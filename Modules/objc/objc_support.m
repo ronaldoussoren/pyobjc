@@ -54,12 +54,24 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-        return (PyObject *) PyObjCObject_New(self);
+	PyGILState_STATE state = PyGILState_Ensure();
+	PyObject *rval = (PyObject *)PyObjCObject_New(self);
+	if (rval == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+	}
+	PyGILState_Release(state);
+	return rval;
 }
 
 +(PyObject*)__pyobjc_PythonObject__
 {
-	return PyObjCClass_New(self);
+	PyGILState_STATE state = PyGILState_Ensure();
+	PyObject *rval = (PyObject *)PyObjCClass_New(self);
+	if (rval == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+	}
+	PyGILState_Release(state);
+	return rval;
 }
 
 @end /* PyObjCSupport */
@@ -73,12 +85,24 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-        return (PyObject *) PyObjCObject_New(self);
+	PyGILState_STATE state = PyGILState_Ensure();
+	PyObject *rval = (PyObject *)PyObjCObject_New(self);
+	if (rval == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+	}
+	PyGILState_Release(state);
+	return rval;
 }
 
 +(PyObject*)__pyobjc_PythonObject__
 {
-	return PyObjCClass_New(self);
+	PyGILState_STATE state = PyGILState_Ensure();
+	PyObject *rval = (PyObject *)PyObjCClass_New(self);
+	if (rval == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+	}
+	PyGILState_Release(state);
+	return rval;
 }
 
 @end /* PyObjCSupport */
@@ -92,8 +116,13 @@
 -(PyObject*)__pyobjc_PythonObject__
 {
 	abort();
-        PyObject* res =  (PyObject *) PyObjCObject_NewClassic(self);
-	return res;
+	PyGILState_STATE state = PyGILState_Ensure();
+	PyObject* rval =  (PyObject *)PyObjCObject_NewClassic(self);
+	if (rval == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+	}
+	PyGILState_Release(state);
+	return rval;
 }
 
 @end /* PyObjCSupport */
@@ -106,7 +135,13 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-        return (PyObject *) PyObjCObject_NewClassic(self);
+	PyGILState_STATE state = PyGILState_Ensure();
+	PyObject* rval =  (PyObject *)PyObjCObject_NewClassic(self);
+	if (rval == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+	}
+	PyGILState_Release(state);
+	return rval;
 }
 
 @end /* PyObjCSupport */
@@ -121,23 +156,30 @@
 {
 	const char* typestr = [self objCType];
 	char*        buf;
+	PyObject* rval;
+	PyGILState_STATE state;
 	
 	buf = alloca(PyObjCRT_SizeOfType(typestr));
 
 	[self getValue:buf];
 
+	state = PyGILState_Ensure();
+	if (0) {
 #ifdef MACOSX
 	/* NSNumber seems to be toll-free bridged to CFNumber,
 	 * this check allows us to return the proper python objects
 	 * for boolean True and False values.
 	 */
-	if (kCFBooleanTrue == (CFBooleanRef)self) {
-		return PyObjCBool_FromLong(1);
+	} else if (kCFBooleanTrue == (CFBooleanRef)self) {
+		rval = PyObjCBool_FromLong(1);
 	} else if (kCFBooleanFalse == (CFBooleanRef)self) {
-		return PyObjCBool_FromLong(0);
-	}
+		rval = PyObjCBool_FromLong(0);
 #endif
-	return pythonify_c_value(typestr, buf);
+	} else {
+		rval = pythonify_c_value(typestr, buf);
+	}
+	PyGILState_Release(state);
+	return rval;
 }
 
 @end /* NSNumber (PyObjCSupport) */
@@ -154,7 +196,13 @@
 	/* NSDecimalNumbers don't have a Python counterpart, don't convert
 	 * these to Python but use a proxy. (Bug #831774)
 	 */
-        return (PyObject *) PyObjCObject_New(self);
+	PyGILState_STATE state = PyGILState_Ensure();
+	PyObject *rval = (PyObject *)PyObjCObject_New(self);
+	if (rval == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+	}
+	PyGILState_Release(state);
+	return rval;
 }
 
 @end /* NSNumber (PyObjCSupport) */
@@ -167,7 +215,13 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-	return PyObjCUnicode_New(self);
+	PyGILState_STATE state = PyGILState_Ensure();
+	PyObject *rval = (PyObject *)PyObjCUnicode_New(self);
+	if (rval == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+	}
+	PyGILState_Release(state);
+	return rval;
 }
 
 @end /* NSString (PyObjCSupport) */
@@ -204,13 +258,14 @@ ROUND(int v, int a)
 static inline const char*
 PyObjCRT_SkipTypeQualifiers (const char* type)
 {
-	while (*type == _C_CONST ||
-	       *type == _C_IN ||
-	       *type == _C_INOUT ||
-	       *type == _C_OUT ||
-	       *type == _C_BYCOPY ||
-	       *type == _C_ONEWAY) {
-			type++;
+	while (
+			*type == _C_CONST ||
+			*type == _C_IN ||
+			*type == _C_INOUT ||
+			*type == _C_OUT ||
+			*type == _C_BYCOPY ||
+			*type == _C_ONEWAY) {
+		type++;
 	}
 	while (*type && isdigit(*type)) type++;
 	return type;
