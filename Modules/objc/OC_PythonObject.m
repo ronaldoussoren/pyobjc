@@ -34,11 +34,6 @@
 extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 
 @implementation OC_PythonObject
-+ (void) initialize
-{
-    NSLog(@"%d spew bar %d", MAC_OS_X_VERSION_10_3, MAC_OS_X_VERSION_MAX_ALLOWED);
-}
-
 + newWithObject:(PyObject *) obj
 {
 	if (PyObjCObject_Check (obj)) {
