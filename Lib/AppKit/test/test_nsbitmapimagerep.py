@@ -13,7 +13,7 @@ class TestNSBitmapImageRep(unittest.TestCase):
         dataPlanes = (None, None, None, None, None)
         i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
         self.assert_(i1)
-        
+
         i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(None, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
         self.assert_(i2)
 
@@ -69,7 +69,7 @@ class TestNSBitmapImageRep(unittest.TestCase):
         self.assertEquals(len(r), len(rPlane))
         self.assertEquals(len(g), len(gPlane))
         self.assertEquals(len(b), len(bPlane))
-       
+
         r[0:len(r)] = rPlane[0:len(rPlane)]
         g[0:len(g)] = gPlane[0:len(gPlane)]
         b[0:len(b)] = bPlane[0:len(bPlane)]

@@ -3,7 +3,7 @@
 import unittest
 import objc
 
-from AppKit import NSBezierPath,  NSMoveToBezierPathElement 
+from AppKit import NSBezierPath,  NSMoveToBezierPathElement
 from AppKit import NSLineToBezierPathElement, NSCurveToBezierPathElement
 from AppKit import NSClosePathBezierPathElement
 
@@ -65,7 +65,7 @@ class TestNSBezierPath(unittest.TestCase):
         self.assertEquals(p.elementAtIndex_(3), NSCurveToBezierPathElement)
         self.assertEquals(p.elementAtIndex_(4), NSClosePathBezierPathElement)
 
-        tp, points = p.elementAtIndex_associatedPoints_(0) 
+        tp, points = p.elementAtIndex_associatedPoints_(0)
         self.assertEquals(tp, NSMoveToBezierPathElement)
         self.assertEquals(len(points), 1)
         self.assertPointEquals(points[0], (10, 10))
@@ -100,7 +100,7 @@ class TestNSBezierPath(unittest.TestCase):
         p.closePath()
 
         p.setAssociatedPoints_atIndex_([(0, 1)], 0)
-        tp, points = p.elementAtIndex_associatedPoints_(0) 
+        tp, points = p.elementAtIndex_associatedPoints_(0)
         self.assertEquals(tp, NSMoveToBezierPathElement)
         self.assertEquals(len(points), 1)
         self.assertPointEquals(points[0], (0, 1))
@@ -115,4 +115,4 @@ class TestNSBezierPath(unittest.TestCase):
 
 
 if __name__ == '__main__':
-   unittest.main( )
+    unittest.main( )
