@@ -17,9 +17,7 @@ _objc.setSignatureForSelector("ScreenSaverUserInfo", "loginUserName:andID:", "v@
 _objc.loadBundle(
     "ScreenSaver",
     globals(),
-    bundle_path=_objc.pathForFramework(
-        "/System/Library/Frameworks/ScreenSaver.framework",
-    ),
+    bundle_path="/System/Library/Frameworks/ScreenSaver.framework"
 )
 
 # NOTE: One MacOSX 10.2.4 the framework doesn't define constants,
