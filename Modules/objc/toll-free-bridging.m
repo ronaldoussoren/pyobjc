@@ -1,10 +1,6 @@
 /*
  *  This file defines support for "toll-free briging" between Python wrappers
  *  for CoreFoundation objecs and native Objective-C objects.
- *
- *  NOTE: It would be nice if we could move some of this logic into MacPython,
- *  keeping the lists of CF-wrappers synchronized is not a very pleasant 
- *  thought.
  */
 #include "pyobjc.h"
 
@@ -17,7 +13,8 @@
 
 #include "pymactoolbox.h"
 
-id PyObjC_CFTypeToID(PyObject* argument)
+id 
+PyObjC_CFTypeToID(PyObject* argument)
 {
 	/* Tollfree bridging of CF (some) objects 
 	 * This list of conversion functions is the complete list of such
@@ -64,7 +61,14 @@ id PyObjC_CFTypeToID(PyObject* argument)
 #endif
 }
 
-PyObject* PyObjC_IDToCFType(id argument)
+/* 
+ * NOTE: CFObj_New creates a CF wrapper for any CF object, however we have
+ * better information for at least some types: it is impossible to see the
+ * difference between mutable and immutable collection types using only 
+ * the CF API.
+ */
+PyObject* 
+PyObjC_IDToCFType(id argument)
 {
 	[argument retain];
 	if ([argument isKindOfClass:[NSMutableString class]]) {
@@ -114,6 +118,3 @@ PyObject* PyObjC_IDToCFType(id argument)
 static const char dummy; /* Make sure this is valid C on GNUstep */
 
 #endif /* MACOSX */
-
-
-
