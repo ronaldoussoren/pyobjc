@@ -8,7 +8,7 @@
 #include "OC_PythonObject.h"
 #include "super-call.h"
 
-#define PYOBJC_VERSION "0.7.0"
+#define PYOBJC_VERSION "0.7.1"
 
 #ifdef MACOSX
 
@@ -24,15 +24,6 @@
 	@end
 #endif
 
-
-/* XXX This seems to work, but I don't think this should work at al,
- * PyType_Type is variable sized! Currently all is well, if that changes
- * I'll add a dict to store the 'Class' seperately.
-typedef struct {
-	PyTypeObject head;
-	Class	  objc_class;
-} ObjCClass;
- */
 
 extern PyTypeObject ObjCClass_Type;
 #define ObjCClass_Check(obj) PyObject_TypeCheck(obj, &ObjCClass_Type)
@@ -91,9 +82,6 @@ extern PyObject* allocator_dict;
 	int		sel_class_method;  \
 	int		sel_allocator;
 
-#if 0
-	PyObject*       sel_class;	
-#endif
 
 
 typedef struct {
@@ -110,6 +98,9 @@ typedef struct {
 typedef struct {
 	ObjCSelector_HEAD
 	PyObject*	callable;
+
+	/* Protocol support: */
+	unsigned int	is_required:1;
 } ObjCPythonSelector;
 
 extern PyTypeObject ObjCSelector_Type;
@@ -121,6 +112,7 @@ extern PyTypeObject ObjCPythonSelector_Type;
 
 char* ObjCSelector_Signature(PyObject* obj);
 SEL   ObjCSelector_Selector(PyObject* obj);
+int   ObjCSelector_Required(PyObject* obj);
 int ObjC_SignatureForSelector(char* class_name, SEL selector, char* signature);
 
 PyObject* ObjCSelect_NewFromPython(char* selector, char* signature, PyObject* callable);
@@ -148,15 +140,19 @@ SEL ObjCSelector_DefaultSelector(char* methname);
 PyObject* ObjC_GetClassList(void);
 
 
-#if 0
-#define FUNC_IN do { printf("Enter function %s at %s:%d\n", __FUNCTION__, __FILE__, __LINE__); } while(0)
-#define FUNC_OUT do { printf("Leave function %s at %s:%d\n", __FUNCTION__, __FILE__, __LINE__); } while(0)
-#endif
-
 int ObjC_register_methods(void);
 
 int ObjCAPI_Register(PyObject* module_dict);
 #define PYOBJC_BUILD
 #include "pyobjc-api.h"
+
+
+extern PyTypeObject ObjCInformalProtocol_Type;
+#define ObjCInformalProtocol_Check(obj) PyObject_TypeCheck(obj, &ObjCInformalProtocol_Type)
+
+int     ObjCIPVerify(PyObject* obj, PyObject* cls);
+PyObject* ObjCIPFindInfo(PyObject* obj, SEL selector);
+
+
 
 #endif /* META_H */

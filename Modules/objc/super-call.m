@@ -1,3 +1,16 @@
+/*
+ * super-call.m -- Finding the right dispatch function for a method-call
+ *
+ * This file defines a registry that is used to find the right function to
+ * call when a method is called. There are 3 variants:
+ * - Call the method from python
+ * - Call the superclass implementation from python
+ * - Call the python implementation of a method from Objective-C
+ *
+ * The first will almost always be 'execute_and_pythonify_method', the other
+ * two classes contain lots of functions because the normal runtime doesn't
+ * allow for dynamicly creating these types of calls (see also: register.m)
+ */
 #include <Python.h>
 #include "objc_support.h"
 #include "super-call.h"
@@ -160,6 +173,7 @@ int ObjC_RegisterSignatureMapping(
 		Py_DECREF(entry);
 		return -1;
 	}
+	Py_DECREF(entry); 
 
 	return 0;
 }
@@ -191,7 +205,8 @@ search_special(Class class, SEL sel)
 			if (!special_class) {
 				special_class = pyclass;
 				result = PyTuple_GetItem(entry, 2);
-			} else if (PyType_IsSubtype((PyTypeObject*)pyclass, (PyTypeObject*)special_class)) {
+			} else if (PyType_IsSubtype((PyTypeObject*)pyclass, 
+					(PyTypeObject*)special_class)) {
 				special_class = pyclass;
 				result = PyTuple_GetItem(entry, 2);
 			}
@@ -258,6 +273,8 @@ IMP ObjC_FindIMPForSignature(char* signature)
 	r = find_signature(signature);
 
 	if (r) return r->call_to_python;
+
+	printf("No IMP for signature %s\n", signature);
 	return NULL;
 }
 
@@ -280,16 +297,6 @@ IMP ObjC_FindIMP(Class class, SEL sel)
 	if (objc_sel == NULL) return NULL;
 
 	
-#if 0
-	m = class_getInstanceMethod(class, sel);
-	if (!m) {
-		ObjCErr_Set(objc_error,
-			"Class %s does not respond to %s",
-			class->name, SELNAME(sel));
-		return NULL;
-	}
-#endif
-
 	special = search_special(class, sel);
 	if (special) {
 		return special->call_to_python;
@@ -298,16 +305,13 @@ IMP ObjC_FindIMP(Class class, SEL sel)
 	}
 
 	generic = find_signature(ObjCSelector_Signature(objc_sel));
-#if 0
-	generic = find_signature(m->method_types);
-#endif
 	if (generic) {
 		if (PyErr_Occurred()) {
 			PyErr_Print();
 		}
 		return generic->call_to_python;
 	}
-
+	printf("No IMP for selector %s in %s\n", SELNAME(sel), class->name);
 	return NULL;
 }
 

@@ -1,3 +1,14 @@
+2002-10-18 Ronald Oussoren <oussoren@cistron.nl>
+	* Better fix for crash while converting exception from Python to
+	  Objective-C
+	* Code cleanup in OC_*.[hm], ObjCPointer.m
+	* Cleaner code to check if the Objective-C class has a changed 
+	  method table.
+	* Native selectors now have a 'defining_class' attribute, which 
+	  contains a reference to the class that defined this method.
+	* Added type objc.informal_protocol, which can be used to eliminate
+	  most existing cases of explicit calls to 'objc.selector'
+
 2002-10-17  Bill Bumgarner  <bbum@codefab.com>
 	* Fixed a situation where ObjCErr_ToObjC() would crash if the
 	exception lacked a value or traceback.

@@ -125,6 +125,7 @@ register_proxy(PyObject* proxy_obj)
 	Py_INCREF(data->key);
 	PyDict_SetItem(proxy_dict, data->key, v);
 	if (PyErr_Occurred()) return -1;
+	Py_DECREF(v); 
 
 	return 0;
 }
@@ -157,11 +158,6 @@ object_dealloc(PyObject* obj)
 		 PyObject_ClearWeakRefs(obj);
  	}
 	[((ObjCObject*)obj)->objc_object release];
-#if 0
-	if (!((ObjCObject*)obj)->is_paired) {
-		[((ObjCObject*)obj)->objc_object release];
-	}
-#endif
 	obj->ob_type->tp_free(obj);
 }
 
@@ -171,21 +167,7 @@ object_getattro(PyObject* obj, PyObject* name)
 	PyObject* result;
 
 	result = PyObject_GenericGetAttr(obj, name);
-	if (result) {
-		/* This is ugly, but needed for now.
-		 * see objc-class:add_class_fields  for details
-		 */
-		if (ObjCNativeSelector_Check(result)) {
-			if (((ObjCNativeSelector*)result)->class != 
-				ObjCClass_GetClass((PyObject*)obj->ob_type)) {
-
-				Py_DECREF(result);
-				ObjCClass_MaybeRescan((PyObject*)obj->ob_type);
-				return PyObject_GenericGetAttr(obj, name);
-			}
-		}
-		return result;
-	}
+	if (result) return result;
 
 	PyErr_Clear();
 	result = ObjCSelector_FindNative(obj, PyString_AsString(name));
@@ -291,16 +273,17 @@ PyObject* ObjCObject_FindSelector(PyObject* object, SEL selector)
 	if (meth == NULL) {
 		return NULL;
 	} else {
-		/* XXX: Should we bind to self? */
 		return meth;
 	}	
 }
 
 id        (ObjCObject_GetObject)(PyObject* object)
 {
-	/* Default version is a macro! */
 	if (!ObjCObject_Check(object)) {
-		abort();
+		ObjCErr_Set(PyExc_TypeError,
+			"objc.objc_object expected, got %s",
+			object->ob_type->tp_name);
+		
 	}
 	return ObjCObject_GetObject(object);
 }

@@ -16,32 +16,20 @@
 
 #include "OC_PythonInt.h"
 
-#define CLASS_VERSION 0
-
 @implementation OC_PythonInt
-+ (void) initialize
-{
-/*
-  // NSProxy does not implement +setVersion:
-  if (self == [OC_PythonInt class])
-    {
-      [OC_PythonInt setVersion:CLASS_VERSION];
-    }
-*/
-}
 
 + (id <PythonObject>) fromLong:(long) i
 {
-  PyObject *pyint = PyInt_FromLong (i);
-  id <PythonObject> result = [self newWithObject:pyint];
+	PyObject *pyint = PyInt_FromLong(i);
+	id <PythonObject> result = [self newWithObject:pyint];
 
-  Py_DECREF(pyint);
-  return result;
+	Py_DECREF(pyint);
+	return result;
 }
 
 - (long) asLong
 {
-  return PyInt_AsLong ([self pyObject]);
+	return PyInt_AsLong([self pyObject]);
 }
 
 

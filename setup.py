@@ -54,6 +54,7 @@ sourceFiles = [
 	"Modules/objc/class-list.m",
 	"Modules/objc/ObjCPointer.m",
 	"Modules/objc/objc-class.m",
+	"Modules/objc/informal-protocol.m",
 	"Modules/objc/objc-object.m",
 	"Modules/objc/super-call.m",
 	"Modules/objc/selector.m",

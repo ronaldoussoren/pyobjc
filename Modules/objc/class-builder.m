@@ -6,7 +6,6 @@
 #include "pyobjc.h"
 #include "objc_support.h"
 #include <Foundation/NSInvocation.h>
-//#include <Foundation/Foundation.h> // Needed for NSInvocation
 
 
 /* We add 1 instance variable to hybrid objective-C/Python classes, this 
@@ -35,7 +34,6 @@ static id class_method_allocWithZone(id self, SEL sel, NSZone* zone);
 
 static id object_method_retain(id self, SEL sel);
 static void object_method_release(id self, SEL sel);
-static id object_method_autorelease(id self, SEL sel);
 static unsigned object_method_retainCount(id self, SEL sel);
 static BOOL object_method_respondsToSelector(id self, SEL selector, 
 	SEL aSelector);
@@ -45,6 +43,10 @@ static void object_method_forwardInvocation(id self, SEL selector,
 	NSInvocation* invocation);
 
 
+/*
+ * When we create a 'Class' we actually create the struct below. This allows
+ * us to add some extra information to the class defintion.
+ */
 struct class_wrapper {
 	struct objc_class  class;
 	struct objc_class  meta_class;
@@ -59,9 +61,9 @@ struct class_wrapper {
  */
 int ObjC_HasPythonImplementation(id obj)
 {
-	Ivar var = class_getInstanceVariable(obj->isa, pyobj_ivar);
-
-	return (var != NULL);
+	if (obj == nil) return 0;
+	
+	return (class_getInstanceVariable(obj->isa, pyobj_ivar) != NULL);
 }
 
 /*
@@ -71,12 +73,14 @@ int ObjC_HasPythonImplementation(id obj)
  */
 PyObject* ObjC_GetPythonImplementation(id obj)
 {
-	/* 
-	 * XXX: According to the docs for object_getInstanceVariable this
-	 * is wrong, but if I do follow the docs the code doesn't work...
-	 */
 	PyObject* pyobj = NULL;
 	Ivar      var   = NULL;
+
+	if (obj == nil) {
+		ObjCErr_Set(objc_internal_error,
+			"ObjC_GetPythonImplementation called for <nil>");
+		return NULL;
+	}
 
 	var = object_getInstanceVariable(obj, pyobj_ivar, (void**)&pyobj);
 	if (var == NULL) {
@@ -101,8 +105,11 @@ PyObject* ObjC_GetPythonImplementation(id obj)
  */
 int ObjCClass_SetClass(Class objc_class, PyObject* py_class)
 {
-
-#ifdef OBJC_PARANOIA_MODE
+	if (objc_class == nil) {
+		ObjCErr_Set(objc_internal_error, 
+			"Trying to set class of <nil>\n", objc_class->name);
+		return -1;
+	}
 	if (class_getInstanceVariable(objc_class, pyobj_ivar) == NULL) {
 		ObjCErr_Set(objc_internal_error, 
 			"Trying to set class of non-python %s", 
@@ -115,7 +122,13 @@ int ObjCClass_SetClass(Class objc_class, PyObject* py_class)
 			objc_class->name);
 		return -1;
 	}
-#endif /* OBJC_PARANOIA_MODE */
+	if (((struct class_wrapper*)objc_class)->python_class != NULL) {
+		ObjCErr_Set(objc_internal_error,
+			"Trying to set update PythonClass of %s",
+			objc_class->name);
+		return -1;
+	}
+
 
 	((struct class_wrapper*)objc_class)->python_class = py_class;
 	Py_INCREF(py_class);
@@ -125,29 +138,33 @@ int ObjCClass_SetClass(Class objc_class, PyObject* py_class)
 }
 
 /*
- * Call this when the python half of the class could not be created. Do *not*
- * use this to deconstruct an already registered class.
+ * Call this when the python half of the class could not be created. 
+ *
+ * Due to technical restrictions it is not allowed to unbuild a class that
+ * is already registered with the Objective-C runtime.
  */
 void ObjCClass_UnbuildClass(Class objc_class)
 {
 	struct class_wrapper* wrapper = (struct class_wrapper*)objc_class;
 
-#ifdef OBJC_PARANOIA_MODE
+	if (objc_class == nil) {
+		ObjCErr_Set(objc_internal_error, 
+		"Trying to unregister class <nil>");
+		return;
+	}
 	if (class_getInstanceVariable(objc_class, pyobj_ivar) == NULL) {
 		ObjCErr_Set(objc_internal_error, 
 			"Trying to unregister class of non-python %s", 
 			objc_class->name);
 		return;
 	}
-#endif /* OBJC_PARANOIA_MODE */
-
 	if (wrapper->python_class != NULL) {
-		/* class already registered, fail */
 		ObjCErr_Set(objc_internal_error,
 			"Trying to unregister objective-C klass %s",
 			objc_class->name);
 		return;
 	}
+
 
 	if (wrapper->class.methodLists) {
 		if (wrapper->class.methodLists[0]) {
@@ -165,15 +182,55 @@ void ObjCClass_UnbuildClass(Class objc_class)
 	free(objc_class);
 }
 
+/*
+ * Find the signature of 'selector' in the list of protocols.
+ */
+static char*
+find_protocol_signature(PyObject* protocols, SEL selector)
+{
+	int len;
+	int i;
 
+	if (!PyList_Check(protocols)) {
+		ObjCErr_Set(objc_internal_error,
+			"Protocol-list is not a list");
+		return NULL;
+	}
+
+	len = PyList_Size(protocols);
+	for (i = 0; i < len; i++) {
+		PyObject* p;
+		PyObject* info;
+	
+		p = PyList_GetItem(protocols, i);
+		if (p == NULL) {
+			PyErr_Clear();
+			continue;
+		}
+		if (!ObjCInformalProtocol_Check(p)) continue;
+
+		info = ObjCIPFindInfo(p, selector);
+		if (info != NULL) {
+			return ObjCSelector_Signature(info);
+		}
+	}
+	return NULL;
+}
 
 /*
  * First step of creating a python subclass of an objective-C class
  *
  * Returns NULL or the newly created objective-C klass. 'class_dict' may
  * be modified by this function.
+ *
+ * TODO:
+ * - This function complete ignores other base-classes, even though they
+ *   might override methods. Need to check the MRO documentation to check
+ *   if this is a problem. 
+ * - It is a problem when the user tries to use mixins to define common
+ *   methods (like a NSTableViewDataSource mixin).
  */
-Class ObjCClass_BuildClass(Class super_class, 
+Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				char* name, PyObject* class_dict)
 {
 	PyObject*                key_list = NULL;
@@ -199,7 +256,11 @@ Class ObjCClass_BuildClass(Class super_class,
 	if (py_superclass == NULL) return NULL;
 
 
-#ifdef OBJC_PARANOIA_MODE
+	if (!PyList_Check(protocols)) {
+		ObjCErr_Set(objc_internal_error, "%s", 
+			"protocol list not a PyList");
+		goto error_cleanup;
+	}
 	if (!PyDict_Check(class_dict)) {
 		ObjCErr_Set(objc_internal_error, "%s", 
 			"class dict not a PyDict");
@@ -210,7 +271,6 @@ Class ObjCClass_BuildClass(Class super_class,
 			"must have super_class");
 		goto error_cleanup;
 	}
-#endif /* OBJC_PARANOIA_MODE */
 
 	if (objc_lookUpClass(name) != NULL) {
 		ObjCErr_Set(objc_error, "class '%s' exists", name);
@@ -316,6 +376,7 @@ Class ObjCClass_BuildClass(Class super_class,
 			char*     name;
 			SEL	  selector;
 			Method    meth;
+			int       is_class_method = 0;
 
 			pyname = PyObject_GetAttrString(value, "__name__");
 			if (pyname == NULL) continue;
@@ -330,9 +391,10 @@ Class ObjCClass_BuildClass(Class super_class,
 
 			meth = class_getInstanceMethod(super_class, selector);
 			if (!meth) {
-				if (!class_getClassMethod(
-						super_class, selector) == NULL){
-					continue;
+				meth = class_getClassMethod(
+						super_class, selector);
+				if (meth) {
+					is_class_method = 1;
 				}
 			}
 
@@ -353,13 +415,17 @@ Class ObjCClass_BuildClass(Class super_class,
 					value, 
 					selector, 
 					ObjCSelector_Signature(super_sel),
-					0);
+					is_class_method);
 				Py_DECREF(super_sel);
 			} else {
+				char* signature;
+
+				signature = find_protocol_signature(
+					protocols, selector);
 				value = ObjCSelector_New(
 					value, 
 					selector, 
-					NULL,
+					signature,
 					0);
 			}
 			if (value == NULL) goto error_cleanup;
@@ -367,6 +433,7 @@ Class ObjCClass_BuildClass(Class super_class,
 			if (PyDict_SetItem(class_dict, key, value) < 0) {
 				goto error_cleanup;
 			}
+			Py_DECREF(value); value = NULL;
 			method_count++;
 		}			
 	}
@@ -433,6 +500,7 @@ Class ObjCClass_BuildClass(Class super_class,
 		/* Our parent is a pure Objective-C class, add our magic
 		 * methods and variables 
 		 */
+		 
 		Ivar var = ivar_list->ivar_list;
 		Method meth;
 		PyObject* sel;
@@ -452,7 +520,8 @@ Class ObjCClass_BuildClass(Class super_class,
 			sel = ObjCSelector_NewNative(&new_class->class, \
 				selector,  types, 1);			\
 			if (sel == NULL) goto error_cleanup;		\
-			PyDict_SetItemString(class_dict, pyname, sel)
+			PyDict_SetItemString(class_dict, pyname, sel);	\
+			Py_DECREF(sel)
 
 #		define METH(pyname, selector, types, imp) 		\
 			meth = method_list->method_list + 		\
@@ -463,7 +532,8 @@ Class ObjCClass_BuildClass(Class super_class,
 			sel = ObjCSelector_NewNative(&new_class->class, \
 				selector,  types, 0);			\
 			if (sel == NULL) goto error_cleanup;		\
-			PyDict_SetItemString(class_dict, pyname, sel)
+			PyDict_SetItemString(class_dict, pyname, sel);	\
+			Py_DECREF(sel)
 					
 
 		META_METH("alloc", @selector(alloc), "@@:", class_method_alloc);
@@ -472,7 +542,6 @@ Class ObjCClass_BuildClass(Class super_class,
 		METH("retain", @selector(retain), "@@:", object_method_retain);
 		METH("release", @selector(release), "v@:", object_method_release);
 		METH("retainCount", @selector(retainCount), "I@:", object_method_retainCount);
-		METH("autorelease", @selector(autorelease), "@@:", object_method_autorelease);
 		METH("respondsToSelector_", @selector(respondsToSelector:), "c@::", 
 			object_method_respondsToSelector);
 		METH("methodSignatureForSelector_", @selector(methodSignatureForSelector:), "@@::", 
@@ -660,8 +729,8 @@ error_cleanup:
  * - deallocactie doen we eerst in python en dan in objective-C
  *
  * NOTE:
- * - According to the compiler these are normal function, we cannot use
- *   things like [super ...] here!
+ * - These functions will be used as methods, but as far as the compiler
+ *   knows these are normal functions. You cannot use [super call]s here.
  */
 
 /*
@@ -702,17 +771,11 @@ static id class_method_allocWithZone(id self, SEL sel, NSZone* zone)
 
    /* obj->__pyobjc_obj__ = pyobjct */ 
    if (object_setInstanceVariable(obj, pyobj_ivar, pyobject) == NULL) {
-	/* XXX: Leaking!, need exception */
-       PySys_WriteStderr("Cannot set python reference");
+       ObjCErr_Set(objc_internal_error, "Cannot set python reference");
        Py_DECREF(pyobject);
+       ObjCErr_ToObjC();
        return nil;
    }
-
-#ifdef OBJC_PARANOIA_MODE
-   if ([obj retainCount] != 1) {
-	abort();
-   }
-#endif
 
    return obj;
 }
@@ -733,17 +796,6 @@ static id object_method_retain(id self, SEL sel)
 	return self;
 }
 
-/* -autorelease */
-static id object_method_autorelease(id self, SEL sel)
-{
-	struct objc_super super;
-
-	super.class = self->isa->super_class;
-	super.receiver = self;
-	self = objc_msgSendSuper(&super, @selector(autorelease)); 
-	return self;
-}
-
 /* -release */
 static void object_method_release(id self, SEL sel)
 {
@@ -759,33 +811,20 @@ static void object_method_release(id self, SEL sel)
 	}
 
 	if (obj->ob_refcnt == 0) {
-		printf("Release with dead python\n");
+		/* [super release] */
 		super.class = self->isa->super_class;
 		super.receiver = self;
 		self = objc_msgSendSuper(&super, @selector(release)); 
 		return;
 
-	} else if (obj->ob_refcnt != 1) {
+	} else {
+		/* If the reference count is 1, Py_DECREF causes a call
+		 * to object_dealloc, which in turn calls back to us
+		 * with a reference-count of 0.
+		 */
 		Py_DECREF(obj);
 		return;
 	} 
-
-	/* need to dealloc. protocol: we dealloc the python-side and
-	 * then ourselves. We call [super release] instead of just 
-	 * [self dealloc] just in case the normal release does something
-	 * sneeky.
-	 *
-	 * Py_DECREF() causes object_dealloc with calls back into us
-	 * with retainCount == 0.
-	 */
-	printf("Before DECREF in normal\n");
-	Py_DECREF(obj);
-#if 0
-	printf("After DECREF in normal\n");
-	super.class = self->isa->super_class;
-	super.receiver = self;
-        self = objc_msgSendSuper(&super, @selector(release)); 
-#endif
 
 	return;
 }
@@ -809,7 +848,6 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 	/* First check if we respond */
 	pyself = ObjC_GetPythonImplementation(self);
 	if (pyself == NULL) {
-		NSLog(@"WARNING: Incomplete PyObjC object\n");
 		return NO;
 	}
 	pymeth = ObjCObject_FindSelector(pyself, aSelector);
@@ -819,11 +857,6 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 	}
 	PyErr_Clear();
 
-	/* XXX: We currently don't respond correctly for methods we added
-	 * to python/objc hybrids, below is a quick fix for some of them.
-	 */
-	if (aSelector == @selector(respondsToSelector:)) return YES;
-      
 	/* Check superclass */
 	super.receiver = self;
 	super.class = self->isa->super_class;
@@ -849,8 +882,6 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 	NS_DURING
 		result = objc_msgSendSuper(&super, selector, aSelector);
 	NS_HANDLER
-		NSLog(@"[super methodSignatureForSelector:] failed: %@ - %@",
-			[localException name], [localException reason]);
 		result = nil;
 	NS_ENDHANDLER
 
@@ -881,7 +912,6 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 static void
 object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 {
-	/* TODO: error handling */
 	PyObject*	args;
 	PyObject* 	result;
 	PyObject*       v;
@@ -894,7 +924,6 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	const char* err;
 	int   arglen;
 
-
 	signature = [invocation methodSignature];
 	len = [signature numberOfArguments];
 
@@ -906,7 +935,11 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	i = PyTuple_SetItem(args, 0, pythonify_c_value(
 					[signature getArgumentTypeAtIndex:0],
 					(void*)&self));
-	if (i < 0) ObjCErr_ToObjC();
+	if (i < 0) {
+		Py_DECREF(args);
+		ObjCErr_ToObjC();
+		return;
+	}
 
 	for (i = 2; i < len; i++) {
 		type = [signature getArgumentTypeAtIndex:i];
@@ -916,11 +949,16 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		[invocation getArgument:argbuf atIndex:i];
 		v = pythonify_c_value(type, argbuf);
 		if (v == NULL) {
+			Py_DECREF(args);
 			ObjCErr_ToObjC();
 			return;
 		}
 
-		PyTuple_SetItem(args, i-1, v);
+		if (PyTuple_SetItem(args, i-1, v) < 0) {
+			Py_DECREF(args);
+			ObjCErr_ToObjC();
+			return;
+		}
 	}
 
 	result = ObjC_call_to_python(self, [invocation selector], args);
@@ -932,10 +970,15 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 	type = [signature methodReturnType];
 	arglen = objc_sizeof_type(type);
-	arg = alloca(arglen);
+	arg = alloca(arglen+1);
 
 	err = depythonify_c_value(type, result, arg);
-	if (err != NULL) abort();
+	if (err != NULL) {
+		ObjCErr_Set(objc_error,
+			"Cannot depythonify result: %s", err);
+		ObjCErr_ToObjC();
+		return;
+	}
 }
 
 /*
@@ -966,6 +1009,7 @@ ObjC_call_to_python(id self, SEL selector, PyObject* arglist)
 
 	if (result == NULL) {
 		ObjCErr_ToObjC();
+		return NULL;
 	}
 
 	return result;

@@ -25,9 +25,6 @@
 {
 }
 
-//#M Initialize the version number of this class.
-+ (void) initialize;
-
 /*#M Returns a new autoreleased PyString object with @var{str} of
   length @var{size} as contents. */
 + (id <PythonObject>) fromString:(char *) str andSize:(int) size;

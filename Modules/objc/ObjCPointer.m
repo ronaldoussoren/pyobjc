@@ -12,6 +12,8 @@
  * Date: 1998/01/04 17:59:28
  *
  * Created Mon Oct 28 12:38:18 1996.
+ *
+ * XXX (Ronald): How usefull is this type? 
  */
 
 #include "pyobjc.h"
@@ -24,13 +26,9 @@ ObjCPointer_dealloc (ObjCPointer *self)
   PyMem_DEL (self);
 }
 
-static char ObjCPointer_unpack_doc[] = "";
-#if 0
-FUNDOC("Unpack the pointed value accordingly to its type.",
-       ".unpack()",
-       "none",
-       "A Python object containing the unpacked value");
-#endif
+PyDoc_STRVAR(ObjCPointer_unpack_doc,
+	"Unpack the pointed value accordingly to its type.\n"
+        "obj.unpack() -> value");
 static PyObject *
 ObjCPointer_unpack (ObjCPointer *self, PyObject *args)
 {
@@ -138,6 +136,8 @@ ObjCPointer_new (void *p, const char *t)
   unsigned int size = objc_sizeof_type (t);
   const char *typeend = objc_skip_typespec (t);
   ObjCPointer *self = PyObject_NEW_VAR (ObjCPointer, &ObjCPointer_Type, size);
+
+  NSLog(@"ObjCPointer created: at %p of type %s", p, t);
 
   if (self == NULL)
     return NULL;

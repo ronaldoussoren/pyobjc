@@ -4,13 +4,15 @@ new-style pyobjc
 from _objc import *
 from _objc import __version__
 
-# Backward compat stuff
-try:
-	getattr(__builtins__, 'True')
-except AttributeError:
-	# Python 2.2.0 doesn't have 'True' and 'False'
-	True=1
-	False=0
+
+
+# Import values used to define signatures
+import _objc
+gl = globals()
+for nm in [ x for x in dir(_objc) if x.startswith('_C_') ]:
+	gl[nm] = getattr(_objc, nm)
+del gl, nm, _objc
+
 
 # This is a hack, should probably patch python:
 # - We want the resources directory to be on the python search-path
@@ -37,11 +39,11 @@ del b
 #
 # These 5 are documented in Apple's Objective-C book, in theory these
 # are the only methods that transfer ownership.
-ALLOCATOR_METHODS['alloc'] = True
-ALLOCATOR_METHODS['allocWithZone:'] = True
-ALLOCATOR_METHODS['copy'] = True
-ALLOCATOR_METHODS['copyWithZone:'] = True
-ALLOCATOR_METHODS['mutableCopyWithZone:'] = True
+ALLOCATOR_METHODS['alloc'] = 1
+ALLOCATOR_METHODS['allocWithZone:'] = 1
+ALLOCATOR_METHODS['copy'] = 1
+ALLOCATOR_METHODS['copyWithZone:'] = 1
+ALLOCATOR_METHODS['mutableCopyWithZone:'] = 1
 
 # Some special modules needed to correctly wrap all
 # methods in the Foundation framework. Doing it here
@@ -77,8 +79,8 @@ class _runtime:
 
 	def __eq__(self, other):
 		if self is other:
-			return True
-		return False
+			return 1
+		return 0
 
 	def __repr__(self):
 		return "objc.runtime"
@@ -88,13 +90,12 @@ runtime = _runtime()
 IBOutlet = ivar
 
 # Signature for an action in Interface Builder
-#IBAction = "v@:"
 def IBAction(func):
 	return selector(func, signature="v@:@")
 
 # Aliases for Objective-C lovers...
-YES=True
-NO=False
+YES=1
+NO=0
 nil=None
 
 
@@ -135,7 +136,7 @@ def mapping_values(self):
 		value = enum.nextObject()
 	return result
 
-#CONVENIENCE_METHODS['description'] = ('__repr__', lambda self: self.description())
+CONVENIENCE_METHODS['description'] = ('__repr__', lambda self: self.description())
 # Mappings (e.g. like dict)
 # TODO (not all are needed or even possible): 
 #   iter*, update, pop, popitem, setdefault
@@ -160,7 +161,7 @@ del mapping_keys, mapping_values
 CONVENIENCE_METHODS['doesContain:'] = ('__contains__', lambda self, elem: self.doesContain_(elem))
 def eq_func(self, other):
 	print "eq_func(%s, %s)"%(self, other)
-	if self is other: return True
+	if self is other: return 1
 	return self.isEqualTo_(other)
 
 CONVENIENCE_METHODS['isEqualTo:'] = ('__eq__', eq_func) # lambda self, other: self.isEqualTo_(other))

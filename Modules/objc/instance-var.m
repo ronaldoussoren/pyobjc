@@ -220,4 +220,3 @@ PyObject* ObjCInstanceVar_New(char* name)
 	((ObjCIvar*)result)->type[0] = '\0';
 	return result;
 }
-

@@ -4,18 +4,16 @@
  *
  */
 #include "pyobjc.h"
+#include "objc_support.h"
 #include <stddef.h>
 //#include <Foundation/Foundation.h>
 
+static int add_class_fields(Class objc_class, PyObject* dict);
+
 /*
- * PyType_Type is has variable-sized information and I (ROU) haven't found a
- * way yet to stuff additional information in there. 
- *
- * XXX: the __slots__ mechanism could (and should) be used, implemention is 
- * left as an exercise for the reader.
- *
- * Because classes must live forever anyway (objective-C runtime cannot drop 
- * classes) storing the additinal information seperately is acceptable.
+ * Due to the way dynamicly created PyTypeObject's are processed it is not 
+ * possible to add new fields to a type struct. For now we store the additional
+ * information in a seperate data-structure. 
  *
  * The struct class_info contains the additional information for a class object,
  * and class_to_objc stores a mapping from a class object to its additional
@@ -24,7 +22,7 @@
 struct class_info {
 	Class	  class;
 	PyObject* sel_to_py;
-	int	  rescan_done;
+	int	  method_magic;
 };
 
 static PyObject* 	class_to_objc = NULL;
@@ -60,7 +58,7 @@ get_class_info(PyObject* class)
 
 	info->class     = nil;
 	info->sel_to_py = NULL;
-	info->rescan_done = 0;
+	info->method_magic = 0;
 	item = PyCObject_FromVoidPtr(info, NULL);
 	if (item == NULL) {
 		PyMem_Free(info);
@@ -74,6 +72,7 @@ get_class_info(PyObject* class)
 		PyMem_Free(info);
 		return NULL;
 	}
+	Py_DECREF(item); 
 	Py_INCREF(class);
 	return info;
 }
@@ -87,6 +86,7 @@ get_class_info(PyObject* class)
 static PyObject*	class_registry = NULL;
 
 
+	
 static int 
 objc_class_register(Class objc_class, PyObject* py_class)
 {
@@ -105,12 +105,18 @@ objc_class_register(Class objc_class, PyObject* py_class)
 
 	res = PyDict_SetItemString(class_registry, 
 		(char*)objc_class->name, py_class);
-	if (res == 0) {
-		Py_INCREF(py_class);
-	} else {
+	if (res != 0) {
 		abort();
 	}
 	return res;
+}
+
+static int 
+objc_class_unregister(Class objc_class)
+{
+	if (class_registry == NULL) return 0;
+
+	return PyDict_DelItemString(class_registry, (char*)objc_class->name);
 }
 
 static PyObject*
@@ -150,25 +156,15 @@ normalize_classname(char* classname, char* buf, size_t buflen)
 	return buf;
 }
 	
-static int
-class_traverse(PyObject* ob, visitproc proc, void* opaque)
-{
-	int res = 0;
-
-	/* If we are incomplete, don't traverse the type. */
-	/* This seems to solve a problem on Python 2.2.0 */
-	if (ObjCClass_GetClass(ob) != nil) {
-		res =  ((PyTypeObject*)ob)->tp_base->tp_traverse(ob, proc, opaque);
-	}
-
-	return res;
-}
 
 /*
  * Create a new objective-C class, as a subclass of 'type'. This is
  * ObjCClass_Type.tp_new.
  *
  * Note: This function creates new _classes_
+ *
+ * TODO:
+ * - Add support for Objective-C 'Protocol' instances in the list of bases
  */
 static PyObject*
 class_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
@@ -185,6 +181,8 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	Class      objc_class = NULL;
 	Class	   super_class = NULL;
 	struct class_info* info;
+	PyObject* protocols;
+	PyObject* real_bases;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:meta_new",
 			keywords, &name, &bases, &dict)) {
@@ -223,29 +221,63 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 	super_class = ObjCClass_GetClass(v);
+
+	protocols = PyList_New(0);
+	if (protocols == NULL) return NULL;
+	real_bases = PyList_New(0);
+	if (real_bases == NULL) {
+		Py_DECREF(protocols);
+		return NULL;
+	}
+	PyList_Append(real_bases, v);
+	if (PyErr_Occurred()) {
+		Py_DECREF(protocols);
+		Py_DECREF(real_bases);
+		return NULL;
+	}
 	
 	for (i = 1; i < len; i++) {
-		v = PyTuple_GetItem(bases, 0);
+		v = PyTuple_GetItem(bases, i);
 		if (v == NULL) {
 			return NULL;
 		}
 		if (ObjCClass_Check(v)) {
+			Py_DECREF(protocols);
+			Py_DECREF(real_bases);
 			PyErr_SetString(PyExc_TypeError, 
 					"multiple objective-C bases");
 			return NULL;
+		} else if (ObjCInformalProtocol_Check(v)) {
+			PyList_Append(protocols, v);
+		} else {
+			PyList_Append(real_bases, v);
 		}
 	}
+
+	v = PyList_AsTuple(real_bases);
+	if (v == NULL) {
+		Py_DECREF(protocols);
+		Py_DECREF(real_bases);
+		return NULL;
+	}
+	Py_DECREF(real_bases);
+	real_bases = v;
 
 	/* First generate the objective-C klass. This may change the
 	 * class dict.
 	 */
-	objc_class = ObjCClass_BuildClass(super_class, name, dict);
+	objc_class = ObjCClass_BuildClass(super_class, protocols, name, dict);
 	if (objc_class == NULL) {
 		if (!PyErr_Occurred()) {
 			abort();
 		}
+		Py_DECREF(protocols);
+		Py_DECREF(real_bases);
 		return NULL;
 	}
+
+
+
 
 	/* Add convenience methods like '__eq__'. Must do it before
 	 * call to super-class implementation, because '__*' methods
@@ -253,22 +285,69 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	 */
 	if (ObjC_AddConvenienceMethods(objc_class, dict) < 0) {
 		ObjCClass_UnbuildClass(objc_class);
+		Py_DECREF(protocols);
+		Py_DECREF(real_bases);
 		return NULL;
 	}
 
 	/* call super-class implementation */
-	res =  PyType_Type.tp_new(type, args, kwds);
+	args = Py_BuildValue("(sOO)", name, real_bases, dict);
+	res =  PyType_Type.tp_new(type, args, NULL);
 	if (res == NULL) {
+		Py_DECREF(args);
+		Py_DECREF(real_bases);
+		ObjCClass_UnbuildClass(objc_class);
+		return NULL;
+	}
+	Py_DECREF(args);
+	Py_DECREF(real_bases);
+	args = NULL;
+	real_bases = NULL;
+
+	/* Verify that the class conforms to all protocols it claims to 
+	 * conform to.
+	 */
+	len = PyList_Size(protocols);
+	for (i = 0; i < len; i++) {
+		PyObject* p = PyList_GetItem(protocols, i);
+
+		if (p == NULL) {
+			PyErr_Clear();
+			continue;
+		}
+
+		if (ObjCInformalProtocol_Check(p)) {
+			if (!ObjCIPVerify(p, res)) {
+				Py_DECREF(res);
+				Py_DECREF(protocols);
+				ObjCClass_UnbuildClass(objc_class);
+				return NULL;
+			}
+		}
+	}
+
+	Py_DECREF(protocols);
+	protocols = NULL;
+
+	if (objc_class_register(objc_class, res) < 0) {
+		Py_DECREF(res);
 		ObjCClass_UnbuildClass(objc_class);
 		return NULL;
 	}
 
-	/* FIXME: handle errors in next 4 lines */
-	objc_class_register(objc_class, res);
 	info = get_class_info(res);
+	if (info == NULL) {
+		if (objc_class_unregister(objc_class) < 0) {
+			/* Oops, cannot unregister */
+			abort();
+		}
+		Py_DECREF(res);
+		ObjCClass_UnbuildClass(objc_class);
+		return NULL;
+	}
 	info->class = objc_class;
-	info->sel_to_py = NULL; /* FIX ME */
-	info->rescan_done = 0;
+	info->sel_to_py = PyDict_New(); 
+	info->method_magic = objc_methodlist_magic(objc_class);
 
 	ObjCClass_SetClass(objc_class, res);
 
@@ -309,8 +388,37 @@ class_dealloc(PyObject* cls)
 static PyObject*
 class_getattro(PyObject* self, PyObject* name)
 {
-	PyObject* result = PyType_Type.tp_getattro(self, name);
+	PyObject* result;
+	struct class_info* info;
+	int                magic;
 
+	/* Try to get rid of MaybeRescan... */
+	info = get_class_info(self);
+	if (info->method_magic != (magic = objc_methodlist_magic(info->class))){
+		int r;
+		r = add_class_fields(
+			info->class,
+			((PyTypeObject*)self)->tp_dict);
+		if (r < 0) {
+			PyErr_SetString(PyExc_RuntimeError,
+				"Cannot rescan method table");
+			return NULL;
+		}
+		r = ObjC_AddConvenienceMethods(info->class, 
+			((PyTypeObject*)self)->tp_dict);
+		if (r < 0) {
+			PyErr_SetString(PyExc_RuntimeError,
+				"Cannot rescan method table");
+			return NULL;
+		}
+		info->method_magic = magic;
+		if (info->sel_to_py) {
+			Py_DECREF(info->sel_to_py);
+			info->sel_to_py = PyDict_New();
+		}
+	}
+	
+	result = PyType_Type.tp_getattro(self, name);
 	if (result != NULL) {
 		return result;
 	}
@@ -319,16 +427,16 @@ class_getattro(PyObject* self, PyObject* name)
 	PyErr_Clear();
 	result = ObjCSelector_FindNative(self, PyString_AsString(name));
 	if (result != 0) {
-		int res = PyDict_SetItem(self, name, result);
+		int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);
 		ObjCNativeSelector* x = (ObjCNativeSelector*)result;
 
 		if (x->sel_class_method) {
 			x->sel_self = self;
 			Py_INCREF(x->sel_self);
 		}
-		if (res >= 0) {
-			Py_INCREF(result);
-		} else {
+		if (res < 0) {
+			printf("Cannot add method to dict:\n");
+			PyErr_Print();
 			PyErr_Clear();
 		}
 	}
@@ -399,7 +507,7 @@ PyTypeObject ObjCClass_Type = {
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT,			/* tp_flags */
  	0,					/* tp_doc */
- 	class_traverse,				/* tp_traverse */
+ 	0,					/* tp_traverse */
  	0,					/* tp_clear */
 	0,					/* tp_richcompare */
 	0,					/* tp_weaklistoffset */
@@ -459,6 +567,8 @@ add_class_fields(Class objc_class, PyObject* dict)
 	PyObject* descr;
 	char      selbuf[1024];
 
+	if (objc_class == NULL) return 0;
+
 	/*
 	 * First add instance methods
 	 */
@@ -488,10 +598,8 @@ add_class_fields(Class objc_class, PyObject* dict)
 			 * uses this feature.
 			 */
 			if (PyDict_GetItemString(dict, name) != NULL) {
-				//printf("Skipped %s in wrapper for %s\n", SELNAME(meth->method_name), objc_class->name);
 				continue;
 			} 
-			//printf("Found %s in wrapper for %s\n", SELNAME(meth->method_name), objc_class->name);
 
 			descr = ObjCSelector_NewNative(
 					objc_class,
@@ -506,6 +614,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 
 				return -1;
 			}
+			Py_DECREF(descr); 
 		}
 		mlist = class_nextMethodList(objc_class, &iterator);
 	}
@@ -543,6 +652,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 					descr) != 0) {
 				return -1;
 			}
+			Py_DECREF(descr);
 		}
 		mlist = class_nextMethodList(cls, &iterator);
 	}
@@ -570,6 +680,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 					var->ivar_name, descr) != 0) {
 				return -1;
 			}
+			Py_DECREF(descr);
 		}
 	}
 #endif
@@ -611,7 +722,6 @@ PyObject* ObjCClass_New(Class objc_class)
 	}
 
 	bases = PyTuple_New(1);
-	PyTuple_SET_ITEM(bases, 0, NULL);
 
 	if (objc_class->super_class == NULL) {
 		PyTuple_SetItem(bases, 0, (PyObject*)&ObjCObject_Type);
@@ -621,23 +731,23 @@ PyObject* ObjCClass_New(Class objc_class)
 			ObjCClass_New(objc_class->super_class));
 	} 
 	args = PyTuple_New(3);
-	PyTuple_SET_ITEM(args, 0, PyString_FromString(objc_class->name));
-	PyTuple_SET_ITEM(args, 1, bases);
-	PyTuple_SET_ITEM(args, 2, dict);
+	PyTuple_SetItem(args, 0, PyString_FromString(objc_class->name));
+	PyTuple_SetItem(args, 1, bases);
+	PyTuple_SetItem(args, 2, dict);
 
 	result = PyType_Type.tp_new(&ObjCClass_Type, args, NULL);
 	if (result == NULL) {
 		Py_DECREF(args);
 		return NULL;
 	}
-	Py_DECREF(args); /* XXX: Seems to be needed */
+	Py_DECREF(args); 
 
 	info = get_class_info(result);
 	if (info == NULL) abort();
 
 	info->class = objc_class;
-	info->sel_to_py = NULL; /* FIX ME */
-	info->rescan_done = 0;
+	info->sel_to_py = PyDict_New(); 
+	info->method_magic = objc_methodlist_magic(objc_class);
 
 	objc_class_register(objc_class, result);
 	Py_INCREF(result);
@@ -679,7 +789,10 @@ PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector)
 	info = get_class_info(cls);
 	if (info->sel_to_py == NULL) {
 		info->sel_to_py = PyDict_New();
-		if (info->sel_to_py == NULL) return NULL;
+		if (info->sel_to_py == NULL) {
+			abort();
+			return NULL;
+		}
 	}
 
 	/* First check the cache */
@@ -702,6 +815,9 @@ PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector)
 
 	attributes = PyObject_Dir(cls);
 	if (attributes == NULL) {
+		if (!PyErr_Occurred()) {
+			abort();
+		}
 		return NULL;
 	}
 
@@ -720,11 +836,8 @@ PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector)
 		if (ObjCSelector_Check(v)) {
 			if (((ObjCSelector*)v)->sel_selector == selector) {
 				Py_DECREF(attributes);
-				if (PyDict_SetItemString(info->sel_to_py,
-					(char*)SELNAME(selector), v) == 0) {
-
-					Py_INCREF(v);
-				}
+				PyDict_SetItemString(info->sel_to_py,
+					(char*)SELNAME(selector), v);
 				return v;
 			}
 		} 
@@ -735,47 +848,10 @@ PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector)
 
 	ObjCErr_Set(PyExc_AttributeError,
 		"No selector %s", SELNAME(selector));
-	if (PyDict_SetItemString(info->sel_to_py, 
-			(char*)SELNAME(selector), Py_None) == 0) {
-		Py_INCREF(Py_None);
-	}
+	PyDict_SetItemString(info->sel_to_py, 
+			(char*)SELNAME(selector), Py_None);
 	return NULL;
 }
-
-/*
- * This should be a temporary function, need to find a better soluation for
- * the problem described in 'add_class_fields'
- *
- * Wanted: efficient way to detect if the method-table has changed, maybe cache
- * value of 'methodLists'...
- */
-void 
-ObjCClass_MaybeRescan(PyObject* class)
-{
-	struct class_info* info;
-	int   r;
-
-	if (!ObjCClass_Check(class)) {
-		abort();	/* FIXME */
-	}
-
-	info = get_class_info(class);
-	if (info == NULL) {
-		abort(); 	/* FIXME */
-	}
-
-	if (info->rescan_done) return;
-
-	r = add_class_fields(ObjCClass_GetClass(class), ((PyTypeObject*)class)->tp_dict);
-	if (r < 0) abort();
-
-	info->rescan_done = 1;
-	if (info->sel_to_py) {
-		Py_DECREF(info->sel_to_py);
-		info->sel_to_py = NULL;
-	}
-}
-
 
 int 
 ObjCClass_IsSubClass(Class child, Class parent)
