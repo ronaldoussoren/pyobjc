@@ -136,12 +136,12 @@ class pyobjc_build_ext (build_ext):
                         os.path.join(self.build_temp, 'Modules', 'Foundation'))
 
             try:
-                os.unlink(os.path.join(self.build_lib, '_AppKit.so'))
+                os.unlink(os.path.join(self.build_lib, 'AppKit', '_AppKit.so'))
             except os.error:
                 pass
 
             try:
-                os.unlink(os.path.join(self.build_lib, '_Foundation.so'))
+                os.unlink(os.path.join(self.build_lib, 'Foundation', '_Foundation.so'))
             except os.error:
                 pass
 
