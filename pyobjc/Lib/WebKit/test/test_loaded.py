@@ -1,5 +1,5 @@
 """
-WebKit doesn't add 'interesting' behaviour, just check that the 
+WebKit doesn't add 'interesting' behaviour, just check that the
 module loaded correctly.
 """
 
@@ -12,7 +12,7 @@ if os.path.exists('/System/Library/Frameworks/WebKit.framework'):
     class WKTest (unittest.TestCase):
 
         def testConstants(self):
-            # Test one string and one integer, to check if the 
+            # Test one string and one integer, to check if the
             # constant-extraction script worked.
             import WebKit
 

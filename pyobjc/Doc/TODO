@@ -247,6 +247,8 @@ Add examples that demonstrate:
 
 - how to integrate with MacPython
 
+- how to use PIL with Cocoa 
+
 Performance tuning/testing
 ..........................
 
