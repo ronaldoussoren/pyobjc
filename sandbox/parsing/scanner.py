@@ -43,23 +43,36 @@ class Scanner(object):
         p = sre_parse.SubPattern(s, [(BRANCH, (None, p))])
         self.scanner = sre_compile.compile(p)
 
-    def iterscan(self, string):
+    def iterscan(self, string, dead=None):
         match = self.scanner.scanner(string).search
         actions = self.actions
-        i = 0
+        i, j, k = 0, 0, 0
+        end = len(string)
         while True:
             m = match()
             if m is None:
-                print i, j
-                print repr(string[i:])
-                return
-            j = m.end()
+                break
+            k, j = m.span()
             if i == j:
-                return
+                break
+            # yield for dead space
+            if k != i and dead is not None:
+                rval = dead(string, i, k)
+                if rval is not None:
+                    yield rval
             action = actions[m.lastindex]
             if action is not None:
-                yield action(m)
+                rval, next_pos = action(m)
+                yield rval
+                if next_pos is not None and next_pos != j:
+                    # "fast forward" the scanner
+                    match = self.scanner.scanner(string, j).search
+                    j = next_pos
             i = j
+        if i != end and dead is not None:
+            rval = dead(string, i, end)
+            yield rval
+            
 
 class Token(object):
     pattern = None
@@ -87,11 +100,11 @@ class Token(object):
         if self.regex is not None:
             match = self.regex.match(match.string, *match.span())
         self.match = match
-        return self
+        return self, None
 
     def __repr__(self):
         return '%s(%r)' % (type(self).__name__, self.groupdict())
 
 class IgnoreToken(Token):
     def found(self, match):
-        return None
+        return None, None
