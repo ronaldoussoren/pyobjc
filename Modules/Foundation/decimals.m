@@ -236,7 +236,7 @@ static char* keywords2[] = { "string", NULL };
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOO", keywords, &pyMantissa, &pyExponent, &pyNegative)) {
 		PyObject* pyValue;
-		NSString* stringVal;
+		NSString* volatile stringVal;
 
 		PyErr_Clear();
 		if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords2, &pyValue)) {
