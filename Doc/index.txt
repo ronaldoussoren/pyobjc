@@ -74,11 +74,6 @@ you want to write Cocoa programs in Python.
   This explains how you can provide a python wrapper for an existing 
   Objective-C class library.
 
-* `Odd features`_
-
-  Describes some features of Objective-C that may surprise Python programmers.
-  Not very relevant.
-
 * `Project Builder Python Support`_
 
   Describes the Python support for Project Builder, including a TODO list for
@@ -101,8 +96,6 @@ you want to write Cocoa programs in Python.
 .. _`Structure of the PyObjC package`: structure.html
 
 .. _`How to wrap an Objective-C class library`: wrapping.html
-
-.. _`Odd features`: warts.html
 
 .. _`Creating your first PyObjC application (tutorial)`: tutorial/tutorial.html
 
