@@ -32,18 +32,34 @@ def pattern(s):
 def example(s):
     return dedent(s).strip()
 
+class CPPDecls(Token):
+    pattern = pattern(r'''
+    (__BEGIN_DECLS|__END_DECLS)
+    ''')
+
 class CPPCrap(Token):
     pattern = pattern(r'''
     \#\s*(
         if\s*defined\s*\(\s*__cplusplus\s*\)
         | ifdef\s*__cplusplus
     )
-    [^#]*
-    (
-        (?!\#\s*endif)
-        \#
+    (?P<body>
         [^#]*
-    )*
+        (
+            \#if[^#]*
+            (
+                (?!\#\s*endif)
+                \#
+                [^#]*
+            )*
+            \#\s*endif[^#]*
+
+          |
+            (?!\#\s*endif)
+            \#
+            [^#]*
+        )*
+    )
     \#\s*endif
     ''')
     example = example('''
@@ -335,11 +351,12 @@ class UninterestingStruct(Token):
 class Struct(Token):
     # XXX handle comments? need its own internal parser?
     pattern = pattern(r'''
-    struct
+    (struct|union)
     \s*(?P<structname>%(IDENTIFIER)s)?
     \s*{
         (?P<content>%(BRACES)s)
     }
+    (\s*%(AVAILABLE)s)?
     \s*;
     ''')
     example = example(r'''
@@ -357,13 +374,14 @@ class NamedStruct(Token):
     # XXX handle comments? need its own internal parser?
     pattern = pattern(r'''
     typedef
-    \s+struct
+    \s+(struct|union)
     \s*(?P<structname>%(IDENTIFIER)s)?
     \s*
     {
     (?P<body>%(BRACES)s)
     }
     \s*%(IDENTIFIER)s
+    (\s*%(AVAILABLE)s)?
     \s*;
     ''')
     example = example(r'''
@@ -534,6 +552,7 @@ LEXICON = [
     UninterestingTypedef,
     UninterestingStruct,
     MacroDefine,
+    CPPDecls,
     CPPCrap,
     CompilerDirective,
 ]
@@ -553,11 +572,29 @@ if __name__ == '__main__':
     ScreenSaver
     SecurityInterface
     WebKit
+    CoreFoundation
+    AppKitScripting
+    ApplicationServices
+    Cocoa
+    DirectoryService
+    DiscRecording
+    DiscRecordingUI
+    LDAP
+    Scripting
+    SecurityFoundation
+    SecurityInterface
+    System
+    SystemConfiguration
+    #Security
+    #Carbon
+    #CoreServices
     """.split()
     files = sys.argv[1:]
     if not files:
         import glob
         for framework in frameworks:
+            if framework.startswith('#'):
+                continue
             files.extend(glob.glob('/System/Library/Frameworks/%s.framework/Headers/*.h' % (framework,)))
     fn = None
     def deadraise(string, i, j):
