@@ -1,6 +1,6 @@
-==============================================
-Notes on supported APIs and classes on MacOS X
-==============================================
+===============================================
+Notes on supported APIs and classes on Mac OS X
+===============================================
 
 .. :author: Ronald Oussoren
 
@@ -12,7 +12,7 @@ Introduction
 ------------
 
 This document describes the restrictions w.r.t. supported APIs and classes
-on MacOS X. In general you can use classes and global functions just like
+on Mac OS X. In general you can use classes and global functions just like
 in Objective-C (e.g. the Apple developer documentation applies), but in some
 cases there are special considerations.
 
@@ -25,9 +25,9 @@ containing the original return value and the additional values. You don't have
 to pass values for those arguments, unless the method uses the values you
 pass in.
 
-This document is targeted at the latest supported version of MacOS X (currently
-MacOS X 10.3.x); unless specifically noted the same restrictions apply to 
-earlier versions of MacOS X. Earlier versions of the OS have less extensive
+This document is targeted at the latest supported version of Mac OS X (currently
+Mac OS X 10.3.x); unless specifically noted the same restrictions apply to 
+earlier versions of Mac OS X. Earlier versions of the OS have less extensive
 APIs, PyObjC does *not* provide a compatibility layer.
 
 Frameworks not listed below are not wrapped by PyObjC, they can still be
@@ -446,8 +446,8 @@ Class ``NSIndexSet``
 Class ``NSInvocation``
 ......................
 
-In some versions of MacOS X, NSInvocation doesn't work properly with structs
-that contain padding. Such structs are not used in the MacOS X API, but may
+In some versions of Mac OS X, NSInvocation doesn't work properly with structs
+that contain padding. Such structs are not used in the Mac OS X API, but may
 be present in 3th party code. This leads to problems when ``forwardInvocation:``
 is used to call a method that has such a struct as one of its arguments.
 

@@ -57,11 +57,11 @@ objects and classes available as first-class Python citizens, it is not only
 possible to use Objective-C objects but you can also subclass Objective-C 
 classes.
 
-The package maintainers currently only work on supporting MacOS X, the GNU
+The package maintainers currently only work on supporting Mac OS X, the GNU
 runtime and GnuStep are not supported at the moment (patches to change that 
 are welcome).
 
-The python situation on MacOS X is a bit vague at the moment, PyObjC is known
+The python situation on Mac OS X is a bit vague at the moment, PyObjC is known
 to work using the following versions of python:
 - Fink's python 2.2 
   Building GUI applications requires some manual work, mostly because I

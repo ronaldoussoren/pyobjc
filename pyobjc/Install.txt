@@ -4,19 +4,6 @@ Installation Instructions
 
 .. :authors: Bill Bumgarner, Ronald Oussoren, Bob Ippolito
  
-Notes for Subversion users
-==========================
-
-To build PyObjC from the Subversion repository, you will need an installation
-of libffi.  A snapshot of libffi modified to build inside the PyObjC source
-tree is available from the `PyObjC download site`_.  To use this, simply move
-the extracted libffi-src folder to your PyObjC source folder.  If you would
-like to use another libffi source location, update the variable
-``LIBFFI_SOURCES`` at the top of setup.py.  Release versions of PyObjC include
-a compatible libffi snapshot.
-
-.. _`the PyObjC download site`: http://sourceforge.net/project/showfiles.php?group_id=14534
-
 Building the package
 ====================
 
@@ -39,10 +26,15 @@ The following command will build and install the PyObjC package::
 The setup.py system can also be used to create source and binary
 distribution archives automatically.
 
-Use ``sudo`` to install the PyObjC package into the Apple supplied
-Python's site-packages directory on OS X 10.2 and greater:
+The following command will build and open a binary installer for PyObjC,
+py2app, tools, examples, and documentation::
 
-% sudo python setup.py install
+  % python setup.py bdist_mpkg --open
+
+If you want to install the PyObjC package without examples, documentation,
+or py2app, you can use the standard distutils install command::
+
+  % sudo python setup.py install
 
 If you have multiple versions of Python installed on your system, the
 above will only install PyObjC for whatever version of Python is the
@@ -50,11 +42,11 @@ default on the command line.   Make sure you are installing PyObjC
 against the correct version of Python.
 
 Note that there is a known bug in Python 2.3.0 
-(as shipped with MacOS X 10.3.x), such that when another framework Python is 
+(as shipped with Mac OS X 10.3.x), such that when another framework Python is 
 installed it will not link extensions (such as PyObjC) properly, rendering them
 unusable.  If you intend to build PyObjC for Python 2.3.0, ensure that no other
-framework Python is installed, such as a previous installation for MacOS X
-10.2.  For more information on this and other Python issues on MacOS X,
+framework Python is installed, such as a previous installation for Mac OS X
+10.2.  For more information on this and other Python issues on Mac OS X,
 please refer to the `pythonmac.org FAQ`_.
 
 .. _`pythonmac.org FAQ`: http://pythonmac.org/wiki/FAQ
@@ -66,8 +58,8 @@ new sources and try again.  PyObjC will typically be installed to a folder
 of the same name in /Library/Python/2.3 or /Library/Python/2.3/site-packages.
 
 To be able to build the wrappers for the WebKit framework (included with
-Safari 1.0), you'll have to install the WebKit SDK. You can download 
-this from the `ADC website <http://connect.apple.com>`_.
+Safari 1.0) on Mac OS X 10.2, you'll have to install the WebKit SDK. You can
+download this from the `ADC website <http://connect.apple.com>`_.
 
 PyObjC has limited support for `GNUstep`_. See `Doc/gnustep.txt`_ for 
 more information.
@@ -90,19 +82,19 @@ CurrencyConverter and TableModel are both examples of standalone
 Cocoa-Python applications.  To build and execute::
 
   % cd TableModel
-  % python buildapp.py build
+  % python setup.py py2app
+  % open dist/TableModel.app
 
-The WebServicesTool is an example of Cocoa-Python applications created via 
-the Cocoa-Python project template found in the 
-``ProjectBuilder Extras/Project Templates`` directory.  Use Project Builder 
-to build the applications.
-
+For projects that contain a Project Builder (.pbproj), you can build them
+with Project Builder or Xcode.  Xcode (.xcode) projects can be built only
+with Xcode.  However, all examples ship with a py2app-based setup.py, and
+this is the preferred build method.
 
 Project Templates
 =================
 
-Xcode on MacOS X 10.3
-.....................
+Xcode on Mac OS X 10.3
+......................
 
 The ``Xcode`` directory contains some file and project that make it easier to
 work with Python and PyObjC when using `Xcode`__.
@@ -123,7 +115,7 @@ There are two project templates:
   include the PyObjC package and can be launched on any stock OS X 10.3 system
   without requiring PyObjC to be preinstalled.
 
-  Note that the optional 'BSD Subsystem' component of MacOS X is required,
+  Note that the optional 'BSD Subsystem' component of Mac OS X is required,
   however it is installed by default and should be present on most systems.
 
 * Cocoa-Python Document-based Application
@@ -133,12 +125,12 @@ There are two project templates:
   that uses Cocoa's Multiple Document Architecture in the same fashion as the
   default Cocoa Document-based Application supplied with Project Builder. 
 
-Note that Python applications built on MacOS X 10.3 are not compatible with
-MacOS X 10.2.  At this time, a MacOS X 10.2 system must be used to build
-MacOS X 10.2 compatible applications.
+Note that Python applications built on Mac OS X 10.3 are not compatible with
+Mac OS X 10.2.  At this time, a Mac OS X 10.2 system must be used to build
+Mac OS X 10.2 compatible applications.
 
-Project Builder on MacOS X 10.2
-...............................
+Project Builder on Mac OS X 10.2
+................................
 
 The ``ProjectBuilder Extras`` directory contains additional files that can
 be used with Project Builder. The directory ``Specifications`` contains files

@@ -33,6 +33,21 @@ Version 1.2 (2004-??-??)
 
   This adds method ``myMethod`` to class NSObject.
 
+- py2app is now used for all Example scripts and is the recommended method
+  for creating PyObjC applications.
+
+- Proxies of dict, list, and tuple now respect the invariant that you should
+  get an identical instance if you ask for the same thing twice and the
+  collection has not been mutated.  This fixes some problems with binary
+  plist serialization, and potentially some edge cases elsewhere.
+
+- There is now a __bundle_hack__ class attribute that will cause the PyObjC
+  class builder to use a statically allocated class wrapper if one is
+  available via certain environment variables.  This functionality is used
+  to enable +[NSBundle bundleForClass:] to work for exactly one class from
+  a py2app-created plugin bundle.  We now have a working Interface Builder
+  palette example due to this hack.
+
 Version 1.1 (2004-05-30)
 ------------------------
 

@@ -4,12 +4,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
-Notes on supported APIs and classes on MacOS X</title>
+Notes on supported APIs and classes on Mac OS X</title>
 <title>
 Contents</title>
 </head>
 <body>
-<h2>Notes on supported APIs and classes on MacOS X</h2>
+<h2>Notes on supported APIs and classes on Mac OS X</h2>
 <!-- :author: Ronald Oussoren -->
 <h2>Contents</h2>
 <ul>
@@ -77,7 +77,7 @@ Contents</title>
 <p>TODO: Add documentation about weak linking (see intro.txt).</p>
 <h2><a href="#id2" name="introduction">Introduction</a></h2>
 <p>This document describes the restrictions w.r.t. supported APIs and classes
-on MacOS X. In general you can use classes and global functions just like
+on Mac OS X. In general you can use classes and global functions just like
 in Objective-C (e.g. the Apple developer documentation applies), but in some
 cases there are special considerations.</p>
 <p>We also do not provide access to global functions that are not useful for
@@ -87,9 +87,9 @@ to return additional values, the Python wrapper for that method returns a tuple
 containing the original return value and the additional values. You don't have
 to pass values for those arguments, unless the method uses the values you
 pass in.</p>
-<p>This document is targeted at the latest supported version of MacOS X (currently
-MacOS X 10.3.x); unless specifically noted the same restrictions apply to 
-earlier versions of MacOS X. Earlier versions of the OS have less extensive
+<p>This document is targeted at the latest supported version of Mac OS X (currently
+Mac OS X 10.3.x); unless specifically noted the same restrictions apply to 
+earlier versions of Mac OS X. Earlier versions of the OS have less extensive
 APIs, PyObjC does <i>not</i> provide a compatibility layer.</p>
 <p>Frameworks not listed below are not wrapped by PyObjC, they can still be
 accessed although without access to constants and global functions defined
@@ -363,8 +363,8 @@ The usage is:<pre>
 </li>
 </ul>
 <h3><a href="#id32" name="class-nsinvocation">Class <code><span>NSInvocation</span></code></a></h3>
-<p>In some versions of MacOS X, NSInvocation doesn't work properly with structs
-that contain padding. Such structs are not used in the MacOS X API, but may
+<p>In some versions of Mac OS X, NSInvocation doesn't work properly with structs
+that contain padding. Such structs are not used in the Mac OS X API, but may
 be present in 3th party code. This leads to problems when <code><span>forwardInvocation:</span></code>
 is used to call a method that has such a struct as one of its arguments.</p>
 <h3><a href="#id33" name="class-nsmutablearray">Class <code><span>NSMutableArray</span></code></a></h3>
