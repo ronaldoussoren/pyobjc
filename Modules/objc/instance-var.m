@@ -89,6 +89,12 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 	void* buf;
 	int res;
 
+	if (value == NULL) {
+		PyErr_SetString(PyExc_TypeError,
+			"Cannot delete Objective-C instance variables");
+		return -1;
+	}
+
 	if (!obj || PyObjCClass_Check(obj)) {
 		PyErr_SetString(PyExc_TypeError,
 			"Cannot access Objective-C instance-variables "
