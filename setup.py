@@ -456,10 +456,11 @@ if 'install' in sys.argv:
     **NOTE**
 
     Installing PyObjC with "setup.py install" *does not* install the following:
-        py2app (bdist_mpkg, modulegraph, altgraph, ...)
-        Xcode or Project Builder templates
-        Documentation
-        Example code
+    
+    - py2app (bdist_mpkg, modulegraph, altgraph, ...) and its tools
+    - Xcode or Project Builder templates
+    - Documentation
+    - Example code
 
     The recommended method for installing PyObjC is to do:
         
