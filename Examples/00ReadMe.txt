@@ -2,6 +2,8 @@
 PyObjC Examples
 ===============
 
+XXX - UPDATE THIS BEFORE 1.2
+
 Simple scripts that demo the core modules
 -----------------------------------------
 
