@@ -1,7 +1,7 @@
 <?
 $title = "Home";
 $cvs_author = '$Author: bbum $';
-$cvs_date = '$Date: 2002/11/24 16:14:38 $';
+$cvs_date = '$Date: 2002/12/19 21:05:54 $';
 $is_home = 1;
 
 $metatags = '<meta name="description" content="PyObjC, a universal bridge between the Objective-C and Python languages.">
@@ -36,7 +36,7 @@ include $fsroot."news/news.inc";
 <h1>Status</h1>
 
 <p>
-<a href="http://pyobjc.sourceforge.net/software/PyObjC%200.7.0.dmg.gz">PyObjC 0.7.0</a> was released on 13 October 2002 as a disk image.  A formal release was not cut via the <a href="http://sourceforge.net/projects/pyobjc/">sourceforge site</a>.
+<a href="http://sourceforge.net/project/showfiles.php?group_id=14534">PyObjC 0.8</a> was released on 19 December 2002.  See the <a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/pyobjc/pyobjc/ChangeLog?rev=1.58&only_with_tag=REL_20021219_0pt8&content-type=text/vnd.viewcvs-markup">ChangeLog</a> for details.
 </p>
 
 <h1>Resources</h1>

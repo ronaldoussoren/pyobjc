@@ -1,3 +1,6 @@
+<span class="news_date">2002-12-19: </span><span class="news_headline">PyObjC 0.8 released</span><?php gray_line(); ?>
+  <p>
+PyObjC v0.8 has finally shipped!  A disk image and source tarball are <a href="http://sourceforge.net/project/showfiles.php?group_id=14534">now available</a>.  The PyObjC installer package now contains Examples that are installed into /Developer/Examples/PyObjC.</p><p>There are many new features and bug fixes found within this release.  Please see the <a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/pyobjc/pyobjc/ChangeLog?rev=1.58&only_with_tag=REL_20021219_0pt8&content-type=text/vnd.viewcvs-markup">ChangeLog</a> for details.  Documentation is still lacking.  It will be improved in the next release.</p>
 <span class="news_date">2002-11-22: </span><span class="news_headline">CVS commit notificaiton mailing list available</span><?php gray_line(); ?>
   <p>
 A <a href="http://lists.sourceforge.net/mailman/listinfo/pyobjc-checkins">mailing list</a> has been created to which all CVS commit notifications will be automatically posted.   Each message includes both the file(s) changed and diff-style output of exactly what changed.
