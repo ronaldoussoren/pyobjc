@@ -66,9 +66,11 @@ class TestNSBitmapImageRep(unittest.TestCase):
         g[0:len(g)] = gPlane[0:len(gPlane)]
         b[0:len(b)] = bPlane[0:len(bPlane)]
 
-        i1.TIFFRepresentation().writeToFile_atomically_("/tmp/1.tiff", YES)
-        i2.TIFFRepresentation().writeToFile_atomically_("/tmp/2.tiff", YES)
-        i3.TIFFRepresentation().writeToFile_atomically_("/tmp/3.tiff", YES)
+        bitmapData = i2.bitmapData()
+        self.assertEquals(len(bitmapData), len(singlePlane))
+        for i in range(0,100):
+            # barfs because type(bitmapData[0]) != type(singlePlane[0])
+            self.assertEquals(bitmapData[i], singlePlane[i], "bitmapData and singlePlane differ at byte %d" % i)
 
 def suite():
     suite = unittest.TestSuite()

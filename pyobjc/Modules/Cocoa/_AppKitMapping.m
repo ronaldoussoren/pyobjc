@@ -340,9 +340,9 @@ supercall_NSBitmapImageRep_initWithBitmap(PyObject* method,
 }
 
 static void
-imp_NSBitmapImageRep_initWithBitmap(id self, SEL sel, int* rowCount, int* columnCount)
+imp_NSBitmapImageRep_initWithBitmap(id self, SEL sel)
 {
-  NSLog(@"not yet supported");
+  NSLog(@"Implementing '@s' in a Python subclass of %@ is not yet supported (%s:%d)", NSStringFromSelector(sel), NSStringFromClass([self class]), __FILE__, __LINE__ );
   abort();
 }
 
@@ -395,46 +395,131 @@ static PyObject*
 supercall_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, 
 		PyObject* self, PyObject* arguments)
 {
-	int       rowCount, columnCount;
-	PyObject* result;
-	struct objc_super super;
+  PyObject* result;
+  struct objc_super super;
+  
+  if (PyArg_ParseTuple(arguments, "") < 0) {
+    return NULL;
+  }
 
-	if (PyArg_ParseTuple(arguments, "") < 0) {
-		return NULL;
+  NS_DURING
+    unsigned char *dataPlanes[5];
+    int i;
+    int bytesPerPlane;
+
+    super.receiver = ObjCObject_GetObject(self);
+    super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+    
+    (void)objc_msgSendSuper(&super, 
+			    @selector(getBitmapDataPlanes:),
+			    &dataPlanes);
+#warning self or super??
+    bytesPerPlane = (int) objc_msgSendSuper(&super, @selector(bytesPerPlane));
+
+    result = PyTuple_New(5);
+    if (result != NULL) {
+      for(i=0; i<5; i++) {
+	if (dataPlanes[i]) {
+	  // leak??
+	  PyObject* buffer = PyBuffer_FromReadWriteMemory(dataPlanes[i], bytesPerPlane);
+	  if ( (!buffer) || PyErr_Occurred()) {
+	    Py_DECREF(result);
+	    result = NULL;
+	  }
+	  PyTuple_SET_ITEM(result, i, buffer);
+	} else {
+	  PyTuple_SET_ITEM(result, i, Py_None);
 	}
+      }
+    }
+  NS_HANDLER
+    ObjCErr_FromObjC(localException);
+    result = NULL;
+  NS_ENDHANDLER
 
-	NS_DURING
-		super.receiver = ObjCObject_GetObject(self);
-		super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
-
-		(void)objc_msgSendSuper(&super, 
-					@selector(getNumerOfRows:columns:),
-					&rowCount, &columnCount);
-
-		result = PyTuple_New(2);
-		if (result != NULL) {
-			PyTuple_SET_ITEM(result,0,PyInt_FromLong(rowCount));
-			PyTuple_SET_ITEM(result,1,PyInt_FromLong(columnCount));
-
-			if (PyErr_Occurred()) {
-				Py_DECREF(result);
-				result = NULL;
-			}
-		}
-
-	NS_HANDLER
-		ObjCErr_FromObjC(localException);
-		result = NULL;
-	NS_ENDHANDLER
-
-	return result;
+  return result;
 }
 
 static void
-imp_NSBitmapImageRep_getBitmapDataPlanes_(id self, SEL sel, 
-			int* rowCount, int* columnCount)
+imp_NSBitmapImageRep_getBitmapDataPlanes_(id self, SEL sel)
 {
-  NSLog(@"not yet supported");
+  NSLog(@"Implementing '@s' in a Python subclass of %@ is not yet supported (%s:%d)", NSStringFromSelector(sel), NSStringFromClass([self class]), __FILE__, __LINE__ );
+  abort();
+}
+
+static PyObject*
+call_NSBitmapImageRep_bitmapData(PyObject* method, 
+		PyObject* self, PyObject* arguments)
+{
+  PyObject* result;
+  
+  if (PyArg_ParseTuple(arguments, "") < 0) {
+    return NULL;
+  }
+
+  NS_DURING
+    unsigned char *bitmapData;
+    int bytesPerPlane;
+  
+    bitmapData = (unsigned char *)objc_msgSend(ObjCObject_GetObject(self), @selector(bitmapData));
+    bytesPerPlane = (int) objc_msgSend(ObjCObject_GetObject(self), @selector(bytesPerPlane));
+
+    result = PyBuffer_FromReadWriteMemory(bitmapData, bytesPerPlane);
+    if (PyErr_Occurred()) {
+      if (result) {
+	Py_DECREF(result);
+      }
+      result = NULL;
+    }
+  NS_HANDLER
+    ObjCErr_FromObjC(localException);
+    result = NULL;
+  NS_ENDHANDLER
+
+  return result;
+}
+
+static PyObject*
+supercall_NSBitmapImageRep_bitmapData(PyObject* method, 
+		PyObject* self, PyObject* arguments)
+{
+  PyObject* result;
+  struct objc_super super;
+  
+  if (PyArg_ParseTuple(arguments, "") < 0) {
+    return NULL;
+  }
+
+  NS_DURING
+    unsigned char *bitmapData;
+    int bytesPerPlane;
+
+    super.receiver = ObjCObject_GetObject(self);
+    super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+    
+    bitmapData = (unsigned char *) objc_msgSendSuper(&super, @selector(bitmapData));
+#warning self or super??
+    bytesPerPlane = (int) objc_msgSendSuper(&super, @selector(bytesPerPlane));
+
+    result = PyBuffer_FromReadWriteMemory(bitmapData, bytesPerPlane);
+    if (PyErr_Occurred()) {
+      if (result) {
+	Py_DECREF(result);
+      }
+      result = NULL;
+    }
+  NS_HANDLER
+    ObjCErr_FromObjC(localException);
+    result = NULL;
+  NS_ENDHANDLER
+
+  return result;
+}
+
+static void
+imp_NSBitmapImageRep_bitmapData(id self, SEL sel)
+{
+  NSLog(@"Implementing '@s' in a Python subclass of %@ is not yet supported (%s:%d)", NSStringFromSelector(sel), NSStringFromClass([self class]), __FILE__, __LINE__ );
   abort();
 }
 
@@ -491,6 +576,17 @@ void init_AppKitMapping(void)
 			call_NSBitmapImageRep_getBitmapDataPlanes_,
 			supercall_NSBitmapImageRep_getBitmapDataPlanes_,
 			(IMP)imp_NSBitmapImageRep_getBitmapDataPlanes_) < 0) {
+
+		PyErr_Print();
+		return;
+	}
+
+	if (ObjC_RegisterMethodMapping(
+			objc_lookUpClass("NSBitmapImageRep"), 
+			@selector(bitmapData),
+			call_NSBitmapImageRep_bitmapData,
+			supercall_NSBitmapImageRep_bitmapData,
+			(IMP)imp_NSBitmapImageRep_bitmapData) < 0) {
 
 		PyErr_Print();
 		return;
