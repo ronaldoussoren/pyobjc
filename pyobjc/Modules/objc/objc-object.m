@@ -127,6 +127,12 @@ object_del(PyObject* obj __attribute__((__unused__)))
 static void
 object_dealloc(PyObject* obj)
 {
+	/* XXX: This should not be necessary, but if we don't do this we
+	 * sometimes loose exception information...
+	 */
+	PyObject* ptype, *pvalue, *ptraceback;
+	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+
 	unregister_proxy(PyObjCObject_GetObject(obj));
 
 	/* If the object is not yet initialized we try to initialize it before
@@ -164,6 +170,8 @@ object_dealloc(PyObject* obj)
 #else
 	obj->ob_type->tp_free(obj);
 #endif
+
+	PyErr_Restore(ptype, pvalue, ptraceback);
 }
 
 
@@ -321,17 +329,18 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	if (res) goto done;
 
 	PyErr_Format(PyExc_AttributeError,
-		     "'%.50s' object has no attribute '%.400s'",
-		     tp->tp_name, namestr);
+	     "'%.50s' object has no attribute '%.400s'",
+	     tp->tp_name, namestr);
+
   done:
 	if (res != NULL) {
 		/* class methods cannot be accessed through instances */
 		if (PyObjCSelector_Check(res) 
 				&& PyObjCSelector_IsClassMethod(res)) {
+			Py_DECREF(res);
 			PyErr_Format(PyExc_AttributeError,
 			     "'%.50s' object has no attribute '%.400s'",
 			     tp->tp_name, PyString_AS_STRING(name));
-			Py_DECREF(res);
 			res = NULL;
 		}
 	}

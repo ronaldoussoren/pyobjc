@@ -885,7 +885,6 @@ object_method_dealloc(
 	PyObject* ptype, *pvalue, *ptraceback;
 	PyGILState_STATE state = PyGILState_Ensure();
 
-
 	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
 	CHECK_MAGIC(GETISA(self));
