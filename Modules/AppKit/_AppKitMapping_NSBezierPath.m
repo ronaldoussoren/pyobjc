@@ -672,7 +672,8 @@ static void imp_NSBezierPath_setLineDash_count_phase_(id self, SEL sel, float* p
 }
 
 
-int _pyobjc_install_NSBezierPath(void)
+static int 
+_pyobjc_install_NSBezierPath(void)
 {
 	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSBezierPath"), 
 		@selector(appendBezierPathWithGlyphs:count:inFont:),
@@ -710,6 +711,14 @@ int _pyobjc_install_NSBezierPath(void)
 		@selector(setLineDash:count:phase:),
 		call_NSBezierPath_setLineDash_count_phase_,
 		(IMP)imp_NSBezierPath_setLineDash_count_phase_) < 0 ) {
+
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSBezierPath"), 
+		@selector(getLineDash:count:phase:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0 ) {
 
 		return -1;
 	}

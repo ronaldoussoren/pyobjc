@@ -79,6 +79,38 @@ static void 	fill_super_cls(struct objc_super* super, Class cls, Class self)
 	super->class = GETISA(cls);
 }
 
+id  unsupported_method_imp(id self, SEL selector)
+{
+	NSLog(@"Implementing %s from Python is not supported for %@",
+		SELNAME(selector), self);
+
+	[NSException raise:NSInvalidArgumentException
+		format:@"Implementing %s from Python is not supported for %@",
+			self, SELNAME(selector)];
+	return nil;
+}
+
+static PyObject* 
+unsupported_method_caller(PyObject* meth, PyObject* self, PyObject* 
+	args __attribute__((__unused__)))
+{
+	PyObject* repr;
+
+	repr = PyObject_Repr(self);
+	if (repr == NULL) return NULL;
+	if (!PyString_Check(repr)) {
+		PyErr_SetString(PyExc_RuntimeError, 
+			"repr() didn't return a string");
+		return NULL;
+	}
+
+	ObjCErr_Set(PyExc_TypeError,
+		"Cannot call %s on %s from Python",
+		SELNAME(PyObjCSelector_Selector(meth)),
+		PyString_AS_STRING(repr));
+	Py_DECREF(repr);
+	return NULL;
+}
 
 
 struct pyobjc_api objc_api = {
@@ -107,7 +139,9 @@ struct pyobjc_api objc_api = {
 	bool_init,			/* bool_init */
 	fill_super,			/* fill_super */
 	fill_super_cls,			/* fill_super_cls*/
-	PyObjCPointerWrapper_Register	/* register_pointer_wrapper */
+	PyObjCPointerWrapper_Register,	/* register_pointer_wrapper */
+	unsupported_method_imp,		/* unsupported_method_imp */
+	unsupported_method_caller	/* unsupported_method_caller */
 };
 
 int ObjCAPI_Register(PyObject* module_dict)

@@ -231,8 +231,6 @@ static PyMethodDef mapping_methods[] = {
 
 
 void init_AppKitMapping(void);
-int _pyobjc_install_NSMovie(void);
-int _pyobjc_install_NSBezierPath(void);
 
 #include "_AppKitMapping_NSMovie.m"
 #include "_AppKitMapping_NSBezierPath.m"

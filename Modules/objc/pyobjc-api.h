@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.15 2003/06/09 07:18:09 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.16 2003/06/09 12:18:10 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -45,9 +45,12 @@
  * - Semantics of current functions change
  * - Functions are removed
  * Do not increase when adding a new function, the struct_len field
- * can be used for that
+ * can be used for detecting if a function has been added.
  *
  * HISTORY:
+ * - Version 2.2 adds PyObjCUnsupportedMethod_IMP 
+ *       and PyObjCUnsupportedMethod_Caller 
+ * - Version 2.1 adds PyObjCPointerWrapper_Register 
  * - Version 2 adds an argument to PyObjC_InitSuper
  */
 #define PYOBJC_API_VERSION 2
@@ -138,6 +141,9 @@ struct pyobjc_api {
 		        const char*, PyObject* (*pythonify)(void*),
 			int (*depythonify)(PyObject*, void*)
 		);
+
+	IMP  unsupported_method_imp;
+	PyObject* (*unsupported_method_caller)(PyObject*, PyObject*, PyObject*);
 };
 
 
@@ -173,6 +179,8 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjC_InitSuper	(PyObjC_API->fill_super)
 #define PyObjC_InitSuperCls	(PyObjC_API->fill_super_cls)
 #define PyObjCPointerWrapper_Register (PyObjC_API->register_pointer_wrapper)
+#define PyObjCUnsupportedMethod_IMP (PyObjC_API->unsupported_method_imp)
+#define PyObjCUnsupportedMethod_Caller (PyObjC_API->unsupported_method_caller)
 
 
 static inline int PyObjCObject_Convert(PyObject* object, void* pvar)

@@ -54,6 +54,10 @@ Version 0.10CVS (Work in progress):
 - Added support for custom conversion for pointer types. The end result is that
   we support more Cocoa APIs without special mappings.
 
+- It is now possible to write plugin bundles, such as preference panes for 
+  use in System Preferences, in Python. See Examples/PrefPanes for an example
+  of this feature.
+
 Version 0.9 (May-02-2003):
 - This version includes numerous bugfixes and improvements.
 
