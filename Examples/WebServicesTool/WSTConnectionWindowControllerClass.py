@@ -61,9 +61,20 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
     
     aController._toolbarItems[anIdentifier] = toolbarItem
 
-from PyObjCTools import NibClassBuilder
 
+def doWork(queue):
+    while 1:
+        work = queue.get()
+        if work is None:
+            break
+        func, args, kwargs = work
+        NSAutoreleasePool.pyobjcPushPool()
+        func(*args, **kwargs)
+        NSAutoreleasePool.pyobjcPopPool()
+
+from PyObjCTools import NibClassBuilder
 NibClassBuilder.extractClasses( "WSTConnection" )
+
 class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass, 
                                     NSTableDataSource, NSTableViewDelegate,
                                     NSToolbarDelegate):
@@ -80,7 +91,9 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         '_methodSignatures',
         '_methodDescriptions',
         '_server',
-        '_methodPrefix' )
+        '_methodPrefix',
+        '_queue',
+        '_working')
     
     def connectionWindowController(self):
         """
@@ -104,8 +117,16 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         self._toolbarAllowedItemIdentifiers = []
 
         self._methods = []
-                
+        self._working = 0
+        self.spawnWorkerThread()
         return self
+    
+    def spawnWorkerThread(self):
+        from threading import Thread
+        from Queue import Queue
+        self._queue = Queue()
+        t = Thread(target=doWork, args=(self._queue,))
+        t.start()
     
     def awakeFromNib(self):
         """
@@ -116,7 +137,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         
         self.statusTextField.setStringValue_("No host specified.")
         self.progressIndicator.setStyle_(NSProgressIndicatorSpinningStyle)
-        self.progressIndicator.setUsesThreadedAnimation_(YES)
+#        self.progressIndicator.setUsesThreadedAnimation_(YES)
         self.progressIndicator.setDisplayedWhenStopped_(NO)
         
         self.createToolbar()
@@ -212,7 +233,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
             newItem.setMaxSize_( item.maxSize() )
         
         return newItem  
-        
+    
     def setStatusTextFieldMessage_(self, aMessage):
         """
         Sets the contents of the statusTextField to aMessage and
@@ -220,15 +241,33 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         """
         if not aMessage:
             aMessage = "Displaying information about %d methods." % len(self._methods)
-        self.statusTextField.setStringValue_(aMessage)
-        self.statusTextField.display()
-
+        self.statusTextField.performSelectorOnMainThread_withObject_waitUntilDone_(
+            "setStringValue:", aMessage, 0)
+    
+    def reloadData(self):
+        self.methodsTable.performSelectorOnMainThread_withObject_waitUntilDone_(
+            "reloadData", None, 0)
+    
+    def beginWorking(self):
+        if not self._working:
+            self.progressIndicator.startAnimation_(self)
+        self._working += 1
+    
+    def stopWorking(self):
+        self._working -= 1
+        if not self._working:
+            self.progressIndicator.performSelectorOnMainThread_withObject_waitUntilDone_(
+                "stopAnimation:", self, 0)
+    
     def reloadVisibleData_(self, sender):
         """
         Reloads the list of methods and their signatures from the
         XML-RPC server specified in the urlTextField.  Displays
         appropriate error messages, if necessary.
         """
+        if self._working:
+            # don't start a new job while there's an unfinished one
+            return
         url = self.urlTextField.stringValue()
         self._methods = []
         self._methodSignatures = {}
@@ -239,9 +278,15 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
             self.setStatusTextFieldMessage_("No URL specified.")
             return
 
-        self._server = xmlrpclib.ServerProxy(url)
-        self.progressIndicator.startAnimation_(sender)
+        self.window().setTitle_(url)
+        NSUserDefaults.standardUserDefaults().setObject_forKey_(url, "LastURL")
+
         self.setStatusTextFieldMessage_("Retrieving method list...")
+        self.beginWorking()
+        self._queue.put((self.getMethods, (url,), {}))
+    
+    def getMethods(self, url):
+        self._server = xmlrpclib.ServerProxy(url)
         try:
             self._methods = self._server.listMethods()
             self._methodPrefix = ""
@@ -250,29 +295,31 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
                 self._methods = self._server.system.listMethods()
                 self._methodPrefix = "system."
             except:
-                self.setStatusTextFieldMessage_("Server failed to respond to listMethods query.  See below for more information.")
-                self.progressIndicator.stopAnimation_(sender)
                 self._server = None
                 self._methodPrefix = None
+                self.setStatusTextFieldMessage_("Server failed to respond to listMethods query.  "
+                                                "See below for more information.")
                 
                 exceptionType, exceptionValue, exceptionTraceback = sys.exc_info()
-                self.methodDescriptionTextView.setString_("Exception information\n\nType: %s\n\nValue: %s\n\nTraceback:\n\n %s\n" % (exceptionType, exceptionValue, string.join(traceback.format_tb( exceptionTraceback ), '\n' )))
-                
+                self.methodDescriptionTextView.performSelectorOnMainThread_withObject_waitUntilDone_(
+                    "setString:",
+                    "Exception information\n\nType: %s\n\nValue: %s\n\nTraceback:\n\n %s\n" %
+                    (exceptionType, exceptionValue, "\n".join(traceback.format_tb(exceptionTraceback))),
+                    0)
+                self.stopWorking()
                 return
-                
+        self.getMethodInfo(url)
+    
+    def getMethodInfo(self, url):
         self._methods.sort(lambda x, y: cmp(x, y))
-        self.methodsTable.reloadData()
-        self.methodsTable.display()
+        self.reloadData()
         self.setStatusTextFieldMessage_("Retrieving information about %d methods." % len(self._methods))
-        self.window().setTitle_(url)
-        NSUserDefaults.standardUserDefaults().setObject_forKey_(url, "LastURL")
         
         index = 0
         for aMethod in self._methods:
             index = index + 1
             if not (index % 5):
-                self.methodsTable.reloadData()
-                self.methodsTable.display()
+                self.reloadData()
             self.setStatusTextFieldMessage_("Retrieving signature for method %s (%d of %d)." % (aMethod , index, len(self._methods)))
             methodSignature = getattr(self._server, self._methodPrefix + "methodSignature")(aMethod)
             signatures = None
@@ -289,8 +336,8 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
                 signatures = signature
             self._methodSignatures[aMethod] = signatures
         self.setStatusTextFieldMessage_(None)
-        self.progressIndicator.stopAnimation_(sender)
-        self.methodsTable.reloadData()
+        self.reloadData()
+        self.stopWorking()
     
     def selectMethodAction_(self, sender):
         """
@@ -302,19 +349,22 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         selectedRow = self.methodsTable.selectedRow()
         selectedMethod = self._methods[selectedRow]
         
-        if  not self._methodDescriptions.has_key(selectedMethod):
-            self.progressIndicator.startAnimation_(sender)
-            self.setStatusTextFieldMessage_("Retrieving signature for method %s..." % selectedMethod)
-            methodDescription = getattr(self._server, self._methodPrefix + "methodHelp")(selectedMethod)
-            if not methodDescription:
-                methodDescription = "No description available."
-            self._methodDescriptions[selectedMethod] = methodDescription
-            self.progressIndicator.stopAnimation_(sender)
+        if not self._methodDescriptions.has_key(selectedMethod):
+            self.beginWorking()
+            def work():
+                self.setStatusTextFieldMessage_("Retrieving signature for method %s..." % selectedMethod)
+                methodDescription = getattr(self._server, self._methodPrefix + "methodHelp")(selectedMethod)
+                if not methodDescription:
+                    methodDescription = "No description available."
+                self._methodDescriptions[selectedMethod] = methodDescription
+                self.setStatusTextFieldMessage_(None)
+                self.methodDescriptionTextView.setString_(methodDescription)
+                self.stopWorking()
+            self._queue.put((work, (), {}))
         else:
             methodDescription = self._methodDescriptions[selectedMethod]
-       
-        self.setStatusTextFieldMessage_(None)
-        self.methodDescriptionTextView.setString_(methodDescription)
+            self.setStatusTextFieldMessage_(None)
+            self.methodDescriptionTextView.setString_(methodDescription)
 
     def numberOfRowsInTableView_(self, aTableView):
         """
