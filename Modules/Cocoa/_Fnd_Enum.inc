@@ -2,13 +2,15 @@
  * Enumeration constants. This file is generated from files in
  * /System/Library/Frameworks/Foundation.framework/Headers
  */
-struct inttable enum_table[] = {
+static struct inttable enum_table[] = {
 
 	/* From: Foundation.h */
 
 	/* From: NSAppleEventDescriptor.h */
 
 	/* From: NSAppleEventManager.h */
+
+	/* From: NSAppleScript.h */
 
 	/* From: NSArchiver.h */
 
@@ -93,6 +95,8 @@ struct inttable enum_table[] = {
 
 	/* From: NSJavaSetup.h */
 
+	/* From: NSKeyedArchiver.h */
+
 	/* From: NSKeyValueCoding.h */
 
 	/* From: NSLock.h */
@@ -100,6 +104,15 @@ struct inttable enum_table[] = {
 	/* From: NSMapTable.h */
 
 	/* From: NSMethodSignature.h */
+
+	/* From: NSNetServices.h */
+	 { "NSNetServicesUnknownError", NSNetServicesUnknownError },
+	 { "NSNetServicesCollisionError", NSNetServicesCollisionError },
+	 { "NSNetServicesNotFoundError", NSNetServicesNotFoundError },
+	 { "NSNetServicesActivityInProgress", NSNetServicesActivityInProgress },
+	 { "NSNetServicesBadArgumentError", NSNetServicesBadArgumentError },
+	 { "NSNetServicesCancelledError", NSNetServicesCancelledError },
+	 { "NSNetServicesInvalidError", NSNetServicesInvalidError },
 
 	/* From: NSNotification.h */
 
@@ -123,6 +136,8 @@ struct inttable enum_table[] = {
 
 	/* From: NSObject.h */
 
+	/* From: NSObjectScripting.h */
+
 	/* From: NSPathUtilities.h */
 	 { "NSApplicationDirectory", NSApplicationDirectory },
 	 { "NSDemoApplicationDirectory", NSDemoApplicationDirectory },
@@ -132,6 +147,7 @@ struct inttable enum_table[] = {
 	 { "NSDeveloperDirectory", NSDeveloperDirectory },
 	 { "NSUserDirectory", NSUserDirectory },
 	 { "NSDocumentationDirectory", NSDocumentationDirectory },
+	 { "NSDocumentDirectory", NSDocumentDirectory },
 	 { "NSAllApplicationsDirectory", NSAllApplicationsDirectory },
 	 { "NSAllLibrariesDirectory", NSAllLibrariesDirectory },
 	 { "NSUserDomainMask", NSUserDomainMask },
@@ -149,6 +165,14 @@ struct inttable enum_table[] = {
 	/* From: NSPortNameServer.h */
 
 	/* From: NSProcessInfo.h */
+
+	/* From: NSPropertyList.h */
+	 { "NSPropertyListImmutable", NSPropertyListImmutable },
+	 { "NSPropertyListMutableContainers", NSPropertyListMutableContainers },
+	 { "NSPropertyListMutableContainersAndLeaves", NSPropertyListMutableContainersAndLeaves },
+	 { "NSPropertyListOpenStepFormat", NSPropertyListOpenStepFormat },
+	 { "NSPropertyListXMLFormat_v1_0", NSPropertyListXMLFormat_v1_0 },
+	 { "NSPropertyListBinaryFormat_v1_0", NSPropertyListBinaryFormat_v1_0 },
 
 	/* From: NSProtocolChecker.h */
 

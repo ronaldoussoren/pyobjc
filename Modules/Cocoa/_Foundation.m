@@ -184,7 +184,7 @@ void init_Foundation(void)
 {
 	PyObject *m, *d;
 
-	printf("Init _Foundation\n");
+	//	printf("Init _Foundation\n");
 
 	m = Py_InitModule4("_Foundation", foundation_methods, foundation_doc, 
 			NULL, PYTHON_API_VERSION);

@@ -2,7 +2,7 @@
  * Enumeration constants. This file is generated from files in
  * /System/Library/Frameworks/AppKit.framework/Headers
  */
-struct inttable enum_table[] = {
+static struct inttable enum_table[] = {
 
 	/* From: AppKit.h */
 

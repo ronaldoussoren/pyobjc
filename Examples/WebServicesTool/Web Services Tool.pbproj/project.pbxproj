@@ -167,6 +167,7 @@
 		};
 		29B97317FDCFA39411CA2CEA = {
 			children = (
+				F62CEFC10357250301718D22,
 				29B97318FDCFA39411CA2CEA,
 				089C165CFE840E0CC02AAC07,
 				F6CD0DC5033C279E0126A167,
@@ -219,6 +220,7 @@
 		};
 		29B97326FDCFA39411CA2CEA = {
 			buildPhases = (
+				F62CEFA50357242601718D22,
 				29B97327FDCFA39411CA2CEA,
 				29B97328FDCFA39411CA2CEA,
 				29B9732BFDCFA39411CA2CEA,
@@ -358,6 +360,67 @@
 //F62
 //F63
 //F64
+		F62CEFA50357242601718D22 = {
+			buildActionMask = 8;
+			dstPath = pyobjc;
+			dstSubfolderSpec = 7;
+			files = (
+				F62CEFBE035724EB01718D22,
+				F62CEFBF035724EB01718D22,
+				F62CEFC0035724EB01718D22,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		F62CEFA6035724EB01718D22 = {
+			includeInIndex = 1;
+			isa = PBXFolderReference;
+			name = AppKit;
+			path = "/usr/lib/python2.2/site-packages/AppKit";
+			refType = 0;
+		};
+		F62CEFAD035724EB01718D22 = {
+			includeInIndex = 1;
+			isa = PBXFolderReference;
+			name = Foundation;
+			path = "/usr/lib/python2.2/site-packages/Foundation";
+			refType = 0;
+		};
+		F62CEFB2035724EB01718D22 = {
+			includeInIndex = 1;
+			isa = PBXFolderReference;
+			name = objc;
+			path = "/usr/lib/python2.2/site-packages/objc";
+			refType = 0;
+		};
+		F62CEFBE035724EB01718D22 = {
+			fileRef = F62CEFA6035724EB01718D22;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F62CEFBF035724EB01718D22 = {
+			fileRef = F62CEFAD035724EB01718D22;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F62CEFC0035724EB01718D22 = {
+			fileRef = F62CEFB2035724EB01718D22;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F62CEFC10357250301718D22 = {
+			children = (
+				F62CEFA6035724EB01718D22,
+				F62CEFAD035724EB01718D22,
+				F62CEFB2035724EB01718D22,
+			);
+			isa = PBXGroup;
+			name = pyobjc;
+			refType = 4;
+		};
 		F6646A4E0344927801F2B36F = {
 			isa = PBXFileReference;
 			path = Main.py;

@@ -1,8 +1,8 @@
 /*
  * String constants. This file is generated from files in
- * /System/Library/Frameworks/Foundation.framework/Headers
+ * /System/Library/Frameworks/Foundation.framework/Headers/
  */
-struct stringtable string_table[] = {
+static struct stringtable string_table[] = {
 
 	/* From: Foundation.h */
 
@@ -10,6 +10,13 @@ struct stringtable string_table[] = {
 
 	/* From: NSAppleEventManager.h */
 	 { "NSAppleEventManagerWillProcessFirstEventNotification", &NSAppleEventManagerWillProcessFirstEventNotification },
+
+	/* From: NSAppleScript.h */
+	 { "NSAppleScriptErrorMessage", &NSAppleScriptErrorMessage },
+	 { "NSAppleScriptErrorNumber", &NSAppleScriptErrorNumber },
+	 { "NSAppleScriptErrorAppName", &NSAppleScriptErrorAppName },
+	 { "NSAppleScriptErrorBriefMessage", &NSAppleScriptErrorBriefMessage },
+	 { "NSAppleScriptErrorRange", &NSAppleScriptErrorRange },
 
 	/* From: NSArchiver.h */
 	 { "NSInconsistentArchiveException", &NSInconsistentArchiveException },
@@ -109,6 +116,11 @@ struct stringtable string_table[] = {
 	 { "NSFileExtensionHidden", &NSFileExtensionHidden },
 	 { "NSFileHFSCreatorCode", &NSFileHFSCreatorCode },
 	 { "NSFileHFSTypeCode", &NSFileHFSTypeCode },
+	 { "NSFileImmutable", &NSFileImmutable },
+	 { "NSFileAppendOnly", &NSFileAppendOnly },
+	 { "NSFileCreationDate", &NSFileCreationDate },
+	 { "NSFileOwnerAccountID", &NSFileOwnerAccountID },
+	 { "NSFileGroupOwnerAccountID", &NSFileGroupOwnerAccountID },
 	 { "NSFileSystemSize", &NSFileSystemSize },
 	 { "NSFileSystemFreeSize", &NSFileSystemFreeSize },
 	 { "NSFileSystemNodes", &NSFileSystemNodes },
@@ -139,6 +151,10 @@ struct stringtable string_table[] = {
 	 { "NSJavaWillCreateVirtualMachineNotification", &NSJavaWillCreateVirtualMachineNotification },
 	 { "NSJavaDidCreateVirtualMachineNotification", &NSJavaDidCreateVirtualMachineNotification },
 
+	/* From: NSKeyedArchiver.h */
+	 { "NSInvalidArchiveOperationException", &NSInvalidArchiveOperationException },
+	 { "NSInvalidUnarchiveOperationException", &NSInvalidUnarchiveOperationException },
+
 	/* From: NSKeyValueCoding.h */
 
 	/* From: NSLock.h */
@@ -146,6 +162,10 @@ struct stringtable string_table[] = {
 	/* From: NSMapTable.h */
 
 	/* From: NSMethodSignature.h */
+
+	/* From: NSNetServices.h */
+	 { "NSNetServicesErrorCode", &NSNetServicesErrorCode },
+	 { "NSNetServicesErrorDomain", &NSNetServicesErrorDomain },
 
 	/* From: NSNotification.h */
 
@@ -159,6 +179,8 @@ struct stringtable string_table[] = {
 
 	/* From: NSObject.h */
 
+	/* From: NSObjectScripting.h */
+
 	/* From: NSPathUtilities.h */
 
 	/* From: NSPort.h */
@@ -171,6 +193,8 @@ struct stringtable string_table[] = {
 	/* From: NSPortNameServer.h */
 
 	/* From: NSProcessInfo.h */
+
+	/* From: NSPropertyList.h */
 
 	/* From: NSProtocolChecker.h */
 
@@ -244,6 +268,11 @@ struct stringtable string_table[] = {
 	 { "NSHTTPPropertyServerHTTPVersionKey", &NSHTTPPropertyServerHTTPVersionKey },
 	 { "NSHTTPPropertyRedirectionHeadersKey", &NSHTTPPropertyRedirectionHeadersKey },
 	 { "NSHTTPPropertyErrorPageDataKey", &NSHTTPPropertyErrorPageDataKey },
+	 { "NSHTTPPropertyHTTPProxy", &NSHTTPPropertyHTTPProxy },
+	 { "NSFTPPropertyUserLoginKey", &NSFTPPropertyUserLoginKey },
+	 { "NSFTPPropertyUserPasswordKey", &NSFTPPropertyUserPasswordKey },
+	 { "NSFTPPropertyActiveTransferModeKey", &NSFTPPropertyActiveTransferModeKey },
+	 { "NSFTPPropertyFileOffsetKey", &NSFTPPropertyFileOffsetKey },
 
 	/* From: NSUserDefaults.h */
 	 { "NSGlobalDomain", &NSGlobalDomain },

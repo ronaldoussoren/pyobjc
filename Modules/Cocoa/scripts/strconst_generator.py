@@ -26,18 +26,18 @@ def process_file(outfp, filename):
 
 	outfp.write("\n\t/* From: %s */\n"%os.path.basename(filename))
 
-	in_class = False
+	in_class = 0
 
 	for ln in fp.xreadlines():
 
 		# Skip declarations in objective-C class definitions
 		if not in_class:
 			if ln.startswith("@interface"):
-				in_class = True
+				in_class = 1
 				continue
 		else:
 			if ln.startswith("@end"):
-				in_class = False
+				in_class = 0
 			continue
 
 		
@@ -60,7 +60,7 @@ def generate(dirname, fn = None):
 	fp.write(" * String constants. This file is generated from files in\n")
 	fp.write(" * %s\n"%dirname)
 	fp.write(" */\n")
-	fp.write("struct stringtable string_table[] = {\n")
+	fp.write("static struct stringtable string_table[] = {\n")
 	fnames = [ os.path.join(dirname, fn)
 				for fn in os.listdir(dirname)
 				if fn.endswith('.h') ]

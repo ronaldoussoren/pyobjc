@@ -33,9 +33,9 @@ def load_bundle(path):
 	defined in that bundle/framework
 	"""
 	bundle_class = _objc.lookup_class('NSBundle')
-	print "Bundle-class = ", bundle_class
+	# print "Bundle-class = ", bundle_class
 	bndl = bundle_class.bundleWithPath_(path)
-	print "Bundle = ", bndl, path
+	# print "Bundle = ", bndl, path
 	bndl.load()
 	classes = [ cls 
 			for cls in _objc.class_list() 

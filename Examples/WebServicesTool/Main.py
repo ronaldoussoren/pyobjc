@@ -1,10 +1,13 @@
 #!/usr/bin/python
 
 import sys
+
 import objc
-from AppKit import NSApplicationMain
+import Foundation
+
+import AppKit
 
 import WSTApplicationDelegateClass
 import WSTConnectionWindowControllerClass
 
-sys.exit(NSApplicationMain(sys.argv))
+sys.exit( AppKit.NSApplicationMain(sys.argv) )
