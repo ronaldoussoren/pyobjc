@@ -813,6 +813,7 @@ PyObject*
 ObjCSelector_FindNative(PyObject* self, char* name)
 {
 	SEL   sel = ObjCSelector_DefaultSelector(name);
+
 	NSMethodSignature* methsig;
 	char  buf[1024];
 
@@ -852,6 +853,7 @@ ObjCSelector_FindNative(PyObject* self, char* name)
 
 		if (nil != (methsig = [object methodSignatureForSelector:sel])){
 			ObjCNativeSelector* res;
+
 			res =  (ObjCNativeSelector*)ObjCSelector_NewNative(
 				GETISA(object), sel, 
 				typestr_from_NSMethodSignature(methsig, 
@@ -873,7 +875,7 @@ ObjCSelector_FindNative(PyObject* self, char* name)
 		return NULL;
 	}
 }
-	
+
 
 
 PyObject*
@@ -1058,9 +1060,11 @@ pysel_call(ObjCPythonSelector* self, PyObject* args)
 	     ((ObjCObject*)self->sel_self)->flags & ObjCObject_kUNINITIALIZED) {
 
 	     ((ObjCObject*)self->sel_self)->flags &= ~ObjCObject_kUNINITIALIZED;
-	     
+	    
+#if 0
 	     // See simular code in objcsel_call
 	     [ObjCObject_GetObject(self->sel_self) release];
+#endif
 
 	}
 

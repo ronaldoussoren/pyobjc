@@ -1012,7 +1012,6 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
         PyObject*          pyself;
 	PyObject*          pymeth;
 
-
 	super.class = find_real_superclass(
 			GETISA(self), 
 			selector, class_getInstanceMethod, 
@@ -1063,6 +1062,29 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	void* arg = NULL;
 	const char* err;
 	int   arglen;
+	PyObject* pymeth;
+	PyObject* pyself;
+
+	pyself = ObjC_GetPythonImplementation(self);
+	if (pyself == NULL) {
+		ObjCErr_ToObjC();
+		return;
+	}
+	pymeth = ObjCObject_FindSelector(pyself, selector);
+	if (pymeth && ObjCNativeSelector_Check(pymeth)) {
+		struct objc_super super;
+
+		Py_DECREF(pymeth);
+
+		super.class = find_real_superclass(
+				GETISA(self), 
+				selector, class_getInstanceMethod, 
+				(IMP)object_method_forwardInvocation);
+		super.receiver = self;
+		objc_msgSendSuper(&super, selector, invocation);
+		return;
+	}
+	Py_XDECREF(pymeth);
 
 	signature = [invocation methodSignature];
 	len = [signature numberOfArguments];
