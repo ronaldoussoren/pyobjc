@@ -9,6 +9,7 @@ d.addCallback(close)
 """
 from twisted.internet import protocol, defer
 from twisted.protocols import http
+from twisted.internet import error
 import urllib2, urlparse
 
 class Request(urllib2.Request):
@@ -232,9 +233,14 @@ def opener():
 
 def read(response):
     d, l = defer.Deferred(), []
+    done = []
+    def dataDone():
+        if not done:
+            d.callback(''.join(l))
+            done.append(True)
     response.setHandler(
         dataReceived=l.append,
-        dataDone=lambda:d.callback(''.join(l)),
+        dataDone=dataDone,
         connectionLost=d.errback,
     )
     return d

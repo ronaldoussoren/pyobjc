@@ -1,9 +1,10 @@
 {
     IBClasses = (
         {
+            ACTIONS = {addDb = id; }; 
             CLASS = DatabasesController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {databaseTable = id; }; 
+            OUTLETS = {databaseTable = id; newDatabaseURL = id; packageController = id; }; 
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
