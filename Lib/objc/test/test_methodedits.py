@@ -247,6 +247,20 @@ class TestCategory (unittest.TestCase):
         except TypeError:
             pass
 
+    def testCategoryRedefiningPythonMethod(self):
+        class BaseClassRedef(objc.runtime.NSObject):
+            def foo(self):
+                return 1
+
+        class BaseClassRedef(objc.Category(BaseClassRedef)):
+            def foo(self):
+                return 2
+
+        obj = BaseClassRedef.alloc().init()
+
+        self.assertEquals(obj.foo(), 2)
+                
+
 
 if __name__ == '__main__':
     unittest.main()
