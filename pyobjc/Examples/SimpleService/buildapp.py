@@ -36,7 +36,7 @@ plist = Plist(
 
 
 buildapp(
-	mainprogram = "SimpleService_main.py",
+        mainprogram = "SimpleService_main.py",
     name = 'PyObjCSimpleService',
     resources = ['ServiceTest.py'],
     plist = plist,

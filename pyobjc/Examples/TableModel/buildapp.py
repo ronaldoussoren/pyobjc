@@ -13,7 +13,7 @@
 from bundlebuilder import buildapp
 
 buildapp(
-	mainprogram = "TableModel.py",
-	resources = ["English.lproj"],
-	nibname = "MainMenu",
+        mainprogram = "TableModel.py",
+        resources = ["English.lproj"],
+        nibname = "MainMenu",
 )
