@@ -13,7 +13,7 @@ from dupfile import dupfile
 START_RE=re.compile('(typedef[\w]|)enum.*{')
 START_RE2=re.compile('(typedef[\w]|)enum(?:\s+[A-Za-z_][A-Za-z0-9]*)?\s*$')
 END_RE=re.compile('}')
-IDENT_RE=re.compile('[A-Za-z_][A-Za-z_0-9]*')
+IDENT_RE=re.compile('(^|[^A-Za-z_0-9])(?P<identifier>[A-Za-z_][A-Za-z_0-9]*)')
 LINE_COMMENT_RE=re.compile('//.*')
 SINGLE_LINE_RE=re.compile('enum.*{([^}]*)}')
 BLOCK_1_RE=re.compile('/\*([^*]|(\*[^/]))*\*/')
@@ -60,7 +60,7 @@ def process_file(outfp, filename):
                         if not m:
                             continue
 
-                        ident = v[m.start():m.end()]
+                        ident = m.group('identifier')
                         entry(outfp, ident)
                 elif START_RE.search(ln):
                     in_enum = 1
@@ -98,7 +98,7 @@ def process_file(outfp, filename):
                 if not m:
                     continue
 
-                ident = ln[m.start():m.end()]
+                ident = m.group('identifier')
                 if not ident in ['if', 'endif', 'else']:
                     entry(outfp, ident)
 
