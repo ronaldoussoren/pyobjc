@@ -22,7 +22,6 @@ import _AppKitMapping
 # Load the Cocoa bundle, and gather all classes defined there
 _objc.loadBundle("AppKit", globals(), bundle_path="/System/Library/Frameworks/AppKit.framework")
 _objc.recyleAutoreleasePool()
-del Foundation
 
 
 # Define usefull utility methods here
@@ -30,9 +29,11 @@ NSClassForName = _objc.lookUpClass
 
 # The used to be defined here as pure python functions, these aliasses
 # are left here for backward compatibility.
-NSMakePoint = Foundaiton.NSMakePoint
+NSMakePoint = Foundation.NSMakePoint
 NSMakeSize = Foundation.NSMakeSize
 NSMakeRect = Foundation.NSMakeRect
+
+del Foundation
 
 import protocols  # no need to export these, just register with PyObjC
 

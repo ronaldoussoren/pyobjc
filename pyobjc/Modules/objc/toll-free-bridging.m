@@ -65,7 +65,7 @@ id PyObjC_CFTypeToID(PyObject* argument)
 
 PyObject* PyObjC_IDToCFType(id argument)
 {
-
+	[argument retain];
 	if ([argument isKindOfClass:[NSMutableString class]]) {
 		return CFMutableStringRefObj_New((CFMutableStringRef)argument);
 	}

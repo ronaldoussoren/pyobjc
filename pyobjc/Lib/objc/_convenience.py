@@ -27,11 +27,17 @@ def add_convenience_methods(super_class, name, type_dict):
 
     Matching entries from both mappings are added to the 'type_dict'.
     """
-    for sel in type_dict.values():
+    for k, sel in type_dict.items():
+        if k in ('__doc__', '__slots__', '__bases__', '__module__'):
+            # XXX: Without this test we get crashes on 'pydoc Foundation'.
+            # The crash happens in this function when testing
+            # type_dict['__slots__'] in the if-stmt below. That value
+            # ends up as a tuple with a corrupt type (__mro__ is NULL)
+            continue
+
         if not isinstance(sel, selector):
             continue
 
-        
         if sel.selector.startswith('init') and not sel.isClassMethod:
             # Instance methods that start with 'init*' are constructors. These
             # return 'self'. If they don't they reallocated the previous 

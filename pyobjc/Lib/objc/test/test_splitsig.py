@@ -24,6 +24,7 @@ class SplitSignatureTest (unittest.TestCase):
                 if not isinstance(sel, objc.selector): continue
 
                 elems = objc.splitSignature(sel.signature)
+            
 
     def testSimple(self):
         self.assertEquals(objc.splitSignature("@:@"), ('@',':','@'))

@@ -122,4 +122,9 @@ def recycle_autorelease_pool():
     warings.warn(
         "Use recycleAutoreleasePool instead of recycle_autorelease_pool",
         DeprecationWarning)
-    recycleAutoreleasePool()
+    recyleAutoreleasePool()
+
+###
+# This can be usefull to hunt down memory problems in the testsuite.
+#import atexit
+#atexit.register(recyleAutoreleasePool)

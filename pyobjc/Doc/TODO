@@ -110,6 +110,9 @@ From the top of my head:
 * Use libffi to do away with class-builder.m:find_real_superclass. And check
   if we can use libffi to simplify code.
 
+* See XXX in Lib/objc/_convenience.py. That code masks a real, but elusive,
+  bug.
+
 
 Support for GNUstep
 ...................

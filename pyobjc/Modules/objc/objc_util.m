@@ -292,6 +292,11 @@ int ObjC_UpdateConvenienceMethods(PyObject* cls)
 	PyObject* dict;
 	PyObject* keys;
 	int       i, len;
+
+	if (!PyObjCClass_Check(cls)) {
+		PyErr_SetString(PyExc_TypeError, "not a class");
+		return -1;
+	}
 	
 
 	if (ObjC_class_extender == NULL || cls == NULL) return 0;
@@ -340,7 +345,6 @@ int ObjC_UpdateConvenienceMethods(PyObject* cls)
 		return -1;
 	}
 	Py_DECREF(res);
-
 	keys = PyDict_Keys(dict);
 	if (keys == NULL) {
 		Py_DECREF(args);
@@ -373,7 +377,9 @@ int ObjC_UpdateConvenienceMethods(PyObject* cls)
 			continue;
 		}
 		if (	   strcmp(n, "__dict__") == 0 
-			|| strcmp(n, "__bases__") == 0) {
+			|| strcmp(n, "__bases__") == 0
+			|| strcmp(n, "__slots__") == 0
+		   ) {
 
 			Py_DECREF(k);
 			continue;

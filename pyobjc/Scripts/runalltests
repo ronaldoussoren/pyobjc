@@ -28,9 +28,15 @@ def perform_some_tests(dummy, dirname, fnames):
                 ln = ''
                 for ln in fd.xreadlines():
                     sys.stdout.write(ln)
+
+                xit = fd.close()
                 if ln.startswith('OK'):
-                    tests[path] = ln.strip()
-                    test_sum['OK'] += 1
+                    if xit is not None:
+                        tests[path] = 'Exit with %s: %s'%(xit, ln.strip())
+                        test_sum['CRASH'] += 1
+                    else:
+                        tests[path] = ln.strip()
+                        test_sum['OK'] += 1
 
                 elif ln.startswith('FAIL'):
                     tests[path] = ln.strip()
