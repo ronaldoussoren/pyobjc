@@ -244,10 +244,11 @@ static PyObject** _get_dictptr(PyObject* obj)
 	return (PyObject**)(((char*)PyObjCObject_GetObject(obj)) + dictoffset);
 }
 
+
 static PyObject *
 object_getattro(PyObject *obj, PyObject * volatile name)
 {
-	PyTypeObject *tp = obj->ob_type;
+	PyTypeObject *tp;
 	PyObject *descr = NULL;
 	PyObject *res = NULL;
 	descrgetfunc f;
@@ -276,13 +277,39 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	else
 		Py_INCREF(name);
 
+	/* Special hack for KVO on MacOS X, when an object is observed it's 
+	 * ISA is changed by the runtime. We change the python type as well.
+	 */
+	tp = (PyTypeObject*)PyObjCClass_New(GETISA(PyObjCObject_GetObject(obj)));
+
+	descr = NULL;
+
+	if (tp != obj->ob_type) {
+		/* Workaround for KVO implementation feature */
+		PyObject* dict;
+
+		if (tp->tp_dict == NULL) {
+			if (PyType_Ready(tp) < 0)
+				goto done;
+		}
+
+		PyObjCClass_CheckMethodList((PyObject*)tp, 0);
+		dict = tp->tp_dict;
+
+		assert(dict && PyDict_Check(dict));
+		descr = PyDict_GetItem(dict, name);
+	}
+
+	tp = obj->ob_type;
 	if (tp->tp_dict == NULL) {
 		if (PyType_Ready(tp) < 0)
 			goto done;
 	}
 
 	/* replace _PyType_Lookup */
-	descr = _type_lookup(tp, name);
+	if (descr == NULL) {
+		descr = _type_lookup(tp, name);
+	}
 
 	f = NULL;
 	if (descr != NULL &&
@@ -501,6 +528,17 @@ obj_get_classMethods(PyObjCObject* self, void* closure __attribute__((__unused__
 }
 #endif
 
+PyDoc_STRVAR(objc_get_real_class_doc, "Return the current ISA of the object");
+static PyObject* objc_get_real_class(PyObject* self, void* closure __attribute__((__unused__)))
+{
+	PyObject* ret = PyObjCClass_New(GETISA(PyObjCObject_GetObject(self)));
+	if (ret != (PyObject*)self->ob_type) {
+		self->ob_type = (PyTypeObject*)ret;
+		Py_INCREF(ret);
+	}
+	return ret;
+}
+
 PyDoc_STRVAR(obj_get_instanceMethods_doc,
 "The attributes of this field are the instance methods of this object. This\n"
 "can be used to force access to a class method."
@@ -521,6 +559,13 @@ static PyGetSetDef obj_getset[] = {
 		0
 	},
 #endif
+	{
+		"pyobjc_ISA",
+		(getter)objc_get_real_class,
+		NULL,
+		objc_get_real_class_doc,
+		0
+	},
 	{
 		"pyobjc_instanceMethods",
 		(getter)obj_get_instanceMethods,

@@ -2,6 +2,7 @@
 Helper module for KeyValue tests
 """
 from objc.test.testbndl import PyObjCTest_KVBaseClass, PyObjCTest_KVPathClass
+import objc
 
 DirectString = u'Direct String'
 IndirectString = u'Indirect String'
@@ -72,3 +73,17 @@ class KVPySubOverObjCPath(PyObjCTest_KVPathClass):
 
     def setOverIndirectHead(self, aHead):
         self._overIndirectHead = aHead
+
+class PyObjCTestObserver (objc.runtime.NSObject):
+    def init(self):
+        self = super(PyObjCTestObserver, self).init()
+        if self is not None:
+            self.observed = []
+            self.willChange = []
+        return self
+
+    def observeValueForKeyPath_ofObject_change_context_(self, keyPath, obj, change, context):
+        self.observed.append( (keyPath, obj, change, context) )
+
+    def willChangeValueForKey_(self, key):
+        self.willChange.append(key)
