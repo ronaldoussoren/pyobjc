@@ -11,7 +11,6 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.34 2004/05/21 20:44:31 ronaldoussoren Exp $
  */
 
 #include <Python.h>
