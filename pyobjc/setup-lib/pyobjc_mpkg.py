@@ -97,7 +97,7 @@ class bdist_mpkg(_bdist_mpkg):
         sys.path.insert(0, srcdir)
         args = ['bdist_mpkg', '--bdist-base=' + bdist_base, '--dist-dir=' + dist_dir]
         try:
-            sub = run_setup('setup.py', args)
+            sub = run_setup(os.path.abspath('setup.py'), args)
             pkg = sub.get_command_obj('bdist_mpkg').metapackagename
         finally:
             sys.path = old_path
@@ -149,11 +149,7 @@ class bdist_mpkg(_bdist_mpkg):
         self.preflight_rm[scheme] = files
 
     def pyobjc_documentation(self):
-        try:
-            import build_html
-            build_html.build_html()
-        except ImportError:
-            log.info("*** Can't update HTML, DocArticle missing")
+        self.run_command('build_html')
         scheme = 'docs'
         schemedir = os.path.join(self.pkg_base, scheme)
         self.scheme_map[scheme] = '/Developer/Python/PyObjC/Documentation'
