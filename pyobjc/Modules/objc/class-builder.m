@@ -295,7 +295,6 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	struct objc_method_list* meta_method_list = NULL;
 	struct class_wrapper*    new_class = NULL;
 	Class                    root_class;
-	int                      static_class_wrapper = 0;
 	Class                    cur_class;
 	char**                   curname;
 	PyObject*                py_superclass = NULL;
@@ -369,6 +368,39 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		goto error_cleanup;
 	}
 
+	// call into objc._subclass_extender(...)
+	PyObject *modules_dict = PySys_GetObject("modules");
+	PyObject *objc_module = PyDict_GetItemString(modules_dict, "objc");
+	PyObject *objc_module_dict;
+	while (objc_module) {
+		PyObject *objc_class_extender;
+		PyObject *class_name;
+		PyObject *superclass_object;
+		PyObject *extender_result;
+		objc_module_dict = PyModule_GetDict(objc_module);
+		objc_class_extender = PyDict_GetItemString(objc_module_dict, "_subclass_extender");
+		if (!objc_class_extender) {
+			break;
+		}
+		superclass_object = pythonify_c_value(@encode(Class), &super_class);
+		if (!superclass_object) {
+			goto error_cleanup;
+		}
+		class_name = PyString_FromString(name);
+		if (!class_name) {
+			Py_DECREF(superclass_object);
+			goto error_cleanup;
+		}
+		extender_result = PyObject_CallFunctionObjArgs(objc_class_extender, class_name, superclass_object, protocols, class_dict, NULL);
+		Py_DECREF(class_name);
+		Py_DECREF(superclass_object);
+		if (!extender_result) {
+			goto error_cleanup;
+		}
+		Py_DECREF(extender_result);
+		break;
+	}
+
 	py_superclass = PyObjCClass_New(super_class);
 	if (py_superclass == NULL) return NULL;
 
@@ -417,55 +449,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	}
 
 	/* Allocate the class as soon as possible, for new selector objects */
-	if (!PyDict_GetItemString(class_dict, "bundleForClass")) {
-		char *bundle_address = getenv("PYOBJC_BUNDLE_ADDRESS");
-		id clsBundle;
-		BOOL used_bundle_address = NO;
-		while (bundle_address) {
-			if (sscanf(bundle_address, "%p", &clsBundle) == 1) {
-				PyObject *modules_dict = PySys_GetObject("modules");
-				PyObject *objc_module = PyDict_GetItemString(modules_dict, "objc");
-				if (!objc_module) {
-					break;
-				}
-				PyObject *loadBundleFunction = PyObject_GetAttrString(objc_module, "_make_bundleForClass");
-				if (!loadBundleFunction) {
-					PyErr_Clear();
-					break;
-				}
-				PyObject *pyClsBundle = pythonify_c_value(@encode(id), &clsBundle);
-				if (!pyClsBundle) {
-					Py_DECREF(loadBundleFunction);
-					goto error_cleanup;
-				}
-				PyObject *madeFunction = PyObject_CallFunctionObjArgs(loadBundleFunction, pyClsBundle, NULL);
-				Py_DECREF(loadBundleFunction);
-				if (!madeFunction) {
-					goto error_cleanup;
-				}
-				PyObject *bString = PyString_FromString("bundleForClass");
-				PyDict_SetItem(class_dict, bString, madeFunction);
-				Py_DECREF(madeFunction);
-				PyList_Append(key_list, bString);
-				Py_DECREF(bString);
-				key_count++;
-				used_bundle_address = YES;
-			}
-			break;
-		}
-		if (!used_bundle_address && PyDict_GetItemString(class_dict, "__bundle_hack__")) {
-			char *class_wrapper_address = getenv("PYOBJC_BUNDLE_CLASS_WRAPPER_ADDRESS");
-			if (class_wrapper_address) {
-				if (sscanf(class_wrapper_address, "%p", &new_class) == 1) {
-					unsetenv("PYOBJC_BUNDLE_CLASS_WRAPPER_ADDRESS");
-					static_class_wrapper = 1;
-				}
-			}
-		}
-	}
-	if (!static_class_wrapper) {
-		new_class = malloc(sizeof(struct class_wrapper));
-	}
+	new_class = malloc(sizeof(struct class_wrapper));
 	if (new_class == NULL) {
 		goto error_cleanup;
 	}
@@ -854,9 +838,7 @@ error_cleanup:
 	if (new_class != NULL) {
 		PyObjCRT_ClearClass(&(new_class->class));
 		PyObjCRT_ClearClass(&(new_class->meta_class));
-		if (static_class_wrapper) {
-			free(new_class);
-		}
+        free(new_class);
 	}
 
 	return NULL;
