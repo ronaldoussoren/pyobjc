@@ -296,6 +296,7 @@ static char* g_charps[] = {
 	case 2: return [NSMutableDictionary dictionary];
 	case 3: return NULL;
 	}
+	return NULL;
 }
 
 - (void)reset
@@ -391,6 +392,7 @@ static char* g_charps[] = {
 	case 2: return [NSMutableDictionary dictionary];
 	case 3: return NULL;
 	}
+	return NULL;
 }
 
 - (NSPoint)nspointFunc
@@ -819,6 +821,15 @@ static 	char buf[1024];
 }
 
 /* "plain" calls */
+-(char)callInstanceCharFuncOf:(OC_TestClass1*)arg;
+-(unsigned char)callInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg;
+
+-(short)callInstanceShortFuncOf:(OC_TestClass1*)arg;
+-(unsigned short)callInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg;
+
+-(int)callInstanceIntFuncOf:(OC_TestClass1*)arg;
+-(unsigned int)callInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg;
+
 -(long)callInstanceLongFuncOf:(OC_TestClass1*)arg;
 -(unsigned long)callInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg;
 
@@ -830,10 +841,20 @@ static 	char buf[1024];
 
 -(id)callInstanceIdFuncOf:(OC_TestClass1*)arg;
 -(struct dummy)callInstanceDummyFuncOf:(OC_TestClass1*)arg;
+-(struct dummy2)callInstanceDummy2FuncOf:(OC_TestClass1*)arg;
 -(NSPoint)callInstanceNSPointFuncOf:(OC_TestClass1*)arg;
 
 /* "NSInvocation" calls */
--(long )invokeInstanceLongFuncOf:(OC_TestClass1*)arg;
+-(char)invokeInstanceCharFuncOf:(OC_TestClass1*)arg;
+-(unsigned char)invokeInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg;
+
+-(short)invokeInstanceShortFuncOf:(OC_TestClass1*)arg;
+-(unsigned short)invokeInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg;
+
+-(int)invokeInstanceIntFuncOf:(OC_TestClass1*)arg;
+-(unsigned int)invokeInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg;
+
+-(long)invokeInstanceLongFuncOf:(OC_TestClass1*)arg;
 -(unsigned long)invokeInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg;
 
 -(long long)invokeInstanceLongLongFuncOf:(OC_TestClass1*)arg;
@@ -844,6 +865,7 @@ static 	char buf[1024];
 
 -(id)invokeInstanceIdFuncOf:(OC_TestClass1*)arg;
 -(struct dummy)invokeInstanceDummyFuncOf:(OC_TestClass1*)arg;
+-(struct dummy2)invokeInstanceDummy2FuncOf:(OC_TestClass1*)arg;
 -(NSPoint)invokeInstanceNSPointFuncOf:(OC_TestClass1*)arg;
 
 @end
@@ -857,6 +879,36 @@ static 	char buf[1024];
 
 @implementation OC_TestClass2 
 
+-(char)callInstanceCharFuncOf:(OC_TestClass1*)arg
+{
+	return [arg charFunc];
+}
+
+-(unsigned char)callInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg
+{
+	return [arg ucharFunc];
+}
+
+-(short)callInstanceShortFuncOf:(OC_TestClass1*)arg
+{
+	return [arg shortFunc];
+}
+
+-(unsigned short)callInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg
+{
+	return [arg ushortFunc];
+}
+
+-(int)callInstanceIntFuncOf:(OC_TestClass1*)arg
+{
+	return [arg intFunc];
+}
+
+-(unsigned int)callInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg
+{
+	return [arg uintFunc];
+}
+
 -(long)callInstanceLongFuncOf:(OC_TestClass1*)arg
 {
 	return [arg longFunc];
@@ -865,6 +917,78 @@ static 	char buf[1024];
 -(unsigned long)callInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg
 {
 	return [arg ulongFunc];
+}
+
+-(char)invokeInstanceCharFuncOf:(OC_TestClass1*)arg
+{
+	char res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(charFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(unsigned char)invokeInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg
+{
+	unsigned char res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(ucharFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(short)invokeInstanceShortFuncOf:(OC_TestClass1*)arg
+{
+	short res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(shortFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(unsigned short)invokeInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg
+{
+	unsigned short res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(ushortFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(int)invokeInstanceIntFuncOf:(OC_TestClass1*)arg
+{
+	int res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(intFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(unsigned int)invokeInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg
+{
+	unsigned int res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(uintFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
 }
 
 -(long)invokeInstanceLongFuncOf:(OC_TestClass1*)arg
@@ -920,6 +1044,11 @@ static 	char buf[1024];
 -(struct dummy)callInstanceDummyFuncOf:(OC_TestClass1*)arg
 {
 	return [arg dummyFunc];
+}
+
+-(struct dummy2)callInstanceDummy2FuncOf:(OC_TestClass1*)arg
+{
+	return [arg dummy2Func];
 }
 
 -(NSPoint)callInstanceNSPointFuncOf:(OC_TestClass1*)arg
@@ -991,6 +1120,18 @@ static 	char buf[1024];
 -(struct dummy)invokeInstanceDummyFuncOf:(OC_TestClass1*)arg
 {
 	struct dummy res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(dummyFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(struct dummy2)invokeInstanceDummy2FuncOf:(OC_TestClass1*)arg
+{
+	struct dummy2 res;
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, arg, @selector(dummyFunc))

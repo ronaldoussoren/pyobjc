@@ -175,10 +175,18 @@ object_dealloc(PyObject* obj)
  	}
 	if (((ObjCObject*)obj)->flags & ObjCObject_kUNINITIALIZED) {
 		/* Lets hope 'init' is always a valid initializer */
-		[[((ObjCObject*)obj)->objc_object init] release];
+		NS_DURING
+			[[((ObjCObject*)obj)->objc_object init] release];
+		NS_HANDLER
+			ObjCErr_FromObjC(localException);
+		NS_ENDHANDLER
 
 	} else {
-		[((ObjCObject*)obj)->objc_object release];
+		NS_DURING
+			[((ObjCObject*)obj)->objc_object release];
+		NS_HANDLER
+			ObjCErr_FromObjC(localException);
+		NS_ENDHANDLER
 	}
 	obj->ob_type->tp_free(obj);
 }
