@@ -22,7 +22,7 @@ NSStringFromSelector = NSSelectorFromString
 def NSStringFromClass(aClass):
 	return aClass.__name__
 
-# Define usefull utility methods here
+# Define useful utility methods here
 def load_bundle(path):
 	"""
 	Load the specified bundle/framework and return a list of classes 
@@ -36,7 +36,7 @@ def load_bundle(path):
 
 	classes = [ cls 
 		for cls in _objc.getClassList() 
-		if path == bundle_class.bundleForClass_(cls).bundlePath() ]
+		if bndl == bundle_class.bundleForClass_(cls) ]
 	return classes
 
 class_list = load_bundle('/System/Library/Frameworks/Foundation.framework')
@@ -48,6 +48,22 @@ for cls in class_list:
 del class_list
 del cls
 del gl
+
+import os
+import sys
+import string
+if 'PYOBJCFRAMEWORKS' in os.environ:
+	paths = string.split(os.environ['PYOBJCFRAMEWORKS'], ":")
+	count = 0
+	for path in paths:
+		bundle = NSBundle.bundleWithPath_(path)
+		bundle.principalClass()
+		sys.path.insert(count, bundle.resourcePath())
+		count = count + 1
+    
+		initPath = bundle.pathForResource_ofType_( "Init", "py")
+		if initPath:
+			execfile(initPath, globals(), locals())
 
 from types import *
 def propertyListFromPythonCollection(aPyCollection, conversionHelper=None):

@@ -36,6 +36,11 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
     char** childEnvp;
     char*  PYTHONPATH = NULL;
 
+    // set up paths to be prepended to the PYTHONPATH
+    const char *pythonPathInWrapper = [[NSString stringWithFormat: @"%@:%@",
+        [[NSBundle mainBundle] resourcePath],
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: @"pyobjc"]] UTF8String];
+    
     // count entries in environment and find the PYTHONPATH setting, if present
     for (envc = 0; envp[envc] != NULL; envc++) {
         if (strncmp(envp[envc], "PYTHONPATH=", sizeof("PYTHONPATH=")-1) == 0) {
@@ -44,18 +49,24 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
         }
     }
 
+    // copy the environment into a new array that will eventually also contain the PYTHONPATH
     childEnvp = alloca(sizeof(char*) * (envc + 10)); // enough for both PYTHONPATH and the DYLD stuff
     for (envc = 0; envp[envc] != NULL; envc ++) {
         if (strncmp(envp[envc], "PYTHONPATH=", sizeof("PYTHONPATH=")-1) == 0) {
-            childEnvp[envc] = (char *)[[NSString stringWithFormat: @"PYTHONPATH=%@:%s", [[NSBundle mainBundle] resourcePath], envp[envc]] UTF8String];
+            // already exisxts, prepend app wrapper paths
+            NSString *envValue = [NSString stringWithFormat: @"PYTHONPATH=%s:%s", pythonPathInWrapper, PYTHONPATH];
+            childEnvp[envc] = (char *)[envValue UTF8String];
         } else {
             childEnvp[envc] = envp[envc];
         }
     }
     if (PYTHONPATH) {
+        // already set in for() loop above
         childEnvp[envc] = NULL;
     } else {
-        childEnvp[envc] = (char *)[[NSString stringWithFormat: @"PYTHONPATH=%@", [[NSBundle mainBundle] resourcePath]] UTF8String];
+        // wasn't set -- add PYTHONPATH to child
+        NSString *envValue = [NSString stringWithFormat: @"PYTHONPATH=%s", pythonPathInWrapper];
+        childEnvp[envc] = (char *)[envValue UTF8String];
         envc++;
         childEnvp[envc] = NULL;
     }
@@ -83,6 +94,10 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
         if ( [[[aBundle bundlePath] pathExtension] isEqualToString: @"framework"] )
             [bundlePaths addObject: [aBundle bundlePath]];
     }
+
+    // set an environment variable to contain the linked frameworks
+    childEnvp[envc++] = (char*)[[NSString stringWithFormat: @"PYOBJCFRAMEWORKS=%@", [bundlePaths componentsJoinedByString: @":"]] UTF8String];
+    childEnvp[envc++] = NULL;
 
     // figure out which python interpreter to use
     NSString *pythonBinPath = [[NSUserDefaults standardUserDefaults] stringForKey: @"PythonBinPath"];
@@ -122,10 +137,6 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
         childArgv[i+1] = argv[i];
     i++; // compensate for i+1 in for() loop
 
-    // add an argument that lists all frameworks
-    childArgv[i++] = "-PyFrameworkPaths";
-    childArgv[i++] = [[bundlePaths componentsJoinedByString: @":"] UTF8String];
-
     // terminate the arg list
     childArgv[i++] = NULL;
 
@@ -134,7 +145,9 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
         NSLog(@"Process ID is: %d (\n\tgdb %s %d\n to debug)", getpid(), pythonBinPathPtr, getpid());
 
     // pass control to the python interpreter
-    return execve(pythonBinPathPtr, (char **)childArgv, childEnvp);
+    if (execve(pythonBinPathPtr, (char **)childArgv, childEnvp) == -1)
+        perror("execve");
+    return 1;
 }
 
 int main(int argc, char * const *argv, char * const *envp)
