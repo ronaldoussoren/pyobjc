@@ -28,4 +28,4 @@ For help, please use the pyobjc-dev mailing list:
 
     http://lists.sourceforge.net/lists/listinfo/pyobjc-dev
 
-b.bum <bbum@codefab.com>, Ronald Oussoren <oussoren@cistron.nl>
+b.bum <bbum@codefab.com>, Ronald Oussoren <ronaldoussoren@mac.com>

@@ -795,10 +795,10 @@ error_cleanup:
 
 
 static void
-free_ivars(id self, PyObject* cls)
+free_ivars(id self, PyObject* volatile cls )
 {
 	/* Free all instance variables introduced through python */
-	PyObjCRT_Ivar_t var;
+	volatile PyObjCRT_Ivar_t var;
 
 	var = class_getInstanceVariable(PyObjCClass_GetClass(cls), "__dict__");
 	if (var != NULL) {
@@ -811,7 +811,8 @@ free_ivars(id self, PyObject* cls)
 		PyObject* clsDict; 
 		PyObject* clsValues;
 		PyObject* o;
-		int       len, i;
+		volatile int       i;
+		int len;
 
 		if (objcClass == nil) break;
 
@@ -1086,7 +1087,7 @@ object_method_forwardInvocation(
 	int   arglen;
 	PyObject* pymeth;
 	PyObject* pyself;
-	int have_output = 0;
+	volatile int have_output = 0;
 	PyGILState_STATE state = PyObjCGILState_Ensure();
 
 	pyself = PyObjCObject_New(self);

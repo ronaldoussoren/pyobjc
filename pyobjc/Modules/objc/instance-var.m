@@ -85,7 +85,7 @@ ivar_descr_get(PyObjCInstanceVariable* self, PyObject* obj, PyObject* type __att
 static int
 ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 {
-	PyObjCRT_Ivar_t var;
+	volatile PyObjCRT_Ivar_t var;
 	id   objc;
 	int  size;
 	int res;

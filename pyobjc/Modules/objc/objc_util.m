@@ -16,6 +16,16 @@ PyObject* PyObjCExc_UnInitDeallocWarning;
 
 PyGILState_STATE PyObjCGILState_Ensure(void)
 {
+	/* Now that PyObjCUnicode_New no longer uses autorelead objects it 
+	 * should no longer be necessaryt to create a transient release-pool
+	 * for calls from ObjC to python. 
+	 * The pool might also be unsafe because at least some python methods
+	 * return objects whose only reference is in the autorelease pool (
+	 * it is unverified if this really is a problem)
+	 */
+#if 1
+	return PyGILState_Ensure();
+#else
 	int shouldCreateThreadPool = (PyGILState_GetThisThreadState() == NULL) ? 1 : 0;
 	PyGILState_STATE state = PyGILState_Ensure();
 	if (shouldCreateThreadPool) {
@@ -30,6 +40,7 @@ PyGILState_STATE PyObjCGILState_Ensure(void)
 		Py_DECREF(pypool);
 	}
 	return state;
+#endif
 }
 
 int ObjCUtil_Init(PyObject* module)

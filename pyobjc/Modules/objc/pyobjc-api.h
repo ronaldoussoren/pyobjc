@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.31 2004/04/07 11:43:13 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.32 2004/04/11 12:52:37 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -34,8 +34,45 @@ static inline void PyGILState_Release(
 
 #endif
 
-#endif
+/* threading support */
+#define PyObjC_DURING \
+		NS_DURING
 
+#define PyObjC_HANDLER NS_HANDLER
+
+#define PyObjC_ENDHANDLER \
+		NS_ENDHANDLER \
+
+#define PyObjC_BEGIN_WITH_GIL \
+	{ \
+		PyGILState_STATE _GILState; \
+		_GILState = PyObjCGILState_Ensure(); 
+
+#define PyObjC_GIL_FORWARD_EXC() \
+		do { \
+            PyObjCErr_ToObjCWithGILState(&_GILState); \
+		} while (0)
+
+
+#define PyObjC_GIL_RETURN(val) \
+		do { \
+			PyGILState_Release(_GILState); \
+			return (val); \
+		} while (0)
+
+#define PyObjC_GIL_RETURNVOID \
+		do { \
+			PyGILState_Release(_GILState); \
+			return; \
+		} while (0)
+
+
+#define PyObjC_END_WITH_GIL \
+		PyGILState_Release(_GILState); \
+	}
+
+
+#else /* Python 2.3 and later */
 
 /* threading support */
 #define PyObjC_DURING \
@@ -75,6 +112,10 @@ static inline void PyGILState_Release(
 #define PyObjC_END_WITH_GIL \
 		PyGILState_Release(_GILState); \
 	}
+
+#endif
+
+
 
 
 #ifndef GNU_RUNTIME

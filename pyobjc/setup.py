@@ -324,7 +324,7 @@ if gs_root is None:
         #"-pedantic",
 
         "-Wno-import",
-        "-O0", "-g",
+        #"-O0", "-g",
         #"-Werror",
         #"-O3", "-mcpu=7450", "-maltivec",
         ]
@@ -454,6 +454,12 @@ CoreExtensions =  [
               extra_compile_args=["-IModules/objc" ] + CFLAGS,
               extra_link_args=OBJC_LDFLAGS),
     ]
+
+if sys.version == '2.2' or sys.version.startswith('2.2.'):
+    CoreExtensions.append(
+            Extension("autoGIL",
+                ["Modules/autoGIL.c"],
+                extra_link_args=OBJC_LDFLAGS))
 
 # Provide some dependency information on Python 2.3 and later, this
 # makes development slightly more convenient.

@@ -24,7 +24,7 @@ bbum@codefab.com
 
 History:
 
-Ronald Oussoren <oussoren@cistron.nl> rewrote most of the module in 2002.  Ronald made it possible to subclass Objective-C classes from Python and added nearly complete support for the Foundation, the AppKit and the AddressBook frameworks.
+Ronald Oussoren <ronaldoussoren@mac.com> rewrote most of the module in 2002.  Ronald made it possible to subclass Objective-C classes from Python and added nearly complete support for the Foundation, the AppKit and the AddressBook frameworks.
 
 In the fall of 2002, Bill Bumgarner<bbum@codefab.com> added support for non-Framework builds of python.  Ronald and Bill subsequently added support for the Apple supplied build of Python.   Bill created the Project Builder template that allows for building standalone Cocoa applications that are implemented in Project Builder.
 
