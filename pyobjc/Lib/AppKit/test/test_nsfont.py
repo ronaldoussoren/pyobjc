@@ -1,0 +1,51 @@
+import unittest
+import objc
+
+import AppKit
+
+class TestNSFont(unittest.TestCase):
+    def matrixEquals(self, value1, value2):
+        self.assertEquals(len(value1), len(value2))
+        for v1, v2 in zip(value1, value2):
+            # This should probably be 'assertAlmostEquals'
+            self.assertEquals(v1, v2)
+
+    def testConstants(self):
+        self.assert_(hasattr(AppKit, 'NSFontIdentityMatrix'))
+        self.assertEquals(AppKit.NSFontIdentityMatrix, None)
+
+    def testMatrixMethods(self):
+        o = AppKit.NSFont.boldSystemFontOfSize_(10);
+        m = o.matrix()
+        self.assert_(isinstance(m, tuple))
+        self.assertEquals(len(m), 6)
+
+        nm = o.fontName()
+
+        o = AppKit.NSFont.fontWithName_matrix_(nm, AppKit.NSFontIdentityMatrix)
+        self.assert_(o is not None)
+
+        m = o.matrix()
+        self.assert_(isinstance(m, tuple))
+        self.assertEquals(len(m), 6)
+
+        self.matrixEquals(m, (1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
+
+        o = AppKit.NSFont.fontWithName_matrix_(nm, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
+        self.assert_(o is not None)
+
+        m = o.matrix()
+        self.assert_(isinstance(m, tuple))
+        self.assertEquals(len(m), 6)
+
+        self.matrixEquals(m, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
+
+        self.assertRaises(ValueError, AppKit.NSFont.fontWithName_matrix_, nm, "foo")
+        self.assertRaises(ValueError, AppKit.NSFont.fontWithName_matrix_, nm, (1, 2, 3, 4))
+        self.assertRaises(ValueError, AppKit.NSFont.fontWithName_matrix_, nm, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0))
+
+
+
+
+if __name__ == '__main__':
+   unittest.main( )
