@@ -845,4 +845,5 @@ void init_objc(void)
 #ifdef MAC_OS_X_VERSION_10_3
 	PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_3", MAC_OS_X_VERSION_10_3);
 #endif /* MAC_OS_X_VERSION_10_3 */
+	PyEval_InitThreads();
 }

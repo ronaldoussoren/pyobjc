@@ -58,8 +58,15 @@ void PyObjCErr_FromObjC(NSException* localException)
 	PyObject*     exc_type;
 	PyObject*     exc_value;
 	PyObject*     exc_traceback;
+	const char    *c_localException_name;
+	const char    *c_localException_reason;
 
-	exception = ObjCErr_PyExcForName([[localException name] cString]);
+	PyGILState_STATE state;
+
+	c_localException_name = [[localException name] cString];
+	c_localException_reason = [[localException reason] cString];
+
+	exception = ObjCErr_PyExcForName(c_localException_name);
 
 	userInfo = [localException userInfo];
 	if (userInfo) {
@@ -67,26 +74,29 @@ void PyObjCErr_FromObjC(NSException* localException)
 
 		val = [userInfo objectForKey:@"__pyobjc_exc_type__"];
 		if (val) {
-			exc_type = [val  pyObject];
+			exc_type = [val pyObject];
 			exc_value = [[userInfo objectForKey:@"__pyobjc_exc_value__"]  pyObject];
 			exc_traceback = [[userInfo objectForKey:@"__pyobjc_exc_traceback__"]  pyObject];
 
 			/* -pyObject returns a borrowed reference and 
 			 * PyErr_Restore steals one from us.
 			 */
+			state = PyGILState_Ensure();
 			Py_INCREF(exc_type);
 			Py_XINCREF(exc_value);
 			Py_XINCREF(exc_traceback);
 
 			PyErr_Restore(exc_type, exc_value , exc_traceback);
+			PyGILState_Release(state);
 			return;
 		}
 	}
 
+	state = PyGILState_Ensure();
 	dict = PyDict_New();
-	v = PyString_FromString([[localException name] cString]);
+	v = PyString_FromString(c_localException_name);
 	PyDict_SetItemString(dict, "name", v);
-	v = PyString_FromString([[localException reason] cString]);
+	v = PyString_FromString(c_localException_reason);
 	PyDict_SetItemString(dict, "reason",  v);
 	Py_DECREF(v);
 	if (userInfo) {
@@ -102,8 +112,8 @@ void PyObjCErr_FromObjC(NSException* localException)
 	}
 
 	snprintf(buf, sizeof(buf), "%s - %s", 
-		[[localException name] cString],
-		[[localException reason] cString]);
+		c_localException_name,
+		c_localException_reason);
 
 	PyErr_SetObject(exception, PyString_FromString(buf));
 	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
@@ -112,8 +122,9 @@ void PyObjCErr_FromObjC(NSException* localException)
 	}
 	PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict);
 	PyObject_SetAttrString(exc_value, "name", PyString_FromString(
-		[[localException name] cString]));
+		c_localException_name));
 	PyErr_Restore(exc_type, exc_value, exc_traceback);
+	PyGILState_Release(state);
 }
 
 void PyObjCErr_ToObjC(void)
