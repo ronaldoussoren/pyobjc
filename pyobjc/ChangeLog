@@ -1,3 +1,10 @@
+2002-12-19  Bill Bumgarner  <bbum@codefab.com>
+    * RELEASE 0.8
+    * Modules/Cocoa/_Foundation.m (and others):  Added #ifdefs that will only
+    import the files if on 10.2 or greater.   This provides the foundation for
+    10.1 compatibility, but the autogenerators and other pieces need to be put
+    into places.
+
 2002-12-17  Bill Bumgarner  <bbum@codefab.com>
 
     * Project Templates/Cocoa-Python Application/MyAppDelegate.py: Moved to
