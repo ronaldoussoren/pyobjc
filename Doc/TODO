@@ -58,6 +58,10 @@ happen when embedding a PyObjC solution in an existing Cocoa application.
 
 NOTE3: This is not really an important item.
 
+XXX (Ronald): I'll probably add PEP311 support after we do a release  with
+Panther support. This would make it safer to use PyObjC embedded in an 
+multithreaded application. Specifically: grab the GIL when going from ObjC
+to python, and release it when going back again. This is a half-way solution.
 
 Test suite
 ..........
@@ -290,3 +294,18 @@ Key-Value Encoding
 Implement the Key-Value encoding protocol for Py-ObjC hybrids, in a Pythonic
 way. Do the same in OC_PythonObject (e.g. for pure-python objects used from
 Objective-C)
+
+Formal Protocols, Distributed Objects
+.....................................
+
+``DO`` seems to use formal protocols, we don't support those at all. 
+
+Links to Apple documentation
+............................
+
+Links to Apple documentation are not stable, can we add a layer of indirection
+here, e.g. link to the PyObjC website that will redirect to the right
+location?
+
+But: we should also provide links to locally installed documetation, especially
+in the documentation that will be installed on the users machine.

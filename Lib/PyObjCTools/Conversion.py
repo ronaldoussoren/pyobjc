@@ -44,6 +44,7 @@ def propertyListFromPythonCollection(aPyCollection, conversionHelper=None):
     elif isinstance(aPyCollection, float):
         return NSNumber.numberWithLongDouble_( aPyCollection )
     elif aPyCollection is None:
+        # XXX: None cannot be represented in PLists.
         return NSNull.null()
     else:
         if conversionHelper:

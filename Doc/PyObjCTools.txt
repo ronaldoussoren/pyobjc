@@ -24,11 +24,6 @@ Functions for converting between Cocoa and pure Python data structures.
 
 A python API for working with Key-Value Coding. XXX: Link
 
-* ``PyObjCTools.KeyValueCodingSupport.py``
-
-Utility functions and mix-in classes for working with Key-Value Coding. This
-module is deprecated.
-
 * ``PyObjCTools.NibClassBuilder.py``
 
 Module containing a magic super-class that can read information about the
@@ -44,3 +39,125 @@ screen savers.
 
 Module that tries to print usefull information when the program gets a fatal
 exception. This module should only be used during development.
+
+
+``PyObjCTools.AppHelper``
+.........................
+
+This module exports two functions that are usefull when working with the
+``AppKit`` framework.
+
+* ``endSheetMethod(method) -> selector``
+
+  Convert a method to a form that is suitable to use as the delegate callback
+  for sheet methods.
+
+* ``runEventLoop(argv=None, unexpectedErrorAlert=unexpectedErrorAlert) -> None``
+
+  Run the evenloop using ``NSApplicationMain`` and ask the user if we should
+  continue if an exception is caught.
+
+  This function doesn't return unless it throws an exception.
+
+
+``PyObjCTools.Conversion.py``
+.............................
+
+Functions for converting between Cocoa and pure Python data structures.
+
+* ``propertyListFromPythonCollection(pyCol, conversionHelper=None) -> ocCol``
+
+  Convert a Python collection (dictionary, array, tuple, string) into an 
+  Objective-C collection.
+
+  If conversionHelper is defined, it must be a callable.  It will be called 
+  for any object encountered for which ``propertyListFromPythonCollection()``
+  cannot automatically convert the object.   The supplied helper function 
+  should convert the object and return the converted form.  If the conversion 
+  helper cannot convert the type, it should raise an exception or return None.
+
+* ``pythonCollectionFromPropertyList(ocCol, conversionHelper=None) -> pyCol``
+
+  Converts a Foundation based collection-- a property list-- into a Python 
+  collection.  Like ``propertyListFromPythonCollection()``, ``conversionHelper``
+  is an optional callable that will be invoked any time an encountered object 
+  cannot be converted.
+
+``PyObjCTools.KeyValueCoding``
+..............................
+
+A module for working with Key-Value Coding in python. Key-Value coding is
+explained `on the apple website`__
+
+.. __: http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i
+
+This module provides a python interface to some of that functionality. The
+interface is modelled on the ``getattr`` and ``setattr`` functions.
+
+* ``getKey(object, key) -> value``
+
+  Find the value for ``key``. Raises ``KeyError`` if the key is not a valid
+  attribute of the object.
+
+  To find the value of a key the following values are tried for a key named
+  ``key`` (first match wins):
+
+  - the return value of ``object.get_key()``
+
+  - the return value of ``object.getKey()``
+
+  - the return value of ``object._get_key()``
+
+  - the return value of ``object._getKey()``
+
+  - the value of the attribute ``key``
+
+  - the value of the attribue ``_key``
+
+* ``getKeyPath(object, keypath) -> value``
+
+  Like ``getKey`` but using a key path. The ``keypath`` is a sequence of keys
+  seperated by dots. It calls ``getKey`` to follow the path and returns the
+  final value.
+
+* ``setKey(object, key, value) -> None``
+
+  Set the value of ``key`` to ``value``.
+
+  The following values are used for setting the value for a key named ``key``
+  (first match wins):
+
+  - Call ``object.set_key(value)``
+
+  - Call ``object.setKey(value)``
+
+  - Call ``object._set_key(value)``
+
+  - Call ``object._setKey(value)``
+
+  - Check if ``_key`` is an attribute and if so, set its value
+
+  - Try to set the attribute ``key``.
+
+  Raises ``KeyError`` if the key cannot be changed.
+
+* ``setKeyPath(object, keypath, value) -> None``
+
+  The same as ``setKey``, but now using a key path. A key path is a sequence
+  of keys seperated by dots. The ``getKey`` function is used to traverse 
+  the path upto the last item, and then ``setKey`` is used to change the value.
+
+PyObjCTools.NibClassBuilder
+...........................
+
+XXX: Read the online documetation
+
+PyObjCTools.Signals
+...................
+
+XXX: Read the online documetation
+
+PyObjCTools.pluginbuilder
+.........................
+
+XXX: Read the online documetation

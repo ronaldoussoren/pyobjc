@@ -8,6 +8,8 @@ Structure of the PyObjC package
 Introduction
 ------------
 
+XXX:  This documet is outdated and incomplete.
+
 This document gives an overview of the PyObjC for developers (of the package).
 
 One of the sections describes how all of it works, and some of the limitation.

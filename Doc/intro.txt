@@ -10,12 +10,6 @@ An introduction to PyObjC
 
 .. contents::
 
-WORK IN PROGRESS
-----------------
-
-This document is work in progress.
-
-
 Preface
 -------
 
@@ -100,6 +94,12 @@ recovery and not for normal error handling you won't see them very often
 in example code. The `The Objective-C Programming Language`_ if you want to
 know more about exceptions in Objective-C. 
 
+One thing to keep in mind when translating Objective-C snippets to python is
+that it is valid to call methods on ``nil`` (that is the NULL pointer). Those
+method calls are ignored by the runtime. The value ``nil`` is represented in
+Python by the ``None``, this means that calls to non-existing methods are
+not ignored but will raise ``AttributeError``.
+
 For more information about Objective-C see:
 
 * `The Objective-C Programming Language`_ at `Apple`_.
@@ -113,10 +113,18 @@ Overview of the bridge
 Classes
 .......
 
-Objective-C classes are visible as Python classes and can be subclassed just
-like normal Python classes. The major differences between normal Python classes
-and Objective-C classes are the way you create instances and the fact that 
-Objective-C methods have odd names.
+Objective-C classes are visible as (new-style) Python classes and can be 
+subclassed just like normal Python classes. All the usual introspection
+mechanism work as well, as do __slots__ and descriptors. The major 
+differences between normal Python classes and Objective-C classes are the way 
+you create instances and the fact that Objective-C methods have odd names.
+
+You can use multiple inheritance with Objective-C classes, as long as the
+Objetive-C is the first base-class and there is only one Objective-C 
+base-class. E.g. it is not possible to subclass from the Objective-C classes
+at the same time. Multiple inheritance should also not be used to mix-in
+different implementations for Objective-C methods, that will not work and
+you won't get errors about this.
 
 Another thing to keep in mind is that the names of Objective-C classes must
 be unique, without taking modules into account. That is, it is *not* possible
@@ -211,8 +219,8 @@ arguments you can use with this function. It is normally used like this::
 
 		someMethod_ = objc.selector(someMethod_, ...)
 
-Reference counts
-................
+Reference counting
+..................
 
 The `Cocoa libraries`_, and most (if not all) other class libraries for 
 Objective-C use explicit reference counting to manage memory. The methods
@@ -248,6 +256,26 @@ stores weak references to the objects return by the method
 ``outlineView:child:ofItem:`` of its data source. The easiest way to avoid
 crashes with outline views is to make sure that you model for the view uses
 subclasses of ``NSObject`` to represent the nodes in the outline view.
+
+Another gotcha is when you're manually allocating and assigning delegate(-like)
+objects: most of the time ``obj.setDelegate_()`` will *not* retain the 
+delegate, so you must keep a reference manually.
+
+(Informal) protocols
+....................
+
+Cocoa defines a number of formal and informal protocols that specify methods
+that should be implemented by a class if it is to be used in a specific role,
+such as the data source for an NSTableView.
+
+Those protocols are represented by instances of ``objc.informal_protocol``. The
+only ones that have to care about these objects are the maintainers of 
+wrappers around Objective-C frameworks: they have to keep these protocol
+wrappers up-to-date.
+
+PyObjC will automaticly use the information in the ``informal_protocol`` 
+objects to add the right method signatures to methods, and to warn about
+classes that partially implement a protocol.
 
 
 Cocoa for Python programmers
@@ -297,6 +325,28 @@ More information on Cocoa programming can be found at:
 .. _`Cocoa examples at the Apple developer website`: http://developer.apple.com/samplecode/Sample_Code/Cocoa.htm
 
 .. _`stepwise.com`: http://www.stepwise.com/
+
+Special tasks
+-------------
+
+XXX: Rename this section
+
+Working with threads
+....................
+
+When you create a thread and want to use PyObjC from that thread you will
+have to create an ``NSAutoreleasePool`` in that thread and clean it up when
+you're done. The easiest way to that is to create an instance of that class
+bound to a local variable. If the thread is long-lived you may want to arrange
+for recycling the pool once in a while.
+
+There are some limitiation w.r.t. threading. You cannot use ``NSThread`` to 
+create new threads, but must use the python primitives instead. 
+
+You must also make sure that Objective-C only makes calls to Python from a 
+thread that owns the Python GIL (that's also the reason for not being able 
+to use ``NSThread`` to create new threads).  This restriction will be lifted
+in a future version of PyObjC (at least when using Python 2.3).
 
 
 Building applications

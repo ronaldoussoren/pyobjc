@@ -27,11 +27,6 @@ start with a short overview.</p>
 </ul>
 <p>A python API for working with Key-Value Coding. XXX: Link</p>
 <ul>
-<li><code><span>PyObjCTools.KeyValueCodingSupport.py</span></code></li>
-</ul>
-<p>Utility functions and mix-in classes for working with Key-Value Coding. This
-module is deprecated.</p>
-<ul>
 <li><code><span>PyObjCTools.NibClassBuilder.py</span></code></li>
 </ul>
 <p>Module containing a magic super-class that can read information about the
@@ -47,5 +42,81 @@ screen savers.</p>
 </ul>
 <p>Module that tries to print usefull information when the program gets a fatal
 exception. This module should only be used during development.</p>
+<h2><a name="pyobjctools-apphelper"><code><span>PyObjCTools.AppHelper</span></code></a></h2>
+<p>This module exports two functions that are usefull when working with the
+<code><span>AppKit</span></code> framework.</p>
+<ul>
+<li><code><span>endSheetMethod(method)</span> <span>-&gt;</span> <span>selector</span></code><p>Convert a method to a form that is suitable to use as the delegate callback
+for sheet methods.</p>
+</li>
+<li><code><span>runEventLoop(argv=None,</span> <span>unexpectedErrorAlert=unexpectedErrorAlert)</span> <span>-&gt;</span> <span>None</span></code><p>Run the evenloop using <code><span>NSApplicationMain</span></code> and ask the user if we should
+continue if an exception is caught.</p>
+<p>This function doesn't return unless it throws an exception.</p>
+</li>
+</ul>
+<h2><a name="pyobjctools-conversion-py"><code><span>PyObjCTools.Conversion.py</span></code></a></h2>
+<p>Functions for converting between Cocoa and pure Python data structures.</p>
+<ul>
+<li><code><span>propertyListFromPythonCollection(pyCol,</span> <span>conversionHelper=None)</span> <span>-&gt;</span> <span>ocCol</span></code><p>Convert a Python collection (dictionary, array, tuple, string) into an 
+Objective-C collection.</p>
+<p>If conversionHelper is defined, it must be a callable.  It will be called 
+for any object encountered for which <code><span>propertyListFromPythonCollection()</span></code>
+cannot automatically convert the object.   The supplied helper function 
+should convert the object and return the converted form.  If the conversion 
+helper cannot convert the type, it should raise an exception or return None.</p>
+</li>
+<li><code><span>pythonCollectionFromPropertyList(ocCol,</span> <span>conversionHelper=None)</span> <span>-&gt;</span> <span>pyCol</span></code><p>Converts a Foundation based collection-- a property list-- into a Python 
+collection.  Like <code><span>propertyListFromPythonCollection()</span></code>, <code><span>conversionHelper</span></code>
+is an optional callable that will be invoked any time an encountered object 
+cannot be converted.</p>
+</li>
+</ul>
+<h2><a name="pyobjctools-keyvaluecoding"><code><span>PyObjCTools.KeyValueCoding</span></code></a></h2>
+<p>A module for working with Key-Value Coding in python. Key-Value coding is
+explained <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i">on the apple website</a></p>
+<p>This module provides a python interface to some of that functionality. The
+interface is modelled on the <code><span>getattr</span></code> and <code><span>setattr</span></code> functions.</p>
+<ul>
+<li><code><span>getKey(object,</span> <span>key)</span> <span>-&gt;</span> <span>value</span></code><p>Find the value for <code><span>key</span></code>. Raises <code><span>KeyError</span></code> if the key is not a valid
+attribute of the object.</p>
+<p>To find the value of a key the following values are tried for a key named
+<code><span>key</span></code> (first match wins):</p>
+<ul>
+<li>the return value of <code><span>object.get_key()</span></code></li>
+<li>the return value of <code><span>object.getKey()</span></code></li>
+<li>the return value of <code><span>object._get_key()</span></code></li>
+<li>the return value of <code><span>object._getKey()</span></code></li>
+<li>the value of the attribute <code><span>key</span></code></li>
+<li>the value of the attribue <code><span>_key</span></code></li>
+</ul>
+</li>
+<li><code><span>getKeyPath(object,</span> <span>keypath)</span> <span>-&gt;</span> <span>value</span></code><p>Like <code><span>getKey</span></code> but using a key path. The <code><span>keypath</span></code> is a sequence of keys
+seperated by dots. It calls <code><span>getKey</span></code> to follow the path and returns the
+final value.</p>
+</li>
+<li><code><span>setKey(object,</span> <span>key,</span> <span>value)</span> <span>-&gt;</span> <span>None</span></code><p>Set the value of <code><span>key</span></code> to <code><span>value</span></code>.</p>
+<p>The following values are used for setting the value for a key named <code><span>key</span></code>
+(first match wins):</p>
+<ul>
+<li>Call <code><span>object.set_key(value)</span></code></li>
+<li>Call <code><span>object.setKey(value)</span></code></li>
+<li>Call <code><span>object._set_key(value)</span></code></li>
+<li>Call <code><span>object._setKey(value)</span></code></li>
+<li>Check if <code><span>_key</span></code> is an attribute and if so, set its value</li>
+<li>Try to set the attribute <code><span>key</span></code>.</li>
+</ul>
+<p>Raises <code><span>KeyError</span></code> if the key cannot be changed.</p>
+</li>
+<li><code><span>setKeyPath(object,</span> <span>keypath,</span> <span>value)</span> <span>-&gt;</span> <span>None</span></code><p>The same as <code><span>setKey</span></code>, but now using a key path. A key path is a sequence
+of keys seperated by dots. The <code><span>getKey</span></code> function is used to traverse 
+the path upto the last item, and then <code><span>setKey</span></code> is used to change the value.</p>
+</li>
+</ul>
+<h2><a name="pyobjctools-nibclassbuilder">PyObjCTools.NibClassBuilder</a></h2>
+<p>XXX: Read the online documetation</p>
+<h2><a name="pyobjctools-signals">PyObjCTools.Signals</a></h2>
+<p>XXX: Read the online documetation</p>
+<h2><a name="pyobjctools-pluginbuilder">PyObjCTools.pluginbuilder</a></h2>
+<p>XXX: Read the online documetation</p>
 </body>
 </html>
