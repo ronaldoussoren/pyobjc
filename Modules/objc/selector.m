@@ -1557,38 +1557,6 @@ PyObjCSelector_FromFunction(
 		}
 	}
 
-	if (!PyFunction_Check(callable) && !PyMethod_Check(callable)) {
-		PyErr_SetString(PyExc_TypeError, 
-				"expecting function or method");
-		return NULL;
-	} else {
-		PyCodeObject* c = NULL;
-		if (PyFunction_Check(callable)) {
-			c = (PyCodeObject*)PyFunction_GetCode(callable);
-		} else {
-			PyObject* func;
-
-			func = PyMethod_Function(callable);
-			if (PyFunction_Check(func)) {
-				c = (PyCodeObject*)PyFunction_GetCode(func);
-			}
-		}
-
-
-		if (c != NULL && (c->co_flags & CO_VARARGS)) {
-			PyErr_SetString(PyExc_TypeError,
-				"Using function with *args as an objc method");
-			return NULL;
-		}
-		if (c != NULL && (c->co_flags & CO_VARKEYWORDS)) {
-			PyErr_SetString(PyExc_TypeError,
-				"Using function with **args as an objc method");
-			return NULL;
-		}
-	} 
-
-
-
 	if (pyname == NULL) {
 		/* No name specified, use the function name */
 		pyname = PyObject_GetAttrString(callable, "__name__");
