@@ -1,0 +1,19 @@
+{
+	FilesToRename = {
+		"AppDelegate.py" = "ÇPROJECTNAMEASIDENTIFIERÈAppDelegate.py";
+		"CocoaApp_Prefix.pch" = "ÇPROJECTNAMEASIDENTIFIERÈ_Prefix.pch";
+	};
+	FilesToMacroExpand = (
+		"English.lproj/InfoPlist.strings",
+		"main-embedded-interpreter.m",
+		"__main__.py",
+		"Info.plist",
+		"ÇPROJECTNAMEASIDENTIFIERÈAppDelegate.py",
+		"English.lproj/MainMenu.nib/keyedobjects.nib",
+		"English.lproj/MainMenu.nib/classes.nib",
+		"English.lproj/MainMenu.nib/info.nib",
+		"ÇPROJECTNAMEASIDENTIFIERÈ_Prefix.pch"
+	);
+
+	Description = "This project builds a Cocoa-based application written in Python.  The project is compatible with the Python that ships with OS X, but can be used with Fink, Framework, or manual builds of Python (if pyobjc has been installed correctly within the desired build).  Upon building the 'install' target, the resulting application should contain everything necessary to run the application on any 10.2 system without first requiring the installation of PyObjC.";
+}
