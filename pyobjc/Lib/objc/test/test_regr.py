@@ -20,11 +20,15 @@ class TestRegressions(unittest.TestCase):
         """
         Check that calling methods on unitialized objects raises an error
         """
-        # expected to fail with PYOBJC_NEW_INITIALIZER_PATTERN
         import warnings
         import Foundation
 
-        warnings.filterwarnings('ignore', 
+        # Not applicable to PYOBJC_NEW_INITIALIZER_PATTERN
+        PYOBJC_NEW_INITIALIZER_PATTERN = not (hasattr(objc.selector, 'returnsSelf') and hasattr(objc.selector, 'isInitializer'))
+        if PYOBJC_NEW_INITIALIZER_PATTERN:
+            return
+
+        warnings.filterwarnings('ignore',
             category=objc.UninitializedDeallocWarning)
         o = Foundation.NSObject.alloc() # Not yet initialized
         warnings.filterwarnings('error', category=RuntimeWarning)

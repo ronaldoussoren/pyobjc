@@ -139,7 +139,7 @@ object_dealloc(PyObject* obj)
 	PyObject* ptype, *pvalue, *ptraceback;
 	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
-	if (PyObjCObject_Flags(obj) != PyObjCObject_kDEALLOC_HELPER 
+	if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER 
 			&& PyObjCObject_GetObject(obj) != nil) {
 		/* Release the proxied object, we don't have to do this when
 		 * there is no proxied object!
@@ -296,7 +296,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 		PyErr_Format(PyExc_AttributeError,
 		     "cannot access attribute '%.400s' of NIL '%.50s' object",
 		     PyString_AS_STRING(name),
-		     tp->tp_name);
+		     obj->ob_type->tp_name);
 		goto done;
 	}
 

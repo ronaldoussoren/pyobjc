@@ -27,11 +27,12 @@ def add_convenience_methods(super_class, name, type_dict):
 
     Matching entries from both mappings are added to the 'type_dict'.
     """
+    PYOBJC_NEW_INITIALIZER_PATTERN = not (hasattr(selector, 'returnsSelf') and hasattr(selector, 'isInitializer'))
     for k, sel in type_dict.items():
         if not isinstance(sel, selector):
             continue
 
-        if sel.selector.startswith('init') and not sel.isClassMethod:
+        if not PYOBJC_NEW_INITIALIZER_PATTERN and sel.selector.startswith('init') and not sel.isClassMethod:
             # Instance methods that start with 'init*' are constructors. These
             # return 'self'. If they don't they reallocated the previous 
             # value, don't use that afterwards.
@@ -58,8 +59,9 @@ def add_convenience_methods(super_class, name, type_dict):
                     t = type_dict[name]
                     v = selector(value, selector=t.selector, 
                         signature=t.signature, isClassMethod=t.isClassMethod)
-                    v.isInitializer = t.isInitializer
-                    v.returnsSelf = t.returnsSelf
+                    if not PYOBJC_NEW_INITIALIZER_PATTERN:
+                        v.isInitializer = t.isInitializer
+                        v.returnsSelf = t.returnsSelf
                     v.isAlloc = t.isAlloc
 
                     #if t.selector.startswith('init'):

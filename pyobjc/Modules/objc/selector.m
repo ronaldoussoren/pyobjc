@@ -225,6 +225,8 @@ base_donates_ref_setter(ObjCNativeSelector* self, PyObject* newVal, void* closur
 	return 0;
 }
 
+#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
+
 PyDoc_STRVAR(base_returns_self_doc, 
 "True if this is method returns a reallocated 'self', False otherwise\n"
 "\n"
@@ -245,26 +247,7 @@ base_returns_self_setter(ObjCNativeSelector* self, PyObject* newVal, void* closu
 	}
 	return 0;
 }
-PyDoc_STRVAR(base_is_alloc_doc, 
-"True if this is method returns a a freshly allocated object (uninitialized)\n"
-"\n"
-"NOTE: This field is used by the implementation."
-);
-static PyObject*
-base_is_alloc(ObjCNativeSelector* self, void* closure __attribute__((__unused__)))
-{
-	return PyObjCBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED));
-}
-static int
-base_is_alloc_setter(ObjCNativeSelector* self, PyObject* newVal, void* closure __attribute__((__unused__)))
-{
-	if (PyObject_IsTrue(newVal)) {
-		self->sel_flags |= PyObjCSelector_kRETURNS_UNINITIALIZED;
-	} else {
-		self->sel_flags &= ~PyObjCSelector_kRETURNS_UNINITIALIZED;
-	}
-	return 0;
-}
+
 PyDoc_STRVAR(base_is_initializer_doc, 
 "True if this is method is an object initializer\n"
 "\n"
@@ -286,7 +269,31 @@ base_is_initializer_setter(ObjCNativeSelector* self, PyObject* newVal, void* clo
 	return 0;
 }
 
+#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
+
+PyDoc_STRVAR(base_is_alloc_doc, 
+"True if this is method returns a a freshly allocated object (uninitialized)\n"
+"\n"
+"NOTE: This field is used by the implementation."
+);
+static PyObject*
+base_is_alloc(ObjCNativeSelector* self, void* closure __attribute__((__unused__)))
+{
+	return PyObjCBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED));
+}
+static int
+base_is_alloc_setter(ObjCNativeSelector* self, PyObject* newVal, void* closure __attribute__((__unused__)))
+{
+	if (PyObject_IsTrue(newVal)) {
+		self->sel_flags |= PyObjCSelector_kRETURNS_UNINITIALIZED;
+	} else {
+		self->sel_flags &= ~PyObjCSelector_kRETURNS_UNINITIALIZED;
+	}
+	return 0;
+}
+
 static PyGetSetDef base_getset[] = {
+#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 	{
 		"isInitializer",
 		(getter)base_is_initializer,
@@ -294,6 +301,7 @@ static PyGetSetDef base_getset[] = {
 		base_is_initializer_doc,
 		0
 	},
+#endif /* ! PYOBJC_NEW_INIITALIZER_PATTERN */
 	{
 		"isAlloc",
 		(getter)base_is_alloc,
@@ -350,6 +358,7 @@ static PyGetSetDef base_getset[] = {
 		base_selector_doc,
 		0
 	},
+#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 	{
 		"returnsSelf",
 		(getter)base_returns_self,
@@ -357,6 +366,7 @@ static PyGetSetDef base_getset[] = {
 		base_returns_self_doc,
 		0
 	},
+#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 	{ 
 		"__name__",  
 		(getter)base_selector, 
@@ -478,13 +488,13 @@ PyTypeObject PyObjCSelector_Type = {
 	pysel_new,				/* tp_new */
 	0,		        		/* tp_free */
 	0,					/* tp_is_gc */
-        0,                                      /* tp_bases */
-        0,                                      /* tp_mro */
-        0,                                      /* tp_cache */
-        0,                                      /* tp_subclasses */
-        0                                       /* tp_weaklist */
+	0,                                      /* tp_bases */
+	0,                                      /* tp_mro */
+	0,                                      /* tp_cache */
+	0,                                      /* tp_subclasses */
+	0                                       /* tp_weaklist */
 #if PY_VERSION_HEX >= 0x020300A2
-        , 0                                     /* tp_del */
+	, 0                                     /* tp_del */
 #endif
 };
 
@@ -560,7 +570,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		char buf[1024];
 
 		snprintf(buf, sizeof(buf), 
-			"Calling method (%s) on unitialized object %p of class %s\n",
+			"Calling method (%s) on uninitialized object %p of class %s\n",
 			PyObjCRT_SELName(self->sel_selector),
 			(void*)PyObjCObject_GetObject(self->sel_self),
 			GETISA(PyObjCObject_GetObject(self->sel_self))->name);
@@ -769,13 +779,13 @@ PyTypeObject ObjCNativeSelector_Type = {
 	0,					/* tp_new */
 	0,		        		/* tp_free */
 	0,					/* tp_is_gc */
-        0,                                      /* tp_bases */
-        0,                                      /* tp_mro */
-        0,                                      /* tp_cache */
-        0,                                      /* tp_subclasses */
-        0                                       /* tp_weaklist */
+	0,                                      /* tp_bases */
+	0,                                      /* tp_mro */
+	0,                                      /* tp_cache */
+	0,                                      /* tp_subclasses */
+	0                                       /* tp_weaklist */
 #if PY_VERSION_HEX >= 0x020300A2
-        , 0                                     /* tp_del */
+	, 0                                     /* tp_del */
 #endif
 };
 
@@ -1032,7 +1042,7 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 		char buf[1024];
 
 		snprintf(buf, sizeof(buf), 
-		   "Calling method (%s) on unitialized object %p of class %s\n",
+		   "Calling method (%s) on uninitialized object %p of class %s\n",
 		   PyObjCRT_SELName(self->sel_selector),
 		   (void*)PyObjCObject_GetObject(self->sel_self),
 		   GETISA(PyObjCObject_GetObject(self->sel_self))->name);
@@ -1485,13 +1495,13 @@ PyTypeObject ObjCPythonSelector_Type = {
 	0,					/* tp_new */
 	0,		        		/* tp_free */
 	0,					/* tp_is_gc */
-        0,                                      /* tp_bases */
-        0,                                      /* tp_mro */
-        0,                                      /* tp_cache */
-        0,                                      /* tp_subclasses */
-        0                                       /* tp_weaklist */
+	0,                                      /* tp_bases */
+	0,                                      /* tp_mro */
+	0,                                      /* tp_cache */
+	0,                                      /* tp_subclasses */
+	0                                       /* tp_weaklist */
 #if PY_VERSION_HEX >= 0x020300A2
-        , 0                                     /* tp_del */
+	, 0                                     /* tp_del */
 #endif
 };
 
@@ -1509,7 +1519,7 @@ PyObjCSelector_GetClass(PyObject* sel)
 	}
 	return ((ObjCNativeSelector*)sel)->sel_class;
 }
-        
+
 SEL      
 PyObjCSelector_GetSelector(PyObject* sel)
 {
