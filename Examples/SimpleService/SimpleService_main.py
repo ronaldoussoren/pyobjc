@@ -1,14 +1,15 @@
 from AppKit import *
 from Foundation import *
 from ServiceTest import *
+from PyObjCTools import AppHelper
+
+def main():
+    #NSLog(u"main()")
+    serviceProvider = ServiceTest.alloc().init()
+    #NSLog(u"serviceProvider = %r" % (serviceProvider,))
+    NSRegisterServicesProvider(serviceProvider, u"PyObjCSimpleService")
+    #NSLog(u"registered as PyObjCSimpleService")
+    AppHelper.runConsoleEventLoop()
 
 if __name__ == '__main__':
-    serviceProvider = ServiceTest.alloc().init()
-    NSRegisterServicesProvider(serviceProvider, u"PyObjCSimpleService")
-    try:
-        NSRunLoop.currentRunLoop().configureAsServer()
-        NSRunLoop.currentRunLoop().run()
-    except Exception, localException:
-        NSLog(localException)
-    
-    del serviceProvider
+    main()
