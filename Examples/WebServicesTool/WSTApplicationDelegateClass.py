@@ -1,12 +1,11 @@
 from Foundation import NSObject
 from WSTConnectionWindowControllerClass import WSTConnectionWindowController
 
-from AppKit import NibLoader
+from AppKit import NibClassBuilder
+from AppKit.NibClassBuilder import AutoBaseClass
 
-NibLoader.loadClassesForNibFromBundle( "MainMenu" )
-
-class WSTApplicationDelegate:
-  __metaclass__ = NibLoader.NibClassBuilder
+NibClassBuilder.extractClasses( "MainMenu" )
+class WSTApplicationDelegate(AutoBaseClass):
 
   def newConnectionAction_(self, sender):
     WSTConnectionWindowController.connectionWindowController().showWindow_(sender)
