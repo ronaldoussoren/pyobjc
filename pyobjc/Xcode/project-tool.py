@@ -52,20 +52,20 @@ def maybenib(encoding):
 def maybeutf(encoding=None):
     def maybeutf(fn):
         header = file(fn).read(4)
-        if header == '\x00\x00\xFE\xFF':
-            return 'ucs4_be'
-        elif header == '\xFF\xFE\x00\x00':
-            return 'ucs4_le'
-        elif header == '\x00\x3C\x00\x3F':
-            return 'utf_16_be'
-        elif header == '\x3C\x00\x3F\x00':
-            return 'utf_16_le'
-        elif header == '\x3C\x3F\x78\x6D':
+        if header.startswith(codecs.BOM_UTF8):
             return 'utf_8'
-        elif header.startswith('\xFE\xFF'):
+        elif header.startswith(codecs.BOM_UTF16_BE):
             return 'utf_16_be'
-        elif header.startswith('\xFF\xFE'):
+        elif header.startswith(codecs.BOM_UTF16_LE):
             return 'utf_16_le'
+        # some hacks to guess BOM-less UTF-16 text
+        elif header[0::2] == '\x00\x00' and header[1::2] != '\x00\x00':
+            return 'utf_16_be'
+        elif header[1::2] == '\x00\x00' and header[0::2] != '\x00\x00':
+            return 'utf_16_le'
+        # anything else is undetermined, can't match
+        # utf-8 against <?xm because it's the same in
+        # all of the latin/romanish codecs
         return encoding
     return maybeutf
 
@@ -79,7 +79,8 @@ def _buildEncodingsDict():
     for k in ['.py', '.m', '.h', '.c', '.pch', '.rtf', '.java', '.applescript', '.dependency', '.plist']:
         d[k] = maybeutf('macroman')
     for k in ['.strings']:
-        d[k] = maybeutf('utf16')
+        # should be utf_16, but that is always detectable
+        d[k] = maybeutf('utf_8')
     return d
 
 ENCODINGS = _buildEncodingsDict()
