@@ -12,6 +12,29 @@ This document contains an (incomplete) list of work items.
 Important items
 ---------------
 
+Check/Fix consistency of method calling
+.......................................
+
+There are currently 3 ways for calling from Objective-C into Python:
+
+* The methods stubs (in register.m and libffi_support.m)
+
+* forwardInvocation in class-builder.m
+
+* forwardInvocation in OC_PythonObject.m
+
+These should be consistent with each other, and the first two should be
+equivalent (but aren't as the latter doesn't support pass-by-reference 
+arguments). Hmm, might as well try to merge the two forwardInvocation
+implementations if at all possible...
+
+The 'data-flow' for calling into Python from Objective-C should be the 
+reverse of calling into Objective-C from Python (e.g. 
+``libffi_support.m:method_stub`` should be the reverse of 
+``libffi_support.m:ObjC_FFICaller``)
+
+BTW. The unittests don't cover calling Python from Objective-C at all!
+
 Better documentation
 ....................
 
@@ -42,7 +65,11 @@ we should add code that enables using python in multiple threads:
 * Acquire the GIL during callbacks from Objective-C (this includes python
   methods called from Objective-C)
 
-Ronald has started working on this, based on hints by Jack Janssen.
+* A number of functions use static buffers, all in pyobjc_support.m and
+  related to depythonify_c_value. Fixing this is relatively straightforward:
+  raise a python exception if the conversion fails, instead of returning an
+  error-string.
+
 
 Test suite
 ..........
@@ -106,10 +133,15 @@ should simular templates for other usefull projects and most importantly a
 document-based application. 
 
 Other possibilies include:
+
 * Standalone Service
+
 * IBPalette
+
 * PreferencePane
+
 * Screen Saver
+
 * Cocoa Bundle
 
 In contrast to a template for a document-based application these last four 
@@ -134,3 +166,5 @@ MacOS 10.1 support
 The native code for supporting Cocoa don't compile on MacOS 10.1. Need a way
 to conditionally compile parts of this code. Problem is that most of that code
 is generated.
+
+NOTE: At least one person has problems compiling Modules/objc on 10.1.
