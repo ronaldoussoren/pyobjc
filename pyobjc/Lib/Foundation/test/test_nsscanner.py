@@ -20,5 +20,33 @@ class TestNSScannerUsage(unittest.TestCase):
         self.assert_(didConvert)
         self.assertAlmostEquals(value, 2.4)
 
+        obj = NSScanner.scannerWithString_("abcd1234 efgh")
+
+        didConvert, value = obj.scanCharactersFromSet_intoString_(
+                NSCharacterSet.lowercaseLetterCharacterSet())
+        self.assert_(didConvert)
+        self.assertEquals(value, "abcd")
+
+        didConvert, value = obj.scanInt_()
+        self.assert_(didConvert)
+        self.assertEquals(value, 1234)
+
+        obj = NSScanner.scannerWithString_("1234 efgh")
+
+        didConvert, value = obj.scanLongLong_()
+        self.assert_(didConvert)
+        self.assertEquals(value, 1234)
+
+        didConvert, value = obj.scanString_intoString_("efgh")
+        self.assert_(didConvert)
+        self.assertEquals(value, "efgh")
+
+        obj = NSScanner.scannerWithString_("1234 efgh")
+        didConvert, value = obj.scanUpToCharactersFromSet_intoString_(
+                NSCharacterSet.lowercaseLetterCharacterSet())
+        self.assert_(didConvert)
+        self.assertEquals(value, "1234 ")
+
+
 if __name__ == '__main__':
     unittest.main( )
