@@ -5,6 +5,9 @@ import sys
 import os
 import glob
 
+# Add our utility library to the path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'setup-lib'))
+
 # Some PiPy stuff
 LONG_DESCRIPTION="""
 PyObjC is a bridge between Python and Objective-C.  It allows full
@@ -67,7 +70,7 @@ from distutils.core import setup, Extension
 from distutils.command.build_ext import build_ext
 import os
 
-
+from di_test import cmd_test
 
 
 class pyobjc_build_ext (build_ext):
@@ -708,7 +711,10 @@ dist = setup(name = "pyobjc",
              package_dir = package_dir,
              scripts = [ 'Scripts/nibclassbuilder', 'Scripts/runPyObjCTests'],
              extra_path = "PyObjC",
-             cmdclass = {'build_ext': pyobjc_build_ext},
+             cmdclass = {
+                'build_ext': pyobjc_build_ext,
+                'test':      cmd_test,
+             },
              **SetupExtraArguments
 )
 
