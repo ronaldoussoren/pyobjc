@@ -31,6 +31,9 @@ class _runtime:
     older versions of PyObjC.
     """
     def __getattr__(self, name):
+        import warnings
+        warnings.warn("Deprecated: use objc.lookUpClass",
+            DeprecationWarning)
         if name == '__objc_classes__':
             return getClassList()
         elif name == '__kind__':
@@ -166,18 +169,6 @@ def _subclass_extender(name, base, protocols, dct):
         warnings.warn(
             "__bundle_hack__ is not necessary in PyObjC 1.3+ / py2app 0.1.8+",
             DeprecationWarning)
-
-######
-# Backward compatibility stuff
-# (deprecated functionality)
-
-def recycle_autorelease_pool():
-    """Deprecated: Use recycleAutoreleasePool"""
-    import warnings
-    warnings.warn(
-        "Use recycleAutoreleasePool instead of recycle_autorelease_pool",
-        DeprecationWarning)
-    recycleAutoreleasePool()
 
 ###
 # This can be usefull to hunt down memory problems in the testsuite.
