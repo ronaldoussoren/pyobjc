@@ -449,7 +449,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 	Py_DECREF(arglist);
 	if (res == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
+		goto error;
 	}
 
 	if (!have_output) {
