@@ -10,6 +10,8 @@
 #endif
 
 
+#undef AUTOGIL_DEBUG
+
 static PyObject *AutoGILError;
 
 
@@ -21,10 +23,16 @@ static void autoGILCallback(CFRunLoopObserverRef observer,
 	switch (activity) {
 	case kCFRunLoopBeforeWaiting:
 		/* going to sleep, release GIL */
+#ifdef AUTOGIL_DEBUG
+		fprintf(stderr, "going to sleep, release GIL\n");
+#endif
 		*p_tstate = PyEval_SaveThread();
 		break;
 	case kCFRunLoopAfterWaiting:
 		/* waking up, acquire GIL */
+#ifdef AUTOGIL_DEBUG
+		fprintf(stderr, "waking up, acquire GIL\n");
+#endif
 		PyEval_RestoreThread(*p_tstate);
 		*p_tstate = NULL;
 		break;
