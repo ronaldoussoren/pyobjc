@@ -286,7 +286,7 @@ class PackageMaker:
         # Alternatively the filenames can be {pre,post}_{upgrade,install}
         # in which case we prepend the package name
         packageName = self.packageInfo["Title"]
-        for pat in ("*upgrade", "*install", "*flight"):
+        for pat in ("*upgrade", "*install", "*flight", "InstallationCheck"):
             pattern = join(self.resourceFolder, packageName + pat)
             pattern2 = join(self.resourceFolder, pat)
             allFiles = allFiles + glob.glob(pattern)
@@ -302,7 +302,7 @@ class PackageMaker:
                 files.append((f, f))
             elif basename(f) in ["pre_upgrade", "pre_install", "post_upgrade", "post_install"]:
                 files.append((f, packageName+"."+basename(f)))
-            elif basename(f) in ["preflight", "postflight"]:
+            elif basename(f) in ["preflight", "postflight", "InstallationCheck"]:
                 files.append((f, f))
             elif f[-8:] == "_upgrade":
                 files.append((f,f))
@@ -318,11 +318,12 @@ class PackageMaker:
                 shutil.copy(f, os.path.join(self.packageResourceFolder, dst))
             elif isdir(f):
                 # special case for .rtfd and .lproj folders...
-                d = join(self.packageResourceFolder, dst)
-                os.mkdir(d)
-                files = GlobDirectoryWalker(f)
-                for file in files:
-                    shutil.copy(file, d)
+                #d = join(self.packageResourceFolder, dst)
+                #os.mkdir(d)
+                #files = GlobDirectoryWalker(f)
+                #for file in files:
+                #    shutil.copy(file, d)
+                shutil.copytree(f, os.path.join(self.packageResourceFolder, dst))
 
 
     def _addSizes(self):
