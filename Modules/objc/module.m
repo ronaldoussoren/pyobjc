@@ -479,7 +479,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	Py_XDECREF(module_key); module_key = NULL;
 	Py_XDECREF(class_list); class_list = NULL;
 
-	return PyObjC_IdToPython(bundle)
+	return PyObjC_IdToPython(bundle);
 }
 
 PyDoc_STRVAR(objc_splitSignature_doc,
