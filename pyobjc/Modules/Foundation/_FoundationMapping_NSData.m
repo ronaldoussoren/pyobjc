@@ -2,7 +2,7 @@
  * NSData mappings for 'difficult' methods:
  *
  * -initWithBytes:length:
- * +dataWithBytes:lenght:
+ * +dataWithBytes:length:
  * -bytes
  * -mutableBytes
  *

@@ -314,12 +314,12 @@ static inline int add_NSRect(PyObject* d, char* name, NSRect value)
 #include "_FoundationMapping_NSData.m"
 #include "_FoundationMapping_NSDictionary.m"
 #include "_FoundationMapping_NSIndexSet.m"
-#include "_FoundationMapping_NSInputStream.m"
 #include "_FoundationMapping_NSMutableArray.m"
 #include "_FoundationMapping_NSNetService.m"
 #include "_FoundationMapping_NSScriptObjectSpecifier.m"
 #include "_FoundationMapping_NSSet.m"
 #include "_FoundationMapping_NSString.m"
+#include "_FoundationMapping_NSStream.m"
 
 
 void init_Foundation(void);
@@ -369,10 +369,10 @@ void init_Foundation(void)
 	if (_pyobjc_install_NSData() != 0) return;
 	if (_pyobjc_install_NSDictionary() != 0) return;
 	if (_pyobjc_install_NSIndexSet() != 0) return;
-	if (_pyobjc_install_NSInputStream() != 0) return;
 	if (_pyobjc_install_NSMutableArray() != 0) return;
 	if (_pyobjc_install_NSNetService() != 0) return;
 	if (_pyobjc_install_NSScriptObjectSpecifier() != 0) return;
 	if (_pyobjc_install_NSSet() != 0) return;
 	if (_pyobjc_install_NSString() != 0) return;
+	if (_pyobjc_install_NSStream() != 0) return;
 }
