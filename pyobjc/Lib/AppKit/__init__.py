@@ -574,7 +574,7 @@ NSTableViewDelegate = _objc.informal_protocol(
     _objc.selector(
     None,
     selector='tableView:willDisplayCell:forTableColumn:row:',
-    signature='c@:@@@i',
+    signature='v@:@@@i',
     required=0
     ),
     
