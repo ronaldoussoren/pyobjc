@@ -1,7 +1,7 @@
 <?
 $title = "Home";
 $cvs_author = '$Author: bbum $';
-$cvs_date = '$Date: 2002/11/22 22:01:52 $';
+$cvs_date = '$Date: 2002/11/24 16:14:38 $';
 $is_home = 1;
 
 $metatags = '<meta name="description" content="PyObjC, a universal bridge between the Objective-C and Python languages.">
@@ -42,7 +42,7 @@ include $fsroot."news/news.inc";
 <h1>Resources</h1>
 
 <p>
-Support is currently limited to <a href=http://lists.sourceforge.net/mailman/listinfo/pyobjc-dev"">the developer's mailing list</a>.
+Support is currently limited to <a href="http://lists.sourceforge.net/mailman/listinfo/pyobjc-dev">the developer's mailing list</a>.
 </p>
 
 <p>
