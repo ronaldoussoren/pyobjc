@@ -217,12 +217,6 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc)
 	result->methinfo= PyObjCMethodSignature_FromSignature(signature);
 	if (result->methinfo == NULL) return NULL;
 
-	result->cif = PyObjCFFI_CIFForSignature(result->methinfo, 0);
-	if (result->cif == NULL) {
-		Py_DECREF(result);
-		return NULL;	
-	}
-
 	result->function = func;
 
 	result->doc = doc;
@@ -230,6 +224,15 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc)
 
 	result->name = name;
 	Py_XINCREF(name);
+
+	result->module = NULL;
+
+	result->cif = PyObjCFFI_CIFForSignature(result->methinfo, 0);
+	if (result->cif == NULL) {
+		Py_DECREF(result);
+		return NULL;	
+	}
+
 	
 	return (PyObject*)result;
 }
