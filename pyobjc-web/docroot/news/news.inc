@@ -1,4 +1,4 @@
-<span class="news_date">2002-01-23: </span><span class="news_headline">Dev News; GNUstep support, FFI, performance, etc...</span><?php gray_line(); ?>
+<span class="news_date">2003-01-23: </span><span class="news_headline">Dev News; GNUstep support, FFI, performance, etc...</span><?php gray_line(); ?>
   <p>
 <b>Important:</b> If you are working with the cvs based source, please read <a href="http://sourceforge.net/mailarchive/message.php?msg_id=3618225">this message</a>.</p>
 <p>
