@@ -40,6 +40,7 @@ print '->', obj.retainCount()
 print "all->", x.description()
 x=None
 
-#obj.release() 
 obj = None
 print "Done"
+
+objc.recycle_autorelease_pool()

@@ -5,6 +5,8 @@
 #include "pyobjc.h"
 #include <stddef.h>
 
+#import <Foundation/NSString.h> /*XXX*/
+
 /*
  * We use weakreferences to make sure that every objective-C object has 
  * at most one python proxy. This allows users to use the 'is' operator
@@ -170,7 +172,12 @@ object_getattro(PyObject* obj, PyObject* name)
 	if (result) return result;
 
 	PyErr_Clear();
-	result = ObjCSelector_FindNative(obj, PyString_AsString(name));
+	NS_DURING
+		result = ObjCSelector_FindNative(obj, PyString_AsString(name));
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+		result = NULL;
+	NS_ENDHANDLER
 
 	return result;
 }

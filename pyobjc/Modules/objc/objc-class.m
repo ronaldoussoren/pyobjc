@@ -6,7 +6,20 @@
 #include "pyobjc.h"
 #include "objc_support.h"
 #include <stddef.h>
-//#include <Foundation/Foundation.h>
+
+PyDoc_STRVAR(class_doc,
+"objc_class(name, bases, dict) -> a new Objective-C class\n"
+"\n"
+"objc_class is the meta-type for Objective-C classes. It should not be\n"
+"necessary to manually create instances of this type, those are \n"
+"created by subclassing and existing Objective-C class.\n"
+"\n"
+"The list of bases must start with an existing Objective-C class, and \n"
+"cannot contain other Objective-C classes. The list may contain\n"
+"informal_interface objects, those are used during the calculation of\n"
+"method signatures and will not be visible in the list of base-classes\n"
+"of the created class."
+);
 
 static int add_class_fields(Class objc_class, PyObject* dict);
 
@@ -73,7 +86,7 @@ get_class_info(PyObject* class)
 		return NULL;
 	}
 	Py_DECREF(item); 
-	Py_INCREF(class);
+	/* Py_INCREF(class); XXX Needed? */
 	return info;
 }
 
@@ -90,6 +103,10 @@ static PyObject*	class_registry = NULL;
 static int 
 objc_class_register(Class objc_class, PyObject* py_class)
 {
+	/* TODO: Also add to 'register_proxy' structure in obc-object.m
+	 * (just in case a class is returned where an 'id' is expected 
+	 * according to the method signature)
+	 */
 	int res;
 	
 	if (class_registry == NULL) {
@@ -108,6 +125,7 @@ objc_class_register(Class objc_class, PyObject* py_class)
 	if (res != 0) {
 		abort();
 	}
+	Py_INCREF(py_class);
 	return res;
 }
 
@@ -184,7 +202,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	PyObject* protocols;
 	PyObject* real_bases;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:meta_new",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:__new__",
 			keywords, &name, &bases, &dict)) {
 		return NULL;
 	}
@@ -300,7 +318,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 	Py_DECREF(args);
-	Py_DECREF(real_bases);
+	//Py_DECREF(real_bases);
 	args = NULL;
 	real_bases = NULL;
 
@@ -367,7 +385,7 @@ class_repr(PyObject* obj)
 	if (cls) {
 		snprintf(buffer, sizeof(buffer), 
 			"<objective-c class %s at %p>", 
-			cls->name, obj);
+			cls->name, cls);
 	} else {
 		snprintf(buffer, sizeof(buffer),
 			"%s", "<objective-c class NIL>");
@@ -425,7 +443,13 @@ class_getattro(PyObject* self, PyObject* name)
 
 	/* Try to find the method anyway */
 	PyErr_Clear();
-	result = ObjCSelector_FindNative(self, PyString_AsString(name));
+	NS_DURING
+		result = ObjCSelector_FindNative(self, PyString_AsString(name));
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+		result = NULL;
+	NS_ENDHANDLER
+
 	if (result != 0) {
 		int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);
 		ObjCNativeSelector* x = (ObjCNativeSelector*)result;
@@ -506,7 +530,7 @@ PyTypeObject ObjCClass_Type = {
 	0,					/* tp_setattro */
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT,			/* tp_flags */
- 	0,					/* tp_doc */
+ 	class_doc,				/* tp_doc */
  	0,					/* tp_traverse */
  	0,					/* tp_clear */
 	0,					/* tp_richcompare */
@@ -715,6 +739,7 @@ PyObject* ObjCClass_New(Class objc_class)
 		Py_INCREF(result);
 		return result;
 	}
+	PyErr_Clear();
 
 	dict = PyDict_New();
 	if (add_class_fields(objc_class, dict) < 0)  {
@@ -755,7 +780,6 @@ PyObject* ObjCClass_New(Class objc_class)
 	info->method_magic = objc_methodlist_magic(objc_class);
 
 	objc_class_register(objc_class, result);
-	Py_INCREF(result);
 
 	return result;
 }

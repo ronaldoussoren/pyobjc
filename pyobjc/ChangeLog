@@ -1,9 +1,28 @@
+2002-10-30  Ronald Oussoren <oussoren@cistron.nl>
+	* Fix memory corruption bug
+	* Add Obj-C exception handling around calls to ObjC_FindNative,
+	  this avoids an unhandled exception when during:
+	  	help('Foundation')
+	  I didn't add a testcase for this as the above code takes a
+	  _very_ long time to execute.
+	* Some minor code cleanup (mostly removal of print statements)
+	* Reset '__module__' of classes in the __init__.py of AppKit and 
+	  Foundation. help(AppKit) now works (and generates an lot of
+	  output)
+
 2002-10-29  Bill Bumgarner  <bbum@bumbox.local.>
 
 	* Fixed a bug in convenience method that covered objectForKey:.
 	Wrote a unit test that failed due to the bug
 	(test_nsdictionary.py), then fixed _convenience.py to fix the
 	problem.
+
+2002-10-28 Ronald Oussoren <oussoren@cistron.nl>
+	* Doc/wrapping.txt: New file containing basic documentation on how
+	  to wrap an Objective-C class library.
+
+2002-10-25 Ronald Oussoren <oussoren@cistron.nl>
+	* Improved inline documentation
 
 2002-10-25  Bill Bumgarner  <bbum@codefab.com>
 
@@ -39,6 +58,13 @@
 	* Added basic unit tests to objc.
 	* Implemented __ne__ in terms of isEqual_ (not isNotEqual_).
 	* Added unit test that tests that an object is equal to itself.
+
+2002-10-21 Ronald Oussoren <oussoren@cistron.nl>
+	* scripts/buildpkg.py: Import from Python 2.3 CVS, with one minor
+	  bugfix
+	* scripts/make_distrib.py: Create source archive and installer
+	* Modules/objc/register.m: Add signature that is needed to write
+	  system services in Python.
 
 2002-10-18  Bill Bumgarner  <bbum@codefab.com>
 	* Fixed the -dealloc method in OC_PythonDictionary.

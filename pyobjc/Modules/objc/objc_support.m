@@ -662,20 +662,10 @@ pythonify_c_value (const char *type, void *datum)
       break;
 
     default:
-      {
-      /* XXX: Ronald: Why are GNU and Apple runtimes treated differently? */
-#ifdef GNU_RUNTIME
-        [NSException raise:NSInternalInconsistencyException 
-                     format:@"unhandled value type (%c|%d|%s)", *type, *type, type];
-#else
-#define ERRMSG "pythonify_c_value: unhandled value type (%c|%d|%s)"
-        char msg[sizeof ERRMSG];
-        sprintf (msg, ERRMSG, *type, *type, type);
-        PyErr_SetString (objc_error, msg);
-#undef ERRMSG
-#endif
+	ObjCErr_Set(objc_error, 
+		"pythonify_c_value: unhandled value type (%c|%d|%s)",
+		*type, *type, *type);
         break;
-      }
     }
 
   return retobject;
@@ -696,7 +686,7 @@ pythonify_c_value (const char *type, void *datum)
 #endif
 
 /* This is used as an array of pointers: both the memory for the array
-   and that for each array's slot is dinamically allocated with malloc().
+   and that for each array's slot is dynamically allocated with malloc().
    We use it when we have to give an ObjC method a pointer to some datum:
    since from the Python point of view we always work on values, not pointers,
    when an ObjC does actually want a pointer, we allocate memory in the
@@ -1128,7 +1118,8 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	ObjCNativeSelector* meth = (ObjCNativeSelector*)aMeth;
 	PyObject*	  objc_result = NULL;
 	PyObject*	  result = NULL;
-	id		  self_obj = NULL;
+	id		  self_obj = nil;
+	id                nil_obj = nil;
 
 	methinfo = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
 	objc_argcount = [methinfo numberOfArguments];
@@ -1237,14 +1228,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	}
 
 	[inv setTarget:self_obj];
-#if 0
-	[inv setArgument:&self_obj atIndex:0];
-#endif
-
 	[inv setSelector:meth->sel_selector];
-#if 0
-	[inv setArgument:&(meth->sel_selector) atIndex:1];
-#endif
 
 	py_arg = 0;
 	for (i = 2; i < objc_argcount; i++) {
@@ -1423,14 +1407,11 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 #if 1
 	self_obj = nil;
 	if (*[methinfo methodReturnType] == _C_ID) {
-		[inv setReturnValue:&self_obj];
+		[inv setReturnValue:&nil_obj];
 	}
-	[inv setTarget:self_obj];
-	[inv setArgument:&self_obj atIndex:0];
+	[inv setTarget:nil];
 #endif
-
 	[inv release];
-	[methinfo release];
 	inv = nil;
 
 	PyMem_Free(argbuf);
@@ -1445,11 +1426,12 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 error_cleanup:
 	if (inv) {
 		self_obj = nil;
+#if 1
 		if (*[methinfo methodReturnType] == _C_ID) {
 			[inv setReturnValue:&self_obj];
 		}
-		[inv setTarget:self_obj];
-		[inv setArgument:&self_obj atIndex:0];
+#endif
+		[inv setTarget:nil];
 		[inv release];
 		inv = nil;
 	}

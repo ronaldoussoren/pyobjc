@@ -10,6 +10,7 @@ NSBundle = _objc.lookup_class('NSBundle')
 
 # We use strings to represent selectors, therefore 
 # NSSelectorFromString and NSStringFromSelector are no-ops (for now)
+
 def NSSelectorFromString(aSelectorName):
 	if not isinstance(aSelectorName, str):
 		raise TypeError, "aSelector must be string"
@@ -18,31 +19,31 @@ def NSSelectorFromString(aSelectorName):
 
 NSStringFromSelector = NSSelectorFromString
 
-
 def NSStringFromClass(aClass):
 	return aClass.__name__
 
 # Define usefull utility methods here
-
 def load_bundle(path):
 	"""
 	Load the specified bundle/framework and return a list of classes 
 	defined in that bundle/framework
 	"""
 	bundle_class = _objc.lookup_class('NSBundle')
-	# print "Bundle-class = ", bundle_class
+
 	bndl = bundle_class.bundleWithPath_(path)
-	# print "Bundle = ", bndl, path
+
 	bndl.load()
+
 	classes = [ cls 
-			for cls in _objc.class_list() 
-			if path == bundle_class.bundleForClass_(cls).bundlePath() ]
+		for cls in _objc.class_list() 
+		if path == bundle_class.bundleForClass_(cls).bundlePath() ]
 	return classes
 
 class_list = load_bundle('/System/Library/Frameworks/Foundation.framework')
 gl = globals()
 for cls in class_list:
 	gl[cls.__name__] = cls
+	cls.__module__ = 'Foundation'
 
 del class_list
 del cls
@@ -77,8 +78,3 @@ def propertyListFromPythonCollection(aPyCollection, conversionHelper=None):
 		if conversionHelper:
 			return conversionHelper(aPyCollection)
 		raise "UnrecognizedTypeException", "Type %s encountered in python collection;  don't know how to convert." % containerType
-
-# def pythonCollectionFromPropertyList(aPropertyList):
-#	elementClass = aPropertyList.
-#
-# How do I figure out if [aPropertyList isKindOfClass: [NSDictionary class]]??

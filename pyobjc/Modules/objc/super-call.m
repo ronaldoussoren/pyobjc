@@ -272,10 +272,7 @@ IMP ObjC_FindIMPForSignature(char* signature)
 
 	r = find_signature(signature);
 
-	if (r) return r->call_to_python;
-
-	printf("No IMP for signature %s\n", signature);
-	return NULL;
+	return r?r->call_to_python:NULL;
 }
 
 IMP ObjC_FindIMP(Class class, SEL sel)
@@ -306,12 +303,8 @@ IMP ObjC_FindIMP(Class class, SEL sel)
 
 	generic = find_signature(ObjCSelector_Signature(objc_sel));
 	if (generic) {
-		if (PyErr_Occurred()) {
-			PyErr_Print();
-		}
 		return generic->call_to_python;
 	}
-	printf("No IMP for selector %s in %s\n", SELNAME(sel), class->name);
 	return NULL;
 }
 
