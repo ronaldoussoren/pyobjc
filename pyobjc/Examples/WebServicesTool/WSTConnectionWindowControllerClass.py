@@ -62,12 +62,11 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
     
     aController._toolbarItems.setObject_forKey_(toolbarItem, anIdentifier)
 
-from AppKit import NibClassBuilder
-from AppKit.NibClassBuilder import AutoBaseClass
+from PyObjCTools import NibClassBuilder
 
 NibClassBuilder.extractClasses( "WSTConnection" )
-class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource,
-                                    NSToolbarDelegate):
+class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass, 
+                                    NSTableDataSource, NSToolbarDelegate):
     """
     As per the definition in the NIB file,
     WSTConnectionWindowController is a subclass of

@@ -1,35 +1,17 @@
 import time
-def before(txt = None):
-    global b
-    if txt is not None:
-        print time.ctime(), txt
-    b = time.time()
-
-def after(txt):
-    global b
-    e = time.time()
-    print time.ctime(), txt, e - b
-    b = e
-
-before('import sys')
 import sys
-after('import sys')
 from Foundation import NSObject
-after('import Foundation')
-from AppKit import NSApplicationMain, NibClassBuilder
+from AppKit import NSApplicationMain
+from PyObjCTools import NibClassBuilder
 from AppKit import NSRunAlertPanel
-after('import AppKit')
 from objc import *
-after('import objc')
 
 NibClassBuilder.extractClasses('MainMenu.nib')
-after('extractClasses')
 
 class Converter (NibClassBuilder.AutoBaseClass):
     def convertAmount(self, amt, rate):
         return amt*rate
 
-after('class Converter')
         
 class ConverterController (NibClassBuilder.AutoBaseClass):
 
@@ -52,10 +34,6 @@ class ConverterController (NibClassBuilder.AutoBaseClass):
 
         x = NSRunAlertPanel("Calculation Result", 
             "The result is %s"%(total), "OK", None, None)
-        print x
 
-after('class ConverterController')
 
 sys.exit(NSApplicationMain(sys.argv))
-
-after('NSApplicationMain')

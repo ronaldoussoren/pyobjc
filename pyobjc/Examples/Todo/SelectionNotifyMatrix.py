@@ -1,6 +1,6 @@
 from AppKit import *
 from Foundation import *
-from AppKit.NibClassBuilder import AutoBaseClass
+from PyObjCTools.NibClassBuilder import AutoBaseClass
 
 RowSelectedNotification = "RowSelectedNotification"
 

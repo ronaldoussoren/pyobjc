@@ -8,12 +8,12 @@
 
 from objc import YES, NO
 
-from AppKit import NibClassBuilder, NSApplicationDelegate
-from AppKit.NibClassBuilder import AutoBaseClass
+from AppKit import NSApplicationDelegate
+from PyObjCTools import NibClassBuilder 
 
 # create ObjC classes as defined in MainMenu.nib
 NibClassBuilder.extractClasses("MainMenu")
-class MyAppDelegate(AutoBaseClass, NSApplicationDelegate):
+class MyAppDelegate(NibClassBuilder.AutoBaseClass, NSApplicationDelegate):
     def applicationShouldOpenUntitledFile_(self, sender):
         # return NO if you don't want untitled document to be opened on app launch
         return YES

@@ -27,7 +27,7 @@
 #define PyDoc_STRVAR(name, str) PyDoc_VAR(name) = PyDoc_STR(str)
 #endif
 
-#define OBJC_VERSION "0.8CVS"
+#define OBJC_VERSION "0.9pre1"
 
 #ifdef MACOSX
 
@@ -91,6 +91,7 @@ void PyObjCClass_CheckMethodList(PyObject* cls);
 
 
 PyObject* PyObjCObject_New(id objc_object);
+PyObject* PyObjCObject_NewUnitialized(id objc_object);
 PyObject* PyObjCObject_FindSelector(PyObject* cls, SEL selector);
 id 	  PyObjCObject_GetObject(PyObject* object);
 void 	  PyObjCObject_ClearObject(PyObject* object);

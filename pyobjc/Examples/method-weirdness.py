@@ -12,6 +12,7 @@
 # NSActionCell.isEnabled_, which is wrong.
 #
 import objc
+import AppKit
 
 # NSButtonCell is one of the classes that acts like this, NSTextView is
 # another one (both detected accidently while debugging a problem with the

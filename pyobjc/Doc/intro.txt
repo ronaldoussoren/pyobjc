@@ -131,7 +131,7 @@ Cocoa frameworks are mapped onto Python packages with the same name, that is
 the classes, constants and functioins from the AppKit framework are available
 after you import ``AppKit`` in your Python script.
 
-The module ``AppKit.NibClassBuilder`` can be used to make working with 
+The module ``PyObjCTools.NibClassBuilder`` can be used to make working with 
 NIB files more convenient. This module can be used to extract information 
 about classes from NIB files, both as a standalone tool generating source code 
 and during runtime. See the online documentation for this module for more

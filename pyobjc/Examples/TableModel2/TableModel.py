@@ -1,8 +1,7 @@
 import sys
 import os.path
 import AppKit
-from AppKit import NibClassBuilder
-from AppKit.NibClassBuilder import AutoBaseClass
+from PyObjCTools import NibClassBuilder
 
 sys.path.insert(0, os.path.join(sys.path[0], "pyobjc"))
 
@@ -10,7 +9,7 @@ import objc
 import AppKit
 
 NibClassBuilder.extractClasses("MainMenu")
-class PyModel (AutoBaseClass, AppKit.NSTableDataSource, AppKit.NSTableViewDelegate):
+class PyModel (NibClassBuilder.AutoBaseClass, AppKit.NSTableDataSource, AppKit.NSTableViewDelegate):
     __slots__  = ('rowcount')
 
     def init(self):

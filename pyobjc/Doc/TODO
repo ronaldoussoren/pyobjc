@@ -12,6 +12,14 @@ This document contains an (incomplete) list of work items.
 Important items
 ---------------
 
+Remove ``from {AppKit,Foundation} import *``
+...........................................
+
+There are definite plans to replace the AppKit/Foundation modules by module-like
+objects that lazily lookup class objects. This is needed to speed up application
+loading. Just importing everything negates the usefullness of this change.
+
+
 Check/Fix consistency of method calling
 .......................................
 

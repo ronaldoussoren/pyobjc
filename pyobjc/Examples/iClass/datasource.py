@@ -1,6 +1,6 @@
 from Foundation import NSObject, NSBundle
-from AppKit import NSOutlineViewDataSource, NSTableDataSource, NibClassBuilder
-from AppKit.NibClassBuilder import AutoBaseClass
+from AppKit import NSOutlineViewDataSource, NSTableDataSource, 
+from PyObjCTools import NibClassBuilder
 from objc import selector, getClassList, objc_object, IBOutlet
 
 WRAPPED={}
@@ -42,7 +42,7 @@ def classBundle(cls):
             framework = framework[:-len('.framework')]
     return framework
 
-class ClassesDataSource (AutoBaseClass, NSOutlineViewDataSource, NSTableDataSource):
+class ClassesDataSource (NibClassBuilder.AutoBaseClass, NSOutlineViewDataSource, NSTableDataSource):
     __slots__ = ('_classList', '_classTree', '_methodInfo')
 
     def clearClassInfo(self):

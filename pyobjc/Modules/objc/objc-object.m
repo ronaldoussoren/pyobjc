@@ -357,6 +357,49 @@ PyObjCObject_New(id objc_object)
 }
 
 PyObject* 
+PyObjCObject_NewUnitialized(id objc_object)
+{
+	Class cls = GETISA(objc_object);
+	PyTypeObject* cls_type;
+	PyObject*     res;
+
+
+	res = find_existing_proxy(objc_object);
+	if (res) return res;
+
+	if (objc_object == NULL) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	cls_type = (PyTypeObject*)PyObjCClass_New(cls);
+	if (cls_type == NULL) {
+		return NULL;
+	}
+
+	res = cls_type->tp_alloc(cls_type, 0);
+	if (res == NULL) {
+		return NULL;
+	}
+
+	/* This should be in the tp_alloc for the new class, but 
+	 * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
+	 */
+	PyObjCClass_CheckMethodList((PyObject*)res->ob_type);
+	
+	((PyObjCObject*)res)->weak_refs = NULL;
+	((PyObjCObject*)res)->objc_object = objc_object;
+	((PyObjCObject*)res)->flags = 0;
+
+	if (register_proxy(res) < 0) {
+		Py_DECREF(res);
+		return NULL;
+	}
+
+	return res;
+}
+
+PyObject* 
 PyObjCObject_FindSelector(PyObject* object, SEL selector)
 {
 	PyObject* meth;

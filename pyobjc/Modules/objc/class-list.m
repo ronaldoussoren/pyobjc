@@ -114,7 +114,6 @@ PyObjC_GetClassList(void)
 	return result;
 
 error_cleanup:
-	printf("getClassList error\n");
 	if (result)
 	  Py_DECREF(result);
 

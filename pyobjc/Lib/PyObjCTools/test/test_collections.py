@@ -2,7 +2,7 @@ import unittest
 import objc
 
 from Foundation import *
-from Foundation.Conversion import *
+from PyObjCTools.Conversion import *
 
 samplePropertyList = '{ "" = 1; "x" = "2"; 1 = "one";}'
 
