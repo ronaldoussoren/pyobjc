@@ -1,6 +1,18 @@
 """
-MachSignals - Integrating signal handling into the runloop
+Substitute for the signal module when using a CFRunLoop.
+
+This module is generally only used to support:
+    PyObjCTools.AppHelper.installMachInterrupt()
+
+A mach port is opened and registered to the CFRunLoop.
+When a signal occurs the signal number is sent in a mach
+message to the CFRunLoop.  The handler then causes Python
+code to get executed.
+
+In other words, Python's signal handling code does not wake
+reliably when not running Python code, but this does.
 """
+
 import _machsignals
 __all__ = ['getsignal', 'signal']
 
