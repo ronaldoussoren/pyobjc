@@ -2,11 +2,14 @@
 Odd features
 ============
 
+.. :author: Ronald Oussoren
+
 The mapping from Objective-C onto Python is almost complete, but the following
 things should be kept in mind:
 
 - Objective-C only has single inheritance. You can use multiple inheritance in
-  the python code, but only to mix in 'fully python' classes.
+  the python code, but only to mix in 'fully python' classes. Do *not* use 
+  multiple inheritance, this feature may not survive beyond 0.9.
 
 - In objective-C it is valid to call methods on nil, these calls will be
   ignored. The nil 'object' is mapped to None and None will not ignore method

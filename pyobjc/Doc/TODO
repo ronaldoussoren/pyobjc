@@ -108,6 +108,12 @@ applicable.
 Support beyond that requires someone that actually tries to perform the 
 port to GNUstep (and after that maintains it). 
 
+Support for MacOS X 10.1
+.......................
+
+We also do not support MacOS X 10.1, again because nobody seems to care enough
+to perform (and maintain) the port. 
+
 Support for libFFI
 ..................
 
@@ -190,3 +196,21 @@ NSCoder support
 It might be usefull to add default implementations of ``encodeWithCoder:`` and
 ``initWithCoder:`` methods to Python subclasses of Objective-C classes that 
 implement these.
+
+Build cleanups
+..............
+
+The contents of MANIFEST are no longer valid. We should move to a generated 
+MANIFEST (using MANIFEST.in).
+
+Known issues
+............
+
+It is impossible to support methods with a variable number of arguments in the
+generic code (you have to reimplement allmost all of the logic of these 
+methods in order to know how many and which types of arguments are expected).
+Luckily there are not many varargs methods and most (if no all) of them can
+be easily avoided.
+
+
+

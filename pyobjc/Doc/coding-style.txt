@@ -8,9 +8,6 @@ Coding style for PyObjC
 :URL: http://pyobjc.sourceforge.net/
 :copyright: 2002 The PyObjC Project
 
-.. note:: This document is a work in progress and does *not* describe the existing
-   code.
-
 .. contents::
 
 Introduction
@@ -68,8 +65,8 @@ in the DocUtils source tree.
 
         # Author: David Goodger
         # Contact: goodger@users.sourceforge.net
-        # Revision: $Revision: 1.2 $
-        # Date: $Date: 2003/01/10 12:20:34 $
+        # Revision: $Revision: 1.3 $
+        # Date: $Date: 2003/04/03 20:20:43 $
         # Copyright: This module has been placed in the public domain.
 
 (2) Add a module level variable that indicates that ReST is used to format

@@ -12,6 +12,15 @@ USAGE='Usage: %s [-p python | --with-python=%s] [-h|--help] [-o release-dir|--ou
 
 PYTHON=sys.executable
 
+def rest2HTML(irrelevant, dirName, names):
+    for aName in names:
+        if aName.endswith('.txt'):
+            anInputPath = os.path.join(dirName, aName)
+            anOutputPath = anInputPath[:-4] + '.html'
+            os.system("docarticle.py '%s' > '%s' || rm '%s'"%(
+                escquotes(anInputPath), escquotes(anOutputPath), 
+                escquotes(anOutputPath)))
+
 def package_version():
 	fp = open('Modules/objc/pyobjc.h', 'r')  
 	for ln in fp.readlines():
@@ -91,6 +100,10 @@ if not basedir:
 	sys.stderr.write("%s: Cannot determine basedir\n"%(sys.argv[0]))
 	sys.exit(1)
 
+print "Generateing HTML documentation"
+os.path.walk('Doc', rest2HTML, None)
+rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt'])
+
 print "Running: '%s' setup.py sdist -d '%s'"%(
 			escquotes(PYTHON), escquotes(OUTPUTDIR))
 fd = os.popen("'%s' setup.py sdist -d '%s'"%(
@@ -112,7 +125,11 @@ shutil.copyfile("ChangeLog", os.path.join(OUTPUTDIR, "ChangeLog"))
 
 print "Setting up developer templates"
 
+
+
+
 nastyFiles = ['.DS_Store', '.gdb_history']
+
 def killNasties(irrelevant, dirName, names):
         for aName in names:
                 if aName in nastyFiles:
@@ -143,9 +160,11 @@ makeDir(basedir, 'Developer', 'Documentation')
 docsDestination = os.path.join(basedir, 'Developer', 'Documentation', 'PyObjC')
 shutil.copytree('Doc', docsDestination)
 
+
 os.path.walk(templateDestination, killNasties, None)
 os.path.walk(examplesDestination, killNasties, None)
 os.path.walk(docsDestination, killNasties, None)
+os.path.walk(docsDestination, rest2HTML, None)
 
 print 'Building package'
 pm = buildpkg.PackageMaker('PyObjC', package_version(), 
