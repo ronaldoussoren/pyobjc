@@ -88,9 +88,11 @@ class bdist_mpkg (Command):
             scripts = u'(Optional) Scripts to use from the Unix shell',
             data    = u'(Optional) Additional data files (sometimes documentation)',
         )
-        is_framework = os.path.dirname(os.path.dirname(sys.prefix)).endswith('.framework')
-        if is_framework and self.scheme_map['scripts'].startswith(sys.prefix):
-            self.scheme_map['scripts'] = '/usr/local/bin'
+        scripts = self.scheme_map.get('scripts')
+        if scripts:
+            is_framework = os.path.dirname(os.path.dirname(sys.prefix)).endswith('.framework')
+            if is_framework and scripts.startswith(sys.prefix):
+                self.scheme_map['scripts'] = '/usr/local/bin'
 
         for k,v in descriptions.iteritems():
             path = self.scheme_map.get(k)
