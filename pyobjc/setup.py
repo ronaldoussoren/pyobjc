@@ -82,6 +82,8 @@ if gs_root is None:
     #
     CFLAGS=[
         "-DMACOSX",
+        "-no-cpp-precomp",
+        "-Wno-long-double",
         ]
 
     OBJC_LDFLAGS=[
