@@ -29,7 +29,9 @@ Objective-C, the format-arguments are not present in Python).
 Test suite
 ..........
 
-The test suite needs to be enhanced.
+The test suite needs to be enhanced. 
+
+* Somehow find a way to check code-coverage of the unittests.
 
 * Tests that exercise Key-Value Observing in a way that crashes older versions
   of PyObjC.
@@ -104,6 +106,9 @@ is a shame.
 
   This would require Python 2.3 on Jaguar.
 
+XXX: ReSTedit seems to have an Xcode project that also maintains a py2app setup
+script. Bug bbum into donateing this to PyObjC.
+
 Complete Cocoa wrapping
 .......................
 
@@ -113,6 +118,10 @@ the testsuite that checks if the function wrappers are working as expected.
 Someone needs to check if we correctly export all constants from Cocoa and if
 the generation script finds all global functions. Simularly for the annotations
 for input/output arguments.
+
+XXX: I'm pretty sure we don't wrap all constants: the newer, yet incomplete
+wrapper scripts found some enums inside interface definitions. Don't bother
+about fixing this before 1.2.
 
 We also don't support all "difficult" methods yet, implementing these is
 not too hard but it is a lot of work.
@@ -143,7 +152,6 @@ There are issues with implementing ``-copy`` in python, these need to be fixed.
 Specifically, overriding an existing ``-copy`` implementation does not work 
 unless ``__slots__ == ()``
 
-XXX: is this still true?
 
 Known issues
 ............
@@ -216,43 +224,12 @@ a regular basis, we should check if using freelists would speed this up. See
 also `Performance tuning/testing`.
 
 
-Key-Value Encoding
-..................
-
-XXX: Need to check if the current implementation is correct.
-
-XXX: It has proven to work quite well, is this still a TODO item?
-
-The takeValue:forKey: implementation correctly emits notifications (on MacOS X
-10.3). MacOS X 10.3 is currently detected at compile-time, this should probably
-be done dynamicly.
-
-The right notifications are not yet emitted for:
-
-* setattr() on Objective-C objects
-
-  There is preliminary (sp?) support in objc-object.m, but I'm not sure if this
-  we really should do this at all. 
-
-* setattr() on pure Python objects
-
-  It is extremely difficult to detect such changes, even finding the right ObjC
-  wrapper is not possible at the moment (but that is fixable).
-
-  The documentation should mention that observations don't work for pure
-  Python objects.
-
-Scott Anguish mentioned on one of the Cocoa lists that the right way to 
-override the key-value related methods is different from what we're doing.
-
 Formal Protocols, Distributed Objects
 .....................................
 
-``DO`` seems to use formal protocols, we don't support those at all. 
-
-XXX: We do support accessing protocols (e.g. an equivalent to @protocol(Foo)),
-but you cannot define new protocols in python yet.
-XXX: Is it still true that we can't define new protocols from Python?
+``DO`` seems to use formal protocols, we don't fully support those. There is 
+an equivalent to ``@protocol(Foo)``, but it is not yet possible to define
+new protocols in Python.
 
 Links to Apple documentation
 ............................
@@ -288,8 +265,6 @@ refactored to make it easier to create readable reports.
 Finish struct-wrapper.m
 .......................
 
-XXX: Is this still true?
-
 We need more unittests and an implementation of the extended slice interface.
 
 Why does the GC support cause an assertion failure when it is enabled?
@@ -307,9 +282,60 @@ Finish refactoring of the code-generator scripts
 setup.py cleanup
 ................
 
-XXX: Why not use docarticle?
-
-* Don't use docarticle to create HTML from build_html.
-
 * Use 'WrapperGenerator.py', probably need to create a custom build action
   for that.
+
+Unique proxies for Python objects
+.................................
+
+Some Cocoa/CoreFoundation API's basically require that ``a[0] is a[0]``. The
+container wrappers contain support for that, but we should try to move that
+into the generic core: there should be at most one ObjC proxy object alive
+for every Python object (just like there's at most one Python proxy for every
+ObjC object).
+
+NSDecimal vs decimal
+....................
+
+Check if it is possible to wrap ``NSDecimal`` using ``decimal`` (and v.v.).
+
+Only implement this when it is possible to convert without loss of information.
+
+NSSet vs set
+............
+
+Check if it is possible to wrap ``NSSet`` using ``set`` (and v.v.).
+
+Only implement this when it is possible to convert without loss of information.
+
+Python2.4
+.........
+
+Python 2.4 introduces a decorator syntax. Add convenience functions that
+make it easier to use decorators with PyObjC. 
+
+Also add example programs using decorators. Actually, first add the example(s)
+and extract usefull convenience functions from those.
+
+An example of a convenience function would be::
+
+	import objc
+
+	def method_signature(signature):
+		def make_selector(func):
+			return objc.selector(func, signature=signature)
+		return make_selector
+
+Which can be used like this::
+	
+	class FooClass (NSObject):
+
+		@method_signature("v@:i")
+		def myIntMethod_(self, value):
+			pass
+
+NSLog, stringWithFormat, ...
+............................
+
+Functions and methods that use format strings are not properly wrapped. Fix
+that.
