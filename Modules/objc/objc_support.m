@@ -414,7 +414,8 @@ static PyObject *
 pythonify_c_array (const char *type, void *datum)
 {
 	PyObject *ret;
-	unsigned int nitems, offset, itemidx, sizeofitem;
+	unsigned int nitems, itemidx, sizeofitem;
+	unsigned char* curdatum;
   
 	nitems = atoi (type+1);
 	while (isdigit (*++type))
@@ -425,10 +426,11 @@ pythonify_c_array (const char *type, void *datum)
 	ret = PyTuple_New (nitems);
 	if (!ret) return NULL;
 
-	for (offset=itemidx=0; itemidx < nitems; itemidx++) {
+	curdatum = datum;
+	for (itemidx=0; itemidx < nitems; itemidx++) {
 		PyObject *pyitem = NULL;
 
-		pyitem = pythonify_c_value (type, datum+offset);
+		pyitem = pythonify_c_value (type, curdatum);
 
 		if (pyitem) {
 			PyTuple_SET_ITEM (ret, itemidx, pyitem);
@@ -437,7 +439,7 @@ pythonify_c_array (const char *type, void *datum)
 			return NULL;
 		}
 
-		offset += sizeofitem;
+		curdatum += sizeofitem;
 	}
   
 	return ret;
@@ -487,12 +489,13 @@ pythonify_c_struct (const char *type, void *datum)
 static int
 depythonify_c_array (const char *type, PyObject *arg, void *datum)
 {
-	unsigned int nitems, offset, itemidx, sizeofitem;
+	unsigned int nitems, itemidx, sizeofitem;
+	unsigned char* curdatum;
 
 	nitems = atoi (type+1);
 	while (isdigit (*++type))
 		;
-	sizeofitem = objc_sizeof_type (type);
+	sizeofitem = objc_aligned_size (type);
 	if (sizeofitem == -1) {
 		ObjCErr_Set(ObjCExc_error, 
 			"cannot depythonify array of unknown type");
@@ -506,14 +509,15 @@ depythonify_c_array (const char *type, PyObject *arg, void *datum)
 		return -1;
 	}
 
-	for (offset=itemidx=0; itemidx < nitems; itemidx++) {
+	curdatum = datum;
+	for (itemidx=0; itemidx < nitems; itemidx++) {
 		PyObject *pyarg = PyTuple_GetItem (arg, itemidx);
 		int err;
 
-		err = depythonify_c_value (type, pyarg, datum+offset);
+		err = depythonify_c_value (type, pyarg, curdatum);
 		if (err == -1) return err;
       
-		offset += sizeofitem;
+		curdatum += sizeofitem;
 	}
 
 	return 0;
@@ -563,16 +567,9 @@ pythonify_c_value (const char *type, void *datum)
 	type = objc_skip_type_qualifiers (type);
 
 	switch (*type) {
-	case _C_ULNGLNG:
-		retobject = (PyObject*)PyLong_FromUnsignedLongLong(*(unsigned long long*)datum);
-		break;
-
-	case _C_LNGLNG: 
-		retobject = (PyObject*)PyLong_FromLongLong(*(long long*)datum);
-		break;
-
 	case _C_CHR:
-		/* XXX: Why not return a string of length 1 */
+		// We don't return a string because BOOL is an alias for
+		// char (at least on MacOS X)
 		retobject = (PyObject*)PyInt_FromLong ((int)(*(char*)datum));
 		break;
 
@@ -628,6 +625,14 @@ pythonify_c_value (const char *type, void *datum)
 			retobject = (PyObject*)PyInt_FromLong (
 				*(unsigned long*) datum);
 		}
+		break;
+
+	case _C_ULNGLNG:
+		retobject = (PyObject*)PyLong_FromUnsignedLongLong(*(unsigned long long*)datum);
+		break;
+
+	case _C_LNGLNG: 
+		retobject = (PyObject*)PyLong_FromLongLong(*(long long*)datum);
 		break;
 
 	case _C_FLT:
@@ -756,7 +761,8 @@ static  const char intType[] = { _C_INT, 0 };
 static  const char uintType[] = { _C_UINT, 0 };
 
 	switch(*type) {
-	case _C_CHR: case _C_SHT:
+	case _C_CHR: 
+	case _C_SHT:
 		return pythonify_c_value(intType, datum);
 	case _C_UCHR: case _C_USHT:
 		return pythonify_c_value(uintType, datum);
@@ -771,6 +777,8 @@ static  const char uintType[] = { _C_UINT, 0 };
 
 /* TODO: Examine whether using PyArg_Parse would be usefull to translate
  *       basic types (range checking for free!)
+ *
+ * This function is way too large!
  */
 int
 depythonify_c_value (const char *type, PyObject *argument, void *datum)
@@ -783,62 +791,12 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	type = objc_skip_type_qualifiers (type);
   
 	switch (*type) {
-	case _C_ULNGLNG:
-		if (PyInt_Check(argument)) {
-			long value = PyInt_AsLong(argument);
-			if (value < 0) {
-				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'unsigned long long'," 
-					"got negative %s",
-						argument->ob_type->tp_name);
-				return -1;
-			}
-			*(unsigned long long*)datum = (unsigned long long)value;
-		} else if (PyLong_Check(argument)) {
-			*(unsigned long long*)datum = 
-				PyLong_AsUnsignedLongLong(argument);
-			if (PyErr_Occurred()) {
-				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'unsigned long long'," 
-					"got %s of wrong magnitude",
-						argument->ob_type->tp_name);
-				return -1;
-			}
-		} else {
-			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'unsigned long long', got %s",
-					argument->ob_type->tp_name);
-			return -1;
-		}
-		break;
-
-	case _C_LNGLNG: 
-		if (PyInt_Check(argument)) {
-			*(long long*)datum = PyInt_AsLong(argument);
-		} else if (PyLong_Check(argument)) {
-			*(long long*)datum = 
-				PyLong_AsLongLong(argument);
-			if (PyErr_Occurred()) {
-				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'long long'," 
-					"got %s of wrong magnitude",
-						argument->ob_type->tp_name);
-				return -1;
-			}
-		} else {
-			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'long long', got %s",
-					argument->ob_type->tp_name);
-			return -1;
-		}
-		break;
-
 	case _C_CHR:
 		if (PyInt_Check (argument)) {
 			long temp = PyInt_AsLong(argument);
 			if (temp < CHAR_MIN || temp > CHAR_MAX) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'char', got %s of "
+					"depythonifying 'char', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -848,7 +806,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			long long temp = PyLong_AsLongLong(argument);
 			if (PyErr_Occurred()) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'char', got %s of "
+					"depythonifying 'char', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -856,7 +814,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			if (temp < CHAR_MIN || temp > CHAR_MAX) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'char', got %s of "
+					"depythonifying 'char', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -866,8 +824,19 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		} else if (PyString_Size(argument) == 1) {
 			*(char *) datum = PyString_AsString (argument)[0];
 		} else {
+			PyObject* tmp = PyNumber_Int(argument);
+			if (tmp != NULL) {
+				long temp = PyInt_AsLong(tmp);
+				Py_DECREF(tmp);
+
+				if (temp >= CHAR_MIN && temp <= CHAR_MAX) {
+					*(char *) datum = temp;
+					return 0;
+				}
+			}
+
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'char', got %s of %d",
+				"depythonifying 'char', got '%s' of %d",
 					argument->ob_type->tp_name,
 					PyString_Size(argument));
 			return -1;
@@ -880,7 +849,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			if (temp < 0 || temp > UCHAR_MAX) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'char', got %s of "
+					"depythonifying 'char', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -892,7 +861,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			if (PyErr_Occurred()) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'char', got %s of "
+					"depythonifying 'char', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -900,7 +869,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			if (temp < 0 || temp > UCHAR_MAX) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'char', got %s of "
+					"depythonifying 'char', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -911,8 +880,22 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			  *(unsigned char *) datum = 
 			  	PyString_AsString (argument)[0];
 		} else {
+			PyObject* tmp = PyNumber_Int(argument);
+			if (tmp != NULL) {
+
+				if (PyInt_Check(tmp)) {
+					long temp = PyInt_AsLong(tmp);
+					Py_DECREF(tmp);
+					if (temp >= 0 && temp <= UCHAR_MAX) {
+						*(unsigned char *) datum = temp;
+						return 0;
+					}
+				} else {
+					Py_DECREF(tmp);
+				}
+			}
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'unsigned char', got %s of %d",
+				"depythonifying 'unsigned char', got '%s' of %d",
 					argument->ob_type->tp_name,
 					PyString_Size(argument));
 			return -1;
@@ -922,7 +905,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	case _C_CHARPTR:
 		if (!PyString_Check (argument) && argument != Py_None) {
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'charptr', got %s",
+				"depythonifying 'charptr', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		} else if (argument == Py_None) {
@@ -943,7 +926,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			temp = PyLong_AsLongLong(argument);
 			if (PyErr_Occurred()) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'int', got %s of "
+					"depythonifying 'int', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -951,7 +934,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			if (temp < INT_MIN || temp > INT_MAX) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'int', got %s of "
+					"depythonifying 'int', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -959,8 +942,18 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			*(long*) datum = temp;
 		} else {
+			PyObject* tmp = PyNumber_Int(argument);
+			if (tmp != NULL) {
+				if (PyInt_Check(tmp)) {
+					*(int*) datum = PyInt_AsLong(tmp);
+					Py_DECREF(tmp);
+					return 0;
+				} else {
+					Py_DECREF(tmp);
+				}
+			}
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'int', got %s",
+				"depythonifying 'int', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		}
@@ -972,7 +965,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			if (temp < SHRT_MIN || temp > SHRT_MAX) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'short', got %s of "
+					"depythonifying 'short', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -984,7 +977,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			temp = PyLong_AsLongLong(argument);
 			if (PyErr_Occurred()) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'short', got %s of "
+					"depythonifying 'short', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -992,7 +985,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			if (temp < SHRT_MIN || temp > SHRT_MAX) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'short', got %s of "
+					"depythonifying 'short', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -1000,8 +993,22 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			*(short*) datum = temp;
 		} else {
+			PyObject* tmp = PyNumber_Int(argument);
+			if (tmp != NULL) {
+				if (PyInt_Check(tmp)) {
+					long temp = PyInt_AsLong(tmp);
+					Py_DECREF(tmp);
+					if (temp >= SHRT_MIN && 
+							temp <= SHRT_MAX) {
+						*(short*) datum = temp;
+						return 0;
+					}
+				} else {
+					Py_DECREF(tmp);
+				}
+			}
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'short', got %s",
+				"depythonifying 'short', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		}
@@ -1013,7 +1020,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			if (temp < 0) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'unsigned int', got %s "
+					"depythonifying 'unsigned int', got '%s' "
 					"of wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -1025,7 +1032,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			temp = PyLong_AsUnsignedLongLong(argument);
 			if (PyErr_Occurred()) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'unsigned int', got %s "
+					"depythonifying 'unsigned int', got '%s' "
 					"of wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -1033,7 +1040,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			if (temp > UINT_MAX) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'unsigned int', got %s "
+					"depythonifying 'unsigned int', got '%s' "
 					"of wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -1041,8 +1048,38 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			*(unsigned int*) datum = temp;
 		} else {
+			PyObject* tmp = PyNumber_Int(argument);
+			if (tmp != NULL) {
+				if (PyInt_Check(tmp)) {
+					long temp = PyInt_AsLong(tmp);
+					Py_DECREF(tmp);
+					if (temp >= 0) {
+						*(unsigned int *) datum = temp;
+						return 0;
+					}
+				} else if (PyLong_Check(tmp)) {
+					long long temp = PyLong_AsLongLong(tmp);
+					Py_DECREF(tmp);
+					if (temp >= 0 && temp <= ULONG_MAX) {
+						*(unsigned int*) datum = temp;
+						return 0;
+					}
+				} else {
+					Py_DECREF(tmp);
+				}
+			}
+			tmp = PyNumber_Long(argument);
+			if (tmp != NULL) {
+				long long temp = PyLong_AsLongLong(tmp);
+				Py_DECREF(tmp);
+				if (!PyErr_Occurred() && temp >= 0) {
+					*(unsigned int*) datum = temp;
+					return 0;
+				}
+			}
+
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'unsigned int', got %s",
+				"depythonifying 'unsigned int', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		}
@@ -1055,7 +1092,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			if (temp < 0 || temp > USHRT_MAX) {
 				ObjCErr_Set(ObjCExc_error,
 					"depythonifying 'unsigned short', "
-					"got %s of wrong magnitude",
+					"got '%s' of wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
 			}
@@ -1067,7 +1104,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			if (PyErr_Occurred()) {
 				ObjCErr_Set(ObjCExc_error,
 					"depythonifying 'unsigned short', "
-					"got %s of wrong magnitude",
+					"got '%s' of wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
 			}
@@ -1075,15 +1112,29 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			if (temp > USHRT_MAX) {
 				ObjCErr_Set(ObjCExc_error,
 					"depythonifying 'unsigned short', "
-					"got %s of wrong magnitude",
+					"got '%s' of wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
 			}
 
 			*(unsigned short*) datum = temp;
 		} else {
+			PyObject* tmp = PyNumber_Int(argument);
+			if (tmp != NULL) {
+				if (PyInt_Check(tmp)) {
+					long temp = PyInt_AsLong(tmp);
+					Py_DECREF(tmp);
+					if (temp >= 0 && temp <= USHRT_MAX) {
+						*(unsigned short *) datum = temp;
+						return 0;
+					}
+				} else {
+					Py_DECREF(tmp);
+				}
+			}
+			
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'unsigned short', got %s",
+				"depythonifying 'unsigned short', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		}
@@ -1098,7 +1149,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			temp = PyLong_AsLongLong(argument);
 			if (PyErr_Occurred()) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'long', got %s of "
+					"depythonifying 'long', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -1106,7 +1157,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			if (temp < LONG_MIN || temp > LONG_MAX) {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'long', got %s of "
+					"depythonifying 'long', got '%s' of "
 					"wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
@@ -1114,8 +1165,18 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			*(long*) datum = temp;
 		} else {
+			PyObject* tmp = PyNumber_Int(argument);
+			if (tmp != NULL) {
+				if (PyInt_Check(tmp)) {
+					*(long*) datum = PyInt_AsLong(tmp);
+					Py_DECREF(tmp);
+					return 0;
+				} else {
+					Py_DECREF(tmp);
+				}
+			}
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'long', got %s",
+				"depythonifying 'long', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		}
@@ -1131,7 +1192,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			if (PyErr_Occurred()) {
 				ObjCErr_Set(ObjCExc_error,
 					"depythonifying 'unsigned long', "
-					"got %s of wrong magnitude",
+					"got '%s' of wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
 			}
@@ -1139,19 +1200,120 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			if (temp > ULONG_MAX) {
 				ObjCErr_Set(ObjCExc_error,
 					"depythonifying 'unsigned long', "
-					"got %s of wrong magnitude",
+					"got '%s' of wrong magnitude",
 						argument->ob_type->tp_name);
 				return -1;
 			}
 
 			*(unsigned long*) datum = temp;
 		} else {
+			PyObject* tmp = PyNumber_Int(argument);
+			if (tmp != NULL) {
+				if (PyInt_Check(tmp)) {
+					long temp = PyInt_AsLong(tmp);
+					Py_DECREF(tmp);
+					if (temp >= 0) {
+						*(unsigned long *) datum = temp;
+						return 0;
+					}
+				} else if (PyLong_Check(tmp)) {
+					unsigned long long temp = 
+						PyLong_AsUnsignedLongLong(tmp);
+					Py_DECREF(tmp);
+					if (!PyErr_Occurred() && temp <= ULONG_MAX) {
+						*(unsigned long*) datum = temp;
+						return 0;
+					}
+				} else {
+					Py_DECREF(tmp);
+				}
+			}
+			tmp = PyNumber_Long(argument);
+			if (tmp != NULL) {
+				unsigned long long temp = 
+					PyLong_AsUnsignedLongLong(tmp);
+				Py_DECREF(tmp);
+				if (!PyErr_Occurred() && temp <= ULONG_MAX) {
+					*(unsigned long*) datum = temp;
+					return 0;
+				}
+			}
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'unsigned long', got %s",
+				"depythonifying 'unsigned long', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		}
 		break;
+
+	case _C_ULNGLNG:
+		if (PyInt_Check(argument)) {
+			long value = PyInt_AsLong(argument);
+			if (value < 0) {
+				ObjCErr_Set(ObjCExc_error,
+					"depythonifying 'unsigned long long'," 
+					"got negative '%s'",
+						argument->ob_type->tp_name);
+				return -1;
+			}
+			*(unsigned long long*)datum = (unsigned long long)value;
+		} else if (PyLong_Check(argument)) {
+			*(unsigned long long*)datum = 
+				PyLong_AsUnsignedLongLong(argument);
+			if (PyErr_Occurred()) {
+				ObjCErr_Set(ObjCExc_error,
+					"depythonifying 'unsigned long long'," 
+					"got '%s' of wrong magnitude",
+						argument->ob_type->tp_name);
+				return -1;
+			}
+		} else {
+			PyObject* tmp = PyNumber_Long(argument);
+			if (tmp != NULL) {
+				unsigned long long temp = 
+					PyLong_AsUnsignedLongLong(tmp);
+				Py_DECREF(tmp);
+				if (!PyErr_Occurred()) {
+					*(unsigned long long *) datum = temp;
+					return 0;
+				}
+			}
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'unsigned long long', got '%s'",
+					argument->ob_type->tp_name);
+			return -1;
+		}
+		break;
+
+	case _C_LNGLNG: 
+		if (PyInt_Check(argument)) {
+			*(long long*)datum = PyInt_AsLong(argument);
+		} else if (PyLong_Check(argument)) {
+			*(long long*)datum = 
+				PyLong_AsLongLong(argument);
+			if (PyErr_Occurred()) {
+				ObjCErr_Set(ObjCExc_error,
+					"depythonifying 'long long'," 
+					"got '%s' of wrong magnitude",
+						argument->ob_type->tp_name);
+				return -1;
+			}
+		} else {
+			PyObject* tmp = PyNumber_Long(argument);
+			if (tmp != NULL) {
+				long long temp = PyLong_AsLongLong(tmp);
+				Py_DECREF(tmp);
+				if (!PyErr_Occurred()) {
+					*(long long*) datum = temp;
+					return 0;
+				}
+			}
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'long long', got '%s'",
+					argument->ob_type->tp_name);
+			return -1;
+		}
+		break;
+
 
 	case _C_ID:
 		if (argument == Py_None) {
@@ -1178,7 +1340,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				PyUnicode_GetDefaultEncoding(), 
 				"strict");
 			if (as_unicode == NULL) {
-				ObjCErr_Set(ObjCExc_error,
+				ObjCErr_Set(PyExc_UnicodeError,
 					"depythonifying 'id', got "
 					"a string with a non-default "
 					"encoding");
@@ -1256,7 +1418,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			*(Class*) datum = nil;
 		} else {
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'Class', got %s",
+				"depythonifying 'Class', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		}
@@ -1275,13 +1437,13 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				*(SEL*) datum = sel;
 			} else {
 				ObjCErr_Set(ObjCExc_error,
-					"depythonifying 'SEL', got cannot "
+					"depythonifying 'SEL', cannot "
 					"register string with runtime");
 				return -1;
 			}
 		} else {
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'SEL', got %s",
+				"depythonifying 'SEL', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		}
@@ -1301,8 +1463,9 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			*(void **) datum = ((ObjCPointer *) argument)->ptr;
 		} else {
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'pointer', got %s",
+				"depythonifying 'pointer', got '%s'",
 					argument->ob_type->tp_name);
+			abort();
 			return -1;
 		}
 		break;
@@ -1313,8 +1476,16 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		} else if (PyInt_Check (argument)) {
 			*(float *) datum = (float) PyInt_AsLong (argument);
 		} else {
+			PyObject* tmp = PyNumber_Float(argument);
+			if (tmp != NULL) {
+				double temp = PyFloat_AsDouble(tmp);
+				Py_DECREF(tmp);
+				*(float*) datum = temp;
+				return 0;
+			}
+
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'float', got %s",
+				"depythonifying 'float', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		}
@@ -1326,8 +1497,16 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		} else if (PyInt_Check (argument)) {
 			*(double *) datum = (double) PyInt_AsLong (argument);
 		} else {
+			PyObject* tmp = PyNumber_Float(argument);
+			if (tmp != NULL) {
+				double temp = PyFloat_AsDouble(tmp);
+				Py_DECREF(tmp);
+				*(double*) datum = temp;
+				return 0;
+			}
+
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'double', got %s",
+				"depythonifying 'double', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		}
@@ -1356,7 +1535,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			}
 		} else {
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'union', got %s",
+				"depythonifying 'union', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		}
@@ -1365,7 +1544,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	case _C_STRUCT_B:
 		if (! PyTuple_Check (argument)) {
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'struct', got %s",
+				"depythonifying 'struct', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		} else {
@@ -1376,7 +1555,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	case _C_ARY_B:
 		if (! PyTuple_Check (argument)) {
 			ObjCErr_Set(ObjCExc_error,
-				"depythonifying 'array', got %s",
+				"depythonifying 'array', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
 		} else {

@@ -221,7 +221,6 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	PyObject*          args = NULL;
 	unsigned int       i;
 	unsigned int       argcount;      
-	PyCodeObject*      func_code;
 	int		   retsize = objc_sizeof_type (rettype);
 	char*              retbuffer;
 

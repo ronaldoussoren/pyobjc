@@ -71,6 +71,72 @@ free_type(void *obj)
 static ffi_type* signature_to_ffi_type(const char* argtype);
 
 static ffi_type* 
+array_to_ffi_type(const char* argtype)
+{
+static  PyObject* array_types = NULL;
+	PyObject* v;
+	ffi_type* type;
+	int       field_count;
+	int        i;
+
+	if (array_types == NULL) {
+		array_types = PyDict_New();
+		if (array_types == NULL) return NULL;
+	}
+
+	v = PyDict_GetItemString(array_types, (char*)argtype);
+	if (v != NULL) {
+		return (ffi_type*)PyCObject_AsVoidPtr(v);
+	}
+
+	/* We don't have a type description yet, dynamicly 
+	 * create it.
+	 */
+	field_count = atoi(argtype+1);
+			
+	type = malloc(sizeof(*type));
+	if (type == NULL) {
+		PyErr_NoMemory();
+		return NULL;
+	}
+	type->size = 0;
+	type->alignment = 0;
+
+	/* Libffi doesn't really know about arrays as part of larger 
+	 * data-structres (e.g. struct foo { int field[3]; };). We fake it
+	 * by treating the nested array as a struct. These seems to work 
+	 * fine on MacOS X.
+	 */
+	type->type = FFI_TYPE_STRUCT;
+	type->elements = malloc((1+field_count) * sizeof(*type->elements));
+	if (type->elements == NULL) {
+		free(type);
+		PyErr_NoMemory();
+		return NULL;
+	}
+	
+	while (isdigit(*++argtype));
+	type->elements[0] = signature_to_ffi_type(argtype);
+	for (i = 1; i < field_count; i++) {
+		type->elements[i] = type->elements[0];
+	}
+	type->elements[field_count] = 0;
+
+	v = PyCObject_FromVoidPtr(type, free_type);
+	if (v == NULL) {
+		free_type(type);
+		return NULL;
+	}
+
+	PyDict_SetItemString(array_types, (char*)argtype, v);
+	if (PyErr_Occurred()) {
+		Py_DECREF(v);
+		return NULL;
+	}
+	return type;
+}
+
+static ffi_type* 
 struct_to_ffi_type(const char* argtype)
 {
 static  PyObject* struct_types = NULL;
@@ -149,6 +215,7 @@ static  PyObject* struct_types = NULL;
 	}
 	return type;
 }
+
 static ffi_type*
 signature_to_ffi_return_type(const char* argtype)
 {
@@ -184,7 +251,8 @@ signature_to_ffi_type(const char* argtype)
 	case _C_DBL: return &ffi_type_double;
 	case _C_CHARPTR: return &ffi_type_pointer;
 	case _C_PTR: return &ffi_type_pointer;
-	case _C_ARY_B: return &ffi_type_pointer;
+	case _C_ARY_B: 
+		return array_to_ffi_type(argtype);
 	case _C_IN: case _C_OUT: case _C_INOUT: case _C_CONST:
 		return signature_to_ffi_type(argtype+1);
 	case _C_STRUCT_B: 
@@ -369,7 +437,6 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 	ffi_status        rv;
 	int               i;
 	const char*		  rettype;
-	char 		  buf[2];
 
 	methinfo = [NSMethodSignature signatureWithObjCTypes:signature];
 
@@ -513,7 +580,6 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	int               arglistOffset;
 	int		  itemSize;
 	int		  itemAlign;
-	char		  tpBuf[2];
 
 	if (meth->sel_oc_signature) {
 		methinfo = meth->sel_oc_signature;
@@ -781,7 +847,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			case _C_IN:
 			case _C_CONST:
 
-				if (argbuf[1] == _C_PTR) {
+				if (argtype[1] == _C_PTR) {
 					/* Allocate space and encode */
 					argbuf_cur = align(argbuf_cur, objc_alignof_type(argtype+2));
 					void* arg = argbuf + argbuf_cur;
@@ -793,7 +859,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 						arg);
 
 					arglist[arglistOffset + i] = &ffi_type_pointer;
-					values[arglistOffset + i] = arg;
+					values[arglistOffset + i] = byref + i;
 
 				} else {
 					/* just encode */

@@ -489,9 +489,11 @@ static PyObject*
 objcsel_call(ObjCNativeSelector* self, PyObject* args)
 {
 	PyObject* pyself = self->sel_self;
-	Class     pyself_class;
 	ObjC_CallFunc_t execute = NULL;
+#if !(defined(OC_WITH_LIBFFI) && defined(OC_USE_FFI_SHORTCUTS))
+	Class     pyself_class;
 	int       is_super_call = 0;
+#endif
 	PyObject* res;
 
 	if (pyself == NULL) {
