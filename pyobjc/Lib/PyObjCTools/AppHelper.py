@@ -4,6 +4,7 @@ Application helpers.
 Currently only a single function is exported: runEventloop
 """
 from AppKit import NSApplicationMain, NSApp, NSRunAlertPanel
+import traceback
 
 def unexpectedErrorAlert():
     exceptionInfo = traceback.format_exception_only(
@@ -13,9 +14,9 @@ def unexpectedErrorAlert():
             "Continue", "Quit", None)
 
 
-def runEventloop(argv, unexpectedErrorAlert = unexpectedErrorAlert):
+def runEventLoop(argv, unexpectedErrorAlert = unexpectedErrorAlert):
     """
-    Run the eventloop, ask the user if we should continue when 
+    Run the event loop, ask the user if we should continue when 
     catching exceptions. Use this function instead of NSApplicationMain
     """
     mainFunc = NSApplicationMain
