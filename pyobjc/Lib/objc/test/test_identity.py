@@ -95,7 +95,7 @@ class ObjCRoundTrip (unittest.TestCase):
         container = OC_TestIdentity.alloc().init()
 
         cls = objc.lookUpClass("Object")
-        container.setStoredObjectAnInstanceOf_(cls)
+        container.setStoredObjectAnInstanceOfClassic_(cls)
         v = container.storedObject()
         self.assert_(container.isSameObjectAsStored_(v), repr(v))
         self.assert_(isinstance(v, cls))
@@ -196,7 +196,7 @@ class ObjCtoPython (unittest.TestCase):
         container = OC_TestIdentity.alloc().init()
 
         cls = objc.lookUpClass("Object")
-        container.setStoredObjectAnInstanceOf_(cls)
+        container.setStoredObjectAnInstanceOfClassic_(cls)
         self.assertFetchingTwice(container, "object")
 
     def dont_testNSNumber(self):
