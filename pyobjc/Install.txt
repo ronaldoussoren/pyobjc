@@ -14,7 +14,6 @@ version of PyObjC includes a compatible version of libffi.
 
 .. _`the PyObjC download site`: http://sourceforge.net/project/showfiles.php?group_id=14534
 
-
 PyObjC is build and installed using the distutils package included with Python
 2.0 and beyond.  This package provides a single interface for building and
 packaging the module.   To see usage documentation for the module,
@@ -58,16 +57,20 @@ Cocoa-Python applications.  To build and execute::
   % cd TableModel
   % python buildapp.py build
 
-The WebServicesTool and TableModel2 are both examples of Cocoa-Python
-applications created via the Cocoa-Python project template found in
-the ``Project Templates`` directory.  Use Project Builder to build the
-applications.
+The WebServicesTool is an example of Cocoa-Python applications created via 
+the Cocoa-Python project template found in the 
+``ProjectBuilder Extras/Project Templates`` directory.  Use Project Builder 
+to build the applications.
 
 Project Templates
 =================
 
+The ``ProjectBuilder Extras`` directory contains additional files that can
+be used with Project Builder. The diretory ``Specifications`` contains files
+that enable syntax coloring for Python files in Project Builder.
+
 The ``Project Templates`` directory contains project templates for
-project builder.  These have to be copied to
+Project Builder.  These have to be copied to
 ``/Developer/ProjectBuilder Extras/Project Templates/Application`` before
 they are useable from Project Builder.
 

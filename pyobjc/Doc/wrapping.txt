@@ -27,6 +27,9 @@ The code for loading a framework and exporting its classes is pretty simple::
 If your class library does not require helper functions for some methods this
 is all that is needed.
 
+Don't forget to import the frameworks that are used by your framework before
+calling ``objc.loadBundle``. This is necessary to arrange for the helper code
+for these modules (if there is any) to be loaded.
 
 Wrapping global functions and constants
 ---------------------------------------
@@ -99,3 +102,11 @@ class library for more information. We'll add documentation for this in the
 future.
 
 NOTE: It is likely that there will be changes w.r.t. the special wrappers.
+
+protocols
+.........
+
+If the framework defines any (informal) protocols you should add 
+``objc.informal_protocol`` objects for those protocols to your module. These
+can be defined in a submodule, as long as you arrange for that module to be
+loaded whenever someone imports your package.

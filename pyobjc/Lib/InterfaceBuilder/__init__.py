@@ -8,6 +8,9 @@ documentation for details on how to use these functions and classes.
 # Load the AddressBook bundle, and gather all classes defined there
 import objc 
 
+import AppKit
+del AppKit
+
 objc.loadBundle("InterfaceBuilder", globals(), bundle_path="/System/Library/Frameworks/InterfaceBuilder.framework")
 
 del objc

@@ -9,6 +9,9 @@ documentation for details on how to use these functions and classes.
 # Load the ScreenSaver framework, and gather all classes defined there
 import objc
 
+import AppKit
+del AppKit
+
 # Custom method signature (undocumented class, this is a guess)
 objc.set_signature_for_selector("ScreenSaverUserInfo", "loginUserName:andID:", "v@:o^@o^I")
 

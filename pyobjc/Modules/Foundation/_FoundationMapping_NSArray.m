@@ -68,7 +68,8 @@ SortHelperFunc(id arg1, id arg2, void* opaque)
 	return res;
 }
 
-static PyObject* call_NSArray_sortedArrayUsingFunction_context_(
+static PyObject* 
+call_NSArray_sortedArrayUsingFunction_context_(
 		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;

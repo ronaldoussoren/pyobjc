@@ -13,11 +13,11 @@ you change.
 
 import objc
 import Foundation
-#import AddressBook
 import AppKit
 import PreferencePanes
 import ScreenSaver
 import InterfaceBuilder
+import AddressBook
 
 PTRSIG={}
 
@@ -69,6 +69,15 @@ WRAPPED_METHODS={
     'NSMutableArray_sortUsingFunction_context_range_':1,    
 
     #<AppKit>
+    'NSBitmapImageRep_getBitmapDataPlanes_':1,
+    'NSBitmapImageRep_getTIFFCompressionTypes_count_':1,
+    'NSBitmapImageRep_initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_':1,
+    'NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_':1,
+    'NSSimpleHorizontalTypesetter_baseOfTypesetterGlyphInfo':1,
+    'NSSimpleHorizontalTypesetter_layoutGlyphsInHorizontalLineFragment_baseline_':1,
+    'NSWindow_graphicsPort':1,
+    'NSWindow_initWithWindowRef_':1,
+    'NSWindow_windowRef':1,
     'NSLayoutManager_getGlyphs_range_':1,
     'NSLayoutManager_getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_':1,
     'NSLayoutManager_getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_':1,
@@ -148,7 +157,25 @@ WRAPPED_METHODS={
 
 # Undocumented methods:
 
+    #<AddressBook>
+    'ABLDAP_ConfigController_editorDidEnd_returnCode_contextInfo_':1,
+    'ABGroupsController_deleteConfirmSheetDidEnd_returnCode_contextInfo_':1,
+    'ABCustomLabelEditor_sheetDidEnd_returnCode_contextInfo_':1,
+    'ABRemoteImageLoader_beginLoadingImageForPerson_forClient_orCallback_withRefcon_':1,
+    'ABLayoutManager_rectArrayForCharacterRange_withinSelectedCharacterRange_inTextContainer_rectCount_forCursorPosition_':1,
+    'ABLDAP_Manager_queryAttributes':1,
+    'ABPersonImageView_savePanelDidEnd_returnCode_contextInfo_':1,
+    'ABVCard_initWithVCardRef_':1,
+    'ABVCardEnumerator_initWithVCardRef_':1,
+    'ABRecord_firstLastSortingNamePart1_part2_':1,
+    'ABRecord_lastFirstSortingNamePart1_part2_':1,
+    'AB_AFDataFile_info':1,
+    'ABPeopleController_deleteConfirmSheetDidEnd_returnCode_contextInfo_':1,
+    'ABPeopleController_removeConfirmSheetDidEnd_returnCode_contextInfo_':1,
+
+
     #<Foundation>
+    'NSString_escapeStringForUnichar_and_advance_':1,
     'NSSet_getObjects_':1,
     'NSData_initWithBytes_length_copy_freeWhenDone_bytesAreVM_':1,
     'NSMessagePort_sendBeforeTime_streamData_components_from_msgid_':1,
@@ -175,6 +202,7 @@ WRAPPED_METHODS={
     'NSConstantString_initWithCharactersNoCopy_length_':1,
 
     #<AppKit>
+    'NSCGSContext_windowID':1,
     'NSPreferences_confirmCloseSheetIsDone_returnCode_contextInfo_':1,
     'NSPasteboard_readDocumentFromPbtype_filename_':1,
     'NSView_knowsPagesFirst_last_':1,
@@ -243,7 +271,7 @@ WRAPPED_METHODS={
     'NSHFSContainer_iconRef_label_forObjectName_':1,
     'NSHFSObject_iconRef_label_':1,
     'NSHFSObject_initWithRawCatalogInfo_name_parentRef_ref_hfsName_hidden_':1,
-    'SHyphenator_getHyphenLocations_inString_':1,
+    'NSHyphenator_getHyphenLocations_inString_':1,
     'NSHyphenator_getHyphenLocations_inString_wordAtIndex_':1,
     'NSImageReader_bitmapDataPlanes':1,
     'NSImageReader_loadImage_':1,
