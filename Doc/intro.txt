@@ -14,8 +14,7 @@ An introduction to PyObjC
 WORK IN PROGRESS
 ----------------
 
-This document is work in progress and incomplete. I've added notes where I 
-intend to add more information.
+This document is work in progress and thin on details.
 
 
 Preface
@@ -88,11 +87,41 @@ arguments in the bridged method (e.g. if the method has an ``int*`` argument
 the bridged method has has an integer argument).  Data that is passed from the
 function results in additional return values from the function.
 
-TODO:
+When the bridge cannot automaticly deduce the right signature for a method, or
+if you want to add a method whose name cannot be transformed into python (
+for example a methodname containing ``$``), you'll have to add explicit hints
+to your code. You do this by calling the function ``objc.selector`` and using
+the result instead of your method definition::
 
-* Selector objects and when to use them
+	class MyObject (NSObject):
+		def someMethod_(self, arg):
+			pass
 
-* Protocols, informal protocols, delegates and objc.informal_protocol
+		someMethod_ = objc.selector(someMethod_, ...)
+
+The other arguments of ``objc.selector`` (not shown in the example) provide
+additional information about the method to the bridge, see the online 
+documentation for more information about this function. It is almost never
+necessary to use this technique.
+
+The need for additional hints to the bridge often arises from implementing an
+(informal) protocol in Python. Because the methods compromising the protocol
+are probably not implemented in the superclass the bridge often cannot deduce 
+the correct method signatures for the methods you implemented. To avoid the
+need for using ``objc.selector`` and to make it explicit that your implementing
+an (informal) protocol the bridge has explicit support for these (informal)
+protocols. 
+
+To tell the bridge that your implementing an informal protocol you use an
+``informal_protocol`` object as a mixin::
+		
+		class MyModel (NSObject, anInformalProtocol):
+			pass
+
+The ``AppKit`` and ``Foundation`` modules define ``informal_protocol`` objects 
+for most (informal) protocols and defined by these frameworks (both the 
+explicitly documented protocols and the protocols used to communicate between
+an object and its delegate).
 
 
 Cocoa for Python programmers
@@ -102,9 +131,13 @@ Cocoa frameworks are mapped onto Python packages with the same name, that is
 the classes, constants and functioins from the AppKit framework are available
 after you import ``AppKit`` in your Python script.
 
-TODO:
+The module ``AppKit.NibClassBuilder`` can be used to make working with 
+NIB files more convenient. This module can be used to extract information 
+about classes from NIB files, both as a standalone tool generating source code 
+and during runtime. See the online documentation for this module for more
+information.
 
-* NibClassBuilder
+**TODO**:
 
 * Links to example PyObjC scripts.
 
@@ -131,6 +164,41 @@ More information on Cocoa programming can be found at:
 Building applications
 ---------------------
 
-* Using buildapp.py
+There are two different ways to build applications with PyObjC. There are no
+major advantages to using either one of them, use the one that is most 
+convenient to you.
 
-* Using project builder
+"Pure python" :  buildapp.py
+............................
+
+PyObjC includes a copy of the ``bundlebuilder`` module. This module will be part
+of the Python 2.3 MacPython release and is a to build distutil-style scripts 
+for building (standalone) applications.
+
+An example ``buildapp.py`` script::
+
+	from bundlebuilder import buildapp
+	buildapp(
+		name = 'iClass',
+		mainprogram = "main.py",
+		resources = ["English.lproj", "datasource.py" ],
+	        nibname = "MainMenu",
+	)   
+
+The online documentation for ``bundlebuilder`` contains more information on 
+building ``buildapp.py`` scripts.
+
+
+"IDE approach" : Project builder
+................................
+
+PyObjC includes a number of Project Builder templates that can be used to 
+build (standalone) applications.
+
+**TODO**:
+
+* Expand this section, input needed as I don't use Project Builder
+
+* Add link to documentation about our templates
+
+* Add link to documentation for Project Builder
