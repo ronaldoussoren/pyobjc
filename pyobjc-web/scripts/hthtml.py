@@ -1,7 +1,7 @@
 # Author: Ollie Rutherfurd
 # Contact: oliver@rutherfurd.net
 # Revision: $Revision: 1.2 $
-# Date: $Date: 2003/07/05 14:59:47 $
+# Date: $Date: 2004/12/08 19:49:05 $
 # Copyright: This module has been placed in the public domain.
 
 """
@@ -21,7 +21,7 @@ __docformat__ = 'reStructuredText'
 import os
 from docutils import nodes
 from docutils import writers
-from docutils.writers.html4css1 import HTMLTranslator
+from docutils.writers.html4css1 import HTMLTranslator, utils
 
 
 class Writer(writers.Writer):
@@ -36,8 +36,13 @@ class Writer(writers.Writer):
           'would be written as H3, 2nd level H4, etc...).  Default is 3.',
           ['--base-section'],
           {'choices': ['1','2','3','4'], 
-            'default': '1', 
+            'default': '3', 
             'metavar': '<NUMBER>'}),
+         ('Specify the initial header level.  Default is 1 for "<h1>".  '
+          'Does not affect document title & subtitle (see --no-doc-title).',
+          ['--initial-header-level'],
+          {'choices': '1 2 3 4 5 6'.split(), 'default': '1',
+           'metavar': '<level>'}),
          ('Specify a stylesheet URL, used verbatim.  Default is '
           '"default.css".',
           ['--stylesheet'],
@@ -60,7 +65,10 @@ class Writer(writers.Writer):
           {'default': 1, 'action': 'store_true'}),
          ('Disable compact simple bullet and enumerated lists.',
           ['--no-compact-lists'],
-          {'dest': 'compact_lists', 'action': 'store_false'}),))
+          {'dest': 'compact_lists', 'action': 'store_false'}),
+          ('Omit the XML declaration.  Use with caution.',
+          ['--no-xml-declaration'], {'dest': 'xml_declaration', 'default': 1,
+                                     'action': 'store_false'}),))
 
     relative_path_settings = ('stylesheet_path',)
 
@@ -86,14 +94,12 @@ class HTTranslator(HTMLTranslator):
         # the header, so always link to the stylesheet.
         document.settings.embed_stylesheet = 0
         document.settings.base_section = int(document.settings.base_section)
-        document.settings.xml_declaration = None
 
-        document.settings.initial_header_level = 1
         HTMLTranslator.__init__(self, document)
-
         # ht2html likes having a title, so add a default one
         self.headers = {'title': 'None'}
-        stylesheet = self.get_stylesheet_reference(os.getcwd())
+        stylesheet = utils.get_stylesheet_reference(document.settings,
+                os.path.join(os.getcwd(),'dummy'))
         if stylesheet:
             self.headers['stylesheet']= stylesheet
         # using first author found for .ht 'Author' header
@@ -103,7 +109,8 @@ class HTTranslator(HTMLTranslator):
         headers = ''.join(['%s: %s\n' % (k,v) \
             for (k,v) in self.headers.items()])
         # kludge! want footer, but not '</body></html>'
-        body = self.docinfo + self.body + self.body_suffix[:-1]
+        body = self.body_pre_docinfo + self.docinfo + self.body + \
+                self.body_suffix[:-1]
 
         return ''.join([headers + '\n'] + body)
 
@@ -116,11 +123,6 @@ class HTTranslator(HTMLTranslator):
         if not self.headers.has_key('author-email'):
             self.headers['author-email'] = self.encode(node.astext())
         HTMLTranslator.visit_contact(self, node)
-
-    def visit_organization(self, node):
-        if not self.headers.has_key('organization'):
-            self.headers['organization'] = self.encode(node.astext())
-        HTMLTranslator.visit_organization(self, node)
 
     def visit_title(self, node):
         """Only 6 section levels are supported by HTML."""

@@ -5,14 +5,14 @@
 
     include "header.inc";
 ?>
-<div class="document" id="installation-instructions">
+<h1 class="title">Installation Instructions</h1>
 <!-- :authors: Bill Bumgarner, Ronald Oussoren, Bob Ippolito -->
 <div class="section" id="building-the-package">
-<h1><a name="building-the-package">Building the package</a></h1>
+<h3><a name="building-the-package">Building the package</a></h3>
 <p>PyObjC is built and installed using the distutils package included with Python
 2.0 and beyond.  distutils provides a single interface for building and
-packaging the PyObjC via a <tt class="literal"><span class="pre">setup.py</span></tt> script. To see usage documentation
-for <tt class="literal"><span class="pre">setup.py</span></tt>, issue the <tt class="literal"><span class="pre">--help</span></tt> command:</p>
+packaging the PyObjC via a <tt class="docutils literal"><span class="pre">setup.py</span></tt> script. To see usage documentation
+for <tt class="docutils literal"><span class="pre">setup.py</span></tt>, issue the <tt class="docutils literal"><span class="pre">--help</span></tt> command:</p>
 <pre class="literal-block">
 % python setup.py --help
 </pre>
@@ -49,7 +49,7 @@ framework Python is installed, such as a previous installation for Mac OS X
 10.2.  For more information on this and other Python issues on Mac OS X,
 please refer to the <a class="reference" href="http://pythonmac.org/wiki/FAQ">pythonmac.org FAQ</a>.</p>
 <p>If you have a previous version of PyObjC installed, you may see an exception
-such as <tt class="literal"><span class="pre">Wrong</span> <span class="pre">version</span> <span class="pre">of</span> <span class="pre">PyObjC</span> <span class="pre">C</span> <span class="pre">API</span></tt>.  If this happens, you should
+such as <tt class="docutils literal"><span class="pre">Wrong</span> <span class="pre">version</span> <span class="pre">of</span> <span class="pre">PyObjC</span> <span class="pre">C</span> <span class="pre">API</span></tt>.  If this happens, you should
 delete any previous installation of PyObjC and the build folder in your
 new sources and try again.  PyObjC will typically be installed to a folder
 of the same name in /Library/Python/2.3 or /Library/Python/2.3/site-packages.</p>
@@ -60,7 +60,7 @@ download this from the <a class="reference" href="http://connect.apple.com">ADC 
 more information.</p>
 </div>
 <div class="section" id="examples">
-<h1><a name="examples">Examples</a></h1>
+<h3><a name="examples">Examples</a></h3>
 <p>The <a class="reference" href="Examples/00ReadMe.html">examples directory</a> contains a number of projects that demonstrate
 various features of the PyObjC bridge. The scripts at the top level of
 the <a class="reference" href="Examples/00ReadMe.html">examples directory</a> were mostly written to test a particular
@@ -78,12 +78,12 @@ with Xcode.  However, all examples ship with a py2app-based setup.py, and
 this is the preferred build method.</p>
 </div>
 <div class="section" id="project-templates">
-<h1><a name="project-templates">Project Templates</a></h1>
+<h3><a name="project-templates">Project Templates</a></h3>
 <div class="section" id="xcode-on-mac-os-x-10-3">
-<h2><a name="xcode-on-mac-os-x-10-3">Xcode on Mac OS X 10.3</a></h2>
-<p>The <tt class="literal"><span class="pre">Xcode</span></tt> directory contains some file and project that make it easier to
+<h4><a name="xcode-on-mac-os-x-10-3">Xcode on Mac OS X 10.3</a></h4>
+<p>The <tt class="docutils literal"><span class="pre">Xcode</span></tt> directory contains some file and project that make it easier to
 work with Python and PyObjC when using <a class="reference" href="http://www.apple.com/xcode">Xcode</a>.</p>
-<p>Copy the templates in <tt class="literal"><span class="pre">Xcode/File</span> <span class="pre">templates</span></tt> to <tt class="literal"><span class="pre">/Library/Application</span> <span class="pre">Support/Apple/Developer</span> <span class="pre">Tools/File</span> <span class="pre">Templates</span></tt>. Copy the templates in <tt class="literal"><span class="pre">Xcode/Project</span> <span class="pre">Templates</span></tt> to <tt class="literal"><span class="pre">/Library/Application</span> <span class="pre">Support/Apple/Developer</span> <span class="pre">Tools/Project</span> <span class="pre">Templates</span></tt>.</p>
+<p>Copy the templates in <tt class="docutils literal"><span class="pre">Xcode/File</span> <span class="pre">templates</span></tt> to <tt class="docutils literal"><span class="pre">/Library/Application</span> <span class="pre">Support/Apple/Developer</span> <span class="pre">Tools/File</span> <span class="pre">Templates</span></tt>. Copy the templates in <tt class="docutils literal"><span class="pre">Xcode/Project</span> <span class="pre">Templates</span></tt> to <tt class="docutils literal"><span class="pre">/Library/Application</span> <span class="pre">Support/Apple/Developer</span> <span class="pre">Tools/Project</span> <span class="pre">Templates</span></tt>.</p>
 <p>There are two project templates:</p>
 <ul>
 <li><p class="first">Cocoa-Python Application</p>
@@ -108,13 +108,13 @@ Mac OS X 10.2.  At this time, a Mac OS X 10.2 system must be used to build
 Mac OS X 10.2 compatible applications.</p>
 </div>
 <div class="section" id="project-builder-on-mac-os-x-10-2">
-<h2><a name="project-builder-on-mac-os-x-10-2">Project Builder on Mac OS X 10.2</a></h2>
-<p>The <tt class="literal"><span class="pre">ProjectBuilder</span> <span class="pre">Extras</span></tt> directory contains additional files that can
-be used with Project Builder. The directory <tt class="literal"><span class="pre">Specifications</span></tt> contains files
+<h4><a name="project-builder-on-mac-os-x-10-2">Project Builder on Mac OS X 10.2</a></h4>
+<p>The <tt class="docutils literal"><span class="pre">ProjectBuilder</span> <span class="pre">Extras</span></tt> directory contains additional files that can
+be used with Project Builder. The directory <tt class="docutils literal"><span class="pre">Specifications</span></tt> contains files
 that enable syntax coloring for Python files in Project Builder.</p>
-<p>The <tt class="literal"><span class="pre">Project</span> <span class="pre">Templates</span></tt> directory contains project templates for
+<p>The <tt class="docutils literal"><span class="pre">Project</span> <span class="pre">Templates</span></tt> directory contains project templates for
 Project Builder.  These have to be copied to
-<tt class="literal"><span class="pre">/Developer/ProjectBuilder</span> <span class="pre">Extras/Project</span> <span class="pre">Templates/Application</span></tt> before
+<tt class="docutils literal"><span class="pre">/Developer/ProjectBuilder</span> <span class="pre">Extras/Project</span> <span class="pre">Templates/Application</span></tt> before
 they are useable from Project Builder.</p>
 <p>There are three templates available:</p>
 <ul>

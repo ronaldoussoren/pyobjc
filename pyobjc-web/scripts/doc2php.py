@@ -189,8 +189,8 @@ def copy_project_docs(srctree):
             else:
                 shutil.copy(os.path.join(tutdir, fn), dstname)
 
-    print "Don't forget to update docroot/doc/tutorial.php: it's reference to"
-    print "'step3-MainMenu.nib' should be changed to a ZIP file"
+    print "Don't forget to update docroot/doc/tutorial.php: it's references to"
+    print "'step3-MainMenu.nib' and 'step12-src' should be changed to ZIP files"
 
 if __name__ == "__main__":
     copy_project_docs(srctree)

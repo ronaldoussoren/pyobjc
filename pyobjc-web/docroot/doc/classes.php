@@ -5,17 +5,17 @@
 
     include "header.inc";
 ?>
-<div class="document" id="python-classes-and-objective-c-code">
+<h1 class="title">Python classes and Objective-C code</h1>
 <!-- This file is formatted using the rules for reStructuredText -->
 <!-- Version 0.1 -->
 <div class="section" id="introduction">
-<h1><a name="introduction">Introduction</a></h1>
+<h3><a name="introduction">Introduction</a></h3>
 <p>PyObjC is a proxy between Objective-C and Python and allows access to Python
 classes from Objective-C and vice versa. PyObjC also allows you to subclass
 Objective-C classes from Python.</p>
 </div>
 <div class="section" id="accessing-python-objects-from-objective-c">
-<h1><a name="accessing-python-objects-from-objective-c">Accessing Python objects from Objective-C</a></h1>
+<h3><a name="accessing-python-objects-from-objective-c">Accessing Python objects from Objective-C</a></h3>
 <p>All Python objects can be accessed from Objective-C through proxy objects. 
 Whenever a Python object crosses the line from Python to Objective-C a proxy
 object is created (of class OC_PythonObject, a subclass of NSProxy). This
@@ -34,7 +34,7 @@ between Python and Objective-C method calls.</p>
 Objective-C.</p>
 </div>
 <div class="section" id="accessing-objective-c-objects-from-python">
-<h1><a name="accessing-objective-c-objects-from-python">Accessing Objective-C objects from Python</a></h1>
+<h3><a name="accessing-objective-c-objects-from-python">Accessing Objective-C objects from Python</a></h3>
 <p>Objective-C objects are accessed through proxy objects that forward method
 calls from Python to Objective-C. All proxy objects are instances of 
 objc.objc_object, or a subclass of this class.</p>
@@ -45,7 +45,7 @@ class are translated to Python strings or unicode objects (depending on the
 value of the string).</p>
 </div>
 <div class="section" id="accessing-objective-c-classes-from-python">
-<h1><a name="accessing-objective-c-classes-from-python">Accessing Objective-C classes from Python</a></h1>
+<h3><a name="accessing-objective-c-classes-from-python">Accessing Objective-C classes from Python</a></h3>
 <p>Objective-C classes are also accessed through proxy objects, but those are
 subclasses of objc.objc_class. The proxies for Objective-C classes are 
 classes in Python.</p>
@@ -102,7 +102,7 @@ class MyClass (NSObject):
 </pre>
 </div>
 <div class="section" id="method-protocol">
-<h1><a name="method-protocol">Method protocol</a></h1>
+<h3><a name="method-protocol">Method protocol</a></h3>
 <p>There is a straightforward translation from Objective-C method names to
 Python method names: Concatenate all parts of the Objective-C method name
 (without any whitespace) and then replace all colons by underscores.</p>

@@ -1,10 +1,11 @@
 <?
-    $title = "Project Builder Python Support";
+    $title = "Warning";
     $cvs_author = '$Author: ronaldoussoren $';
     $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
+<h1 class="title">Project Builder Python Support</h1>
 <table class="docinfo" frame="void" rules="none">
 <col class="docinfo-name" />
 <col class="docinfo-content" />
@@ -19,13 +20,13 @@
 <td>12/16/2002</td></tr>
 </tbody>
 </table>
-<div class="document" id="project-builder-python-support">
 <div class="warning">
-<p class="admonition-title first">Warning</p>
-None of this is documented or supported by <strong>Apple</strong>.  Don't ask <strong>Apple</strong> for
+<p class="first admonition-title">Warning</p>
+<p class="last">None of this is documented or supported by <strong>Apple</strong>.  Don't ask <strong>Apple</strong> for
 support and don't blame me if something breaks.  A lot could break as
 <strong>Project Builder</strong> stores a tremendous amount of highly dynamic information in
-both the user defaults and within project files.</div>
+both the user defaults and within project files.</p>
+</div>
 <div class="contents topic" id="contents">
 <p class="topic-title first"><a name="contents">Contents</a></p>
 <ul class="simple">
@@ -37,7 +38,7 @@ both the user defaults and within project files.</div>
 <p>Triple-quoted strings are not always treated correctly by Project Builder. This
 seems to be a Project Builder bug.</p>
 <div class="section" id="installation">
-<h1><a class="toc-backref" href="#id1" name="installation">Installation</a></h1>
+<h3><a class="toc-backref" href="#id1" name="installation">Installation</a></h3>
 <p>Create the directory 'Specifications' within
 <em>~/Developer/ProjectBuilder Extras/</em> or <em>/Developer/ProjectBuilder
 Extras/</em>:</p>
@@ -51,7 +52,7 @@ cp Python.pb*spec ~/Developer/ProjectBuilder\ Extras/Specifications/
 <p>The binary installer will install the specifications for you.</p>
 </div>
 <div class="section" id="documentation">
-<h1><a class="toc-backref" href="#id2" name="documentation">Documentation</a></h1>
+<h3><a class="toc-backref" href="#id2" name="documentation">Documentation</a></h3>
 <p>The version of Project Builder that ships with the December Developer Tools
 modularizes the support for file types and syntax based colorizing of
 source files.  The base mechanisms and definitions are found in:</p>
@@ -104,7 +105,7 @@ Out[2]:
 </pre>
 </div>
 <div class="section" id="to-do">
-<h1><a class="toc-backref" href="#id3" name="to-do">To Do</a></h1>
+<h3><a class="toc-backref" href="#id3" name="to-do">To Do</a></h3>
 <ul class="simple">
 <li>NOTE: PyObjC's Project Builder support is unmaintained.  It is unlikely that
 any of these items will ever be completed.</li>

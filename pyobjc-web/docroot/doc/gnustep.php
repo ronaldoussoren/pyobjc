@@ -5,7 +5,7 @@
 
     include "header.inc";
 ?>
-<div class="document" id="gnustep-support-in-pyobjc">
+<h1 class="title">GNUstep support in PyObjC</h1>
 <p>PyObjC has limited support for GNUstep, the 'objc' and 'Foundation' packages
 build and pass some, but by far not all, unittests. More work is needed to
 make the GNUstep port as stable as the Mac OS X &quot;port&quot;.</p>
@@ -18,7 +18,7 @@ new classes should be strings, in others they should be SEL objects (as you
 would expect). We also use undocumented private functions to initialize new
 classes.</p>
 <div class="section" id="todo">
-<h1><a name="todo">TODO</a></h1>
+<h3><a name="todo">TODO</a></h3>
 <ul>
 <li><p class="first">[Serious] Fix linkage problems. The ObjC runtime doesn't seem to be 
 initialized correctly and/or the classes in newly loaded frameworks are
