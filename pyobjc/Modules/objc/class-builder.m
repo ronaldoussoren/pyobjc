@@ -66,6 +66,13 @@ static void object_method_takeValue_forKey_(
 		void** args,
 		void* userarg);
 
+static char copyWithZone_signature[132] = { '\0' };
+static void object_method_copyWithZone_(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* resp,
+		void** args,
+		void* userdata);
+
 /*
  * When we create a 'Class' we actually create the struct below. This allows
  * us to add some extra information to the class defintion.
@@ -259,6 +266,99 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 	return 0;
 }
 
+static Class
+build_intermediate_class(Class base_class, char* name)
+{
+	Class intermediate_class = nil;
+	Class meta_class = nil;
+	Class root_class;
+	int i;
+	struct objc_method_list* method_list = NULL;
+	PyObjCRT_Method_t meth;
+	IMP closure;
+	PyObjCMethodSignature* methinfo;
+
+	method_list = PyObjCRT_AllocMethodList(1);
+
+	if (method_list == NULL) {
+		PyErr_NoMemory();
+		goto error_cleanup;
+	}
+
+	if (copyWithZone_signature[0] == '\0') {
+		snprintf(copyWithZone_signature,
+			sizeof(copyWithZone_signature),
+			"@@:%s", @encode(NSZone*));
+	}
+
+	method_list->method_count = 0;
+	methinfo = PyObjCMethodSignature_FromSignature(copyWithZone_signature);
+	if (methinfo == NULL) goto error_cleanup; 
+	closure = PyObjCFFI_MakeClosure(methinfo, object_method_copyWithZone_,
+		base_class);
+	PyObjCMethodSignature_Free(methinfo); methinfo = NULL;
+	if (closure == NULL) goto error_cleanup;
+	meth = method_list->method_list + method_list->method_count++;
+
+	PyObjCRT_InitMethod(meth, @selector(copyWithZone:), 
+			copyWithZone_signature, (IMP)closure); \
+
+	root_class = base_class;
+	while (root_class->super_class != NULL) {
+		root_class = root_class->super_class;
+	}
+
+	intermediate_class = malloc(sizeof(struct objc_class));
+	if (intermediate_class == NULL) {
+		PyErr_NoMemory();
+		goto error_cleanup;
+	}
+
+	meta_class = malloc(sizeof(struct objc_class));
+	if (meta_class == NULL) {
+		PyErr_NoMemory();
+		goto error_cleanup;
+	}
+
+	i = PyObjCRT_SetupClass(
+		intermediate_class, 
+		meta_class, 
+		name,
+		base_class,
+		root_class,
+		base_class->instance_size, NULL,
+		NULL
+		);
+	if (i < 0) {
+		goto error_cleanup;
+	}
+
+	if (method_list) {
+		PyObjCRT_ClassAddMethodList(
+			intermediate_class,
+			method_list);
+		method_list = NULL;
+	}
+
+	objc_addClass(intermediate_class);
+
+	return intermediate_class;
+
+error_cleanup:
+	if (intermediate_class) free(intermediate_class);
+	if (meta_class) free(meta_class);
+	if (method_list) {
+		free(method_list);
+	}
+	if (methinfo) {
+		PyObjCMethodSignature_Free(methinfo);
+	}
+
+	return NULL;
+}
+
+
+
 /*
  * First step of creating a python subclass of an objective-C class
  *
@@ -302,6 +402,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	char**                   curname;
 	PyObject*                py_superclass = NULL;
 	int                      item_size;
+	int			 have_intermediate = 0;
 
 	if (!PyList_Check(protocols)) {
 		PyErr_Format(PyObjCExc_InternalError,  
@@ -376,6 +477,45 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	py_superclass = PyObjCClass_New(super_class);
 	if (py_superclass == NULL) return NULL;
 
+	/* We must override copyWithZone: for python classes because the
+	 * refcounts of python slots might be off otherwise. Yet it should
+	 * be possible to override copyWithZone: in those classes. 
+	 *
+	 * The solution: introduce an intermediate class that contains our
+	 * implementation of copyWithZone:. This intermediate class is only
+	 * needed when (1) the superclass implements copyWithZone: and (2)
+	 * the python subclass overrides that method.
+	 *
+	 * FIXME: Better code to look for copyWithZone: in the class dict
+	 */
+	if (PyDict_GetItemString(class_dict, "copyWithZone_") == NULL) {
+		PyErr_Clear();
+		i = 0;
+	} else {
+		i = 1;
+	}
+
+	if (i && !PyObjCClass_HasPythonImplementation(py_superclass) 
+          && [super_class instancesRespondToSelector:@selector(copyWithZone:)]){
+		Class intermediate_class;
+		char  buf[1024];
+
+		have_intermediate = 1;
+
+		snprintf(buf, 1024, "_PyObjCCopying_%s", super_class->name);
+		intermediate_class = objc_lookUpClass(buf);
+		if (intermediate_class == NULL) {
+			intermediate_class = build_intermediate_class(
+					super_class, buf);
+			if (intermediate_class == NULL) goto error_cleanup;
+		}
+
+		super_class = intermediate_class;
+		py_superclass = PyObjCClass_New(super_class);
+		if (py_superclass == NULL) return NULL;
+	}
+
+
 	if (do_slots(py_superclass, class_dict) < 0) {
 		goto error_cleanup;
 	}
@@ -439,7 +579,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		ivar_count        += 0;
 		meta_method_count += 0; 
-		method_count      += 8;
+		method_count      += 9;
 	}
 
 	/* Allocate the class as soon as possible, for new selector objects */
@@ -609,7 +749,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (methinfo == NULL) goto error_cleanup; \
 			closure = PyObjCFFI_MakeClosure(methinfo, imp, \
 					super_class); \
-			PyObjCMethodSignature_Free(methinfo); \
+			PyObjCMethodSignature_Free(methinfo); methinfo = NULL; \
 			if (closure == NULL) goto error_cleanup; \
 			meth = method_list->method_list + 		\
 				method_list->method_count++;		\
@@ -665,6 +805,20 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			@selector(setValue:forKey:),
 			"v@:@@",
 			object_method_takeValue_forKey_);
+
+		if (!have_intermediate && [super_class instancesRespondToSelector:@selector(copyWithZone:)]) {
+			if (copyWithZone_signature[0] == '\0') {
+				snprintf(copyWithZone_signature,
+					sizeof(copyWithZone_signature),
+					"@@:%s", @encode(NSZone*));
+			}
+
+			METH(
+				"copyWithZone_",
+				@selector(copyWithZone:),
+				copyWithZone_signature,
+				object_method_copyWithZone_);
+		}
 #undef		METH
 	}
 
@@ -699,12 +853,8 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			/* XXX: Add alignment! */
 
 			if (((PyObjCInstanceVariable*)value)->isSlot) {
-				/*
-				  XXX: Use @encode(PyObject**)?
-				       Why is this not (PyObject*)?
-				*/
-				var->ivar_type = "^v";
-				item_size = sizeof(PyObject**);
+				var->ivar_type = @encode(PyObject*);
+				item_size = sizeof(PyObject*);
 			} else {
 				var->ivar_type = PyObjCUtil_Strdup(((PyObjCInstanceVariable*)value)->type);
 				if (var->ivar_type == NULL) goto error_cleanup;
@@ -1490,6 +1640,13 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 			return NULL;
 		}
 		if (arg_self != ((PyObjCSelector*)pymeth)->sel_self) {
+
+			printf("self[%p]:%s sel_self[%p]:%s\n",
+				arg_self, PyObject_REPR(arg_self),
+				((PyObjCSelector*)pymeth)->sel_self,
+				PyObject_REPR(((PyObjCSelector*)pymeth)->sel_self));
+
+
 			PyErr_SetString(PyExc_TypeError,
 				"PyObjC_CallPython called with 'self' and "
 				"a method bound to another object");
@@ -2066,23 +2223,6 @@ object_method_takeValue_forKey_(
 	NS_ENDHANDLER
 }
 
-#if 0
- /* This will one day be the copyWithZone: for subclasses of classes that define
-  * copyWithZone:. There's just one problem: how can we allow the user to
-  * hook into this (e.g. the user must be able to override copyWithZone:
-  * without introducing problems). 
-  *
-  * Luckily we can break existing code, that code is broken anyway :-)
-  *
-  * Why is this needed? In many cases the default copyWithZone: either doesn't
-  * copy python slots, or it copies them without updating the reference count.
-  * For __dict__ and values in __slots__ the second option is a serious 
-  * problem: there is nothing the user can do to fix this (those values are 
-  * PyObject*-s and there is no interface for changing their refcount from 
-  * Python).  The only workaround: have '__slots__ = ()' in the class (e.g.
-  * do NOT have additional instance variables).
-  */
-
 static void
 object_method_copyWithZone_(
 		ffi_cif* cif __attribute__((__unused__)),
@@ -2094,117 +2234,60 @@ object_method_copyWithZone_(
 	id copy;
 	SEL _meth = *(SEL*)args[1];
 	NSZone* zone = *(NSZone**)args[2];
-	struct copyWithZoneData* data = (PyObject*)userdata;
+	Class cls;
 
 	struct objc_super super;
-	int r;
 	PyGILState_STATE state;
-	PyObjCRT_Ivar_t var;
 
 	/* Ask super to create a copy */
 
-	super.class = data->class;
+	super.class = (Class)userdata;
 	RECEIVER(super) = self;
 	copy = objc_msgSendSuper(&super, _meth, zone);
 
 	if (copy == nil) {
 		*(id*)resp = nil;
+		return;
 	}
 
 	state = PyGILState_Ensure();
 
-	/* Update the reference counts for slots/outlets */
+	cls = self->isa;
+	while (cls != (Class)userdata) {
+		struct objc_ivar_list* ivars = cls->ivars;
+		if (ivars != NULL) {
+			int i;
+			struct objc_ivar* v;
+			PyObject** p;
 
-	while (cls != NULL) {
-		Class     objcClass = PyObjCClass_GetClass(cls);
-		PyObject* clsDict; 
-		PyObject* clsValues;
-		PyObject* o;
-		int       len, i;
+			for (i = 0; i < ivars->ivar_count; i++) {
+				v = ivars->ivar_list + i;
+				if (strcmp(v->ivar_type, @encode(PyObject*))!=0)
+					continue;
 
-		if (objcClass == nil) break;
+				/* A PyObject, increase it's refcount */
+				p = (PyObject**)(((char*)copy)+v->ivar_offset);
+				if (*p == NULL) continue;
 
-		clsDict = PyObject_GetAttrString(cls, "__dict__");
-		if (clsDict == NULL) {
-			PyErr_Clear();
-			break;
-		}
-		
-		/* Class.__dict__ is a dictproxy, which is not a dict and
-		 * therefore PyDict_Values doesn't work.
-		 */
-		clsValues = PyObject_CallMethod(clsDict, "values", NULL);
-		Py_DECREF(clsDict);
-		if (clsValues == NULL) {
-			PyErr_Clear();
-			break;
-		}
-
-		len = PyList_Size(clsValues);
-		/* Check type */
-		for (i = 0; i < len; i++) {
-			PyObjCInstanceVariable* iv;
-
-			o = PyList_GET_ITEM(clsValues, i);
-
-			if (o == NULL) continue;
-			if (!PyObjCInstanceVariable_Check(o)) continue;
-		
-			iv = ((PyObjCInstanceVariable*)o);
-
-			if (strcmp(iv->type, "@") != 0) continue;
-			if (iv->isOutlet) continue;
-
-			var = class_getInstanceVariable(objcClass, iv->name);
-			if (var == NULL) continue;
-
-			if (iv->isSlot) {
-				Py_XINCREF(*(PyObject**)(((char*)self) + 
-					var->ivar_offset));
-				*(PyObject**)(((char*)copy) + var->ivar_offset) =
-					*(PyObject**)(((char*)self) + var->ivar_offset);
-			} else {
-				[*(id*)(((char*)self) + var->ivar_offset) retain];
-				*(id*)(((char*)copy) + var->ivar_offset) = *(id*)(((char*)self) + var->ivar_offset);
+				if (strcmp(v->ivar_name, "__dict__") == 0) {
+					/* copy __dict__ */
+					*p = PyDict_Copy(*p);
+					if (*p == NULL) {
+						[copy release];
+						PyObjCErr_ToObjCWithGILState(
+								&state);
+						return;
+					}
+				} else {
+					Py_INCREF(*p);
+				}
 			}
+			
 		}
 
-		Py_DECREF(clsValues);
-
-		o = PyObject_GetAttrString(cls, "__bases__");
-		if (o == NULL) {
-			PyErr_Clear();
-			cls = NULL;
-		}  else if (PyTuple_Size(o) == 0) {
-			PyErr_Clear();
-			cls = NULL;
-			Py_DECREF(o);
-		} else {
-			cls = PyTuple_GET_ITEM(o, 0);
-			if (cls == (PyObject*)&PyObjCClass_Type) {
-				cls = NULL;
-			}
-			Py_DECREF(o);
-		}
+		cls = cls->super_class;
 	}
 
-	/* And at the end copy the dict */
-	var = class_getInstanceVariable(PyObjCClass_GetClass(cls), "__dict__");
-	if (var != NULL) {
-		*(PyObject**)(((char*)copy) + var->ivar_offset) = 
-			PyDict_Copy(
-			    *(PyObject**)(((char*)self) + var->ivar_offset));
-
-		if (*(PyObject**)(((char*)copy) + var->ivar_offset) == NULL) {
-			[copy release];
-			*(id*)resp = nil;
-			PyObjCErr_ToObjCWithGILState(&state);
-			return;
-		}
-	}
-	
 	PyGILState_Release(state);
 	*(id*)resp = copy;
 }
-
-#endif

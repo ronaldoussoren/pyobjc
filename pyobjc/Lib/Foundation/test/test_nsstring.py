@@ -51,7 +51,21 @@ class TestNSString(unittest.TestCase):
             raise
 
 
-            
+    def testGetCString(self):
+        # Custom wrappers
+        v = NSString.stringWithString_(u"hello world")
+        
+        self.assertEquals(v, u"hello world")
+
+        x = v.getCString_maxLength_(16)
+        self.assertEquals(x, u"hello world")
+
+        self.assertRaises(objc.error, v.getCString_maxLength_, 4)
+
+        x, l = v.getCString_maxLength_range_remainingRange_(4, (1, 4))
+        self.assertEquals(x, "ello")
+        self.assertEquals(l.location, 5)
+        self.assertEquals(l.length, 0)
 
 
 class TestNSStringBridging(unittest.TestCase):
@@ -158,6 +172,8 @@ class TestPickle(unittest.TestCase):
         s = pickle.dumps(self.strVal, 2)
         v = pickle.loads(s)
         self.assertEquals(type(v), types.UnicodeType)
+
+
 
 if __name__ == '__main__':
     unittest.main()

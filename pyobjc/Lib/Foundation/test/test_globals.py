@@ -89,6 +89,7 @@ class NSLogTest (unittest.TestCase):
             self.assert_("This is a test" in data)
 
     def testLoggingWithFormattingChars(self):
+        # XXX: This is wrong, we should expand the %-escapes ourselves!
         self.startCaptureStderr()
         try:
             Foundation.NSLog("This is a test %@")

@@ -150,15 +150,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
-#if 0
-	/* Use test in class-builder.m, that one is more useful */
-	if (PyObjCRT_LookUpClass(name) != NULL) {
-		PyErr_SetString(PyObjCExc_Error, 
-			"Class already exists in Objective-C runtime");
-		return NULL;
-	}
-#endif
-
 	if (!PyTuple_Check(bases)) {
 		PyErr_SetString(PyExc_TypeError, "'bases' must be tuple");
 		return NULL;
@@ -253,14 +244,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		}
 	}
 
-	v = PyList_AsTuple(real_bases);
-	if (v == NULL) {
-		Py_DECREF(protocols);
-		Py_DECREF(real_bases);
-		return NULL;
-	}
-	Py_DECREF(real_bases);
-	real_bases = v;
 
 	/* First generate the objective-C class. This may change the
 	 * class dict.
@@ -271,6 +254,32 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		Py_DECREF(real_bases);
 		return NULL;
 	}
+
+	/* PyObjCClass_BuildClass may have changed the super_class */
+	super_class = objc_class->super_class;
+	py_super_class = PyObjCClass_New(super_class);
+	if (py_super_class == NULL) {
+		PyObjCClass_UnbuildClass(objc_class);
+		Py_DECREF(protocols);
+		Py_DECREF(real_bases);
+		return NULL;
+	} else {
+		PyObjCClass_CheckMethodList(py_super_class, 1);
+	}
+
+	Py_INCREF(py_super_class);
+	Py_DECREF(PyList_GET_ITEM(real_bases, 0));
+	PyList_SET_ITEM(real_bases, 0, py_super_class);
+
+	v = PyList_AsTuple(real_bases);
+	if (v == NULL) {
+		PyObjCClass_UnbuildClass(objc_class);
+		Py_DECREF(protocols);
+		Py_DECREF(real_bases);
+		return NULL;
+	}
+	Py_DECREF(real_bases);
+	real_bases = v;
 
 	/* Verify that the class conforms to all protocols it claims to 
 	 * conform to.
