@@ -1,3 +1,4 @@
+===================================
 Python classes and Objective-C code
 ===================================
 
@@ -32,12 +33,8 @@ Objective-C flavored version of the Python C-API.
 A number of Python types/classes are treated specially:
 - Python numbers are translated into NSNumber instances
 - Python strings and unicode objects are translated into NSString instances
-- Python dictionaries are proxied using OC_PythonDictionary, a subclass of NSMutableDictionary.
-  This allows you to use a Python dictionary everywhere where an NSDictionary
-  is expected.
-- Python lists or tuples are proxied using OC_PythonArray, a subclas of NSMutableArray.
-  This allows you to use a Python list or tuple everywhere where an NSArray
-  is expected.
+- Python dictionaries are proxied using OC_PythonDictionary, a subclass of NSMutableDictionary. This allows you to use a Python dictionary everywhere where an NSDictionary is expected.
+- Python lists or tuples are proxied using OC_PythonArray, a subclas of NSMutableArray. This allows you to use a Python list or tuple everywhere where an NSArray is expected.
 
 The special cases allow for more transparent bridging between Python and
 Objective-C.
@@ -99,24 +96,24 @@ in Python, and not in Objective-C. This means that normal Python instance
 variables cannot be used as 'outlets' in interface builder. Those can be 
 defined using special properties: objc.instance_variable or objc.IBOutlet.
 
-The Objective-C class:
+The Objective-C class::
 
-	@interface MyClass : NSObject
-	{
-		IBOutlet id my_outlet1;
-		IBOutlet id my_outlet2;
-	}
+  @interface MyClass : NSObject
+  {
+    IBOutlet id my_outlet1;
+    IBOutlet id my_outlet2;
+  }
 
-	// ...
-	@end // MyClass
+  // ...
+  @end // MyClass
 
-can be defined in Python like this:
+can be defined in Python like this::
 
-	class MyClass (NSObject):
-		my_outlet1 = objc.IBOutlet('my_outlet1')
-		my_outlet2 = objc.IBOutlet('my_outlet2')
+  class MyClass (NSObject):
+    my_outlet1 = objc.IBOutlet('my_outlet1')
+    my_outlet2 = objc.IBOutlet('my_outlet2')
 
-		# ...
+  # ...
 
 Method protocol
 ---------------
@@ -125,9 +122,10 @@ There is a straightforward translation from Objective-C method names to
 Python method names: Concatenate all parts of the Objective-C method name
 (without any whitespace) and then replace all colons by underscores.
 
-Examples:
-- (void)myAction:(id)sender	<->	def myAction_(self, sender)
-- method:(int)x andY:y		<->	def method_andY_(self, x, y)
+Examples::
+
+  (void)myAction:(id)sender	<->	def `myAction_`(self, sender)
+  method:(int)x andY:y		<->	def `method_andY_`(self, x, y)
 
 As can be seen in the examples above, Objective-C allows you to specify
 the types of arguments and the return value, while this is not possible in
@@ -151,19 +149,21 @@ The following Objective-C class:
 	-(void)myAction:(id)sender;
 
 can be defined in Python like this:
-	
+
+::
+
 	class MyClass (NSObject):
 
-		def methodWithX_andY_(self, x, y):
+		def `methodWithX_andY_`(self, x, y):
 			pass
 
-		methodWithX_and_Y_ = selector(methodWithX_andY_,
+		`methodWithX_and_Y_` = selector(`methodWithX_andY_`,
 			signature='i@:if')
 
-		def myAction_(self, sender):
+		def `myAction_`(self, sender):
 			pass
 
-		myAction_ = selector(myAction_,
+		myAction_ = selector(`myAction_`,
 			signature='v@:')
 
 The explicit selectors don't really help to increase readability, especially

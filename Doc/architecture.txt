@@ -1,6 +1,8 @@
-TODO
-- Expand
-- Convert to StructuredText
+===================
+PyObjC Architecture
+===================
+
+:authors: Ronald Oussoren
 
 Introduction
 ------------
