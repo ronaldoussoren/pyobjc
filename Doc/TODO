@@ -12,13 +12,6 @@ This document contains an (incomplete) list of work items.
 Important items
 ---------------
 
-Remove ``from {AppKit,Foundation} import *``
-...........................................
-
-There are definite plans to replace the AppKit/Foundation modules by module-like
-objects that lazily lookup class objects. This is needed to speed up application
-loading. Just importing everything negates the usefullness of this change.
-
 Better documentation
 ....................
 
@@ -62,6 +55,8 @@ defined by PEP 311
 NOTE2: The autoGIL is quite usefull, but unless our code gets called from a
 different thread, that does not yet have a Python thread context. This may 
 happen when embedding a PyObjC solution in an existing Cocoa application.
+
+NOTE3: This is not really an important item.
 
 
 Test suite
@@ -151,6 +146,10 @@ the plugin/bundle is loaded. Furthermore we need to make sure that exactly one
 interpreter is created, even when more than one Python based plugin/bundle is
 loaded.
 
+NOTE: All these are supported for 'pure python' projects, we just have to 
+find a way to make it easier to maintain PB templates. The currently is too
+much manual labor involved in updating them.
+
 Complete Cocoa wrapping
 .......................
 
@@ -207,10 +206,6 @@ the example.
 The TableModel and TableModel2 examples should be merged, the contain the same
 python code and only differ in the build method.
 
-* method-weirdness.py
-  Not really a suitable example, but shows a strange feature of Apple's 
-  implementation of Cocoa. Move to a unittest.
-
 * addressbook.py
   Cleanup, maybe transform this into a usefull utility (import/export from/to
   CSV springs to mind).
@@ -260,6 +255,9 @@ It would be nice if this could be abstracted away to something like::
 Another option would be to make the generator script slightly smarter: have
 it emit #if version guards based on the guards found in the header files.
 
+NOTE: This is mostly solved for MacOSX by running the generator script from
+setup.py, although the mechanism needs to be cleaned up.
+
 Access to method implementations
 ................................
 
@@ -267,6 +265,9 @@ Add a wrapper for 'instanceMethodForSelector:' and 'methodForSelector:', these
 should return selector objects that call a specific C function. This would make
 it possible to use classAddMethods to replace existing methods while still 
 calling the previous implementation.
+
+The same mechanism could be used to wrap "simple" global functions. OTOH the
+current mechanism works good enough at the moment.
 
 Performance tuning/testing
 ..........................
@@ -279,11 +280,13 @@ Robustness
 
 Make core bridge more robust w.r.t. order of loading frameworks. You currently
 get incorrect wrappers if you manually load the AppKit.framework and then 
-import AppKit.
+import AppKit. I (Ronald) know how to do this, but this can wait until after 
+1.0.
 
 Add freelists
 .............
 
 PyObjCSelector objects and (especially) PyObjCObject objects are created on
-a regular basis, we should check if using freelists would speed this up.
+a regular basis, we should check if using freelists would speed this up. See
+also `Performance tuning/testing`.
 

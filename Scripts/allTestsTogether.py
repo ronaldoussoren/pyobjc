@@ -61,6 +61,7 @@ if __name__ == '__main__':
     importExternalTestCases("test_*.py", root)
     # please unittest
     del sys.argv[1:]
+    #sys.argv.append('-v')
     # run tests
     unittest.main()
 

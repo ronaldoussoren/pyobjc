@@ -1442,7 +1442,7 @@ struct objc_method_list *objc_allocMethodList(int numMethods)
   struct objc_method_list *mlist;
 
   mlist = malloc(sizeof(struct objc_method_list)
-		 + (numMethods) * sizeof(struct objc_method));
+		 + (numMethods+1) * sizeof(struct objc_method));
   mlist->method_count = 0;
   mlist->obsolete = NULL;
 
@@ -1472,7 +1472,7 @@ struct objc_method_list *objc_allocMethodList(int numMethods)
   struct objc_method_list *mlist;
 
   mlist = malloc(sizeof(struct objc_method_list)
-		 + ((numMethods) * sizeof(struct objc_method)));
+		 + ((numMethods+1) * sizeof(struct objc_method)));
 
   if (mlist == NULL)
     return NULL;

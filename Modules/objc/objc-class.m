@@ -468,7 +468,6 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 	PyObjC_class_info* info;
 	int		   magic;
 
-	//NSLog(@"chkml_called %s %d\n", ((PyTypeObject*)cls)->tp_name, recursive);
 	info = get_class_info(cls);
 
 	if (info->class == NULL) return;
@@ -793,10 +792,10 @@ add_class_fields(Class objc_class, PyObject* dict)
 			 *
 			 * We're save for now because none of the example code 
 			 * uses this feature.
+			 */
 			if (PyDict_GetItemString(dict, name) != NULL) {
 				continue;
 			} 
-			 */
 
 			descr = PyObjCSelector_NewNative(
 					objc_class,

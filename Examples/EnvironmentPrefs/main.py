@@ -15,7 +15,7 @@ from AppKit import *
 from Foundation import *
 from PreferencePanes import *
 import objc
-from PyObjCTools import NibClassBuilder
+from PyObjCTools import NibClassBuilder, AppHelper
 import os
 
 # Uncomment this during development, you'll get exception tracebacks when
@@ -117,7 +117,7 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
         self.changed = False
         self.replyToShouldUnselect_(NSUnselectNow)
 
-    sheetDidDismiss_returnCode_contextInfo_ = endSheetMethod(
+    sheetDidDismiss_returnCode_contextInfo_ = AppHelper.endSheetMethod(
         sheetDidDismiss_returnCode_contextInfo_)
 
     def saveEnvironment(self):

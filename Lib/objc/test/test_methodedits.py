@@ -91,23 +91,6 @@ class TestFromObjCSuperToObjCClass(unittest.TestCase):
         self.assertEquals(newInstance.newSubMethod(), "<new-method-sub>")
         self.assertEquals(preEverythingInstance.newSubMethod(), "<new-method-sub>")
 
-class TestAddMethodWithNewName(unittest.TestCase):
-    def setUp(self):
-        self.NSObjectClass = MEClass
-
-    def testAddMethodWithNameName(self):
-        objc.classAddMethod(self.NSObjectClass, "doTheFoo", MethodsSub.newMethod)
-        objc.classAddMethod(self.NSObjectClass, "doTheBoo", MethodsSub.newSubMethod)
-
-        self.assert_(self.NSObjectClass.instancesRespondToSelector_("doTheFoo"))
-        self.assert_(self.NSObjectClass.instancesRespondToSelector_("doTheBoo"))
-
-        newInstance = self.NSObjectClass.new()
-        
-        self.assertEquals(newInstance.doTheFoo(), "<sub-new-method>")
-        self.assertEquals(preEverythingInstance.doTheFoo(), "<sub-new-method>")
-        self.assertEquals(newInstance.doTheBoo(), "<new-method-sub>")
-        self.assertEquals(preEverythingInstance.doTheBoo(), "<new-method-sub>")
 
 class TestFromPythonClassToObjCClass(unittest.TestCase):
     def setUp(self):

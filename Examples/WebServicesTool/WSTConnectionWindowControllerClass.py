@@ -102,14 +102,14 @@ class WorkerThread(Thread):
             if work is None or not self.working:
                 break
             func, args, kwargs = work
-            NSAutoreleasePool.pyobjcPushPool()
+            pool = NSAutoreleasePool.alloc().init()
             try:
                 func(*args, **kwargs)
             finally:
                 # delete all local references; if they are the last refs they
                 # may invoke autoreleases, which should then end up in our pool
                 del func, args, kwargs, work
-                NSAutoreleasePool.pyobjcPopPool()
+                del pool
 
 
 from PyObjCTools import NibClassBuilder
@@ -343,7 +343,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
     
     def getMethods(self, url):
         self._server = xmlrpclib.ServerProxy(url)
-        NSAutoreleasePool.pyobjcPushPool()  # use an extra pool to get rid of intermediates
+        pool = NSAutoreleasePool.alloc().init()  # use an extra pool to get rid of intermediates
         try:
             self._methods = self._server.listMethods()
             self._methodPrefix = ""
@@ -364,9 +364,9 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
                     (exceptionType, exceptionValue, "\n".join(traceback.format_tb(exceptionTraceback))),
                     0)
                 self.stopWorking()
-                NSAutoreleasePool.pyobjcPopPool()
                 return
-        NSAutoreleasePool.pyobjcPopPool()
+
+        del pool
         if self._windowIsClosing:
             return
 
@@ -378,12 +378,12 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         for aMethod in self._methods:
             if self._windowIsClosing:
                 return
-            NSAutoreleasePool.pyobjcPushPool()  # use an extra pool to get rid of intermediates
+            pool = NSAutoreleasePool.alloc().init()  # use an extra pool to get rid of intermediates
             index = index + 1
             if not (index % 5):
                 self.reloadData()
             self.setStatusTextFieldMessage_("Retrieving signature for method %s (%d of %d)." % (aMethod , index, len(self._methods)))
-            NSAutoreleasePool.pyobjcPopPool()
+            del pool
             methodSignature = getattr(self._server, self._methodPrefix + "methodSignature")(aMethod)
             signatures = None
             if not len(methodSignature):
