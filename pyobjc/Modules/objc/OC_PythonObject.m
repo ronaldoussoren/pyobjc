@@ -56,38 +56,41 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 
 - (void)dealloc
 {
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyObjC_BEGIN_WITH_GIL
+		Py_XDECREF(pyObject);
 
-	Py_XDECREF(pyObject);
-	PyGILState_Release(state);
+	PyObjC_END_WITH_GIL
+
 	[super dealloc];
 }
 
 - (NSString *) description
 {
 	PyObject *repr;
-	PyGILState_STATE state;
 
 	if (pyObject == NULL) return @"no python object";
 	
-	state = PyGILState_Ensure();
-	repr = PyObject_Repr (pyObject);
-	if (repr) {
-		int err;
-		NSString* result;
+	PyObjC_BEGIN_WITH_GIL
 
-		err = depythonify_c_value ("@", repr, &result);
-		Py_DECREF (repr);
-		if (err == -1) {
-			PyObjCErr_ToObjCWithGILState(&state);		
-			return @"a python object";
+		repr = PyObject_Repr (pyObject);
+		if (repr) {
+			int err;
+			NSString* result;
+
+			err = depythonify_c_value ("@", repr, &result);
+			Py_DECREF (repr);
+			if (err == -1) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+			PyObjC_GIL_RETURN(result);
+		} else {
+			PyObjC_GIL_FORWARD_EXC();
 		}
-		PyGILState_Release(state);
-		return result;
-	} else {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return  @"a buggy python object";
-	}
+
+	PyObjC_END_WITH_GIL
+	
+	// not reached
+	return @"a python object";
 }
   
 - (void) doesNotRecognizeSelector:(SEL) aSelector
@@ -163,27 +166,23 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 - (BOOL) respondsToSelector:(SEL) aSelector
 {
 	PyObject *m;
-	PyGILState_STATE state;
-	BOOL r;
 
 	if ([super respondsToSelector:aSelector]) {
 		return YES;
 	} 
 
 	
-	state = PyGILState_Ensure();
-    
-	m = get_method_for_selector(pyObject, aSelector);
+	PyObjC_BEGIN_WITH_GIL
+		m = get_method_for_selector(pyObject, aSelector);
 
-	if (m) {
-		r = YES;
-	} else {
-		PyErr_Clear();
-		r = NO;
-	}
-
-	PyGILState_Release(state);
-	return r;
+		if (m) {
+			PyObjC_GIL_RETURN(YES);
+		} else {
+			PyErr_Clear();
+			PyObjC_GIL_RETURN(NO);
+		}
+	
+	PyObjC_END_WITH_GIL
 
 }
 
@@ -198,7 +197,6 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	PyObject*          pymethod;
 	PyCodeObject*      func_code;
 	int                argcount;
-	PyGILState_STATE state;
 
 	encoding = (char*)get_selector_encoding (self, sel);
 	if (encoding) {
@@ -206,32 +204,35 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		return [NSMethodSignature signatureWithObjCTypes:encoding];
 	}
 
-	state = PyGILState_Ensure();
-	pymethod = get_method_for_selector(pyObject, sel);
-	if (!pymethod) {
-		PyErr_Clear();
-		PyGILState_Release(state);
-		[NSException raise:NSInvalidArgumentException 
-			format:@"Class %s: no such selector: %s", 
-			GETISA(self)->name, PyObjCRT_SELName(sel)];
-	}
+	PyObjC_BEGIN_WITH_GIL
+
+		pymethod = get_method_for_selector(pyObject, sel);
+		if (!pymethod) {
+			PyErr_Clear();
+			PyGILState_Release(_GILState); // XXX: FIXME
+			[NSException raise:NSInvalidArgumentException 
+				format:@"Class %s: no such selector: %s", 
+				GETISA(self)->name, PyObjCRT_SELName(sel)];
+		}
 
 
-	if (PyMethod_Check (pymethod)) {
-		func_code = (PyCodeObject *) PyFunction_GetCode(
-			PyMethod_Function (pymethod));
-		argcount = func_code->co_argcount-1;
-	} else {
-		func_code = (PyCodeObject *) PyFunction_GetCode(
-			pymethod);
-		argcount = func_code->co_argcount;
-	}
+		if (PyMethod_Check (pymethod)) {
+			func_code = (PyCodeObject *) PyFunction_GetCode(
+				PyMethod_Function (pymethod));
+			argcount = func_code->co_argcount-1;
+		} else {
+			func_code = (PyCodeObject *) PyFunction_GetCode(
+				pymethod);
+			argcount = func_code->co_argcount;
+		}
 
-	encoding = alloca(argcount+4);
-	memset(encoding, '@', argcount+3);
-	encoding[argcount+3] = '\0';
-	encoding[2] = ':';
-	PyGILState_Release(state);
+		encoding = alloca(argcount+4);
+		memset(encoding, '@', argcount+3);
+		encoding[argcount+3] = '\0';
+		encoding[2] = ':';
+	
+	PyObjC_END_WITH_GIL
+
 	return [NSMethodSignature signatureWithObjCTypes:encoding];
 }
 
@@ -249,81 +250,104 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	unsigned int       argcount;      
 	int		   retsize;
 	char*              retbuffer;
-	PyGILState_STATE   state = PyGILState_Ensure();
 
-	retsize = PyObjCRT_SizeOfType (rettype);
-	if (retsize == -1) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	}
+
+	PyObjC_BEGIN_WITH_GIL
+
+		retsize = PyObjCRT_SizeOfType (rettype);
+		if (retsize == -1) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 	
-	retbuffer = alloca(retsize);
+		retbuffer = alloca(retsize);
   
-	pymethod = get_method_for_selector(pyObject, aSelector);
+		pymethod = get_method_for_selector(pyObject, aSelector);
 
-	if (!pymethod) {
-		/* The method does not exist. We cannot forward this to our 
-		 * super because NSProxy doesn't implement forwardInvocation. 
-		 */
-		PyErr_Clear();
+		if (!pymethod) {
+			/* The method does not exist. We cannot forward this 
+			 * to our * super because NSProxy doesn't implement 
+			 * forwardInvocation. 
+			 */
+			PyErr_Clear();
 
+			if (aSelector == @selector(description)) {
+				NS_DURING
+					id res = [self description];
+					[invocation setReturnValue:&res];
 
-		if (aSelector == @selector(description)) {
-			id res = [self description];
-			[invocation setReturnValue:&res];
-			PyGILState_Release(state);
+				NS_HANDLER
+					PyGILState_Release(_GILState); // FIXME
+					[localException raise];
+
+				NS_ENDHANDLER
+
+				PyObjC_GIL_RETURNVOID;
+			}
+			PyGILState_Release(_GILState); // FIXME
+			[self doesNotRecognizeSelector:aSelector];
 			return;
 		}
-		PyGILState_Release(state);
-		[self doesNotRecognizeSelector:aSelector];
-		return;
-	}
  
-	argcount = [msign numberOfArguments];
-	args = PyTuple_New(argcount-2);
-	if (args == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	}
-	for (i=2; i< argcount; i++) {
-		const char *argtype;
-		char *argbuffer;
-		int  argsize;
-		PyObject *pyarg;
-
-		argtype = [msign getArgumentTypeAtIndex:i];
-
-		/* What if argtype is a pointer? */
-
-		argsize = PyObjCRT_SizeOfType(argtype);
-		if (argsize == -1) {
-			PyObjCErr_ToObjCWithGILState(&state);
+		argcount = [msign numberOfArguments];
+		args = PyTuple_New(argcount-2);
+		if (args == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
 		}
-		argbuffer = alloca (argsize);
-		[invocation getArgument:argbuffer atIndex:i];
-		pyarg = pythonify_c_value (argtype, argbuffer);
-		if (pyarg == NULL) {
-			Py_DECREF(args);
-			PyObjCErr_ToObjCWithGILState(&state);
+		for (i=2; i< argcount; i++) {
+			const char *argtype;
+			char *argbuffer;
+			int  argsize;
+			PyObject *pyarg;
+
+			argtype = [msign getArgumentTypeAtIndex:i];
+
+			/* What if argtype is a pointer? */
+
+			argsize = PyObjCRT_SizeOfType(argtype);
+			if (argsize == -1) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+			argbuffer = alloca (argsize);
+
+			NS_DURING
+				[invocation getArgument:argbuffer atIndex:i];
+
+			NS_HANDLER
+				PyGILState_Release(_GILState); // FIXME
+				[localException raise];
+
+			NS_ENDHANDLER
+
+			pyarg = pythonify_c_value (argtype, argbuffer);
+			if (pyarg == NULL) {
+				Py_DECREF(args);
+				PyObjC_GIL_FORWARD_EXC();
+			}
+
+			PyTuple_SET_ITEM (args, i-2, pyarg);
+		}
+		result = PyObject_CallObject(pymethod, args);
+		Py_DECREF(args);
+
+		if (result == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
 			return;
 		}
 
-		PyTuple_SET_ITEM (args, i-2, pyarg);
-	}
-	result = PyObject_CallObject(pymethod, args);
-	Py_DECREF(args);
+		err = depythonify_c_value (rettype, result, retbuffer);
+		if (err == -1) {
+			PyObjC_GIL_FORWARD_EXC();
+		} else {
+			NS_DURING
+				[invocation setReturnValue:retbuffer];
 
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
-	err = depythonify_c_value (rettype, result, retbuffer);
-	if (err == -1) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	} else {
-		[invocation setReturnValue:retbuffer];
-	}
-	PyGILState_Release(state);
+			NS_HANDLER
+				PyGILState_Release(_GILState); // FIXME
+				[localException raise];
+			NS_ENDHANDLER
+		}
+	
+	PyObjC_END_WITH_GIL
 }
 
 
@@ -358,6 +382,34 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 }
 
 
+static PyObject*
+getModuleFunction(char* modname, char* funcname)
+{
+	PyObject* func;
+	PyObject* name;
+	PyObject* mod;
+
+	name = PyString_FromString(modname);
+	if (name == NULL) {
+		return NULL;
+	}
+
+	mod = PyImport_Import(name);
+	if (mod == NULL) {
+		Py_DECREF(name);
+		return NULL;
+	}
+	func = PyObject_GetAttrString(mod, funcname);
+	if (func == NULL) {
+		Py_DECREF(name);
+		Py_DECREF(mod);
+		return NULL;
+	}
+	Py_DECREF(name);
+	Py_DECREF(mod);
+
+	return func;
+}
 
 /*
  *  Call PyObjCTools.KeyValueCoding.getKey to get the value for a key
@@ -369,53 +421,37 @@ static  PyObject* getKeyFunc = NULL;
 	PyObject* keyName;
 	PyObject* val;
 	id res;
-	PyGILState_STATE state = PyGILState_Ensure();
 
-	if (getKeyFunc == NULL) {
-		PyObject* name;
-		PyObject* mod;
-		name = PyString_FromString( "PyObjCTools.KeyValueCoding");
-		if (name == NULL) {
-			PyObjCErr_ToObjCWithGILState(&state);
-			return nil;
-		}
-		mod = PyImport_Import(name);
-		if (mod == NULL) {
-			Py_DECREF(name);
-			PyObjCErr_ToObjCWithGILState(&state);
-			return nil;
-		}
-		getKeyFunc = PyObject_GetAttrString(mod, "getKey");
+	PyObjC_BEGIN_WITH_GIL
+
 		if (getKeyFunc == NULL) {
-			Py_DECREF(name);
-			Py_DECREF(mod);
-			PyObjCErr_ToObjCWithGILState(&state);
-			return nil;
+			getKeyFunc = getModuleFunction(
+				"PyObjCTools.KeyValueCoding",
+				"getKey");
+			if (getKeyFunc == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
 		}
-		Py_DECREF(name);
-		Py_DECREF(mod);
-	}
 
-	keyName = pythonify_c_value(@encode(id), &key);
-	if (keyName == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+		keyName = pythonify_c_value(@encode(id), &key);
+		if (keyName == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	val = PyObject_CallFunction(getKeyFunc, "OO", pyObject, keyName);
-	Py_DECREF(keyName);
-	if (val == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+		val = PyObject_CallFunction(getKeyFunc, "OO", pyObject, keyName);
+		Py_DECREF(keyName);
+		if (val == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	if (depythonify_c_value(@encode(id), val, &res) < 0) {
+		if (depythonify_c_value(@encode(id), val, &res) < 0) {
+			Py_DECREF(val);
+			PyObjC_GIL_FORWARD_EXC();
+		}
 		Py_DECREF(val);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
-	Py_DECREF(val);
-	PyGILState_Release(state);
+	
+	PyObjC_END_WITH_GIL
+
 	return res;
 }
 
@@ -440,56 +476,40 @@ static  PyObject* setKeyFunc = NULL;
 	PyObject* keyName;
 	PyObject* pyValue;
 	PyObject* val;
-	PyGILState_STATE state = PyGILState_Ensure();
 
-	if (setKeyFunc == NULL) {
-		PyObject* name;
-		PyObject* mod;
-		name = PyString_FromString( "PyObjCTools.KeyValueCoding");
-		if (name == NULL) {
-			PyObjCErr_ToObjCWithGILState(&state);
-			return;
-		}
-		mod = PyImport_Import(name);
-		if (mod == NULL) {
-			Py_DECREF(name);
-			PyObjCErr_ToObjCWithGILState(&state);
-			return;
-		}
-		setKeyFunc = PyObject_GetAttrString(mod, "setKey");
+	PyObjC_BEGIN_WITH_GIL
+
 		if (setKeyFunc == NULL) {
-			Py_DECREF(name);
-			Py_DECREF(mod);
-			PyObjCErr_ToObjCWithGILState(&state);
-			return;
+			setKeyFunc = getModuleFunction(
+				"PyObjCTools.KeyValueCoding",
+				"setKey");
+			if (setKeyFunc == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
 		}
-		Py_DECREF(name);
-		Py_DECREF(mod);
-	}
 
-	keyName = pythonify_c_value(@encode(id), &key);
-	if (keyName == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+		keyName = pythonify_c_value(@encode(id), &key);
+		if (keyName == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	pyValue = pythonify_c_value(@encode(id), &value);
-	if (pyValue == NULL) {
+		pyValue = pythonify_c_value(@encode(id), &value);
+		if (pyValue == NULL) {
+			Py_DECREF(keyName);
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+		val = PyObject_CallFunction(setKeyFunc, "OOO", 
+				pyObject, keyName, pyValue);
 		Py_DECREF(keyName);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+		Py_DECREF(pyValue);
+		if (val == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	val = PyObject_CallFunction(setKeyFunc, "OOO", pyObject, keyName, pyValue);
-	Py_DECREF(keyName);
-	Py_DECREF(pyValue);
-	if (val == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+		Py_DECREF(val);
 
-	Py_DECREF(val);
-	PyGILState_Release(state);
+	PyObjC_END_WITH_GIL
 }
 
 - (void)takeStoredValue: value forKey: (NSString*) key;

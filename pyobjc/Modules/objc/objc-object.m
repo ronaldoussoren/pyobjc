@@ -148,6 +148,18 @@ object_dealloc(PyObject* obj)
 	if (PyObjCObject_IsClassic(obj)) {
 		/* pass */
 	} else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
+		/* Freeing of an unitialized object, just leak because there is
+		 * no reliable manner to free such objects.
+		 *
+		 * - [obj release] doesn't work because some classes cause
+		 *      crashes for unitialized objects
+		 * - [[obj init] release] also doesn't work because not all
+		 *      classes implement -init
+		 * - [obj dealloc] also doesn't work for class clusters like
+		 *      NSArray.
+		 */
+		NSLog(@"PyObjC: leaking unitialized object");
+#if 0
 		/* Lets hope 'dealloc' works
 		 * 'init' is not always a valid initializer
 		 */
@@ -159,6 +171,7 @@ object_dealloc(PyObject* obj)
 				localException);
 
 		PyObjC_ENDHANDLER
+#endif
 
 		((PyObjCObject*)obj)->objc_object = nil;
 	} else {

@@ -1,6 +1,7 @@
 import unittest
 
 import objc
+from testbndl import PyObjC_TestClass4
 
 class TestConstants(unittest.TestCase):
     def testBooleans(self):
@@ -89,6 +90,12 @@ class TestPickle(unittest.TestCase):
         self.assertRaises(TypeError, pickle.dumps, o, 0)
         self.assertRaises(TypeError, pickle.dumps, o, 1)
         self.assertRaises(TypeError, pickle.dumps, o, 2)
+
+
+class TestDescription (unittest.TestCase):
+    def testSimple(self):
+        for obj in [ ['a',], 'hello', 2, ]:
+            self.assertEquals(repr(obj), PyObjC_TestClass4.fetchObjectDescription_(obj))
 
 if __name__ == '__main__':
     unittest.main()

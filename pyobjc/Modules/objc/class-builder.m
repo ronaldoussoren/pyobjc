@@ -854,7 +854,16 @@ free_ivars(id self, PyObject* cls)
 				Py_XDECREF(*(PyObject**)(((char*)self) + 
 					var->ivar_offset));
 			} else {
-				[*(id*)(((char*)self) + var->ivar_offset) release];
+				NS_DURING
+					[*(id*)(((char*)self) + var->ivar_offset) release];
+
+				NS_HANDLER
+					// FIXME: I don't like this but we must
+					// do something...
+					NSLog(@"ignoring exception %@ in destructor",
+						localException);
+
+				NS_ENDHANDLER
 				*(id*)(((char*)self) + var->ivar_offset) = NULL;
 			}
 		}
@@ -896,38 +905,41 @@ object_method_dealloc(
 	PyObject* delmethod;
 	PyObject* cls;
 	PyObject* ptype, *pvalue, *ptraceback;
-	PyGILState_STATE state = PyGILState_Ensure();
 
-	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+	PyObjC_BEGIN_WITH_GIL
 
-	CHECK_MAGIC(GETISA(self));
-	cls = PyObjCClass_New(GETISA(self));
-	if (!PyObjCClass_HasPythonImplementation(cls)) {
-		printf("-dealloc substitute called for pure ObjC class\n");
-		abort();
-	}
+		PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
-	delmethod = PyObjCClass_GetDelMethod(cls);
-	if (delmethod != NULL) {
-		PyObject* s = _PyObjCObject_NewDeallocHelper(self);
-		obj = PyObject_CallFunction(delmethod, "O", s);
-		_PyObjCObject_FreeDeallocHelper(s);
-		if (obj == NULL) {
-			PyErr_WriteUnraisable(delmethod);
-		} else {
-			Py_DECREF(obj);
+		CHECK_MAGIC(GETISA(self));
+		cls = PyObjCClass_New(GETISA(self));
+		if (!PyObjCClass_HasPythonImplementation(cls)) {
+			printf("-dealloc substitute called for pure ObjC "
+			       "class\n");
+			abort();
 		}
-		Py_DECREF(delmethod);
-	}
 
-	free_ivars(self, cls);
+		delmethod = PyObjCClass_GetDelMethod(cls);
+		if (delmethod != NULL) {
+			PyObject* s = _PyObjCObject_NewDeallocHelper(self);
+			obj = PyObject_CallFunction(delmethod, "O", s);
+			_PyObjCObject_FreeDeallocHelper(s);
+			if (obj == NULL) {
+				PyErr_WriteUnraisable(delmethod);
+			} else {
+				Py_DECREF(obj);
+			}
+			Py_DECREF(delmethod);
+		}
 
-	PyErr_Restore(ptype, pvalue, ptraceback);
+		free_ivars(self, cls);
+
+		PyErr_Restore(ptype, pvalue, ptraceback);
+
+	PyObjC_END_WITH_GIL
 
 	super.class = (Class)userdata;
 	RECEIVER(super) = self;
 
-	PyGILState_Release(state);
 	objc_msgSendSuper(&super, _meth);
 }
 
@@ -947,35 +959,34 @@ object_method_respondsToSelector(
 	struct objc_super super;
         PyObject* pyself;
 	PyObject* pymeth;
-	PyGILState_STATE state = PyGILState_Ensure();
 
-	/* First check if we respond */
-	pyself = PyObjCObject_New(self);
-	if (pyself == NULL) {
-		*pres = NO;
-		PyGILState_Release(state);
-		return;
-	}
-	pymeth = PyObjCObject_FindSelector(pyself, aSelector);
-	Py_DECREF(pyself);
-	if (pymeth) {
-		*pres = YES;
-
-		if (PyObjCSelector_Check(pymeth) && (((PyObjCSelector*)pymeth)->sel_flags & PyObjCSelector_kCLASS_METHOD)) {
-			*pres = NO;	
+	PyObjC_BEGIN_WITH_GIL
+		/* First check if we respond */
+		pyself = PyObjCObject_New(self);
+		if (pyself == NULL) {
+			*pres = NO;
+			PyObjC_GIL_RETURNVOID;
 		}
+		pymeth = PyObjCObject_FindSelector(pyself, aSelector);
+		Py_DECREF(pyself);
+		if (pymeth) {
+			*pres = YES;
+
+			if (PyObjCSelector_Check(pymeth) && (((PyObjCSelector*)pymeth)->sel_flags & PyObjCSelector_kCLASS_METHOD)) {
+				*pres = NO;	
+			}
 			
-		Py_DECREF(pymeth);
-		PyGILState_Release(state);
-		return;
-	}
-	PyErr_Clear();
+			Py_DECREF(pymeth);
+			PyObjC_GIL_RETURNVOID;
+		}
+		PyErr_Clear();
+	
+	PyObjC_END_WITH_GIL
 
 	/* Check superclass */
 	super.class = (Class)userdata;
 	RECEIVER(super) = self;
 
-	PyGILState_Release(state);
 	*pres = (int)objc_msgSendSuper(&super, _meth, aSelector);
 	return;
 }
@@ -996,7 +1007,6 @@ object_method_methodSignatureForSelector(
         PyObject*          pyself;
 	PyObject*          pymeth;
 	NSMethodSignature** presult = (NSMethodSignature**)retval;
-	PyGILState_STATE state;
 
 	*presult = nil;
 
@@ -1013,39 +1023,40 @@ object_method_methodSignatureForSelector(
 		return;
 	}
 
-	state = PyGILState_Ensure();
+	PyObjC_BEGIN_WITH_GIL
+		pyself = PyObjCObject_New(self);
+		if (pyself == NULL) {
+			PyErr_Clear();
+			PyObjC_GIL_RETURNVOID;
+		}
 
-	pyself = PyObjCObject_New(self);
-	if (pyself == NULL) {
-		PyErr_Clear();
-		PyGILState_Release(state);
-		return;
-	}
+		pymeth = PyObjCObject_FindSelector(pyself, aSelector);
+		if (!pymeth) {
+			Py_DECREF(pyself);
+			PyErr_Clear();
+			PyObjC_GIL_RETURNVOID;
+		}
+	
+	PyObjC_END_WITH_GIL
 
-	pymeth = PyObjCObject_FindSelector(pyself, aSelector);
-	if (!pymeth) {
-		Py_DECREF(pyself);
-		PyErr_Clear();
-		PyGILState_Release(state);
-		return;
-	}
-
-	PyGILState_Release(state);
 	NS_DURING
 		*presult =  [NSMethodSignature signatureWithObjCTypes:(
 				(PyObjCSelector*)pymeth)->sel_signature];
 	NS_HANDLER
-		state = PyGILState_Ensure();
-		Py_DECREF(pymeth);
-		Py_DECREF(pyself);
-		PyGILState_Release(state);
+		PyObjC_BEGIN_WITH_GIL
+			Py_DECREF(pymeth);
+			Py_DECREF(pyself);
+
+		PyObjC_END_WITH_GIL
 		[localException raise];
 	NS_ENDHANDLER
 
-	state = PyGILState_Ensure();
-	Py_DECREF(pymeth);
-	Py_DECREF(pyself);
-	PyGILState_Release(state);
+	PyObjC_BEGIN_WITH_GIL
+		Py_DECREF(pymeth);
+		Py_DECREF(pyself);
+
+	PyObjC_END_WITH_GIL
+
 }
 
 /* -forwardInvocation: */
@@ -1059,6 +1070,7 @@ object_method_forwardInvocation(
 	id self = *(id*)args[0];
 	SEL _meth = *(SEL*)args[1];
 	NSInvocation* invocation = *(NSInvocation**)args[2];
+	SEL theSelector;
 
 	PyObject*	arglist;
 	PyObject* 	result;
@@ -1082,7 +1094,18 @@ object_method_forwardInvocation(
 		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
-	pymeth = PyObjCObject_FindSelector(pyself, [invocation selector]);
+
+
+	NS_DURING
+		theSelector = [invocation selector];
+	NS_HANDLER
+		PyGILState_Release(state);
+		[localException raise];
+
+	NS_ENDHANDLER
+
+	pymeth = PyObjCObject_FindSelector(pyself, theSelector);
+
 	if ((pymeth == NULL) || ObjCNativeSelector_Check(pymeth)) {
 		struct objc_super super;
 
@@ -1187,7 +1210,7 @@ object_method_forwardInvocation(
 	Py_DECREF(arglist);
 	arglist = v;
 
-	result = PyObjC_CallPython(self, [invocation selector], arglist, &isAlloc);
+	result = PyObjC_CallPython(self, theSelector, arglist, &isAlloc);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCMethodSignature_Free(signature);
@@ -1285,7 +1308,7 @@ object_method_forwardInvocation(
 			     || PyTuple_Size(result) != have_output+1) {
 				PyErr_Format(PyExc_TypeError,
 					"%s: Need tuple of %d arguments as result",
-					PyObjCRT_SELName([invocation selector]),
+					PyObjCRT_SELName(theSelector),
 					have_output+1);
 				Py_DECREF(result);
 				PyObjCMethodSignature_Free(signature);
@@ -1313,7 +1336,7 @@ object_method_forwardInvocation(
 			     || PyTuple_Size(result) != have_output) {
 				PyErr_Format(PyExc_TypeError,
 					"%s: Need tuple of %d arguments as result",
-					PyObjCRT_SELName([invocation selector]),
+					PyObjCRT_SELName(theSelector),
 					have_output);
 				PyObjCMethodSignature_Free(signature);
 				Py_DECREF(result);

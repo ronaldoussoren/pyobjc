@@ -324,7 +324,7 @@ if gs_root is None:
         #"-pedantic",
 
         "-Wno-import",
-        #"-O0", "-g",
+        "-O0", "-g",
         #"-Werror",
         #"-O3", "-mcpu=7450", "-maltivec",
         ]

@@ -71,31 +71,37 @@ imp_NSObject_alloc(
 	PyObject* v = NULL;
 	PyObject* result = NULL;
 
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyObjC_BEGIN_WITH_GIL
 
-	arglist = PyTuple_New(1);
-	if (arglist == NULL) goto error;
+		arglist = PyTuple_New(1);
+		if (arglist == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	v = PyObjC_IdToPython(*(id*)args[0]);
-	if (v == NULL) goto error;
-	PyTuple_SET_ITEM(arglist, 0, v);
-	v = NULL;
+		v = PyObjC_IdToPython(*(id*)args[0]);
+		if (v == NULL) {
+			Py_DECREF(arglist);
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	result = PyObject_Call((PyObject*)callable, arglist, NULL);
-	if (result == NULL) goto error;
+		PyTuple_SET_ITEM(arglist, 0, v);
+		v = NULL;
 
-	Py_DECREF(arglist); arglist = NULL;
+		result = PyObject_Call((PyObject*)callable, arglist, NULL);
+		if (result == NULL) {
+			Py_DECREF(arglist);
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	err = depythonify_c_value("@", result, resp);
-	Py_DECREF(result); result = NULL;
-	if (err == -1) goto error;
+		Py_DECREF(arglist); 
 
-	PyGILState_Release(state);
-	return;
+		err = depythonify_c_value("@", result, resp);
+		Py_DECREF(result); 
+		if (err == -1) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-error:
-	Py_XDECREF(arglist);
-	PyObjCErr_ToObjCWithGILState(&state);
+	PyObjC_END_WITH_GIL
 }
 
 int
