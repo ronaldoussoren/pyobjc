@@ -117,15 +117,23 @@ compile time settings.
 The original, unwrapped, ``NSString`` instance is accessible from Python
 with the ``nsstring()`` method of ``objc.pyobjc_unicode``, primarily used
 to access an updated copy of an ``NSMutableString``'s contents.  Since
-PyObjC 1.2, ``NSString`` and ``NSMutableString`` methods are available from
+PyObjC 1.3, ``NSString`` and ``NSMutableString`` methods are available from
 the ``objc.pyobjc_unicode`` object, though they do not show up via Python's
 introspection mechanisms.
 
-For legacy and convenience, Python ``str`` instances are automatically coerced
-to ``unicode`` when they cross the bridge using the same mechanism that
-automatically converts from ``str`` to ``unicode`` (using 
-``sys.getdefaultencoding()``).  This automatic conversion can cause terrible
-things to happen at runtime that are hard to test for, so you may enable an
-``objc.PyObjCStrBridgeWarning`` at each coercion attempt by calling
-``objc.setStrBridgeEnabled(False)``.  To promote this warning to an exception,
-see the documentation for the ``warnings`` module in the standard library.
+The ``str`` bridge is now disabled by default, and will issue
+``objc.PyObjCStrBridgeWarning`` warnings.  To promote these to an
+exception, do the following::
+
+      import objc
+      import warnings
+      warnings.filterwarnings('error', objc.PyObjCStrBridgeWarning)
+
+To enable the str bridge, without warnings, use::
+
+      import objc
+      objc.setStrBridgeEnabled(True)
+
+In PyObjC 1.4, this warning will go away, and ``str`` objects will not be
+usable as ``NSString`` instances.  To pass text across the bridge,
+always use ``unicode``.

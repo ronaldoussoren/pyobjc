@@ -356,7 +356,7 @@ argument.
 
 Python's ``array.array`` type may be used to represent a C array if the
 typestr and size match what is expected by the selector.  Numeric, numarray,
-and other third party array types are not supported in PyObjC 1.2.
+and other third party array types are not supported in PyObjC 1.3.
 
 When you define methods in a subclass of an Objective-C class, the bridge has
 to tell the Objective-C runtime what the signature of those methods is.  The

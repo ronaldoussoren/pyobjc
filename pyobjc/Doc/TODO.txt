@@ -120,7 +120,7 @@ Note that even though we do not have 100% coverage of Cocoa, the majority
 of useful functions, constants, and "difficult" methods are wrapped.  If you
 run across a missing or incorrectly wrapped constant, function, or method
 please report it as a bug and/or post to pyobjc-dev about the issue.  This is
-one area we intend to improve after the release of 1.2 when our new
+one area we intend to improve after the release of 1.3 when our new
 wrapper-generators are in a more complete state.
 
 Pickle support
@@ -128,7 +128,7 @@ Pickle support
 
 Objective-C objects don't support pickling.
 
-This is post-1.2 work, in general this is a hard problem because it may 
+This is post-1.3 work, in general this is a hard problem because it may 
 involve object cycles that cross the Python-ObjC boundary.
 
 NSCoder support
