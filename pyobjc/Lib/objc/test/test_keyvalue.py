@@ -310,5 +310,88 @@ class TestPythonSubOverObjC(AbstractKVCodingTest, unittest.TestCase):
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "overIndirectHead.indirectString"))
 
 
+
+import sys, os
+if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
+
+    # MacOS X 10.3 and later use 'setValue:forKey:' instead of 
+    # 'takeValue:forKey:', test these as wel.
+
+    class PyKeyValueCoding_10_3 (unittest.TestCase):
+        def testSetValueForKey(self):
+            o = KeyValueClass2()
+
+            self.assertEquals(o.key3, 3)
+            STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, 'key3', 'drie')
+            self.assertEquals(o.key3, "drie")
+            
+            self.assertEquals(o._key4, "4")
+            STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, 'key4', 'vier')
+            self.assertEquals(o._key4, "viervierviervier")
+
+            o.key5 = 1
+            STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, 'key5', 'V')
+            self.assertEquals(o.key5, "VVVVV")
+
+            self.assert_(not hasattr(o, 'key9'))
+            STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, 'key9', 'IX')
+            self.assert_(hasattr(o, 'key9'))
+            self.assertEquals(o.key9, 'IX')
+
+        def testTakeValueForKey2(self):
+            o = KeyValueClass3()
+
+            self.assertEquals(o.foo, "foobar")
+            STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, 'foo', 'FOO')
+            self.assertEquals(o.foo, "FOO")
+
+            self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, DO_SETVALUE_FORKEY, o, 'key9', 'IX')
+
+        def testSetValuesForKeysFromDictionary(self):
+            o = KeyValueClass2()
+
+            self.assertEquals(o.key3, 3)
+            self.assertEquals(o._key4, "4")
+            o.key5 = 1
+            self.assert_(not hasattr(o, 'key9'))
+
+            STUB.setKeyValue_forObject_key_value_(DO_SETVALUESFORKEYSFROMDICT, o, None,
+                {
+                    'key3': 'drie',
+                    'key4': 'vier',
+                    'key5': 'V',
+                    'key9': 'IX',
+                })
+
+            self.assertEquals(o.key3, "drie")
+            self.assertEquals(o._key4, "viervierviervier")
+            self.assertEquals(o.key5, "VVVVV")
+            self.assert_(hasattr(o, 'key9'))
+            self.assertEquals(o.key9, 'IX')
+
+        def testSetValuesForKeysFromDictionary2(self):
+            o = KeyValueClass3()
+
+            self.assertEquals(o.foo, "foobar")
+            STUB.setKeyValue_forObject_key_value_(DO_SETVALUESFORKEYSFROMDICT, o, None, { 'foo': 'FOO' })
+            self.assertEquals(o.foo, "FOO")
+
+            self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, DO_SETVALUESFORKEYSFROMDICT, o, None, { 'key9':  'IX' })
+            self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, DO_SETVALUESFORKEYSFROMDICT, o, None, { 'roprop':  'IX' })
+
+        def testSetValueForKeyPath(self):
+            o = KeyValueClass2()
+            o.addMultiple()
+
+            self.assertEquals(o.multiple.level2.level3.keyA, "hello")
+            self.assertEquals(o.multiple.level2.level3.keyB, "world")
+
+            STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEYPATH, o, "multiple.level2.level3.keyA", "KeyAValue")
+            self.assertEquals(o.multiple.level2.level3.keyA, "KeyAValue")
+
+            STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEYPATH, o, "multiple.level2.level3.keyB", 9.999)
+            self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -9,38 +9,6 @@
  *	needed.
  */
 #include "pyobjc.h"
-#include "objc_support.h"
-
-static char* 
-flatten_signature(NSMethodSignature* sig, char* buf, int buflen)
-{
-	char* cur = buf;
-	int   curlen = buflen;
-	int   r;
-	int   i, len;
-
-	r = snprintf(cur, curlen, "%s", [sig methodReturnType]);
-	if (r >= curlen) goto error;
-	cur += r;
-	curlen -= r;
-
-	len = [sig numberOfArguments];
-	for (i = 0; i < len; i ++) {
-		r = snprintf(cur, curlen, "%s", [sig getArgumentTypeAtIndex:i]);
-		if (r >= curlen) goto error;
-		cur += r;
-		curlen -= r;
-	}
-	*cur = '\0';
-	return buf;
-
-error:
-	/* FIXME, however 1024 characters should be enough for any reasonable
-	 * signature. E.g. this can wait until we run into problems.
-	 */
-	PyErr_SetString(PyExc_MemoryError, "PyObC: extremely long signature");
-	return NULL;
-}
 
 static PyObject* 
 find_selector(PyObject* self, char* name, int class_method)
@@ -111,7 +79,8 @@ find_selector(PyObject* self, char* name, int class_method)
 		objc_object = GETISA(objc_object);
 	}
 
-	flattened = flatten_signature(methsig, buf, sizeof(buf));
+	flattened = PyObjC_NSMethodSignatureToTypeString(
+			methsig, buf, sizeof(buf));
 	if (flattened == NULL) {
 		return NULL;
 	}
@@ -128,7 +97,7 @@ make_dict(PyObject* self, int class_method)
 	struct objc_method_list* mlist;
 	void* iterator;
 	char  buf[256];
-	id    objc_class;
+	Class    objc_class;
 	PyObject* bound_self;
 
 	if (PyObjCObject_Check(self)) {
@@ -168,9 +137,9 @@ make_dict(PyObject* self, int class_method)
 
 	while (objc_class != NULL && cls != NULL) {
 		iterator = NULL;
-		mlist = class_nextMethodList(objc_class, &iterator);
+		mlist = PyObjCRT_NextMethodList(objc_class, &iterator);
 		while (mlist != NULL) {
-			METHOD meth;
+			PyObjCRT_Method_t meth;
 			PyObject* v;
 			int i;
 
@@ -214,7 +183,7 @@ make_dict(PyObject* self, int class_method)
 				Py_DECREF(v);
 
 			}
-			mlist = class_nextMethodList(objc_class, &iterator);
+			mlist = PyObjCRT_NextMethodList(objc_class, &iterator);
 		}
 
 		objc_class = ((Class)objc_class)->super_class;

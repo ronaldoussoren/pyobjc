@@ -16,7 +16,7 @@
 #include "pymactoolbox.h"
 
 static PyObject* call_NSWindow_windowRef(
-		PyObject* method __attribute__((__unused__)), 
+		PyObject* method, 
 		PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
@@ -29,12 +29,12 @@ static PyObject* call_NSWindow_windowRef(
 
 	NS_DURING
 		PyObjC_InitSuper(&super, 
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
 
 		windowRef = objc_msgSendSuper(&super,
-				@selector(windowRef));
+				PyObjCSelector_GetSelector(method));
 		if (windowRef == NULL) {
 			result = Py_None;
 			Py_INCREF(result);
@@ -56,16 +56,18 @@ static void* imp_NSWindow_windowRef(id self, SEL sel)
 	PyObject* arglist;
 	void*    objc_result;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(0);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -73,16 +75,17 @@ static void* imp_NSWindow_windowRef(id self, SEL sel)
 	Py_DECREF(result);
 
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
+	PyGILState_Release(state);
 	return objc_result;
 }
 
 
 static PyObject* call_NSWindow_initWithWindowRef_(
-		PyObject* method __attribute__((__unused__)), PyObject* self, PyObject* arguments)
+		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -95,11 +98,11 @@ static PyObject* call_NSWindow_initWithWindowRef_(
 
 	NS_DURING
 		PyObjC_InitSuper(&super, 
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
 		objc_result = objc_msgSendSuper(&super,
-				@selector(initWithWindowRef:), windowRef);
+				PyObjCSelector_GetSelector(method), windowRef);
 		result = PyObjC_IdToPython(objc_result);
 
 	NS_HANDLER
@@ -116,33 +119,36 @@ static id imp_NSWindow_initWithWindowRef_(id self, SEL sel, void* windowRef)
 	PyObject* arglist;
 	id        objc_result;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	
 	PyTuple_SET_ITEM(arglist, 0, WinObj_New(windowRef));
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	objc_result = PyObjC_PythonToId(result);
 
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
+	PyGILState_Release(state);
 	return objc_result;
 }
 

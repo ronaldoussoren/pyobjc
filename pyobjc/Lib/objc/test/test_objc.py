@@ -43,7 +43,7 @@ class TestMethodInvocation(unittest.TestCase):
 
     def testWithZones(self):
         obj = objc.runtime.NSObject.allocWithZone_(None).init()
-        zone = obj.zone()
+	zone = obj.zone()
         self.assert_(zone is not None)
         self.assert_(zone.pointer != 0)
 
@@ -51,6 +51,8 @@ class TestMethodInvocation(unittest.TestCase):
         zone2 = obj2.zone()
         self.assertEquals(zone.pointer, zone2.pointer)
 
+
+	self.assertRaises(ValueError, objc.runtime.NSObject.allocWithZone_, 10)
 
 
     def testClassInvocation(self):

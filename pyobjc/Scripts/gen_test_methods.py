@@ -21,10 +21,8 @@ NOTES:
   to make it easier to debug problems.
 
 TODO:
-- Add structured types (struct, array), we currently only test NSPoint/NSRect
 - Check that we include all tests from the manually generated version.
   (We don't, see below)
-- Fix bugs found by these tests ('in' arguments don't work correctly)
 - The 'values' items in the TYPES array need more work: We don't really test
   boundary conditions.
 - We don't test invalid arguments, bad number of arguments
@@ -44,10 +42,37 @@ OBJC_HEADER="""\
  *
  */
 
-#import <Foundation/Foundation.h>
-
 #include <Python.h>
 #include <pyobjc-api.h>
+#include <limits.h>
+
+#import <Foundation/Foundation.h>
+
+#if !defined(LLONG_MAX) && defined(LONG_LONG_MAX)
+
+#  define LLONG_MAX LONG_LONG_MAX
+#  define LLONG_MIN LONG_LONG_MIN
+#  define ULLONG_MAX ULONG_LONG_MAX
+
+#endif
+
+
+struct TestStruct1 {
+    int i;
+    int d; 
+    short  s[5];
+};
+
+struct TestStruct2 {
+    int i;
+    double d; 
+    short  s[5];
+};
+
+struct TestStruct3 {
+    char ch;
+    int  i;
+};
 """
 
 OBJC_FOOTER="""\
@@ -92,6 +117,23 @@ from objc import YES, NO, nil
 from Foundation import NSPriorDayDesignations
 import sys
 
+from objc.test import ctests
+
+#
+# NSInvocation in MacOS X 10.2 doesn't like some struct definition, it 
+# garbles the contents of those structs. These unittests disable NSInvocation
+# tests that fail because of this problem.
+#
+# ctests.CheckNSInvoke checks if NSInvocation has this problem, it does so
+# in pure Objective-C code and will therefore not mask problems with the
+# bridge.
+#
+try:
+    ctests.CheckNSInvoke()
+    nsinvoke_ok = 1
+except AssertionError:
+    nsinvoke_ok = 0
+
 NSArray = objc.runtime.NSArray
 
 # First make sure that the pass-by-reference methods have the correct signature
@@ -119,9 +161,14 @@ if __name__ == "__main__":
     unittest.main()
 """
 
-TYPES=[
+if hasattr(objc, '_C_BOOL'):
+    TYPES = [('bool', objc._C_BOOL, [ 'YES', 'NO' ]),]
+else:
+    TYPES = []
+
+TYPES.extend([
     # ( typename, objc_signature, testvalues )
-    ('BOOL', objc._C_BOOL, [ 'YES', 'NO' ]),
+    ('BOOL', objc._C_NSBOOL, [ 'YES', 'NO' ]),
     ('char', objc._C_CHR, ('-128', '0', '127') ),
     ('signed short', objc._C_SHT, ('-(1<<14)', '-42', '0', '42', '1 << 14') ),
     ('signed int', objc._C_INT, ('-(1<<30)', '-42', '0', '42', '1 << 30') ),
@@ -138,7 +185,16 @@ TYPES=[
     ('char*', objc._C_CHARPTR, ('"hello"', '"world"', '"foobar"')),
     ('NSPoint', "{_NSPoint=ff}", ((1, 2), (3,4),)),
     ('NSRect', "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", (((1,2), (3,4)), ((7,8),(9,10)),)),
-]
+    ('struct TestStruct1', '{_TestStruct1=ii[5s]}', ((1,2,(1,2,3,4,5)), (9,8,(-1,-2,-3,-4,-5)))),
+    ('struct TestStruct2', '{_TestStruct2=id[5s]}', ((1,2,(1,2,3,4,5)), (9,8,(-1,-2,-3,-4,-5)))),
+    ('struct TestStruct3', '{_TestStruct3=ci}', ((1,2), (2,4))),
+])
+
+
+
+def IS_PROBLEM(tp):
+    # See CheckNSInvoke in PYTHON_HEADER 
+    return tp in ['struct TestStruct1', 'struct TestStruct2', 'struct TestStruct3']
 
 def tp2ident(tp):
     return tp.replace(' ', '').replace('*', 'Ptr')
@@ -339,7 +395,7 @@ def emit_objc_implementations(fp):
     fp.write('\t{\\\n')
     fp.write('\t\tid sign = [target methodSignatureForSelector:selector];\\\n')
     fp.write('\t\tif (sign == NULL) {\\\n')
-    fp.write('\t\t\tPyErr_SetString(PyExc_AttributeError, SELNAME(selector));\\\n')
+    fp.write('\t\t\tPyErr_SetString(PyExc_AttributeError, PyObjCRT_SELName(selector));\\\n')
     fp.write('\t\t\tPyObjCErr_ToObjC();\\\n')
     fp.write('\t\t}\\\n')
     fp.write('\t\tinv = [NSInvocation invocationWithMethodSignature:\\\n')
@@ -725,6 +781,10 @@ def emit_py_from_objc(fp):
         nm = tp2ident(tp)
         for kind in  ('call', 'invoke'):
             fp.write('\tdef test%s%sArg(self):\n'%(kind, nm,))
+            for kind in ('call', 'invoke'):
+                if kind == 'invoke' and IS_PROBLEM(tp):
+                    fp.write('\t\tif not nsinvoke_ok:\n')
+                    fp.write('\t\t\treturn\n')
             fp.write('\t\to = Python_TestClass.alloc().init()\n')
             fp.write('\t\tself.assert_(o is not None)\n')
             for v in values:
@@ -748,6 +808,10 @@ def emit_py_from_objc(fp):
             nm2 = tp2ident(tp2)
             for kind in ('call', 'invoke'):
                 fp.write('\tdef test%s%sAnd%sArg(self):\n'%(kind, nm1,nm2))
+                if kind == 'invoke' and (IS_PROBLEM(tp1)  or IS_PROBLEM(tp2)):
+                    fp.write('\t\tif not nsinvoke_ok:\n')
+                    fp.write('\t\t\treturn\n')
+
                 fp.write('\t\to = Python_TestClass.alloc().init()\n')
                 fp.write('\t\tself.assert_(o is not None)\n')
                 for v1 in values1:
@@ -859,7 +923,16 @@ for tp, sign, values in TYPES:
     if tp != 'id': continue
     
     fp.write('\t/* Initialize g_id_values */\n')
-    for idx, v in enumerate(values):
+    def counted(lst):
+    	""" 'enumurate' for dummies """
+    	i = 0
+	result = []
+	for item in lst:
+		result.append((i, item))
+		i = i+1
+	return result
+
+    for idx, v in counted(values):
         fp.write('\tg_id_values[%d] = %s;\n'%(idx, v))
 
 fp.write('}\n')

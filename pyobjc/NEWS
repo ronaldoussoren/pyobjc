@@ -4,6 +4,21 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version "Panther" (Off-CVS)
+---------------------------
+
+- Integrates full support for MacOS X 10.3 (aka Panther)
+
+- Adds a convenience/wrapper module for SecurityInterface
+
+- It is now safe to call from Objective-C to Python in arbitrary threads, but
+  only when using Python 2.3 or later.
+
+- Fixes some issues with passing structs between Python and Objective-C. 
+
+- Uses the Panther version of NSKeyValueCoding, the Jaguar version is still
+  supported.
+
 Version 1.0 (2003-09-21)
 ------------------------
 

@@ -32,7 +32,7 @@ MacPython 2.3.  Users of MacPython 2.3 can install PyObjC though the
 PackageManager application.
 """
 
-if sys.version >= '2.2.3':
+if sys.version >= '2.3':
     # Add additional setup arguments, used to register with PyPI, Python 2.2.2
     # and earlier don't support these (nor the 'register' subcommand of 
     # setup.py)
@@ -133,6 +133,8 @@ LIBFFI_LDFLAGS=[
 ]
 
 sourceFiles = [
+	"Modules/objc/objc-runtime-apple.m",
+	"Modules/objc/objc-runtime-gnu.m",
         "Modules/objc/objc_util.m",
         "Modules/objc/objc_support.m",
         "Modules/objc/class-builder.m",
@@ -153,6 +155,7 @@ sourceFiles = [
         "Modules/objc/pyobjc-api.m",
         "Modules/objc/alloc_hack.m",
         "Modules/objc/toll-free-bridging.m",
+        "Modules/objc/method-signature.m",
         "Modules/objc/module.m",
         "Modules/objc/libffi_support.m",
         "Modules/objc/pointer-support.m",
@@ -165,8 +168,29 @@ if gs_root is None:
     #
     # MacOS X 
     #
+    def IfFrameWork(name, packages, extensions, headername=None):
+        """
+        Return the packages and extensions if the framework exists, or
+        two empty lists if not.
+        """
+        for pth in ('/System/Library/Frameworks', '/Library/Frameworks'):
+            basedir = os.path.join(pth, name)
+            if os.path.exists(basedir):
+                if (headername is None) or os.path.exists(os.path.join(basedir, "Headers", headername)):
+                    return packages, extensions
+        return [], []
+
+    # Double-check
+    if sys.platform != 'darwin':
+    	print "You're not running on MacOS X, and don't use GNUstep"
+	print "I don't know how to build PyObjC on such a platform."
+	print "Please read the ReadMe."
+	print ""
+	sys.exit(1)
+
     CFLAGS=[
         "-DMACOSX",
+	"-DAPPLE_RUNTIME",
         "-no-cpp-precomp",
         "-Wno-long-double",
         "-g",
@@ -185,7 +209,7 @@ if gs_root is None:
         #"-pedantic",
 
         "-Wno-import", 
-        #"-O0", "-g",
+        "-O0", "-g",
         #"-Werror",
         ]
 
@@ -201,16 +225,12 @@ if gs_root is None:
         '-framework CoreFoundation', '-framework', 'AppKit',
         ]
 
-    FNDMAP_LDFLAGS=[
-        '-framework CoreFoundation', '-framework', 'Foundation',
-        ]
-
-    APPMAP_LDFLAGS=[
-        '-framework CoreFoundation', '-framework', 'AppKit',
-        ]
-
     ADDRESSBOOK_LDFLAGS=[
         '-framework CoreFoundation', '-framework', 'AddressBook', '-framework', 'Foundation',
+    ]
+
+    SECURITY_INTERFACE_LDFLAGS=[
+        '-framework CoreFoundation', '-framework', 'SecurityInterface', '-framework', 'Foundation',
     ]
 
     PREFPANES_LDFLAGS=[
@@ -224,6 +244,7 @@ else:
     # NOTE: We add '-g' to the compile flags to make development easier
     # on systems where the installed python hasn't been build with debugging
     # support.
+    gs_root = gs_root + '/Library'
 
     gs_cpu = os.environ.get('GNUSTEP_HOST_CPU')
     gs_os = os.environ.get('GNUSTEP_HOST_OS')
@@ -232,11 +253,29 @@ else:
     gs_lib_dir = gs_cpu + '/' + gs_os
     gs_flib_dir = gs_cpu + '/' + gs_os + '/' + gs_combo
 
+    def IfFrameWork(name, packages, extensions, headername=None):
+        """
+        Return the packages and extensions if the framework exists, or
+        two empty lists if not.
+        """
+	name = os.path.splitext(name)[0]
+        for pth in (gs_root, ):
+            basedir = os.path.join(pth, 'Headers', name)
+            if os.path.exists(basedir):
+	    	return packages, extensions
+        return [], []
+
     CFLAGS=[
         '-g',
+	'-O0',
         '-Wno-import',
-        '-DGNU_RUNTIME',
-        '-DGNUSTEP',
+
+	# The flags below should somehow be extracted from the GNUstep
+	# build environment (makefiles)!
+	'-DGNU_RUNTIME=1',
+	'-DGNUSTEP_BASE_LIBRARY=1',
+	'-fconstant-string-class=NSConstantString',
+	'-fgnu-runtime',
         '-I' + gs_root + '/Headers',
         '-I' + gs_root + '/Headers/gnustep',
         '-I' + gs_root + '/Headers/' + gs_lib_dir
@@ -244,63 +283,23 @@ else:
 
     OBJC_LDFLAGS=[
         '-g',
+        '-L', gs_root + '/Libraries/',
         '-L', gs_root + '/Libraries/' + gs_flib_dir,
-        '-l', 'gnustep-base',
         '-L', gs_root + '/Libraries/' + gs_lib_dir,
-        '-l', 'objc'
+        '-lgnustep-base',
+        '-lobjc'
         ]
 
-    FND_LDFLAGS=[
-        '-g',
-        '-L', gs_root + '/Libraries/' + gs_flib_dir,
-        '-l', 'gnustep-base',
-        '-L', gs_root + '/Libraries/' + gs_lib_dir,
-        '-l', 'objc'
-        ]
-
-    APPKIT_LDFLAGS=[
-        '-g',
-        '-L', gs_root + '/Libraries/' + gs_flib_dir,
-        '-l', 'gnustep-base',
-        '-l', 'gnustep-gui',
-        '-L', gs_root + '/Libraries/' + gs_lib_dir,
-        '-l', 'objc'
-        ]
-
-    FNDMAP_LDFLAGS=[
-        '-g',
-        '-L', gs_root + '/Libraries/' + gs_flib_dir,
-        '-l', 'gnustep-base',
-        '-L', gs_root + '/Libraries/' + gs_lib_dir,
-        '-l', 'objc'
-        ]
-
-    APPMAP_LDFLAGS=[
-        '-g',
-        '-L', gs_root + '/Libraries/' + gs_flib_dir,
-        '-l', 'gnustep-base',
-        '-l', 'gnustep-gui',
-        '-L', gs_root + '/Libraries/' + gs_lib_dir,
-        '-l', 'objc'
-        ]
-
+    FND_LDFLAGS=OBJC_LDFLAGS
+    FNDMAP_LDFLAGS=OBJC_LDFLAGS
+    APPKIT_LDFLAGS=OBJC_LDFLAGS + ['-lgnustep-gui']
+    APPMAP_LDFLAGS=OBJC_LDFLAGS + ['-lgnustep-gui']
     ADDRESSBOOK_LDFLAGS=[]
     PREFPANES_LDFLAGS=[]
+    SECURITY_INTERFACE_LDFLAGS=[]
 
-CFLAGS.append('-IInclude/')
 CFLAGS.append('-Ibuild/codegen/')
 
-def IfFrameWork(name, packages, extensions, headername=None):
-    """
-    Return the packages and extensions if the framework exists, or
-    two empty lists if not.
-    """
-    for pth in ('/System/Library/Frameworks', '/Library/Frameworks'):
-        basedir = os.path.join(pth, name)
-        if os.path.exists(basedir):
-            if (headername is None) or os.path.exists(os.path.join(basedir, "Headers", headername)):
-                return packages, extensions
-    return [], []
 
 
 
@@ -308,6 +307,11 @@ CorePackages = [ 'objc' ]
 CoreExtensions =  [
     Extension("objc._objc", 
               sourceFiles,
+              extra_compile_args=[
+              ] + LIBFFI_CFLAGS + CFLAGS,
+              extra_link_args=LIBFFI_LDFLAGS + OBJC_LDFLAGS),
+    Extension("objc.test.ctests", 
+              [ 'Modules/objc/unittest.m' ],
               extra_compile_args=[
               ] + LIBFFI_CFLAGS + CFLAGS,
               extra_link_args=LIBFFI_LDFLAGS + OBJC_LDFLAGS),
@@ -319,12 +323,16 @@ CoreExtensions =  [
               ["Lib/objc/test/testbndl2.m"],
               extra_compile_args=["-IModules/objc" ] + CFLAGS,
               extra_link_args=OBJC_LDFLAGS),
-    Extension("autoGIL", 
-              ["Modules/autoGIL.c"],
-              extra_compile_args = CFLAGS,
-              extra_link_args = ['-framework', 'CoreFoundation']),
     ]
-CocoaPackages = [ 'Foundation', 'AppKit' ]
+
+if gs_root is None:
+    # autoGIL is only usefull on MacOS X
+    CoreExtensions.append(
+        Extension("autoGIL", 
+            ["Modules/autoGIL.c"],
+                extra_compile_args = CFLAGS,
+                extra_link_args = ['-framework', 'CoreFoundation']),
+    )
 
 subprocess("Generating wrappers & stubs", "%s Scripts/CodeGenerators/cocoa_generator.py" % (sys.executable,), None)
 
@@ -332,18 +340,17 @@ subprocess("Generating wrappers & stubs", "%s Scripts/CodeGenerators/cocoa_gener
 # makes development slightly more convenient.
 if sys.version >= '2.3':
     FoundationDepends = {
-        'depends': glob.glob('build/codegen/_Fnd_*.inc'),
+        'depends': (glob.glob('build/codegen/_Fnd_*.inc') 
+                + glob.glob('Modules/Foundation/_FoundationMapping_*.m'))
     }
     AppKitDepends = {
-        'depends': glob.glob('build/codegen/_App_*.inc'),
-    }
-    AppKitMappingDepends = {
-        'depends': glob.glob('Modules/AppKit/_AppKitMapping_*.m'),
-    }
-    FoundationMappingDepends = {
-        'depends': glob.glob('Modules/Foundation/_FoundationMapping_*.m'),
+        'depends': (glob.glob('build/codegen/_App_*.inc')
+                + glob.glob('Modules/AppKit/_AppKitMapping_*.m'))
     }
     AddressBookDepends = {
+        'depends': glob.glob('build/codegen/*.inc'),
+    }
+    SecurityInterfaceDepends = {
         'depends': glob.glob('build/codegen/*.inc'),
     }
     PrefPanesDepends = {
@@ -358,15 +365,15 @@ if sys.version >= '2.3':
 else:
     FoundationDepends = {}
     AppKitDepends = {}
-    AppKitMappingDepends = {}
-    FoundationMappingDepends = {}
     AddressBookDepends = {}
+    SecurityInterfaceDepends = {}
     PrefPanesDepends = {}
     InterfaceBuilderDepends = {}
     WebKitDepends = {}
 
-CocoaExtensions = [
-          Extension("Foundation._Foundation", 
+FoundationPackages, FoundationExtensions = \
+        IfFrameWork('Foundation.framework', [ 'Foundation' ], [
+          Extension("_Foundation", 
                     [
                         "Modules/Foundation/_Foundation.m",
                         "Modules/Foundation/NSAutoreleasePoolSupport.m"
@@ -378,6 +385,10 @@ CocoaExtensions = [
                     ] + FND_LDFLAGS,
                     **FoundationDepends
                     ),
+	])
+
+AppKitPackages, AppKitExtensions = \
+        IfFrameWork('AppKit.framework', [ 'AppKit' ], [
           Extension("AppKit._AppKit", 
                     ["Modules/AppKit/_AppKit.m"],
                     extra_compile_args=[
@@ -387,22 +398,7 @@ CocoaExtensions = [
                     ] + APPKIT_LDFLAGS,
                     **AppKitDepends
                     ),
-          Extension("AppKit._AppKitMapping",
-                    ["Modules/AppKit/_AppKitMapping.m"],
-                    extra_compile_args=[ "-IModules/objc",] + CFLAGS,
-                    extra_link_args=[] + APPMAP_LDFLAGS,
-                    **AppKitMappingDepends
-                    ),
-          Extension("objc._FoundationMapping", 
-                    ["Modules/Foundation/_FoundationMapping.m"],
-                    extra_compile_args=[
-                        "-IModules/objc", 
-                    ] + CFLAGS,
-                    extra_link_args=[
-                    ] + FNDMAP_LDFLAGS,
-                    **FoundationMappingDepends
-                    ),
-      ]
+      ])
 
 # The AdressBook module is only installed when the user actually has the
 # AddressBook framework.
@@ -418,6 +414,21 @@ AddressBookPackages, AddressBookExtensions = \
                       **AddressBookDepends
                       ),
         ])
+
+
+SecurityInterfacePackages, SecurityInterfaceExtensions = [], []
+#SecurityInterfacePackages, SecurityInterfaceExtensions = \
+#        IfFrameWork('SecurityInterface.framework', [ 'SecurityInterface' ], [
+#            Extension('SecurityInterface._SecurityInterface',
+#                      [ 'Modules/SecurityInterface/_SecurityInterface.m' ],
+#                      extra_compile_args=[
+#                        '-IModules/objc',
+#                      ] + CFLAGS,
+#                      extra_link_args=[
+#                      ] + SECURITY_INTERFACE_LDFLAGS,
+#                      **SecurityInterfaceDepends
+#                      ),
+#        ])
 
 PrefPanesPackages, PrefPanesExtensions = \
         IfFrameWork('PreferencePanes.framework', [ 'PreferencePanes' ], [
@@ -476,7 +487,7 @@ def package_version():
     raise ValueError, "Version not found"
 
 
-packages = CorePackages + CocoaPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + ScreenSaverPackages + WebKitPackages + [ 'PyObjCTools' ] 
+packages = CorePackages + AppKitPackages + FoundationPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + ScreenSaverPackages + WebKitPackages + SecurityInterfacePackages + [ 'PyObjCTools' ] 
 # The following line is needed to allow separate flat modules
 # to be installed from a different folder (needed for the 
 # bundlebuilder test below).
@@ -511,16 +522,18 @@ dist = setup(name = "pyobjc",
              platforms = [ 'MacOS X' ],
 	     ext_modules = (
 			     CoreExtensions 
-			   + CocoaExtensions 
+			   + AppKitExtensions
+			   + FoundationExtensions
 			   + AddressBookExtensions 
                            + PrefPanesExtensions
                            + InterfaceBuilderExtensions
                            + ScreenSaverExtensions
+                           + SecurityInterfaceExtensions
                            + WebKitExtensions
 			   ),
 	     packages = packages,
 	     package_dir = package_dir,
-	     scripts = [ 'Scripts/nibclassbuilder', ],
+	     scripts = [ 'Scripts/nibclassbuilder', 'Scripts/runPyObjCTests'],
 	     extra_path = "PyObjC",
              **SetupExtraArguments
 )

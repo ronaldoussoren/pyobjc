@@ -78,12 +78,12 @@ simply double-click it and choose ``Build and Run``.
 * `Todo`_
 
   A more complex NIB based applications. This is a document-based application.
-  The code is a translation into pyton of an example project in 
+  The code is a translation into Python of an example project in 
   'Learning Cocoa' from O'Reilly
 
 * `WebServicesTool`_
 
-  Another Project Builder Cocoa project.  Quiries an XML-RPC enabled web
+  Another Project Builder Cocoa project.  Queries an XML-RPC enabled web
   server for the methods that it implements.  Demonstrates a more advanced
   use of an NSTableView, how to make a toolbar as well as how to use
   multi-threading.

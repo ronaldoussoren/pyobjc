@@ -3,7 +3,6 @@
 
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/NSString.h>
-#include "Python.h"
 
 /*
  * OC_PythonString - Objective-C proxy class for Python strings

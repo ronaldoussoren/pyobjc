@@ -1,5 +1,5 @@
-#ifndef OBJC_MODHELPER_H
-#define OBJC_MODHELPER_H
+#ifndef PyObjC_API_H
+#define PyObjC_API_H
 
 /*
  * Use this in helper modules for the objc package, and in wrappers
@@ -11,13 +11,30 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.20 2003/07/21 20:08:15 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.21 2003/10/19 16:53:35 ronaldoussoren Exp $
  */
 
 #include <Python.h>
 #include <objc/objc.h>
 
 #import <Foundation/NSException.h>
+
+#if PY_VERSION_HEX < 0x020300b0 
+
+#ifndef PyGILState_Ensure
+
+typedef int PyGILState_STATE;
+
+#define PyGILState_Ensure(void)  (0)
+static inline void PyGILState_Release(
+		PyGILState_STATE state __attribute__((__unused__))) 
+{
+	/* EMPTY */
+}
+
+#endif
+
+#endif
 
 #ifndef GNU_RUNTIME
 #include <objc/objc-runtime.h>
@@ -33,7 +50,22 @@
 #define MAC_OS_X_VERSION_10_2 1020
 #endif
 
-#endif
+
+#else /* RUNTIME_GNU */
+
+#ifndef objc_msgSendSuper
+#  define objc_msgSendSuper(super, op, args...) \
+	((super)->self == NULL                           \
+	 	? 0                                      \
+		: (                                      \
+			class_get_instance_method(       \
+				(super)->class, (op)     \
+			)->method_imp)(                  \
+				(super)->self,           \
+				(op) ,##args))
+#endif /* objc_msgSendSuper */
+
+#endif	/* RUNTIME_GNU */
 
 /* Earlier versions of Python don't define PyDoc_STRVAR */
 #ifndef PyDoc_STR
@@ -54,8 +86,13 @@
  * - Version 2.1 adds PyObjCPointerWrapper_Register 
  * - Version 2 adds an argument to PyObjC_InitSuper
  * - Version 3 adds another argument to PyObjC_CallPython
+ * - Version 4 adds PyObjCErr_ToObjCGILState
+ * - Version 4.1 adds PyObjCRT_AlignOfType and PyObjCRT_SizeOfType
+ *         (PyObjC_SizeOfType is now deprecated)
+ * - Version 4.2 adds PyObjCRT_SELName
+ * - Version 4.3 adds PyObjCRT_SimplifySignature
  */
-#define PYOBJC_API_VERSION 3
+#define PYOBJC_API_VERSION 4
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -146,6 +183,19 @@ struct pyobjc_api {
 
 	IMP  unsupported_method_imp;
 	PyObject* (*unsupported_method_caller)(PyObject*, PyObject*, PyObject*);
+
+	/* PyObjCErr_ToObjCWithGILState */
+	void (*err_python_to_objc_gil)(PyGILState_STATE* state);
+
+	/* PyObjCRT_AlignOfType */
+	int (*alignof_type)(const char* typestr);
+
+	/* PyObjCRT_SELName */
+	const char* (*selname)(SEL sel);
+
+	/* PyObjCRT_SimplifySignature */
+	void (*simplify_sig)(char* signature, char* buf, size_t buflen);
+
 };
 
 
@@ -168,6 +218,7 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjC_IdToPython      (PyObjC_API->id_to_python)
 #define PyObjCErr_FromObjC     (PyObjC_API->err_objc_to_python)
 #define PyObjCErr_ToObjC       (PyObjC_API->err_python_to_objc)
+#define PyObjCErr_ToObjCWithGILState       (PyObjC_API->err_python_to_objc_gil)
 #define PyObjC_PythonToObjC    (PyObjC_API->py_to_objc)
 #define PyObjC_ObjCToPython    (PyObjC_API->objc_to_py)
 #define PyObjC_CallPython	     (PyObjC_API->call_to_python)
@@ -183,6 +234,10 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCPointerWrapper_Register (PyObjC_API->register_pointer_wrapper)
 #define PyObjCUnsupportedMethod_IMP (PyObjC_API->unsupported_method_imp)
 #define PyObjCUnsupportedMethod_Caller (PyObjC_API->unsupported_method_caller)
+#define PyObjCRT_SizeOfType      (PyObjC_API->sizeof_type)
+#define PyObjCRT_AlignOfType	(PyObjC_API->alignof_type)
+#define PyObjCRT_SELName	(PyObjC_API->selname)
+#define PyObjCRT_SimplifySignature	(PyObjC_API->simplify_sig)
 
 
 /* XXX: Check if we can use the following function in the bridge itself,
@@ -239,7 +294,7 @@ PyObjC_ConvertChar(PyObject* object, void* pvar)
 
 static inline int 
 PyObjCSelector_Convert(PyObject* object, void* pvar)
-{
+{ 
     if (object == Py_None) {
         *(SEL*)pvar = NULL;
         return 1;
@@ -253,8 +308,7 @@ PyObjCSelector_Convert(PyObject* object, void* pvar)
         return 0;
     }
 
-    *(SEL*)pvar = SELUID(PyString_AsString(object));
-    return 1;
+    return PyObjC_PythonToObjC(@encode(SEL), object, pvar);
 }
 
 static inline int 
@@ -269,6 +323,7 @@ PyObjCClass_Convert(PyObject* object, void* pvar)
     if (*(Class*)pvar == NULL) return 0;
     return 1;
 }
+
 
 
 #ifndef PYOBJC_METHOD_STUB_IMPL
@@ -332,4 +387,4 @@ PyObjC_ImportAPI(PyObject* calling_module)
 extern struct pyobjc_api	objc_api;
 
 #endif /* !PYOBJC_BUILD */
-#endif /*  OBJC_MODHELPER_H */
+#endif /*  PyObjC_API_H */

@@ -273,6 +273,61 @@ NSDelayedPerforming = _objc.informal_protocol(
     ]
 )
 
+NSDeprecatedKeyValueCoding = _objc.informal_protocol(
+    "NSDeprecatedKeyValueCoding",
+    [
+# (id)handleQueryWithUnboundKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='handleQueryWithUnboundKey:',
+            signature='@@:@',
+            isRequired=0,
+        ),
+# (void)handleTakeValue:(id)value forUnboundKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='handleTakeValue:forUnboundKey:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)takeValue:(id)value forKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='takeValue:forKey:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)takeValue:(id)value forKeyPath:(NSString *)keyPath
+        _objc.selector(
+            None,
+            selector='takeValue:forKeyPath:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)takeValuesFromDictionary:(NSDictionary *)properties
+        _objc.selector(
+            None,
+            selector='takeValuesFromDictionary:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)unableToSetNilForKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='unableToSetNilForKey:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (NSDictionary *)valuesForKeys:(NSArray *)keys
+        _objc.selector(
+            None,
+            selector='valuesForKeys:',
+            signature='@@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
 NSDistantObjectRequestMethods = _objc.informal_protocol(
     "NSDistantObjectRequestMethods",
     [
@@ -309,6 +364,55 @@ NSDistributedObjects = _objc.informal_protocol(
 NSKeyValueCoding = _objc.informal_protocol(
     "NSKeyValueCoding",
     [
+# (NSMutableArray *)mutableArrayValueForKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='mutableArrayValueForKey:',
+            signature='@@:@',
+            isRequired=0,
+        ),
+# (NSMutableArray *)mutableArrayValueForKeyPath:(NSString *)keyPath
+        _objc.selector(
+            None,
+            selector='mutableArrayValueForKeyPath:',
+            signature='@@:@',
+            isRequired=0,
+        ),
+# (void)setNilValueForKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='setNilValueForKey:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)setValue:(id)value forKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='setValue:forKey:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)setValue:(id)value forKeyPath:(NSString *)keyPath
+        _objc.selector(
+            None,
+            selector='setValue:forKeyPath:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)setValue:(id)value forUndefinedKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='setValue:forUndefinedKey:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues
+        _objc.selector(
+            None,
+            selector='setValuesForKeysWithDictionary:',
+            signature='v@:@',
+            isRequired=0,
+        ),
 # (id)storedValueForKey:(NSString *)key
         _objc.selector(
             None,
@@ -323,11 +427,18 @@ NSKeyValueCoding = _objc.informal_protocol(
             signature='v@:@@',
             isRequired=0,
         ),
-# (void)takeValue:(id)value forKey:(NSString *)key
+# (BOOL)validateValue:(id *)ioValue forKey:(NSString *)inKey error:(NSError **)outError
         _objc.selector(
             None,
-            selector='takeValue:forKey:',
-            signature='v@:@@',
+            selector='validateValue:forKey:error:',
+            signature='c@:^@@^@',
+            isRequired=0,
+        ),
+# (BOOL)validateValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError
+        _objc.selector(
+            None,
+            selector='validateValue:forKeyPath:error:',
+            signature='c@:^@@^@',
             isRequired=0,
         ),
 # (id)valueForKey:(NSString *)key
@@ -337,65 +448,105 @@ NSKeyValueCoding = _objc.informal_protocol(
             signature='@@:@',
             isRequired=0,
         ),
-    ]
-)
-
-NSKeyValueCodingException = _objc.informal_protocol(
-    "NSKeyValueCodingException",
-    [
-# (id)handleQueryWithUnboundKey:(NSString *)key
-        _objc.selector(
-            None,
-            selector='handleQueryWithUnboundKey:',
-            signature='@@:@',
-            isRequired=0,
-        ),
-# (void)handleTakeValue:(id)value forUnboundKey:(NSString *)key
-        _objc.selector(
-            None,
-            selector='handleTakeValue:forUnboundKey:',
-            signature='v@:@@',
-            isRequired=0,
-        ),
-# (void)unableToSetNilForKey:(NSString *)key
-        _objc.selector(
-            None,
-            selector='unableToSetNilForKey:',
-            signature='v@:@',
-            isRequired=0,
-        ),
-    ]
-)
-
-NSKeyValueCodingExtras = _objc.informal_protocol(
-    "NSKeyValueCodingExtras",
-    [
-# (void)takeValue:(id)value forKeyPath:(NSString *)key
-        _objc.selector(
-            None,
-            selector='takeValue:forKeyPath:',
-            signature='v@:@@',
-            isRequired=0,
-        ),
-# (void)takeValuesFromDictionary:(NSDictionary *)dictionary
-        _objc.selector(
-            None,
-            selector='takeValuesFromDictionary:',
-            signature='v@:@',
-            isRequired=0,
-        ),
-# (id)valueForKeyPath:(NSString *)key
+# (id)valueForKeyPath:(NSString *)keyPath
         _objc.selector(
             None,
             selector='valueForKeyPath:',
             signature='@@:@',
             isRequired=0,
         ),
-# (NSDictionary *)valuesForKeys:(NSArray *)keys
+# (id)valueForUndefinedKey:(NSString *)key
         _objc.selector(
             None,
-            selector='valuesForKeys:',
+            selector='valueForUndefinedKey:',
             signature='@@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSKeyValueObserverNotification = _objc.informal_protocol(
+    "NSKeyValueObserverNotification",
+    [
+# (void)didChange:(NSKeyValueChange)change valuesAtIndexes:(NSIndexSet *)indexes forKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='didChange:valuesAtIndexes:forKey:',
+            signature='v@:i@@',
+            isRequired=0,
+        ),
+# (void)didChangeValueForKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='didChangeValueForKey:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)willChange:(NSKeyValueChange)change valuesAtIndexes:(NSIndexSet *)indexes forKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='willChange:valuesAtIndexes:forKey:',
+            signature='v@:i@@',
+            isRequired=0,
+        ),
+# (void)willChangeValueForKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='willChangeValueForKey:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSKeyValueObserverRegistration = _objc.informal_protocol(
+    "NSKeyValueObserverRegistration",
+    [
+# (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
+        _objc.selector(
+            None,
+            selector='addObserver:forKeyPath:options:context:',
+            signature='v@:@@I^v',
+            isRequired=0,
+        ),
+# (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath
+        _objc.selector(
+            None,
+            selector='removeObserver:forKeyPath:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSKeyValueObserving = _objc.informal_protocol(
+    "NSKeyValueObserving",
+    [
+# (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(NSObject *)object change:(NSDictionary *)change context:(void *)context
+        _objc.selector(
+            None,
+            selector='observeValueForKeyPath:ofObject:change:context:',
+            signature='v@:@@@^v',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSKeyValueObservingCustomization = _objc.informal_protocol(
+    "NSKeyValueObservingCustomization",
+    [
+# (void *)observationInfo
+        _objc.selector(
+            None,
+            selector='observationInfo',
+            signature='^v@:',
+            isRequired=0,
+        ),
+# (void)setObservationInfo:(void *)observationInfo
+        _objc.selector(
+            None,
+            selector='setObservationInfo:',
+            signature='v@:^v',
             isRequired=0,
         ),
     ]
@@ -1058,11 +1209,31 @@ NSSpellServerDelegate = _objc.informal_protocol(
             signature='{_NSRange=II}@:@@@^ic',
             isRequired=0,
         ),
+# (NSArray *)spellServer:(NSSpellServer *)sender suggestCompletionsForPartialWordRange:(NSRange)range inString:(NSString *)string language:(NSString *)language
+        _objc.selector(
+            None,
+            selector='spellServer:suggestCompletionsForPartialWordRange:inString:language:',
+            signature='@@:@{_NSRange=II}@@',
+            isRequired=0,
+        ),
 # (NSArray *)spellServer:(NSSpellServer *)sender suggestGuessesForWord:(NSString *)word inLanguage:(NSString *)language
         _objc.selector(
             None,
             selector='spellServer:suggestGuessesForWord:inLanguage:',
             signature='@@:@@@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSStreamDelegateEventExtensions = _objc.informal_protocol(
+    "NSStreamDelegateEventExtensions",
+    [
+# (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode
+        _objc.selector(
+            None,
+            selector='stream:handleEvent:',
+            signature='v@:@i',
             isRequired=0,
         ),
     ]
@@ -1371,6 +1542,152 @@ NSURLProtocolClient = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='URLProtocolDidFinishLoading:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSXMLParserDelegateEventAdditions = _objc.informal_protocol(
+    "NSXMLParserDelegateEventAdditions",
+    [
+# (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+        _objc.selector(
+            None,
+            selector='parser:didEndElement:namespaceURI:qualifiedName:',
+            signature='v@:@@@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser didEndMappingPrefix:(NSString *)prefix
+        _objc.selector(
+            None,
+            selector='parser:didEndMappingPrefix:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
+        _objc.selector(
+            None,
+            selector='parser:didStartElement:namespaceURI:qualifiedName:attributes:',
+            signature='v@:@@@@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser didStartMappingPrefix:(NSString *)prefix toURI:(NSString *)namespaceURI
+        _objc.selector(
+            None,
+            selector='parser:didStartMappingPrefix:toURI:',
+            signature='v@:@@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser foundAttributeDeclarationWithName:(NSString *)attributeName forElement:(NSString *)elementName type:(NSString *)type defaultValue:(NSString *)defaultValue
+        _objc.selector(
+            None,
+            selector='parser:foundAttributeDeclarationWithName:forElement:type:defaultValue:',
+            signature='v@:@@@@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser foundCDATA:(NSData *)CDATABlock
+        _objc.selector(
+            None,
+            selector='parser:foundCDATA:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+        _objc.selector(
+            None,
+            selector='parser:foundCharacters:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser foundComment:(NSString *)comment
+        _objc.selector(
+            None,
+            selector='parser:foundComment:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser foundElementDeclarationWithName:(NSString *)elementName model:(NSString *)model
+        _objc.selector(
+            None,
+            selector='parser:foundElementDeclarationWithName:model:',
+            signature='v@:@@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser foundExternalEntityDeclarationWithName:(NSString *)name publicID:(NSString *)publicID systemID:(NSString *)systemID
+        _objc.selector(
+            None,
+            selector='parser:foundExternalEntityDeclarationWithName:publicID:systemID:',
+            signature='v@:@@@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser foundIgnorableWhitespace:(NSString *)whitespaceString
+        _objc.selector(
+            None,
+            selector='parser:foundIgnorableWhitespace:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser foundInternalEntityDeclarationWithName:(NSString *)name value:(NSString *)value
+        _objc.selector(
+            None,
+            selector='parser:foundInternalEntityDeclarationWithName:value:',
+            signature='v@:@@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser foundNotationDeclarationWithName:(NSString *)name publicID:(NSString *)publicID systemID:(NSString *)systemID
+        _objc.selector(
+            None,
+            selector='parser:foundNotationDeclarationWithName:publicID:systemID:',
+            signature='v@:@@@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser foundProcessingInstructionWithTarget:(NSString *)target data:(NSString *)data
+        _objc.selector(
+            None,
+            selector='parser:foundProcessingInstructionWithTarget:data:',
+            signature='v@:@@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser foundUnparsedEntityDeclarationWithName:(NSString *)name publicID:(NSString *)publicID systemID:(NSString *)systemID notationName:(NSString *)notationName
+        _objc.selector(
+            None,
+            selector='parser:foundUnparsedEntityDeclarationWithName:publicID:systemID:notationName:',
+            signature='v@:@@@@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
+        _objc.selector(
+            None,
+            selector='parser:parseErrorOccurred:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (NSData *)parser:(NSXMLParser *)parser resolveExternalEntityName:(NSString *)name systemID:(NSString *)systemID
+        _objc.selector(
+            None,
+            selector='parser:resolveExternalEntityName:systemID:',
+            signature='@@:@@@',
+            isRequired=0,
+        ),
+# (void)parser:(NSXMLParser *)parser validationErrorOccurred:(NSError *)validationError
+        _objc.selector(
+            None,
+            selector='parser:validationErrorOccurred:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)parserDidEndDocument:(NSXMLParser *)parser
+        _objc.selector(
+            None,
+            selector='parserDidEndDocument:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)parserDidStartDocument:(NSXMLParser *)parser
+        _objc.selector(
+            None,
+            selector='parserDidStartDocument:',
             signature='v@:@',
             isRequired=0,
         ),

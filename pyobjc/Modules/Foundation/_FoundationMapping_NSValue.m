@@ -16,6 +16,7 @@ static int
 _pyobjc_install_NSValue(void)
 {
 	Class classNSValue = objc_lookUpClass("NSValue");
+	if (classNSValue == NULL) return 0;
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSValue,

@@ -9,96 +9,148 @@ likewise for methods that won't be supported by the bridge.
 
 Don't forget to add unittests for methods that are wrapped, or whose signature 
 you change.
+
+XXX: 
+- Use the values in the WRAPPED_METHODS dict to explain why a method is there.
+- Use this information to print information about incorrect entries in the table (e.g. method should be
+  in current OS, but isn't)
+- Use the information to make reports for the website
 """
 
 import objc
 import Foundation
-import AppKit
-import PreferencePanes
-import ScreenSaver
-import InterfaceBuilder
-import AddressBook
+
+try:
+    import AppKit
+except ImportError:
+    pass
+
+if 0:
+    try:
+        import PreferencePanes
+    except ImportError:
+        pass
+    try:
+        import ScreenSaver
+    except ImportError:
+        pass
+    try:
+        import InterfaceBuilder
+    except ImportError:
+        pass
+    try:
+        import AddressBook
+    except ImportError:
+        pass
+    try:
+        import WebKit
+    except ImportError:
+        pass
 
 PTRSIG={}
+
+
+REL_OSX_10_2 = 'MacOS X 10.2'
+REL_OSX_10_3 = 'MacOS X 10.3'
+
+TP_SUPPORTED = 'supported'
+TP_UNSUPPORTED = 'unsupported'
+TP_DEPRECATED = 'deprecated' # Unsupported because the method is deprecated in Cocoa
+TP_UNDOCUMENTED = 'undocumented' #  Unsupported because there is no documentation for the method/class
+
+# Keys are 'Class_MethodName' value is ( initial-release, entrytype+)
 
 WRAPPED_METHODS={
 # Supported methods:
 
     #<Foundation>
-    'NSString_getCString_maxLength_range_remainingRange_':1,
-    'NSString_getCharacters_':1,
-    'NSString_getCharacters_range_':1,
-    'NSData_getBytes_':1,
-    'NSData_getBytes_length_':1,
-    'NSData_getBytes_range_':1,
-    'NSValue_getValue_':1,
-    'NSValue_pointerValue':1,
-    'NSMutableData_mutableBytes':1,
-    'NSMutableData_serializeAlignedBytes_length_':1,
-    'NSMutableData_serializeInts_count_':1,
-    'NSMutableData_serializeInts_count_atIndex_':1,
-    'NSCoder_decodeBytesForKey_returnedLength_':1,
-    'NSCoder_decodeBytesWithReturnedLength_':1,
-    'NSSet_initWithObjects_count_':1,
-    'NSSet_setWithObjects_count_':1,
-    'NSScriptObjectSpecifier_indicesOfObjectsByEvaluatingWithContainer_count_':1,
-    'NSArray_arrayByAddingObjects_count_':1,
-    'NSArray_arrayWithObjects_count_':1,
-    'NSArray_initWithObjects_count_':1,
-    'NSArray_sortedArrayUsingFunction_context_':1,
-    'NSArray_sortedArrayUsingFunction_context_hint_':1,
-    'NSBezierPath_appendBezierPathWithGlyphs_count_inFont_':1,
-    'NSBezierPath_appendBezierPathWithPoints_count_':1,
-    'NSBezierPath_elementAtIndex_associatedPoints_':1,
-    'NSBezierPath_setAssociatedPoints_atIndex_':1,
-    'NSBezierPath_setLineDash_count_phase_':1,
-    'NSMovie_QTMovie':1,
-    'NSMovie_initWithMovie':1,
-    'NSCoder_encodeValueOfObjCType_at_':1,
-    'NSCoder_decodeValueOfObjCType_at_':1,
-    'NSCoder_encodeArrayOfObjCType_count_at_':1,
-    'NSCoder_decodeArrayOfObjCType_count_at_':1,
-    'NSData_initWithBytes_length_':1,
-    'NSData_bytes':1,
-    'NSData_mutableBytes':1,
-    'NSDictionary_initWithObjects_forKeys_count_':1,
-    'NSDictionary_dictionaryWithObjects_forKeys_count_':1,
-    'NSMutableArray_removeObjectsFromIndices_numIndices_':1,
-    'NSMutableArray_replaceObjectsInRange_withObjects_count_':1,
-    'NSMutableArray_sortUsingFunction_context_':1,
-    'NSMutableArray_sortUsingFunction_context_range_':1,    
+    'NSKeyValueAccessor_extraArgument1': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSKeyValueAccessor_extraArgument2': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSKeyValueAccessor_initWithContainerClass_key_implementation_selector_extraArgument1_extraArgument2_extraArgument3_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSKeyValueMethodSetter_method': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSKeyValueIvarMutableArrayGetter_initWithContainerClass_key_ivar_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSKeyValueIvarMutableArrayGetter_ivar': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSKeyValueIvarSetter_ivar': (REL_OSX_10_3, TP_UNDOCUMENTED),
+
+
+    'NSIndexSet_getIndexes_maxCount_inIndexRange_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSInputStream_getBuffer_length_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSString_getCString_maxLength_range_remainingRange_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSString_getCharacters_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSString_getCharacters_range_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSData_getBytes_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSData_getBytes_length_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSData_getBytes_range_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSValue_getValue_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSValue_pointerValue': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSMutableData_mutableBytes': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSMutableData_serializeAlignedBytes_length_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSMutableData_serializeInts_count_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSMutableData_serializeInts_count_atIndex_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSCoder_decodeBytesForKey_returnedLength_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSCoder_decodeBytesWithReturnedLength_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSSet_initWithObjects_count_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSSet_setWithObjects_count_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSScriptObjectSpecifier_indicesOfObjectsByEvaluatingWithContainer_count_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSArray_arrayByAddingObjects_count_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSArray_arrayWithObjects_count_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSArray_initWithObjects_count_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSArray_sortedArrayUsingFunction_context_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSArray_sortedArrayUsingFunction_context_hint_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSBezierPath_appendBezierPathWithGlyphs_count_inFont_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSBezierPath_appendBezierPathWithPoints_count_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSBezierPath_elementAtIndex_associatedPoints_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSBezierPath_setAssociatedPoints_atIndex_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSBezierPath_setLineDash_count_phase_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSMovie_QTMovie': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSMovie_initWithMovie': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSCoder_encodeValueOfObjCType_at_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSCoder_decodeValueOfObjCType_at_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSCoder_encodeArrayOfObjCType_count_at_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSCoder_decodeArrayOfObjCType_count_at_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSData_initWithBytes_length_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSData_bytes': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSData_mutableBytes': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSDictionary_initWithObjects_forKeys_count_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSDictionary_dictionaryWithObjects_forKeys_count_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSMutableArray_removeObjectsFromIndices_numIndices_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSMutableArray_replaceObjectsInRange_withObjects_count_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSMutableArray_sortUsingFunction_context_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSMutableArray_sortUsingFunction_context_range_': (REL_OSX_10_2, TP_SUPPORTED),    
 
     #<AppKit>
-    'NSBitmapImageRep_getBitmapDataPlanes_':1,
-    'NSBitmapImageRep_getTIFFCompressionTypes_count_':1,
-    'NSBitmapImageRep_initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_':1,
-    'NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_':1,
-    'NSSimpleHorizontalTypesetter_baseOfTypesetterGlyphInfo':1,
-    'NSSimpleHorizontalTypesetter_layoutGlyphsInHorizontalLineFragment_baseline_':1,
-    'NSWindow_graphicsPort':1,
-    'NSWindow_initWithWindowRef_':1,
-    'NSWindow_windowRef':1,
-    'NSLayoutManager_getGlyphs_range_':1,
-    'NSLayoutManager_getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_':1,
-    'NSLayoutManager_getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_':1,
-    'NSLayoutManager_rectArrayForCharacterRange_withinSelectedCharacterRange_inTextContainer_rectCount_':1,
-    'NSLayoutManager_rectArrayForGlyphRange_withinSelectedGlyphRange_inTextContainer_rectCount_':1,
-    'NSQuickDrawView_qdPort':1,
-    'NSOpenGLContext_getValues_forParameter_':1,
-    'NSOpenGLContext_setOffScreen_width_height_rowbytes_':1,
-    'NSOpenGLPixelFormat_getValues_forAttribute_forVirtualScreen_':1,
-    'NSOpenGLPixelFormat_initWithAttributes_':1,
-    'NSView_sortSubviewsUsingFunction_context_':1,
-    'NSGraphicsContext_focusStack':1,
-    'NSGraphicsContext_graphicsPort':1,
-    'NSGraphicsContext_initWithHostName_serverName_textProc_errorProc_timeout_secure_encapsulated_':1,
-    'NSGraphicsContext_initWithMutableData_forDebugging_languageEncoding_nameEncoding_textProc_errorProc_':1,
-    'NSGraphicsContext_setFocusStack_':1,
-    'NSMovie_initWithMovie_':1,
-    'NSMatrix_sortUsingFunction_context_':1,
+    'NSATSTypesetter_getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSATSTypesetter_getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSATSTypesetter_substituteGlyphsInRange_withGlyphs_': (REL_OSX_10_2, TP_SUPPORTED),
 
-
-    
+    'NSOpenGLContext_CGLContextObj': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSBitmapImageRep_getBitmapDataPlanes_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSBitmapImageRep_getTIFFCompressionTypes_count_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSBitmapImageRep_initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSSimpleHorizontalTypesetter_baseOfTypesetterGlyphInfo': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSSimpleHorizontalTypesetter_layoutGlyphsInHorizontalLineFragment_baseline_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSWindow_graphicsPort': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSWindow_initWithWindowRef_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSWindow_windowRef': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSLayoutManager_getGlyphs_range_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSLayoutManager_getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSLayoutManager_getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSLayoutManager_rectArrayForCharacterRange_withinSelectedCharacterRange_inTextContainer_rectCount_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSLayoutManager_rectArrayForGlyphRange_withinSelectedGlyphRange_inTextContainer_rectCount_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSQuickDrawView_qdPort': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSOpenGLContext_getValues_forParameter_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSOpenGLContext_setOffScreen_width_height_rowbytes_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSOpenGLPixelFormat_getValues_forAttribute_forVirtualScreen_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSOpenGLPixelFormat_initWithAttributes_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSView_sortSubviewsUsingFunction_context_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSGraphicsContext_focusStack': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSGraphicsContext_graphicsPort': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSGraphicsContext_initWithHostName_serverName_textProc_errorProc_timeout_secure_encapsulated_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSGraphicsContext_initWithMutableData_forDebugging_languageEncoding_nameEncoding_textProc_errorProc_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSGraphicsContext_setFocusStack_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSMovie_initWithMovie_': (REL_OSX_10_2, TP_SUPPORTED),
+    'NSMatrix_sortUsingFunction_context_': (REL_OSX_10_2, TP_SUPPORTED),
 
 # Depricated methods
 
@@ -119,6 +171,7 @@ WRAPPED_METHODS={
     'Protocol_descriptionForClassMethod_':1,
 
     #<Foundation>
+    'NSString_initWithBytesNoCopy_length_encoding_freeWhenDone_':1,
     'NSData_dataWithBytesNoCopy_length_':1,
     'NSData_dataWithBytesNoCopy_length_freeWhenDone_':1,
     'NSData_initWithBytesNoCopy_length_':1,
@@ -156,8 +209,215 @@ WRAPPED_METHODS={
 
 
 # Undocumented methods:
+    # from 'WebKit' 
+    'WebCoreBridge_adjustPageHeightNew_top_bottom_limit_':1,
+    'WebCoreBridge_copyDOMNode_copier_':1,
+    'WebCoreBridge_copyRenderNode_copier_':1,
+    'WebCoreBridge_drawRect_withPainter_':1,
+    'WebCoreBridge_part':1,
+    'WebCoreBridge_renderPart':1,
+    'WebCoreBridge_setRenderPart_':1,
+    'WebCoreTextRendererFactory_fontWithFamilies_traits_size_':1,
+    'KWQResourceLoader_initWithLoader_job_':1,
+    'KWQTextAreaTextView_setWidget_':1,
+    'KWQTextAreaTextView_widget':1,
+    'WebCoreDOMImplementation_DOMImplementationImpl':1,
+    'WebCoreDOMImplementation_implementionatWithImpl_':1,
+    'KWQComboBoxAdapter_initWithQComboBox_':1,
+    'WebCoreDOMAttr_attrImpl':1,
+    'WebCoreDOMAttr_attrWithImpl_':1,
+    'WebCoreSettings_settings':1,
+    'KWQObjectTimerTarget_initWithQObject_timerId_':1,
+    'WebBridge_runJavaScriptTextInputPanelWithPrompt_defaultText_returningText_':1,
+    'KWQPopUpButton_widget':1,
+    'KWQScrollBar_initWithQScrollBar_':1,
+    'KWQPageState_URL':1,
+    'KWQPageState_document':1,
+    'KWQPageState_initWithDocument_URL_windowProperties_locationProperties_interpreterBuiltins_':1,
+    'KWQPageState_interpreterBuiltins':1,
+    'KWQPageState_locationProperties':1,
+    'KWQPageState_pausedActions':1,
+    'KWQPageState_renderer':1,
+    'KWQPageState_setPausedActions_':1,
+    'KWQPageState_windowProperties':1,
+    'WebNSView_initWithQButton_':1,
+    'KWQSingleShotTimerTarget_targetWithQObject_member_':1,
+    'NSWindowGraphicsContext_setCGContext_':1,
+    'WebHistoryPrivate_findIndex_forDay_':1,
+    'WebHistoryPrivate_loadFromURL_error_':1,
+    'WebHistoryPrivate_saveToURL_error_':1,
+    'KWQButton_initWithQButton_':1,
+    'WebTextRenderer_convertCharacters_length_toGlyphs_skipControlCharacters_':1,
+    'WebTextRenderer_convertUnicodeCharacters_length_toGlyphs_':1,
+    'WebTextRenderer_extendGlyphToWidthMapToInclude_font_':1,
+    'WebTextRenderer_floatWidthForCharacters_stringLength_fromCharacterPosition_numberOfCharacters_withPadding_applyRounding_attemptFontSubstitution_widths_letterSpacing_wordSpacing_smallCaps_fontFamilies_':1,
+    'WebTextRenderer_floatWidthForRun_style_applyRounding_attemptFontSubstitution_widths_':1,
+    'WebTextRenderer_substituteFontForCharacters_length_families_':1,
+    'WebTextRenderer_substituteFontForString_families_':1,
+    'NSTextView_completionsForPartialWordRange_indexOfSelectedItem_':1,
+    'NSTextView_dragImageForSelectionWithEvent_origin_':1,
+    'NSTextView_smartInsertForString_replacingRange_beforeString_afterString_':1,
+    'WebHistory_loadFromURL_error_':1,
+    'WebHistory_saveToURL_error_':1,
+    'KWQTextField_initWithQLineEdit_':1,
+    'KWQTextField_widget':1,
+    'KWQView_initWithWidget_':1,
+    'KWQView_widget':1,
+    'WebCoreDOMNamedNodeMap_implWebCoreDOMNamedNodeMap_initWithImpl_':1,
+    'WebCoreDOMNamedNodeMap_namedNodeMapWithImpl_WebBaseNetscapePluginStream_setPluginPointer_HIViewAdapter_bindHIViewToNSView_nsView_':1,
+    'HIViewAdapter_getHIViewForNSView_HIViewAdapter_initWithFrame_view_':1,
+    'WebBaseNetscapePluginView_destroyStream_reason_':1,
+    'WebBaseNetscapePluginView_getCarbonEvent_':1,
+    'WebBaseNetscapePluginView_getCarbonEvent_withEvent_':1,
+    'WebBaseNetscapePluginView_getURLNotify_target_notifyData_':1,
+    'WebBaseNetscapePluginView_invalidateRect_':1,
+    'WebBaseNetscapePluginView_invalidateRegion_':1,
+    'WebBaseNetscapePluginView_loadRequest_inTarget_withNotifyData_':1,
+    'WebBaseNetscapePluginView_newStream_target_stream_':1,
+    'WebBaseNetscapePluginView_pluginPointer':1,
+    'WebBaseNetscapePluginView_postURLNotify_target_len_buf_file_notifyData_':1,
+    'WebBaseNetscapePluginView_sendEvent_':1,
+    'WebBaseNetscapePluginView_write_len_buffer_WebCoreDOMText_textImpl':1,
+    'CarbonWindowAdapter_initWithCarbonWindowRef_takingOwnership_':1,
+    'CarbonWindowAdapter_initWithCarbonWindowRef_takingOwnership_disableOrdering_carbon_':1,
+    'CarbonWindowAdapter_sendCarbonUpdateHICommandStatusEvent_withMenuRef_andMenuItemIndex_':1,
+    'WebCoreDOMText_textWithImpl_':1,
+    'WebDownloadInternal_download_shouldBeginChildDownloadOfSource_delegate_':1,
+    'WebCoreDOMDocumentFragment_documentFragmentImpl':1,
+    'WebCoreDOMDocumentFragment_documentFragmentWithImpl_':1,
+    'WebCoreDOMCharacterData_characterDataImpl':1,
+    'WebCoreDOMCharacterData_commentWithImpl_':1,
+    'KWQTableView_initWithListBox_items_':1,
+    'KWQTableView_widget':1,
+    'KWQTextArea_getCursorPositionAsIndex_inParagraph_':1,
+    'KWQTextArea_initWithQTextEdit_':1,
+    'KWQTextArea_widget':1,
+    'WebAuthenticationPanel_sheetDidEnd_returnCode_contextInfo_':1,
+    'WebCoreDOMNodeList_impl':1,
+    'WebCoreDOMNodeList_initWithImpl_':1,
+    'WebCoreDOMNodeList_nodeListWithImpl_':1,
+    'WebCoreDOMElement_elementImpl':1,
+    'WebCoreDOMElement_elementWithImpl_':1,
+    'WebNetscapePluginPackage_NPP_Destroy':1,
+    'WebNetscapePluginPackage_NPP_DestroyStream':1,
+    'WebNetscapePluginPackage_NPP_GetValue':1,
+    'WebNetscapePluginPackage_NPP_HandleEvent':1,
+    'WebNetscapePluginPackage_NPP_New':1,
+    'WebNetscapePluginPackage_NPP_NewStream':1,
+    'WebNetscapePluginPackage_NPP_Print':1,
+    'WebNetscapePluginPackage_NPP_SetValue':1,
+    'WebNetscapePluginPackage_NPP_SetWindow':1,
+    'WebNetscapePluginPackage_NPP_StreamAsFile':1,
+    'WebNetscapePluginPackage_NPP_URLNotify':1,
+    'WebNetscapePluginPackage_NPP_Write':1,
+    'WebNetscapePluginPackage_NPP_WriteReady':1,
+    'KWQFileButtonAdapter_initWithKWQFileButton_':1,
+    'WebCoreDOMDocument_documentImpl':1,
+    'WebCoreDOMDocument_documentWithImpl_':1,
+    'KWQSecureTextField_widget':1,
+    'WebCoreDOMEntityReference_entityReferenceImpl':1,
+    'WebCoreDOMEntityReference_entityReferenceWithImpl_':1,
+    'WebPluginRequest_initWithRequest_frameName_notifyData_':1,
+    'WebPluginRequest_notifyData':1,
+    'WebCoreDOMCDATASection_CDATASectionImpl':1,
+    'WebCoreDOMCDATASection_CDATASectionWithImpl_':1,
+    'KWQPopUpButtonCell_initWithWidget_':1,
+    'KWQPopUpButtonCell_widget':1,
+    'WebGlyphBuffer_addGlyphs_advances_count_at__':1,
+    'KWQTimerTarget_targetWithQTimer_':1,
+    'WebCoreDOMNode_impl':1,
+    'WebCoreDOMNode_initWithImpl_':1,
+    'WebCoreDOMNode_nodeWithImpl_':1,
+    'WebCoreDOMDocumentType_documentTypeImpl':1,
+    'WebCoreDOMDocumentType_documentTypeWithImpl_':1,
+    'WebCoreDOMProcessingInstruction_processingInstructionImpl':1,
+    'WebCoreDOMProcessingInstruction_processingInstructionWithImpl_':1,
+    'WebNetscapePluginStream_initWithRequest_pluginPointer_notifyData_':1,
+    'WebCoreDOMComment_commentImpl':1,
+    'WebCoreDOMNamedNodeMap_impl':1,
+    'WebCoreDOMNamedNodeMap_initWithImpl_':1,
+    'WebCoreDOMNamedNodeMap_namedNodeMapWithImpl_':1,
+    'WebBaseNetscapePluginStream_setPluginPointer_':1,
+    'HIViewAdapter_bindHIViewToNSView_nsView_':1,
+    'HIViewAdapter_getHIViewForNSView_':1,
+    'HIViewAdapter_initWithFrame_view_':1,
+    'WebBaseNetscapePluginView_write_len_buffer_':1,
+    'WebCoreDOMText_textImpl':1,
+
+
+
+    # From 'import PreferencePanes', some undocumented framework?
+    'SFCertificateTrustPanel_beginSheetForWindow_modalDelegate_didEndSelector_contextInfo_trust_message_':1,
+    'SFCertificateTrustPanel_runModalForTrust_message_':1,
+    'SFKeychainSavePanel_keychain':1,
+    'SFAuthorizationView_authorizationRights':1,
+    'SFPasswordAsstModel_calculateSetSize___':1,
+    'SFPasswordAsstModel_calculate___':1,
+    'SFAuthorization_authorizationRef':1,
+    'SFAuthorization_permitWithRights_flags_environment_authorizedRights_':1,
+    'SFCertificateData_certData':1,
+    'SFCertificateData_certificate':1,
+    'SFCertificateData_data':1,
+    'SFCertificateData_initWithCertData_':1,
+    'SFCertificateData_initWithCertificate_':1,
+    'SFCertificateData_initWithData_':1,
+    'SFCertificateData_issuer':1,
+    'SFCertificateData_parseGeneralNames_':1,
+    'SFCertificateData_setCertData_':1,
+    'SFCertificateData_setCertificate_':1,
+    'SFCertificateData_setData_':1,
+    'SFCertificateData_subject':1,
+    'SFCertificateView_certificate':1,
+    'SFCertificateView_setCertificate_':1,
+    'SFCertificatePanel_beginSheetForWindow_modalDelegate_didEndSelector_contextInfo_certificates_showGroup_':1,
+    'SFChooseIdentityPanel_beginSheetForWindow_modalDelegate_didEndSelector_contextInfo_identities_message_':1,
+    'SFChooseIdentityPanel_identity':1,
+    'SFKeychainSettingsPanel_beginSheetForWindow_modalDelegate_didEndSelector_contextInfo_settings_keychain_':1,
+    'SFKeychainSettingsPanel_runModalForSettings_keychain_':1,
 
     #<AddressBook>
+
+       # Panther
+    'DSoBuffer_dsDataBuffer':1,
+    'DSoBuffer_grow_':1,
+    'DSoDataList_dsDataList':1,
+    'DSoDataList_initWithDir_dsDataList_':1,
+    'DSoRecord_getAttrValuePtrForTypeNode_value_':1,
+    'DSoDataNode_dsDataNode':1,
+    'DSoDataNode_initWithDir_copyOfDsDataNode_':1,
+    'DSoDataNode_initWithDir_dsDataNode_':1,
+    'ABPeoplePickerView_carbonDelegate':1,
+    'ABPeoplePickerView_setCarbonDelegate_':1,
+    'ABUIController_resizeWindow_animate_fromLayout_toLayout_paneWidths_numberOfPanes_':1,
+    'ABAuthenticationInfo_authenticationInfoWithAuthentication_forUser_andPass_':1,
+    'ABAuthenticationInfo_initWithAuthentication_forUser_andPass_':1,
+    'NSString_abEscapeStringForUnichar_and_advance_':1,
+    'ABIndexer_filelock':1,
+    'ABPerson_firstLastSortingNamePart1_part2_':1,
+    'ABPerson_lastFirstSortingNamePart1_part2_':1,
+    'ABPerson_propertyLineForGenericABProperty_vCardProperty_is21_groupCount_':1,
+    'ABPerson_slowFirstLastSortingNamePart1_part2_':1,
+    'ABPerson_slowLastFirstSortingNamePart1_part2_':1,
+    'ABVCardParser_nextPersonWithLength_':1,
+    'ABCardItemRuler_view_stringForToolTip_point_userData_':1,
+    'ABTableController_dragImageForRows_event_dragImageOffset_':1,
+    'ABRemoteImageLoader_nts_BeginLoadingImageForPerson_forClient_orCallback_withRefcon_':1,
+    'ABInputController_textView_completions_forPartialWordRange_indexOfSelectedItem_':1,
+    'ABRecord_createFirstLastSortingNamePart1_part2_':1,
+    'ABRecord_createLastFirstSortingNamePart1_part2_':1,
+    'ABTextView_view_stringForToolTip_point_userData_':1,
+    'ABDBCache_databaseChangedForUserInfo_groupsChanged_peopleChanged_':1,
+    'ABSeparatedButtonsCell_view_stringForToolTip_point_userData_':1,
+    'ABWindow_setFrame_animate_fromLayout_toLayout_paneWidths_numberOfPanes_':1,
+    'ABMembersController_deleteConfirmSheetDidEnd_returnCode_contextInfo_':1,
+    'ABMembersController_removeConfirmSheetDidEnd_returnCode_contextInfo_':1,
+    'ABVCardLexer_nextBase64Line_':1,
+    'ABVCardLexer_nextSingleByteBase64Line_':1,
+    'ABVCardLexer_nextUnicodeBase64Line_':1,
+
+
+
+      # Januar
     'ABLDAP_ConfigController_editorDidEnd_returnCode_contextInfo_':1,
     'ABGroupsController_deleteConfirmSheetDidEnd_returnCode_contextInfo_':1,
     'ABCustomLabelEditor_sheetDidEnd_returnCode_contextInfo_':1,
@@ -175,6 +435,51 @@ WRAPPED_METHODS={
 
 
     #<Foundation>
+      # .. Panther ..
+    'NSKeyValueAccessor_initWithContainerClass_key_implementation_selector_extraArgumentCount_extraArgument1_extraArgument2_':1,
+    'NSCFNetworkHTTPURLProtocol_retryAfterAuthenticationFailure_':1,
+    'NSCFNetworkHTTPURLProtocol_setResponseHeaderUsingHTTPResponse_andCall_context_':1,
+    'NSURLAuthenticationChallengeState_initWithProtocol_httpRequest_challenge_callback_context_':1,
+    'NSHTTPURLProtocol_didAddCredentials_toRequest_context_':1,
+    'NSURLQueue_newNode':1,
+    'NSUndoManager_registerUndoWithTarget_selector_arguments_argumentCount_':1,
+    'NSKeyValueIvarGetter_initWithContainerClass_key_ivar_':1,
+    'NSKeyValueMethodGetter_initWithContainerClass_key_getMethod_':1,
+    'NSKeyValueIvarSetter_initWithContainerClass_key_ivar_':1,
+    'NSKeyValueMethodSetter_initWithContainerClass_key_setMethod_':1,
+    'NSSSLProxyWrapperStream_initWithURL_httpStream_readStreamToProxy_writeStreamToProxy_':1,
+    'NSGZipDecoder_decodeData_dataForkData_resourceForkData_':1,
+    'NSGZipDecoder_decodeHeader_headerLength_modificationTime_filename_':1,
+    'NSURLKeychainCredentialInternal_initWithKeychainItem_':1,
+    'NSURLKeychainCredential_credentialWithKeychainItem_':1,
+    'NSURLKeychainCredential_initWithKeychainItem_':1,
+    'NSHTTPAuthenticator_addCredentialsToInitialHTTPRequest_protocol_':1,
+    'NSHTTPAuthenticator_addCredentialsToRetryHTTPRequest_afterFailureResponse_nsFailureResponse_failureCount_protocol_withCallback_context_':1,
+    'NSHTTPAuthenticator_cancelAddCredentialsToRetryHTTPRequest_':1,
+    'NSHTTPAuthenticator_checkForAuthenticationFailureInHTTPResponse_withURL_':1,
+    'NSMacBinaryDecoder_decodeData_dataForkData_resourceForkData_':1,
+    'NSMacBinaryDecoder_decodeDownloadData_dataForkData_resourceForkData_':1,
+    'NSBinHexDecoder_decodeAllIntoBuffer_size_':1,
+    'NSBinHexDecoder_decodeData_dataForkData_resourceForkData_':1,
+    'NSBinHexDecoder_decodeForkWithData_count_CRCCheckFlag_':1,
+    'NSBinHexDecoder_decodeIntoBuffer_size_':1,
+
+      ## NSAppleEventManagerSuspensionID is an opaque pointer (TODO)
+    'NSAppleEventManager_appleEventForSuspensionID_':1,
+    'NSAppleEventManager_replyAppleEventForSuspensionID_':1,
+    'NSAppleEventManager_resumeWithSuspensionID_':1,
+    'NSAppleEventManager_setCurrentAppleEventAndReplyEventWithSuspensionID_':1,
+    'NSAppleEventManager_suspendCurrentAppleEvent':1,
+    'NSGZipDecoder_decodeDownloadData_dataForkData_resourceForkData_':1,
+    'NSGZipDecoder_decodeDownloadHeader_headerLength_modificationTime_filename_':1,
+    'NSBinHexDecoder_decodeDownloadData_dataForkData_resourceForkData_':1,
+
+
+      ## This looks doable
+    'NSURLHostNameAddressInfo_addrinfo':1,
+
+
+      # .. Jaguar ..
     'NSString_escapeStringForUnichar_and_advance_':1,
     'NSSet_getObjects_':1,
     'NSData_initWithBytes_length_copy_freeWhenDone_bytesAreVM_':1,
@@ -202,6 +507,61 @@ WRAPPED_METHODS={
     'NSConstantString_initWithCharactersNoCopy_length_':1,
 
     #<AppKit>
+       # .. Panther .. 
+    'NSGlyphGenerator_generateGlyphsForGlyphStorage_desiredNumberOfCharacters_glyphIndex_characterIndex_':1,
+    'NSMatrix_textView_completions_forPartialWordRange_indexOfSelectedItem_':1,
+    'NSSavePanel_control_textView_completions_forPartialWordRange_indexOfSelectedItem_':1,
+    'NSTableView_textView_completions_forPartialWordRange_indexOfSelectedItem_':1,
+    'NSTextField_textView_completions_forPartialWordRange_indexOfSelectedItem_':1,
+
+    'NSBinder_invokeSelector_withArguments_forBinding_atIndex_error_':1,
+    'NSBinder_invokeSelector_withArguments_forBinding_error_':1,
+    'NSBinder_setValue_forBinding_atIndex_error_':1,
+    'NSBinder_setValue_forBinding_error_':1,
+    'NSGrayFrame_drawWindowBackgroundRegion_level_':1,
+    'NSNavOutlineView_cellAtPoint_row_column_loaded_':1,
+    'NSNavFBEContainerNode_eventQueue':1,
+    'NSColorPickerPageableNameListView_selectedIndexAndQuality_':1,
+    'NSSpeechSynthesizerVars_findVoiceByIdentifier_returningCreator_returningID_':1,
+    'NSSpeechSynthesizerVars_speechChannel':1,
+    'NSSpeechRecognizerVars_setSRRecognitionSystem_':1,
+    'NSSpeechRecognizerVars_setSRRecognizer_':1,
+    'NSSpeechRecognizerVars_srRecognitionSystem':1,
+    'NSSpeechRecognizerVars_srRecognizer':1,
+    'NSDocFormatReader_attributesAtIndex_effectiveRange_inRange_':1,
+    'NSDocFormatReader_paragraphAttributesAtIndex_effectiveRange_inRange_':1,
+    'NSFontOptions_sheetDidEnd_returnCode_contextInfo_':1,
+    'NSNavVirtualNode_copyIcon':1,
+    'NSNavVirtualNode_setIconRef_':1,
+    'NSNavFBENode_copyIcon':1,
+    'NSNavFBENode_fbeNode':1,
+    'NSNavFBENode_initWithFBENode_':1,
+    'NSNavFBENode_nodeWithFBENode_':1,
+    'NSColorPickerPageableNameList_attachColorList_systemList_makeSelected_':1,
+    'NSColorPickerPageableNameList_removeColorSheetDidEnd_returnCode_context_':1,
+    'NSColorPickerPageableNameList_removeListSheetDidEnd_returnCode_context_':1,
+    'NSColorPickerPageableNameList_renameColorSheetDidEnd_returnCode_context_':1,
+    'NSColorPickerPageableNameList_renameListSheetDidEnd_returnCode_context_':1,
+    'NSColorPickerPageableNameList_tryNewColorListNameSheetDidEnd_returnCode_context_':1,
+    'NSRegion_cgsRegionObj':1,
+    'NSRegion_getRects_count_':1,
+    'NSRegion_initWithCGSRegionObj_':1,
+    'NSCGImageRep_CGImage':1,
+    'NSCGImageRep_initWithCGImage_':1,
+    'NSView_getRectsBeingDrawn_count_':1,
+    'NSNavFileListDelegate_getSnapToWidthList_snapRadiusList_count_':1,
+    'NSNavMatrix_cellAtPoint_row_column_':1,
+    'NSNavSidebarView_getSnapToWidthList_snapRadiusList_count_':1,
+
+
+
+     # PyOpenGL integration?
+     'NSOpenGLPixelFormat_CGLPixelFormatObj':1,
+
+
+
+     
+       # .. Jaguar ..
     'NSCGSContext_windowID':1,
     'NSPreferences_confirmCloseSheetIsDone_returnCode_contextInfo_':1,
     'NSPasteboard_readDocumentFromPbtype_filename_':1,
@@ -283,6 +643,9 @@ WRAPPED_METHODS={
 
 
     #<InterfaceBuilder>
+    'NSImage_getGlobalWindowNum_frame_':1,
+    'IBIncompatibleProperty_incompatiblePropertiesForDocument_version_criticalCount_':1,
+    'IBIncompatibleProperty_incompatiblePropertiesForDocument_version_criticalCount_longestMessageIndex_':1,
     'IBObjCSourceParser_parseClass_':1,
     'NSView_objectAtPoint_rect_':1,
     'NSIBObjectData_restoreFromObjectDataInfo_':1,
@@ -388,8 +751,8 @@ for cls in objc.getClassList():
         if sel.selector.startswith('_'):
             continue
 
-
         m = 0
+
         elems = objc.splitSignature(sel.signature)
         for e in elems:
             if e.startswith('^'):

@@ -12,9 +12,10 @@
 #include <Foundation/Foundation.h>
 #include "pyobjc-api.h"
 
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_2
-
-/* makeipaddr and makesockaddr were stolen from socketmodule.c (Python2.3b1+) */
+/*
+ *  makeipaddr and makesockaddr are adapted from the socket module in 
+ *  Python 2.3. Their license is that of Python.
+ */
 
 static PyObject *
 makeipaddr(struct sockaddr *addr, int addrlen)
@@ -156,6 +157,9 @@ static int
 _pyobjc_install_NSNetService(void)
 {
 	Class classNSNetService = objc_lookUpClass("NSNetService");
+	if (classNSNetService == NULL) {
+		return 0;
+	}
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSNetService,
@@ -168,9 +172,3 @@ _pyobjc_install_NSNetService(void)
 
 	return 0;
 }
-
-#else
-
-#define _pyobjc_install_NSNetService() (0)
-
-#endif

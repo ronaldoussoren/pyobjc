@@ -1,8 +1,6 @@
 #ifndef OBJC_SUPER_CALL_H
 #define OBJC_SUPER_CALL_H
 /*
- * Filename will probably be changed soon.
- *
  * This file, and the corresponding '.m' file, deal with finding the 
  * correct function to call a method, both from Python to Objective-C and
  * from Objective-C to python.
@@ -20,7 +18,6 @@
  * The core module again provides no stubs, and again the Cocoa-related stubs
  * will be part of the pyobjc package.
  */
-#include "pyobjc.h"
 
 extern PyObject* ObjC_CallSuper(PyObject* meth, 
 					PyObject* self, PyObject* args);

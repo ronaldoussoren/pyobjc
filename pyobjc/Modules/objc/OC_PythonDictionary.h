@@ -2,7 +2,6 @@
 #define OC_PythonDictionary_h
 
 #import <Foundation/NSDictionary.h>
-#include "Python.h"
 
 /*
  * OC_PythonDictionary - Objective-C proxy for Python dictonaries

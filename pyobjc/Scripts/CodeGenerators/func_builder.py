@@ -149,6 +149,12 @@ SIMPLE_TYPES={
         '&%(varname)s',
         None
     ),
+    'char*': (
+        "\t result = PyString_FromString(%(varname)s);\n\tif (result == NULL) return NULL;",
+        "s",
+        '&%(varname)s',
+        None
+    ),
 }
 
 # Python2.3 has better PyArgs_Parse format-chars for unsigned integral types,
@@ -197,6 +203,23 @@ else:
         '&%(varname)s',
         None
     )
+
+def hidden_from_python(typestr):
+    if typestr.startswith('const ') or typestr.startswith('const\t'):
+        typestr = typestr[6:].strip()
+
+    if is_id(typestr):
+        return 0
+
+    if typestr in INT_ALIASES:
+        x = SIMPLE_TYPES['int']
+    else:
+        x = SIMPLE_TYPES[typestr]
+
+    if x[2] is '':
+        return 1
+    return 0
+
                 
 def simple_to_python(varname, typestr):
     if typestr.startswith('const ') or typestr.startswith('const\t'):
@@ -281,23 +304,24 @@ def parse_prototype(protostr):
     retval = simplify_type(before[:idx+1].strip())
 
     if not is_simple_type(retval) and retval != 'void':
-        raise ValueError, "Complex function (retval)"
+        raise ValueError, "Complex function (retval) --%s--"%(retval,)
 
     new_arguments = []
-    if len(arguments)  != 1 or arguments[0] != 'void':
+    if len(arguments)  != 1 or arguments[0] != 'void' and arguments[0] != '':
         for a in arguments:
             if a == '...':
                 if funcname in IGNORE_VARARGS:
                     continue
                 raise ValueError, "Complex function (varargs)"
             idx = len(a)-1
-            while a[idx].isalnum() or a[idx] == '_':
+            while idx > 0 and (a[idx].isalnum() or a[idx] == '_'):
                 idx -= 1
             new_arguments.append((simplify_type(a[:idx+1].strip()), a[idx+1:].strip()))
     arguments = tuple(new_arguments)
 
     if FUNC_MAP.has_key(funcname):
         arguments = FUNC_MAP[funcname](funcname, arguments)
+
 
     for tp, name in arguments:
         if not is_simple_type(tp):
@@ -320,7 +344,7 @@ def process_function(fp, protostr, funclist):
     fp.write("/* %s */\n"%protostr)
     fp.write("static PyObject* objc_%s(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)\n"%funcname)
     fp.write("{\n")
-    keywords = [ a[1] for a in arguments ]
+    keywords = [ a[1] for a in arguments if not hidden_from_python(a[0])]
     keywords = '", "'.join(keywords)
     if keywords:
         keywords = '"%s", '%keywords
@@ -340,7 +364,10 @@ def process_function(fp, protostr, funclist):
         if is_id(tp):
             fp.write("\tid objc_%s;\n"%name)
         else:
-            fp.write("\t%s objc_%s;\n"%(tp, name))
+            if hidden_from_python(tp):
+                fp.write("\t%s objc_%s = 0;\n"%(tp, name))
+            else:
+                fp.write("\t%s objc_%s;\n"%(tp, name))
 
     fp.write("\n")
 
@@ -395,6 +422,7 @@ def process_list(fp, lst):
             sys.stderr.write("Converting '%s' ..."%l.strip())
             sys.stderr.write("failed: %s\n"%msg)
             sys.stderr.flush()
+            raise
 
     fp.write("\n")
 

@@ -22,7 +22,6 @@
 #ifndef _OC_PythonObject_H
 #define _OC_PythonObject_H
 
-#include <Python.h>
 #import <Foundation/NSProxy.h>
 #import <Foundation/NSMethodSignature.h>
 
@@ -49,12 +48,16 @@
 - valueForKeyPath: (NSString*) keyPath;
 - storedValueForKey: (NSString*) key;
 - (void)takeValue: value forKey: (NSString*) key;
+- (void)setValue: value forKey: (NSString*) key;
+- (void)setValue: value forKeyPath: (NSString*) key;
 - (void)takeStoredValue: value forKey: (NSString*) key;
 - (void)takeValue: value forKeyPath: (NSString*) keyPath;
 - (void)takeValuesFromDictionary: (NSDictionary*) aDictionary;
+- (void)setValuesForKeysWithDictionary: (NSDictionary*) aDictionary;
 - (void)unableToSetNilForKey: (NSString*) key;
-- (void)handleQueryWithUnboundKey: (NSString*) key;
+- (void)valueForUndefinedKey: (NSString*) key;
 - (void)handleTakeValue: value forUnboundKey: (NSString*) key;
+- (void)setValue: value forUndefinedKey: (NSString*) key;
 
 @end /* OC_PythonObject class interface */
 

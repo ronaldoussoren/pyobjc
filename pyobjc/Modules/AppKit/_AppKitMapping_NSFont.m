@@ -121,16 +121,18 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 	int i;
 	int retValue;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	args = PyTuple_New(3);
 	if (args == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return -1;
 	}
 	
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
 		Py_DECREF(args);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return -1;
 	}
 
@@ -139,7 +141,7 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 	v = PyTuple_New(numGlyphs);
 	if (v == NULL) {
 		Py_DECREF(args);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return -1;
 	}
 	PyTuple_SET_ITEM(args, 1, v);
@@ -150,7 +152,7 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 		t = PyObjC_ObjCToPython(@encode(NSGlyph), glyphs + i);
 		if (t == NULL) {
 			Py_DECREF(args);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return -1;
 		}
 		PyTuple_SET_ITEM(v, i, t);
@@ -159,7 +161,7 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 	v = PyInt_FromLong(numGlyphs);
 	if (v == NULL) {
 		Py_DECREF(args);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return -1;
 	}
 
@@ -168,7 +170,7 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 	result = PyObjC_CallPython(self, sel, args, NULL);
 	Py_DECREF(args);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return -1;
 	}
 
@@ -176,14 +178,14 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 		PyErr_SetString(PyExc_TypeError, 
 			"Should return tuple (numPoints, points)");
 		Py_DECREF(result);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return -1;
 	}
 
 	if (PyObjC_PythonToObjC(
 		@encode(int), PyTuple_GET_ITEM(result, 0), &retValue) < 0) {
 		Py_DECREF(result);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return -1;
 	}
 
@@ -191,7 +193,7 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 		"Should return tuple (numPoints, points)");
 	if (seq == NULL) {
 		Py_DECREF(result);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return -1;
 	}
 
@@ -199,7 +201,7 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 		PyErr_SetString(PyExc_ValueError, "Too few points returned");
 		Py_DECREF(result);
 		Py_DECREF(seq);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return -1;
 	}
 
@@ -207,7 +209,7 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 		PyErr_SetString(PyExc_ValueError, "Too many points returned");
 		Py_DECREF(result);
 		Py_DECREF(seq);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return -1;
 	}
 
@@ -221,13 +223,13 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 		if (r == -1) {
 			Py_DECREF(result);
 			Py_DECREF(seq);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return -1;
 		}
 	}
 	Py_DECREF(seq);
 	Py_DECREF(result);
-
+	PyGILState_Release(state);
 	return retValue;
 }
 
@@ -240,8 +242,8 @@ call_NSFont_fontWithName_matrix_(
 	id  font;
 	id  typeface;
 	PyObject* pyFontMatrix;
-	float _fontMatrix[6];
-	float* volatile fontMatrix;
+	float _matrix[6];
+	float* volatile matrix;
 	PyObject* seq;
 	int i, len;
 
@@ -251,10 +253,10 @@ call_NSFont_fontWithName_matrix_(
 	}
 
 	if (pyFontMatrix == Py_None) {
-		fontMatrix = NULL;
+		matrix = NULL;
 
 	} else {
-		fontMatrix = _fontMatrix;
+		matrix = _matrix;
 
 		seq = PySequence_Fast(pyFontMatrix, "fontMatrix is not a sequence");
 		if (seq == NULL) {
@@ -273,7 +275,7 @@ call_NSFont_fontWithName_matrix_(
 
 			r = PyObjC_PythonToObjC(@encode(float), 
 				PySequence_Fast_GET_ITEM(seq, i),
-				fontMatrix + i);
+				matrix + i);
 			if (r == -1) {
 				Py_DECREF(seq);
 				return NULL;
@@ -289,7 +291,7 @@ call_NSFont_fontWithName_matrix_(
 
 		font = objc_msgSendSuper(&super,
 			PyObjCSelector_GetSelector(method),
-			typeface, fontMatrix);
+			typeface, matrix);
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		font = nil;
@@ -304,7 +306,7 @@ call_NSFont_fontWithName_matrix_(
 
 static id
 imp_NSFont_fontWithName_matrix_(
-	Class self, SEL sel, NSString* typeface, const float* fontMatrix)
+	Class self, SEL sel, NSString* typeface, const float* matrix)
 {
 	PyObject* args;
 	PyObject* result;
@@ -312,16 +314,18 @@ imp_NSFont_fontWithName_matrix_(
 	int i;
 	id retValue;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	args = PyTuple_New(3);
 	if (args == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	v = PyObjC_ObjCToPython(@encode(Class), &self);
 	if (v == NULL) {
 		Py_DECREF(args);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -330,28 +334,28 @@ imp_NSFont_fontWithName_matrix_(
 	v = PyObjC_IdToPython(typeface);
 	if (v == NULL) {
 		Py_DECREF(args);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	PyTuple_SET_ITEM(args, 1, v);
 
-	if (fontMatrix == NULL) {
+	if (matrix == NULL) {
 		v = Py_None;
 		Py_INCREF(Py_None);
 	} else {
 		v = PyTuple_New(6);
 		if (v == NULL) {
 			Py_DECREF(args);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 		for (i = 0; i < 6; i++) {
-			PyObject* t = PyFloat_FromDouble(fontMatrix[i]);
+			PyObject* t = PyFloat_FromDouble(matrix[i]);
 			if (t == NULL) {
 				Py_DECREF(v);
 				Py_DECREF(args);
-				PyObjCErr_ToObjC();
+				PyObjCErr_ToObjCWithGILState(&state);
 				return nil;
 			}
 			PyTuple_SET_ITEM(v, i, t);
@@ -362,17 +366,18 @@ imp_NSFont_fontWithName_matrix_(
 	result = PyObjC_CallPython(self, sel, args, NULL);
 	Py_DECREF(args);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	retValue = PyObjC_PythonToId(result);
 	Py_DECREF(result);
 	if (retValue == nil && PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
+	PyGILState_Release(state);
 	return retValue;
 }
 
@@ -382,7 +387,7 @@ call_NSFont_matrix(
 {
 	struct objc_super super;
 	PyObject* pyFontMatrix;
-	float* fontMatrix;
+	float* matrix;
 	int i;
 
 	if (!PyArg_ParseTuple(arguments, "")) {
@@ -394,14 +399,14 @@ call_NSFont_matrix(
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
-		fontMatrix = (float*)objc_msgSendSuper(&super,
+		matrix = (float*)objc_msgSendSuper(&super,
 			PyObjCSelector_GetSelector(method));
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
-		fontMatrix = nil;
+		matrix = nil;
 	NS_ENDHANDLER
 
-	if (fontMatrix == nil && PyErr_Occurred()) {
+	if (matrix == nil && PyErr_Occurred()) {
 		return NULL;
 	}
 
@@ -410,7 +415,7 @@ call_NSFont_matrix(
 		return NULL;
 	}
 	for (i = 0; i < 6; i++) {
-		PyObject* t = PyFloat_FromDouble(fontMatrix[i]);
+		PyObject* t = PyFloat_FromDouble(matrix[i]);
 		if (t == NULL) {
 			Py_DECREF(pyFontMatrix);
 		}

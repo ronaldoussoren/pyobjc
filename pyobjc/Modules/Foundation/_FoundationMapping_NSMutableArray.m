@@ -319,15 +319,17 @@ static void imp_NSMutableArray_removeObjectsFromIndices_numIndices_(id self,
 	PyObject* v;
 	int i;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -335,7 +337,7 @@ static void imp_NSMutableArray_removeObjectsFromIndices_numIndices_(id self,
 
 	v = PyTuple_New(count);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	for (i = 0; i < count; i++) {
@@ -344,7 +346,7 @@ static void imp_NSMutableArray_removeObjectsFromIndices_numIndices_(id self,
 		if (PyTuple_GET_ITEM(v, i) == NULL) {
 			Py_DECREF(v);
 			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
 	}
@@ -353,7 +355,7 @@ static void imp_NSMutableArray_removeObjectsFromIndices_numIndices_(id self,
 	v = PyInt_FromLong(count);
 	if (v == NULL) {	
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	PyTuple_SET_ITEM(arglist, 2,  v);
@@ -361,11 +363,12 @@ static void imp_NSMutableArray_removeObjectsFromIndices_numIndices_(id self,
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	Py_DECREF(result);
+	PyGILState_Release(state);
 }
 
 static PyObject* call_NSMutableArray_replaceObjectsInRange_withObjects_count_(
@@ -448,16 +451,18 @@ static void imp_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 	PyObject* v;
 	int i;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -466,7 +471,7 @@ static void imp_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 	v = PyObjC_ObjCToPython(@encode(NSRange), &range);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -474,7 +479,7 @@ static void imp_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 
 	v = PyTuple_New(count);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	for (i = 0; i < count; i++) {
@@ -482,7 +487,7 @@ static void imp_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 		if (PyTuple_GET_ITEM(v, i) == NULL) {
 			Py_DECREF(v);
 			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
 	}
@@ -491,7 +496,7 @@ static void imp_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 	v = PyInt_FromLong(count);
 	if (v == NULL) {	
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	PyTuple_SET_ITEM(arglist, 3,  v);
@@ -499,11 +504,12 @@ static void imp_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	Py_DECREF(result);
+	PyGILState_Release(state);
 }
 
 
@@ -511,6 +517,7 @@ static int
 _pyobjc_install_NSMutableArray(void)
 {
 	Class classNSMutableArray = objc_lookUpClass("NSMutableArray");
+	if (classNSMutableArray == NULL) return 0;
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSMutableArray,

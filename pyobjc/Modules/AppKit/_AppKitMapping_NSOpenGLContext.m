@@ -5,6 +5,7 @@
  * -getValues:forParameter:
  * -setValues:forParameter:
  * -setOffScreen:width:height:rowbytes:
+ * -CGLContextObj
  */
 #include <Python.h>
 #include <AppKit/AppKit.h>
@@ -15,6 +16,15 @@ static int
 _pyobjc_install_NSOpenGLContext(void)
 {
 	Class classNSOpenGLContext = objc_lookUpClass("NSOpenGLContext");
+
+	if (PyObjC_RegisterMethodMapping(
+		classNSOpenGLContext,
+		@selector(CGLContextObj),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSOpenGLContext,

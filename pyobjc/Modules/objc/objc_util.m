@@ -4,10 +4,10 @@
  * TODO: Documentation
  */
 
+#include "pyobjc.h"
+
 #import <Foundation/NSString.h>
 #import <Foundation/NSDictionary.h>
-#include "objc_util.h"
-#include "pyobjc.h"
 
 PyObject* ObjCExc_error;
 PyObject* ObjCExc_noclass_error;
@@ -127,8 +127,12 @@ void PyObjCErr_FromObjC(NSException* localException)
 	PyErr_Restore(exc_type, exc_value, exc_traceback);
 }
 
-
 void PyObjCErr_ToObjC(void)
+{
+	PyObjCErr_ToObjCWithGILState(NULL);
+}
+
+void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
 {
 	PyObject* exc_type;
 	PyObject* exc_value;
@@ -190,6 +194,10 @@ void PyObjCErr_ToObjC(void)
 			Py_XDECREF(exc_type);
 			Py_XDECREF(exc_value);
 			Py_XDECREF(exc_traceback);
+			
+			if (state) {
+				PyGILState_Release(*state);
+			}
 			[val raise];
 		}
 	}
@@ -224,6 +232,9 @@ void PyObjCErr_ToObjC(void)
 		Py_DECREF(exc_type);
 		Py_XDECREF(exc_value);
 		Py_XDECREF(exc_traceback);
+	}
+	if (state) {
+		PyGILState_Release(*state);
 	}
 	[val raise];
 }
@@ -291,6 +302,7 @@ int ObjC_UpdateConvenienceMethods(PyObject* cls)
 	Class     objc_cls;
 	PyObject* dict;
 	PyObject* keys;
+	PyObject* v;
 	int       i, len;
 
 	if (!PyObjCClass_Check(cls)) {
@@ -351,15 +363,16 @@ int ObjC_UpdateConvenienceMethods(PyObject* cls)
 		return -1;
 	}
 
-	len = PySequence_Length(keys);
-	if (len == -1) {
-		Py_DECREF(keys);
-		Py_DECREF(args);
+	v = PySequence_Fast(keys, "PyDict_Keys didn't return a sequence");
+	Py_DECREF(keys);
+	if (v == NULL) {
 		return -1;
 	}
+	keys = v;
+
+	len = PySequence_Fast_GET_SIZE(keys);
 	for (i = 0; i < len; i++) {
-		PyObject* k = PySequence_GetItem(keys, i);
-		PyObject* v;
+		PyObject* k = PySequence_Fast_GET_ITEM(keys, i);
 		char*     n;
 		
 		if (k == NULL) {
@@ -368,12 +381,10 @@ int ObjC_UpdateConvenienceMethods(PyObject* cls)
 		}
 
 		if (!PyString_Check(k)) {
-			Py_DECREF(k);
 			continue;
 		}
 		n = PyString_AS_STRING(k);
 		if (n[0] != '_' || n[1] != '_') {
-			Py_DECREF(k);
 			continue;
 		}
 		if (	   strcmp(n, "__dict__") == 0 
@@ -382,23 +393,19 @@ int ObjC_UpdateConvenienceMethods(PyObject* cls)
 			|| strcmp(n, "__mro__") == 0
 		   ) {
 
-			Py_DECREF(k);
 			continue;
 		}
 
 		v = PyDict_GetItem(dict, k);
 		if (v == NULL) {
-			Py_DECREF(k);
 			continue;
 		}
 		if (PyObject_SetAttr(cls, k, v) == -1) {
-			Py_DECREF(k);
 			continue;
 		}
-		Py_DECREF(k);
-	}	
+	}
 
-
+	Py_DECREF(keys);
 	Py_DECREF(args);
 
 	return 0;
@@ -433,31 +440,3 @@ NSMapTableValueCallBacks ObjC_PointerValueCallBacks = {
 	NULL,
 	NULL,
 };
-
-#if 0
-static void pyobj_retain(NSMapTable* table __attribute__((__unused__)), const void* v)
-{
-	Py_XINCREF((PyObject*)v);
-}
-
-static void pyobj_release(NSMapTable* table __attribute__((__unused__)), void* v)
-{
-	Py_XDECREF((PyObject*)v);
-}
-
-NSMapTableKeyCallBacks ObjC_PyObjectKeyCallBacks = {
-	NULL,
-	NULL,
-	pyobj_retain,
-	pyobj_release,
-	NULL,
-	NULL,
-};
-
-NSMapTableValueCallBacks ObjC_PyObjectValueCallBacks = {
-	pyobj_retain,
-	pyobj_release,
-	NULL,
-};
-
-#endif

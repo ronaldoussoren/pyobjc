@@ -2,7 +2,6 @@
 #define OC_PythonArray_h
 
 #import <Foundation/NSArray.h>
-#include "Python.h"
 
 /*
  * OC_PythonArray - Objective-C proxy class for Python sequences
@@ -16,6 +15,7 @@
 {
 	PyObject* value;
 }
+
 +newWithPythonObject:(PyObject*)value;
 -initWithPythonObject:(PyObject*)value;
 -(void)dealloc;
@@ -25,6 +25,6 @@
 -objectAtIndex:(int)idx;
 -(void)replaceObjectAtIndex:(int)idx withObject:newValue;
 
-@end /* interface OC_PythonArray */
+@end
 
 #endif /* OC_PythonArray_h */

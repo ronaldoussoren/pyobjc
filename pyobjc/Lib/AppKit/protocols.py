@@ -33,6 +33,13 @@ NSAccessibility = _objc.informal_protocol(
             signature='@@:@',
             isRequired=0,
         ),
+# (id)accessibilityAttributeValue:(NSString *)attribute forParameter:(id)parameter
+        _objc.selector(
+            None,
+            selector='accessibilityAttributeValue:forParameter:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
 # (id)accessibilityFocusedUIElement
         _objc.selector(
             None,
@@ -61,6 +68,13 @@ NSAccessibility = _objc.informal_protocol(
             signature='c@:',
             isRequired=0,
         ),
+# (NSArray *)accessibilityParameterizedAttributeNames
+        _objc.selector(
+            None,
+            selector='accessibilityParameterizedAttributeNames',
+            signature='@@:',
+            isRequired=0,
+        ),
 # (void)accessibilityPerformAction:(NSString *)action
         _objc.selector(
             None,
@@ -73,6 +87,19 @@ NSAccessibility = _objc.informal_protocol(
             None,
             selector='accessibilitySetValue:forAttribute:',
             signature='v@:@@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSAlertDelegate = _objc.informal_protocol(
+    "NSAlertDelegate",
+    [
+# (BOOL)alertShowHelp:(NSAlert *)alert
+        _objc.selector(
+            None,
+            selector='alertShowHelp:',
+            signature='c@:@',
             isRequired=0,
         ),
     ]
@@ -95,6 +122,13 @@ NSApplicationDelegate = _objc.informal_protocol(
             signature='c@:@@',
             isRequired=0,
         ),
+# (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames
+        _objc.selector(
+            None,
+            selector='application:openFiles:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
 # (BOOL)application:(NSApplication *)sender openTempFile:(NSString *)filename
         _objc.selector(
             None,
@@ -107,6 +141,13 @@ NSApplicationDelegate = _objc.informal_protocol(
             None,
             selector='application:printFile:',
             signature='c@:@@',
+            isRequired=0,
+        ),
+# (void)application:(NSApplication *)sender printFiles:(NSArray *)filenames
+        _objc.selector(
+            None,
+            selector='application:printFiles:',
+            signature='v@:@@',
             isRequired=0,
         ),
 # (NSMenu *)applicationDockMenu:(NSApplication *)sender
@@ -309,6 +350,20 @@ NSBrowserDelegate = _objc.informal_protocol(
             signature='c@:@ii',
             isRequired=0,
         ),
+# (float)browser:(NSBrowser *)browser shouldSizeColumn:(int)columnIndex forUserResize:(BOOL)forUserResize toWidth:(float)suggestedWidth
+        _objc.selector(
+            None,
+            selector='browser:shouldSizeColumn:forUserResize:toWidth:',
+            signature='f@:@icf',
+            isRequired=0,
+        ),
+# (float)browser:(NSBrowser *)browser sizeToFitWidthOfColumn:(int)columnIndex
+        _objc.selector(
+            None,
+            selector='browser:sizeToFitWidthOfColumn:',
+            signature='f@:@i',
+            isRequired=0,
+        ),
 # (NSString *)browser:(NSBrowser *)sender titleOfColumn:(int)column
         _objc.selector(
             None,
@@ -321,6 +376,13 @@ NSBrowserDelegate = _objc.informal_protocol(
             None,
             selector='browser:willDisplayCell:atRow:column:',
             signature='v@:@@ii',
+            isRequired=0,
+        ),
+# (void)browserColumnConfigurationDidChange:(NSNotification *)notification
+        _objc.selector(
+            None,
+            selector='browserColumnConfigurationDidChange:',
+            signature='v@:@',
             isRequired=0,
         ),
 # (void)browserDidScroll:(NSBrowser *)sender
@@ -600,6 +662,13 @@ NSControlSubclassDelegate = _objc.informal_protocol(
             None,
             selector='control:textShouldEndEditing:',
             signature='c@:@@',
+            isRequired=0,
+        ),
+# (NSArray *)control:(NSControl *)control textView:(NSTextView *)textView completions:(NSArray *)words forPartialWordRange:(NSRange)charRange indexOfSelectedItem:(int *)index
+        _objc.selector(
+            None,
+            selector='control:textView:completions:forPartialWordRange:indexOfSelectedItem:',
+            signature='@@:@@@{_NSRange=II}^i',
             isRequired=0,
         ),
 # (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
@@ -886,6 +955,46 @@ NSDrawerNotifications = _objc.informal_protocol(
     ]
 )
 
+NSEditor = _objc.informal_protocol(
+    "NSEditor",
+    [
+# (BOOL)commitEditing
+        _objc.selector(
+            None,
+            selector='commitEditing',
+            signature='c@:',
+            isRequired=0,
+        ),
+# (void)discardEditing
+        _objc.selector(
+            None,
+            selector='discardEditing',
+            signature='v@:',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSEditorRegistration = _objc.informal_protocol(
+    "NSEditorRegistration",
+    [
+# (void)objectDidBeginEditing:(id)editor
+        _objc.selector(
+            None,
+            selector='objectDidBeginEditing:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)objectDidEndEditing:(id)editor
+        _objc.selector(
+            None,
+            selector='objectDidEndEditing:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
 NSFontManagerDelegate = _objc.informal_protocol(
     "NSFontManagerDelegate",
     [
@@ -907,6 +1016,53 @@ NSFontManagerResponderMethod = _objc.informal_protocol(
             None,
             selector='changeFont:',
             signature='v@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSFontPanelValidationAdditions = _objc.informal_protocol(
+    "NSFontPanelValidationAdditions",
+    [
+# (unsigned int) validModesForFontPanel: (NSFontPanel *) fontPanel
+        _objc.selector(
+            None,
+            selector='validModesForFontPanel:',
+            signature='I@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSGlyphStorage = _objc.informal_protocol(
+    "NSGlyphStorage",
+    [
+# (NSAttributedString *)attributedString
+        _objc.selector(
+            None,
+            selector='attributedString',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (void)insertGlyphs:(const NSGlyph *)glyphs length:(unsigned int)length forStartingGlyphAtIndex:(unsigned int)glyphIndex characterIndex:(unsigned int)charIndex
+        _objc.selector(
+            None,
+            selector='insertGlyphs:length:forStartingGlyphAtIndex:characterIndex:',
+            signature='v@:^IIII',
+            isRequired=0,
+        ),
+# (unsigned int)layoutOptions
+        _objc.selector(
+            None,
+            selector='layoutOptions',
+            signature='I@:',
+            isRequired=0,
+        ),
+# (void)setIntAttribute:(int)attributeTag value:(int)val forGlyphAtIndex:(unsigned)glyphIndex
+        _objc.selector(
+            None,
+            selector='setIntAttribute:value:forGlyphAtIndex:',
+            signature='v@:iiI',
             isRequired=0,
         ),
     ]
@@ -1104,6 +1260,40 @@ NSInputServiceProvider = _objc.informal_protocol(
     ]
 )
 
+NSKeyValueBindingCreation = _objc.informal_protocol(
+    "NSKeyValueBindingCreation",
+    [
+# (void)bind:(NSString *)binding toObject:(id)observable withKeyPath:(NSString *)keyPath options:(NSDictionary *)options
+        _objc.selector(
+            None,
+            selector='bind:toObject:withKeyPath:options:',
+            signature='v@:@@@@',
+            isRequired=0,
+        ),
+# (NSArray *)exposedBindings
+        _objc.selector(
+            None,
+            selector='exposedBindings',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (void)unbind:(NSString *)binding
+        _objc.selector(
+            None,
+            selector='unbind:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (Class)valueClassForBinding:(NSString *)binding
+        _objc.selector(
+            None,
+            selector='valueClassForBinding:',
+            signature='#@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
 NSLayoutManagerDelegate = _objc.informal_protocol(
     "NSLayoutManagerDelegate",
     [
@@ -1124,280 +1314,181 @@ NSLayoutManagerDelegate = _objc.informal_protocol(
     ]
 )
 
+NSMenuDelegate = _objc.informal_protocol(
+    "NSMenuDelegate",
+    [
+# (BOOL)menu:(NSMenu*)menu updateItem:(NSMenuItem*)item atIndex:(int)index shouldCancel:(BOOL)shouldCancel
+        _objc.selector(
+            None,
+            selector='menu:updateItem:atIndex:shouldCancel:',
+            signature='c@:@@ic',
+            isRequired=0,
+        ),
+# (BOOL)menuHasKeyEquivalent:(NSMenu*)menu forEvent:(NSEvent*)event target:(id*)target action:(SEL*)action
+        _objc.selector(
+            None,
+            selector='menuHasKeyEquivalent:forEvent:target:action:',
+            signature='c@:@@^@^:',
+            isRequired=0,
+        ),
+# (void)menuNeedsUpdate:(NSMenu*)menu
+        _objc.selector(
+            None,
+            selector='menuNeedsUpdate:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (int)numberOfItemsInMenu:(NSMenu*)menu
+        _objc.selector(
+            None,
+            selector='numberOfItemsInMenu:',
+            signature='i@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
 NSMenuItem = _objc.informal_protocol(
     "NSMenuItem",
     [
-# (SEL)action
+# (void)add:(id)sender
         _objc.selector(
             None,
-            selector='action',
-            signature=':@:',
+            selector='add:',
+            signature='v@:@',
             isRequired=0,
         ),
-# (BOOL)hasSubmenu
+# (void)addObject:(id)object
         _objc.selector(
             None,
-            selector='hasSubmenu',
+            selector='addObject:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (BOOL)automaticallyPreparesContent
+        _objc.selector(
+            None,
+            selector='automaticallyPreparesContent',
             signature='c@:',
             isRequired=0,
         ),
-# (NSImage *)image
+# (BOOL)canAdd
         _objc.selector(
             None,
-            selector='image',
-            signature='@@:',
-            isRequired=0,
-        ),
-# (id)initWithTitle:(NSString *)aString action:(SEL)aSelector keyEquivalent:(NSString *)charCode
-        _objc.selector(
-            None,
-            selector='initWithTitle:action:keyEquivalent:',
-            signature='@@:@:@',
-            isRequired=0,
-        ),
-# (BOOL)isEnabled
-        _objc.selector(
-            None,
-            selector='isEnabled',
+            selector='canAdd',
             signature='c@:',
             isRequired=0,
         ),
-# (BOOL)isSeparatorItem
+# (BOOL)canRemove
         _objc.selector(
             None,
-            selector='isSeparatorItem',
+            selector='canRemove',
             signature='c@:',
             isRequired=0,
         ),
-# (NSString *)keyEquivalent
+# (id)content
         _objc.selector(
             None,
-            selector='keyEquivalent',
+            selector='content',
             signature='@@:',
             isRequired=0,
         ),
-# (unsigned int)keyEquivalentModifierMask
+# (id)initWithContent:(id)content
         _objc.selector(
             None,
-            selector='keyEquivalentModifierMask',
-            signature='I@:',
+            selector='initWithContent:',
+            signature='@@:@',
             isRequired=0,
         ),
-# (NSMenu *)menu
+# (BOOL)isEditable
         _objc.selector(
             None,
-            selector='menu',
+            selector='isEditable',
+            signature='c@:',
+            isRequired=0,
+        ),
+# (id)newObject
+        _objc.selector(
+            None,
+            selector='newObject',
             signature='@@:',
             isRequired=0,
         ),
-# (NSImage *)mixedStateImage
+# (Class)objectClass
         _objc.selector(
             None,
-            selector='mixedStateImage',
+            selector='objectClass',
+            signature='#@:',
+            isRequired=0,
+        ),
+# (void)prepareContent
+        _objc.selector(
+            None,
+            selector='prepareContent',
+            signature='v@:',
+            isRequired=0,
+        ),
+# (void)remove:(id)sender
+        _objc.selector(
+            None,
+            selector='remove:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)removeObject:(id)object
+        _objc.selector(
+            None,
+            selector='removeObject:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (NSArray *)selectedObjects
+        _objc.selector(
+            None,
+            selector='selectedObjects',
             signature='@@:',
             isRequired=0,
         ),
-# (NSString *)mnemonic
+# (id)selection
         _objc.selector(
             None,
-            selector='mnemonic',
+            selector='selection',
             signature='@@:',
             isRequired=0,
         ),
-# (unsigned)mnemonicLocation
+# (void)setAutomaticallyPreparesContent:(BOOL)flag
         _objc.selector(
             None,
-            selector='mnemonicLocation',
-            signature='I@:',
-            isRequired=0,
-        ),
-# (NSImage *)offStateImage
-        _objc.selector(
-            None,
-            selector='offStateImage',
-            signature='@@:',
-            isRequired=0,
-        ),
-# (NSImage *)onStateImage
-        _objc.selector(
-            None,
-            selector='onStateImage',
-            signature='@@:',
-            isRequired=0,
-        ),
-# (id)representedObject
-        _objc.selector(
-            None,
-            selector='representedObject',
-            signature='@@:',
-            isRequired=0,
-        ),
-# (void)setAction:(SEL)aSelector
-        _objc.selector(
-            None,
-            selector='setAction:',
-            signature='v@::',
-            isRequired=0,
-        ),
-# (void)setEnabled:(BOOL)flag
-        _objc.selector(
-            None,
-            selector='setEnabled:',
+            selector='setAutomaticallyPreparesContent:',
             signature='v@:c',
             isRequired=0,
         ),
-# (void)setImage:(NSImage *)menuImage
+# (void)setContent:(id)content
         _objc.selector(
             None,
-            selector='setImage:',
+            selector='setContent:',
             signature='v@:@',
             isRequired=0,
         ),
-# (void)setKeyEquivalent:(NSString *)aKeyEquivalent
+# (void)setEditable:(BOOL)flag
         _objc.selector(
             None,
-            selector='setKeyEquivalent:',
-            signature='v@:@',
+            selector='setEditable:',
+            signature='v@:c',
             isRequired=0,
         ),
-# (void)setKeyEquivalentModifierMask:(unsigned int)mask
+# (void)setObjectClass:(Class)objectClass
         _objc.selector(
             None,
-            selector='setKeyEquivalentModifierMask:',
-            signature='v@:I',
+            selector='setObjectClass:',
+            signature='v@:#',
             isRequired=0,
         ),
-# (void)setMenu:(NSMenu *)menu
+# (BOOL)validateMenuItem:(id <NSMenuItem>)menuItem
         _objc.selector(
             None,
-            selector='setMenu:',
-            signature='v@:@',
-            isRequired=0,
-        ),
-# (void)setMixedStateImage:(NSImage *)image
-        _objc.selector(
-            None,
-            selector='setMixedStateImage:',
-            signature='v@:@',
-            isRequired=0,
-        ),
-# (void)setMnemonicLocation:(unsigned)location
-        _objc.selector(
-            None,
-            selector='setMnemonicLocation:',
-            signature='v@:I',
-            isRequired=0,
-        ),
-# (void)setOffStateImage:(NSImage *)image
-        _objc.selector(
-            None,
-            selector='setOffStateImage:',
-            signature='v@:@',
-            isRequired=0,
-        ),
-# (void)setOnStateImage:(NSImage *)image
-        _objc.selector(
-            None,
-            selector='setOnStateImage:',
-            signature='v@:@',
-            isRequired=0,
-        ),
-# (void)setRepresentedObject:(id)anObject
-        _objc.selector(
-            None,
-            selector='setRepresentedObject:',
-            signature='v@:@',
-            isRequired=0,
-        ),
-# (void)setState:(int)state
-        _objc.selector(
-            None,
-            selector='setState:',
-            signature='v@:i',
-            isRequired=0,
-        ),
-# (void)setSubmenu:(NSMenu *)submenu
-        _objc.selector(
-            None,
-            selector='setSubmenu:',
-            signature='v@:@',
-            isRequired=0,
-        ),
-# (void)setTag:(int)anInt
-        _objc.selector(
-            None,
-            selector='setTag:',
-            signature='v@:i',
-            isRequired=0,
-        ),
-# (void)setTarget:(id)anObject
-        _objc.selector(
-            None,
-            selector='setTarget:',
-            signature='v@:@',
-            isRequired=0,
-        ),
-# (void)setTitle:(NSString *)aString
-        _objc.selector(
-            None,
-            selector='setTitle:',
-            signature='v@:@',
-            isRequired=0,
-        ),
-# (void)setTitleWithMnemonic:(NSString *)stringWithAmpersand
-        _objc.selector(
-            None,
-            selector='setTitleWithMnemonic:',
-            signature='v@:@',
-            isRequired=0,
-        ),
-# (int)state
-        _objc.selector(
-            None,
-            selector='state',
-            signature='i@:',
-            isRequired=0,
-        ),
-# (NSMenu *)submenu
-        _objc.selector(
-            None,
-            selector='submenu',
-            signature='@@:',
-            isRequired=0,
-        ),
-# (int)tag
-        _objc.selector(
-            None,
-            selector='tag',
-            signature='i@:',
-            isRequired=0,
-        ),
-# (id)target
-        _objc.selector(
-            None,
-            selector='target',
-            signature='@@:',
-            isRequired=0,
-        ),
-# (NSString *)title
-        _objc.selector(
-            None,
-            selector='title',
-            signature='@@:',
-            isRequired=0,
-        ),
-# (NSString *)userKeyEquivalent
-        _objc.selector(
-            None,
-            selector='userKeyEquivalent',
-            signature='@@:',
-            isRequired=0,
-        ),
-# (unsigned int)userKeyEquivalentModifierMask
-        _objc.selector(
-            None,
-            selector='userKeyEquivalentModifierMask',
-            signature='I@:',
+            selector='validateMenuItem:',
+            signature='c@:@',
             isRequired=0,
         ),
     ]
@@ -1488,6 +1579,13 @@ NSOutlineViewDataSource = _objc.informal_protocol(
             signature='v@:@@@@',
             isRequired=0,
         ),
+# (void)outlineView:(NSOutlineView *)outlineView sortDescriptorsDidChange:(NSArray *)oldDescriptors
+        _objc.selector(
+            None,
+            selector='outlineView:sortDescriptorsDidChange:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
 # (NSDragOperation)outlineView:(NSOutlineView*)olv validateDrop:(id <NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(int)index
         _objc.selector(
             None,
@@ -1508,6 +1606,27 @@ NSOutlineViewDataSource = _objc.informal_protocol(
 NSOutlineViewDelegate = _objc.informal_protocol(
     "NSOutlineViewDelegate",
     [
+# (void)outlineView:(NSOutlineView *)outlineView didClickTableColumn:(NSTableColumn *)tableColumn
+        _objc.selector(
+            None,
+            selector='outlineView:didClickTableColumn:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)outlineView:(NSOutlineView *)outlineView didDragTableColumn:(NSTableColumn *)tableColumn
+        _objc.selector(
+            None,
+            selector='outlineView:didDragTableColumn:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)outlineView:(NSOutlineView *)outlineView mouseDownInHeaderOfTableColumn:(NSTableColumn *)tableColumn
+        _objc.selector(
+            None,
+            selector='outlineView:mouseDownInHeaderOfTableColumn:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
 # (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item
         _objc.selector(
             None,
@@ -1649,14 +1768,27 @@ NSPasteboardOwner = _objc.informal_protocol(
     ]
 )
 
+NSPlaceholders = _objc.informal_protocol(
+    "NSPlaceholders",
+    [
+    ]
+)
+
 NSSavePanelDelegate = _objc.informal_protocol(
     "NSSavePanelDelegate",
     [
-# (NSComparisonResult)panel:(id)sender compareFilename:(NSString *)file1 with:(NSString *)file2 caseSensitive:(BOOL)caseSensitive
+# (NSComparisonResult)panel:(id)sender compareFilename:(NSString *)name1 with:(NSString *)name2 caseSensitive:(BOOL)caseSensitive
         _objc.selector(
             None,
             selector='panel:compareFilename:with:caseSensitive:',
             signature='i@:@@@c',
+            isRequired=0,
+        ),
+# (void)panel:(id)sender directoryDidChange:(NSString *)path
+        _objc.selector(
+            None,
+            selector='panel:directoryDidChange:',
+            signature='v@:@@',
             isRequired=0,
         ),
 # (BOOL)panel:(id)sender isValidFilename:(NSString *)filename
@@ -1685,6 +1817,13 @@ NSSavePanelDelegate = _objc.informal_protocol(
             None,
             selector='panel:willExpand:',
             signature='v@:@c',
+            isRequired=0,
+        ),
+# (void)panelSelectionDidChange:(id)sender
+        _objc.selector(
+            None,
+            selector='panelSelectionDidChange:',
+            signature='v@:@',
             isRequired=0,
         ),
     ]
@@ -1718,6 +1857,46 @@ NSSoundDelegateMethods = _objc.informal_protocol(
             None,
             selector='sound:didFinishPlaying:',
             signature='v@:@c',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSSpeechRecognizerDelegate = _objc.informal_protocol(
+    "NSSpeechRecognizerDelegate",
+    [
+# (void)speechRecognizer:(NSSpeechRecognizer *)sender didRecognizeCommand:(id)command
+        _objc.selector(
+            None,
+            selector='speechRecognizer:didRecognizeCommand:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSSpeechSynthesizerDelegate = _objc.informal_protocol(
+    "NSSpeechSynthesizerDelegate",
+    [
+# (void)speechSynthesizer:(NSSpeechSynthesizer *)sender didFinishSpeaking:(BOOL)finishedSpeaking
+        _objc.selector(
+            None,
+            selector='speechSynthesizer:didFinishSpeaking:',
+            signature='v@:@c',
+            isRequired=0,
+        ),
+# (void)speechSynthesizer:(NSSpeechSynthesizer *)sender willSpeakPhoneme:(short)phonemeOpcode
+        _objc.selector(
+            None,
+            selector='speechSynthesizer:willSpeakPhoneme:',
+            signature='v@:@s',
+            isRequired=0,
+        ),
+# (void)speechSynthesizer:(NSSpeechSynthesizer *)sender willSpeakWord:(NSRange)characterRange ofString:(NSString *)string
+        _objc.selector(
+            None,
+            selector='speechSynthesizer:willSpeakWord:ofString:',
+            signature='v@:@{_NSRange=II}@',
             isRequired=0,
         ),
     ]
@@ -1841,6 +2020,13 @@ NSTableDataSource = _objc.informal_protocol(
             None,
             selector='tableView:setObjectValue:forTableColumn:row:',
             signature='v@:@@@i',
+            isRequired=0,
+        ),
+# (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors
+        _objc.selector(
+            None,
+            selector='tableView:sortDescriptorsDidChange:',
+            signature='v@:@@',
             isRequired=0,
         ),
 # (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info proposedRow:(int)row proposedDropOperation:(NSTableViewDropOperation)op
@@ -2235,6 +2421,13 @@ NSTextViewDelegate = _objc.informal_protocol(
             signature='c@:@@I',
             isRequired=0,
         ),
+# (NSArray *)textView:(NSTextView *)textView completions:(NSArray *)words forPartialWordRange:(NSRange)charRange indexOfSelectedItem:(int *)index
+        _objc.selector(
+            None,
+            selector='textView:completions:forPartialWordRange:indexOfSelectedItem:',
+            signature='@@:@@{_NSRange=II}^i',
+            isRequired=0,
+        ),
 # (BOOL)textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
         _objc.selector(
             None,
@@ -2284,6 +2477,13 @@ NSTextViewDelegate = _objc.informal_protocol(
             signature='{_NSRange=II}@:@{_NSRange=II}{_NSRange=II}',
             isRequired=0,
         ),
+# (NSString *)textView:(NSTextView *)textView willDisplayToolTip:(NSString *)tooltip forCharacterAtIndex:(unsigned)characterIndex
+        _objc.selector(
+            None,
+            selector='textView:willDisplayToolTip:forCharacterAtIndex:',
+            signature='@@:@@I',
+            isRequired=0,
+        ),
 # (NSArray *)textView:(NSTextView *)view writablePasteboardTypesForCell:(id <NSTextAttachmentCell>)cell atIndex:(unsigned)charIndex
         _objc.selector(
             None,
@@ -2302,6 +2502,13 @@ NSTextViewDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='textViewDidChangeSelection:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)textViewDidChangeTypingAttributes:(NSNotification *)notification
+        _objc.selector(
+            None,
+            selector='textViewDidChangeTypingAttributes:',
             signature='v@:@',
             isRequired=0,
         ),
@@ -2349,6 +2556,13 @@ NSToolbarDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='toolbarDefaultItemIdentifiers:',
+            signature='@@:@',
+            isRequired=0,
+        ),
+# (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar
+        _objc.selector(
+            None,
+            selector='toolbarSelectableItemIdentifiers:',
             signature='@@:@',
             isRequired=0,
         ),
@@ -2424,6 +2638,13 @@ NSValidatedUserInterfaceItem = _objc.informal_protocol(
 NSWindowDelegate = _objc.informal_protocol(
     "NSWindowDelegate",
     [
+# (NSRect)window:(NSWindow *)window willPositionSheet:(NSWindow *)sheet usingRect:(NSRect)rect
+        _objc.selector(
+            None,
+            selector='window:willPositionSheet:usingRect:',
+            signature='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@@{_NSRect={_NSPoint=ff}{_NSSize=ff}}',
+            isRequired=0,
+        ),
 # (BOOL)windowShouldClose:(id)sender
         _objc.selector(
             None,

@@ -11,7 +11,7 @@
 
 
 static PyObject* call_NSQuickDrawView_qdport(
-		PyObject* method __attribute__((__unused__)), 
+		PyObject* method, 
 		PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
@@ -24,12 +24,12 @@ static PyObject* call_NSQuickDrawView_qdport(
 
 	NS_DURING
 		PyObjC_InitSuper(&super, 
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
 
 		port = objc_msgSendSuper(&super,
-				@selector(qdport));
+				PyObjCSelector_GetSelector(method));
 		if (port == NULL) {
 			result = Py_None;
 			Py_INCREF(result);
@@ -51,16 +51,18 @@ static void* imp_NSQuickDrawView_qdport(id self, SEL sel)
 	PyObject* arglist;
 	void*    objc_result;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(0);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -68,10 +70,11 @@ static void* imp_NSQuickDrawView_qdport(id self, SEL sel)
 	Py_DECREF(result);
 
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
+	PyGILState_Release(state);
 	return objc_result;
 }
 
@@ -89,4 +92,6 @@ _pyobjc_install_NSQuickDrawView(void)
 
 		return -1;
 	}
+
+	return 0;
 }

@@ -5,17 +5,18 @@
  * Python subclasses of Objective-C classes.
  */
 #include "pyobjc.h"
+
 #include <stddef.h>
+#include <ctype.h>
+
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSBundle.h>
 #import <Foundation/NSProcessInfo.h>
 #import <Foundation/NSString.h>
-#include "objc_support.h"
 
-#include <ctype.h>
 
 int ObjC_VerboseLevel = 0;
-NSAutoreleasePool* ObjC_global_release_pool = nil;
+static NSAutoreleasePool* global_release_pool = nil;
 PyObject* PyObjCClass_DefaultModule = NULL;
 
 PyDoc_STRVAR(lookUpClass_doc,
@@ -37,7 +38,7 @@ static 	char* keywords[] = { "class_name", NULL };
 		return NULL;
 	}
 
-	objc_class = objc_lookUpClass(class_name);
+	objc_class = PyObjCRT_LookUpClass(class_name);
 	if (objc_class == NULL) {
 		PyErr_SetString(ObjCExc_noclass_error, class_name);
 		return NULL;
@@ -78,7 +79,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		return Py_None;
 	}
 
-	methodsToAdd = objc_allocMethodList(methodCount);
+	methodsToAdd = PyObjCRT_AllocMethodList(methodCount);
 	if (methodsToAdd == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -103,7 +104,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 
 		/* install in methods to add */
 		objcMethod = &methodsToAdd->method_list[methodIndex];
-		objcMethod->method_name = PyObjCSelector_Selector(aMethod);
+		objcMethod->method_name = PyObjCSelector_GetSelector(aMethod);
 
 		objcMethod->method_types = strdup(PyObjCSelector_Signature(
 			aMethod));
@@ -144,9 +145,8 @@ static	char* keywords[] = { NULL };
 		return NULL;
 	}
 
-	
-	[ObjC_global_release_pool release];
-	ObjC_global_release_pool = [[NSAutoreleasePool alloc] init];
+	[global_release_pool release];
+	global_release_pool = [[NSAutoreleasePool alloc] init];
 
 	Py_INCREF(Py_None);
 	return Py_None;
@@ -226,7 +226,7 @@ static 	char* keywords[] = { "class_name", "selector", "signature", NULL };
 		return NULL;
 	}
 
-	sel = SELUID(selector);
+	sel = PyObjCRT_SELUID(selector);
 	
 	if (ObjC_SignatureForSelector(class_name, sel, signature) < 0) {
 		return NULL;
@@ -304,10 +304,16 @@ static	char* keywords[] = { "length", 0 };
 
 
 PyDoc_STRVAR(loadBundle_doc,
-	"loadBundle(bundle, module_name, module_globals) -> None\n"
+	"loadBundle(module_name, module_globals, bundle_path=None, "
+	"bundle_identifier=None)\n"
 	"\n"
-	"Find all classes defined in the 'bundle', set their __module__ to\n"
-	"'module_name' and load them into 'module_globals'"
+	"Load the bundle identified by 'bundle_path' or 'bundle_identifier' \n"
+	"and add the classes in the bundle to the 'module_globals'.\n"
+	"\n"
+	"If 'bundle_identifier' is specified the right bundle is located\n"
+	"using NSBundle's +bundleWithIdentifier:.\n"
+	"If 'bundle_path' is specified the right bundle is located using\n"
+	"NSBundle's +bundleWithPath:. The path must be an absolute pathname\n"
 );
 static PyObject*
 loadBundle(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
@@ -351,14 +357,22 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		}
 		bundle = [NSBundle bundleWithPath:strval];
 	} else {
+#ifdef MACOSX
 		err = depythonify_c_value("@", bundle_identifier, &strval);
 		if (err == -1) {
 			return NULL;
 		}
 		bundle = [NSBundle bundleWithIdentifier:strval];
-	}
 
-	//NSLog(@"loadBundle %@", strval);
+#else  /* !MACOSX */
+		/* GNUstep doesn't seem to support ``bundleWithIdentifier:`` */
+		PyErr_SetString(PyExc_RuntimeError,
+			"The 'bundle_identifier' argument is only supported "
+			"on MacOS X");
+		return NULL;
+
+#endif /* !MACOSX */
+	}
 
 	[bundle load];
 
@@ -569,9 +583,22 @@ static char* keywords[] = { "value", 0 };
 
 #endif /* MACOSX */
 
-	
 
+PyDoc_STRVAR(enableThreading_doc,
+	"enableThreading() -> None\n"
+	"\n"
+	"This sets the interpreter up for multithreading (if that hasn't\n"
+	"been done yet). This makes it possible to use the Cocoa threading\n"
+	"API's to create new threads, even when those threads will run\n"
+	"python code.");
 
+static PyObject*
+enableThreading(PyObject* self __attribute__((__unused__)))
+{
+	PyEval_InitThreads();
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 
 static PyMethodDef meta_methods[] = {
 	{
@@ -595,7 +622,7 @@ static PyMethodDef meta_methods[] = {
 	{ "getClassList", (PyCFunction)getClassList, METH_NOARGS, getClassList_doc },
 	{ "setClassExtender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
 	{ "setSignatureForSelector", (PyCFunction)set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
-	{ "recyleAutoreleasePool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
+	{ "recycleAutoreleasePool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
 	{ "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
 	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
 	{ "loadBundle", (PyCFunction)loadBundle, METH_VARARGS|METH_KEYWORDS, loadBundle_doc },
@@ -605,6 +632,7 @@ static PyMethodDef meta_methods[] = {
 	{ "CFToObject", (PyCFunction)objc_CFToObject, METH_VARARGS, objc_CFToObject_doc },
 	{ "ObjectToCF", (PyCFunction)objc_ObjectToCF, METH_VARARGS, objc_ObjectToCF_doc },
 #endif
+	{ "enableThreading", (PyCFunction)enableThreading, METH_NOARGS, enableThreading_doc },
 
 	{ 0, 0, 0, 0 } /* sentinel */
 };
@@ -620,6 +648,9 @@ struct objc_typestr_values {
 	{ "_C_UCHR", _C_UCHR },
 	{ "_C_SHT", _C_SHT },
 	{ "_C_USHT", _C_USHT },
+#ifdef _C_BOOL
+	{ "_C_BOOL", _C_BOOL },
+#endif
 	{ "_C_INT", _C_INT },
 	{ "_C_UINT", _C_UINT },
 	{ "_C_LNG", _C_LNG },
@@ -676,7 +707,7 @@ void init_objc(void)
 	/* Allocate an auto-release pool for our own use, this avoids numerous
 	 * warnings during startup of a python script.
 	 */
-	ObjC_global_release_pool = [[NSAutoreleasePool alloc] init];
+	global_release_pool = [[NSAutoreleasePool alloc] init];
 
 	PyObjCClass_DefaultModule = PyString_FromString("objc");
 
@@ -706,6 +737,18 @@ void init_objc(void)
 	if (ObjCUtil_Init(m) < 0) return;
 	if (ObjCAPI_Register(d) < 0) return;
 
+#if 1
+	/* Python based plugin bundles currently use only PyObjClass_GetClass,
+	 * add that seperately to avoid distributing pyobjc-api.h for now 
+	 */
+	{
+		PyObject* v = PyCObject_FromVoidPtr((void*)(PyObjCClass_GetClass), NULL);
+		if (v == NULL) return;
+
+		PyDict_SetItemString(d, "__C_GETCLASS__", v);
+	}
+#endif
+
 	{
 		struct objc_typestr_values* cur = objc_typestr_values;
 
@@ -714,8 +757,8 @@ void init_objc(void)
 				PyString_FromStringAndSize(&cur->value, 1));
 		}
 	}
-	/* Add a _C_BOOL value, the actual type might vary acros platforms */
-	PyDict_SetItemString(d, "_C_BOOL", PyString_FromString(@encode(BOOL)));
+	/* Add a _C_NSBOOL value, the actual type might vary acros platforms */
+	PyDict_SetItemString(d, "_C_NSBOOL", PyString_FromString(@encode(BOOL)));
 
 	PyDict_SetItemString(d, "__version__", 
 		PyString_FromString(OBJC_VERSION));

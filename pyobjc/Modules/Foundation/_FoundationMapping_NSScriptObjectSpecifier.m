@@ -35,11 +35,11 @@ call_NSScriptObjectSpecifier_indicesOfObjectsByEvaluatingWithContainer_count_(
 		    container, &numrefs);
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
-		res = nil;
+		res = NULL;
 		numrefs = -2;
 	NS_ENDHANDLER
 
-	if (res == nil && PyErr_Occurred()) {
+	if (res == NULL && PyErr_Occurred()) {
 		return NULL;
 	}
 
@@ -54,7 +54,7 @@ call_NSScriptObjectSpecifier_indicesOfObjectsByEvaluatingWithContainer_count_(
 		return NULL;
 	}
 
-	if (res == nil) {
+	if (res == NULL) {
 		PyTuple_SET_ITEM(retVal, 0, Py_None);
 		Py_INCREF(Py_None);
 
@@ -92,6 +92,7 @@ static int
 _pyobjc_install_NSScriptObjectSpecifier(void)
 {
 	Class classNSScriptObjectSpecifier = objc_lookUpClass("NSScriptObjectSpecifier");
+	if (classNSScriptObjectSpecifier == NULL) return 0;
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSScriptObjectSpecifier,

@@ -12,11 +12,27 @@
  * - When adding new methods to OC_TestClass1 *always* add invoke- and call-
  *   variants to OC_TestClass2.
  */
-#import <Foundation/Foundation.h>
 
 #include <Python.h>
 #include <pyobjc-api.h>
+
+#import <Foundation/Foundation.h>
+
+#ifndef GNU_RUNTIME
 #include <objc/objc-runtime.h>
+#endif
+
+#include <limits.h>
+#include <float.h>
+
+#if !defined(LLONG_MAX) && defined(LONG_LONG_MAX)
+
+#  define LLONG_MAX LONG_LONG_MAX
+#  define LLONG_MIN LONG_LONG_MIN
+#  define ULLONG_MAX ULONG_LONG_MAX
+
+#endif
+
 
 
 struct dummy
@@ -1498,6 +1514,12 @@ static 	char buf[1024];
 	case 1: [object takeValue: value forKeyPath: key]; break;
 	case 2: [object takeStoredValue: value forKey: key]; break;
 	case 3: [object takeValuesFromDictionary: value]; break;
+#if defined (MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
+
+	case 4: [object setValue: value forKey: key]; break;
+	case 5: [object setValue: value forKeyPath: key]; break;
+	case 6: [object setValuesForKeysWithDictionary: value]; break;
+#endif
 	}
 }
 
@@ -1573,7 +1595,46 @@ static 	char buf[1024];
 @end
 
 
+static PyObject* pyobjcpy(PyObject* self __attribute__((__unused__)), PyObject* args)
+{
+	char* signature;
+	PyObject* o;
+	char* buf;
+	int r;
+
+	if (!PyArg_ParseTuple(args, "sO", &signature, &o)) {
+		return NULL;
+	}
+
+	buf = alloca(PyObjCRT_SizeOfType(signature));
+	if (buf == NULL) {
+		PyErr_NoMemory();
+		return NULL;
+	}
+
+	r = PyObjC_PythonToObjC(signature, o, buf);
+	if (r < 0) {
+		return NULL;
+	}
+
+	o = PyObjC_ObjCToPython(signature, buf);
+	return o;
+
+}
+
+
+
 static PyMethodDef no_methods[] = {
+	{
+		"pyObjCPy",
+		(PyCFunction)pyobjcpy,
+		METH_VARARGS,
+
+		"pyObjCPy(signature, object) -> object\n"
+		"\n"
+		"convert object to ObjC and back."
+	},
+
 	{ 0, 0, 0, 0 }
 };
 
@@ -1611,4 +1672,37 @@ void inittestbndl(void)
 	PyModule_AddObject(m, "DO_TAKEVALUE_FORKEYPATH", PyInt_FromLong(1));
 	PyModule_AddObject(m, "DO_TAKESTOREDVALUE_FORKEY", PyInt_FromLong(2));
 	PyModule_AddObject(m, "DO_TAKEVALUESFROMDICT", PyInt_FromLong(3));
+	PyModule_AddObject(m, "DO_SETVALUE_FORKEY", PyInt_FromLong(4));
+	PyModule_AddObject(m, "DO_SETVALUE_FORKEYPATH", PyInt_FromLong(5));
+	PyModule_AddObject(m, "DO_SETVALUESFORKEYSFROMDICT", PyInt_FromLong(6));
+
+
+	PyModule_AddObject(m, "UCHAR_MAX", PyInt_FromLong(UCHAR_MAX));
+	PyModule_AddObject(m, "SCHAR_MAX", PyInt_FromLong(SCHAR_MAX));
+	PyModule_AddObject(m, "SCHAR_MIN", PyInt_FromLong(SCHAR_MIN));
+	PyModule_AddObject(m, "CHAR_MAX", PyInt_FromLong(CHAR_MAX));
+	PyModule_AddObject(m, "CHAR_MIN", PyInt_FromLong(CHAR_MIN));
+
+	PyModule_AddObject(m, "USHRT_MAX", PyInt_FromLong(USHRT_MAX));
+	PyModule_AddObject(m, "SHRT_MAX", PyInt_FromLong(SHRT_MAX));
+	PyModule_AddObject(m, "SHRT_MIN", PyInt_FromLong(SHRT_MIN));
+
+	PyModule_AddObject(m, "UINT_MAX", PyLong_FromLongLong(UINT_MAX));
+	PyModule_AddObject(m, "INT_MAX", PyInt_FromLong(INT_MAX));
+	PyModule_AddObject(m, "INT_MIN", PyInt_FromLong(INT_MIN));
+
+	PyModule_AddObject(m, "ULONG_MAX", PyLong_FromLongLong(ULONG_MAX));
+	PyModule_AddObject(m, "LONG_MAX", PyInt_FromLong(LONG_MAX));
+	PyModule_AddObject(m, "LONG_MIN", PyInt_FromLong(LONG_MIN));
+	
+	PyModule_AddObject(m, "ULLONG_MAX", PyLong_FromUnsignedLongLong(ULLONG_MAX));
+	PyModule_AddObject(m, "LLONG_MAX", PyLong_FromLongLong(LLONG_MAX));
+	PyModule_AddObject(m, "LLONG_MIN", PyLong_FromLongLong(LLONG_MIN));
+
+	PyModule_AddObject(m, "DBL_MAX", PyFloat_FromDouble(DBL_MAX));
+	PyModule_AddObject(m, "DBL_MIN", PyFloat_FromDouble(DBL_MIN));
+	PyModule_AddObject(m, "DBL_EPSILON", PyFloat_FromDouble(DBL_EPSILON));
+	PyModule_AddObject(m, "FLT_MAX", PyFloat_FromDouble(FLT_MAX));
+	PyModule_AddObject(m, "FLT_MIN", PyFloat_FromDouble(FLT_MIN));
+	PyModule_AddObject(m, "FLT_EPSILON", PyFloat_FromDouble(FLT_EPSILON));
 }

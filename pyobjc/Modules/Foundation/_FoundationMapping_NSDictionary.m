@@ -127,15 +127,17 @@ static id imp_NSDictionary_initWithObjects_forKeys_count_(id self, SEL sel,
 	int i;
 	id  returnValue;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -143,7 +145,7 @@ static id imp_NSDictionary_initWithObjects_forKeys_count_(id self, SEL sel,
 
 	v = PyTuple_New(count);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	for (i = 0; i < count; i++) {
@@ -151,7 +153,7 @@ static id imp_NSDictionary_initWithObjects_forKeys_count_(id self, SEL sel,
 		if (PyTuple_GET_ITEM(v, i) == NULL) {
 			Py_DECREF(v);
 			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 	}
@@ -159,7 +161,7 @@ static id imp_NSDictionary_initWithObjects_forKeys_count_(id self, SEL sel,
 
 	v = PyTuple_New(count);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	for (i = 0; i < count; i++) {
@@ -167,7 +169,7 @@ static id imp_NSDictionary_initWithObjects_forKeys_count_(id self, SEL sel,
 		if (PyTuple_GET_ITEM(v, i) == NULL) {
 			Py_DECREF(v);
 			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 	}
@@ -175,23 +177,24 @@ static id imp_NSDictionary_initWithObjects_forKeys_count_(id self, SEL sel,
 	PyTuple_SET_ITEM(arglist, 3, PyInt_FromLong(count));
 	if (PyTuple_GET_ITEM(arglist, 3) == NULL) {	
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	returnValue = PyObjC_PythonToId(result);
 	Py_DECREF(result);
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
+	PyGILState_Release(state);
 	return returnValue;
 }
 
@@ -310,15 +313,17 @@ static id imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
 	int i;
 	id  returnValue;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -326,7 +331,7 @@ static id imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
 
 	v = PyTuple_New(count);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	for (i = 0; i < count; i++) {
@@ -334,7 +339,7 @@ static id imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
 		if (PyTuple_GET_ITEM(v, i) == NULL) {
 			Py_DECREF(v);
 			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 	}
@@ -342,7 +347,7 @@ static id imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
 
 	v = PyTuple_New(count);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	for (i = 0; i < count; i++) {
@@ -350,7 +355,7 @@ static id imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
 		if (PyTuple_GET_ITEM(v, i) == NULL) {
 			Py_DECREF(v);
 			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 	}
@@ -358,23 +363,24 @@ static id imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
 	PyTuple_SET_ITEM(arglist, 3, PyInt_FromLong(count));
 	if (PyTuple_GET_ITEM(arglist, 3) == NULL) {	
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	returnValue = PyObjC_PythonToId(result);
 	Py_DECREF(result);
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
+	PyGILState_Release(state);
 	return returnValue;
 }
 
@@ -382,6 +388,7 @@ static int
 _pyobjc_install_NSDictionary(void)
 {
 	Class classNSDictionary = objc_lookUpClass("NSDictionary");
+	if (classNSDictionary == NULL) return 0;
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSDictionary,

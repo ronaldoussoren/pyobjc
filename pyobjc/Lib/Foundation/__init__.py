@@ -30,6 +30,7 @@ if 'PYOBJCFRAMEWORKS' in os.environ:
 try:
     import autoGIL
 except ImportError:
+    # We don't have an autoGIL module on GNUstep
     pass
 else:
     # Install an observer callback in the current CFRunLoop that will

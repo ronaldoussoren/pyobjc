@@ -18,10 +18,8 @@
  *   the *_New and *_Convert functions in MacPython (pymactoolbox.h), this
  *   makes it easier to interface with that packages.
  */
-
-#include <Python.h>
 #include "pyobjc.h"
-#include "objc_support.h"
+
 
 #ifdef MACOSX
 #include <pymactoolbox.h>
@@ -139,9 +137,9 @@ int PyObjCPointerWrapper_FromPython(
 
 	r = item->depythonify(value, datum);
 	if (r == 0) {
-		return -1;
-	} else {
 		return 0;
+	} else {
+		return -1;
 	}
 }
 
@@ -251,7 +249,7 @@ PyTypeObject ZoneWrapper_Type = {
 #endif
 };
 
-#define ZoneWrapper_Check(obj) PyObject_TypeCheck((obj), &PyObjCClass_Type)
+#define ZoneWrapper_Check(obj) PyObject_TypeCheck((obj), &ZoneWrapper_Type)
 
 
 
@@ -265,6 +263,7 @@ static PyObject* NSZone_New(void* zoneptr __attribute__((__unused__)))
 		return NULL;
 	}
 	res->ptr = zoneptr;
+
 	return (PyObject*)res;
 }
 
@@ -274,6 +273,8 @@ static int NSZone_Convert(PyObject* zone, void* pZonePtr)
 		*(void**)pZonePtr = ((ZoneWrapper*)zone)->ptr;
 		return 0;
 	}
+
+	*(void**)pZonePtr = (void*)0xDEADBEEF; /* Force errors */
 	PyErr_SetString(PyExc_ValueError, "Require NSZone object");
 	return -1;
 }

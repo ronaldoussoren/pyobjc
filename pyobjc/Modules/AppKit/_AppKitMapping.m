@@ -22,6 +22,7 @@ static PyMethodDef mapping_methods[] = {
 void init_AppKitMapping(void);
 
 #include "_AppKitMapping_NSApplication.m"
+#include "_AppKitMapping_NSATSTypeSetter.m"
 #include "_AppKitMapping_NSBezierPath.m"
 #include "_AppKitMapping_NSBitmap.m"
 #include "_AppKitMapping_NSBitmapImageRep.m"
@@ -54,19 +55,20 @@ void init_AppKitMapping(void)
 
 
 	/* register other specials */
-	_pyobjc_install_NSApplication();
-	_pyobjc_install_NSBezierPath();
-	_pyobjc_install_NSBitmap();
-	_pyobjc_install_NSBitmapImageRep();
-	_pyobjc_install_NSFont();
-	_pyobjc_install_NSLayoutManager();
-	_pyobjc_install_NSMatrix();
-	_pyobjc_install_NSMovie();
-	_pyobjc_install_NSOpenGLContext();
-	_pyobjc_install_NSOpenGLPixelFormat();
-	_pyobjc_install_NSQuickDrawView();
-	_pyobjc_install_NSSimpleHorizontalTypesetter();
-	_pyobjc_install_NSView();
-	_pyobjc_install_NSWindow();
+	if (_pyobjc_install_NSApplication() < 0) return;
+	if (_pyobjc_install_NSATSTypesetter() < 0) return;
+	if (_pyobjc_install_NSBezierPath() < 0) return;
+	if (_pyobjc_install_NSBitmap() < 0) return;
+	if (_pyobjc_install_NSBitmapImageRep() < 0) return;
+	if (_pyobjc_install_NSFont() < 0) return;
+	if (_pyobjc_install_NSLayoutManager() < 0) return;
+	if (_pyobjc_install_NSMatrix() < 0) return;
+	if (_pyobjc_install_NSMovie() < 0) return;
+	if (_pyobjc_install_NSOpenGLContext() < 0) return;
+	if (_pyobjc_install_NSOpenGLPixelFormat() < 0) return;
+	if (_pyobjc_install_NSQuickDrawView() < 0) return;
+	if (_pyobjc_install_NSSimpleHorizontalTypesetter() < 0) return;
+	if (_pyobjc_install_NSView() < 0) return;
+	if (_pyobjc_install_NSWindow() < 0) return;
 
 }

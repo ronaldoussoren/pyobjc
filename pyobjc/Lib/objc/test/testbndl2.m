@@ -7,10 +7,37 @@
  *
  */
 
-#import <Foundation/Foundation.h>
-
 #include <Python.h>
 #include <pyobjc-api.h>
+#include <limits.h>
+
+#import <Foundation/Foundation.h>
+
+#if !defined(LLONG_MAX) && defined(LONG_LONG_MAX)
+
+#  define LLONG_MAX LONG_LONG_MAX
+#  define LLONG_MIN LONG_LONG_MIN
+#  define ULLONG_MAX ULONG_LONG_MAX
+
+#endif
+
+
+struct TestStruct1 {
+    int i;
+    int d; 
+    short  s[5];
+};
+
+struct TestStruct2 {
+    int i;
+    double d; 
+    short  s[5];
+};
+
+struct TestStruct3 {
+    char ch;
+    int  i;
+};
 @interface PyObjC_TestClass1 : NSObject
 {
 }
@@ -20,6 +47,8 @@
 -(void)reset;
 
 /* Test return values */
++(bool)boolClsMethod;
+-(bool)boolMethod;
 +(BOOL)BOOLClsMethod;
 -(BOOL)BOOLMethod;
 +(char)charClsMethod;
@@ -54,7 +83,14 @@
 -(NSPoint)NSPointMethod;
 +(NSRect)NSRectClsMethod;
 -(NSRect)NSRectMethod;
++(struct TestStruct1)structTestStruct1ClsMethod;
+-(struct TestStruct1)structTestStruct1Method;
++(struct TestStruct2)structTestStruct2ClsMethod;
+-(struct TestStruct2)structTestStruct2Method;
++(struct TestStruct3)structTestStruct3ClsMethod;
+-(struct TestStruct3)structTestStruct3Method;
 /* Single argument passing */
+-(id)boolArg:(bool)arg;
 -(id)BOOLArg:(BOOL)arg;
 -(id)charArg:(char)arg;
 -(id)signedshortArg:(signed short)arg;
@@ -72,7 +108,32 @@
 -(id)charPtrArg:(char*)arg;
 -(id)NSPointArg:(NSPoint)arg;
 -(id)NSRectArg:(NSRect)arg;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg;
 /* Multiple arguments */
+-(id)boolArg:(bool)arg1 andboolArg:(bool)arg2;
+-(id)boolArg:(bool)arg1 andBOOLArg:(BOOL)arg2;
+-(id)boolArg:(bool)arg1 andcharArg:(char)arg2;
+-(id)boolArg:(bool)arg1 andsignedshortArg:(signed short)arg2;
+-(id)boolArg:(bool)arg1 andsignedintArg:(signed int)arg2;
+-(id)boolArg:(bool)arg1 andsignedlongArg:(signed long)arg2;
+-(id)boolArg:(bool)arg1 andsignedlonglongArg:(signed long long)arg2;
+-(id)boolArg:(bool)arg1 andunsignedcharArg:(unsigned char)arg2;
+-(id)boolArg:(bool)arg1 andunsignedshortArg:(unsigned short)arg2;
+-(id)boolArg:(bool)arg1 andunsignedintArg:(unsigned int)arg2;
+-(id)boolArg:(bool)arg1 andunsignedlongArg:(unsigned long)arg2;
+-(id)boolArg:(bool)arg1 andunsignedlonglongArg:(unsigned long long)arg2;
+-(id)boolArg:(bool)arg1 andfloatArg:(float)arg2;
+-(id)boolArg:(bool)arg1 anddoubleArg:(double)arg2;
+-(id)boolArg:(bool)arg1 andidArg:(id)arg2;
+-(id)boolArg:(bool)arg1 andcharPtrArg:(char*)arg2;
+-(id)boolArg:(bool)arg1 andNSPointArg:(NSPoint)arg2;
+-(id)boolArg:(bool)arg1 andNSRectArg:(NSRect)arg2;
+-(id)boolArg:(bool)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)boolArg:(bool)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)boolArg:(bool)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)BOOLArg:(BOOL)arg1 andboolArg:(bool)arg2;
 -(id)BOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2;
 -(id)BOOLArg:(BOOL)arg1 andcharArg:(char)arg2;
 -(id)BOOLArg:(BOOL)arg1 andsignedshortArg:(signed short)arg2;
@@ -90,6 +151,10 @@
 -(id)BOOLArg:(BOOL)arg1 andcharPtrArg:(char*)arg2;
 -(id)BOOLArg:(BOOL)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)BOOLArg:(BOOL)arg1 andNSRectArg:(NSRect)arg2;
+-(id)BOOLArg:(BOOL)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)BOOLArg:(BOOL)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)BOOLArg:(BOOL)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)charArg:(char)arg1 andboolArg:(bool)arg2;
 -(id)charArg:(char)arg1 andBOOLArg:(BOOL)arg2;
 -(id)charArg:(char)arg1 andcharArg:(char)arg2;
 -(id)charArg:(char)arg1 andsignedshortArg:(signed short)arg2;
@@ -107,6 +172,10 @@
 -(id)charArg:(char)arg1 andcharPtrArg:(char*)arg2;
 -(id)charArg:(char)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)charArg:(char)arg1 andNSRectArg:(NSRect)arg2;
+-(id)charArg:(char)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)charArg:(char)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)charArg:(char)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)signedshortArg:(signed short)arg1 andboolArg:(bool)arg2;
 -(id)signedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2;
 -(id)signedshortArg:(signed short)arg1 andcharArg:(char)arg2;
 -(id)signedshortArg:(signed short)arg1 andsignedshortArg:(signed short)arg2;
@@ -124,6 +193,10 @@
 -(id)signedshortArg:(signed short)arg1 andcharPtrArg:(char*)arg2;
 -(id)signedshortArg:(signed short)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)signedshortArg:(signed short)arg1 andNSRectArg:(NSRect)arg2;
+-(id)signedshortArg:(signed short)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)signedshortArg:(signed short)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)signedshortArg:(signed short)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)signedintArg:(signed int)arg1 andboolArg:(bool)arg2;
 -(id)signedintArg:(signed int)arg1 andBOOLArg:(BOOL)arg2;
 -(id)signedintArg:(signed int)arg1 andcharArg:(char)arg2;
 -(id)signedintArg:(signed int)arg1 andsignedshortArg:(signed short)arg2;
@@ -141,6 +214,10 @@
 -(id)signedintArg:(signed int)arg1 andcharPtrArg:(char*)arg2;
 -(id)signedintArg:(signed int)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)signedintArg:(signed int)arg1 andNSRectArg:(NSRect)arg2;
+-(id)signedintArg:(signed int)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)signedintArg:(signed int)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)signedintArg:(signed int)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)signedlongArg:(signed long)arg1 andboolArg:(bool)arg2;
 -(id)signedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2;
 -(id)signedlongArg:(signed long)arg1 andcharArg:(char)arg2;
 -(id)signedlongArg:(signed long)arg1 andsignedshortArg:(signed short)arg2;
@@ -158,6 +235,10 @@
 -(id)signedlongArg:(signed long)arg1 andcharPtrArg:(char*)arg2;
 -(id)signedlongArg:(signed long)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)signedlongArg:(signed long)arg1 andNSRectArg:(NSRect)arg2;
+-(id)signedlongArg:(signed long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)signedlongArg:(signed long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)signedlongArg:(signed long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)signedlonglongArg:(signed long long)arg1 andboolArg:(bool)arg2;
 -(id)signedlonglongArg:(signed long long)arg1 andBOOLArg:(BOOL)arg2;
 -(id)signedlonglongArg:(signed long long)arg1 andcharArg:(char)arg2;
 -(id)signedlonglongArg:(signed long long)arg1 andsignedshortArg:(signed short)arg2;
@@ -175,6 +256,10 @@
 -(id)signedlonglongArg:(signed long long)arg1 andcharPtrArg:(char*)arg2;
 -(id)signedlonglongArg:(signed long long)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)signedlonglongArg:(signed long long)arg1 andNSRectArg:(NSRect)arg2;
+-(id)signedlonglongArg:(signed long long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)signedlonglongArg:(signed long long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)signedlonglongArg:(signed long long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)unsignedcharArg:(unsigned char)arg1 andboolArg:(bool)arg2;
 -(id)unsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2;
 -(id)unsignedcharArg:(unsigned char)arg1 andcharArg:(char)arg2;
 -(id)unsignedcharArg:(unsigned char)arg1 andsignedshortArg:(signed short)arg2;
@@ -192,6 +277,10 @@
 -(id)unsignedcharArg:(unsigned char)arg1 andcharPtrArg:(char*)arg2;
 -(id)unsignedcharArg:(unsigned char)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)unsignedcharArg:(unsigned char)arg1 andNSRectArg:(NSRect)arg2;
+-(id)unsignedcharArg:(unsigned char)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)unsignedcharArg:(unsigned char)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)unsignedcharArg:(unsigned char)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)unsignedshortArg:(unsigned short)arg1 andboolArg:(bool)arg2;
 -(id)unsignedshortArg:(unsigned short)arg1 andBOOLArg:(BOOL)arg2;
 -(id)unsignedshortArg:(unsigned short)arg1 andcharArg:(char)arg2;
 -(id)unsignedshortArg:(unsigned short)arg1 andsignedshortArg:(signed short)arg2;
@@ -209,6 +298,10 @@
 -(id)unsignedshortArg:(unsigned short)arg1 andcharPtrArg:(char*)arg2;
 -(id)unsignedshortArg:(unsigned short)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)unsignedshortArg:(unsigned short)arg1 andNSRectArg:(NSRect)arg2;
+-(id)unsignedshortArg:(unsigned short)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)unsignedshortArg:(unsigned short)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)unsignedshortArg:(unsigned short)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)unsignedintArg:(unsigned int)arg1 andboolArg:(bool)arg2;
 -(id)unsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2;
 -(id)unsignedintArg:(unsigned int)arg1 andcharArg:(char)arg2;
 -(id)unsignedintArg:(unsigned int)arg1 andsignedshortArg:(signed short)arg2;
@@ -226,6 +319,10 @@
 -(id)unsignedintArg:(unsigned int)arg1 andcharPtrArg:(char*)arg2;
 -(id)unsignedintArg:(unsigned int)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)unsignedintArg:(unsigned int)arg1 andNSRectArg:(NSRect)arg2;
+-(id)unsignedintArg:(unsigned int)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)unsignedintArg:(unsigned int)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)unsignedintArg:(unsigned int)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)unsignedlongArg:(unsigned long)arg1 andboolArg:(bool)arg2;
 -(id)unsignedlongArg:(unsigned long)arg1 andBOOLArg:(BOOL)arg2;
 -(id)unsignedlongArg:(unsigned long)arg1 andcharArg:(char)arg2;
 -(id)unsignedlongArg:(unsigned long)arg1 andsignedshortArg:(signed short)arg2;
@@ -243,6 +340,10 @@
 -(id)unsignedlongArg:(unsigned long)arg1 andcharPtrArg:(char*)arg2;
 -(id)unsignedlongArg:(unsigned long)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)unsignedlongArg:(unsigned long)arg1 andNSRectArg:(NSRect)arg2;
+-(id)unsignedlongArg:(unsigned long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)unsignedlongArg:(unsigned long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)unsignedlongArg:(unsigned long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)unsignedlonglongArg:(unsigned long long)arg1 andboolArg:(bool)arg2;
 -(id)unsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2;
 -(id)unsignedlonglongArg:(unsigned long long)arg1 andcharArg:(char)arg2;
 -(id)unsignedlonglongArg:(unsigned long long)arg1 andsignedshortArg:(signed short)arg2;
@@ -260,6 +361,10 @@
 -(id)unsignedlonglongArg:(unsigned long long)arg1 andcharPtrArg:(char*)arg2;
 -(id)unsignedlonglongArg:(unsigned long long)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)unsignedlonglongArg:(unsigned long long)arg1 andNSRectArg:(NSRect)arg2;
+-(id)unsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)unsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)unsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)floatArg:(float)arg1 andboolArg:(bool)arg2;
 -(id)floatArg:(float)arg1 andBOOLArg:(BOOL)arg2;
 -(id)floatArg:(float)arg1 andcharArg:(char)arg2;
 -(id)floatArg:(float)arg1 andsignedshortArg:(signed short)arg2;
@@ -277,6 +382,10 @@
 -(id)floatArg:(float)arg1 andcharPtrArg:(char*)arg2;
 -(id)floatArg:(float)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)floatArg:(float)arg1 andNSRectArg:(NSRect)arg2;
+-(id)floatArg:(float)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)floatArg:(float)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)floatArg:(float)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)doubleArg:(double)arg1 andboolArg:(bool)arg2;
 -(id)doubleArg:(double)arg1 andBOOLArg:(BOOL)arg2;
 -(id)doubleArg:(double)arg1 andcharArg:(char)arg2;
 -(id)doubleArg:(double)arg1 andsignedshortArg:(signed short)arg2;
@@ -294,6 +403,10 @@
 -(id)doubleArg:(double)arg1 andcharPtrArg:(char*)arg2;
 -(id)doubleArg:(double)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)doubleArg:(double)arg1 andNSRectArg:(NSRect)arg2;
+-(id)doubleArg:(double)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)doubleArg:(double)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)doubleArg:(double)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)idArg:(id)arg1 andboolArg:(bool)arg2;
 -(id)idArg:(id)arg1 andBOOLArg:(BOOL)arg2;
 -(id)idArg:(id)arg1 andcharArg:(char)arg2;
 -(id)idArg:(id)arg1 andsignedshortArg:(signed short)arg2;
@@ -311,6 +424,10 @@
 -(id)idArg:(id)arg1 andcharPtrArg:(char*)arg2;
 -(id)idArg:(id)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)idArg:(id)arg1 andNSRectArg:(NSRect)arg2;
+-(id)idArg:(id)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)idArg:(id)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)idArg:(id)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)charPtrArg:(char*)arg1 andboolArg:(bool)arg2;
 -(id)charPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2;
 -(id)charPtrArg:(char*)arg1 andcharArg:(char)arg2;
 -(id)charPtrArg:(char*)arg1 andsignedshortArg:(signed short)arg2;
@@ -328,6 +445,10 @@
 -(id)charPtrArg:(char*)arg1 andcharPtrArg:(char*)arg2;
 -(id)charPtrArg:(char*)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)charPtrArg:(char*)arg1 andNSRectArg:(NSRect)arg2;
+-(id)charPtrArg:(char*)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)charPtrArg:(char*)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)charPtrArg:(char*)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)NSPointArg:(NSPoint)arg1 andboolArg:(bool)arg2;
 -(id)NSPointArg:(NSPoint)arg1 andBOOLArg:(BOOL)arg2;
 -(id)NSPointArg:(NSPoint)arg1 andcharArg:(char)arg2;
 -(id)NSPointArg:(NSPoint)arg1 andsignedshortArg:(signed short)arg2;
@@ -345,6 +466,10 @@
 -(id)NSPointArg:(NSPoint)arg1 andcharPtrArg:(char*)arg2;
 -(id)NSPointArg:(NSPoint)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)NSPointArg:(NSPoint)arg1 andNSRectArg:(NSRect)arg2;
+-(id)NSPointArg:(NSPoint)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)NSPointArg:(NSPoint)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)NSPointArg:(NSPoint)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)NSRectArg:(NSRect)arg1 andboolArg:(bool)arg2;
 -(id)NSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2;
 -(id)NSRectArg:(NSRect)arg1 andcharArg:(char)arg2;
 -(id)NSRectArg:(NSRect)arg1 andsignedshortArg:(signed short)arg2;
@@ -362,7 +487,76 @@
 -(id)NSRectArg:(NSRect)arg1 andcharPtrArg:(char*)arg2;
 -(id)NSRectArg:(NSRect)arg1 andNSPointArg:(NSPoint)arg2;
 -(id)NSRectArg:(NSRect)arg1 andNSRectArg:(NSRect)arg2;
+-(id)NSRectArg:(NSRect)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)NSRectArg:(NSRect)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)NSRectArg:(NSRect)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andboolArg:(bool)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andBOOLArg:(BOOL)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andcharArg:(char)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andsignedshortArg:(signed short)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andsignedintArg:(signed int)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andsignedlongArg:(signed long)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andsignedlonglongArg:(signed long long)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andunsignedcharArg:(unsigned char)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andunsignedshortArg:(unsigned short)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andunsignedintArg:(unsigned int)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andunsignedlongArg:(unsigned long)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andunsignedlonglongArg:(unsigned long long)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andfloatArg:(float)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 anddoubleArg:(double)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andidArg:(id)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andcharPtrArg:(char*)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andNSPointArg:(NSPoint)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andNSRectArg:(NSRect)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andboolArg:(bool)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andBOOLArg:(BOOL)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andcharArg:(char)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andsignedshortArg:(signed short)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andsignedintArg:(signed int)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andsignedlongArg:(signed long)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andsignedlonglongArg:(signed long long)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andunsignedcharArg:(unsigned char)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andunsignedshortArg:(unsigned short)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andunsignedintArg:(unsigned int)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andunsignedlongArg:(unsigned long)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andunsignedlonglongArg:(unsigned long long)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andfloatArg:(float)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 anddoubleArg:(double)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andidArg:(id)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andcharPtrArg:(char*)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andNSPointArg:(NSPoint)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andNSRectArg:(NSRect)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andboolArg:(bool)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andBOOLArg:(BOOL)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andcharArg:(char)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andsignedshortArg:(signed short)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andsignedintArg:(signed int)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andsignedlongArg:(signed long)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andsignedlonglongArg:(signed long long)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andunsignedcharArg:(unsigned char)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andunsignedshortArg:(unsigned short)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andunsignedintArg:(unsigned int)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andunsignedlongArg:(unsigned long)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andunsignedlonglongArg:(unsigned long long)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andfloatArg:(float)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 anddoubleArg:(double)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andidArg:(id)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andcharPtrArg:(char*)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andNSPointArg:(NSPoint)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andNSRectArg:(NSRect)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2;
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2;
 /* in, out and in-out arguments */
+-(id)boolInArg:(bool*)arg;
+-(void)boolOutArg:(bool*)arg;
+-(id)boolInOutArg:(bool*)arg;
 -(id)BOOLInArg:(BOOL*)arg;
 -(void)BOOLOutArg:(BOOL*)arg;
 -(id)BOOLInOutArg:(BOOL*)arg;
@@ -414,6 +608,15 @@
 -(id)NSRectInArg:(NSRect*)arg;
 -(void)NSRectOutArg:(NSRect*)arg;
 -(id)NSRectInOutArg:(NSRect*)arg;
+-(id)structTestStruct1InArg:(struct TestStruct1*)arg;
+-(void)structTestStruct1OutArg:(struct TestStruct1*)arg;
+-(id)structTestStruct1InOutArg:(struct TestStruct1*)arg;
+-(id)structTestStruct2InArg:(struct TestStruct2*)arg;
+-(void)structTestStruct2OutArg:(struct TestStruct2*)arg;
+-(id)structTestStruct2InOutArg:(struct TestStruct2*)arg;
+-(id)structTestStruct3InArg:(struct TestStruct3*)arg;
+-(void)structTestStruct3OutArg:(struct TestStruct3*)arg;
+-(id)structTestStruct3InOutArg:(struct TestStruct3*)arg;
 
 @end // interface PyObjC_TestClass1
 
@@ -424,6 +627,8 @@
 {
 }
 
++(bool)callboolMethodOf:(PyObjC_TestClass1*)obj;
++(bool)invokeboolMethodOf:(PyObjC_TestClass1*)obj;
 +(BOOL)callBOOLMethodOf:(PyObjC_TestClass1*)obj;
 +(BOOL)invokeBOOLMethodOf:(PyObjC_TestClass1*)obj;
 +(char)callcharMethodOf:(PyObjC_TestClass1*)obj;
@@ -458,7 +663,15 @@
 +(NSPoint)invokeNSPointMethodOf:(PyObjC_TestClass1*)obj;
 +(NSRect)callNSRectMethodOf:(PyObjC_TestClass1*)obj;
 +(NSRect)invokeNSRectMethodOf:(PyObjC_TestClass1*)obj;
++(struct TestStruct1)callstructTestStruct1MethodOf:(PyObjC_TestClass1*)obj;
++(struct TestStruct1)invokestructTestStruct1MethodOf:(PyObjC_TestClass1*)obj;
++(struct TestStruct2)callstructTestStruct2MethodOf:(PyObjC_TestClass1*)obj;
++(struct TestStruct2)invokestructTestStruct2MethodOf:(PyObjC_TestClass1*)obj;
++(struct TestStruct3)callstructTestStruct3MethodOf:(PyObjC_TestClass1*)obj;
++(struct TestStruct3)invokestructTestStruct3MethodOf:(PyObjC_TestClass1*)obj;
 /* Single argument passing */
++(id)callboolArg:(bool)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg of:(PyObjC_TestClass1*)obj;
 +(id)callBOOLArg:(BOOL)arg of:(PyObjC_TestClass1*)obj;
 +(id)invokeBOOLArg:(BOOL)arg of:(PyObjC_TestClass1*)obj;
 +(id)callcharArg:(char)arg of:(PyObjC_TestClass1*)obj;
@@ -493,7 +706,57 @@
 +(id)invokeNSPointArg:(NSPoint)arg of:(PyObjC_TestClass1*)obj;
 +(id)callNSRectArg:(NSRect)arg of:(PyObjC_TestClass1*)obj;
 +(id)invokeNSRectArg:(NSRect)arg of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg of:(PyObjC_TestClass1*)obj;
 /* Multiple arguments */
++(id)callboolArg:(bool)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callboolArg:(bool)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeboolArg:(bool)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callBOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeBOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callBOOLArg:(BOOL)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -528,6 +791,14 @@
 +(id)invokeBOOLArg:(BOOL)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callBOOLArg:(BOOL)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeBOOLArg:(BOOL)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callcharArg:(char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokecharArg:(char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callcharArg:(char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -562,6 +833,14 @@
 +(id)invokecharArg:(char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callcharArg:(char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokecharArg:(char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedshortArg:(signed short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -596,6 +875,14 @@
 +(id)invokesignedshortArg:(signed short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedshortArg:(signed short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedshortArg:(signed short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedintArg:(signed int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedintArg:(signed int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedintArg:(signed int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -630,6 +917,14 @@
 +(id)invokesignedintArg:(signed int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedintArg:(signed int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedintArg:(signed int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedlongArg:(signed long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -664,6 +959,14 @@
 +(id)invokesignedlongArg:(signed long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedlongArg:(signed long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedlongArg:(signed long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedlonglongArg:(signed long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedlonglongArg:(signed long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedlonglongArg:(signed long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -698,6 +1001,14 @@
 +(id)invokesignedlonglongArg:(signed long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callsignedlonglongArg:(signed long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokesignedlonglongArg:(signed long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedcharArg:(unsigned char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -732,6 +1043,14 @@
 +(id)invokeunsignedcharArg:(unsigned char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedcharArg:(unsigned char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedcharArg:(unsigned char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedshortArg:(unsigned short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedshortArg:(unsigned short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedshortArg:(unsigned short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -766,6 +1085,14 @@
 +(id)invokeunsignedshortArg:(unsigned short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedshortArg:(unsigned short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedshortArg:(unsigned short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedintArg:(unsigned int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -800,6 +1127,14 @@
 +(id)invokeunsignedintArg:(unsigned int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedintArg:(unsigned int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedintArg:(unsigned int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedlongArg:(unsigned long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedlongArg:(unsigned long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedlongArg:(unsigned long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -834,6 +1169,14 @@
 +(id)invokeunsignedlongArg:(unsigned long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedlongArg:(unsigned long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedlongArg:(unsigned long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedlonglongArg:(unsigned long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -868,6 +1211,14 @@
 +(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callunsignedlonglongArg:(unsigned long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callfloatArg:(float)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokefloatArg:(float)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callfloatArg:(float)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -902,6 +1253,14 @@
 +(id)invokefloatArg:(float)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callfloatArg:(float)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokefloatArg:(float)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)calldoubleArg:(double)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokedoubleArg:(double)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)calldoubleArg:(double)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -936,6 +1295,14 @@
 +(id)invokedoubleArg:(double)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)calldoubleArg:(double)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokedoubleArg:(double)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callidArg:(id)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeidArg:(id)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callidArg:(id)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -970,6 +1337,14 @@
 +(id)invokeidArg:(id)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callidArg:(id)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeidArg:(id)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callcharPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokecharPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callcharPtrArg:(char*)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -1004,6 +1379,14 @@
 +(id)invokecharPtrArg:(char*)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callcharPtrArg:(char*)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokecharPtrArg:(char*)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callNSPointArg:(NSPoint)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeNSPointArg:(NSPoint)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callNSPointArg:(NSPoint)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -1038,6 +1421,14 @@
 +(id)invokeNSPointArg:(NSPoint)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callNSPointArg:(NSPoint)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeNSPointArg:(NSPoint)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callNSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeNSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callNSRectArg:(NSRect)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
@@ -1072,7 +1463,145 @@
 +(id)invokeNSRectArg:(NSRect)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)callNSRectArg:(NSRect)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 +(id)invokeNSRectArg:(NSRect)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj;
 /* in, out and in-out arguments */
++(id)invokeboolInArg:(bool*)arg of:(PyObjC_TestClass1*)obj;
++(id)callboolInArg:(bool*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokeboolOutArg:(bool*)arg of:(PyObjC_TestClass1*)obj;
++(void)callboolOutArg:(bool*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeboolInOutArg:(bool*)arg of:(PyObjC_TestClass1*)obj;
++(id)callboolInOutArg:(bool*)arg of:(PyObjC_TestClass1*)obj;
 +(id)invokeBOOLInArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
 +(id)callBOOLInArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
 +(void)invokeBOOLOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
@@ -1175,11 +1704,34 @@
 +(void)callNSRectOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
 +(id)invokeNSRectInOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
 +(id)callNSRectInOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1InArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1InArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokestructTestStruct1OutArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj;
++(void)callstructTestStruct1OutArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct1InOutArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct1InOutArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2InArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2InArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokestructTestStruct2OutArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj;
++(void)callstructTestStruct2OutArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct2InOutArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct2InOutArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3InArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3InArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokestructTestStruct3OutArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj;
++(void)callstructTestStruct3OutArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokestructTestStruct3InOutArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj;
++(id)callstructTestStruct3InOutArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj;
 
 @end // interface PyObjC_TestClass2
 
 /* Some global variables */
 static int g_idx = 0;
+static bool g_bool_values[] = {
+	YES,
+	NO
+};
+
 static BOOL g_BOOL_values[] = {
 	YES,
 	NO
@@ -1284,6 +1836,21 @@ static NSRect g_NSRect_values[] = {
 	{{7, 8}, {9, 10}}
 };
 
+static struct TestStruct1 g_structTestStruct1_values[] = {
+	{1, 2, {1, 2, 3, 4, 5}},
+	{9, 8, {-1, -2, -3, -4, -5}}
+};
+
+static struct TestStruct2 g_structTestStruct2_values[] = {
+	{1, 2, {1, 2, 3, 4, 5}},
+	{9, 8, {-1, -2, -3, -4, -5}}
+};
+
+static struct TestStruct3 g_structTestStruct3_values[] = {
+	{1, 2},
+	{2, 4}
+};
+
 static id arg2id(const char* argtype, void* argptr)
 {
 	id res;
@@ -1305,6 +1872,18 @@ static id arg2id(const char* argtype, void* argptr)
 -(void)reset;
 {
 	g_idx = 0;
+}
+
++(bool)boolClsMethod
+{
+	if (g_idx > 2) g_idx = 0;
+	return g_bool_values[g_idx++];
+}
+
+-(bool)boolMethod;
+{
+	if (g_idx > 2) g_idx = 0;
+	return g_bool_values[g_idx++];
 }
 
 +(BOOL)BOOLClsMethod
@@ -1511,7 +2090,48 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_NSRect_values[g_idx++];
 }
 
++(struct TestStruct1)structTestStruct1ClsMethod
+{
+	if (g_idx > 2) g_idx = 0;
+	return g_structTestStruct1_values[g_idx++];
+}
+
+-(struct TestStruct1)structTestStruct1Method;
+{
+	if (g_idx > 2) g_idx = 0;
+	return g_structTestStruct1_values[g_idx++];
+}
+
++(struct TestStruct2)structTestStruct2ClsMethod
+{
+	if (g_idx > 2) g_idx = 0;
+	return g_structTestStruct2_values[g_idx++];
+}
+
+-(struct TestStruct2)structTestStruct2Method;
+{
+	if (g_idx > 2) g_idx = 0;
+	return g_structTestStruct2_values[g_idx++];
+}
+
++(struct TestStruct3)structTestStruct3ClsMethod
+{
+	if (g_idx > 2) g_idx = 0;
+	return g_structTestStruct3_values[g_idx++];
+}
+
+-(struct TestStruct3)structTestStruct3Method;
+{
+	if (g_idx > 2) g_idx = 0;
+	return g_structTestStruct3_values[g_idx++];
+}
+
 /* Single argument passing */
+-(id)boolArg:(bool)arg
+{
+	return arg2id(@encode(bool), &arg);
+}
+
 -(id)BOOLArg:(BOOL)arg
 {
 	return arg2id(@encode(BOOL), &arg);
@@ -1595,6 +2215,219 @@ static id arg2id(const char* argtype, void* argptr)
 -(id)NSRectArg:(NSRect)arg
 {
 	return arg2id(@encode(NSRect), &arg);
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg
+{
+	return arg2id(@encode(struct TestStruct1), &arg);
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg
+{
+	return arg2id(@encode(struct TestStruct2), &arg);
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg
+{
+	return arg2id(@encode(struct TestStruct3), &arg);
+}
+
+-(id)boolArg:(bool)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andBOOLArg:(BOOL)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(BOOL), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andcharArg:(char)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(char), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andsignedshortArg:(signed short)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(signed short), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andsignedintArg:(signed int)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(signed int), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andsignedlongArg:(signed long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(signed long), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andsignedlonglongArg:(signed long long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(signed long long), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andunsignedcharArg:(unsigned char)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(unsigned char), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andunsignedshortArg:(unsigned short)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(unsigned short), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andunsignedintArg:(unsigned int)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(unsigned int), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andunsignedlongArg:(unsigned long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(unsigned long), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andunsignedlonglongArg:(unsigned long long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(unsigned long long), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andfloatArg:(float)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(float), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 anddoubleArg:(double)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(double), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andidArg:(id)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(id), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andcharPtrArg:(char*)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(char*), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andNSPointArg:(NSPoint)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(NSPoint), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andNSRectArg:(NSRect)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(NSRect), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)boolArg:(bool)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(bool), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)BOOLArg:(BOOL)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(BOOL), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
 }
 
 -(id)BOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2
@@ -1747,6 +2580,42 @@ static id arg2id(const char* argtype, void* argptr)
 	res = [NSMutableArray array];
 	[res addObject:arg2id(@encode(BOOL), &arg1)];
 	[res addObject:arg2id(@encode(NSRect), &arg2)];
+	return res;
+}
+
+-(id)BOOLArg:(BOOL)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(BOOL), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)BOOLArg:(BOOL)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(BOOL), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)BOOLArg:(BOOL)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(BOOL), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)charArg:(char)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(char), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
 	return res;
 }
 
@@ -1903,6 +2772,42 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
+-(id)charArg:(char)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(char), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)charArg:(char)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(char), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)charArg:(char)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(char), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)signedshortArg:(signed short)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed short), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
+}
+
 -(id)signedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2
 {
 	NSMutableArray* res;
@@ -2053,6 +2958,42 @@ static id arg2id(const char* argtype, void* argptr)
 	res = [NSMutableArray array];
 	[res addObject:arg2id(@encode(signed short), &arg1)];
 	[res addObject:arg2id(@encode(NSRect), &arg2)];
+	return res;
+}
+
+-(id)signedshortArg:(signed short)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed short), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)signedshortArg:(signed short)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed short), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)signedshortArg:(signed short)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed short), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)signedintArg:(signed int)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed int), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
 	return res;
 }
 
@@ -2209,6 +3150,42 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
+-(id)signedintArg:(signed int)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed int), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)signedintArg:(signed int)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed int), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)signedintArg:(signed int)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed int), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)signedlongArg:(signed long)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed long), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
+}
+
 -(id)signedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2
 {
 	NSMutableArray* res;
@@ -2359,6 +3336,42 @@ static id arg2id(const char* argtype, void* argptr)
 	res = [NSMutableArray array];
 	[res addObject:arg2id(@encode(signed long), &arg1)];
 	[res addObject:arg2id(@encode(NSRect), &arg2)];
+	return res;
+}
+
+-(id)signedlongArg:(signed long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed long), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)signedlongArg:(signed long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed long), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)signedlongArg:(signed long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed long), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)signedlonglongArg:(signed long long)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed long long), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
 	return res;
 }
 
@@ -2515,6 +3528,42 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
+-(id)signedlonglongArg:(signed long long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed long long), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)signedlonglongArg:(signed long long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed long long), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)signedlonglongArg:(signed long long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(signed long long), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)unsignedcharArg:(unsigned char)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned char), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
+}
+
 -(id)unsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2
 {
 	NSMutableArray* res;
@@ -2665,6 +3714,42 @@ static id arg2id(const char* argtype, void* argptr)
 	res = [NSMutableArray array];
 	[res addObject:arg2id(@encode(unsigned char), &arg1)];
 	[res addObject:arg2id(@encode(NSRect), &arg2)];
+	return res;
+}
+
+-(id)unsignedcharArg:(unsigned char)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned char), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)unsignedcharArg:(unsigned char)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned char), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)unsignedcharArg:(unsigned char)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned char), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)unsignedshortArg:(unsigned short)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned short), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
 	return res;
 }
 
@@ -2821,6 +3906,42 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
+-(id)unsignedshortArg:(unsigned short)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned short), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)unsignedshortArg:(unsigned short)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned short), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)unsignedshortArg:(unsigned short)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned short), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)unsignedintArg:(unsigned int)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned int), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
+}
+
 -(id)unsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2
 {
 	NSMutableArray* res;
@@ -2971,6 +4092,42 @@ static id arg2id(const char* argtype, void* argptr)
 	res = [NSMutableArray array];
 	[res addObject:arg2id(@encode(unsigned int), &arg1)];
 	[res addObject:arg2id(@encode(NSRect), &arg2)];
+	return res;
+}
+
+-(id)unsignedintArg:(unsigned int)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned int), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)unsignedintArg:(unsigned int)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned int), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)unsignedintArg:(unsigned int)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned int), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)unsignedlongArg:(unsigned long)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned long), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
 	return res;
 }
 
@@ -3127,6 +4284,42 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
+-(id)unsignedlongArg:(unsigned long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned long), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)unsignedlongArg:(unsigned long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned long), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)unsignedlongArg:(unsigned long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned long), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)unsignedlonglongArg:(unsigned long long)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned long long), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
+}
+
 -(id)unsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2
 {
 	NSMutableArray* res;
@@ -3277,6 +4470,42 @@ static id arg2id(const char* argtype, void* argptr)
 	res = [NSMutableArray array];
 	[res addObject:arg2id(@encode(unsigned long long), &arg1)];
 	[res addObject:arg2id(@encode(NSRect), &arg2)];
+	return res;
+}
+
+-(id)unsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned long long), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)unsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned long long), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)unsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(unsigned long long), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)floatArg:(float)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(float), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
 	return res;
 }
 
@@ -3433,6 +4662,42 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
+-(id)floatArg:(float)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(float), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)floatArg:(float)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(float), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)floatArg:(float)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(float), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)doubleArg:(double)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(double), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
+}
+
 -(id)doubleArg:(double)arg1 andBOOLArg:(BOOL)arg2
 {
 	NSMutableArray* res;
@@ -3583,6 +4848,42 @@ static id arg2id(const char* argtype, void* argptr)
 	res = [NSMutableArray array];
 	[res addObject:arg2id(@encode(double), &arg1)];
 	[res addObject:arg2id(@encode(NSRect), &arg2)];
+	return res;
+}
+
+-(id)doubleArg:(double)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(double), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)doubleArg:(double)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(double), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)doubleArg:(double)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(double), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)idArg:(id)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(id), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
 	return res;
 }
 
@@ -3739,6 +5040,42 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
+-(id)idArg:(id)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(id), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)idArg:(id)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(id), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)idArg:(id)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(id), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)charPtrArg:(char*)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(char*), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
+}
+
 -(id)charPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2
 {
 	NSMutableArray* res;
@@ -3889,6 +5226,42 @@ static id arg2id(const char* argtype, void* argptr)
 	res = [NSMutableArray array];
 	[res addObject:arg2id(@encode(char*), &arg1)];
 	[res addObject:arg2id(@encode(NSRect), &arg2)];
+	return res;
+}
+
+-(id)charPtrArg:(char*)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(char*), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)charPtrArg:(char*)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(char*), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)charPtrArg:(char*)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(char*), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)NSPointArg:(NSPoint)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(NSPoint), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
 	return res;
 }
 
@@ -4045,6 +5418,42 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
+-(id)NSPointArg:(NSPoint)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(NSPoint), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)NSPointArg:(NSPoint)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(NSPoint), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)NSPointArg:(NSPoint)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(NSPoint), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)NSRectArg:(NSRect)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(NSRect), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
+}
+
 -(id)NSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2
 {
 	NSMutableArray* res;
@@ -4198,7 +5607,620 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
+-(id)NSRectArg:(NSRect)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(NSRect), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)NSRectArg:(NSRect)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(NSRect), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)NSRectArg:(NSRect)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(NSRect), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andBOOLArg:(BOOL)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(BOOL), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andcharArg:(char)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(char), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andsignedshortArg:(signed short)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(signed short), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andsignedintArg:(signed int)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(signed int), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andsignedlongArg:(signed long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(signed long), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andsignedlonglongArg:(signed long long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(signed long long), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andunsignedcharArg:(unsigned char)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(unsigned char), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andunsignedshortArg:(unsigned short)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(unsigned short), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andunsignedintArg:(unsigned int)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(unsigned int), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andunsignedlongArg:(unsigned long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(unsigned long), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andunsignedlonglongArg:(unsigned long long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(unsigned long long), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andfloatArg:(float)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(float), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 anddoubleArg:(double)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(double), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andidArg:(id)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(id), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andcharPtrArg:(char*)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(char*), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andNSPointArg:(NSPoint)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(NSPoint), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andNSRectArg:(NSRect)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(NSRect), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andBOOLArg:(BOOL)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(BOOL), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andcharArg:(char)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(char), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andsignedshortArg:(signed short)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(signed short), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andsignedintArg:(signed int)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(signed int), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andsignedlongArg:(signed long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(signed long), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andsignedlonglongArg:(signed long long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(signed long long), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andunsignedcharArg:(unsigned char)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(unsigned char), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andunsignedshortArg:(unsigned short)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(unsigned short), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andunsignedintArg:(unsigned int)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(unsigned int), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andunsignedlongArg:(unsigned long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(unsigned long), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andunsignedlonglongArg:(unsigned long long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(unsigned long long), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andfloatArg:(float)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(float), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 anddoubleArg:(double)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(double), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andidArg:(id)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(id), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andcharPtrArg:(char*)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(char*), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andNSPointArg:(NSPoint)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(NSPoint), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andNSRectArg:(NSRect)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(NSRect), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andboolArg:(bool)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(bool), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andBOOLArg:(BOOL)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(BOOL), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andcharArg:(char)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(char), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andsignedshortArg:(signed short)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(signed short), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andsignedintArg:(signed int)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(signed int), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andsignedlongArg:(signed long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(signed long), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andsignedlonglongArg:(signed long long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(signed long long), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andunsignedcharArg:(unsigned char)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(unsigned char), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andunsignedshortArg:(unsigned short)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(unsigned short), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andunsignedintArg:(unsigned int)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(unsigned int), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andunsignedlongArg:(unsigned long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(unsigned long), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andunsignedlonglongArg:(unsigned long long)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(unsigned long long), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andfloatArg:(float)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(float), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 anddoubleArg:(double)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(double), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andidArg:(id)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(id), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andcharPtrArg:(char*)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(char*), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andNSPointArg:(NSPoint)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(NSPoint), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andNSRectArg:(NSRect)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(NSRect), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct1), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct2), &arg2)];
+	return res;
+}
+
+-(id)structTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2
+{
+	NSMutableArray* res;
+	res = [NSMutableArray array];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg1)];
+	[res addObject:arg2id(@encode(struct TestStruct3), &arg2)];
+	return res;
+}
+
 /* in, out and in-out arguments */
+-(id)boolInArg:(bool*)arg
+{
+	return arg2id(@encode(bool), arg);
+}
+
+-(void)boolOutArg:(bool*)arg;
+{
+	if (g_idx > 2) g_idx = 0;
+	*arg = g_bool_values[g_idx++];
+}
+
+-(id)boolInOutArg:(bool*)arg;
+{
+	id res = arg2id(@encode(bool), arg);
+	if (g_idx > 2) g_idx = 0;
+	*arg = g_bool_values[g_idx++];
+	return res;
+}
+
 -(id)BOOLInArg:(BOOL*)arg
 {
 	return arg2id(@encode(BOOL), arg);
@@ -4522,6 +6544,63 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
+-(id)structTestStruct1InArg:(struct TestStruct1*)arg
+{
+	return arg2id(@encode(struct TestStruct1), arg);
+}
+
+-(void)structTestStruct1OutArg:(struct TestStruct1*)arg;
+{
+	if (g_idx > 2) g_idx = 0;
+	*arg = g_structTestStruct1_values[g_idx++];
+}
+
+-(id)structTestStruct1InOutArg:(struct TestStruct1*)arg;
+{
+	id res = arg2id(@encode(struct TestStruct1), arg);
+	if (g_idx > 2) g_idx = 0;
+	*arg = g_structTestStruct1_values[g_idx++];
+	return res;
+}
+
+-(id)structTestStruct2InArg:(struct TestStruct2*)arg
+{
+	return arg2id(@encode(struct TestStruct2), arg);
+}
+
+-(void)structTestStruct2OutArg:(struct TestStruct2*)arg;
+{
+	if (g_idx > 2) g_idx = 0;
+	*arg = g_structTestStruct2_values[g_idx++];
+}
+
+-(id)structTestStruct2InOutArg:(struct TestStruct2*)arg;
+{
+	id res = arg2id(@encode(struct TestStruct2), arg);
+	if (g_idx > 2) g_idx = 0;
+	*arg = g_structTestStruct2_values[g_idx++];
+	return res;
+}
+
+-(id)structTestStruct3InArg:(struct TestStruct3*)arg
+{
+	return arg2id(@encode(struct TestStruct3), arg);
+}
+
+-(void)structTestStruct3OutArg:(struct TestStruct3*)arg;
+{
+	if (g_idx > 2) g_idx = 0;
+	*arg = g_structTestStruct3_values[g_idx++];
+}
+
+-(id)structTestStruct3InOutArg:(struct TestStruct3*)arg;
+{
+	id res = arg2id(@encode(struct TestStruct3), arg);
+	if (g_idx > 2) g_idx = 0;
+	*arg = g_structTestStruct3_values[g_idx++];
+	return res;
+}
+
 
 @end // implementation PyObjC_TestClass1
 
@@ -4534,7 +6613,7 @@ static id arg2id(const char* argtype, void* argptr)
 	{\
 		id sign = [target methodSignatureForSelector:selector];\
 		if (sign == NULL) {\
-			PyErr_SetString(PyExc_AttributeError, SELNAME(selector));\
+			PyErr_SetString(PyExc_AttributeError, PyObjCRT_SELName(selector));\
 			PyObjCErr_ToObjC();\
 		}\
 		inv = [NSInvocation invocationWithMethodSignature:\
@@ -4543,6 +6622,22 @@ static id arg2id(const char* argtype, void* argptr)
 		[inv setSelector:selector];\
 	}
 
+
++(bool)callboolMethodOf:(PyObjC_TestClass1*)obj
+{
+	return [obj boolMethod];
+}
+
++(bool)invokeboolMethodOf:(PyObjC_TestClass1*)obj
+{
+	bool res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolMethod))
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
 
 +(BOOL)callBOOLMethodOf:(PyObjC_TestClass1*)obj
 {
@@ -4811,6 +6906,71 @@ static id arg2id(const char* argtype, void* argptr)
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, obj, @selector(NSRectMethod))
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(struct TestStruct1)callstructTestStruct1MethodOf:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Method];
+}
+
++(struct TestStruct1)invokestructTestStruct1MethodOf:(PyObjC_TestClass1*)obj
+{
+	struct TestStruct1 res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Method))
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(struct TestStruct2)callstructTestStruct2MethodOf:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Method];
+}
+
++(struct TestStruct2)invokestructTestStruct2MethodOf:(PyObjC_TestClass1*)obj
+{
+	struct TestStruct2 res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Method))
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(struct TestStruct3)callstructTestStruct3MethodOf:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Method];
+}
+
++(struct TestStruct3)invokestructTestStruct3MethodOf:(PyObjC_TestClass1*)obj
+{
+	struct TestStruct3 res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Method))
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg];
+}
+
++(id)invokeboolArg:(bool)arg of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:))
+	[inv setArgument:&arg atIndex:2];
 	[obj forwardInvocation:inv];
 	[inv getReturnValue:&res];
 	return res;
@@ -5100,6 +7260,453 @@ static id arg2id(const char* argtype, void* argptr)
 
 	SETUP_INVOCATION(inv, obj, @selector(NSRectArg:))
 	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andboolArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andBOOLArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andBOOLArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andcharArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andcharArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andsignedshortArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andsignedshortArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andsignedintArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andsignedintArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andsignedlongArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andsignedlongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andsignedlonglongArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andsignedlonglongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andunsignedcharArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andunsignedcharArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andunsignedshortArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andunsignedshortArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andunsignedintArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andunsignedintArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andunsignedlongArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andunsignedlongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andunsignedlonglongArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andunsignedlonglongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andfloatArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andfloatArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 anddoubleArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:anddoubleArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andidArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andidArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andcharPtrArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andcharPtrArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andNSPointArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andNSPointArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andNSRectArg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andNSRectArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolArg:(bool)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokeboolArg:(bool)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callBOOLArg:(BOOL)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj BOOLArg:arg1 andboolArg:arg2];
+}
+
++(id)invokeBOOLArg:(BOOL)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
 	[obj forwardInvocation:inv];
 	[inv getReturnValue:&res];
 	return res;
@@ -5404,6 +8011,78 @@ static id arg2id(const char* argtype, void* argptr)
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andNSRectArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callBOOLArg:(BOOL)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj BOOLArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokeBOOLArg:(BOOL)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callBOOLArg:(BOOL)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj BOOLArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokeBOOLArg:(BOOL)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callBOOLArg:(BOOL)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj BOOLArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokeBOOLArg:(BOOL)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callcharArg:(char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj charArg:arg1 andboolArg:arg2];
+}
+
++(id)invokecharArg:(char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(charArg:andboolArg:))
 	[inv setArgument:&arg1 atIndex:2];
 	[inv setArgument:&arg2 atIndex:3];
 	[obj forwardInvocation:inv];
@@ -5717,6 +8396,78 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
++(id)callcharArg:(char)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj charArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokecharArg:(char)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(charArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callcharArg:(char)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj charArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokecharArg:(char)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(charArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callcharArg:(char)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj charArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokecharArg:(char)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(charArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedshortArg:(signed short)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedshortArg:arg1 andboolArg:arg2];
+}
+
++(id)invokesignedshortArg:(signed short)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
 +(id)callsignedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andBOOLArg:arg2];
@@ -6016,6 +8767,78 @@ static id arg2id(const char* argtype, void* argptr)
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andNSRectArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedshortArg:(signed short)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedshortArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokesignedshortArg:(signed short)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedshortArg:(signed short)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedshortArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokesignedshortArg:(signed short)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedshortArg:(signed short)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedshortArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokesignedshortArg:(signed short)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedintArg:(signed int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedintArg:arg1 andboolArg:arg2];
+}
+
++(id)invokesignedintArg:(signed int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedintArg:andboolArg:))
 	[inv setArgument:&arg1 atIndex:2];
 	[inv setArgument:&arg2 atIndex:3];
 	[obj forwardInvocation:inv];
@@ -6329,6 +9152,78 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
++(id)callsignedintArg:(signed int)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedintArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokesignedintArg:(signed int)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedintArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedintArg:(signed int)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedintArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokesignedintArg:(signed int)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedintArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedintArg:(signed int)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedintArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokesignedintArg:(signed int)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedintArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedlongArg:(signed long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedlongArg:arg1 andboolArg:arg2];
+}
+
++(id)invokesignedlongArg:(signed long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
 +(id)callsignedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andBOOLArg:arg2];
@@ -6628,6 +9523,78 @@ static id arg2id(const char* argtype, void* argptr)
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andNSRectArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedlongArg:(signed long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedlongArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokesignedlongArg:(signed long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedlongArg:(signed long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedlongArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokesignedlongArg:(signed long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedlongArg:(signed long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedlongArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokesignedlongArg:(signed long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedlonglongArg:(signed long long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedlonglongArg:arg1 andboolArg:arg2];
+}
+
++(id)invokesignedlonglongArg:(signed long long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andboolArg:))
 	[inv setArgument:&arg1 atIndex:2];
 	[inv setArgument:&arg2 atIndex:3];
 	[obj forwardInvocation:inv];
@@ -6941,6 +9908,78 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
++(id)callsignedlonglongArg:(signed long long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedlonglongArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokesignedlonglongArg:(signed long long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedlonglongArg:(signed long long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedlonglongArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokesignedlonglongArg:(signed long long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callsignedlonglongArg:(signed long long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj signedlonglongArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokesignedlonglongArg:(signed long long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedcharArg:(unsigned char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedcharArg:arg1 andboolArg:arg2];
+}
+
++(id)invokeunsignedcharArg:(unsigned char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
 +(id)callunsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andBOOLArg:arg2];
@@ -7240,6 +10279,78 @@ static id arg2id(const char* argtype, void* argptr)
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andNSRectArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedcharArg:(unsigned char)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedcharArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokeunsignedcharArg:(unsigned char)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedcharArg:(unsigned char)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedcharArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokeunsignedcharArg:(unsigned char)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedcharArg:(unsigned char)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedcharArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokeunsignedcharArg:(unsigned char)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedshortArg:(unsigned short)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedshortArg:arg1 andboolArg:arg2];
+}
+
++(id)invokeunsignedshortArg:(unsigned short)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andboolArg:))
 	[inv setArgument:&arg1 atIndex:2];
 	[inv setArgument:&arg2 atIndex:3];
 	[obj forwardInvocation:inv];
@@ -7553,6 +10664,78 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
++(id)callunsignedshortArg:(unsigned short)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedshortArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokeunsignedshortArg:(unsigned short)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedshortArg:(unsigned short)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedshortArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokeunsignedshortArg:(unsigned short)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedshortArg:(unsigned short)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedshortArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokeunsignedshortArg:(unsigned short)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedintArg:(unsigned int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedintArg:arg1 andboolArg:arg2];
+}
+
++(id)invokeunsignedintArg:(unsigned int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
 +(id)callunsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andBOOLArg:arg2];
@@ -7852,6 +11035,78 @@ static id arg2id(const char* argtype, void* argptr)
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andNSRectArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedintArg:(unsigned int)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedintArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokeunsignedintArg:(unsigned int)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedintArg:(unsigned int)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedintArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokeunsignedintArg:(unsigned int)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedintArg:(unsigned int)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedintArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokeunsignedintArg:(unsigned int)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedlongArg:(unsigned long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedlongArg:arg1 andboolArg:arg2];
+}
+
++(id)invokeunsignedlongArg:(unsigned long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andboolArg:))
 	[inv setArgument:&arg1 atIndex:2];
 	[inv setArgument:&arg2 atIndex:3];
 	[obj forwardInvocation:inv];
@@ -8165,6 +11420,78 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
++(id)callunsignedlongArg:(unsigned long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedlongArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokeunsignedlongArg:(unsigned long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedlongArg:(unsigned long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedlongArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokeunsignedlongArg:(unsigned long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedlongArg:(unsigned long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedlongArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokeunsignedlongArg:(unsigned long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedlonglongArg:arg1 andboolArg:arg2];
+}
+
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
 +(id)callunsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andBOOLArg:arg2];
@@ -8464,6 +11791,78 @@ static id arg2id(const char* argtype, void* argptr)
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andNSRectArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedlonglongArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedlonglongArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj unsignedlonglongArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callfloatArg:(float)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj floatArg:arg1 andboolArg:arg2];
+}
+
++(id)invokefloatArg:(float)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(floatArg:andboolArg:))
 	[inv setArgument:&arg1 atIndex:2];
 	[inv setArgument:&arg2 atIndex:3];
 	[obj forwardInvocation:inv];
@@ -8777,6 +12176,78 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
++(id)callfloatArg:(float)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj floatArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokefloatArg:(float)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(floatArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callfloatArg:(float)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj floatArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokefloatArg:(float)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(floatArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callfloatArg:(float)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj floatArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokefloatArg:(float)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(floatArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)calldoubleArg:(double)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj doubleArg:arg1 andboolArg:arg2];
+}
+
++(id)invokedoubleArg:(double)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(doubleArg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
 +(id)calldoubleArg:(double)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andBOOLArg:arg2];
@@ -9076,6 +12547,78 @@ static id arg2id(const char* argtype, void* argptr)
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, obj, @selector(doubleArg:andNSRectArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)calldoubleArg:(double)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj doubleArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokedoubleArg:(double)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(doubleArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)calldoubleArg:(double)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj doubleArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokedoubleArg:(double)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(doubleArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)calldoubleArg:(double)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj doubleArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokedoubleArg:(double)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(doubleArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callidArg:(id)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj idArg:arg1 andboolArg:arg2];
+}
+
++(id)invokeidArg:(id)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(idArg:andboolArg:))
 	[inv setArgument:&arg1 atIndex:2];
 	[inv setArgument:&arg2 atIndex:3];
 	[obj forwardInvocation:inv];
@@ -9389,6 +12932,78 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
++(id)callidArg:(id)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj idArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokeidArg:(id)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(idArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callidArg:(id)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj idArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokeidArg:(id)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(idArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callidArg:(id)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj idArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokeidArg:(id)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(idArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callcharPtrArg:(char*)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj charPtrArg:arg1 andboolArg:arg2];
+}
+
++(id)invokecharPtrArg:(char*)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
 +(id)callcharPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andBOOLArg:arg2];
@@ -9688,6 +13303,78 @@ static id arg2id(const char* argtype, void* argptr)
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andNSRectArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callcharPtrArg:(char*)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj charPtrArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokecharPtrArg:(char*)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callcharPtrArg:(char*)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj charPtrArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokecharPtrArg:(char*)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callcharPtrArg:(char*)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj charPtrArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokecharPtrArg:(char*)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callNSPointArg:(NSPoint)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj NSPointArg:arg1 andboolArg:arg2];
+}
+
++(id)invokeNSPointArg:(NSPoint)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andboolArg:))
 	[inv setArgument:&arg1 atIndex:2];
 	[inv setArgument:&arg2 atIndex:3];
 	[obj forwardInvocation:inv];
@@ -10001,6 +13688,78 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
++(id)callNSPointArg:(NSPoint)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj NSPointArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokeNSPointArg:(NSPoint)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callNSPointArg:(NSPoint)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj NSPointArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokeNSPointArg:(NSPoint)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callNSPointArg:(NSPoint)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj NSPointArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokeNSPointArg:(NSPoint)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callNSRectArg:(NSRect)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj NSRectArg:arg1 andboolArg:arg2];
+}
+
++(id)invokeNSRectArg:(NSRect)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
 +(id)callNSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andBOOLArg:arg2];
@@ -10302,6 +14061,1242 @@ static id arg2id(const char* argtype, void* argptr)
 	SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andNSRectArg:))
 	[inv setArgument:&arg1 atIndex:2];
 	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callNSRectArg:(NSRect)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj NSRectArg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokeNSRectArg:(NSRect)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callNSRectArg:(NSRect)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj NSRectArg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokeNSRectArg:(NSRect)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callNSRectArg:(NSRect)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj NSRectArg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokeNSRectArg:(NSRect)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andboolArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andBOOLArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andBOOLArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andcharArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andcharArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andsignedshortArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andsignedshortArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andsignedintArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andsignedintArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andsignedlongArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andsignedlongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andsignedlonglongArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andsignedlonglongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andunsignedcharArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andunsignedcharArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andunsignedshortArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andunsignedshortArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andunsignedintArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andunsignedintArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andunsignedlongArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andunsignedlongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andunsignedlonglongArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andunsignedlonglongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andfloatArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andfloatArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 anddoubleArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:anddoubleArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andidArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andidArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andcharPtrArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andcharPtrArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andNSPointArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andNSPointArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andNSRectArg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andNSRectArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1Arg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokestructTestStruct1Arg:(struct TestStruct1)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andboolArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andBOOLArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andBOOLArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andcharArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andcharArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andsignedshortArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andsignedshortArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andsignedintArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andsignedintArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andsignedlongArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andsignedlongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andsignedlonglongArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andsignedlonglongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andunsignedcharArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andunsignedcharArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andunsignedshortArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andunsignedshortArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andunsignedintArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andunsignedintArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andunsignedlongArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andunsignedlongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andunsignedlonglongArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andunsignedlonglongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andfloatArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andfloatArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 anddoubleArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:anddoubleArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andidArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andidArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andcharPtrArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andcharPtrArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andNSPointArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andNSPointArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andNSRectArg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andNSRectArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2Arg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokestructTestStruct2Arg:(struct TestStruct2)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andboolArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andboolArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andBOOLArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andBOOLArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andcharArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andcharArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andsignedshortArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andsignedshortArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andsignedintArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andsignedintArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andsignedlongArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andsignedlongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andsignedlonglongArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andsignedlonglongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andunsignedcharArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andunsignedcharArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andunsignedshortArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andunsignedshortArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andunsignedintArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andunsignedintArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andunsignedlongArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andunsignedlongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andunsignedlonglongArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andunsignedlonglongArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andfloatArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andfloatArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 anddoubleArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:anddoubleArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andidArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andidArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andcharPtrArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andcharPtrArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andNSPointArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andNSPointArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andNSRectArg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andNSRectArg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andstructTestStruct1Arg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct1Arg:(struct TestStruct1)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andstructTestStruct1Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andstructTestStruct2Arg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct2Arg:(struct TestStruct2)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andstructTestStruct2Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3Arg:arg1 andstructTestStruct3Arg:arg2];
+}
+
++(id)invokestructTestStruct3Arg:(struct TestStruct3)arg1 andstructTestStruct3Arg:(struct TestStruct3)arg2 of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andstructTestStruct3Arg:))
+	[inv setArgument:&arg1 atIndex:2];
+	[inv setArgument:&arg2 atIndex:3];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callboolInArg:(bool*)arg of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolInArg:arg];
+}
+
++(void)callboolOutArg:(bool*)arg of:(PyObjC_TestClass1*)obj
+{
+	[obj boolOutArg:arg];
+}
+
++(id)callboolInOutArg:(bool*)arg of:(PyObjC_TestClass1*)obj
+{
+	return [obj boolInOutArg:arg];
+}
+
++(id)invokeboolInArg:(bool*)arg of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolInArg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(void)invokeboolOutArg:(bool*)arg of:(PyObjC_TestClass1*)obj
+{
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolOutArg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+}
+
++(id)invokeboolInOutArg:(bool*)arg of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(boolInOutArg:))
+	[inv setArgument:&arg atIndex:2];
 	[obj forwardInvocation:inv];
 	[inv getReturnValue:&res];
 	return res;
@@ -11117,6 +16112,150 @@ static id arg2id(const char* argtype, void* argptr)
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, obj, @selector(NSRectInOutArg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct1InArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1InArg:arg];
+}
+
++(void)callstructTestStruct1OutArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj
+{
+	[obj structTestStruct1OutArg:arg];
+}
+
++(id)callstructTestStruct1InOutArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct1InOutArg:arg];
+}
+
++(id)invokestructTestStruct1InArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1InArg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(void)invokestructTestStruct1OutArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj
+{
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1OutArg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+}
+
++(id)invokestructTestStruct1InOutArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct1InOutArg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct2InArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2InArg:arg];
+}
+
++(void)callstructTestStruct2OutArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj
+{
+	[obj structTestStruct2OutArg:arg];
+}
+
++(id)callstructTestStruct2InOutArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct2InOutArg:arg];
+}
+
++(id)invokestructTestStruct2InArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2InArg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(void)invokestructTestStruct2OutArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj
+{
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2OutArg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+}
+
++(id)invokestructTestStruct2InOutArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct2InOutArg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(id)callstructTestStruct3InArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3InArg:arg];
+}
+
++(void)callstructTestStruct3OutArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj
+{
+	[obj structTestStruct3OutArg:arg];
+}
+
++(id)callstructTestStruct3InOutArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj
+{
+	return [obj structTestStruct3InOutArg:arg];
+}
+
++(id)invokestructTestStruct3InArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3InArg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
++(void)invokestructTestStruct3OutArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj
+{
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3OutArg:))
+	[inv setArgument:&arg atIndex:2];
+	[obj forwardInvocation:inv];
+}
+
++(id)invokestructTestStruct3InOutArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(structTestStruct3InOutArg:))
 	[inv setArgument:&arg atIndex:2];
 	[obj forwardInvocation:inv];
 	[inv getReturnValue:&res];

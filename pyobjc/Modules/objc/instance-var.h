@@ -1,15 +1,13 @@
 #ifndef OBJC_INSTANCE_VAR
 #define OBJC_INSTANCE_VAR
 
-#include <Python.h>
-
 typedef struct {
 	PyObject_HEAD
 	char* name;	/* Name of the instance variable */
 	char  type[2];	/* Type of the instance variable for definition only */
 	int   isOutlet;
 	int   isSlot;
-	IVAR   ivar;
+	PyObjCRT_Ivar_t   ivar;
 } PyObjCInstanceVariable;
 
 

@@ -1,4 +1,6 @@
 """
+XXX: Should verify if test_methods2.py implements all tests in this file.
+
 Test lowlevel message passing details (Python -> ObjC)
 
 
@@ -90,42 +92,6 @@ def makeCFloat(value):
     """
     return struct.unpack('f',struct.pack('f', value))[0]
 
-class PyOCTestTypeStr(unittest.TestCase):
-    # 
-    # Check that typestrings have the expected values. 
-    # We currently depend on these values in this file as wel as in the 
-    # modules that set method signatures to 'better' values.
-    #
-    def testAll(self):
-
-        self.assertEquals(objc._C_ID, "@")
-        self.assertEquals(objc._C_CLASS, "#")
-        self.assertEquals(objc._C_SEL, ":")
-        self.assertEquals(objc._C_CHR, "c")
-        self.assertEquals(objc._C_UCHR, "C")
-        self.assertEquals(objc._C_SHT, "s")
-        self.assertEquals(objc._C_USHT, "S")
-        self.assertEquals(objc._C_INT, "i")
-        self.assertEquals(objc._C_UINT, "I")
-        self.assertEquals(objc._C_LNG, "l")
-        self.assertEquals(objc._C_ULNG, "L")
-        self.assertEquals(objc._C_LNGLNG, "q")
-        self.assertEquals(objc._C_ULNGLNG, "Q")
-        self.assertEquals(objc._C_FLT, "f")
-        self.assertEquals(objc._C_DBL, "d")
-        self.assertEquals(objc._C_VOID, "v")
-        self.assertEquals(objc._C_CHARPTR, "*")
-        self.assertEquals(objc._C_PTR, "^")
-        self.assertEquals(objc._C_UNDEF, "?")
-        self.assertEquals(objc._C_ARY_B, "[")
-        self.assertEquals(objc._C_ARY_E, "]")
-        self.assertEquals(objc._C_UNION_B, "(")
-        self.assertEquals(objc._C_UNION_E, ")")
-        self.assertEquals(objc._C_STRUCT_B, "{")
-        self.assertEquals(objc._C_STRUCT_E, "}")
-        self.assertEquals(objc._C_IN, "n")
-        self.assertEquals(objc._C_OUT, "o")
-        self.assertEquals(objc._C_INOUT, "N")
 
 class PyOCTestSimpleReturns(unittest.TestCase):
     #
@@ -501,7 +467,8 @@ class PyOCTestSimpleArguments(unittest.TestCase):
 
     def testIDOC(self):
         # Test an Objective-C object as the argument
-        o = objc.lookUpClass("NSHost").hostWithAddress_('127.0.0.1')
+        c = objc.lookUpClass("NSHost")
+	o = c.hostWithAddress_('127.0.0.1')
         s = self.obj.idArg_(o)
         self.assertEquals(len(s), 1)
         self.assert_(s[0] is o)
@@ -509,7 +476,7 @@ class PyOCTestSimpleArguments(unittest.TestCase):
     def testStruct1(self):
         self.assertEquals(self.obj.dummyArg_((-1, 1)), (-2, 2))
 
-        self.assertRaises(ValueError, self.obj.dummyArg_, 256L)
+        self.assertRaises(TypeError, self.obj.dummyArg_, 256L)
         self.assertRaises(ValueError, self.obj.dummyArg_, (-1,))
         self.assertRaises(ValueError, self.obj.dummyArg_, (-1,1,2))
 

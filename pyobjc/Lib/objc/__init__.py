@@ -19,6 +19,11 @@ from _objc import *
 from _objc import __version__
 import _FoundationSignatures
 
+try:
+    import _Foundation
+except ImportError:
+    pass
+
 _objc_bool = type(YES)
 
 # Import values used to define signatures
@@ -87,14 +92,7 @@ from _convenience import CONVENIENCE_METHODS, CLASS_METHODS
 # is ugly, but it is also something that would be very
 # hard to avoid...
 
-try:
-    import _FoundationMapping
-    del _FoundationMapping
-except ImportError:
-    pass
-
 del sys
-
 
 def classAddMethod(cls, name, method):
     """
@@ -122,9 +120,9 @@ def recycle_autorelease_pool():
     warings.warn(
         "Use recycleAutoreleasePool instead of recycle_autorelease_pool",
         DeprecationWarning)
-    recyleAutoreleasePool()
+    recycleAutoreleasePool()
 
 ###
 # This can be usefull to hunt down memory problems in the testsuite.
 #import atexit
-#atexit.register(recyleAutoreleasePool)
+#atexit.register(recycleAutoreleasePool)

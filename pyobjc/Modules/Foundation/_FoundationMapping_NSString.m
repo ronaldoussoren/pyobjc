@@ -135,6 +135,7 @@ static int
 _pyobjc_install_NSString(void)
 {
 	Class classNSString = objc_lookUpClass("NSString");
+	if (classNSString == NULL) return 0;
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSString,

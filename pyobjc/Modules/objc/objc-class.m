@@ -4,7 +4,7 @@
  *
  */
 #include "pyobjc.h"
-#include "objc_support.h"
+
 #include <stddef.h>
 
 PyDoc_STRVAR(class_doc,
@@ -179,14 +179,14 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	PyObject* protocols;
 	PyObject* real_bases;
 	PyObject* delmethod;
-	IVAR var;
+	PyObjCRT_Ivar_t var;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:__new__",
 			keywords, &name, &bases, &dict)) {
 		return NULL;
 	}
 
-	if (objc_lookUpClass(name) != NULL) {
+	if (PyObjCRT_LookUpClass(name) != NULL) {
 		PyErr_SetString(ObjCExc_error, 
 			"Class already exists in Objective-C runtime");
 		return NULL;
@@ -729,10 +729,10 @@ PyTypeObject PyObjCClass_Type = {
 char*
 PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
 {
-	size_t res = snprintf(buf, buflen, "%s", SELNAME(sel));
+	size_t res = snprintf(buf, buflen, "%s", PyObjCRT_SELName(sel));
 	char* cur;
 
-	if (res != strlen(SELNAME(sel))) {
+	if (res != strlen(PyObjCRT_SELName(sel))) {
 		return NULL;
 	}
 	cur = strchr(buf, ':');
@@ -770,10 +770,10 @@ add_class_fields(Class objc_class, PyObject* dict)
 	 */
 
 	iterator = 0;
-	mlist = class_nextMethodList(objc_class, &iterator);
+	mlist = PyObjCRT_NextMethodList(objc_class, &iterator);
 	while (mlist != NULL) {
 		int i;
-		METHOD meth;
+		PyObjCRT_Method_t meth;
 
 		for (i = 0; i < mlist->method_count; i++) {
 			char* name;
@@ -813,7 +813,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			}
 			Py_DECREF(descr); 
 		}
-		mlist = class_nextMethodList(objc_class, &iterator);
+		mlist = PyObjCRT_NextMethodList(objc_class, &iterator);
 	}
 
 
@@ -824,10 +824,10 @@ add_class_fields(Class objc_class, PyObject* dict)
 
 	cls = GETISA(objc_class);
 	iterator = 0;
-	mlist = class_nextMethodList(cls, &iterator);
+	mlist = PyObjCRT_NextMethodList(cls, &iterator);
 	while (mlist != NULL) {
 		int i;
-		METHOD meth;
+		PyObjCRT_Method_t meth;
 
 		for (i = 0; i < mlist->method_count; i++) {
 			meth = mlist->method_list + i;
@@ -859,7 +859,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			}
 			Py_DECREF(descr);
 		}
-		mlist = class_nextMethodList(cls, &iterator);
+		mlist = PyObjCRT_NextMethodList(cls, &iterator);
 	}
 
 #if PyOBJC_ACCESS_INSTANCE_VARIABLES
@@ -913,7 +913,7 @@ PyObjCClass_New(Class objc_class)
 	PyObject* result;
 	PyObject* bases;
 	PyObjC_class_info* info;
-	IVAR var;
+	PyObjCRT_Ivar_t var;
 
 	result = objc_class_locate(objc_class);
 	if (result != NULL) {
@@ -1023,13 +1023,13 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 	/* First check the cache */
 
 	result = PyDict_GetItemString(info->sel_to_py, 
-				(char*)SELNAME(selector));	
+				(char*)PyObjCRT_SELName(selector));	
 	if (result != NULL) {
 		if (result == Py_None) {
 			/* negative cache entry */
 			ObjCErr_Set(PyExc_AttributeError,
 				"No selector %s (cached)",
-				SELNAME(selector));
+				PyObjCRT_SELName(selector));
 			return NULL;
 		}
 		Py_INCREF(result);
@@ -1043,10 +1043,21 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 		return NULL;
 	}
 
-	len = PySequence_Size(attributes);
+	v = PySequence_Fast(attributes, "PyObject_Dir didn't return a list");
+	if (v == NULL) {
+		Py_DECREF(attributes);
+		return NULL;
+	}
+
+	Py_DECREF(attributes);
+	attributes = v; 
+	v = NULL;
+
+	len = PySequence_Fast_GET_SIZE(attributes);
 	for (i = 0; i < len; i++) {
-		key = PySequence_GetItem(attributes, i);
+		key = PySequence_Fast_GET_ITEM(attributes, i);
 		if (key == NULL) {
+			Py_DECREF(attributes);
 			return NULL;
 		}
 
@@ -1060,24 +1071,25 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
   	 */
 		if (PyString_Check(key) && 
 				strcmp(PyString_AS_STRING(key), "__pyobjc_PythonObject__") == 0) {
-			Py_DECREF(key);
 			continue;
 
 		}
 #endif
 
 		v = PyObject_GetAttr(cls, key);
-		Py_DECREF(key);
 		if (v == NULL) {
 			PyErr_Clear();
 			continue;
 		}
 
 		if (PyObjCSelector_Check(v)) {
-			if (((PyObjCSelector*)v)->sel_selector == selector) {
+			if (PyObjCRT_SameSEL(
+					((PyObjCSelector*)v)->sel_selector, 
+					selector)) {
+
 				Py_DECREF(attributes);
 				PyDict_SetItemString(info->sel_to_py,
-					(char*)SELNAME(selector), v);
+					(char*)PyObjCRT_SELName(selector), v);
 				return v;
 			}
 		} 
@@ -1087,9 +1099,9 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 	Py_DECREF(attributes);
 
 	ObjCErr_Set(PyExc_AttributeError,
-		"No selector %s", SELNAME(selector));
+		"No selector %s", PyObjCRT_SELName(selector));
 	PyDict_SetItemString(info->sel_to_py, 
-			(char*)SELNAME(selector), Py_None);
+			(char*)PyObjCRT_SELName(selector), Py_None);
 	return NULL;
 }
 

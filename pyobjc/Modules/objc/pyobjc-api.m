@@ -9,11 +9,6 @@
  * - To generic support for additional method signatures
  */
 #include "pyobjc.h"
-#include "py2.2bool.h"
-#include "objc_support.h"
-
-#define PYOBJC_BUILD
-#include "pyobjc-api.h"
 
 #ifdef PyObjCObject_GetObject
 #undef PyObjCObject_GetObject
@@ -55,6 +50,7 @@ static Class      sel_get_class(PyObject* sel)
 {
 	if (!ObjCNativeSelector_Check(sel)) {
 		PyErr_SetString(PyExc_TypeError, "Expecting PyObjCSelector");
+		return NULL;
 	}
 	return ((ObjCNativeSelector*)sel)->sel_class;
 }
@@ -63,6 +59,7 @@ static SEL      sel_get_sel(PyObject* sel)
 {
 	if (!PyObjCSelector_Check(sel)) {
 		PyErr_SetString(PyExc_TypeError, "Expecting PyObjCSelector");
+		return NULL;
 	}
 	return ((PyObjCSelector*)sel)->sel_selector;
 }
@@ -79,15 +76,15 @@ static void 	fill_super_cls(struct objc_super* super, Class cls, Class self)
 	super->class = GETISA(cls);
 }
 
-static id  
-unsupported_method_imp(id self, SEL selector)
+id  
+PyObjCUnsupportedMethod_IMP(id self, SEL selector)
 {
 	NSLog(@"Implementing %s from Python is not supported for %@",
-		SELNAME(selector), self);
+		PyObjCRT_SELName(selector), self);
 
 	[NSException raise:NSInvalidArgumentException
 		format:@"Implementing %s from Python is not supported for %@",
-			self, SELNAME(selector)];
+			self, PyObjCRT_SELName(selector)];
 	return nil;
 }
 
@@ -107,7 +104,7 @@ unsupported_method_caller(PyObject* meth, PyObject* self, PyObject*
 
 	ObjCErr_Set(PyExc_TypeError,
 		"Cannot call %s on %s from Python",
-		SELNAME(PyObjCSelector_Selector(meth)),
+		PyObjCRT_SELName(PyObjCSelector_GetSelector(meth)),
 		PyString_AS_STRING(repr));
 	Py_DECREF(repr);
 	return NULL;
@@ -133,7 +130,7 @@ struct pyobjc_api objc_api = {
 	depythonify_c_value,		/* py_to_objc */
 	pythonify_c_value,		/* objc_to_python */
 	PyObjC_CallPython,		/* call_to_python */
-	objc_sizeof_type,		/* sizeof_type */
+	PyObjCRT_SizeOfType,		/* sizeof_type */
 	sel_get_class,			/* sel_get_class */
 	sel_get_sel,			/* sel_get_sel */
 	bool_check,			/* bool_check */
@@ -141,8 +138,12 @@ struct pyobjc_api objc_api = {
 	fill_super,			/* fill_super */
 	fill_super_cls,			/* fill_super_cls*/
 	PyObjCPointerWrapper_Register,	/* register_pointer_wrapper */
-	(IMP)unsupported_method_imp,	/* unsupported_method_imp */
-	unsupported_method_caller	/* unsupported_method_caller */
+	(IMP)PyObjCUnsupportedMethod_IMP, /* unsupported_method_imp */
+	unsupported_method_caller,	/* unsupported_method_caller */
+	PyObjCErr_ToObjCWithGILState,	/* objc_err_to_objc_gil */
+	PyObjCRT_AlignOfType,		/* alignof_type */
+	PyObjCRT_SELName,		/* selname */
+	PyObjCRT_SimplifySignature	/* simplify_sig */
 };
 
 int ObjCAPI_Register(PyObject* module_dict)
