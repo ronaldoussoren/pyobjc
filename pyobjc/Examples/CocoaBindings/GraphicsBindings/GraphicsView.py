@@ -60,7 +60,7 @@ class GraphicsView(NSView):
     def stopObservingGraphics_(self, graphics):
         if graphics is None: return
         for graphic in graphics:
-            for key in graphic.class__.keysForNonBoundsProperties():
+            for key in graphic.class__().keysForNonBoundsProperties():
                 graphic.removeObserver_forKeyPath_(self, key)
             graphic.removeObserver_forKeyPath_(self, u"drawingBounds")
         
