@@ -1,6 +1,14 @@
 <?
   $macpython23="<a href=\"http://homepages.cwi.nl/~jack/macpython/\">Mac Python 2.3</a>";
 ?>
+<span class="news_date">2004-05-30: </span><span class="news_headline">PyObjC 1.1 released</span><?php gray_line(); ?>
+  <p>
+It has been a long, long process, but PyObjC 1.1 is finally there.  See the 
+<a href="<? print $root; ?>NEWS-1.1.txt">NEWS file</a> for details.
+  <p>
+Click <a href="/software/">here</a> to go to the download page.
+  <p>
+
 <span class="news_date">2004-04-11: </span><span class="news_headline">PyObjC 1.1b2 released</span><?php gray_line(); ?>
   <p>
 A new prerelease of the upcoming 1.1 release of PyObjC is available. 

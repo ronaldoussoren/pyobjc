@@ -1,7 +1,7 @@
 <?
 $title = "Home";
 $cvs_author = '$Author: ronaldoussoren $';
-$cvs_date = '$Date: 2004/02/21 19:47:55 $';
+$cvs_date = '$Date: 2004/05/30 19:02:54 $';
 $is_home = 1;
 
 $metatags = '<meta name="description" content="PyObjC, a universal bridge between the Objective-C and Python languages.">
@@ -38,7 +38,7 @@ include $fsroot."news/news.inc";
 <h1>Status</h1>
 
 <p>
-<a href="software/index.php">PyObjC 1.0</a> was released on 8 October 2003.  See the <a href="NEWS-1.0.txt">NEWS</a> for details.
+<a href="software/index.php">PyObjC 1.1</a> was released on 30 May 2004.  See the <a href="NEWS-1.1.txt">NEWS</a> for details.
 </p>
 
 <h1>Platform support</h1>
@@ -49,8 +49,8 @@ current version has minimal support for MacOS X 10.1, earlier versions are not
 (and will never be) supported.
 <p>
 There is limited support for <a href="http://www.gnustep.org/">GNUstep</a>, 
-most of the unittests pass on GNUstep on Linux/ix86. However, we do not yet
-support the AppKit framework on GNUstep.
+most of the unittests pass on GNUstep on Linux/ix86. However, we do still have
+some serious problems with real scripts.
 <P>
 Contact <a href="mailto:pyobjc-dev@lists.sourceforge.net">the mailinglist</a> if you want to help out with GNUstep or MacOS X 10.1 support.
 
@@ -71,10 +71,8 @@ provides the following resources for the project:
 <li><a
 href="http://sourceforge.net/tracker/?group_id=14534&atid=114534">Bug tracker</a></li>
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=14534">Files</a></li>
-<li>CVS (<a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/pyobjc">browse online</a>, <a href="http://sourceforge.net/cvs/?group_id=14534">access instructions</a>)</li>
-
+<li>CVS (<a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/pyobjc">browse online</a>, <a href="http://sourceforge.net/cvs/?group_id=14534">access instructions</a>)<br><i>We're moving our repository to a SVN repository at red-bean.com</i></li>
 </ul>
-<p>We have daily <a href="/cvs-snapshots">CVS snapshots</a>. The contents are a work in progress and may be instable, or not even compile.
 
 </td></tr></table>
 

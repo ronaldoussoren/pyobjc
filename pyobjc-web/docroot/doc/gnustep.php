@@ -1,7 +1,7 @@
 <?
     $title = "GNUstep support in PyObjC";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
+    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
 
     include "header.inc";
 ?>
@@ -21,6 +21,10 @@ classes.</p>
 <div class="section" id="todo">
 <h1><a name="todo">TODO</a></h1>
 <ul>
+<li><p class="first">[Serious] Fix linkage problems. The objC runtime doesn't seem to be 
+initialized correctly and/or the classes in newly loaded frameworks are
+not correctly registered in the runtime.</p>
+</li>
 <li><p class="first">Fix the odd bug...</p>
 <p>I currently get the following text when importing objc:</p>
 <pre class="literal-block">
@@ -30,10 +34,8 @@ Unable to retrieve information about SIGPIPE
 does print that text...</p>
 </li>
 <li><p class="first">Fix bugs found using the unittests</p>
-<p>runPyObjCTests finds some problems that disapear when those tests are run
-seperately...</p>
-</li>
-<li><p class="first">Port the AppKit wrappers</p>
+<p>runPyObjCTests finds some problems that disappear when those tests 
+are run separately...</p>
 </li>
 <li><p class="first">Extract more CFLAGS and LDFLAGS information from the GNUstep build system,
 instead of hard-coding the information</p>

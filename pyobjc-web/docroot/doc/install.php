@@ -1,7 +1,7 @@
 <?
     $title = "Installation Instructions";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
+    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
 
     include "header.inc";
 ?>
@@ -42,6 +42,8 @@ against the correct version of python.</p>
 <p>To be able to build the wrappers for the WebKit framework (included with
 Safari 1.0), you'll have to install the WebKit SDK. You can download 
 this from the <a class="reference" href="http://connect.apple.com">ADC website</a>.</p>
+<p>PyObjC has limited support for <a class="reference" href="http://www.gnustep.org/">GNUstep</a>. See <a class="reference" href="Doc/gnustep.html">Doc/gnustep.txt</a> for 
+more information.</p>
 </div>
 <div class="section" id="examples">
 <h1><a name="examples">Examples</a></h1>
@@ -62,6 +64,31 @@ to build the applications.</p>
 </div>
 <div class="section" id="project-templates">
 <h1><a name="project-templates">Project Templates</a></h1>
+<div class="section" id="xcode-on-macos-x-10-3">
+<h2><a name="xcode-on-macos-x-10-3">Xcode on MacOS X 10.3</a></h2>
+<p>The <tt class="literal"><span class="pre">Xcode</span></tt> directory contains some file and project that make it easier to
+work with Python and PyObjC when using <a class="reference" href="http://www.apple.com/xcode">Xcode</a>.</p>
+<p>Copy the templates in <tt class="literal"><span class="pre">Xcode/File</span> <span class="pre">templates</span></tt> to <tt class="literal"><span class="pre">/Library/Application</span> <span class="pre">Support/Apple/Development</span> <span class="pre">Tools/File</span> <span class="pre">Templates</span></tt>. Copy the templates in <tt class="literal"><span class="pre">Xcode/Project</span> <span class="pre">Templates</span></tt> to <tt class="literal"><span class="pre">/Library/Application</span> <span class="pre">Support/Apple/Development</span> <span class="pre">Tools/Project</span> <span class="pre">Templates</span></tt>.</p>
+<p>There are two project templates:</p>
+<ul>
+<li><p class="first">Cocoa-Python Application</p>
+<p>A project created from this template is designed to implement standalone,
+pure-Python, applications that are compatible with Apple's build of Python as
+well as all other builds of python that support PyObjC.</p>
+<p>When building the 'install' target, the resulting application wrapper will
+included the PyObjC module and can be launched on any stock OS X 10.3 system
+without requiring PyObjC to be preinstalled.</p>
+</li>
+<li><p class="first">Cocoa-Python Document-based Application</p>
+<p>This template works like the Cocoa-Python Application template in that it
+is compatible with the Apple build of Python.   It creates an application 
+that uses Cocoa's Multiple Document Architecture in the same fashion as the
+default Cocoa Document-based Application supplied with Project Builder.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="project-builder-on-macos-x-10-2">
+<h2><a name="project-builder-on-macos-x-10-2">Project Builder on MacOS X 10.2</a></h2>
 <p>The <tt class="literal"><span class="pre">ProjectBuilder</span> <span class="pre">Extras</span></tt> directory contains additional files that can
 be used with Project Builder. The directory <tt class="literal"><span class="pre">Specifications</span></tt> contains files
 that enable syntax coloring for Python files in Project Builder.</p>
@@ -95,6 +122,7 @@ default Cocoa Document-based Application supplied with Project Builder.</p>
 </ul>
 <p>More information on project templates can be found in the Project
 Builder documentation and/or release notes.</p>
+</div>
 </div>
 </div>
 <?

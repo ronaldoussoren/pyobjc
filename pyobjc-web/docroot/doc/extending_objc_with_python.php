@@ -1,7 +1,7 @@
 <?
     $title = "Tutorial - Adding Python code to an existing ObjC application";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
+    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
 
     include "header.inc";
 ?>
@@ -140,6 +140,13 @@ you would disable the &quot;Ask iTunes&quot; button unless iTunes was active. Al
 is left as an exercise to the reader.</p>
 </li>
 </ol>
+<div class="section" id="a-minor-variation">
+<h1><a name="a-minor-variation">A minor variation</a></h1>
+<p>There a several projects that improve upon the built-in AppleScript support (or to be more precise &quot;application scripting support&quot;). One of those is AppScript (<a class="reference" href="http://freespace.virgin.net/hamish.sanderson/appscript.html">http://freespace.virgin.net/hamish.sanderson/appscript.html</a>).</p>
+<p>When you have this module installed you can replace the contents of
+<tt class="literal"><span class="pre">ITunesCommuncation.py</span></tt> with <tt class="literal"><span class="pre">src/ITunesCommunication_AppScript.py</span></tt>, and
+you can skip step 15 entirely.</p>
+</div>
 </div>
 <?
     include "footer.inc";

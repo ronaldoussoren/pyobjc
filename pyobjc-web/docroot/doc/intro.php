@@ -1,7 +1,7 @@
 <?
     $title = "An introduction to PyObjC";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
+    $cvs_date = '$Date: 2004/05/30 18:56:39 $';
 
     include "header.inc";
 ?>
@@ -54,12 +54,12 @@ to read (and translate) example code.</p>
 <p>Objective-C is an object-oriented programming language that is an extension 
 of C and borrows heavily from Smalltalk. It features single inheritance with
 (in theory) multiple root classes and dynamic dispatch of methods. This is
-basicly the same as Python with single inheritance.</p>
+basically the same as Python with single inheritance.</p>
 <p>An important difference between Python and Objective-C is that the latter is
 not a pure object-oriented language. Some values are not objects, but values
 of plain C types, such as <tt class="literal"><span class="pre">int</span></tt> and <tt class="literal"><span class="pre">double</span></tt>. These basic C types can also
 be used as the types of arguments and the return value of methods.</p>
-<p>Object allocation and initialization are explicit and seperate actions in 
+<p>Object allocation and initialization are explicit and separate actions in 
 Objective-C. The former is done by the class-method <tt class="literal"><span class="pre">alloc</span></tt>, while the
 latter is done by instance-methods whose name customarily starts with <tt class="literal"><span class="pre">init</span></tt>.</p>
 <p>Objective-C code looks just like plain C code, with some easily recognizable
@@ -83,7 +83,7 @@ is done using expressions enclosed with brackets (name?), e.g.
 -(int)anInstanceMethodWithArg1:arg1 andArg2:(BOOL)arg2;
 &#64;end
 </pre>
-<p>A class implemenation:</p>
+<p>A class implementation:</p>
 <pre class="literal-block">
 &#64;implementation MYClass
 
@@ -130,7 +130,7 @@ mechanisms work as well, as do __slots__ and descriptors. The major
 differences between normal Python classes and Objective-C classes are the way 
 you create instances and the fact that Objective-C methods have odd names.</p>
 <p>You can use multiple inheritance with Objective-C classes, as long as the
-Objetive-C class is the first base-class and there is only one Objective-C 
+Objective-C class is the first base-class and there is only one Objective-C 
 base-class. E.g. it is not possible to subclass from multiple Objective-C classes
 at the same time. Multiple inheritance should also not be used to mix-in
 different implementations for Objective-C methods. It will not work and
@@ -145,7 +145,7 @@ as the prefix in the <a class="reference" href="http://developer.apple.com/techp
 objects is a two-stage process. You first call the class method <tt class="literal"><span class="pre">alloc</span></tt>, and
 then call some variation of <tt class="literal"><span class="pre">init</span></tt> to initialize the objects. The newly
 created object is the result of the call to <tt class="literal"><span class="pre">init</span></tt>. Most classes have 
-convienence class methods that combine the calls to <tt class="literal"><span class="pre">alloc</span></tt> and <tt class="literal"><span class="pre">init</span></tt>.</p>
+convenience class methods that combine the calls to <tt class="literal"><span class="pre">alloc</span></tt> and <tt class="literal"><span class="pre">init</span></tt>.</p>
 </div>
 <div class="section" id="methods-and-functions">
 <h2><a class="toc-backref" href="#id8" name="methods-and-functions">Methods and functions</a></h2>
@@ -205,9 +205,9 @@ the bridge (yet), the information is therefore not entirely correct.</p>
 <p>When you define methods in a subclass of an Objective-C class, the bridge has
 to tell the Objective-C runtime what the signature of those methods is. The
 basic rule is that all arguments as well as the return value are objects (just
-like with normal Python methods). The bridge will automaticly pick a better 
+like with normal Python methods). The bridge will automatically pick a better 
 signature when it has more information available. Specifically, if you 
-overide an existing method the bridge will assume you want to use the same
+override an existing method the bridge will assume you want to use the same
 method signature. And furthermore, if you implement a method in an (informal)
 protocol known to the bridge it will use the signature from the corresponding
 method in that signature.</p>
@@ -243,7 +243,7 @@ reference counting.</p>
 are not true <a class="reference" href="http://www.python.org/doc/current/lib/module-weakref.html">weak references</a> as in Python, but use-cases where an object 
 stores a reference to another object without increasing the reference count
 for that other object. The bridge cannot solve the issues this introduces
-for you, which means that you get hard crashes when you're not carefull when
+for you, which means that you get hard crashes when you're not careful when
 dealing with those <a class="reference" href="http://www.python.org/doc/current/lib/module-weakref.html">weak references</a>.</p>
 <p>The basic rule to deal with weak references is: make sure objects stays
 alive as long as someone might have a weak reference to them. Due to the way
@@ -272,7 +272,7 @@ such as the data source for an NSTableView.</p>
 only ones that have to care about these objects are the maintainers of 
 wrappers around Objective-C frameworks: they have to keep these protocol
 wrappers up-to-date.</p>
-<p>PyObjC will automaticly use the information in the <tt class="literal"><span class="pre">informal_protocol</span></tt> 
+<p>PyObjC will automatically use the information in the <tt class="literal"><span class="pre">informal_protocol</span></tt> 
 objects to add the right method signatures to methods, and to warn about
 classes that partially implement a protocol.</p>
 </div>
@@ -323,7 +323,7 @@ have to create an <tt class="literal"><span class="pre">NSAutoreleasePool</span>
 you're done. The easiest way to that is to create an instance of that class
 bound to a local variable. If the thread is long-lived you may want to arrange
 for recycling the pool once in a while.</p>
-<p>There are some limitiation w.r.t. threading. You cannot use <tt class="literal"><span class="pre">NSThread</span></tt> to 
+<p>There are some limitation w.r.t. threading. You cannot use <tt class="literal"><span class="pre">NSThread</span></tt> to 
 create new threads, but must use the python primitives instead.</p>
 <p>You must also make sure that Objective-C only makes calls to Python from a 
 thread that owns the Python GIL (that's also the reason for not being able 

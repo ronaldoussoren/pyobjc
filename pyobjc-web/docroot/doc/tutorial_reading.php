@@ -1,7 +1,7 @@
 <?
     $title = "Understanding existing PyObjC examples";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
+    $cvs_date = '$Date: 2004/05/30 18:56:39 $';
 
     include "header.inc";
 ?>
@@ -110,7 +110,7 @@ become clear why all the boilerplate code is missing from Cocoa applications:
 you don't need it. The NIB file usually contains all of the things that need to
 be done for the Views objects, as is often the case with other gui-builders.
 But in addition the NIB also contains a large proportion of your Model
-functionality: creating the View and Controller objects and tieing the
+functionality: creating the View and Controller objects and tying the
 lot together.</p>
 </div>
 <div class="section" id="delegates">
@@ -167,7 +167,7 @@ action will go to the <tt class="literal"><span class="pre">ConverterController.
 For instance, you will be hard put to find who, if anyone, calls 
 <tt class="literal"><span class="pre">ConverterController.invertRate:</span></tt>. The solution: go to the &quot;MainMenu.nib&quot; window and
 look at the top of the vertical scrollbar. There are two little icons there, one with
-lines and one with squares, with the squares being higlighted. Press it. The view will change
+lines and one with squares, with the squares being highlighted. Press it. The view will change
 to a scrollable list with objects in the left column and an indication of connections
 in the right column. You can now see our ConverterController object has four
 outgoing connections (the ones we found earlier) and two incoming connections. Click

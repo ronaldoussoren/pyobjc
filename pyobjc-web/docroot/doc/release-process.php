@@ -1,7 +1,7 @@
 <?
     $title = "The PyObjC release process";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
+    $cvs_date = '$Date: 2004/05/30 18:56:39 $';
 
     include "header.inc";
 ?>
@@ -14,13 +14,13 @@ administrators, and not of much use for users of PyObjC.</p>
 <p>The timeframe is a guideline only and should be taken with a grain of salt.</p>
 <div class="section" id="release-date-2-weeks">
 <h1><a name="release-date-2-weeks">Release date -2 weeks</a></h1>
-<p>Full feature freeze, documenation updates and critical bugfixes only. At this
+<p>Full feature freeze, documentation updates and critical bug-fixes only. At this
 time:</p>
 <ul class="simple">
 <li>Check if the NEWS file is up-to-date</li>
 <li>Tests the tutorial(s)
 Read the tutorial(s) and follow the instructions exactly, the tutorials should
-be completely bugfree.</li>
+be completely bug-free.</li>
 <li>Proofread the documentation</li>
 <li>Update the announcement messages.</li>
 </ul>
@@ -67,7 +67,7 @@ the pyobjc-web tree).</p>
 <ul>
 <li><p class="first">Organization: PyObjC Team</p>
 </li>
-<li><p class="first">Name of Produt... : PyObjC</p>
+<li><p class="first">Name of Product... : PyObjC</p>
 </li>
 <li><p class="first">URL: <a class="reference" href="http://pyobjc.sourceforge.net">http://pyobjc.sourceforge.net</a></p>
 </li>

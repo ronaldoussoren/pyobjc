@@ -1,7 +1,7 @@
 <?
     $title = "Structure of the PyObjC package";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
+    $cvs_date = '$Date: 2004/05/30 18:56:39 $';
 
     include "header.inc";
 ?>
@@ -11,7 +11,7 @@
 HTML. -->
 <div class="section" id="introduction">
 <h1><a name="introduction">Introduction</a></h1>
-<p>XXX:  This documet is outdated and incomplete.</p>
+<p>XXX:  This document is outdated and incomplete.</p>
 <p>This document gives an overview of the PyObjC for developers (of the package).</p>
 <p>One of the sections describes how all of it works, and some of the limitation.</p>
 <p>This document is a little dated, it should be updated.</p>
@@ -96,7 +96,7 @@ a Unicode object if that fails.</p>
 <p>When translating from NSString to a Python unicode object (and back) we first 
 translate to a UTF8 encoding. This way we don't have to worry about any
 differences in the representation of Unicode strings in Python and Objective-C
-(Python has two different represenations, selection is at compile-time).</p>
+(Python has two different representations, selection is at compile-time).</p>
 </div>
 </div>
 <?

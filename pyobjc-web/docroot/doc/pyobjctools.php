@@ -1,7 +1,7 @@
 <?
     $title = "PyObjCTools: The PyObjC Toolbox";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
+    $cvs_date = '$Date: 2004/05/30 18:56:39 $';
 
     include "header.inc";
 ?>
@@ -18,32 +18,37 @@ start with a short overview.</p>
 </ul>
 <p>Utility functions for use with the <tt class="literal"><span class="pre">AppKit</span></tt> module.</p>
 <ul class="simple">
-<li><tt class="literal"><span class="pre">PyObjCTools.Conversion.py</span></tt></li>
+<li><tt class="literal"><span class="pre">PyObjCTools.Conversion</span></tt></li>
 </ul>
 <p>Functions for converting between Cocoa and pure Python data structures.</p>
 <ul class="simple">
-<li><tt class="literal"><span class="pre">PyObjCTools.KeyValueCoding.py</span></tt></li>
+<li><tt class="literal"><span class="pre">PyObjCTools.KeyValueCoding</span></tt></li>
 </ul>
 <p>A python API for working with <a class="reference" href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i">Key-Value Coding</a>.</p>
 <ul class="simple">
-<li><tt class="literal"><span class="pre">PyObjCTools.NibClassBuilder.py</span></tt></li>
+<li><tt class="literal"><span class="pre">PyObjCTools.NibClassBuilder</span></tt></li>
 </ul>
 <p>Module containing a magic super-class that can read information about the
 actual super-class and implemented actions and outlets from a NIB file.</p>
 <ul class="simple">
-<li><tt class="literal"><span class="pre">PyObjCTools.pluginbuilder.py</span></tt></li>
+<li><tt class="literal"><span class="pre">PyObjCTools.MachSignals</span></tt></li>
+</ul>
+<p>Module to make it possible to integrate signal handling into the main
+runloop.</p>
+<ul class="simple">
+<li><tt class="literal"><span class="pre">PyObjCTools.pluginbuilder</span></tt></li>
 </ul>
 <p>Extension of <tt class="literal"><span class="pre">bundlebuilder</span></tt> (XXX: Link) that allows you to build python-based
 plugin bundles, such as panes for the System Preferences application and
 screen savers.</p>
 <ul class="simple">
-<li><tt class="literal"><span class="pre">PyObjCTools.Signals.py</span></tt></li>
+<li><tt class="literal"><span class="pre">PyObjCTools.Signals</span></tt></li>
 </ul>
 <p>Module that tries to print useful information when the program gets a fatal
 exception. This module should only be used during development.</p>
 <div class="section" id="pyobjctools-apphelper">
 <h1><a name="pyobjctools-apphelper"><tt class="literal"><span class="pre">PyObjCTools.AppHelper</span></tt></a></h1>
-<p>This module exports two functions that are usefull when working with the
+<p>This module exports two functions that are useful when working with the
 <tt class="literal"><span class="pre">AppKit</span></tt> framework.</p>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">endSheetMethod(method)</span> <span class="pre">-&gt;</span> <span class="pre">selector</span></tt></p>
@@ -57,8 +62,8 @@ continue if an exception is caught.</p>
 </li>
 </ul>
 </div>
-<div class="section" id="pyobjctools-conversion-py">
-<h1><a name="pyobjctools-conversion-py"><tt class="literal"><span class="pre">PyObjCTools.Conversion.py</span></tt></a></h1>
+<div class="section" id="pyobjctools-conversiony">
+<h1><a name="pyobjctools-conversiony"><tt class="literal"><span class="pre">PyObjCTools.Conversiony</span></tt></a></h1>
 <p>Functions for converting between Cocoa and pure Python data structures.</p>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">propertyListFromPythonCollection(pyCol,</span> <span class="pre">conversionHelper=None)</span> <span class="pre">-&gt;</span> <span class="pre">ocCol</span></tt></p>
@@ -103,7 +108,7 @@ attribute of the object.</p>
 </li>
 <li><p class="first"><tt class="literal"><span class="pre">getKeyPath(object,</span> <span class="pre">keypath)</span> <span class="pre">-&gt;</span> <span class="pre">value</span></tt></p>
 <p>Like <tt class="literal"><span class="pre">getKey</span></tt> but using a key path. The <tt class="literal"><span class="pre">keypath</span></tt> is a sequence of keys
-seperated by dots. It calls <tt class="literal"><span class="pre">getKey</span></tt> to follow the path and returns the
+separated by dots. It calls <tt class="literal"><span class="pre">getKey</span></tt> to follow the path and returns the
 final value.</p>
 </li>
 <li><p class="first"><tt class="literal"><span class="pre">setKey(object,</span> <span class="pre">key,</span> <span class="pre">value)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>

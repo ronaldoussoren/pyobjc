@@ -1,7 +1,7 @@
 <?
     $title = "PyObjC Architecture";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
+    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
 
     include "header.inc";
 ?>

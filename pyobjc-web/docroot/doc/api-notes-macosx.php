@@ -1,7 +1,7 @@
 <?
     $title = "Notes on supported APIs and classes on MacOS X";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
+    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
 
     include "header.inc";
 ?>
@@ -76,7 +76,7 @@
 <h1><a class="toc-backref" href="#id2" name="introduction">Introduction</a></h1>
 <p>This document describes the restrictions w.r.t. supported APIs and classes
 on MacOS X. In general you can use classes and global functions just like
-in Objective-C (e.g. the Apple developer documentaton applies), but in some
+in Objective-C (e.g. the Apple developer documentation applies), but in some
 cases there are special considerations.</p>
 <p>We also do not provide access to global functions that are not useful for
 Python programs, those functions are listed below.</p>
@@ -333,12 +333,12 @@ from Python. This limitation will be lifted in a future version of PyObjC.</p>
 </div>
 <div class="section" id="class-nsautoreleasepool">
 <h2><a class="toc-backref" href="#id23" name="class-nsautoreleasepool">Class <tt class="literal"><span class="pre">NSAutoreleasePool</span></tt></a></h2>
-<p>The bridge automaticly manages reference counts for you, but you're still 
+<p>The bridge automatically manages reference counts for you, but you're still 
 required to make an autorelease pool available.</p>
 <p>In simple, single-threaded GUI programs you don't have to do anything for this,
 because NSRunLoop does this for you and PyObjC creates an initial pool for the
 main thread.</p>
-<p>If you create lots of Cocoa objects in a loop it can be usefull to manually create
+<p>If you create lots of Cocoa objects in a loop it can be useful to manually create
 a pool to reclaim memory as soon as possible. The proper idiom for this is:</p>
 <pre class="literal-block">
 while &lt;test&gt;:
@@ -514,7 +514,7 @@ of PyObjC.</p>
 <li><p class="first"><tt class="literal"><span class="pre">indicesOfObjectsByEvaluatingWithContainer:count:</span></tt></p>
 <p>Implementing this in Python is not supported yet. We're looking for a way
 to avoid leaking the returned buffer, as we cannot return a pointer to an
-internal datastructure.</p>
+internal data-structure.</p>
 </li>
 </ul>
 </div>

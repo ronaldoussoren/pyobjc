@@ -1,7 +1,7 @@
 <?
     $title = "Documentation for the PyObjC C-API (Preliminary)";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
+    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
 
     include "header.inc";
 ?>
@@ -27,15 +27,15 @@ export symbols other than the module init function.</p>
 in Scripts/CodeGenerators. These scripts are unsupported and might not work on
 anything but the Apple headers, but if they work it will save you a lot of work.</p>
 </div>
-<div class="section" id="limititations">
-<h1><a name="limititations">Limititations</a></h1>
+<div class="section" id="limitations">
+<h1><a name="limitations">Limitations</a></h1>
 <p>An important limitation of the current C API is that you can only use the API
 from one C file in the implementation of an extension module. This limitation
 will probably not be removed in future versions of the API.</p>
 </div>
 <div class="section" id="initialization">
 <h1><a name="initialization">Initialization</a></h1>
-<p>The initialiazation function (below) should be called before using the
+<p>The initialization function (below) should be called before using the
 rest of the API:</p>
 <pre class="literal-block">
 static int PyObjC_ImportAPI(PyObject* calling_module)
@@ -138,14 +138,14 @@ void PyObjCErr_FromObjC(NSException* localException);
 <p>Convert an Objective-C exception to Python. Use 
 <tt class="literal"><span class="pre">PyObjCErr_FromObjC(localException)</span></tt> to convert the exception in an 
 <tt class="literal"><span class="pre">NS_HANDLER</span></tt> block.</p>
-<p>Note that PyObjC supports roundtripping for exceptions, if the current 
+<p>Note that PyObjC supports round-tripping for exceptions, if the current 
 Objective-C exception is an converted Python exception, the original Python
 exception will be rethrown.</p>
 <pre class="literal-block">
 void PyObjCErr_ToObjC(void);
 </pre>
 <p>Convert a Python exception to Objective-C. This function does not return.</p>
-<p>Note that PyObjC supports roundtripping for exceptions, if the current Python
+<p>Note that PyObjC supports round-tripping for exceptions, if the current Python
 exception is an converted Objective-C exception, the original Objective-C
 exception will be rethrown.</p>
 <pre class="literal-block">

@@ -1,7 +1,7 @@
 <?
     $title = "Coding style for PyObjC";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
+    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
 
     include "header.inc";
 ?>
@@ -37,7 +37,7 @@
 <h1><a class="toc-backref" href="#id1" name="introduction">Introduction</a></h1>
 <p>This document describes the coding style for PyObjC. Please use this style for
 new code and try apply this style to existing code while working on it.</p>
-<p>The managment summary: 4-space indents in Python code, 1-TAB indents in C
+<p>The management summary: 4-space indents in Python code, 1-TAB indents in C
 code.</p>
 </div>
 <div class="section" id="python-code">
