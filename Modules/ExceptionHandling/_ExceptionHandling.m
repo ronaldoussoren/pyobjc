@@ -43,8 +43,7 @@ void init_ExceptionHandling(void)
 		return;
 	}
 
-	bundle = CFBundleCreate(NULL,
-		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/ExceptionHandling.framework"]);
+	bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.ExceptionHandling"));
 
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_variableList(d, bundle, string_table, 

@@ -47,9 +47,8 @@ void init_SecurityInterface(void)
 		return;
 	}
 
-	bundle = CFBundleCreate(NULL,
-		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/SecurityInterface.framework"]);
-
+	/* SecurityFoundation.framework has no @constant values to bring in... */
+	bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.securityinterface"));
 
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_variableList(d, bundle, string_table, 

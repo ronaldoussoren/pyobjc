@@ -41,8 +41,7 @@ void init_WebKit(void)
 		return;
 	}
 
-	bundle = CFBundleCreate(NULL,
-		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/WebKit.framework"]);
+	bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.WebKit"));
 
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_variableList(d, bundle, string_table, 

@@ -1206,8 +1206,7 @@ void init_AppKit(void)
 	}
 
 #ifdef MACOSX
-	bundle = CFBundleCreate(NULL,
-		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/AppKit.framework"]);
+	bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.AppKit"));
 #else
 	bundle = NULL;
 #endif
