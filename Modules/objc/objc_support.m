@@ -1150,7 +1150,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	PyObject*	  result = NULL;
 	id		  self_obj = nil;
 	id                nil_obj = nil;
-	char*		  curspec;
+	const char*	  curspec;
 
 	if (meth->sel_oc_signature) {
 		methinfo = meth->sel_oc_signature;

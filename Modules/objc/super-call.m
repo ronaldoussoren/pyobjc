@@ -367,11 +367,11 @@ IMP ObjC_FindIMP(Class class, SEL sel)
 
 ObjC_CallFunc_t ObjC_FindSupercaller(Class class, SEL sel)
 {
-	struct registry* generic;
 	struct registry* special;
+#ifndef OC_WITH_LIBFFI
+	struct registry* generic;
 	METHOD           m;
 
-#ifndef OC_WITH_LIBFFI
 	m = class_getInstanceMethod(class, sel);
 	if (!m) {
 		ObjCErr_Set(ObjCExc_error,

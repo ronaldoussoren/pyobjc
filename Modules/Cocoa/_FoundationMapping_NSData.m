@@ -325,7 +325,7 @@ static void *imp_NSData_bytes(id self, SEL sel)
     return NULL;
 
   if (PyBuffer_Check(result)) {
-    const char *p;
+    const void *p;
     int len;
     if (PyObject_AsReadBuffer(result, &p, &len) == -1) {
       ObjCErr_ToObjC();
@@ -406,13 +406,13 @@ static void *imp_NSMutableData_mutableBytes(id self, SEL sel)
     return NULL;
 
   if (PyBuffer_Check(result)) {
-    const char *p;
+    void *p;
     int len;
     if (PyObject_AsWriteBuffer(result, &p, &len) == -1) {
       ObjCErr_ToObjC();
       return NULL;
     }
-    return p;
+    return (void *)p;
   }
 
   PyErr_SetString(PyExc_ValueError, "No idea what to do with result.");
