@@ -12,11 +12,7 @@
 #include "pyobjc-api.h"
 #include "pyobjc-unittest.h"
 
-#import <Foundation/NSInvocation.h>
-#import <Foundation/NSArray.h>
-#import <Foundation/NSDictionary.h>
-#import <Foundation/NSAutoreleasePool.h>
-#import <Foundation/NSString.h>
+#import <Foundation/Foundation.h>
 
 struct Struct1 {
 	int f1;
@@ -368,7 +364,7 @@ END_UNITTEST
 
 BEGIN_UNITTEST(TestSizeOfBool)
 
-	// Code in libffi_support.m depends on this equality.
+	/* Code in libffi_support.m depends on this equality. */
 	ASSERT_EQUALS(sizeof(bool), sizeof(int), "%d");
 
 END_UNITTEST
