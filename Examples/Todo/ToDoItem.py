@@ -88,18 +88,18 @@ class ToDoItem (NSObject):
         coder.encodeObject_(self._day)
         coder.encodeObject_(self._itemName)
         coder.encodeObject_(self._notes)
-        
+
         tempTime = self._secsUntilDue
         coder.encodeValueOfObjCType_at_(objc._C_LNG, tempTime)
 
         tempTime = self._secsUntilNotify
         coder.encodeValueOfObjCType_at_(objc._C_LNG, tempTime)
-    
+
         tempStatus = self._status
         coder.encodeValueOfObjCType_at_(objc._C_INT, tempStatus)
 
     def initWithCoder_(self, coder):
-        
+
         self.setDay_(coder.decodeObject())
         self.setItemName_(coder.decodeObject())
         self.setNotes_(coder.decodeObject())
@@ -109,7 +109,7 @@ class ToDoItem (NSObject):
 
         tempTime = coder.decodeObjectOfObjCType_at_(objc._C_LNG)
         self.setSecsUntilNotify_(tempTime)
-    
+
         tempStatus = coder.decodeObjectOfObjCType_at_(objc._C_INT)
         self.setSecsUntilNotify_(tempStatus)
 
@@ -172,7 +172,7 @@ class ToDoItem (NSObject):
 def ConvertTimeToSeconds(hour, minute, pm):
     if hour == 12:
         hour = 0
-    
+
     if pm:
         hour += 12
 

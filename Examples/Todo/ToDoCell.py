@@ -64,7 +64,7 @@ class ToDoCell (NSButtonCell):
             self.setImage_(self._deferredImage)
 
         self.controlView().updateCell_(self)
-    
+
     def startTrackingAt_inView_(self, startPoint, controlView):
         #print "startTracking:", startPoint, controlView
         return 1

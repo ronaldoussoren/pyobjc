@@ -82,7 +82,7 @@ class CalendarMatrix (AutoBaseClass):
         self.setSelectedDay_(NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(currentYear, currentMonth, 1, 0, 0, 0, NSTimeZone.localTimeZone()))
         self.refreshCalendar()
         self.choseDay_(self)
-    
+
     def setSelectedDay_(self, newDay):
         self._selectedDay = newDay
 
@@ -137,7 +137,7 @@ class CalendarMatrix (AutoBaseClass):
         self.selectCellWithTag_(selDate.dayOfMonth() + self._startOffset - 1)
         self.highlightTodayIfVisible()
 
-    
+
     def highlightTodayIfVisible(self):
         now = NSCalendarDate.date()
         selDate = self.selectedDay()
@@ -156,5 +156,3 @@ class CalendarMatrix (AutoBaseClass):
         self.setAutosizesCells_(YES)
         self.refreshCalendar()
         self.choseDay_(self)
-
-
