@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {changeTextFont = id; }; 
+            CLASS = ControlledPreferencesAppDelegate; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = FontSampleDisplayView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {changeTextFont = id; }; 
+            CLASS = PreferencesPanelController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}
