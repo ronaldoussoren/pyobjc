@@ -62,7 +62,11 @@ static inline int add_unsigned(PyObject*d, char* name, unsigned value)
 	int res;
 	PyObject* v;
 
-	v = PyInt_FromLong(value);
+	if (value > LONG_MAX) {
+		v = PyLong_FromUnsignedLong(value);
+	} else {
+		v = PyInt_FromLong((long)value);
+	}
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);
