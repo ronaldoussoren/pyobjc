@@ -1,3 +1,7 @@
+2002-11-02  Bill Bumgarner  <bbum@codefab.com>
+	* Change addressbook example to be in line with updated
+	convenience methods.
+
 2002-10-31 Ronald Oussoren <oussoren@cistron.nl>
 	* Use 'nibwrapper' technique in all GUI examples.
 	* Actually remove old version of classnib.py and add the
