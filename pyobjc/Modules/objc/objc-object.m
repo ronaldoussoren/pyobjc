@@ -82,7 +82,6 @@ object_new(
 static PyObject*
 object_repr(PyObjCObject* self)
 {
-	char buffer[256];
 	PyObject* res;
 
 	if ((self->flags & PyObjCObject_kUNINITIALIZED) == 0 && !PyObjCObject_IsClassic(self)) {
@@ -99,10 +98,9 @@ object_repr(PyObjCObject* self)
 			return res;
 		}
 	}
-	snprintf(buffer, sizeof(buffer), "<%s objective-c instance %p>",
+	return PyString_FromFormat(
+		"<%s objective-c instance %p>",
 		self->ob_type->tp_name, self->objc_object);
-
-	return PyString_FromString(buffer);
 }
 
 static void

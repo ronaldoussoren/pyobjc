@@ -23,15 +23,11 @@ ivar_dealloc(PyObjCInstanceVariable* ivar)
 static PyObject*
 ivar_repr(PyObjCInstanceVariable* self)
 {
-	char buf[256];
-
 	if (self->isOutlet) {
-		snprintf(buf, sizeof(buf), "<IBOutlet %s>", self->name);
+		return PyString_FromFormat("<IBOutlet %s>", self->name);
 	} else {
-		snprintf(buf, sizeof(buf), "<instance-variable %s>", 
-			self->name);
+		return PyString_FromFormat("<instance-variable %s>", self->name);
 	}
-	return PyString_FromString(buf);
 }
 
 static PyObject*

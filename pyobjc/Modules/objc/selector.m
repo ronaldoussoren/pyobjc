@@ -1076,7 +1076,6 @@ PyObjCSelector_DefaultSelector(const char* methname)
 static char
 pytype_to_objc(char val)
 {
-	char buf[128];
 	switch (val) {
 	case 's': case 'z': case 'S': return _C_ID;
 	case 'b': return _C_CHR;
@@ -1088,9 +1087,7 @@ pytype_to_objc(char val)
 	case 'd': return _C_DBL;
 	case 'O': return _C_ID;
 	default:
-		snprintf(buf, sizeof(buf), 
-			"Unrecognized type character: %c", val);
-		PyErr_SetString(PyExc_ValueError, buf);
+		PyErr_Format(PyExc_ValueError, "Unrecognized type character: %c", val);
 		return 0;
 	}
 }

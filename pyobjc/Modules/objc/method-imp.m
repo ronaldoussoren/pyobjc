@@ -151,13 +151,9 @@ imp_call(PyObjCIMPObject* self, PyObject* args)
 static PyObject* 
 imp_repr(PyObjCIMPObject* self)
 {
-	char buf[256];
-
-	snprintf(buf, sizeof(buf), 
-		"<IMP %s at %p for %p>",
+	return PyString_FromFormat("<IMP %s at %p for %p>",
 		PyObjCRT_SELName(self->selector),
 		self, self->imp);
-	return PyString_FromString(buf);
 }
 
 static void
