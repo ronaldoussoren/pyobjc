@@ -235,7 +235,10 @@ class NibInfo(object):
 
 	def _printTemplateHeader(self, writer):
 		frameworks = {}
+		nibs = {}
 		for clsInfo in self.classes.values():
+			for nib in clsInfo.nibs:
+				nibs[nib] = 1
 			super = clsInfo.super
 			framework = _frameworkForClass(super)
 			if not framework:
@@ -251,7 +254,15 @@ class NibInfo(object):
 			for framework, classes in items:
 				classes.sort()
 				writer.writeln("from %s import %s" % (framework, ", ".join(classes)))
-		writer.writeln("from AppKit.NibLoader import AutoBaseClass")
+		writer.writeln("from AppKit import NibClassBuilder")
+		writer.writeln("from AppKit.NibClassBuilder import AutoBaseClass")
+		writer.writeln()
+		nibs = nibs.keys()
+		nibs.sort()
+		for nib in nibs:
+			assert nib[-4:] == ".nib"
+			nib = nib[:-4]
+			writer.writeln("NibClassBuilder.extractClasses(\"%s\")" % nib)
 		writer.writeln()
 		writer.writeln()
 
