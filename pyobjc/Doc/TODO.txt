@@ -185,7 +185,7 @@ Code cleanup
 Cleanup Examples
 ................
 
-The CurrentConvertor example should be removed, this should be the same as the
+The CurrencyConvertor example should be removed, this should be the same as the
 final step of the tutorial. It isn't at the moment because additional cruft in
 the example.
 
@@ -307,8 +307,8 @@ Check if it is possible to wrap ``NSSet`` using ``set`` (and v.v.).
 
 Only implement this when it is possible to convert without loss of information.
 
-Python2.4
-.........
+Python 2.4
+..........
 
 Python 2.4 introduces a decorator syntax. Add convenience functions that
 make it easier to use decorators with PyObjC. 
