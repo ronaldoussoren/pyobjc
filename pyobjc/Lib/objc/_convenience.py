@@ -18,6 +18,15 @@ CLASS_METHODS = {}
 NSObject = lookUpClass('NSObject')
 
 def add_convenience_methods(super_class, name, type_dict):
+    try:
+        return _add_convenience_methods(super_class, name, type_dict)
+    except:
+        import traceback
+        traceback.print_exc()
+        raise
+
+
+def _add_convenience_methods(super_class, name, type_dict):
     """
     Add additional methods to the type-dict of subclass 'name' of
     'super_class'.
@@ -64,23 +73,23 @@ def add_convenience_methods(super_class, name, type_dict):
 
         if sel in CONVENIENCE_METHODS:
             v = CONVENIENCE_METHODS[sel]
-            for name, value in v:
-                if name in type_dict and isinstance(type_dict[name], selector):
+            for nm, value in v:
+                if nm in type_dict and isinstance(type_dict[nm], selector):
 
                     # Clone attributes of already existing version
 
-                    t = type_dict[name]
+                    t = type_dict[nm]
                     v = selector(value, selector=t.selector,
                         signature=t.signature, isClassMethod=t.isClassMethod)
                     v.isAlloc = t.isAlloc
 
-                    type_dict[name] = v
+                    type_dict[nm] = v
                 else:
-                    type_dict[name] = value
+                    type_dict[nm] = value
 
     if name in CLASS_METHODS:
-        for name, value in CLASS_METHODS[name]:
-            type_dict[name] = value
+        for nm, value in CLASS_METHODS[name]:
+            type_dict[nm] = value
 
 setClassExtender(add_convenience_methods)
 
@@ -481,4 +490,27 @@ CONVENIENCE_METHODS['hasSuffix:'] = (
 
 CLASS_METHODS['NSNull'] = (
         (   '__nonzero__',  lambda self: False ),
+)
+
+NSDecimalNumber = lookUpClass('NSDecimalNumber')
+def _makeD(v): 
+    if isinstance(v, NSDecimalNumber):
+        return v
+    return NSDecimalNumber.decimalNumberWithDecimal_(v)
+
+CLASS_METHODS['NSDecimalNumber'] = (
+        ( '__add__',  lambda self, other: _makeD(self.decimalValue()+other) ),
+        ( '__radd__', lambda self, other: _makeD(other+self.decimalValue()) ),
+        ( '__sub__',  lambda self, other: _makeD(self.decimalValue()-other) ),
+        ( '__rsub__', lambda self, other: _makeD(other-self.decimalValue()) ),
+        ( '__mul__',  lambda self, other: _makeD(self.decimalValue()*other) ),
+        ( '__rmul__', lambda self, other: _makeD(other*self.decimalValue()) ),
+        ( '__div__',  lambda self, other: _makeD(self.decimalValue()/other) ),
+        ( '__rdiv__', lambda self, other: _makeD(other/self.decimalValue()) ),
+        ( '__mod__',  lambda self, other: _makeD(self.decimalValue()%other) ),
+        ( '__rmod__', lambda self, other: _makeD(other%self.decimalValue()) ),
+        ( '__neg__',  lambda self: _makeD(-(self.decimalValue())) ),
+        ( '__pos__',  lambda self: _makeD(+(self.decimalValue())) ),
+        ( '__abs__',  lambda self: _makeD(abs(self.decimalValue())) ),
+        
 )

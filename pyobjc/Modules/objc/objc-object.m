@@ -22,67 +22,6 @@
 #endif  
         
 
-static NSMapTable* proxy_dict = NULL;
-
-static PyObject* 
-find_existing_proxy(id objc_obj)
-{
-	PyObject* v;
-
-	if (proxy_dict == NULL) return NULL;
-
-	v = NSMapGet(proxy_dict, objc_obj);
-	Py_XINCREF(v);
-	return v;
-}
-
-static void 
-unregister_proxy(id objc_obj)
-{
-	if (proxy_dict == NULL) return;
-	if (objc_obj == nil) return;
-
-	NSMapRemove(proxy_dict, objc_obj);
-}
-
-static int
-register_proxy(PyObject* proxy_obj) 
-{
-	id objc_obj;
-
-	if (PyObjCObject_Check(proxy_obj)) {
-		objc_obj = PyObjCObject_GetObject(proxy_obj);
-	} else if (PyObjCClass_Check(proxy_obj)) {
-		objc_obj = PyObjCClass_GetClass(proxy_obj);
-	} else if (PyObjCUnicode_Check(proxy_obj)) {
-		objc_obj = PyObjCUnicode_Extract(proxy_obj);
-	} else {
-		PyErr_SetString(PyExc_TypeError, 
-			"bad argument for register_proxy");
-		return -1;
-	}
-	assert(objc_obj != nil);
-
-	if (proxy_dict == NULL)  {
-		proxy_dict =  NSCreateMapTable(
-			PyObjCUtil_PointerKeyCallBacks,
-			PyObjCUtil_PointerValueCallBacks, 
-			500);
-
-		if (proxy_dict == NULL) {
-			PyErr_SetString(PyExc_RuntimeError,
-					"Cannot create NSMapTable");
-			return -1;
-		}
-	}
-
-	NSMapInsert(proxy_dict, objc_obj, proxy_obj);
-
-	return 0;
-}
-
-
-
 static PyObject*
 object_new(
 	PyTypeObject*  type __attribute__((__unused__)),
@@ -140,7 +79,8 @@ object_dealloc(PyObject* obj)
 		/* Release the proxied object, we don't have to do this when
 		 * there is no proxied object.
 		 */
-		unregister_proxy(PyObjCObject_GetObject(obj));
+		PyObjC_UnregisterPythonProxy(
+			PyObjCObject_GetObject(obj), obj);
 
 		if (PyObjCObject_IsClassic(obj)) {
 			/* pass */
@@ -702,9 +642,6 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 			[objc_object retain];
 		}
 
-		if (register_proxy(obj) < 0) {
-			NSLog(@"Couldn't register revived proxy object!");
-		}
 		return;
 	}
 	Py_DECREF(obj);
@@ -718,7 +655,7 @@ PyObjCObject_New(id objc_object)
 	PyTypeObject* cls_type;
 	PyObject*     res;
 
-	res = find_existing_proxy(objc_object);
+	res = PyObjC_FindPythonProxy(objc_object);
 	if (res) return res;
 
 	if (objc_object == NULL) {
@@ -754,11 +691,6 @@ PyObjCObject_New(id objc_object)
 		[objc_object retain];
 	}
 
-	if (register_proxy(res) < 0) {
-		Py_DECREF(res);
-		return NULL;
-	}
-
 	return res;
 }
 
@@ -769,7 +701,7 @@ PyObjCObject_NewClassic(id objc_object)
 	PyTypeObject* cls_type;
 	PyObject*     res;
 
-	res = find_existing_proxy(objc_object);
+	res = PyObjC_FindPythonProxy(objc_object);
 	if (res) return res;
 
 	if (objc_object == NULL) {
@@ -797,11 +729,6 @@ PyObjCObject_NewClassic(id objc_object)
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = PyObjCObject_kCLASSIC;
 
-	if (register_proxy(res) < 0) {
-		Py_DECREF(res);
-		return NULL;
-	}
-
 	return res;
 }
 
@@ -812,7 +739,7 @@ PyObjCObject_NewUnitialized(id objc_object)
 	PyTypeObject* cls_type;
 	PyObject*     res;
 
-	res = find_existing_proxy(objc_object);
+	res = PyObjC_FindPythonProxy(objc_object);
 	if (res) return res;
 
 	if (objc_object == NULL) {
@@ -840,10 +767,7 @@ PyObjCObject_NewUnitialized(id objc_object)
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = 0;
 
-	if (register_proxy(res) < 0) {
-		Py_DECREF(res);
-		return NULL;
-	}
+	PyObjC_RegisterPythonProxy(objc_object, res);
 
 	return res;
 }
@@ -883,6 +807,7 @@ PyObjCObject_ClearObject(PyObject* object)
 			object->ob_type->tp_name);
 		
 	}
-	unregister_proxy(((PyObjCObject*)object)->objc_object);
+	PyObjC_UnregisterPythonProxy(
+			((PyObjCObject*)object)->objc_object, object);
 	((PyObjCObject*)object)->objc_object = nil;
 }

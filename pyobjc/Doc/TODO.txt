@@ -299,6 +299,12 @@ Check if it is possible to wrap ``NSSet`` using ``set`` (and v.v.).
 
 Only implement this when it is possible to convert without loss of information.
 
+**Ronald, 20050130**: *converting* is not an option: PyObjC takes care to
+preserve the identity of ObjC objects when passed through python. This is 
+necessary for at least some APIs.   Furthermore, both ``NSSet`` and 
+``__builtin__.set`` are mutable!
+
+
 Python 2.4
 ..........
 

@@ -1,45 +1,5 @@
 #import "OC_PythonDictionary.h"
 
-static void
-nsmaptable_python_retain(NSMapTable *table __attribute__((__unused__)), const void *datum) {
-	Py_INCREF((PyObject *)datum);
-}
-
-static void
-nsmaptable_python_release(NSMapTable *table __attribute__((__unused__)), void *datum) {
-	Py_DECREF((PyObject *)datum);
-}
-
-static void
-nsmaptable_objc_retain(NSMapTable *table __attribute__((__unused__)), const void *datum) {
-	[(id)datum retain];
-}
-
-static void
-nsmaptable_objc_release(NSMapTable *table __attribute__((__unused__)), void *datum) {
-	[(id)datum release];
-}
-
-static
-NSMapTableKeyCallBacks PyObjC_ObjectToIdTable_KeyCallBacks = {
-	NULL, // use pointer value for hash
-	NULL, // use pointer value for equality
-	&nsmaptable_python_retain,
-	&nsmaptable_python_release,
-	NULL, // generic description
-	NULL // not a key
-};
-
-static
-NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
-	&nsmaptable_objc_retain,
-	&nsmaptable_objc_release,
-	NULL  // generic description
-};
-
-
-
-
 /*
  * OC_PythonDictionaryEnumerator - Enumerator for Python dictionaries
  *
@@ -115,22 +75,14 @@ NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
 	Py_INCREF(v);
 	Py_XDECREF(value);
 	value = v;
-	if (table) {
-		NSResetMapTable(table);
-	} else {
-		table = NSCreateMapTable(PyObjC_ObjectToIdTable_KeyCallBacks, PyObjC_ObjectToIdTable_ValueCallBacks, [self count]);
-	}
-	NSMapInsert(table, (const void *)Py_None, (const void *)[NSNull null]);
 	return self;
 }
 
 -(void)dealloc
 {
 	PyObjC_BEGIN_WITH_GIL
+		PyObjC_UnregisterObjCProxy(value, self);
 		Py_XDECREF(value);
-		if (table) {
-			NSFreeMapTable(table);
-		}
 	
 	PyObjC_END_WITH_GIL
 
@@ -157,11 +109,8 @@ NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
 
 -(int)depythonify:(PyObject*)v toId:(id*)datum
 {
-	if (!(*datum = (id)NSMapGet(table, (const void *)v))) {
-		if (depythonify_c_value(@encode(id), v, datum) == -1) {
-			return -1;
-		}
-		NSMapInsert(table, (const void *)v, (const void *)*datum);
+	if (depythonify_c_value(@encode(id), v, datum) == -1) {
+		return -1;
 	}
 	return 0;
 }

@@ -21,7 +21,6 @@
 @interface OC_PythonArray : NSMutableArray
 {
 	PyObject* value;
-	NSMapTable* table;
 }
 
 /*!

@@ -2,6 +2,7 @@ import unittest
 import objc
 import re
 import sys
+import operator
 
 from Foundation import *
 
@@ -28,8 +29,6 @@ def stripDocType(val):
     return r.replace(u'version="0.9"', u'version="1.0"')
 
 
-# NSNumber instances are converted to Python numbers
-
 class TestNSNumber( unittest.TestCase ):
     def testSimple(self):
         self.assertEquals(NSNumber.numberWithFloat_(1.0), 1,0)
@@ -37,16 +36,31 @@ class TestNSNumber( unittest.TestCase ):
         self.assertEquals(NSNumber.numberWithFloat_(-0.5), -0.5)
         self.assertEquals(NSNumber.numberWithInt_(-4), -4)
         self.assertEquals(NSNumber.numberWithInt_(0), 0)
-        self.assertEquals(NSNumber.numberWithFloat_(0.0), 0,0)
+        self.assertEquals(NSNumber.numberWithFloat_(0.0), 0.0)
+
+    def testReadOnly(self):
+        n = NSNumber.numberWithFloat_(1.2)
+        self.assertRaises(AttributeError, setattr, n, 'foo', 2)
+
+        n = NSNumber.numberWithInt_(1)
+        self.assertRaises(AttributeError, setattr, n, 'foo', 2)
+
+        n = NSNumber.numberWithLongLong_(sys.maxint + 2)
+        self.assertRaises(AttributeError, setattr, n, 'foo', 2)
 
     def testUseAsBasicType(self):
         lstValue = list(range(0, 20, 2))
         for idx, v in enumerate(lstValue):
             self.assertEquals(v, lstValue[NSNumber.numberWithInt_(idx)])
+            self.assertEquals(v, lstValue[NSNumber.numberWithLong_(idx)])
+            self.assertEquals(v, lstValue[NSNumber.numberWithLongLong_(idx)])
+
+        self.assertRaises(TypeError, operator.getitem, lstValue,
+                NSNumber.numberWithFloat_(2.0))
 
     def testUnsignedIssues(self):
         # NSNumber stores unsigned numbers as signed numbers
-        # This is a bug in Cocoa...
+        # This is a bug in Cocoa... (RADAR #4007594)
 
         self.assertEquals(NSNumber.numberWithUnsignedInt_(sys.maxint+1),
                     -sys.maxint-1)
@@ -59,6 +73,85 @@ class TestNSNumber( unittest.TestCase ):
 
         v = NSNumber.numberWithInt_(10)
         self.assertEquals(v.doubleValue(), float(10))
+
+    def testMath(self):
+        Xs = list(range(10, 40, 3))
+        Ys = list(range(-12, 44, 5))
+
+        self.assert_(0 not in Ys)
+        self.assert_(0 not in Xs)
+
+        for x in Xs:
+            for y in Ys:
+                Nx = NSNumber.numberWithInt_(x)
+                Ny = NSNumber.numberWithInt_(y)
+
+                self.assertEquals(x + y, Nx + Ny)
+                self.assertEquals(x - y, Nx - Ny)
+                self.assertEquals(x * y, Nx * Ny)
+                self.assertEquals(x / y, Nx / Ny)
+                self.assertEquals(x % y, Nx % Ny)
+                self.assertEquals(x ** y, Nx ** Ny)
+
+                Nx = NSNumber.numberWithFloat_(x+0.5)
+                Ny = NSNumber.numberWithFloat_(y+0.5)
+
+                self.assertEquals((x+0.5) + (y+0.5), Nx + Ny)
+                self.assertEquals((x+0.5) - (y+0.5), Nx - Ny)
+                self.assertEquals((x+0.5) * (y+0.5), Nx * Ny)
+                self.assertEquals((x+0.5) / (y+0.5), Nx / Ny)
+                self.assertEquals((x+0.5) % (y+0.5), Nx % Ny)
+                self.assertEquals((x+0.5) ** (y+0.5), Nx ** Ny)
+
+                Nx = NSNumber.numberWithLongLong_(x)
+                Ny = NSNumber.numberWithLongLong_(y)
+
+                self.assertEquals(long(x) + long(y), Nx + Ny)
+                self.assertEquals(long(x) - long(y), Nx - Ny)
+                self.assertEquals(long(x) * long(y), Nx * Ny)
+                self.assertEquals(long(x) / long(y), Nx / Ny)
+                self.assertEquals(long(x) % long(y), Nx % Ny)
+                self.assertEquals(long(x) ** long(y), Nx ** Ny)
+
+
+    def testTyping(self):
+        # Thanks to some tricks and a cooperating Python runtime,
+        # NSNumber "instances" seem to be subclasses of both NSNumber and
+        # the corresponding Python number type.
+        #
+
+        n = NSNumber.numberWithInt_(10)
+        self.assert_(isinstance(n, int))
+        self.assert_(isinstance(n, NSNumber))
+
+        n = NSNumber.numberWithUnsignedInt_(10)
+        self.assert_(isinstance(n, int))
+        self.assert_(isinstance(n, NSNumber))
+
+        n = NSNumber.numberWithLong_(10)
+        self.assert_(isinstance(n, int))
+        self.assert_(isinstance(n, NSNumber))
+
+        n = NSNumber.numberWithUnsignedLong_(10)
+        self.assert_(isinstance(n, int))
+        self.assert_(isinstance(n, NSNumber))
+
+        n = NSNumber.numberWithLongLong_(10)
+        self.assert_(isinstance(n, long))
+        self.assert_(isinstance(n, NSNumber))
+
+        n = NSNumber.numberWithUnsignedLongLong_(10)
+        self.assert_(isinstance(n, long))
+        self.assert_(isinstance(n, NSNumber))
+
+        n = NSNumber.numberWithFloat_(10)
+        self.assert_(isinstance(n, float))
+        self.assert_(isinstance(n, NSNumber))
+
+        n = NSNumber.numberWithDouble_(10)
+        self.assert_(isinstance(n, float))
+        self.assert_(isinstance(n, NSNumber))
+
 
 if objc.platform == 'MACOSX':
     class TestPropList (unittest.TestCase):

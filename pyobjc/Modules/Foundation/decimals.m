@@ -365,6 +365,20 @@ static char* keywords2[] = { "string", NULL };
 			return 0;
 			
 
+		} else if (PyObjCObject_Check(pyValue)) {
+			NSObject* value = PyObjC_PythonToId(pyValue);
+			if ([value isKindOfClass:[NSDecimalNumber class]]) {
+				((DecimalObject*)self)->value = [
+					(NSDecimalNumber*)value decimalValue
+				];
+
+				((DecimalObject*)self)->objc_value = 
+					(NSDecimalNumber*)value;
+				[value retain];
+				return 0;
+			}
+			PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal", pyValue->ob_type->tp_name);
+			return -1;
 		} else if (!PyString_Check(pyValue) && !PyUnicode_Check(pyValue)) {
 			PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal", pyValue->ob_type->tp_name);
 			return -1;
@@ -758,7 +772,7 @@ static int decimal_coerce(PyObject** l, PyObject** r)
 
 	if (!Decimal_Check(*l)) {
 		/* The test is needed to avoid silently converting strings */
-		if (!(PyInt_Check(*l) || PyLong_Check(*l))) goto error;
+		if (PyString_Check(*l) || PyUnicode_Check(*l) || PyFloat_Check(*l)) goto error;
 		
 		left = (PyObject*)PyObject_New(DecimalObject, &Decimal_Type);
 		if (left == NULL) goto error;
@@ -774,7 +788,7 @@ static int decimal_coerce(PyObject** l, PyObject** r)
 
 	if (!Decimal_Check(*r)) {
 		/* The test is needed to avoid silently converting strings */
-		if (!(PyInt_Check(*r) || PyLong_Check(*r))) goto error;
+		if (PyString_Check(*r) || PyUnicode_Check(*r) || PyFloat_Check(*r)) goto error;
 		
 		right = (PyObject*)PyObject_New(DecimalObject, &Decimal_Type);
 		if (right == NULL) goto error;

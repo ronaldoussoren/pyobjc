@@ -12,6 +12,7 @@ call_NSObject_alloc(PyObject* method,
 	IMP anIMP;
 	Class aClass;
 	SEL volatile aSel;
+	PyObject* v;
 
 	if (PyArg_ParseTuple(arguments, "") < 0) {
 		return NULL;

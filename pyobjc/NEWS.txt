@@ -7,6 +7,18 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3 (2005-03-??)
 ------------------------
 
+- The bridge now maintains object identity across the bridge
+  in both directions. Previous versions of the bridge only did this when
+  bridging from Objective-C to Python.
+
+  Exceptions: NSString and NSNumber do not have unique proxies. NSString
+  never will have. Python numbers and strings are converted, not proxied and
+  therefore also don't get unique proxies.
+
+  And finally, any python object that is proxied using the ``__pyobjc_object__``
+  interface will only get a unique proxy if the ``__pyobjc_object__`` method
+  implements that feature.
+
 - (UNFINISHED) New RemotePyInterpreter example that demonstrates an
   out-of-process Python interpreter (primarily for IDE uses).
 
@@ -32,9 +44,10 @@ Version 1.3 (2005-03-??)
   as the wrapped object.
 
 - ``NSNumber`` instances are bridged to a ``float``, ``long``, or ``int``
-  subclass that uses ``__pyobjc_object__``.  ``NSDecimalNumber`` is bridged
-  to ``Foundation.NSDecimal``, which now supports ``__pyobjc_object__``.
-  This eliminates a HUGE amount of cruft in ``objc._conveniences``.
+  subclass that uses ``__pyobjc_object__``.  
+  ``NSDecimal`` is converted to ``NSDecimalNumber`` when used as an object,
+  ``NSDecimalNumber`` is not bridged to ``NSDecimal`` because the latter is
+  a mutable type.
 
 - The Python to Objective-C bridge now looks for a ``__pyobjc_object__`` 
   attribute to get a PyObjC object from a Python object.

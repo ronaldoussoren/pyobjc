@@ -29,6 +29,7 @@
 #define PyObjC_UNICODE_FAST_PATH
 #endif
 
+#include "proxy-registry.h"
 #include "objc_support.h"
 #include "pointer-support.h"
 #include "OC_PythonObject.h"

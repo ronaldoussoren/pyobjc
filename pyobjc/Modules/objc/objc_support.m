@@ -51,18 +51,28 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-	PyObject *rval = (PyObject *)PyObjCObject_New(self);
+	PyObject *rval;
+
+	rval = PyObjC_FindPythonProxy(self);
+	if (rval == NULL) {
+		rval = (PyObject *)PyObjCObject_New(self);
+		PyObjC_RegisterPythonProxy(self, rval);
+	}
+
 	return rval;
 }
 
 +(PyObject*)__pyobjc_PythonObject__
 {
-	PyGILState_STATE state = PyGILState_Ensure();
-	PyObject *rval = (PyObject *)PyObjCClass_New(self);
+	PyObject *rval;
+
+	//rval = PyObjC_FindPythonProxy(self);
+	rval = NULL;
 	if (rval == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
+		rval = (PyObject *)PyObjCClass_New(self);
+		//PyObjC_RegisterPythonProxy(self, rval);
 	}
-	PyGILState_Release(state);
+
 	return rval;
 }
 
@@ -77,13 +87,26 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-	PyObject *rval = (PyObject *)PyObjCObject_New(self);
+	PyObject *rval;
+
+	rval = PyObjC_FindPythonProxy(self);
+	if (rval == NULL) {
+		rval = (PyObject *)PyObjCObject_New(self);
+		PyObjC_RegisterPythonProxy(self, rval);
+	}
 	return rval;
 }
 
 +(PyObject*)__pyobjc_PythonObject__
 {
-	PyObject *rval = (PyObject *)PyObjCClass_New(self);
+	PyObject *rval;
+
+	rval = NULL;
+	//rval = PyObjC_FindPythonProxy(self);
+	if (rval == NULL) {
+		rval = (PyObject *)PyObjCClass_New(self);
+		//PyObjC_RegisterPythonProxy(self, rval);
+	}
 	return rval;
 }
 
@@ -97,7 +120,13 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-	PyObject* rval =  (PyObject *)PyObjCObject_NewClassic(self);
+	PyObject *rval;
+
+	rval = PyObjC_FindPythonProxy(self);
+	if (rval == NULL) {
+		rval = (PyObject *)PyObjCObject_NewClassic(self);
+		PyObjC_RegisterPythonProxy(self, rval);
+	}
 	return rval;
 }
 
@@ -111,7 +140,13 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-	PyObject* rval =  (PyObject *)PyObjCObject_NewClassic(self);
+	PyObject *rval;
+
+	rval = PyObjC_FindPythonProxy(self);
+	if (rval == NULL) {
+		rval = (PyObject *)PyObjCObject_NewClassic(self);
+		PyObjC_RegisterPythonProxy(self, rval);
+	}
 	return rval;
 }
 
@@ -125,6 +160,7 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
+	/* Don't register the proxy, see XXX */
 	PyObject *rval = (PyObject *)PyObjCUnicode_New(self);
 	return rval;
 }
@@ -138,12 +174,49 @@
 @implementation NSNumber (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__
 {
-	PyObject *rval = [super __pyobjc_PythonObject__];
-	if (PyObjC_NSNumberWrapper && rval) {
-		PyObject *val = rval;
-		rval = PyObject_CallFunctionObjArgs(PyObjC_NSNumberWrapper, val, NULL);
-		Py_DECREF(val);
+	/* FIXME: rewrite PyObjC_NSNumberWrapper in C */
+	PyObject *rval;
+
+
+#ifdef MACOSX
+	/* shortcut for booleans */
+	if (kCFBooleanTrue == (CFBooleanRef)self) {
+		return PyBool_FromLong(1);
+	} else if (kCFBooleanFalse == (CFBooleanRef)self) {
+		return PyBool_FromLong(0);
 	}
+#endif
+	
+	rval = PyObjC_FindPythonProxy(self);
+	if (rval == NULL) {
+		rval= PyObjCObject_New(self);
+
+		if (PyObjC_NSNumberWrapper && rval) {
+			PyObject *val = rval;
+			rval = PyObject_CallFunctionObjArgs(
+					PyObjC_NSNumberWrapper, val, NULL);
+			Py_DECREF(val);
+		}
+	}
+	return rval;
+}
+@end
+
+@interface NSDecimalNumber (PyObjCSupport)
+-(PyObject*)__pyobjc_PythonObject__;
+@end /* NSDecimalNumber (PyObjCSupport) */
+
+@implementation NSDecimalNumber (PyObjCSupport)
+-(PyObject*)__pyobjc_PythonObject__
+{
+	PyObject *rval;
+
+	rval = PyObjC_FindPythonProxy(self);
+	if (rval == NULL) {
+		rval = (PyObject *)PyObjCObject_New(self);
+		PyObjC_RegisterPythonProxy(self, rval);
+	}
+
 	return rval;
 }
 @end
@@ -887,7 +960,7 @@ pythonify_c_value (const char *type, void *datum)
 
 		if (obj == nil) {
 			retobject = Py_None;
-				Py_INCREF (retobject);
+			Py_INCREF (retobject);
 		} else {
 			retobject = [obj  __pyobjc_PythonObject__];
 		}

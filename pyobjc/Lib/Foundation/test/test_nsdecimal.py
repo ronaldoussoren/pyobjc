@@ -5,6 +5,7 @@ import unittest
 from Foundation import *
 import operator
 import objc
+import sys
 
 class TestNSDecimal (unittest.TestCase):
     def testCreation(self):
@@ -119,28 +120,85 @@ class TestNSDecimalNumber (unittest.TestCase):
         self.assertEquals(o.description(), u"1.1234")
 
 class NSDecimalOperators (unittest.TestCase):
+    def testCoerce(self):
+        r = NSDecimal(1)
+
+        v = coerce(r, r)
+        self.assertEquals(v, (r, r))
+
+        v = coerce(r, 2)
+        self.assertEquals(v, (r, NSDecimal(2)))
+
+        v = coerce(2, r)
+        self.assertEquals(v, (NSDecimal(2), r))
+
+        v = coerce(r, sys.maxint+2)
+        self.assertEquals(v, (r, NSDecimal(sys.maxint+2)))
+
+        v = coerce(sys.maxint+2, r)
+        self.assertEquals(v, (NSDecimal(sys.maxint+2), r))
+
+        t = NSDecimal(4).__pyobjc_object__
+        self.assert_(isinstance(t, NSObject))
+        v = coerce(t, r)
+        self.assertEquals(v, (NSDecimal(4), r))
+
+        v = coerce(r, t)
+        self.assertEquals(v, (r, NSDecimal(4)))
+
+        self.assertRaises(TypeError, coerce, 1.0, r)
+        self.assertRaises(TypeError, coerce, r, 1.0)
+        self.assertRaises(TypeError, coerce, "1.0", r)
+        self.assertRaises(TypeError, coerce, r, "1.0")
+        self.assertRaises(TypeError, coerce, u"1.0", r)
+        self.assertRaises(TypeError, coerce, r, u"1.0")
+        self.assertRaises(TypeError, coerce, (), r)
+        self.assertRaises(TypeError, coerce, r, ())
+
+
     def testAddition(self):
         r = NSDecimal()
         o = NSDecimal(1)
         p = NSDecimal(2)
 
+        O = o.__pyobjc_object__
+        P = p.__pyobjc_object__
+        self.assert_(isinstance(P, NSObject))
+        self.assert_(isinstance(O, NSObject))
+
         NSDecimalAdd(r, o, p, NSRoundPlain)
         self.assertEquals(o+p, r)
+        self.assertEquals(o+P, r)
+        self.assertEquals(O+p, r)
         self.assertEquals(o+2, r)
         self.assertEquals(o+2L, r)
-        self.assertEquals(1+p, r)
+        self.assertEquals(p+1, r)
         self.assertEquals(1+p, r)
 
         self.assertRaises(TypeError, operator.add, o, 1.2)
         self.assertRaises(TypeError, operator.add, 1.2, o)
+        self.assertRaises(TypeError, operator.add, o, "1.2")
+        self.assertRaises(TypeError, operator.add, "1.2", o)
+        self.assertRaises(TypeError, operator.add, o, u"1.2")
+        self.assertRaises(TypeError, operator.add, u"1.2", o)
+        self.assertRaises(TypeError, operator.add, o, [])
+        self.assertRaises(TypeError, operator.add, [], o)
 
     def testSubtraction(self):
         r = NSDecimal()
         o = NSDecimal(1)
         p = NSDecimal(2)
 
+        P = p.__pyobjc_object__
+        O = o.__pyobjc_object__
+        self.assert_(isinstance(P, NSObject))
+        self.assert_(isinstance(O, NSObject))
+
+
         NSDecimalSubtract(r, o, p, NSRoundPlain)
         self.assertEquals(o-p, r)
+        self.assertEquals(O-p, r)
+        self.assertEquals(o-P, r)
         self.assertEquals(o-2, r)
         self.assertEquals(o-2L, r)
         self.assertEquals(1-p, r)
@@ -148,14 +206,27 @@ class NSDecimalOperators (unittest.TestCase):
 
         self.assertRaises(TypeError, operator.sub, o, 1.2)
         self.assertRaises(TypeError, operator.sub, 1.2, o)
+        self.assertRaises(TypeError, operator.sub, o, "1.2")
+        self.assertRaises(TypeError, operator.sub, "1.2", o)
+        self.assertRaises(TypeError, operator.sub, o, u"1.2")
+        self.assertRaises(TypeError, operator.sub, u"1.2", o)
+        self.assertRaises(TypeError, operator.sub, o, ())
+        self.assertRaises(TypeError, operator.sub, (), o)
 
     def testMultiplication(self):
         r = NSDecimal()
         o = NSDecimal(2)
         p = NSDecimal(3)
 
+        P = p.__pyobjc_object__
+        O = o.__pyobjc_object__
+        self.assert_(isinstance(P, NSObject))
+        self.assert_(isinstance(O, NSObject))
+
         NSDecimalMultiply(r, o, p, NSRoundPlain)
         self.assertEquals(o*p, r)
+        self.assertEquals(O*p, r)
+        self.assertEquals(o*P, r)
         self.assertEquals(o*3, r)
         self.assertEquals(o*3L, r)
         self.assertEquals(2*p, r)
@@ -169,8 +240,15 @@ class NSDecimalOperators (unittest.TestCase):
         o = NSDecimal(2)
         p = NSDecimal(3)
 
+        P = p.__pyobjc_object__
+        O = o.__pyobjc_object__
+        self.assert_(isinstance(P, NSObject))
+        self.assert_(isinstance(O, NSObject))
+
         NSDecimalDivide(r, o, p, NSRoundPlain)
         self.assertEquals(o/p, r)
+        self.assertEquals(O/p, r)
+        self.assertEquals(o/P, r)
         self.assertEquals(o/3, r)
         self.assertEquals(o/3L, r)
         self.assertEquals(2/p, r)
@@ -229,10 +307,17 @@ class NSDecimalOperators (unittest.TestCase):
         o = NSDecimal(1)
         p = NSDecimal(2)
 
+        P = p.__pyobjc_object__
+        self.assert_(isinstance(P, NSObject))
+
         NSDecimalAdd(r, o, p, NSRoundPlain)
 
         o = NSDecimal(1)
         o += p
+        self.assertEquals(o, r)
+
+        o = NSDecimal(1)
+        o += P
         self.assertEquals(o, r)
 
         o = NSDecimal(1)
@@ -270,11 +355,19 @@ class NSDecimalOperators (unittest.TestCase):
         o = NSDecimal(1)
         p = NSDecimal(2)
 
+        P = p.__pyobjc_object__
+        self.assert_(isinstance(P, NSObject))
+
         NSDecimalSubtract(r, o, p, NSRoundPlain)
 
         o = NSDecimal(1)
         o -= p
         self.assertEquals(o, r)
+
+        o = NSDecimal(1)
+        o -= P
+        self.assertEquals(o, r)
+
 
         o = NSDecimal(1)
         o -= 2
@@ -297,10 +390,17 @@ class NSDecimalOperators (unittest.TestCase):
         o = NSDecimal(2)
         p = NSDecimal(3)
 
+        P = p.__pyobjc_object__
+        self.assert_(isinstance(P, NSObject))
+
         NSDecimalMultiply(r, o, p, NSRoundPlain)
 
         o = NSDecimal(2)
         o *= p
+        self.assertEquals(o, r)
+
+        o = NSDecimal(2)
+        o *= P
         self.assertEquals(o, r)
 
         o = NSDecimal(2)
@@ -324,10 +424,17 @@ class NSDecimalOperators (unittest.TestCase):
         o = NSDecimal(2)
         p = NSDecimal(3)
 
+        P = p.__pyobjc_object__
+        self.assert_(isinstance(P, NSObject))
+
         NSDecimalDivide(r, o, p, NSRoundPlain)
 
         o = NSDecimal(2)
         o /= p
+        self.assertEquals(o, r)
+
+        o = NSDecimal(2)
+        o /= P
         self.assertEquals(o, r)
 
         o = NSDecimal(2)
