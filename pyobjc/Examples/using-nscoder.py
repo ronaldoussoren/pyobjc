@@ -19,7 +19,7 @@ archiver = archiver.initForWritingWithMutableData_(data)
 print 4
 archiver.encodeObject_(MyObject.alloc().init())
 print 5
-result = data.writeToFile_atomically_("archive.bin", True)
+result = data.writeToFile_atomically_("archive.bin", objc.YES)
 print 6
 
 del archiver

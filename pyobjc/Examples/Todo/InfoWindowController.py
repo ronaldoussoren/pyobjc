@@ -1,5 +1,5 @@
 from AppKit import *
-from objc import selector, IBOutlet
+from objc import selector, IBOutlet, NO
 from ToDoDocument import *
 from PyObjCTools.NibClassBuilder import AutoBaseClass
 
@@ -146,8 +146,7 @@ class InfoWindowController (AutoBaseClass):
     def windowDidLoad(self):
     	NSWindowController.windowDidLoad(self) 
 
-    	#self.dump_outlets()
-
+        # XXX: The calls to retain may not be necessary.
     	self.notifyView.retain()
     	self.notifyView.removeFromSuperview()
 
@@ -182,9 +181,6 @@ class InfoWindowController (AutoBaseClass):
 
 
     def __del__(self): # dealloc
-    	#self.notifyView.release()
-    	#self.reschedView.release()
-    	#self.notesView.release()
     	
     	NSNotificationCenter.defaultCenter().removeObserver_(self)
 
@@ -284,4 +280,4 @@ def clearButtonMatrix(matrix):
 
     for i in range(rows):
     	cell = matrix.cellAtRow_column_(i, 0)
-    	if cell: cell.setState_(False)
+    	if cell: cell.setState_(NO)

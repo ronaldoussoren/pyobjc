@@ -1,6 +1,6 @@
 from Foundation import *
 from AppKit import *
-from objc import IBOutlet
+from objc import IBOutlet, YES, NO
 from PyObjCTools.NibClassBuilder import AutoBaseClass
 
 gNumDaysInMonth = ( 0, 31, 28, 31, 30, 21, 30, 31, 31, 30, 31, 30, 31 )
@@ -29,7 +29,6 @@ class CalendarMatrix (AutoBaseClass):
                 if val:
                     val.setTag_(count)
                 count += 1
-        #cell.release() # is this needed?
 
         self._selectedDay = NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
                 now.yearOfCommonEra(), 
@@ -38,7 +37,7 @@ class CalendarMatrix (AutoBaseClass):
                 0, 
                 0, 
                 0, 
-                NSTimeZone.localTimeZone()) #.retain()
+                NSTimeZone.localTimeZone())
         return self
 
 
@@ -122,18 +121,18 @@ class CalendarMatrix (AutoBaseClass):
 
             if i < self._startOffset or i >= (daysInMonth + self._startOffset):
                 # blank out unused cells in the matrix
-                cell.setBordered_(False)
-                cell.setEnabled_(False)
+                cell.setBordered_(NO)
+                cell.setEnabled_(NO)
                 cell.setTitle_("")
-                cell.setCellAttribute_to_(NSCellHighlighted, False)
+                cell.setCellAttribute_to_(NSCellHighlighted, NO)
             else:
                 # Fill in valid days in the matrix
-                cell.setBordered_(True)
-                cell.setEnabled_(True)
+                cell.setBordered_(YES)
+                cell.setEnabled_(YES)
                 cell.setFont_(NSFont.systemFontOfSize_(12))
                 cell.setTitle_(str(dayLabel))
                 dayLabel += 1
-                cell.setCellAttribute_to_(NSCellHighlighted, False)
+                cell.setCellAttribute_to_(NSCellHighlighted, NO)
 
         self.selectCellWithTag_(selDate.dayOfMonth() + self._startOffset - 1)
         self.highlightTodayIfVisible()
@@ -149,12 +148,12 @@ class CalendarMatrix (AutoBaseClass):
             aCell = self.cellWithTag_(
                 now.dayOfMonth() + self._startOffset - 1)
             aCell.setHighlightsBy_(NSMomentaryChangeButton)
-            aCell.setCellAttribute_to_(NSCellHighlighted, True)
+            aCell.setCellAttribute_to_(NSCellHighlighted, YES)
 
     def awakeFromNib(self):
         self.setTarget_(self)
         self.setAction_('choseDay:')
-        self.setAutosizesCells_(True)
+        self.setAutosizesCells_(YES)
         self.refreshCalendar()
         self.choseDay_(self)
 
