@@ -396,7 +396,7 @@ static PyTypeObject ObjCMethodAccessor_Type = {
 #endif
 };
 
-PyObject* ObjCMethodAccessor_New(PyObject* base, int class_method)
+PyObject* PyObjCMethodAccessor_New(PyObject* base, int class_method)
 {
 	ObjCMethodAccessor* result;
 

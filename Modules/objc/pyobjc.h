@@ -22,16 +22,17 @@
 
 
 #include "objc_support.h"
+#include "pointer-support.h"
 #include "OC_PythonObject.h"
 #include "OC_PythonArray.h"
 #include "OC_PythonDictionary.h"
 #include "method-signature.h"
-#include "libffi_support.h"
-#include "super-call.h"
 #include "objc_util.h"
 #include "objc-class.h"
 #include "objc-object.h"
 #include "selector.h"
+#include "libffi_support.h"
+#include "super-call.h"
 #include "instance-var.h"
 #include "class-builder.h" 
 #include "ObjCPointer.h"
@@ -64,27 +65,14 @@
 
 #endif
 
-extern int ObjC_VerboseLevel;
+extern int PyObjC_VerboseLevel;
 
 
-
-
-
-
-
-int ObjC_register_methods(void);
-
-int ObjCAPI_Register(PyObject* module_dict);
+int PyObjCAPI_Register(PyObject* module_dict);
 #define PYOBJC_BUILD
 #include "pyobjc-api.h"
 
-
-IMP ObjC_MakeIMPForSignature(char* signature, PyObject* callable);
-IMP ObjC_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector);
-PyObject *ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args);
-
-
-extern PyObject* ObjCMethodAccessor_New(PyObject* base, int class_method);
+extern PyObject* PyObjCMethodAccessor_New(PyObject* base, int class_method);
 
 /* Needed by method-accessor, name will be changed soon */
 char* PyObjC_SELToPythonName(SEL, char*, size_t);
