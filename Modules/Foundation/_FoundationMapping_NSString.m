@@ -233,6 +233,14 @@ _pyobjc_install_NSString(void)
 	}
 	if (PyObjC_RegisterMethodMapping(
 		classNSString,
+		@selector(localizedStringWithFormat:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+	if (PyObjC_RegisterMethodMapping(
+		classNSString,
 		@selector(stringByAppendingFormat:),
 		PyObjCUnsupportedMethod_Caller,
 		PyObjCUnsupportedMethod_IMP) < 0) {
