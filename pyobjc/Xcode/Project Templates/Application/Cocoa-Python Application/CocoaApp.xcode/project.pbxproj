@@ -252,7 +252,7 @@
 				GCC_ENABLE_TRIGRAPHS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = «PROJECTNAME»_Prefix.pch;
+				GCC_PREFIX_HEADER = "«PROJECTNAMEASIDENTIFIER»_Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -350,7 +350,7 @@
 			explicitFileType = wrapper.application;
 			includeInIndex = 0;
 			isa = PBXFileReference;
-			path = «PROJECTNAME».app;
+			path = "«PROJECTNAME».app";
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -410,7 +410,7 @@
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			path = «PROJECTNAME»_Prefix.pch;
+			path = "«PROJECTNAMEASIDENTIFIER»_Prefix.pch";
 			refType = 4;
 			sourceTree = "<group>";
 		};
