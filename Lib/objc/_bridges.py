@@ -5,15 +5,6 @@ __all__ = []
 BRIDGED_STRUCTURES = {}
 BRIDGED_TYPES = []
 
-# XXX - these could let us remove code from OC_PythonObject
-#NSNumber = lookUpClass('NSNumber')
-#BRIDGED_TYPES.extend([
-#    (bool, NSNumber.numberWithBool_),
-#    (int, NSNumber.numberWithInt_),
-#    (float, NSNumber.numberWithDouble_),
-#    (long, NSNumber.numberWithLongLong_),
-#])
-
 try:
     from array import array
     from Carbon.File import FSRef
@@ -27,17 +18,6 @@ else:
     def FSRef_to_struct(fsRef):
         return (tuple(array('B').fromstring(fsRef.data)),)
     BRIDGED_TYPES.append((FSRef, FSRef_to_struct))
-
-
-class PyObjCData(lookUpClass('NSData')):
-    def dataWithPyObject_(cls, anObject):
-        self = cls.dataWithBytes_length_(anObject, len(anObject))
-        self.__pyobjc_object__ = anObject
-        return self
-    dataWithPyObject_ = classmethod(dataWithPyObject_)
-
-BRIDGED_TYPES.append((buffer, PyObjCData.dataWithPyObject_))
-
 
 def _bridgePythonTypes():
     # python TO Obj-C
