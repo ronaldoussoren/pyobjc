@@ -132,11 +132,33 @@ PyObject* ObjC_GetPythonImplementation(id obj)
 			"normal object of class %s", obj->isa->name);
 		return NULL;
 	}
-
 	if (pyobj == NULL) {
 		return Py_None;
 	}
+
 	return pyobj;
+}
+
+static int
+ObjC_SetPythonImplementation(id obj, PyObject* newval)
+{
+	Ivar      var   = NULL;
+
+	if (obj == nil) {
+		ObjCErr_Set(objc_internal_error,
+			"ObjC_GetPythonImplementation called for <nil>");
+		return -1;
+	}
+
+	var = class_getInstanceVariable(obj->isa, pyobj_ivar);
+	if (var == NULL) {
+		ObjCErr_Set(objc_internal_error,
+			"ObjC_SetPythonImplementation called for "
+			"normal object of class %s", obj->isa->name);
+		return -1;
+	}
+	*(PyObject**)(((char*)obj)+var->ivar_offset) = newval;
+	return 0;
 }
 
 /*
@@ -829,13 +851,11 @@ static id class_method_allocWithZone(id self, SEL sel, NSZone* zone)
    pyobject->is_paired = 1;
 
    /* obj->__pyobjc_obj__ = pyobjct */ 
-   if (object_setInstanceVariable(obj, pyobj_ivar, pyobject) == NULL) {
-       ObjCErr_Set(objc_internal_error, "Cannot set python reference");
+   if (ObjC_SetPythonImplementation(obj, (PyObject*)pyobject) == -1) {
        Py_DECREF(pyobject);
        ObjCErr_ToObjC();
        return nil;
    }
-
    return obj;
 }
 
@@ -846,7 +866,17 @@ static id object_method_retain(id self, SEL sel)
 
 	pyself = ObjC_GetPythonImplementation(self);
 
-	if (pyself) {
+	if (pyself == Py_None) {
+		struct objc_super super;
+		
+   		super.class = find_real_superclass(self->isa, 
+			@selector(retain), class_getInstanceMethod, 
+			(IMP)object_method_retain);
+		super.receiver = self;
+
+		self = objc_msgSendSuper(&super, @selector(retain)); 
+	} else if (pyself) {
+		OC_CheckRevive(pyself);
 		Py_INCREF(pyself);
 	} else {
 		PyErr_Clear();
@@ -867,9 +897,29 @@ static void object_method_release(id self, SEL sel)
 	if (obj == NULL) {
 		PyErr_Clear();
 		return;
+	} else if (obj == Py_None) {
+   		super.class = find_real_superclass(self->isa, 
+			@selector(release), class_getInstanceMethod, 
+			(IMP)object_method_release);
+		super.receiver = self;
+
+		self = objc_msgSendSuper(&super, @selector(release)); 
+		return;
 	}
 
-	if (obj->ob_refcnt == 0) {
+	if (obj->ob_refcnt <= 0) {
+		
+		/* Remove reference to the Python object. We don't need it
+		 * any more (because the ObjCObject code will remove it 
+		 * when this function returns) and [super release] may 
+		 * call back to us some time later on ([NSWindow release] in
+		 * a seperator thread).
+		 */
+		if (ObjC_SetPythonImplementation(self, 0) == -1) {
+		       ObjCErr_ToObjC();
+		       return;
+		}
+
 		/* [super release] */
    		super.class = find_real_superclass(self->isa, 
 			@selector(release), class_getInstanceMethod, 
@@ -894,7 +944,19 @@ static void object_method_release(id self, SEL sel)
 /* -retainCount */
 static unsigned object_method_retainCount(id self, SEL sel)
 {
-	return ObjC_GetPythonImplementation(self)->ob_refcnt;
+	PyObject* obj = ObjC_GetPythonImplementation(self);
+
+	if (obj == Py_None) {
+		struct objc_super super;
+		
+   		super.class = find_real_superclass(self->isa, 
+			@selector(retainCount), class_getInstanceMethod, 
+			(IMP)object_method_retainCount);
+		super.receiver = self;
+
+		return (int)objc_msgSendSuper(&super, @selector(retainCount)); 
+	}
+	return obj->ob_refcnt;
 }
 
 /* -respondsToSelector: */
