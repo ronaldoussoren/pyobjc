@@ -348,13 +348,15 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
 	Py_Initialize();
     PySys_SetArgv(argc, (char **)argv);
 	
+    NSAutoreleasePool *pythonPool = [[NSAutoreleasePool alloc] init];
+    
 	FILE *mainPy = fopen([[mainPyPath retain] fileSystemRepresentation], "r");
 	NSString *scriptName = [mainPyPath lastPathComponent];
 	int rval = PyRun_SimpleFile(mainPy, [[scriptName retain] cString]);
 	fclose(mainPy);
 	[scriptName release];
 	[mainPyPath release];
-	
+
 	while ( rval ) {
 		PyObject *exc = PySys_GetObject("last_type");		
 		if ( !exc ) {
@@ -385,6 +387,9 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
 		rval = report_script_error([NSString stringWithFormat:ERR_PYTHONEXCEPTION, nsExceptionClassName, nsExceptionName], nsExceptionClassName, nsExceptionName);
 		break;
 	}
+
+    [pythonPool release];
+    
 	Py_Finalize();
 
 	[pythonProgramName release];
