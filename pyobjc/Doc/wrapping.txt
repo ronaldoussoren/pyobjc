@@ -1,3 +1,4 @@
+========================================
 How to wrap an Objective-C class library
 ========================================
 
@@ -16,7 +17,7 @@ C code for specific methods.
 The basics
 ----------
 
-The code for loading a framework and exporting its classes is pretty simple:
+The code for loading a framework and exporting its classes is pretty simple::
 
    import Foundation
    _clslist = Foundation.load_bundle('/path/to/MyFramework.framework')
@@ -54,7 +55,7 @@ Pass-by-reference arguments can be 'in' (data passed into the function),
 'out' (data is returned from the function) or 'inout' (data is passed into 
 and then returned from  the function). 
 
-Given the following class interface:
+Given the following class interface::
 
    @interface ClassName {}
 
@@ -63,13 +64,14 @@ Given the following class interface:
    @end
  
 The compiler will generate a method signature for this method and this can 
-be accessed from Python using the property 'signature' of Objective-C methods. `You can also just make up the signature, which is quite easy once you get the
+be accessed from Python using the property 'signature' of Objective-C methods. 
+You can also just make up the signature, which is quite easy once you get the
 hang of it. The signature for this method is 'v@:^@@'.
 
 Let's say the first argument is an output parameter. Output parameters are 
 denoted in the signature string using the character 'o' before the actual
 argument signature. The 'correct' signature for method is therefore 'v@:o^@@'.
-The following code tells the brigde about this better method signature.
+The following code tells the brigde about this better method signature::
 
    import objc
    objc.set_signature_for_selector("ClassName", "selector:withArguments:",
@@ -77,8 +79,11 @@ The following code tells the brigde about this better method signature.
 
 To anotate method signatures you'll have to add a single character before all
 '^' characters in the signature of a method. The characters are:
+
 - output parameter: o
+
 - input parameter: i
+
 - input-output parameter: O
 
 special wrappers

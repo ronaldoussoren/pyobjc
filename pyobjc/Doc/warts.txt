@@ -1,9 +1,9 @@
+============
+Odd features
+============
+
 The mapping from Objective-C onto Python is almost complete, but the following
 things should be kept in mind:
-
-- You must manually take care of reference-counts when updating IBOutlet fields.
-  This means calling 'retain' when setting a value and 'release' when you unset
-  it (or replace it by another one).
 
 - Objective-C only has single inheritance. You can use multiple inheritance in
   the python code, but only to mix in 'fully python' classes.
@@ -12,3 +12,7 @@ things should be kept in mind:
   ignored. The nil 'object' is mapped to None and None will not ignore method
   calls, but will most likely raise an AttributeError. You'll have to remember
   this when translating from Objective-C to python.
+
+- Some Cocoa classes store references to objects while not increasing the 
+  reference count. One of those is NSOutlineView. A side-effect of this is that
+  you *must* use subclasses of NSObject in your NSOutlineView model.
