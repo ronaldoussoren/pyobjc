@@ -3,7 +3,8 @@ from textwrap import dedent
 
 
 SUBPATTERNS = dict(
-    AVAILABLE=r'(AVAILABLE_\w+)',
+    AVAILABLE=r'([A-Z][A-Z0-9_]+)',
+    PROTOCOLS=r'(<[^>]+>)',
     KEYWORD=r'((double|float|int|unsigned|long|char|extern|volatile|void|inline|__(\w+?)__|const|typedef|static|const))',
     IDENTIFIER=r'([A-Za-z_]\w*)',
     SIZEOF=r'(sizeof\(([^)]+)\))',
@@ -410,13 +411,17 @@ class ExportFunction(Token):
         %(IDENTIFIER)s
         (%(INDIRECTION)s|\s+%(KEYWORD)s)*
     )
+    (\s*(?P<protocols>%(PROTOCOLS)s))?
     \s*(?P<name>%(IDENTIFIER)s)
     \s*\(
         (?P<args>\s*[^)]*)
     \s*\)
+    (\s*(?P<available>%(AVAILABLE)s))?
     \s*%(SEMI)s\s*
     ''')
     example = example(r'''
+    FOUNDATION_EXPORT void *NSAllocateCollectable(unsigned long size, unsigned long options) AVAILABLE_MAC_OS_X_VERSION_10_4_AND_LATER;
+    FOUNDATION_EXPORT SomeResult <NSObject> SomeName(const Foo *, const Foo *Bar);
     FOUNDATION_EXPORT SomeResult **SomeName(const Foo *, const Foo *Bar);
     FOUNDATION_EXPORT SomeResult SomeName(int,float);
     ''')
@@ -484,7 +489,9 @@ if __name__ == '__main__':
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSBundle.h'
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSException.h'
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSInvocation.h'
-    fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSByteOrder.h'
+    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSByteOrder.h'
+    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSObject.h'
+    fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSZone.h'
     files = sys.argv[1:] or [fn]
     def deadraise(string, i, j):
         print string[i:j]
