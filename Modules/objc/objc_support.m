@@ -1163,19 +1163,25 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	case _C_SEL:
 		if (argument == Py_None) {
 			*(SEL*)datum = NULL;
-		} if (ObjCSelector_Check (argument)) {
+		} else if (ObjCSelector_Check (argument)) {
 			*(SEL *) datum = ObjCSelector_Selector(argument); 
         	} else if (PyString_Check(argument)) {
 			char *selname = PyString_AsString (argument);
-			SEL sel = SELUID (selname);
+			SEL sel;
 
-			if (sel)  {
-				*(SEL*) datum = sel;
+			if (*selname == '\0') {
+				*(SEL*)datum = NULL;
 			} else {
-				ObjCErr_Set(PyExc_ValueError,
-					"depythonifying 'SEL', cannot "
-					"register string with runtime");
-				return -1;
+				sel = SELUID (selname);
+
+				if (sel)  {
+					*(SEL*) datum = sel;
+				} else {
+					ObjCErr_Set(PyExc_ValueError,
+						"depythonifying 'SEL', cannot "
+						"register string with runtime");
+					return -1;
+				}
 			}
 		} else {
 			ObjCErr_Set(PyExc_ValueError,
