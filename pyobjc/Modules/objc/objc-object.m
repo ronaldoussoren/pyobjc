@@ -180,11 +180,15 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 		base = PyTuple_GET_ITEM(mro, i);
 		assert(PyType_Check(base));
 
-		if (PyObjCClass_Check(base)) {
-			PyObjCClass_CheckMethodList(base, 0);
-		}
+		if (PyClass_Check(base)) {
+			dict = ((PyClassObject*)base)->cl_dict;
+		} else {
+			if (PyObjCClass_Check(base)) {
+				PyObjCClass_CheckMethodList(base, 0);
+			}
 
-		dict = ((PyTypeObject *)base)->tp_dict;
+			dict = ((PyTypeObject *)base)->tp_dict;
+		}
 		assert(dict && PyDict_Check(dict));
 		descr = PyDict_GetItem(dict, name);
 		if (descr != NULL) {
