@@ -1,0 +1,547 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 39;
+	objects = {
+		080E96DDFE201D6D7F000001 = {
+			children = (
+				F60DD8BD0358A22201C8ED3C,
+			);
+			isa = PBXGroup;
+			name = Classes;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		089C165CFE840E0CC02AAC07 = {
+			children = (
+				089C165DFE840E0CC02AAC07,
+			);
+			isa = PBXVariantGroup;
+			name = InfoPlist.strings;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		089C165DFE840E0CC02AAC07 = {
+			expectedFileType = text.plist.strings;
+			fileEncoding = 10;
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/InfoPlist.strings;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+//080
+//081
+//082
+//083
+//084
+//100
+//101
+//102
+//103
+//104
+		1058C7A1FEA54F0111CA2CBB = {
+			expectedFileType = wrapper.framework;
+			fallbackIsa = PBXFileReference;
+			isa = PBXFrameworkReference;
+			name = Cocoa.framework;
+			path = /System/Library/Frameworks/Cocoa.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+//100
+//101
+//102
+//103
+//104
+//190
+//191
+//192
+//193
+//194
+		19C28FACFE9D520D11CA2CBB = {
+			children = (
+				1BFB80A804CEE27800DEF731,
+			);
+			isa = PBXGroup;
+			name = Products;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+//190
+//191
+//192
+//193
+//194
+//1B0
+//1B1
+//1B2
+//1B3
+//1B4
+		1BFB7DBF04CEE17C00DEF731 = {
+			expectedFileType = sourcecode.c.objc;
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = "main-embedded-interpreter.m";
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		1BFB7DD504CEE24900DEF731 = {
+			expectedFileType = wrapper.framework;
+			isa = PBXFileReference;
+			name = Python.framework;
+			path = /System/Library/Frameworks/Python.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		1BFB7F6D04CEE27700DEF731 = {
+			buildPhases = (
+				1BFB7F6E04CEE27700DEF731,
+				1BFB7F6F04CEE27700DEF731,
+				1BFB801004CEE27700DEF731,
+				1BFB801204CEE27700DEF731,
+				77A8F17D04D6B2470033F030,
+			);
+			buildRules = (
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "«PROJECTNAMEASIDENTIFIER»_Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "«PROJECTNAME»";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = app;
+			};
+			dependencies = (
+			);
+			isa = PBXNativeTarget;
+			name = "«PROJECTNAME»";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "«PROJECTNAME»";
+			productReference = 1BFB80A804CEE27800DEF731;
+			productType = "com.apple.product-type.application";
+		};
+		1BFB7F6E04CEE27700DEF731 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BFB7F6F04CEE27700DEF731 = {
+			buildActionMask = 2147483647;
+			files = (
+				1BFB7F7004CEE27700DEF731,
+				1BFB7F7104CEE27700DEF731,
+				1BFB7F7204CEE27700DEF731,
+				1BFB7F7304CEE27700DEF731,
+				777C19C904D6B9D800FBF432,
+				77A9B0E204D6BD1E00EC1630,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BFB7F7004CEE27700DEF731 = {
+			fileRef = 29B97318FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		1BFB7F7104CEE27700DEF731 = {
+			fileRef = 089C165CFE840E0CC02AAC07;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		1BFB7F7204CEE27700DEF731 = {
+			fileRef = F60DD8BC0358A22201C8ED3C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		1BFB7F7304CEE27700DEF731 = {
+			fileRef = F60DD8BD0358A22201C8ED3C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		1BFB801004CEE27700DEF731 = {
+			buildActionMask = 2147483647;
+			files = (
+				1BFB801104CEE27700DEF731,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BFB801104CEE27700DEF731 = {
+			fileRef = 1BFB7DBF04CEE17C00DEF731;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		1BFB801204CEE27700DEF731 = {
+			buildActionMask = 2147483647;
+			files = (
+				1BFB801304CEE27700DEF731,
+				1BFB80F904CEE38B00DEF731,
+				1BFB801404CEE27700DEF731,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BFB801304CEE27700DEF731 = {
+			fileRef = 29B97325FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		1BFB801404CEE27700DEF731 = {
+			fileRef = 1BFB7DD504CEE24900DEF731;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		1BFB80A804CEE27800DEF731 = {
+			expectedFileType = wrapper.application;
+			includeInIndex = 0;
+			isa = PBXFileReference;
+			path = "«PROJECTNAME».app";
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1BFB80F904CEE38B00DEF731 = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//1B0
+//1B1
+//1B2
+//1B3
+//1B4
+//290
+//291
+//292
+//293
+//294
+		29B97313FDCFA39411CA2CEA = {
+			buildSettings = {
+			};
+			buildStyles = (
+				4A9504CCFFE6A4B311CA0CBA,
+				4A9504CDFFE6A4B311CA0CBA,
+			);
+			hasScannedForEncodings = 1;
+			isa = PBXProject;
+			mainGroup = 29B97314FDCFA39411CA2CEA;
+			projectDirPath = "";
+			targets = (
+				1BFB7F6D04CEE27700DEF731,
+			);
+		};
+		29B97314FDCFA39411CA2CEA = {
+			children = (
+				080E96DDFE201D6D7F000001,
+				29B97315FDCFA39411CA2CEA,
+				29B97317FDCFA39411CA2CEA,
+				29B97323FDCFA39411CA2CEA,
+				19C28FACFE9D520D11CA2CBB,
+			);
+			isa = PBXGroup;
+			name = "«PROJECTNAMEASXML»";
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA = {
+			children = (
+				F60DD8BC0358A22201C8ED3C,
+				1BFB7DBF04CEE17C00DEF731,
+				777C19C804D6B9D800FBF432,
+				77A9B0E104D6BD1E00EC1630,
+			);
+			isa = PBXGroup;
+			name = "Other Sources";
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA = {
+			children = (
+				29B97318FDCFA39411CA2CEA,
+				089C165CFE840E0CC02AAC07,
+			);
+			isa = PBXGroup;
+			name = Resources;
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97318FDCFA39411CA2CEA = {
+			children = (
+				29B97319FDCFA39411CA2CEA,
+			);
+			isa = PBXVariantGroup;
+			name = MainMenu.nib;
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97319FDCFA39411CA2CEA = {
+			expectedFileType = wrapper.nib;
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/MainMenu.nib;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA = {
+			children = (
+				29B97324FDCFA39411CA2CEA,
+				1058C7A1FEA54F0111CA2CBB,
+				29B97325FDCFA39411CA2CEA,
+				1BFB7DD504CEE24900DEF731,
+				77A8EFE904D6B2200033F030,
+			);
+			isa = PBXGroup;
+			name = "Frameworks & Modules";
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		29B97324FDCFA39411CA2CEA = {
+			expectedFileType = wrapper.framework;
+			fallbackIsa = PBXFileReference;
+			isa = PBXFrameworkReference;
+			name = AppKit.framework;
+			path = /System/Library/Frameworks/AppKit.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		29B97325FDCFA39411CA2CEA = {
+			expectedFileType = wrapper.framework;
+			fallbackIsa = PBXFileReference;
+			isa = PBXFrameworkReference;
+			name = Foundation.framework;
+			path = /System/Library/Frameworks/Foundation.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+//290
+//291
+//292
+//293
+//294
+//4A0
+//4A1
+//4A2
+//4A3
+//4A4
+		4A9504CCFFE6A4B311CA0CBA = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OPTIMIZATION_CFLAGS = "-O0";
+				ZERO_LINK = YES;
+			};
+			isa = PBXBuildStyle;
+			name = Development;
+		};
+		4A9504CDFFE6A4B311CA0CBA = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DEPLOYMENT_POSTPROCESSING = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				ZERO_LINK = NO;
+			};
+			isa = PBXBuildStyle;
+			name = Deployment;
+		};
+//4A0
+//4A1
+//4A2
+//4A3
+//4A4
+//770
+//771
+//772
+//773
+//774
+		777C19C804D6B9D800FBF432 = {
+			expectedFileType = sourcecode.c.h;
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = "«PROJECTNAMEASIDENTIFIER»_Prefix.pch";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		777C19C904D6B9D800FBF432 = {
+			fileRef = 777C19C804D6B9D800FBF432;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		77A8EF4A04D6B2180033F030 = {
+			expectedFileType = folder;
+			isa = PBXFileReference;
+			name = AppKit;
+			path = /Library/Python/2.3/PyObjC/AppKit;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		77A8EF6204D6B2180033F030 = {
+			expectedFileType = "compiled.mach-o.bundle";
+			isa = PBXFileReference;
+			name = autoGIL.so;
+			path = /Library/Python/2.3/PyObjC/autoGIL.so;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		77A8EF6304D6B2180033F030 = {
+			expectedFileType = folder;
+			isa = PBXFileReference;
+			name = Foundation;
+			path = /Library/Python/2.3/PyObjC/Foundation;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		77A8EF9804D6B2180033F030 = {
+			expectedFileType = folder;
+			isa = PBXFileReference;
+			name = objc;
+			path = /Library/Python/2.3/PyObjC/objc;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		77A8EFC804D6B2180033F030 = {
+			expectedFileType = folder;
+			isa = PBXFileReference;
+			name = PyObjCTools;
+			path = /Library/Python/2.3/PyObjC/PyObjCTools;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		77A8EFE904D6B2200033F030 = {
+			children = (
+				77A8EF4A04D6B2180033F030,
+				77A8EF6204D6B2180033F030,
+				77A8EF6304D6B2180033F030,
+				77A8EF9804D6B2180033F030,
+				77A8EFC804D6B2180033F030,
+			);
+			isa = PBXGroup;
+			name = PyObjC;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		77A8F17D04D6B2470033F030 = {
+			buildActionMask = 8;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				77A8F1E004D6B2750033F030,
+				77A8F1E104D6B2750033F030,
+				77A8F1E204D6B2750033F030,
+				77A8F1E304D6B2750033F030,
+				77A8F1E404D6B2750033F030,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		77A8F1E004D6B2750033F030 = {
+			fileRef = 77A8EF4A04D6B2180033F030;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		77A8F1E104D6B2750033F030 = {
+			fileRef = 77A8EF6204D6B2180033F030;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		77A8F1E204D6B2750033F030 = {
+			fileRef = 77A8EF6304D6B2180033F030;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		77A8F1E304D6B2750033F030 = {
+			fileRef = 77A8EF9804D6B2180033F030;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		77A8F1E404D6B2750033F030 = {
+			fileRef = 77A8EFC804D6B2180033F030;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		77A9B0E104D6BD1E00EC1630 = {
+			expectedFileType = text.plist;
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = Info.plist;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		77A9B0E204D6BD1E00EC1630 = {
+			fileRef = 77A9B0E104D6BD1E00EC1630;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//770
+//771
+//772
+//773
+//774
+//F60
+//F61
+//F62
+//F63
+//F64
+		F60DD8BC0358A22201C8ED3C = {
+			expectedFileType = text.script.python;
+			fallbackIsa = PBXFileReference;
+			fileEncoding = 30;
+			isa = PBXExecutableFileReference;
+			path = __main__.py;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		F60DD8BD0358A22201C8ED3C = {
+			expectedFileType = text.script.python;
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = "«PROJECTNAMEASIDENTIFIER»AppDelegate.py";
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA;
+}
