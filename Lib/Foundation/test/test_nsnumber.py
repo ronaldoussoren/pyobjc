@@ -1,6 +1,7 @@
 import unittest
 import objc
 import re
+import sys
 
 from Foundation import *
 
@@ -27,59 +28,37 @@ def stripDocType(val):
     return r.replace(u'version="0.9"', u'version="1.0"')
 
 
-if not isinstance(NSNumber.numberWithInt_(10), int):
-    # NSNumber is proxied into python
+# NSNumber instances are converted to Python numbers
 
-    class TestNSNumber( unittest.TestCase ):
-        def testNSNumber( self ):
-            x = NSMutableArray.arrayWithArray_( range(1, 10) )
-            y = range( 1, 10 )
+class TestNSNumber( unittest.TestCase ):
+    def testSimple(self):
+        self.assertEquals(NSNumber.numberWithFloat_(1.0), 1,0)
+        self.assertEquals(NSNumber.numberWithInt_(1), 1)
+        self.assertEquals(NSNumber.numberWithFloat_(-0.5), -0.5)
+        self.assertEquals(NSNumber.numberWithInt_(-4), -4)
+        self.assertEquals(NSNumber.numberWithInt_(0), 0)
+        self.assertEquals(NSNumber.numberWithFloat_(0.0), 0,0)
 
-            self.assert_( isinstance( x[4], NSNumber ) )
-            self.assertEquals( x[3], y[3] )
-            self.assertEquals( x[3] + x[5], y[3] + y[5] )
-            self.assertEquals( x[2] + y[3], y[2] + x[3] )
-            self.assertEquals( x[8] * x[7], y[7] * y[8] )
-            self.assertEquals( y[8] * x[7], x[7] * y[8] )
+    def testUseAsBasicType(self):
+        lstValue = list(range(0, 20, 2))
+        for idx, v in enumerate(lstValue):
+            self.assertEquals(v, lstValue[NSNumber.numberWithInt_(idx)])
 
-        def testAsBool(self):
-            trues = (
-                NSNumber.numberWithFloat_(1.0),
-                NSNumber.numberWithInt_(1),
-                NSNumber.numberWithFloat_(-0.01),
-                NSNumber.numberWithInt_(-4),
-            )
-            falses = (
-                NSNumber.numberWithFloat_(0.0),
-                NSNumber.numberWithInt_(0),
-            )
+    def testUnsignedIssues(self):
+        # NSNumber stores unsigned numbers as signed numbers
+        # This is a bug in Cocoa...
 
-            for a in trues:
-                if a:
-                    pass
-                else:
-                    raise AssertionError, "%s is not true"%(a.description())
+        self.assertEquals(NSNumber.numberWithUnsignedInt_(sys.maxint+1),
+                    -sys.maxint-1)
 
-            for a in falses:
-                if a:
-                    raise AssertionError, "%s is true"%(a.description())
+    def testMethods(self):
+        v = NSNumber.numberWithUnsignedInt_(sys.maxint+1)
 
-        def testStr(self):
-            x = NSNumber.numberWithInt_(4)
-            self.assertEquals(4, int(str(x)))
+        self.assertEquals(v.unsignedIntValue(), sys.maxint+1)
+        self.assertEquals(v.intValue(), -sys.maxint-1)
 
-else:
-    # NSNumber instances are converted to Python numbers
-
-    class TestNSNumber( unittest.TestCase ):
-        def testNSNumber( self ):
-            self.assertEquals(NSNumber.numberWithFloat_(1.0), 1,0)
-            self.assertEquals(NSNumber.numberWithInt_(1), 1)
-            self.assertEquals(NSNumber.numberWithFloat_(-0.5), -0.5)
-            self.assertEquals(NSNumber.numberWithInt_(-4), -4)
-            self.assertEquals(NSNumber.numberWithInt_(0), 0)
-            self.assertEquals(NSNumber.numberWithFloat_(0.0), 0,0)
-
+        v = NSNumber.numberWithInt_(10)
+        self.assertEquals(v.doubleValue(), float(10))
 
 if objc.platform == 'MACOSX':
     class TestPropList (unittest.TestCase):
