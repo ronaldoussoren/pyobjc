@@ -398,8 +398,6 @@ def _num_to_python(v):
     """
     if isinstance(v, NSDecimalNumber):
         return _numberForDecimal(v)
-    # XXX - this only works for Mac OS X
-    #       GNUstep and Mac OS X can both use objCType
     if hasattr(v, 'objCType'):
         tp = v.objCType()
         if tp in 'sil':
