@@ -13,6 +13,22 @@ PyObjC NEWS</title>
 <ul>
 <li>(UNFINISHED) New RemotePyInterpreter example that demonstrates an
 out-of-process Python interpreter (primarily for IDE uses).</li>
+<li>PyObjCTools.KeyValueCoding has a new <code><span>kvc</span></code> class that allows
+Pythonic Key-Value Coding.<ul>
+<li><code><span>__getitem__</span></code> is mapped to <code><span>valueForKeyPath:</span></code></li>
+<li><code><span>__setitem__</span></code> is mapped to <code><span>setValue:forKeyPath:</span></code></li>
+<li><code><span>__getattr__</span></code> is mapped to <code><span>valueForKey:</span></code></li>
+<li><code><span>__setattr__</span></code> is mapped to <code><span>setValue:forKey:</span></code></li>
+</ul>
+<p>The <code><span>kvc</span></code> class uses <code><span>__pyobjc_object</span></code>, so it may cross the bridge
+as the wrapped object.</p>
+</li>
+<li><code><span>NSNumber</span></code> instances are bridged to a <code><span>float</span></code>, <code><span>long</span></code>, or <code><span>int</span></code>
+subclass that uses <code><span>__pyobjc_object__</span></code>.  <code><span>NSDecimalNumber</span></code> is bridged
+to <code><span>Foundation.NSDecimal</span></code>, which now supports <code><span>__pyobjc_object__</span></code>.
+This eliminates a HUGE amount of cruft in <code><span>objc._conveniences</span></code>.</li>
+<li>The Python to Objective-C bridge now looks for a <code><span>__pyobjc_object__</span></code> 
+attribute to get a PyObjC object from a Python object.</li>
 <li>New IDNSnitch example in Inject that demonstrates how to write an
 monitor for the launch of another application,
 use <code><span>objc.inject</span></code> to load code into a target process,

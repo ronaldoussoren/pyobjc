@@ -10,6 +10,25 @@ Version 1.3 (2005-03-??)
 - (UNFINISHED) New RemotePyInterpreter example that demonstrates an
   out-of-process Python interpreter (primarily for IDE uses).
 
+- PyObjCTools.KeyValueCoding has a new ``kvc`` class that allows
+  Pythonic Key-Value Coding.
+
+  - ``__getitem__`` is mapped to ``valueForKeyPath:``
+  - ``__setitem__`` is mapped to ``setValue:forKeyPath:``
+  - ``__getattr__`` is mapped to ``valueForKey:``
+  - ``__setattr__`` is mapped to ``setValue:forKey:``
+
+  The ``kvc`` class uses ``__pyobjc_object``, so it may cross the bridge
+  as the wrapped object.
+
+- ``NSNumber`` instances are bridged to a ``float``, ``long``, or ``int``
+  subclass that uses ``__pyobjc_object__``.  ``NSDecimalNumber`` is bridged
+  to ``Foundation.NSDecimal``, which now supports ``__pyobjc_object__``.
+  This eliminates a HUGE amount of cruft in ``objc._conveniences``.
+
+- The Python to Objective-C bridge now looks for a ``__pyobjc_object__`` 
+  attribute to get a PyObjC object from a Python object.
+
 - New IDNSnitch example in Inject that demonstrates how to write an
   monitor for the launch of another application,
   use ``objc.inject`` to load code into a target process,

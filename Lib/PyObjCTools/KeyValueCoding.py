@@ -190,27 +190,25 @@ def setKeyPath(obj, keypath, value):
 
 class kvc(object):
     def __init__(self, obj):
-        self._obj = obj
+        self.__pyobjc_object__ = obj
     
     def __getattr__(self, attr):
-        return getKey(self._obj, attr)
+        return getKey(self.__pyobjc_object__, attr)
 
     def __repr__(self):
-        return repr(self._obj)
+        return repr(self.__pyobjc_object__)
 
     def __setattr__(self, attr, value):
         if not attr.startswith('_'):
-            setKey(self._obj, attr, value)
+            setKey(self.__pyobjc_object__, attr, value)
         object.__setattr__(self, attr, value)
 
     def __getitem__(self, item):
         if not isinstance(item, basestring):
             raise TypeError, 'Keys must be strings'
-        return getKeyPath(self._obj, item)
+        return getKeyPath(self.__pyobjc_object__, item)
 
     def __setitem__(self, item, value):
         if not isinstance(item, basestring):
             raise TypeError, 'Keys must be strings'
-        setKeyPath(self._obj, item, value)
-
-objc.lookUpClass('OC_PythonObject').depythonifyTable().insert(0, (kvc, lambda o:o._obj))
+        setKeyPath(self.__pyobjc_object__, item, value)
