@@ -14,7 +14,7 @@ SUBPATTERNS = dict(
     CFSTRING=r'(?:CFSTR\("(?:[^\\"\n]|\\")*"\))',
     HEX=r'(?:0[xX][0-9a-fA-F]+[lL]?)',
     EXTERN=r'(?:(?:(?:[A-Z-a-z_]\w*?_)?EXTERN|extern))',
-    BOL=r'(?:^\s*)',
+    BOL=r'(?:\s*^\s*)',
     EOL=r'(?:\s*$\n?)',
     SEMI=r';\s*',
 )
@@ -26,12 +26,79 @@ def example(s):
     return dedent(s).strip()
 
 class BlockComment(Token):
-    pattern = pattern(r'/\*(?P<comment>(?:[^*]|\*[^/])*)\*/')
+    pattern = pattern(r'\s*/\*(?P<comment>(?:[^*]|\*[^/])*)\*/\s*')
     example = example(r'/* this is a block comment */')
 
 class SingleLineComment(Token):
-    pattern = pattern(r'//(?P<comment>[^\n]*)(\n|$)')
+    pattern = pattern(r'\s*//(?P<comment>[^\n]*)(\n|$)')
     example = example(r'// this is a single line comment')
+
+class NamedStruct(Token):
+    # XXX handle comments, needs its own internal parser
+    pattern = pattern(r'''
+    %(BOL)s
+    typedef
+    \s+struct
+    \s*{
+        (?P<content>[^}]*)
+    \s*}
+    \s*(?P<name>%(IDENTIFIER)s)
+    \s*%(SEMI)s
+    ''')
+    example = example(r'''
+    typedef struct {
+        signed foo name;
+        int bar;
+    } FooBarStruct;
+    ''')
+ 
+class NamedEnum(Token):
+    # XXX handle comments, needs its own internal parser
+    pattern = pattern(r'''
+    %(BOL)s
+    typedef
+    \s+enum
+    \s*{
+        (?P<content>[^}]*)
+    \s*}
+    \s*(?P<name>%(IDENTIFIER)s)
+    \s*%(SEMI)s
+    ''')
+    example = example(r'''
+    typedef enum {
+        FooBar = 1,
+        Baz = 2,
+        Wibble
+    } FooBarBazWibble;
+    typedef enum {
+        FooBar,
+        Baz,
+        Wibble
+    } FooBarBazWibble;
+    ''')
+    
+class Enum(Token):
+    # XXX handle comments, needs its own internal parser
+    pattern = pattern(r'''
+    %(BOL)s
+    enum
+    \s*{
+        (?P<content>[^}]*)
+    \s*}
+    \s*%(SEMI)s
+    ''')
+    example = example(r'''
+    enum {
+        FooBar = 1,
+        Baz = 2,
+        Wibble
+    };
+    enum {
+        FooBar,
+        Baz,
+        Wibble
+    };
+    ''')
 
 class Interface(Token):
     pattern = pattern(r'''
@@ -46,7 +113,7 @@ class Interface(Token):
     %(BOL)s
     @end
     %(EOL)s
-    ''' % SUBPATTERNS)
+    ''')
     example = example(r'''
     @interface Foo(Bar): Baz <protocols> {
     @private
@@ -68,7 +135,7 @@ class Protocol(Token):
     %(BOL)s
     @end
     %(EOL)s
-    ''' % SUBPATTERNS)
+    ''')
     example = example(r'''
     @protocol FooProtocol <Foo>
     + (Foo *)protoFoo;
@@ -81,7 +148,7 @@ class AngleImport(Token):
     \#\s*(?P<import_type>import|include)
         \s+<(?P<import_file>[^>]*)>
     %(EOL)s
-    ''' % SUBPATTERNS)
+    ''')
     example = example('#import <Foo/Bar.h>')
 
 class StringImport(Token):
@@ -90,7 +157,7 @@ class StringImport(Token):
     \#\s*(?P<import_type>import|include)
         \s+"(?P<import_file>[^"]*)"
     %(EOL)s
-    ''' % SUBPATTERNS)
+    ''')
     example = example('#import "Foo/Bar.h"')
 
 class SimpleDefine(Token):
@@ -101,7 +168,7 @@ class SimpleDefine(Token):
     %(BOL)s
     \#\s*define\s*
         (?P<name>%(IDENTIFIER)s)\s+
-        (?P<value>
+        \(?(?P<value>
             (?!%(KEYWORD)s)%(IDENTIFIER)s
             | %(HEX)s
             | %(INTEGER)s
@@ -110,9 +177,9 @@ class SimpleDefine(Token):
             | %(STRING)s
             | %(CFSTRING)s
             | %(SIZEOF)s
-        )
+        )\)?
     %(EOL)s
-    ''' % SUBPATTERNS)
+    ''')
     example = example(r'''
     #define foo bar
     #define foo 0x200
@@ -121,6 +188,7 @@ class SimpleDefine(Token):
     #define foo "foo"
     #define foo CFSTR("foo")
     #define foo sizeof(bar)
+    #define foo (8)
     ''')
     
 
@@ -159,9 +227,9 @@ class GlobalCharArray(Token):
     
 
 class ForwardClassReference(Token):
-    pattern = pattern(r'@class[^;]+;')
+    pattern = pattern(r'@class (?P<name>[^;]+);')
     example = example(r'@class Foo;')
-    
+
 LEXICON = [
     BlockComment,
     SingleLineComment,
@@ -172,12 +240,19 @@ LEXICON = [
     GlobalString,
     GlobalCharArray,
     ForwardClassReference,
+    NamedEnum,
+    Enum,
+    NamedStruct,
 ]
 
 if __name__ == '__main__':
     from pdb import pm
     import re
+    import sys
     fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSDecimal.h'
+    fn = (sys.argv[1:] or [fn])[0]
     scan = Scanner(LEXICON)
-    for token in scan.iterscan(file(fn).read()):
+    def deadspace(string, begin, end):
+        return 'NO MATCH FOR [%d:%d] %r' % (begin, end, string[begin:end])
+    for token in scan.iterscan(file(fn).read(), dead=deadspace):
         print token
