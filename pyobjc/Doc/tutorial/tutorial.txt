@@ -40,7 +40,8 @@ Getting Started
    
        $ export PYLIB=/Library/Frameworks/Python.framework/Versions/Current/lib/python2.3
        
-   For Apple's ``/usr/bin/python`` set the variable to ``/usr/lib/python2.2``.
+   For Apple's ``/usr/bin/python`` set the variable to ``/usr/lib/python2.2``,
+   if you are running on MacOS X set it to ``/System/Library/Frameworks/Python.framework/Versions/Current/lib/python2.3``.
            
 2. Start Interface Builder, select *Cocoa Application*
    in the new file dialog, save this file as ``src/MainMenu.nib``.
@@ -75,10 +76,16 @@ Testing the user interface
 --------------------------
 
 6. Now we need to create an application framework around our program. Again,
-   in the future it could well be that this step is not needed during development,
-   or that it becomes simpler, but for now we do the following::
+   in the future it could well be that this step is not needed during 
+   development, or that it becomes simpler, but for now we do the following::
    
        $ python $PYLIB/site-packages/PyObjC/bundlebuilder.py --link --nib=MainMenu \
+               --mainprogram=CurrencyConverter.py --resource=MainMenu.nib build
+
+   If you are using Python 2.3 the script is located in ``plat-mac`` instead
+   of ``site-packages`` and the command is::
+
+       $ python2.3 $PYLIB/plat-mac/PyObjC/bundlebuilder.py --link --nib=MainMenu \
                --mainprogram=CurrencyConverter.py --resource=MainMenu.nib build
                
    There are a few things to note:
