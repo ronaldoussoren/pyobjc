@@ -36,8 +36,11 @@ def add_convenience_methods(super_class, name, type_dict):
             def bundleForClass(cls):
                 return cb
             type_dict['bundleForClass'] = selector(bundleForClass, isClassMethod=True)
-            #if '__useKVO__' not in type_dict:
-            #    type_dict['__useKVO__'] = issubclass(super_class, NSObject)
+            if '__useKVO__' not in type_dict:
+                if not (
+                        'willChangeValueForKey_' in type_dict
+                        or 'didChangeValueForKey_' in type_dict):
+                    type_dict['__useKVO__'] = issubclass(super_class, NSObject)
         if '__bundle_hack__' in type_dict:
             import warnings
             warnings.warn(

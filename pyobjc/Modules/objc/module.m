@@ -1061,10 +1061,14 @@ init_objc(void)
 	PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_3", MAC_OS_X_VERSION_10_3);
 #endif /* MAC_OS_X_VERSION_10_3 */
 
+#ifdef MAC_OS_X_VERSION_10_4
+	PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_4", MAC_OS_X_VERSION_10_4);
+#endif /* MAC_OS_X_VERSION_10_4 */
+
 #ifdef MACOSX
-    PyModule_AddStringConstant(m, "platform", "MACOSX");
+	PyModule_AddStringConstant(m, "platform", "MACOSX");
 #else
-    PyModule_AddStringConstant(m, "platform", "GNUSTEP");
+	PyModule_AddStringConstant(m, "platform", "GNUSTEP");
 #endif /* MACOSX */
 
 	PyEval_InitThreads();
