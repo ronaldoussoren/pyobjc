@@ -380,7 +380,9 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		bundle = [NSBundle bundleWithIdentifier:strval];
 
 #else  /* !MACOSX */
-		/* GNUstep doesn't seem to support ``bundleWithIdentifier:`` */
+		/* GNUstep doesn't seem to support ``bundleWithIdentifier:``
+           but it could be emulated by enumerating allFrameworks and
+           allBundles.. */
 		PyErr_SetString(PyExc_RuntimeError,
 			"The 'bundle_identifier' argument is only supported "
 			"on MacOS X");
@@ -389,7 +391,11 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 #endif /* !MACOSX */
 	}
 
-	[bundle load];
+    if (![bundle load]) {
+        PyErr_SetString(PyExc_ImportError,
+            "Bundle could not be loaded");
+        return NULL;
+    }
 
 	class_list = PyObjC_GetClassList();
 	if (class_list == NULL) {	
@@ -844,5 +850,12 @@ void init_objc(void)
 #ifdef MAC_OS_X_VERSION_10_3
 	PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_3", MAC_OS_X_VERSION_10_3);
 #endif /* MAC_OS_X_VERSION_10_3 */
+
+#ifdef MACOSX
+    PyModule_AddStringConstant(m, "platform", "MACOSX");
+#else
+    PyModule_AddStringConstant(m, "platform", "GNUSTEP");
+#endif /* MACOSX */
+
 	PyEval_InitThreads();
 }
