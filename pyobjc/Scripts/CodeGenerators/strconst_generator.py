@@ -12,7 +12,7 @@ from dupfile import *
 
 ON_OSX= (sys.platform == "darwin")
 
-MATCH_RE=re.compile(r'NSString\s*\*\s*(const\s+)?([A-Za-z_][A-Za-z0-9_]*(\s*,\s\*\s*[A-Za-z_][A-Za-z0-9_]*)*);')
+MATCH_RE=re.compile(r'NSString\s*\*\s*(const\s+)?([A-Za-z_][A-Za-z0-9_]*(\s*,\s*\*\s*[A-Za-z_][A-Za-z0-9_]*)*);')
 
 def entry(fp, val, ignore):
     vals = val.split(',')
@@ -59,7 +59,7 @@ def process_file(outfp, filename, ignore):
             if ln.strip().startswith('}'):
                 struct_level -= 1
 
-        if ln.strip().startswith('struct '):
+        if ln.strip().startswith('struct ') and ln.strip().endswith('{'):
             struct_level += 1
 
         if struct_level:

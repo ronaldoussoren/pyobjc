@@ -1,5 +1,6 @@
 import unittest
 import AppKit
+import objc
 
 class ContantTest (unittest.TestCase):
 
@@ -11,6 +12,10 @@ class ContantTest (unittest.TestCase):
 
     def testNSAnyEventMask(self):
         self.assert_(AppKit.NSAnyEventMask > 0)
+
+    def testNSViewFrameDidChangeNotification(self):
+        self.assert_(hasattr(AppKit, 'NSViewFrameDidChangeNotification'))
+        self.assert_(isinstance(AppKit.NSViewFrameDidChangeNotification, objc.pyobjc_unicode))
 
 if __name__ == "__main__":
     unittest.main()
