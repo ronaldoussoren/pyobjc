@@ -100,12 +100,19 @@ convention. The code should be changed to conform to this document.
 
 .. _`Coding style`: coding-style.txt
 
+Add templates for various file types
+....................................
+
+Add Xcode/PB file templates for various types of files, at least for an
+empty python file.
+
 Add templates for various project-types
 .......................................
 
 We currently have a Project Builder template for a basic PyObjC application. We
 should simular templates for other usefull projects and most importantly a 
 document-based application. 
+
 
 Other possibilies include:
 

@@ -40,8 +40,14 @@ def process_file(outfp, filename, ignore):
 
     in_class = 0
     struct_level = 0
+    maybe_struct_level = 0
 
     for ln in fp.xreadlines():
+        if maybe_struct_level:
+            if ln.strip().startswith('{'):
+                struct_level += 1
+                continue
+        maybe_struct_level = 0
 
         # Skip declarations in objective-C class definitions
         if not in_class:
@@ -61,6 +67,8 @@ def process_file(outfp, filename, ignore):
 
         if ln.strip().startswith('struct ') and ln.strip().endswith('{'):
             struct_level += 1
+        elif ln.strip().startswith('struct '):
+            maybe_struct_level = 1
 
         if struct_level:
             continue

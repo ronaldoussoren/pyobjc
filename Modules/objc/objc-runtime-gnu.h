@@ -104,10 +104,14 @@ PyObjCRT_NextMethodList(Class c, void ** p)
 static inline void 
 PyObjCRT_InitMethod(Method_t m, SEL name, const char* types, IMP imp)
 {
-	/* class_add_method_list on GNUstep assumes the method_name is
-	 * a string, not a SEL.
+	/* XXX: With some versions of the GNU runtime, the runtime assumes
+	 * that method_name is initialy a string instead of a selector, other
+	 * versions do not. The version on my development box currently 
+	 * doesn't.
+	 *
+	 * m->method_name = (SEL)PyObjCRT_SELName(name);
 	 */
-	m->method_name = (SEL)PyObjCRT_SELName(name);
+	m->method_name = name;
 	m->method_types = types;
 	m->method_imp = imp;
 }

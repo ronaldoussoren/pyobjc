@@ -195,10 +195,10 @@ elif osvers == '10.3':
     print "Setting up Xcode templates"
     makeDir(basedir, 
             'Library', 'Application Support', 'Apple', 
-            'Developer Tools', 'Project Templates')
+            'Developer Tools', 'Project Templates', 'Application')
     templateDestination = os.path.join(basedir, 
             'Library', 'Application Support', 'Apple', 
-            'Developer Tools', 'Project Templates')
+            'Developer Tools', 'Project Templates', 'Application')
     templateDir = os.path.join('Xcode', 'Project Templates')
     for dname in os.listdir(templateDir):
         if dname == 'CVS': continue

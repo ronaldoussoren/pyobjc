@@ -83,7 +83,7 @@ class pyobjc_build_ext (build_ext):
             fd = open('build/codegen/_%s_Classes.inc'%(fw,), 'w')
             fd.write('static const char* gClassNames[] = {\n')
             fd.write('\tNULL\n')
-            fd.write('};')
+            fd.write('};\n')
             fd.close()
 
     def create_cached_class_list(self):
@@ -102,7 +102,7 @@ class pyobjc_build_ext (build_ext):
                 if not isinstance(o, objc.objc_class): continue
                 fd.write('\t"%s",\n'%(o.__name__))
             fd.write('\tNULL\n')
-            fd.write('};')
+            fd.write('};\n')
             fd.close()
 
             d1 = open('build/codegen/_%s_Classes.inc~'%(pfx,), 'r').read()
@@ -143,14 +143,19 @@ class pyobjc_build_ext (build_ext):
             # Note: dependencies don't work here, we depend on a file that
             # probably didn't exist when the glob was done...
             print "** Created a fresh class-cache, rebuilding the extensions"
-            shutil.rmtree(
-                    os.path.join(self.build_temp, 'Modules', 'AppKit'))
-            os.mkdir(
-                    os.path.join(self.build_temp, 'Modules', 'AppKit'))
-            shutil.rmtree(
-                    os.path.join(self.build_temp, 'Modules', 'Foundation'))
-            os.mkdir(
-                    os.path.join(self.build_temp, 'Modules', 'Foundation'))
+            if os.path.exists(
+                        os.path.join(self.build_temp, 'Modules', 'AppKit')):
+                shutil.rmtree(
+                        os.path.join(self.build_temp, 'Modules', 'AppKit'))
+                os.mkdir(
+                        os.path.join(self.build_temp, 'Modules', 'AppKit'))
+
+            if os.path.exists(
+                        os.path.join(self.build_temp, 'Modules', 'Foundation')):
+                shutil.rmtree(
+                        os.path.join(self.build_temp, 'Modules', 'Foundation'))
+                os.mkdir(
+                        os.path.join(self.build_temp, 'Modules', 'Foundation'))
 
             try:
                 os.unlink(os.path.join(self.build_lib, '_AppKit.so'))
