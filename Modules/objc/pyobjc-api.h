@@ -14,24 +14,26 @@
  * - This interface is in development, the the API will probably change in
  *   incompatible ways.
  *
- * $Id: pyobjc-api.h,v 1.3 2002/10/18 10:03:15 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.4 2002/12/20 20:44:43 ronaldoussoren Exp $
  */
 
 #include <Python.h>
-
-#ifndef PyDoc_STRVAR
-#define PyDoc_STRVAR(name, value) static char name[] = value
-#endif
-
-#ifndef PyBool_Check
-#define PyBool_Check(_x_) (0)
-#endif
-
-#ifndef PyBool_FromLong
-#define PyBool_FromLong(_x_) PyInt_FromLong(_x_)
-#endif
-
 #include <objc/objc.h>
+
+/* Earlier versions of Python don't define PyDoc_STRVAR */
+#ifndef PyDoc_STR
+#define PyDoc_VAR(name)         static char name[]
+#define PyDoc_STR(str)          (str)
+#define PyDoc_STRVAR(name, str) PyDoc_VAR(name) = PyDoc_STR(str)
+#endif
+
+#if PY_VERSION_HEX < 0x0203000A /* Python < 2.3.0a */
+
+/* PyBool_Type was introduced in Python 2.3 */
+#define PyBool_Check(_x_) (0)
+#define PyBool_FromLong(_x_) PyInt_FromLong(_x_)
+
+#endif /* Python < 2.3.0a */
 
 #define PYOBJC_API_VERSION -1
 #define PYOBJC_API_NAME "__C_API__"

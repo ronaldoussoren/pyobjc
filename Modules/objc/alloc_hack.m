@@ -1,3 +1,7 @@
+/*
+ * The default processing doesn't work for some calls to alloc. Therefore
+ * we install custom handlers for these calls.
+ */
 #include "pyobjc.h"
 #include "objc_support.h"
 
@@ -100,4 +104,4 @@ ObjC_InstallAllocHack(void)
 		call_NSObject_alloc,
 		supercall_NSObject_alloc,
 		(IMP)imp_NSObject_alloc);
-}	
+}
