@@ -18,7 +18,10 @@ if _objc.platform == 'MACOSX':
     _objc.loadBundle(
         "ScreenSaver",
         globals(),
-        bundle_identifier='com.apple.ScreenSaver',
+        # Why doesn't this work?
+        #bundle_identifier='com.apple.ScreenSaver',
+        bundle_path=_objc.pathForFramework(
+            "/System/Library/Frameworks/ScreenSaver.framework")
     )
 else:
     _objc.loadBundle(
