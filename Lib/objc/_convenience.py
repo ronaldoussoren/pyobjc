@@ -157,15 +157,22 @@ def enumeratorGenerator(anEnumerator):
 		yield nextObject
 		nextObject = anEnumerator.nextObject()
 
-CONVENIENCE_METHODS['keyEnumerator'] = (('keys',
-					 lambda self: self.allKeys()),
+CONVENIENCE_METHODS['allKeys'] = (('keys', lambda self: self.allKeys()), )
+CONVENIENCE_METHODS['allValues'] = (('values', lambda self: self.allValues()), )
 
-					('__iter__',
+CONVENIENCE_METHODS['keyEnumerator'] = (('__iter__',
 					 lambda self: enumeratorGenerator( self.keyEnumerator() ) ),
 
 					('iterkeys',
 					 lambda self: enumeratorGenerator( self.keyEnumerator() ) ) )
 
-CONVENIENCE_METHODS['objectEnumerator'] = (('values', lambda self: self.allValues()),)
+CONVENIENCE_METHODS['objectEnumerator'] = (('values', lambda self: self.allValues()),
+
+					   ('__iter__',
+					    lambda self: enumeratorGenerator( self.objectEnumerator() ) ),
+
+					   ('itervalues',
+					    lambda self: enumeratorGenerator( self.objectEnumerator() ) ) )
+
 CONVENIENCE_METHODS['removeAllObjects'] = (('clear', lambda self: self.removeAllObjects()),)
 CONVENIENCE_METHODS['dictionaryWithDictionary:'] = (('copy', lambda self: type(self).dictionaryWithDictionary_(self)),)
