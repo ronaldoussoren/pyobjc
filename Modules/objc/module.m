@@ -74,7 +74,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 	}
 
 	if (!PyObjCClass_Check(classObject)) {
-		PyErr_SetString(PyExc_TypeError, "not a class");
+		PyErr_SetString(PyExc_TypeError, "base class is not an Objective-C class");
 		return NULL;
 	}
 
