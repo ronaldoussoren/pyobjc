@@ -23,7 +23,8 @@ import os
 import objc
 
 
-__all__ = ["NibClassBuilder", "loadClassesForNib", "loadClassesForNibFromBundle", "NibInfo"]
+__all__ = ["AutoBaseClass", "NibClassBuilder", "loadClassesForNib",
+           "loadClassesForNibFromBundle", "NibInfo"]
 
 
 NSDictionary = objc.lookup_class("NSDictionary")
@@ -36,13 +37,14 @@ class NibLoaderError(Exception): pass
 
 class ClassInfo:
 
-	__slots__ = ("nib", "name", "super", "actions", "outlets")
+	__slots__ = ("nibs", "name", "super", "actions", "outlets")
 
 	def merge(self, other):
 		assert self.name == other.name
 		if self.super != other.super:
 			raise NibLoaderError, \
 					"Incompatible superclass for %s" % self.name
+		self.nibs = mergeLists(self.nibs, other.nibs)
 		self.outlets = mergeLists(self.outlets, other.outlets)
 		self.actions = mergeLists(self.actions, other.actions)
 
@@ -107,7 +109,7 @@ class NibInfo(object):
 			return
 
 		clsInfo = ClassInfo()
-		clsInfo.nib = nibName
+		clsInfo.nibs = [nibName]  # a class can occur in multiple nibs
 		clsInfo.name = name
 		clsInfo.super = rawClsInfo.get('SUPERCLASS', 'NSObject')
 		clsInfo.actions = [a + "_" for a in rawClsInfo.get('ACTIONS', ())]
@@ -142,31 +144,130 @@ class NibInfo(object):
 
 		return metaClass(name, bases, methods)
 
-	def printOverview(self, file=None):
+	def printTemplate(self, file=None):
+		if file is None:
+			file = sys.stdout
+		writer = IndentWriter(file)
+		self._printTemplateHeader(writer)
+		
 		classes = self.classes.values()
 		classes.sort()  # see ClassInfo.__cmp__
-		nib = None
-		INDENT = "   "
 		for clsInfo in classes:
-			if nib != clsInfo.nib:
-				if nib:
-					print >>file
-				nib = clsInfo.nib
-				print >>file, "%s:" % nib
-			print >>file, INDENT + "%s(%s):" % (clsInfo.name, clsInfo.super)
-			for attrName in ["actions", "outlets"]:
-				attrs = getattr(clsInfo, attrName)
-				label = attrName.capitalize()
-				attrs.sort()
-				print >>file, 2 * INDENT + "%s:" % label
-				if not attrs:
-					print >>file, 3 * INDENT + "<none>"
-				else:
-					for name in attrs:
-						print >>file, 3 * INDENT + name
+			classExists = 1
+			if _classExists(clsInfo.super):
+				self._printClass(writer, clsInfo)
+			else:
+				writer.writeln("if 0:")
+				writer.indent()
+				writer.writeln("# *** base class not found: %s" % clsInfo.super)
+				self._printClass(writer, clsInfo)
+				writer.dedent()
 
+	def _printTemplateHeader(self, writer):
+		frameworks = {}
+		for clsInfo in self.classes.values():
+			super = clsInfo.super
+			framework = self._frameworkForClass(super)
+			if not framework:
+				continue  # don't know what to do
+			try:
+				frameworks[framework].append(super)
+			except KeyError:
+				frameworks[framework] = [super]
+		
+		items = frameworks.items()
+		if items:
+			items.sort()
+			for framework, classes in items:
+				classes.sort()
+				writer.writeln("from %s import %s" % (framework, ", ".join(classes)))
+		writer.writeln("from AppKit.NibLoader import AutoBaseClass")
+		writer.writeln()
+		writer.writeln()
+
+	def _printClass(self, writer, clsInfo):
+			nibs = clsInfo.nibs
+			if len(nibs) > 1:
+				nibs[-2] = nibs[-2] + " and " + nibs[-1]
+				del nibs[-1]
+			nibs = ", ".join(nibs)
+			writer.writeln("# class defined in %s" % nibs)
+			writer.writeln("class %s(AutoBaseClass):" % clsInfo.name)
+			writer.indent()
+			writer.writeln("# the actual base class is %s" % clsInfo.super)
+			outlets = clsInfo.outlets
+			actions = clsInfo.actions
+			if not actions:
+				writer.writeln("pass")
+				writer.writeln()
+			else:
+				writer.writeln()
+				if outlets:
+					writer.writeln("# The following outlets are added to the class:")
+					outlets.sort()
+					for o in outlets:
+						#writer.writeln("# %s" % o)
+						writer.writeln("%s = ivar('%s')" % (o, o))
+					writer.writeln()
+				if actions:
+					actions.sort()
+					for a in actions:
+						writer.writeln("def %s(self, sender):" % a)
+						writer.indent()
+						writer.writeln("pass")
+						writer.dedent()
+					writer.writeln()
+			writer.writeln()
+			writer.dedent()
+
+	def _frameworkForClass(self, className):
+		"""Return the name of the framework containing the class."""
+		try:
+			cls = objc.lookup_class(className)
+		except objc.error:
+			return ""
+		path = NSBundle.bundleForClass_(cls).bundlePath()
+		if path == "/System/Library/Frameworks/Foundation.framework":
+			return "Foundation"
+		elif path == "/System/Library/Frameworks/AppKit.framework":
+			return "AppKit"
+		else:
+			return ""
+
+
+def _classExists(className):
+	try:
+		objc.lookup_class(className)
+	except objc.error:
+		return 0
+	else:
+		return 1
 
 def _actionStub(self, sender): pass
+
+
+class IndentWriter:
+
+	def __init__(self, file=None, indentString="\t"):
+		if file is None:
+			file = sys.stdout
+		self.file = file
+		self.indentString = indentString
+		self.indentLevel = 0
+	
+	def writeln(self, line=""):
+		if line:
+			self.file.write(self.indentLevel * self.indentString +
+					line + "\n")
+		else:
+			self.file.write("\n")
+	
+	def indent(self):
+		self.indentLevel += 1
+	
+	def dedent(self):
+		assert self.indentLevel > 0, "negative dedent"
+		self.indentLevel -= 1
 
 
 def mergeLists(l1, l2):
@@ -179,8 +280,29 @@ def mergeLists(l1, l2):
 
 
 class NibClassBuilder(type):
+	
+	def _newSubclass(cls, name, bases, methods):
+		# Constructor for AutoBaseClass: create an actual
+		# instance that can be subclassed to invoke the
+		# magic behavior.
+		return type.__new__(cls, name, bases, methods)
+	_newSubclass = classmethod(_newSubclass)
+	
 	def __new__(cls, name, bases, methods):
+		# __new__ would normally create a subclass of cls, but
+		# instead we create a completely different class.
+		if bases and bases[0].__class__ is cls:
+			bases = bases[1:]
 		return _nibInfo.makeClass(name, bases, methods)
+
+
+# AutoBaseClass is a class that has NibClassBuilder is its' metaclass.
+# This means that if you subclass from AutoBaseClass, NibClassBuilder
+# will be used to create the new "subclass". This will however _not_
+# be a real subclass of AutoBaseClass, but rather a subclass of the
+# Cocoa class specified in the nib.
+AutoBaseClass = NibClassBuilder._newSubclass("AutoBaseClass", (), {})
+
 
 _nibInfo = NibInfo()
 
@@ -195,8 +317,9 @@ loadClassesForNibFromBundle =  _nibInfo.loadClassesForNibFromBundle
 commandline_doc = """\
 NibLoader.py [-th] nib1 [...nibN]
   Print an overview of the classes found in the nib file(s) specified,
-  listing their superclass, actions and outlets.
-  -t Instead of printing the overvies, perform a simple test.
+  listing their superclass, actions and outlets as Python source. This
+  output can be used as a template or a stub.
+  -t Instead of printing the overview, perform a simple test.
   -h Print this text."""
 
 def usage(msg, code):
@@ -217,7 +340,8 @@ def test(nibFiles):
 			# instantiate class, equivalent to
 			# class %(className):
 			#     __metaclass__ = NibClassBuilder
-			cls = NibClassBuilder(className, (), {})
+#			cls = NibClassBuilder(className, (), {})
+			cls = type(className, (AutoBaseClass,), {})
 		except NibLoaderError, why:
 			print "*** Failed class: %s; NibLoaderError: %s" % (
 					className, why[0])
@@ -225,12 +349,11 @@ def test(nibFiles):
 			print "Created class: %s, superclass: %s" % (cls.__name__,
 					cls.__bases__[0].__name__)
 
-def printOverview(nibFiles):
+def printTemplate(nibFiles):
+	info = NibInfo()
 	for nibPath in nibFiles:
-		info = NibInfo()
 		info.loadClassesForNib(nibPath)
-		info.printOverview()
-		print
+	info.printTemplate()
 
 def commandline():
 	import getopt
@@ -253,7 +376,7 @@ def commandline():
 	if doTest:
 		test(nibFiles)
 	else:
-		printOverview(nibFiles)
+		printTemplate(nibFiles)
 
 
 if __name__ == "__main__":
