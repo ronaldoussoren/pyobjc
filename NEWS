@@ -5,7 +5,7 @@
 
 WHAT'S NEW:
 
-Version 0.9 (April-??-2003):
+Version 0.9 (May-02-2003):
 - This version includes numerous bugfixes and improvements.
 
 - The module AppKit.NibClassBuilder has been moved to the package
