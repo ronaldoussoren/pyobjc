@@ -28,7 +28,7 @@ if sys.version_info[0] < req_ver[0] or (
 
 # TODO: Autodetect libFFI, including LIBFFI_BASE
 # ... But first implement FFI support!
-if 1:
+if 0:
     LIBFFI_CFLAGS=[]
     LIBFFI_LDFLAGS=[]
     LIBFFI_SOURCEFILES=[]
@@ -57,6 +57,7 @@ sourceFiles = [
         "Modules/objc/objc-object.m",
         "Modules/objc/super-call.m",
         "Modules/objc/selector.m",
+        "Modules/objc/method-accessor.m",
         "Modules/objc/instance-var.m",
         "Modules/objc/OC_PythonInt.m",
         "Modules/objc/OC_PythonObject.m",
@@ -77,7 +78,7 @@ if gs_root is None:
     # MacOS X 
     #
     CFLAGS=[
-        "-DMACOSX"
+        "-DMACOSX",
         ]
 
     OBJC_LDFLAGS=[
@@ -186,7 +187,6 @@ CoreExtensions =  [
               sourceFiles + LIBFFI_SOURCEFILES,
               extra_compile_args=[
                     "-DOBJC_PARANOIA_MODE",
-                    "-DPyOBJC_UNIQUE_PROXY",
               ] + LIBFFI_CFLAGS + CFLAGS,
               extra_link_args=LIBFFI_LDFLAGS + OBJC_LDFLAGS)
     ]

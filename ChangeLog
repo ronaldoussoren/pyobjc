@@ -1,3 +1,25 @@
+2003-01-18  Ronald Oussoren <oussoren@cistron.nl>
+    * Remove the PyOBJC_UNIQUE_PROXY option, it is always on anyway.
+    * Remove mechanism for registering methods that return a 'new'
+      instead of a 'borrowed' reference. This mechanism is too
+      simplistic.
+    * Initial support for special support of init methods: These return
+      self, and if they don't the old value of self probably is no longer
+      valid. 
+    * Bugfixes in libffi support
+    * Some performance enhancements, the effects are fairly minor.
+      I'm not too happy about the new version for objc_methodlist_magic, I'll
+      probably revert this change later on.
+    * Add workaround for a feature of NSData: 
+    	x = NSData.alloc()
+	    y = x.initWithBytes_len_(foo, bar)
+      The initWithBytes_len_ call above acts like realloc(): 'x' might no
+      longer be a pointer to a valid object. 
+    * Add <class>.pyobjc_classMethods, <object>.pyobjc_classMethods and
+      <object>.pyobjc_instanceMethods. The attributes of these attributes
+      are the class and instance-methods of the <class> or <object>.
+    * Typo in "Project Templates/00README.txt"
+
 2003-01-18  Bill Bumgarner  <bbum@codefab.com>
 
     * Modules/objc/OC_PythonDictionary.m ([OC_PythonDictionary
@@ -35,13 +57,6 @@
     * Modules/Cocoa/_AppKit.m: Added bridging of NSRectFillList.  API should
       be in GNUstep?
     (objc_NSRectFillList): Fixed short-circuit where rectCount is 0.
-
-2002-01-11 Ronald Oussoren <oussoren@cistron.nl>
-    * Add workaround for a feature of NSData: 
-    	x = NSData.alloc()
-	    y = x.initWithBytes_len_(foo, bar)
-      The initWithBytes_len_ call above acts like realloc(): 'x' might no
-      longer be a pointer to a valid object. 
 
 2002-01-06 Ronald Oussoren <oussoren@cistron.nl>
     * Merged the second halve of Mirko's patch: Changes to Modules/Cocoa

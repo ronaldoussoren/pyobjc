@@ -11,40 +11,6 @@
 #include "objc_support.h"
 
 /*
- * 'Inside Cocoa: OOP and the Objective-C Language'  says the following about
- * object ownership:
- *
- * - If you create an object (using alloc or allocWithZone:) or copy an
- *   object (using copy, copyWithZone:, or mutableCopyWithZone:), you alone
- *   are responsible for releasing it.
- *
- * The end effect of this is that the normal 'trick' of retain-ing an object
- * when creating the Python proxy object, and release-ing it when that proxy
- * dies, gives us one reference too many. The datastructure and code below
- * help to maintain an administration of methods that transfer object ownership
- * to us.
- */
-
-PyObject* allocator_dict = NULL;
-
-static int is_allocator_method(SEL sel)
-{
-	PyObject* v;
-
-	if (allocator_dict == NULL) return 0;
-
-	v = PyDict_GetItemString(allocator_dict, (char*)SELNAME(sel));
-	if (v == NULL) {
-		return 0;
-	}
-
-	return PyObject_IsTrue(v);
-}
-
-	
-
-
-/*
  * First section deals with registering replacement signatures for methods.
  * This is meant to be used to add _C_IN, _C_OUT and _C_INOUT specifiers for
  * pass-by-reference parameters.
@@ -240,9 +206,29 @@ base_donates_ref_setter(ObjCNativeSelector* self, PyObject* newVal, void* closur
 	} else {
 		self->sel_flags &= ~ObjCSelector_kDONATE_REF;
 	}
-	return 1;
+	return 0;
 }
 
+PyDoc_STRVAR(base_returns_self_doc, 
+"True if this is method returns a reallocated 'self', False otherwise\n"
+"\n"
+"NOTE: This field is used by the implementation."
+);
+static PyObject*
+base_returns_self(ObjCNativeSelector* self, void* closure)
+{
+	return PyBool_FromLong(0 != (self->sel_flags & ObjCSelector_kRETURNS_SELF));
+}
+static int
+base_returns_self_setter(ObjCNativeSelector* self, PyObject* newVal, void* closure)
+{
+	if (PyObject_IsTrue(newVal)) {
+		self->sel_flags |= ObjCSelector_kRETURNS_SELF;
+	} else {
+		self->sel_flags &= ~ObjCSelector_kRETURNS_SELF;
+	}
+	return 0;
+}
 static PyGetSetDef base_getset[] = {
 	{
 		"donates_ref",
@@ -286,6 +272,13 @@ static PyGetSetDef base_getset[] = {
 		base_selector_doc,
 		0
 	},
+	{
+		"returns_reallocated_self",
+		(getter)base_returns_self,
+		(setter)base_returns_self_setter,
+		base_returns_self_doc,
+		0
+	},
 	{ 
 		"__name__",  
 		(getter)base_selector, 
@@ -301,6 +294,11 @@ void
 sel_dealloc(PyObject* object)
 {
 	ObjCSelector* self = (ObjCSelector*)object;	
+
+	/* HACK */
+	if (ObjCNativeSelector_Check(self)) {
+		[((ObjCNativeSelector*)self)->sel_oc_signature release];
+	}
 
 	PyMem_Free(self->sel_signature);
 	self->sel_signature = NULL;
@@ -456,10 +454,9 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 	}
 
 	/* First stab at detecting super-calls... */
-	if (!self->sel_flags & ObjCSelector_kCLASS_METHOD) {
+	if (!(self->sel_flags & ObjCSelector_kCLASS_METHOD)) {
 		if (ObjCObject_Check(pyself)) {
-			pyself_class = ObjCClass_GetClass(
-				(PyObject*)pyself->ob_type);
+			pyself_class = GETISA(ObjCObject_GetObject(pyself));
 			if (pyself_class == NULL) {
 				return NULL;
 			}
@@ -498,7 +495,6 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		}
 	}
 
-
 	if (pyself_class != NULL && pyself_class != self->sel_class) {
 		METHOD self_m;
 		METHOD pyself_m;
@@ -522,13 +518,21 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 	}
 
 	if (is_super_call) {
-		execute = ObjC_FindSupercaller(self->sel_class, self->sel_selector);
-		if (execute == NULL) return NULL;
-		self->sel_call_super = execute;
+		if (self->sel_call_super) {
+			execute = self->sel_call_super;
+		} else {
+			execute = ObjC_FindSupercaller(self->sel_class, self->sel_selector);
+			if (execute == NULL) return NULL;
+			self->sel_call_super = execute;
+		}
 	} else {
-		execute = ObjC_FindSelfCaller(pyself_class, self->sel_selector);
-		if (execute == NULL) return NULL;
-		self->sel_call_self = execute;
+		if (self->sel_call_self) {
+			execute = self->sel_call_self;
+		} else {
+			execute = ObjC_FindSelfCaller(pyself_class, self->sel_selector);
+			if (execute == NULL) return NULL;
+			self->sel_call_self = execute;
+		}
 	}
 
 	if (self->sel_self != NULL) {
@@ -595,8 +599,19 @@ objcsel_descr_get(ObjCNativeSelector* meth, PyObject* obj, PyObject* class)
 	}
 	result->sel_flags = meth->sel_flags;
 	result->sel_class = meth->sel_class;
+
+	if (meth->sel_call_self == NULL || meth->sel_call_super == NULL) {
+		ObjC_FindCaller(meth->sel_class, meth->sel_selector,
+			&meth->sel_call_self, &meth->sel_call_super);
+	}
 	result->sel_call_self = meth->sel_call_self;
 	result->sel_call_super = meth->sel_call_super;
+
+	if (meth->sel_oc_signature == NULL) {
+		meth->sel_oc_signature = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
+	}
+	result->sel_oc_signature = meth->sel_oc_signature;
+	[result->sel_oc_signature retain];
 
 	result->sel_self       = obj;
 	if (result->sel_self) {
@@ -772,16 +787,11 @@ ObjCSelector_NewNative(Class class,
 	result->sel_class = class;
 	result->sel_call_self = NULL;
 	result->sel_call_super = NULL;
+	result->sel_oc_signature = NULL;
 	result->sel_flags = 0;
 	if (class_method) {
 		result->sel_flags |= ObjCSelector_kCLASS_METHOD;
 	}
-#if 0
-	/* This isn't really necessary: Use objc._convenience.py instead */
-	if (is_allocator_method(result->sel_selector)) {
-		result->sel_flags |= ObjCSelector_kDONATE_REF;
-	}
-#endif
 	return (PyObject*)result;
 }
 
@@ -810,9 +820,6 @@ ObjCSelector_New(PyObject* callable,
 	result->callable = callable;
 	if (class_method) {
 		result->sel_flags |= ObjCSelector_kCLASS_METHOD;
-	}
-	if (is_allocator_method(result->sel_selector)) {
-		result->sel_flags |= ObjCSelector_kDONATE_REF;
 	}
 	Py_INCREF(result->callable);
 
@@ -910,11 +917,10 @@ pysel_call(ObjCPythonSelector* self, PyObject* args)
 		PyTuple_SetItem(actual_args, 0, self->sel_self);
 		for (i = 0; i < argc; i++) {
 			PyObject* v = PyTuple_GET_ITEM(args, i);
-			if (v == NULL) return NULL;
+			/*if (v == NULL) return NULL;*/
 			OC_CheckRevive(v);
-			Py_INCREF(v);
-			if (PyTuple_SetItem(actual_args, i+1, v) < 0) 
-				return NULL;
+			Py_XINCREF(v);
+			PyTuple_SET_ITEM(actual_args, i+1, v);
 		}
 		result = PyObject_Call(self->callable, 
 			actual_args, NULL);	

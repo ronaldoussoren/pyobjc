@@ -14,16 +14,6 @@
  * at most one python proxy. This allows users to use the 'is' operator
  * to check if two proxy instances refer to the same objective-C object.
  *
- */
-#ifndef PyOBJC_UNIQUE_PROXY
-
-#define find_existing_proxy(objc_obj) NULL
-#define register_proxy(proxy_obj)  0
-#define unregister_proxy(proxy_obj)  ((void)0)
-
-#else /* PyOBJC_UNIQUE_PROXY */
-
-/*
  * There are three functions:
  * - register_proxy
  *   Add the proxy for an objective-C object to the weakref dictionary
@@ -36,6 +26,8 @@
  * there are no more references to that proxy. Note that we use the 'self' 
  * object to pass the key that should be remove, that seems to be the easiest
  * (but ugly) method of creating a closure.
+ *
+ * TODO: Implement using NSHashTable and check if performance improves.
  */
 
 static PyObject* proxy_dict = NULL;
@@ -104,7 +96,7 @@ unregister_proxy(id objc_obj)
 	int r;
 	PyObject* key;
 
-	if (proxy_dict == NULL) return NULL;
+	if (proxy_dict == NULL) return;
 
 	key = PyInt_FromLong((long)objc_obj);
 	r = PyDict_DelItem(proxy_dict, key);
@@ -165,8 +157,6 @@ register_proxy(PyObject* proxy_obj)
 	return 0;
 }
 
-#endif /* PyOBJC_UNIQUE_PROXY */
-
 int ObjC_RegisterClassProxy(Class cls, PyObject* classProxy)
 {
 	return register_proxy(classProxy);
@@ -222,6 +212,44 @@ object_getattro(PyObject* obj, PyObject* name)
 	return result;
 }
 
+PyDoc_STRVAR(obj_get_classMethods_doc,
+"The attributes of this field are the class methods of this object. This can\n"
+"be used to force access to a class method."
+);
+static PyObject*
+obj_get_classMethods(ObjCObject* self, void* closure)
+{
+	return ObjCMethodAccessor_New((PyObject*)self, 1);
+}
+
+PyDoc_STRVAR(obj_get_instanceMethods_doc,
+"The attributes of this field are the instance methods of this object. This\n"
+"can be used to force access to a class method."
+);
+static PyObject*
+obj_get_instanceMethods(ObjCObject* self, void* closure)
+{
+	return ObjCMethodAccessor_New((PyObject*)self, 0);
+}
+
+static PyGetSetDef obj_getset[] = {
+	{
+		"pyobjc_classMethods",
+		(getter)obj_get_classMethods,
+		NULL,
+		obj_get_classMethods_doc,
+		0
+	},
+	{
+		"pyobjc_instanceMethods",
+		(getter)obj_get_instanceMethods,
+		NULL,
+		obj_get_instanceMethods_doc,
+		0
+	},
+	{ 0, 0, 0, 0, 0 }
+};
+
 
 PyTypeObject ObjCObject_Type = {
 	PyObject_HEAD_INIT(&ObjCClass_Type)
@@ -256,7 +284,7 @@ PyTypeObject ObjCObject_Type = {
 	0,					/* tp_iternext */
 	0,					/* tp_methods */
 	0,					/* tp_members */
-	0,					/* tp_getset */
+	obj_getset,				/* tp_getset */
 	0,					/* tp_base */
 	0,					/* tp_dict */
 	0,					/* tp_descr_get */

@@ -413,12 +413,6 @@ void init_objc(void)
 	PyDict_SetItemString(d, "ivar", (PyObject*)&ObjCIvar_Type);
 	PyDict_SetItemString(d, "informal_protocol", (PyObject*)&ObjCInformalProtocol_Type);
 
-	allocator_dict = PyDict_New();
-	if (allocator_dict == NULL) return;
-
-	Py_INCREF(allocator_dict);
-	PyDict_SetItemString(d, "ALLOCATOR_METHODS", allocator_dict);
-
 	if (ObjCUtil_Init(m) < 0) return;
 	if (ObjCAPI_Register(d) < 0) return;
 	if (ObjC_RegisterStdStubs(&objc_api) < 0) return;

@@ -30,6 +30,14 @@ def add_convenience_methods(super_class, name, type_dict):
     for sel in type_dict.values():
         if not isinstance(sel, selector):
             continue
+
+        
+        if sel.selector.startswith('init') and not sel.class_method:
+            # Instance methods that start with 'init*' are constructors. These
+            # return 'self'. If they don't they reallocated the previous 
+            # value, don't use that afterwards.
+            sel.returns_reallocated_self = 1
+
         sel = sel.selector
 
         if CONVENIENCE_METHODS.has_key(sel):
