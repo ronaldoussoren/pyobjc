@@ -97,6 +97,11 @@
  */
 -(void)getObjects:(id*)buffer inRange:(NSRange)range;
 
+-(void)addObject:(id)anObject;
+-(void)insertObject:(id)anObject atIndex:(unsigned)idx;
+-(void)removeLastObject;
+-(void)removeObjectAtIndex:(unsigned)idx;
+
 @end
 
 #endif /* OC_PythonArray_h */
