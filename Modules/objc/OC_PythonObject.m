@@ -220,8 +220,10 @@ end:
 			int i;
 			for (i=0; i<PyList_GET_SIZE(OC_PythonObject_DepythonifyTable); i++) {
 				PyObject *tpl = PyList_GET_ITEM(OC_PythonObject_DepythonifyTable, i);
-				PyObject *cls = PyTuple_GET_ITEM(tpl, 0);
+				PyObject *cls;
 				if (!PyTuple_Check(tpl)) continue;
+
+				cls = PyTuple_GET_ITEM(tpl, 0);
 				if (PyObject_IsInstance(obj, cls)) {
 					PyObject *fn;
 					PyObject *res;
