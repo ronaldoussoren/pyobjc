@@ -843,6 +843,17 @@ pythonify_c_value (const char *type, void *datum)
 	{
 		id obj = *(id *) datum;
 
+#if 1
+		/* In theory this is a no-op, in practice this gives us EOF 4.5 
+		 * support.
+		 *
+		 * EOF can return references to 'to-be-restored' objects, 
+		 * calling any method on them fully restores them, 'self' is
+		 * the safest method to call.
+		 */
+		obj = [obj self];
+#endif
+
 		if (obj == nil) {
 			retobject = Py_None;
 			Py_INCREF (retobject);
