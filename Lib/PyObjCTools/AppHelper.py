@@ -5,10 +5,10 @@ Exported functions:
 * endSheetMethod - set correct signature for NSSheet callbacks
 """
 
-__all__ = ( 'runEventLoop', 'endSheetMethod' )
+__all__ = ( 'runEventLoop', 'runConsoleEventLoop', 'endSheetMethod' )
 
 from AppKit import NSApplicationMain, NSApp, NSRunAlertPanel
-from Foundation import NSLog
+from Foundation import NSLog, NSRunLoop
 import sys
 import traceback
 import objc as _objc
@@ -31,7 +31,30 @@ def unexpectedErrorAlert():
             "Continue", "Quit", None)
 
 
-def runEventLoop(argv=None, unexpectedErrorAlert=unexpectedErrorAlert):
+def machInterrupt(signum):
+    app = NSApp()
+    if app:
+        app.terminate_(None)
+    else:
+        import os
+        os._exit(1)
+
+def installMachInterrupt():
+    try:
+        import signal
+        from PyObjCTools import MachSignals
+    except:
+        return
+    MachSignals.signal(signal.SIGINT, machInterrupt)
+
+def runConsoleEventLoop(argv=None, installInterrupt=True):
+    if argv is None:
+        argv = sys.argv
+    if installInterrupt:
+        installMachInterrupt()
+    NSRunLoop.currentRunLoop().run()
+
+def runEventLoop(argv=None, unexpectedErrorAlert=unexpectedErrorAlert, installInterrupt=True):
     """Run the event loop, ask the user if we should continue if an
     exception is caught. Use this function instead of NSApplicationMain().
     """
@@ -43,6 +66,8 @@ def runEventLoop(argv=None, unexpectedErrorAlert=unexpectedErrorAlert):
         try:
             if firstRun:
                 firstRun = 0
+                if installInterrupt:
+                    installMachInterrupt()
                 NSApplicationMain(argv)
             else:
                 NSApp().run()
