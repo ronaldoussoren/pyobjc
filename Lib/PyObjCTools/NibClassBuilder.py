@@ -64,9 +64,9 @@ import objc
 __all__ = ["AutoBaseClass", "NibInfo", "extractClasses"]
 
 
-NSDictionary = objc.lookUpClass("NSDictionary")
-NSObject = objc.lookUpClass("NSObject")
-NSBundle = objc.lookUpClass("NSBundle")
+from Foundation import NSDictionary, NSObject, NSBundle
+import AppKit  # not used directly, but we look up classes from AppKit
+               # dynamically, so it has to be loaded.
 
 
 class NibLoaderError(Exception): pass
