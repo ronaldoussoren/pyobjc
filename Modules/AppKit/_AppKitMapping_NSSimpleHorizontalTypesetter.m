@@ -4,7 +4,7 @@
  *
  * TODO:
  * -baseOfTypesetterGlyphInfo
- * -layoutGlyphsInHorizontalLineFragment_baseline:
+ * -layoutGlyphsInHorizontalLineFragment:baseline:
  */
 #include <Python.h>
 #include <AppKit/AppKit.h>

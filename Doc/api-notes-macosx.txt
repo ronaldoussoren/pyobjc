@@ -69,6 +69,14 @@ callback::
 
 		mysheetDidEnd = NSEndSheetMethod(mysheetDidEnd)
 
+
+Class NSApplication
+...................
+
+``NSModalSession`` objects are wrapped as opaque values. You can check if
+two wrapper objects refer to the same session object by comparing their
+``ptr`` attributes.
+
 Class NSBezierPath
 ..................
 
@@ -87,6 +95,25 @@ Class NSBezierPath
 * ``setAssociatedPoints:atIndex:``
   Implementing this method in Python is not yet supported.
 
+Class ``NSBitmapImageRep``
+..........................
+
+* ``getBitMapDataPlanes``
+  This method is not supported (yet)
+
+* ``getTIFFCompressionTypes:count:``
+  This method is not supported (yet)
+
+* ``initWithBitmapDataPlanes:pixesWide:pixelsHigh:bitPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:``
+  This method is not supported (yet)
+
+Class ``NSFont``
+................
+
+* ``positionsForCompositeSequence:numberOfGlyphs:pointArray:``
+  This method is not supported (yet)
+
+
 Class ``NSGraphicsContext``
 ...........................
 
@@ -99,6 +126,24 @@ Class ``NSGraphicsContext``
 * ``graphicsPort``
   This method is not yet supported.
 
+Class ``NSLayoutManager``
+.........................
+
+* ``getGlyphs:range:``
+  This method is not yet supported
+
+* ``getGlyphsInRange:glyphs:characterIndexes:glyphInscriptions:elasticBits:``
+  This method is not yet supported
+
+* ``getGlyphsInRange:glyphs:characterIndexes:glyphInscriptions:elasticBits:bidiLevels:``
+  This method is not yet supported
+
+* ``rectArrayForCharacterRange:withinSelectedCharacterRange:inTextContainer:rectCount:``
+  This method is not yet supported
+
+* ``rectArrayForGlyphRange:withinSelectedGlyphRange:inTextContainer:rectCount:``
+  This method is not yet supported
+
 Class ``NSMatrix``
 ..................
 
@@ -106,11 +151,68 @@ Class ``NSMatrix``
   Calling this method from Python is supported, overriding it in Python
   is not. The ``context`` can be an arbitrary python object.
 
+Class ``NSMovie``
+.................
+
+The return value of ``QTMovie`` and the sole argument of ``initWithMovie:``
+are QT.Movie objects. Using these methods requires the use of MacPython 2.3.
+
+Class ``NSOpenGLContext``
+.........................
+
+* ``getValues:forParameter:``
+  This method is not yet supported.
+
+* ``setValues:forParameter:``
+  This method is not yet supported.
+
+* ``setOffScreen:width:height:rowbytes:``
+  This method is not yet supported.
+
+Class ``NSOpenGLPixelFormat``
+.............................
+
+* ``getValues:forAttribute:forVirtualScreen:``
+  This method is not yet supported
+
+* ``initWithAttributes:``
+  This method is not yet supported
+
+Class ``NSQuickDrawView``
+.........................
+
+* ``qdPort``
+  This method is not yet supported and will return a MacPython wrapper for
+  a QuickDraw port in the future.
+
+Class ``NSSimpleHorizontalTypesetter``
+......................................
+
+* ``baseOfTypesetterGlyphInfo``
+  This method is not yet supported
+
+* ``layoutGlyphsInHorizontalLineFragment:baseline:``
+  This method is not yet supported
+
+
 Class ``NSView``
+................
 
 * ``sortSubviewsUsingFunction:context:``
   Calling this method from Python is supported, overriding it in Python
   is not. The ``context`` can be an arbitrary python object.
+
+Class ``NSWindow``
+..................
+
+* ``graphicsPort``
+  This method is not yet supported
+
+* ``initWithWindowRef:``
+  This method is not yet supported
+
+* ``windowRef``
+  This method is not yet supported
 
 Foundation framework
 --------------------
@@ -249,8 +351,8 @@ Class ``NSSet``
   This method is not supported, use ``initWithArray:`` instead.
 
 
-Class NSString
-..............
+Class ``NSString``
+..................
 
 Objective-C strings are usually represented as instances of a subclass of
 the Python type ``unicode``. It is possible to access the "real" Objective-C
@@ -284,13 +386,14 @@ following methods with a "difficult" signature are not supported.
 
 Please let me know if there is documentation for this framework.
 
-Class IBObjCSourceParser
-........................
+Class ``IBObjCSourceParser``
+............................
 
 * ``parseClass:``
 
-Class NSView
-............
+Class ``NSView``
+................
+
 * ``objectAtPoint:rect:``
   Defined in a catagory on ``NSView``.
 

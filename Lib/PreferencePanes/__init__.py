@@ -5,8 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-# Load the AddressBook bundle, and gather all classes defined there
+# Load the PreferencePanes bundle, and gather all classes defined there
 import objc 
+
+import AppKit
+del AppKit
 
 objc.loadBundle("PreferencePanes", globals(), bundle_path="/System/Library/Frameworks/PreferencePanes.framework")
 

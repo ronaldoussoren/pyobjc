@@ -3,6 +3,7 @@
  *
  * TODO:
  * -getValues:forParameter:
+ * -setValues:forParameter:
  * -setOffScreen:width:height:rowbytes:
  */
 #include <Python.h>
@@ -18,6 +19,15 @@ _pyobjc_install_NSOpenGLContext(void)
 	if (PyObjC_RegisterMethodMapping(
 		classNSOpenGLContext,
 		@selector(getValues:forParameter:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(
+		classNSOpenGLContext,
+		@selector(setValues:forParameter:),
 		PyObjCUnsupportedMethod_Caller,
 		PyObjCUnsupportedMethod_IMP) < 0) {
 

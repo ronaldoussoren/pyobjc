@@ -8,6 +8,11 @@ documentation for details on how to use these functions and classes.
 # Load the AddressBook bundle, and gather all classes defined there
 import objc
 
+# AddressBook.framework has a dependency on AppKit.framework. Make sure we
+# load AppKit ourselfes, otherwise we might not load the custom wrappers for it.
+import AppKit
+del AppKit
+
 objc.loadBundle("AddressBook", globals(), bundle_path="/System/Library/Frameworks/AddressBook.framework")
 
 from _AddressBook import *

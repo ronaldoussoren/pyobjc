@@ -157,7 +157,7 @@
 ,NSFont,positionOfGlyph:precededByGlyph:isNominal:,{_NSPoint=ff}0@8:12I16I20^c24,{_NSPoint=ff}@:IIo^c
 ,NSFont,positionOfGlyph:struckOverGlyph:metricsExist:,{_NSPoint=ff}0@8:12I16I20^c24,{_NSPoint=ff}@:IIo^c
 ,NSFont,positionOfGlyph:struckOverRect:metricsExist:,{_NSPoint=ff}36@8:12I16{_NSRect={_NSPoint=ff}{_NSSize=ff}}20^c32,{_NSPoint=ff}@:I{_NSRect={_NSPoint=ff}{_NSSize=ff}}o^c
-,NSFont,positionOfGlyph:withRelation:toBaseGlyph:totalAdvancement:metricsExist:,{_NSPoint=ff}0@8:12I16i20I24^{_NSSize=ff}28^c32,{_NSPoint=ff}@:IiI^{_NSSize=ff}o^c
+,NSFont,positionOfGlyph:withRelation:toBaseGlyph:totalAdvancement:metricsExist:,{_NSPoint=ff}0@8:12I16i20I24^{_NSSize=ff}28^c32,{_NSPoint=ff}@:IiIo^{_NSSize=ff}o^c
 ,NSFont,positionsForCompositeSequence:numberOfGlyphs:pointArray:,i0@4:8^I12i16^{_NSPoint=ff}20,
 ,NSTextView,getMarkedText:selectedRange:,v0@4:8^@12^{_NSRange=II}16,
 ,NSColorPickerWheelView,_pointInPicker:,c0@4:8^{_NSPoint=ff}12,

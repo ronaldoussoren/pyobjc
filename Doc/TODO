@@ -65,8 +65,6 @@ Test suite
 
 The test suite needs to be enhanced.
 
-* tests for ``pyobjc_instanceMethods``, ``pyobjc_classMethods``
-
 * tests for all functions in ``Modules/*/*Mapping*.m``
 
 
@@ -282,3 +280,9 @@ Performance tuning/testing
 Design and implement a set of performance tests for the bridge. Use this to 
 invistigate and fix any possible performance problems.
 
+Robustness
+..........
+
+Make core bridge more robust w.r.t. order of loading frameworks. You currently
+get incorrect wrappers if you manually load the AppKit.framework and then 
+import AppKit.

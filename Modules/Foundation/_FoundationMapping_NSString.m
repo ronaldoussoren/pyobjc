@@ -1,9 +1,10 @@
 /*
  * Special wrappers for NSString methods with 'difficult' arguments.
  *
- * TODO:
  * -getCString:maxLength:range:remainingRange:	[call]
  * -getCString:maxLength:			[call]
+ *
+ * TODO:
  * -getCharacters:
  * -getCharacters:range:
  * -getCString:
