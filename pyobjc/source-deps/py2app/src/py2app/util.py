@@ -6,6 +6,40 @@ def fsencoding(s, encoding=sys.getfilesystemencoding()):
         s = s.encode(encoding)
     return s
 
+def makedirs(path):
+    path = fsencoding(path)
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+def mergecopy(src, dest):
+    if os.path.exists(dest) and os.stat(dest).st_mtime >= os.stat(src).st_mtime:
+        return
+    copy2(src, dest)
+    
+def mergetree(src, dst, condition=None, copyfn=mergecopy):
+    """Recursively merge a directory tree using mergecopy()."""
+    # XXX - symlinks
+    src = fsencoding(src)
+    dst = fsencoding(dst)
+    names = os.listdir(src)
+    if not os.path.exists(dst):
+        os.mkdir(dst)
+    errors = []
+    for name in names:
+        srcname = os.path.join(src, name)
+        dstname = os.path.join(dst, name)
+        if condition is not None and not condition(srcname):
+            continue
+        try:
+            if os.path.isdir(srcname):
+                mergetree(srcname, dstname, condition=condition)
+            else:
+                copyfn(srcname, dstname)
+        except (IOError, os.error), why:
+            errors.append((srcname, dstname, why))
+    if errors:
+        raise IOError, errors
+
 def move(src, dst):
     shutil.move(fsencoding(src), fsencoding(dst))
 
