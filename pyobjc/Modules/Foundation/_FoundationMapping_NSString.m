@@ -191,6 +191,55 @@ _pyobjc_install_NSString(void)
 		return -1;
 	}
 
+	if (PyObjC_RegisterMethodMapping(
+		classNSString,
+		@selector(initWithFormat:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+	if (PyObjC_RegisterMethodMapping(
+		classNSString,
+		@selector(initWithFormat:arguments:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+	if (PyObjC_RegisterMethodMapping(
+		classNSString,
+		@selector(initWithFormat:locale:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+	if (PyObjC_RegisterMethodMapping(
+		classNSString,
+		@selector(initWithFormat:locale:arguments:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+	if (PyObjC_RegisterMethodMapping(
+		classNSString,
+		@selector(stringWithFormat:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+	if (PyObjC_RegisterMethodMapping(
+		classNSString,
+		@selector(stringByAppendingFormat:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+
 
 	return 0;
 }

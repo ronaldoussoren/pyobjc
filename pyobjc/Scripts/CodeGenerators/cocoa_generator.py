@@ -215,6 +215,7 @@ if FOUNDATION_HDRS is not None:
         'NSAllMapTableValues(',
         'NSGetSizeAndAlignment(', # Hmm, shouldn't we use this in the bridge?
         'NSLogv(',
+        'NSLog(',
         'NSAllocateObject(',
         'NSCopyObject(',
         'NSShouldRetainWithZone(',
@@ -253,6 +254,7 @@ if FOUNDATION_HDRS is not None:
         'NSStringFromMapTable(',
         'GSLogLock(',
         'NSLogv (',
+        'NSLog (',
         'NSCreateZone (',
         'NSZoneFromPointer (',
         'NSZoneCalloc (',
@@ -296,7 +298,6 @@ if FOUNDATION_HDRS is not None:
     func_builder.IGNORE_VARARGS.extend([
         # Some of these are Foundation some are AppKit
         'NSGetInformationalAlertPanel',
-        'NSLog',
         'NSRunAlertPanel',
         'NSRunInformationalAlertPanel',
         'NSRunCriticalAlertPanel',

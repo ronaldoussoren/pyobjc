@@ -159,6 +159,37 @@ static	char* keywords[] = { "inRect", "amount", "edge", NULL };
 	return result;
 }
 
+/* void NSLog(NSString *format, ...); */
+PyDoc_STRVAR(NSLog_doc,
+	"void NSLog(NSString *format, ...); n"
+	"\n"
+	"NOTE: Any formatting characters will be ignored."
+);
+static PyObject* 
+objc_NSLog(PyObject* self __attribute__((__unused__)), 
+		PyObject* args, PyObject* kwds)
+{
+	static  char* keywords[] = { "format", NULL };
+	PyObject* result = NULL;
+	id objc_format;
+			                    
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSLog", keywords, 
+		PyObjCObject_Convert, &objc_format)) return NULL;
+
+	PyObjC_DURING
+		NSLog(@"%@", objc_format);
+		result = Py_None;
+
+	PyObjC_HANDLER
+		PyObjCErr_FromObjC(localException);
+		result = NULL;
+	PyObjC_ENDHANDLER
+
+	Py_XINCREF(Py_None);
+	return result;
+}
+
+
 static PyMethodDef foundation_methods[] = {
 #ifdef MACOSX
 	{ 
@@ -180,6 +211,12 @@ static PyMethodDef foundation_methods[] = {
 		(PyCFunction)objc_NSDivideRect,
 		METH_VARARGS|METH_KEYWORDS,
 		NSDivideRect_doc
+	},
+	{
+		"NSLog",
+		(PyCFunction)objc_NSLog,
+		METH_VARARGS|METH_KEYWORDS,
+		NSLog_doc
 	},
 
 	METHOD_TABLE_ENTRIES
@@ -478,8 +515,10 @@ error:
 #include "_FoundationMapping_NSData.m"
 #include "_FoundationMapping_NSDecimalNumber.m"
 #include "_FoundationMapping_NSDictionary.m"
+#include "_FoundationMapping_NSException.m"
 #include "_FoundationMapping_NSIndexSet.m"
 #include "_FoundationMapping_NSMutableArray.m"
+#include "_FoundationMapping_NSMutableString.m"
 #include "_FoundationMapping_NSNetService.m"
 #include "_FoundationMapping_NSScriptObjectSpecifier.m"
 #include "_FoundationMapping_NSSet.m"
@@ -659,8 +698,10 @@ void init_Foundation(void)
 	if (_pyobjc_install_NSData() != 0) return;
 	if (_pyobjc_install_NSDecimalNumber() != 0) return;
 	if (_pyobjc_install_NSDictionary() != 0) return;
+	if (_pyobjc_install_NSException() != 0) return;
 	if (_pyobjc_install_NSIndexSet() != 0) return;
 	if (_pyobjc_install_NSMutableArray() != 0) return;
+	if (_pyobjc_install_NSMutableString() != 0) return;
 	if (_pyobjc_install_NSNetService() != 0) return;
 	if (_pyobjc_install_NSScriptObjectSpecifier() != 0) return;
 	if (_pyobjc_install_NSSet() != 0) return;

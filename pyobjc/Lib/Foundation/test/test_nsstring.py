@@ -13,6 +13,43 @@ class TestNSString(unittest.TestCase):
             NSString.localizedCaseInsensitiveCompare_(u'foo',u'Foo') == 0,
             u"NSString doesn't compare correctly")
 
+    def testFormatting(self):
+
+        self.assertRaises(TypeError, NSString.stringWithFormat_, "foo")
+
+        # The test on instances is slightly more verbose to avoid warnings
+        try:
+            obj = NSString.alloc()
+            self.assertRaises(TypeError, obj.initWithFormat_, "foo")
+            obj = obj.initWithString_("foo")
+        except AssertionError, msg:
+            raise
+
+        try:
+            obj = NSString.alloc()
+            self.assertRaises(TypeError, obj.initWithFormat_locale_, "foo", {})
+            obj = obj.initWithString_("foo")
+        except AssertionError, msg:
+            raise
+
+        try:
+            obj = NSString.alloc()
+            self.assertRaises(TypeError, obj.initWithFormat_arguments_, "foo", [])
+            obj = obj.initWithString_("foo")
+        except AssertionError, msg:
+            raise
+
+        try:
+            obj = NSString.alloc()
+            self.assertRaises(TypeError, obj.initWithFormat_locale_arguments_, "foo", {}, [])
+            obj = obj.initWithString_("foo")
+        except AssertionError, msg:
+            raise
+
+
+            
+
+
 class TestNSStringBridging(unittest.TestCase):
     def setUp(self):
         self.nsUniString = NSString.stringWithString_(u"unifoo")
