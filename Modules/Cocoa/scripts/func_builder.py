@@ -4,7 +4,18 @@
 # This generates wrappers for 'simple' functions, basically anything that
 # has only 'by value' arguments, and return a simple object or an 'id'
 #
-import objc
+
+try:
+    import objc
+except ImportError:
+    objc = None
+
+try:
+    import AppKit
+except ImportError:
+    pass
+
+
 import re
 import sys
 import types
@@ -12,10 +23,30 @@ import types
 # Types that are also int-values (mostly enums)
 INT_ALIASES=[]
 
+# Varargs functions to be treated like normal functions
+IGNORE_VARARGS = []
+
+# Function mapping
+FUNC_MAP = {}
+
 HDR="""\
 /*
  * This is a generated file.
  */
+
+static inline int convert_BOOL(PyObject* object, void* pvar)
+{
+    BOOL* pbool = (BOOL*)pvar;
+
+    if (PyObject_IsTrue(object)) {
+        *pbool = YES;
+    } else {
+        *pbool = NO;
+    }
+
+    return 1;
+}
+
 
 static inline int convert_char(PyObject* object, void* pvar)
 {
@@ -86,12 +117,14 @@ def is_id(typestr):
 	elif typestr[-1] != '*':
 		return 0
 	
-
-	try:
-		objc.lookUpClass(typestr[:-1])
-		return 1
-	except:
-		return 0
+        if objc != None:
+            try:
+                    objc.lookUpClass(typestr[:-1])
+                    return 1
+            except:
+                    return 0
+        else:
+            return 0
 
 # TODO: actually use this, and add more types (when using: always check here
 # first, and then special logic (like handling 'id'-like values)
@@ -124,8 +157,8 @@ SIMPLE_TYPES={
 	),
 	'BOOL': (
 		"\tresult = PyBool_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
-		'b',
-		'&%(varname)s',
+		'O&', 		
+		'convert_BOOL, &%(varname)s', 
 		None
 	),
 	'unsigned': (
@@ -248,12 +281,17 @@ def parse_prototype(protostr):
 	if len(arguments)  != 1 or arguments[0] != 'void':
 		for a in arguments:
 			if a == '...':
+                                if funcname in IGNORE_VARARGS:
+                                    continue
 				raise ValueError, "Complex function (varargs)"
 			idx = len(a)-1
 			while a[idx].isalnum() or a[idx] == '_':
 				idx -= 1
 			new_arguments.append((simplify_type(a[:idx+1].strip()), a[idx+1:].strip()))
 	arguments = tuple(new_arguments)
+
+        if FUNC_MAP.has_key(funcname):
+            arguments = FUNC_MAP[funcname](funcname, arguments)
 
 	for tp, name in arguments:
 		if not is_simple_type(tp):

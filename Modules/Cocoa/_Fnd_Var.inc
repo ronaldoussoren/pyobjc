@@ -47,7 +47,6 @@
 	if (add_BOOL(d, "NSDebugEnabled", NSDebugEnabled) < 0) return;
 	if (add_BOOL(d, "NSZombieEnabled", NSZombieEnabled) < 0) return;
 	if (add_BOOL(d, "NSDeallocateZombies", NSDeallocateZombies) < 0) return;
-	//if (add_BOOL(d, "NSHangOnMallocError", NSHangOnMallocError) < 0) return;
 	if (add_BOOL(d, "NSHangOnUncaughtException", NSHangOnUncaughtException) < 0) return;
 	if (add_BOOL(d, "NSKeepAllocationStatistics", NSKeepAllocationStatistics) < 0) return;
 

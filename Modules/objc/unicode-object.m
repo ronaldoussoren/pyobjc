@@ -6,6 +6,7 @@
 #include <Python.h>
 #include "pyobjc.h"
 #include "objc_support.h"
+#include <stddef.h>
 
 typedef struct {
 	PyUnicodeObject	base;
@@ -86,7 +87,7 @@ PyTypeObject ObjCUnicode_Type = {
  	0,					/* tp_traverse */
  	0,					/* tp_clear */
 	0,					/* tp_richcompare */
-	0,	/* tp_weaklistoffset */
+	offsetof(ObjCUnicodeObject, weakrefs),	/* tp_weaklistoffset */
 	0,					/* tp_iter */
 	0,					/* tp_iternext */
 	class_methods,				/* tp_methods */
