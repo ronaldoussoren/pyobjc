@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-# Using the AddressBook framework on MacOS X
+"""
+This script show how to use the AddressBook framework from Python. It dumps
+information about the person on "your card".
+"""
 import AddressBook
 
 book = AddressBook.ABAddressBook.sharedAddressBook()

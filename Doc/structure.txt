@@ -8,7 +8,7 @@ Structure of the PyObjC package
 Introduction
 ------------
 
-XXX:  This documet is outdated and incomplete.
+XXX:  This document is outdated and incomplete.
 
 This document gives an overview of the PyObjC for developers (of the package).
 
@@ -113,4 +113,4 @@ a Unicode object if that fails.
 When translating from NSString to a Python unicode object (and back) we first 
 translate to a UTF8 encoding. This way we don't have to worry about any
 differences in the representation of Unicode strings in Python and Objective-C
-(Python has two different represenations, selection is at compile-time).
+(Python has two different representations, selection is at compile-time).

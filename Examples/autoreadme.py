@@ -1,4 +1,11 @@
 #!/usr/bin/python
+"""
+This script is a daemon that will open the ReadMe file in the root of any
+(removable) volume that is inserted while this script is running.
+
+The script is part of an article at MAcDevCenter: 
+    http://www.macdevcenter.com/pub/a/mac/2003/01/31/pyobjc_one.html
+"""
 import sys
 import os
 import re

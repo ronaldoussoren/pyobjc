@@ -41,7 +41,7 @@ PyObjC is released with an open source license.
 
 on our website (News section):
 
-PyObjC 1.0b1 has shippped. A disk image and the sources are `available` [link]. 
+PyObjC 1.0b1 has shipped. A disk image and the sources are `available` [link]. 
 There are many new features and bugfixes, the the NEWS file [link] for details.
 
 The PyObjC installer installs a number of examples and project builder templates
@@ -59,6 +59,6 @@ PyObjC 1.0b1 provides a bridge between the Python and Objective-C
 programming languages, allowing the Python programmer
 transparent access to Objective-C-based classes and APIs. Write
 Cocoa applications in Python, using Interface Builder to design
-the user inteface.
+the user interface.
 
 URL: http://pyobjc.sourceforge.net/

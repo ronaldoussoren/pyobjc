@@ -51,7 +51,7 @@ exception. This module should only be used during development.
 ``PyObjCTools.AppHelper``
 .........................
 
-This module exports two functions that are usefull when working with the
+This module exports two functions that are useful when working with the
 ``AppKit`` framework.
 
 * ``endSheetMethod(method) -> selector``
@@ -126,7 +126,7 @@ interface is modelled on the ``getattr`` and ``setattr`` functions.
 * ``getKeyPath(object, keypath) -> value``
 
   Like ``getKey`` but using a key path. The ``keypath`` is a sequence of keys
-  seperated by dots. It calls ``getKey`` to follow the path and returns the
+  separated by dots. It calls ``getKey`` to follow the path and returns the
   final value.
 
 * ``setKey(object, key, value) -> None``

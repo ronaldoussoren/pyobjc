@@ -17,7 +17,7 @@ More information can be found on `our website <http://pyobjc.sf.net>`_
 General user documentation
 ..........................
 
-The following documents are usefull when you're interested in developing
+The following documents are useful when you're interested in developing
 Cocoa applications in Python.
 
 * `An introduction to PyObjC`_
