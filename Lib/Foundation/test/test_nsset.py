@@ -26,16 +26,19 @@ class TestNSSetInteraction(unittest.TestCase):
         x = NSSet.alloc().initWithObjects_(0,1,2,3,None)
         y = NSSet.setWithObjects_count_(range(10), 4)
         z = NSSet.alloc().initWithObjects_count_(range(10), 4)
+        a = NSSet.alloc().initWithObjects_count_(range(4), None)
 
         self.assert_(len(w) == 4)
         self.assert_(len(x) == 4)
         self.assert_(len(y) == 4)
         self.assert_(len(z) == 4)
+        self.assert_(len(a) == 4)
 
         self.assert_(0 in w)
         self.assert_(1 in x)
         self.assert_(2 in y)
         self.assert_(3 in z)
+        self.assert_(3 in a)
 
     def test_varargsConstruction2(self):
         w = NSMutableSet.setWithObjects_(0,1,2,3,None)

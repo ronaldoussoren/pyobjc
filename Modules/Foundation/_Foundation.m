@@ -303,6 +303,214 @@ static inline int add_NSRect(PyObject* d, char* name, NSRect value)
 	return 0;
 }
 
+
+static PyObject* call_objWithObjects_count_(
+		PyObject* method, PyObject* self, PyObject* arguments)
+{
+	PyObject* result;
+	struct objc_super super;
+	PyObject* objectList;
+	PyObject* objectCount;
+	id* objects;
+	int count;
+	int arrayToken;
+	id  res;
+
+	if  (!PyArg_ParseTuple(arguments, "OO", &objectList, &objectCount)) {
+		return NULL;
+	}
+
+	arrayToken = PyObjC_PythonToCArray(@encode(id),
+			objectList, objectCount,
+			(void**)&objects, &count);
+	if (arrayToken == -1) {
+		return NULL;
+	}
+
+	NS_DURING
+		PyObjC_InitSuper(&super, 
+			PyObjCSelector_GetClass(method),
+			PyObjCObject_GetObject(self));
+
+		res = objc_msgSendSuper(&super,
+				PyObjCSelector_GetSelector(method),
+				objects, count);
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+		res = nil;
+	NS_ENDHANDLER
+
+	PyObjC_FreeCArray(arrayToken, objects);
+
+	if (res == nil && PyErr_Occurred()) {
+		return NULL;
+	}
+	
+	result = PyObjC_IdToPython(res);
+
+	return result;
+}
+
+static id imp_objWithObjects_count_(id self, SEL sel, id* objects, int count)
+{
+	PyObject* result;
+	PyObject* arglist;
+	PyObject* v;
+	id  returnValue;
+
+	PyGILState_STATE state = PyGILState_Ensure();
+
+	arglist = PyTuple_New(3);
+	if (arglist == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+		return nil;
+	}
+
+	v = PyObjC_IdToPython(self);
+	if (v == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+		return nil;
+	}
+
+	PyTuple_SET_ITEM(arglist, 0, v);
+
+	v = PyObjC_CArrayToPython(@encode(id), objects, count);
+	if (v == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+		return nil;
+	}
+	PyTuple_SET_ITEM(arglist, 1, v);
+
+	v = PyInt_FromLong(count);
+	if (v == NULL) {	
+		Py_DECREF(arglist);
+		PyObjCErr_ToObjCWithGILState(&state);
+		return nil;
+	}
+	PyTuple_SET_ITEM(arglist, 2,  v);
+
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
+	Py_DECREF(arglist);
+	if (result == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+		return nil;
+	}
+
+	returnValue = PyObjC_PythonToId(result);
+	Py_DECREF(result);
+	if (PyErr_Occurred()) {
+		PyObjCErr_ToObjCWithGILState(&state);
+		return nil;
+	}
+	PyGILState_Release(state);
+	return returnValue;
+}
+
+
+static PyObject* call_clsWithObjects_count_(
+		PyObject* method, PyObject* self, PyObject* arguments)
+{
+	PyObject* result;
+	struct objc_super super;
+	PyObject* objectList;
+	PyObject* objectCount;
+	id* objects;
+	int count;
+	int arrayToken;
+	id  res;
+
+	if  (!PyArg_ParseTuple(arguments, "OO", &objectList, &objectCount)) {
+		return NULL;
+	}
+
+	arrayToken = PyObjC_PythonToCArray(
+			@encode(id), 
+			objectList, objectCount,
+			(void**)&objects, &count);
+	if (arrayToken == -1) {
+		return NULL;
+	}
+
+	NS_DURING
+		PyObjC_InitSuperCls(&super, 
+			PyObjCSelector_GetClass(method),
+			PyObjCClass_GetClass(self));
+
+		res = objc_msgSendSuper(&super,
+				PyObjCSelector_GetSelector(method),
+				objects, count);
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+		res = nil;
+	NS_ENDHANDLER
+
+	PyObjC_FreeCArray(arrayToken, objects);
+
+	if (res == nil && PyErr_Occurred()) {
+		return NULL;
+	}
+	
+	result = PyObjC_IdToPython(res);
+
+	return result;
+}
+
+static id imp_clsWithObjects_count_(id self, SEL sel, id* objects, int count)
+{
+	PyObject* result;
+	PyObject* arglist;
+	PyObject* v;
+	id  returnValue;
+	PyGILState_STATE state = PyGILState_Ensure();
+
+	arglist = PyTuple_New(3);
+	if (arglist == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+		return nil;
+	}
+
+	v = PyObjC_IdToPython(self);
+	if (v == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+		return nil;
+	}
+
+	PyTuple_SET_ITEM(arglist, 0, v);
+
+	v = PyObjC_CArrayToPython(@encode(id), objects, count);
+	if (v == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+		return nil;
+	}
+
+	PyTuple_SET_ITEM(arglist, 1, v);
+
+	v = PyInt_FromLong(count);
+	if (v == NULL) {	
+		Py_DECREF(arglist);
+		PyObjCErr_ToObjCWithGILState(&state);
+		return nil;
+	}
+	PyTuple_SET_ITEM(arglist, 2,  v);
+
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
+	Py_DECREF(arglist);
+	if (result == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+		return nil;
+	}
+
+	returnValue = PyObjC_PythonToId(result);
+	Py_DECREF(result);
+	if (PyErr_Occurred()) {
+		PyObjCErr_ToObjCWithGILState(&state);
+		return nil;
+	}
+	PyGILState_Release(state);
+	return returnValue;
+}
+
+
 /*
  * Include the implementation of difficult methods.
  */

@@ -1100,6 +1100,19 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 
 	Py_DECREF(attributes);
 
+	/* If all else fails, ask the actual class (getattro also does this) */
+	NS_DURING
+		result = PyObjCSelector_FindNative(cls, 
+				PyObjCRT_SELName(selector));
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+		result = NULL;
+	NS_ENDHANDLER
+
+	if (result) {
+		return result;
+	}
+
 	ObjCErr_Set(PyExc_AttributeError,
 		"No selector %s", PyObjCRT_SELName(selector));
 	PyDict_SetItemString(info->sel_to_py, 

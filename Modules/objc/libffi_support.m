@@ -742,6 +742,7 @@ ObjC_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector)
 	}
 }
 
+
 PyObject *
 ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 {
@@ -793,7 +794,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 	/* First count the number of by reference parameters, and the number
 	 * of bytes of storage needed for them. Note that arguments 0 and 1
-	 * are self and the selector, no need to count counted or checked those.
+	 * are self and the selector, no need to count those.
 	 */
 	argbuf_len = resultSize;
 

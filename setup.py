@@ -116,7 +116,7 @@ if LIBFFI_SOURCES is not None:
             print >>sys.stderr, "LIBFFI can not build correctly in a path that contains spaces."
             print >>sys.stderr, "This limitation includes the entire path (all parents, etc.)"
             print >>sys.stderr, "Move the PyObjC and libffi source to a path without spaces and build again."
-            sys.exit(1)
+            #sys.exit(1)
 
         inst_dir = inst_dir.replace("'", "'\"'\"'")
         src_path = src_path.replace("'", "'\"'\"'")
@@ -163,6 +163,7 @@ sourceFiles = [
         "Modules/objc/module.m",
         "Modules/objc/libffi_support.m",
         "Modules/objc/pointer-support.m",
+        #"Modules/objc/generic-callable.m",
 ]
 
 # On GNUstep we can read some configuration from the environment.

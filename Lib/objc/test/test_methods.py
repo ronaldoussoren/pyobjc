@@ -278,7 +278,7 @@ class PyOCTestSimpleReturns(unittest.TestCase):
     def testFloat(self):
         # Fails, possibly rounding error
         obj = OC_TestClass1.new()
-        obj.clsReset()
+        obj.reset()
         self.assertEquals(obj.floatFunc(), makeCFloat(0.128))
         self.assertEquals(obj.floatFunc(), makeCFloat(1.0))
         self.assertEquals(obj.floatFunc(), makeCFloat(42.0))
@@ -286,7 +286,7 @@ class PyOCTestSimpleReturns(unittest.TestCase):
 
     def testDouble(self):
         obj = OC_TestClass1.new()
-        obj.clsReset()
+        obj.reset()
         self.assertEquals(obj.doubleFunc(), 0.128)
         self.assertEquals(obj.doubleFunc(), 1.0)
         self.assertEquals(obj.doubleFunc(), 42.0)
@@ -295,17 +295,17 @@ class PyOCTestSimpleReturns(unittest.TestCase):
     def testCharp(self):
         obj = OC_TestClass1.new()
         obj.reset()
-        self.assertEquals(obj.charpClsFunc(), 'hello')
-        self.assertEquals(obj.charpClsFunc(), 'world')
-        self.assertEquals(obj.charpClsFunc(), 'foobar')
+        self.assertEquals(obj.charpFunc(), 'hello')
+        self.assertEquals(obj.charpFunc(), 'world')
+        self.assertEquals(obj.charpFunc(), 'foobar')
 
     def testID(self):
         obj = OC_TestClass1.new()
         obj.reset()
-        self.assertEquals(len(obj.idClsFunc()), 0)
-        self.assertEquals(type(obj.idClsFunc()).__name__, 'NSHost')
-        self.assertEquals(str(obj.idClsFunc()), '{}')
-        self.assertEquals(obj.idClsFunc(), None)
+        self.assertEquals(len(obj.idFunc()), 0)
+        self.assertEquals(type(obj.idFunc()).__name__, 'NSHost')
+        self.assertEquals(str(obj.idFunc()), '{}')
+        self.assertEquals(obj.idFunc(), None)
 
     def testStruct1(self):
         obj = OC_TestClass1.new()

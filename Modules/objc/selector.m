@@ -1522,6 +1522,7 @@ PyObjCSelector_FromFunction(
 	int       is_class_method = 0;
 	Class     oc_class = PyObjCClass_GetClass(template_class);
 	PyObject* value;
+	PyObject* super_sel;
 
 	if (oc_class == NULL) {
 		return NULL;
@@ -1590,6 +1591,17 @@ PyObjCSelector_FromFunction(
 		selector = PyObjCSelector_DefaultSelector(oc_name);
 	}
 
+	/* XXX: This seriously fails if a class method has a different signature
+	 * than an instance method of the same name!
+	 *
+	 *
+	 * We eagerly call PyObjCClass_FindSelector because some ObjC
+	 * classes are not fully initialized until they are actually used,
+	 * and the code below doesn't seem to count but PyObjCClass_FindSelector
+	 * is.
+	 */
+	super_sel = PyObjCClass_FindSelector(template_class, selector);
+
 	if (is_class_method) {
 		meth = class_getClassMethod(oc_class, selector);
 	} else {
@@ -1610,8 +1622,6 @@ PyObjCSelector_FromFunction(
 		 * the user may have specified a more exact
 		 * signature!
 		 */
-		PyObject* super_sel = PyObjCClass_FindSelector(
-			template_class, selector);
 		if (super_sel == NULL) {
 			return NULL;
 		}
@@ -1626,6 +1636,7 @@ PyObjCSelector_FromFunction(
 	} else {
 		char* signature = NULL;
 
+		PyErr_Clear(); /* The call to PyObjCClass_FindSelector failed */
 		if (protocols != NULL) {
 			signature = find_protocol_signature(
 					protocols, selector);
