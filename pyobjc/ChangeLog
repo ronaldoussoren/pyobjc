@@ -1,5 +1,11 @@
 2002-10-24  Bill Bumgarner  <bbum@codefab.com>
 
+	* Fixed up web services tool example slightly.
+
+	* Changed objc_selcall to not release allocator method returns.
+	Not sure if this is absolutely correct, but if fixes a bunch of
+	code that had been implemented in a standard pattern.
+
 	* Added a number of NS* tests.
 	* "Fixed" a crasher that would happen after the second time a
 	collection class was alloc()'d.
