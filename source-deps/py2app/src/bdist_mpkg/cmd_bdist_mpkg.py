@@ -15,6 +15,7 @@ from distutils import log
 from altgraph.compat import *
 
 from bdist_mpkg import pkg, tools, plists
+from py2app.util import copy_tree
 
 class bdist_mpkg (Command):
 
@@ -184,14 +185,21 @@ class bdist_mpkg (Command):
             mkpath(pkgdir, dry_run=self.dry_run, verbose=self.verbose)
             info = ()
             desc = self.scheme_descriptions.get(scheme)
-            pkg.make_package(self, pkgname, version, files, common, prefix, pkgdir, info, desc)
+
+            pkg.make_package(self,
+                pkgname, version, files, common, prefix, pkgdir, info, desc,
+            )
+
             self.scheme_hook(scheme, pkgname, version, files, common, prefix, pkgdir)
             
         info = dict(
             IFRequirementDicts=[plists.python_requirement(name)],
             IFPkgFlagComponentDirectory=tools.unicode_path(self.component_directory),
         )
-        pkg.make_metapackage(self, name, version, packages, pseudoinstall_root, info)
+
+        pkg.make_metapackage(self,
+            name, version, packages, pseudoinstall_root, info,
+        )
         
         if not self.keep_temp:
             remove_tree(self.pkg_base, dry_run=self.dry_run)
@@ -199,6 +207,23 @@ class bdist_mpkg (Command):
             TOOL = '/usr/bin/open'
             os.spawnv(os.P_NOWAIT, TOOL, [TOOL, pseudoinstall_root])
 
+    def copy_tree(self, infile, outfile,
+                   preserve_mode=1, preserve_times=1, preserve_symlinks=0,
+                   condition=None):
+        """
+        Copy an entire directory tree respecting verbose, dry-run,
+        and force flags.
+
+        This version doesn't bork on existing symlinks
+        """
+        update = not self.force
+        dry_run = self.dry_run
+        verbose = self.verbose
+        return copy_tree(
+            infile, outfile,
+            preserve_mode, preserve_times, preserve_symlinks,
+            update, verbose, dry_run, condition
+        )
     # run()
 
 # class bdist_dumb
