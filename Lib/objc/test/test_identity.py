@@ -237,7 +237,6 @@ class ObjCtoPython (unittest.TestCase):
 
         cls = objc.lookUpClass("NSDecimalNumber")
         container.setStoredObjectToResultOf_on_("zero", cls)
-        print `container.storedObject()`, `type(container.storedObject())`
         self.assertFetchingTwice(container, "decimal")
 
 class PythonToObjC (unittest.TestCase):
