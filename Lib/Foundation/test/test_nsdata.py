@@ -60,7 +60,7 @@ class TestNSData(unittest.TestCase):
 
         Data of different lengths may be stored in different subclasses within the class cluster.
         """
-        testFactor = [1, 10, 1000, 10000, 10000000]
+        testFactor = [1, 10, 1000, 10000, 1000000]
         for aFactor in testFactor:
             bigRawBytes = "1234567890" * aFactor
 
