@@ -1,3 +1,8 @@
+2002-10-25  Bill Bumgarner  <bbum@codefab.com>
+
+	* Changed the objc_support.m to compile in the invocation tear
+	down code.
+
 2002-10-24  Bill Bumgarner  <bbum@codefab.com>
 
 	* Fixed up web services tool example slightly.

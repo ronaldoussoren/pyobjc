@@ -1420,7 +1420,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 		}
 	}
 
-#if 0
+#if 1
 	self_obj = nil;
 	if (*[methinfo methodReturnType] == _C_ID) {
 		[inv setReturnValue:&self_obj];
