@@ -5,6 +5,14 @@ import objc
 NSObject = objc.lookUpClass('NSObject')
 
 class TestSubclassing(unittest.TestCase):
+    def testMIObjC(self):
+        try:
+            class MIClass1(NSObject, objc.runtime.NSArray):
+                pass
+            self.assert_(0)
+        except TypeError:
+            pass
+
     def testSubclassOfSubclass(self):
         class Level1Class (NSObject):
             def hello(self):

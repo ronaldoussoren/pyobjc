@@ -36,5 +36,5 @@ if os.path.exists(p):
     print "- Removing %s"%p
     os.unlink(p)
 
-os.system("LIBFFI_BASE='%s/libffi' '%s' setup.py install"%(
+os.system("LIBFFI_BASE='%s/libffi' '%s' setup.py install -f"%(
     os.getcwd(), sys.executable))

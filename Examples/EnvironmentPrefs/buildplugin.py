@@ -16,7 +16,7 @@ buildplugin(
     mainmodule = "main.py",
     nibname = "EnvironmentPane",
     principalClass = "EnvironmentPane",
-    resources = ["English.lproj", "ShellEnv.icns"],
+    resources = ["English.lproj", "Dutch.lproj", "ShellEnv.icns"],
     bundlesuffix = ".prefPane",
     plist = infoPlist,
 )

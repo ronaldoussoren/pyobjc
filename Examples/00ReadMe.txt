@@ -44,6 +44,11 @@ And a number of Cocoa applications. These use the 'AppKit' package.
 
   Demonstrates how to write an NSPreferencePane, for use in the
   System Preferences application. Requires a framework build of Python.
+ 
+- EnvironmentPrefs
+
+  Another NSPreferencePane. This one can be used to edit the default environment
+  for the current user. It also is a simple example of a localized application.
 
 - PythonBrowser
 

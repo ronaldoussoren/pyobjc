@@ -77,6 +77,12 @@ static struct stringtable string_table[] = {
 
 	/* From: NSEnumerator.h */
 
+	/* From: NSError.h */
+	 { "NSLocalizedDescriptionKey", &NSLocalizedDescriptionKey },
+	 { "NSPOSIXErrorDomain", &NSPOSIXErrorDomain },
+	 { "NSOSStatusErrorDomain", &NSOSStatusErrorDomain },
+	 { "NSMachErrorDomain", &NSMachErrorDomain },
+
 	/* From: NSException.h */
 	 { "NSGenericException", &NSGenericException },
 	 { "NSRangeException", &NSRangeException },
@@ -135,6 +141,25 @@ static struct stringtable string_table[] = {
 	/* From: NSHFSFileTypes.h */
 
 	/* From: NSHost.h */
+
+	/* From: NSHTTPCookie.h */
+	 { "NSHTTPCookieName", &NSHTTPCookieName },
+	 { "NSHTTPCookieValue", &NSHTTPCookieValue },
+	 { "NSHTTPCookieOriginURL", &NSHTTPCookieOriginURL },
+	 { "NSHTTPCookieVersion", &NSHTTPCookieVersion },
+	 { "NSHTTPCookieDomain", &NSHTTPCookieDomain },
+	 { "NSHTTPCookiePath", &NSHTTPCookiePath },
+	 { "NSHTTPCookieSecure", &NSHTTPCookieSecure },
+	 { "NSHTTPCookieExpires", &NSHTTPCookieExpires },
+	 { "NSHTTPCookieComment", &NSHTTPCookieComment },
+	 { "NSHTTPCookieCommentURL", &NSHTTPCookieCommentURL },
+	 { "NSHTTPCookieDiscard", &NSHTTPCookieDiscard },
+	 { "NSHTTPCookieMaximumAge", &NSHTTPCookieMaximumAge },
+	 { "NSHTTPCookiePort", &NSHTTPCookiePort },
+
+	/* From: NSHTTPCookieStorage.h */
+	 { "NSHTTPCookieManagerAcceptPolicyChangedNotification", &NSHTTPCookieManagerAcceptPolicyChangedNotification },
+	 { "NSHTTPCookieManagerCookiesChangedNotification", &NSHTTPCookieManagerCookiesChangedNotification },
 
 	/* From: NSInvocation.h */
 
@@ -262,6 +287,23 @@ static struct stringtable string_table[] = {
 	/* From: NSURL.h */
 	 { "NSURLFileScheme", &NSURLFileScheme },
 
+	/* From: NSURLAuthenticationChallenge.h */
+
+	/* From: NSURLCache.h */
+
+	/* From: NSURLConnection.h */
+
+	/* From: NSURLCredential.h */
+
+	/* From: NSURLCredentialStorage.h */
+	 { "NSURLCredentialStorageChangedNotification", &NSURLCredentialStorageChangedNotification },
+
+	/* From: NSURLDownload.h */
+
+	/* From: NSURLError.h */
+	 { "NSURLErrorDomain", &NSURLErrorDomain },
+	 { "NSErrorFailingURLStringKey", &NSErrorFailingURLStringKey },
+
 	/* From: NSURLHandle.h */
 	 { "NSHTTPPropertyStatusCodeKey", &NSHTTPPropertyStatusCodeKey },
 	 { "NSHTTPPropertyStatusReasonKey", &NSHTTPPropertyStatusReasonKey },
@@ -273,6 +315,22 @@ static struct stringtable string_table[] = {
 	 { "NSFTPPropertyUserPasswordKey", &NSFTPPropertyUserPasswordKey },
 	 { "NSFTPPropertyActiveTransferModeKey", &NSFTPPropertyActiveTransferModeKey },
 	 { "NSFTPPropertyFileOffsetKey", &NSFTPPropertyFileOffsetKey },
+
+	/* From: NSURLProtectionSpace.h */
+	 { "NSURLProtectionSpaceHTTPProxy", &NSURLProtectionSpaceHTTPProxy },
+	 { "NSURLProtectionSpaceHTTPSProxy", &NSURLProtectionSpaceHTTPSProxy },
+	 { "NSURLProtectionSpaceFTPProxy", &NSURLProtectionSpaceFTPProxy },
+	 { "NSURLProtectionSpaceSOCKSProxy", &NSURLProtectionSpaceSOCKSProxy },
+	 { "NSURLAuthenticationMethodDefault", &NSURLAuthenticationMethodDefault },
+	 { "NSURLAuthenticationMethodHTTPBasic", &NSURLAuthenticationMethodHTTPBasic },
+	 { "NSURLAuthenticationMethodHTTPDigest", &NSURLAuthenticationMethodHTTPDigest },
+	 { "NSURLAuthenticationMethodHTMLForm", &NSURLAuthenticationMethodHTMLForm },
+
+	/* From: NSURLProtocol.h */
+
+	/* From: NSURLRequest.h */
+
+	/* From: NSURLResponse.h */
 
 	/* From: NSUserDefaults.h */
 	 { "NSGlobalDomain", &NSGlobalDomain },

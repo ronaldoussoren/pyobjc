@@ -2,7 +2,7 @@
  * NSGraphicsContext mappings for difficult methods:
  *
  * TODO:
- * -graphicsPort
+ * -graphicsPort, there doesn't seem to be a MacPython wrapper for this?
  *
  * Unsupported:
  * -focusStack

@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.16 2003/06/09 12:18:10 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.17 2003/06/28 12:57:51 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -155,7 +155,7 @@ static struct pyobjc_api*	PyObjC_API;
 
 #define PyObjCObject_Check(obj) PyObject_TypeCheck(obj, PyObjC_API->object_type)
 #define PyObjCClass_Check(obj)  PyObject_TypeCheck(obj, PyObjC_API->class_type)
-#define PyObjCSelector_Check(obj)  PyObject_TypeCheck(obj, PyObjC_API->class_type)
+#define PyObjCSelector_Check(obj)  PyObject_TypeCheck(obj, PyObjC_API->select_type)
 #define PyObjCObject_GetObject (PyObjC_API->obj_get_object)
 #define PyObjCObject_ClearObject (PyObjC_API->obj_clear_object)
 #define PyObjCClass_GetClass   (PyObjC_API->cls_get_class)

@@ -10,11 +10,9 @@ when the user logs in using SSH.
 
 TODO:
 - Undo
-- Icon, documentation, ...
-- Localize 
 """
 from AppKit import *
-from Foundation import NSBundle, NSMutableDictionary
+from Foundation import *
 from PreferencePanes import *
 import objc
 from PyObjCTools import NibClassBuilder
@@ -34,7 +32,7 @@ NibClassBuilder.extractClasses("EnvironmentPane",
 ENVPLIST="~/.MacOSX/environment.plist"
 
 # Template for new keys
-NEWTMPL="New_Variable_%d"
+NEWTMPL=NSLocalizedString("New_Variable_%d", "")
 
 class EnvironmentPane (NibClassBuilder.AutoBaseClass):
     """
@@ -81,14 +79,17 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
         # unsaved changes ask if they should be saved right now.
 
         if self.changed:
-            NSBeginAlertSheet("Save changes?",
-                "Cancel", "Don't Save", "Save",
+            NSBeginAlertSheet(
+                NSLocalizedString("Save changes?", ""),
+                NSLocalizedString("Cancel", ""), 
+                NSLocalizedString("Don't Save", ""),
+                NSLocalizedString("Save", ""),
                 self.mainView().window(),
                 self,
                 None,
                 "sheetDidDismiss:returnCode:contextInfo:",
                 0,
-                "There are unsaved changed, should these be saved?")
+                NSLocalizedString("There are unsaved changed, should these be saved?", ""))
             return NSUnselectLater
         return NSUnselectNow
 
@@ -105,8 +106,9 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
         elif code == NSAlertOtherReturn: # 'Save'
             r = self.saveEnvironment()
             if not r:
-                self.runAlertSheet("Cannot save changes",
-                    "It was not possible to save your changes")
+                self.runAlertSheet(
+                    NSLocalizedString("Cannot save changes", ""),
+                    NSLocalizedString("It was not possible to save your changes", ""))
                 self.replyToShouldUnselect_(NSUnselectCancel)
                 return
 
@@ -156,8 +158,8 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
         while self.environ.has_key(name):
             i += 1
             name = NEWTMPL%(i,)
-        self.environ[name] = "New Value"
-        self.keys = list(environment.keys())
+        self.environ[name] = NSLocalizedString("New Value", "")
+        self.keys = list(self.environ.keys())
         self.keys.sort()
         self.mainTable.reloadData()
         self.changed = True
@@ -189,8 +191,10 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
         if name == "name":
             if value != envname:
                 if self.environ.has_key(value):
-                    self.runAlertSheet("Name exists",
-                        "The name %s is already used"%(value,))
+                    self.runAlertSheet(
+                        NSLocalizedString("Name exists", ""),
+                        NSLocalizedString("The name %s is already used", "")%(
+                            value,))
                     aView.reloadData()
                     return
 
@@ -218,7 +222,7 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
     def runAlertSheet(self, title, message):
         """ Run an alertsheet without callbacks """
         NSBeginAlertSheet(title,
-            "OK", None, None,
+            NSLocalizedString("OK", ""), None, None,
             self.mainView().window(),
             self,
             None,

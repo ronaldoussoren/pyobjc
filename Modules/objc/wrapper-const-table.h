@@ -123,6 +123,20 @@ static inline int add_string(PyObject* d, char* name, NSString* value)
 	return 0;
 }
 
+static inline int add_id(PyObject* d, char* name, id value)
+{
+	int res;
+	PyObject* v;
+
+	v = PyObjC_ObjCToPython("@", &value);
+	if (v == NULL) return -1;
+
+	res = PyDict_SetItemString(d, name, v);
+	if (res < 0) return -1;
+	return 0;
+}
+
+
 static inline int register_strings(PyObject* d, struct stringtable* table)
 {
 	while (table->name != NULL) {

@@ -86,6 +86,10 @@ static inline int convert_SEL(PyObject* object, void* pvar)
             *(SEL*)pvar = NULL;
             return 1;
         }
+        if (PyObjCSelector_Check(object)) {
+            *(SEL*)pvar = PyObjCSelector_GetSelector(object);
+            return 1;
+        }
 	if (!PyString_Check(object)) {
 		PyErr_SetString(PyExc_TypeError, "Expected string");
 		return 0;
