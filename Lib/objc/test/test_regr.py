@@ -20,6 +20,7 @@ class TestRegressions(unittest.TestCase):
         """
         Check that calling methods on unitialized objects raises an error
         """
+        # expected to fail with PYOBJC_NEW_INITIALIZER_PATTERN
         import warnings
         import Foundation
 

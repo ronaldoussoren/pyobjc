@@ -234,6 +234,10 @@ if LIBFFI_SOURCES is not None:
     LIBFFI_CFLAGS=[
         "-isystem", "%s/include"%LIBFFI_BASE,
     ]
+    if os.path.exists('%s/lib/gcc/include/libffi'%LIBFFI_BASE):
+        LIBFFI_CFLAGS.extend([
+            "-isystem", "%s/lib/gcc/include/libffi"%LIBFFI_BASE,
+        ])
     LIBFFI_LDFLAGS=[
         '-L%s/lib'%LIBFFI_BASE, '-lffi',
     ]
@@ -304,6 +308,7 @@ if gs_root is None:
         sys.exit(1)
 
     CFLAGS=[
+        "-DPYOBJC_NEW_INITIALIZER_PATTERN",
         "-DMACOSX",
         "-DAPPLE_RUNTIME",
         "-no-cpp-precomp",
@@ -324,9 +329,16 @@ if gs_root is None:
         #"-pedantic",
 
         "-Wno-import",
-        #"-O0", "-g",
         #"-Werror",
+
+        # no optimization, for debugging
+        #"-O0"
+
+        # g4 optimized
         #"-O3", "-mcpu=7450", "-maltivec",
+
+        # g5 optimized
+        #"-fast", "-fPIC"
         ]
 
     OBJC_LDFLAGS=[
