@@ -14,7 +14,7 @@ import sys
 from objc.test.testbndl import PyObjC_TestClass3 as STUB
 from Foundation import *
 
-class KeyValueClass1 (objc.runtime.NSObject):
+class KeyValueClass1 (NSObject):
     def init(self):
         self = super(KeyValueClass1, self).init()
         self.key3 = 3
@@ -41,7 +41,7 @@ class KeyValueClass1 (objc.runtime.NSObject):
     def set_key5(self, value):
         self.key5 = value * 5
 
-class KeyValueClass4 (objc.runtime.NSObject):
+class KeyValueClass4 (NSObject):
     __slots__ = ('foo', )
 
     def init(self):
@@ -61,14 +61,14 @@ class KeyValueClass4 (objc.runtime.NSObject):
 
     roprop = property(lambda self: u"read-only")
 
-class KVOClass(objc.runtime.NSObject):
+class KVOClass(NSObject):
     def automaticallyNotifiesObserversForKey_(self, aKey):
         return objc.NO
 
     def test(self): return u"test"
 
 
-class KeyValueObserver (objc.runtime.NSObject):
+class KeyValueObserver (NSObject):
     def init(self):
         self.observed = []
         return self
@@ -251,7 +251,7 @@ class PyKeyValueCoding (unittest.TestCase):
         STUB.setKeyValue_forObject_key_value_(1, o, u"multiple.level2.level3.keyB", 9.999)
         self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
 
-    if hasattr(objc.runtime.NSObject, u"willChangeValueForKey_"):
+    if hasattr(NSObject, u"willChangeValueForKey_"):
         # NSKeyValueObserving is only available on Panther and beyond
         def testKVO1(self):
             o = KVOClass.alloc().init()
@@ -320,17 +320,17 @@ class TestBaseExceptions (unittest.TestCase):
     exception that we expect it to raise.
     """
     def testValueForKey(self):
-        o = objc.runtime.NSObject.alloc().init()
+        o = NSObject.alloc().init()
 
         self.assertRaises(KeyError, o.valueForKey_, u"unknownKey")
 
     def testStoredValueForKey(self):
-        o = objc.runtime.NSObject.alloc().init()
+        o = NSObject.alloc().init()
 
         self.assertRaises(KeyError, o.storedValueForKey_, u"unknownKey")
 
     def testTakeStoredValue(self):
-        o = objc.runtime.NSObject.alloc().init()
+        o = NSObject.alloc().init()
 
         self.assertRaises(KeyError,
             o.takeStoredValue_forKey_, u"value", u"unknownKey")
