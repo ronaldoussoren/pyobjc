@@ -12,6 +12,8 @@
 #import <Foundation/NSString.h>
 #include "objc_support.h"
 
+#include <ctype.h>
+
 int ObjC_VerboseLevel = 0;
 NSAutoreleasePool* ObjC_global_release_pool = nil;
 PyObject* PyObjCClass_DefaultModule = NULL;
@@ -458,6 +460,7 @@ static  char* keywords[] = { "signature", NULL };
 	
 	while (signature && *signature != 0) {
 		PyObject* str;
+		const char* t;
 
 		end = PyObjCRT_SkipTypeSpec(signature);
 		if (end == NULL) {
@@ -465,7 +468,13 @@ static  char* keywords[] = { "signature", NULL };
 			return NULL;
 		}
 
-		str = PyString_FromStringAndSize(signature, end - signature);
+		t = end-1;
+		while (t != signature && isdigit(*t)) {
+			t --;
+		}
+		t ++;
+
+		str = PyString_FromStringAndSize(signature, t - signature);
 		if (str == NULL) {
 			Py_DECREF(result);
 			return NULL;
@@ -674,5 +683,6 @@ void init_objc(void)
 	PyDict_SetItemString(d, "__version__", 
 		PyString_FromString(OBJC_VERSION));
 
+	PyObjCPointerWrapper_Init();
 	PyObjC_InstallAllocHack();
 }

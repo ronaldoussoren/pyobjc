@@ -359,10 +359,13 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 		const char* argtype = [methinfo getArgumentTypeAtIndex:i];
 
 		switch (*argtype) {
+#if 0
+/* Unannotated pointers should be handled by pointer-support.m */
 		case _C_PTR:
 			have_output ++;
 			v = pythonify_c_value(argtype+1, *(void**)args[i+argOffset]);
 			break;
+#endif
 		case _C_INOUT: 
 			if (argtype[1] == _C_PTR) {
 				have_output ++;
@@ -454,9 +457,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			int err;
 
 			switch (*argtype) {
+#if 0
+/* Unannotated pointers should be handled by pointer-support.m */
 			case _C_PTR: 
 				argtype ++;
 				break;
+#endif
 			case _C_INOUT: case _C_OUT:
 				if (argtype[1] != _C_PTR) {
 					continue;
@@ -696,6 +702,8 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		const char *argtype = [methinfo getArgumentTypeAtIndex:i];
 
 		switch (*argtype) {
+#if 0
+/* Unannotated pointers should be handled by pointer-support.m */
 		case _C_PTR: 
 			byref_in_count ++;
 			byref_out_count ++;
@@ -707,7 +715,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			argbuf_len = align(argbuf_len, itemAlign);
 			argbuf_len += itemSize;
 			break;
-
+#endif
 		case _C_INOUT:
 			if (argtype[1] == _C_PTR) {
 				byref_out_count ++;
@@ -912,7 +920,8 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 					values[arglistOffset + i] = arg;
 				} 
 				break;
-
+#if 0
+/* Unannotated pointers should be handled by pointer-support.m */
 			case _C_PTR:
 				/* Allocate space and encode */
 				{
@@ -930,7 +939,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 					values[arglistOffset + i] = byref+i;
 				} 
 				break;
-
+#endif
 			case _C_INOUT:
 			case _C_IN:
 			case _C_CONST:
@@ -1056,6 +1065,8 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			PyObject*   v;
 
 			switch (*argtype) {
+#if 0
+/* Unannotated pointers should be handled by pointer-support.m */
 			case _C_PTR: 
 				arg = byref[i];
 				v = pythonify_c_value(argtype+1, arg);
@@ -1065,7 +1076,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 					goto error_cleanup;
 				}
 				break;
-
+#endif
 			case _C_INOUT:
 			case _C_OUT:
 				if (argtype[1] == _C_PTR) {

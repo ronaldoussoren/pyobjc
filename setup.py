@@ -131,7 +131,6 @@ LIBFFI_LDFLAGS=[
 sourceFiles = [
         "Modules/objc/objc_util.m",
         "Modules/objc/objc_support.m",
-        #"Modules/objc/class-builder-old.m",
         "Modules/objc/class-builder.m",
         "Modules/objc/class-list.m",
         "Modules/objc/ObjCPointer.m",
@@ -151,7 +150,8 @@ sourceFiles = [
         "Modules/objc/alloc_hack.m",
         "Modules/objc/toll-free-bridging.m",
         "Modules/objc/module.m",
-        'Modules/objc/libffi_support.m',
+        "Modules/objc/libffi_support.m",
+        "Modules/objc/pointer-support.m",
 ]
 
 # On GNUstep we can read some configuration from the environment.

@@ -17,10 +17,8 @@ static PyMethodDef mapping_methods[] = {
 
 /* These are needed to silence GCC */
 void init_FoundationMapping(void);
-int _pyobjc_install_NSCoder(void);
-int _pyobjc_install_NSDictionary(void);
-int _pyobjc_install_NSData(void);
 
+#include "_FoundationMapping_NSArray.m"
 #include "_FoundationMapping_NSCoder.m"
 #include "_FoundationMapping_NSData.m"
 #include "_FoundationMapping_NSDictionary.m"
@@ -41,6 +39,7 @@ void init_FoundationMapping(void)
 		return;
 	}
 
+	if (_pyobjc_install_NSArray()) return;
 	if (_pyobjc_install_NSCoder()) return;
 	if (_pyobjc_install_NSData()) return;
 	if (_pyobjc_install_NSDictionary()) return;

@@ -40,6 +40,18 @@ class TestMethodInvocation(unittest.TestCase):
     def setUp(self):
         self.NSObjectInstance = objc.runtime.NSObject.alloc().init()
 
+    def testWithZones(self):
+        obj = objc.runtime.NSObject.allocWithZone_(None).init()
+        zone = obj.zone()
+        self.assert_(zone is not None)
+        self.assert_(zone.pointer != 0)
+
+        obj2 = objc.runtime.NSObject.allocWithZone_(zone).init()
+        zone2 = obj2.zone()
+        self.assertEquals(zone.pointer, zone2.pointer)
+
+
+
     def testClassInvocation(self):
         self.assert_(objc.runtime.NSObject.pyobjc_classMethods.description(), "Failed to invoke the +description method.")
 

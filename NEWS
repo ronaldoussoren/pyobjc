@@ -48,8 +48,11 @@ Version 0.10CVS (Work in progress):
 
 - It is no longer necessary to specify which protocols are implemented by
   a class, this information is automaticly deduced from the list of implemented
-  methods. You'll still a runtime error if you implement some methods of a protocol
-  and one of the unimplemented methods is required.
+  methods. You'll still a runtime error if you implement some methods of a 
+  protocol and one of the unimplemented methods is required.
+
+- Added support for custom conversion for pointer types. The end result is that
+  we support more Cocoa APIs without special mappings.
 
 Version 0.9 (May-02-2003):
 - This version includes numerous bugfixes and improvements.

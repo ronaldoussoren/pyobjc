@@ -36,9 +36,12 @@ def getSelector(line):
             break
         pos = m.end()
         m = typeRE.match(line, pos)
-        assert m is not None, "can't parse arg type"
-        types.append(m.group(2).strip())
-        pos = m.end()
+        if m is None and line[pos].isalpha():
+            types.append('id')
+        else:
+            assert m is not None, "can't parse arg type"
+            types.append(m.group(2).strip())
+            pos = m.end()
         m = argNameRE.match(line, pos)
         assert m is not None, "can't parse arg name"
         pos = m.end()

@@ -36,7 +36,7 @@ static PyObject* call_NSData_dataWithBytes_length_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuperCls(&super, PyObjCClass_GetClass(method), self);
+		PyObjC_InitSuperCls(&super, PyObjCSelector_GetClass(method), PyObjCClass_GetClass(self));
 
 		objc_result = objc_msgSendSuper(&super,
 				@selector(dataWithBytes:length:),
@@ -297,7 +297,8 @@ static void *imp_NSMutableData_mutableBytes(id self, SEL sel)
   return NULL;
 }
 
-int _pyobjc_install_NSData(void)
+static int 
+_pyobjc_install_NSData(void)
 {
   if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSData"), 
 				 @selector(initWithBytes:length:),
@@ -337,4 +338,3 @@ int _pyobjc_install_NSData(void)
   
   return 0;
 }
-

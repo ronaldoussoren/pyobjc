@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.14 2003/06/05 20:11:52 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.15 2003/06/09 07:18:09 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -46,8 +46,11 @@
  * - Functions are removed
  * Do not increase when adding a new function, the struct_len field
  * can be used for that
+ *
+ * HISTORY:
+ * - Version 2 adds an argument to PyObjC_InitSuper
  */
-#define PYOBJC_API_VERSION 1
+#define PYOBJC_API_VERSION 2
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -124,11 +127,17 @@ struct pyobjc_api {
 	/* PyObjCBool_FromLong */
 	PyObject*  (*bool_init)(long i);
 
-	/* PyObjC_InitSuper */ 	// FIX ME!
+	/* PyObjC_InitSuper */ 	
 	void	(*fill_super)(struct objc_super*, Class, id);
 
 	/* PyObjC_InitSuperCls */
 	void	(*fill_super_cls)(struct objc_super*, Class, Class);
+
+	/* PyObjCPointerWrapper_Register */ 
+	int  (*register_pointer_wrapper)(
+		        const char*, PyObject* (*pythonify)(void*),
+			int (*depythonify)(PyObject*, void*)
+		);
 };
 
 
@@ -163,6 +172,8 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCBool_FromLong   (PyObjC_API->bool_init)
 #define PyObjC_InitSuper	(PyObjC_API->fill_super)
 #define PyObjC_InitSuperCls	(PyObjC_API->fill_super_cls)
+#define PyObjCPointerWrapper_Register (PyObjC_API->register_pointer_wrapper)
+
 
 static inline int PyObjCObject_Convert(PyObject* object, void* pvar)
 {
