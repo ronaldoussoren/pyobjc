@@ -1020,13 +1020,13 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 
 	pyself = ObjC_GetPythonImplementation(self);
 	if (pyself == NULL) {
-		ObjCErr_ToObjC();
+		PyErr_Clear();
 		return nil;
 	}
 
 	pymeth = ObjCObject_FindSelector(pyself, aSelector);
 	if (!pymeth) {
-		ObjCErr_ToObjC();
+		PyErr_Clear();
 		return nil;
 	}
 
