@@ -9,6 +9,10 @@ call_NSObject_alloc(PyObject* method,
 {
 	id result = nil;
 	struct objc_super super;
+	PyThreadState *_save;
+	IMP anIMP;
+	Class aClass;
+	SEL aSel;
 
 	if (PyArg_ParseTuple(arguments, "") < 0) {
 		return NULL;
@@ -20,27 +24,32 @@ call_NSObject_alloc(PyObject* method,
 	}
 
 	if (PyObjCIMP_Check(method)) {
+		anIMP = PyObjCIMP_GetIMP(method);
+		aClass = PyObjCClass_GetClass(self);
+		aSel = PyObjCIMP_GetSelector(method);
+		Py_UNBLOCK_THREADS
 		NS_DURING
-			result = PyObjCIMP_GetIMP(method)(
-					PyObjCClass_GetClass(self), 
-					PyObjCIMP_GetSelector(method));
+			result = anIMP(aClass, aSel);
 		NS_HANDLER
 			PyObjCErr_FromObjC(localException);
 			result = nil;
 		NS_ENDHANDLER;
+		Py_BLOCK_THREADS
 
 	} else {
 		RECEIVER(super) = (id)PyObjCClass_GetClass(self);
 		super.class = PyObjCSelector_GetClass(method); 
 		super.class = GETISA(super.class);
+		aSel = PyObjCSelector_GetSelector(method);
 
+		Py_UNBLOCK_THREADS
 		NS_DURING
-			result = objc_msgSendSuper(&super, 
-					PyObjCSelector_GetSelector(method)); 
+			result = objc_msgSendSuper(&super, aSel); 
 		NS_HANDLER
 			PyObjCErr_FromObjC(localException);
 			result = nil;
 		NS_ENDHANDLER;
+		Py_BLOCK_THREADS
 	}
 
 	if (result == nil && PyErr_Occurred()) {
