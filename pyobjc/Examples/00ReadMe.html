@@ -72,6 +72,11 @@ compatible with Objective-C plists.</p>
 </li>
 </ul>
 <ul>
+<li><a href="Scripts/stdinreader.py">stdinreader.py</a><p>Demonstrates how to write a console runloop based application that uses
+<code><span>NSFileHandle</span></code> to read stdin asynchronously.</p>
+</li>
+</ul>
+<ul>
 <li><a href="Scripts/subclassing-objective-c.py">subclassing-objective-c.py</a><p>A doctest that demonstrates the subclassing of an Objective-C class from
 Python.  Note that it is typically discouraged to define a <code><span>__del__</span></code>
 method.</p>
@@ -218,6 +223,17 @@ converted to PyObjC by u.fiedler.</p>
 </li>
 </ul>
 <ul>
+<li><a href="CocoaBindings/GraphicsBindings">GraphicsBindings</a><blockquote>
+<p>Shows the use of a custom controller, a value transformer, and two custom
+bindings-enabled views. One view is a control that allows you to set the
+angle and offset of a shadow; the other view observes and displays a
+collection of graphic objects.</p>
+</blockquote>
+<p>Originally from <a href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
 <li><a href="CocoaBindings/ManualBindings">ManualBindings</a><p>A simple example that illustrates establishing bindings
 programmatically, including a number of options such as validation
 and an array operator, and indexed accessor methods. A custom model
@@ -252,6 +268,14 @@ shows two value transformers to alter the color of text.</p>
 converted to PyObjC by u.fiedler.</p>
 </li>
 </ul>
+<h2><a name="foundation">Foundation</a></h2>
+<p>The directory <a href="#foundation">Foundation</a> contains a number of examples
+that use only Foundation facilities.</p>
+<ul>
+<li><a href="Foundation/simple-kvo.py">simple-kvo.py</a><p>Demonstrates the use of Key-Value Observing from a simple
+script, without a runloop.  Requires Mac OS X 10.3 or later.</p>
+</li>
+</ul>
 <h2><a name="inject">Inject</a></h2>
 <p>The directory <a href="Inject">Inject</a> contains a number of examples that use the
 <code><span>objc.inject</span></code> facility to inject code into another process.  These
@@ -270,6 +294,11 @@ to share object files (the PyObjC extensions in this case).</p>
 <ul>
 <li><a href="Inject/InjectInterpreter">InjectInterpreter</a>:<p>Shows how to inject an in-process Python interpreter into another
 process.  Based on the AppKit PyInterpreter example.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Inject/ClassBrowser">ClassBrowser</a>:<p>Shows how to inject an in-process Python class browser into another
+process.  Based on the AppKit ClassBrowser example.</p>
 </li>
 </ul>
 <h2><a name="opengl">OpenGL</a></h2>
