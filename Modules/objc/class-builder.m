@@ -11,19 +11,6 @@
 #import <Foundation/NSKeyValueObserving.h>
 #endif
 
-/* List of instance variables, methods and class-methods that should not
- * be overridden from python
- */
-static char* dont_override_methods[] = {
-	"alloc",
-	"dealloc",
-	"retain",
-	"release",
-	"autorelease",
-	"retainCount",
-	NULL
-};
-
 /* Special methods for Python subclasses of Objective-C objects */
 static void object_method_dealloc(
 		ffi_cif* cif,
@@ -75,23 +62,14 @@ static void object_method_copyWithZone_(
 
 /*
  * When we create a 'Class' we actually create the struct below. This allows
- * us to add some extra information to the class defintion.
+ * us to add some extra information to the class definition.
  *
- * NOTE1: the meta_class field is first because poseAs: copies the class but
- *        not the meta class (on MacOS X <= 10.2)
- * NOTE2: That doesn't help, test_posing still crashes.
- * XXX: Is this still relevant? The current code only refers to the struct
- *      during the construction of the class, which means poseAs: probably 
- *      works just fine (to be checked after 1.1)
+ * XXX: The struct is not really necessary, it just makes error-recovery 
+ * slightly easier. 
  */
-#define MAGIC 0xDEADBEEF
-#define CLASS_WRAPPER(cls) ((struct class_wrapper*)(cls))
-#define CHECK_MAGIC(o) do { if (CLASS_WRAPPER(o)->magic != MAGIC) abort(); } while(0)
 struct class_wrapper {
 	struct objc_class class;
 	struct objc_class meta_class;
-	PyObject* python_class;
-	unsigned int magic; 
 };
 
 #define IDENT_CHARS "ABCDEFGHIJKLMNOPQSRTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789"
@@ -104,34 +82,9 @@ struct class_wrapper {
  * Return 0 on success, -1 on failure.
  */
 int 
-PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
+PyObjCClass_FinishClass(Class objc_class)
 {
-	if (objc_class == nil) {
-		PyErr_SetString(PyObjCExc_InternalError, 
-			"Trying to set class of <nil>\n");
-		return -1;
-	}
-	if (py_class == NULL || !PyObjCClass_Check(py_class)) {
-		PyErr_Format(PyObjCExc_InternalError,
-			"Trying to set class to of %s to invalid value "
-			"(type %s instead of %s)",
-			objc_class->name, py_class->ob_type->tp_name,
-			PyObjCClass_Type.tp_name);
-		return -1;
-	}
-
-	CHECK_MAGIC(objc_class);
-
-	if (CLASS_WRAPPER(objc_class)->python_class != NULL) {
-		PyErr_Format(PyObjCExc_InternalError,
-			"Trying to set update PythonClass of %s",
-			objc_class->name);
-		return -1;
-	}
-
-
-	CLASS_WRAPPER(objc_class)->python_class = py_class;
-	Py_INCREF(py_class);
+	PyObjC_Assert(objc_class != nil, -1);
 
 	objc_addClass(objc_class);
 	return 0;
@@ -143,37 +96,24 @@ PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
  * Due to technical restrictions it is not allowed to unbuild a class that
  * is already registered with the Objective-C runtime.
  */
-void 
+int 
 PyObjCClass_UnbuildClass(Class objc_class)
 {
-	struct class_wrapper* wrapper = CLASS_WRAPPER(objc_class); 
+	struct class_wrapper* wrapper = (struct class_wrapper*)objc_class; 
 
-	if (objc_class == nil) {
-		PyErr_SetString(PyObjCExc_InternalError, 
-		"Trying to unregister class <nil>");
-		return;
-	}
-
-	CHECK_MAGIC(objc_class);
-
-	if (wrapper->python_class != NULL) {
-		PyErr_Format(PyObjCExc_InternalError,
-			"Trying to unregister objective-C class %s, but it "
-			"is already registered with the runtime",
-			objc_class->name);
-		return;
-	}
-
+	PyObjC_Assert(objc_class != nil, -1);
+	PyObjC_Assert(objc_lookUpClass(objc_class->name) == nil, -1);
 
 	PyObjCRT_ClearClass(&(wrapper->class));
 	PyObjCRT_ClearClass(&(wrapper->meta_class));
 	free(objc_class);
+	return 0;
 }
 
 /*
- * Be smart about slots: Push them into Objective-C and leave an empty
- * __slots__ attribute, that way we don't store object-state in the python
- * proxy.
+ * The Python proxy for an object should not contain any state, even if 
+ * the class is defined in Python. Therefore transfer all slots to the 
+ * Objective-C class and add '__slots__ = ()' to the Python class.
  */
 static int 
 do_slots(PyObject* super_class, PyObject* clsdict)
@@ -266,6 +206,12 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 	return 0;
 }
 
+/*
+ * Built a (pure Objective-C) subclass of base_class that defines our version
+ * of 'dealloc' and 'copyWithZone:'. The latter is only defined when the 
+ * base_class also defines it. This makes it possible to override both methods
+ * from Python.
+ */
 static Class
 build_intermediate_class(Class base_class, char* name)
 {
@@ -276,9 +222,9 @@ build_intermediate_class(Class base_class, char* name)
 	struct objc_method_list* method_list = NULL;
 	PyObjCRT_Method_t meth;
 	IMP closure;
-	PyObjCMethodSignature* methinfo;
+	PyObjCMethodSignature* methinfo = NULL;
 
-	method_list = PyObjCRT_AllocMethodList(1);
+	method_list = PyObjCRT_AllocMethodList(2);
 
 	if (method_list == NULL) {
 		PyErr_NoMemory();
@@ -292,16 +238,27 @@ build_intermediate_class(Class base_class, char* name)
 	}
 
 	method_list->method_count = 0;
-	methinfo = PyObjCMethodSignature_FromSignature(copyWithZone_signature);
+	if ([base_class instancesRespondToSelector:@selector(copyWithZone:)]) {
+		methinfo = PyObjCMethodSignature_FromSignature(
+				copyWithZone_signature);
+		if (methinfo == NULL) goto error_cleanup; 
+		closure = PyObjCFFI_MakeClosure(methinfo, 
+				object_method_copyWithZone_, base_class);
+		PyObjCMethodSignature_Free(methinfo); methinfo = NULL;
+		if (closure == NULL) goto error_cleanup;
+		meth = method_list->method_list + method_list->method_count++;
+		PyObjCRT_InitMethod(meth, @selector(copyWithZone:), 
+			copyWithZone_signature, (IMP)closure); 
+	}
+
+	methinfo = PyObjCMethodSignature_FromSignature("v@:");
 	if (methinfo == NULL) goto error_cleanup; 
-	closure = PyObjCFFI_MakeClosure(methinfo, object_method_copyWithZone_,
+	closure = PyObjCFFI_MakeClosure(methinfo, object_method_dealloc,
 		base_class);
 	PyObjCMethodSignature_Free(methinfo); methinfo = NULL;
 	if (closure == NULL) goto error_cleanup;
 	meth = method_list->method_list + method_list->method_count++;
-
-	PyObjCRT_InitMethod(meth, @selector(copyWithZone:), 
-			copyWithZone_signature, (IMP)closure); \
+	PyObjCRT_InitMethod(meth, @selector(dealloc), "v@:", (IMP)closure); 
 
 	root_class = base_class;
 	while (root_class->super_class != NULL) {
@@ -399,10 +356,10 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	struct class_wrapper*    new_class = NULL;
 	Class                    root_class;
 	Class                    cur_class;
-	char**                   curname;
 	PyObject*                py_superclass = NULL;
 	int                      item_size;
 	int			 have_intermediate = 0;
+	int			 need_intermediate = 0;
 
 	if (!PyList_Check(protocols)) {
 		PyErr_Format(PyObjCExc_InternalError,  
@@ -428,7 +385,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		 * python and are in the same module.
 		 * This allows using reload() without hiding erroneous
 		 * redefinition (e.g. someone forgetting that classnames
-		 * must be globally unique.
+		 * must be globally unique).
 		 */
 
 		PyObject* tmp = PyObjCClass_New(cur_class);
@@ -488,15 +445,24 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	 *
 	 * FIXME: Better code to look for copyWithZone: in the class dict
 	 */
+
+	need_intermediate = 0;
+
 	if (PyDict_GetItemString(class_dict, "copyWithZone_") == NULL) {
 		PyErr_Clear();
-		i = 0;
 	} else {
-		i = 1;
+		if ([super_class instancesRespondToSelector:@selector(copyWithZone:)]) {
+			need_intermediate = 1;
+		}
 	}
 
-	if (i && !PyObjCClass_HasPythonImplementation(py_superclass) 
-          && [super_class instancesRespondToSelector:@selector(copyWithZone:)]){
+	if (PyDict_GetItemString(class_dict, "dealloc") == NULL) {
+		PyErr_Clear();
+	} else {
+		need_intermediate = 1;
+	}
+
+	if (!PyObjCClass_HasPythonImplementation(py_superclass) && need_intermediate) {
 		Class intermediate_class;
 		char  buf[1024];
 
@@ -520,19 +486,6 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		goto error_cleanup;
 	}
 
-
-	/* 
-	 * Check for methods/variables that must not be overridden in python.
-	 */
-	for (curname = dont_override_methods; *curname != NULL; curname++) {
-		key = PyDict_GetItemString(class_dict, *curname);
-		if (key != NULL) {
-			PyErr_Format(PyObjCExc_Error,
-				"Cannot override method '%s' from python", 
-				*curname);
-			goto error_cleanup;
-		}
-	}
 
 	protocol_count = PyList_Size(protocols);
 	if (protocol_count > 0) {
@@ -579,7 +532,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		ivar_count        += 0;
 		meta_method_count += 0; 
-		method_count      += 9;
+		method_count      += 10;
 	}
 
 	/* Allocate the class as soon as possible, for new selector objects */
@@ -760,11 +713,18 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			PyDict_SetItemString(class_dict, pyname, sel);	\
 			Py_DECREF(sel)
 
-		METH(
-			"dealloc", 
-			@selector(dealloc), 
-			"v@:", 
-			object_method_dealloc);
+		if (!have_intermediate) {
+			METH(
+				"dealloc", 
+				@selector(dealloc), 
+				"v@:", 
+				object_method_dealloc);
+		}
+		/* FIXME: 
+		 * all these should be in the intermediate class as well,
+		 * define the intermediate class when any of them are 
+		 * overridden
+		 */
 		METH(
 			"respondsToSelector_", 
 			@selector(respondsToSelector:), 
@@ -924,9 +884,6 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		root_class = root_class->super_class;
 	}
 
-	new_class->magic = MAGIC;
-	new_class->python_class = NULL;
-
 	i = PyObjCRT_SetupClass(
 		&new_class->class, 
 		&new_class->meta_class, 
@@ -1074,8 +1031,6 @@ free_ivars(id self, PyObject* volatile cls )
 					[*(id*)(((char*)self) + var->ivar_offset) release];
 
 				NS_HANDLER
-					// FIXME: I don't like this but we must
-					// do something...
 					NSLog(@"ignoring exception %@ in destructor",
 						localException);
 
@@ -1125,13 +1080,7 @@ object_method_dealloc(
 
 		PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
-		CHECK_MAGIC(GETISA(self));
 		cls = PyObjCClass_New(GETISA(self));
-		if (!PyObjCClass_HasPythonImplementation(cls)) {
-			printf("-dealloc substitute called for pure ObjC "
-			       "class\n");
-			abort();
-		}
 
 		delmethod = PyObjCClass_GetDelMethod(cls);
 		if (delmethod != NULL) {
@@ -1156,6 +1105,76 @@ object_method_dealloc(
 	RECEIVER(super) = self;
 
 	objc_msgSendSuper(&super, _meth);
+}
+
+/* -copyWithZone:(NSZone*)zone */
+static void
+object_method_copyWithZone_(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* resp,
+		void** args,
+		void* userdata)
+{
+	id self = *(id*)args[0];
+	id copy;
+	SEL _meth = *(SEL*)args[1];
+	NSZone* zone = *(NSZone**)args[2];
+	Class cls;
+
+	struct objc_super super;
+	PyGILState_STATE state;
+
+	/* Ask super to create a copy */
+
+	super.class = (Class)userdata;
+	RECEIVER(super) = self;
+	copy = objc_msgSendSuper(&super, _meth, zone);
+
+	if (copy == nil) {
+		*(id*)resp = nil;
+		return;
+	}
+
+	state = PyGILState_Ensure();
+
+	cls = self->isa;
+	while (cls != (Class)userdata) {
+		struct objc_ivar_list* ivars = cls->ivars;
+		if (ivars != NULL) {
+			int i;
+			struct objc_ivar* v;
+			PyObject** p;
+
+			for (i = 0; i < ivars->ivar_count; i++) {
+				v = ivars->ivar_list + i;
+				if (strcmp(v->ivar_type, @encode(PyObject*))!=0)
+					continue;
+
+				/* A PyObject, increase it's refcount */
+				p = (PyObject**)(((char*)copy)+v->ivar_offset);
+				if (*p == NULL) continue;
+
+				if (strcmp(v->ivar_name, "__dict__") == 0) {
+					/* copy __dict__ */
+					*p = PyDict_Copy(*p);
+					if (*p == NULL) {
+						[copy release];
+						PyObjCErr_ToObjCWithGILState(
+								&state);
+						return;
+					}
+				} else {
+					Py_INCREF(*p);
+				}
+			}
+			
+		}
+
+		cls = cls->super_class;
+	}
+
+	PyGILState_Release(state);
+	*(id*)resp = copy;
 }
 
 /* -respondsToSelector: */
@@ -2221,73 +2240,4 @@ object_method_takeValue_forKey_(
 			[localException raise];
 		}
 	NS_ENDHANDLER
-}
-
-static void
-object_method_copyWithZone_(
-		ffi_cif* cif __attribute__((__unused__)),
-		void* resp,
-		void** args,
-		void* userdata)
-{
-	id self = *(id*)args[0];
-	id copy;
-	SEL _meth = *(SEL*)args[1];
-	NSZone* zone = *(NSZone**)args[2];
-	Class cls;
-
-	struct objc_super super;
-	PyGILState_STATE state;
-
-	/* Ask super to create a copy */
-
-	super.class = (Class)userdata;
-	RECEIVER(super) = self;
-	copy = objc_msgSendSuper(&super, _meth, zone);
-
-	if (copy == nil) {
-		*(id*)resp = nil;
-		return;
-	}
-
-	state = PyGILState_Ensure();
-
-	cls = self->isa;
-	while (cls != (Class)userdata) {
-		struct objc_ivar_list* ivars = cls->ivars;
-		if (ivars != NULL) {
-			int i;
-			struct objc_ivar* v;
-			PyObject** p;
-
-			for (i = 0; i < ivars->ivar_count; i++) {
-				v = ivars->ivar_list + i;
-				if (strcmp(v->ivar_type, @encode(PyObject*))!=0)
-					continue;
-
-				/* A PyObject, increase it's refcount */
-				p = (PyObject**)(((char*)copy)+v->ivar_offset);
-				if (*p == NULL) continue;
-
-				if (strcmp(v->ivar_name, "__dict__") == 0) {
-					/* copy __dict__ */
-					*p = PyDict_Copy(*p);
-					if (*p == NULL) {
-						[copy release];
-						PyObjCErr_ToObjCWithGILState(
-								&state);
-						return;
-					}
-				} else {
-					Py_INCREF(*p);
-				}
-			}
-			
-		}
-
-		cls = cls->super_class;
-	}
-
-	PyGILState_Release(state);
-	*(id*)resp = copy;
 }

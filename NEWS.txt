@@ -4,6 +4,7 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+
 Version 1.3 (2005-03-??)
 ------------------------
 
@@ -187,6 +188,29 @@ Version 1.3 (2005-03-??)
 
 - It is now possible to subclass a class that implements ``copyWithZone:``
   without setting ``__slots__`` to ``()``. 
+
+- It is now possible to override ``dealloc``. It is still possible to
+  define ``__del__``.
+
+- As an experimental feature it is also possible to override ``retain`` and
+  ``release``. Note it almost never a good idea to do this (even when you're
+  programming in Objective-C and much more so in Python).
+
+- ``poseAsClass:`` can be used, although it is not very useful in python, use
+  categories instead.
+
+  A major issue with ``poseAsClass:`` is that existing references to the old
+  version of the class won't be changed to point to the new class. 
+
+- It is now possible to access all instance variables of a class using
+  the functions ``objc.listInstanceVariables(aClassOrInstance)``,
+  ``objc.getInstanceVariable(obj, name)`` and 
+  ``objc.setInstanceVariable(obj, name, value [, updateRefCount])``.
+
+  The last argument of ``setInstanceVariable`` is required when the instance
+  variable is an object. If it is true the bridge will update reference counts,
+  otherwise it won't. 
+
 
 Version 1.2 (2004-12-29)
 ------------------------

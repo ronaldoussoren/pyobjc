@@ -19,4 +19,10 @@ PyObject* PyObjCInstanceVariable_New(char* name);
 #define PyObjCInstanceVariable_IsOutlet(obj) \
 	(((PyObjCInstanceVariable*)(obj))->isOutlet)
 
+PyObject* PyObjCIvar_Info(PyObject* self, PyObject* arg);
+PyObject* PyObjCIvar_Set(PyObject* self, PyObject* args, PyObject* kwds);
+PyObject* PyObjCIvar_Get(PyObject* self, PyObject* args, PyObject* kwds);
+
+
+
 #endif /* OBJC_INSTANCE_VAR */

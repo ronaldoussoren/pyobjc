@@ -7,6 +7,7 @@ import types
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass('NSObject')
 NSArray = objc.lookUpClass('NSArray')
+NSAutoreleasePool = objc.lookUpClass('NSAutoreleasePool')
 
 class TestSubclassing(unittest.TestCase):
     def testMethodRaise(self):
@@ -194,6 +195,145 @@ class TestClassMethods (unittest.TestCase):
             stMeth = staticmethod(stMeth)
 
         self.assert_(isinstance(StaticMethodTest.stMeth, types.FunctionType))
+
+
+class TestOverridingSpecials(unittest.TestCase):
+    def testOverrideSpecialMethods(self):
+        aList = [0]
+
+        class ClassWithAlloc(NSObject):
+            def alloc(cls):
+                aList[0] += 1
+                return super(ClassWithAlloc, cls).alloc()
+
+            
+        self.assertEquals(aList[0], 0)
+        o = ClassWithAlloc.alloc().init()
+        self.assertEquals(aList[0], 1)
+        self.assert_(isinstance(o, NSObject))
+        del o
+
+        class ClassWithRetaining(NSObject):
+            def retain(self):
+                aList.append('retain')
+                return super(ClassWithRetaining, self).retain()
+
+            def release(self):
+                aList.append('release')
+                return super(ClassWithRetaining, self).release()
+
+            def __del__(self):
+                aList.append('__del__')
+
+        del aList[:]
+        o = ClassWithRetaining.alloc().init()
+        v = o.retainCount()
+        o.retain()
+        self.assertEquals(aList, ['retain'])
+        self.assertEquals(o.retainCount(), v+1)
+        o.release()
+        self.assertEquals(aList, ['retain', 'release'])
+        self.assertEquals(o.retainCount(), v)
+        del o
+
+        self.assertEquals(aList, ['retain', 'release', 'release', '__del__'])
+
+        # Test again, now remove all python references and create one
+        # again.
+        del aList[:]
+        pool = NSAutoreleasePool.alloc().init()
+        o = ClassWithRetaining.alloc().init()
+        v = NSArray.arrayWithArray_([o])
+        del o
+        self.assertEquals(aList, ['retain'])
+        o = v[0]
+        self.assertEquals(aList, ['retain'])
+        del v
+        del o
+        del pool
+        
+        self.assertEquals(aList, ['retain', 'release', 'release', '__del__'])
+
+        class ClassWithRetainCount(NSObject):
+            def retainCount(self):
+                aList.append('retainCount')
+                return super(ClassWithRetainCount, self).retainCount()
+        
+        del aList[:]
+        o = ClassWithRetainCount.alloc().init()
+        self.assertEquals(aList, [])
+        v = o.retainCount()
+        self.assert_(isinstance(v, int))
+        self.assertEquals(aList, ['retainCount'])
+        del o
+
+    def testOverrideDealloc(self):
+        aList = []
+
+        class Dummy:
+            def __del__(self):
+                aList.append('__del__')
+
+        self.assertEquals(aList, [])
+        Dummy()
+        self.assertEquals(aList, ['__del__'])
+
+        class ClassWithDealloc(NSObject):
+            def init(self):
+                self = super(ClassWithDealloc, self).init()
+                if self is not None:
+                    self.obj = Dummy()
+                return self
+
+            def dealloc(self):
+                aList.append('dealloc')
+                return super(ClassWithDealloc, self).dealloc()
+
+        del aList[:]
+        o = ClassWithDealloc.alloc().init()
+        self.assertEquals(aList, [])
+        del o
+        self.assertEquals(len(aList), 2)
+        self.assert_('dealloc' in aList)
+        self.assert_('__del__' in aList)
+
+        class SubClassWithDealloc(ClassWithDealloc):
+            def dealloc(self):
+                aList.append('dealloc.dealloc')
+                return super(SubClassWithDealloc, self).dealloc()
+
+        del aList[:]
+        o = SubClassWithDealloc.alloc().init()
+        self.assertEquals(aList, [])
+        del o
+        self.assertEquals(len(aList), 3)
+        self.assert_('dealloc.dealloc' in aList)
+        self.assert_('dealloc' in aList)
+        self.assert_('__del__' in aList)
+
+        class ClassWithDeallocAndDel(NSObject):
+            def init(self):
+                self = super(ClassWithDeallocAndDel, self).init()
+                if self is not None:
+                    self.obj = Dummy()
+                return self
+
+            def dealloc(self):
+                aList.append('dealloc')
+                return super(ClassWithDeallocAndDel, self).dealloc()
+
+            def __del__(self):
+                aList.append('mydel')
+
+        del aList[:]
+        o = ClassWithDeallocAndDel.alloc().init()
+        self.assertEquals(aList, [])
+        del o
+        self.assertEquals(len(aList), 3)
+        self.assert_('mydel' in aList)
+        self.assert_('dealloc' in aList)
+        self.assert_('__del__' in aList)
+
 
 if __name__ == '__main__':
     unittest.main()

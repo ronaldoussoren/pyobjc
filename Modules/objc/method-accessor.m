@@ -3,10 +3,6 @@
  *	anObject.pyobjc_classMethods.description()
  * and
  *	anObject.pyobjc_instanceMethods.description()
- *
- * NOTES:
- *	Does not support reflection. That can be added when
- *	needed.
  */
 #include "pyobjc.h"
 

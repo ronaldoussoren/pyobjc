@@ -272,7 +272,6 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	switch (*type) {
 	/* The following are one character type codes */
 	case _C_UNDEF:
-	case _C_ID:
 	case _C_CLASS:
 	case _C_SEL:
 	case _C_CHR:
@@ -299,6 +298,19 @@ PyObjCRT_SkipTypeSpec (const char *type)
 		++type;
 		break;
 
+	case _C_ID:
+		++type;
+#ifdef MACOSX
+		if (*type == '"') {
+			/* embedded field name in an ivar_type */
+			type=strchr(type+1, '"');
+			if (type != NULL) {
+				type++;
+			}
+		}
+#endif
+		break;
+
 	case _C_ARY_B:
 		/* skip digits, typespec and closing ']' */
 
@@ -311,8 +323,18 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	case _C_STRUCT_B:
 		/* skip name, and elements until closing '}'  */
 		while (*type != _C_STRUCT_E && *type++ != '='); 
-		while (type && *type != _C_STRUCT_E)
+		while (type && *type != _C_STRUCT_E) {
+			if (*type == '"') {
+				/* embedded field names */
+				type = strchr(type+1, '"');
+				if (type != NULL) {
+					type++;
+				} else {
+					return NULL;
+				}
+			}
 			type = PyObjCRT_SkipTypeSpec (type);
+		}
 		if (type) type++;
 		break;
 
@@ -444,6 +466,10 @@ PyObjCRT_AlignOfType (const char *type)
 			int align = 0;
 
 			while (type != NULL && *type != _C_STRUCT_E) {
+				if (*type == '"') {
+					type = strchr(type+1, '"');
+					if (type) type++;
+				}
 				if (have_align) {
 					align = MAX(align, 
 					   PyObjC_EmbeddedAlignOfType(type));
@@ -561,6 +587,10 @@ PyObjCRT_SizeOfType (const char *type)
 		while (*type != _C_STRUCT_E && *type++ != '=')
 			; /* skip "<name>=" */
 		while (*type != _C_STRUCT_E) {
+			if (*type == '"') {
+				type = strchr(type+1, '"');
+				if (type) type++;
+			}
 			if (have_align) {
 				align = PyObjC_EmbeddedAlignOfType(type);
 				if (align == -1) return -1;
@@ -680,10 +710,15 @@ pythonify_c_struct (const char *type, void *datum)
 	if (ret == NULL) {
 		int nitems;
 
-		for (item=type, nitems=0; 
-				*item != _C_STRUCT_E; 
-				item = PyObjCRT_SkipTypeSpec (item)){
-			nitems++;
+		nitems = 0;
+		item = type;
+		while (*item != _C_STRUCT_E) {
+			nitems ++;
+			if (*item == '"') {
+				item = strchr(item+1, '"');
+				if (item) item ++;
+			}
+			item = PyObjCRT_SkipTypeSpec(item);
 		}
 
 		haveTuple = 1;
@@ -691,10 +726,15 @@ pythonify_c_struct (const char *type, void *datum)
 		if (!ret) return NULL;
 	}
 
-	for (item=type, offset=itemidx=0; 
-			*item != _C_STRUCT_E; 
-			item = PyObjCRT_SkipTypeSpec (item)) {
+	item = type;
+	offset = itemidx = 0;
+	while (*item != _C_STRUCT_E) {
 		PyObject *pyitem;
+
+		if (*item == '"') {
+			item = strchr(item+1, '"');
+			if (item) item ++;
+		}
 
 		if (!have_align) {
 			align = PyObjCRT_AlignOfType(item);
@@ -726,6 +766,7 @@ pythonify_c_struct (const char *type, void *datum)
 
 		itemidx++;
 		offset += PyObjCRT_SizeOfType (item);
+		item = PyObjCRT_SkipTypeSpec (item);
 	}
 
 	converted = [OC_PythonObject __pythonifyStruct:ret withType:type_real_start length:type_real_length];
@@ -796,11 +837,16 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
 	PyObject* seq;
 
 	while (*types != _C_STRUCT_E && *types++ != '='); /* skip "<name>=" */
-	for (type=types, nitems=0; 
-		*type != _C_STRUCT_E; 
-		type = PyObjCRT_SkipTypeSpec (type)){
 
+	type=types;
+	nitems=0;
+	while (*type != _C_STRUCT_E) {
+		if (*type == '"') {
+			type = strchr(type+1, '"');
+			type++;
+		}
 		nitems++;
+		type = PyObjCRT_SkipTypeSpec (type);
 	}
 
 	seq = PySequence_Fast(arg, "depythonifying struct, got no sequence");
@@ -816,11 +862,19 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
 		return -1;
 	}
 
-	for (type=types, offset=itemidx=0; 
-		*type != _C_STRUCT_E; 
-		type = PyObjCRT_SkipTypeSpec (type)){
+	type=types;
+	offset = itemidx = 0;
 
-		PyObject *argument = PySequence_Fast_GET_ITEM(seq, itemidx);
+	while (*type != _C_STRUCT_E) {
+		PyObject *argument;
+
+		if (*type == '"') {
+			type = strchr(type+1, '"');
+			type++;
+		}
+
+
+		argument = PySequence_Fast_GET_ITEM(seq, itemidx);
 		int error;
 		if (!have_align) {
 			align = PyObjCRT_AlignOfType(type);
@@ -840,6 +894,7 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
   
 		itemidx++;
 		offset += PyObjCRT_SizeOfType (type);
+		type = PyObjCRT_SkipTypeSpec (type);
 	}
 	Py_DECREF(seq);
 	return 0;

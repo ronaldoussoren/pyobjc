@@ -12,7 +12,7 @@
  *    1) Collect the necessary information (name, bases and class_dict)
  *    2) Call PyObjCClass_BuildClass
  *    3) Create the Python class (using type.__new__)
- *    4) Call PyObjCClass_SetClass
+ *    4) Call PyObjCClass_FinishClass
  *
  *    If step 3 fails: call PyObjCClass_UnbuildClass
  *
@@ -48,27 +48,27 @@ Class PyObjCClass_BuildClass(
  * @function PyObjCClass_UnbuildClass
  * @abstract Undo the work of PyObjCClass_BuildClass
  * @param Class A class created by PyObjCClass_BuildClass
+ * @result 0 on success, -1 on failure
  * @discussion
  *    This function destroys the class created by PyObjCClass_BuildClass. This
- *    function can only be called when PyObjCClass_SetClass has not been called
- *    for the class.
+ *    function can only be called when PyObjCClass_FinishClass has not been 
+ *    called for the class.
  *
  *    This limitation is necessary because it is not possible to remove classes
  *    from the Objetive-C runtime on MacOS X.
  */
-void PyObjCClass_UnbuildClass(Class new_class);
+int PyObjCClass_UnbuildClass(Class new_class);
 
 
 /*!
- * @function PyObjCClass_SetClass
+ * @function PyObjCClass_FinishClass
  * @abstract Register the class in the Objective-C runtime
  * @param objc_class A class created by PyObjCClass_BuildClass
- * @param py_class   The python class corresponding with objc_class
  * @result Returns 0 on success, -1 on failure.
  * @discussion
  *    This function updates the bookkeeping information for objc_class and
  *    then registers the class with the Objective-C runtime.
  */
-int PyObjCClass_SetClass(Class objc_class, PyObject* py_class);
+int PyObjCClass_FinishClass(Class objc_class);
 
 #endif /* OBJC_CLASS_BUILDER */
