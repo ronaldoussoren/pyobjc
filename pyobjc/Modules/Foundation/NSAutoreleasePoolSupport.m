@@ -1,4 +1,12 @@
+/*
+ * A category for working with NSAutoreleasePools. This was needed when 
+ * PyObjC couldn't be used to create autoreleasepools in the regular way,
+ * that is no longer a problem.
+ *
+ * Should we post a deprication warning?
+ */
 #import <Foundation/Foundation.h>
+#include <Python.h>
 
 static NSString *_threadPoolIdentifier = @"PyObjC:  NSThread AutoreleasePool Identifier.";
 
@@ -9,6 +17,7 @@ static NSString *_threadPoolIdentifier = @"PyObjC:  NSThread AutoreleasePool Ide
 {
   NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
   NSMutableArray *poolStack;
+
 
   poolStack = [threadDictionary objectForKey: _threadPoolIdentifier];
   if (!poolStack) {
@@ -21,7 +30,15 @@ static NSString *_threadPoolIdentifier = @"PyObjC:  NSThread AutoreleasePool Ide
 
 + (void) pyobjcPushPool
 {
-  NSAutoreleasePool *p = [[NSAutoreleasePool alloc] init];
+  NSAutoreleasePool *p;
+
+  PyErr_Warn(PyExc_DeprecationWarning, "NSAutoreleasePool.pyobjcPushPool() is deprecated: Use NSAutoreleasePool.alloc().new() instead");
+  if (PyErr_Occurred()) {
+  	PyErr_Print();
+  }
+
+  p = [[NSAutoreleasePool alloc] init];
+
   [[self pyobjcPoolStackForCurrentThread] addObject: [NSValue valueWithNonretainedObject: p]];
 }
 

@@ -1,14 +1,25 @@
 /*
- * NSData mappings for special methods:
- * - initWithBytes_length_
- * - bytes
- * - mutableBytes
+ * NSData mappings for 'difficult' methods:
  *
- * Should add:
+ * -initWithBytes:length:
+ * +dataWithBytes:lenght:
+ * -bytes
+ * -mutableBytes
+ *
+ * TODO:
+ * -getBytes:
+ * -getBytes:length:
+ * -getBytes:range:
+ *
+ *
+ * Unsupported methods:
+ * +dataWithBytesNoCopy:length:
+ * +dataWithBytesNoCopy:length:freeWhenDone:
  * -initWithBytesNoCopy:length:
- * -initWithBytesNoCopy:length:freeWhenDone
- * +dataWith... version of above
- * -getBytes...
+ * -initWithBytesNoCopy:length:freeWhenDone:
+
+ * Undocumented methods:
+ * -initWithBytes:length:copy:freeWhenDone:bytesAreVM:
  * 
  */
 #include <Python.h>
@@ -195,10 +206,6 @@ static PyObject* call_NSData_bytes(PyObject* method __attribute__((__unused__)),
 	    PyObjCClass_GetClass((PyObject*)(self->ob_type)),
 	    PyObjCObject_GetObject(self));
 
-    /* bbum: Not at all sure what to do here....   send both to super?  
-     *       Just -bytes?
-     * ronald: I think both is more correct, neiter one is perfect.
-     */
     bytes = objc_msgSendSuper(&super, @selector(bytes));
     bytes_len = (unsigned) objc_msgSendSuper(&super, @selector(length));
 
@@ -235,6 +242,7 @@ static void *imp_NSData_bytes(id self, SEL sel)
   }
 
   PyErr_SetString(PyExc_ValueError, "No idea what to do with result.");
+  PyObjCErr_ToObjC();
   return NULL;
 }
 
@@ -255,9 +263,6 @@ static PyObject* call_NSMutableData_mutableBytes(PyObject* method __attribute__(
     	PyObjCClass_GetClass((PyObject*)(self->ob_type)),
     	PyObjCObject_GetObject(self));
 
-    /* bbum: Not at all sure what to do here....   
-     *       send both to super?  Just -bytes?
-     */
     bytes = objc_msgSendSuper(&super, @selector(mutableBytes));
     bytes_len = (unsigned) objc_msgSendSuper(&super, @selector(length));
 
@@ -294,6 +299,7 @@ static void *imp_NSMutableData_mutableBytes(id self, SEL sel)
   }
 
   PyErr_SetString(PyExc_ValueError, "No idea what to do with result.");
+  PyObjCErr_ToObjC();
   return NULL;
 }
 
@@ -304,8 +310,6 @@ _pyobjc_install_NSData(void)
 				 @selector(initWithBytes:length:),
 				 call_NSData_initWithBytes_length_,
 				 (IMP)imp_NSData_initWithBytes_length_) < 0 ) {
-    NSLog(@"Error occurred while installing NSData method bridge (initWithBytes:length:).");
-    PyErr_Print();
     return -1;
   }
 
@@ -313,8 +317,6 @@ _pyobjc_install_NSData(void)
 				 @selector(dataWithBytes:length:),
 				 call_NSData_dataWithBytes_length_,
 				 (IMP)imp_NSData_dataWithBytes_length_) < 0 ) {
-    NSLog(@"Error occurred while installing NSData method bridge (initWithBytes:length:).");
-    PyErr_Print();
     return -1;
   }
   
@@ -322,8 +324,6 @@ _pyobjc_install_NSData(void)
 				 @selector(bytes),
 				 call_NSData_bytes,
 				 (IMP)imp_NSData_bytes) < 0 ) {
-    NSLog(@"Error occurred while installing NSData method bridge (bytes).");
-    PyErr_Print();
     return -1;
   }
 
@@ -331,9 +331,16 @@ _pyobjc_install_NSData(void)
 				 @selector(mutableBytes),
 				 call_NSMutableData_mutableBytes,
 				 (IMP)imp_NSMutableData_mutableBytes) < 0 ) {
-    NSLog(@"Error occurred while installing NSMutableData method bridge (mutableBytes).");
-    PyErr_Print();
     return -1;
+  }
+
+  if (PyObjC_RegisterMethodMapping(
+	     objc_lookUpClass("NSData"),
+	     @selector(initWithBytes:length:copy:freeWhenDone:bytesAreVM:),
+	     PyObjCUnsupportedMethod_Caller,
+	     PyObjCUnsupportedMethod_IMP) < 0) {
+
+	return -1;	
   }
   
   return 0;

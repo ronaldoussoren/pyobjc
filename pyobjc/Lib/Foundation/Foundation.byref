@@ -31,7 +31,7 @@
 ,NSString,getCString:maxLength:range:remainingRange:,v0@4:8*12I16{_NSRange=II}20^{_NSRange=II}28,
 ,NSString,getCharacters:,v0@4:8^S12,
 ,NSString,getCharacters:range:,v0@4:8^S12{_NSRange=II}16,
-,NSString,getLineStart:end:contentsEnd:forRange:,v0@4:8^I12^I16^I20{_NSRange=II}24,
+,NSString,getLineStart:end:contentsEnd:forRange:,v0@4:8^I12^I16^I20{_NSRange=II}24,v@:o^Io^Io^I{_NSRange=II}
 ,NSString,initWithCharactersNoCopy:length:freeWhenDone:,@0@4:8^S12I16c20,
 ,NSString,initWithCharacters:length:,@0@4:8r^S12I16,
 ,NSString,stringWithCharacters:length:,@0@4:8r^S12I16,
@@ -76,9 +76,9 @@
 ,NSAttributedString,attributesAtIndex:effectiveRange:,@0@4:8I12^{_NSRange=II}16,@0@4:8I12o^{_NSRange=II}16
 ,NSAttributedString,attributesAtIndex:longestEffectiveRange:inRange:,@0@4:8I12^{_NSRange=II}16{_NSRange=II}20,@0@4:8I12o^{_NSRange=II}16{_NSRange=II}20
 ,NSAttributedString,initWithHTML:baseURL:documentAttributes:,@0@4:8@12@16^@20,@0@4:8@12@16o^@20
-,NSAttributedString,initWithHTML:documentAttributes:,@0@4:8@12^@16,8@12o^@16
-,NSAttributedString,initWithPath:documentAttributes:,@0@4:8@12^@16,8@12o^@16
-,NSAttributedString,initWithRTFDFileWrapper:documentAttributes:,@0@4:8@12^@16,@0@4:8@12o^@16
+,NSAttributedString,initWithHTML:documentAttributes:,@0@4:8@12^@16,@@:@o^@
+,NSAttributedString,initWithPath:documentAttributes:,@0@4:8@12^@16,@@:@o^@
+,NSAttributedString,initWithRTFDFileWrapper:documentAttributes:,@0@4:8@12^@16,@@:@o^@
 ,NSAttributedString,initWithRTFD:documentAttributes:,@0@4:8@12^@16,@0@4:8@12o^@16
 ,NSAttributedString,initWithRTF:documentAttributes:,@0@4:8@12^@16,@0@4:8@12o^@16
 ,NSAttributedString,initWithURL:documentAttributes:,@0@4:8@12^@16,@0@4:8@12o^@16
@@ -184,8 +184,8 @@
 ,_NSKVCPIvarGetBinding,initWithFunc:ivarOffset:,@0@4:8^?12i16,
 ,NSScriptClassDescription,_forKey:getType:andSuite:,v0@4:8@12^@16^@20,
 ,NSConstantString,initWithCharactersNoCopy:length:,@0@4:8^S12I16,
-,NSPropertyListSerialization,dataFromPropertyList:format:errorDescription:,@0@4:8@12i16^@20,
-,NSPropertyListSerialization,propertyListFromData:mutabilityOption:format:errorDescription:,@0@4:8@12i16^i20^@24,
+,NSPropertyListSerialization,dataFromPropertyList:format:errorDescription:,@0@4:8@12i16^@20,@@:@io^@
+,NSPropertyListSerialization,propertyListFromData:mutabilityOption:format:errorDescription:,@0@4:8@12i16^i20^@24,@@:@iN^io^@
 ,NSProtocolChecker,methodDescriptionForSelector:,^{objc_method_description=:*}0@4:8:12,
 ,NSSetCommand,_forArgument:getType:andSuite:,v0@4:8@12^@16^@20,
 ,NSSetCommand,_key:inClass:indicatesMultipleValues:,c0@4:8@12@16^c20,

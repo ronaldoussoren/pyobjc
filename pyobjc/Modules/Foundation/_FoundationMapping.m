@@ -22,6 +22,10 @@ void init_FoundationMapping(void);
 #include "_FoundationMapping_NSCoder.m"
 #include "_FoundationMapping_NSData.m"
 #include "_FoundationMapping_NSDictionary.m"
+#include "_FoundationMapping_NSMutableArray.m"
+#include "_FoundationMapping_NSScriptObjectSpecifier.m"
+#include "_FoundationMapping_NSSet.m"
+#include "_FoundationMapping_NSString.m"
 
 
 void init_FoundationMapping(void)
@@ -43,4 +47,8 @@ void init_FoundationMapping(void)
 	if (_pyobjc_install_NSCoder()) return;
 	if (_pyobjc_install_NSData()) return;
 	if (_pyobjc_install_NSDictionary()) return;
+	if (_pyobjc_install_NSMutableArray()) return;
+	if (_pyobjc_install_NSScriptObjectSpecifier()) return;
+	if (_pyobjc_install_NSSet()) return;
+	if (_pyobjc_install_NSString()) return;
 }

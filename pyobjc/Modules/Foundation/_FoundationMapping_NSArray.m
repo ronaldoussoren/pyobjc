@@ -1,16 +1,16 @@
 /*
  * Special wrappers for NSArray methods with 'difficult' arguments.
  *
- * TODO:
- *
- * -initWithObjects:count:
- * -arrayByAddingObjects:count:
- * +arrayWithObjects:count:
- * -getObjects:
- * -getObjects:range:
+ * -initWithObjects:count:		[call, imp]
+ * -arrayByAddingObjects:count:		[call, imp]
+ * +arrayWithObjects:count:		[call, imp]
  *
  * -sortedArrayUsingFunction:context:			[call]
  * -sortedArrayUsingFunction:context:hint:		[call]
+ *
+ * Unsupported methods: (The usual access methods are good enough)
+ * -getObjects:
+ * -getObjects:range:
  *
  * Undocumented methods:
  * -apply:context:
@@ -295,6 +295,405 @@ imp_NSArray_sortedArrayUsingFunction_context_hint_(id self, SEL sel,
 }
 #endif
 
+static PyObject* call_NSArray_arrayWithObjects_count_(
+		PyObject* method, PyObject* self, PyObject* arguments)
+{
+	PyObject* result;
+	int err;
+	struct objc_super super;
+	PyObject* objectList;
+	PyObject* objectSeq;
+	id* objects;
+	int count;
+	int i;
+	id  res;
+
+	if  (PyArg_ParseTuple(arguments, "Oi", &objectList, &count) < 0) {
+		return NULL;
+	}
+
+	objectSeq = PySequence_Fast(objectList, "objects not a sequence");
+	if (objectSeq == NULL) {
+		return NULL;
+	}
+
+	if (PySequence_Fast_GET_SIZE(objectSeq) < count) {
+		PyErr_SetString(PyExc_ValueError, "too few objects");
+		Py_DECREF(objectSeq);
+		return NULL;
+	}
+
+	objects = alloca(sizeof(id) * count);
+	if (objects == NULL) {
+		Py_DECREF(objectSeq);
+		PyErr_NoMemory();
+		return NULL;
+	}
+
+	for (i = 0; i < count; i++) {
+		err = PyObjC_PythonToObjC(@encode(id), 
+			PySequence_Fast_GET_ITEM(objectSeq, i), objects + i);
+		if (err == -1) {
+			Py_DECREF(objectSeq);
+			PyErr_NoMemory();
+			return NULL;
+		}
+	}
+
+	NS_DURING
+		PyObjC_InitSuperCls(&super, 
+			PyObjCSelector_GetClass(method),
+			PyObjCClass_GetClass(self));
+
+			
+		res = objc_msgSendSuper(&super,
+				@selector(arrayWithObjects:count:),
+				objects, count);
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+		res = nil;
+	NS_ENDHANDLER
+
+	Py_DECREF(objectSeq);
+
+	if (res == nil && PyErr_Occurred()) {
+		return NULL;
+	}
+	
+	result = PyObjC_IdToPython(res);
+
+	return result;
+}
+
+static id imp_NSArray_arrayWithObjects_count_(id self, SEL sel,
+		id* objects, int count)
+{
+	PyObject* result;
+	PyObject* arglist;
+	PyObject* v;
+	int i;
+	id  returnValue;
+
+	arglist = PyTuple_New(3);
+	if (arglist == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+
+	v = PyObjC_IdToPython(self);
+	if (v == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+
+	PyTuple_SET_ITEM(arglist, 0, v);
+
+	v = PyTuple_New(count);
+	if (v == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+	for (i = 0; i < count; i++) {
+		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(objects[i]));
+		if (PyTuple_GET_ITEM(v, i) == NULL) {
+			Py_DECREF(v);
+			Py_DECREF(arglist);
+			PyObjCErr_ToObjC();
+			return nil;
+		}
+	}
+	PyTuple_SET_ITEM(arglist, 1, v);
+
+	v = PyInt_FromLong(count);
+	if (v == NULL) {	
+		Py_DECREF(arglist);
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+	PyTuple_SET_ITEM(arglist, 2,  v);
+
+	result = PyObjC_CallPython(self, sel, arglist);
+	Py_DECREF(arglist);
+	if (result == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+
+	returnValue = PyObjC_PythonToId(result);
+	Py_DECREF(result);
+	if (PyErr_Occurred()) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+	return returnValue;
+}
+
+static PyObject* call_NSArray_arrayByAddingObjects_count_(
+		PyObject* method, PyObject* self, PyObject* arguments)
+{
+	PyObject* result;
+	int err;
+	struct objc_super super;
+	PyObject* objectList;
+	PyObject* objectSeq;
+	id* objects;
+	int count;
+	int i;
+	id  res;
+
+	if  (PyArg_ParseTuple(arguments, "Oi", &objectList, &count) < 0) {
+		return NULL;
+	}
+
+	objectSeq = PySequence_Fast(objectList, "objects not a sequence");
+	if (objectSeq == NULL) {
+		return NULL;
+	}
+
+	if (PySequence_Fast_GET_SIZE(objectSeq) < count) {
+		PyErr_SetString(PyExc_ValueError, "too few objects");
+		Py_DECREF(objectSeq);
+		return NULL;
+	}
+
+	objects = alloca(sizeof(id) * count);
+	if (objects == NULL) {
+		Py_DECREF(objectSeq);
+		PyErr_NoMemory();
+		return NULL;
+	}
+
+	for (i = 0; i < count; i++) {
+		err = PyObjC_PythonToObjC(@encode(id), 
+			PySequence_Fast_GET_ITEM(objectSeq, i), objects + i);
+		if (err == -1) {
+			Py_DECREF(objectSeq);
+			PyErr_NoMemory();
+			return NULL;
+		}
+	}
+
+	NS_DURING
+		PyObjC_InitSuper(&super, 
+			PyObjCSelector_GetClass(method),
+			PyObjCObject_GetObject(self));
+
+			
+		res = objc_msgSendSuper(&super,
+				@selector(arrayByAddingObjects:count:),
+				objects, count);
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+		res = nil;
+	NS_ENDHANDLER
+
+	Py_DECREF(objectSeq);
+
+	if (res == nil && PyErr_Occurred()) {
+		return NULL;
+	}
+	
+	result = PyObjC_IdToPython(res);
+
+	return result;
+}
+
+static id imp_NSArray_arrayByAddingObjects_count_(id self, SEL sel,
+		id* objects, int count)
+{
+	PyObject* result;
+	PyObject* arglist;
+	PyObject* v;
+	int i;
+	id  returnValue;
+
+	arglist = PyTuple_New(3);
+	if (arglist == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+
+	v = PyObjC_IdToPython(self);
+	if (v == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+
+	PyTuple_SET_ITEM(arglist, 0, v);
+
+	v = PyTuple_New(count);
+	if (v == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+	for (i = 0; i < count; i++) {
+		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(objects[i]));
+		if (PyTuple_GET_ITEM(v, i) == NULL) {
+			Py_DECREF(v);
+			Py_DECREF(arglist);
+			PyObjCErr_ToObjC();
+			return nil;
+		}
+	}
+	PyTuple_SET_ITEM(arglist, 1, v);
+
+	v = PyInt_FromLong(count);
+	if (v == NULL) {	
+		Py_DECREF(arglist);
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+	PyTuple_SET_ITEM(arglist, 2,  v);
+
+	result = PyObjC_CallPython(self, sel, arglist);
+	Py_DECREF(arglist);
+	if (result == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+
+	returnValue = PyObjC_PythonToId(result);
+	Py_DECREF(result);
+	if (PyErr_Occurred()) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+	return returnValue;
+}
+
+static PyObject* call_NSArray_initWithObjects_count_(
+		PyObject* method, PyObject* self, PyObject* arguments)
+{
+	PyObject* result;
+	int err;
+	struct objc_super super;
+	PyObject* objectList;
+	PyObject* objectSeq;
+	id* objects;
+	int count;
+	int i;
+	id  res;
+
+	if  (PyArg_ParseTuple(arguments, "Oi", &objectList, &count) < 0) {
+		return NULL;
+	}
+
+	objectSeq = PySequence_Fast(objectList, "objects not a sequence");
+	if (objectSeq == NULL) {
+		return NULL;
+	}
+
+	if (PySequence_Fast_GET_SIZE(objectSeq) < count) {
+		PyErr_SetString(PyExc_ValueError, "too few objects");
+		Py_DECREF(objectSeq);
+		return NULL;
+	}
+
+	objects = alloca(sizeof(id) * count);
+	if (objects == NULL) {
+		Py_DECREF(objectSeq);
+		PyErr_NoMemory();
+		return NULL;
+	}
+
+	for (i = 0; i < count; i++) {
+		err = PyObjC_PythonToObjC(@encode(id), 
+			PySequence_Fast_GET_ITEM(objectSeq, i), objects + i);
+		if (err == -1) {
+			Py_DECREF(objectSeq);
+			PyErr_NoMemory();
+			return NULL;
+		}
+	}
+
+	NS_DURING
+		PyObjC_InitSuper(&super, 
+			PyObjCSelector_GetClass(method),
+			PyObjCObject_GetObject(self));
+
+			
+		res = objc_msgSendSuper(&super,
+				@selector(initWithObjects:count:),
+				objects, count);
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+		res = nil;
+	NS_ENDHANDLER
+
+	Py_DECREF(objectSeq);
+
+	if (res == nil && PyErr_Occurred()) {
+		return NULL;
+	}
+	
+	result = PyObjC_IdToPython(res);
+
+	return result;
+}
+
+static id imp_NSArray_initWithObjects_count_(id self, SEL sel,
+		id* objects, int count)
+{
+	PyObject* result;
+	PyObject* arglist;
+	PyObject* v;
+	int i;
+	id  returnValue;
+
+	arglist = PyTuple_New(3);
+	if (arglist == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+
+	v = PyObjC_IdToPython(self);
+	if (v == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+
+	PyTuple_SET_ITEM(arglist, 0, v);
+
+	v = PyTuple_New(count);
+	if (v == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+	for (i = 0; i < count; i++) {
+		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(objects[i]));
+		if (PyTuple_GET_ITEM(v, i) == NULL) {
+			Py_DECREF(v);
+			Py_DECREF(arglist);
+			PyObjCErr_ToObjC();
+			return nil;
+		}
+	}
+	PyTuple_SET_ITEM(arglist, 1, v);
+
+	v = PyInt_FromLong(count);
+	if (v == NULL) {	
+		Py_DECREF(arglist);
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+	PyTuple_SET_ITEM(arglist, 2,  v);
+
+	result = PyObjC_CallPython(self, sel, arglist);
+	Py_DECREF(arglist);
+	if (result == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+
+	returnValue = PyObjC_PythonToId(result);
+	Py_DECREF(result);
+	if (PyErr_Occurred()) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+	return returnValue;
+}
+
 static int 
 _pyobjc_install_NSArray(void)
 {
@@ -312,8 +711,8 @@ _pyobjc_install_NSArray(void)
 	if (PyObjC_RegisterMethodMapping(
 		classNSArray,
 		@selector(arrayByAddingObjects:count:),
-		PyObjCUnsupportedMethod_Caller,
-		PyObjCUnsupportedMethod_IMP) < 0) {
+		call_NSArray_arrayByAddingObjects_count_,
+		(IMP)imp_NSArray_arrayByAddingObjects_count_) < 0) {
 
 		return -1;
 	}
@@ -338,9 +737,36 @@ _pyobjc_install_NSArray(void)
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSArray,
-		@selector(intWithObjects:count:),
+		@selector(initWithObjects:),
 		PyObjCUnsupportedMethod_Caller,
 		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(
+		classNSArray,
+		@selector(arrayWithObjects:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(
+		classNSArray,
+		@selector(arrayWithObjects:count:),
+		call_NSArray_arrayWithObjects_count_,
+		(IMP)imp_NSArray_arrayWithObjects_count_) < 0) {
+
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(
+		classNSArray,
+		@selector(initWithObjects:count:),
+		call_NSArray_initWithObjects_count_,
+		(IMP)imp_NSArray_initWithObjects_count_) < 0) {
 
 		return -1;
 	}

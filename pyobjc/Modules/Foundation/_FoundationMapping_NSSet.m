@@ -1,73 +1,46 @@
 /*
- * Special wrappers for NSDictionary methods with 'difficult' arguments.
+ * Special wrappers for NSSet methods with 'difficult' arguments.
  *
- * -initWithObjects:forKeys:count:		[call ,imp]
- * +dictionaryWithObjects:forKeys:count:	[call, imp]
+ * -initWithObjects:count:		[call, imp]
+ * +setWithObjects:count:		[call, imp]
  *
- * Undocumented methods:
- * -getKeys:		
- * -getObjects:
- * -getObjects:andKeys:
+ * Unsupported methods:
+ * -initWithObjects:
  */
 #include <Python.h>
 #include <Foundation/Foundation.h>
 #include "pyobjc-api.h"
 
-static PyObject* call_NSDictionary_initWithObjects_forKeys_count_(
+static PyObject* call_NSSet_setWithObjects_count_(
 		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	int err;
 	struct objc_super super;
-	PyObject* keyList;
-	PyObject* keySeq;
 	PyObject* objectList;
 	PyObject* objectSeq;
 	id* objects;
-	id* keys;
 	int count;
 	int i;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "OOi", &objectList, &keyList, &count) < 0) {
+	if  (PyArg_ParseTuple(arguments, "Oi", &objectList, &count) < 0) {
 		return NULL;
 	}
 
-	keySeq = PySequence_Fast(keyList, "keys not a sequence");
-	if (keySeq == NULL) {
-		return NULL;
-	}
 	objectSeq = PySequence_Fast(objectList, "objects not a sequence");
 	if (objectSeq == NULL) {
-		Py_DECREF(keySeq);
-		return NULL;
-	}
-
-	if (PySequence_Fast_GET_SIZE(keySeq) < count) {
-		PyErr_SetString(PyExc_ValueError, "too few keys");
-		Py_DECREF(keySeq);
-		Py_DECREF(objectSeq);
 		return NULL;
 	}
 
 	if (PySequence_Fast_GET_SIZE(objectSeq) < count) {
 		PyErr_SetString(PyExc_ValueError, "too few objects");
-		Py_DECREF(keySeq);
 		Py_DECREF(objectSeq);
-		return NULL;
-	}
-
-	keys = alloca(sizeof(id) * count);
-	if (keys == NULL) {
-		Py_DECREF(keySeq);
-		Py_DECREF(objectSeq);
-		PyErr_NoMemory();
 		return NULL;
 	}
 
 	objects = alloca(sizeof(id) * count);
 	if (objects == NULL) {
-		Py_DECREF(keySeq);
 		Py_DECREF(objectSeq);
 		PyErr_NoMemory();
 		return NULL;
@@ -77,16 +50,6 @@ static PyObject* call_NSDictionary_initWithObjects_forKeys_count_(
 		err = PyObjC_PythonToObjC(@encode(id), 
 			PySequence_Fast_GET_ITEM(objectSeq, i), objects + i);
 		if (err == -1) {
-			Py_DECREF(keySeq);
-			Py_DECREF(objectSeq);
-			PyErr_NoMemory();
-			return NULL;
-		}
-
-		err = PyObjC_PythonToObjC(@encode(id), 
-			PySequence_Fast_GET_ITEM(keySeq, i), keys + i);
-		if (err == -1) {
-			Py_DECREF(keySeq);
 			Py_DECREF(objectSeq);
 			PyErr_NoMemory();
 			return NULL;
@@ -94,22 +57,20 @@ static PyObject* call_NSDictionary_initWithObjects_forKeys_count_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
+		PyObjC_InitSuperCls(&super, 
 			PyObjCSelector_GetClass(method),
-			//PyObjCClass_GetClass((PyObject*)(self->ob_type)),
-			PyObjCObject_GetObject(self));
+			PyObjCClass_GetClass(self));
 
 			
 		res = objc_msgSendSuper(&super,
-				@selector(initWithObjects:forKeys:count:),
-				objects, keys, count);
+				@selector(setWithObjects:count:),
+				objects, count);
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
 	NS_ENDHANDLER
 
 	Py_DECREF(objectSeq);
-	Py_DECREF(keySeq);
 
 	if (res == nil && PyErr_Occurred()) {
 		return NULL;
@@ -120,8 +81,8 @@ static PyObject* call_NSDictionary_initWithObjects_forKeys_count_(
 	return result;
 }
 
-static id imp_NSDictionary_initWithObjects_forKeys_count_(id self, SEL sel,
-		id* objects, id* keys, int count)
+static id imp_NSSet_setWithObjects_count_(id self, SEL sel,
+		id* objects, int count)
 {
 	PyObject* result;
 	PyObject* arglist;
@@ -129,7 +90,7 @@ static id imp_NSDictionary_initWithObjects_forKeys_count_(id self, SEL sel,
 	int i;
 	id  returnValue;
 
-	arglist = PyTuple_New(4);
+	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
 		PyObjCErr_ToObjC();
 		return nil;
@@ -159,27 +120,13 @@ static id imp_NSDictionary_initWithObjects_forKeys_count_(id self, SEL sel,
 	}
 	PyTuple_SET_ITEM(arglist, 1, v);
 
-	v = PyTuple_New(count);
-	if (v == NULL) {
-		PyObjCErr_ToObjC();
-		return nil;
-	}
-	for (i = 0; i < count; i++) {
-		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(keys[i]));
-		if (PyTuple_GET_ITEM(v, i) == NULL) {
-			Py_DECREF(v);
-			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
-			return nil;
-		}
-	}
-	PyTuple_SET_ITEM(arglist, 2, v);
-	PyTuple_SET_ITEM(arglist, 3, PyInt_FromLong(count));
-	if (PyTuple_GET_ITEM(arglist, 3) == NULL) {	
+	v = PyInt_FromLong(count);
+	if (v == NULL) {	
 		Py_DECREF(arglist);
 		PyObjCErr_ToObjC();
 		return nil;
 	}
+	PyTuple_SET_ITEM(arglist, 2,  v);
 
 	result = PyObjC_CallPython(self, sel, arglist);
 	Py_DECREF(arglist);
@@ -197,61 +144,36 @@ static id imp_NSDictionary_initWithObjects_forKeys_count_(id self, SEL sel,
 	return returnValue;
 }
 
-static PyObject* call_NSDictionary_dictionaryWithObjects_forKeys_count_(
+static PyObject* call_NSSet_initWithObjects_count_(
 		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	int err;
 	struct objc_super super;
-	PyObject* keyList;
-	PyObject* keySeq;
 	PyObject* objectList;
 	PyObject* objectSeq;
 	id* objects;
-	id* keys;
 	int count;
 	int i;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "OOi", &objectList, &keyList, &count) < 0) {
+	if  (PyArg_ParseTuple(arguments, "Oi", &objectList, &count) < 0) {
 		return NULL;
 	}
 
-	keySeq = PySequence_Fast(keyList, "keys not a sequence");
-	if (keySeq == NULL) {
-		return NULL;
-	}
 	objectSeq = PySequence_Fast(objectList, "objects not a sequence");
 	if (objectSeq == NULL) {
-		Py_DECREF(keySeq);
-		return NULL;
-	}
-
-	if (PySequence_Fast_GET_SIZE(keySeq) < count) {
-		PyErr_SetString(PyExc_ValueError, "too few keys");
-		Py_DECREF(keySeq);
-		Py_DECREF(objectSeq);
 		return NULL;
 	}
 
 	if (PySequence_Fast_GET_SIZE(objectSeq) < count) {
 		PyErr_SetString(PyExc_ValueError, "too few objects");
-		Py_DECREF(keySeq);
 		Py_DECREF(objectSeq);
-		return NULL;
-	}
-
-	keys = alloca(sizeof(id) * count);
-	if (keys == NULL) {
-		Py_DECREF(keySeq);
-		Py_DECREF(objectSeq);
-		PyErr_NoMemory();
 		return NULL;
 	}
 
 	objects = alloca(sizeof(id) * count);
 	if (objects == NULL) {
-		Py_DECREF(keySeq);
 		Py_DECREF(objectSeq);
 		PyErr_NoMemory();
 		return NULL;
@@ -261,16 +183,6 @@ static PyObject* call_NSDictionary_dictionaryWithObjects_forKeys_count_(
 		err = PyObjC_PythonToObjC(@encode(id), 
 			PySequence_Fast_GET_ITEM(objectSeq, i), objects + i);
 		if (err == -1) {
-			Py_DECREF(keySeq);
-			Py_DECREF(objectSeq);
-			PyErr_NoMemory();
-			return NULL;
-		}
-
-		err = PyObjC_PythonToObjC(@encode(id), 
-			PySequence_Fast_GET_ITEM(keySeq, i), keys + i);
-		if (err == -1) {
-			Py_DECREF(keySeq);
 			Py_DECREF(objectSeq);
 			PyErr_NoMemory();
 			return NULL;
@@ -278,21 +190,20 @@ static PyObject* call_NSDictionary_dictionaryWithObjects_forKeys_count_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuperCls(&super, 
-			PyObjCSelector_GetClass(method), 
-			PyObjCClass_GetClass(self));
+		PyObjC_InitSuper(&super, 
+			PyObjCSelector_GetClass(method),
+			PyObjCObject_GetObject(self));
 
 			
 		res = objc_msgSendSuper(&super,
-				@selector(dictionaryWithObjects:forKeys:count:),
-				objects, keys, count);
+				@selector(initWithObjects:count:),
+				objects, count);
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
 	NS_ENDHANDLER
 
 	Py_DECREF(objectSeq);
-	Py_DECREF(keySeq);
 
 	if (res == nil && PyErr_Occurred()) {
 		return NULL;
@@ -303,8 +214,8 @@ static PyObject* call_NSDictionary_dictionaryWithObjects_forKeys_count_(
 	return result;
 }
 
-static id imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
-	id self, SEL sel, id* objects, id* keys, int count)
+static id imp_NSSet_initWithObjects_count_(id self, SEL sel,
+		id* objects, int count)
 {
 	PyObject* result;
 	PyObject* arglist;
@@ -312,7 +223,7 @@ static id imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
 	int i;
 	id  returnValue;
 
-	arglist = PyTuple_New(4);
+	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
 		PyObjCErr_ToObjC();
 		return nil;
@@ -342,27 +253,13 @@ static id imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
 	}
 	PyTuple_SET_ITEM(arglist, 1, v);
 
-	v = PyTuple_New(count);
-	if (v == NULL) {
-		PyObjCErr_ToObjC();
-		return nil;
-	}
-	for (i = 0; i < count; i++) {
-		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(keys[i]));
-		if (PyTuple_GET_ITEM(v, i) == NULL) {
-			Py_DECREF(v);
-			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
-			return nil;
-		}
-	}
-	PyTuple_SET_ITEM(arglist, 2, v);
-	PyTuple_SET_ITEM(arglist, 3, PyInt_FromLong(count));
-	if (PyTuple_GET_ITEM(arglist, 3) == NULL) {	
+	v = PyInt_FromLong(count);
+	if (v == NULL) {	
 		Py_DECREF(arglist);
 		PyObjCErr_ToObjC();
 		return nil;
 	}
+	PyTuple_SET_ITEM(arglist, 2,  v);
 
 	result = PyObjC_CallPython(self, sel, arglist);
 	Py_DECREF(arglist);
@@ -381,31 +278,13 @@ static id imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
 }
 
 static int 
-_pyobjc_install_NSDictionary(void)
+_pyobjc_install_NSSet(void)
 {
-	Class classNSDictionary = objc_lookUpClass("NSDictionary");
+	Class classNSSet = objc_lookUpClass("NSSet");
 
 	if (PyObjC_RegisterMethodMapping(
-		classNSDictionary,
-		@selector(initWithObjects:forKeys:count:),
-		call_NSDictionary_initWithObjects_forKeys_count_,
-		(IMP)imp_NSDictionary_initWithObjects_forKeys_count_) < 0) {
-
-		return -1;
-	}
-
-	if (PyObjC_RegisterMethodMapping(
-		classNSDictionary,
-		@selector(dictionaryWithObjects:forKeys:count:),
-		call_NSDictionary_dictionaryWithObjects_forKeys_count_,
-		(IMP)imp_NSDictionary_dictionaryWithObjects_forKeys_count_) < 0) {
-
-		return -1;
-	}
-
-	if (PyObjC_RegisterMethodMapping(
-		classNSDictionary,
-		@selector(getKeys:),
+		classNSSet,
+                @selector(initWithObjects:),
 		PyObjCUnsupportedMethod_Caller,
 		PyObjCUnsupportedMethod_IMP) < 0) {
 
@@ -413,8 +292,8 @@ _pyobjc_install_NSDictionary(void)
 	}
 
 	if (PyObjC_RegisterMethodMapping(
-		classNSDictionary,
-		@selector(getObjects:),
+		classNSSet,
+                @selector(setWithObjects:),
 		PyObjCUnsupportedMethod_Caller,
 		PyObjCUnsupportedMethod_IMP) < 0) {
 
@@ -422,10 +301,19 @@ _pyobjc_install_NSDictionary(void)
 	}
 
 	if (PyObjC_RegisterMethodMapping(
-		classNSDictionary,
-		@selector(getObjects:andKeys:),
-		PyObjCUnsupportedMethod_Caller,
-		PyObjCUnsupportedMethod_IMP) < 0) {
+		classNSSet,
+		@selector(setWithObjects:count:),
+		call_NSSet_setWithObjects_count_,
+		(IMP)imp_NSSet_setWithObjects_count_) < 0) {
+
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(
+		classNSSet,
+		@selector(initWithObjects:count:),
+		call_NSSet_initWithObjects_count_,
+		(IMP)imp_NSSet_initWithObjects_count_) < 0) {
 
 		return -1;
 	}
