@@ -1,3 +1,8 @@
+2002-12-23 Ronald Oussoren <oussoren@cistron.nl>
+    * Automaticly convert 'self' argument to Objective-C if it is a Python
+      string, or int (just like for other arguments). This allows calls like
+      >>> NSString.localizedCaseInsensitiveCompare_('foo','bar')
+     
 2002-12-22 Ronald Oussoren <oussoren@cistron.nl>
     * Introduce support for libffi. For now the only advantages are a faster
       build and smaller libraries.
