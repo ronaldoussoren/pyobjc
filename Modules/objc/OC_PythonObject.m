@@ -67,10 +67,11 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 - (NSString *) description
 {
 	PyObject *repr;
+	PyGILState_STATE state;
 
 	if (pyObject == NULL) return @"no python object";
 	
-	PyGILState_STATE state = PyGILState_Ensure();
+	state = PyGILState_Ensure();
 	repr = PyObject_Repr (pyObject);
 	if (repr) {
 		int err;

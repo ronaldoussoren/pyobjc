@@ -58,14 +58,13 @@ class GlobalVariablesTest (unittest.TestCase):
     def testMisc(self):
         # enum
         self.assert_(hasattr(Foundation, 'NS_LittleEndian'))
-        self.assert_(hasattr(Foundation, 'NSXMLParserExtraContentError'))
 
         # NSString
-        self.assert_(hasattr(Foundation, 'NSAppleScriptErrorNumber'))
         self.assert_(hasattr(Foundation, 'NSConnectionReplyMode'))
 
         # VAR
-        self.assert_(hasattr(Foundation, 'NSFoundationVersionNumber'))
+        if sys.platform == 'darwin':
+            self.assert_(hasattr(Foundation, 'NSFoundationVersionNumber'))
 
 if __name__ == "__main__":
     unittest.main()

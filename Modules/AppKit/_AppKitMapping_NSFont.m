@@ -262,7 +262,6 @@ call_NSFont_fontWithName_matrix_(
 		PyObjC_InitSuperCls(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCClass_GetClass(self));
-
 		font = objc_msgSendSuper(&super,
 			PyObjCSelector_GetSelector(method),
 			typeface, matrix);

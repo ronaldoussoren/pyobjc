@@ -4,7 +4,7 @@ import objc
 import AppKit
 
 import os
-ON_JAGUAR=((os.uname()[0] == 'Darwin') and (os.uname()[2][0] == '6'))
+ON_JAGUAR=((os.uname()[0] == 'Darwin') and (int(os.uname()[2][0]) <= '6'))
 
 class TestNSFont(unittest.TestCase):
     def matrixEquals(self, value1, value2):

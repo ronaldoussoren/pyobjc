@@ -189,11 +189,12 @@ int PyObjC_RegisterSignatureMapping(
 
 
 static struct registry*
-search_special(Class class __attribute__((__unused__)), SEL sel)
+search_special(Class class, SEL sel)
 {
 	PyObject* 	 result = NULL;
 	PyObject*        special_class = NULL;
 	int              special_len, i;
+
 
 	if (special_registry == NULL) {
 		ObjCErr_Set(ObjCExc_error,
@@ -202,12 +203,18 @@ search_special(Class class __attribute__((__unused__)), SEL sel)
 		return NULL;
 	}
 
+	if (class) {
+		special_class = PyObjCClass_New(class);
+		if (special_class == NULL) return NULL;
+
+	}
+
 	special_len = PyList_Size(special_registry);
 
 	for (i = 0; i < special_len; i++) {
 		PyObject* entry = PyList_GetItem(special_registry, i);
-		PyObject* pyclass = PyTuple_GetItem(entry, 0);
-		PyObject* pysel = PyTuple_GetItem(entry, 1);
+		PyObject* pyclass = PyTuple_GET_ITEM(entry, 0);
+		PyObject* pysel = PyTuple_GET_ITEM(entry, 1);
 
 		if (pyclass == NULL || pysel == NULL) continue;
 		
@@ -215,14 +222,16 @@ search_special(Class class __attribute__((__unused__)), SEL sel)
 			if (!special_class) {
 				special_class = pyclass;
 				result = PyTuple_GetItem(entry, 2);
-			} else if (PyType_IsSubtype((PyTypeObject*)pyclass, 
-					(PyTypeObject*)special_class)) {
+			} else if (PyType_IsSubtype(
+					(PyTypeObject*)special_class,
+					(PyTypeObject*)pyclass
+				    )) {
 				special_class = pyclass;
 				result = PyTuple_GetItem(entry, 2);
 			}
 		}
 	}
-
+	Py_XDECREF(special_class);
 	if (result) {
 		return PyCObject_AsVoidPtr(result);
 	} else {

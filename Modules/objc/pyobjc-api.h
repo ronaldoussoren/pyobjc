@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.23 2004/01/01 19:07:07 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.24 2004/01/02 20:48:41 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -63,6 +63,18 @@ static inline void PyGILState_Release(
 			)->method_imp)(                  \
 				(super)->self,           \
 				(op) ,##args))
+
+#  define objc_msgSendSuper_stret(resultptr, super, op, args...) \
+	do { \
+		typedef __typeof__(*resultptr)(*STRET_IMP)(id, SEL, ...); \
+\
+		if ((super)->self) { \
+			STRET_IMP _stretfunc_ = (STRET_IMP)class_get_instance_method( \
+					(super)->class, (op));	\
+			*(resultptr) = _stretfunc_((super)->self,(op) ,##args);\
+		} \
+	} while(0)
+
 #endif /* objc_msgSendSuper */
 
 #endif	/* RUNTIME_GNU */

@@ -18,7 +18,10 @@ static void
 PyObjCPointer_dealloc (PyObjCPointer *self)
 {
 	Py_DECREF (self->type);
+	/*
 	self->ob_type->tp_free((PyObject*)self);
+	*/
+	PyObject_Free((PyObject*)self);
 }
 
 PyDoc_STRVAR(PyObjCPointer_unpack_doc,

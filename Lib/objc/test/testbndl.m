@@ -1471,6 +1471,7 @@ static 	char buf[1024];
 @interface PyObjC_TestClass3 : NSObject
 {
 }
++createAHostWithAddress:(NSString*)address;
 +makeACopy:source;
 +makeDataWithBytes:(Class)cls method:(int)i;
 +getBytes:(NSData*)data;
@@ -1479,6 +1480,11 @@ static 	char buf[1024];
 @end
 
 @implementation PyObjC_TestClass3
+
++createAHostWithAddress:(NSString*)address
+{
+	return [NSHost hostWithAddress:address];
+}
 
 +getBytes:(NSData*)data
 {
@@ -1684,6 +1690,8 @@ static 	char buf[1024];
 }
 @end
 
+#if defined (MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
+
 @interface PyObjCTest_KeyValueObserver : NSObject
 {
 	id observed;
@@ -1750,6 +1758,8 @@ static 	char buf[1024];
 
 
 @end
+
+#endif /* ! MacOS X 10.3 */
 
 
 static PyObject* pyobjcpy(PyObject* self __attribute__((__unused__)), PyObject* args)
@@ -1859,8 +1869,14 @@ void inittestbndl(void)
 		PyObjCClass_New([PyObjCTest_KVBaseClass class]));
 	PyModule_AddObject(m, "PyObjCTest_KVPathClass", 
 		PyObjCClass_New([PyObjCTest_KVPathClass class]));
+
+#if defined (MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
 	PyModule_AddObject(m, "PyObjCTest_KeyValueObserver", 
 		PyObjCClass_New([PyObjCTest_KeyValueObserver class]));
+#else
+	PyModule_AddObject(m, "PyObjCTest_KeyValueObserver",  Py_None);
+		
+#endif /* ! MacOS X 10.3 */
 
 	PyModule_AddObject(m, "DO_VALUEFORKEY", PyInt_FromLong(0));
 	PyModule_AddObject(m, "DO_VALUEFORKEYPATH", PyInt_FromLong(1));

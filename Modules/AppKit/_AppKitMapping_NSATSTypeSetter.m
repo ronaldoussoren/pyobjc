@@ -17,6 +17,8 @@ _pyobjc_install_NSATSTypesetter(void)
 {
 	Class classNSATSTypesetter = objc_lookUpClass("NSATSTypesetter");
 
+	if (classNSATSTypesetter == NULL) return 0;
+
 	if (PyObjC_RegisterMethodMapping(
 		classNSATSTypesetter,
 		@selector(getGlyphsInRange:glyphs:characterIndexes:glyphInscriptions:elasticBits:),

@@ -54,7 +54,6 @@ static inline void PyGILState_Release(
 #define PyObjC_COMPILING_ON_MACOSX_10_1
 #define MAC_OS_X_VERSION_10_1 1010
 #define MAC_OS_X_VERSION_MAX_ALLOWED MAC_OS_X_VERSION_10_1
-#error "No 10.1?"
 #endif
 
 

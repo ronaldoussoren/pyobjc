@@ -16,6 +16,11 @@ int PyObjCRT_SetupClass(
 )
 
 {
+	/* This is a private function, but seems to be the only way to
+	 * really create the class.
+	 */
+	extern void __objc_install_premature_dtable (Class);
+
 	/* Initialize the structure */
 	memset(cls, 0, sizeof(*cls));
 	memset(metaCls, 0, sizeof(*cls));

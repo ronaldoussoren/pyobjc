@@ -40,6 +40,7 @@ if sys.platform == "darwin":
     APPKIT_HDRS=os.path.join(FRAMEWORKS, "AppKit.framework", "Headers")
     FOUNDATION_HDRS=os.path.join(FRAMEWORKS, "Foundation.framework", "Headers")
     FOUNDATION_FUNCTION_PREFIX="FOUNDATION_EXPORT"
+    FOUNDATION_INLINE_PREFIX='FOUNDATION_STATIC_INLINE'
     FOUNDATION_VAR_PREFIX="FOUNDATION_EXPORT"
 
     IB_HDRS=os.path.join(FRAMEWORKS, "InterfaceBuilder.framework", "Headers")
@@ -68,8 +69,9 @@ else:
         APPKIT_HDRS=None
 
     FOUNDATION_HDRS=os.path.join(HDR_BASE, "Foundation")
-    FOUNDATION_FUNCTION_PREFIX="static"
-    FOUNDATION_VAR_PREFIX="static"
+    FOUNDATION_FUNCTION_PREFIX="GS_EXPORT"
+    FOUNDATION_INLINE_PREFIX='GS_GEOM_SCOPE'
+    FOUNDATION_VAR_PREFIX="GS_EXPORT"
     if not os.path.exists(FOUNDATION_HDRS):
         FOUNDATION_HDRS=None
 
@@ -223,20 +225,6 @@ if FOUNDATION_HDRS is not None:
             'NSStringFromPoint',
             'NSDivideRect(',
 
-            # NSDecimal support, should wrap type
-            #'NSDecimalCopy(',
-            #'NSDecimalCompact(',
-            #'NSDecimalCompare(',
-            #'NSDecimalRound(',
-            #'NSDecimalNormalize(',
-            #'NSDecimalAdd(',
-            #'NSDecimalSubtract(',
-            #'NSDecimalMultiply(',
-            #'NSDecimalDivide(',
-            #'NSDecimalPower(',
-            #'NSDecimalMultiplyByPowerOf10(',
-            #'NSDecimalString(',
-
             # Zones might be usefull someday
             'NSCreateZone(',
             'NSRecycleZone(',
@@ -253,6 +241,26 @@ if FOUNDATION_HDRS is not None:
             'NSUncaughtExceptionHandler(',
             'NSSetUncaughtExceptionHandler(',
             'NSGetUncaughtExceptionHandler(',
+
+            # GNUstep functions
+            'GSDebugAllocationClassList(',
+            '_NSAddHandler(',
+            '_NSRemoveHandler(',
+            'NSStringFromMapTable(',
+            'GSLogLock(',
+            'NSLogv (',
+            'NSCreateZone (',
+            'NSZoneFromPointer (',
+            'NSZoneCalloc (',
+            'NSSetZoneName (',
+            'NSAllocateMemoryPages (',
+            'NSDeallocateMemoryPages (',
+            'NSCopyMemoryPages (',
+            'GSDebugAllocation',
+            'NSStringFromMapTable (',
+            'NSDeallocateObject(',
+            'GSDebugFunctionMsg(',
+            'GSDebugMethodMsg(',
         )
 
         func_collector.generate(
@@ -264,7 +272,7 @@ if FOUNDATION_HDRS is not None:
         func_collector.generate(
                 FOUNDATION_HDRS, 
                 'build/codegen/Foundation.prototype2', 
-                'FOUNDATION_STATIC_INLINE', 
+                FOUNDATION_INLINE_PREFIX,
                 FOUNDATION_IGNORE_LIST)
 
 
@@ -315,6 +323,8 @@ if FOUNDATION_HDRS is not None:
             )
 
         structs = ['NSPoint', 'NSSize', 'NSRect', 'NSRange', 'NSSwappedFloat', 'NSSwappedDouble']
+        if sys.platform == 'darwin':
+            structs.append('NSTimeInterval')
         for s in structs:
             func_builder.SIMPLE_TYPES[s] = (
                 '\tresult = PyObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,

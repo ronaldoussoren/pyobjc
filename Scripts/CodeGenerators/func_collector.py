@@ -9,11 +9,12 @@ import os
 from dupfile import *
 
 IDENT='[A-Za-z_][A-Za-z0-9_]*'
-attribute_unused=re.compile(r'__attribute__\(\(_?_?unused_?_?\)\)')
+attribute_unused=re.compile(r'__attribute__\s*\(\(_?_?unused_?_?\)\)')
+attribute_const=re.compile(r'__attribute__\s*\(\(_?_?const_?_?\)\)')
 
 def process_file(outfp, filename, match_prefix='', ignore_list=()):
 
-    MATCH_RE=re.compile('%(match_prefix)s(.+\s+.+\([^);{]+\)\s*[;{])'%{
+    MATCH_RE=re.compile('%(match_prefix)s(.+\s+.+\([^);{]+\)\s*(?:[;{]|$))'%{
             'match_prefix':match_prefix, 'IDENT':IDENT})
 
     fp = open(filename, 'r')
@@ -21,12 +22,14 @@ def process_file(outfp, filename, match_prefix='', ignore_list=()):
     outfp.write("\n# From: %s\n"%os.path.basename(filename))
 
     in_class = 0
-
+    saved_line = None
     for ln in fp.xreadlines():
         ln = attribute_unused.sub(' ', ln)
+        ln = attribute_const.sub(' ', ln)
         # Skip declarations in objective-C class definitions
         if not in_class:
             if ln.startswith("@interface"):
+                saved_line=None
                 in_class = 1
                 continue
         else:
@@ -34,8 +37,21 @@ def process_file(outfp, filename, match_prefix='', ignore_list=()):
                 in_class = 0
             continue
 
+        if saved_line is not None:
+            ln = saved_line.rstrip() + ' ' + ln
+
+        i = ln.find('//')
+        if i != -1:
+            ln = ln[:i]
+
+
         m = MATCH_RE.match(ln)
-        if not m: continue
+        if not m: 
+            if saved_line is None and ln.startswith(match_prefix):
+                saved_line=ln
+            else:
+                saved_line=None
+            continue
 
         prototype=m.group(1).strip()
 

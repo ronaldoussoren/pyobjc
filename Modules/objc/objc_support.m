@@ -292,7 +292,14 @@ PyObjC_EmbeddedAlignOfType (const char*  type)
 static inline int
 PyObjC_EmbeddedAlignOfType (const char*  type)
 {
-	return PyObjCRT_AlignOfType(type);
+	int align =  PyObjCRT_AlignOfType(type);
+
+	/* GNUstep/ix86 seems to behave like this: */
+	if (align < 4) {
+		return align;
+	} else {
+		return 4;
+	}
 }
 
 #endif
@@ -455,6 +462,7 @@ PyObjCRT_SizeOfType (const char *type)
 		int have_align =  0;
 		int align;
 		int max_align = 0;
+
 		while (*type != _C_STRUCT_E && *type++ != '=')
 			; /* skip "<name>=" */
 		while (*type != _C_STRUCT_E) {

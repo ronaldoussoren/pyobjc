@@ -12,6 +12,8 @@
  */
 #include "pyobjc.h"
 
+#import <Foundation/NSHost.h>
+
 #ifndef FFI_CLOSURES
 #    error "Need FFI_CLOSURES!"
 #endif
@@ -308,7 +310,7 @@ signature_to_ffi_type(const char* argtype)
 		return struct_to_ffi_type(argtype);
 	default:
 		ObjCErr_Set(PyExc_NotImplementedError,
-			"Type '%x' not supported", *argtype);
+			"Type '%#x' not supported", *argtype);
 		return NULL;
 	}
 }
@@ -1026,11 +1028,20 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		 * to this structure.
 		 */
 		Method_t m = class_get_instance_method(super.class, 
-			meth->sel_selector);
+				meth->sel_selector);
 
-		values[0] = &super.self;
-		ffi_call(&cif, FFI_FN(m->method_imp), 
-			msgResult, values);
+		if (m == NULL) {
+			/* Class doesn't really have an IMP for the selector,
+			 * find a forwarder for the method and call that.
+			 */
+			values[0] = &(super.self);
+			ffi_call(&cif, FFI_FN(__objc_msg_forward(meth->sel_selector)), 
+				msgResult, values);
+		} else {
+			values[0] = &(super.self);
+			ffi_call(&cif, FFI_FN(m->method_imp), 
+				msgResult, values);
+		}
 
 #else /* !GNU_RUNTIME */
 

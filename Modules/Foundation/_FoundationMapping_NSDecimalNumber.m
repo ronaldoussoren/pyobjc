@@ -130,9 +130,17 @@ call_NSDecimalNumber_decimalValue(
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
-
+#ifdef MACOSX
 		objc_msgSendSuper_stret(&aDecimal, &super,
 				PyObjCSelector_GetSelector(method));
+
+#else /* GNUSTEP */
+		/*  My hacked objc_msgSendSuper_stret doesn't work and it
+		 *  is unlikely that anyone ever overrides this method.
+		 */
+		aDecimal = [super.self decimalValue];
+
+#endif /* GNUSTEP */
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
@@ -144,6 +152,7 @@ call_NSDecimalNumber_decimalValue(
 	return Decimal_New(&aDecimal);
 }
 
+#ifdef MACOSX /* See GNU comment above */
 static void 
 imp_NSDecimalNumber_decimalValue(
 	void* cif __attribute__((__unused__)), 
@@ -183,6 +192,7 @@ error:
 	Py_XDECREF(arglist);
 	PyObjCErr_ToObjCWithGILState(&state);
 }
+#endif /* MACOSX */
 
 
 static int 
@@ -199,6 +209,22 @@ _pyobjc_install_NSDecimalNumber(void)
 		return -1;
 	}
 
+#if defined(MACOSX) 
+      {
+        Class classNSDecimalNumberPlaceholder = objc_lookUpClass("NSDecimalNumberPlaceholder");
+	if (classNSDecimalNumberPlaceholder != nil) {
+		if (PyObjC_RegisterMethodMapping(
+			classNSDecimalNumberPlaceholder,
+			@selector(initWithDecimal:),
+			call_NSDecimalNumber_initWithDecimal_,
+			imp_NSDecimalNumber_initWithDecimal_) < 0) {
+
+			return -1;
+		}
+	}
+     }
+#endif
+
 	if (PyObjC_RegisterMethodMapping(
 			classNSDecimalNumber,
 			@selector(decimalNumberWithDecimal:),
@@ -207,6 +233,7 @@ _pyobjc_install_NSDecimalNumber(void)
 		return -1;
 	}
 
+#ifdef MACOSX
 	if (PyObjC_RegisterMethodMapping(
 			classNSDecimalNumber,
 			@selector(decimalValue),
@@ -214,6 +241,21 @@ _pyobjc_install_NSDecimalNumber(void)
 			imp_NSDecimalNumber_decimalValue) < 0) {
 		return -1;
 	}
+
+
+#else 
+	/* Our objc_msgSendSuper_stret implementation for the GNU runtime
+	 * doesn't work, because of the work-around we cannot allow overriding
+	 * -decimalValue for now.
+	 */
+	if (PyObjC_RegisterMethodMapping(
+			classNSDecimalNumber,
+			@selector(decimalValue),
+			call_NSDecimalNumber_decimalValue,
+			PyObjCUnsupportedMethod_IMP) < 0) {
+		return -1;
+	}
+#endif
 
 
 	return 0;

@@ -467,8 +467,14 @@ class PyOCTestSimpleArguments(unittest.TestCase):
 
     def testIDOC(self):
         # Test an Objective-C object as the argument
-        c = objc.lookUpClass("NSHost")
-        o = c.hostWithAddress_('127.0.0.1')
+
+        # NSHost gives problems on GNUstep, better check those problems
+        # seperately in the Foundation test suite.
+        #c = objc.lookUpClass("NSHost")
+        #o = c.hostWithAddress_('127.0.0.1')
+
+        c = objc.lookUpClass("NSScanner")
+        o = c.scannerWithString_("hello world")
         s = self.obj.idArg_(o)
         self.assertEquals(len(s), 1)
         self.assert_(s[0] is o)

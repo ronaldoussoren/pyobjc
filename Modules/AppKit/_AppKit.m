@@ -1124,12 +1124,13 @@ struct uchar_table {
 static int 
 fontMatrix(PyObject* d, const char* name, const float* value)
 {
+	PyObject* v;
 	int i;
 
 	if (value == NULL) {
 		return PyDict_SetItemString(d, (char*)name, Py_None);
 	}
-	PyObject* v = PyTuple_New(6);
+	v = PyTuple_New(6);
 	if (v == NULL) {
 		return -1;
 	}
