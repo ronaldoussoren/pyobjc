@@ -14,7 +14,7 @@ NibClassBuilder.extractClasses( "MainMenu" )
 # WSTApplicationDelegate will automatically inherit from the
 # appropriate ObjC class [NSObject, in this case] and will have the
 # appropriate IBOutlets already defined based on the data found in the
-# NIB file(s) that define the class. 
+# NIB file(s) that define the class.
 class WSTApplicationDelegate(NibClassBuilder.AutoBaseClass):
 
     def newConnectionAction_(self, sender):

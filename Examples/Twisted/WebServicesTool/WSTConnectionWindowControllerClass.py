@@ -54,14 +54,14 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
     generically useful toolbar management untility.
     """
     toolbarItem = NSToolbarItem.alloc().initWithItemIdentifier_(anIdentifier)
-    
+
     toolbarItem.setLabel_(aLabel)
     toolbarItem.setPaletteLabel_(aPaletteLabel)
     toolbarItem.setToolTip_(aToolTip)
     toolbarItem.setTarget_(aTarget)
     if anAction:
         toolbarItem.setAction_(anAction)
-    
+
     if type(anItemContent) == NSImage:
         toolbarItem.setImage_(anItemContent)
     else:
@@ -71,13 +71,13 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
         maxSize = (1000, bounds[1][1])
         toolbarItem.setMinSize_( minSize )
         toolbarItem.setMaxSize_( maxSize )
-        
+
     if aMenu:
         menuItem = NSMenuItem.alloc().init()
         menuItem.setSubmenu_(aMenu)
         menuItem.setTitle_( aMenu.title() )
         toolbarItem.setMenuFormRepresentation_(menuItem)
-    
+
     aController._toolbarItems[anIdentifier] = toolbarItem
 
 NibClassBuilder.extractClasses( "WSTConnection" )
@@ -97,15 +97,15 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         '_methodDescriptions',
         '_server',
         '_methodPrefix',)
-    
+
     def connectionWindowController(self):
         """
         Create and return a default connection window instance.
         """
         return WSTConnectionWindowController.alloc().init()
-    
+
     connectionWindowController = classmethod(connectionWindowController)
-    
+
     def init(self):
         """
         Designated initializer.
@@ -121,23 +121,23 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
 
         self._methods = []
         return self
-    
+
     def awakeFromNib(self):
         """
         Invoked when the NIB file is loaded.  Initializes the various
         UI widgets.
         """
         self.retain() # balanced by autorelease() in windowWillClose_
-        
+
         self.statusTextField.setStringValue_("No host specified.")
         self.progressIndicator.setStyle_(NSProgressIndicatorSpinningStyle)
         self.progressIndicator.setDisplayedWhenStopped_(NO)
-        
+
         self.createToolbar()
         # Start the CFReactor if it's not already going
         if not reactor.running:
             reactor.run()
-    
+
     def windowWillClose_(self, aNotification):
         """
         Clean up when the document window is closed.
@@ -153,15 +153,15 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         toolbar.setDelegate_(self)
         toolbar.setAllowsUserCustomization_(YES)
         toolbar.setAutosavesConfiguration_(YES)
-        
+
         self.createToolbarItems()
-        
+
         self.window().setToolbar_(toolbar)
 
         lastURL = NSUserDefaults.standardUserDefaults().stringForKey_("LastURL")
         if lastURL and len(lastURL):
             self.urlTextField.setStringValue_(lastURL)
-        
+
     def createToolbarItems(self):
         """
         Creates all of the toolbar items that can be made available in
@@ -176,14 +176,14 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
                        "orderFrontPreferences:", NSImage.imageNamed_("Preferences"), None)
         addToolbarItem(self, kWSTUrlTextFieldToolbarItemIdentifier,
                        "URL", "URL", "Server URL", None, None, self.urlTextField, None)
-        
+
         self._toolbarDefaultItemIdentifiers = [
             kWSTReloadContentsToolbarItemIdentifier,
             kWSTUrlTextFieldToolbarItemIdentifier,
             NSToolbarSeparatorItemIdentifier,
             NSToolbarCustomizeToolbarItemIdentifier,
         ]
-        
+
         self._toolbarAllowedItemIdentifiers = [
             kWSTReloadContentsToolbarItemIdentifier,
             kWSTUrlTextFieldToolbarItemIdentifier,
@@ -194,7 +194,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
             kWSTPreferencesToolbarItemIdentifier,
             NSToolbarCustomizeToolbarItemIdentifier,
         ]
-        
+
     def toolbarDefaultItemIdentifiers_(self, anIdentifier):
         """
         Return an array of toolbar item identifiers that identify the
@@ -208,7 +208,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         Return an array of toolbar items that may be used in the toolbar.
         """
         return self._toolbarAllowedItemIdentifiers
-        
+
     def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self,
                                                                  toolbar,
                                                                  itemIdentifier, flag):
@@ -221,25 +221,25 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         """
         newItem = NSToolbarItem.alloc().initWithItemIdentifier_(itemIdentifier)
         item = self._toolbarItems[itemIdentifier]
-        
+
         newItem.setLabel_( item.label() )
         newItem.setPaletteLabel_( item.paletteLabel() )
         if item.view():
             newItem.setView_( item.view() )
         else:
             newItem.setImage_( item.image() )
-            
+
         newItem.setToolTip_( item.toolTip() )
         newItem.setTarget_( item.target() )
         newItem.setAction_( item.action() )
         newItem.setMenuFormRepresentation_( item.menuFormRepresentation() )
-        
+
         if newItem.view():
             newItem.setMinSize_( item.minSize() )
             newItem.setMaxSize_( item.maxSize() )
-        
+
         return newItem
-    
+
     def setStatusTextFieldMessage_(self, aMessage):
         """
         Sets the contents of the statusTextField to aMessage and
@@ -249,19 +249,19 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
             aMessage = "Displaying information about %d methods." % len(self._methods)
         # All UI calls should be directed to the main thread
         self.statusTextField.setStringValue_(aMessage)
-    
+
     def reloadData(self):
         """Tell the main thread to update the table view."""
         self.methodsTable.reloadData()
-    
+
     def startWorking(self):
         """Signal the UI there's work goin on."""
         self.progressIndicator.startAnimation_(self)
-    
+
     def stopWorking(self):
         """Signal the UI that the work is done."""
         self.progressIndicator.stopAnimation_(self)
-    
+
     def reloadVisibleData_(self, sender):
         """
         Reloads the list of methods and their signatures from the
@@ -272,7 +272,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         self._methods = []
         self._methodSignatures = {}
         self._methodDescriptions = {}
-        
+
         if not url:
             self.window().setTitle_("Untitled.")
             self.setStatusTextFieldMessage_("No URL specified.")
@@ -283,7 +283,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
 
         self.setStatusTextFieldMessage_("Retrieving method list...")
         self.getMethods(url)
-    
+
     def getMethods(self, url):
         _server = self._server = Proxy(url.encode('utf8'))
         self.startWorking()
@@ -294,7 +294,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
             # on error, call this lambda
             lambda e: _server.callRemote('system.listMethods').addCallback(
                 # call self.receievedMethods(result, _server, "system.")
-                self.receivedMethods, _server, 'system.' 
+                self.receivedMethods, _server, 'system.'
             )
         ).addErrback(
             # log the failure instance, with a method
@@ -303,28 +303,28 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
             # stop working nomatter what trap all errors (returns None)
             lambda n:self.stopWorking()
         )
-            
+
     def receivedMethodsFailure(self, why, method):
         self._server = None
         self._methodPrefix = None
         self.setStatusTextFieldMessage_(
-           ("Server failed to respond to %s.  " 
+           ("Server failed to respond to %s.  "
             "See below for more information."       ) % (method,)
         )
         #log.err(why)
         self.methodDescriptionTextView.setString_(why.getTraceback())
-        
+
     def receivedMethods(self, _methods, _server, _methodPrefix):
         self._server = _server
         self._methods = _methods
         self._methodPrefix = _methodPrefix
-        
+
         self._methods.sort()
         self.reloadData()
         self.setStatusTextFieldMessage_(
             "Retrieving information about %d methods." % (len(self._methods),)
         )
-        
+
         # we could make all the requests at once :)
         # but the server might not like that so we will chain them
         d = defer.succeed(None)
@@ -347,15 +347,15 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         if (index % 5)==0:
             self.reloadData()
         self.setStatusTextFieldMessage_(
-            "Retrieving signature for method %s (%d of %d)." 
+            "Retrieving signature for method %s (%d of %d)."
             % (aMethod , index, len(self._methods))
         )
         return self._server.callRemote(
             self._methodPrefix + 'methodSignature',
             aMethod
         )
-            
-    
+
+
     def processSignatureForMethod(self, methodSignature, index, aMethod):
         signatures = None
         if not len(methodSignature):
@@ -370,14 +370,14 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         else:
             signatures = signature
         self._methodSignatures[aMethod] = signatures
-    
+
     def couldntProcessSignatureForMethod(self, why, index, aMethod):
 
         #log.err(why)
         self._methodSignatures[aMethod] = (
             "<error> %s %s" % (aMethod, why.getBriefTraceback())
         )
-            
+
     def tableViewSelectionDidChange_(self, sender):
         """
         When the user selects a remote method, this method displays
@@ -387,12 +387,12 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         """
         selectedRow = self.methodsTable.selectedRow()
         selectedMethod = self._methods[selectedRow]
-        
+
         def displayMethod(methodDescription):
             self.setStatusTextFieldMessage_(None)
             self.methodDescriptionTextView.setString_(methodDescription)
         self.fetchMethodDescription(selectedMethod).addCallback(displayMethod)
-        
+
     def fetchMethodDescription(self, aMethod):
         desc = self._methodDescriptions
         if aMethod in desc:
@@ -402,7 +402,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
             v = v or "No description available."
             desc[aMethod] = v
             return v
-        
+
         def _stopWorking(v):
             self.stopWorking()
             return v
@@ -416,8 +416,8 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
             self._methodPrefix + 'methodHelp',
             aMethod
         ).addCallback(_stopWorking).addCallback(cacheDesc)
-            
-            
+
+
     def numberOfRowsInTableView_(self, aTableView):
         """
         Returns the number of methods found on the server.
