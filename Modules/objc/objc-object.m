@@ -148,9 +148,11 @@ object_dealloc(PyObject* obj)
 	if (PyObjCObject_IsClassic(obj)) {
 		/* pass */
 	} else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
-		/* Lets hope 'init' is always a valid initializer */
+		/* Lets hope 'dealloc' works
+		 * 'init' is not always a valid initializer
+		 */
 		PyObjC_DURING
-			[[((PyObjCObject*)obj)->objc_object init] release];
+			[((PyObjCObject*)obj)->objc_object dealloc];
 
 		PyObjC_HANDLER
 			NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
