@@ -30,18 +30,18 @@ else:
         return (tuple(array('B').fromstring(fsRef.data)),)
     BRIDGED_TYPES.append((FSRef, FSRef_to_struct))
 
-try:
-    import decimal
-except ImportError:
-    pass
-else:
-    NSDecimalNumber = lookUpClass('NSDecimalNumber')
-    def Decimal_to_NSDecimalNumber(d):
-        # XXX - this doesn't take into account the locale setting
-        #       however I don't know what the heck NSDecimalNumber
-        #       expects..
-        return NSDecimalNumber.decimalNumberWithString_(unicode(d))
-    BRIDGED_TYPES.append((decimal.Decimal, Decimal_to_NSDecimalNumber))
+#try:
+#    import decimal
+#except ImportError:
+#    pass
+#else:
+#    NSDecimalNumber = lookUpClass('NSDecimalNumber')
+#    def Decimal_to_NSDecimalNumber(d):
+#        # XXX - this doesn't take into account the locale setting
+#        #       however I don't know what the heck NSDecimalNumber
+#        #       expects..
+#        return NSDecimalNumber.decimalNumberWithString_(unicode(d))
+#    BRIDGED_TYPES.append((decimal.Decimal, Decimal_to_NSDecimalNumber))
 
 def _bridgePythonTypes():
     # python TO Obj-C
