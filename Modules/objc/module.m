@@ -1072,9 +1072,11 @@ init_objc(void)
 
 	PyObjCClass_DefaultModule = PyString_FromString("objc");
 
+    /*
 	if (PyObjC_InitProxyRegistry() < 0) {
 		return;
 	}
+    */
 
 	PyType_Ready(&PyObjCClass_Type); 
 	PyType_Ready((PyTypeObject*)&PyObjCObject_Type);
