@@ -187,3 +187,30 @@ def setKeyPath(obj, keypath, value):
         cur = getKey(cur, e)
 
     return setKey(cur, elements[-1], value)
+
+class kvc(object):
+    def __init__(self, obj):
+        self._obj = obj
+    
+    def __getattr__(self, attr):
+        return getKey(self._obj, attr)
+
+    def __repr__(self):
+        return repr(self._obj)
+
+    def __setattr__(self, attr, value):
+        if not attr.startswith('_'):
+            setKey(self._obj, attr, value)
+        object.__setattr__(self, attr, value)
+
+    def __getitem__(self, item):
+        if not isinstance(item, basestring):
+            raise TypeError, 'Keys must be strings'
+        return getKeyPath(self._obj, item)
+
+    def __setitem__(self, item, value):
+        if not isinstance(item, basestring):
+            raise TypeError, 'Keys must be strings'
+        setKeyPath(self._obj, item, value)
+
+objc.lookUpClass('OC_PythonObject').depythonifyTable().insert(0, (kvc, lambda o:o._obj))
