@@ -15,22 +15,12 @@ class TestNSObjectInteraction( unittest.TestCase ):
         self.assert_( instance.description(), "NSObject instance didn't respond to -description selector." )
         self.assert_( not instance.isProxy(), "Instance of NSObject claimed it was a proxy.   That seems odd." )
         self.assert_( isinstance( instance, objc.runtime.NSObject ), "Instantiated object not an instance of NSObject." )
-        self.assert_( instance == instance, "Python identity check failed." )
+        self.assertEqual( instance, instance, "Python identity check failed." )
         self.assert_( instance.isEqual_( instance ), "Obj-C identity check failed." )
 
     def testRepeatedAllocInit( self ):
         for i in range(1,1000):
             a = NSObject.alloc().init()
-
-class TestNSExceptionInteraction( unittest.TestCase ):
-    def testRepeatedAllocInit( self ):
-        for i in range(1,1000):
-            a = NSException.alloc().initWithName_reason_userInfo_( "Bogus", "A bad reason", { "foo" : "bar" } )
-
-class TestNSDictionaryInteraction( unittest.TestCase ):
-    def testRepeatedAllocInit( self ):
-        for i in range(1,1000):
-            d = NSDictionary.alloc().init()
 
 class TestNSArrayInteraction( unittest.TestCase ):
     def testRepeatedAllocInit( self ):
@@ -40,9 +30,6 @@ class TestNSArrayInteraction( unittest.TestCase ):
 def suite():
     suite = unittest.TestSuite()
     suite.addTest( unittest.makeSuite( TestNSObjectInteraction ) )
-    suite.addTest( unittest.makeSuite( TestNSArrayInteraction ) )
-    suite.addTest( unittest.makeSuite( TestNSExceptionInteraction ) )
-    suite.addTest( unittest.makeSuite( TestNSDictionaryInteraction ) )
     return suite
 
 if __name__ == '__main__':

@@ -1,3 +1,10 @@
+2002-10-29  Bill Bumgarner  <bbum@bumbox.local.>
+
+	* Fixed a bug in convenience method that covered objectForKey:.
+	Wrote a unit test that failed due to the bug
+	(test_nsdictionary.py), then fixed _convenience.py to fix the
+	problem.
+
 2002-10-25  Bill Bumgarner  <bbum@codefab.com>
 
 	* Changed the objc_support.m to compile in the invocation tear

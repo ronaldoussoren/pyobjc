@@ -46,7 +46,7 @@ def __len__1(self):
 def __len__2(self):
 	return self.length()
 def __getitem__1(self, key):
-	res = self.objectForKey_(self, key)
+	res = self.objectForKey_(key)
 	if res == None:
 		raise KeyError, key
 	return res
