@@ -35,7 +35,7 @@ int pyobjc_main(int argc, const char *argv[])
         @"Main.pyo",
         nil];
     NSEnumerator *possibleMainsEnumerator = [possibleMains objectEnumerator];
-    NSString *mainPyPath;
+    NSString *mainPyPath = nil;
     NSString *nextFileName;
 
     while (nextFileName = [possibleMainsEnumerator nextObject]) {
