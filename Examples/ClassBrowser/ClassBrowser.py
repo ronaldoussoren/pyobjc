@@ -92,6 +92,10 @@ class ClassBrowserDelegate(NibClassBuilder.AutoBaseClass):
             row = self.browser.selectedRowInColumn_(col)
         if row >= 0:
             self.selectedClass = self.columns[col][row]
+            # Classes get initialized lazily, upon the first attribute access,
+            # only after that cls.__dict__ actually contains the methods.
+            # Do a dummy hasattr() to make sure the class is initialized.
+            hasattr(self.selectedClass, "alloc")
             self.selectedClassMethods = [obj.selector for obj in self.selectedClass.__dict__.values()
                                          if hasattr(obj, "selector")]
             self.selectedClassMethods.sort()
