@@ -132,6 +132,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         return self
     
     def spawnWorkerThread(self):
+        """Create and start our worker thread."""
         from threading import Thread
         from Queue import Queue
         self._workQueue = Queue()
@@ -152,12 +153,19 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         self.createToolbar()
     
     def scheduleWork(self, func, *args, **kwargs):
+        """Give the worker thread something to do."""
         self._workQueue.put((func, args, kwargs))
     
     def windowWillClose_(self, aNotification):
         """
         Clean up when the document window is closed.
         """
+        # We must stop the worker thread and wait until it actually finishes before
+        # we can allow the window to close. Weird stuff happens if we simply let the
+        # thread run. When this thread is idle (blocking in queue.get()) there is
+        # no problem and we can almost instantly close the window. If it's actually
+        # in the middle of working it may take a couple of seconds, as we can't
+        # _force_ the thread to stop: we have to ask it to to stop itself.
         self._windowIsClosing = 1  # try to stop the thread a.s.a.p.
         self._workQueue.put(None)  # signal the thread that there is no more work to do
         self._workerThread.join()  # wait until it finishes
@@ -190,19 +198,23 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         addToolbarItem(self, kWSTPreferencesToolbarItemIdentifier, "Preferences", "Preferences", "Show Preferences", None, "orderFrontPreferences:", NSImage.imageNamed_("Preferences"), None)
         addToolbarItem(self, kWSTUrlTextFieldToolbarItemIdentifier, "URL", "URL", "Server URL", None, None, self.urlTextField, None)
         
-        self._toolbarDefaultItemIdentifiers.append(kWSTReloadContentsToolbarItemIdentifier)
-        self._toolbarDefaultItemIdentifiers.append(kWSTUrlTextFieldToolbarItemIdentifier)
-        self._toolbarDefaultItemIdentifiers.append(NSToolbarSeparatorItemIdentifier)
-        self._toolbarDefaultItemIdentifiers.append(NSToolbarCustomizeToolbarItemIdentifier)
+        self._toolbarDefaultItemIdentifiers = [
+            kWSTReloadContentsToolbarItemIdentifier,
+            kWSTUrlTextFieldToolbarItemIdentifier,
+            NSToolbarSeparatorItemIdentifier,
+            NSToolbarCustomizeToolbarItemIdentifier,
+        ]
         
-        self._toolbarAllowedItemIdentifiers.append(kWSTReloadContentsToolbarItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.append(kWSTUrlTextFieldToolbarItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.append(NSToolbarSeparatorItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.append(NSToolbarSpaceItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.append(NSToolbarFlexibleSpaceItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.append(NSToolbarPrintItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.append(kWSTPreferencesToolbarItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.append(NSToolbarCustomizeToolbarItemIdentifier)
+        self._toolbarAllowedItemIdentifiers = [
+            kWSTReloadContentsToolbarItemIdentifier,
+            kWSTUrlTextFieldToolbarItemIdentifier,
+            NSToolbarSeparatorItemIdentifier,
+            NSToolbarSpaceItemIdentifier,
+            NSToolbarFlexibleSpaceItemIdentifier,
+            NSToolbarPrintItemIdentifier,
+            kWSTPreferencesToolbarItemIdentifier,
+            NSToolbarCustomizeToolbarItemIdentifier,
+        ]
         
     def toolbarDefaultItemIdentifiers_(self, anIdentifier):
         """
@@ -260,15 +272,18 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
             "setStringValue:", aMessage, 0)
     
     def reloadData(self):
+        """Tell the main thread to update the table view."""
         self.methodsTable.performSelectorOnMainThread_withObject_waitUntilDone_(
             "reloadData", None, 0)
     
-    def beginWorking(self):
+    def startWorking(self):
+        """Signal the UI there's work goin on."""
         if not self._working:
             self.progressIndicator.startAnimation_(self)
         self._working += 1
     
     def stopWorking(self):
+        """Signal the UI that the work is done."""
         self._working -= 1
         if not self._working:
             self.progressIndicator.performSelectorOnMainThread_withObject_waitUntilDone_(
@@ -297,12 +312,12 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         NSUserDefaults.standardUserDefaults().setObject_forKey_(url, "LastURL")
 
         self.setStatusTextFieldMessage_("Retrieving method list...")
-        self.beginWorking()
+        self.startWorking()
         self.scheduleWork(self.getMethods, url)
     
     def getMethods(self, url):
         self._server = xmlrpclib.ServerProxy(url)
-        NSAutoreleasePool.pyobjcPushPool()
+        NSAutoreleasePool.pyobjcPushPool()  # use an extra pool to get rid of intermediates
         try:
             self._methods = self._server.listMethods()
             self._methodPrefix = ""
@@ -328,9 +343,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         NSAutoreleasePool.pyobjcPopPool()
         if self._windowIsClosing:
             return
-        self.getMethodInfo(url)
-    
-    def getMethodInfo(self, url):
+
         self._methods.sort(lambda x, y: cmp(x, y))
         self.reloadData()
         self.setStatusTextFieldMessage_("Retrieving information about %d methods." % len(self._methods))
@@ -339,7 +352,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         for aMethod in self._methods:
             if self._windowIsClosing:
                 return
-            NSAutoreleasePool.pyobjcPushPool()
+            NSAutoreleasePool.pyobjcPushPool()  # use an extra pool to get rid of intermediates
             index = index + 1
             if not (index % 5):
                 self.reloadData()
@@ -374,7 +387,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         selectedMethod = self._methods[selectedRow]
         
         if not self._methodDescriptions.has_key(selectedMethod):
-            self.beginWorking()
+            self.startWorking()
             def work():
                 self.setStatusTextFieldMessage_("Retrieving signature for method %s..." % selectedMethod)
                 methodDescription = getattr(self._server, self._methodPrefix + "methodHelp")(selectedMethod)
