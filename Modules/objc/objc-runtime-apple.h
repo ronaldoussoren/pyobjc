@@ -61,7 +61,7 @@ PyObjCRT_InitMethod(Method m, SEL name, const char* types, IMP imp)
 	m->method_imp = imp;
 }
 
-static void
+static inline void
 PyObjCRT_ClassAddMethodList(Class cls, struct objc_method_list* lst)
 {
 	class_addMethods(cls, lst);

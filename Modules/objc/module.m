@@ -74,8 +74,11 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		return NULL;
 	}
 
+	methodsArray = PySequence_Fast(methodsArray, "methodsArray must be a sequence");
+	if (methodsArray == NULL) return NULL;
+	
 	targetClass  = PyObjCClass_GetClass(classObject);
-	methodCount  = PyList_Size(methodsArray);
+	methodCount  = PySequence_Fast_GET_SIZE(methodsArray);
 
 	if (methodCount == 0) {
 		Py_INCREF(Py_None);
@@ -91,7 +94,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 	methodsToAdd->method_count = methodCount;
 
 	for (methodIndex = 0; methodIndex < methodCount; methodIndex++) {
-		PyObject* aMethod = PyList_GetItem(methodsArray, methodIndex);
+		PyObject* aMethod = PySequence_Fast_GET_ITEM(methodsArray, methodIndex);
 		struct objc_method *objcMethod;
 
 		/* check
@@ -116,7 +119,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 	}
 
 	/* add the methods */
-	class_addMethods(targetClass, methodsToAdd);
+	PyObjCRT_ClassAddMethodList(targetClass, methodsToAdd);
 
 	/* This one shouldn't be necessary, but we get crashes without 
 	 * the next line. The crashes happen when 'targetClass' is a Python
