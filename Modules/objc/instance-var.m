@@ -1,5 +1,6 @@
 #include <Python.h>
 //#include <Foundation/Foundation.h>
+#include "pyobjc.h"
 #include "objc_support.h"
 
 /*
@@ -34,7 +35,7 @@ ivar_repr(ObjCIvar* self)
 static PyObject*
 ivar_descr_get(ObjCIvar* self, PyObject* obj, PyObject* type)
 {
-	Ivar var;
+	IVAR var;
 	id   objc;
 	int  size;
 	void* buf;
@@ -75,7 +76,7 @@ ivar_descr_get(ObjCIvar* self, PyObject* obj, PyObject* type)
 static int
 ivar_descr_set(ObjCIvar* self, PyObject* obj, PyObject* value)
 {
-	Ivar var;
+	IVAR var;
 	id   objc;
 	int  size;
 	void* buf;

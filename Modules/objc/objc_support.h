@@ -17,16 +17,34 @@
 #ifndef _objc_support_H
 #define _objc_support_H
 
-#include "pyobjc.h"
 
 /* These macros hides as much as possible the differences between the
    GNU Runtime and the NeXT one. */
 
 #ifdef GNU_RUNTIME
 
-#include <gnustep/base/mframe.h>
 #include <Foundation/NSException.h>
 #include <Foundation/NSString.h>
+
+#ifndef nil
+#define nil NULL
+#endif
+
+#ifndef _C_LNGLNG
+#define _C_LNGLNG 'q'
+#endif
+
+#ifndef _C_ULNGLNG
+#define _C_ULNGLNG 'Q'
+#endif
+
+extern Ivar_t class_getInstanceVariable(Class aClass, const char *name);
+extern Ivar_t object_getInstanceVariable(id obj, const char *name, void **out);
+extern struct objc_method_list *class_nextMethodList(Class aClass, void **ptr);
+extern Ivar_t object_setInstanceVariable(id obj, const char *name, void *value);
+extern void objc_addClass(Class aClass);
+extern id objc_msgSendSuper(struct objc_super *super, SEL op, ...);
+extern void objc_freeMethodList(struct objc_method_list *list);
 
 #define ISCLASS(o)	((o) && CLS_ISMETA(((struct objc_object *) o)->class_pointer))
 
@@ -35,16 +53,72 @@
 #define ISSELECTOR(s)	sel_is_mapped(s)
 #define NAMEOF(obj)	object_get_class_name(obj)
 #define LOOKUPCLASS(n)	objc_lookup_class(n)
+#define METHODLISTS     methods
 #define METHOD		Method_t
+#define IVAR            Ivar_t
 #define CLASSMETH(c,s)	class_get_class_method(((struct objc_object *) c)->class_pointer, s)
 #define INSTMETH(i,s)	class_get_instance_method(((struct objc_object *) i)->class_pointer, s)
 #define METHNARGS(m)	method_get_number_of_arguments(m)
 #define METHSARGS(m)	method_get_size_of_arguments(m)
+#define GETISA(c)       ((struct objc_object *)(c))->class_pointer
+#define CLS_CLASS       _CLS_CLASS
+#define CLS_META        _CLS_META
+#define RECEIVER(c)     (c).self
+#define SELUID(name)    sel_get_uid(name)
 
 static inline const char *
 get_selector_encoding (id self, SEL sel)
 {
   return sel->sel_types;
+}
+
+static inline Method_t class_getClassMethod(MetaClass class, SEL aSel)
+{
+  return class_get_class_method(class, aSel);
+}
+
+static inline Method_t class_getInstanceMethod(Class class, SEL aSel)
+{
+  return class_get_instance_method(class, aSel);
+}
+
+static inline Class objc_lookUpClass(const char *name)
+{
+  return objc_lookup_class(name);
+}
+
+static inline SEL sel_registerName(const char *name)
+{
+  return sel_register_name(name);
+}
+
+static inline void class_addMethods(Class aClass, struct objc_method_list *methods)
+{
+  class_add_method_list(aClass, methods);
+}
+
+/* Return a number that is likely to change when the method list changes,
+ * and is cheap to compute.
+ */
+static inline int
+objc_methodlist_magic(Class cls)
+{
+  struct objc_method_list *mlist;
+  int res, cnt;
+  void *iterator = 0;
+
+  res = cnt = 0;
+
+  if (cls == NULL)
+    return -1;
+
+  while ((mlist = class_nextMethodList(cls, &iterator)))
+    {
+      res += mlist->method_count;
+      cnt ++;
+    }
+
+  return (cnt << 16) | (res & 0xFFFF);
 }
 
 #else /* NeXTSTEP / Mac OS X */
@@ -58,11 +132,15 @@ get_selector_encoding (id self, SEL sel)
 
 #define SELNAME(sel)	sel_getName(sel)
 #define LOOKUPCLASS(n)	objc_lookUpClass(n)
+#define METHODLISTS     methodLists
 #define METHOD		Method
-#define CLASSMETH(c,s)	class_getClassMethod(c->isa, s)
-#define INSTMETH(i,s)	class_getInstanceMethod(i->isa, s)
+#define IVAR            Ivar
+#define CLASSMETH(c,s)	class_getClassMethod((c)->isa, s)
+#define INSTMETH(i,s)	class_getInstanceMethod((i)->isa, s)
 #define METHNARGS(m)	method_getNumberOfArguments(m)
 #define METHSARGS(m)	method_getSizeOfArguments(m)
+#define GETISA(c)       (c)->isa
+#define RECEIVER(c)     (c).receiver
 
 #define _C_CONST    'r'
 #define _C_IN       'n'
@@ -124,6 +202,7 @@ objc_methodlist_magic(Class cls)
 
 extern int objc_sizeof_type (const char *type);
 extern const char *objc_skip_typespec (const char *type);
+extern void objc_freeMethodList(struct objc_method_list **list);
 
 static inline const char *
 get_selector_encoding (id self, SEL sel)
@@ -232,5 +311,7 @@ extern const char *depythonify_c_value (const char *type,
   result. */
 extern PyObject *execute_and_pythonify_objc_method (PyObject *meth,
 				PyObject* self, PyObject *args);
+
+extern struct objc_method_list *objc_allocMethodList(int numMethods);
 
 #endif /* _objc_support_H */

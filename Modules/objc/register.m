@@ -1,14 +1,20 @@
 /*
  * WARNING: This is a generated file, do not change
+ *
+ * XXX: This file contains a number of manual fixups related to GNUstep
+ *      support. Need to fix this!
  */
 #ifdef OC_WITH_LIBFFI
 
 #include <Python.h>
 #include <objc/objc.h>
+#ifndef GNU_RUNTIME
 #include <objc/objc-runtime.h>
+#endif
 #include <Foundation/NSException.h>
 #define PYOBJC_METHOD_STUB_IMPL
 #include "pyobjc-api.h"
+#include "objc_support.h"
 
 int ObjC_RegisterStdStubs(struct pyobjc_api* api)
 {
@@ -19,10 +25,14 @@ int ObjC_RegisterStdStubs(struct pyobjc_api* api)
 
 #include <Python.h>
 #include <objc/objc.h>
+#ifndef GNU_RUNTIME
 #include <objc/objc-runtime.h>
+#endif
 #include <Foundation/NSException.h>
 #define PYOBJC_METHOD_STUB_IMPL
 #include "pyobjc-api.h"
+#include "objc_support.h"
+
 static struct pyobjc_api* ObjC_API;
 typedef int (*superfunc)(int);
 
@@ -79,7 +89,7 @@ static PyObject* super_0(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -160,7 +170,7 @@ static PyObject* super_1(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -243,7 +253,7 @@ static PyObject* super_2(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -312,7 +322,7 @@ static PyObject* super_3(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (Class)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -373,7 +383,7 @@ static PyObject* super_4(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -444,7 +454,7 @@ static PyObject* super_5(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -517,7 +527,7 @@ static PyObject* super_6(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -580,7 +590,7 @@ static PyObject* super_7(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (char*)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -638,7 +648,7 @@ static PyObject* super_8(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (id)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -704,7 +714,7 @@ static PyObject* super_9(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (SEL)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -765,7 +775,7 @@ static PyObject* super_10(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -828,7 +838,7 @@ static PyObject* super_11(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (id)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -889,7 +899,7 @@ static PyObject* super_12(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("#", v, &objc_arg2);
@@ -968,7 +978,7 @@ static PyObject* super_13(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("#", v, &objc_arg2);
@@ -1053,7 +1063,7 @@ static PyObject* super_14(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -1124,7 +1134,7 @@ static PyObject* super_15(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -1217,7 +1227,7 @@ static PyObject* super_16(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -1322,7 +1332,7 @@ static PyObject* super_17(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -1405,7 +1415,7 @@ static PyObject* super_18(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -1486,7 +1496,7 @@ static PyObject* super_19(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -1569,7 +1579,7 @@ static PyObject* super_20(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -1642,7 +1652,7 @@ static PyObject* super_21(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -1713,7 +1723,7 @@ static PyObject* super_22(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -1794,7 +1804,7 @@ static PyObject* super_23(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -1880,7 +1890,7 @@ static PyObject* super_24(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -1965,7 +1975,7 @@ static PyObject* super_25(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -2003,10 +2013,12 @@ static PyObject* super_25(PyObject* meth, PyObject* self, PyObject* args)
 
 
 /* signature: @0@4:8:12{_NSRange=II}16@24 */
+#if 0 /* ndef GNUSTEP */
 struct _NSRange {
 	unsigned int field_0;
 	unsigned int field_1;
 };
+#endif
 
 static id 
 meth_imp_26(id self, SEL sel, SEL arg_2, struct _NSRange arg_3, id arg_4)
@@ -2063,7 +2075,7 @@ static PyObject* super_26(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -2142,7 +2154,7 @@ static PyObject* super_27(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -2213,7 +2225,7 @@ static PyObject* super_28(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -2290,7 +2302,7 @@ static PyObject* super_29(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -2367,7 +2379,7 @@ static PyObject* super_30(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -2448,7 +2460,7 @@ static PyObject* super_31(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -2539,7 +2551,7 @@ static PyObject* super_32(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -2632,7 +2644,7 @@ static PyObject* super_33(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -2715,7 +2727,7 @@ static PyObject* super_34(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -2796,7 +2808,7 @@ static PyObject* super_35(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -2887,7 +2899,7 @@ static PyObject* super_36(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -2980,7 +2992,7 @@ static PyObject* super_37(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -3071,7 +3083,7 @@ static PyObject* super_38(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -3172,7 +3184,7 @@ static PyObject* super_39(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -3283,7 +3295,7 @@ static PyObject* super_40(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -3398,7 +3410,7 @@ static PyObject* super_41(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -3509,7 +3521,7 @@ static PyObject* super_42(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -3622,7 +3634,7 @@ static PyObject* super_43(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -3727,7 +3739,7 @@ static PyObject* super_44(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -3828,7 +3840,7 @@ static PyObject* super_45(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -3931,7 +3943,7 @@ static PyObject* super_46(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -4032,7 +4044,7 @@ static PyObject* super_47(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -4140,7 +4152,7 @@ static PyObject* super_48(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -4233,7 +4245,7 @@ static PyObject* super_49(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -4324,7 +4336,7 @@ static PyObject* super_50(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -4425,7 +4437,7 @@ static PyObject* super_51(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -4524,7 +4536,7 @@ static PyObject* super_52(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -4614,7 +4626,7 @@ static PyObject* super_53(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -4705,7 +4717,7 @@ static PyObject* super_54(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -4798,7 +4810,7 @@ static PyObject* super_55(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -4885,7 +4897,7 @@ static PyObject* super_56(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -4976,7 +4988,7 @@ static PyObject* super_57(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -5073,7 +5085,7 @@ static PyObject* super_58(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -5186,7 +5198,7 @@ static PyObject* super_59(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -5284,7 +5296,7 @@ static PyObject* super_60(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -5373,7 +5385,7 @@ static PyObject* super_61(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -5454,7 +5466,7 @@ static PyObject* super_62(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -5545,7 +5557,7 @@ static PyObject* super_63(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -5638,7 +5650,7 @@ static PyObject* super_64(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -5727,7 +5739,7 @@ static PyObject* super_65(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -5818,7 +5830,7 @@ static PyObject* super_66(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -5930,7 +5942,7 @@ static PyObject* super_67(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -6047,7 +6059,7 @@ static PyObject* super_68(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -6143,7 +6155,7 @@ static PyObject* super_69(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -6231,7 +6243,7 @@ static PyObject* super_70(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -6312,7 +6324,7 @@ static PyObject* super_71(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -6395,7 +6407,7 @@ static PyObject* super_72(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -6480,7 +6492,7 @@ static PyObject* super_73(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -6573,7 +6585,7 @@ static PyObject* super_74(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -6664,7 +6676,7 @@ static PyObject* super_75(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -6761,7 +6773,7 @@ static PyObject* super_76(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -6850,7 +6862,7 @@ static PyObject* super_77(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -6931,7 +6943,7 @@ static PyObject* super_78(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -7018,7 +7030,7 @@ static PyObject* super_79(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -7105,7 +7117,7 @@ static PyObject* super_80(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -7194,7 +7206,7 @@ static PyObject* super_81(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -7281,7 +7293,7 @@ static PyObject* super_82(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -7372,7 +7384,7 @@ static PyObject* super_83(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -7475,7 +7487,7 @@ static PyObject* super_84(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -7577,7 +7589,7 @@ static PyObject* super_85(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -7665,7 +7677,7 @@ static PyObject* super_86(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -7748,7 +7760,7 @@ static PyObject* super_87(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -7829,7 +7841,7 @@ static PyObject* super_88(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -7906,7 +7918,7 @@ static PyObject* super_89(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -7983,7 +7995,7 @@ static PyObject* super_90(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -8064,7 +8076,7 @@ static PyObject* super_91(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -8147,7 +8159,7 @@ static PyObject* super_92(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -8228,7 +8240,7 @@ static PyObject* super_93(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -8307,7 +8319,7 @@ static PyObject* super_94(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("C", v, &objc_arg2);
@@ -8374,7 +8386,7 @@ static PyObject* super_95(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -8445,7 +8457,7 @@ static PyObject* super_96(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -8522,7 +8534,7 @@ static PyObject* super_97(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -8603,7 +8615,7 @@ static PyObject* super_98(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -8695,7 +8707,7 @@ static PyObject* super_99(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -8792,7 +8804,7 @@ static PyObject* super_100(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -8885,7 +8897,7 @@ static PyObject* super_101(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -8968,7 +8980,7 @@ static PyObject* super_102(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -9057,7 +9069,7 @@ static PyObject* super_103(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -9156,7 +9168,7 @@ static PyObject* super_104(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -9237,7 +9249,7 @@ static PyObject* super_105(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -9339,7 +9351,7 @@ static PyObject* super_106(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -9446,7 +9458,7 @@ static PyObject* super_107(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -9541,7 +9553,7 @@ static PyObject* super_108(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -9624,7 +9636,7 @@ static PyObject* super_109(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -9697,7 +9709,7 @@ static PyObject* super_110(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("L", v, &objc_arg2);
@@ -9768,7 +9780,7 @@ static PyObject* super_111(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("L", v, &objc_arg2);
@@ -9841,7 +9853,7 @@ static PyObject* super_112(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("Q", v, &objc_arg2);
@@ -9916,7 +9928,7 @@ static PyObject* super_113(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("Q", v, &objc_arg2);
@@ -9995,7 +10007,7 @@ static PyObject* super_114(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -10066,7 +10078,7 @@ static PyObject* super_115(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -10147,7 +10159,7 @@ static PyObject* super_116(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -10230,7 +10242,7 @@ static PyObject* super_117(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -10311,7 +10323,7 @@ static PyObject* super_118(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -10394,7 +10406,7 @@ static PyObject* super_119(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -10515,7 +10527,7 @@ static PyObject* super_120(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -10586,7 +10598,7 @@ static PyObject* super_121(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -10664,7 +10676,7 @@ static PyObject* super_122(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -10741,7 +10753,7 @@ static PyObject* super_123(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -10826,7 +10838,7 @@ static PyObject* super_124(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -10911,7 +10923,7 @@ static PyObject* super_125(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -10982,7 +10994,7 @@ static PyObject* super_126(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -11071,7 +11083,7 @@ static PyObject* super_127(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -11170,7 +11182,7 @@ static PyObject* super_128(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -11249,7 +11261,7 @@ static PyObject* super_129(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -11320,7 +11332,7 @@ static PyObject* super_130(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -11397,7 +11409,7 @@ static PyObject* super_131(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -11478,7 +11490,7 @@ static PyObject* super_132(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -11569,7 +11581,7 @@ static PyObject* super_133(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -11670,7 +11682,7 @@ static PyObject* super_134(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -11761,7 +11773,7 @@ static PyObject* super_135(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -11832,7 +11844,7 @@ static PyObject* super_136(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -11921,7 +11933,7 @@ static PyObject* super_137(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -12021,7 +12033,7 @@ static PyObject* super_138(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -12104,7 +12116,7 @@ static PyObject* super_139(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -12181,7 +12193,7 @@ static PyObject* super_140(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -12258,7 +12270,7 @@ static PyObject* super_141(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -12343,7 +12355,7 @@ static PyObject* super_142(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -12432,7 +12444,7 @@ static PyObject* super_143(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -12513,7 +12525,7 @@ static PyObject* super_144(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -12600,7 +12612,7 @@ static PyObject* super_145(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -12687,7 +12699,7 @@ static PyObject* super_146(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -12778,7 +12790,7 @@ static PyObject* super_147(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -12875,7 +12887,7 @@ static PyObject* super_148(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -12980,7 +12992,7 @@ static PyObject* super_149(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -13081,7 +13093,7 @@ static PyObject* super_150(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -13162,7 +13174,7 @@ static PyObject* super_151(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -13261,7 +13273,7 @@ static PyObject* super_152(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -13362,7 +13374,7 @@ static PyObject* super_153(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -13439,7 +13451,7 @@ static PyObject* super_154(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -13512,7 +13524,7 @@ static PyObject* super_155(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("l", v, &objc_arg2);
@@ -13579,7 +13591,7 @@ static PyObject* super_156(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("q", v, &objc_arg2);
@@ -13646,7 +13658,7 @@ static PyObject* super_157(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -13717,7 +13729,7 @@ static PyObject* super_158(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -13798,7 +13810,7 @@ static PyObject* super_159(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -13881,7 +13893,7 @@ static PyObject* super_160(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -13963,7 +13975,7 @@ static PyObject* super_161(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{AEDesc=I^^{OpaqueAEDataStorageType=}}", v, &objc_arg2);
@@ -14030,7 +14042,7 @@ static PyObject* super_162(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{FSRef=[80C]}", v, &objc_arg2);
@@ -14097,7 +14109,7 @@ static PyObject* super_163(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -14180,7 +14192,7 @@ static PyObject* super_164(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -14291,7 +14303,7 @@ static PyObject* super_165(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -14392,7 +14404,7 @@ static PyObject* super_166(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSSize=ff}", v, &objc_arg2);
@@ -14465,7 +14477,7 @@ static PyObject* super_167(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("s", v, &objc_arg2);
@@ -14536,7 +14548,7 @@ static PyObject* super_168(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("s", v, &objc_arg2);
@@ -14614,7 +14626,7 @@ static PyObject* super_169(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{CGPoint=ff}", v, &objc_arg2);
@@ -14688,7 +14700,7 @@ static PyObject* super_170(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{NSButtonState=iccc}", v, &objc_arg2);
@@ -14755,7 +14767,7 @@ static PyObject* super_171(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -14826,7 +14838,7 @@ static PyObject* super_172(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -14899,7 +14911,7 @@ static PyObject* super_173(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -14970,7 +14982,7 @@ static PyObject* super_174(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -15051,7 +15063,7 @@ static PyObject* super_175(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -15142,7 +15154,7 @@ static PyObject* super_176(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -15232,7 +15244,7 @@ static PyObject* super_177(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -15305,7 +15317,7 @@ static PyObject* super_178(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -15376,7 +15388,7 @@ static PyObject* super_179(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -15457,7 +15469,7 @@ static PyObject* super_180(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -15544,7 +15556,7 @@ static PyObject* super_181(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -15631,7 +15643,7 @@ static PyObject* super_182(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -15714,7 +15726,7 @@ static PyObject* super_183(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -15791,7 +15803,7 @@ static PyObject* super_184(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -15868,7 +15880,7 @@ static PyObject* super_185(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -15941,7 +15953,7 @@ static PyObject* super_186(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSSize=ff}", v, &objc_arg2);
@@ -16012,7 +16024,7 @@ static PyObject* super_187(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSSize=ff}", v, &objc_arg2);
@@ -16089,7 +16101,7 @@ static PyObject* super_188(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSSize=ff}", v, &objc_arg2);
@@ -16174,7 +16186,7 @@ static PyObject* super_189(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSSize=ff}", v, &objc_arg2);
@@ -16275,7 +16287,7 @@ static PyObject* super_190(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSSize=ff}", v, &objc_arg2);
@@ -16390,7 +16402,7 @@ static PyObject* super_191(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -16517,7 +16529,7 @@ static PyObject* super_192(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -16640,7 +16652,7 @@ static PyObject* super_193(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -16749,7 +16761,7 @@ static PyObject* super_194(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -16850,7 +16862,7 @@ static PyObject* super_195(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -16965,7 +16977,7 @@ static PyObject* super_196(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -17092,7 +17104,7 @@ static PyObject* super_197(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -17219,7 +17231,7 @@ static PyObject* super_198(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -17334,7 +17346,7 @@ static PyObject* super_199(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -17431,7 +17443,7 @@ static PyObject* super_200(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -17532,7 +17544,7 @@ static PyObject* super_201(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -17639,7 +17651,7 @@ static PyObject* super_202(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -17746,7 +17758,7 @@ static PyObject* super_203(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -17870,7 +17882,7 @@ static PyObject* super_204(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -18018,7 +18030,7 @@ static PyObject* super_205(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -18170,7 +18182,7 @@ static PyObject* super_206(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -18287,7 +18299,7 @@ static PyObject* super_207(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (id)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -18348,7 +18360,7 @@ static PyObject* super_208(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -18419,7 +18431,7 @@ static PyObject* super_209(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -18500,7 +18512,7 @@ static PyObject* super_210(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -18591,7 +18603,7 @@ static PyObject* super_211(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -18692,7 +18704,7 @@ static PyObject* super_212(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -18803,7 +18815,7 @@ static PyObject* super_213(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -18924,7 +18936,7 @@ static PyObject* super_214(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -19035,7 +19047,7 @@ static PyObject* super_215(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -19110,7 +19122,7 @@ static PyObject* super_216(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (unsigned char)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -19168,7 +19180,7 @@ static PyObject* super_217(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (unsigned int)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -19229,7 +19241,7 @@ static PyObject* super_218(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -19300,7 +19312,7 @@ static PyObject* super_219(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -19373,7 +19385,7 @@ static PyObject* super_220(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -19444,7 +19456,7 @@ static PyObject* super_221(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -19525,7 +19537,7 @@ static PyObject* super_222(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -19616,7 +19628,7 @@ static PyObject* super_223(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -19709,7 +19721,7 @@ static PyObject* super_224(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -19792,7 +19804,7 @@ static PyObject* super_225(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -19877,7 +19889,7 @@ static PyObject* super_226(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -19974,7 +19986,7 @@ static PyObject* super_227(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -20063,7 +20075,7 @@ static PyObject* super_228(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -20144,7 +20156,7 @@ static PyObject* super_229(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -20223,7 +20235,7 @@ static PyObject* super_230(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -20294,7 +20306,7 @@ static PyObject* super_231(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -20372,7 +20384,7 @@ static PyObject* super_232(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -20449,7 +20461,7 @@ static PyObject* super_233(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -20523,7 +20535,7 @@ static PyObject* super_234(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -20595,7 +20607,7 @@ static PyObject* super_235(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -20662,7 +20674,7 @@ static PyObject* super_236(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -20729,7 +20741,7 @@ static PyObject* super_237(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("l", v, &objc_arg2);
@@ -20797,7 +20809,7 @@ static PyObject* super_238(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -20868,7 +20880,7 @@ static PyObject* super_239(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -20967,7 +20979,7 @@ static PyObject* super_240(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 1);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg3);
@@ -21043,7 +21055,7 @@ static PyObject* super_241(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (unsigned long)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -21104,7 +21116,7 @@ static PyObject* super_242(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -21171,7 +21183,7 @@ static PyObject* super_243(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -21242,7 +21254,7 @@ static PyObject* super_244(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -21311,7 +21323,7 @@ static PyObject* super_245(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (unsigned long long)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -21368,7 +21380,7 @@ static PyObject* super_246(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (unsigned short)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -21429,7 +21441,7 @@ static PyObject* super_247(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -21482,7 +21494,7 @@ static PyObject* super_248(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		(void)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -21534,7 +21546,7 @@ static PyObject* super_249(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -21596,7 +21608,7 @@ static PyObject* super_250(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -21664,7 +21676,7 @@ static PyObject* super_251(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -21732,7 +21744,7 @@ static PyObject* super_252(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -21800,7 +21812,7 @@ static PyObject* super_253(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -21927,7 +21939,7 @@ static PyObject* super_254(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (char)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -21988,7 +22000,7 @@ static PyObject* super_255(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("#", v, &objc_arg2);
@@ -22059,7 +22071,7 @@ static PyObject* super_256(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("#", v, &objc_arg2);
@@ -22148,7 +22160,7 @@ static PyObject* super_257(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -22243,7 +22255,7 @@ static PyObject* super_258(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -22324,7 +22336,7 @@ static PyObject* super_259(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -22411,7 +22423,7 @@ static PyObject* super_260(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -22506,7 +22518,7 @@ static PyObject* super_261(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -22597,7 +22609,7 @@ static PyObject* super_262(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -22668,7 +22680,7 @@ static PyObject* super_263(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -22749,7 +22761,7 @@ static PyObject* super_264(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -22840,7 +22852,7 @@ static PyObject* super_265(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -22925,7 +22937,7 @@ static PyObject* super_266(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -22996,7 +23008,7 @@ static PyObject* super_267(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -23073,7 +23085,7 @@ static PyObject* super_268(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -23154,7 +23166,7 @@ static PyObject* super_269(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -23241,7 +23253,7 @@ static PyObject* super_270(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -23333,7 +23345,7 @@ static PyObject* super_271(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -23430,7 +23442,7 @@ static PyObject* super_272(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -23523,7 +23535,7 @@ static PyObject* super_273(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -23610,7 +23622,7 @@ static PyObject* super_274(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -23701,7 +23713,7 @@ static PyObject* super_275(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -23792,7 +23804,7 @@ static PyObject* super_276(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -23893,7 +23905,7 @@ static PyObject* super_277(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -23992,7 +24004,7 @@ static PyObject* super_278(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -24084,7 +24096,7 @@ static PyObject* super_279(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -24173,7 +24185,7 @@ static PyObject* super_280(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -24262,7 +24274,7 @@ static PyObject* super_281(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -24364,7 +24376,7 @@ static PyObject* super_282(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -24445,7 +24457,7 @@ static PyObject* super_283(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -24528,7 +24540,7 @@ static PyObject* super_284(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -24609,7 +24621,7 @@ static PyObject* super_285(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -24712,7 +24724,7 @@ static PyObject* super_286(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -24800,7 +24812,7 @@ static PyObject* super_287(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -24895,7 +24907,7 @@ static PyObject* super_288(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -24990,7 +25002,7 @@ static PyObject* super_289(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -25071,7 +25083,7 @@ static PyObject* super_290(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -25154,7 +25166,7 @@ static PyObject* super_291(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -25231,7 +25243,7 @@ static PyObject* super_292(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -25312,7 +25324,7 @@ static PyObject* super_293(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -25395,7 +25407,7 @@ static PyObject* super_294(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -25476,7 +25488,7 @@ static PyObject* super_295(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -25563,7 +25575,7 @@ static PyObject* super_296(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -25642,7 +25654,7 @@ static PyObject* super_297(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("C", v, &objc_arg2);
@@ -25709,7 +25721,7 @@ static PyObject* super_298(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -25780,7 +25792,7 @@ static PyObject* super_299(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -25861,7 +25873,7 @@ static PyObject* super_300(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -25952,7 +25964,7 @@ static PyObject* super_301(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -26037,7 +26049,7 @@ static PyObject* super_302(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("L", v, &objc_arg2);
@@ -26104,7 +26116,7 @@ static PyObject* super_303(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -26198,7 +26210,7 @@ static PyObject* super_304(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -26265,7 +26277,7 @@ static PyObject* super_305(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -26333,7 +26345,7 @@ static PyObject* super_306(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -26404,7 +26416,7 @@ static PyObject* super_307(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -26477,7 +26489,7 @@ static PyObject* super_308(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -26548,7 +26560,7 @@ static PyObject* super_309(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -26629,7 +26641,7 @@ static PyObject* super_310(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -26720,7 +26732,7 @@ static PyObject* super_311(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -26809,7 +26821,7 @@ static PyObject* super_312(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -26894,7 +26906,7 @@ static PyObject* super_313(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -26983,7 +26995,7 @@ static PyObject* super_314(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -27064,7 +27076,7 @@ static PyObject* super_315(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -27143,7 +27155,7 @@ static PyObject* super_316(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("l", v, &objc_arg2);
@@ -27214,7 +27226,7 @@ static PyObject* super_317(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -27287,7 +27299,7 @@ static PyObject* super_318(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -27355,7 +27367,7 @@ static PyObject* super_319(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{FSRef=[80C]}", v, &objc_arg2);
@@ -27422,7 +27434,7 @@ static PyObject* super_320(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -27493,7 +27505,7 @@ static PyObject* super_321(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -27570,7 +27582,7 @@ static PyObject* super_322(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -27643,7 +27655,7 @@ static PyObject* super_323(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("s", v, &objc_arg2);
@@ -27711,7 +27723,7 @@ static PyObject* super_324(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{NSButtonState=iccc}", v, &objc_arg2);
@@ -27778,7 +27790,7 @@ static PyObject* super_325(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -27849,7 +27861,7 @@ static PyObject* super_326(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -27927,7 +27939,7 @@ static PyObject* super_327(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -28008,7 +28020,7 @@ static PyObject* super_328(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -28091,7 +28103,7 @@ static PyObject* super_329(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -28164,7 +28176,7 @@ static PyObject* super_330(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -28235,7 +28247,7 @@ static PyObject* super_331(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -28316,7 +28328,7 @@ static PyObject* super_332(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -28420,7 +28432,7 @@ static PyObject* super_333(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -28535,7 +28547,7 @@ static PyObject* super_334(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -28632,7 +28644,7 @@ static PyObject* super_335(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -28729,7 +28741,7 @@ static PyObject* super_336(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -28826,7 +28838,7 @@ static PyObject* super_337(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -28928,7 +28940,7 @@ static PyObject* super_338(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -29035,7 +29047,7 @@ static PyObject* super_339(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -29151,7 +29163,7 @@ static PyObject* super_340(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -29280,7 +29292,7 @@ static PyObject* super_341(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -29408,7 +29420,7 @@ static PyObject* super_342(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -29519,7 +29531,7 @@ static PyObject* super_343(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -29634,7 +29646,7 @@ static PyObject* super_344(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 1);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg3);
@@ -29737,7 +29749,7 @@ static PyObject* super_345(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (char)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth), objc_arg2);
@@ -29830,7 +29842,7 @@ static PyObject* super_346(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (char)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth), objc_arg2);
@@ -29923,7 +29935,7 @@ static PyObject* super_347(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (char)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth), objc_arg2);
@@ -30016,7 +30028,7 @@ static PyObject* super_348(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (char)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth), objc_arg2);
@@ -30109,7 +30121,7 @@ static PyObject* super_349(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (char)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth), objc_arg2);
@@ -30179,7 +30191,7 @@ static PyObject* super_350(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (double)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -30240,7 +30252,7 @@ static PyObject* super_351(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -30307,7 +30319,7 @@ static PyObject* super_352(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -30374,7 +30386,7 @@ static PyObject* super_353(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -30441,7 +30453,7 @@ static PyObject* super_354(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -30504,7 +30516,7 @@ static PyObject* super_355(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (float)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -30565,7 +30577,7 @@ static PyObject* super_356(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -30636,7 +30648,7 @@ static PyObject* super_357(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -30717,7 +30729,7 @@ static PyObject* super_358(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -30800,7 +30812,7 @@ static PyObject* super_359(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -30881,7 +30893,7 @@ static PyObject* super_360(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -30964,7 +30976,7 @@ static PyObject* super_361(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -31037,7 +31049,7 @@ static PyObject* super_362(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -31104,7 +31116,7 @@ static PyObject* super_363(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -31175,7 +31187,7 @@ static PyObject* super_364(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -31248,7 +31260,7 @@ static PyObject* super_365(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -31315,7 +31327,7 @@ static PyObject* super_366(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -31382,7 +31394,7 @@ static PyObject* super_367(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -31453,7 +31465,7 @@ static PyObject* super_368(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -31530,7 +31542,7 @@ static PyObject* super_369(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -31603,7 +31615,7 @@ static PyObject* super_370(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSSize=ff}", v, &objc_arg2);
@@ -31666,7 +31678,7 @@ static PyObject* super_371(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (int)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -31727,7 +31739,7 @@ static PyObject* super_372(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -31798,7 +31810,7 @@ static PyObject* super_373(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -31871,7 +31883,7 @@ static PyObject* super_374(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -31942,7 +31954,7 @@ static PyObject* super_375(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -32019,7 +32031,7 @@ static PyObject* super_376(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -32100,7 +32112,7 @@ static PyObject* super_377(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -32191,7 +32203,7 @@ static PyObject* super_378(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -32296,7 +32308,7 @@ static PyObject* super_379(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -32406,7 +32418,7 @@ static PyObject* super_380(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -32500,7 +32512,7 @@ static PyObject* super_381(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -32591,7 +32603,7 @@ static PyObject* super_382(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -32684,7 +32696,7 @@ static PyObject* super_383(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -32767,7 +32779,7 @@ static PyObject* super_384(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -32848,7 +32860,7 @@ static PyObject* super_385(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -32939,7 +32951,7 @@ static PyObject* super_386(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -33030,7 +33042,7 @@ static PyObject* super_387(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -33111,7 +33123,7 @@ static PyObject* super_388(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -33206,7 +33218,7 @@ static PyObject* super_389(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -33305,7 +33317,7 @@ static PyObject* super_390(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -33388,7 +33400,7 @@ static PyObject* super_391(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -33469,7 +33481,7 @@ static PyObject* super_392(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -33552,7 +33564,7 @@ static PyObject* super_393(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -33625,7 +33637,7 @@ static PyObject* super_394(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -33692,7 +33704,7 @@ static PyObject* super_395(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -33763,7 +33775,7 @@ static PyObject* super_396(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -33855,7 +33867,7 @@ static PyObject* super_397(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -33940,7 +33952,7 @@ static PyObject* super_398(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -34007,7 +34019,7 @@ static PyObject* super_399(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -34074,7 +34086,7 @@ static PyObject* super_400(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -34145,7 +34157,7 @@ static PyObject* super_401(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -34222,7 +34234,7 @@ static PyObject* super_402(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -34304,7 +34316,7 @@ static PyObject* super_403(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -34387,7 +34399,7 @@ static PyObject* super_404(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -34464,7 +34476,7 @@ static PyObject* super_405(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -34545,7 +34557,7 @@ static PyObject* super_406(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -34628,7 +34640,7 @@ static PyObject* super_407(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -34713,7 +34725,7 @@ static PyObject* super_408(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -34798,7 +34810,7 @@ static PyObject* super_409(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -34866,7 +34878,7 @@ static PyObject* super_410(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -34933,7 +34945,7 @@ static PyObject* super_411(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{NSButtonState=iccc}", v, &objc_arg2);
@@ -35000,7 +35012,7 @@ static PyObject* super_412(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -35067,7 +35079,7 @@ static PyObject* super_413(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -35159,7 +35171,7 @@ static PyObject* super_414(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -35278,7 +35290,7 @@ static PyObject* super_415(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -35388,7 +35400,7 @@ static PyObject* super_416(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -35480,7 +35492,7 @@ static PyObject* super_417(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -35543,7 +35555,7 @@ static PyObject* super_418(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (long)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -35612,7 +35624,7 @@ static PyObject* super_419(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -35687,7 +35699,7 @@ static PyObject* super_420(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (long long)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -35749,7 +35761,7 @@ static PyObject* super_421(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -35812,7 +35824,7 @@ static PyObject* super_422(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (char*)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -35873,7 +35885,7 @@ static PyObject* super_423(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -35941,7 +35953,7 @@ static PyObject* super_424(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -36008,7 +36020,7 @@ static PyObject* super_425(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -36071,7 +36083,7 @@ static PyObject* super_426(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (unsigned int  *)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -36128,7 +36140,7 @@ static PyObject* super_427(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (unsigned short  *)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -36185,7 +36197,7 @@ static PyObject* super_428(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (float  *)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -36246,7 +36258,7 @@ static PyObject* super_429(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -36309,7 +36321,7 @@ static PyObject* super_430(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (int  *)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -36367,7 +36379,7 @@ static PyObject* super_431(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (struct AEDesc  *)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -36424,7 +36436,7 @@ static PyObject* super_432(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (struct FSRef  *)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -36481,7 +36493,7 @@ static PyObject* super_433(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		objc_retval = (short)(long)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -36542,7 +36554,7 @@ static PyObject* super_434(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -36613,7 +36625,7 @@ static PyObject* super_435(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -36694,7 +36706,7 @@ static PyObject* super_436(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -36777,7 +36789,7 @@ static PyObject* super_437(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("L", v, &objc_arg2);
@@ -36858,7 +36870,7 @@ static PyObject* super_438(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("L", v, &objc_arg2);
@@ -36924,7 +36936,7 @@ static PyObject* super_439(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		(void)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -36976,7 +36988,7 @@ static PyObject* super_440(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("#", v, &objc_arg2);
@@ -37038,7 +37050,7 @@ static PyObject* super_441(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("#", v, &objc_arg2);
@@ -37103,7 +37115,7 @@ static PyObject* super_442(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -37165,7 +37177,7 @@ static PyObject* super_443(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -37230,7 +37242,7 @@ static PyObject* super_444(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -37292,7 +37304,7 @@ static PyObject* super_445(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -37364,7 +37376,7 @@ static PyObject* super_446(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -37450,7 +37462,7 @@ static PyObject* super_447(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -37548,7 +37560,7 @@ static PyObject* super_448(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -37638,7 +37650,7 @@ static PyObject* super_449(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -37720,7 +37732,7 @@ static PyObject* super_450(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -37804,7 +37816,7 @@ static PyObject* super_451(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -37886,7 +37898,7 @@ static PyObject* super_452(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -37970,7 +37982,7 @@ static PyObject* super_453(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC(":", v, &objc_arg2);
@@ -38040,7 +38052,7 @@ static PyObject* super_454(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -38102,7 +38114,7 @@ static PyObject* super_455(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -38170,7 +38182,7 @@ static PyObject* super_456(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -38242,7 +38254,7 @@ static PyObject* super_457(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -38324,7 +38336,7 @@ static PyObject* super_458(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -38408,7 +38420,7 @@ static PyObject* super_459(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -38490,7 +38502,7 @@ static PyObject* super_460(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -38582,7 +38594,7 @@ static PyObject* super_461(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -38680,7 +38692,7 @@ static PyObject* super_462(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -38770,7 +38782,7 @@ static PyObject* super_463(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -38852,7 +38864,7 @@ static PyObject* super_464(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -38933,7 +38945,7 @@ static PyObject* super_465(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -39005,7 +39017,7 @@ static PyObject* super_466(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -39084,7 +39096,7 @@ static PyObject* super_467(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -39167,7 +39179,7 @@ static PyObject* super_468(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -39264,7 +39276,7 @@ static PyObject* super_469(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -39368,7 +39380,7 @@ static PyObject* super_470(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -39462,7 +39474,7 @@ static PyObject* super_471(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -39554,7 +39566,7 @@ static PyObject* super_472(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -39649,7 +39661,7 @@ static PyObject* super_473(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -39737,7 +39749,7 @@ static PyObject* super_474(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -39829,7 +39841,7 @@ static PyObject* super_475(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -39919,7 +39931,7 @@ static PyObject* super_476(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40001,7 +40013,7 @@ static PyObject* super_477(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40085,7 +40097,7 @@ static PyObject* super_478(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40163,7 +40175,7 @@ static PyObject* super_479(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40245,7 +40257,7 @@ static PyObject* super_480(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40337,7 +40349,7 @@ static PyObject* super_481(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40427,7 +40439,7 @@ static PyObject* super_482(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40509,7 +40521,7 @@ static PyObject* super_483(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40598,7 +40610,7 @@ static PyObject* super_484(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40686,7 +40698,7 @@ static PyObject* super_485(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40770,7 +40782,7 @@ static PyObject* super_486(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40848,7 +40860,7 @@ static PyObject* super_487(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40922,7 +40934,7 @@ static PyObject* super_488(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -40994,7 +41006,7 @@ static PyObject* super_489(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -41076,7 +41088,7 @@ static PyObject* super_490(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -41157,7 +41169,7 @@ static PyObject* super_491(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -41232,7 +41244,7 @@ static PyObject* super_492(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -41306,7 +41318,7 @@ static PyObject* super_493(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -41388,7 +41400,7 @@ static PyObject* super_494(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -41476,7 +41488,7 @@ static PyObject* super_495(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -41556,7 +41568,7 @@ static PyObject* super_496(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -41624,7 +41636,7 @@ static PyObject* super_497(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -41700,7 +41712,7 @@ static PyObject* super_498(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -41780,7 +41792,7 @@ static PyObject* super_499(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -41852,7 +41864,7 @@ static PyObject* super_500(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -41931,7 +41943,7 @@ static PyObject* super_501(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42013,7 +42025,7 @@ static PyObject* super_502(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42106,7 +42118,7 @@ static PyObject* super_503(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42196,7 +42208,7 @@ static PyObject* super_504(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42274,7 +42286,7 @@ static PyObject* super_505(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42352,7 +42364,7 @@ static PyObject* super_506(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42438,7 +42450,7 @@ static PyObject* super_507(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42528,7 +42540,7 @@ static PyObject* super_508(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42606,7 +42618,7 @@ static PyObject* super_509(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42680,7 +42692,7 @@ static PyObject* super_510(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42748,7 +42760,7 @@ static PyObject* super_511(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42816,7 +42828,7 @@ static PyObject* super_512(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42888,7 +42900,7 @@ static PyObject* super_513(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -42966,7 +42978,7 @@ static PyObject* super_514(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -43040,7 +43052,7 @@ static PyObject* super_515(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -43112,7 +43124,7 @@ static PyObject* super_516(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -43190,7 +43202,7 @@ static PyObject* super_517(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -43268,7 +43280,7 @@ static PyObject* super_518(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -43342,7 +43354,7 @@ static PyObject* super_519(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -43414,7 +43426,7 @@ static PyObject* super_520(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -43492,7 +43504,7 @@ static PyObject* super_521(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -43566,7 +43578,7 @@ static PyObject* super_522(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -43630,7 +43642,7 @@ static PyObject* super_523(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("C", v, &objc_arg2);
@@ -43688,7 +43700,7 @@ static PyObject* super_524(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -43750,7 +43762,7 @@ static PyObject* super_525(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -43822,7 +43834,7 @@ static PyObject* super_526(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -43896,7 +43908,7 @@ static PyObject* super_527(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -43968,7 +43980,7 @@ static PyObject* super_528(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -44042,7 +44054,7 @@ static PyObject* super_529(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -44119,7 +44131,7 @@ static PyObject* super_530(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -44199,7 +44211,7 @@ static PyObject* super_531(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -44271,7 +44283,7 @@ static PyObject* super_532(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -44353,7 +44365,7 @@ static PyObject* super_533(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("I", v, &objc_arg2);
@@ -44429,7 +44441,7 @@ static PyObject* super_534(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("L", v, &objc_arg2);
@@ -44495,7 +44507,7 @@ static PyObject* super_535(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("L", v, &objc_arg2);
@@ -44565,7 +44577,7 @@ static PyObject* super_536(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("Q", v, &objc_arg2);
@@ -44623,7 +44635,7 @@ static PyObject* super_537(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -44685,7 +44697,7 @@ static PyObject* super_538(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -44836,7 +44848,7 @@ static PyObject* super_539(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -44898,7 +44910,7 @@ static PyObject* super_540(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -44974,7 +44986,7 @@ static PyObject* super_541(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -45054,7 +45066,7 @@ static PyObject* super_542(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -45126,7 +45138,7 @@ static PyObject* super_543(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -45202,7 +45214,7 @@ static PyObject* super_544(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -45274,7 +45286,7 @@ static PyObject* super_545(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -45348,7 +45360,7 @@ static PyObject* super_546(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -45420,7 +45432,7 @@ static PyObject* super_547(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -45494,7 +45506,7 @@ static PyObject* super_548(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -45566,7 +45578,7 @@ static PyObject* super_549(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -45636,7 +45648,7 @@ static PyObject* super_550(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -45698,7 +45710,7 @@ static PyObject* super_551(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -45766,7 +45778,7 @@ static PyObject* super_552(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -45834,7 +45846,7 @@ static PyObject* super_553(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("d", v, &objc_arg2);
@@ -45898,7 +45910,7 @@ static PyObject* super_554(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -45960,7 +45972,7 @@ static PyObject* super_555(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -46036,7 +46048,7 @@ static PyObject* super_556(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -46116,7 +46128,7 @@ static PyObject* super_557(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -46184,7 +46196,7 @@ static PyObject* super_558(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -46248,7 +46260,7 @@ static PyObject* super_559(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -46310,7 +46322,7 @@ static PyObject* super_560(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -46391,7 +46403,7 @@ static PyObject* super_561(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -46477,7 +46489,7 @@ static PyObject* super_562(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -46546,7 +46558,7 @@ static PyObject* super_563(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -46618,7 +46630,7 @@ static PyObject* super_564(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -46700,7 +46712,7 @@ static PyObject* super_565(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -46780,7 +46792,7 @@ static PyObject* super_566(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -46856,7 +46868,7 @@ static PyObject* super_567(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -46936,7 +46948,7 @@ static PyObject* super_568(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47008,7 +47020,7 @@ static PyObject* super_569(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47090,7 +47102,7 @@ static PyObject* super_570(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47174,7 +47186,7 @@ static PyObject* super_571(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47252,7 +47264,7 @@ static PyObject* super_572(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47338,7 +47350,7 @@ static PyObject* super_573(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47440,7 +47452,7 @@ static PyObject* super_574(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47536,7 +47548,7 @@ static PyObject* super_575(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47614,7 +47626,7 @@ static PyObject* super_576(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47696,7 +47708,7 @@ static PyObject* super_577(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47780,7 +47792,7 @@ static PyObject* super_578(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47854,7 +47866,7 @@ static PyObject* super_579(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47922,7 +47934,7 @@ static PyObject* super_580(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -47986,7 +47998,7 @@ static PyObject* super_581(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("l", v, &objc_arg2);
@@ -48048,7 +48060,7 @@ static PyObject* super_582(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("q", v, &objc_arg2);
@@ -48112,7 +48124,7 @@ static PyObject* super_583(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -48178,7 +48190,7 @@ static PyObject* super_584(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -48255,7 +48267,7 @@ static PyObject* super_585(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -48324,7 +48336,7 @@ static PyObject* super_586(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("*", v, &objc_arg2);
@@ -48392,7 +48404,7 @@ static PyObject* super_587(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("S", v, &objc_arg2);
@@ -48461,7 +48473,7 @@ static PyObject* super_588(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -48533,7 +48545,7 @@ static PyObject* super_589(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -48607,7 +48619,7 @@ static PyObject* super_590(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -48680,7 +48692,7 @@ static PyObject* super_591(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -48753,7 +48765,7 @@ static PyObject* super_592(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{pyobjcanonymous0=^SI^SI^SI}", v, &objc_arg2);
@@ -48820,7 +48832,7 @@ static PyObject* super_593(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSAffineTransformStruct=ffffff}", v, &objc_arg2);
@@ -48878,7 +48890,7 @@ static PyObject* super_594(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -48940,7 +48952,7 @@ static PyObject* super_595(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49008,7 +49020,7 @@ static PyObject* super_596(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49084,7 +49096,7 @@ static PyObject* super_597(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49164,7 +49176,7 @@ static PyObject* super_598(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49240,7 +49252,7 @@ static PyObject* super_599(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49332,7 +49344,7 @@ static PyObject* super_600(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49418,7 +49430,7 @@ static PyObject* super_601(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49490,7 +49502,7 @@ static PyObject* super_602(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49564,7 +49576,7 @@ static PyObject* super_603(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49636,7 +49648,7 @@ static PyObject* super_604(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49718,7 +49730,7 @@ static PyObject* super_605(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49802,7 +49814,7 @@ static PyObject* super_606(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49880,7 +49892,7 @@ static PyObject* super_607(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -49954,7 +49966,7 @@ static PyObject* super_608(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -50026,7 +50038,7 @@ static PyObject* super_609(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -50104,7 +50116,7 @@ static PyObject* super_610(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -50174,7 +50186,7 @@ static PyObject* super_611(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -50236,7 +50248,7 @@ static PyObject* super_612(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -50308,7 +50320,7 @@ static PyObject* super_613(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -50386,7 +50398,7 @@ static PyObject* super_614(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -50462,7 +50474,7 @@ static PyObject* super_615(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -50536,7 +50548,7 @@ static PyObject* super_616(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -50614,7 +50626,7 @@ static PyObject* super_617(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -50692,7 +50704,7 @@ static PyObject* super_618(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -50768,7 +50780,7 @@ static PyObject* super_619(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -50833,7 +50845,7 @@ static PyObject* super_620(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -50895,7 +50907,7 @@ static PyObject* super_621(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -50967,7 +50979,7 @@ static PyObject* super_622(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -51045,7 +51057,7 @@ static PyObject* super_623(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -51123,7 +51135,7 @@ static PyObject* super_624(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -51201,7 +51213,7 @@ static PyObject* super_625(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -51275,7 +51287,7 @@ static PyObject* super_626(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -51347,7 +51359,7 @@ static PyObject* super_627(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -51425,7 +51437,7 @@ static PyObject* super_628(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -51499,7 +51511,7 @@ static PyObject* super_629(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -51567,7 +51579,7 @@ static PyObject* super_630(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -51631,7 +51643,7 @@ static PyObject* super_631(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSSize=ff}", v, &objc_arg2);
@@ -51694,7 +51706,7 @@ static PyObject* super_632(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSSize=ff}", v, &objc_arg2);
@@ -51766,7 +51778,7 @@ static PyObject* super_633(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSSize=ff}", v, &objc_arg2);
@@ -51848,7 +51860,7 @@ static PyObject* super_634(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSSize=ff}", v, &objc_arg2);
@@ -51928,7 +51940,7 @@ static PyObject* super_635(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSSize=ff}", v, &objc_arg2);
@@ -52012,7 +52024,7 @@ static PyObject* super_636(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -52125,7 +52137,7 @@ static PyObject* super_637(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -52236,7 +52248,7 @@ static PyObject* super_638(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -52339,7 +52351,7 @@ static PyObject* super_639(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -52440,7 +52452,7 @@ static PyObject* super_640(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -52530,7 +52542,7 @@ static PyObject* super_641(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("c", v, &objc_arg2);
@@ -52618,7 +52630,7 @@ static PyObject* super_642(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -52702,7 +52714,7 @@ static PyObject* super_643(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -52784,7 +52796,7 @@ static PyObject* super_644(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -52872,7 +52884,7 @@ static PyObject* super_645(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -52960,7 +52972,7 @@ static PyObject* super_646(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -53048,7 +53060,7 @@ static PyObject* super_647(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -53136,7 +53148,7 @@ static PyObject* super_648(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -53224,7 +53236,7 @@ static PyObject* super_649(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -53312,7 +53324,7 @@ static PyObject* super_650(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -53404,7 +53416,7 @@ static PyObject* super_651(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -53502,7 +53514,7 @@ static PyObject* super_652(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -53596,7 +53608,7 @@ static PyObject* super_653(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSPoint=ff}", v, &objc_arg2);
@@ -53688,7 +53700,7 @@ static PyObject* super_654(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -53774,7 +53786,7 @@ static PyObject* super_655(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -53862,7 +53874,7 @@ static PyObject* super_656(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -53964,7 +53976,7 @@ static PyObject* super_657(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -54050,7 +54062,7 @@ static PyObject* super_658(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("f", v, &objc_arg2);
@@ -54140,7 +54152,7 @@ static PyObject* super_659(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -54230,7 +54242,7 @@ static PyObject* super_660(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -54326,7 +54338,7 @@ static PyObject* super_661(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -54404,7 +54416,7 @@ static PyObject* super_662(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -54486,7 +54498,7 @@ static PyObject* super_663(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -54590,7 +54602,7 @@ static PyObject* super_664(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -54706,7 +54718,7 @@ static PyObject* super_665(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -54796,7 +54808,7 @@ static PyObject* super_666(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -54878,7 +54890,7 @@ static PyObject* super_667(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRect={_NSPoint=ff}{_NSSize=ff}}", v, &objc_arg2);
@@ -54970,7 +54982,7 @@ static PyObject* super_668(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("i", v, &objc_arg2);
@@ -55106,7 +55118,7 @@ static PyObject* super_669(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("{_NSRange=II}", v, &objc_arg2);
@@ -55190,7 +55202,7 @@ static PyObject* super_670(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	NS_DURING
 		(void)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth));
@@ -55242,7 +55254,7 @@ static PyObject* super_671(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -55304,7 +55316,7 @@ static PyObject* super_672(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -55376,7 +55388,7 @@ static PyObject* super_673(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -55458,7 +55470,7 @@ static PyObject* super_674(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -55550,7 +55562,7 @@ static PyObject* super_675(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -55652,7 +55664,7 @@ static PyObject* super_676(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -55764,7 +55776,7 @@ static PyObject* super_677(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -55898,7 +55910,7 @@ static PyObject* super_678(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 1);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg3);
@@ -55970,8 +55982,10 @@ meth_imp_679(id self, SEL sel, id arg_2, id arg_3, id  *arg_4)
 	}
 	{
 		PyObject* v;
+		const char* errstr;
+
 		v = PySequence_GetItem(retval, 1);
-		const char* errstr = ObjC_PythonToObjC("@", v, arg_4);
+		errstr = ObjC_PythonToObjC("@", v, arg_4);
 		Py_DECREF(v);
 		if (errstr != NULL) {
 			PyErr_SetString(PyExc_ValueError, "Cannot convert to ObjC");
@@ -55998,7 +56012,7 @@ static PyObject* super_679(PyObject* meth, PyObject* self, PyObject* args)
 	if (errstr != NULL) {
 		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
 		return NULL;
-	} 	super.receiver = objc_self;
+	} 	RECEIVER(super) = objc_self;
 	super.class = ObjCSelector_GetClass(meth);
 	v = PyTuple_GET_ITEM(args, 0);
 	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
@@ -56048,7 +56062,9 @@ static struct method_table {
 	{ "#0@4:8@12@16", (superfunc)super_5, (IMP)meth_imp_5 },
 	{ "#0@4:8I12", (superfunc)super_6, (IMP)meth_imp_6 },
 	{ "*0@4:8", (superfunc)super_7, (IMP)meth_imp_7 },
+#ifndef GNU_RUNTIME
 	{ "8@12o^@16", (superfunc)super_8, (IMP)meth_imp_8 },
+#endif
 	{ ":0@4:8", (superfunc)super_9, (IMP)meth_imp_9 },
 	{ ":0@4:8@12", (superfunc)super_10, (IMP)meth_imp_10 },
 	{ "@0@4:8", (superfunc)super_11, (IMP)meth_imp_11 },

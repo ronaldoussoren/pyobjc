@@ -4,6 +4,7 @@
  * See the module DOCSTR for more information.
  */
 #include <Python.h>
+#include "pyobjc.h"
 #include "objc_support.h"
 
 PyDoc_STRVAR(proto_cls_doc,

@@ -12,6 +12,7 @@
  * allow for dynamicly creating these types of calls (see also: register.m)
  */
 #include <Python.h>
+#include "pyobjc.h"
 #include "objc_support.h"
 #include "super-call.h"
 
@@ -364,7 +365,7 @@ ObjC_CallFunc_t ObjC_FindSupercaller(Class class, SEL sel)
 {
 	struct registry* generic;
 	struct registry* special;
-	Method           m;
+	METHOD           m;
 
 	m = class_getInstanceMethod(class, sel);
 	if (!m) {

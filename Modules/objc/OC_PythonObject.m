@@ -14,6 +14,7 @@
  * Created Wed Sep  4 19:57:44 1996.
  */
 
+#include "pyobjc.h"
 #include "objc_support.h"
 #include "compile.h"
 

@@ -3,6 +3,7 @@
  */
 #include <Python.h>
 #include "pyobjc.h"
+#include "objc_support.h"
 #include <stddef.h>
 #include <objc/Object.h>
 
@@ -252,7 +253,7 @@ PyTypeObject ObjCObject_Type = {
 
 PyObject* ObjCObject_New(id objc_object)
 {
-	Class cls = objc_object->isa;
+	Class cls = GETISA(objc_object);
 	PyTypeObject* cls_type;
 	PyObject*     res;
 
@@ -284,7 +285,7 @@ PyObject* ObjCObject_New(id objc_object)
 	((ObjCObject*)res)->objc_object = objc_object;
 	((ObjCObject*)res)->is_paired = 0;
 
-	if (strcmp(objc_object->isa->name, "NSAutoreleasePool") != 0) {
+	if (strcmp(GETISA(objc_object)->name, "NSAutoreleasePool") != 0) {
 		/* NSAutoreleasePool doesn't like retain */
 		[objc_object retain];
 	}

@@ -78,28 +78,37 @@ ObjC_GetClassList(void)
 	PyObject* 	result = NULL;
 	Class		classid;
 	void*	        state = NULL;
+	int             i = 0;
 
-	result = PyList_New(0);
-	while (classid = objc_next_class(&state)) {
+	while ((classid = objc_next_class(&state)))
+	  i++;
+
+	result = PyTuple_New(i);
+
+	state = NULL; i = 0;
+
+	while ((classid = objc_next_class(&state))) {
 		PyObject* pyclass = ObjCClass_New(classid);
+
 		if (pyclass == NULL) {
 			goto error_cleanup;
 		}
-		if (PyList_Append(result, pyclass) < 0) {
+
+		if (PyTuple_SET_ITEM(result, i, pyclass) < 0) {
 			Py_DECREF(pyclass);
 			goto error_cleanup;
 		}
-		Py_DECREF(pyclass);
+
+		i++;
 	}
 
 	return result;
 
 error_cleanup:
-	return NULL;
-	if (result) {
-		Py_DECREF(result);
-		result = NULL;
-	}
+	printf("getClassList error\n");
+	if (result)
+	  Py_DECREF(result);
+
 	return NULL;
 }
 

@@ -615,7 +615,7 @@ static int
 add_class_fields(Class objc_class, PyObject* dict)
 {
 	Class     cls;
-	Method    meth;
+	METHOD    meth;
 	struct objc_method_list* mlist;
 	void*     iterator;
 	PyObject* descr;
@@ -631,7 +631,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 	mlist = class_nextMethodList(objc_class, &iterator);
 	while (mlist != NULL) {
 		int i;
-		Method meth;
+		METHOD meth;
 
 		for (i = 0; i < mlist->method_count; i++) {
 			char* name;
@@ -679,7 +679,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 	 * Then add class methods
 	 */
 
-	cls = objc_class->isa;
+	cls = GETISA(objc_class);
 	iterator = 0;
 	mlist = class_nextMethodList(cls, &iterator);
 	while (mlist != NULL) {
@@ -835,7 +835,7 @@ PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector)
 	if (!ObjCClass_Check(cls)) {
 		ObjCErr_Set(ObjCExc_internal_error,
 			"ObjCClass_GetClass called for non-class");
-		return nil;
+		return NULL;
 	}
 
 	ObjCClass_CheckMethodList(cls);

@@ -298,7 +298,7 @@ int ObjC_UpdateConvenienceMethods(PyObject* cls)
 	int       i, len;
 	
 
-	if (ObjC_class_extender == NULL || cls == nil) return 0;
+	if (ObjC_class_extender == NULL || cls == NULL) return 0;
 
 	objc_cls = ObjCClass_GetClass(cls);
 

@@ -72,9 +72,9 @@ struct class_wrapper {
  * (assembly) trickery.
  */
 static Class find_real_superclass(Class startAt, SEL selector, 
-		Method (*find_method)(Class, SEL), IMP currentImp)
+		METHOD (*find_method)(Class, SEL), IMP currentImp)
 {
-	Method m;
+	METHOD m;
 	Class  cur;
 
 	cur = startAt;
@@ -106,7 +106,7 @@ int ObjC_HasPythonImplementation(id obj)
 {
 	if (obj == nil) return 0;
 	
-	return (class_getInstanceVariable(obj->isa, pyobj_ivar) != NULL);
+	return (class_getInstanceVariable(GETISA(obj), pyobj_ivar) != NULL);
 }
 
 /*
@@ -117,7 +117,7 @@ int ObjC_HasPythonImplementation(id obj)
 PyObject* ObjC_GetPythonImplementation(id obj)
 {
 	PyObject* pyobj = NULL;
-	Ivar      var   = NULL;
+	IVAR      var   = NULL;
 
 	if (obj == nil) {
 		ObjCErr_Set(ObjCExc_internal_error,
@@ -129,7 +129,8 @@ PyObject* ObjC_GetPythonImplementation(id obj)
 	if (var == NULL) {
 		ObjCErr_Set(ObjCExc_internal_error,
 			"ObjC_GetPythonImplementation called for "
-			"normal object of class %s", obj->isa->name);
+			"normal object of class %s",
+			    GETISA(obj)->name);
 		return NULL;
 	}
 	if (pyobj == NULL) {
@@ -142,7 +143,7 @@ PyObject* ObjC_GetPythonImplementation(id obj)
 static int
 ObjC_SetPythonImplementation(id obj, PyObject* newval)
 {
-	Ivar      var   = NULL;
+	IVAR      var   = NULL;
 
 	if (obj == nil) {
 		ObjCErr_Set(ObjCExc_internal_error,
@@ -150,11 +151,12 @@ ObjC_SetPythonImplementation(id obj, PyObject* newval)
 		return -1;
 	}
 
-	var = class_getInstanceVariable(obj->isa, pyobj_ivar);
+	var = class_getInstanceVariable(GETISA(obj), pyobj_ivar);
 	if (var == NULL) {
 		ObjCErr_Set(ObjCExc_internal_error,
 			"ObjC_SetPythonImplementation called for "
-			"normal object of class %s", obj->isa->name);
+			"normal object of class %s",
+			    GETISA(obj)->name);
 		return -1;
 	}
 	*(PyObject**)(((char*)obj)+var->ivar_offset) = newval;
@@ -235,18 +237,8 @@ void ObjCClass_UnbuildClass(Class objc_class)
 	}
 
 
-	if (wrapper->class.methodLists) {
-		if (wrapper->class.methodLists[0]) {
-			free(wrapper->class.methodLists[0]);
-		}
-		free(wrapper->class.methodLists);
-	}
-	if (wrapper->meta_class.methodLists) {
-		if (wrapper->meta_class.methodLists[0]) {
-			free(wrapper->meta_class.methodLists[0]);
-		}
-		free(wrapper->meta_class.methodLists);
-	}
+	objc_freeMethodList(wrapper->class.METHODLISTS);
+	objc_freeMethodList(wrapper->meta_class.METHODLISTS);
 	free((char*)(wrapper->class.name));
 	free(objc_class);
 }
@@ -425,7 +417,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		} else if (ObjCSelector_Check(value)) {
 			ObjCSelector* sel = (ObjCSelector*)value;
-			Method        meth;
+			METHOD        meth;
 
 			if (sel->sel_flags & ObjCSelector_kCLASS_METHOD) {
 				meth = class_getClassMethod(super_class,
@@ -445,7 +437,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			PyObject* pyname;
 			char*     name;
 			SEL	  selector;
-			Method    meth;
+			METHOD    meth;
 			int       is_class_method = 0;
 
 			pyname = PyObject_GetAttrString(value, "__name__");
@@ -525,31 +517,23 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	if (method_count == 0) {
 		method_list = NULL;
 	} else {
-		method_list = malloc(sizeof(struct objc_method_list) +
-			(method_count)*sizeof(struct objc_method));
+		method_list = objc_allocMethodList(method_count);
+
 		if (method_list == NULL) {
 			PyErr_NoMemory();
 			goto error_cleanup;
 		}
-		memset(method_list, 0, sizeof(struct objc_method_list) +
-			(method_count)*sizeof(struct objc_method));
-		method_list->method_count      = 0;
-		method_list->obsolete = NULL; /* DEBUG */
 	}
 
 	if (meta_method_count == 0) {
 		meta_method_list = NULL;
 	} else {
-		meta_method_list = malloc(sizeof(struct objc_method_list)+
-			(meta_method_count)*sizeof(struct objc_method));
+		meta_method_list = objc_allocMethodList(meta_method_count);
+
 		if (meta_method_list == NULL) {
 			PyErr_NoMemory();
 			goto error_cleanup;
 		}
-		memset(meta_method_list, 0, sizeof(struct objc_method_list)+
-			(meta_method_count)*sizeof(struct objc_method));
-		meta_method_list->method_count = 0;
-		meta_method_list->obsolete = NULL; /* DEBUG */
 	}
 
 
@@ -571,8 +555,8 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		 * methods and variables 
 		 */
 		 
-		Ivar var = ivar_list->ivar_list;
-		Method meth;
+		IVAR var = ivar_list->ivar_list;
+		METHOD meth;
 		PyObject* sel;
 		ivar_list->ivar_count++;
 
@@ -606,7 +590,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (sel == NULL) goto error_cleanup;		\
 			PyDict_SetItemString(class_dict, pyname, sel);	\
 			Py_DECREF(sel)
-					
+
 
 		META_METH("alloc", @selector(alloc), "@@:", class_method_alloc);
 		META_METH("allocWithZone_", @selector(allocWithZone:), "@@:^{_NSZone=}", class_method_allocWithZone);
@@ -641,7 +625,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		}
 
 		if (ObjCIvar_Check(value)) {
-			Ivar var;
+			IVAR var;
 
 			var = ivar_list->ivar_list + ivar_list->ivar_count;
 			ivar_list->ivar_count++;
@@ -654,7 +638,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		} else if (ObjCSelector_Check(value)) {
 			ObjCSelector* sel = (ObjCSelector*)value;
-			Method        meth;
+			METHOD        meth;
 			int           is_override = 0;
 			struct objc_method_list* lst;
 
@@ -706,28 +690,30 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	}
 
 	new_class->python_class = NULL;
-	new_class->class.methodLists = NULL;
-	new_class->meta_class.methodLists = NULL;
-	new_class->class.isa = &new_class->meta_class;
+	new_class->class.METHODLISTS = NULL;
+	new_class->meta_class.METHODLISTS = NULL;
+	GETISA(&new_class->class) = &new_class->meta_class;
 	new_class->class.info = CLS_CLASS;
 	new_class->meta_class.info = CLS_META;
 
 	new_class->class.name = strdup(name);
 	new_class->meta_class.name = new_class->class.name;
 
-	new_class->class.methodLists = 
+#ifndef GNU_RUNTIME
+	new_class->class.METHODLISTS = 
 		calloc(1, sizeof(struct objc_method_list*));
-	if (new_class->class.methodLists == NULL) abort();
-	new_class->class.methodLists[0] = NULL;
+	if (new_class->class.METHODLISTS == NULL) abort();
+	new_class->class.METHODLISTS[0] = NULL;
 
-	new_class->meta_class.methodLists = 
+	new_class->meta_class.METHODLISTS = 
 		calloc(1, sizeof(struct objc_method_list*));
-	if (new_class->meta_class.methodLists == NULL) abort();
-	new_class->meta_class.methodLists[0] = NULL;
+	if (new_class->meta_class.METHODLISTS == NULL) abort();
+	new_class->meta_class.METHODLISTS[0] = NULL;
+#endif
 
 	new_class->class.super_class = super_class;
-	new_class->meta_class.super_class = super_class->isa;
-	new_class->meta_class.isa = root_class->isa;
+	new_class->meta_class.super_class = GETISA(super_class);
+	GETISA(&new_class->meta_class) = GETISA(root_class);
 
 	new_class->class.instance_size = ivar_size;
 	new_class->class.ivars = ivar_list;
@@ -735,8 +721,10 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	/* Be explicit about clearing data, should not be necessary with
 	 * 'calloc'
 	 */
+#ifndef GNU_RUNTIME
 	new_class->class.cache = NULL;
 	new_class->meta_class.cache = NULL;
+#endif
 
 	new_class->class.protocols = NULL;
 	new_class->meta_class.protocols = NULL;
@@ -776,12 +764,9 @@ error_cleanup:
 	}
 
 	if (new_class != NULL) {
-		if (new_class->class.methodLists) {
-			free(new_class->class.methodLists);
-		}
-		if (new_class->meta_class.methodLists) {
-			free(new_class->meta_class.methodLists);
-		}
+		objc_freeMethodList(new_class->class.METHODLISTS);
+		objc_freeMethodList(new_class->meta_class.METHODLISTS);
+
 		if (new_class->class.name) {
 			free((char*)(new_class->class.name));
 		}
@@ -819,7 +804,7 @@ error_cleanup:
 static id class_method_alloc(id self, SEL sel)
 {  
    /* NSObject documentation defines +alloc as 'allocWithZone:nil' */
-   return class_method_allocWithZone(self, sel, nil);
+   return class_method_allocWithZone(self, sel, NULL);
 }
 
 
@@ -833,9 +818,9 @@ static id class_method_allocWithZone(id self, SEL sel, NSZone* zone)
 
    pyclass = ((struct class_wrapper*)self)->python_class;
 
-   super.class = find_real_superclass((Class)self, @selector(allocWithZone:),
-   	class_getClassMethod, (IMP)class_method_allocWithZone)->isa;
-   super.receiver = self;
+   super.class = GETISA(find_real_superclass((Class)self, @selector(allocWithZone:),
+					     class_getClassMethod, (IMP)class_method_allocWithZone));
+   RECEIVER(super) = self;
 
    obj = objc_msgSendSuper(&super, @selector(allocWithZone:), zone); 
    if (obj == nil) {
@@ -869,10 +854,10 @@ static id object_method_retain(id self, SEL sel)
 	if (pyself == Py_None) {
 		struct objc_super super;
 		
-   		super.class = find_real_superclass(self->isa, 
+   		super.class = find_real_superclass(GETISA(self),
 			@selector(retain), class_getInstanceMethod, 
 			(IMP)object_method_retain);
-		super.receiver = self;
+		RECEIVER(super) = self;
 
 		self = objc_msgSendSuper(&super, @selector(retain)); 
 	} else if (pyself) {
@@ -898,10 +883,10 @@ static void object_method_release(id self, SEL sel)
 		PyErr_Clear();
 		return;
 	} else if (obj == Py_None) {
-   		super.class = find_real_superclass(self->isa, 
+	  super.class = find_real_superclass(GETISA(self),
 			@selector(release), class_getInstanceMethod, 
 			(IMP)object_method_release);
-		super.receiver = self;
+		RECEIVER(super) = self;
 
 		self = objc_msgSendSuper(&super, @selector(release)); 
 		return;
@@ -921,10 +906,10 @@ static void object_method_release(id self, SEL sel)
 		}
 
 		/* [super release] */
-   		super.class = find_real_superclass(self->isa, 
+   		super.class = find_real_superclass(GETISA(self),
 			@selector(release), class_getInstanceMethod, 
 			(IMP)object_method_release);
-		super.receiver = self;
+		RECEIVER(super) = self;
 
 		self = objc_msgSendSuper(&super, @selector(release)); 
 		return;
@@ -949,10 +934,10 @@ static unsigned object_method_retainCount(id self, SEL sel)
 	if (obj == Py_None) {
 		struct objc_super super;
 		
-   		super.class = find_real_superclass(self->isa, 
+   		super.class = find_real_superclass(GETISA(self),
 			@selector(retainCount), class_getInstanceMethod, 
 			(IMP)object_method_retainCount);
-		super.receiver = self;
+		RECEIVER(super) = self;
 
 		return (int)objc_msgSendSuper(&super, @selector(retainCount)); 
 	}
@@ -983,10 +968,10 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 
 
 	/* Check superclass */
-	super.class = find_real_superclass(self->isa, 
+	super.class = find_real_superclass(GETISA(self),
 			selector, class_getInstanceMethod, 
 			(IMP)object_method_respondsToSelector);
-	super.receiver = self;
+	RECEIVER(super) = self;
 
 	res = (int)objc_msgSendSuper(&super, selector, aSelector);
 
@@ -1003,10 +988,11 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 	PyObject*          pymeth;
 
 
-	super.class = find_real_superclass(self->isa, 
+	super.class = find_real_superclass(
+			GETISA(self), 
 			selector, class_getInstanceMethod, 
 			(IMP)object_method_methodSignatureForSelector);
-	super.receiver = self;
+	RECEIVER(super) = self;
 
 	NS_DURING
 		result = objc_msgSendSuper(&super, selector, aSelector);
