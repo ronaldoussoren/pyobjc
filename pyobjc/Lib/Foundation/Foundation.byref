@@ -39,7 +39,7 @@
 ,NSTimer,_cffireDate,^{__CFDate=}0@4:8,
 ,_NSSelectorSetBinding,initWithSetFunc:forImp:selector:,@0@4:8^?12^?16:20,
 ,NSWhoseSpecifier,_internalIndicesOfObjectsByEvaluatingWithContainer:count:,^i0@4:8@12^i16,
-,NSMutableAttributedString,readFromURL:options:documentAttributes:,c0@4:8@12@16^@20,
+,NSMutableAttributedString,readFromURL:options:documentAttributes:,c0@4:8@12@16^@20,c@:@@o^@
 ,NSData,bytes,r^v0@4:8,
 ,NSData,dataWithBytesNoCopy:length:,@0@4:8^v12I16,
 ,NSData,dataWithBytesNoCopy:length:freeWhenDone:,@0@4:8^v12I16c20,

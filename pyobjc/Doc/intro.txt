@@ -21,8 +21,8 @@ Preface
 -------
 
 PyObjC is a bridge between Python and Objective-C. It allows you to write 
-Python scripts that reuse and extend existing Objective-C class libraries, 
-most importantly the `Cocoa library`_ by `Apple`_.
+Python scripts that use and extend existing Objective-C class libraries, 
+most importantly the `Cocoa libraries`_ by `Apple`_.
 
 This document describes how to use Objective-C class libraries from Python
 scripts and how to interpret the documentation of those libraries, from the 
@@ -51,8 +51,8 @@ For more information about Objective-C see:
 
 * `The Objective-C Programming Language`_ at `Apple`_.
 
-
 .. _`The Objective-C Programming Language`: http://developer.apple.com/techpubs/macosx/Cocoa/ObjectiveC/index.html
+
 
 Overview of the bridge
 ----------------------
@@ -152,7 +152,7 @@ More information on Cocoa programming can be found at:
 
 * Your local bookstore or library
 
-..  _`Cocoa library`: http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html
+..  _`Cocoa libraries`: http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html
 
 ..  _`Cocoa documentation at the Apple developer website`: http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html
 

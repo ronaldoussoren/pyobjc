@@ -123,7 +123,7 @@ static PyObject* call_NSArray_sortedArrayUsingFunction_context_hint_(
 	struct objc_super super;
 	PyObject* sortFunc;
 	PyObject* context;
-	id hint;
+	id hint = nil;
 	PyObject* realContext;
 	id  res;
 
@@ -149,7 +149,7 @@ static PyObject* call_NSArray_sortedArrayUsingFunction_context_hint_(
 			
 		res = objc_msgSendSuper(&super,
 			@selector(sortedArrayUsingFunction:context:hint:),
-			 sortFunc, realContext, hint);
+			 SortHelperFunc, realContext, hint);
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;

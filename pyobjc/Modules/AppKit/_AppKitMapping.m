@@ -232,8 +232,18 @@ static PyMethodDef mapping_methods[] = {
 
 void init_AppKitMapping(void);
 
-#include "_AppKitMapping_NSMovie.m"
+#include "_AppKitMapping_NSApplication.m"
 #include "_AppKitMapping_NSBezierPath.m"
+#include "_AppKitMapping_NSFont.m"
+#include "_AppKitMapping_NSMatrix.m"
+#include "_AppKitMapping_NSLayoutManager.m"
+#include "_AppKitMapping_NSMovie.m"
+#include "_AppKitMapping_NSOpenGLContext.m"
+#include "_AppKitMapping_NSOpenGLPixelFormat.m"
+#include "_AppKitMapping_NSQuickDrawView.m"
+#include "_AppKitMapping_NSSimpleHorizontalTypesetter.m"
+#include "_AppKitMapping_NSView.m"
+#include "_AppKitMapping_NSWindow.m"
 
 void init_AppKitMapping(void)
 {
@@ -282,7 +292,17 @@ void init_AppKitMapping(void)
 	}
 
 	/* register other specials */
-	_pyobjc_install_NSMovie();
+	_pyobjc_install_NSApplication();
 	_pyobjc_install_NSBezierPath();
+	_pyobjc_install_NSFont();
+	_pyobjc_install_NSLayoutManager();
+	_pyobjc_install_NSMatrix();
+	_pyobjc_install_NSMovie();
+	_pyobjc_install_NSOpenGLContext();
+	_pyobjc_install_NSOpenGLPixelFormat();
+	_pyobjc_install_NSQuickDrawView();
+	_pyobjc_install_NSSimpleHorizontalTypesetter();
+	_pyobjc_install_NSView();
+	_pyobjc_install_NSWindow();
 
 }

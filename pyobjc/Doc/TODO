@@ -65,6 +65,10 @@ Test suite
 
 The test suite needs to be enhanced.
 
+* tests for ``pyobjc_instanceMethods``, ``pyobjc_classMethods``
+
+* tests for all functions in ``Modules/*/*Mapping*.m``
+
 
 Less important items
 --------------------
@@ -255,6 +259,9 @@ It would be nice if this could be abstracted away to something like::
 
    #include PyObjC_PLAT_FILE("_Fnd_Var", ".inc")
 
+Another option would be to make the generator script slightly smarter: have
+it emit #if version guards based on the guards found in the header files.
+
 Convenience functions
 .....................
 
@@ -274,3 +281,4 @@ Performance tuning/testing
 
 Design and implement a set of performance tests for the bridge. Use this to 
 invistigate and fix any possible performance problems.
+

@@ -208,7 +208,8 @@ def __getitem__objectAtIndexWithSlice(self, x, y):
         return []
     if (r - x) > l:
         r = l - x
-    return self.subarrayWithRange_( (x, r) )
+    res =  self.subarrayWithRange_( (x, r) )
+    return res
 
 def __getitem__objectAtIndex(self, idx):
     if idx < 0:
@@ -327,10 +328,11 @@ CONVENIENCE_METHODS['objectEnumerator'] = (
     ('itervalues', lambda self: enumeratorGenerator( self.objectEnumerator())),
 )
 
-CONVENIENCE_METHODS['reverseObjectEnumerator'] = (
-    ('__iter__', lambda self: enumeratorGenerator(self.reverseObjectEnumerator())),
-    ('itervalues', lambda self: enumeratorGenerator(self.reverseObjectEnumerator()))
-)
+# Ronald: I don't think you want this!
+#CONVENIENCE_METHODS['reverseObjectEnumerator'] = (
+#    ('__iter__', lambda self: enumeratorGenerator(self.reverseObjectEnumerator())),
+#    ('itervalues', lambda self: enumeratorGenerator(self.reverseObjectEnumerator()))
+#)
 
 CONVENIENCE_METHODS['removeAllObjects'] = (
     ('clear', lambda self: self.removeAllObjects()),
@@ -518,19 +520,6 @@ CONVENIENCE_METHODS['arrayWithObjects:'] = (
     ('arrayWithObjects_', selector(arrayWithObjects_, signature='@@:@', isClassMethod=1)),
 )
 
-def arrayWithObjects_count_(self, args, count):
-    return self.arrayWithArray_(args[:count])
-
-CONVENIENCE_METHODS['arrayWithObjects:count:'] = (
-    ('arrayWithObjects_count_', selector(arrayWithObjects_count_, signature='@@:^@i', isClassMethod=1)),
-)
-
-def initWithObjects_count_(self, args, count):
-    return self.initWithArray_(args[:count])
-
-CONVENIENCE_METHODS['initWithObjects:count:'] = (
-    ('initWithObjects_count_', initWithObjects_count_),
-)
 
 def setWithObjects_(self, *args):
     if args[-1] is not None:

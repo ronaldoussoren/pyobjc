@@ -52,11 +52,6 @@ find_selector(PyObject* self, char* name, int class_method)
 	int   unbound_instance_method = 0;
 	char* flattened;
 
-	if (strcmp(name, "__class__") == 0) {
-		/* Someone does 'type(object.pybojc_instanceMethods)' */
-		Py_INCREF(self->ob_type);
-		return (PyObject*)self->ob_type;
-	}
 
 	if (name[0] == '_' && name[1] == '_') {
 		/*
@@ -143,9 +138,9 @@ make_dict(PyObject* self, int class_method)
 		}
 
 		if (class_method) {
-			cls = GETISA(GETISA(obj));
+			cls = GETISA(obj);
 			bound_self = (PyObject*)self->ob_type;
-			objc_class = GETISA(obj);
+			objc_class = GETISA(cls); 
 		} else {
 			cls = GETISA(obj);
 			objc_class = cls;
@@ -156,7 +151,7 @@ make_dict(PyObject* self, int class_method)
 		cls = PyObjCClass_GetClass(self);
 		objc_class = cls;
 		if (class_method) {
-			cls = GETISA(cls);
+			objc_class = GETISA(cls);
 			bound_self = self;
 		} else {
 			bound_self = NULL;
@@ -171,7 +166,7 @@ make_dict(PyObject* self, int class_method)
 		return NULL;
 	}
 
-	while (objc_class != NULL) {
+	while (objc_class != NULL && cls != NULL) {
 		iterator = NULL;
 		mlist = class_nextMethodList(objc_class, &iterator);
 		while (mlist != NULL) {
@@ -203,7 +198,7 @@ make_dict(PyObject* self, int class_method)
 
 				if (v == NULL) {
 					v = PyObjCSelector_NewNative(
-						objc_class, meth->method_name,
+						cls, meth->method_name,
 						meth->method_types, class_method);
 					if (v == NULL) {
 						Py_DECREF(res);
@@ -223,6 +218,7 @@ make_dict(PyObject* self, int class_method)
 		}
 
 		objc_class = ((Class)objc_class)->super_class;
+		cls = ((Class)cls)->super_class;
 	}
 
 	return res;
@@ -262,7 +258,39 @@ obj_getattro(ObjCMethodAccessor* self, PyObject* name)
 	}
 
 	if (strcmp(PyString_AS_STRING(name), "__dict__") == 0) {
-		return make_dict(self->base, self->class_method);
+		PyObject* dict;
+		dict = make_dict(self->base, self->class_method);
+		return dict;
+
+		/*
+		 * Ronald: I'd prefer to add the code below, because our 
+		 * __dict__ cannot be modified, but then dir() doesn't work.
+		 * The current version is save enough, but might give surprising
+		 * behaviour (you can change pyobjc_instancMethods.__dict__,
+		 * but those changes have no effect).
+		result  = PyDictProxy_New(dict);
+		Py_DECREF(dict);
+		return result;
+		 */
+	}
+
+	if (strcmp(PyString_AS_STRING(name), "__methods__") == 0) {
+		PyErr_SetString(PyExc_AttributeError,
+			"No such attribute: __methods__");
+		return NULL;
+	}
+
+	if (strcmp(PyString_AS_STRING(name), "__members__") == 0) {
+		PyErr_SetString(PyExc_AttributeError,
+			"No such attribute: __members__");
+		return NULL;
+	}
+
+	result = PyObject_GenericGetAttr((PyObject*)self, name);
+	if (result == NULL) {
+		PyErr_Clear();
+	} else {
+		return result;
 	}
 
 	/* First try to access through base, this way the method replacements

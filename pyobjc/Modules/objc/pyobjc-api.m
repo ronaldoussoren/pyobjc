@@ -79,7 +79,8 @@ static void 	fill_super_cls(struct objc_super* super, Class cls, Class self)
 	super->class = GETISA(cls);
 }
 
-id  unsupported_method_imp(id self, SEL selector)
+static id  
+unsupported_method_imp(id self, SEL selector)
 {
 	NSLog(@"Implementing %s from Python is not supported for %@",
 		SELNAME(selector), self);
