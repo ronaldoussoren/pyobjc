@@ -4,7 +4,7 @@ To build the demo program, run this line in Terminal.app:
 
     $ python buildapp.py --link build
 
-This creates a directory "build" containing PythonBrowser.app. (The
+This creates a directory "build" containing ClassBrowser.app. (The
 --link option causes the files to be symlinked to the .app bundle instead
 of copied. This means you don't have to rebuild the app if you edit the
 sources or nibs.)
