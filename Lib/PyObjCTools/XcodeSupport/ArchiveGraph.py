@@ -156,7 +156,6 @@ def itergraphreport(nodes, describe_edge, name='G'):
 def openDict(fn):
     if not isinstance(fn, unicode):
         fn = unicode(fn, 'utf-8')
-    print repr(fn)
     return NSDictionary.dictionaryWithContentsOfFile_(fn)
 
 def main():
