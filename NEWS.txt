@@ -7,6 +7,11 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.2 (2004-12-??)
 ------------------------
 
+- ``PyObjCTools.AppHelper.stopEventLoop`` will attempt to stop the current
+  ``NSRunLoop`` (if started by ``runConsoleEventLoop``) or terminate the
+  current ``NSApplication`` (which may or may not have been started by
+  ``runEventLoop``).
+
 - This version no longer support Python 2.2. Python 2.3 or later is
   required.
 
