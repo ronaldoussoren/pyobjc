@@ -2,50 +2,75 @@
     IBClasses = (
         {
             ACTIONS = {
-                towerFieldDisplayValueControl0 = id; 
-                towerFieldDisplayValueControl1 = id; 
-                towerFieldDisplayValueControl2 = id; 
-                towerFieldSliderValueControl0 = id; 
-                towerFieldSliderValueControl1 = id; 
-                towerFieldSliderValueControl2 = id; 
-                towerPhaseDisplayValueControl0 = id; 
-                towerPhaseDisplayValueControl1 = id; 
-                towerPhaseDisplayValueControl2 = id; 
-                towerPhaseSliderValueControl0 = id; 
-                towerPhaseSliderValueControl1 = id; 
-                towerPhaseSliderValueControl2 = id; 
-                towerSpacingDisplayValueControl = id; 
-                towerSpacingSliderValueControl = id; 
+                fieldDisplay0 = id; 
+                fieldDisplay1 = id; 
+                fieldDisplay2 = id; 
+                fieldSlider0 = id; 
+                fieldSlider1 = id; 
+                fieldSlider2 = id; 
+                phaseDisplay0 = id; 
+                phaseDisplay1 = id; 
+                phaseDisplay2 = id; 
+                phaseSlider0 = id; 
+                phaseSlider1 = id; 
+                phaseSlider2 = id; 
+                settingDrawerButton = id; 
+                spacingDisplay = id; 
+                spacingSlider = id; 
             }; 
             CLASS = CGraphController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                RMSGainDisplayValue = NSTextField; 
+                RMSGainDisplay = NSTextField; 
+                fieldDisplay0 = NSTextField; 
+                fieldDisplay1 = NSTextField; 
+                fieldDisplay2 = NSTextField; 
+                fieldNormalizeCheck = NSButton; 
+                fieldSlider0 = NSSlider; 
+                fieldSlider1 = NSSlider; 
+                fieldSlider2 = NSSlider; 
                 graphModel = CGraphModel; 
-                towerFieldDisplayValue0 = NSTextField; 
-                towerFieldDisplayValue1 = NSTextField; 
-                towerFieldDisplayValue2 = NSTextField; 
-                towerFieldSliderValue0 = NSSlider; 
-                towerFieldSliderValue1 = NSSlider; 
-                towerFieldSliderValue2 = NSSlider; 
-                towerPhaseDisplayValue0 = NSTextField; 
-                towerPhaseDisplayValue1 = NSTextField; 
-                towerPhaseDisplayValue2 = NSTextField; 
-                towerPhaseSliderValue0 = NSSlider; 
-                towerPhaseSliderValue1 = NSSlider; 
-                towerPhaseSliderValue2 = NSSlider; 
-                towerSpacingDisplayValue = NSTextField; 
-                towerSpacingSliderValue = NSSlider; 
+                graphView = CGraphView; 
+                phaseDisplay0 = NSTextField; 
+                phaseDisplay1 = NSTextField; 
+                phaseDisplay2 = NSTextField; 
+                phaseSlider0 = NSSlider; 
+                phaseSlider1 = NSSlider; 
+                phaseSlider2 = NSSlider; 
+                settingDrawer = NSDrawer; 
+                spacingDisplay = NSTextField; 
+                spacingSlider = NSSlider; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
+        {CLASS = CGraphModel; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            CLASS = CGraphModel; 
+            ACTIONS = {
+                azmuthDisplay = id; 
+                azmuthSlider = id; 
+                mapOffsetEWDisplay = id; 
+                mapOffsetEWSlider = id; 
+                mapOffsetNSDisplay = id; 
+                mapOffsetNSSlider = id; 
+                mapScaleDisplay = id; 
+                mapScaleSlider = id; 
+                mapVisibleSlider = id; 
+            }; 
+            CLASS = CGraphView; 
             LANGUAGE = ObjC; 
-            OUTLETS = {graphView = CGraphView; }; 
-            SUPERCLASS = NSObject; 
+            OUTLETS = {
+                azmuthDisplay = NSTextField; 
+                azmuthSlider = NSSlider; 
+                mapOffsetEWDisplay = NSTextField; 
+                mapOffsetEWSlider = NSSlider; 
+                mapOffsetNSDisplay = NSTextField; 
+                mapOffsetNSSlider = NSSlider; 
+                mapScaleDisplay = NSTextField; 
+                mapScaleSlider = NSSlider; 
+                mapVisibleSlider = NSSlider; 
+            }; 
+            SUPERCLASS = NSView; 
         }, 
-        {CLASS = CGraphView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
     ); 
     IBVersion = 1; 

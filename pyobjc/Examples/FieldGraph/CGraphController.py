@@ -3,86 +3,136 @@ from PyObjCTools import NibClassBuilder, AppHelper
 from objc import *
 
 from CGraphModel import *
+from CGraphView import *
+from fieldMath import *
 
 
 NibClassBuilder.extractClasses("MainMenu")
 
 
+#____________________________________________________________
 class CGraphController(NibClassBuilder.AutoBaseClass):
 
-    # Update GUI display and control values
-    def awakeFromNib(self):
-        self.RMSGainDisplayValue.setFloatValue_(self.graphModel.getRMSGain()*100.0)
-        self.towerSpacingDisplayValue.setFloatValue_(radToDeg(self.graphModel.getSpacing()))
-        self.towerSpacingSliderValue.setFloatValue_(radToDeg(self.graphModel.getSpacing()))
-        self.towerFieldDisplayValue0.setFloatValue_(self.graphModel.getField(0))
-        self.towerFieldDisplayValue1.setFloatValue_(self.graphModel.getField(1))
-        self.towerFieldDisplayValue2.setFloatValue_(self.graphModel.getField(2))
-        self.towerFieldSliderValue0.setFloatValue_(self.graphModel.getField(0))
-        self.towerFieldSliderValue1.setFloatValue_(self.graphModel.getField(1))
-        self.towerFieldSliderValue2.setFloatValue_(self.graphModel.getField(2))
-        self.towerPhaseDisplayValue0.setFloatValue_(radToDeg(self.graphModel.getPhase(0)))
-        self.towerPhaseDisplayValue1.setFloatValue_(radToDeg(self.graphModel.getPhase(1)))
-        self.towerPhaseDisplayValue2.setFloatValue_(radToDeg(self.graphModel.getPhase(2)))
-        self.towerPhaseSliderValue0.setFloatValue_(radToDeg(self.graphModel.getPhase(0)))
-        self.towerPhaseSliderValue1.setFloatValue_(radToDeg(self.graphModel.getPhase(1)))
-        self.towerPhaseSliderValue2.setFloatValue_(radToDeg(self.graphModel.getPhase(2)))
+#____________________________________________________________
+# Update GUI display and control values
 
-        self.graphModel.drawGraph()
+	def awakeFromNib(self):
+		self.mapImage = NSImage.imageNamed_("Map")
+		self.graphView.setMapImage(self.mapImage)
+		self.drawGraph()
 
-    # Handle GUI values
-    def towerFieldDisplayValueControl0_(self, sender):
-        self.graphModel.setField(0, sender.floatValue())
-        self.awakeFromNib()
+	def drawGraph(self):
+		self.spacingDisplay.setFloatValue_(radToDeg(self.graphModel.getSpacing()))
+		self.spacingSlider.setFloatValue_(radToDeg(self.graphModel.getSpacing()))
+		self.fieldDisplay0.setFloatValue_(self.graphModel.getField(0))
+		self.fieldDisplay1.setFloatValue_(self.graphModel.getField(1))
+		self.fieldDisplay2.setFloatValue_(self.graphModel.getField(2))
+		self.fieldSlider0.setFloatValue_(self.graphModel.getField(0))
+		self.fieldSlider1.setFloatValue_(self.graphModel.getField(1))
+		self.fieldSlider2.setFloatValue_(self.graphModel.getField(2))
+		self.phaseDisplay0.setFloatValue_(radToDeg(self.graphModel.getPhase(0)))
+		self.phaseDisplay1.setFloatValue_(radToDeg(self.graphModel.getPhase(1)))
+		self.phaseDisplay2.setFloatValue_(radToDeg(self.graphModel.getPhase(2)))
+		self.phaseSlider0.setFloatValue_(radToDeg(self.graphModel.getPhase(0)))
+		self.phaseSlider1.setFloatValue_(radToDeg(self.graphModel.getPhase(1)))
+		self.phaseSlider2.setFloatValue_(radToDeg(self.graphModel.getPhase(2)))
+		
+		totalField = self.graphModel.getField(0) + self.graphModel.getField(1) + self.graphModel.getField(2)
 
-    def towerFieldDisplayValueControl1_(self, sender):
-        self.graphModel.setField(1, sender.floatValue())
-        self.awakeFromNib()
+		RMSGain = self.graphModel.fieldGain()
+		self.graphView.setGain(RMSGain, totalField)
+		self.RMSGainDisplay.setFloatValue_(RMSGain*100.0)
 
-    def towerFieldDisplayValueControl2_(self, sender):
-        self.graphModel.setField(2, sender.floatValue())
-        self.awakeFromNib()
+		path, maxMag  = self.graphModel.getGraph()
+		self.graphView.setPath(path, maxMag)
 
-    def towerFieldSliderValueControl0_(self, sender):
-        self.graphModel.setField(0, sender.floatValue())
-        self.awakeFromNib()
 
-    def towerFieldSliderValueControl1_(self, sender):
-        self.graphModel.setField(1, sender.floatValue())
-        self.awakeFromNib()
+#____________________________________________________________
+# Handle GUI values
 
-    def towerFieldSliderValueControl2_(self, sender):
-        self.graphModel.setField(2, sender.floatValue())
-        self.awakeFromNib()
+	def fieldDisplay0_(self, sender):
+		self.setNormalizedField(0, sender.floatValue())
+		self.drawGraph()
 
-    def towerPhaseDisplayValueControl0_(self, sender):
-        self.graphModel.setPhase(0, degToRad(sender.floatValue()))
-        self.awakeFromNib()
+	def fieldDisplay1_(self, sender):
+		self.setNormalizedField(1, sender.floatValue())
+		self.drawGraph()
 
-    def towerPhaseDisplayValueControl1_(self, sender):
-        self.graphModel.setPhase(1, degToRad(sender.floatValue()))
-        self.awakeFromNib()
+	def fieldDisplay2_(self, sender):
+		self.setNormalizedField(2, sender.floatValue())
+		self.drawGraph()
 
-    def towerPhaseDisplayValueControl2_(self, sender):
-        self.graphModel.setPhase(2, degToRad(sender.floatValue()))
-        self.awakeFromNib()
+	def fieldSlider0_(self, sender):
+		self.setNormalizedField(0, sender.floatValue())
+		self.drawGraph()
 
-    def towerPhaseSliderValueControl0_(self, sender):
-        self.graphModel.setPhase(0, degToRad(sender.floatValue()))
-        self.awakeFromNib()
+	def fieldSlider1_(self, sender):
+		self.setNormalizedField(1, sender.floatValue())
+		self.drawGraph()
 
-    def towerPhaseSliderValueControl1_(self, sender):
-        self.graphModel.setPhase(1, degToRad(sender.floatValue()))
-        self.awakeFromNib()
+	def fieldSlider2_(self, sender):
+		self.setNormalizedField(2, sender.floatValue())
+		self.drawGraph()
+		
+	def setNormalizedField(self, t, v):
+		if self.fieldNormalizeCheck.intValue():
+			f = [0, 0, 0]
+			cft = 0
+			for i in range(3):
+				f[i] = self.graphModel.getField(i)
+				cft += f[i]
+				
+			aft = cft - v
+			if aft < 0.001:
+				v = cft - 0.001
+				aft = 0.001
+			f[t] = v
+			
+			nft = 0
+			for i in range(3):
+				nft +=  f[i]
+			r = aft / (nft - f[t])
+		
+			for i in range(3):
+				self.graphModel.setField(i, f[i] * r)
+			self.graphModel.setField(t, v)
 
-    def towerPhaseSliderValueControl2_(self, sender):
-        self.graphModel.setPhase(2, degToRad(sender.floatValue()))
-        self.awakeFromNib()
+		else:
+			self.graphModel.setField(t, v)
 
-    def towerSpacingDisplayValueControl_(self, sender):
-        self.graphModel.setSpacing(degToRad(sender.floatValue()))
-        self.awakeFromNib()
 
-    def towerSpacingSliderValueControl_(self, sender):
-        self.graphModel.setSpacing(degToRad(sender.floatValue()))
-        self.awakeFromNib()
+
+	def phaseDisplay0_(self, sender):
+		self.graphModel.setPhase(0, degToRad(sender.floatValue()))
+		self.drawGraph()
+
+	def phaseDisplay1_(self, sender):
+		self.graphModel.setPhase(1, degToRad(sender.floatValue()))
+		self.drawGraph()
+
+	def phaseDisplay2_(self, sender):
+		self.graphModel.setPhase(2, degToRad(sender.floatValue()))
+		self.drawGraph()
+
+	def phaseSlider0_(self, sender):
+		self.graphModel.setPhase(0, degToRad(sender.floatValue()))
+		self.drawGraph()
+
+	def phaseSlider1_(self, sender):
+		self.graphModel.setPhase(1, degToRad(sender.floatValue()))
+		self.drawGraph()
+
+	def phaseSlider2_(self, sender):
+		self.graphModel.setPhase(2, degToRad(sender.floatValue()))
+		self.drawGraph()
+
+	def spacingDisplay_(self, sender):
+		self.graphModel.setSpacing(degToRad(sender.floatValue()))
+		self.drawGraph()
+
+	def spacingSlider_(self, sender):
+		self.graphModel.setSpacing(degToRad(sender.floatValue()))
+		self.drawGraph()
+	
+	def settingDrawerButton_(self, sender):
+		self.settingDrawer.toggle_(self)

@@ -103,7 +103,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 
 		/* install in methods to add */
 		objcMethod = &methodsToAdd->method_list[methodIndex];
-		objcMethod->method_name = PyObjCSelector_Selector(aMethod);
+		objcMethod->method_name = sel_registerName(PyObjCSelector_Selector(aMethod));
 
 		objcMethod->method_types = strdup(PyObjCSelector_Signature(
 			aMethod));

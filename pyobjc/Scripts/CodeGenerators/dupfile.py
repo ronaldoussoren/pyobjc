@@ -11,6 +11,7 @@ def cmpfile(fn1, fn2):
 class dupfile:
     def __init__(self, fname, mode):
         self.fname = fname
+        self.done = 0
         self.tfile = fname + ".wrk"
         self.mode = mode
 
@@ -35,7 +36,17 @@ class dupfile:
     def close(self):
         self.fp.close()
         if self.mode == 'w':
-            if cmpfile(self.tfile, self.fname):
+            if os.path.exists(self.fname) and cmpfile(self.tfile, self.fname):
+                os.unlink(self.tfile)
+            else:
+                os.rename(self.tfile, self.fname)
+        self.done = 1
+
+    def __del__(self):
+        if self.done:
+            return
+        if self.mode == 'w':
+            if os.path.exists(self.fname) and cmpfile(self.tfile, self.fname):
                 os.unlink(self.tfile)
             else:
                 os.rename(self.tfile, self.fname)

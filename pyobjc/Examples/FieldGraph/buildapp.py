@@ -1,22 +1,14 @@
-#
-# Run this program from the command line like so:
-#
-# % python buildapp.py --link build
-#
-#
+#! /usr/local/python
+
+import os
 
 from bundlebuilder import buildapp
 
-SRC=[
-    'CGraphController.py',
-    'CGraphModel.py',
-    'CGraphView.py',
-    'fieldMath.py',
-]
+src = [ fn for fn in os.listdir('.') if fn.endswith('.py') and fn not in ('Main.py', 'buildapp.py') ]
 
 buildapp(
-    name = "FieldGraph",
-    mainprogram = "Main.py",
-    resources = ["English.lproj"] + SRC,
-    nibname = "MainMenu",
+	name = "FieldGraph",
+	mainprogram = "Main.py",
+	resources = ["English.lproj", 'CrossCursor.tiff', 'Map.png' ] + src,
+	nibname = "MainMenu",
 )
