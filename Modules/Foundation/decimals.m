@@ -17,6 +17,7 @@
 typedef struct {
 	PyObject_HEAD
 	NSDecimal value;
+	NSDecimalNumber *objc_value;
 } DecimalObject;
 
 #define Decimal_Value(v) ((DecimalObject*)(v))->value
@@ -85,10 +86,18 @@ static PyNumberMethods decimal_asnumber = {
 	NULL				/* nb_inplace_true_divide */
 };
 
+static NSDecimalNumber *
+Decimal_ObjCValue(PyObject *self) {
+	DecimalObject *pyself = (DecimalObject *)self;
+	NSDecimalNumber *res = pyself->objc_value;
+	if (!res) {
+		res = pyself->objc_value = [[NSDecimalNumber alloc] initWithDecimal:Decimal_Value(self)];
+	}
+	return res;
+}
+
 static PyObject *decimal_get__pyobjc_object__(PyObject *self, void *closure __attribute__((__unused__))) {
-	id num = [[NSDecimalNumber alloc] initWithDecimal:Decimal_Value(self)];
-	PyObject *rval = PyObjC_IdToPython(num);
-	[num release];
+	PyObject *rval = PyObjC_IdToPython(Decimal_ObjCValue(self));
 	return rval;
 }
 
@@ -128,6 +137,20 @@ static PyMethodDef decimal_methods[] = {
 	}
 };
 
+static PyObject*
+decimal_getattro(PyObject *o, PyObject *attr_name)
+{
+	PyObject *res;
+	res = PyObject_GenericGetAttr(o, attr_name);
+	if (res == NULL) {
+		PyObject *tmp;
+		PyErr_Clear();
+		tmp = PyObjC_IdToPython(Decimal_ObjCValue(o));
+		res = PyObject_GenericGetAttr(tmp, attr_name);
+		Py_XDECREF(tmp);
+	}
+	return res;
+}
 
 static PyTypeObject Decimal_Type = {
 	PyObject_HEAD_INIT(NULL)
@@ -148,7 +171,7 @@ static PyTypeObject Decimal_Type = {
 	0,					/* tp_hash */
 	0,					/* tp_call */
 	decimal_repr,				/* tp_str */
-	PyObject_GenericGetAttr,		/* tp_getattro */
+	decimal_getattro,			/* tp_getattro */
 	PyObject_GenericSetAttr,		/* tp_setattro */
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_RICHCOMPARE | Py_TPFLAGS_HAVE_INPLACEOPS, /* tp_flags */
@@ -222,15 +245,19 @@ decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyOb
 
 	
 	self = PyObject_New(DecimalObject, &Decimal_Type);
-	if (self != NULL) {
-		memset(&self->value, 0, sizeof(self->value));
+	if (self == NULL) {
+	    return PyErr_NoMemory();
 	}
+	    
+	memset(&self->value, 0, sizeof(self->value));
+	self->objc_value = nil;
 	if ((args == NULL || PyTuple_Size(args) == 0) && (kwds == NULL || PyDict_Size(kwds) == 0)) {
 		DecimalFromComponents(&self->value, 0, 0, 0);
 		return (PyObject*)self;
 	}
 	if (decimal_init((PyObject*)self, args, kwds) == -1) {
 		Py_DECREF(self);
+		self = NULL;
 		return NULL;
 	}
 	return (PyObject*)self;
@@ -239,6 +266,7 @@ decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyOb
 static void
 decimal_dealloc(PyObject* self)
 {
+	[((DecimalObject *)self)->objc_value release];
 	PyObject_Free(self);
 }
 
@@ -254,6 +282,8 @@ static char* keywords2[] = { "string", NULL };
 	BOOL negative;
 	unsigned long long mantissa;
 	short int exponent;
+
+	((DecimalObject*)self)->objc_value = nil;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOO", keywords, &pyMantissa, &pyExponent, &pyNegative)) {
 		PyObject* pyValue;
@@ -404,20 +434,14 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
 
 static PyObject* decimal_asint(PyObject* self)
 {
-	NSDecimalNumber* tmp = [[NSDecimalNumber alloc] initWithDecimal:Decimal_Value(self)];
-	long retval = [tmp longValue];
-	[tmp release];
-
-	return PyInt_FromLong(retval);
+	NSDecimalNumber* tmp = Decimal_ObjCValue(self);
+	return PyInt_FromLong([tmp longValue]);
 }
 
 static PyObject* decimal_asfloat(PyObject* self)
 {
-	NSDecimalNumber* tmp = [[NSDecimalNumber alloc] initWithDecimal:Decimal_Value(self)];
-	double retval = [tmp doubleValue];
-	[tmp release];
-
-	return PyFloat_FromDouble(retval);
+	NSDecimalNumber* tmp = Decimal_ObjCValue(self);
+	return PyFloat_FromDouble([tmp doubleValue]);
 }
 
 static PyObject* decimal_power(
@@ -815,6 +839,7 @@ Decimal_New(NSDecimal* aDecimal)
 	result = PyObject_New(DecimalObject, &Decimal_Type);
 	if (result == NULL) return NULL;
 
+	result->objc_value = nil;
 	result->value = *aDecimal;
 	return (PyObject*)result;
 }
