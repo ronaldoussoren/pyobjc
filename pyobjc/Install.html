@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+Installation Instructions</title>
+</head>
+<body>
+<h2>Installation Instructions</h2>
+<!-- :authors: Bill Bumgarner, Ronald Oussoren -->
+<h2><a name="building-the-package">Building the package</a></h2>
+<p>If you're using the sources from CVS you should first download a copy of 
+libffi from <a href="http://sourceforge.net/project/showfiles.php?group_id=14534">the PyObjC download site</a>.  Extract this in a convenient location
+and update the variable <code><span>LIBFF_SOURCES</span></code> at the top of setup.py.  The released
+version of PyObjC includes a compatible version of libffi.</p>
+<p>PyObjC is build and installed using the distutils package included with Python
+2.0 and beyond.  This package provides a single interface for building and
+packaging the module.   To see usage documentation for the module,
+issue the <code><span>--help</span></code> command:</p>
+<pre>
+% python setup.py --help
+</pre>
+<p>To see an inventory of building and packaging commands, issue the
+command:</p>
+<pre>
+% python setup.py --help-commands
+</pre>
+<p>The following command will build and install the pyobjc module:</p>
+<pre>
+% python setup.py install
+</pre>
+<p>The setup.py system can also be used to create source and binary
+distribution archives automatically.</p>
+<p>Use <code><span>sudo</span></code> to install the pyobjc module into a the Apple supplied
+python's site-packages directory on OS X 10.2 and greater:</p>
+<p>% sudo python setup.py install</p>
+<p>If you have multiple versions of python installed on your system, the
+above will only install pyobjc for whatever version of python is the
+default on the command line.   Make sure you are installing python
+against the correct version of python.</p>
+<h2><a name="examples">Examples</a></h2>
+<p>The examples directory contains a number of projects that demonstrate
+various features of the PyObjC bridge. The scripts at the top level of
+the examples directory were mostly written to test a particular
+feature of the bridge (or document a bug until a fix could be found).</p>
+<p>CurrencyConverter and TableModel are both examples of standalone
+Cocoa-Python applications.  To build and execute:</p>
+<pre>
+% cd TableModel
+% python buildapp.py build
+</pre>
+<p>The WebServicesTool and TableModel2 are both examples of Cocoa-Python
+applications created via the Cocoa-Python project template found in
+the <code><span>Project</span> <span>Templates</span></code> directory.  Use Project Builder to build the
+applications.</p>
+<h2><a name="project-templates">Project Templates</a></h2>
+<p>The <code><span>Project</span> <span>Templates</span></code> directory contains project templates for
+project builder.  Currently, there is one project builder template;  a
+Cocoa-Python Application project template.   When installed, this adds
+a project to Project Builder's project menu that allows new Cocoa
+applications implemented entirely in Python to be created from within
+Project Builder (in the same fashion as any other project).</p>
+<p>To install, simply copy the project template into the Project Builder
+project templates directory (or create a symlink).</p>
+<p>More information on project templates can be found in the Project
+Builder documentation and/or release notes.</p>
+</body>
+</html>
