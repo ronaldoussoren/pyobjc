@@ -1,7 +1,7 @@
 <?
     $title = "Structure of the PyObjC package";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/07/05 14:59:46 $';
+    $cvs_date = '$Date: 2003/10/08 17:30:40 $';
 
     include "header.inc";
 ?>
@@ -11,6 +11,7 @@
 HTML. -->
 <div class="section" id="introduction">
 <h1><a name="introduction">Introduction</a></h1>
+<p>XXX:  This documet is outdated and incomplete.</p>
 <p>This document gives an overview of the PyObjC for developers (of the package).</p>
 <p>One of the sections describes how all of it works, and some of the limitation.</p>
 <p>This document is a little dated, it should be updated.</p>

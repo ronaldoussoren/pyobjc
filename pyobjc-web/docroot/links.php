@@ -1,7 +1,7 @@
 <?
 $title = "Links";
-$cvs_author = '$Author: bbum $';
-$cvs_date = '$Date: 2002/11/12 07:41:06 $';
+$cvs_author = '$Author: ronaldoussoren $';
+$cvs_date = '$Date: 2003/10/08 17:30:40 $';
 
 include "header.inc";
 ?>
@@ -11,7 +11,7 @@ include "header.inc";
 
 <p>All links will open in a new browser window.</p>
 
-<p>The building blocks</p>
+<h2>The building blocks</h2>
 <ul>
 <li><a href="http://www.python.org/" target="_blank">Python</a> - the Python interpreter</li>
 <li><a href="http://developer.apple.com/techpubs/macosx/Cocoa/ObjectiveC/" target="_blank">Objective-C</a> - the Objective-C programming language</li>
@@ -20,7 +20,7 @@ include "header.inc";
 <li><a href="http://www.gnustep.org/" target="_blank">GnuStep</a> - open source implementation of ObjC, Foundation, and AppKit</li>
 </ul>
 
-<p>Similar Projects</p>
+<h2>Similar Projects</h2>
 <ul>
 <li><a href="http://camelbones.sourceforge.net/" target="_blank">CamelBones</a> - a Perl&lt;-&gt;ObjC bridge</li>
 <li><a href="http://archive.develooper.com/macosx@perl.org/msg00896.html" target="_blank">PerlObjCBridge</a> - another Perl&lt;-&gt;ObjC bridge. Ships with OS X (see <i>PerlObjCBridge</i> man page)</li>

@@ -1,7 +1,7 @@
 <?
     $title = "Installation Instructions";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/07/05 14:59:46 $';
+    $cvs_date = '$Date: 2003/10/08 17:30:40 $';
 
     include "header.inc";
 ?>
@@ -39,6 +39,9 @@ python's site-packages directory on OS X 10.2 and greater:</p>
 above will only install pyobjc for whatever version of python is the
 default on the command line.   Make sure you are installing python
 against the correct version of python.</p>
+<p>To be able to build the wrappers for the WebKit framework (included with
+Safari 1.0), you'll have to install the WebKit SDK. You can download 
+this from the <a class="reference" href="http://connect.apple.com">ADC website</a>.</p>
 </div>
 <div class="section" id="examples">
 <h1><a name="examples">Examples</a></h1>

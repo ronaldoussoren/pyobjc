@@ -1,5 +1,5 @@
 <?
-/* $Id: header.inc,v 1.5 2003/05/29 15:42:57 ronaldoussoren Exp $ */
+/* $Id: header.inc,v 1.6 2003/10/08 17:30:40 ronaldoussoren Exp $ */
 
 // section navigation (always visible)
 $sections = array(
@@ -8,6 +8,7 @@ $sections = array(
   "faq/index.php", "FAQ", "faq",
   "software/", "Download", "download",
   "examples/index.php", "Examples", "examples",
+  "showcase/index.php", "PyObjC Users", "pyobjc-users",
   "http://sourceforge.net/mail/?group_id=14534", "Mailing Lists", "mailing-lists"
 );
 if (!$section)

@@ -1,7 +1,7 @@
 <?
 $title = "Home";
 $cvs_author = '$Author: ronaldoussoren $';
-$cvs_date = '$Date: 2003/07/05 14:59:46 $';
+$cvs_date = '$Date: 2003/10/08 17:30:40 $';
 $is_home = 1;
 
 $metatags = '<meta name="description" content="PyObjC, a universal bridge between the Objective-C and Python languages.">
@@ -18,6 +18,7 @@ The most important usage of this is writing Cocoa GUI applications on
 <a href="http://www.apple.com/macosx/">Mac OS X</a> in pure Python. See 
 <a href="<? print $root; ?>doc/tutorial.php">our tutorial</a> for an example
 of this.
+<p>
 
 
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -37,7 +38,7 @@ include $fsroot."news/news.inc";
 <h1>Status</h1>
 
 <p>
-<a href="software/index.php">PyObjC 1.0b1</a> was released on 5 July 2003.  See the <a href="NEWS-1.0b1.txt">NEWS</a> for details.
+<a href="software/index.php">PyObjC 1.0</a> was released on 21 September 2003.  See the <a href="NEWS-1.0.txt">NEWS</a> for details.
 </p>
 
 <h1>Platform support</h1>
@@ -66,7 +67,7 @@ provides the following resources for the project:
 <ul>
 <li><a href="http://sourceforge.net/projects/pyobjc/">Project page</a></li>
 <li><a
-href="http://sourceforge.net/tracker/?group_id=14534&amp;atid=114534">Bug tracker</a></li>
+href="http://sourceforge.net/tracker/?group_id=14534&atid=114534">Bug tracker</a></li>
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=14534">Files</a></li>
 <li>CVS (<a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/pyobjc">browse online</a>, <a href="http://sourceforge.net/cvs/?group_id=14534">access instructions</a>)</li>
 

@@ -1,7 +1,7 @@
 <?
 $title = "Documentation";
 $cvs_author = '$Author: ronaldoussoren $';
-$cvs_date = '$Date: 2003/09/24 11:13:37 $';
+$cvs_date = '$Date: 2003/10/08 17:30:40 $';
 
 include "header.inc";
 ?>
@@ -9,9 +9,16 @@ include "header.inc";
 <h1>Downloads</h1>
 
 <ul>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/PyObjC-1.0b1.dmg?download">PyObjC 1.0b1 installer package for Apple's Python</a>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.0b1.tar.gz?download">PyObjC 1.0b1 source release (a compressed tar archive)</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/PyObjC-1.0.dmg?download">PyObjC 1.0 installer package for Apple's Python</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.0.tar.gz?download">PyObjC 1.0 source release (a compressed tar archive)</a>
 </ul>
+
+<p>Users of MacPython can use the PyObjC PackageManager database to install 
+   PyObjC: select ``File/open URL...`` in Package Manager and select 
+   "<CODE>http://pyobjc.sf.net/packman/pyobjc-stable-6.6-Power_Macintosh.plist</CODE>" as the URL. 
+
+ <p>Users of MacPython on MacOS X 10.3 can use "<CODE>"http://pyobjc.sf.net/packman/pyobjc-stable-7.0-Power_Macintosh.plist</CODE>" as the database location. 
+ There is no MacOS X 10.3 installer at the moment.
 
 <p>Older releases are available in the <a href="http://sourceforge.net/project/showfiles.php?group_id=14534">Files section of our SourceForge project</a>.
 

@@ -1,7 +1,7 @@
 <?
     $title = "PyObjC Architecture";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/07/05 14:59:46 $';
+    $cvs_date = '$Date: 2003/10/08 17:30:40 $';
 
     include "header.inc";
 ?>
@@ -15,8 +15,9 @@
 </table>
 <div class="section" id="introduction">
 <h1><a name="introduction">Introduction</a></h1>
+<p>XXX: This documented is outdated and incomplete.</p>
 <p>This document gives a (brief) description of how the PyObjc package is 
-structured. Too bad this document is outdated and incomplete...</p>
+structured.</p>
 </div>
 <div class="section" id="objective-c-classes-and-objects">
 <h1><a name="objective-c-classes-and-objects">Objective-C classes and objects</a></h1>

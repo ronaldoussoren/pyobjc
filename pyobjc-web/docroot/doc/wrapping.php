@@ -1,7 +1,7 @@
 <?
     $title = "How to wrap an Objective-C class library";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/07/05 14:59:46 $';
+    $cvs_date = '$Date: 2003/10/08 17:30:40 $';
 
     include "header.inc";
 ?>
@@ -29,7 +29,8 @@ del objc
 is all that is needed.</p>
 <p>Don't forget to import the frameworks that are used by your framework before
 calling <tt class="literal"><span class="pre">objc.loadBundle</span></tt>. This is necessary to arrange for the helper code
-for these modules (if there is any) to be loaded.</p>
+for these modules (if there is any) to be loaded. Not importing the those
+wrappers can lead to subtle bugs in unrelated code!</p>
 </div>
 <div class="section" id="wrapping-global-functions-and-constants">
 <h1><a name="wrapping-global-functions-and-constants">Wrapping global functions and constants</a></h1>
@@ -41,7 +42,9 @@ some luck you can adapt the scripts in <tt class="literal"><span class="pre">Scr
 this module for you. These scripts are both very rough and tuned for the Apple
 headers, so YMMV.</p>
 <p>Note that we currently do not install the <tt class="literal"><span class="pre">pyobjc-api.h</span></tt> header, you'll have
-to copy it from the source-tree until we do.</p>
+to copy it from the source-tree until we do. This header is not installed 
+because the interface is not yet stable, please let us know if you want to
+use the API.</p>
 </div>
 <div class="section" id="pointer-arguments">
 <h1><a name="pointer-arguments">Pointer arguments</a></h1>
@@ -74,7 +77,7 @@ argument signature. The 'correct' signature for method is therefore 'v&#64;:o^&#
 The following code tells the brigde about this better method signature:</p>
 <pre class="literal-block">
 import objc
-objc.set_signature_for_selector(&quot;ClassName&quot;, &quot;selector:withArguments:&quot;,
+objc.setSignatureForSelector(&quot;ClassName&quot;, &quot;selector:withArguments:&quot;,
      &quot;v&#64;:o^&#64;:&#64;&quot;)
 </pre>
 <p>To anotate method signatures you'll have to add a single character before all
@@ -93,6 +96,9 @@ have to write custom wrappers. For every custom wrapper you'll have to write
 three functions: 1 to call the method from Python, 1 to call the superclass
 implementation of the method from Python and 1 to call a Python implementation
 of the method from Objective-C.</p>
+<p>You also must write a custom wrapper when the method has a variable number
+of arguments. It is often adviseable to documented varargs method as 
+unsupported, or to support them only using a fixed number of arguments.</p>
 <p>For now it is best to check the source code for the wrappers for the Cocoa 
 class library for more information. We'll add documentation for this in the
 future.</p>

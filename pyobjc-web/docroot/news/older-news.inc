@@ -1,4 +1,16 @@
-
+<p><span class="news_date">2003-05-07: </span><span class="news_headline">Updated tutorial</span><?php gray_line(); ?>
+  <p>
+The tutorial included in the 0.9 release was not entirely up-to-date, please use <a href="<? print $root; ?> doc/tutorial.php">the tutorial on this website</a>.
+<p>
+<span class="news_date">2003-05-02: </span><span class="news_headline">PyObjC 0.9 released</span><?php gray_line(); ?>
+ <p>
+ PyObjC 0.9 has shipped. A disk image with an installer package and the sources are <a href="http://sourceforge.net/project/showfiles.php?group_id=14534">available</a>. There are many new features and bugfixes, see the <a href="<? print $root; ?>NEWS-1.0.txt">NEWS file</a> for details.
+ <p>
+ The PyObjC installer package installs a number of examples and project builder
+ templates as wel as documentation into /Developer. Users of 
+ <a href="http://homepages.cwi.nl/~jack/macpython.html#beta">MacPython 2.3b1</a> can install this release using the 
+ PackageManager application.
+ <p>
 <p><span class="news_date">2003-01-23: </span><span class="news_headline">Dev News; GNUstep support, FFI, performance, etc...</span><?php gray_line(); ?>
 <p>
 <span class="news_date">2002-12-19: </span><span class="news_headline">PyObjC 0.8 released</span><?php gray_line(); ?>

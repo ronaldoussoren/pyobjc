@@ -1,7 +1,7 @@
 <?
     $title = "Project Builder Python Support";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/07/05 14:59:46 $';
+    $cvs_date = '$Date: 2003/10/08 17:30:40 $';
 
     include "header.inc";
 ?>
@@ -34,6 +34,8 @@ both the user defaults and within project files.</div>
 <li><a class="reference" href="#misc" id="id5" name="id5">Misc.</a></li>
 </ul>
 </div>
+<p>Triple-quoted strings are not always treated correctly by Project Builder. This
+seems to be a Project Builder bug.</p>
 <div class="section" id="installation">
 <h1><a class="toc-backref" href="#id2" name="installation">Installation</a></h1>
 <p>Create the directory 'Specifications' within
@@ -46,6 +48,7 @@ mkdir -p ~/Developer/ProjectBuilder\ Extras/Specifications/
 <pre class="literal-block">
 cp Python.pb*spec ~/Developer/ProjectBuilder\ Extras/Specifications/
 </pre>
+<p>The binary installer will install the specifications for you.</p>
 </div>
 <div class="section" id="documentation">
 <h1><a class="toc-backref" href="#id3" name="documentation">Documentation</a></h1>

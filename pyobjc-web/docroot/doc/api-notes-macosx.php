@@ -1,7 +1,7 @@
 <?
     $title = "Notes on supported APIs and classes on MacOS X";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/07/05 14:59:46 $';
+    $cvs_date = '$Date: 2003/10/08 17:30:40 $';
 
     include "header.inc";
 ?>
@@ -65,6 +65,7 @@
 </li>
 </ul>
 </div>
+<p>TODO: Add documentation about weak linking (see intro.txt).</p>
 <div class="section" id="introduction">
 <h1><a class="toc-backref" href="#id2" name="introduction">Introduction</a></h1>
 <p>This document describes the restrictions w.r.t. supported APIs and classes
@@ -214,19 +215,22 @@ This method is not yet supported.</li>
 </div>
 <div class="section" id="class-nsopenglpixelformat">
 <h2><a class="toc-backref" href="#id16" name="class-nsopenglpixelformat">Class <tt class="literal"><span class="pre">NSOpenGLPixelFormat</span></tt></a></h2>
-<ul class="simple">
-<li><tt class="literal"><span class="pre">getValues:forAttribute:forVirtualScreen:</span></tt>
-This method is not yet supported</li>
-<li><tt class="literal"><span class="pre">initWithAttributes:</span></tt>
-This method is not yet supported</li>
+<ul>
+<li><p class="first"><tt class="literal"><span class="pre">getValues:forAttribute:forVirtualScreen:</span></tt></p>
+<p>This method is not yet supported</p>
+</li>
+<li><p class="first"><tt class="literal"><span class="pre">initWithAttributes:</span></tt></p>
+<p>This method is not yet supported</p>
+</li>
 </ul>
 </div>
 <div class="section" id="class-nsquickdrawview">
 <h2><a class="toc-backref" href="#id17" name="class-nsquickdrawview">Class <tt class="literal"><span class="pre">NSQuickDrawView</span></tt></a></h2>
-<ul class="simple">
-<li><tt class="literal"><span class="pre">qdPort</span></tt>
-This method is not yet supported and will return a MacPython wrapper for
-a QuickDraw port in the future.</li>
+<ul>
+<li><p class="first"><tt class="literal"><span class="pre">qdPort</span></tt></p>
+<p>This method returns an instance from a type Carbon.QuickDraw. This 
+requires MacPython.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="class-nssimplehorizontaltypesetter">
@@ -301,14 +305,23 @@ Python based bundle. See Examples/PrefPane for an example of its usage.</li>
 <h2><a class="toc-backref" href="#id24" name="class-nscoder">Class <tt class="literal"><span class="pre">NSCoder</span></tt></a></h2>
 <p>The following methods are not supported in the current version of PyObjC.
 This limitation will be lifted in a future version of the bridge.</p>
-<ul class="simple">
-<li><tt class="literal"><span class="pre">encodeBytes:length:</span></tt></li>
-<li><tt class="literal"><span class="pre">decodeBytesWithReturnedLength:</span></tt></li>
-<li><tt class="literal"><span class="pre">encodeValuesOfObjCType:</span></tt></li>
-<li><tt class="literal"><span class="pre">decodeValuesOfObjCType:</span></tt></li>
-<li><tt class="literal"><span class="pre">decodeBytesForKey:returnedLength:</span></tt></li>
-<li><tt class="literal"><span class="pre">decodeBytesWithoutReturnedLength:</span></tt></li>
+<ul>
+<li><p class="first"><tt class="literal"><span class="pre">decodeBytesWithReturnedLength:</span></tt></p>
+</li>
+<li><p class="first"><tt class="literal"><span class="pre">decodeBytesForKey:returnedLength:</span></tt></p>
+</li>
+<li><p class="first"><tt class="literal"><span class="pre">encodeValuesOfObjCType:</span></tt></p>
+<p>Use multiple calls to <tt class="literal"><span class="pre">encodeValueOfObjCType:at:</span></tt> instead.</p>
+</li>
+<li><p class="first"><tt class="literal"><span class="pre">decodeValuesOfObjCType:</span></tt></p>
+<p>Use multiple calls to <tt class="literal"><span class="pre">decodeValueOfObjCType:at:</span></tt> instead. Note that
+that won't work if your trying to read back data that was written using
+<tt class="literal"><span class="pre">encodeValuesOfObjCType:</span></tt>.</p>
+</li>
 </ul>
+<p>The method <tt class="literal"><span class="pre">decodeBytesWithoutReturnedLength:</span></tt> is not supported, use 
+<tt class="literal"><span class="pre">decodeBytesWithReturnedLength:</span></tt> instead. It is not possible to safely
+represent the return value of this method in Python.</p>
 </div>
 <div class="section" id="class-nsdata">
 <h2><a class="toc-backref" href="#id25" name="class-nsdata">Class <tt class="literal"><span class="pre">NSData</span></tt></a></h2>
