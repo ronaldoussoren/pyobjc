@@ -36,6 +36,9 @@
 
 -initWithPythonObject:(PyObject*)v;
 {
+	self = [super init];
+	if (!self) return nil;
+
 	value = PySequence_Fast(v, 
 		"pyObject of OC_PythonDictionaryEnumerator must be a sequence");
 	cur   = 0;
@@ -97,8 +100,12 @@
 
 -initWithPythonObject:(PyObject*)v;
 {
-	value = v;
+	self = [super init];
+	if (!self) return nil;
+
 	Py_INCREF(v);
+	Py_XDECREF(value);
+	value = v;
 	return self;
 }
 
@@ -146,15 +153,14 @@
 		}
 
 		v = PyDict_GetItem(value, k);
+		Py_DECREF(k);
 
 		if (!v) {
-			Py_DECREF(k);
 			PyErr_Clear();
 			PyObjC_GIL_RETURN(nil);
 		}
 
 		err = depythonify_c_value("@", v, &result);
-		Py_DECREF(k);
 		if (err == -1) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
@@ -171,16 +177,14 @@
 	PyObject* k = NULL;
 
 	PyObjC_BEGIN_WITH_GIL
-		v = pythonify_c_value("@", &val);
+		v = PyObjC_IdToPython(val);
 		if (v == NULL) {
-			Py_XDECREF(k);
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-		k = pythonify_c_value("@", &key);
+		k = PyObjC_IdToPython(key);
 		if (k == NULL) {
 			Py_XDECREF(v);
-			Py_XDECREF(k);
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
@@ -201,7 +205,7 @@
 	PyObject* k;
 
 	PyObjC_BEGIN_WITH_GIL
-		k = pythonify_c_value("@", &key);
+		k = PyObjC_IdToPython(key);
 		if (k == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
@@ -222,6 +226,9 @@
 
 	PyObjC_BEGIN_WITH_GIL
 		keys = PyDict_Keys(value);
+		if (keys == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 		result = [OC_PythonDictionaryEnumerator 
 				newWithPythonObject:keys];
 		Py_DECREF(keys);

@@ -18,13 +18,13 @@
 #ifndef PyObjC_RUNTIME_APPLE_H
 #define PyObjC_RUNTIME_APPLE_H
 
-
 #import <Foundation/NSObject.h>
 #import <Foundation/NSString.h>
 
 #include <objc/objc-runtime.h>
 
-static inline int PyObjCRT_SameSEL(SEL a, SEL b)
+static inline int 
+PyObjCRT_SameSEL(SEL a, SEL b)
 {
 	return a == b;
 }
@@ -56,6 +56,7 @@ PyObjCRT_NextMethodList(Class c, void ** p)
 static inline void 
 PyObjCRT_InitMethod(Method m, SEL name, const char* types, IMP imp)
 {
+	memset(m, 0, sizeof(*m));
 	m->method_name = name;
 	m->method_types = strdup((char*)types);
 	m->method_imp = imp;
@@ -73,9 +74,9 @@ extern struct objc_method_list* PyObjCRT_AllocMethodList(int);
 typedef Method PyObjCRT_Method_t;
 typedef Ivar PyObjCRT_Ivar_t;
 
-#define GETISA(c)       (c)->isa
+#define GETISA(c)       ((c)->isa)
 
-#define RECEIVER(c)     (c).receiver
+#define RECEIVER(c)     ((c).receiver)
 
 #define _C_CONST    'r'
 #define _C_IN       'n'
@@ -119,12 +120,13 @@ objc_methodlist_magic(Class cls)
 static inline const char *
 get_selector_encoding (id self, SEL sel)
 {
-  struct objc_method* m = class_getInstanceMethod(self->isa, sel);
+	struct objc_method* m = class_getInstanceMethod(self->isa, sel);
 
-  if (!m)
-    return NULL;
-  else
-    return m->method_types;
+	if (!m) {
+		return NULL;
+	} else {
+		return m->method_types;
+	}
 }
 
 #endif /* PyObjC_RUNTIME_APPLE_H */

@@ -109,9 +109,6 @@ check_argcount (PyObject *pymethod, int argcount)
 {
 	PyCodeObject *func_code;
 
-	if (!pymethod) {
-		return NULL;
-	}
 	if (PyFunction_Check(pymethod)) {
         	func_code = (PyCodeObject *)PyFunction_GetCode(pymethod);
 		if (argcount == func_code->co_argcount) {
@@ -158,6 +155,10 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	pymethod = PyObject_GetAttrString(obj, 
 			PyObjC_SELToPythonName(
 				aSelector, pymeth_name, sizeof(pymeth_name)));
+	if (pymethod == NULL) {
+		return NULL;	
+	}
+
 	return check_argcount(pymethod, argcount);
 }
 
@@ -181,7 +182,6 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		}
 	
 	PyObjC_END_WITH_GIL
-
 }
 
 
@@ -214,13 +214,13 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		}
 
 
-		if (PyMethod_Check (pymethod)) {
-			func_code = (PyCodeObject *) PyFunction_GetCode(
+		if (PyMethod_Check(pymethod)) {
+			func_code = (PyCodeObject*) PyFunction_GetCode(
 				PyMethod_Function (pymethod));
 			argcount = func_code->co_argcount-1;
 
 		} else {
-			func_code = (PyCodeObject *) PyFunction_GetCode(
+			func_code = (PyCodeObject*) PyFunction_GetCode(
 				pymethod);
 			argcount = func_code->co_argcount;
 		}
@@ -418,7 +418,7 @@ static  PyObject* getKeyFunc = NULL;
 
 	PyObject* keyName;
 	PyObject* val;
-	id res;
+	id res = nil;
 
 	PyObjC_BEGIN_WITH_GIL
 
@@ -431,7 +431,7 @@ static  PyObject* getKeyFunc = NULL;
 			}
 		}
 
-		keyName = pythonify_c_value(@encode(id), &key);
+		keyName = PyObjC_IdToPython(key);
 		if (keyName == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
@@ -486,12 +486,12 @@ static  PyObject* setKeyFunc = NULL;
 			}
 		}
 
-		keyName = pythonify_c_value(@encode(id), &key);
+		keyName = PyObjC_IdToPython(key);
 		if (keyName == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-		pyValue = pythonify_c_value(@encode(id), &value);
+		pyValue = PyObjC_IdToPython(value);
 		if (pyValue == NULL) {
 			Py_DECREF(keyName);
 			PyObjC_GIL_FORWARD_EXC();
