@@ -10,7 +10,7 @@ Implements a standard toolbar.
 # there are still moments where the app appears to hang briefly. This should
 # only be noticable when your DNS is slow-ish. The hang is caused by the
 # socket.getaddrinfo() function, which is used (indirectly) when connecting
-# to a server, which is an frequent operation when using xmlrpclib (it makes
+# to a server, which is a frequent operation when using xmlrpclib (it makes
 # a new connection for each request). Up to (and including) version 2.3b1,
 # Python would not grant time to other threads while blocking inside
 # getaddrinfo(). This has been fixed *after* 2.3b1 was released. (jvr)
@@ -205,9 +205,14 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         the toolbar.  The actual set of available toolbar items is
         determined by other mechanisms (user defaults, for example).
         """
-        addToolbarItem(self, kWSTReloadContentsToolbarItemIdentifier, "Reload", "Reload", "Reload Contents", None, "reloadVisibleData:", NSImage.imageNamed_("Reload"), None)
-        addToolbarItem(self, kWSTPreferencesToolbarItemIdentifier, "Preferences", "Preferences", "Show Preferences", None, "orderFrontPreferences:", NSImage.imageNamed_("Preferences"), None)
-        addToolbarItem(self, kWSTUrlTextFieldToolbarItemIdentifier, "URL", "URL", "Server URL", None, None, self.urlTextField, None)
+        addToolbarItem(self, kWSTReloadContentsToolbarItemIdentifier,
+                       "Reload", "Reload", "Reload Contents", None,
+                       "reloadVisibleData:", NSImage.imageNamed_("Reload"), None)
+        addToolbarItem(self, kWSTPreferencesToolbarItemIdentifier,
+                       "Preferences", "Preferences", "Show Preferences", None,
+                       "orderFrontPreferences:", NSImage.imageNamed_("Preferences"), None)
+        addToolbarItem(self, kWSTUrlTextFieldToolbarItemIdentifier,
+                       "URL", "URL", "Server URL", None, None, self.urlTextField, None)
         
         self._toolbarDefaultItemIdentifiers = [
             kWSTReloadContentsToolbarItemIdentifier,
