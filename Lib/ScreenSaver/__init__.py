@@ -7,18 +7,22 @@ documentation for details on how to use these functions and classes.
 
 
 # Load the ScreenSaver framework, and gather all classes defined there
-import objc
+import objc as _objc
 
-import AppKit
-del AppKit
+import AppKit as _AppKit
 
 # Custom method signature (undocumented class, this is a guess)
-objc.setSignatureForSelector("ScreenSaverUserInfo", "loginUserName:andID:", "v@:o^@o^I")
+_objc.setSignatureForSelector("ScreenSaverUserInfo", "loginUserName:andID:", "v@:o^@o^I")
 
-objc.loadBundle("ScreenSaver", globals(), bundle_path="/System/Library/Frameworks/ScreenSaver.framework")
+_objc.loadBundle(
+    "ScreenSaver",
+    globals(),
+    bundle_path=_objc.pathForFramework(
+        "/System/Library/Frameworks/ScreenSaver.framework",
+    ),
+)
 
-del objc
 # NOTE: One MacOSX 10.2.4 the framework doesn't define constants,
 # therefore there is no _ScreenSaver module.
 
-# Define usefull utility methods here
+# Define useful utility methods here

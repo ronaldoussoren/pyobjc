@@ -205,7 +205,7 @@ class TestNSArraySpecialMethods(unittest.TestCase):
         self.assertRaises(ValueError, NSArray.arrayWithObjects_count_, ('a','b'), 3)
 
     def test_arrayByAddingObjects_count_(self):
-        if sys.platform != 'darwin' and not hasattr(NSArray, 'arrayByAddingObjects_count_'): return
+        if objc.platform != 'MACOSX' and not hasattr(NSArray, 'arrayByAddingObjects_count_'): return
 
         a = NSArray.arrayWithArray_(('a', 'b', 'c'))
         self.assertEquals(a, ('a', 'b', 'c'))
@@ -254,7 +254,7 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
 
 
     def testReplaceObjects(self):
-        if sys.platform == 'darwin' or hasattr(NSMutableArray, 'replaceObjectsInRange_withObjects_count_'):
+        if objc.platform == 'MACOSX' or hasattr(NSMutableArray, 'replaceObjectsInRange_withObjects_count_'):
 
             a = NSMutableArray.arrayWithArray_(range(4))
             self.assertEquals(a, (0, 1, 2, 3))
@@ -280,7 +280,7 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
         a = NSMutableArray.arrayWithArray_(range(10))
         self.assertEquals(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
         
-        if sys.platform == 'darwin' or hasattr(a, 'sortUsingFunction_context_range_'):
+        if objc.platform == 'MACOSX' or hasattr(a, 'sortUsingFunction_context_range_'):
             def cmpfunc(l, r, c):
                 return -cmp(l,r)
 
@@ -319,7 +319,7 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
         a = NSMutableArray.arrayWithArray_(range(10))
         self.assertEquals(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
 
-        if sys.platform == 'darwin' or hasattr(a, 'sortUsingFunction_context_range_'):
+        if objc.platform == 'MACOSX' or hasattr(a, 'sortUsingFunction_context_range_'):
             def cmpfunc(l, r, c):
                 return -cmp(l,r)
 
@@ -352,7 +352,7 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
         o = NSArray.arrayWithArray_(range(4))
         self.assertRaises(TypeError, o.getObjects_)
         self.assertRaises(TypeError, o.getObjects_range_, (1,2))
-        if sys.platform == 'darwin' or hasattr(o, 'apply_context_'):
+        if objc.platform == 'MACOSX' or hasattr(o, 'apply_context_'):
             self.assertRaises(TypeError, o.apply_context_, lambda x, y:None, 0)
 
 if __name__ == '__main__':

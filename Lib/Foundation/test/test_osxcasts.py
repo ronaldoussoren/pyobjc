@@ -4,7 +4,7 @@ from objc import *
 from Foundation import *
 
 try:
-    # These tests are only usefull on MacOS X when using MacPython
+    # These tests are only useful on MacOS X when using MacPython
     from Carbon.CF import *
 
 
