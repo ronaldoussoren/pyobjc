@@ -1,6 +1,7 @@
 2002-11-18 Ronald Oussoren <oussoren@cistron.nl>
 	* Doc/classes.txt: new file documenting how classes work
-	* Modules/objc: Reformatted (4-space indent)
+	* Lib/objc: Reformatted (4-space indent) and remove superfluos 
+	  whitespace
 
 2002-11-17  Bill Bumgarner  <bbum@codefab.com>
 
