@@ -82,3 +82,11 @@ def admin_writable(path):
 
 def reduce_size(files):
     return sum([os.stat(fn).st_size for fn in files])
+
+def sw_vers():
+    info = os.popen('/usr/bin/sw_vers').read().splitlines()
+    for line in info:
+        key, value = line.split(None, 1)
+        if key == 'ProductVersion:':
+            return value.strip()
+    raise ValueError, "What?!"
