@@ -984,6 +984,112 @@ protocolsForClass(PyObject* self __attribute__((__unused__)),
 	return protocols;
 }
 
+PyDoc_STRVAR(createOpaquePointerType_doc,
+	"createOpaquePointerType(name, typestr, doc) -> type\n"
+	"\n"
+	"Return a wrapper type for opaque pointers of the given type. The type \n"
+	"will be registered with PyObjC and will be used to wrap pointers of the \n"
+	"given type."
+);
+static PyObject*
+createOpaquePointerType(PyObject* self __attribute__((__unused__)),
+		PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "name", "typestr", "doc", NULL };
+	char* name;
+	char* typestr;
+	char* docstr = NULL;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "ss|s", keywords, 
+				&name, &typestr, &docstr)) {
+		return NULL;
+	}
+
+	return PyObjCCreateOpaquePointerType(name, typestr, docstr);
+}
+
+PyDoc_STRVAR(createStructType_doc,
+	"createStructType(name, typestr, fieldnames, doc) -> type\n"
+	"\n"
+	"Return a wrapper type for structs of the given type. The wrapper will \n"
+	"registered with PyObjC and will be used to wrap structs of the given type."
+);
+static PyObject*
+createStructType(PyObject* self __attribute__((__unused__)),
+		PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "name", "typestr", "fieldnames", "doc", NULL };
+	char* name;
+	char* typestr;
+	PyObject* pyfieldnames;
+	char* docstr = NULL;
+	PyObject* retval;
+	char** fieldnames = NULL;
+	int i;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "ssO|s", keywords, 
+				&name, &typestr, &pyfieldnames, &docstr)) {
+		return NULL;
+	}
+
+	name = strdup(name);
+	typestr = strdup(typestr);
+	if (docstr) {
+		docstr = strdup(docstr);
+	}
+	pyfieldnames = PySequence_Fast(pyfieldnames, 
+			"fieldnames must be a sequence of strings");
+
+	if (pyfieldnames == NULL) goto error_cleanup;
+	if (name == NULL || typestr == NULL) {
+		PyErr_NoMemory();
+		goto error_cleanup;
+	}
+
+	fieldnames = malloc(sizeof(char*) * PySequence_Fast_GET_SIZE(pyfieldnames));
+	if (fieldnames == NULL) {
+		PyErr_NoMemory();
+		goto error_cleanup;
+	}
+	memset(fieldnames, 0, 
+			sizeof(char*) * PySequence_Fast_GET_SIZE(pyfieldnames));
+	for (i = 0; i < PySequence_Fast_GET_SIZE(pyfieldnames); i++) {
+		PyObject* v = PySequence_Fast_GET_ITEM(pyfieldnames, i);
+		if (!PyString_Check(v)) {
+			PyErr_SetString(PyExc_TypeError,
+				"fieldnames must be a sequence of strings");
+			goto error_cleanup;
+		}
+		fieldnames[i] = strdup(PyString_AS_STRING(v));
+		if (fieldnames[i] == NULL) {
+			PyErr_NoMemory();
+			goto error_cleanup;
+		}
+	}
+
+	retval = PyObjC_RegisterStructType(typestr, name, docstr, NULL,
+			PySequence_Fast_GET_SIZE(pyfieldnames), 
+			(const char**)fieldnames);
+	if (retval == NULL) goto error_cleanup;
+	Py_DECREF(pyfieldnames);
+
+	return retval;
+
+error_cleanup:
+	if (name) free(name);
+	if (typestr) free(typestr);
+	if (docstr) free(docstr);
+	if (fieldnames) {
+		for (i = 0; i < PySequence_Fast_GET_SIZE(pyfieldnames); i++) {
+			if (fieldnames[i]) free(fieldnames[i]);
+		}
+		free(fieldnames);
+	}
+	Py_XDECREF(pyfieldnames);
+
+	return NULL;
+}
+
 PyDoc_STRVAR(PyObjCIvar_Info_doc, 
 	"listInstanceVariables(classOrInstance) -> [ (name, typestr), ... ]\n"
 	"\n"
@@ -1059,7 +1165,11 @@ static PyMethodDef mod_methods[] = {
 	{ "getInstanceVariable", (PyCFunction)PyObjCIvar_Get,
 		METH_VARARGS|METH_KEYWORDS, PyObjCIvar_Get_doc },
 	{ "setInstanceVariable", (PyCFunction)PyObjCIvar_Set,
-		METH_VARARGS|METH_KEYWORDS, PyObjCIvar_Get_doc },
+		METH_VARARGS|METH_KEYWORDS, PyObjCIvar_Set_doc },
+	{ "createOpaquePointerType", (PyCFunction)createOpaquePointerType,
+		METH_VARARGS|METH_KEYWORDS, createOpaquePointerType_doc },
+	{ "createStructType", (PyCFunction)createStructType,
+		METH_VARARGS|METH_KEYWORDS, createStructType_doc },
 
 	{ 0, 0, 0, 0 } /* sentinel */
 };
@@ -1138,13 +1248,12 @@ init_objc(void)
 	PyType_Ready(&PyObjCUnicode_Type);
 	PyType_Ready(&PyObjCIMP_Type);
 	PyType_Ready(&PyObjCMethodAccessor_Type);
-	PyType_Ready(&PyObjCZoneWrapper_Type);
 
 	m = Py_InitModule4("_objc", mod_methods, NULL,
 			NULL, PYTHON_API_VERSION);
 
-    d = PyModule_GetDict(m);
-    /* use PyDict_SetItemString for the retain, non-heap types can't be dealloc'ed */
+	d = PyModule_GetDict(m);
+	/* use PyDict_SetItemString for the retain, non-heap types can't be dealloc'ed */
 	PyDict_SetItemString(d, "objc_class", (PyObject*)&PyObjCClass_Type);
 	PyDict_SetItemString(d, "objc_object", (PyObject*)&PyObjCObject_Type);
 	PyDict_SetItemString(d, "pyobjc_unicode", (PyObject*)&PyObjCUnicode_Type);

@@ -114,12 +114,13 @@ struct pyobjc_api objc_api = {
 	PyObjCErr_AsExc,		/* err_python_to_nsexception */
 	PyGILState_Ensure,		/* gilstate_ensure */
 	obj_is_uninitialized,   /* obj_is_uninitialized */
-    PyObjCObject_Convert,   /* pyobjcobject_convert */
-    PyObjCSelector_Convert, /* pyobjcselector_convert */
-    PyObjCClass_Convert,    /* pyobjcclass_convert */
-    PyObjC_ConvertBOOL,     /* pyobjc_convertbool */
-    PyObjC_ConvertChar,     /* pyobjc_convertchar */
-	PyObjCObject_New		/* pyobjc_object_new */
+	PyObjCObject_Convert,   /* pyobjcobject_convert */
+	PyObjCSelector_Convert, /* pyobjcselector_convert */
+	PyObjCClass_Convert,    /* pyobjcclass_convert */
+	PyObjC_ConvertBOOL,     /* pyobjc_convertbool */
+	PyObjC_ConvertChar,     /* pyobjc_convertchar */
+	PyObjCObject_New,		/* pyobjc_object_new */
+	PyObjCCreateOpaquePointerType, /* pointer_type_new */
 };
 
 int PyObjCAPI_Register(PyObject* module)

@@ -9,8 +9,8 @@ class TestNSPoint (unittest.TestCase):
     def testConstructor(self):
         p = NSPoint()
         self.assert_(isinstance(p, NSPoint))
-        self.assertEquals(p.x, None)
-        self.assertEquals(p.y, None)
+        self.assertEquals(p.x, 0)
+        self.assertEquals(p.y, 0)
 
         p = NSPoint(1,2)
         self.assert_(isinstance(p, NSPoint))
@@ -79,7 +79,7 @@ class TestNSPoint (unittest.TestCase):
 
     def testRepr(self):
         p = NSPoint()
-        self.assertEquals(repr(p), "<Foundation.NSPoint x=None y=None>")
+        self.assertEquals(repr(p), "<Foundation.NSPoint x=0.0 y=0.0>")
 
         p = NSPoint(42, 98)
         self.assertEquals(repr(p), "<Foundation.NSPoint x=42 y=98>")
@@ -89,7 +89,7 @@ class TestNSPoint (unittest.TestCase):
 
     def testStr(self):
         p = NSPoint()
-        self.assertEquals(str(p), "<Foundation.NSPoint x=None y=None>")
+        self.assertEquals(str(p), "<Foundation.NSPoint x=0.0 y=0.0>")
 
         p = NSPoint(42, 98)
         self.assertEquals(str(p), "<Foundation.NSPoint x=42 y=98>")
@@ -137,8 +137,8 @@ class TestNSSize (unittest.TestCase):
     def testConstructor(self):
         p = NSSize()
         self.assert_(isinstance(p, NSSize))
-        self.assertEquals(p.width, None)
-        self.assertEquals(p.height, None)
+        self.assertEquals(p.width, 0)
+        self.assertEquals(p.height, 0)
 
         p = NSSize(1,2)
         self.assert_(isinstance(p, NSSize))
@@ -169,8 +169,8 @@ class TestNSRange (unittest.TestCase):
     def testConstructor(self):
         p = NSRange()
         self.assert_(isinstance(p, NSRange))
-        self.assertEquals(p.location, None)
-        self.assertEquals(p.length, None)
+        self.assertEquals(p.location, 0)
+        self.assertEquals(p.length, 0)
 
         p = NSRange(1,2)
         self.assert_(isinstance(p, NSRange))
