@@ -232,6 +232,11 @@ class PyKeyValueCoding (unittest.TestCase):
         STUB.setKeyValue_forObject_key_value_(1, o, "multiple.level2.level3.keyB", 9.999)
         self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
 
+class KVOClass(objc.runtime.NSObject):
+    def automaticallyNotifiesObserversForKey_(self, aKey):
+        return NO
+
+    def test(self): return "test"
 
 class TestBaseExceptions (unittest.TestCase):
     """
@@ -253,6 +258,10 @@ class TestBaseExceptions (unittest.TestCase):
 
         self.assertRaises(KeyError, 
             o.takeStoredValue_forKey_, "value", "unknownKey")
+
+    def testKVO(self):
+        o = KVOClass.alloc().init()
+        o.addObserver_forKeyPath_options_context_(self, "test", 0, 0)
 
 if __name__ == "__main__":
     unittest.main()
