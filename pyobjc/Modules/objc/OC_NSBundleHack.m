@@ -47,7 +47,7 @@ NSMapTableValueCallBacks PyObjC_ClassToNSBundle_ValueCallBacks = {
 	if (rval) {
 		return rval;
 	}
-	rval = bundleForClassIMP([NSBundle class], @selector(bundleForClass:), aClass);
+	rval = bundleForClassIMP(self, @selector(bundleForClass:), aClass);
 	if (rval == mainBundle) {
 		Class base_isa = aClass;
 		Class nsobject_isa = GETISA([NSObject class]);
