@@ -98,13 +98,20 @@ static	char* keywords[] = { "argv", NULL };
 	  ((NSProcessInfoStruct *)processInfo)->arguments = args;
 	}
 
-	res = NSApplicationMain(argc, argv);
+	NS_DURING
+		res = NSApplicationMain(argc, argv);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+		res = -1;
+	NS_ENDHANDLER
 
 	for (i = 0; i < argc; i++) {
 		free(argv[i]);
 	}
 	free(argv);
 
+	if (res == -1 && PyErr_Occurred())
+		return NULL;
 	return PyInt_FromLong(res);
 
 error_cleanup:
