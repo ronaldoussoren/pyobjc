@@ -165,10 +165,10 @@ The module maintains a global set of class definitions, extracted from
 nibs. To add the classes from a nib to this set, use the ``extractClasses()``
 function. It can be called in two ways:
 
-- ``extractClasses(nibName, bundle=<main-bundle>)``
+- ``extractClasses(nibName, bundle=<current-bundle>)``
 
   This finds the nib by name from a bundle. If no bundle
-  if given, the main bundle is searched.
+  if given, the ``objc.currentBundle()`` is searched.
 
 - ``extractClasses(path=pathToNib)``
 

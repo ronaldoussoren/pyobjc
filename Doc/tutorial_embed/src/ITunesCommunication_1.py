@@ -17,6 +17,9 @@ from PyObjCTools import NibClassBuilder
 # we can subclass our ITunesCommunication from AutoBaseClass
 # later on, and its actual baseclass will be ITunesCommunication
 # from the NIB file.
+# Since the NIB files are in the application, NOT the plugin, we
+# need to specify this explicitly.  Typicaly, NIB files would be in the
+# plugins.
 NibClassBuilder.extractClasses("CDInfoDocument", bundle=NSBundle.mainBundle())
 
 class ITunesCommunication(NibClassBuilder.AutoBaseClass):

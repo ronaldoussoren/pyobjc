@@ -320,18 +320,6 @@ a new one, the code below will silently leak memory::
 
 		# ... Do work here ...
 
-Class ``NSBundle``
-..................
-
-* ``bundleForClass:``
-
-  This method does not work correctly for classes defined in Python, these
-  all seem be defined in the ``mainBundle()``. As a workaround for plugin
-  bundles built with py2app, you can declare ``__bundle_hack__ = True``
-  on one class in the bundle (probably the NSPrincipalClass).  For this
-  class, ``bundleForClass:`` will return the expected value.  See
-  Examples/Plugins for examples of this.
-
 Class ``NSCoder``
 .................
 
