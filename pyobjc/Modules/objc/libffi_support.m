@@ -130,6 +130,7 @@ static ffi_type*
 signature_to_ffi_type(const char* argtype)
 {
 	switch (*argtype) {
+	case _C_VOID: return &ffi_type_void;
 	case _C_ID: return &ffi_type_pointer;
 	case _C_CLASS: return &ffi_type_pointer;
 	case _C_SEL: return &ffi_type_pointer;
@@ -405,6 +406,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	PyObject*	  result = NULL;
 	id		  self_obj = nil;
 	struct objc_super super;
+	struct objc_super* superPtr;
 	ffi_cif		  cif;
 	ffi_type*	  arglist[64]; /* XX: Magic constant */
 	void*             values[64];
@@ -530,13 +532,14 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		arglist[0] = &ffi_type_pointer;
 		values[0] = argbuf;
 	}
-
+	
+	superPtr = &super;
 	arglist[arglistOffset + 0] = &ffi_type_pointer;
-	values[arglistOffset + 0] = &super;
+	values[arglistOffset + 0] = &superPtr;
 	arglist[arglistOffset + 1] = &ffi_type_pointer;
-	values[arglistOffset + 1] = meth->sel_selector;
-	argbuf_cur = resultSize;
+	values[arglistOffset + 1] = &meth->sel_selector;
 	msgResult = argbuf;
+	argbuf_cur = resultSize;
 
 	py_arg = 0;
 	for (i = 2; i < objc_argcount; i++) {
@@ -657,10 +660,10 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	PyErr_Clear();
 	if (arglistOffset) {
 		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, objc_argcount,
-			&ffi_type_pointer, arglist);
+			&ffi_type_void, arglist);
 	} else {
 		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, objc_argcount,
-			&ffi_type_void, arglist);
+			&ffi_type_pointer, arglist);
 	}
 	if (r != FFI_OK) {
 		ObjCErr_Set(PyExc_RuntimeError,
