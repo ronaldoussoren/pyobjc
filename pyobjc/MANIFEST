@@ -103,6 +103,7 @@
 ./Lib/Foundation/__init__.py
 ./Lib/Foundation/Foundation.byref
 ./Lib/Foundation/test/test_subclassing.py
+./Lib/Foundation/test/test_nsobject.py
 ./Lib/objc/__init__.py
 ./Lib/objc/_convenience.py
 ./Lib/objc/_FoundationSignatures.py
