@@ -5,6 +5,6 @@ Templates directory used by Project Builder.   The following command
 will add the "Cocoa-Python Application" template to the Application
 group within Project Builder's new project wizard.
 
-cp -r Cocoa-Python\ Application \
-   /Developer/ProjectBuilder\ Extras/Project\ Templates/Application/
+The install.sh shell script installs the various projects onto the local system.
+
 

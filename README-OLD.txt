@@ -1,9 +1,4 @@
-# -*- indented-text -*-
-#
-# This file is part of the PyObjC package.
-#
-
-The ObjC package provides the glue needed to interface the Python
+The PyObjC package provides the glue needed to interface the Python
 interpreter with the Objective-C language. The 'objc' module makes Objective-C
 objects and classes available as first-class Python citizens, it is not only
 possible to use Objective-C objects but you can also subclass Objective-C 
