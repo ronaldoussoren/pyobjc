@@ -1,24 +1,47 @@
-#
-# Using an NSDictionary.
-#
-# You can use both the Python and Objective-C interfaces to access a
-# dictionary.
-#
-from Foundation import *
+#!/usr/bin/env python
+# This is a doctest
+"""
+==============================
+Using Cocoa collection classes
+==============================
 
-obj = NSMutableDictionary.dictionary()
-print "An empty NSMutableDictionary:", obj
-print "Actual type:", type(obj)
+Cocoa contains a number of collection classes, including dictionaries and
+arrays (like python lists) in mutable and immutable variations. We'll 
+demonstrate their usage using the ``NSMutableDictonary`` class.
 
-print "Setting key2 the objective-C way"
-obj.setObject_forKey_(42, 'key2')
-print "Setting key1 the python way"
-obj['key1'] = 'value1'
+We'll start by importing everything we need::
 
-print "key1 = ", obj.objectForKey_('key1')
-print "key2 = ", obj['key2']
+    >>> from Foundation import *
 
-# Print values
-print "all keys:", obj.keys()
-print "all values:",  obj.values()
-print "A filled NSMutableDictonary:", obj
+Then create an empty dictionary::
+
+    >>> d = NSMutableDictionary.dictionary()
+    >>> d
+    {}
+    >>> isinstance(d, dict)
+    False
+    >>> isinstance(d, NSMutableDictionary)
+    True
+
+You can add a new value using the Objective-C API::
+
+    >>> d.setObject_forKey_(42, 'key2')
+    >>> d
+    {key2 = 42; }
+
+But can also use the familiar python interface:
+
+    >>> d['key1'] = u'hello'
+    >>> d
+    {key1 = hello; key2 = 42; }
+
+The same is true for fetching elements::
+
+    >>> d['key2']
+    42
+    >>> d.objectForKey_('key1')
+    u'hello'
+"""
+import doctest
+import __main__
+doctest.testmod(__main__, verbose=1)
