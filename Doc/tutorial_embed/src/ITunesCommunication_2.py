@@ -41,7 +41,7 @@ class ITunesCommunication(NibClassBuilder.AutoBaseClass):
         artist = self.itunes.get(current_track.artist)
         genre = self.itunes.get(current_track.genre)
         return album, artist, genre
-        
+
     def askITunes_(self, obj):
         # obj is the button the user pressed. We can go from here
         # to the document (an instance of CDInfoDocument)
@@ -57,4 +57,3 @@ class ITunesCommunication(NibClassBuilder.AutoBaseClass):
         document.setCDTitle_(album)
         document.setBandName_(artist)
         document.setMusicGenre_(genre)
-

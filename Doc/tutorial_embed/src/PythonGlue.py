@@ -15,11 +15,11 @@ def main():
     resource_folder, ourname = os.path.split(__file__)
     if DEBUG:
         print "PythonGlue: resource folder:", resource_folder
-    
+
     # Add this folder and the PyObjC subfolder to sys.path
     sys.path.append(resource_folder)
     sys.path.append(os.path.join(resource_folder, "PyObjC"))
-    
+
     # Now import all modules from the resource folder
     count = 0
     for filename in os.listdir(resource_folder):
@@ -31,7 +31,6 @@ def main():
             count = count + 1
     if count == 0:
         print "PythonGlue: Warning: no Python modules found"
-            
+
 if __name__ == '__main__':
     main()
-    

@@ -35,4 +35,3 @@ class ITunesCommunication(NibClassBuilder.AutoBaseClass):
         document.setBandName_("Uit de Sloot")
         document.setCDTitle_("En Snel Een Beetje")
         document.setMusicGenre_("Punkrock")
-

@@ -119,7 +119,7 @@ class pyobjc_build_ext (build_ext):
         return retval
 
 
-                
+
 
 
     def run(self):
@@ -341,7 +341,7 @@ if gs_root is None:
         ]
 
     OBJC_LDFLAGS=[
-        '-framework', 'Foundation', 
+        '-framework', 'Foundation',
         ]
 
     CF_LDFLAGS=[
@@ -397,7 +397,7 @@ else:
         for pth in (gs_root, ):
             basedir = os.path.join(pth, 'Headers', name)
             if os.path.exists(basedir):
-                    return packages, extensions
+                return packages, extensions
         return [], []
 
     CFLAGS=[
@@ -572,7 +572,7 @@ CoreFoundationPackages, CoreFoundationExtensions = \
                       ] + CF_LDFLAGS,
                       **CoreFoundationDepends),
         ])
-        
+
 SecurityInterfacePackages, SecurityInterfaceExtensions = \
         IfFrameWork('SecurityInterface.framework', [ 'SecurityInterface' ], [
             Extension('_SecurityInterface',
