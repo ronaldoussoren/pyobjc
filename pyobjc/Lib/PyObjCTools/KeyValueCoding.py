@@ -33,6 +33,13 @@ __all__ = ("getKey", "setKey", "getKeyPath", "setKeyPath")
 import objc
 import types
 
+if objc.lookUpClass('NSObject').alloc().init().respondsToSelector_('setValue:forKey:'):
+    SETVALUEFORKEY = 'setValue_forKey_'
+    SETVALUEFORKEYPATH = 'setValue_forKeyPath_'
+else:
+    SETVALUEFORKEY = 'takeValue_forKey_'
+    SETVALUEFORKEYPATH = 'takeValue_forKeyPath_'
+
 def getKey(obj, key):
     """
     Get the attribute referenced by 'key'. The key is used
@@ -119,7 +126,7 @@ def setKey(obj, key, value):
     """
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
         try:
-            return obj.takeValue_forKey_(value, key)
+            return getattr(obj, SETVALUEFORKEY)(value, key)
         except ValueError, msg:
             raise KeyError, str(msg)
 
@@ -172,7 +179,7 @@ def setKeyPath(obj, keypath, value):
     path of keys, seperated by dots.
     """
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
-        return obj.takeValue_forKeyPath_(value, keypath)
+        return getattr(obj, SETVALUEFORKEYPATH)(value, keypath)
 
     elements = keypath.split('.')
     cur = obj
