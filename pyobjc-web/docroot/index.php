@@ -38,14 +38,13 @@ include $fsroot."news/news.inc";
 <h1>Status</h1>
 
 <p>
-<a href="software/index.php">PyObjC 1.1</a> was released on 30 May 2004.  See the <a href="NEWS-1.1.txt">NEWS</a> for details.
+<a href="software/index.php">PyObjC 1.2</a> was released on 29 December 2004.  See the <a href="NEWS-1.2.txt">NEWS</a> for details.
 </p>
 
 <h1>Platform support</h1>
 
 The development of the bridge is currently focused on 
-<a href="http://www.apple.com/macosx/">Mac OS X</a> 10.2 and later. The 
-current version has minimal support for MacOS X 10.1, earlier versions are not 
+<a href="http://www.apple.com/macosx/">Mac OS X</a> 10.2 and later. Earlier versions are not 
 (and will never be) supported.
 <p>
 There is limited support for <a href="http://www.gnustep.org/">GNUstep</a>, 
