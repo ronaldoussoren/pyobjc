@@ -123,22 +123,6 @@ static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
 	return result;
 }
 
-#define NSLog_doc "NSLog(str) -> None"
-PyObject* objc_NSLog(PyObject* self, PyObject* args, PyObject* kwds)
-{
-static	char* keywords[] = { "value", NULL };
-	char* value;
-
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "s:NSLog",
-			keywords, &value)) {
-		return NULL;
-	}
-	NSLog(@"%s", value);
-
-	Py_INCREF(Py_None);
-	return Py_None;
-}
-
 #ifdef GNUSTEP
 #include "_Fnd_Functions.GNUstep.inc"
 
@@ -168,12 +152,6 @@ static PyMethodDef foundation_methods[] = {
 		(PyCFunction)objc_NSLocalizedStringFromTableInBundle, 
 		METH_VARARGS|METH_KEYWORDS, 
 		NSLocalizedStringFromTable_doc 
-	},
-	{ 
-		"NSLog", 
-		(PyCFunction)objc_NSLog, 
-		METH_VARARGS|METH_KEYWORDS, 
-		NSLog_doc
 	},
 
 	METHOD_TABLE_ENTRIES

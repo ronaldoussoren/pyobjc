@@ -27,6 +27,9 @@
  * object to pass the key that should be remove, that seems to be the easiest
  * (but ugly) method of creating a closure.
  *
+ *
+ * FIXME: This really should be in a seperate file, with some cleanups to
+ *        the API.
  */
 
 static NSMapTable* proxy_dict = NULL;
@@ -105,6 +108,8 @@ register_proxy(PyObject* proxy_obj)
 		objc_obj = ObjCObject_GetObject(proxy_obj);
 	} else if (ObjCClass_Check(proxy_obj)) {
 		objc_obj = ObjCClass_GetClass(proxy_obj);
+	} else if (ObjCUnicode_Check(proxy_obj)) {
+		objc_obj = ObjCUnicode_Extract(proxy_obj);
 	} else {
 		PyErr_SetString(PyExc_TypeError, 
 			"bad argument for register_proxy");

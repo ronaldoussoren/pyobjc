@@ -54,6 +54,7 @@ FOUNDATION_IGNORE_LIST=(
 	"NSNonRetainedObjectMapValueCallBacks",
 	"NSOwnedPointerMapValueCallBacks",
 	"NSIntHashCallBacks",
+        "NSHangOnMallocError",
 )
 
 var_generator.generate(FOUNDATION_HDRS, '_Fnd_Var.inc', FOUNDATION_PREFIX, FOUNDATION_IGNORE_LIST)
@@ -74,8 +75,13 @@ FOUNDATION_IGNORE_LIST=(
 	'_NSAddHandler2',
 	'_NSRemoveHandler2',
 	'_NSExceptionObjectFromHandler2'
+
+        # List of manually wrapped functions:
 )
 APPKIT_IGNORE_LIST=(
+
+        # List of manually wrapped functions:
+        'NSApplicationMain',
 )
 func_collector.generate(FOUNDATION_HDRS, 'Foundation.prototypes', 
 	FOUNDATION_PREFIX, FOUNDATION_IGNORE_LIST)
@@ -98,6 +104,34 @@ func_builder.INT_ALIASES.extend([
 	'NSSearchPathDomainMask', 'NSTestComparisonOperation',
 	'NSURLHandleStatus', 'NSWhoseSubelementIdentifier']
 )
+func_builder.IGNORE_VARARGS.extend([
+        # Some of these are Foundation some are AppKit
+        'NSGetInformationalAlertPanel',
+        'NSLog',
+        'NSRunAlertPanel',
+        'NSRunInformationalAlertPanel',
+        'NSRunCriticalAlertPanel',
+        'NSRunAlertPanelRelativeToWindow',
+        'NSRunInformationalAlertPanelRelativeToWindow',
+        'NSRunCriticalAlertPanelRelativeToWindow',
+        'NSBeginAlertSheet',
+        'NSBeginInformationalAlertSheet',
+        'NSBeginCriticalAlertSheet',
+        'NSGetAlertPanel',
+        'NSGetCriticalAlertPanel',
+])
+
+def BeginSheetMapper(funcname, args):
+    new_args = []
+    for tp, name in args:
+        if name == 'contextInfo':
+            tp = 'int'
+        new_args.append((tp, name))
+    return tuple(new_args)
+func_builder.FUNC_MAP['NSBeginAlertSheet'] = BeginSheetMapper
+func_builder.FUNC_MAP['NSBeginInformationalAlertSheet'] = BeginSheetMapper
+func_builder.FUNC_MAP['NSBeginCriticalAlertSheet'] = BeginSheetMapper
+
 fd = file('_Fnd_Functions.inc', 'w')
 structs = ['NSPoint', 'NSSize', 'NSRect', 'NSRange']
 for s in structs:

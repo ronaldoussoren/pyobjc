@@ -46,6 +46,20 @@ static inline int convert_NSRange(PyObject* object, void* pvar)
  * This is a generated file.
  */
 
+static inline int convert_BOOL(PyObject* object, void* pvar)
+{
+    BOOL* pbool = (BOOL*)pvar;
+
+    if (PyObject_IsTrue(object)) {
+        *pbool = YES;
+    } else {
+        *pbool = NO;
+    }
+
+    return 1;
+}
+
+
 static inline int convert_char(PyObject* object, void* pvar)
 {
 	char* pchar = (char*)pvar;
@@ -374,7 +388,7 @@ static	char* keywords[] = { "aPoint", "aRect", "flipped", NULL };
 	NSRect objc_aRect;
 	BOOL objc_flipped;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&b:NSMouseInRect", keywords, convert_NSPoint, &objc_aPoint, convert_NSRect, &objc_aRect, &objc_flipped) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&:NSMouseInRect", keywords, convert_NSPoint, &objc_aPoint, convert_NSRect, &objc_aRect, convert_BOOL, &objc_flipped) < 0) return NULL;
 	NS_DURING
 		objc_result = NSMouseInRect(
 objc_aPoint, objc_aRect, objc_flipped);
@@ -799,6 +813,25 @@ objc_aClass);
 		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
+/* void NSLog(NSString *format, ...); */
+PyObject* objc_NSLog(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static	char* keywords[] = { "format", NULL };
+	PyObject* result;
+	id objc_format;
+
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSLog", keywords, convert_id, &objc_format) < 0) return NULL;
+	NS_DURING
+		NSLog(
+objc_format);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+		return NULL;
+	NS_ENDHANDLER
+	result = Py_None;
+	Py_INCREF(Py_None);
+	return result;
+}
 /* void NSDeallocateObject(id <NSObject>object); */
 PyObject* objc_NSDeallocateObject(PyObject* self, PyObject* args, PyObject* kwds)
 {
@@ -996,7 +1029,7 @@ static	char* keywords[] = { "directory", "domainMask", "expandTilde", NULL };
 	NSSearchPathDomainMask objc_domainMask;
 	BOOL objc_expandTilde;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "iib:NSSearchPathForDirectoriesInDomains", keywords, &objc_directory, &objc_domainMask, &objc_expandTilde) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "iiO&:NSSearchPathForDirectoriesInDomains", keywords, &objc_directory, &objc_domainMask, convert_BOOL, &objc_expandTilde) < 0) return NULL;
 	NS_DURING
 		objc_result = NSSearchPathForDirectoriesInDomains(
 objc_directory, objc_domainMask, objc_expandTilde);
@@ -1222,6 +1255,7 @@ static	char* keywords[] = { NULL };
 	{ "NSSelectorFromString", (PyCFunction)objc_NSSelectorFromString, METH_VARARGS|METH_KEYWORDS, "SEL NSSelectorFromString(NSString *aSelectorName);" }, \
 	{ "NSClassFromString", (PyCFunction)objc_NSClassFromString, METH_VARARGS|METH_KEYWORDS, "Class NSClassFromString(NSString *aClassName);" }, \
 	{ "NSStringFromClass", (PyCFunction)objc_NSStringFromClass, METH_VARARGS|METH_KEYWORDS, "NSString *NSStringFromClass(Class aClass);" }, \
+	{ "NSLog", (PyCFunction)objc_NSLog, METH_VARARGS|METH_KEYWORDS, "void NSLog(NSString *format, ...);" }, \
 	{ "NSDeallocateObject", (PyCFunction)objc_NSDeallocateObject, METH_VARARGS|METH_KEYWORDS, "void NSDeallocateObject(id <NSObject>object);" }, \
 	{ "NSIncrementExtraRefCount", (PyCFunction)objc_NSIncrementExtraRefCount, METH_VARARGS|METH_KEYWORDS, "void NSIncrementExtraRefCount(id object);" }, \
 	{ "NSDecrementExtraRefCountWasZero", (PyCFunction)objc_NSDecrementExtraRefCountWasZero, METH_VARARGS|METH_KEYWORDS, "BOOL NSDecrementExtraRefCountWasZero(id object);" }, \
