@@ -1,5 +1,6 @@
 import unittest
 import objc
+import types
 
 from Foundation import *
 
@@ -63,5 +64,50 @@ class TestMutable(unittest.TestCase):
 
         self.assertEquals(pyStr, "hello world")
 
+class TestPickle(unittest.TestCase):
+    """
+    Testcases for pickling of Objective-C strings. Those are pickled as
+    unicode strings.
+    """
+
+    def setUp(self):
+        self.strVal = NSTaskDidTerminateNotification
+
+    def testPickle(self):
+        """
+        Check that ObjC-strings pickle as unicode strings
+        """
+        import pickle
+
+        s = pickle.dumps(self.strVal, 0)
+        v = pickle.loads(s)
+        self.assertEquals(type(v), types.UnicodeType)
+
+        s = pickle.dumps(self.strVal, 1)
+        v = pickle.loads(s)
+        self.assertEquals(type(v), types.UnicodeType)
+
+        s = pickle.dumps(self.strVal, 2)
+        v = pickle.loads(s)
+        self.assertEquals(type(v), types.UnicodeType)
+
+    def testCPickle(self):
+        """
+        Check that ObjC-strings pickle as unicode strings
+        """
+        import cPickle as pickle
+
+        s = pickle.dumps(self.strVal, 0)
+        v = pickle.loads(s)
+        self.assertEquals(type(v), types.UnicodeType)
+
+        s = pickle.dumps(self.strVal, 1)
+        v = pickle.loads(s)
+        self.assertEquals(type(v), types.UnicodeType)
+
+        s = pickle.dumps(self.strVal, 2)
+        v = pickle.loads(s)
+        self.assertEquals(type(v), types.UnicodeType)
+
 if __name__ == '__main__':
-    unittest.main( )
+    unittest.main()

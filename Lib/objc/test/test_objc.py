@@ -67,8 +67,26 @@ class TestMethodInvocation(unittest.TestCase):
 
 class TestClassDict(unittest.TestCase):
     def testDict(self):
-        self.assert_("drawAtPoint_" in objc.runtime.NSAttributedString.__dict__)
+        self.assert_("attributesAtIndex_longestEffectiveRange_inRange_" in objc.runtime.NSAttributedString.__dict__)
 
+class TestPickle(unittest.TestCase):
+    # We don't support pickling at the moment, make sure we enforce that.
+
+    def testPicklePure(self):
+        import pickle
+
+        o = objc.runtime.NSObject.alloc().init()
+        self.assertRaises(TypeError, pickle.dumps, o, 0)
+        self.assertRaises(TypeError, pickle.dumps, o, 1)
+        self.assertRaises(TypeError, pickle.dumps, o, 2)
+
+    def testCPicklePure(self):
+        import cPickle as pickle
+
+        o = objc.runtime.NSObject.alloc().init()
+        self.assertRaises(TypeError, pickle.dumps, o, 0)
+        self.assertRaises(TypeError, pickle.dumps, o, 1)
+        self.assertRaises(TypeError, pickle.dumps, o, 2)
 
 if __name__ == '__main__':
     unittest.main()

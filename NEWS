@@ -5,6 +5,15 @@
 
 WHAT'S NEW:
 
+Version 1.0b1+ (CVS):
+- objc.pyobjc_unicode objects are now pickled as unicode objects, previously
+  the couldn't be pickled or were pickled as incomplete objects (protocol 
+  version 2). 
+
+- Pickling of ObjC objects never worked, we now explicitly throw an exception
+  if you try to pickle one: pickle protocol version 2 silently wrote the 
+  incomplete state of objects to the pickle.
+
 Version 1.0b1 (2003-07-05):
 
 - More tutorials

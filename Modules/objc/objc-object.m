@@ -410,6 +410,36 @@ static PyGetSetDef obj_getset[] = {
 	{ 0, 0, 0, 0, 0 }
 };
 
+/*
+ * We don't support pickling of Objective-C objects at the moment. The new
+ * version 2 of the pickle protocol has a default pickle method for new-style
+ * classes that doesn't work for us (it will write incomplete values to the
+ * pickle). This method forces a failure during pickling.
+ */
+static PyObject*
+meth_reduce(PyObject* self)
+{
+        PyErr_SetString(PyExc_TypeError,
+		"Cannot pickle Objective-C objects");
+	return NULL;
+}
+
+static PyMethodDef obj_methods[] = {
+	{
+		"__reduce__",
+		(PyCFunction)meth_reduce,
+		METH_NOARGS,
+		"Used for pickling"
+	},
+	{
+		NULL,
+		NULL,
+		0,
+		NULL
+	}
+};
+
+
 PyObjCClassObject PyObjCObject_Type = {
 #ifdef PyObjC_CLASS_INFO_IN_TYPE
    {
@@ -447,7 +477,7 @@ PyObjCClassObject PyObjCObject_Type = {
 	0,					/* tp_weaklistoffset */
 	0,					/* tp_iter */
 	0,					/* tp_iternext */
-	0,					/* tp_methods */
+	obj_methods,				/* tp_methods */
 	0,					/* tp_members */
 	obj_getset,				/* tp_getset */
 	0,					/* tp_base */
