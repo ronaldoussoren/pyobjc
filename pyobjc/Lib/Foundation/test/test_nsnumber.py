@@ -37,6 +37,10 @@ class TestNSNumber( unittest.TestCase ):
             if a:
                 raise AssertionError, "%s is true"%(a.description())
 
+    def testStr(self):
+        x = NSNumber.numberWithInt_(4)
+        self.assertEquals(4, int(str(x)))
+
 def suite():
     suite = unittest.TestSuite()
     suite.addTest( unittest.makeSuite( TestNSNumber ) )

@@ -1,4 +1,7 @@
 2003-02-01  Bill Bumgarner  <bbum@codefab.com>
+    * Lib/objc/_convenience.py:  __repr__ and __str__ now both invoke
+      -description.   Not sure why __repr__ doing that was commented out
+      before, but it seems to work-- same set of unit tests pass.
     * Lib/Foundation/Conversion.py:  Now handles NSValue instances correctly
       [like NSNumber].
 
