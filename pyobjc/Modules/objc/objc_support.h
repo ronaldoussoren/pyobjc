@@ -195,7 +195,8 @@ objc_methodlist_magic(Class cls)
 
 	struct objc_method_list** p;
 
-	for (p = cls->methodLists; (*p != -1) && (*p != 0); p++) {
+	for (p = cls->methodLists; (*p != (struct objc_method_list*)-1) && (*p != NULL);
+	     p++) {
 		res += (*p)->method_count;
 		cnt++;
 	}

@@ -203,7 +203,6 @@ PyObject*
 func_allocateBuffer(PyObject* self, PyObject* args, PyObject* kwds)
 {
   int length;
-  PyObject *result;
 
   if (!PyArg_ParseTuple(args, "i", &length)) {
       return NULL;
