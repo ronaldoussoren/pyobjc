@@ -24,7 +24,7 @@ Notes
   framework into the current python scope's globals.  For all intents and
   purposes, it is similar to::
 
-    from Founation import *
+    from Foundation import *
 
 - There is risk that the pyobjc modules compiled for one version of python
   will not work with another.  Where this may be a problem is if the a
