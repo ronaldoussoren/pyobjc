@@ -54,6 +54,9 @@ class DotView(NibClassBuilder.AutoBaseClass):
     def awakeFromNib(self):
         self.colorWell.setColor_(self.color)
         self.sizeSlider.setFloatValue_(self.radius)
+        scrollView = self.superview().superview()
+        scrollView.setHasHorizontalRuler_(1)
+        scrollView.setHasVerticalRuler_(1)
 
     def zoomIn_(self, sender):
         (x, y), (bw, bh) = self.bounds()
