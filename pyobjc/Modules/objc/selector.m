@@ -756,6 +756,13 @@ PyObjCSelector_FindNative(PyObject* self, char* name)
 		Object_class = [Object class];
 	}
 
+	if (name[0] == '_' && name[1] == '_') {
+		/* XXX: Try to speed up pydoc */
+		ObjCErr_Set(PyExc_AttributeError,
+			"No attribute %s", name);
+		return NULL;
+	}
+
 	if (PyObjCClass_Check(self)) {
 		Class cls = PyObjCClass_GetClass(self);
 
