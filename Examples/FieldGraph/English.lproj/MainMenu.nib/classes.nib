@@ -1,0 +1,52 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                towerFieldDisplayValueControl0 = id; 
+                towerFieldDisplayValueControl1 = id; 
+                towerFieldDisplayValueControl2 = id; 
+                towerFieldSliderValueControl0 = id; 
+                towerFieldSliderValueControl1 = id; 
+                towerFieldSliderValueControl2 = id; 
+                towerPhaseDisplayValueControl0 = id; 
+                towerPhaseDisplayValueControl1 = id; 
+                towerPhaseDisplayValueControl2 = id; 
+                towerPhaseSliderValueControl0 = id; 
+                towerPhaseSliderValueControl1 = id; 
+                towerPhaseSliderValueControl2 = id; 
+                towerSpacingDisplayValueControl = id; 
+                towerSpacingSliderValueControl = id; 
+            }; 
+            CLASS = CGraphController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                RMSGainDisplayValue = NSTextField; 
+                graphModel = CGraphModel; 
+                towerFieldDisplayValue0 = NSTextField; 
+                towerFieldDisplayValue1 = NSTextField; 
+                towerFieldDisplayValue2 = NSTextField; 
+                towerFieldSliderValue0 = NSSlider; 
+                towerFieldSliderValue1 = NSSlider; 
+                towerFieldSliderValue2 = NSSlider; 
+                towerPhaseDisplayValue0 = NSTextField; 
+                towerPhaseDisplayValue1 = NSTextField; 
+                towerPhaseDisplayValue2 = NSTextField; 
+                towerPhaseSliderValue0 = NSSlider; 
+                towerPhaseSliderValue1 = NSSlider; 
+                towerPhaseSliderValue2 = NSSlider; 
+                towerSpacingDisplayValue = NSTextField; 
+                towerSpacingSliderValue = NSSlider; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = CGraphModel; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {graphView = CGraphView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = CGraphView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
