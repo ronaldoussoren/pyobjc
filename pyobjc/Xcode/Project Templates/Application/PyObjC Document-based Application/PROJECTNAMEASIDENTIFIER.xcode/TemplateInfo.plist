@@ -1,0 +1,19 @@
+{
+	"Description" = "This project builds a Cocoa-based application written in Python that uses the NSDocument architecture.";
+	"FilesToMacroExpand" = (
+		"Info.plist",
+		"setup.py",
+		"English.lproj/MainMenu.nib/classes.nib",
+		"English.lproj/MainMenu.nib/keyedobjects.nib",
+		"ÇPROJECTNAMEASIDENTIFIERÈ.py",
+		"ÇPROJECTNAMEASIDENTIFIERÈDocument.py",
+		"English.lproj/ÇPROJECTNAMEASIDENTIFIERÈDocument.nib/classes.nib",
+		"English.lproj/ÇPROJECTNAMEASIDENTIFIERÈDocument.nib/keyedobjects.nib",
+        "ÇPROJECTNAMEASIDENTIFIERÈ.xcode/default.pbxuser",
+    );
+	"FilesToRename" = {
+        "PROJECTNAMEASIDENTIFIER.py" = "ÇPROJECTNAMEASIDENTIFIERÈ.py";
+        "PROJECTNAMEASIDENTIFIERDocument.py" = "ÇPROJECTNAMEASIDENTIFIERÈDocument.py";
+		"English.lproj/PROJECTNAMEASIDENTIFIERDocument.nib" = "English.lproj/ÇPROJECTNAMEASIDENTIFIERÈDocument.nib";
+    };
+}
