@@ -80,22 +80,6 @@ From the top of my head:
 
 * Also restructure class-builder.m, this file is way to large.
 
-* Allow ivars of Objective-C classes to be introspected
-  (but not directly from the __dict__?)
-
-  NOTE: instance-var.[hm] implements most of this, it just needs to be
-  wired up correctly. I'd do this by adding ``pyobjc_instancevars`` to
-  instances (simular to ``pyobjc_instanceMethods``). They cannot be added
-  directly to the ``__dict__`` because of this common idiom::
-
-    @interface Foo : NSObject
-    {
-       int myvar;
-    }
-    -(int)myvar;
-    -(void)setMyvar:(int)value;
-    @end
-
 * We've several types that wrap pointer values, such as ``SessionWrapper`` in
   ``Modules/AppKit``. Should add a function for creating these types, 
   possibly exposed to C code.
@@ -190,8 +174,6 @@ Code cleanup
 * SessionWrapper (in ``Modules/AppKit``) is one of several types that wrap 
   a single pointer, create a function to build such types (similar to
   ``Modules/objc/struct-wrapper.m``)
-
-* Use the ``CArray`` API whenever appropriate.
 
 Cleanup Examples
 ................

@@ -16,14 +16,20 @@ class TestPosing(unittest.TestCase):
             def testPosingMethod(self):
                 return "<PoseClass instance>"
 
-        self.assertRaises(ValueError, PoseClass.poseAsClass_, BaseClass)
 
-        # Whoops, this is a problem: We keep referencing the old class!
-        #obj = objc.lookUpClass(BaseName).new()
-        #obj = objc.runtime.__getattr__(BaseName).alloc().init()
+        PoseClass.poseAsClass_(BaseClass)
+
+        # BaseClass still refers to the old class, if we look it up again
+        # we get to see the new value. There's not much we can do about that.
+        obj = objc.lookUpClass(BaseName).new()
+        self.assertEquals(obj.testPosingMethod(), "<PoseClass instance>")
+
+        # XXX: next assertion fails because the runtime seems to copy the
+        # original class.
         #self.assert_(isinstance(obj, PoseClass))
-        #self.assertEquals(obj.testPosingMethod(), "<PoseClass instance>")
-        #del obj
+        self.assertNotEquals(BaseClass.__name__, BaseName)
+        self.assertEquals(PoseClass.__name__, BaseName)
+        del obj
 
 
 

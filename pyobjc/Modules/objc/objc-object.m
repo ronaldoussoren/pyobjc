@@ -465,7 +465,7 @@ objc_get_real_class(PyObject* self, void* closure __attribute__((__unused__)))
 
 PyDoc_STRVAR(obj_get_instanceMethods_doc,
 "The attributes of this field are the instance methods of this object. This\n"
-"can be used to force access to a class method."
+"can be used to force access to an instance method."
 );
 static PyObject*
 obj_get_instanceMethods(PyObjCObject* self, void* closure __attribute__((__unused__)))

@@ -156,6 +156,22 @@ to be used for application or plugin development.</li>
 as they are no longer useful.</li>
 <li>It is now possible to subclass a class that implements <code><span>copyWithZone:</span></code>
 without setting <code><span>__slots__</span></code> to <code><span>()</span></code>.</li>
+<li>It is now possible to override <code><span>dealloc</span></code>. It is still possible to
+define <code><span>__del__</span></code>.</li>
+<li>As an experimental feature it is also possible to override <code><span>retain</span></code> and
+<code><span>release</span></code>. Note it almost never a good idea to do this (even when you're
+programming in Objective-C and much more so in Python).</li>
+<li><code><span>poseAsClass:</span></code> can be used, although it is not very useful in python, use
+categories instead.<p>A major issue with <code><span>poseAsClass:</span></code> is that existing references to the old
+version of the class won't be changed to point to the new class.</p>
+</li>
+<li>It is now possible to access all instance variables of a class using
+the functions <code><span>objc.listInstanceVariables(aClassOrInstance)</span></code>,
+<code><span>objc.getInstanceVariable(obj,</span> <span>name)</span></code> and 
+<code><span>objc.setInstanceVariable(obj,</span> <span>name,</span> <span>value</span> <span>[,</span> <span>updateRefCount])</span></code>.<p>The last argument of <code><span>setInstanceVariable</span></code> is required when the instance
+variable is an object. If it is true the bridge will update reference counts,
+otherwise it won't.</p>
+</li>
 </ul>
 <h2><a name="version-1-2-2004-12-29">Version 1.2 (2004-12-29)</a></h2>
 <ul>

@@ -308,7 +308,7 @@ static PyObject*
 descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 {
 	PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;	
-	SEL aSelector;
+	SEL aSelector = NULL;
 	struct objc_method_description* descr;
 
 	if (PyObjCSelector_Check(sel)) {
@@ -322,6 +322,10 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 		}
 
 		aSelector = PyObjCRT_SELUID(s);
+	} else {
+		PyErr_Format(PyExc_TypeError, "expecting a SEL, got instance of %s",
+				sel->ob_type->tp_name);
+		return NULL;
 	}
 
 	descr = [self->objc descriptionForInstanceMethod:aSelector];
@@ -339,7 +343,7 @@ static PyObject*
 descriptionForClassMethod_(PyObject* object, PyObject* sel)
 {
 	PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;	
-	SEL aSelector;
+	SEL aSelector = NULL;
 	struct objc_method_description* descr;
 
 	if (PyObjCSelector_Check(sel)) {

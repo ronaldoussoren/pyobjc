@@ -165,7 +165,6 @@ lookUpClass(PyObject* self __attribute__((__unused__)),
 		PyErr_SetString(PyObjCExc_NoSuchClassError, class_name);
 		return NULL;
 	}
-
 	return PyObjCClass_New(objc_class);
 }
 
@@ -985,6 +984,28 @@ protocolsForClass(PyObject* self __attribute__((__unused__)),
 	return protocols;
 }
 
+PyDoc_STRVAR(PyObjCIvar_Info_doc, 
+	"listInstanceVariables(classOrInstance) -> [ (name, typestr), ... ]\n"
+	"\n"
+	"Return information about all instance variables of an object or class\n"
+);
+PyDoc_STRVAR(PyObjCIvar_Get_doc, 
+	"getInstanceVariable(object, name) -> value\n"
+	"\n"
+	"Return the value of an instance variable\n"
+);
+PyDoc_STRVAR(PyObjCIvar_Set_doc, 
+	"setInstanceVariable(object, name, value [, updateRefCount])\n"
+	"\n"
+	"Modify an instance variable. If the instance variable is an object \n"
+	"reference you must include the ``updateRefCount`` argument, otherwise it \n"
+	"is ignored. If ``updateRefCount`` is true the reference counts of the \n"
+	"old and new values are updated, otherwise they are not.\n"
+	"\n"
+	"NOTE: updating instance variables is dangerous, instance variables are \n"
+	"private in Objective-C and classes might not expected that those values \n"
+	"are changed by other code."
+);
 
 static PyMethodDef mod_methods[] = {
 	{
@@ -1033,6 +1054,12 @@ static PyMethodDef mod_methods[] = {
 	{ "inject", (PyCFunction)pyject_inject, METH_VARARGS|METH_KEYWORDS, inject_doc },
 #endif /* MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3 */
 #endif /* MACOSX */
+	{ "listInstanceVariables", (PyCFunction)PyObjCIvar_Info, 
+		METH_O, PyObjCIvar_Info_doc },
+	{ "getInstanceVariable", (PyCFunction)PyObjCIvar_Get,
+		METH_VARARGS|METH_KEYWORDS, PyObjCIvar_Get_doc },
+	{ "setInstanceVariable", (PyCFunction)PyObjCIvar_Set,
+		METH_VARARGS|METH_KEYWORDS, PyObjCIvar_Get_doc },
 
 	{ 0, 0, 0, 0 } /* sentinel */
 };

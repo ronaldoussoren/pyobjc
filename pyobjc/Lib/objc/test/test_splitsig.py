@@ -56,6 +56,9 @@ class SplitSignatureTest (unittest.TestCase):
         self.assertEquals(objc.splitSignature("@:10{NSRect=ff}"), ('@',':','{NSRect=ff}'))
         self.assertEquals(objc.splitSignature("@:o^@"), ('@',':','o^@'))
 
+        # struct definition in an struct objc_ivar
+        self.assertEquals(objc.splitSignature('{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}'), ('{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}',))
+
     def testSignatureCount(self):
         EXCEPTIONS=[
 

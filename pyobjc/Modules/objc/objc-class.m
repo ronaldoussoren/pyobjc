@@ -259,7 +259,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	super_class = objc_class->super_class;
 	py_super_class = PyObjCClass_New(super_class);
 	if (py_super_class == NULL) {
-		PyObjCClass_UnbuildClass(objc_class);
+		(void)PyObjCClass_UnbuildClass(objc_class);
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
 		return NULL;
@@ -273,7 +273,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 
 	v = PyList_AsTuple(real_bases);
 	if (v == NULL) {
-		PyObjCClass_UnbuildClass(objc_class);
+		(void)PyObjCClass_UnbuildClass(objc_class);
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
 		return NULL;
@@ -298,7 +298,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 					p, name, py_super_class, dict)) {
 				Py_DECREF(real_bases);
 				Py_DECREF(protocols);
-				PyObjCClass_UnbuildClass(objc_class);
+				(void)PyObjCClass_UnbuildClass(objc_class);
 				return NULL;
 			}
 		} else if (PyObjCFormalProtocol_Check(p)) {
@@ -306,7 +306,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 					p, name, py_super_class, dict)) {
 				Py_DECREF(real_bases);
 				Py_DECREF(protocols);
-				PyObjCClass_UnbuildClass(objc_class);
+				(void)PyObjCClass_UnbuildClass(objc_class);
 				return NULL;
 			}
 		}
@@ -319,7 +319,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	if (v == NULL) {
 		Py_DECREF(real_bases);
 		Py_DECREF(protocols);
-		PyObjCClass_UnbuildClass(objc_class);
+		(void)PyObjCClass_UnbuildClass(objc_class);
 		return NULL;
 	}
 
@@ -339,7 +339,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	} else {
 		Py_INCREF(delmethod);
 		if (PyDict_DelItemString(dict, "__del__") < 0) {
-			PyObjCClass_UnbuildClass(objc_class);
+			(void)PyObjCClass_UnbuildClass(objc_class);
 			Py_DECREF(protocols);
 			Py_DECREF(real_bases);
 			return NULL;
@@ -351,7 +351,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	 * are treated specially there.
 	 */
 	if (add_convenience_methods(objc_class, dict) < 0) {
-		PyObjCClass_UnbuildClass(objc_class);
+		(void)PyObjCClass_UnbuildClass(objc_class);
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
 		return NULL;
@@ -363,7 +363,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	if (res == NULL) {
 		Py_DECREF(args);
 		Py_DECREF(real_bases);
-		PyObjCClass_UnbuildClass(objc_class);
+		(void)PyObjCClass_UnbuildClass(objc_class);
 		return NULL;
 	}
 	Py_DECREF(args);
@@ -376,7 +376,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 
 	if (objc_class_register(objc_class, res) < 0) {
 		Py_DECREF(res);
-		PyObjCClass_UnbuildClass(objc_class);
+		(void)PyObjCClass_UnbuildClass(objc_class);
 		return NULL;
 	}
 
@@ -389,7 +389,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	info->delmethod = delmethod;
 	info->hasPythonImpl = 1;
 
-	PyObjCClass_SetClass(objc_class, res);
+	PyObjCClass_FinishClass(objc_class);
 
 	var = class_getInstanceVariable(objc_class, "__dict__");
 	if (var != NULL) {

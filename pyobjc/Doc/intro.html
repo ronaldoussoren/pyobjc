@@ -516,9 +516,9 @@ for recycling the pool once in a while.</p>
 <p>In Python you can use the method <code><span>__del__</span></code> to clean up resources when your
 object is garbage collected. In Objective-C/Cocoa this is done with a method 
 named <code><span>dealloc</span></code>.</p>
-<p>In PyObjC you should always use the <code><span>__del__</span></code> method, the <code><span>dealloc</span></code> method
-can safely be ignored and the bridge will complain when you try to override
-this method.</p>
+<p>In Python subclasses of Objective-C classes you can use either convention. You
+should pick one convention for your own code, the order in which <code><span>__del__</span></code>
+and <code><span>dealloc</span></code> methods are called is undefined.</p>
 <h3><a href="#id19" name="copying">Copying</a></h3>
 <p>It is possible to implement the <code><span>NSCopying</span></code> protocol in your classes. Some
 care must be taken when you inherit from a class that already implements 

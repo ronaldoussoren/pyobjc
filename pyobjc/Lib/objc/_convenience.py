@@ -463,13 +463,6 @@ CONVENIENCE_METHODS['initWithObjectsAndKeys:'] = (
     ( 'initWithObjectsAndKeys_', initWithObjectsAndKeys_ ),
 )
 
-def UnsupportedMethod(self, *args):
-    raise ValueError, "Unsupported method"
-
-CONVENIENCE_METHODS['poseAsClass:'] = (
-    ('poseAsClass_', (UnsupportedMethod)),
-)
-
 def sort(self, cmpfunc=cmp):
     def doCmp(a, b, cmpfunc):
         return cmpfunc(a, b)

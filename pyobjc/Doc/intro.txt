@@ -571,9 +571,9 @@ In Python you can use the method ``__del__`` to clean up resources when your
 object is garbage collected. In Objective-C/Cocoa this is done with a method 
 named ``dealloc``. 
 
-In PyObjC you should always use the ``__del__`` method, the ``dealloc`` method
-can safely be ignored and the bridge will complain when you try to override
-this method.
+In Python subclasses of Objective-C classes you can use either convention. You
+should pick one convention for your own code, the order in which ``__del__``
+and ``dealloc`` methods are called is undefined.
 
 Copying
 .......
