@@ -191,8 +191,8 @@ def subprocess(taskName, cmd, validRes=None):
         sys.stderr.write("Task '%s' failed [%d]\n"%(taskName, res))
         sys.exit(1)
 
-# We need at least Python 2.2
-req_ver = (2, 2)
+# We need at least Python 2.3
+req_ver = (2, 3)
 
 if sys.version_info < req_ver:
     sys.stderr.write('PyObjC: Need at least Python %s\n'%('.'.join(req_ver)))
