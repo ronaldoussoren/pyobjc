@@ -62,7 +62,7 @@ use ``AppKit.NSMakeRect(x, y, h, w)``.
 
 The callback methods for the NSSheet API's have a non-default signature
 and no fixed name. You should therefore explicitly specify the signature. This
-is done by calling the ``NSEndSheetMethod`` function after defining your
+is done by calling the ``endSheetMethod`` function after defining your
 callback::
 	
 	class MYClass (NSObject):
@@ -70,7 +70,7 @@ callback::
 			""" Actual implementation goes here """
 			pass
 
-		mysheetDidEnd = NSEndSheetMethod(mysheetDidEnd)
+		mysheetDidEnd = AppKit.endSheetMethod(mysheetDidEnd)
 
 
 Class NSApplication

@@ -32,13 +32,19 @@ for these modules (if there is any) to be loaded.</p>
 <p>The code above only provides wrappers for Objective-C classes, if the library
 also defines global functions and/or constants you'll have to write an 
 extension module to make these available to Python.</p>
-<p>You can use the PyObjC C-API (to be documented) when writing this module.</p>
+<p>You can use the PyObjC C-API (to be documented) when writing this module. With
+some luck you can adapt the scripts in <code><span>Scripts/CodeGenerators</span></code> to generate
+this module for you. These scripts are both very rough and tuned for the Apple
+headers, so YMMV.</p>
+<p>Note that we currently do not install the <code><span>pyobjc-api.h</span></code> header, you'll have
+to copy it from the source-tree until we do.</p>
 <h2><a name="pointer-arguments">Pointer arguments</a></h2>
 <p>Methods with pointer arguments (other then arguments that are equivalent to 
 an 'id') require more work. If the pointer arguments are used to pass a single 
 value to/from a function ('pass-by-reference arguments') you'll just have to 
 provide more specific method signatures. In other cases you'll have to write
 custom wrappers for these methods.</p>
+<p>Check <code><span>Modules/Foundation</span></code> for examples of these custom wrappers.</p>
 <h3><a name="pass-by-reference-arguments">Pass-by-reference arguments</a></h3>
 <p>Pass-by-reference arguments can be 'in' (data passed into the function), 
 'out' (data is returned from the function) or 'inout' (data is passed into 
@@ -68,8 +74,8 @@ objc.set_signature_for_selector(&quot;ClassName&quot;, &quot;selector:withArgume
 '^' characters in the signature of a method. The characters are:</p>
 <ul>
 <li>output parameter: o</li>
-<li>input parameter: i</li>
-<li>input-output parameter: O</li>
+<li>input parameter: n</li>
+<li>input-output parameter: N</li>
 </ul>
 <h3><a name="special-wrappers">special wrappers</a></h3>
 <p>If the method has pointer arguments that are not pass-by-reference arguments,
@@ -81,11 +87,11 @@ of the method from Objective-C.</p>
 <p>For now it is best to check the source code for the wrappers for the Cocoa 
 class library for more information. We'll add documentation for this in the
 future.</p>
-<p>NOTE: It is likely that there will be changes w.r.t. the special wrappers.</p>
 <h3><a name="protocols">protocols</a></h3>
 <p>If the framework defines any (informal) protocols you should add 
 <code><span>objc.informal_protocol</span></code> objects for those protocols to your module. These
 can be defined in a submodule, as long as you arrange for that module to be
 loaded whenever someone imports your package.</p>
+<p>See <code><span>Lib/Foundation/protocols.py</span></code> for examples of protocol definitions.</p>
 </body>
 </html>

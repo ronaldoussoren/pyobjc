@@ -589,7 +589,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 }
 
 static PyObject*
-objcsel_descr_get(ObjCNativeSelector* meth, PyObject* obj, PyObject* class)
+objcsel_descr_get(ObjCNativeSelector* meth, PyObject* volatile obj, PyObject* class)
 {
 	ObjCNativeSelector* result;
 	

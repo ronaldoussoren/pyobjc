@@ -38,7 +38,13 @@ The code above only provides wrappers for Objective-C classes, if the library
 also defines global functions and/or constants you'll have to write an 
 extension module to make these available to Python.
 
-You can use the PyObjC C-API (to be documented) when writing this module.
+You can use the PyObjC C-API (to be documented) when writing this module. With
+some luck you can adapt the scripts in ``Scripts/CodeGenerators`` to generate
+this module for you. These scripts are both very rough and tuned for the Apple
+headers, so YMMV.
+
+Note that we currently do not install the ``pyobjc-api.h`` header, you'll have
+to copy it from the source-tree until we do.
 
 Pointer arguments
 -----------------
@@ -48,6 +54,8 @@ an 'id') require more work. If the pointer arguments are used to pass a single
 value to/from a function ('pass-by-reference arguments') you'll just have to 
 provide more specific method signatures. In other cases you'll have to write
 custom wrappers for these methods.
+
+Check ``Modules/Foundation`` for examples of these custom wrappers.
 
 Pass-by-reference arguments
 ...........................
@@ -83,9 +91,9 @@ To anotate method signatures you'll have to add a single character before all
 
 - output parameter: o
 
-- input parameter: i
+- input parameter: n
 
-- input-output parameter: O
+- input-output parameter: N
 
 special wrappers
 ................
@@ -101,8 +109,6 @@ For now it is best to check the source code for the wrappers for the Cocoa
 class library for more information. We'll add documentation for this in the
 future.
 
-NOTE: It is likely that there will be changes w.r.t. the special wrappers.
-
 protocols
 .........
 
@@ -110,3 +116,5 @@ If the framework defines any (informal) protocols you should add
 ``objc.informal_protocol`` objects for those protocols to your module. These
 can be defined in a submodule, as long as you arrange for that module to be
 loaded whenever someone imports your package.
+
+See ``Lib/Foundation/protocols.py`` for examples of protocol definitions.
