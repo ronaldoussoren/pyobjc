@@ -72,7 +72,7 @@ def process_file(outfp, filename):
 				entry(outfp, ident)
 
 
-def generate(dirname, fn = None):
+def generate(dirname, fn = None, filter = lambda x: 1):
 	if not os.path.exists(dirname): return
 
 	if fn:
@@ -89,7 +89,7 @@ def generate(dirname, fn = None):
 	fp.write("static struct inttable enum_table[] = {\n")
 	fnames = [ os.path.join(dirname, fn)
 				for fn in os.listdir(dirname)
-				if fn.endswith('.h') ]
+				if fn.endswith('.h') and filter(fn) ]
 	for f in fnames:
 		process_file(fp, f)
 	fp.write("\t{0, 0} /* Sentinel */\n")

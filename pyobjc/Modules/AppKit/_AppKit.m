@@ -16,7 +16,11 @@
 
 #ifndef GNUSTEP
 
-#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
+#if MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_2
+#import <AppKit/NSNib.h>
+#endif
+
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_2
 #import <AppKit/NSAccessibility.h>
 #endif
 

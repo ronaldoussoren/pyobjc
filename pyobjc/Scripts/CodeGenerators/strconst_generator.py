@@ -50,7 +50,7 @@ def process_file(outfp, filename, ignore):
 		ident = m.group(2)
 		entry(outfp, ident, ignore)
 
-def generate(dirname, fn = None, ignore=()):
+def generate(dirname, fn = None, ignore=(), filter = lambda x: 1):
 	if not os.path.exists(dirname): return
 
 	if fn:
@@ -67,7 +67,7 @@ def generate(dirname, fn = None, ignore=()):
 	fp.write("static struct stringtable string_table[] = {\n")
 	fnames = [ os.path.join(dirname, fn)
 				for fn in os.listdir(dirname)
-				if fn.endswith('.h') ]
+				if fn.endswith('.h') and filter(fn) ]
 	for f in fnames:
 		process_file(fp, f, ignore)
 	fp.write("\t{0, 0} /* Sentinel */\n")

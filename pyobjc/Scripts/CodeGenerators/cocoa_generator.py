@@ -28,27 +28,42 @@ PREFPANES=os.path.join(FRAMEWORKS, "PreferencePanes.framework")
 WEBKIT=os.path.join(FRAMEWORKS, "WebKit.framework")
 IB=os.path.join(FRAMEWORKS, "InterfaceBuilder.framework")
 FOUNDATION_HDRS=os.path.join(FOUNDATION, 'Headers')
-APPKIT_HDRS=os.path.join(APPKIT, 'Headers')
 ADDRESSBOOK_HDRS=os.path.join(ADDRESSBOOK, 'Headers')
+APPKIT_HDRS=os.path.join(APPKIT, 'Headers')
 PREFPANES_HDRS=os.path.join(PREFPANES, 'Headers')
 IB_HDRS=os.path.join(IB, 'Headers')
 WEBKIT_HDRS=os.path.join(WEBKIT, 'Headers')
 
+def filterAddressBookHeaders(fn):
+    if fn[-3:] == 'C.h':
+        return 0
+
+    if fn == 'ABPeoplePickerView.h':
+        return 0
+
+    return 1
+
 enum_generator.generate(FOUNDATION_HDRS, 'Modules/Foundation/_Fnd_Enum.inc')
 enum_generator.generate(APPKIT_HDRS, 'Modules/AppKit/_App_Enum.inc')
-enum_generator.generate(ADDRESSBOOK_HDRS, 'Modules/AddressBook/_Addr_Enum.inc')
-enum_generator.generate(PREFPANES_HDRS, 'Modules/PreferencePanes/_PrefPanes_Enum.inc')
+enum_generator.generate(ADDRESSBOOK_HDRS,
+                        'Modules/AddressBook/_Addr_Enum.inc',
+                        filter=filterAddressBookHeaders)
+enum_generator.generate(PREFPANES_HDRS, 'Modules/PreferencePanes/_PreferencePanes_Enum.inc')
 enum_generator.generate(IB_HDRS, 'Modules/InterfaceBuilder/_InterfaceBuilder_Enum.inc')
 enum_generator.generate(WEBKIT_HDRS, 'Modules/WebKit/_WebKit_Enum.inc')
 
 strconst_generator.generate(FOUNDATION_HDRS, 'Modules/Foundation/_Fnd_Str.inc')
 strconst_generator.generate(APPKIT_HDRS, 'Modules/AppKit/_App_Str.inc')
-strconst_generator.generate(ADDRESSBOOK_HDRS, 'Modules/AddressBook/_Addr_Str.inc')
-strconst_generator.generate(PREFPANES_HDRS, 'Modules/PreferencePanes/_PrefPanes_Str.inc')
+strconst_generator.generate(ADDRESSBOOK_HDRS,
+                            'Modules/AddressBook/_Addr_Str.inc',
+                            filter=filterAddressBookHeaders)
+strconst_generator.generate(PREFPANES_HDRS, 'Modules/PreferencePanes/_PreferencePanes_Str.inc')
 strconst_generator.generate(IB_HDRS, 'Modules/InterfaceBuilder/_InterfaceBuilder_Str.inc')
 
 # The two items on the ignore-list cause link errors, to-be-investigated.
-strconst_generator.generate(WEBKIT_HDRS, 'Modules/WebKit/_WebKit_Str.inc', ignore=('WebElementImageAltStringKey', 'WebPreferencesChangedNotification')
+strconst_generator.generate(WEBKIT_HDRS,
+                            'Modules/WebKit/_WebKit_Str.inc',
+                            ignore=('WebElementImageAltStringKey', 'WebPreferencesChangedNotification')
 )
 
 FOUNDATION_PREFIX="FOUNDATION_EXPORT"

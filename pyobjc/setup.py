@@ -66,6 +66,17 @@ if sys.platform == 'darwin':
 from distutils.core import setup, Extension
 import os
 
+def subprocess(taskName, cmd, validRes=None):
+    print "Performing task: %s" % (taskName,)
+    fd = os.popen(cmd, 'r')
+    for ln in fd.xreadlines():
+        sys.stdout.write(ln)
+
+    res = fd.close()
+    if res is not validRes:
+        sys.stderr.write("Task '%s' failed [%d]\n"%(taskName, res))
+        sys.exit(1)
+
 # We need at least Python 2.2
 req_ver = [ 2, 2]
 
@@ -94,8 +105,6 @@ if LIBFFI_SOURCES is not None:
 
     if not os.path.exists('build/libffi/lib/libffi.a'):
         # No pre-build version available, build it now.
-        print "Building local copy of libffi"
-
         # Do not use a relative path for the build-tree, libtool on
         # MacOS X doesn't like that.
         inst_dir = os.path.join(os.getcwd(), 'build/libffi')
@@ -104,15 +113,7 @@ if LIBFFI_SOURCES is not None:
         inst_dir = inst_dir.replace("'", "'\"'\"'")
         src_path = src_path.replace("'", "'\"'\"'")
 
-        fd = os.popen(
-            "cd build/libffi/BLD && '%s/configure' --prefix='%s' --disable-shared --enable-static && make install"%(src_path, inst_dir), 'r')
-        for ln in fd.xreadlines():
-            sys.stdout.write(ln)
-
-        res = fd.close()
-        if res is not None:
-            sys.stderr.write('Building libffi failed [%d]\n'%(res,))
-            sys.exit(1)
+        subprocess('Building FFI', "cd build/libffi/BLD && '%s/configure' --prefix='%s' --disable-shared --enable-static && make install"%(src_path, inst_dir), None)
         
     LIBFFI_BASE='build/libffi'
 
@@ -319,6 +320,7 @@ CoreExtensions =  [
     ]
 CocoaPackages = [ 'Foundation', 'AppKit' ]
 
+subprocess("Generating wrappers & stubs", "%s Scripts/CodeGenerators/cocoa_generator.py" % (sys.executable,), None)
 
 # Provide some dependency information on Python 2.3 and later, this
 # makes development slightly more convenient.
