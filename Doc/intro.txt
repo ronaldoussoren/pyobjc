@@ -1,0 +1,136 @@
+=========================
+An introduction to PyObjC
+=========================
+
+..	:authors: Ronald Oussoren
+	:contact: pyobjc-dev@lists.sourceforge.net
+	:URL: http://pyobjc.sourceforge.net/
+	:copyright: 2003 The PyObjC Project
+
+
+
+.. contents::
+
+WORK IN PROGRESS
+----------------
+
+This document is work in progress and incomplete. I've added notes where I 
+intend to add more information.
+
+
+Preface
+-------
+
+PyObjC is a bridge between Python and Objective-C. It allows you to write 
+Python scripts that reuse and extend existing Objective-C class libraries, 
+most importantly the `Cocoa library`_ by `Apple`_.
+
+This document describes how to use Objective-C class libraries from Python
+scripts and how to interpret the documentation of those libraries, from the 
+point of view of a Python programmer.
+
+.. _`Apple`: http://www.apple.com/
+
+Objective-C for PyObjC users
+----------------------------
+
+Objective-C is an object-oriented programming language that is an extention 
+of C and borrows heavily from Smalltalk. It features single inheritance with
+(in theory) multiple root classes and dynamic dispatch of methods. This is
+basicly the same as python with single inheritance.
+
+An important difference between Python and Objective-C is that the latter is
+not a pure object-oriented language. Some values are not objects, but values
+of plain C types, such as ``int`` and ``double``. These basic C types can also
+be used as the types of arguments and the return value of methods. 
+
+Object allocation and initialization are explicit and seperate actions in 
+Objective-C. The former is done by the class-method ``alloc``, while the
+latter is done by instance-methods whose name customarily starts with ``init``.
+
+For more information about Objective-C see:
+
+* `The Objective-C Programming Language`_ at `Apple`_.
+
+
+.. _`The Objective-C Programming Language`: http://developer.apple.com/techpubs/macosx/Cocoa/ObjectiveC/index.html
+
+Overview of the bridge
+----------------------
+
+Objective-C classes are visible as Python classes and can be subclassed just
+like normal Python classes. The major differences between normal Python classes
+and Objective-C classes are the way you create instances and the fact that 
+Objective-C classes have *odd* names.
+
+As described in `Objective-C for PyObjC users`_ the creation of Objective-C 
+objects is a two-stage process. You first call the class method ``alloc``, and
+then call some variation of ``init`` to initialize the objects. The newly
+created object is the result of the call to ``init``. Most classes have 
+convienence class methods that combine the calls to ``alloc`` and ``init``.
+
+Objective-C methods are bridged to python callables. Because Objective-C method 
+names can contain colons it is necessary to translate methods names. The rules
+for translation are:
+
+* Concatenate all elements of the method name: ``someMethod:withFoo:andBar:``
+
+* Then convert all colons to underscores: ``someMethod_withFoo_andBar_``
+
+The bridged method usually has the same number of arguments as the orginal 
+method and also returns the same as the original method. In special 
+circumstances the method interface may be different from the Objective-C 
+interface, those methods are document in 'some other document'. Furthermore,
+some methods have pass-by-reference arguments (that is a pointer to a single
+value that is used to transfer data to (in), from (out) or to-and-from (inout)
+the method. The arguments that are passed to methods is present as normal 
+arguments in the bridged method (e.g. if the method has an ``int*`` argument
+the bridged method has has an integer argument).  Data that is passed from the
+function results in additional return values from the function.
+
+TODO:
+
+* Selector objects and when to use them
+
+* Protocols, informal protocols, delegates and objc.informal_protocol
+
+
+Cocoa for Python programmers
+----------------------------
+
+Cocoa frameworks are mapped onto Python packages with the same name, that is
+the classes, constants and functioins from the AppKit framework are available
+after you import ``AppKit`` in your Python script.
+
+TODO:
+
+* NibClassBuilder
+
+* Links to example PyObjC scripts.
+
+
+More information on Cocoa programming can be found at:
+
+* `Cocoa documentation at the Apple developer website`_
+
+* `Cocoa examples at the Apple developer website`_
+
+* `stepwise.com`_
+
+* Your local bookstore or library
+
+..  _`Cocoa library`: http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html
+
+..  _`Cocoa documentation at the Apple developer website`: http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html
+
+.. _`Cocoa examples at the Apple developer website`: http://developer.apple.com/samplecode/Sample_Code/Cocoa.htm
+
+.. _`stepwise.com`: http://www.stepwise.com/
+
+
+Building applications
+---------------------
+
+* Using buildapp.py
+
+* Using project builder

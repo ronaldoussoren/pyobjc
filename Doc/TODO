@@ -83,8 +83,6 @@ Refactor some parts of the bridge
 
 From the top of my head:
 
-* Conversion of numeric types to basic C types contains lots of duplicate code
-
 * Should write a function for calculating the signature for a function/method
   object that is to be added to a class (check informal_protocols and methods
   in the superclass for signature and "class-methodness"). Use this when 
@@ -100,7 +98,7 @@ some definitions that help in supporting GNUstep, we should use those where
 applicable. 
 
 Support beyond that requires someone that actually tries to perform the 
-port to GNUstep. 
+port to GNUstep (and after that maintains it). 
 
 Support for libFFI
 ..................
