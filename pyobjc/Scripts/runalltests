@@ -13,6 +13,9 @@
 import sys
 import os
 
+tests = {}
+test_sum = { 'OK': 0, 'FAIL':0, 'CRASH': 0 }
+
 def perform_some_tests(dummy, dirname, fnames):
 	if os.path.split(dirname)[-1] != 'test': return
 
@@ -21,7 +24,30 @@ def perform_some_tests(dummy, dirname, fnames):
                 if not nm.endswith('.py'): continue
 		path = os.path.join(dirname, nm)
 		print "-- Running '%s'"%path
-		os.system("'%s' '%s'"%(sys.executable, path))
+		fd = os.popen("'%s' '%s' 2>&1"%(sys.executable, path), 'r')
+                ln = ''
+                for ln in fd.xreadlines():
+                    sys.stdout.write(ln)
+                if ln.startswith('OK'):
+                    tests[path] = ln.strip()
+                    test_sum['OK'] += 1
+
+                elif ln.startswith('FAIL'):
+                    tests[path] = ln.strip()
+                    test_sum['FAIL'] += 1
+
+                else:
+                    tests[path] = 'CRASHED'
+                    test_sum['CRASH'] += 1
+
 		print "-- Done"
 
 os.path.walk('Lib', perform_some_tests, None)
+
+keys = tests.keys()
+keys.sort()
+print "\nSummary:"
+for k in keys:
+    print "  %-50s: %s"%(k[4:], tests[k])
+
+print "\n\n%(OK)s OK, %(FAIL)s FAILED, %(CRASH)s CRASHED"%test_sum
