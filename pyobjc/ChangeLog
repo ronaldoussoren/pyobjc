@@ -1,3 +1,7 @@
+2002-10-30  Bill Bumgarner  <bbum@codefab.com>
+	* Added some tests and cleaned up a bit of the existing tests in
+	test_subclass.py
+
 2002-10-30  Ronald Oussoren <oussoren@cistron.nl>
 	* Fix memory corruption bug
 	* Add Obj-C exception handling around calls to ObjC_FindNative,
