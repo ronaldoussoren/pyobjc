@@ -3,6 +3,7 @@ from PyObjCTools import NibClassBuilder
 from objc import selector, getClassList, objc_object, IBOutlet
 
 import objc
+import AppKit
 objc.setVerbose(1)
 
 try:
