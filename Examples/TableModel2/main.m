@@ -21,6 +21,37 @@ int pyobjc_main(int argc, char * const *argv, char *envp[])
   NSBundle *aBundle;
   NSMutableArray *bundlePaths = [[NSMutableArray array] retain];
   int i;
+  int envc;
+  char** childEnvp;
+  char*  PYTHONPATH = NULL;
+
+  for (envc = 0; envp[envc] != NULL; envc++) {
+  	if (strncmp(envp[envc], "PYTHONPATH=", sizeof("PYTHONPATH=")-1) == 0) {
+		PYTHONPATH=envp[envc] + sizeof("PYTHONPATH=") - 1;
+		/* No break, we also want to know how large envp is */
+	}
+  } 
+
+  childEnvp = alloca(sizeof(char*) * (envc + 2));
+  for (envc = 0; envp[envc] != NULL; envc ++) {
+  	if (strncmp(envp[envc], "PYTHONPATH=", sizeof("PYTHONPATH=")-1) == 0) {
+		const char* s = [[[NSBundle mainBundle] resourcePath] UTF8String];
+		childEnvp[envc] = alloca(strlen(envp[envc]) + strlen(s) + 2);
+		sprintf(childEnvp[envc], "%s:%s", envp[envc], s);
+
+	} else {
+		childEnvp[envc] = envp[i];
+	}
+  }
+  if (PYTHONPATH) {
+	envp[envc] = NULL;
+  } else {
+	const char* s = [[[NSBundle mainBundle] resourcePath] UTF8String];
+	childEnvp[envc] = alloca(sizeof("PYTHONPATH=") + strlen(s));
+	sprintf(childEnvp[envc], "PYTHONPATH=%s", s);
+	childEnvp[envc+1] = NULL;
+  }
+
 
   while ( aBundle = [bundleEnumerator nextObject] ) {
     if ( [[[aBundle bundlePath] pathExtension] isEqualToString: @"framework"] )
@@ -55,7 +86,9 @@ int pyobjc_main(int argc, char * const *argv, char *envp[])
   childArgv[i+2] = [[bundlePaths componentsJoinedByString: @":"] UTF8String];
   childArgv[i+3] = NULL;
 
-  return execve(pythonBinPathPtr, (char **)childArgv, envp);
+  i = execve(pythonBinPathPtr, (char **)childArgv, (char**) childEnvp);
+  if (i == -1) perror("execv");
+  return 1;
 }
 
 int main(int argc, char * const *argv, char *envp[])
