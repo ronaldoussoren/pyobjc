@@ -91,7 +91,7 @@ def __getitem__objectForKey(self, key):
     return res
 def has_key_objectForKey(self, key):
     res = self.objectForKey_(key)
-    return not (res is None)
+    return res is not None
 def get_objectForKey(self, key, dflt=None):
     res = self.objectForKey_(key)
     if res is None: 
@@ -102,7 +102,7 @@ CONVENIENCE_METHODS['objectForKey:'] = (
     ('__getitem__', __getitem__objectForKey),
     ('has_key', has_key_objectForKey),
     ('get', get_objectForKey),
-    ('__contains__', lambda self, elem: (self.objectForKey_(elem) != None)),
+    ('__contains__', lambda self, elem: (self.objectForKey_(elem) is not None)),
 )
 
 CONVENIENCE_METHODS['removeObjectForKey:'] = (
@@ -126,7 +126,7 @@ CONVENIENCE_METHODS['description'] = (
 )
 
 CONVENIENCE_METHODS['containsObject:'] = (
-    ('__contains__', lambda self, elem: (self.containsObject_(elem) != 0)),
+    ('__contains__', lambda self, elem: bool(self.containsObject_(elem))),
 )
 
 CONVENIENCE_METHODS['hash'] = (
@@ -134,31 +134,31 @@ CONVENIENCE_METHODS['hash'] = (
 )
 
 CONVENIENCE_METHODS['isEqualTo:'] = (
-    ('__eq__', lambda self, other: self.isEqualTo_(other)),
+    ('__eq__', lambda self, other: bool(self.isEqualTo_(other))),
 )
 
 CONVENIENCE_METHODS['isEqual:'] = (
-    ('__eq__', lambda self, other: self.isEqual_(other)),
+    ('__eq__', lambda self, other: bool(self.isEqual_(other))),
 )
 
 CONVENIENCE_METHODS['isGreaterThan:'] = (
-    ('__gt__', lambda self, other: self.isGreaterThan_(other)),
+    ('__gt__', lambda self, other: bool(self.isGreaterThan_(other))),
 )
 
 CONVENIENCE_METHODS['isGreaterThanOrEqualTo:'] = (
-    ('__ge__', lambda self, other: self.isGreaterThanOrEqualTo_(other)),
+    ('__ge__', lambda self, other: bool(self.isGreaterThanOrEqualTo_(other))),
 )
 
 CONVENIENCE_METHODS['isLessThan:'] = (
-    ('__lt__', lambda self, other: self.isLessThan_(other)),
+    ('__lt__', lambda self, other: bool(self.isLessThan_(other))),
 )
 
 CONVENIENCE_METHODS['isLessThanOrEqualTo:'] = (
-    ('__le__', lambda self, other: self.isLessThanOrEqualTo_(other)),
+    ('__le__', lambda self, other: bool(self.isLessThanOrEqualTo_(other))),
 )
 
 CONVENIENCE_METHODS['isNotEqualTo:'] = (
-    ('__ne__', lambda self, other: self.isNotEqualTo_(other)),
+    ('__ne__', lambda self, other: bool(self.isNotEqualTo_(other))),
 )
 
 CONVENIENCE_METHODS['length'] = (
