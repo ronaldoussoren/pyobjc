@@ -1,3 +1,7 @@
+2002-10-09 Ronald Oussoren <oussoren@cistron.nl>
+	* Move Cocoa.AppKit and Cocoa.Foundation packages to AppKit
+	  and Foundation
+
 2002-09-28 Ronald Oussoren <oussoren@cistron.nl>
 	* objc-class.m: Actually implement the selector->python cache,
 	  this significantly speeds up method dispatch (iClass is now

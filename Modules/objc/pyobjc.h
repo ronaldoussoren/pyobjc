@@ -8,6 +8,8 @@
 #include "OC_PythonObject.h"
 #include "super-call.h"
 
+#define PYOBJC_VERSION "0.7.0"
+
 #ifdef MACOSX
 
 /* On MacOS X, +signatureWithObjCTypes: is a method of NSMethodSignature,

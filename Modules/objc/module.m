@@ -204,4 +204,7 @@ void init_objc(void)
 				PyString_FromStringAndSize(&cur->value, 1));
 		}
 	}
+
+	PyDict_SetItemString(d, "__version__", 
+		PyString_FromString(PYOBJC_VERSION));
 }
