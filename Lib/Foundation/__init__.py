@@ -22,32 +22,7 @@ NSStringFromSelector = NSSelectorFromString
 def NSStringFromClass(aClass):
     return aClass.__name__
 
-# Define useful utility methods here
-def load_bundle(path):
-    """
-    Load the specified bundle/framework and return a list of classes 
-    defined in that bundle/framework
-    """
-    bundle_class = _objc.lookUpClass('NSBundle')
-
-    bndl = bundle_class.bundleWithPath_(path)
-
-    bndl.load()
-
-    classes = [ cls 
-        for cls in _objc.getClassList() 
-        if bndl == bundle_class.bundleForClass_(cls) ]
-    return classes
-
-class_list = load_bundle('/System/Library/Frameworks/Foundation.framework')
-gl = globals()
-for cls in class_list:
-    gl[cls.__name__] = cls
-    cls.__module__ = 'Foundation'
-
-del class_list
-del cls
-del gl
+_objc.loadBundle("Foundation", globals(), bundle_path="/System/Library/Frameworks/Foundation.framework")
 
 import os
 import sys
@@ -94,3 +69,4 @@ def propertyListFromPythonCollection(aPyCollection, conversionHelper=None):
         if conversionHelper:
             return conversionHelper(aPyCollection)
         raise "UnrecognizedTypeException", "Type %s encountered in python collection;  don't know how to convert." % containerType
+
