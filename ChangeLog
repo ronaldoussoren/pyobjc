@@ -1,4 +1,7 @@
 2002-10-17  Bill Bumgarner  <bbum@codefab.com>
+	* Fixed a situation where ObjCErr_ToObjC() would crash if the
+	exception lacked a value or traceback.
+
 	* propertyListFromPythonCollection() takes an optional kv argument
 	that is used as a helper function when the type to be converted in
 	the python collection is not recognized.   For example, the

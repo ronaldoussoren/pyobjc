@@ -197,8 +197,10 @@ void ObjCErr_ToObjC(void)
 				     userInfo:userInfo];
 			Py_DECREF(args);
 			Py_DECREF(exc_type);
-			Py_DECREF(exc_value);
-			Py_DECREF(exc_traceback);
+			if (exc_value)
+			  Py_DECREF(exc_value);
+			if (exc_traceback)
+			  Py_DECREF(exc_traceback);
 
 			[val raise];
 		}
@@ -218,8 +220,10 @@ void ObjCErr_ToObjC(void)
 
 	Py_DECREF(repr);
 	Py_DECREF(exc_type);
-	Py_DECREF(exc_value);
-	Py_DECREF(exc_traceback);
+	if (exc_value)
+	  Py_DECREF(exc_value);
+	if (exc_traceback)
+	  Py_DECREF(exc_traceback);
 
 	[val raise];
 }
