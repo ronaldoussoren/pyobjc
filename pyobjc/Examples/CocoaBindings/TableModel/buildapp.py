@@ -8,7 +8,7 @@ from bundlebuilder import buildapp
 
 buildapp(
         name = "TableModel",
-	mainprogram = "__main__.py",
-	resources = ["English.lproj", "TableModelAppDelegate.py" ],
-	nibname = "MainMenu",
+        mainprogram = "__main__.py",
+        resources = ["English.lproj", "TableModelAppDelegate.py" ],
+        nibname = "MainMenu",
 )

@@ -10,10 +10,10 @@ class PyDocURLProtocol(NSURLProtocol):
         if request.URL().scheme() == PYDOCSCHEME:
             return True
         return False
-        
+
     def canonicalRequestForRequest_(klass, request):
         return request
-        
+
     def startLoading(self):
         client = self.client()
         request = self.request()
@@ -21,7 +21,7 @@ class PyDocURLProtocol(NSURLProtocol):
         modpath = urlpath.replace(u'/', u'.'
             ).lstrip(u'.'
             ).replace(u'.html', u'')
-            
+
         try:
             data = gethtmldoc(modpath.encode('utf-8'))
         except Exception, e:

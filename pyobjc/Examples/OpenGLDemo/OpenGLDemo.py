@@ -47,7 +47,7 @@ class OpenGLDemoView(NibClassBuilder.AutoBaseClass):
     def setClearColor_(self, sender):
         self.color_index = sender.tag()
         self.setNeedsDisplay_(True)
-        
+
     def drawRect_(self, ((x, y), (w, h))):
         glViewport(0, 0, w, h)
         clear_color = [0.0]*4

@@ -25,7 +25,7 @@ class PrintingBrowserDelegate(NSObject):
             prd = PrintingResolverDelegate.new()
             aNetService.setDelegate_(prd)
             aNetService.resolve()
-        
+
     def netServiceBrowserWillSearch_(self, browser):
         print "Browsing for advertised services..."
         self.services = []

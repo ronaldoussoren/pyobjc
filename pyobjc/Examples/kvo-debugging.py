@@ -61,7 +61,7 @@ class FooClass(NSObject):
         if orig is not new:
             print "class changed!!"
             self.__class__ = fromKVOClass(orig)
-    
+
     def setBar_(self, bar):
         print 'setBar_ ->', bar
         print self, type(self), self.class__()

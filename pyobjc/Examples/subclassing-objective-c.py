@@ -20,7 +20,7 @@ You can then define a subclass of this class using the usual syntax::
 
     >>> class MyEnumerator (NSEnumerator):
     ...    __slots__ = ('cnt',)
-    ...    # 
+    ...    #
     ...    # Start of the method definitions:
     ...    def init(self):
     ...        self.cnt = 10

@@ -18,9 +18,8 @@ def badness():
 class Foo:
     def baz(self):
         badness()
-        
+
     def bar(self):
         self.baz()
 
 Foo().bar()
-
