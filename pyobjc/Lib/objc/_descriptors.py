@@ -73,9 +73,6 @@ def accessor(func, typeSignature='@'):
 
         return selector(func, signature=typeSignature + "@:")
 
-    elif selArgs == 0:
-        raise TypeError("%s must take at least one argument to be an accessor" % (funcName,))
-
     raise TypeError("%s takes too many arguments to be an accessor" % (funcName,))
 
 def typedAccessor(typeSignature):
