@@ -26,9 +26,8 @@ _objc.loadBundle("Foundation", globals(), bundle_path="/System/Library/Framework
 
 import os
 import sys
-import string
 if 'PYOBJCFRAMEWORKS' in os.environ:
-    paths = string.split(os.environ['PYOBJCFRAMEWORKS'], ":")
+    paths = os.environ['PYOBJCFRAMEWORKS'].split(":")
     count = 0
     for path in paths:
         bundle = NSBundle.bundleWithPath_(path)

@@ -244,15 +244,18 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 
 	if (!have_output) {
 		const char* err;
+		const char* rettype = [methinfo methodReturnType];
 
-		err = depythonify_c_value([methinfo methodReturnType],
-			res, resp);
-		Py_DECREF(res);
-		if (err) {
-			ObjCErr_Set(PyExc_TypeError,
-				"%s: Cannot encode return value: %s\n",
-				SELNAME(*(SEL*)args[1]), err);
-			ObjCErr_ToObjC();
+		if (*rettype != _C_VOID) {
+			err = depythonify_c_value([methinfo methodReturnType],
+				res, resp);
+			Py_DECREF(res);
+			if (err) {
+				ObjCErr_Set(PyExc_TypeError,
+					"%s: Cannot encode return value: %s\n",
+					SELNAME(*(SEL*)args[1]), err);
+				ObjCErr_ToObjC();
+			}
 		}
 	} else {
 		/* We have some output parameters, locate them and encode
