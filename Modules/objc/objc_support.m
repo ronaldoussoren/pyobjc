@@ -61,6 +61,8 @@ objc_skip_typespec (const char *type)
     case _C_FLT:
     case _C_DBL:
     case _C_VOID:
+    case _C_LNGLNG:
+    case _C_ULNGLNG:
       ++type;
       break;
 
@@ -90,8 +92,17 @@ objc_skip_typespec (const char *type)
       break;
       
     case _C_PTR:
+    case _C_CONST:
+    case _C_IN:
+    case _C_INOUT:
+    case _C_OUT:
+    case _C_BYCOPY:
+    case _C_ONEWAY:
+
       /* Just skip the following typespec */
       type = objc_skip_typespec (type+1);
+      break;
+
     
     default:
       PySys_WriteStderr("PyObjC: objc_skip_typespec: Unhandled type '%c' (%d)\n", 
