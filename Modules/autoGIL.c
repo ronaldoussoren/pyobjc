@@ -1,6 +1,14 @@
 #include "Python.h"
 #include <CoreFoundation/CFRunLoop.h>
 
+/* These macros are defined in Python 2.3 but not 2.2 */
+#ifndef PyMODINIT_FUNC
+#define PyMODINIT_FUNC void
+#endif
+#ifndef PyDoc_STRVAR
+#define PyDoc_STRVAR(Var,Str) static char Var[] = Str
+#endif
+
 
 static PyObject *AutoGILError;
 
