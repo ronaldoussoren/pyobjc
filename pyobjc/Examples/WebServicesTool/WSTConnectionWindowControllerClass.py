@@ -22,6 +22,9 @@ from objc import IBOutlet
 from objc import selector
 from objc import YES, NO
 
+from threading import Thread
+from Queue import Queue
+
 import xmlrpclib
 import sys
 import types
@@ -73,22 +76,40 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
     aController._toolbarItems[anIdentifier] = toolbarItem
 
 
-def doWork(queue):
-    """Worker thread. Fetch work from a queue, block when there's
-    nothing to do."""
-    while 1:
-        work = queue.get()
-        if work is None:
-            break
-        func, args, kwargs = work
-        NSAutoreleasePool.pyobjcPushPool()
-        try:
-            func(*args, **kwargs)
-        finally:
-            # delete all local references; if they are the last refs they
-            # may invoke autoreleases, which should then end up in our pool
-            del func, args, kwargs, work
-            NSAutoreleasePool.pyobjcPopPool()
+class WorkerThread(Thread):
+    
+    def __init__(self):
+        """Create and start our worker thread."""
+        self.queue = Queue()
+        Thread.__init__(target=self.doWork)
+    
+    def stop(self):
+        """Stop the thread a.s.a.p., meaning whenever the currently running
+        job is finished."""
+        self.working = 0
+        self.queue.put(None)
+    
+    def scheduleWork(self, func, *args, **kwargs):
+        """Schedule some work to be done in the worker thread."""
+        self.queue.put((func, args, kwargs))
+
+    def run(self):
+        """Fetch work from a queue, block when there's nothing to do.
+        This method is called by Thread, don't call it yourself."""
+        self.working = 1
+        while self.working:
+            work = self.queue.get()
+            if work is None or not self.working:
+                break
+            func, args, kwargs = work
+            NSAutoreleasePool.pyobjcPushPool()
+            try:
+                func(*args, **kwargs)
+            finally:
+                # delete all local references; if they are the last refs they
+                # may invoke autoreleases, which should then end up in our pool
+                del func, args, kwargs, work
+                NSAutoreleasePool.pyobjcPopPool()
 
 
 from PyObjCTools import NibClassBuilder
@@ -139,16 +160,9 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         self._methods = []
         self._working = 0
         self._windowIsClosing = 0
-        self.spawnWorkerThread()
-        return self
-    
-    def spawnWorkerThread(self):
-        """Create and start our worker thread."""
-        from threading import Thread
-        from Queue import Queue
-        self._workQueue = Queue()
-        self._workerThread = Thread(target=doWork, args=(self._workQueue,))
+        self._workerThread = WorkerThread()
         self._workerThread.start()
+        return self
     
     def awakeFromNib(self):
         """
@@ -163,10 +177,6 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         
         self.createToolbar()
     
-    def scheduleWork(self, func, *args, **kwargs):
-        """Give the worker thread something to do."""
-        self._workQueue.put((func, args, kwargs))
-    
     def windowWillClose_(self, aNotification):
         """
         Clean up when the document window is closed.
@@ -178,7 +188,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         # in the middle of working it may take a couple of seconds, as we can't
         # _force_ the thread to stop: we have to ask it to to stop itself.
         self._windowIsClosing = 1  # try to stop the thread a.s.a.p.
-        self._workQueue.put(None)  # signal the thread that there is no more work to do
+        self._workerThread.stop()  # signal the thread that there is no more work to do
         self._workerThread.join()  # wait until it finishes
         self.autorelease()
 
@@ -330,7 +340,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
 
         self.setStatusTextFieldMessage_("Retrieving method list...")
         self.startWorking()
-        self.scheduleWork(self.getMethods, url)
+        self._workerThread.scheduleWork(self.getMethods, url)
     
     def getMethods(self, url):
         self._server = xmlrpclib.ServerProxy(url)
@@ -414,7 +424,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
                 self.setStatusTextFieldMessage_(None)
                 self.methodDescriptionTextView.setString_(methodDescription)
                 self.stopWorking()
-            self.scheduleWork(work)
+            self._workerThread.scheduleWork(work)
         else:
             methodDescription = self._methodDescriptions[selectedMethod]
             self.setStatusTextFieldMessage_(None)
