@@ -60,6 +60,23 @@ struct dummy2
 /* returns of complex values */
 - (struct dummy)dummyFunc;
 - (struct dummy2)dummy2Func;
+/* TODO: Nested structs, unions, strings */
+
+/* argument passing for simple types */
+- (long long)longlongArg:(long long)arg;
+- (unsigned long long)ulonglongArg:(unsigned long long)arg;
+- (long)longArg:(long)arg;
+- (unsigned long)ulongArg:(unsigned long)arg;
+- (int)intArg:(int)arg;
+- (unsigned int)uintArg:(unsigned int)arg;
+- (short)shortArg:(short)arg;
+- (unsigned short)ushortArg:(unsigned short)arg;
+- (char)charArg:(char)arg;
+- (unsigned char)ucharArg:(unsigned char)arg;
+- (float)floatArg:(float)arg;
+- (double)doubleArg:(double)arg;
+
+/* argument passing for complex values */
 
 @end
 
@@ -278,6 +295,73 @@ static double g_doubles[] = {
 	res.array[3]  = 4;
 
 	return res;
+}
+
+/*
+ *
+ * Simple, single, pass by value arguments. We return the argument after
+ * modifying it. This should help to uncover cases where the bridge returns
+ * the first argument instead of the real return value.
+ */
+
+- (long long)longlongArg:(long long)arg
+{
+	return arg / 2;
+}
+
+- (unsigned long long)ulonglongArg:(unsigned long long)arg
+{
+	return arg / 2;
+}
+
+- (long)longArg:(long)arg
+{
+	return arg / 2;
+}
+
+- (unsigned long)ulongArg:(unsigned long)arg
+{
+	return arg / 2;
+}
+
+- (int)intArg:(int)arg
+{
+	return arg / 2;
+}
+
+- (unsigned int)uintArg:(unsigned int)arg
+{
+	return arg / 2;
+}
+
+- (short)shortArg:(short)arg
+{
+	return arg / 2;
+}
+
+- (unsigned short)ushortArg:(unsigned short)arg
+{
+	return arg / 2;
+}
+
+- (char)charArg:(char)arg
+{
+	return arg / 2;
+}
+
+- (unsigned char)ucharArg:(unsigned char)arg
+{
+	return arg / 2;
+}
+
+- (float)floatArg:(float)arg
+{
+	return arg / 2;
+}
+
+- (double)doubleArg:(double)arg
+{
+	return arg / 2;
 }
 
 @end

@@ -207,6 +207,7 @@ objc_methodlist_magic(Class cls)
 	return (cnt << 16) | (res & 0xFFFF);
 }
 
+extern int objc_sizeof_return_type(const char* type);
 extern int objc_sizeof_type (const char *type);
 extern int objc_alignof_type (const char *type);
 extern const char *objc_skip_typespec (const char *type);
@@ -303,6 +304,8 @@ pythonify_objc_message (register const char *from, register char *to)
   arrays are represented as tuples. */
 extern PyObject *pythonify_c_value (const char *type,
 				    void *datum);
+extern PyObject *pythonify_c_return_value (const char *type,
+				    void *datum);
 
 /*#F Takes a Python object @var{arg} and translate it into a C value
   pointed by @var{datum} accordingly with the type specification
@@ -311,6 +314,9 @@ extern PyObject *pythonify_c_value (const char *type,
   Returns NULL on success, or a static error string describing the
   error. */
 extern int depythonify_c_value (const char *type,
+					PyObject *arg,
+					void *datum);
+extern int depythonify_c_return_value (const char *type,
 					PyObject *arg,
 					void *datum);
 
