@@ -60,7 +60,7 @@ unittest_assert_failed(const char* file, int line, char* msg, ...)
 
 #define ASSERT(expr) \
 	do { \
-		if (!expr) { \
+		if (!(expr)) { \
 			unittest_assert_failed(__FILE__, __LINE__,"%s",#expr); \
 			goto error; \
 		} \
