@@ -26,12 +26,12 @@ export symbols other than the module init function.</p>
 <p>The easiest way to wrap global functions and constants is by using the scripts
 in Scripts/CodeGenerators. These scripts are unsupported and might not work on
 anything but the Apple headers, but if they work it will save you a lot of work.</p>
-<h2><a name="limititations">Limititations</a></h2>
+<h2><a name="limitations">Limitations</a></h2>
 <p>An important limitation of the current C API is that you can only use the API
 from one C file in the implementation of an extension module. This limitation
 will probably not be removed in future versions of the API.</p>
 <h2><a name="initialization">Initialization</a></h2>
-<p>The initialiazation function (below) should be called before using the
+<p>The initialization function (below) should be called before using the
 rest of the API:</p>
 <pre>
 static int PyObjC_ImportAPI(PyObject* calling_module)
@@ -128,14 +128,14 @@ void PyObjCErr_FromObjC(NSException* localException);
 <p>Convert an Objective-C exception to Python. Use 
 <code><span>PyObjCErr_FromObjC(localException)</span></code> to convert the exception in an 
 <code><span>NS_HANDLER</span></code> block.</p>
-<p>Note that PyObjC supports roundtripping for exceptions, if the current 
+<p>Note that PyObjC supports round-tripping for exceptions, if the current 
 Objective-C exception is an converted Python exception, the original Python
 exception will be rethrown.</p>
 <pre>
 void PyObjCErr_ToObjC(void);
 </pre>
 <p>Convert a Python exception to Objective-C. This function does not return.</p>
-<p>Note that PyObjC supports roundtripping for exceptions, if the current Python
+<p>Note that PyObjC supports round-tripping for exceptions, if the current Python
 exception is an converted Objective-C exception, the original Objective-C
 exception will be rethrown.</p>
 <pre>
