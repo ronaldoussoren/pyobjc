@@ -131,6 +131,23 @@
 
 @end /* NSString (PyObjCSupport) */
 
+@interface NSNumber (PyObjCSupport)
+-(PyObject*)__pyobjc_PythonObject__;
+@end /* NSNumber (PyObjCSupport) */
+
+@implementation NSNumber (PyObjCSupport)
+
+-(PyObject*)__pyobjc_PythonObject__
+{
+	PyObject *rval = [super __pyobjc_PythonObject__];
+	if (PyObjC_NSNumberWrapper && rval) {
+		PyObject *val = rval;
+		rval = PyObject_CallFunctionObjArgs(PyObjC_NSNumberWrapper, val, NULL);
+		Py_DECREF(val);
+	}
+	return rval;
+}
+
 
 #ifndef MAX
 static inline int

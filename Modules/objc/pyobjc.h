@@ -77,6 +77,7 @@
 
 extern int PyObjC_VerboseLevel;
 extern int PyObjC_StrBridgeEnabled;
+extern PyObject *PyObjC_NSNumberWrapper;
 
 
 int PyObjCAPI_Register(PyObject* module);

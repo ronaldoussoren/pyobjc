@@ -406,7 +406,7 @@ def _num_to_python(v):
             v = v.unsignedlongValue()
 
         elif tp == 'q':
-            v = v.longlongValue()
+            v = v.longLongValue()
 
         elif tp == 'Q':
             v = v.unsignedLonglongValue()
