@@ -11,6 +11,7 @@ NibClassBuilder.extractClasses("RemotePyInterpreterDocument.nib")
 
 from AsyncPythonInterpreter import *
 from ConsoleReactor import *
+from netrepr import RemoteObjectReference
 
 def ensure_unicode(s):
     if not isinstance(s, unicode):
@@ -19,10 +20,10 @@ def ensure_unicode(s):
 
 def ensure_utf8(s):
     if isinstance(s, unicode):
-        s = unicode.encode('utf-8')
+        s = s.encode('utf-8')
     return s
 
-class RemotePyInterpreterReactor(ConsoleReactor):
+class RemotePyInterpreterReactor(NibClassBuilder.AutoBaseClass):
     def handleExpectCommand_(self, command):
         seq = command[0]
         name = command[1]
@@ -56,6 +57,9 @@ class RemotePyInterpreterReactor(ConsoleReactor):
         else:
             self.doCallback_sequence_args_(NSLog, seq, [u'%r does not respond to expect %r' % (self, command,)])
     
+    def close(self):
+        super(RemotePyInterpreterReactor, self).close()
+        self.delegate = None
 
 class PseudoUTF8Input(object):
     softspace = 0
@@ -110,8 +114,13 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
 
     def expectCodeInput_withPrompt_(self, callback, prompt):
         self.writeString_forOutput_(prompt, u'code')
+        self.setCharacterIndexForInput_(self.lengthOfTextView())
         self.p_input_callbacks.append(callback)
         self.flushCallbacks()
+
+    def flushCallbacks(self):
+        while self.p_input_lines and self.p_input_callbacks:
+            self.p_input_callbacks.pop(0)(self.p_input_lines.pop(0))
 
     def setupTextView(self):
         self.textView.setFont_(self.font())
@@ -123,9 +132,22 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
     #  NIB loading protocol
     #
 
+    def windowWillClose_(self, window):
+        if self.commandReactor is not None:
+            self.commandReactor.close()
+            self.commandReactor = None
+        if self.interpreter is not None:
+            self.interpreter.close()
+            self.interpreter = None
+    
+    def windowNibName(self):
+        return u'RemotePyInterpreterDocument'
+    
+    def isDocumentEdited(self):
+        return False
+    
     def awakeFromNib(self):
         # XXX - should this be done later?
-        print 'awakeFromNib'
         self.setFont_(NSFont.userFixedPitchFontOfSize_(10))
         self.p_colors = {
             u'stderr': NSColor.redColor(),
@@ -139,6 +161,7 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
         self.setSingleLineInteraction_(False)
         self.p_history = [u'']
         self.p_input_callbacks = []
+        self.p_input_lines = []
         self.setupTextView()
         self.interpreter.connect()
 
@@ -194,21 +217,18 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
 
     def executeLine_(self, line):
         self.addHistoryLine_(line)
-        self.p_executeWithRedirectedIO(self.p_executeLine_, line)
+        self.p_input_lines.append(line)
+        self.flushCallbacks()
         self.p_history = filter(None, self.p_history)
         self.p_history.append(u'')
         self.setHistoryView_(len(self.p_history) - 1)
 
-    def p_executeLine_(self, line):
-        self.p_interp()(line)
-        self.setMore_(self.p_interp())
-
     def executeInteractiveLine_(self, line):
-        self.setInteracting(True)
+        self.setInteracting_(True)
         try:
             self.executeLine_(line)
         finally:
-            self.setInteracting(False)
+            self.setInteracting_(False)
 
     def replaceLineWithCode_(self, s):
         idx = self.characterIndexForInput()
@@ -266,7 +286,7 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
     def writeString_forOutput_(self, s, name):
         s = self.formatString_forOutput_(s, name)
         self.textView.textStorage().appendAttributedString_(s)
-        if self.isAutoscroll():
+        if self.isAutoScroll():
             self.textView.scrollRangeToVisible_((self.lengthOfTextView(), 0))
 
     def writeNewLine(self):
@@ -448,4 +468,4 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
         
 
 if __name__ == '__main__':
-    AppHelper.runEventLoop()
+    AppHelper.runEventLoop(installInterrupt=True)

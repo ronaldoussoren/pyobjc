@@ -9,6 +9,7 @@ import sys
 import socket
 from StringIO import StringIO
 from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
+import objc
 from Foundation import *
 
 IMPORT_MODULES = ['netrepr', 'remote_console', 'remote_pipe', 'remote_bootstrap']
@@ -38,9 +39,10 @@ def bind_and_listen(hostport):
 
 class AsyncPythonInterpreter(NSObject):
 
+    commandReactor = objc.IBOutlet('commandReactor')
+
     def init(self):
         self = super(AsyncPythonInterpreter, self).init()
-        print self
         self.host = None
         self.port = None
         self.interpreterPath = None
@@ -70,12 +72,13 @@ class AsyncPythonInterpreter(NSObject):
     bundleForClass = classmethod(bundleForClass)
     
     def awakeFromNib(self):
-        print self, 'awakeFromNib'
         defaults = NSUserDefaults.standardUserDefaults()
         def default(k, v, typeCheck=None):
             rval = defaults.objectForKey_(k)
             if typeCheck is not None and rval is not None:
-                if not isinstance(rval, typeCheck):
+                try:
+                    rval = typeCheck(rval)
+                except TypeError:
                     NSLog(u'%s failed type check %s with value %r' % (k, typeCheck.__name__, rval))
                     rval = None
             if rval is None:
@@ -85,7 +88,7 @@ class AsyncPythonInterpreter(NSObject):
         self.host = default(u'AsyncPythonInterpreterInterpreterHost', u'127.0.0.1', str)
         self.port = default(u'AsyncPythonInterpreterInterpreterPort', 0, int)
         self.interpreterPath = default(u'AsyncPythonInterpreterInterpreterPath', u'/usr/bin/python', unicode)
-        self.scriptPath = type(self).bundleForClass().pathForResource_(u'tcpinterpreter.py')
+        self.scriptPath = type(self).bundleForClass().pathForResource_ofType_(u'tcpinterpreter', u'py')
     
     def connect(self):
         #NSLog(u'connect')
@@ -96,7 +99,7 @@ class AsyncPythonInterpreter(NSObject):
             self,
             'remoteSocketAccepted:',
             NSFileHandleConnectionAcceptedNotification,
-            None)
+            self.serverFileHandle)
         self.serverFileHandle.acceptConnectionInBackgroundAndNotify()
         self.remoteFileHandle = None
         self.childTask = NSTask.launchedTaskWithLaunchPath_arguments_(self.interpreterPath, [self.scriptPath, repr(self.serverSocket.getsockname())])
@@ -104,7 +107,7 @@ class AsyncPythonInterpreter(NSObject):
             self,
             'childTaskTerminated:',
             NSTaskDidTerminateNotification,
-            None)
+            self.childTask)
         return self
 
     def remoteSocketAccepted_(self, notification):
@@ -118,7 +121,7 @@ class AsyncPythonInterpreter(NSObject):
             self,
             'remoteFileHandleReadCompleted:',
             NSFileHandleReadCompletionNotification,
-            None)
+            self.remoteFileHandle)
         self.writeBytes_(SOURCE)
         self.remoteFileHandle.readInBackgroundAndNotify()
         self.commandReactor.connectionEstablished_(self)
@@ -155,7 +158,10 @@ class AsyncPythonInterpreter(NSObject):
 
     def writeBytes_(self, bytes):
         #NSLog(u'Writing bytes: %r' % (bytes,))
-        self.remoteFileHandle.writeData_(NSData.dataWithBytes_length_(bytes, len(bytes)))
+        try:
+            self.remoteFileHandle.writeData_(NSData.dataWithBytes_length_(bytes, len(bytes)))
+        except objc.error:
+            self.close()
         #NSLog(u'bytes written.')
     
     def childTaskTerminated_(self, notification):
@@ -165,33 +171,43 @@ class AsyncPythonInterpreter(NSObject):
     def closeServerFileHandle(self):
         #NSLog(u'closeServerFileHandle')
         if self.serverFileHandle is not None:
-            self.serverFileHandle.closeFile()
+            try:
+                self.serverFileHandle.closeFile()
+            except objc.error:
+                pass
             self.serverFileHandle = None
 
     def closeRemoteFileHandle(self):
         #NSLog(u'closeRemoteFileHandle')
         if self.remoteFileHandle is not None:
-            self.remoteFileHandle.closeFile()
+            try:
+                self.remoteFileHandle.closeFile()
+            except objc.error:
+                pass
             self.remoteFileHandle = None
     
     def terminateChildTask(self):
         #NSLog(u'terminateChildTask')
         if self.childTask is not None:
-            self.childTask.terminate()
+            try:
+                self.childTask.terminate()
+            except objc.error:
+                pass
             self.childTask = None
 
     def close(self):
         #NSLog(u'close')
+        NSNotificationCenter.defaultCenter().removeObserver_(self)
+        self.finalClose()
+        NSNotificationCenter.defaultCenter().postNotificationName_object_(u'AsyncPythonInterpreterClosed', self)
+
+    def finalClose(self):
         if self.commandReactor is not None:
             self.commandReactor.connectionClosed_(self)
-        NSNotificationCenter.defaultCenter().removeObserver_(self)
+            self.commandReactor = None
         self.closeServerFileHandle()
         self.closeRemoteFileHandle()
         self.terminateChildTask()
-        NSNotificationCenter.defaultCenter().postNotificationName_object_(u'AsyncPythonInterpreterClosed', self)
-    
-    def __del__(self):
-        self.close()
         
 def test_console():
     from PyObjCTools import AppHelper

@@ -22,7 +22,7 @@ plist = dict(
     ],
 )
 
-REMOTE_REQUIREMENTS = ['netrepr', 'remote_console', 'remote_pipe', 'remote_bootstrap']
+REMOTE_REQUIREMENTS = ['tcpinterpreter', 'netrepr', 'remote_console', 'remote_pipe', 'remote_bootstrap']
 DATA_FILES = ['English.lproj'] + [(s + '.py') for s in REMOTE_REQUIREMENTS]
 
 setup(

@@ -6,7 +6,12 @@
 import sys, socket, os
 
 def runsocketcode(clientfile, g):
-    source = clientfile.readline().rstrip()
+    try:
+        source = clientfile.readline().rstrip()
+    except Exception, e:
+        raise SystemExit
+    if not source:
+        raise SystemExit
     source = eval(source)
     co = compile(source+'\n', '<remote-source>', 'exec')
     exec co in g

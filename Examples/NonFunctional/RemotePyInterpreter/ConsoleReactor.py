@@ -4,9 +4,9 @@ from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
 from Foundation import *
 
 class ConsoleReactor(NSObject):
+
     def init(self):
         self = super(ConsoleReactor, self).init()
-        print self
         self.pool = None
         self.netReprCenter = None
         self.connection = None
@@ -21,7 +21,9 @@ class ConsoleReactor(NSObject):
 
     def connectionClosed_(self, connection):
         #NSLog(u'connectionClosed_')
-        pass
+        self.connection = None
+        self.pool = None
+        self.netReprCenter = None
 
     def writeCode_(self, code):
         #NSLog(u'writeCode_')
@@ -57,7 +59,7 @@ class ConsoleReactor(NSObject):
 
     def handleRespondCommand_(self, command):
         self.doCallback_sequence_args_(
-            self.callbacks.pop(command[0]),
+            self.commands.pop(command[0]),
             command[0],
             command[1:],
         )
@@ -79,7 +81,7 @@ class ConsoleReactor(NSObject):
         except Exception, e:
             self.sendException_(e)
         else:
-            self.sendResult_sequence_(seq)
+            self.sendResult_sequence_(rval, seq)
     
     def deferCallback_sequence_value_(self, callback, seq, value):
         self.commands[seq] = callback
@@ -114,3 +116,11 @@ class ConsoleReactor(NSObject):
             self.doCallback_sequence_args_(meth, seq, args[1:])
         else:
             self.doCallback_sequence_args_(NSLog, seq, [u'%r does not respond to expect %r' % (self, command,)])
+
+    def close(self):
+        if self.connection is not None:
+            self.writeCode_('raise SystemExit')
+        self.pool = None
+        self.netReprCenter = None
+        self.connection = None
+        self.commands = None
