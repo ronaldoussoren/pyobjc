@@ -5,6 +5,8 @@ This module defines one class to build python based plugin bundles for MacOS X.
 Examples of plugin bundles include PreferencePanes and InterfaceBuilder 
 palletes.
 
+You *must* use a framework build of Python to be able to use this module.
+
 The PluginBuilder class is instantated with a number of keyword arguments and
 have a build() method that will do all the work. See the class docstrings for
 a description of the constructor arguments.
@@ -295,6 +297,9 @@ class PluginBuilder(bundlebuilder.BundleBuilder):
     binaries = []
 
     def setup(self):
+
+        assert_frameworkinstall()
+
         if self.mainmodule is None:
             raise bundlebuilder.BundleBuilderError, ("must specify 'mainmodule'"
                 " when building a plugin bundle")
@@ -363,6 +368,18 @@ class PluginBuilder(bundlebuilder.BundleBuilder):
 
         if self.missingModules or self.maybeMissingModules:
             self.reportMissing()
+
+def assert_frameworkinstall():
+    import sys
+
+    for item in sys.path:
+        if item.endswith('site-packages'):
+            break
+    else:
+        raise RuntimeError, "Cannot detect python flavor"
+
+    if item.find("Python.framework") == -1:
+        raise RuntimeError, "This module requires a framework install of Python"
 
 def compileBundle(outputName, bundle, mainModule):
     tmpFile = outputName + '.m'
@@ -506,4 +523,5 @@ def buildplugin(**kwargs):
     main(builder)
 
 if __name__ == "__main__":
+    assert_frameworkinstall()
     main()
