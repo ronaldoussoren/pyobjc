@@ -781,6 +781,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 					return NULL;
 				}
 			} else {
+				plain_count ++;
 				itemSize = objc_sizeof_type(argtype+1);
 				itemAlign = objc_alignof_type(argtype+1);
 				if (itemSize == -1) {
@@ -800,6 +801,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 					return NULL;
 				}
 			} else {
+				plain_count++;
 				itemSize = objc_sizeof_type(argtype+1);
 				itemAlign = objc_alignof_type(argtype+1);
 				if (itemSize == -1) {

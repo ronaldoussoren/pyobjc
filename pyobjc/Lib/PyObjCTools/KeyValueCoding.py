@@ -71,10 +71,25 @@ def getKey(obj, key):
 
     try:
         m = getattr(obj, key)
-        if isinstance(m, (types.MethodType, types.BuiltinMethodType)):
+
+        if isinstance(m, types.MethodType):
+            if m.im_self is obj:
+                return m()
+            else:
+                return m
+
+        elif isinstance(m, types.BuiltinMethodType):
+            # Can't access the bound self of methods of builtin classes :-(
             return m()
+
+        elif isinstance(m, objc.selector):
+            if m.self is obj:
+                return m()
+            else:
+                return m
         else:
             return m
+
     except AttributeError:
         pass
 
