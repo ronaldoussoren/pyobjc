@@ -168,8 +168,8 @@
 ,NSTextView,getMarkedText:selectedRange:,v12@4:8^@12^{_NSRange=II}16,
 ,NSColorPickerWheelView,_pointInPicker:,c8@4:8^{_NSPoint=ff}12,
 ,NSWorkspace,_willUnmountDeviceAtPath:ok:,v12@4:8@12^i16,
-,NSWorkspace,getFileSystemInfoForPath:isRemovable:isWritable:isUnmountable:description:type:,c28@4:8@12^c16^c20^c24^@28^@32,
-,NSWorkspace,getInfoForFile:application:type:,c16@4:8@12^@16^@20,
+,NSWorkspace,getFileSystemInfoForPath:isRemovable:isWritable:isUnmountable:description:type:,c28@4:8@12^c16^c20^c24^@28^@32,c28@4:8@12o^c16o^c20o^c24o^@28o^@32
+,NSWorkspace,getInfoForFile:application:type:,c16@4:8@12^@16^@20,c16@4:8@12o^@16o^@20
 ,NSWorkspace,performFileOperation:source:destination:files:tag:,c24@4:8@12@16@20@24^i28,
 ,NSIBObjectData,_encodeMapTable:forTypes:withCoder:,v16@4:8^{_NSMapTable=}12r*16@20,
 ,NSDocument,_changeAlertDidEnd:returnCode:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
@@ -377,12 +377,12 @@
 ,NSApplication,beginModalSessionForWindow:,^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}8@4:8@12,
 ,NSApplication,beginModalSessionForWindow:relativeToWindow:,^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12@4:8@12@16,
 ,NSApplication,beginSheet:modalForWindow:modalDelegate:didEndSelector:contextInfo:,v24@4:8@12@16@20:24^v28,v@:@@@:i
-,NSApplication,contextID,^v4@4:8,
+,NSApplication,contextID,^v4@4:8,i4@4:8
 ,NSApplication,endModalSession:,v8@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12,
 ,NSApplication,msgPrint:ok:,i12@4:8r*12^i16,
-,NSApplication,openFile:ok:,i12@4:8@12^i16,
-,NSApplication,openTempFile:ok:,i12@4:8@12^i16,
-,NSApplication,runModalSession:,i8@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12,
+,NSApplication,openFile:ok:,i12@4:8@12^i16,i12@4:8@12o^i16
+,NSApplication,openTempFile:ok:,i12@4:8@12^i16,i12@4:8@12o^i16
+,NSApplication,runModalSession:,i8@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12,i8@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12
 ,NSCalibratedWhiteColor,newWithCoder:zone:,@12@4:8@12^{_NSZone=}16,
 ,NSCGSFont,_atsFontID,^v4@4:8,
 ,NSCGSFont,_backingCGSFont,^{CGFont=^{CGFontVTable}Ii^{CGEncoding}^{CGCMap}^{CGAdvanceSet}^{CGAdvanceSet}i^{CGFontCache}^vb1b1b1b1}4@4:8,
