@@ -1,3 +1,4 @@
+from AppKit import *
 from Foundation import *
 from ServiceTest import *
 
