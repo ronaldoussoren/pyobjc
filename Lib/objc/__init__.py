@@ -85,12 +85,37 @@ def accessor(func):
     if not isinstance(func, type(accessor)):
         raise ValueError, '%s is not a function'%(func,)
 
+
     argCount = func.func_code.co_argcount
-    if argCount is 2:
+    funcName = func.func_name
+
+    if argCount == 3:
+        if funcName.startswith('insertObject_in') and funcName.endswith('AtIndex_'):
+            return selector(func, signature='v@:@i')
+        elif funcName.startswith('removeObjectFrom') and funcName.endswith('AtIndex_'):
+            return selector(func, signature='v@:i')
+        elif funcName.startswith('replaceObjectIn') and funcName.endswith('AtIndex_withObject_'):
+            return selector(func, signature='v@:i@')
+        elif funcName.startswith('validate') and funcName.endswith('_error_'):
+            return selector(func, signature='c@:N^@o^@')
+
+
+        raise ValueError, "Too many arguments to function '%s'.  Cannot create selector." % foo.func_name
+
+    elif argCount == 2:
+        if funcName.startswith('objectIn') and funcName.endswith('AtIndex_'):
+            return selector(func, signature='@@:i')
+        elif funcName.startswith('get') and funcName.endswith('_range_'):
+            return selector(func, signature='@@:{_NSRange=ii}')
+
         return selector(func, signature="v@:@")
-    elif argCount is 1:
+
+    elif argCount == 1:
+        if func.func_name.startswith('countOf'):
+            return selector(func, signature="i@:")
+
         return selector(func, signature="@@:")
-    elif argCount is 0:
+    elif argCount == 0:
         raise ValueError, "Too few arguments to function '%s'.  Cannot create selector." % foo.func_name
     else:
         raise ValueError, "Too many arguments to function '%s'.  Cannot create selector." % foo.func_name
