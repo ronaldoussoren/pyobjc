@@ -97,7 +97,18 @@ os.mkdir(os.path.join(basedir, 'Developer'))
 os.mkdir(os.path.join(basedir, 'Developer', 'ProjectBuilder Extras'))
 os.mkdir(os.path.join(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates'))
 os.mkdir(os.path.join(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application'))
-shutil.copytree('Project Templates/Cocoa-Python Application', os.path.join(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application', 'Cocoa-Python Application'))
+
+destination = os.path.join(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application', 'Cocoa-Python Application')
+shutil.copytree('Project Templates/Cocoa-Python Application', destination)
+
+def findCVS(irrelevant, dirName, names):
+	if '.DS_Store' in names:
+		os.remove( os.path.join(dirName, '.DS_Store') )
+	if dirName[-3:] == 'CVS':
+		while len(names): del names[0]
+		shutil.rmtree(dirName)
+
+os.path.walk(destination, findCVS, None)
 
 print 'Building package'
 pm = buildpkg.PackageMaker('PyObjC', package_version(), 
