@@ -3,7 +3,7 @@ from bundlebuilder import buildapp
 buildapp(
     mainprogram = "PackMan.py",
     resources = ["MainMenu.nib"],
-    includeModules=['newclient'],
+    includeModules=['newclient', 'newpimp'],
     symlink = True,
     nibname = "MainMenu"
 )

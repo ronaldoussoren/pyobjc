@@ -50,6 +50,7 @@ class Response:
 
 class HTTPClient(http.HTTPClient):
 
+    response = None
     def connectionMade(self):
         self.factory.connection.callback(self)
 
@@ -77,10 +78,12 @@ class HTTPClient(http.HTTPClient):
 
     def handleResponseEnd(self):
         self.done = 1
-        self.response.dataDone()
+        if self.response is not None:
+            self.response.dataDone()
 
 class ClientFactory(protocol.ClientFactory):
     protocol = HTTPClient
+    noisy = None and "FOR GOD'S SAKE NOISY CLIENT FACTORIES SUCK"
     def __init__(self):
         self.connection = defer.Deferred()
     def connectionFailed(self, _, reason):
