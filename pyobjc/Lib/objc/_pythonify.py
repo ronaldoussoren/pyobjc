@@ -8,7 +8,7 @@ class OC_PythonFloat(float):
         self.__pyobjc_object__ = obj
         return self
 
-    def getattr(self, attr):
+    def __getattr__(self, attr):
         return getattr(self.__pyobjc_object__, attr)
 
 class OC_PythonLong(long):
@@ -17,7 +17,7 @@ class OC_PythonLong(long):
         self.__pyobjc_object__ = obj
         return self
 
-    def getattr(self, attr):
+    def __getattr__(self, attr):
         return getattr(self.__pyobjc_object__, attr)
 
 class OC_PythonInt(int):
@@ -26,7 +26,7 @@ class OC_PythonInt(int):
         self.__pyobjc_object__ = obj
         return self
 
-    def getattr(self, attr):
+    def __getattr__(self, attr):
         return getattr(self.__pyobjc_object__, attr)
 
 NSNumber = _objc.lookUpClass('NSNumber')
