@@ -725,10 +725,24 @@ int objc_sizeof_return_type(const char* type)
 int depythonify_c_return_value(
 	const char* type, PyObject* argument, void* datum)
 {
+static  const char intType[] = { _C_INT, 0 };
+static  const char uintType[] = { _C_UINT, 0 };
+
+	/* XXX: This is not entirely correct, we should perform better range
+	 * checking...
+	 */
 	switch (*type) {
-	case _C_CHR:
+	case _C_CHR: 
+		return depythonify_c_value(intType, argument, datum); 
 
 	case _C_UCHR:
+		return depythonify_c_value(uintType, argument, datum); 
+
+	case _C_SHT:
+		return depythonify_c_value(intType, argument, datum); 
+
+	case _C_USHT:
+		return depythonify_c_value(uintType, argument, datum); 
 
 	default:
 		return depythonify_c_value(type, argument, datum);
@@ -738,11 +752,14 @@ int depythonify_c_return_value(
 PyObject *
 pythonify_c_return_value (const char *type, void *datum)
 {
+static  const char intType[] = { _C_INT, 0 };
+static  const char uintType[] = { _C_UINT, 0 };
+
 	switch(*type) {
 	case _C_CHR: case _C_SHT:
-		return pythonify_c_value("i", datum);
+		return pythonify_c_value(intType, datum);
 	case _C_UCHR: case _C_USHT:
-		return pythonify_c_value("I", datum);
+		return pythonify_c_value(uintType, datum);
 
 	default:
 		return pythonify_c_value(type, datum);
