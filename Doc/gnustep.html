@@ -21,6 +21,9 @@ would expect). We also use undocumented private functions to initialize new
 classes.</p>
 <h2><a name="todo">TODO</a></h2>
 <ul>
+<li>[Serious] Fix linkage problems. The objC runtime doesn't seem to be 
+initialized correctly and/or the classes in newly loaded frameworks are
+not correctly registered in the runtime.</li>
 <li>Fix the odd bug...<p>I currently get the following text when importing objc:</p>
 <pre>
 Unable to retrieve information about SIGPIPE
@@ -31,7 +34,6 @@ does print that text...</p>
 <li>Fix bugs found using the unittests<p>runPyObjCTests finds some problems that disappear when those tests 
 are run separately...</p>
 </li>
-<li>Port the AppKit wrappers</li>
 <li>Extract more CFLAGS and LDFLAGS information from the GNUstep build system,
 instead of hard-coding the information</li>
 </ul>

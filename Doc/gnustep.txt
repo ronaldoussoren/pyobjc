@@ -19,6 +19,10 @@ classes.
 TODO
 ----
 
+* [Serious] Fix linkage problems. The objC runtime doesn't seem to be 
+  initialized correctly and/or the classes in newly loaded frameworks are
+  not correctly registered in the runtime.
+
 * Fix the odd bug...
 
   I currently get the following text when importing objc::
@@ -32,8 +36,6 @@ TODO
 
   runPyObjCTests finds some problems that disappear when those tests 
   are run separately...
-
-* Port the AppKit wrappers
 
 * Extract more CFLAGS and LDFLAGS information from the GNUstep build system,
   instead of hard-coding the information

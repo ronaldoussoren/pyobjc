@@ -85,7 +85,7 @@ Xcode on MacOS X 10.3
 The ``Xcode`` directory contains some file and project that make it easier to
 work with Python and PyObjC when using `Xcode`__.
 
-.. __:http://www.apple.com/xcode
+.. __: http://www.apple.com/xcode
 
 Copy the templates in ``Xcode/File templates`` to ``/Library/Application Support/Apple/Development Tools/File Templates``. Copy the templates in ``Xcode/Project Templates`` to ``/Library/Application Support/Apple/Development Tools/Project Templates``.
 
