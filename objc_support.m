@@ -963,10 +963,10 @@ execute_and_pythonify_objc_method (ObjCMethod *meth, PyObject *args)
       for (i = 2; i < argcount; i++)
         {
           PyObject *argument;
-#ifdef NOTOSX
-	  const char *argtype = [methinfo argumentInfoAtIndex:i].type;
-#else
+#ifdef MACOSX
 	  const char *argtype = [methinfo getArgumentTypeAtIndex:i];
+#else
+	  const char *argtype = [methinfo argumentInfoAtIndex:i].type;
 #endif
 	  char argbuffer[objc_sizeof_type (argtype)];
 

@@ -109,10 +109,10 @@ ObjCMethod_pack_argument (ObjCMethod *meth, PyObject *args)
   
       if (argn < argcount-2)
         {
-#ifdef NOTOSX
-          const char *type = [methinfo argumentInfoAtIndex:argn+2].type;
-#else
+#ifdef MACOSX
           const char *type = [methinfo getArgumentTypeAtIndex:argn+2];
+#else
+          const char *type = [methinfo argumentInfoAtIndex:argn+2].type;
 #endif
           unsigned int size;
           char *buffer;
