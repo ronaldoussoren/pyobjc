@@ -49,18 +49,18 @@ del cls
 del gl
 
 from types import *
-def propertyListFromPythonCollection(aPyCollection):
+def propertyListFromPythonCollection(aPyCollection, conversionHelper=None):
 	containerType = type(aPyCollection)
 	if containerType == DictType:
 		collection = NSMutableDictionary.dictionary()
 		for aKey in aPyCollection:
-			convertedValue = propertyListFromPythonCollection( aPyCollection[aKey] )
+			convertedValue = propertyListFromPythonCollection( aPyCollection[aKey], conversionHelper=conversionHelper )
 			collection.setObject_forKey_( convertedValue , aKey )
 		return collection
 	elif containerType in [TupleType, ListType]:
 		collection = NSMutableArray.array()
 		for aValue in aPyCollection:
-			convertedValue = propertyListFromPythonCollection( aValue )
+			convertedValue = propertyListFromPythonCollection( aValue, conversionHelper=conversionHelper )
 			collection.addObject_( convertedValue  )
 		return collection
 	elif containerType in StringTypes:
@@ -74,6 +74,8 @@ def propertyListFromPythonCollection(aPyCollection):
 	elif containerType == NoneType:
 		return NSNull.null()
 	else:
+		if conversionHelper:
+			return conversionHelper(aPyCollection)
 		raise "UnrecognizedTypeException", "Type %s encountered in python collection;  don't know how to convert." % containerType
 
 # def pythonCollectionFromPropertyList(aPropertyList):

@@ -1,5 +1,13 @@
-2002-10-16  Bill Bumgarner  <bbum@codefab.com>
+2002-10-17  Bill Bumgarner  <bbum@codefab.com>
+	* propertyListFromPythonCollection() takes an optional kv argument
+	that is used as a helper function when the type to be converted in
+	the python collection is not recognized.   For example, the
+	xmlrpclib returns a [somewhat inadequate] internal type known as a
+	DateTime.  To convert this to a Foundation class requires some
+	jumping through hoops that may change a bit during context.  The
+	caller can provide a helper function to do the conversion.
 
+2002-10-16  Bill Bumgarner  <bbum@codefab.com>
 	* NSClassFromString() was implemented twice in the Foundation's
 	__init__.py.  The second implementation was supposed to be
 	NSStringFromClass(). Fixed.
@@ -15,7 +23,6 @@
 	  regains its orginal 'identity'
 
 2002-10-11  Bill Bumgarner  <bbum@codefab.com>
-
 	* Removed various debugging/development noise from startup.
 
 	* Regenerated various incs in Modules/Cocoa based on new scripts.
