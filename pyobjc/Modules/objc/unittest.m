@@ -9,6 +9,8 @@
 #include "pyobjc-api.h"
 #include "pyobjc-unittest.h"
 
+#include <fcntl.h>
+
 #import <Foundation/Foundation.h>
 
 struct Struct1 {
@@ -652,6 +654,35 @@ BEGIN_UNITTEST(PythonDictAsNSDictionary)
 
 END_UNITTEST
 
+BEGIN_UNITTEST(NSLogging)
+	/* This is a pretty lame test ...
+	 *
+	 * What this does is that that the proxies of plain Python objects
+	 * can be logged. This used to be impossible upto (and including)
+	 * release 1.1!
+	 */
+	PyObject* o = (PyObject*)(Py_BuildValue("i", 10)->ob_type);
+	NSObject* value;
+	int fd;
+	int stderr_orig;
+	int r;
+
+	value = PyObjC_PythonToId(o);
+	FAIL_IF(value == nil);
+
+	fd = open("/dev/null", O_WRONLY);
+	ASSERT((fd != -1));
+	stderr_orig = dup(2);
+	ASSERT(stderr_orig != -1);
+	r = dup2(fd, 2);
+	ASSERT(r != -1);
+	NSLog(@"%@", value);
+	r = dup2(stderr_orig, 2);
+	ASSERT(r != -1);
+	r = close(fd);
+	ASSERT(r != -1);
+END_UNITTEST
+
 static PyMethodDef unittest_methods[] = {
 	TESTDEF(CheckNSInvoke),
 
@@ -676,6 +707,7 @@ static PyMethodDef unittest_methods[] = {
 	TESTDEF(PythonListAsNSArray),
 	TESTDEF(PythonTupleAsNSArray),
 	TESTDEF(PythonDictAsNSDictionary),
+	TESTDEF(NSLogging),
 	{ 0, 0, 0, 0 }
 };
 

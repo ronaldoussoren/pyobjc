@@ -64,7 +64,13 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 	[super dealloc];
 }
 
-- (NSString *) description
+/* Undocumented method used by NSLog, this seems to work. */
+- (NSString*) _copyDescription
+{
+	return [[self description] retain];
+}
+
+- (NSString*) description
 {
 	PyObject *repr;
 
@@ -166,10 +172,28 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 - (BOOL) respondsToSelector:(SEL) aSelector
 {
 	PyObject *m;
+	struct objc_method_list* lst;
+	void* cookie;
 
-	if ([super respondsToSelector:aSelector]) {
-		return YES;
-	} 
+	/*
+	 * We cannot rely on NSProxy, it doesn't implement most of the
+	 * NSObject interface anyway.
+	 */
+
+	cookie = NULL;
+	lst = PyObjCRT_NextMethodList(GETISA(self), &cookie);
+	while (lst != NULL) {
+		int i;
+
+		for (i = 0; i < lst->method_count; i++) {
+			if (PyObjCRT_SameSEL(
+					lst->method_list[i].method_name, 
+					aSelector)) {
+				return YES;
+			}
+		}
+		lst = PyObjCRT_NextMethodList(GETISA(self), &cookie);
+	}
 
 	PyObjC_BEGIN_WITH_GIL
 		m = get_method_for_selector(pyObject, aSelector);
@@ -235,6 +259,41 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	return [NSMethodSignature signatureWithObjCTypes:encoding];
 }
 
+- (BOOL) _forwardNative:(NSInvocation*) invocation
+{
+	/* XXX: This should use libffi to call call native methods of this
+	 *      class. The implementation below works good enough for
+	 *      now...
+	 */
+	SEL aSelector = [invocation selector];
+
+	if (PyObjCRT_SameSEL(aSelector, @selector(description))) {
+		id res = [self description];
+		[invocation setReturnValue:&res];
+
+		return YES;
+
+	} else if (PyObjCRT_SameSEL(aSelector, @selector(_copyDescription))) {
+		id res = [self _copyDescription];
+		[invocation setReturnValue:&res];
+
+		return YES;
+
+	} else if (PyObjCRT_SameSEL(aSelector, @selector(respondsToSelector:))){
+		SEL	sel;
+		BOOL	b;
+
+		[invocation getArgument:&sel atIndex:2];
+
+		b = [self respondsToSelector: sel];
+		[invocation setReturnValue:&b];
+
+		return YES;
+	}
+
+	return NO;
+}
+
 - (void) forwardInvocation:(NSInvocation *) invocation
 {
 	/* XXX: Needs cleanup */
@@ -250,6 +309,10 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	int		   retsize;
 	char*              retbuffer;
 
+	if ([self _forwardNative:invocation]) {
+		return;
+	}
+
 	PyObjC_BEGIN_WITH_GIL
 
 		retsize = PyObjCRT_SizeOfType (rettype);
@@ -262,25 +325,6 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		pymethod = get_method_for_selector(pyObject, aSelector);
 
 		if (!pymethod) {
-			/* The method does not exist. We cannot forward this 
-			 * to our * super because NSProxy doesn't implement 
-			 * forwardInvocation. 
-			 */
-			PyErr_Clear();
-
-			if (aSelector == @selector(description)) {
-				NS_DURING
-					id res = [self description];
-					[invocation setReturnValue:&res];
-
-				NS_HANDLER
-					PyGILState_Release(_GILState); // FIXME
-					[localException raise];
-
-				NS_ENDHANDLER
-
-				PyObjC_GIL_RETURNVOID;
-			}
 			PyGILState_Release(_GILState); // FIXME
 			[self doesNotRecognizeSelector:aSelector];
 			return;
