@@ -1,6 +1,16 @@
 """
 new-style pyobjc
 """
+
+##
+## Disable gc -- blows up w/Python 2.2
+##
+import sys
+majorVersion, minorVersion, minorDotVersion, None, None = sys.version_info
+if majorVersion is 2 and minorVersion is 2:
+	import gc
+	gc.disable()
+
 from _objc import *
 from _objc import __version__
 

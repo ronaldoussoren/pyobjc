@@ -34,7 +34,7 @@
 	return self;
 }
 
--dealloc
+-(void)dealloc
 {
 	Py_XDECREF(value);
 }
