@@ -225,18 +225,23 @@ search_special(Class class, SEL sel)
 
 			if (!special_class) {
 				special_class = pyclass;
-				result = PyTuple_GetItem(entry, 2);
+				Py_INCREF(special_class);
+				result = PyTuple_GET_ITEM(entry, 2);
 
 			} else if (pyclass == Py_None) {
+				Py_DECREF(special_class);
 				special_class = pyclass;
-				result = PyTuple_GetItem(entry, 2);
+				Py_INCREF(special_class);
+				result = PyTuple_GET_ITEM(entry, 2);
 
 			} else if (PyType_IsSubtype(
 					(PyTypeObject*)special_class,
 					(PyTypeObject*)pyclass
 				    )) {
+				Py_DECREF(special_class);
 				special_class = pyclass;
-				result = PyTuple_GetItem(entry, 2);
+				Py_INCREF(special_class);
+				result = PyTuple_GET_ITEM(entry, 2);
 			}
 		}
 	}
