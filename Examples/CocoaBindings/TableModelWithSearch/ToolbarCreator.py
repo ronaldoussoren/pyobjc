@@ -17,6 +17,14 @@ NibClassBuilder.extractClasses("MainMenu")
 kToolbarIdentifier = "TableModel Toolbar Identifier"
 kSearchFieldItemIdentifier = "TableModel Search Field Identifier"
 
+from FilteringArrayController import kLiteralSearch, kRegularExpressionSearch
+TAG_IDENTIFIER_MAP = {
+    1000: kLiteralSearch,
+    1001: kRegularExpressionSearch,
+}
+
+
+
 class ToolbarCreator(NibClassBuilder.AutoBaseClass):
     def awakeFromNib(self):
         self.toolbarItemCache = {}
@@ -42,6 +50,23 @@ class ToolbarCreator(NibClassBuilder.AutoBaseClass):
 
         self.window.setToolbar_(toolbar)
 
+        cellMenu = NSMenu.alloc().initWithTitle_(u'Search Menu')
+        # note, bottom up!
+        for v in [kRegularExpressionSearch, kLiteralSearch]:
+            item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(v, 'changeSearchType:', u'')
+            item.setRepresentedObject_(v)
+            item.setTarget_(self)
+            cellMenu.insertItem_atIndex_(item, 0)
+        self.searchField.cell().setSearchMenuTemplate_(cellMenu)
+        # this better be the kLiteralSearch menu item
+        self.changeSearchType_(item)
+
+    def changeSearchType_(self, sender):
+        obj = sender.representedObject()
+        self.searchField.cell().setPlaceholderString_(obj)
+        self.searchField.setStringValue_(u'')
+        self.filteringArrayController.changeSearchType_(obj)
+    
     def toolbarDefaultItemIdentifiers_(self, aToolbar):
         return [
             kSearchFieldItemIdentifier,

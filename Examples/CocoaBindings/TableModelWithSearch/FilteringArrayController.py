@@ -10,25 +10,51 @@ from objc import YES, NO
 from Foundation import *
 from AppKit import *
 from PyObjCTools import NibClassBuilder
+import re
 
 NibClassBuilder.extractClasses("MainMenu")
 
+kLiteralSearch = u'Literal Search'
+kRegularExpressionSearch = u'Regular Expression Search'
+
+def regexForSearchString(searchString, searchType):
+    if not searchString:
+        return None
+
+    searchString = searchString.strip()
+    if searchType == kLiteralSearch:
+        searchString = re.escape(searchString.strip()) + ur'(?i)'
+    return re.compile(searchString)
+
+def dictValueFilter(dicts, regex):
+    for dct in dicts:
+        for value in dct.itervalues():
+            if regex.search(value):
+                yield dct
+                break
+
 class FilteringArrayController(NibClassBuilder.AutoBaseClass):
     searchString = None
+    lastRegex = None
+    searchType = kLiteralSearch
     
     def arrangeObjects_(self, objects):
-        if (not self.searchString) or (self.searchString == ""):
-            return super(FilteringArrayController, self).arrangeObjects_(objects)
-
-        newArrangement = []
-        for o in objects: # there has to be a better way...
-            for v in o.values():
-                if v.find(self.searchString) is not -1:
-                    newArrangement.append(o)
-                    break
-        
-        return super(FilteringArrayController, self).arrangeObjects_(newArrangement)
+        supermethod = super(FilteringArrayController, self).arrangeObjects_
+        try:
+            regex = regexForSearchString(self.searchString, self.searchType)
+        except:
+            regex = self.lastRegex
+        self.lastRegex = regex
+        if regex is None:
+            return supermethod(objects)
+        return supermethod(list(dictValueFilter(objects, regex)))
     
     def performSearch_(self, sender):
         self.searchString = sender.stringValue()
+        self.rearrangeObjects()
+
+    def changeSearchType_(self, searchType):
+        self.lastRegex = None
+        self.searchString = None
+        self.searchType = searchType
         self.rearrangeObjects()
