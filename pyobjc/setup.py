@@ -10,6 +10,10 @@ USE_FFI_SHORTCUTS = 1
 # have to do that manually. (Experimental)
 USE_ADJUST_REFCOUNTS = 0
 
+# Set this to the path to an extracted tree of libffi to automaticly build
+# a compatible version of libffi
+LIBFFI_SOURCES=None
+
 import sys
 import os
 
@@ -38,7 +42,46 @@ if sys.version_info[0] < req_ver[0] or (
     sys.exit(1)
 
 if USE_FFI:
-    if os.environ.has_key('LIBFFI_BASE'):
+    if LIBFFI_SOURCES is not None:
+        if not os.path.isdir(LIBFFI_SOURCES):
+            sys.stderr.write(
+                'LIBFFI_SOURCES is not a directory: %s'%LIBFFI_SOURCES)
+            sys.exit(1)
+        
+        if not os.path.exists('build'):
+            os.mkdir('build')
+
+        if not os.path.exists('build/libffi'):
+            os.mkdir('build/libffi')
+
+        if not os.path.exists('build/libffi/BLD'):
+            os.mkdir('build/libffi/BLD')
+
+        if not os.path.exists('build/libffi/lib/libffi.a'):
+            # No pre-build version available, build it now.
+            print "Building local copy of libffi"
+
+            # Do not use a relative path for the build-tree, libtool on
+            # MacOS X doesn't like that.
+            inst_dir = os.path.join(os.getcwd(), 'build/libffi')
+            src_path = os.path.abspath(LIBFFI_SOURCES)
+
+            inst_dir = inst_dir.replace("'", "'\"'\"'")
+            src_path = src_path.replace("'", "'\"'\"'")
+
+            fd = os.popen(
+                "cd build/libffi/BLD && '%s/configure' --prefix='%s' --disable-shared --enable-static && make install"%(src_path, inst_dir), 'r')
+            for ln in fd.xreadlines():
+                sys.stdout.write(ln)
+
+            res = fd.close()
+            if res is not None:
+                sys.stderr.write('Building libffi failed [%d]\n'%(res,))
+                sys.exit(1)
+            
+        LIBFFI_BASE='build/libffi'
+
+    elif os.environ.has_key('LIBFFI_BASE'):
         LIBFFI_BASE=os.environ['LIBFFI_BASE']
     else:
         LIBFFI_BASE='libffi'
