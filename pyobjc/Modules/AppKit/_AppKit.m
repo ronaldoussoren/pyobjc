@@ -2,15 +2,14 @@
  * Mapping of static items in the AppKit kit and helper functions for mapping
  * "difficult" methods.
  */
-#import <AppKit/AppKit.h>
-#import <AppKit/NSGraphics.h>
-#import <CoreFoundation/CoreFoundation.h>
-
 #include <Python.h>
 #include "pyobjc-api.h"
 #include "wrapper-const-table.h"
 
-#ifndef GNUSTEP
+#import <AppKit/AppKit.h>
+#import <AppKit/NSGraphics.h>
+
+#ifdef MACOSX
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_2
 #import <AppKit/NSNib.h>
@@ -21,6 +20,13 @@
 #endif
 
 #import <AppKit/NSTypesetter.h>
+
+#else /* GNUSTEP  */
+
+#import <AppKit/NSOpenGL.h>
+#import <AppKit/AppKitExceptions.h>
+#import <AppKit/NSHelpManager.h>
+
 #endif
 
 
@@ -1194,8 +1200,12 @@ void init_AppKit(void)
 		return;
 	}
 
+#ifdef MACOSX
 	bundle = CFBundleCreate(NULL,
 		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/AppKit.framework"]);
+#else
+	bundle = NULL;
+#endif
 
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_variableList(d, bundle, string_table, (sizeof(string_table)/sizeof(string_table[0]))-1) < 0) return;
@@ -1210,7 +1220,7 @@ void init_AppKit(void)
 	 * directory
 	 */
 
-#ifndef GNUSTEP
+#ifdef MACOSX
 	/* NSOpenGL.h */
 	add_int(d, "NSOPENGL_CURRENT_VERSION", NSOPENGL_CURRENT_VERSION);
 
@@ -1234,6 +1244,11 @@ void init_AppKit(void)
 	add_int(d, "NSPopUpMenuWindowLevel", NSPopUpMenuWindowLevel);
 	add_int(d, "NSScreenSaverWindowLevel", NSScreenSaverWindowLevel);
 
+#ifdef GNU_RUNTIME
+	add_int(d, "NSOutlineViewDropOnItemIndex", 
+			NSOutlineViewDropOnItemIndex);
+#endif
+
 	{
 	  struct uchar_table*  cur = g_unicode_characters;
 	  int       res;
@@ -1248,7 +1263,17 @@ void init_AppKit(void)
 	}
 
 	/* Some special constants */
+#ifdef GNU_RUNTIME
+	/* ARGH, when I look at it in the debugger, NSFontIdentityMatrix 
+	 * seems to have the value of the first entry in the matrix,
+	 * instead of being the address of the array...
+	 */
+	fontMatrix(d, "NSFontIdentityMatrix", &NSFontIdentityMatrix);
+
+#else
+
 	fontMatrix(d, "NSFontIdentityMatrix", NSFontIdentityMatrix);
+#endif
 
 	/* Struct definitions */
 	v = PyObjC_RegisterStructType(@encode(NSAffineTransformStruct),

@@ -131,8 +131,10 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
 		(void)objc_msgSendSuper(&super, 
 			PyObjCSelector_GetSelector(method),
 			&dataPlanes);
-		bytesPerPlane = (int) objc_msgSend(
-			PyObjCObject_GetObject(self), @selector(bytesPerPlane));
+
+		bytesPerPlane = [
+			(NSBitmapImageRep*)PyObjCObject_GetObject(self) 
+			bytesPerPlane];
 
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
@@ -183,8 +185,11 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
     
 		bitmapData = (unsigned char *) objc_msgSendSuper(&super, 
 				PyObjCSelector_GetSelector(method));
-		bytesPerPlane = (int) objc_msgSend(
-			PyObjCObject_GetObject(self), @selector(bytesPerPlane));
+
+			
+		bytesPerPlane = [
+			(NSBitmapImageRep*)PyObjCObject_GetObject(self) 
+			bytesPerPlane];
 
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);

@@ -8,57 +8,59 @@
 #include <Python.h>
 #include <Foundation/Foundation.h>
 #include "pyobjc-api.h"
-#include <ApplicationServices/ApplicationServices.h>
 
 #ifdef MACOSX
+
+#include <ApplicationServices/ApplicationServices.h>
+
 static PyObject*
 call_NSGraphicsContext_graphicsPort(
     PyObject* method, PyObject* self, PyObject* arguments)
 {
-    PyObject* pyCoreGraphicsModule;
-    PyObject* pyCGContextPtr;
-    PyObject* sillySwigThing;
-    CGContextRef res;
-    char ptrString[9];
-    struct objc_super super;
-    PyObject* retVal;
+	PyObject* pyCoreGraphicsModule;
+	PyObject* pyCGContextPtr;
+	PyObject* sillySwigThing;
+	CGContextRef res;
+	char ptrString[9];
+	struct objc_super super;
+	PyObject* retVal;
 
-    if (!PyArg_ParseTuple(arguments, "")) {
-        return NULL;
-    }
+	if (!PyArg_ParseTuple(arguments, "")) {
+		return NULL;
+	}
 
-    if ((pyCoreGraphicsModule = PyImport_ImportModule("CoreGraphics")) == NULL ) {
-        return 0;
-    }
-    pyCGContextPtr = PyObject_GetAttrString(pyCoreGraphicsModule, "CGContextPtr");
-    Py_DECREF(pyCoreGraphicsModule);
-    if (pyCGContextPtr == NULL) {
-        return 0;
-    }
+	if ((pyCoreGraphicsModule = PyImport_ImportModule("CoreGraphics")) == NULL ) {
+		return 0;
+	}
+	pyCGContextPtr = PyObject_GetAttrString(pyCoreGraphicsModule, "CGContextPtr");
+	Py_DECREF(pyCoreGraphicsModule);
+	if (pyCGContextPtr == NULL) {
+		return 0;
+	}
 
-    PyObjC_DURING
-        PyObjC_InitSuper(&super,
-            PyObjCSelector_GetClass(method),
-            PyObjCObject_GetObject(self));
+	PyObjC_DURING
+		PyObjC_InitSuper(&super,
+		    PyObjCSelector_GetClass(method),
+		    PyObjCObject_GetObject(self));
 
-        res = (CGContextRef)objc_msgSendSuper(&super,
-            @selector(graphicsPort));
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        res = NULL;
-    PyObjC_ENDHANDLER
+		res = (CGContextRef)objc_msgSendSuper(&super,
+		    @selector(graphicsPort));
+	PyObjC_HANDLER
+		PyObjCErr_FromObjC(localException);
+		res = NULL;
+	PyObjC_ENDHANDLER
 
-    if (res == NULL && PyErr_Occurred()) {
-        Py_DECREF(pyCGContextPtr);
-        return NULL;
-    }
+	if (res == NULL && PyErr_Occurred()) {
+		Py_DECREF(pyCGContextPtr);
+		return NULL;
+	}
 
-    sprintf(ptrString, "%08x", (unsigned int)res);
-    sillySwigThing = PyString_FromFormat("_%s_CGContextRef", ptrString);
-    retVal = PyObject_CallFunctionObjArgs(pyCGContextPtr, sillySwigThing, NULL);
-    Py_DECREF(sillySwigThing);
-    Py_DECREF(pyCGContextPtr);
-    return retVal;
+	sprintf(ptrString, "%08x", (unsigned int)res);
+	sillySwigThing = PyString_FromFormat("_%s_CGContextRef", ptrString);
+	retVal = PyObject_CallFunctionObjArgs(pyCGContextPtr, sillySwigThing, NULL);
+	Py_DECREF(sillySwigThing);
+	Py_DECREF(pyCGContextPtr);
+	return retVal;
 }
 #endif
 
