@@ -6,6 +6,4 @@ class WSTApplicationDelegate (NSObject):
     WSTConnectionWindowController.connectionWindowController().showWindow_(sender)
 
   def applicationDidFinishLaunching_(self, aNotification):
-    print "foo"
     self.newConnectionAction_(None)
-    print "bar"

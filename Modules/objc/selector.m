@@ -425,7 +425,8 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		/* Ownership transfered to us, but 'execute' method has
 		 * increased retainCount, the retainCount is now one to high
 		 */
-		[ObjCObject_GetObject(res) release];
+    // [ObjCObject_GetObject(res) release];
+    ;
 	}
 	return res;
 }
