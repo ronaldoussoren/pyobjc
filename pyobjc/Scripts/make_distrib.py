@@ -107,7 +107,7 @@ if not basedir:
 
 print "Generateing HTML documentation"
 os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
-rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt'])
+rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt', 'Installer Package/Resources/ReadMe.txt'])
 
 if DOC_ONLY:
     sys.exit(0)

@@ -32,7 +32,7 @@ class AppDelegate (NSObject):
         print "Hello again, World!"
 
 def main():
-    NSApp = NSApplication.sharedApplication()
+    app = NSApplication.sharedApplication()
 
     # we must keep a reference to the delegate object ourselves,
     # NSApp.setDelegate_() doesn't retain it. A local variable is
@@ -50,7 +50,7 @@ def main():
     win.contentView().addSubview_ (hel)
     hel.setBezelStyle_( 4 )
     hel.setTitle_( 'Hello!' )
-    hel.setTarget_( NSApp.delegate() )
+    hel.setTarget_( app.delegate() )
     hel.setAction_( "sayHello:" )
 
     beep = NSSound.alloc()
@@ -60,7 +60,7 @@ def main():
     bye = NSButton.alloc().initWithFrame_ (((100.0, 10.0), (80.0, 80.0)))
     win.contentView().addSubview_ (bye)
     bye.setBezelStyle_( 4 )
-    bye.setTarget_ (NSApp)
+    bye.setTarget_ (app)
     bye.setAction_ ('stop:')
     bye.setEnabled_ ( 1 )
     bye.setTitle_( 'Goodbye!' )
@@ -72,7 +72,7 @@ def main():
     win.display()
     win.orderFrontRegardless()		## but this one does
 
-    NSApp.run()    
+    app.run()    
 
 
 if __name__ == '__main__' : main()

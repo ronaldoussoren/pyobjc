@@ -1,38 +1,45 @@
-from types import FunctionType
+from types import FunctionType, MethodType
 import objc
 from Foundation import *
 
 ### BUG:  If accessing iVar directly and iVar is a callable type, it'll be invoked
 # I don't think there is anything we can do about this because of the way python works
-class BridgedKeyValueMethods(NSObject):
+
+CALL_TP=(FunctionType, MethodType, objc.selector)
+
+def addKeyValueBridgeToClass(aClass):
     def bridgedValueForKey_(self, aKey):
         try:
             v = getValueForKey_(self, aKey)
             return v
         except KeyError:
-            zuper = super(self.__class__, self)
+            zuper = super(aClass, self)
             if zuper.respondsToSelector_("valueForKey:"):
                 return zuper.valueForKey_(aKey)
 
         raise KeyError, aKey
-    bridgedValueForKey_ = objc.selector(bridgedValueForKey_,  argumentTypes="s", returnType="O")
 
-def addKeyValueBridgeToClass(aClass):
-    objc.classAddMethod(aClass, "valueForKey:", BridgedKeyValueMethods.bridgedValueForKey_)
+    objc.classAddMethods(aClass, [
+            objc.selector(
+                bridgedValueForKey_,
+                selector="valueForKey:",
+                signature="@@:@",
+                isClassMethod=0,
+            )])
 
 def getValueForKey_(anObject, aKey):
     upperizedKey = aKey[0].upper() + aKey[1:]
 
     # Accessor methods
     possibleMethod = getattr(anObject, "get" + upperizedKey, None)
-    if possibleMethod and type(possibleMethod) is FunctionType:
-        return possibleMethod(anObject)
+    if possibleMethod and isinstance(possibleMethod, CALL_TP):
+        return possibleMethod()
     aKeyPossibleMethod = getattr(anObject, aKey, None)
-    if aKeyPossibleMethod and type(aKeyPossibleMethod) is FunctionType:
-        return aKeyPossibleMethod(anObject)
+    if aKeyPossibleMethod and isinstance(aKeyPossibleMethod, CALL_TP):
+        return aKeyPossibleMethod()
     possibleIsMethod = getattr(anObject, "is" + upperizedKey, None)
-    if possibleIsMethod and type(possibleIsMethod) is FunctionType:
-        return possibleIsMethod(anObject)
+    if possibleIsMethod and isinstance(possibleIsMethod, CALL_TP):
+        return possibleIsMethod()
 
     # direct access to ivar
     if anObject.accessInstanceVariablesDirectly():

@@ -15,6 +15,7 @@ import func_collector
 import func_builder
 import os
 import sys
+from dupfile import dupfile
 
 if not os.path.isdir('Modules'):
     print "Run me from the root of the PyObjC source tree"
@@ -283,7 +284,7 @@ func_builder.FUNC_MAP['NSBeginAlertSheet'] = BeginSheetMapper
 func_builder.FUNC_MAP['NSBeginInformationalAlertSheet'] = BeginSheetMapper
 func_builder.FUNC_MAP['NSBeginCriticalAlertSheet'] = BeginSheetMapper
 
-fd = file('Modules/Foundation/_Fnd_Functions.inc', 'w')
+fd = dupfile('Modules/Foundation/_Fnd_Functions.inc', 'w')
 structs = ['NSPoint', 'NSSize', 'NSRect', 'NSRange']
 for s in structs:
 	func_builder.SIMPLE_TYPES[s] = (
@@ -310,7 +311,7 @@ fd = None
 for s in structs:
 	del func_builder.SIMPLE_TYPES[s]
 
-fd = file('Modules/AppKit/_App_Functions.inc', 'w')
+fd = dupfile('Modules/AppKit/_App_Functions.inc', 'w')
 structs = ['NSAffineTransformStruct', 'NSRect', 'NSPoint']
 for s in structs:
 	func_builder.SIMPLE_TYPES[s] = (

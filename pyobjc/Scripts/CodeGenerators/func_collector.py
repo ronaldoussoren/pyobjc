@@ -6,6 +6,7 @@
 
 import re
 import os
+from dupfile import *
 
 IDENT='[A-Za-z_][A-Za-z0-9_]*'
 
@@ -47,7 +48,7 @@ def process_file(outfp, filename, match_prefix='', ignore_list=()):
 
 def generate(dirname, fn = None, match_prefix='', ignore_list=()):
 	if fn:
-		fp = open(fn, 'w')
+		fp = dupfile(fn, 'w')
 	else:
 		import sys
 		fp = sys.stdout

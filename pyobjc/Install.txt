@@ -46,10 +46,12 @@ against the correct version of python.
 Examples
 ========
 
-The examples directory contains a number of projects that demonstrate
+The `examples directory`_ contains a number of projects that demonstrate
 various features of the PyObjC bridge. The scripts at the top level of
-the examples directory were mostly written to test a particular
+the `examples directory`_ were mostly written to test a particular
 feature of the bridge (or document a bug until a fix could be found).
+
+.. _`examples directory`: Examples/00ReadMe.html
 
 CurrencyConverter and TableModel are both examples of standalone
 Cocoa-Python applications.  To build and execute::
@@ -62,11 +64,12 @@ the Cocoa-Python project template found in the
 ``ProjectBuilder Extras/Project Templates`` directory.  Use Project Builder 
 to build the applications.
 
+
 Project Templates
 =================
 
 The ``ProjectBuilder Extras`` directory contains additional files that can
-be used with Project Builder. The diretory ``Specifications`` contains files
+be used with Project Builder. The directory ``Specifications`` contains files
 that enable syntax coloring for Python files in Project Builder.
 
 The ``Project Templates`` directory contains project templates for

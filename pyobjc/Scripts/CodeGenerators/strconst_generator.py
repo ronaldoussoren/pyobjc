@@ -7,6 +7,7 @@
 
 import re
 import os
+from dupfile import *
 
 MATCH_RE=re.compile('NSString \*([ ]*const[ ]+)?([A-Za-z_][A-Za-z0-9_]*([ ]*,[ ]*\*[ ]*[A-Za-z_][A-Za-z0-9_]*)*);')
 
@@ -54,7 +55,7 @@ def generate(dirname, fn = None, ignore=(), filter = lambda x: 1):
 	if not os.path.exists(dirname): return
 
 	if fn:
-		fp = open(fn, 'w')
+		fp = dupfile(fn, 'w')
 	else:
 		import sys
 		fp = sys.stdout

@@ -182,8 +182,12 @@ objc_methodlist_magic(Class cls)
 
 	if (cls == NULL) return -1;
 
-	for (p = cls->methodLists; (*p != (struct objc_method_list*)-1) && (*p != NULL);
+	for (p = cls->methodLists; 
+	     (*p != (struct objc_method_list*)-1) && (*p != NULL);
 	     p++) {
+		if (*p == NULL) continue;
+		if (*p == (struct objc_method_list*)1) continue;
+		if (*p == (struct objc_method_list*)-11) continue;
 		res += (*p)->method_count;
 		cnt++;
 	}

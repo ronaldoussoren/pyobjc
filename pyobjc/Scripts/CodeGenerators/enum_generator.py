@@ -8,6 +8,7 @@
 import re
 import os
 import sys
+from dupfile import dupfile
 
 START_RE=re.compile('(typedef[\w]|)enum.*{')
 END_RE=re.compile('}')
@@ -77,7 +78,7 @@ def generate(dirname, fn = None, filter = lambda x: 1):
 	if not os.path.exists(dirname): return
 
 	if fn:
-		fp = open(fn, 'w')
+		fp = dupfile(fn, 'w')
 	else:
 		fp = sys.stdout
 

@@ -4,29 +4,46 @@ import objc
 from Foundation import *
 from PyObjCTools import KeyValueCodingSupport
 
-class StraightPython(KeyValueCodingSupport.KeyValueCoding):
+class StraightPython(object, KeyValueCodingSupport.KeyValueCoding):
     foo = 21
-    bar = 42
+    _bar = 42
     baz = { "bob" : "tail" }
     _didBar = 0
+
     def bar(self):
         self._didBar = 1
         return self._bar
     def setBar(self, aValue):
         self._bar = aValue
-    def didBar(self): return self._didBar
+    def didBar(self): 
+        return self._didBar
 
 class PyObjCMix(NSObject):
+
     foo = 21
-    bar = 42
+    _bar = 42
     baz = { "bob" : "tail" }
     _didBar = 0
+
     def bar(self):
         self._didBar = 1
         return self._bar
     def setBar(self, aValue):
         self._bar = aValue
-    def didBar(self): return self._didBar
+
+    def didBar(self): 
+        return self._didBar
+
+    def valueForKey_(self, aKey):
+        try:
+            v = KeyValueCodingSupport.getValueForKey_(self, aKey)
+            return v
+        except KeyError:
+            zuper = super(self.__class__, self)
+            if zuper.respondsToSelector_("valueForKey:"):
+                return zuper.valueForKey_(aKey)
+
+        raise KeyError, aKey
 
 class TestKeyValueCoding(unittest.TestCase):
     def testValueForKey(self):
