@@ -1,7 +1,7 @@
 <?
 $title = "Home";
 $cvs_author = '$Author: bbum $';
-$cvs_date = '$Date: 2002/11/12 07:41:06 $';
+$cvs_date = '$Date: 2002/11/22 22:01:52 $';
 $is_home = 1;
 
 $metatags = '<meta name="description" content="PyObjC, a universal bridge between the Objective-C and Python languages.">
@@ -16,7 +16,7 @@ The PyObjC project aims to provide a bridge between the Python and Objective-C p
 <p>
 Currently, development of the bridge is primarily focused upon the <a href="http://www.apple.com/macosx/">Mac OS X</a> and <a href="http://www.opensource.apple.com/">Darwin</a> platforms.  Within this environment, PyObjC can be used to entirely replace Objective-C in the development of Cocoa based applications and Foundation based command line tools.</p>
 <p>
-We desperately want to have the same level of support for <a href="http://www.gnustep.org/">GnuStep</a>, but need volunteers with GnuStep experience to make that happen!
+We want to offer the same level of support for <a href="http://www.gnustep.org/">GnuStep</a>, but need volunteers with GnuStep experience to make that happen!
 </p>
 
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -42,7 +42,7 @@ include $fsroot."news/news.inc";
 <h1>Resources</h1>
 
 <p>
-Support is currently limited to <a href="http://sourceforge.net/mail/?group_id=14534">the developer's mailing list</a>.
+Support is currently limited to <a href=http://lists.sourceforge.net/mailman/listinfo/pyobjc-dev"">the developer's mailing list</a>.
 </p>
 
 <p>

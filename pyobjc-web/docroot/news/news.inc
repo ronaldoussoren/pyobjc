@@ -1,3 +1,7 @@
+<span class="news_date">2002-11-22: </span><span class="news_headline">CVS commit notificaiton mailing list available</span><?php gray_line(); ?>
+  <p>
+A <a href="http://lists.sourceforge.net/mailman/listinfo/pyobjc-checkins">mailing list</a> has been created to which all CVS commit notifications will be automatically posted.   Each message includes both the file(s) changed and diff-style output of exactly what changed.
+</p>
 <span class="news_date">2002-11-12: </span><span class="news_headline">Initial release of web site</span><?php gray_line(); ?>
   <p>
 For the first time ever, the PyObjC module has a real web site (the start of one anyway).  The implementation is largely a copy of the <a href="http://fink.sourceforge.net/">Fink project's excellent site.</a>.  The design and graphics were contributed by <a href="http://starship.python.net/crew/jwt/">Jim Tittsler</a>.  The content was compiled from many sources-- Jim's work, Fink, the PyObjC source trees and some original-- by <a href="http://radio.weblogs.com/0100490/">Bill Bumgarner</a>.
