@@ -21,15 +21,21 @@ NibClassBuilder.extractClasses("MainMenu")
 ROWCOUNT = 200
 
 # class defined in MainMenu.nib
-class PyModel(NibClassBuilder.AutoBaseClass):
+class TableModel(NibClassBuilder.AutoBaseClass):
     # the actual base class is NSObject
     # The following outlets are added to the class:
+    # label
     # tableView
+
+    # An instance of this class is connected to the 'datasource' and
+    # the 'delegate' outlet of the table view in the nib.
 
     def awakeFromNib(self):
         self.editedFields = {}
         self.rowcount = ROWCOUNT
         # tableView is an outlet set in Interface Builder
+        self.tableView.setAutosaveName_("TableView")
+        self.tableView.setAutosaveTableColumns_(1)
         self.tableView.setTarget_(self)
         self.tableView.setDoubleAction_("doubleClick:")
         # this also works, but you still need to set the target:
@@ -65,6 +71,23 @@ class PyModel(NibClassBuilder.AutoBaseClass):
     def tableView_shouldEditTableColumn_row_(self, aTableView, aTableColumn, rowIndex):
         # only allow cells in the second column in odd rows to be edited
         return (rowIndex % 2) and aTableColumn.identifier() == "col_2"
+
+    def tableViewSelectionDidChange_(self, notification):
+        # Always use this delegate method instead of using the action to do something
+        # when the selection changed: the action method is only called when the selection
+        # changed by means of a mouse click; this method is also called when the
+        # user uses the arrow keys.
+        if self.tableView.numberOfSelectedRows() == 0:
+            if self.tableView.numberOfSelectedColumns() == 0:
+                self.label.setStringValue_("")
+            else:
+                items = list(self.tableView.selectedColumnEnumerator())
+                word = "Column"
+        else:
+            items = list(self.tableView.selectedRowEnumerator())
+            word = "Row"
+        label = "%s%s: %s" % (word, ("s", "")[len(items) == 1], ", ".join([str(x) for x in items]))
+        self.label.setStringValue_(label)
 
 
 AppHelper.runEventLoop()

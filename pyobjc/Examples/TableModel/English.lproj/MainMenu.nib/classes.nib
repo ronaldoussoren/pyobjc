@@ -2,9 +2,9 @@
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            CLASS = PyModel; 
+            CLASS = TableModel; 
             LANGUAGE = ObjC; 
-            OUTLETS = {tableView = id; }; 
+            OUTLETS = {label = id; tableView = id; }; 
             SUPERCLASS = NSObject; 
         }
     ); 
