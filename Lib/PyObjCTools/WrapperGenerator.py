@@ -6,15 +6,14 @@ NOTE:
   it upside down would help.
 
 TODO
+- Find a real parser, the DummyParser sucks...
 - Finish the implementation
   * Functions
     | Need to specify input/output arguments (no usecase yet)
     | Need to specify that some pointers are not "bad" (e.g. NSZone*)
   * Method definitions
-  * Emit a protocols "module" (instead of Scripts/gen_protocols.py)
-  * Properly encode C types
   * What can we do about enums are defined using other constants that we
-    don't wrap? 
+    don't wrap?
 - Test the output on MacOS X
   * ... for the frameworks we support in PyObjC
   * ... for Colloqui SDK
@@ -165,6 +164,35 @@ def generateWrappersForFramework(outfp, frameworkPath, frameworkIdentifier=None,
 
         outfp.write('\n\n')
 
+    # (informal) protocols
+    protos = p.protocols[:]
+
+    try:
+        protos.extend(p.interfaces['NSObject']['categories'])
+    except KeyError:
+        pass
+
+    if protos:
+        outfp.write('import new\n')
+        outfp.write('protocols = new.module("%s.protocols")\n'%(frameworkName))
+        for p in protos:
+            if p.has_key('category'):
+                nm = p['category']
+            else:
+                nm = p['name']
+            outfp.write('protocols.%s = _objc.informal_protocol(\n'%(nm,))
+            outfp.write('    "%s",\n'%(nm,))
+            outfp.write('    [\n',)
+            for isClassMethod, selector, signature in p['methods']:
+                outfp.write('        _objc.selector(\n')
+                outfp.write('            None,\n')
+                outfp.write('            selector="%s",\n'%(selector,))
+                outfp.write('            signature="%s",\n'%(signature,))
+                outfp.write('            isRequired=False,\n')
+                outfp.write('        ),\n')
+            outfp.write('    ]\n')
+            outfp.write(')\n')
+
     outfp.write(FOOTER%vars)
 
 
@@ -229,7 +257,6 @@ FUNCTION_PROTOTYPE=(
     r'%(PFX)s(.+\s+.+\([^);{]+\)\s*(?:[;{]|$))'
 )
 
-
 CALCULATE_SIGNATURE_SOURCE="""
 #import %(framework)s
 #include <stdio.h>
@@ -266,6 +293,51 @@ def stripcomment(fp):
                 ln = ln[:m.start()]
 
             yield ln.strip()
+
+
+protoRE = re.compile(r"\n@interface\s+NSObject\s*\((.*?)\)|\n@protocol\s+(\w+)")
+
+typeRE = re.compile(r"\s*\((oneway|in|out|inout|bycopy|byref)?\b\s*([^)]+)\)\s*")
+selPartRE = re.compile(r"(\w+:?)\s*")
+argNameRE = re.compile(r"(\w+)\s*")
+
+def getSelector(line):
+    types = []
+    selParts = []
+    line = line.strip()
+    if line.startswith('+'):
+        isClassMethod = True
+        line = line[1:].strip()
+    elif line.startswith('-'):
+        isClassMethod = False
+        line = line[1:].strip()
+    else:
+        raise ValueError, "Invalid prototype: "+line
+
+    m = typeRE.match(line)
+    assert m is not None, "can't parse return type in {%s}" % line
+    types.append(m.group(2).strip())
+    pos = m.end()
+    while 1:
+        m = selPartRE.search(line, pos)
+        if m is None:
+            break
+        part = m.group(1)
+        selParts.append(part)
+        if part[-1] != ":":
+            break
+        pos = m.end()
+        m = typeRE.match(line, pos)
+        if m is None and line[pos].isalpha():
+            types.append('id')
+        else:
+            assert m is not None, "can't parse arg type"
+            types.append(m.group(2).strip())
+            pos = m.end()
+        m = argNameRE.match(line, pos)
+        assert m is not None, "can't parse arg name" + line
+        pos = m.end()
+    return isClassMethod, "".join(selParts), types
 
 class DumbHeaderParser (object):
     def __init__(self, global_variable_prefix=None, function_prefix=None, ignore_functions = (), framework_include=None, framework_link=None, opaque_pointers=()):
@@ -338,6 +410,9 @@ class DumbHeaderParser (object):
 
 
     def process_line(self, ln):
+        if not ln:
+            return
+        if ln.startswith('#'): return # Skip preprocessor stuff
         if self.in_enum:
             if ln.startswith('}'):
                 self.in_enum = False
@@ -360,75 +435,6 @@ class DumbHeaderParser (object):
                     return
 
                 self.enum_value.extend(list(ln.split(',')))
-
-
-        if self.in_interface or self.in_protocol:
-            # XXX: Parse method declarations, needed to replace
-            # gen_protocols
-            if ln.startswith('@end'):
-                if self.in_protocol:
-                    self.current_protocol['methods'] = self.current_methods
-                    self.protocols.append(self.current_protocol)
-                elif self.in_interface:
-                    v = self.interfaces.setdefault(self.current_interface['name'], {})
-
-                    v['name'] = self.current_interface['name']
-                    if self.current_interface['super'] is not None:
-                        v['super'] = self.current_interface['super']
-
-                    if self.current_interface['protocols'] is not None:
-                        v['protocols'] = self.current_interface['protocols']
-            
-                    if 'methods' in v:
-                        v.setdefault('methods', []).extend(self.current_methods)
-
-                    if self.current_interface['category'] is not None:
-                        v.setdefault('categories', []).append(
-                                self.current_interface)
-                    
-                self.current_protocol = None
-                self.current_interface = None
-                self.current_methods = None
-                self.in_interface = False
-                self.in_protocol = False
-            return
-
-        m = INTERFACE_START_RE.match(ln)
-        if m:
-            self.in_interface = True
-            name = m.group('name')
-            category = m.group('category')
-            supername = m.group('super')
-            protocols = m.group('protocols')
-            if protocols is None:
-                protocols = ()
-            else:
-                protocols = [
-                    p.strip() for p in protocols.split(',')
-                ]
-
-            self.current_interface = {
-                'name': name,
-                'super': supername,
-                'protocols': protocols,
-                'category': category,
-            }
-            self.current_methods = []
-
-            return
-
-        m = PROTOCOL_START_RE.match(ln)
-        if m:
-            self.in_protocol = True
-            name = m.group('name')
-            supers = m.group('super')
-            if supers is None:
-                supers = ()
-            else:
-                supers = [ p.strip() for p in supers.split(',') ]
-
-            self.current_protocol = {'name':name, 'supers':supers }
-            self.current_methods = []
             return
 
         m = GLOBAL_STRING_RE.search(ln)
@@ -493,6 +499,115 @@ class DumbHeaderParser (object):
             self.need_brace = True
             return
 
+
+        if self.in_interface or self.in_protocol:
+            ln = ln.strip()
+            if not ln.startswith('@end'):
+                self.in_object_definition += ln.count('{')
+                self.in_object_definition -= ln.count('}')
+                if self.in_object_definition or ln.startswith('}'):
+                    return
+
+                if ln.startswith('@private'):
+                    return
+                if ln.startswith('@public'):
+                    return
+                if ln.startswith('@protected'):
+                    return
+
+                # We have an actual prototype...
+                # XXX: Need to have a mechanisme for in/out byref arguments!
+                try:
+                    isClassMethod, selector, types = getSelector(ln)
+                except AssertionError:
+                    # XXX: We need a real parser... getSelector will fail
+                    # on complex types (such as (int(*)(int, float))).
+                    return
+
+                types = map(self.encode, types)
+                self.current_methods.append(
+                        (isClassMethod, selector, ''.join(types))
+                )
+
+            else: # End of interface
+                self.in_object_definition = False
+                if self.in_protocol:
+                    self.current_protocol['methods'] = self.current_methods
+                    self.protocols.append(self.current_protocol)
+                elif self.in_interface:
+                    v = self.interfaces.setdefault(self.current_interface['name'], {})
+
+                    v['name'] = self.current_interface['name']
+                    if self.current_interface['super'] is not None:
+                        v['super'] = self.current_interface['super']
+
+                    if self.current_interface['protocols'] is not None:
+                        v['protocols'] = self.current_interface['protocols']
+            
+                    if 'methods' in v:
+                        v.setdefault('methods', []).extend(self.current_methods)
+
+                    if self.current_interface['category'] is not None:
+                        v.setdefault('categories', []).append(
+                                self.current_interface)
+                    
+                self.current_protocol = None
+                self.current_interface = None
+                self.current_methods = None
+                self.in_interface = False
+                self.in_protocol = False
+            return
+
+        m = INTERFACE_START_RE.match(ln)
+        if m:
+            self.in_interface = True
+            if ln.strip().endswith('{'):
+                self.in_object_definition = 1
+            else:
+                self.in_object_definition = 0
+            name = m.group('name')
+            category = m.group('category')
+            supername = m.group('super')
+            protocols = m.group('protocols')
+            if protocols is None:
+                protocols = ()
+            else:
+                protocols = [
+                    p.strip() for p in protocols.split(',')
+                ]
+
+            self.current_methods = []
+            self.current_interface = {
+                'name': name,
+                'super': supername,
+                'protocols': protocols,
+                'category': category,
+                'methods': self.current_methods,
+            }
+
+            return
+
+        m = PROTOCOL_START_RE.match(ln)
+        if m:
+            self.in_protocol = True
+            self.in_object_definition = 0
+            name = m.group('name')
+            supers = m.group('super')
+            if supers is None:
+                supers = ()
+            else:
+                supers = [ p.strip() for p in supers.split(',') ]
+
+            self.current_methods = []
+            self.current_protocol = {
+                'name':name, 
+                'supers':supers, 
+                'methods': self.current_methods,
+            }
+            return
+
+
+
         if self.function_prefix_re is not None:
             m = self.function_prefix_re.match(ln)
             if m:
@@ -512,6 +627,7 @@ class DumbHeaderParser (object):
                 self.simple_functions.append(
                         (funcname, signature, prototype)
                 )
+
 
     def encode(self, tp):
         # This needs to be fixed, see the gen_protocols script for details
@@ -570,32 +686,36 @@ class DumbHeaderParser (object):
         return typestr
 
     def isOpaquePointer(self, value):
-        print "--", value
-        return value.replace('const', '').replace(' ', '') in self.opaque_pointers
+        value =  value.replace('const', '').replace(' ', '') 
+        
+        if callable(self.opaque_pointers):
+            return self.opaque_pointers(value)
+        else:
+            return value in self.opaque_pointers
 
     def make_func_signature(self, rettype, arguments):
         result = []
 
-        rettype = self.encode(rettype)
-        if not rettype:
+        v = self.encode(rettype)
+        if not v:
             return None
 
-        if rettype[0] == objc._C_PTR:
+        if v[0] == objc._C_PTR:
             if not self.isOpaquePointer(rettype):
                 return None
 
-        result.append(rettype)
+        result.append(v)
 
         for a, t in arguments:
-            a = self.encode(a)
-            if not a:
+            v = self.encode(a)
+            if not v:
                 return None
 
-            if a[0] == objc._C_PTR:
+            if v[0] == objc._C_PTR:
                 if not self.isOpaquePointer(a):
                     return None
 
-            result.append(a)
+            result.append(v)
 
         return ''.join(result)
 
@@ -644,3 +764,13 @@ if __name__ == "__main__":
             frameworkLink="-framework Foundation",
             opaquePointers=('NSZone*', 'NSDecimal*'),
     )
+    #generateWrappersForFramework(sys.stdout,
+    #        '/System/Library/Frameworks/CoreFoundation.framework',
+    #        'com.apple.CoreFoundation',
+    #        globalVariablePrefix='CF_EXPORT',
+    #        functionPrefix=['CF_EXPORT', ],
+    #        frameworkInclude="<CoreFoundation/CoreFoundation.h>",
+    #        frameworkLink="-framework CoreFoundation",
+    #        opaquePointers=lambda nm: (nm.startswith('CF') and nm.endswith('Ref')),
+            
+    #)
