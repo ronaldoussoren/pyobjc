@@ -409,11 +409,12 @@ if "install" in sys.argv:
     import shutil
     inst = dist.get_command_obj("install")
     install_dir = inst.install_platlib
-    for name in ("objc", "Foundation", "AppKit", "AddressBook", "autoGIL"):
-        path = os.path.join(install_dir, name)
-        if os.path.isdir(path):
-            print "(removing old version: %s)" % path
-            shutil.rmtree(path)
-        elif os.path.isfile(path):
-            print "(removing old version: %s)" % path
-            os.remove(path)
+    if install_dir is not None:
+        for name in ("objc", "Foundation", "AppKit", "AddressBook", "autoGIL"):
+            path = os.path.join(install_dir, name)
+            if os.path.isdir(path):
+                print "(removing old version: %s)" % path
+                shutil.rmtree(path)
+            elif os.path.isfile(path):
+                print "(removing old version: %s)" % path
+                os.remove(path)
