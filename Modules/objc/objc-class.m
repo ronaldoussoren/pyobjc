@@ -500,7 +500,7 @@ class_getattro(PyObject* self, PyObject* name)
 
 	if (result != NULL) {
 		int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);
-		ObjCNativeSelector* x = (ObjCNativeSelector*)result;
+		PyObjCNativeSelector* x = (PyObjCNativeSelector*)result;
 
 		if (x->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 			x->sel_self = self;
@@ -546,7 +546,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 			}
 			return -1;
 		}
-	} else if (ObjCNativeSelector_Check(value)) {
+	} else if (PyObjCNativeSelector_Check(value)) {
 		PyErr_SetString(PyExc_TypeError,
 			"Assigning native selectors is not supported");
 		return -1;
@@ -854,7 +854,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			curItem = PyDict_GetItemString(dict, name);
 			if (curItem == NULL) {
 				PyErr_Clear();
-			} else if (!ObjCNativeSelector_Check(curItem)) {
+			} else if (!PyObjCNativeSelector_Check(curItem)) {
 				continue;
 			}
 

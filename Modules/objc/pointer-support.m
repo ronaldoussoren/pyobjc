@@ -200,7 +200,7 @@ static PyGetSetDef Zone_getset[] = {
 	}
 };
 
-PyTypeObject ZoneWrapper_Type = {
+PyTypeObject PyObjCZoneWrapper_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)
 	0,					/* ob_size */
 	"NSZone",				/* tp_name */
@@ -251,7 +251,7 @@ PyTypeObject ZoneWrapper_Type = {
         0                                       /* tp_del */
 };
 
-#define ZoneWrapper_Check(obj) PyObject_TypeCheck((obj), &ZoneWrapper_Type)
+#define ZoneWrapper_Check(obj) PyObject_TypeCheck((obj), &PyObjCZoneWrapper_Type)
 
 
 static PyObject*
@@ -273,7 +273,7 @@ NSZone_New(void* zoneptr __attribute__((__unused__)))
 {
 	ZoneWrapper* res;
 
-	res  = PyObject_New(ZoneWrapper, &ZoneWrapper_Type);
+	res  = PyObject_New(ZoneWrapper, &PyObjCZoneWrapper_Type);
 	if (res == NULL) {
 		return NULL;
 	}

@@ -369,7 +369,7 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
 		return NULL;
 	}
 
-	if (!ObjCNativeSelector_Check(attr)) {
+	if (!PyObjCNativeSelector_Check(attr)) {
 		PyErr_SetString(PyExc_TypeError, "XXX");
 		return NULL;
 	}
@@ -377,8 +377,8 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
 	res = PyObjCIMP_New(
 			retval,
 			selector,
-			((ObjCNativeSelector*)attr)->sel_call_func,
-			((ObjCNativeSelector*)attr)->sel_oc_signature,
+			((PyObjCNativeSelector*)attr)->sel_call_func,
+			((PyObjCNativeSelector*)attr)->sel_oc_signature,
 			PyObjCSelector_GetFlags(attr)
 		);
 	Py_DECREF(attr);
@@ -442,7 +442,7 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 		return NULL;
 	}
 
-	if (!ObjCNativeSelector_Check(attr)) {
+	if (!PyObjCNativeSelector_Check(attr)) {
 		PyErr_SetString(PyExc_TypeError, "XXX");
 		return NULL;
 	}
@@ -450,8 +450,8 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 	res = PyObjCIMP_New(
 			retval,
 			selector,
-			((ObjCNativeSelector*)attr)->sel_call_func,
-			((ObjCNativeSelector*)attr)->sel_oc_signature,
+			((PyObjCNativeSelector*)attr)->sel_call_func,
+			((PyObjCNativeSelector*)attr)->sel_oc_signature,
 			PyObjCSelector_GetFlags(attr)
 		);
 	Py_DECREF(attr);

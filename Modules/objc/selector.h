@@ -38,19 +38,19 @@ typedef struct {
 	PyObjCSelector_HEAD
 	PyObjCMethodSignature* sel_oc_signature;
 	PyObjC_CallFunc sel_call_func; 
-} ObjCNativeSelector;
+} PyObjCNativeSelector;
 
 typedef struct {
 	PyObjCSelector_HEAD
 	PyObject*	callable;
-} ObjCPythonSelector;
+} PyObjCPythonSelector;
 
 extern PyTypeObject PyObjCSelector_Type;
-extern PyTypeObject ObjCNativeSelector_Type;
-extern PyTypeObject ObjCPythonSelector_Type;
+extern PyTypeObject PyObjCNativeSelector_Type;
+extern PyTypeObject PyObjCPythonSelector_Type;
 #define PyObjCSelector_Check(obj) PyObject_TypeCheck(obj, &PyObjCSelector_Type)
-#define ObjCNativeSelector_Check(obj) PyObject_TypeCheck(obj, &ObjCNativeSelector_Type)
-#define ObjCPythonSelector_Check(obj) PyObject_TypeCheck(obj, &ObjCPythonSelector_Type)
+#define PyObjCNativeSelector_Check(obj) PyObject_TypeCheck(obj, &PyObjCNativeSelector_Type)
+#define PyObjCPythonSelector_Check(obj) PyObject_TypeCheck(obj, &PyObjCPythonSelector_Type)
 
 char* PyObjCSelector_Signature(PyObject* obj);
 SEL   PyObjCSelector_GetSelector(PyObject* obj);
