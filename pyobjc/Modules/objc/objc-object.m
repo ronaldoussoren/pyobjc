@@ -285,13 +285,22 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	else
 		Py_INCREF(name);
 
+
 	namestr = PyString_AS_STRING(name);
 
 	/* Special hack for KVO on MacOS X, when an object is observed it's 
 	 * ISA is changed by the runtime. We change the python type as well.
 	 */
 	obj_inst = PyObjCObject_GetObject(obj);
-	assert(obj_inst != nil);
+	if (obj_inst == nil) {
+		PyErr_Format(PyExc_AttributeError,
+		     "cannot access attribute '%.400s' of NIL '%.50s' object",
+		     PyString_AS_STRING(name),
+		     tp->tp_name);
+		goto done;
+	}
+
+
 	obj_class = GETISA(obj_inst);
 	tp = (PyTypeObject*)PyObjCClass_New(obj_class);
 
@@ -420,6 +429,8 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	descrsetfunc f;
 	PyObject** dictptr;
 	int res = -1;
+	
+
 
 	if (!PyString_Check(name)){
 #ifdef Py_USING_UNICODE
@@ -442,6 +453,14 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	}
 	else
 		Py_INCREF(name);
+
+	if (PyObjCObject_GetObject(obj) == nil) {
+		PyErr_Format(PyExc_AttributeError,
+		     "Cannot set '%s.400s' on NIL '%.50s' object",
+		     PyString_AS_STRING(name),
+		     tp->tp_name);
+		goto done;
+	}
 
 	if (tp->tp_dict == NULL) {
 		if (PyType_Ready(tp) < 0)
