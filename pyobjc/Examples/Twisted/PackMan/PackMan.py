@@ -20,12 +20,32 @@ import plistlib
 NibClassBuilder.extractClasses("MainMenu")
 
 
-class DatabasesController(NSObject):
+class DatabasesController(NibClassBuilder.AutoBaseClass):
+    _databases = [
+        {'description': "Standard", 'url': ''}
+    ]
+
+    def addDb_(self, sender):
+        if len(self._databases) is 1:
+            self._databases = self._databases[:]
+        url = self.newDatabaseURL.stringValue()
+        try:
+            self.packageController.openDatabase(str(url))
+        except ValueError, e:
+            print "bad url", `url`, e
+            return
+        self._databases.append({'description': '', 'url': url})
+        self.databaseTable.reloadData()
+        self.databaseTable.selectRowIndexes_byExtendingSelection_(
+            NSIndexSet.indexSetWithIndex_(len(self._databases)-1), NO
+        )
+
     def numberOfRowsInTableView_(self, view):
-        return 1
+        return len(self._databases)
 
     def tableView_objectValueForTableColumn_row_(self, view, column, row):
-        return "Standard"
+        row = self._databases[row]
+        return row['description'] or row['url']
 
     def tableViewSelectionDidChange_(self, aNotification):
         pass
@@ -39,9 +59,13 @@ class PackageController(NibClassBuilder.AutoBaseClass):
         self.databaseList.selectRowIndexes_byExtendingSelection_(
             NSIndexSet.indexSetWithIndex_(0), NO
         )
+        self.openDatabase('http://undefined.org/python/pimp/darwin-7.0.0-Power_Macintosh.plist')
+        reactor.run()
+
+    def openDatabase(self, url):
         o = newclient.opener()
         d = o.open(
-            newclient.Request('http://undefined.org/python/pimp/darwin-6.6-Power_Macintosh.plist')
+            newclient.Request(str(url))
         ).addCallback(
             newclient.read
         ).addCallback(
@@ -49,7 +73,6 @@ class PackageController(NibClassBuilder.AutoBaseClass):
         ).addErrback(
             self.errorOpening
         )
-        reactor.run()
 
     def gotPlist(self, pliststring):
         fl = StringIO(pliststring)
