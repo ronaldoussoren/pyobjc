@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+"""
+Script to do a clean install of the current version of Python. This removes
+the current version before rebuilding.
+"""
+
+import shutil
+import sys
+import os
+
+site=None
+for e in sys.path:
+    if e.endswith('/site-packages'):
+        site = e
+
+if site is None:
+    print 'Cannot determine site-packages'
+    sys.exit(1)
+
+print "Installing using %s\n"%(sys.executable,)
+print "Installing into %s\n"%(site,)
+
+if os.path.exists('build'):
+    print "- Removing build"
+    shutil.rmtree('build', ignore_errors=1)
+
+for package in ['AddressBook', 'AppKit', 'Foundation', 'objc' ]:
+    p = os.path.join(site, package)
+    if os.path.exists(p):
+        print "- Removing %s"%p
+        shutil.rmtree(p, ignore_errors=1)
+
+os.system("LIBFFI_BASE='%s/libffi' '%s' setup.py install"%(
+    os.getcwd(), sys.executable))

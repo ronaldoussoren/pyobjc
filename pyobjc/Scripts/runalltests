@@ -46,8 +46,9 @@ os.path.walk('Lib', perform_some_tests, None)
 
 keys = tests.keys()
 keys.sort()
-print "\nSummary:"
+print "\nSummary of not-OK tests:"
 for k in keys:
-    print "  %-50s: %s"%(k[4:], tests[k])
+    if tests[k] != "OK":
+        print "  %-50s: %s"%(k[4:], tests[k])
 
-print "\n\n%(OK)s OK, %(FAIL)s FAILED, %(CRASH)s CRASHED"%test_sum
+print "\n%(OK)s OK, %(FAIL)s FAILED, %(CRASH)s CRASHED"%test_sum
