@@ -141,7 +141,6 @@
 		};
 		29B97317FDCFA39411CA2CEA = {
 			children = (
-				F62CEFC10357250301718D22,
 				29B97318FDCFA39411CA2CEA,
 				089C165CFE840E0CC02AAC07,
 				F6CD0DC5033C279E0126A167,
@@ -176,6 +175,7 @@
 				29B97325FDCFA39411CA2CEA,
 				29B97324FDCFA39411CA2CEA,
 				1058C7A1FEA54F0111CA2CBB,
+				77AD49D403ECAB85004B557F,
 			);
 			isa = PBXGroup;
 			name = Frameworks;
@@ -291,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F61BA28D0357963801C36587,
+				77AD49D303ECAB67004B557F,
 			);
 			isa = PBXFrameworksBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,14 +335,21 @@
 //772
 //773
 //774
-		77E90B1C03A29B42002FB0D7 = {
-			isa = PBXFileReference;
-			name = _socket.so;
-			path = "/usr/lib/python2.2/site-packages/_socket.so";
+		77AD49D303ECAB67004B557F = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		77AD49D403ECAB85004B557F = {
+			includeInIndex = 1;
+			isa = PBXFolderReference;
+			name = PyObjC;
+			path = "/usr/lib/python2.2/site-packages/PyObjC";
 			refType = 0;
 		};
-		77E90B1D03A29B42002FB0D7 = {
-			fileRef = 77E90B1C03A29B42002FB0D7;
+		77AD49DB03ECABA7004B557F = {
+			fileRef = 77AD49D403ECAB85004B557F;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -364,68 +372,13 @@
 		};
 		F62CEFA50357242601718D22 = {
 			buildActionMask = 8;
-			dstPath = pyobjc;
+			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				F62CEFBE035724EB01718D22,
-				F62CEFBF035724EB01718D22,
-				F62CEFC0035724EB01718D22,
-				F62CEFC40357585C01718D22,
-				F62CEFC50357585C01718D22,
-				77E90B1D03A29B42002FB0D7,
+				77AD49DB03ECABA7004B557F,
 			);
 			isa = PBXCopyFilesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 1;
-		};
-		F62CEFA6035724EB01718D22 = {
-			includeInIndex = 1;
-			isa = PBXFolderReference;
-			name = AppKit;
-			path = "/usr/lib/python2.2/site-packages/AppKit";
-			refType = 0;
-		};
-		F62CEFAD035724EB01718D22 = {
-			includeInIndex = 1;
-			isa = PBXFolderReference;
-			name = Foundation;
-			path = "/usr/lib/python2.2/site-packages/Foundation";
-			refType = 0;
-		};
-		F62CEFB2035724EB01718D22 = {
-			includeInIndex = 1;
-			isa = PBXFolderReference;
-			name = objc;
-			path = "/usr/lib/python2.2/site-packages/objc";
-			refType = 0;
-		};
-		F62CEFBE035724EB01718D22 = {
-			fileRef = F62CEFA6035724EB01718D22;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F62CEFBF035724EB01718D22 = {
-			fileRef = F62CEFAD035724EB01718D22;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F62CEFC0035724EB01718D22 = {
-			fileRef = F62CEFB2035724EB01718D22;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F62CEFC10357250301718D22 = {
-			children = (
-				F62CEFA6035724EB01718D22,
-				F62CEFAD035724EB01718D22,
-				F62CEFB2035724EB01718D22,
-				77E90B1C03A29B42002FB0D7,
-			);
-			isa = PBXGroup;
-			name = pyobjc;
-			refType = 4;
 		};
 		F62CEFC20357585C01718D22 = {
 			fileEncoding = 30;
@@ -438,18 +391,6 @@
 			isa = PBXFileReference;
 			path = README.txt;
 			refType = 2;
-		};
-		F62CEFC40357585C01718D22 = {
-			fileRef = F62CEFC20357585C01718D22;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F62CEFC50357585C01718D22 = {
-			fileRef = F62CEFC30357585C01718D22;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		F62CEFC60357586F01718D22 = {
 			buildPhases = (
@@ -514,7 +455,7 @@
 		};
 		F6646A4E0344927801F2B36F = {
 			isa = PBXFileReference;
-			path = __main__.py;
+			path = Main.py;
 			refType = 4;
 		};
 		F6646A4F0344927801F2B36F = {

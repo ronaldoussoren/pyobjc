@@ -15,6 +15,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h> // for indexing in PB, not otherwise used.
 #import <sys/param.h>
 #import <unistd.h>
 
@@ -39,8 +40,8 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
     // set up paths to be prepended to the PYTHONPATH
     const char *pythonPathInWrapper = [[NSString stringWithFormat: @"%@:%@",
         [[NSBundle mainBundle] resourcePath],
-        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: @"pyobjc"]] UTF8String];
-    
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: @"PyObjC"]] UTF8String];
+
     // count entries in environment and find the PYTHONPATH setting, if present
     for (envc = 0; envp[envc] != NULL; envc++) {
         if (strncmp(envp[envc], "PYTHONPATH=", sizeof("PYTHONPATH=")-1) == 0) {
@@ -106,7 +107,17 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
     const char *pythonBinPathPtr = [pythonBinPath UTF8String];
 
     // find main python file.  __main__.py seems to be a standard.
-    NSArray *possibleMains = [NSArray arrayWithObjects: @"__main__.py", @"__main__.pyc", @"__realmain__.py", @"__realmain.pyc", nil];
+    NSArray *possibleMains = [NSArray arrayWithObjects:
+        @"__main__.py",
+        @"__main__.pyc",
+        @"__main__.pyo",
+        @"__realmain__.py",
+        @"__realmain__.pyc",
+        @"__realmain__.pyo",
+        @"Main.py",
+        @"Main.pyc",
+        @"Main.pyo",
+        nil];
     NSEnumerator *possibleMainsEnumerator = [possibleMains objectEnumerator];
     NSString *mainPyPath;
     NSString *nextFileName;
