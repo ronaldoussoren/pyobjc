@@ -1,8 +1,9 @@
-from Foundation import *
-from AppKit import *
 import sys
 import encodings.idna
 import objc
+NSObject = objc.lookUpClass('NSObject')
+NSURLRequest = objc.lookUpClass('NSURLRequest')
+NSURL = objc.lookUpClass('NSURL')
 
 MESSAGE = u"""An URL using an IDN host has been detected.  URLs of this type may be misleading as there are many characters that look the same.
 
@@ -15,6 +16,27 @@ Unicode Host
 URL
   %s"""
 
+SEL = 'initWithURL:cachePolicy:timeoutInterval:'
+oldIMP = NSURLRequest.instanceMethodForSelector_(SEL)
+def initWithURL_cachePolicy_timeoutInterval_(self, theURL, cachePolicy, timeoutInterval):
+    print 'checking', theURL, cachePolicy, timeoutInterval
+    try:
+        theURL = idnSnitch.checkURL_(theURL)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()
+        NSLog(u"%s: %s" % (e.__class__.__name__, e))
+    print 'checked'
+    self.retain()
+    res = oldIMP(self, theURL, cachePolicy, timeoutInterval)
+    print 'got res'
+    return res
+initWithURL_cachePolicy_timeoutInterval_ = objc.selector(
+    initWithURL_cachePolicy_timeoutInterval_,
+    selector=oldIMP.selector,
+    signature=oldIMP.signature,
+)
+
 class IDNSnitch(NSObject):
     def init(self):
         super(IDNSnitch, self).init()
@@ -22,28 +44,14 @@ class IDNSnitch(NSObject):
         return self
 
     def runDialog_(self, (res, dialog)):
-        res.append(NSRunAlertPanel(*dialog))
+        from AppKit import NSRunAlertPanel, NSAlertDefaultReturn
+        res.append(NSRunAlertPanel(*dialog) != NSAlertDefaultReturn)
         return
 
     def startIDNSnitch_(self, sender):
-        print u'startIDNSnitch:'
-        global NSURLRequest
-        SEL = 'initWithURL:cachePolicy:timeoutInterval:'
-        oldIMP = NSURLRequest.instanceMethodForSelector_(SEL)
-        class NSURLRequest(objc.Category(NSURLRequest)):
-            def initWithURL_cachePolicy_timeoutInterval_(self, theURL, cachePolicy, timeoutInterval):
-                print 'checking', theURL, cachePolicy, timeoutInterval
-                try:
-                    theURL = idnSnitch.checkURL_(theURL)
-                except Exception, e:
-                    import traceback
-                    traceback.print_exc()
-                    NSLog(u"%s: %s" % (e.__class__.__name__, e))
-                print 'checked'
-                self.retain()
-                res = oldIMP(self, theURL, cachePolicy, timeoutInterval)
-                print 'got res'
-                return res
+        objc.classAddMethod(NSURLRequest,
+            SEL,
+            initWithURL_cachePolicy_timeoutInterval_)
 
     def checkURL_(self, anURL):
         print 'checkURL', self, anURL
@@ -71,11 +79,11 @@ class IDNSnitch(NSObject):
                     ),
                     True,
                 )
-                shouldDeny = res.pop() != NSAlertDefaultReturn
+                shouldDeny = res.pop()
                 self.HOSTS[uni] = shouldDeny
             if shouldDeny:
                 return NSURL.URLWithString_(u'about:blank')
         return anURL
 
 idnSnitch = IDNSnitch.alloc().init()
-idnSnitch.performSelectorOnMainThread_withObject_waitUntilDone_('startIDNSnitch:', None, False)
+idnSnitch.performSelectorOnMainThread_withObject_waitUntilDone_('startIDNSnitch:', None, True)
