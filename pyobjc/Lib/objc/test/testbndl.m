@@ -799,6 +799,76 @@ static 	char buf[1024];
 
 
 
+
+/*
+ * Testing of calling into python
+ *
+ * This is *very* incomplete at the moment, we need 'call' and 'invoke' 
+ * versions for all methods in OC_TestClass1 (both class and instance methods)
+ */
+
+@interface OC_TestClass2: NSObject
+{
+}
+
+/* "plain" calls */
+-(long)callInstanceLongFuncOf:(OC_TestClass1*)arg;
+-(unsigned long)callInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg;
+
+
+/* "NSInvocation" calls */
+-(long )invokeInstanceLongFuncOf:(OC_TestClass1*)arg;
+-(unsigned long)invokeInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg;
+
+@end
+
+
+#define SETUP_INVOCATION(inv, target, selector) \
+	inv = [NSInvocation invocationWithMethodSignature: \
+		[arg methodSignatureForSelector:selector]]; \
+	[inv setTarget:target]; \
+	[inv setSelector:selector]; 
+
+@implementation OC_TestClass2 
+
+-(long)callInstanceLongFuncOf:(OC_TestClass1*)arg
+{
+	return [arg longFunc];
+}
+
+-(unsigned long)callInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg
+{
+	return [arg ulongFunc];
+}
+
+-(long)invokeInstanceLongFuncOf:(OC_TestClass1*)arg
+{
+	long res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(longFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(unsigned long)invokeInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg
+{
+	unsigned long res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(ulongFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+@end
+
+
+
 static PyMethodDef no_methods[] = {
 	{ 0, 0, 0, 0 }
 };
@@ -817,5 +887,7 @@ void inittestbndl(void)
 
 	PyModule_AddObject(m, "OC_TestClass1", 
 		ObjCClass_New([OC_TestClass1 class]));
+	PyModule_AddObject(m, "OC_TestClass2", 
+		ObjCClass_New([OC_TestClass2 class]));
 	
 }
