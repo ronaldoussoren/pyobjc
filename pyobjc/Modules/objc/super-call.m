@@ -59,7 +59,7 @@ int ObjC_RegisterMethodMapping(Class class, SEL sel,
 	}
 
 	if (!call_to_self || !call_to_super || !call_to_python) {
-		PyErr_SetString(objc_error, 
+		PyErr_SetString(ObjCExc_error, 
 			"ObjC_RegisterMethodMapping: all functions required");
 		return NULL;
 	}
@@ -151,7 +151,7 @@ int ObjC_RegisterSignatureMapping(
 	if (PyErr_Occurred()) return -1;
 
 	if (!call_to_super || !call_to_python) {
-		PyErr_SetString(objc_error, 
+		PyErr_SetString(ObjCExc_error, 
 		   "ObjC_RegisterSignatureMapping: all functions required");
 		return NULL;
 	}
@@ -189,7 +189,7 @@ search_special(Class class, SEL sel)
 	int              special_len, i;
 
 	if (special_registry == NULL) {
-		ObjCErr_Set(objc_error,
+		ObjCErr_Set(ObjCExc_error,
 			"No super-caller for %s\n", SELNAME(sel));
 		return NULL;
 	}
@@ -218,7 +218,7 @@ search_special(Class class, SEL sel)
 	if (result) {
 		return PyCObject_AsVoidPtr(result);
 	} else {
-		ObjCErr_Set(objc_error,
+		ObjCErr_Set(ObjCExc_error,
 			"No super-caller for %s\n", SELNAME(sel));
 		return NULL;
 	}
@@ -252,14 +252,14 @@ find_signature(char* signature)
 	simplify_signature(signature, signature_buf, sizeof(signature_buf));
 
 	if (signature_registry == NULL) {
-		ObjCErr_Set(objc_error,
+		ObjCErr_Set(ObjCExc_error,
 			"No forwarder for signature %s\n", signature);
 		return NULL;
 	}
 
 	o = PyDict_GetItemString(signature_registry, signature_buf);
 	if (o == NULL) {
-		ObjCErr_Set(objc_error,
+		ObjCErr_Set(ObjCExc_error,
 			"No forwarder for signature %s\n", signature);
 		return NULL;
 	}
@@ -368,7 +368,7 @@ ObjC_CallFunc_t ObjC_FindSupercaller(Class class, SEL sel)
 
 	m = class_getInstanceMethod(class, sel);
 	if (!m) {
-		ObjCErr_Set(objc_error,
+		ObjCErr_Set(ObjCExc_error,
 			"Class %s does not respond to %s",
 			class->name, SELNAME(sel));
 		return NULL;

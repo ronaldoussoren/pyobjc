@@ -9,9 +9,9 @@
 #include "objc_util.h"
 #include "pyobjc.h"
 
-PyObject* objc_error;
-PyObject* objc_noclass_error;
-PyObject* objc_internal_error;
+PyObject* ObjCExc_error;
+PyObject* ObjCExc_noclass_error;
+PyObject* ObjCExc_internal_error;
 
 
 int ObjCUtil_Init(PyObject* module)
@@ -22,9 +22,9 @@ int ObjCUtil_Init(PyObject* module)
 	Py_INCREF(identifier); \
 	if (PyModule_AddObject(module, name, identifier) < 0) return -1;
 
-	NEW_EXC(objc_error, "error", NULL);
-	NEW_EXC(objc_noclass_error, "nosuchclass_error", objc_error);
-	NEW_EXC(objc_internal_error, "internal_error", objc_error);
+	NEW_EXC(ObjCExc_error, "error", NULL);
+	NEW_EXC(ObjCExc_noclass_error, "nosuchclass_error", ObjCExc_error);
+	NEW_EXC(ObjCExc_internal_error, "internal_error", ObjCExc_error);
 
 	return 0;
 }
@@ -54,7 +54,7 @@ ObjCErr_PyExcForName(const char* value)
 		return PyExc_MemoryError;
 	} 
 
-	return objc_error;
+	return ObjCExc_error;
 }
 	
 

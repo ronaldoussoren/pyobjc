@@ -218,7 +218,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		normalized_name, sizeof(normalized_name));
 
 	if (objc_lookUpClass(name) != NULL) {
-		PyErr_SetString(objc_error, 
+		PyErr_SetString(ObjCExc_error, 
 			"Class already exists in Objective-C runtime");
 		return NULL;
 	}
@@ -813,7 +813,7 @@ Class ObjCClass_GetClass(PyObject* cls)
 	struct class_info* info;
 
 	if (!ObjCClass_Check(cls)) {
-		ObjCErr_Set(objc_internal_error,
+		ObjCErr_Set(ObjCExc_internal_error,
 			"ObjCClass_GetClass called for non-class");
 		return nil;
 	}
@@ -833,7 +833,7 @@ PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector)
 	int                len;
 
 	if (!ObjCClass_Check(cls)) {
-		ObjCErr_Set(objc_internal_error,
+		ObjCErr_Set(ObjCExc_internal_error,
 			"ObjCClass_GetClass called for non-class");
 		return nil;
 	}

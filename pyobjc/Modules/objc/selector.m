@@ -875,12 +875,12 @@ pysel_call(ObjCPythonSelector* self, PyObject* args)
 		if (self->sel_self == NULL) {
 			PyObject* self_arg;
 			if (PyTuple_Size(args) < 1) {
-				PyErr_SetString(objc_error, "need self argument");
+				PyErr_SetString(ObjCExc_error, "need self argument");
 				return NULL;
 			}
 			self_arg = PyTuple_GetItem(args, 0);
 			if (!ObjCObject_Check(self_arg) && !ObjCClass_Check(self_arg)) {
-				PyErr_SetString(objc_error, "bad self type");
+				PyErr_SetString(ObjCExc_error, "bad self type");
 				return NULL;
 			}
 		}
