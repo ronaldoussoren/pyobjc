@@ -11,9 +11,9 @@ otherBytes.fromstring('12345678901234567890' * 5)
 class TestNSData(unittest.TestCase):
     def assertDataContents(self, d1, d2, rawData):
         self.assertEquals(len(d1), d1.length(), "d1: len() and -length didn't match.")
-        self.assertEquals(len(d1), len(rawData), "d1: len(<data>) and len(<input>) didn't match.")
+        self.assertEquals(len(d1), len(rawData), "d1: len(<data>) and len(<input>) didn't match. %d vs %d"%(len(d1), len(rawData)))
         self.assertEquals(len(d2), d2.length(), "d2: len() and -length didn't match.")
-        self.assertEquals(len(d2), len(rawData), "d2: len(<data>) and len(<input>) didn't match.")
+        self.assertEquals(len(d2), len(rawData), "d2: len(<data>) and len(<input>) didn't match. %d vs %d"%(len(d2), len(rawData)))
 
     def testDataWithBytes_length_(self):
         """Test +dataWithBytes:length:"""
@@ -60,7 +60,7 @@ class TestNSData(unittest.TestCase):
 
         Data of different lengths may be stored in different subclasses within the class cluster.
         """
-        testFactor = [1, 10, 1000, 10000, 1000000]
+        testFactor = range(1, 64) + [ 1000, 10000, 1000000]
         for aFactor in testFactor:
             bigRawBytes = "1234567890" * aFactor
 

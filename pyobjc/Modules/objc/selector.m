@@ -566,7 +566,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		 * increased retainCount, the retainCount is now one too high
 		 */
 		id obj = ObjCObject_GetObject(res);
-    		[ObjCObject_GetObject(res) release];
+    		[obj release];
 	}
 #endif
 	return res;

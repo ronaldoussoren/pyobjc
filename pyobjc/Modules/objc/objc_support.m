@@ -607,6 +607,10 @@ pythonify_c_value (const char *type, void *datum)
 	  OC_CheckRevive(retobject);
           Py_INCREF(retobject);
         }
+	else if (ISCLASS(obj))
+	{
+	  retobject = (PyObject*) ObjCClass_New((Class)obj);
+	}
         else
         {
           retobject = (PyObject *) ObjCObject_New (obj);
@@ -1219,11 +1223,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	/* Set 'self' argument, for class methods we use the class */ 
 	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
 		if (ObjCObject_Check(self)) {
-#ifdef GNU_RUNTIME
-			self_obj = ObjCObject_GetObject(self)->class_pointer;
-#else
-			self_obj = ObjCObject_GetObject(self)->isa;
-#endif
+			self_obj = GETISA(ObjCObject_GetObject(self));
 		} else if (ObjCClass_Check(self)) {
 			self_obj = ObjCClass_GetClass(self);
 		} else {

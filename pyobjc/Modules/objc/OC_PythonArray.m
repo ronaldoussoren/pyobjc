@@ -31,7 +31,10 @@
 
 -(int)count
 {
-	return PySequence_Length(value);
+	int result;
+
+	result = PySequence_Length(value);
+	return result;
 }
 
 -objectAtIndex:(int)idx

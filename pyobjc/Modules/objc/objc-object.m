@@ -19,13 +19,16 @@
 
 #define find_existing_proxy(objc_obj) NULL
 #define register_proxy(proxy_obj)  0
+#define unregister_proxy(proxy_obj)  ((void)0)
 
 #else /* PyOBJC_UNIQUE_PROXY */
 
 /*
- * There are two functions:
+ * There are three functions:
  * - register_proxy
  *   Add the proxy for an objective-C object to the weakref dictionary
+ * - unregister_proxy
+ *   Remove the proxy from the weakref dictionary
  * - find_existing_proxy
  *   Find the existing proxy for an objective-C object
  *
@@ -93,6 +96,22 @@ find_existing_proxy(id objc_obj)
 	}
 
 	return v;
+}
+
+static void 
+unregister_proxy(id objc_obj)
+{
+	int r;
+	PyObject* key;
+
+	if (proxy_dict == NULL) return NULL;
+
+	key = PyInt_FromLong((long)objc_obj);
+	r = PyDict_DelItem(proxy_dict, key);
+	Py_DECREF(key); key = NULL;
+	if (r == -1) {
+		PyErr_Clear();
+	}
 }
 
 static int
@@ -320,4 +339,16 @@ id        (ObjCObject_GetObject)(PyObject* object)
 		
 	}
 	return ObjCObject_GetObject(object);
+}
+
+void        ObjCObject_ClearObject(PyObject* object)
+{
+	if (!ObjCObject_Check(object)) {
+		ObjCErr_Set(PyExc_TypeError,
+			"objc.objc_object expected, got %s",
+			object->ob_type->tp_name);
+		
+	}
+	unregister_proxy(((ObjCObject*)object)->objc_object);
+	((ObjCObject*)object)->objc_object = nil;
 }

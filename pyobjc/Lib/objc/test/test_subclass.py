@@ -57,7 +57,7 @@ class TestSubclassing(unittest.TestCase):
         self.assertEquals(v.methodSignatureForSelector_('foo:'), None)
 
         x = v.methodSignatureForSelector_('test:x:')
-        self.assert_(x != None)
+        self.assert_(x is not None)
         self.assert_(x.methodReturnType() == 'v')
         self.assert_(x.numberOfArguments() == 4)
         self.assert_(x.getArgumentTypeAtIndex_(0) == '@')
