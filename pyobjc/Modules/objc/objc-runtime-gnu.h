@@ -118,6 +118,7 @@ PyObjCRT_InitMethod(Method_t m, SEL name, const char* types, IMP imp)
 
 
 extern MethodList_t PyObjCRT_AllocMethodList(int);
+extern struct objc_protocol_list* PyObjCRT_AllocProtocolList(int);
 
 
 typedef Method_t PyObjCRT_Method_t;

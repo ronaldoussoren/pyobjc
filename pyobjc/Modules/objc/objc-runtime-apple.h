@@ -70,6 +70,7 @@ PyObjCRT_ClassAddMethodList(Class cls, struct objc_method_list* lst)
 
 
 extern struct objc_method_list* PyObjCRT_AllocMethodList(int);
+extern struct objc_protocol_list* PyObjCRT_AllocProtocolList(int);
 
 typedef Method PyObjCRT_Method_t;
 typedef Ivar PyObjCRT_Ivar_t;

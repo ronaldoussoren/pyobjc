@@ -289,10 +289,12 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	int                      ivar_size  = 0;
 	int                      meta_method_count = 0;
 	int                      method_count = 0;
+	int                      protocol_count = 0;
 	int                      first_python_gen = 0;
 	struct objc_ivar_list*   ivar_list = NULL;
 	struct objc_method_list* method_list = NULL;
 	struct objc_method_list* meta_method_list = NULL;
+	struct objc_protocol_list* protocol_list = NULL;
 	struct class_wrapper*    new_class = NULL;
 	Class                    root_class;
 	Class                    cur_class;
@@ -368,7 +370,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		goto error_cleanup;
 	}
 
-    PyDict_SetItemString(class_dict, "__objc_python_subclass__", Py_True);
+	PyDict_SetItemString(class_dict, "__objc_python_subclass__", Py_True);
 
 	py_superclass = PyObjCClass_New(super_class);
 	if (py_superclass == NULL) return NULL;
@@ -390,6 +392,36 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			goto error_cleanup;
 		}
 	}
+
+	protocol_count = PyList_Size(protocols);
+	if (protocol_count > 0) {
+		int cur_protocol = 0;
+		protocol_list = PyObjCRT_AllocProtocolList(protocol_count);
+		if (protocol_list == NULL) {
+			PyErr_NoMemory();
+			goto error_cleanup;
+		}
+		for (i=0; i < protocol_count; i++) {
+			Protocol *protocol;
+			PyObject *wrapped_protocol;
+			wrapped_protocol = PyList_GET_ITEM(protocols, i);
+			if (PyObjCInformalProtocol_Check(wrapped_protocol)) {
+				continue;
+			}
+			if (!PyObjCObject_Check(wrapped_protocol)) {
+				PyErr_Format(PyObjCExc_Error,
+					"protocol must be a PyObjCObject, not an '%s'",
+					wrapped_protocol->ob_type->tp_name);
+				goto error_cleanup;
+			}
+			protocol = (Protocol *)PyObjCObject_GetObject(wrapped_protocol);
+			protocol_list->list[cur_protocol] = protocol;
+			cur_protocol++;
+		}
+		protocol_list->list[cur_protocol] = nil;
+		protocol_list->count = cur_protocol;
+	}
+	
 
 	key_list = PyDict_Keys(class_dict);
 	if (key_list == NULL) {
@@ -758,7 +790,8 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		name,
 		super_class,
 		root_class,
-		ivar_size, ivar_list
+		ivar_size, ivar_list,
+		protocol_list
 		);
 	if (i < 0) {
 		goto error_cleanup;
@@ -807,11 +840,14 @@ error_cleanup:
 	if (meta_method_list) {
 		free(meta_method_list);
 	}
+	if (protocol_list) {
+		free(protocol_list);
+	}
 
 	if (new_class != NULL) {
 		PyObjCRT_ClearClass(&(new_class->class));
 		PyObjCRT_ClearClass(&(new_class->meta_class));
-        free(new_class);
+		free(new_class);
 	}
 
 	return NULL;

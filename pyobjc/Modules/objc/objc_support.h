@@ -85,7 +85,8 @@ static inline PyObject* PyObjC_IdToPython(id value)
 
 
 extern int PyObjCRT_SetupClass(
-	Class, Class, const char*, Class, Class, int, struct objc_ivar_list*);
+	Class, Class, const char*, Class, Class, int, struct objc_ivar_list*,
+	struct objc_protocol_list*);
 extern void PyObjCRT_ClearClass(Class cls);
 
 #endif /* _objc_support_H */
