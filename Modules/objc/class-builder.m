@@ -898,13 +898,15 @@ free_ivars(id self, PyObject* cls)
 
 }
 
-/* -release */
+/* -dealloc */
 static void object_method_dealloc(id self, SEL sel)
 {
 	struct objc_super super;
 	PyObject* obj;
 	PyObject* delmethod;
 	PyObject* cls = ((struct class_wrapper*)self->isa)->python_class;
+
+	printf("dealloc!\n");
 
 	delmethod = PyObjCClass_GetDelMethod(cls);
 	if (delmethod != NULL) {
@@ -938,6 +940,7 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
         PyObject*         pyself;
 	PyObject*         pymeth;
 
+	//printf("respondsToSelector %p of %s %s\n", self, self->isa->name, aSelector);
 
 	/* First check if we respond */
 	pyself = PyObjCObject_New(self);
@@ -945,12 +948,12 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 		return NO;
 	}
 	pymeth = PyObjCObject_FindSelector(pyself, aSelector);
+	Py_DECREF(pyself);
 	if (pymeth) {
 		Py_DECREF(pymeth);
 		return YES;
 	}
 	PyErr_Clear();
-
 
 	/* Check superclass */
 	super.class = find_real_superclass(GETISA(self),
@@ -959,7 +962,6 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 	RECEIVER(super) = self;
 
 	res = (int)objc_msgSendSuper(&super, selector, aSelector);
-
 	return res;
 }
 
@@ -971,6 +973,8 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 	struct objc_super  super;
         PyObject*          pyself;
 	PyObject*          pymeth;
+
+	//printf("methdSigfor %p of %s %s\n", self, self->isa->name, aSelector);
 
 	super.class = find_real_superclass(
 			GETISA(self), 
@@ -996,6 +1000,7 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 
 	pymeth = PyObjCObject_FindSelector(pyself, aSelector);
 	if (!pymeth) {
+		Py_DECREF(pyself);
 		PyErr_Clear();
 		return nil;
 	}
@@ -1024,6 +1029,8 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	int   arglen;
 	PyObject* pymeth;
 	PyObject* pyself;
+
+	//printf("forwardInv %p of %s\n", self, self->isa->name);
 
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
