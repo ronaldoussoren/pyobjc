@@ -7,8 +7,8 @@ palletes.
 
 You *must* use a framework build of Python to be able to use this module.
 
-The PluginBuilder class is instantated with a number of keyword arguments and
-have a build() method that will do all the work. See the class docstrings for
+The PluginBuilder class is instantiated with a number of keyword arguments and
+has a build() method that will do all the work. See the class docstrings for
 a description of the constructor arguments.
 
 The module contains a main program that can be used in two ways:

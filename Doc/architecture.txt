@@ -7,9 +7,9 @@ PyObjC Architecture
 Introduction
 ------------
 
-XXX: This documented is outdated and incomplete.
+XXX: This documentent is outdated and incomplete.
 
-This document gives a (brief) description of how the PyObjc package is 
+This document gives a (brief) description of how the PyObjC package is 
 structured. 
 
 Objective-C classes and objects
@@ -26,7 +26,7 @@ storing the additional information in a dictionary indexed by the PyTypeObjects
 that represent Objective-C classes.
 
 Objective-C objects are represented by proxy objects that are instances of
-the classes descriped above.
+the classes described above.
 
 TODO: work out how we'll implement subclasses objects and describe here.
 

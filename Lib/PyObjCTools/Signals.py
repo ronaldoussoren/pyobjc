@@ -13,7 +13,7 @@ This module has two functions in its public API:
   dumpStackOnFatalSignal.
 
 This module is not designed to provide fine grained control over signal 
-handling. Nor is it intended to be terribly robust. It may give usefull
+handling. Nor is it intended to be terribly robust. It may give useful
 information when your program gets unexpected signals, but it might just
 as easily cause a crash when such a signal gets in. 
 
@@ -48,7 +48,7 @@ def installHandler(sig):
 
 def dumpStackOnFatalSignal():
     """
-    Install signal handlers that might print a usefull stack trace when
+    Install signal handlers that might print a useful stack trace when
     this process receives a fatal signal. 
 
     NOTE: See module docstring
