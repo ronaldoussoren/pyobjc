@@ -1,4 +1,7 @@
 2002-10-22  Bill Bumgarner  <bbum@codefab.com>
+	* Updated the MANIFEST (too bad we can't effectively use MANIFEST.in)
+	* Slight correction/addition to setup.py
+
 	* Added basic unit tests to objc.
 	* Implemented __ne__ in terms of isEqual_ (not isNotEqual_).
 	* Added unit test that tests that an object is equal to itself.

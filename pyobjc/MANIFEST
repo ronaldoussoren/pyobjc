@@ -107,6 +107,7 @@
 ./Lib/objc/_FoundationSignatures.py
 ./Lib/objc/builder.py
 ./Lib/objc/classnib.py
+./Lib/objc/test/test_objc.py
 ./License.txt
 ./MANIFEST
 ./Modules/Cocoa/00ReadMe.txt
