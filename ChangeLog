@@ -1,3 +1,14 @@
+2003-01-04  Bill Bumgarner  <bbum@codefab.com>
+    * Modules/Cocoa/_AppKitMapping.m: Added AppKitMapping as new module in
+    setup.py (why wasn't it there before?).  Added support for
+    NSImageBitmapRep.  Can now create a bitmap rep w/many arg designated
+    intiailizer and can invoke -getBitmapDataPlanes.   Unit test included.
+    array instances returned by -getBitmapDataPlanes are mutable and, as
+    such, it is now possible to edit/manipulate NSIBR directly in Python.
+
+2003-01-03  Bill Bumgarner  <bbum@codefab.com>
+    * Modules/objc/objc_support.m: Augmented error message for Unhandled type.
+    
 2003-01-03 Ronald Oussoren <oussoren@cistron.nl>
     * Added methods to objc/_convenience that allow us to use 
       NSArray.arrayWithObjects_ and other varargs constructors (by calling

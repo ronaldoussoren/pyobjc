@@ -15,7 +15,7 @@ from _AppKit import *
 
 # We try to import a module containing support code, the code
 # is only ever used from the C side.
-#import _AppKitMapping 
+import _AppKitMapping 
 
 # Load the Cocoa bundle, and gather all classes defined there
 import Foundation
