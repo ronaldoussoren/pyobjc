@@ -948,7 +948,7 @@ protocolsForClass(PyObject* self __attribute__((__unused__)),
 	while (protocol_list != NULL) {
 		int i;
 		for (i = 0; i < protocol_list->count; i++) {
-			PyObject *protocol = PyObjCObject_NewClassic(protocol_list->list[i]);
+			PyObject *protocol = PyObjCFormalProtocol_ForProtocol(protocol_list->list[i]);
 			if (protocol == NULL) {
 				Py_DECREF(protocols);
 				return NULL;
@@ -1082,8 +1082,8 @@ init_objc(void)
 	PyType_Ready(&PyObjCPythonSelector_Type);
 	PyType_Ready(&PyObjCInstanceVariable_Type);
 	PyType_Ready(&PyObjCInformalProtocol_Type);
+	PyType_Ready(&PyObjCFormalProtocol_Type);
 	PyType_Ready(&PyObjCUnicode_Type);
-	PyType_Ready(&PyObjCInformalProtocol_Type);
 	PyType_Ready(&PyObjCIMP_Type);
 	PyType_Ready(&PyObjCMethodAccessor_Type);
 	PyType_Ready(&PyObjCZoneWrapper_Type);
@@ -1099,6 +1099,7 @@ init_objc(void)
 	PyDict_SetItemString(d, "selector", (PyObject*)&PyObjCSelector_Type);
 	PyDict_SetItemString(d, "ivar", (PyObject*)&PyObjCInstanceVariable_Type);
 	PyDict_SetItemString(d, "informal_protocol", (PyObject*)&PyObjCInformalProtocol_Type);
+	PyDict_SetItemString(d, "formal_protocol", (PyObject*)&PyObjCFormalProtocol_Type);
 	PyDict_SetItemString(d, "function", (PyObject*)&PyObjCFunc_Type);
 	PyDict_SetItemString(d, "IMP", (PyObject*)&PyObjCIMP_Type);
 

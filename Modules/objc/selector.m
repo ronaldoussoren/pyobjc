@@ -1426,7 +1426,7 @@ int   PyObjCSelector_GetFlags(PyObject* obj)
  * Find the signature of 'selector' in the list of protocols.
  */
 static char*
-find_protocol_signature(PyObject* protocols, SEL selector)
+find_protocol_signature(PyObject* protocols, SEL selector, int is_class_method)
 {
 	int len;
 	int i;
@@ -1448,10 +1448,19 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 			PyErr_Clear();
 			continue;
 		}
-		// XXX: Check goes here for formal protocols
-		if (!PyObjCInformalProtocol_Check(proto)) continue;
 
-		info = PyObjCInformalProtocol_FindSelector(proto, selector);
+		if (PyObjCFormalProtocol_Check(proto)) {
+			const char* signature;
+			
+			signature = PyObjCFormalProtocol_FindSelectorSignature(
+					proto, selector, is_class_method
+			);
+			if (signature != NULL) {
+				return (char*)signature;
+			}
+		}
+
+		info = PyObjCInformalProtocol_FindSelector(proto, selector, is_class_method);
 		if (info != NULL) {
 			return PyObjCSelector_Signature(info);
 		}
@@ -1464,7 +1473,7 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 		return NULL;
 	}
 
-	info = PyObjCInformalProtocol_FindSelector(proto, selector);
+	info = PyObjCInformalProtocol_FindSelector(proto, selector, is_class_method);
 	if (info != NULL) {
 		if (PyList_Append(protocols, proto) < 0) {
 			return NULL;
@@ -1625,7 +1634,7 @@ PyObjCSelector_FromFunction(
 		PyErr_Clear(); /* The call to PyObjCClass_FindSelector failed */
 		if (protocols != NULL) {
 			signature = find_protocol_signature(
-					protocols, selector);
+					protocols, selector, is_class_method);
 			if (signature == NULL && PyErr_Occurred()) {
 				return NULL;
 			}

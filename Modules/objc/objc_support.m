@@ -124,8 +124,7 @@
 
 	rval = PyObjC_FindPythonProxy(self);
 	if (rval == NULL) {
-		rval = (PyObject *)PyObjCObject_NewClassic(self);
-		PyObjC_RegisterPythonProxy(self, rval);
+		rval = PyObjCFormalProtocol_ForProtocol(self);
 	}
 	return rval;
 }

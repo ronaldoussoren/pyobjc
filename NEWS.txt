@@ -31,6 +31,14 @@ Version 1.3 (2005-03-??)
     class MyLockingClass(NSObject, objc.protocolNamed('NSLocking')):
         # implementation
         pass
+
+  It is also possible to define new protocols::
+
+     MyProtocol = objc.formal_protocol("MyProtocol", None, [
+     	selector(None, selector='mymethod', signature='v@:'),
+     ])
+
+  All formal protocols are instances of ``objc.formal_protocol``.
         
 - PyObjCTools.KeyValueCoding has a new ``kvc`` class that allows
   Pythonic Key-Value Coding.

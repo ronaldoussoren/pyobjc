@@ -451,6 +451,10 @@ PyObjC will automatically use the information in the ``informal_protocol``
 objects to add the right method signatures to methods, and to warn about
 classes that partially implement a protocol.
 
+See `PyObjC protocol support`__ for more information.
+
+.. __: protocols.html
+
 Cocoa Bindings
 ..............
 
