@@ -2,13 +2,21 @@
 Installation Instructions
 =========================
 
-.. :author: Bill Bumgarner
+.. :authors: Bill Bumgarner, Ronald Oussoren
  
-Building the Module
-===================
+Building the package
+====================
 
-The module uses the distutils package included with Python 2.0 and
-beyond.   This package provides a single interface for building and
+If you're using the sources from CVS you should first download a copy of 
+libffi from `the PyObjC download site`_.  Extract this in a convenient location
+and update the variable ``LIBFF_SOURCES`` at the top of setup.py.  The released
+version of PyObjC includes a compatible version of libffi.
+
+.. _`the PyObjC download site`: http://sourceforge.net/project/showfiles.php?group_id=14534
+
+
+PyObjC is build and installed using the distutils package included with Python
+2.0 and beyond.  This package provides a single interface for building and
 packaging the module.   To see usage documentation for the module,
 issue the ``--help`` command::
 
@@ -35,11 +43,6 @@ If you have multiple versions of python installed on your system, the
 above will only install pyobjc for whatever version of python is the
 default on the command line.   Make sure you are installing python
 against the correct version of python.
-
-This package makes use of a recent version libffi (
-http://sources.redhat.com/libffi). You'll have to install that first. A version
-of libffi that is known to work is available from the files section of PyObjC
-at sourceforge.net.
 
 Examples
 ========

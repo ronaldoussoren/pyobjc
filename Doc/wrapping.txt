@@ -2,7 +2,7 @@
 How to wrap an Objective-C class library
 ========================================
 
-.. This file is formatted using the rules for StructuredText
+.. :author: Ronald Oussoren
 
 Introduction
 ------------
@@ -19,12 +19,10 @@ The basics
 
 The code for loading a framework and exporting its classes is pretty simple::
 
-   import Foundation
-   _clslist = Foundation.load_bundle('/path/to/MyFramework.framework')
-   _gl = globals()
-   for _cls in _clslist:
-   	gl[_cls.__name__] = _cls 
-   del _clslist, _cls, _gl, Foundation
+   import objc
+   objc.loadBundle("MyFramework", globals(), 
+      bundle_path='/path/to/MyFramework.framework')
+   del objc
 
 If your class library does not require helper functions for some methods this
 is all that is needed.

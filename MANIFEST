@@ -1,16 +1,27 @@
-BUGS
 ChangeLog
+Doc/index.txt
+Doc/index.html
 Doc/architecture.txt
+Doc/architecture.html
 Doc/classes.txt
+Doc/classes.html
 Doc/coding-style.txt
+Doc/coding-style.html
 Doc/intro.txt
+Doc/intro.html
 Doc/libffi.txt
+Doc/libffi.html
 Doc/structure.txt
-Doc/TODO
+Doc/structure.html
+Doc/TODO.txt
+Doc/TODO.html
 Doc/users.txt
+Doc/users.html
 Doc/warts.txt
+Doc/warts.html
 Doc/website.lst
 Doc/wrapping.txt
+Doc/wrapping.html
 Examples/00ReadMe.txt
 Examples/addressbook.m
 Examples/addressbook.py
@@ -97,8 +108,8 @@ Examples/WebServicesTool/WST.icns
 Examples/WebServicesTool/WST.png
 Examples/WebServicesTool/WSTApplicationDelegateClass.py
 Examples/WebServicesTool/WSTConnectionWindowControllerClass.py
-FIXME
-INSTALL
+Install.txt
+Install.html
 Installer Package/Resources/Description.plist
 Installer Package/Resources/License.txt
 Installer Package/Resources/ReadMe.txt
@@ -270,8 +281,9 @@ Project Templates/Cocoa-Python-ObjC Application/English.lproj/MainMenu.nib/keyed
 Project Templates/Cocoa-Python-ObjC Application/HueView.h
 Project Templates/Cocoa-Python-ObjC Application/HueView.m
 Project Templates/Cocoa-Python-ObjC Application/MyAppDelegate.py
-README-OLD.txt
+HISTORIC.txt
 ReadMe.txt
+ReadMe.html
 Scripts/buildpkg.py
 Scripts/clean-install
 Scripts/CodeGenerators/00README.txt
@@ -358,3 +370,19 @@ libffi-src/src/x86/sysv.S
 libffi-src/src/x86/unix64.S
 libffi-src/src/x86/win32.S
 libffi-src/stamp-h.in
+Doc/tutorial
+Doc/tutorial/step12-src
+Doc/tutorial/step12-src/CurrencyConverter.py
+Doc/tutorial/step12-src/MainMenu.nib
+Doc/tutorial/step12-src/MainMenu.nib/classes.nib
+Doc/tutorial/step12-src/MainMenu.nib/info.nib
+Doc/tutorial/step12-src/MainMenu.nib/objects.nib
+Doc/tutorial/step3-MainMenu.nib
+Doc/tutorial/step3-MainMenu.nib/classes.nib
+Doc/tutorial/step3-MainMenu.nib/info.nib
+Doc/tutorial/step3-MainMenu.nib/objects.nib
+Doc/tutorial/step4-CurrencyConverter.py
+Doc/tutorial/step5-CurrencyConverter.py
+Doc/tutorial/step8-CurrencyConverter.py
+Doc/tutorial/tutorial.txt
+Doc/tutorial/tutorial.html

@@ -8,7 +8,7 @@ Introduction
 ------------
 
 This document gives a (brief) description of how the PyObjc package is 
-structured.
+structured. Too bad this document is outdated and incomplete...
 
 Objective-C classes and objects
 -------------------------------

@@ -18,6 +18,6 @@ Must be installed on boot volume.
 	<key>IFPkgDescriptionTitle</key>
 	<string>PyObjC</string>
 	<key>IFPkgDescriptionVersion</key>
-	<string>0.7.0</string>
+	<string>0.9</string>
 </dict>
 </plist>
