@@ -53,6 +53,8 @@ class TestSubclassing(unittest.TestCase):
 
         v = Signature.new()
 
+        self.assert_(isinstance(v, Signature))
+
         self.assertEquals(v.methodSignatureForSelector_('foo:'), None)
 
         x = v.methodSignatureForSelector_('test:x:')

@@ -10,6 +10,8 @@
 #else
 #include <objc/objc-runtime.h>
 #endif
+
+#include "objc_support.h"
 #include "OC_PythonObject.h"
 #include "OC_PythonArray.h"
 #include "OC_PythonDictionary.h"
@@ -67,6 +69,7 @@ typedef struct {
 	Class     class;
 	PyObject* sel_to_py;
 	int       method_magic;
+	int	  dictoffset;
 } PyObjCClassObject;
 
 #else

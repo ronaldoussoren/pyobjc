@@ -103,6 +103,7 @@ register_proxy(PyObject* proxy_obj)
 	PyObject* unregister_proxy;
 	struct unregister_data* data;
 
+
 	if (PyObjCObject_Check(proxy_obj)) {
 		objc_obj = PyObjCObject_GetObject(proxy_obj);
 	} else if (PyObjCClass_Check(proxy_obj)) {
@@ -196,28 +197,248 @@ object_dealloc(PyObject* obj)
 				localException);
 		NS_ENDHANDLER
 	}
+
+	// Grr, this calls __del__ and we don't want that.
 	obj->ob_type->tp_free(obj);
 }
 
-static PyObject*
-object_getattro(PyObject* obj, PyObject* name)
+
+static inline PyObject*
+_type_lookup(PyTypeObject* tp, PyObject* name)
 {
-	PyObject* result;
+	int i, n;
+	PyObject *mro, *base, *dict;
+	PyObject *descr = NULL;
 
-	PyObjCClass_CheckMethodList((PyObject*)obj->ob_type);
+	/* Look in tp_dict of types in MRO */
+	mro = tp->tp_mro;
+	assert(mro != NULL);
+	assert(PyTuple_Check(mro));
+	n = PyTuple_GET_SIZE(mro);
+	for (i = 0; i < n; i++) {
+		base = PyTuple_GET_ITEM(mro, i);
+		assert(PyType_Check(base));
 
-	result = PyObject_GenericGetAttr(obj, name);
-	if (result) return result;
+		if (PyObjCClass_Check(base)) {
+			PyObjCClass_CheckMethodList(base);
+		}
 
-	PyErr_Clear();
+		dict = ((PyTypeObject *)base)->tp_dict;
+		assert(dict && PyDict_Check(dict));
+		descr = PyDict_GetItem(dict, name);
+		if (descr != NULL)
+			break;
+	}
+
+	return descr;
+}
+
+static PyObject** _get_dictptr(PyObject* obj)
+{
+	int dictoffset = PyObjCClass_DictOffset(obj->ob_type);
+
+	if (dictoffset == 0) return NULL;
+
+	return (PyObject**)(((char*)PyObjCObject_GetObject(obj)) + dictoffset);
+}
+
+static PyObject *
+ocobject_getattro(PyObject *obj, PyObject *name)
+{
+	PyTypeObject *tp = obj->ob_type;
+	PyObject *descr = NULL;
+	PyObject *res = NULL;
+	descrgetfunc f;
+	long dictoffset;
+	PyObject **dictptr;
+
+	if (!PyString_Check(name)){
+#ifdef Py_USING_UNICODE
+		/* The Unicode to string conversion is done here because the
+		   existing tp_setattro slots expect a string object as name
+		   and we wouldn't want to break those. */
+		if (PyUnicode_Check(name)) {
+			name = PyUnicode_AsEncodedString(name, NULL, NULL);
+			if (name == NULL)
+				return NULL;
+		}
+		else
+#endif
+		{
+			PyErr_SetString(PyExc_TypeError,
+					"attribute name must be string");
+			return NULL;
+		}
+	}
+	else
+		Py_INCREF(name);
+
+	if (tp->tp_dict == NULL) {
+		if (PyType_Ready(tp) < 0)
+			goto done;
+	}
+
+	/* replace _PyType_Lookup */
+	descr = _type_lookup(tp, name);
+
+	f = NULL;
+	if (descr != NULL &&
+	    PyType_HasFeature(descr->ob_type, Py_TPFLAGS_HAVE_CLASS)) {
+		f = descr->ob_type->tp_descr_get;
+		if (f != NULL && PyDescr_IsData(descr)) {
+			res = f(descr, obj, (PyObject *)obj->ob_type);
+			goto done;
+		}
+	}
+
+	/* First try the __dict__ */
+	dictptr = _get_dictptr(obj);
+
+	if (dictptr != NULL) {
+		PyObject *dict;
+
+		if (strcmp(PyString_AS_STRING(name), "__dict__") == 0) {
+			res = *dictptr;
+			if (res == NULL) {
+				*dictptr = PyDict_New();
+				if (*dictptr == NULL) {
+					PyErr_Clear();
+				}
+				res = *dictptr;
+			}
+			if (res != NULL) {
+				Py_INCREF(res);
+				goto done;
+			}
+		} else {
+			dict = *dictptr;
+			if (dict != NULL) {
+				res = PyDict_GetItem(dict, name);
+				if (res != NULL) {
+					Py_INCREF(res);
+					goto done;
+				}
+			}
+		}
+	}
+
+	if (f != NULL) {
+		res = f(descr, obj, (PyObject *)obj->ob_type);
+		goto done;
+	}
+
+	if (descr != NULL) {
+		Py_INCREF(descr);
+		res = descr;
+		goto done;
+	}
+
 	NS_DURING
-		result = ObjCSelector_FindNative(obj, PyString_AsString(name));
+		res = ObjCSelector_FindNative(obj, PyString_AS_STRING(name));
 	NS_HANDLER
 		ObjCErr_FromObjC(localException);
-		result = NULL;
+		res = NULL;
 	NS_ENDHANDLER
 
-	return result;
+	if (res) goto done;
+
+	PyErr_Format(PyExc_AttributeError,
+		     "'%.50s' object has no attribute '%.400s'",
+		     tp->tp_name, PyString_AS_STRING(name));
+  done:
+	Py_DECREF(name);
+	return res;
+}
+
+
+static int
+ocobject_setattro(PyObject *obj, PyObject *name, PyObject *value)
+{
+	PyTypeObject *tp = obj->ob_type;
+	PyObject *descr;
+	descrsetfunc f;
+	PyObject** dictptr;
+	int res = -1;
+
+	if (!PyString_Check(name)){
+#ifdef Py_USING_UNICODE
+		/* The Unicode to string conversion is done here because the
+		   existing tp_setattro slots expect a string object as name
+		   and we wouldn't want to break those. */
+		if (PyUnicode_Check(name)) {
+			name = PyUnicode_AsEncodedString(name, NULL, NULL);
+			if (name == NULL)
+				return -1;
+		}
+		else
+#endif
+		{
+			PyErr_SetString(PyExc_TypeError,
+					"attribute name must be string");
+			return -1;
+		}
+	}
+	else
+		Py_INCREF(name);
+
+	if (tp->tp_dict == NULL) {
+		if (PyType_Ready(tp) < 0)
+			goto done;
+	}
+
+	descr = _type_lookup(tp, name);
+	f = NULL;
+	if (descr != NULL &&
+	    PyType_HasFeature(descr->ob_type, Py_TPFLAGS_HAVE_CLASS)) {
+		f = descr->ob_type->tp_descr_set;
+		if (f != NULL && PyDescr_IsData(descr)) {
+			res = f(descr, obj, value);
+			goto done;
+		}
+	}
+
+	dictptr = _get_dictptr(obj);
+	if (dictptr != NULL) {
+		PyObject *dict;
+
+		dict = *dictptr;
+		
+		if (dict == NULL && value != NULL) {
+			dict = PyDict_New();
+			if (dict == NULL)
+				goto done;
+			
+			*dictptr = dict;
+		}
+		if (dict != NULL) {
+			if (value == NULL)
+				res = PyDict_DelItem(dict, name);
+			else
+				res = PyDict_SetItem(dict, name, value);
+			if (res < 0 && PyErr_ExceptionMatches(PyExc_KeyError))
+				PyErr_SetObject(PyExc_AttributeError, name);
+			goto done;
+		}
+	}
+
+	if (f != NULL) {
+		res = f(descr, obj, value);
+		goto done;
+	}
+
+	if (descr == NULL) {
+		PyErr_Format(PyExc_AttributeError,
+			     "'%.50s' object has no attribute '%.400s'",
+			     tp->tp_name, PyString_AS_STRING(name));
+		goto done;
+	}
+
+	PyErr_Format(PyExc_AttributeError,
+		     "'%.50s' object attribute '%.400s' is read-only",
+		     tp->tp_name, PyString_AS_STRING(name));
+  done:
+	Py_DECREF(name);
+	return res;
 }
 
 PyDoc_STRVAR(obj_get_classMethods_doc,
@@ -277,8 +498,8 @@ PyObjCClassObject PyObjCObject_Type = {{
 	0,					/* tp_hash */
 	0,					/* tp_call */
 	0,					/* tp_str */
-	object_getattro,			/* tp_getattro */
-	0,					/* tp_setattro */
+	ocobject_getattro,			/* tp_getattro */
+	ocobject_setattro,			/* tp_setattro */
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE 
 		| Py_TPFLAGS_HAVE_WEAKREFS, 	/* tp_flags */
@@ -313,6 +534,7 @@ PyObjCObject_New(id objc_object)
 	PyObject*     res;
 
 
+
 	res = find_existing_proxy(objc_object);
 	if (res) return res;
 
@@ -327,6 +549,7 @@ PyObjCObject_New(id objc_object)
 	}
 
 	res = cls_type->tp_alloc(cls_type, 0);
+	//res = (PyObject*)PyObject_New(PyObjCObject, cls_type);
 	if (res == NULL) {
 		return NULL;
 	}
@@ -339,6 +562,7 @@ PyObjCObject_New(id objc_object)
 	((PyObjCObject*)res)->weak_refs = NULL;
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = 0;
+
 
 
 	if (strcmp(GETISA(objc_object)->name, "NSAutoreleasePool") != 0) {

@@ -3,6 +3,21 @@ from AppKit import NSOutlineViewDataSource, NSTableDataSource
 from PyObjCTools import NibClassBuilder
 from objc import selector, getClassList, objc_object, IBOutlet
 
+try:
+    import AddressBook
+except ImportError:
+    pass
+
+try:
+    import PreferencePanes
+except ImportError:
+    pass
+
+try:
+    import InterfaceBuilder
+except ImportError:
+    pass
+
 WRAPPED={}
 class Wrapper (NSObject):
     """

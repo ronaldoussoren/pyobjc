@@ -39,6 +39,7 @@ typedef struct {
 	Class	  class;
 	PyObject* sel_to_py;
 	int	  method_magic;
+	int	  dictoffset;
 } PyObjC_class_info;
 
 static NSMapTable* 	class_to_objc = NULL;
@@ -151,6 +152,8 @@ objc_class_locate(Class objc_class)
  * TODO:
  * - Add support for Objective-C 'Protocol' instances in the list of bases
  */
+
+
 static PyObject*
 class_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 {
@@ -167,6 +170,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	PyObjC_class_info* info;
 	PyObject* protocols;
 	PyObject* real_bases;
+	IVAR var;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:__new__",
 			keywords, &name, &bases, &dict)) {
@@ -285,6 +289,11 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	args = NULL;
 	real_bases = NULL;
 
+
+	//if (PyDict_DelItemString(((PyTypeObject*)res)->tp_dict, "__dict__") < 0) {
+	//	PyErr_Clear();
+	//}             
+
 	/* Verify that the class conforms to all protocols it claims to 
 	 * conform to.
 	 */
@@ -331,7 +340,17 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	info->sel_to_py = PyDict_New(); 
 	info->method_magic = objc_methodlist_magic(objc_class);
 
+	info->dictoffset = 0;
+
+	// Initialize to parent version, not: this should not be necessary!
+	info->dictoffset = PyObjCClass_DictOffset(PyTuple_GET_ITEM(bases, 0));
+
 	PyObjCClass_SetClass(objc_class, res);
+
+	var = class_getInstanceVariable(objc_class, "__dict__");
+	if (var != NULL) {
+		info->dictoffset = var->ivar_offset;
+	}
 
 	Py_INCREF(res);
 	return res;
@@ -686,6 +705,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 					name,
 					descr) != 0) {
 
+				//Py_DECREF(descr); 
 				return -1;
 			}
 			Py_DECREF(descr); 
@@ -729,6 +749,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			if (PyDict_SetItemString(dict, 
 					selbuf,
 					descr) != 0) {
+				//Py_DECREF(descr);
 				return -1;
 			}
 			Py_DECREF(descr);
@@ -757,6 +778,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			}
 			if (PyDict_SetItemString(dict, 
 					var->ivar_name, descr) != 0) {
+				//Py_DECREF(descr);
 				return -1;
 			}
 			Py_DECREF(descr);
@@ -784,6 +806,7 @@ PyObjCClass_New(Class objc_class)
 	PyObject* result;
 	PyObject* bases;
 	PyObjC_class_info* info;
+	IVAR var;
 
 	result = objc_class_locate(objc_class);
 	if (result != NULL) {
@@ -794,6 +817,7 @@ PyObjCClass_New(Class objc_class)
 
 
 	dict = PyDict_New();
+	PyDict_SetItemString(dict, "__slots__", PyTuple_New(0));
 
 	bases = PyTuple_New(1);
 
@@ -827,6 +851,12 @@ PyObjCClass_New(Class objc_class)
 	info->class = objc_class;
 	info->sel_to_py = PyDict_New(); 
 	info->method_magic = 0;
+	info->dictoffset = 0;
+
+	var = class_getInstanceVariable(objc_class, "__dict__");
+	if (var != NULL) {
+		info->dictoffset = var->ivar_offset;
+	}
 
 	if (PyObject_SetAttrString(result, 
 			"__module__", PyObjCClass_DefaultModule) < 0) {
@@ -965,4 +995,12 @@ PyObjCClass_IsSubClass(Class child, Class parent)
 		child = child->super_class;	
 	}
 	return 0;
+}
+
+int
+PyObjCClass_DictOffset(PyObject* cls)
+{
+	PyObjC_class_info* info;
+	info = get_class_info(cls);
+	return info->dictoffset;
 }

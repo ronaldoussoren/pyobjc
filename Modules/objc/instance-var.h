@@ -7,6 +7,9 @@ typedef struct {
 	PyObject_HEAD
 	char* name;	/* Name of the instance variable */
 	char  type[2];	/* Type of the instance variable for definition only */
+	int   isOutlet;
+	int   isSlot;
+	IVAR   ivar;
 } PyObjCInstanceVariable;
 
 
@@ -14,5 +17,8 @@ extern PyTypeObject PyObjCInstanceVariable_Type;
 #define PyObjCInstanceVariable_Check(obj) PyObject_TypeCheck((obj), &PyObjCInstanceVariable_Type)
 
 PyObject* PyObjCInstanceVariable_New(char* name);
+
+#define PyObjCInstanceVariable_IsOutlet(obj) \
+	(((PyObjCInstanceVariable*)(obj))->isOutlet)
 
 #endif /* OBJC_INSTANCE_VAR */

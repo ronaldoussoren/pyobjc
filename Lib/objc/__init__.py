@@ -61,7 +61,7 @@ del _runtime
 #
 # Interface builder support.
 #
-IBOutlet = ivar
+IBOutlet = lambda name: ivar(name, isOutlet=1)
 
 def IBAction(func):
     """

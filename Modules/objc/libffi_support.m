@@ -125,6 +125,7 @@ static  PyObject* array_types = NULL;
 		Py_DECREF(v);
 		return NULL;
 	}
+	//Py_DECREF(v);
 	return type;
 }
 
@@ -205,6 +206,7 @@ static  PyObject* struct_types = NULL;
 		Py_DECREF(v);
 		return NULL;
 	}
+	//Py_DECREF(v);
 	return type;
 }
 

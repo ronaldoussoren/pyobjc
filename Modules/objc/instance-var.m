@@ -65,18 +65,19 @@ ivar_descr_get(PyObjCInstanceVariable* self, PyObject* obj, PyObject* type)
 		    "objc_ivar descriptor for non-existing instance variable");
 		return NULL;
 	}	
-	
-	size = objc_sizeof_type(var->ivar_type);
-	if (size == -1) {
-		return NULL;
-	}
-	buf = alloca(size);
-	if (buf == NULL) {
-		return PyErr_NoMemory();
-	}
-	object_getInstanceVariable(objc, self->name, buf);
 
-	res = pythonify_c_value(var->ivar_type, buf);
+	if (self->isSlot) {
+		res = *(PyObject**)(((char*)objc) + var->ivar_offset);
+
+		if (res == NULL) {
+			ObjCErr_Set(PyExc_AttributeError,
+				"No attribute %s\n", var->ivar_name);
+		} else {
+			Py_INCREF(res);
+		}
+	} else {
+		res = pythonify_c_value(var->ivar_type, ((char*)objc) + var->ivar_offset );
+	}
 	return res;
 }
 
@@ -86,10 +87,9 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 	IVAR var;
 	id   objc;
 	int  size;
-	void* buf;
 	int res;
 
-	if (value == NULL) {
+	if (value == NULL && !self->isSlot) {
 		PyErr_SetString(PyExc_TypeError,
 			"Cannot delete Objective-C instance variables");
 		return -1;
@@ -114,19 +114,28 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 		return NULL;
 	}
 
-	var = class_getInstanceVariable([objc class], self->name);
-	if (var == NULL) {
-		PyErr_SetString(PyExc_RuntimeError, 
-		    "objc_ivar descriptor for non-existing instance variable");
-		return -1;
-	}	
-	
-	size = objc_sizeof_type(var->ivar_type);
-	if (size == -1) {
-		return -1;
+	if (self->ivar == NULL) {
+		var = class_getInstanceVariable([objc class], self->name);
+		if (var == NULL) {
+			PyErr_SetString(PyExc_RuntimeError, 
+			    "objc_ivar descriptor for non-existing instance "
+			    "variable");
+			return -1;
+		}	
+		self->ivar = var;
+	} else {
+		var = self->ivar;
 	}
+	
 
-	buf = alloca(size);
+	if (self->isSlot) {
+		PyObject** slotval = (PyObject**)(((char*)objc) + var->ivar_offset);
+		Py_XINCREF(value);
+		Py_XDECREF(*slotval);
+		*slotval = value;
+
+		return 0;
+	}
 
 	if (strcmp(var->ivar_type, "@") == 0) {
 		/* Automagically manage refcounting of instance variables */
@@ -137,9 +146,10 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 			return -1;
 		}
 
-		[new_value retain];
-
-		[*(id*)(((char*)objc)+var->ivar_offset) release];
+		if (!self->isOutlet) {
+			[new_value retain];
+			[*(id*)(((char*)objc)+var->ivar_offset) release];
+		}
 
 		*(id*)(((char*)objc)+var->ivar_offset) = new_value;
 		//XXX Crashme: NSLog(@"New value is %@", new_value);
@@ -147,6 +157,10 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 		return 0;
 	}
 
+	size = objc_sizeof_type(var->ivar_type);
+	if (size == -1) {
+		return -1;
+	}
 	res = depythonify_c_value(var->ivar_type, value, 
 		(void*)(((char*)objc)+var->ivar_offset));
 	if (res == -1) {
@@ -159,17 +173,26 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 static int
 ivar_init(PyObjCInstanceVariable* self, PyObject* args, PyObject* kwds)
 {
-static  char* keywords[] = { "name", "type", NULL };
+static  char* keywords[] = { "name", "type", "isOutlet", NULL };
 	char* name = NULL;
 	char* type = "@";
+	PyObject* isOutletObj = NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "s|s:objc_ivar",
-			keywords, &name, &type))
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "s|sO:objc_ivar",
+			keywords, &name, &type, &isOutletObj))
 		return -1;
 
 	self->name = strdup(name);	
 	self->type[0] = *type;
 	self->type[1] = '\0';
+	if (isOutletObj) {
+		self->isOutlet = PyObject_IsTrue(isOutletObj);
+	} else {
+		self->isOutlet = 0;
+	}
+	self->ivar = NULL;
+	self->isSlot = 0;
+
 	return 0;
 }
 
@@ -237,5 +260,8 @@ PyObjCInstanceVariable_New(char* name)
 	}
 	((PyObjCInstanceVariable*)result)->name = strdup(name);
 	((PyObjCInstanceVariable*)result)->type[0] = '\0';
+	((PyObjCInstanceVariable*)result)->isOutlet = 0;
+	((PyObjCInstanceVariable*)result)->isSlot = 0;
+	((PyObjCInstanceVariable*)result)->ivar = 0;
 	return result;
 }
