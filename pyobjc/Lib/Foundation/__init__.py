@@ -9,14 +9,14 @@ if _objc.platform == 'MACOSX':
     _objc.loadBundle(
         'Foundation',
         globals(),
-        bundle_identifier='com.apple.Foundation',
+        bundle_identifier=u'com.apple.Foundation',
     )
 else:
     _objc.loadBundle(
         'Foundation',
         globals(),
         bundle_path=_objc.pathForFramework(
-            '/System/Library/Frameworks/Foundation.framework',
+            u'/System/Library/Frameworks/Foundation.framework',
         ),
     )
 

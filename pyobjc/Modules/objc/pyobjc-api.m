@@ -27,7 +27,7 @@ static id python_to_id(PyObject* object)
 	id result;
 	int err;
 
-	err = depythonify_c_value("@", object, &result);
+	err = depythonify_c_value(@encode(id), object, &result);
 	if (err == -1) {
 		return nil;
 	}
@@ -39,7 +39,7 @@ static PyObject* id_to_python(id object)
 {
 	PyObject* result;
 
-	result = pythonify_c_value("@", &object);
+	result = pythonify_c_value(@encode(id), &object);
 	return result;
 }
 
@@ -113,19 +113,23 @@ struct pyobjc_api objc_api = {
 	PyObjCIMP_GetSelector,		/* imp_get_sel */
 	PyObjCErr_AsExc,		/* err_python_to_nsexception */
 	PyGILState_Ensure,		/* gilstate_ensure */
-	obj_is_uninitialized
+	obj_is_uninitialized,   /* obj_is_uninitialized */
+    PyObjCObject_Convert,   /* pyobjcobject_convert */
+    PyObjCSelector_Convert, /* pyobjcselector_convert */
+    PyObjCClass_Convert,    /* pyobjcclass_convert */
+    PyObjC_ConvertBOOL,     /* pyobjc_convertbool */
+    PyObjC_ConvertChar      /* pyobjc_convertchar */
 };
 
-int PyObjCAPI_Register(PyObject* module_dict)
+int PyObjCAPI_Register(PyObject* module)
 {
 	PyObject* API = PyCObject_FromVoidPtr(&objc_api, NULL);
 
 	if (API == NULL) return -1;
 
-	if (PyDict_SetItemString(module_dict, PYOBJC_API_NAME, API) < 0) {
+	if (PyModule_AddObject(module, PYOBJC_API_NAME, API) < 0) {
 		Py_DECREF(API);
 		return -1;
 	}
-	Py_DECREF(API); 
 	return 0;
 }

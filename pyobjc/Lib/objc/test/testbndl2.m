@@ -2,7 +2,7 @@
  *          THIS IS A GENERATED FILE DO NOT EDIT
  *
  * This file implements a number classes that are used to test calling methods,
- * both from Python to Objective-C and from Objective-C to Python. See 
+ * both from Python to Objective-C and from Objective-C to Python. See
  * test_methods.py for the actual tests.
  *
  */
@@ -30,13 +30,13 @@
 
 struct TestStruct1 {
     int i;
-    int d; 
+    int d;
     short  s[5];
 };
 
 struct TestStruct2 {
     int i;
-    double d; 
+    double d;
     short  s[5];
 };
 
@@ -19587,7 +19587,7 @@ static id arg2id(const char* argtype, void* argptr)
 @end // implementation PyObjC_TestClass2
 
 
-/* 
+/*
  * Some glue to make this a valid Python extension module
  */
 

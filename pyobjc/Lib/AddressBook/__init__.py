@@ -17,14 +17,14 @@ if _objc.platform == 'MACOSX':
     _objc.loadBundle(
         "AddressBook",
         globals(),
-        bundle_identifier='com.apple.AddressBook.framework',
+        bundle_identifier=u'com.apple.AddressBook.framework',
     )
 else:
     _objc.loadBundle(
         "AddressBook",
         globals(),
         bundle_path=_objc.pathForFramework(
-            "/System/Library/Frameworks/AddressBook.framework",
+            u"/System/Library/Frameworks/AddressBook.framework",
         ),
     )
 

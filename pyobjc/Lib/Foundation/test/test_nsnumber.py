@@ -10,8 +10,8 @@ def stripDocType(val):
     on MacOS X 10.1 are slightly different from the ones on MacOS X 10.2 (
     different DOCTYPE and version).
     """
-    r =  re.sub('<!DOCTYPE [^>]*>', '<!DOCTYPE>', val)
-    return r.replace('version="0.9"', 'version="1.0"')
+    r =  re.sub(u'<!DOCTYPE [^>]*>', u'<!DOCTYPE>', val)
+    return r.replace(u'version="0.9"', u'version="1.0"')
 
 
 if 0:
@@ -67,7 +67,7 @@ else:
             self.assertEquals(NSNumber.numberWithInt_(0), 0)
             self.assertEquals(NSNumber.numberWithFloat_(0.0), 0,0)
 
-    PLIST="""\
+    PLIST=u"""\
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -92,14 +92,14 @@ if objc.platform == 'MACOSX':
             d = NSMutableDictionary.dictionary()
 
             # Python 2.3 only...
-            d['plain'] = 1
-            d['bool'] = objc.YES
+            d[u'plain'] = 1
+            d[u'bool'] = objc.YES
 
             self.assertEquals(d.writeToFile_atomically_(
-                "/tmp/pyobjctest.plist", 0), 1)
+                u"/tmp/pyobjctest.plist", 0), 1)
 
-            fd = open('/tmp/pyobjctest.plist', 'ru')
-            data = fd.read()
+            fd = open(u'/tmp/pyobjctest.plist', 'ru')
+            data = fd.read().decode('utf8')
             fd.close()
 
             self.assertEquals(stripDocType(data), stripDocType(PLIST))
@@ -107,14 +107,14 @@ if objc.platform == 'MACOSX':
         def testPropertyList2(self):
             d = NSMutableDictionary.dictionary()
 
-            d['plain'] = NSNumber.numberWithLong_(1)
-            d['bool'] = NSNumber.numberWithBool_(1)
+            d[u'plain'] = NSNumber.numberWithLong_(1)
+            d[u'bool'] = NSNumber.numberWithBool_(1)
 
             self.assertEquals(d.writeToFile_atomically_(
-                "/tmp/pyobjctest.plist", 0), 1)
+                u"/tmp/pyobjctest.plist", 0), 1)
 
-            fd = open('/tmp/pyobjctest.plist', 'ru')
-            data = fd.read()
+            fd = open(u'/tmp/pyobjctest.plist', 'ru')
+            data = fd.read().decode('utf8')
             fd.close()
 
             self.assertEquals(stripDocType(data), stripDocType(PLIST))
@@ -125,7 +125,7 @@ class TestDecimalNumber (unittest.TestCase):
     # TODO: Add tests for using decimal numbers (addition, multiplication, ...)
 
     def testProxy (self):
-        o = NSDecimalNumber.decimalNumberWithString_("1.00")
+        o = NSDecimalNumber.decimalNumberWithString_(u"1.00")
 
         self.assert_(isinstance(o, NSDecimalNumber))
 

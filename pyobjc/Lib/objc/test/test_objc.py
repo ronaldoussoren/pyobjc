@@ -23,6 +23,8 @@ class TestClassLookup(unittest.TestCase):
             objc.runtime.ThisClassReallyShouldNotExist
         except AttributeError:
             pass
+        except AttributeError:
+            pass
         else:
             fail("objc.runtime.ThisClassReallyShouldNotExist should have thrown a nosuchclass_error.  It didn't.")
 
@@ -66,7 +68,7 @@ class TestMethodInvocation(unittest.TestCase):
         self.assertEqual(type(self.NSObjectInstance).pyobjc_instanceMethods.self(self.NSObjectInstance), self.NSObjectInstance.self())
 
     def testVarargsInvocation(self):
-        objc.runtime.NSArray.arrayWithObjects_("foo", "bar", None)
+        objc.runtime.NSArray.arrayWithObjects_(u"foo", u"bar", None)
 
 class TestClassDict(unittest.TestCase):
     def testDict(self):
@@ -94,7 +96,7 @@ class TestPickle(unittest.TestCase):
 
 class TestDescription (unittest.TestCase):
     def testSimple(self):
-        TESTS   = ['a'], 'hello', 2
+        TESTS   = [u'a'], u'hello', 2
         EXPECTS = u'(a)', u'hello', u'2'
         for obj,expect in zip(TESTS, EXPECTS):
             self.assertEquals(expect, PyObjC_TestClass4.fetchObjectDescription_(obj))

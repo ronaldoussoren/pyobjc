@@ -43,7 +43,7 @@ if "%02d%02d"%(sys.version_info[:2]) >= '0203':
             myObj = PyObjCTestThreadRunnerString.alloc().init()
 
             objc.runtime.NSThread.detachNewThreadSelector_toTarget_withObject_(
-                    'run:', myObj, "hello world")
+                    'run:', myObj, u"hello world")
 
             time.sleep(2)
             self.assertEquals(myObj.storage[0], u"hello world")

@@ -126,7 +126,7 @@ static inline int add_string(PyObject* d, char* name, NSString* value)
 	int res;
 	PyObject* v;
 
-	v = PyObjC_ObjCToPython("@", &value);
+	v = PyObjC_ObjCToPython(@encode(id), &value);
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);
@@ -139,7 +139,7 @@ static inline int add_id(PyObject* d, char* name, id value)
 	int res;
 	PyObject* v;
 
-	v = PyObjC_ObjCToPython("@", &value);
+	v = PyObjC_ObjCToPython(@encode(id), &value);
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);

@@ -461,9 +461,9 @@ class PyOCTestSimpleArguments(unittest.TestCase):
 
     def testIDPython(self):
         # Test a Python object as the argument
-        s = self.obj.idArg_("hello")
+        s = self.obj.idArg_(u"hello")
         self.assertEquals(len(s), 1)
-        self.assertEquals(s[0], "hello")
+        self.assertEquals(s[0], u"hello")
 
     def testIDOC(self):
         # Test an Objective-C object as the argument
@@ -474,7 +474,7 @@ class PyOCTestSimpleArguments(unittest.TestCase):
         #o = c.hostWithAddress_('127.0.0.1')
 
         c = objc.lookUpClass("NSScanner")
-        o = c.scannerWithString_("hello world")
+        o = c.scannerWithString_(u"hello world")
         s = self.obj.idArg_(o)
         self.assertEquals(len(s), 1)
         self.assert_(s[0] is o)
@@ -728,7 +728,7 @@ ULONGLONG_NUMBERS=[0, 42, 18446744073709551615L, 18446744073709551616L, "hello",
 
 FLOAT_NUMBERS = [ makeCFloat(0.1), makeCFloat(100.0) ]
 DOUBLE_NUMBERS = [ 1.5, 3.5, 1e10, 1.99e10 ]
-OBJECTS = [ "hello", 1.0, range(4), lambda x: 10 ]
+OBJECTS = [ u"hello", 1.0, range(4), lambda x: 10 ]
 DUMMY_OBJECTS = [ (1, 1), (-10, -10), (-4, -5), (0, 0), (10, 20) ]
 DUMMY2_OBJECTS = [ ((1, 2, 3, 4),), ((-9, -8, -7, -6),)]
 POINTS=[ (1.0, 2.0), (1e10, 2e10), (-0.5, 0.5) ]

@@ -18,15 +18,15 @@ from  objc.test import ctests
 class KeyValueClass5 (object):
     def __init__(self):
         self.key3 = 3
-        self._key4 = "4"
-        self.__private = 'private'
+        self._key4 = u"4"
+        self.__private = u'private'
 
     def addMultiple(self):
         self.multiple = KeyValueClass5()
         self.multiple.level2 = KeyValueClass5()
         self.multiple.level2.level3 = KeyValueClass5()
-        self.multiple.level2.level3.keyA = "hello"
-        self.multiple.level2.level3.keyB = "world"
+        self.multiple.level2.level3.keyA = u"hello"
+        self.multiple.level2.level3.keyB = u"world"
 
     def getKey1(self):
         return 1
@@ -42,10 +42,10 @@ class KeyValueClass5 (object):
 
 
 class KeyValueClass6 (object):
-    __slots__ = ('foo', )
+    __slots__ = (u'foo', )
 
     def __init__(self):
-        self.foo = "foobar"
+        self.foo = u"foobar"
 
     # Definition for property 'bar'. Use odd names for the methods
     # because the KeyValue support recognizes the usual names.
@@ -57,22 +57,22 @@ class KeyValueClass6 (object):
 
     bar = property(read_bar, write_bar)
 
-    roprop = property(lambda self: "read-only")
+    roprop = property(lambda self: u"read-only")
 
 class KeyValueClass7 (objc.runtime.NSObject):
     def init(self):
         self = super(KeyValueClass7, self).init()
         self.key3 = 3
-        self._key4 = "4"
-        self.__private = 'private'
+        self._key4 = u"4"
+        self.__private = u'private'
         return self
 
     def addMultiple(self):
         self.multiple = KeyValueClass5()
         self.multiple.level2 = KeyValueClass5()
         self.multiple.level2.level3 = KeyValueClass5()
-        self.multiple.level2.level3.keyA = "hello"
-        self.multiple.level2.level3.keyB = "world"
+        self.multiple.level2.level3.keyA = u"hello"
+        self.multiple.level2.level3.keyB = u"world"
 
     def getKey1(self):
         return 1
@@ -87,14 +87,14 @@ class KeyValueClass7 (objc.runtime.NSObject):
         self.key5 = value * 5
 
     def keyM(self):
-        return "m"
+        return u"m"
 
 class KeyValueClass8 (objc.runtime.NSObject):
     __slots__ = ('foo', )
 
     def init(self):
         self = super(KeyValueClass8, self).init()
-        self.foo = "foobar"
+        self.foo = u"foobar"
         return self
 
     # Definition for property 'bar'. Use odd names for the methods
@@ -107,7 +107,7 @@ class KeyValueClass8 (objc.runtime.NSObject):
 
     bar = property(read_bar, write_bar)
 
-    roprop = property(lambda self: "read-only")
+    roprop = property(lambda self: u"read-only")
 
 
 
@@ -117,78 +117,78 @@ class PyKeyValueCoding (unittest.TestCase):
         # key-value coding.
 
         o = KeyValueClass5()
-        self.assertRaises(KeyError, getKey, o, "private")
+        self.assertRaises(KeyError, getKey, o, u"private")
 
     def testValueForKey(self):
         o = KeyValueClass5()
         o.addMultiple()
 
-        self.assertEquals(getKey(o, "key1"), 1)
-        self.assertEquals(getKey(o, "key2"), 2)
-        self.assertEquals(getKey(o, "key3"), 3)
-        self.assertEquals(getKey(o, "key4"), "4")
-        self.assertEquals(getKey(o, "multiple"), o.multiple)
+        self.assertEquals(getKey(o, u"key1"), 1)
+        self.assertEquals(getKey(o, u"key2"), 2)
+        self.assertEquals(getKey(o, u"key3"), 3)
+        self.assertEquals(getKey(o, u"key4"), u"4")
+        self.assertEquals(getKey(o, u"multiple"), o.multiple)
 
-        self.assertRaises(KeyError, getKey, o, "nokey")
+        self.assertRaises(KeyError, getKey, o, u"nokey")
 
     def testValueForKey2(self):
         o = KeyValueClass6()
 
-        self.assertEquals(getKey(o, "foo"), "foobar")
-        self.assertEquals(getKey(o, "bar"), "foobarfoobar")
-        self.assertEquals(getKey(o, "roprop"), "read-only")
+        self.assertEquals(getKey(o, u"foo"), u"foobar")
+        self.assertEquals(getKey(o, u"bar"), u"foobarfoobar")
+        self.assertEquals(getKey(o, u"roprop"), u"read-only")
 
     def testValueForKeyPath(self):
         o = KeyValueClass5()
         o.addMultiple()
 
-        self.assertEquals(getKeyPath(o, "multiple"), o.multiple)
-        self.assertEquals(getKeyPath(o, "multiple.level2"), o.multiple.level2)
-        self.assertEquals(getKeyPath(o, "multiple.level2.level3.keyA"), o.multiple.level2.level3.keyA)
-        self.assertEquals(getKeyPath(o, "multiple.level2.level3.keyB"), o.multiple.level2.level3.keyB)
+        self.assertEquals(getKeyPath(o, u"multiple"), o.multiple)
+        self.assertEquals(getKeyPath(o, u"multiple.level2"), o.multiple.level2)
+        self.assertEquals(getKeyPath(o, u"multiple.level2.level3.keyA"), o.multiple.level2.level3.keyA)
+        self.assertEquals(getKeyPath(o, u"multiple.level2.level3.keyB"), o.multiple.level2.level3.keyB)
 
-        self.assertRaises(KeyError, getKeyPath, o, "multiple.level2.nokey")
+        self.assertRaises(KeyError, getKeyPath, o, u"multiple.level2.nokey")
 
     def testTakeValueForKey(self):
         o = KeyValueClass5()
 
         self.assertEquals(o.key3, 3)
-        setKey(o, 'key3', 'drie')
-        self.assertEquals(o.key3, "drie")
+        setKey(o, u'key3', u'drie')
+        self.assertEquals(o.key3, u"drie")
 
-        self.assertEquals(o._key4, "4")
-        setKey(o, 'key4', 'vier')
-        self.assertEquals(o._key4, "viervierviervier")
+        self.assertEquals(o._key4, u"4")
+        setKey(o, u'key4', u'vier')
+        self.assertEquals(o._key4, u"viervierviervier")
 
         o.key5 = 1
-        setKey(o, 'key5', 'V')
-        self.assertEquals(o.key5, "VVVVV")
+        setKey(o, u'key5', u'V')
+        self.assertEquals(o.key5, u"VVVVV")
 
-        self.assert_(not hasattr(o, 'key9'))
-        setKey(o, 'key9', 'IX')
-        self.assert_(hasattr(o, 'key9'))
-        self.assertEquals(o.key9, 'IX')
+        self.assert_(not hasattr(o, u'key9'))
+        setKey(o, u'key9', u'IX')
+        self.assert_(hasattr(o, u'key9'))
+        self.assertEquals(o.key9, u'IX')
 
     def testTakeValueForKey2(self):
         o = KeyValueClass6()
 
-        self.assertEquals(o.foo, "foobar")
-        setKey(o, 'foo', 'FOO')
-        self.assertEquals(o.foo, "FOO")
+        self.assertEquals(o.foo, u"foobar")
+        setKey(o, u'foo', u'FOO')
+        self.assertEquals(o.foo, u"FOO")
 
-        self.assertRaises(KeyError, setKey, o, 'key9', 'IX')
+        self.assertRaises(KeyError, setKey, o, u'key9', u'IX')
 
     def testTakeValueForKeyPath(self):
         o = KeyValueClass5()
         o.addMultiple()
 
-        self.assertEquals(o.multiple.level2.level3.keyA, "hello")
-        self.assertEquals(o.multiple.level2.level3.keyB, "world")
+        self.assertEquals(o.multiple.level2.level3.keyA, u"hello")
+        self.assertEquals(o.multiple.level2.level3.keyB, u"world")
 
-        setKeyPath(o, "multiple.level2.level3.keyA", "KeyAValue")
-        self.assertEquals(o.multiple.level2.level3.keyA, "KeyAValue")
+        setKeyPath(o, u"multiple.level2.level3.keyA", u"KeyAValue")
+        self.assertEquals(o.multiple.level2.level3.keyA, u"KeyAValue")
 
-        setKeyPath(o, "multiple.level2.level3.keyB", 9.999)
+        setKeyPath(o, u"multiple.level2.level3.keyB", 9.999)
         self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
 
 
@@ -198,25 +198,25 @@ class OcKeyValueCoding (unittest.TestCase):
         # key-value coding.
 
         o = KeyValueClass7.alloc().init()
-        self.assertRaises(KeyError, getKey, o, "private")
+        self.assertRaises(KeyError, getKey, o, u"private")
 
     def testArrayValueForKey(self):
         o = KeyValueClass7.alloc().init()
         o.addMultiple()
 
-        self.assertEquals(getKey(o, "key1"), 1)
-        self.assertEquals(getKey(o, "key2"), 2)
-        self.assertEquals(getKey(o, "key3"), 3)
-        self.assertEquals(getKey(o, "key4"), "4")
-        self.assertEquals(getKey(o, "multiple"), o.multiple)
+        self.assertEquals(getKey(o, u"key1"), 1)
+        self.assertEquals(getKey(o, u"key2"), 2)
+        self.assertEquals(getKey(o, u"key3"), 3)
+        self.assertEquals(getKey(o, u"key4"), u"4")
+        self.assertEquals(getKey(o, u"multiple"), o.multiple)
 
-        self.assertEquals(o.valueForKey_("keyM"), "m")
+        self.assertEquals(o.valueForKey_(u"keyM"), u"m")
 
         a = objc.runtime.NSMutableArray.array()
         a.addObject_(o)
-        a.addObject_({"keyM": "5"})
-        a.addObject_(objc.runtime.NSDictionary.dictionaryWithObject_forKey_("foo", "keyM"))
-        b = objc.runtime.NSMutableArray.arrayWithObjects_("m","5", "foo", None)
+        a.addObject_({u"keyM": u"5"})
+        a.addObject_(objc.runtime.NSDictionary.dictionaryWithObject_forKey_(u"foo", u"keyM"))
+        b = objc.runtime.NSMutableArray.arrayWithObjects_(u"m", u"5", u"foo", None)
 
 
         # See Modules/objc/unittest.m for an explantion of this test
@@ -227,108 +227,108 @@ class OcKeyValueCoding (unittest.TestCase):
             arrayObservingWorks = False
 
         if arrayObservingWorks:
-            self.assertEquals(a.valueForKey_("keyM"), b)
+            self.assertEquals(a.valueForKey_(u"keyM"), b)
         else:
-            self.assertRaises(KeyError, a.valueForKey_, "keyM")
+            self.assertRaises(KeyError, a.valueForKey_, u"keyM")
 
-        self.assertRaises(KeyError, getKey, o, "nokey")
+        self.assertRaises(KeyError, getKey, o, u"nokey")
 
     def testValueForKey2(self):
         o = KeyValueClass8.alloc().init()
 
-        self.assertEquals(getKey(o, "foo"), "foobar")
-        self.assertEquals(getKey(o, "bar"), "foobarfoobar")
-        self.assertEquals(getKey(o, "roprop"), "read-only")
+        self.assertEquals(getKey(o, u"foo"), u"foobar")
+        self.assertEquals(getKey(o, u"bar"), u"foobarfoobar")
+        self.assertEquals(getKey(o, u"roprop"), u"read-only")
 
     def testValueForKeyPath(self):
         o = KeyValueClass7.alloc().init()
         o.addMultiple()
 
-        self.assertEquals(getKeyPath(o, "multiple"), o.multiple)
-        self.assertEquals(getKeyPath(o, "multiple.level2"), o.multiple.level2)
-        self.assertEquals(getKeyPath(o, "multiple.level2.level3.keyA"), o.multiple.level2.level3.keyA)
-        self.assertEquals(getKeyPath(o, "multiple.level2.level3.keyB"), o.multiple.level2.level3.keyB)
+        self.assertEquals(getKeyPath(o, u"multiple"), o.multiple)
+        self.assertEquals(getKeyPath(o, u"multiple.level2"), o.multiple.level2)
+        self.assertEquals(getKeyPath(o, u"multiple.level2.level3.keyA"), o.multiple.level2.level3.keyA)
+        self.assertEquals(getKeyPath(o, u"multiple.level2.level3.keyB"), o.multiple.level2.level3.keyB)
 
-        self.assertRaises(KeyError, getKeyPath, o, "multiple.level2.nokey")
+        self.assertRaises(KeyError, getKeyPath, o, u"multiple.level2.nokey")
 
     def testTakeValueForKey(self):
         o = KeyValueClass7.alloc().init()
 
         self.assertEquals(o.key3, 3)
-        setKey(o, 'key3', 'drie')
-        self.assertEquals(o.key3, "drie")
+        setKey(o, u'key3', u'drie')
+        self.assertEquals(o.key3, u"drie")
 
-        self.assertEquals(o._key4, "4")
-        setKey(o, 'key4', 'vier')
-        self.assertEquals(o._key4, "viervierviervier")
+        self.assertEquals(o._key4, u"4")
+        setKey(o, u'key4', u'vier')
+        self.assertEquals(o._key4, u"viervierviervier")
 
         o.key5 = 1
-        setKey(o, 'key5', 'V')
-        self.assertEquals(o.key5, "VVVVV")
+        setKey(o, u'key5', u'V')
+        self.assertEquals(o.key5, u"VVVVV")
 
-        self.assert_(not hasattr(o, 'key9'))
-        setKey(o, 'key9', 'IX')
-        self.assert_(hasattr(o, 'key9'))
-        self.assertEquals(o.key9, 'IX')
+        self.assert_(not hasattr(o, u'key9'))
+        setKey(o, u'key9', u'IX')
+        self.assert_(hasattr(o, u'key9'))
+        self.assertEquals(o.key9, u'IX')
 
     def testTakeValueForKey2(self):
         o = KeyValueClass8.alloc().init()
 
-        self.assertEquals(o.foo, "foobar")
-        setKey(o, 'foo', 'FOO')
-        self.assertEquals(o.foo, "FOO")
+        self.assertEquals(o.foo, u"foobar")
+        setKey(o, u'foo', u'FOO')
+        self.assertEquals(o.foo, u"FOO")
 
-        self.assertRaises(KeyError, setKey, o, 'key9', 'IX')
+        self.assertRaises(KeyError, setKey, o, u'key9', u'IX')
 
     def testTakeValueForKeyPath(self):
         o = KeyValueClass7.alloc().init()
         o.addMultiple()
 
-        self.assertEquals(o.multiple.level2.level3.keyA, "hello")
-        self.assertEquals(o.multiple.level2.level3.keyB, "world")
+        self.assertEquals(o.multiple.level2.level3.keyA, u"hello")
+        self.assertEquals(o.multiple.level2.level3.keyB, u"world")
 
-        setKeyPath(o, "multiple.level2.level3.keyA", "KeyAValue")
-        self.assertEquals(o.multiple.level2.level3.keyA, "KeyAValue")
+        setKeyPath(o, u"multiple.level2.level3.keyA", u"KeyAValue")
+        self.assertEquals(o.multiple.level2.level3.keyA, u"KeyAValue")
 
-        setKeyPath(o, "multiple.level2.level3.keyB", 9.999)
+        setKeyPath(o, u"multiple.level2.level3.keyB", 9.999)
         self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
 
 class MethodsAsKeys (unittest.TestCase):
 
     def testStrCap (self):
-        s = "hello"
+        s = u"hello"
 
-        self.assertEquals(getKey(s, 'capitalize'), "Hello")
+        self.assertEquals(getKey(s, u'capitalize'), u"Hello")
 
 
 class AbstractKVCodingTest:
     def testBaseValueForKey(self):
         self.assertEquals(DirectString,
-            getKey( self.base, "directString"))
+            getKey( self.base, u"directString"))
         self.assertEquals(IndirectString,
-            getKey( self.base, "indirectString"))
+            getKey( self.base, u"indirectString"))
         self.assertEquals(DirectNumber,
-            getKey( self.base, "directNumber"))
+            getKey( self.base, u"directNumber"))
         self.assertEquals(IndirectNumber,
-            getKey( self.base, "indirectNumber"))
+            getKey( self.base, u"indirectNumber"))
 
     def testPathValueForKey(self):
         self.assertEquals(DirectString,
-            getKeyPath( self.path, "directHead.directString"))
+            getKeyPath( self.path, u"directHead.directString"))
         self.assertEquals(DirectString,
-            getKeyPath( self.path, "indirectHead.directString"))
+            getKeyPath( self.path, u"indirectHead.directString"))
         self.assertEquals(IndirectString,
-            getKeyPath( self.path, "directHead.indirectString"))
+            getKeyPath( self.path, u"directHead.indirectString"))
         self.assertEquals(IndirectString,
-            getKeyPath( self.path, "indirectHead.indirectString"))
+            getKeyPath( self.path, u"indirectHead.indirectString"))
         self.assertEquals(DirectNumber,
-            getKeyPath( self.path, "directHead.directNumber"))
+            getKeyPath( self.path, u"directHead.directNumber"))
         self.assertEquals(DirectNumber,
-            getKeyPath( self.path, "indirectHead.directNumber"))
+            getKeyPath( self.path, u"indirectHead.directNumber"))
         self.assertEquals(IndirectNumber,
-            getKeyPath( self.path, "directHead.indirectNumber"))
+            getKeyPath( self.path, u"directHead.indirectNumber"))
         self.assertEquals(IndirectNumber,
-            getKeyPath( self.path, "indirectHead.indirectNumber"))
+            getKeyPath( self.path, u"indirectHead.indirectNumber"))
 
 class TestObjCKVCoding(AbstractKVCodingTest, unittest.TestCase):
     def setUp(self):
@@ -352,19 +352,19 @@ class TestPythonSubOverObjC(AbstractKVCodingTest, unittest.TestCase):
 
     def testOverValueKey(self):
         self.assertEquals(DirectString,
-            getKey( self.base, "overDirectString"))
+            getKey( self.base, u"overDirectString"))
         self.assertEquals(IndirectString,
-            getKey( self.base, "overIndirectString"))
+            getKey( self.base, u"overIndirectString"))
 
     def testOverValueKeyPath(self):
         self.assertEquals(DirectString,
-            getKeyPath( self.path, "overDirectHead.directString"))
+            getKeyPath( self.path, u"overDirectHead.directString"))
         self.assertEquals(DirectString,
-            getKeyPath( self.path, "overIndirectHead.directString"))
+            getKeyPath( self.path, u"overIndirectHead.directString"))
         self.assertEquals(IndirectString,
-            getKeyPath( self.path, "overDirectHead.indirectString"))
+            getKeyPath( self.path, u"overDirectHead.indirectString"))
         self.assertEquals(IndirectString,
-            getKeyPath( self.path, "overIndirectHead.indirectString"))
+            getKeyPath( self.path, u"overIndirectHead.indirectString"))
 
 if __name__ == "__main__":
     unittest.main()

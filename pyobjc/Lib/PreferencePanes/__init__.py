@@ -14,14 +14,14 @@ if _objc.platform == 'MACOSX':
     _objc.loadBundle(
         "PreferencePanes",
         globals(),
-        bundle_identifier='com.apple.frameworks.preferencepanes',
+        bundle_identifier=u'com.apple.frameworks.preferencepanes',
     )
 else:
     _objc.loadBundle(
         "PreferencePanes",
         globals(),
         bundle_path=_objc.pathForFramework(
-            "/System/Library/Frameworks/PreferencePanes.framework",
+            u"/System/Library/Frameworks/PreferencePanes.framework",
         ),
     )
 

@@ -46,8 +46,8 @@ class TestInstanceVariables(unittest.TestCase):
         self.failUnless(self.object.idVar is o)
         self.failUnless(self.object.idVar2 is o)
 
-        self.object.idVar = "hello"
-        self.assertEquals(self.object.idVar, "hello")
+        self.object.idVar = u"hello"
+        self.assertEquals(self.object.idVar, u"hello")
 
     def testInt(self):
         # Check that we can set and query attributes of type 'int'
@@ -63,7 +63,7 @@ class TestInstanceVariables(unittest.TestCase):
 
         # Can't rely on this for doubles...
         #self.assertEquals(self.object.doubleVar, 0.0)
-        self.assertRaises(ValueError, lambda x: setattr(self.object, 'doubleVar', x), "h")
+        self.assertRaises(ValueError, lambda x: setattr(self.object, 'doubleVar', x), u"h")
         self.object.doubleVar = 42.0
         self.assertAlmostEquals(self.object.doubleVar, 42.0)
 

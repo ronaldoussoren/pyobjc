@@ -10,21 +10,6 @@
 #import <Foundation/NSBundle.h>
 #import <Foundation/NSURL.h>
 
-/* XXX: this should be somewhere else */
-static int
-PyObjCObject_Convert(PyObject* object, void* pvar)
-{
-	id* pid = (id*)pvar;
-
-	*pid = PyObjC_PythonToId(object);
-
-	if (PyErr_Occurred()) {
-		return 0;
-	} 
-	return 1;
-}
-
-
 static CFBundleRef 
 NSBundle2CFBundle(NSBundle* bundle)
 {
@@ -57,7 +42,7 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 
 
 	NS_DURING
-		cfBundle = NSBundle2CFBundle(bundle);	
+		cfBundle = NSBundle2CFBundle(bundle);
 	
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
@@ -154,7 +139,7 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 
 
 	NS_DURING
-		cfBundle = NSBundle2CFBundle(bundle);	
+		cfBundle = NSBundle2CFBundle(bundle);
 	
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
@@ -180,7 +165,6 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 		char*		signature;
 		NSString*	name;
 		PyObject*	doc;
-		PyObject*	py_name;
 
 		if (!PyTuple_Check(item)) {
 			PyErr_Format(PyExc_TypeError,
@@ -191,18 +175,11 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 		}
 
 		doc = NULL;
-		if (!PyArg_ParseTuple(item, "Ss|S:functionInfo", 
-				&py_name, &signature, &doc)){
+		if (!PyArg_ParseTuple(item, "O&s|s:functionInfo", 
+				PyObjCObject_Convert, &name, &signature, &doc)){
 			Py_DECREF(seq);
 			return NULL;
 		}
-
-		name = PyObjC_PythonToId(py_name);
-		if (name == NULL) {
-			Py_DECREF(seq);
-			return NULL;
-		}
-
 
 		if (![name isKindOfClass:[NSString class]]) {
 			PyErr_SetString(PyExc_TypeError,
@@ -221,6 +198,7 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 				return NULL;
 			}
 		} else {
+			PyObject* py_name = PyObjC_IdToPython(name);
 			PyObject* pyVal = PyObjCFunc_New(
 					py_name,
 					value,
@@ -228,15 +206,18 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 					doc);
 			if (pyVal == NULL) {
 				Py_DECREF(seq);
+				Py_DECREF(py_name);
 				return NULL;
 			}
 
 			if (PyDict_SetItem(module_globals, 
 					py_name, pyVal) == -1) {
 				Py_DECREF(seq);
+				Py_DECREF(py_name);
 				Py_DECREF(pyVal);
 				return NULL;
 			}
+			Py_DECREF(py_name);
 			Py_DECREF(pyVal);
 
 

@@ -15,26 +15,26 @@ if _objc.platform == 'MACOSX':
     _objc.loadBundle(
         "SecurityInterface",
         globals(),
-        bundle_identifier='com.apple.securityinterface',
+        bundle_identifier=u'com.apple.securityinterface',
     )
     _objc.loadBundle(
         "SecurityInterface",
         globals(),
-        bundle_identifier='com.apple.securityfoundation',
+        bundle_identifier=u'com.apple.securityfoundation',
     )
 else:
     _objc.loadBundle(
         "SecurityInterface",
         globals(),
         bundle_path=_objc.pathForFramework(
-            "/System/Library/Frameworks/SecurityFoundation.framework",
+            u"/System/Library/Frameworks/SecurityFoundation.framework",
         )
     )
     _objc.loadBundle(
         "SecurityInterface",
         globals(),
         bundle_path=_objc.pathForFramework(
-            "/System/Library/Frameworks/SecurityInterface.framework",
+            u"/System/Library/Frameworks/SecurityInterface.framework",
         ),
     )
 

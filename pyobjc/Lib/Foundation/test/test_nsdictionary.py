@@ -13,7 +13,7 @@ from Foundation import *
 class TestNSDictionarySubclassing(unittest.TestCase):
     # These tests seem to be specific for MacOSX
     def testExceptionInInit(self):
-        if sys.platform != 'darwin': return
+        if objc.platform != 'MACOSX': return
 
         class DictTestExceptionClass (NSDictionary):
             pass
@@ -35,7 +35,7 @@ class TestNSDictionarySubclassing(unittest.TestCase):
             del warnings.filters[0]
 
     def testAnotherExceptionInInit(self):
-        if sys.platform != 'darwin': return
+        if objc.platform != 'MACOSX': return
 
         class DictTestExceptionClass2 (NSDictionary):
             def initWithObjects_forKeys_count_(self, o, k, c):
@@ -56,7 +56,7 @@ class TestNSDictionarySubclassing(unittest.TestCase):
 
 
     def testExceptionInInitClsMeth(self):
-        if sys.platform != 'darwin': return
+        if objc.platform != 'MACOSX': return
 
         class DictTestExceptionClass3 (NSDictionary):
             def initWithObjects_forKeys_count_(self, o, k, c):
@@ -87,47 +87,47 @@ class TestNSDictionaryInteraction(unittest.TestCase):
 
     def testBasicInteraction(self):
         d = NSMutableDictionary.dictionary()
-        d['a'] = "foo"
-        d['b'] = "bar"
+        d[u'a'] = u"foo"
+        d[u'b'] = u"bar"
 
-        self.assertEqual(d['a'], "foo", "Failed to retrieve the same thing that was put into the dict.")
+        self.assertEqual(d[u'a'], u"foo", "Failed to retrieve the same thing that was put into the dict.")
         try:
-            d['c']
+            d[u'c']
             self.fail("Should have raised...")
         except KeyError:
             pass
 
     def testPythonIteraction(self):
         d = NSMutableDictionary.dictionary()
-        d['a'] = "foo"
-        d['b'] = "bar"
+        d[u'a'] = u"foo"
+        d[u'b'] = u"bar"
 
         k = list(d.keys())
         k.sort()
-        self.assert_(k == ['a', 'b'])
+        self.assert_(k == [u'a', u'b'])
 
         k = list(d.values())
         k.sort()
-        self.assert_(k == ['bar', 'foo'])
+        self.assert_(k == [u'bar', u'foo'])
 
         k = list(d.items())
         k.sort()
-        self.assert_(k == [('a', 'foo'), ('b', 'bar') ])
+        self.assert_(k == [(u'a', u'foo'), (u'b', u'bar') ])
 
 
     def testIn(self):
         d = NSMutableDictionary.dictionary()
-        d['a'] = "foo"
-        d['b'] = "bar"
-        d[1] = "baz"
-        d[0] = "bob"
+        d[u'a'] = u"foo"
+        d[u'b'] = u"bar"
+        d[1] = u"baz"
+        d[0] = u"bob"
         # d[-1] = None -- this fails because the bridge doesn't proxy py(None) to objc(NSNull)... not sure if it should
 
-        self.assert_( 'a' in d )
+        self.assert_( u'a' in d )
         self.assert_( 1 in d )
         # self.assert_( -1 in d )
         # self.assert_( d[-1] is None )
-        self.assert_( 'q' not in d )
+        self.assert_( u'q' not in d )
 
         for k in d.allKeys():
             self.assertEqual( d.objectForKey_( k ), d[k] )
@@ -135,16 +135,16 @@ class TestNSDictionaryInteraction(unittest.TestCase):
         for k in d:
             self.assertEqual( d.objectForKey_( k ), d[k] )
 
-        del d['a']
-        self.assert_( 'a' not in d )
+        del d[u'a']
+        self.assert_( u'a' not in d )
 
     def test_varargConstruction(self):
-        u = NSDictionary.dictionaryWithObjects_forKeys_([1,2,3,4], ['one', 'two', 'three', 'four'])
-        v = NSDictionary.alloc().initWithObjects_forKeys_([1,2,3,4], ['one', 'two', 'three', 'four'])
-        w = NSDictionary.dictionaryWithObjects_forKeys_count_([1,2,3,4,5], ['one', 'two', 'three', 'four', 'five'], 4)
-        x = NSDictionary.alloc().initWithObjects_forKeys_count_([1,2,3,4,5], ['one', 'two', 'three', 'four', 'five'], 4)
-        y = NSDictionary.dictionaryWithObjectsAndKeys_(1, 'one', 2, 'two', 3, 'three', 4, 'four', None)
-        z = NSDictionary.alloc().initWithObjectsAndKeys_(1, 'one', 2, 'two', 3, 'three', 4, 'four', None)
+        u = NSDictionary.dictionaryWithObjects_forKeys_([1,2,3,4], [u'one', u'two', u'three', u'four'])
+        v = NSDictionary.alloc().initWithObjects_forKeys_([1,2,3,4], [u'one', u'two', u'three', u'four'])
+        w = NSDictionary.dictionaryWithObjects_forKeys_count_([1,2,3,4,5], [u'one', u'two', u'three', u'four', u'five'], 4)
+        x = NSDictionary.alloc().initWithObjects_forKeys_count_([1,2,3,4,5], [u'one', u'two', u'three', u'four', u'five'], 4)
+        y = NSDictionary.dictionaryWithObjectsAndKeys_(1, u'one', 2, u'two', 3, u'three', 4, u'four', None)
+        z = NSDictionary.alloc().initWithObjectsAndKeys_(1, u'one', 2, u'two', 3, u'three', 4, u'four', None)
 
         self.assert_(len(u) == 4)
         self.assert_(len(v) == 4)
@@ -153,20 +153,20 @@ class TestNSDictionaryInteraction(unittest.TestCase):
         self.assert_(len(y) == 4)
         self.assert_(len(z) == 4)
 
-        self.assert_(u['one'] == 1)
-        self.assert_(v['two'] == 2)
-        self.assert_(w['three'] == 3)
-        self.assert_(x['one'] == 1)
-        self.assert_(y['two'] == 2)
-        self.assert_(z['four'] == 4)
+        self.assert_(u[u'one'] == 1)
+        self.assert_(v[u'two'] == 2)
+        self.assert_(w[u'three'] == 3)
+        self.assert_(x[u'one'] == 1)
+        self.assert_(y[u'two'] == 2)
+        self.assert_(z[u'four'] == 4)
 
     def test_varargConstruction2(self):
-        u = NSMutableDictionary.dictionaryWithObjects_forKeys_([1,2,3,4], ['one', 'two', 'three', 'four'])
-        v = NSMutableDictionary.alloc().initWithObjects_forKeys_([1,2,3,4], ['one', 'two', 'three', 'four'])
-        w = NSMutableDictionary.dictionaryWithObjects_forKeys_count_([1,2,3,4,5], ['one', 'two', 'three', 'four', 'five'], 4)
-        x = NSMutableDictionary.alloc().initWithObjects_forKeys_count_([1,2,3,4,5], ['one', 'two', 'three', 'four', 'five'], 4)
-        y = NSMutableDictionary.dictionaryWithObjectsAndKeys_(1, 'one', 2, 'two', 3, 'three', 4, 'four', None)
-        z = NSMutableDictionary.alloc().initWithObjectsAndKeys_(1, 'one', 2, 'two', 3, 'three', 4, 'four', None)
+        u = NSMutableDictionary.dictionaryWithObjects_forKeys_([1,2,3,4], [u'one', u'two', u'three', u'four'])
+        v = NSMutableDictionary.alloc().initWithObjects_forKeys_([1,2,3,4], [u'one', u'two', u'three', u'four'])
+        w = NSMutableDictionary.dictionaryWithObjects_forKeys_count_([1,2,3,4,5], [u'one', u'two', u'three', u'four', u'five'], 4)
+        x = NSMutableDictionary.alloc().initWithObjects_forKeys_count_([1,2,3,4,5], [u'one', u'two', u'three', u'four', u'five'], 4)
+        y = NSMutableDictionary.dictionaryWithObjectsAndKeys_(1, u'one', 2, u'two', 3, u'three', 4, u'four', None)
+        z = NSMutableDictionary.alloc().initWithObjectsAndKeys_(1, u'one', 2, u'two', 3, u'three', 4, u'four', None)
 
         self.assert_(len(u) == 4)
         self.assert_(len(v) == 4)
@@ -175,12 +175,12 @@ class TestNSDictionaryInteraction(unittest.TestCase):
         self.assert_(len(y) == 4)
         self.assert_(len(z) == 4)
 
-        self.assert_(u['one'] == 1)
-        self.assert_(v['two'] == 2)
-        self.assert_(w['three'] == 3)
-        self.assert_(x['one'] == 1)
-        self.assert_(y['two'] == 2)
-        self.assert_(z['four'] == 4)
+        self.assert_(u[u'one'] == 1)
+        self.assert_(v[u'two'] == 2)
+        self.assert_(w[u'three'] == 3)
+        self.assert_(x[u'one'] == 1)
+        self.assert_(y[u'two'] == 2)
+        self.assert_(z[u'four'] == 4)
 
 
 class MyDictionaryBase (NSDictionary):

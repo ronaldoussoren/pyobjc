@@ -13,14 +13,14 @@ if _objc.platform == 'MACOSX':
     _objc.loadBundle(
         "ExceptionHandling",
         globals(),
-        bundle_identifier='com.apple.ExceptionHandling',
+        bundle_identifier=u'com.apple.ExceptionHandling',
     )
 else:
     _objc.loadBundle(
         "ExceptionHandling",
         globals(),
         bundle_path=_objc.pathForFramework(
-            "/System/Library/Frameworks/ExceptionHandling.framework",
+            u"/System/Library/Frameworks/ExceptionHandling.framework",
         ),
     )
 

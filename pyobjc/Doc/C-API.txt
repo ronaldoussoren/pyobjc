@@ -238,20 +238,6 @@ Return the Objective-C method name for ``sel``.
 
 ::
 
-  int PyObjCBool_Check(PyObject* obj);
-
-Check if ``obj`` is a boolean object (either the python bool type in Python
-2.3 or the PyObjC bool type in Python 2.2)
-
-::
-
-  PyObject* PyObjCBool_FromLong(long i);
-
-Create a new bool object. This will return a Python bool object in Python 2.3
-(and later) and the PyObjC bool type in Python 2.2.
-
-::
-
   void PyObjC_InitSuper(struct objc_super*, Class, id);
 
 Initialize the ``struct objc_super`` for use with ``objc_sendMsgSuper``. Use 

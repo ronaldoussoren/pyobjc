@@ -4,7 +4,7 @@ import objc
 from Foundation import *
 from PyObjCTools.Conversion import *
 
-samplePropertyList = '{ "" = 1; "x" = "2"; 1 = "one";}'
+samplePropertyList = u'{ "" = 1; "x" = "2"; 1 = "one";}'
 
 class TestCollections(unittest.TestCase):
     def assertSameArrayContents(self, a1, a2):
@@ -64,10 +64,10 @@ class TestCollections(unittest.TestCase):
         def conversionHelper(anObject):
             return anObject
 
-        self.assertRaises(TypeError, propertyListFromPythonCollection, { '1' : type([]) })
-        propertyListFromPythonCollection({'1' : type([])}, conversionHelper)
+        self.assertRaises(TypeError, propertyListFromPythonCollection, { u'1' : type([]) })
+        propertyListFromPythonCollection({u'1' : type([])}, conversionHelper)
 
-        d = NSDictionary.dictionaryWithDictionary_( {'1' : NSObject.alloc().init() })
+        d = NSDictionary.dictionaryWithDictionary_( {u'1' : NSObject.alloc().init() })
         # was: NSBundle.bundleForClass_(NSObject)} )
         # XXX: using NSBundle doesn't work on GNUstep
 

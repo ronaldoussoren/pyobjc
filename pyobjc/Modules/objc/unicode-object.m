@@ -11,13 +11,14 @@ typedef struct {
 	PyUnicodeObject	base;
 	PyObject*	weakrefs;
 	id		nsstr;
+	PyObject* py_nsstr;
 } PyObjCUnicodeObject;
 
 PyDoc_STRVAR(class_doc,
 	"objc.pyobjc_unicode\n"
 	"\n"
 	"Subclass of unicode for representing NSString values. Use \n"
-	"the method pyobjc_NSString to access the NSString. \n"
+	"the method nsstring to access the NSString. \n"
 	"Note that instances are immutable and won't be updated when\n"
 	"the value of the NSString changes."
 );
@@ -25,9 +26,12 @@ PyDoc_STRVAR(class_doc,
 static void
 class_dealloc(PyObject* obj)
 {
-	id nsstr = ((PyObjCUnicodeObject*)obj)->nsstr;
-	PyObject* weakrefs = ((PyObjCUnicodeObject*)obj)->weakrefs;
+	PyObjCUnicodeObject* uobj = (PyObjCUnicodeObject*)obj;
+	id nsstr = uobj->nsstr;
+	PyObject* weakrefs = uobj->weakrefs;
+	PyObject* py_nsstr = uobj->py_nsstr;
 
+	Py_XDECREF(py_nsstr);
 	[nsstr release];
 
 	if (weakrefs) {
@@ -40,63 +44,26 @@ class_dealloc(PyObject* obj)
 static PyObject* 
 meth_nsstring(PyObject* self)
 {
-	return PyObjCObject_New(((PyObjCUnicodeObject*)self)->nsstr);
+	PyObjCUnicodeObject* uobj = (PyObjCUnicodeObject*)self;
+	if (uobj->py_nsstr == NULL) {
+		uobj->py_nsstr = PyObjCObject_New(uobj->nsstr);
+	}
+	Py_INCREF(uobj->py_nsstr);
+	return uobj->py_nsstr;
 }
 
-/* TODO: Remove this method after the 1.1 release */
-static PyObject* 
-meth_syncNSString(PyObjCUnicodeObject* self)
+static PyObject*
+meth_getattro(PyObject *o, PyObject *attr_name)
 {
-	PyUnicodeObject  dummy;
-	const char* utf8; 
-	PyUnicodeObject* tmp = NULL;
-
-	if (PyErr_Warn(PyExc_DeprecationWarning, 
-			"use unicode(obj.nsstring()) instead of "
-			"obj.syncNSString().") < 0) {
-		return NULL;
+	PyObject *res;
+	res = PyObject_GenericGetAttr(o, attr_name);
+	if (res == NULL) {
+		PyErr_Clear();
+		PyObject *py_nsstr = meth_nsstring(o);
+		res = PyObject_GenericGetAttr(py_nsstr, attr_name);
+		Py_XDECREF(py_nsstr);
 	}
-
-	PyUnicode_AS_UNICODE(&dummy) = NULL;
-	
-	utf8 = [self->nsstr UTF8String];
-	tmp = (PyUnicodeObject*)PyUnicode_DecodeUTF8(
-			utf8, 
-			strlen(utf8), 
-			"strict");
-	if (tmp == NULL) goto error;
-
-	
-	PyUnicode_AS_UNICODE(&dummy) = PyMem_NEW(Py_UNICODE,
-		PyUnicode_GET_SIZE(tmp));
-	if (PyUnicode_AS_UNICODE(&dummy) == NULL) goto error;
-
-	PyMem_Free(PyUnicode_AS_UNICODE(self));
-	PyUnicode_AS_UNICODE(self) = PyUnicode_AS_UNICODE(&dummy);
-	PyUnicode_GET_SIZE(self) = PyUnicode_GET_SIZE(tmp);
-	PyUnicode_AS_UNICODE(&dummy) = NULL;
-	memcpy((char*)PyUnicode_AS_DATA(self), PyUnicode_AS_DATA(tmp),
-		PyUnicode_GET_DATA_SIZE(tmp));
-
-	self->base.hash = -1;
-	if (PyUnicode_GET_SIZE(tmp) == 0) {
-		self->base.hash = 0;
-	}
-	Py_XINCREF(tmp->defenc);
-	Py_XDECREF(self->base.defenc);
-	self->base.defenc = tmp->defenc;
-	Py_DECREF(tmp);
-
-	Py_INCREF(Py_None);
-	return Py_None;
-
-error:
-	if (PyUnicode_AS_UNICODE(&dummy) != NULL) {
-		PyMem_Free(PyUnicode_AS_UNICODE(&dummy));
-	}
-	Py_XDECREF(tmp);
-	return NULL;
-
+	return res;
 }
 
 static PyObject*
@@ -137,12 +104,6 @@ static PyMethodDef class_methods[] = {
 	  "directly access NSString instance"
 	},
 	{
-	  "syncFromNSString",
-	  (PyCFunction)meth_syncNSString,
-	  METH_NOARGS,
-	  "Copy contents of the NSString to the unicode object"
-	},
-	{
 	  "__reduce__",
 	  (PyCFunction)meth_reduce,
 	  METH_NOARGS,
@@ -181,7 +142,7 @@ PyTypeObject PyObjCUnicode_Type = {
 	0,					/* tp_hash */
 	0,					/* tp_call */
 	0,					/* tp_str */
-	0,					/* tp_getattro */
+	meth_getattro,		/* tp_getattro */
 	0,					/* tp_setattro */
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT,			/* tp_flags */
@@ -284,8 +245,8 @@ PyObjCUnicode_New(NSString* value)
 	}
 
 	result->weakrefs = NULL;
-	result->nsstr = value;
-	[value retain];
+	result->py_nsstr = NULL;
+	result->nsstr = [value retain];
 
 	return (PyObject*)result;
 }

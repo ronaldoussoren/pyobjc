@@ -292,11 +292,17 @@ static char* keywords2[] = { "string", NULL };
 			 * float.
 			 */
 			PyObject* strVal = PyObject_Repr(pyValue);
+            PyObject* uniVal = NULL;
 
 			if (strVal == NULL) return -1;
 			
-			stringVal = PyObjC_PythonToId(strVal);
-			Py_DECREF(strVal);
+            uniVal = PyUnicode_FromEncodedObject(strVal, "ascii", "strict");
+            Py_DECREF(strVal);
+
+            if (uniVal == NULL) return -1;
+            
+			stringVal = PyObjC_PythonToId(uniVal);
+            Py_DECREF(uniVal);
 
 			PyObjC_DURING
 				DecimalFromString(&Decimal_Value(self), stringVal, NULL);

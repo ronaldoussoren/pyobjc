@@ -103,13 +103,6 @@
 
 #endif	/* RUNTIME_GNU */
 
-/* Earlier versions of Python don't define PyDoc_STRVAR */
-#ifndef PyDoc_STR
-#define PyDoc_VAR(name)         static char name[]
-#define PyDoc_STR(str)          (str)
-#define PyDoc_STRVAR(name, str) PyDoc_VAR(name) = PyDoc_STR(str)
-#endif
-
 /* Current API version, increase whenever:
  * - Semantics of current functions change
  * - Functions are removed
@@ -138,8 +131,10 @@
         removes PyObjCSelector_IsInitializer
  * - Version 9 (???)
  * - Version 10 changes the signature of PyObjCRT_SimplifySignature
+ * - Version 11 adds PyObjCObject_Convert, PyObjCSelector_Convert,
+     PyObjCClass_Convert, PyObjC_ConvertBOOL, and PyObjC_ConvertChar
  */
-#define PYOBJC_API_VERSION 10
+#define PYOBJC_API_VERSION 11
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -255,15 +250,30 @@ struct pyobjc_api {
 	/* PyObjCIMP_GetSelector */
 	SEL  (*imp_get_sel)(PyObject*);
 
-    /* PyObjCErr_AsExc */
-    NSException* (*err_python_to_nsexception)(void);
+	/* PyObjCErr_AsExc */
+	NSException* (*err_python_to_nsexception)(void);
 
-    /* PyGILState_Ensure */
-    PyGILState_STATE (*gilstate_ensure)(void);
+	/* PyGILState_Ensure */
+	PyGILState_STATE (*gilstate_ensure)(void);
 
-    int (*obj_is_uninitialized)(PyObject*);
+	/* PyObjCObject_IsUninitialized */
+	int (*obj_is_uninitialized)(PyObject*);
+
+	/* PyObjCObject_Convert */
+	int (*pyobjcobject_convert)(PyObject*,void*);
+
+	/* PyObjCSelector_Convert */
+	int (*pyobjcselector_convert)(PyObject*,void*);
+
+	/* PyObjCClass_Convert */
+	int (*pyobjcclass_convert)(PyObject*,void*);
+
+	/* PyObjC_ConvertBOOL */
+	int (*pyobjc_convertbool)(PyObject*,void*);
+
+	/* PyObjC_ConvertChar */
+	int (*pyobjc_convertchar)(PyObject*,void*);
 };
-
 
 #ifndef PYOBJC_BUILD
 
@@ -310,99 +320,11 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCIMP_GetIMP   (PyObjC_API->imp_get_imp)
 #define PyObjCIMP_GetSelector   (PyObjC_API->imp_get_sel)
 #define PyObjCObject_IsUninitialized (PyObjC_API->obj_is_uninitialized)
-
-
-/* XXX: Check if we can use the following function in the bridge itself,
- * if so: move these to a seperate C file. These are inline to avoid warnings
- * and code-bloat for files that don't use these functions.
- */
-
-static inline int 
-PyObjCObject_Convert(PyObject* object, void* pvar)
-{
-	id* pid = (id*)pvar;
-
-	*pid = PyObjC_PythonToId(object);
-			        
-	if (PyErr_Occurred()) {
-	    return 0;
-        } 
-	return 1;
-}
-
-
-static inline int 
-PyObjC_ConvertBOOL(PyObject* object, void* pvar)
-{
-    BOOL* pbool = (BOOL*)pvar;
-
-    if (PyObject_IsTrue(object)) {
-        *pbool = YES;
-    } else {
-        *pbool = NO;
-    }
-
-    return 1;
-}
-
-static inline int 
-PyObjC_ConvertChar(PyObject* object, void* pvar)
-{
-    char* pchar = (char*)pvar;
-
-    if (!PyString_Check(object)) {
-        PyErr_SetString(PyExc_TypeError, "Expecting string of len 1");
-        return 0;
-    }
-
-    if (PyString_Size(object) != 1) {
-        PyErr_SetString(PyExc_TypeError, "Expecting string of len 1");
-        return 0;
-    }
-
-    *pchar = *PyString_AsString(object);
-    return 1;
-}
-
-static inline int 
-PyObjCSelector_Convert(PyObject* object, void* pvar)
-{ 
-    int r;
-
-    if (object == Py_None) {
-        *(SEL*)pvar = NULL;
-        return 1;
-    }
-    if (PyObjCSelector_Check(object)) {
-        *(SEL*)pvar = PyObjCSelector_GetSelector(object);
-        return 1;
-    }
-    if (!PyString_Check(object)) {
-        PyErr_SetString(PyExc_TypeError, "Expected string");
-        return 0;
-    }
-
-    r = PyObjC_PythonToObjC(@encode(SEL), object, pvar);
-    if (r == -1) {
-	    return 0;
-    }	 
-    return 1;
-}
-
-static inline int 
-PyObjCClass_Convert(PyObject* object, void* pvar)
-{
-    if (!PyObjCClass_Check(object)) {
-        PyErr_SetString(PyExc_TypeError, "Expected objective-C class");
-        return 0;
-    }
-
-    *(Class*)pvar = PyObjCClass_GetClass(object);
-    if (*(Class*)pvar == NULL) return 0;
-    return 1;
-}
-
-
+#define PyObjCObject_Convert (PyObjC_API->pyobjcobject_convert)
+#define PyObjCSelector_Convert (PyObjC_API->pyobjcselector_convert)
+#define PyObjCClass_Convert (PyObjC_API->pyobjcselector_convert)
+#define PyObjC_ConvertBOOL (PyObjC_API->pyobjc_convertbool)
+#define PyObjC_ConvertChar (PyObjC_API->pyobjc_convertchar)
 
 #ifndef PYOBJC_METHOD_STUB_IMPL
 
@@ -466,4 +388,5 @@ PyObjC_ImportAPI(PyObject* calling_module)
 extern struct pyobjc_api	objc_api;
 
 #endif /* !PYOBJC_BUILD */
+
 #endif /*  PyObjC_API_H */

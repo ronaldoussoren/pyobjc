@@ -138,11 +138,11 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 		return 0;
 	}
 
-	if (strcmp(var->ivar_type, "@") == 0) {
+	if (strcmp(var->ivar_type, @encode(id)) == 0) {
 		/* Automagically manage refcounting of instance variables */
 		id new_value;
 
-		res = depythonify_c_value("@", value, &new_value);
+		res = depythonify_c_value(@encode(id), value, &new_value);
 		if (res == -1) {
 			return -1;
 		}
@@ -179,7 +179,7 @@ ivar_init(PyObjCInstanceVariable* self, PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { "name", "type", "isOutlet", NULL };
 	char* name = NULL;
-	char* type = "@";
+	char* type = @encode(id);
 	PyObject* isOutletObj = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "s|sO:objc_ivar",

@@ -19,14 +19,14 @@ if _objc.platform == 'MACOSX':
     _objc.loadBundle(
         "WebKit",
         globals(),
-        bundle_identifier='com.apple.WebKit',
+        bundle_identifier=u'com.apple.WebKit',
     )
 else:
     _objc.loadBundle(
         "WebKit",
         globals(),
         bundle_path=_objc.pathForFramework(
-            "/System/Library/Frameworks/WebKit.framework",
+            u"/System/Library/Frameworks/WebKit.framework",
         ),
     )
 _objc.recycleAutoreleasePool()

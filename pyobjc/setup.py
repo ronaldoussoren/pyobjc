@@ -31,41 +31,6 @@ MacPython 2.3.  Users of MacPython 2.3 can install PyObjC though the
 PackageManager application.
 """
 
-if sys.version >= '2.3':
-    # Add additional setup arguments, used to register with PyPI, Python 2.2.2
-    # and earlier don't support these (nor the 'register' subcommand of
-    # setup.py)
-    SetupExtraArguments = {
-        'classifiers': [
-            'Development Status :: 5 - Production/Stable',
-            'Environment :: Console',
-            'Environment :: MacOS X :: Cocoa',
-            'Intended Audience :: Developers',
-            'License :: OSI Approved :: MIT License',
-            'Natural Language :: English',
-            'Operating System :: MacOS :: MacOS X',
-            'Programming Language :: Python',
-            'Programming Language :: Objective C',
-            'Topic :: Software Development :: Libraries :: Python Modules',
-            'Topic :: Software Development :: User Interfaces',
-        ],
-        'license': 'MIT License',
-        'download_url': 'http://pyobjc.sourceforge.net/software/index.php',
-    }
-else:
-    SetupExtraArguments = {}
-
-if sys.platform == 'darwin':
-    # Apple has used build options that don't work with a 'normal' system.
-    # Remove '-arch i386' from the LDFLAGS.
-    import distutils.sysconfig
-    distutils.sysconfig.get_config_vars()
-    x = distutils.sysconfig._config_vars['LDSHARED']
-    y = x.replace('-arch i386', '')
-    if y != x:
-        print "Fixing Apple strangeness in Python configuration"
-        distutils.sysconfig._config_vars['LDSHARED'] = y
-
 from distutils.core import setup, Extension
 from distutils.command.build_ext import build_ext
 import os
@@ -475,12 +440,6 @@ CoreExtensions =  [
               extra_link_args=OBJC_LDFLAGS),
     ]
 
-if sys.version == '2.2' or sys.version.startswith('2.2.'):
-    CoreExtensions.append(
-            Extension("autoGIL",
-                ["Modules/autoGIL.c"],
-                extra_link_args=OBJC_LDFLAGS))
-
 # Provide some dependency information on Python 2.3 and later, this
 # makes development slightly more convenient.
 if sys.version >= '2.3':
@@ -679,18 +638,6 @@ for aPackage in package_dir.keys():
         package_dir[packageName] = testDir
         packages.append(packageName)
 
-try:
-    import bundlebuilder
-
-    if sys.version_info[:2] == (2,2):
-        raise ImportError, "We're the only provider of these modules ATM."
-except ImportError:
-    # bundlebuilder.py and plistlib.py shipped with newer versions of
-    # Python but are included with pyobjc be independent. The following
-    # magic makes distutils install the contents of MPCompat.
-    packages.append('')
-    package_dir[''] = 'MPCompat'
-
 dist = setup(name = "pyobjc",
              version = package_version(),
              description = "Python<->ObjC Interoperability Module",
@@ -722,7 +669,21 @@ dist = setup(name = "pyobjc",
                 'test':      cmd_test,
                 'sdist':     cmd_sdist,
              },
-             **SetupExtraArguments
+             classifiers = [
+                'Development Status :: 5 - Production/Stable',
+                'Environment :: Console',
+                'Environment :: MacOS X :: Cocoa',
+                'Intended Audience :: Developers',
+                'License :: OSI Approved :: MIT License',
+                'Natural Language :: English',
+                'Operating System :: MacOS :: MacOS X',
+                'Programming Language :: Python',
+                'Programming Language :: Objective C',
+                'Topic :: Software Development :: Libraries :: Python Modules',
+                'Topic :: Software Development :: User Interfaces',
+             ],
+             license = 'MIT License',
+             download_url = 'http://pyobjc.sourceforge.net/software/index.php',
 )
 
 if "install" in sys.argv:

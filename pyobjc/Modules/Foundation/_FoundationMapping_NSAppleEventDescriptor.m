@@ -34,11 +34,33 @@
 #include "pyobjc-api.h"
 #include "pymactoolbox.h"
 
-#if PY_VERSION_HEX >= 0x0203000A
+/* 
+	WARNING: this is a major hack, you have to be careful using this!
 
-#define HAVE_AEDESC_NEWBORROWED
+	Should I use AEDuplicateDesc instead?
 
+*/
+#ifndef AEDescObject
+typedef struct AEDescObject {
+	PyObject_HEAD
+	AEDesc ob_itself;
+	int ob_owned;
+} AEDescObject;
 #endif
+
+#ifndef AEDesc_Type
+#define PYOBJC_LOCAL_AEDESC 1
+PyObject *AEDesc_TypeObject;
+#define AEDesc_TypePtr ((PyTypeObject *)AEDesc_TypeObject)
+#else
+#define AEDesc_TypePtr (&AEDesc_Type)
+#endif
+
+#ifndef AEDesc_Check
+#define AEDesc_Check(x) ((x)->ob_type == AEDesc_TypePtr || PyObject_TypeCheck((x), AEDesc_TypePtr))
+#endif
+
+
 
 static PyObject* 
 call_NSAppleEventDescriptor_initWithDescriptorType_bytes_length_(
@@ -84,7 +106,7 @@ call_NSAppleEventDescriptor_initWithDescriptorType_bytes_length_(
 		/* XXX Ronald: If you try to use the result of 
 		 * PyObjCObject_GetObject(self) after the call to objc_msgSend 
 		 * it will crash with large enough values of len (>=32). 
-		 * Appearently the original self is recycled during the init.
+		 * Apparently the original self is recycled during the init.
 		 */
 		if (self != result) {
 			PyObjCObject_ClearObject(self);
@@ -145,7 +167,7 @@ call_NSAppleEventDescriptor_descriptorWithDescriptorType_bytes_length_(
 	/* XXX Ronald: If you try to use the result of 
 	 * PyObjCObject_GetObject(self) after the call to objc_msgSend 
 	 * it will crash with large enough values of len (>=32). 
-	 * Appearently the original self is recycled during the init.
+	 * Apparently the original self is recycled during the init.
 	 */
 	if (self != result) {
 		PyObjCObject_ClearObject(self);
@@ -154,131 +176,62 @@ call_NSAppleEventDescriptor_descriptorWithDescriptorType_bytes_length_(
 	return result;
 }
 
-static PyObject*
-call_NSAppleEventDescriptor_initWithAEDescNoCopy_(
-	PyObject* method, PyObject* self, PyObject* arguments)
+static int
+PyAEDescPtr_Convert(PyObject *obj, void *output)
 {
-	AEDesc *theEvent;
-	id res;
-	struct objc_super super;
-	PyObject* retVal;
-
-	if ( (theEvent = PyMem_NEW(AEDesc, 1)) == NULL ) {
-		PyErr_NoMemory();
-		return 0;
+	AEDescObject *desc = (AEDescObject*)obj;
+	if (!AEDesc_Check(obj)) {
+		PyErr_SetString(PyExc_TypeError, "AEDesc required");
+		return -1;
 	}
-	if (!PyArg_ParseTuple(arguments, "O&", AEDesc_Convert, theEvent)) { 
-        PyMem_DEL(theEvent);
-		return NULL;
-	}
-
-	PyObjC_DURING
-		if (PyObjCIMP_Check(method)) {
-			res = ((id(*)(id,SEL,AEDesc*))
-				(PyObjCIMP_GetIMP(method)))(
-					PyObjCObject_GetObject(self),
-					PyObjCIMP_GetSelector(method),
-					theEvent);
-		} else {
-			PyObjC_InitSuper(&super,
-				PyObjCSelector_GetClass(method),
-				PyObjCObject_GetObject(self));
-
-			res = (id)objc_msgSendSuper(&super,
-			    @selector(initWithAEDescNoCopy:), theEvent);
-		}
-	PyObjC_HANDLER
-		PyObjCErr_FromObjC(localException);
-		res = NULL;
-	PyObjC_ENDHANDLER
-
-	if (res == NULL && PyErr_Occurred()) {
-		return NULL;
-	}
-
-	retVal = PyObjC_IdToPython(res);
-	return retVal;
+	*(AEDesc **)output = &desc->ob_itself;
+	desc->ob_owned = 0;
+	return 0;
 }
 
-#ifdef HAVE_AEDESC_NEWBORROWED
 static PyObject*
-call_NSAppleEventDescriptor_aeDesc(
-	PyObject* method, PyObject* self, PyObject* arguments)
+PyAEDescPtr_New(void *obj)
 {
-	AppleEvent* res;
-	struct objc_super super;
-	PyObject* retVal;
-
-	if (!PyArg_ParseTuple(arguments, "")) { 
-		return NULL;
-	}
-
-	PyObjC_DURING
-		if (PyObjCIMP_Check(method)) {
-			res = ((AppleEvent*(*)(id,SEL))
-				(PyObjCIMP_GetIMP(method)))(
-					PyObjCObject_GetObject(self),
-					PyObjCIMP_GetSelector(method));
-		} else {
-			PyObjC_InitSuper(&super,
-				PyObjCSelector_GetClass(method),
-				PyObjCObject_GetObject(self));
-
-			res = (AppleEvent*)objc_msgSendSuper(&super,
-			    @selector(aeDesc));
-		}
-	PyObjC_HANDLER
-		PyObjCErr_FromObjC(localException);
-		res = NULL;
-	PyObjC_ENDHANDLER
-
-	if (res == NULL && PyErr_Occurred()) {
-		return NULL;
-	}
-
-	retVal = AEDesc_NewBorrowed(res);
-	return retVal;
+	return AEDesc_NewBorrowed((AppleEvent*)obj);
 }
-#endif
 
 static int 
 _pyobjc_install_NSAppleEventDescriptor(void)
 {
+	int r;
 	Class classNSAppleEventDescriptor = objc_lookUpClass("NSAppleEventDescriptor");
 	if (classNSAppleEventDescriptor == NULL) return 0;
+    
+#ifdef PYOBJC_LOCAL_AEDESC
+    PyObject *AEModule;
+    PyObject *AEModuleDict;
+    AEModule = PyImport_ImportModule("_AE");
+    if (AEModule == NULL) {
+        PyErr_Clear();
+        return 0;
+    }
+    AEModuleDict = PyModule_GetDict(AEModule);
+    AEDesc_TypeObject = PyMapping_GetItemString(AEModuleDict, "AEDesc");
+    if (AEDesc_TypeObject == NULL) return -1;
+#endif
 
-	if (PyObjC_RegisterMethodMapping(
+	r = PyObjC_RegisterMethodMapping(
 		classNSAppleEventDescriptor,
         @selector(initWithDescriptorType:bytes:length:),
 		call_NSAppleEventDescriptor_initWithDescriptorType_bytes_length_,
-		PyObjCUnsupportedMethod_IMP) < 0) {
-		return -1;
-	}
+		PyObjCUnsupportedMethod_IMP);
+	if (r == -1) return -1;
 
-	if (PyObjC_RegisterMethodMapping(
+	r = PyObjC_RegisterMethodMapping(
 		classNSAppleEventDescriptor,
         @selector(descriptorWithDescriptorType:bytes:length:),
 		call_NSAppleEventDescriptor_descriptorWithDescriptorType_bytes_length_,
-		PyObjCUnsupportedMethod_IMP) < 0) {
-		return -1;
-	}
+		PyObjCUnsupportedMethod_IMP);
+	if (r == -1) return -1;
 
-#ifdef HAVE_AEDESC_NEWBORROWED
-	if (PyObjC_RegisterMethodMapping(
-		classNSAppleEventDescriptor,
-		@selector(aeDesc),
-		call_NSAppleEventDescriptor_aeDesc,
-		PyObjCUnsupportedMethod_IMP) < 0) {
-		return -1;
-	}
-#endif
-
-	if (PyObjC_RegisterMethodMapping(
-		classNSAppleEventDescriptor,
-		@selector(initWithAEDescNoCopy:),
-		call_NSAppleEventDescriptor_initWithAEDescNoCopy_,
-		PyObjCUnsupportedMethod_IMP) < 0) {
-		return -1;
-	}
+	r = PyObjCPointerWrapper_Register(@encode(AEDesc*),
+		PyAEDescPtr_New, PyAEDescPtr_Convert);
+	if (r == -1) return -1;
+	
 	return 0;
 }

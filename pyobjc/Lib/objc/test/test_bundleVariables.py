@@ -9,28 +9,28 @@ class TestBundleVariables (unittest.TestCase):
     def testStrings(self):
         d = {}
         objc.loadBundleVariables(self.bundle, d, [
-                ('NSAppleScriptErrorMessage', '@'),
-                ('NSBundleDidLoadNotification', '@'),
+                (u'NSAppleScriptErrorMessage', '@'),
+                (u'NSBundleDidLoadNotification', '@'),
             ])
 
-        self.assert_('NSBundleDidLoadNotification' in d)
-        self.assert_('NSAppleScriptErrorMessage' in d)
+        self.assert_(u'NSBundleDidLoadNotification' in d)
+        self.assert_(u'NSAppleScriptErrorMessage' in d)
 
-        self.assert_(isinstance(d['NSAppleScriptErrorMessage'], objc.pyobjc_unicode))
-        self.assert_(isinstance(d['NSBundleDidLoadNotification'], objc.pyobjc_unicode))
+        self.assert_(isinstance(d[u'NSAppleScriptErrorMessage'], objc.pyobjc_unicode))
+        self.assert_(isinstance(d[u'NSBundleDidLoadNotification'], objc.pyobjc_unicode))
 
     def testSimple(self):
         d = {}
         objc.loadBundleVariables(self.bundle, d, [
-                ('NSDebugEnabled', objc._C_NSBOOL),
-                ('NSFoundationVersionNumber', objc._C_DBL),
+                (u'NSDebugEnabled', objc._C_NSBOOL),
+                (u'NSFoundationVersionNumber', objc._C_DBL),
             ])
 
-        self.assert_('NSDebugEnabled' in d)
-        self.assert_('NSFoundationVersionNumber' in d)
+        self.assert_(u'NSDebugEnabled' in d)
+        self.assert_(u'NSFoundationVersionNumber' in d)
 
-        self.assert_(isinstance(d['NSFoundationVersionNumber'], float))
-        self.assert_(isinstance(d['NSDebugEnabled'], int))
+        self.assert_(isinstance(d[u'NSFoundationVersionNumber'], float))
+        self.assert_(isinstance(d[u'NSDebugEnabled'], int))
 
 
 if __name__ == "__main__":

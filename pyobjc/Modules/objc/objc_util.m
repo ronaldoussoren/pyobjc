@@ -767,3 +767,88 @@ PyObjCRT_SimplifySignature(char* signature, char* buf, size_t buflen)
 	}
 	return 0;
 }
+
+int
+PyObjCObject_Convert(PyObject* object, void* pvar)
+{
+	int r;
+	r = depythonify_c_value(@encode(id), object, (id*)pvar);
+	if (r == -1) {
+		return 0;
+	} else {
+		return 1;
+	}
+}
+
+int 
+PyObjC_ConvertBOOL(PyObject* object, void* pvar)
+{
+    BOOL* pbool = (BOOL*)pvar;
+
+    if (PyObject_IsTrue(object)) {
+        *pbool = YES;
+    } else {
+        *pbool = NO;
+    }
+
+    return 1;
+}
+
+int 
+PyObjC_ConvertChar(PyObject* object, void* pvar)
+{
+    char* pchar = (char*)pvar;
+
+    if (!PyString_Check(object)) {
+        PyErr_SetString(PyExc_TypeError, "Expecting string of len 1");
+        return 0;
+    }
+
+    if (PyString_Size(object) != 1) {
+        PyErr_SetString(PyExc_TypeError, "Expecting string of len 1");
+        return 0;
+    }
+
+    *pchar = *PyString_AsString(object);
+    return 1;
+}
+
+int 
+PyObjCSelector_Convert(PyObject* object, void* pvar)
+{ 
+    int r;
+
+    if (object == Py_None) {
+        *(SEL*)pvar = NULL;
+        return 1;
+    }
+    if (PyObjCSelector_Check(object)) {
+        *(SEL*)pvar = PyObjCSelector_GetSelector(object);
+        return 1;
+    }
+    if (!PyString_Check(object)) {
+        PyErr_SetString(PyExc_TypeError, "Expected string");
+        return 0;
+    }
+
+    r = depythonify_c_value(@encode(SEL), object, pvar);
+    if (r == -1) {
+           return 0;
+    }   
+    return 1;
+}
+
+int 
+PyObjCClass_Convert(PyObject* object, void* pvar)
+{
+    if (!PyObjCClass_Check(object)) {
+        PyErr_SetString(PyExc_TypeError, "Expected objective-C class");
+        return 0;
+    }
+
+    *(Class*)pvar = PyObjCClass_GetClass(object);
+    if (*(Class*)pvar == NULL) return 0;
+    return 1;
+}
+
+
