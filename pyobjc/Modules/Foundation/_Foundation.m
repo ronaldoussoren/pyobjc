@@ -10,6 +10,11 @@
 #ifdef MACOSX
 #import <CoreFoundation/CoreFoundation.h>
 #include <pymactoolbox.h>
+
+#else
+/* GNUstep's Foundation.h doesn't include these while we do use them */
+#import <Foundation/NSPropertyList.h>
+#import <Foundation/NSKeyedArchiver.h>
 #endif
 
 #include "pyobjc-api.h"
