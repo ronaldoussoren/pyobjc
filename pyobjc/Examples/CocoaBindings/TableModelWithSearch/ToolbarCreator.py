@@ -18,12 +18,6 @@ kToolbarIdentifier = "TableModel Toolbar Identifier"
 kSearchFieldItemIdentifier = "TableModel Search Field Identifier"
 
 from FilteringArrayController import kLiteralSearch, kRegularExpressionSearch
-TAG_IDENTIFIER_MAP = {
-    1000: kLiteralSearch,
-    1001: kRegularExpressionSearch,
-}
-
-
 
 class ToolbarCreator(NibClassBuilder.AutoBaseClass):
     def awakeFromNib(self):
