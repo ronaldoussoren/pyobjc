@@ -1220,12 +1220,12 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 
 #ifdef  PyObjC_COMPILING_ON_MACOSX_10_1
 	/* On MacOSX we get hard crashes for the method signature of this
-         * method. This seems to be a problem with the Objective-C runtime 
-  	 * and/or Cocoa because a simple ObjC program gives the same error.
- 	 * 
- 	 * As this method should never be forwarded to Python anyway we can
+	* method. This seems to be a problem with the Objective-C runtime 
+	 * and/or Cocoa because a simple ObjC program gives the same error.
+	 * 
+	 * As this method should never be forwarded to Python anyway we can
 	 * safely ignore it here.
-  	 */
+	 */
 		if (PyString_Check(key) && 
 				strcmp(PyString_AS_STRING(key), "__pyobjc_PythonObject__") == 0) {
 			continue;
@@ -1256,14 +1256,8 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 	Py_DECREF(attributes);
 
 	/* If all else fails, ask the actual class (getattro also does this) */
-	NS_DURING
-		result = PyObjCSelector_FindNative(cls, 
+	result = PyObjCSelector_FindNative(cls, 
 				PyObjCRT_SELName(selector));
-	NS_HANDLER
-		PyObjCErr_FromObjC(localException);
-		result = NULL;
-	NS_ENDHANDLER
-
 	if (result) {
 		return result;
 	}
