@@ -213,15 +213,15 @@ TYPES.extend([
     ('struct TestStruct1', '{_TestStruct1=ii[5s]}', ((1,2,(1,2,3,4,5)), (9,8,(-1,-2,-3,-4,-5)))),
     ('struct TestStruct2', '{_TestStruct2=id[5s]}', ((1,2,(1,2,3,4,5)), (9,8,(-1,-2,-3,-4,-5)))),
     ('struct TestStruct3', '{_TestStruct3=ci}', ((1,2), (2,4))),
-    ('struct TestStruct4', '{_TestStruct4=cq}', ((1,500000), (2,4))),
-    ('struct TestStruct5', '{_TestStruct5=cd}', ((1,2.0), (2,4.0))),
+    ('struct TestStruct4', '{_TestStruct4=cq}', ((1,'1LL<<60'), (2,4))),
+    ('struct TestStruct5', '{_TestStruct5=cd}', ((1,2.5), (2,4.5))),
 ])
 
 
 
 def IS_PROBLEM(tp):
     # See CheckNSInvoke in PYTHON_HEADER 
-    return tp in ['struct TestStruct1', 'struct TestStruct2', 'struct TestStruct3']
+    return tp in ['struct TestStruct1', 'struct TestStruct2', 'struct TestStruct3', 'struct TestStruct4', 'struct TestStruct5']
 
 def tp2ident(tp):
     return tp.replace(' ', '').replace('*', 'Ptr')
