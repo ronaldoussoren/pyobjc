@@ -152,14 +152,6 @@ CONVENIENCE_METHODS['count'] = (
     ('__len__', lambda self: self.count()),
 )
 
-CONVENIENCE_METHODS['description'] = (
-    # Don't do '__repr__', if the object is not yet initialized this may
-    # cause coredumps (and __repr__ is used by the interpreter to print
-    # objects in interactive mode)
-    #('__repr__', lambda self: self.description()),
-    ('__str__', lambda self: self.description()),
-)
-
 CONVENIENCE_METHODS['containsObject:'] = (
     ('__contains__', lambda self, elem: bool(self.containsObject_(elem))),
 )

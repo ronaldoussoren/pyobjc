@@ -16,6 +16,7 @@
  */
 
 #include "pyobjc.h"
+#include <objc/Protocol.h>
 
 #include <unistd.h>
 
@@ -78,6 +79,34 @@
 +(PyObject*)__pyobjc_PythonObject__
 {
 	return PyObjCClass_New(self);
+}
+
+@end /* PyObjCSupport */
+
+@interface Protocol (PyObjCSupport)
+-(PyObject*)__pyobjc_PythonObject__;
+@end /* PyObjCSupport */
+
+@implementation Protocol (PyObjCSupport)
+
+-(PyObject*)__pyobjc_PythonObject__
+{
+	abort();
+        PyObject* res =  (PyObject *) PyObjCObject_NewClassic(self);
+	return res;
+}
+
+@end /* PyObjCSupport */
+
+@interface Object (PyObjCSupport)
+-(PyObject*)__pyobjc_PythonObject__;
+@end /* PyObjCSupport */
+
+@implementation Object (PyObjCSupport)
+
+-(PyObject*)__pyobjc_PythonObject__
+{
+        return (PyObject *) PyObjCObject_NewClassic(self);
 }
 
 @end /* PyObjCSupport */

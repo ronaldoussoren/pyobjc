@@ -3,6 +3,7 @@
  * and the implementation of a number of exported functions.
  */
 #include "pyobjc.h"
+#include <objc/Protocol.h>
 
 #include <stddef.h>
 #include <ctype.h>
@@ -611,6 +612,53 @@ enableThreading(PyObject* self __attribute__((__unused__)))
 	return Py_None;
 }
 
+PyDoc_STRVAR(protocolNamed_doc,
+	"protocolNamed(name) -> Protocol\n"
+	"\n"
+	"Returns a Protocol object for the named protocol. This is the \n"
+	"equivalent of @protocol(name) in Objective-C.\n"
+	"Raises objc.ProtocolError when the protocol does not exist."
+);
+static PyObject*
+protocolNamed(   PyObject* self __attribute__((__unused__)),
+		PyObject* args,
+		PyObject* kwds)
+{
+static char* keywords[] = { "name", NULL };
+
+	const char* name;
+	PyObject* classes;
+	int i, len;
+
+	if  (!PyArg_ParseTupleAndKeywords(args, kwds, "s", keywords, &name)) {
+		return NULL;
+	}
+
+	classes = PyObjC_GetClassList();
+	if (classes == NULL) {
+		return NULL;
+	}
+
+	len = PyTuple_GET_SIZE(classes);
+	for (i = 0; i < len; i++) {
+		Class cls = PyObjCClass_GetClass(PyTuple_GET_ITEM(classes, i));
+		int j;
+
+		if (cls->protocols == NULL) continue;
+
+		for (j = 0; j < cls->protocols->count; j++) {
+			Protocol* p = cls->protocols->list[j];
+			if (strcmp([p name], name) == 0) {
+				printf("Found it in %s\n", cls->name);
+				return PyObjCObject_NewClassic(p);
+			}
+		}
+	}
+
+	PyErr_Format(PyObjCExc_NoProtocol, "protocol '%s' does not exist", name);
+	return NULL;
+}
+
 static PyMethodDef meta_methods[] = {
 	{
 	  "splitSignature",
@@ -644,6 +692,7 @@ static PyMethodDef meta_methods[] = {
 	{ "ObjectToCF", (PyCFunction)objc_ObjectToCF, METH_VARARGS, objc_ObjectToCF_doc },
 #endif
 	{ "enableThreading", (PyCFunction)enableThreading, METH_NOARGS, enableThreading_doc },
+	{ "protocolNamed", (PyCFunction)protocolNamed, METH_VARARGS|METH_KEYWORDS, protocolNamed_doc },
 
 	{ 0, 0, 0, 0 } /* sentinel */
 };
@@ -796,5 +845,4 @@ void init_objc(void)
 #ifdef MAC_OS_X_VERSION_10_3
 	PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_3", MAC_OS_X_VERSION_10_3);
 #endif /* MAC_OS_X_VERSION_10_3 */
-
 }

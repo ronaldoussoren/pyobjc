@@ -67,7 +67,11 @@ register_proxy(PyObject* proxy_obj)
 			PyObjCUtil_PointerValueCallBacks, 
 			500);
 
-		if (proxy_dict == NULL) return -1;
+		if (proxy_dict == NULL) {
+			PyErr_SetString(PyExc_RuntimeError,
+					"Cannot create NSMapTable");
+			return -1;
+		}
 	}
 
 
@@ -95,7 +99,7 @@ object_repr(PyObjCObject* self)
 	char buffer[256];
 	PyObject* res;
 
-	if ((self->flags & PyObjCObject_kUNINITIALIZED) == 0) {
+	if ((self->flags & PyObjCObject_kUNINITIALIZED) == 0 && !PyObjCObject_IsClassic(self)) {
 		/* Try to call the method 'description', which is the ObjC
 		 * equivalent of __repr__. If that fails we'll fall back to
 		 * the default repr.
@@ -135,12 +139,15 @@ object_dealloc(PyObject* obj)
 
 	unregister_proxy(PyObjCObject_GetObject(obj));
 
+
 	/* If the object is not yet initialized we try to initialize it before
 	 * releasing the reference. This is necessary because of a misfeature
 	 * of MacOS X: [[NSTextView alloc] release] crashes (at least upto 10.2)
 	 * and this is not a bug according to Apple.
 	 */
-	if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
+	if (PyObjCObject_IsClassic(obj)) {
+		/* pass */
+	} else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
 		/* Lets hope 'init' is always a valid initializer */
 		NS_DURING
 			[[((PyObjCObject*)obj)->objc_object init] release];
@@ -320,14 +327,16 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	}
 
 	namestr = PyString_AS_STRING(name);
-	NS_DURING
-		res = PyObjCSelector_FindNative(obj, namestr);
-	NS_HANDLER
-		PyObjCErr_FromObjC(localException);
-		res = NULL;
-	NS_ENDHANDLER
 
-	if (res) goto done;
+	if (!PyObjCObject_IsClassic(obj)) {
+		NS_DURING
+			res = PyObjCSelector_FindNative(obj, namestr);
+		NS_HANDLER
+			PyObjCErr_FromObjC(localException);
+			res = NULL;
+		NS_ENDHANDLER
+		if (res) goto done;
+	}
 
 	PyErr_Format(PyExc_AttributeError,
 	     "'%.50s' object has no attribute '%.400s'",
@@ -757,6 +766,62 @@ PyObjCObject_New(id objc_object)
 		 */
 		[objc_object retain];
 	}
+
+	if (register_proxy(res) < 0) {
+		Py_DECREF(res);
+		return NULL;
+	}
+
+	return res;
+}
+
+PyObject* 
+PyObjCObject_NewClassic(id objc_object)
+{
+	Class cls = GETISA(objc_object);
+	PyTypeObject* cls_type;
+	PyObject*     res;
+
+	res = find_existing_proxy(objc_object);
+	if (res) return res;
+
+	if (objc_object == NULL) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	cls_type = (PyTypeObject*)PyObjCClass_New(cls);
+	if (cls_type == NULL) {
+		return NULL;
+	}
+
+#ifdef FREELIST_SIZE
+	if (obj_freelist_top == 0) {
+		res = cls_type->tp_alloc(cls_type, 0);
+		if (res == NULL) {
+			return NULL;
+		}
+	} else {
+		res = obj_freelist[obj_freelist_top-1];
+		obj_freelist_top -= 1;
+		if (res->ob_refcnt != 0xDEADBEEF) abort();
+		res->ob_refcnt = 1;
+		res->ob_type = cls_type;
+	}
+#else
+	res = cls_type->tp_alloc(cls_type, 0);
+	if (res == NULL) {
+		return NULL;
+	}
+#endif
+
+	/* This should be in the tp_alloc for the new class, but 
+	 * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
+	 */
+	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
+	
+	((PyObjCObject*)res)->objc_object = objc_object;
+	((PyObjCObject*)res)->flags = PyObjCObject_kCLASSIC;
 
 	if (register_proxy(res) < 0) {
 		Py_DECREF(res);

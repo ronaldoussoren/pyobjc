@@ -11,6 +11,14 @@ Version 1.1b2 (2004-?????)
 
 - Add a PackageManager clone to the Examples directory
 
+- Add better support for NSProxy
+
+  This makes it possible to use at Distributed Objects, although this
+  feature has not received much testing
+
+- Function 'objc.protocolNamed' is the Python equivalent of the @protocol
+  expression in Objective-C.
+
 
 Version 1.1b1 (2004-02-20)
 ---------------------------
