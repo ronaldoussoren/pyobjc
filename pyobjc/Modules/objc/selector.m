@@ -638,8 +638,13 @@ objcsel_descr_get(ObjCNativeSelector* meth, PyObject* volatile obj, PyObject* cl
 	}
 	result->sel_call_func = meth->sel_call_func;
 
+#ifdef PyObjC_COMPILING_ON_MACOSX_10_1
+	if (meth->sel_selector == @selector(__pyobjc_PythonObject__)) {
+	} else
+#endif
 	if (meth->sel_oc_signature == NULL) {
 		NS_DURING
+			
 			meth->sel_oc_signature = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
 			[meth->sel_oc_signature retain];
 		NS_HANDLER

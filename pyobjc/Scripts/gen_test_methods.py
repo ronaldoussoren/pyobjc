@@ -89,7 +89,7 @@ the Objective-C helper classes used in theses tests.
 import unittest
 import objc
 from objc import YES, NO, nil
-from Foundation import NSFTPPropertyFileOffsetKey 
+from Foundation import NSPriorDayDesignations
 import sys
 
 NSArray = objc.runtime.NSArray
@@ -134,7 +134,7 @@ TYPES=[
     ('unsigned long long', objc._C_ULNGLNG, ( '0', '42', '1LL << 62') ),
     ('float', objc._C_FLT, ( '0.128', '1.0', '42.0', '1e10')),
     ('double', objc._C_DBL, ( '0.128', '1.0', '42.0', '1e10')),
-    ('id', objc._C_ID, ( 'NSFTPPropertyFileOffsetKey', )), # Fix me
+    ('id', objc._C_ID, ( 'NSPriorDayDesignations', )), # Fix me
     ('char*', objc._C_CHARPTR, ('"hello"', '"world"', '"foobar"')),
     ('NSPoint', "{_NSPoint=ff}", ((1, 2), (3,4),)),
     ('NSRect', "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", (((1,2), (3,4)), ((7,8),(9,10)),)),

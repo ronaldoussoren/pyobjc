@@ -1246,8 +1246,8 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		idx = 1;
 
 		for (i = 2; i < len;i++) {
-			type = [signature getArgumentTypeAtIndex:i];
 			void* ptr;
+			type = [signature getArgumentTypeAtIndex:i];
 
 			if (arglen == -1) {
 				PyObjCErr_ToObjC();

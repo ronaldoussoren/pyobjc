@@ -409,8 +409,9 @@ PyObjCInformalProtocol_CheckClass(
 PyObject*
 PyObjCInformalProtocol_FindProtocol(SEL selector)
 {
-	if (selToProtocolMapping == NULL) return NULL;
 	PyObject* item;
+
+	if (selToProtocolMapping == NULL) return NULL;
 
 	item = PyDict_GetItemString(selToProtocolMapping, (char*)SELNAME(selector));
 	if (item != NULL) {

@@ -181,9 +181,10 @@ register_variableList(PyObject* d, CFBundleRef bundle, struct vartable* table, s
 		(CFArrayRef)names, ptrs);
 
 	for (i = 0; i < count; i++) {
+		PyObject* val;
 		if (ptrs[i] == NULL) continue; /* Skip undefined names */
 
-		PyObject* val = PyObjC_ObjCToPython(table[i].type, ptrs[i]);
+		val  = PyObjC_ObjCToPython(table[i].type, ptrs[i]);
 		if (val == NULL) {
 			retVal = -1;
 			goto cleanup;

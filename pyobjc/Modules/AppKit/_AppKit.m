@@ -356,11 +356,7 @@ static char* keywords[] = { "context", "windowDumpStream", NULL };
 
 #else /* !GNUSTEP */
 
-#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_App_Functions.inc"
-#else
-#include "_App_Functions.10.1.inc"
-#endif
 
 #endif /* !GNUSTEP */
 
@@ -455,13 +451,8 @@ PyDoc_STRVAR(appkit_doc,
 
 #else /* !GNUSTEP */
 
-#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_App_Enum.inc"
 #include "_App_Str.inc"
-#else
-#include "_App_Enum.10.1.inc"
-#include "_App_Str.10.1.inc"
-#endif
 
 #endif /* !GNUSTEP */
 
@@ -581,11 +572,7 @@ void init_AppKit(void)
 
 #else /* !GNUSTEP */
 
-#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #	include "_App_Var.inc"
-#else
-#	include "_App_Var.10.1.inc"
-#endif
 
 #endif /* !GNUSTEP */
 
