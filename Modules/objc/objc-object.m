@@ -257,7 +257,7 @@ static PyGetSetDef obj_getset[] = {
 	{ 0, 0, 0, 0, 0 }
 };
 
-PyObjCClassObject PyObjCObject_Type = {
+PyObjCClassObject PyObjCObject_Type = {{
 	PyObject_HEAD_INIT(&PyObjCClass_Type)
 	0,					/* ob_size */
 	"objc_object",				/* tp_name */
@@ -300,7 +300,7 @@ PyObjCClassObject PyObjCObject_Type = {
 	PyType_GenericAlloc,			/* tp_alloc */
 	object_new,				/* tp_new */
 	0,		        		/* tp_free */
-};
+}};
 
 
 

@@ -35,7 +35,7 @@ static int add_class_fields(Class objc_class, PyObject* dict);
 
 #if PY_VERSION_HEX < 0x020300A2 /* Python 2.2 and early 2.3 alpha's */
 
-struct {
+typedef struct {
 	Class	  class;
 	PyObject* sel_to_py;
 	int	  method_magic;
@@ -52,7 +52,7 @@ static inline PyObjC_class_info*
 get_class_info(PyObject* class)
 {	
 	PyObject*          item;
-	struct class_info* info;
+	PyObjC_class_info* info;
 
 	if (class_to_objc == NULL) {
 		class_to_objc = NSCreateMapTable(ObjC_PyObjectKeyCallBacks,

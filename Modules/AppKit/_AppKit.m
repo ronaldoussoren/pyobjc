@@ -200,6 +200,7 @@ static  char* keywords[] = { NULL };
 	NS_DURING
 		depths = NSAvailableWindowDepths();
 	NS_HANDLER
+		depths = NULL;
 		ObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 	if (PyErr_Occurred()) return NULL;
@@ -295,6 +296,7 @@ static char* keywords[] = { "context", "windowDumpStream", NULL };
 				NULL);
 		}
 	NS_HANDLER
+		res = 0;
 		ObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 

@@ -129,6 +129,7 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 	NS_DURING
 		oc_result = NSFileTypeForHFSTypeCode(hfsTypeCode);
 	NS_HANDLER
+		oc_result = NULL;
 		ObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 
@@ -154,6 +155,7 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 	NS_DURING
 		hfsTypeCode = NSHFSTypeCodeFromFileType(fileType);
 	NS_HANDLER
+		hfsTypeCode = 0;
 		ObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 
