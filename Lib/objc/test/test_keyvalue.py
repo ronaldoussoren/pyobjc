@@ -453,8 +453,62 @@ if PyObjCTest_KeyValueObserver is not None:
             global DEALLOCS
             DEALLOCS += 1
 
+    class PyObjCTestObserved2(NSObject):
+        bar = objc.ivar('bar')
+
+        def init(self):
+            self = super(PyObjCTestObserved2, self).init()
+            self.foo = None
+            return self
+
+        def __del__(self):
+            global DEALLOCS
+            DEALLOCS += 1
+
     class TestKeyValueObservingFromPython (unittest.TestCase):
         # Check for using KVO in python.
+
+        def testAutomaticObserving(self):
+            observer = PyObjCTestObserver.alloc().init()
+            o = PyObjCTestObserved2.alloc().init()
+
+            self.assertEquals(o.foo, None)
+            self.assertEquals(o.bar, None)
+
+            o.foo = u'foo'
+            self.assertEquals(o.foo, u'foo')
+
+            o.bar = u'bar'
+            self.assertEquals(o.bar, u'bar')
+
+            o.addObserver_forKeyPath_options_context_(observer, u'bar',
+                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
+                0)
+            o.addObserver_forKeyPath_options_context_(observer, u'foo',
+                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
+                0)
+            try:
+                o.bar = u"world"
+                self.assertEquals(o.bar, u"world")
+
+                o.foo = u"xxx"
+                self.assertEquals(o.foo, u"xxx")
+            finally:
+                o.removeObserver_forKeyPath_(observer, u"bar")
+                o.removeObserver_forKeyPath_(observer, u"foo")
+
+            self.assertEquals(len(observer.observed), 2)
+
+            self.assertEquals(observer.observed[0],
+                (u'bar', o,  { u'kind': 1, u'new': u'world', u'old': u'bar' }, 0))
+            self.assertEquals(observer.observed[1],
+                (u'foo', o, { u'kind': 1, u'new': u'xxx', u'old': u'foo' }, 0))
+
+            del observer
+
+            before = DEALLOCS
+            del o
+            self.assertEquals(DEALLOCS, before+1, u"Leaking an observed object")
 
         def testObserving(self):
             observer = PyObjCTestObserver.alloc().init()
