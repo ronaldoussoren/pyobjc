@@ -134,7 +134,8 @@ Class ``NSGraphicsContext``
   This method is not supported.
 
 * ``graphicsPort``
-  This method is not yet supported.
+  This method is not yet supported, MacPython doesn't wrap ``CGContextRef``
+  at the moment.
 
 Class ``NSLayoutManager``
 .........................
@@ -273,10 +274,6 @@ Class ``NSCoder``
 The following methods are not supported in the current version of PyObjC.
 This limitation will be lifted in a future version of the bridge.
 
-* ``decodeBytesWithReturnedLength:``
-
-* ``decodeBytesForKey:returnedLength:``
-
 * ``encodeValuesOfObjCType:``
 
   Use multiple calls to ``encodeValueOfObjCType:at:`` instead.
@@ -325,6 +322,9 @@ Class ``NSData``
 * ``deserializeInts:count:atIndex:``
   This is a depricated method, see Apple documentation.
 
+* ``getBytes:``, ``getBytes:length:``, ``getBytes:range:``
+  Use ``bytes`` instead, and then use subscripting to get the
+  desired range.
 
 
 Class ``NSDictionary``

@@ -5,9 +5,6 @@
  * -getValue:
  * -pointerValue:
  *
- NSValue_getValue_
- NSValue_pointerValue
-
  */
 #include <Python.h>
 #include <Foundation/Foundation.h>

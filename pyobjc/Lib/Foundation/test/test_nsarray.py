@@ -329,5 +329,14 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
 
         self.assertEquals(a, (0, 1, 2, 3))
 
+    def test_unsupportedMethods(self):
+        """
+        Check that calling unsupported methods results in a TypeError
+        """
+        o = NSArray.arrayWithArray_(range(4))
+        self.assertRaises(TypeError, o.getObjects_)
+        self.assertRaises(TypeError, o.getObjects_range_, (1,2))
+        self.assertRaises(TypeError, o.apply_context_, lambda x, y:None, 0)
+
 if __name__ == '__main__':
     unittest.main()

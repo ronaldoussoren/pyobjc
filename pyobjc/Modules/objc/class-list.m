@@ -25,7 +25,11 @@ PyObjC_GetClassList(void)
 		while (bufferLen < neededLen) {
 			Class*    newBuffer;
 			bufferLen = neededLen;
-			newBuffer = realloc(buffer, sizeof(Class) * bufferLen);
+			if (buffer == NULL) {
+				newBuffer = malloc(sizeof(Class) * bufferLen);
+			} else {
+				newBuffer = realloc(buffer, sizeof(Class) * bufferLen);
+			}
 			if (newBuffer == NULL) {
 				PyErr_SetString(PyExc_MemoryError, 
 					"ObjC_GetClassList");
