@@ -31,6 +31,13 @@ Notes
   standalone application is packaged with the pyobjc modules compiled
   against, say, the Fink or Framework builds of Python, but is then executed
   using the Apple supplied python binary.
+
+ - The *Project Templates* directory includes a **clean.py** script that
+   removes noise files from the project templates.   When working on project
+   templates, it is recommended that this script be invoked before creating a
+   test project from one of the templates.   For example, the presence of
+   user specific project builder settings will cause any projects created
+   from a template to be incorrect.
     
 Cocoa-Python Templates
 ----------------------
