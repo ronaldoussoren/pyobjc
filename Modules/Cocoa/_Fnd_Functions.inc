@@ -46,6 +46,8 @@ static inline int convert_NSRange(PyObject* object, void* pvar)
  * This is a generated file.
  */
 
+typedef void* PYOBJC_VOIDPTR;
+
 static inline int convert_BOOL(PyObject* object, void* pvar)
 {
     BOOL* pbool = (BOOL*)pvar;

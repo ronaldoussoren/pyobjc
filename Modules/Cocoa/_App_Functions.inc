@@ -35,6 +35,8 @@ static inline int convert_NSPoint(PyObject* object, void* pvar)
  * This is a generated file.
  */
 
+typedef void* PYOBJC_VOIDPTR;
+
 static inline int convert_BOOL(PyObject* object, void* pvar)
 {
     BOOL* pbool = (BOOL*)pvar;
@@ -1004,7 +1006,7 @@ static	char* keywords[] = { "title", "defaultButton", "alternateButton", "otherB
 	id objc_modalDelegate;
 	SEL objc_didEndSelector;
 	SEL objc_didDismissSelector;
-	int objc_contextInfo;
+	PYOBJC_VOIDPTR objc_contextInfo;
 	id objc_msg;
 
 	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&O&O&iO&:NSBeginAlertSheet", keywords, convert_id, &objc_title, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow, convert_id, &objc_modalDelegate, convert_SEL, &objc_didEndSelector, convert_SEL, &objc_didDismissSelector, &objc_contextInfo, convert_id, &objc_msg) < 0) return NULL;
@@ -1032,7 +1034,7 @@ static	char* keywords[] = { "title", "defaultButton", "alternateButton", "otherB
 	id objc_modalDelegate;
 	SEL objc_didEndSelector;
 	SEL objc_didDismissSelector;
-	int objc_contextInfo;
+	PYOBJC_VOIDPTR objc_contextInfo;
 	id objc_msg;
 
 	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&O&O&iO&:NSBeginInformationalAlertSheet", keywords, convert_id, &objc_title, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow, convert_id, &objc_modalDelegate, convert_SEL, &objc_didEndSelector, convert_SEL, &objc_didDismissSelector, &objc_contextInfo, convert_id, &objc_msg) < 0) return NULL;
@@ -1060,7 +1062,7 @@ static	char* keywords[] = { "title", "defaultButton", "alternateButton", "otherB
 	id objc_modalDelegate;
 	SEL objc_didEndSelector;
 	SEL objc_didDismissSelector;
-	int objc_contextInfo;
+	PYOBJC_VOIDPTR objc_contextInfo;
 	id objc_msg;
 
 	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&O&O&iO&:NSBeginCriticalAlertSheet", keywords, convert_id, &objc_title, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow, convert_id, &objc_modalDelegate, convert_SEL, &objc_didEndSelector, convert_SEL, &objc_didDismissSelector, &objc_contextInfo, convert_id, &objc_msg) < 0) return NULL;
