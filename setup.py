@@ -448,3 +448,23 @@ dist = setup(
     license = 'MIT License',
     download_url = 'http://pyobjc.sourceforge.net/software/index.php',
 )
+
+if 'install' in sys.argv:
+    import textwrap
+    print textwrap.dedent(
+    """
+    **NOTE**
+
+    Installing PyObjC with "setup.py install" *does not* install the following:
+        py2app (bdist_mpkg, modulegraph, altgraph, ...)
+        Xcode or Project Builder templates
+        Documentation
+        Example code
+
+    The recommended method for installing PyObjC is to do:
+        
+        $ python setup.py bdist_mpkg --open
+
+    This will create and open an Installer metapackage that contains PyObjC,
+    py2app, and all the goodies!
+    """)
