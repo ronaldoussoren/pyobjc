@@ -4,7 +4,7 @@ from sre import VERBOSE, MULTILINE, DOTALL
 import re
 
 
-__all__ = ['Scanner', 'Token', 'IgnoreToken']
+__all__ = ['Scanner', 'Token', 'IgnoreToken', 'ScanningToken']
 
 class Scanner(object):
     def __init__(self, lexicon, flags=(VERBOSE | MULTILINE | DOTALL), verify=True):
@@ -20,31 +20,32 @@ class Scanner(object):
             token.regex = re.compile(phrase, flags)
             p.append(subpattern)
             self.actions.append(token)
+
+        p = sre_parse.SubPattern(s, [(BRANCH, (None, p))])
+        self.scanner = sre_compile.compile(p)
+
         if verify:
             for token in lexicon:
                 example = token.example
                 if example is None:
                     continue
-                match = token.regex.match
-                j = len(example)
-                i = 0
-                while i < j:
-                    res = match(example, i)
-                    if res is None:
-                        print token.__name__, i, j
-                        print '--- PATTERN ---'
-                        print token.pattern
-                        print '--- PARSED EXAMPLE ---'
-                        print example[:i]
-                        print '--- EXAMPLE LEFT ---'
-                        print example[i:]
-                        raise ValueError, "Token %s can not be verified" % token.__name__
-                    i = res.end()
-        p = sre_parse.SubPattern(s, [(BRANCH, (None, p))])
-        self.scanner = sre_compile.compile(p)
 
-    def iterscan(self, string, dead=None):
-        match = self.scanner.scanner(string).search
+                def dead(string, i, j):
+                    print token.__name__, i, j
+                    print '--- PATTERN ---'
+                    print token.pattern
+                    print '--- PARSED EXAMPLE ---'
+                    print string[:i]
+                    print '--- UNMATCHED CHUNK ---'
+                    print repr(string[i:j])
+                    raise ValueError, "Token %s can not be verified" % token.__name__
+                s = Scanner([token], verify=False)
+                for m in s.iterscan(example, dead=dead):
+                    pass
+
+
+    def iterscan(self, string, dead=None, idx=0):
+        match = self.scanner.scanner(string, idx).search
         actions = self.actions
         i, j, k = 0, 0, 0
         end = len(string)
@@ -66,8 +67,8 @@ class Scanner(object):
                 yield rval
                 if next_pos is not None and next_pos != j:
                     # "fast forward" the scanner
-                    match = self.scanner.scanner(string, j).search
                     j = next_pos
+                    match = self.scanner.scanner(string, j).search
             i = j
         if i != end and dead is not None:
             rval = dead(string, i, end)
@@ -104,6 +105,47 @@ class Token(object):
 
     def __repr__(self):
         return '%s(%r)' % (type(self).__name__, self.groupdict())
+
+class ScanningToken(Token):
+    scanner = None
+    dead = None
+    endtoken = None
+    lexicon = None
+    _matches = None
+
+    def found(self, match):
+        if self.lexicon is None:
+            raise ValueError, "missing lexicon"
+        if self.endtoken is None:
+            raise ValueError, "missing endtoken"
+        if self.endtoken in self.lexicon:
+            raise ValueError, "endtoken is present in lexicon"
+        end = match.end()
+        if self.scanner is None:
+            lex = [self.endtoken]
+            lex.extend(self.lexicon)
+            self.scanner = Scanner(lex)
+
+        scanner = self.scanner.iterscan(match.string, dead=self.dead, idx=end)
+        matches = self._matches = []
+        for match in scanner:
+            if match is None:
+                continue
+            matches.append(match)
+            if isinstance(match, self.endtoken):
+                return self, match.match.end()
+        else:
+            raise ValueError, "EndToken not matched"
+
+    def matches(self):
+        return self._matches
+
+    def __repr__(self):
+        return '%s(%r, %r)' % (
+            type(self).__name__,
+            self.groupdict(),
+            self.matches(),
+        )
 
 class IgnoreToken(Token):
     def found(self, match):
