@@ -38,6 +38,8 @@ def process_file(outfp, filename):
     in_comment = 0
 
     for ln in fp.xreadlines():
+        ln = LINE_COMMENT_RE.sub('', ln)        
+        
         m = DEFINE_RE.match(ln)
         if m is not None:
             name, value = m.group(1), m.group(2)
@@ -79,7 +81,6 @@ def process_file(outfp, filename):
                     in_enum = 0
                     continue
 
-                ln = LINE_COMMENT_RE.sub('', ln)        
                 ln = BLOCK_1_RE.sub('', ln)
                 m = BLOCK_S_RE.search(ln)
                 if m:
