@@ -75,26 +75,12 @@ void ObjCErr_FromObjC(NSException* localException)
 	if (userInfo) {
 		id val;
 
-		val = [userInfo objectForKey:@"__pyobjc_exc__"];
+		val = [userInfo objectForKey:@"__pyobjc_exc_value__"];
 		if (val) {
-			PyObject* exc = [val pyObject];
-
-			/* Create a new exception */
-			if (PyInstance_Check(exc)) {
-				PyErr_SetNone(
-					(PyObject*)
-					((PyInstanceObject*)exc)->in_class);
-			} else {
-				PyErr_SetNone((PyObject*)exc->ob_type);
-			}
-
-			/* And now replace the actual exception object by
-			 * the object in 'userInfo'
-			 */
-			Py_INCREF(exc);
-			PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
-			PyErr_Restore(exc_type, exc , exc_traceback);
-			Py_XDECREF(exc_value);
+			exc_value = [val pyObject];
+			exc_type = [[userInfo objectForKey:@"__pyobjc_exc_type__"] pyObject];
+			exc_traceback = [[userInfo objectForKey:@"__pyobjc_exc_traceback__"] pyObject];
+			PyErr_Restore(exc_type, exc_value , exc_traceback);
 			return;
 		}
 	}
@@ -123,9 +109,9 @@ void ObjCErr_FromObjC(NSException* localException)
 
 	PyErr_SetObject(exception, PyString_FromString(buf));
 	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
-	if (!exc_value || !PyObject_IsInstance(exc_value, exc_type)) {
-		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
-	}
+//	if (!exc_value || !PyObject_IsInstance(exc_value, exc_type)) {
+//		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
+//	}
 	PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict);
 	PyObject_SetAttrString(exc_value, "name", PyString_FromString(
 		[[localException name] cString]));
@@ -143,15 +129,15 @@ void ObjCErr_ToObjC(void)
 	PyObject* args;
 	PyObject* repr;
 	NSException* val;
-	NSDictionary* userInfo;
+	NSMutableDictionary* userInfo;
 
 	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
 
 	if (!exc_type) return;
 
-	if (exc_value == NULL || !PyObject_IsInstance(exc_value, exc_type)) {
-		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
-	}
+//	if (exc_value == NULL || !PyObject_IsInstance(exc_value, exc_type)) {
+//		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
+//	}
 
 	args = PyObject_GetAttrString(exc_value, "_pyobjc_info_");
 	if (args == NULL) {
@@ -205,11 +191,17 @@ void ObjCErr_ToObjC(void)
 	Py_XDECREF(args);
 
 	repr = PyObject_Str(exc_value);
-	userInfo = [NSDictionary 
-			dictionaryWithObject:[
-				OC_PythonObject newWithObject:exc_value]
-			forKey:@"__pyobjc_exc__"
-		   ];
+	userInfo = [NSMutableDictionary dictionaryWithCapacity: 3];
+	[userInfo setObject:
+		[OC_PythonObject newWithObject:exc_value]
+		forKey:@"__pyobjc_exc_value__"];
+	[userInfo setObject:
+		[OC_PythonObject newWithObject:exc_type]
+		forKey:@"__pyobjc_exc_type__"];
+	[userInfo setObject:
+		[OC_PythonObject newWithObject:exc_traceback]
+		forKey:@"__pyobjc_exc_traceback__"];
+
 	val = [NSException 
 		exceptionWithName:@"OC_PythonException"
 		reason:[NSString stringWithCString:PyString_AS_STRING(repr)]
