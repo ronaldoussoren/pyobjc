@@ -32,8 +32,16 @@ def example(s):
     return dedent(s).strip()
 
 class BlockComment(Token):
-    pattern = pattern(r'\s*/\*(?P<comment>(?:[^*]|\*[^/])*)\*/\s*')
-    example = example(r'/* this is a block comment */')
+    pattern = pattern(r'''
+    \s*
+    \/\*
+    (?P<comment>([^*]|\*(?!/))*)
+    \*\/
+    ''')
+    example = example('''
+    /*************\t\tThis is an annoying one\t\t**********/
+    /* this is a block comment */
+    ''')
 
 class SingleLineComment(Token):
     pattern = pattern(r'\s*//(?P<comment>[^\n]*)(\n|$)')
@@ -43,9 +51,32 @@ class InsignificantWhitespace(IgnoreToken):
     pattern = pattern(r'''\s+''')
     example = example('  \t\n\r   ')
 
+class UninterestingTypedef(Token):
+    pattern = pattern(r'''
+    typedef
+    \s*(?P<body>[^;]*)
+    %(SEMI)s
+    ''')
+    example = example('''
+    typedef baz wibble fun* SomethingGreat;
+    ''')
+
+class CompilerDirective(Token):
+    pattern = pattern(r'''
+    \s*
+    \#(?P<name>undef|if|ifdef|ifndef|endif|else|elif|pragma|error|warn)
+    \s*(?P<body>([^\\\n]|\\(\n|$))*)
+    ''')
+    example = example(r'''
+    #if defined(foo)
+    #if \
+        insane
+    #endif
+    #else stuff
+    ''')
+
 class Interface(Token):
     pattern = pattern(r'''
-    %(BOL)s
     @interface
         \s+(?P<name>%(IDENTIFIER)s)
         \s*(?:\((?P<category>%(IDENTIFIER)s)\))?
@@ -53,7 +84,6 @@ class Interface(Token):
         \s*(?:<(?P<protocols>[^>]*)>)?
         \s*(?:{(?P<ivars>[^}])})?
         \s*(?P<interface_body>.*?)
-    %(BOL)s
     @end
     %(EOL)s
     ''')
@@ -70,12 +100,10 @@ class Interface(Token):
 
 class Protocol(Token):
     pattern = pattern(r'''
-    %(BOL)s
     @protocol
         \s+(?P<name>%(IDENTIFIER)s)
         \s*(?:<(?P<super>%(IDENTIFIER)s)>)?
         \s*(?P<protocol_body>.*?)
-    %(BOL)s
     @end
     %(EOL)s
     ''')
@@ -87,7 +115,6 @@ class Protocol(Token):
 
 class AngleImport(Token):
     pattern = pattern(r'''
-    %(BOL)s
     \#\s*(?P<import_type>import|include)
         \s+<(?P<import_file>[^>]*)>
     %(EOL)s
@@ -96,7 +123,6 @@ class AngleImport(Token):
 
 class StringImport(Token):
     pattern = pattern(r'''
-    %(BOL)s
     \#\s*(?P<import_type>import|include)
         \s+"(?P<import_file>[^"]*)"
     %(EOL)s
@@ -108,7 +134,6 @@ class SimpleDefine(Token):
     # XXX foo | bar | baz
     # XXX ((type)foo)
     pattern = pattern(r'''
-    %(BOL)s
     \#\s*define\s*
         (?P<name>%(IDENTIFIER)s)\s+
         \(?(?P<value>
@@ -134,43 +159,50 @@ class SimpleDefine(Token):
     #define foo (8)
     ''')
     
-
-class GlobalString(Token):
+class MacroDefine(Token):
     pattern = pattern(r'''
-    %(BOL)s
-    %(EXTERN)s\s*
+    \s*\#\s*define\s*
+        (?P<name>%(IDENTIFIER)s)
+        \s*\(
+            (?P<args>
+                (\s*%(IDENTIFIER)s\s*,)*
+                (\s*%(IDENTIFIER)s\s*)?
+            )
+        \)
+    \s*(?P<body>([^\\\n]|\\(\n|$))*)
+    ''')
+    example = example(r'''
+    #define NSLocalizedString(key, comment) \
+        [[NSBundle mainBundle] localizedStringForKey:(key) value:@"" table:nil]
+    #define GetNSApp() [NSApplication sharedApplication]
+    #define DoStuff(a, b, c) do { \
+        blah blah blah \
+        blah blah blah \
+    } while (0);
+    ''')
+
+class GlobalThing(Token):
+    pattern = pattern(r'''
+    (?:%(EXTERN)s|%(EXPORT)s)\s+
     (const\s+)?
-    (CFStringRef|(NSString|char)\s*\*)
+    (?P<type>%(IDENTIFIER)s%(INDIRECTION)s*)
     \s*(const\s+)?
-    (?P<name>%(IDENTIFIER)s)\b
-    \s*%(AVAILABLE)s?\s*
+    (?P<name>%(IDENTIFIER)s)(?:\s*\[\s*\]\s*|\b)
+    (?:\s+%(AVAILABLE)s)?
     %(SEMI)s
     ''')
     example = example(r'''
+    extern const double FooBar;
     extern const NSString *foo;
     extern NSString *foo;
     APPKIT_EXTERN NSString* const foo;
+    FOUNDATION_EXPORT NSString * const Foo;
     extern CFStringRef cfFoo AVAILABLE_MAC_OSX_10_8;
-    ''')
-
-class GlobalCharArray(Token):
-    pattern = pattern(r'''
-    %(BOL)s
-    %(EXTERN)s
-    \s*(const\s+)?
-    char
-    \s*(const\s+)?
-    (?P<name>%(IDENTIFIER)s)\s*\[\s*\]\s*
-    \s*%(AVAILABLE)s?\s*
-    %(SEMI)s
-    ''')
-    example = example(r'''
     APPKIT_EXTERN const char foosball[] AVAILABLE_NEVER;
     ''')
-    
 
 class ForwardClassReference(Token):
-    pattern = pattern(r'@class (?P<name>[^;]+);')
+    pattern = pattern(r'@class (?P<name>[^;]+)%(SEMI)s')
     example = example(r'@class Foo;')
 
 class EnumBareMember(Token):
@@ -187,7 +219,12 @@ class EnumValueMember(Token):
     pattern = pattern(r'''
     \s*(?P<name>%(IDENTIFIER)s)
     \s*=
-    \s*(?P<value>%(INTEGER)s)
+    \s*(?P<value>(
+        %(INTEGER)s
+        | %(HEX)s
+        | %(CHARS)s
+        | %(IDENTIFIER)s
+        ))
     \s*,?
     ''')
     example = example(r'''
@@ -207,9 +244,9 @@ class NamedEnumEnd(Token):
 
 class NamedEnum(ScanningToken):
     pattern = pattern(r'''
-    %(BOL)s
     typedef
     \s+enum
+    \s*(?P<name>%(IDENTIFIER)s)?
     \s*{\s*
     ''')
     endtoken = NamedEnumEnd
@@ -245,7 +282,6 @@ class EnumEnd(Token):
 class Struct(Token):
     # XXX handle comments? need its own internal parser?
     pattern = pattern(r'''
-    %(BOL)s
     struct
     \s*(?P<structname>%(IDENTIFIER)s)?
     \s*{
@@ -265,9 +301,8 @@ class Struct(Token):
     ''')
 
 class NamedStruct(Token):
-    # XXX handle comments, needs its own internal parser
+    # XXX handle comments? need its own internal parser?
     pattern = pattern(r'''
-    %(BOL)s
     typedef
     \s+struct
     \s*(?P<structname>%(IDENTIFIER)s)?
@@ -290,8 +325,8 @@ class NamedStruct(Token):
  
 class Enum(ScanningToken):
     pattern = pattern(r'''
-    %(BOL)s
     \s*enum
+    \s*(?P<name>%(IDENTIFIER)s)?
     \s*{\s*
     ''')
     endtoken = EnumEnd
@@ -316,6 +351,7 @@ class Enum(ScanningToken):
     ''')
 
 class FunctionEnd(Token):
+    # XXX - UNUSED
     pattern = pattern(r'''
     \)
     \s*%(SEMI)s
@@ -326,6 +362,7 @@ class FunctionEnd(Token):
     ''')
 
 class FunctionParameter(Token):
+    # XXX - UNUSED
     pattern = pattern(r'''
     (%(IDENTIFIER)s\s*)+
     \s*%(INDIRECTION)s
@@ -338,7 +375,6 @@ class FunctionParameter(Token):
 
 #class ExportFunction(ScanningToken):
 #    pattern = pattern(r'''
-#    %(BOL)s
 #    %(EXPORT)s
 #    \s*(?P<returns>%(IDENTIFIER)s%(INDIRECTION)s*)
 #    \s*%(IDENTIFIER)s
@@ -355,15 +391,19 @@ class FunctionParameter(Token):
 #    ''')
 
 class ExportFunction(Token):
+    # XXX handle comments? need its own internal parser?
     pattern = pattern(r'''
-    %(BOL)s
     %(EXPORT)s
-    \s*(?P<returns>%(IDENTIFIER)s%(INDIRECTION)s*)
+    \s*(?P<returns>
+        (%(KEYWORD)s\s*)*
+        %(IDENTIFIER)s
+        (%(INDIRECTION)s|\s+%(KEYWORD)s)*
+    )
     \s*(?P<name>%(IDENTIFIER)s)
     \s*\(
-    \s*[^)]*
+        (?P<args>\s*[^)]*)
     \s*\)
-    \s*%(SEMI)s
+    \s*%(SEMI)s\s*
     ''')
     example = example(r'''
     FOUNDATION_EXPORT SomeResult **SomeName(const Foo *, const Foo *Bar);
@@ -373,20 +413,26 @@ class ExportFunction(Token):
 class StaticInlineFunction(Token):
     # XXX need to figure out how to find a close brace
     pattern = pattern(r'''
-    %(BOL)s
     %(STATIC_INLINE)s
-    \s*(?P<returns>%(IDENTIFIER)s%(INDIRECTION)s*)
+    \s*(?P<returns>
+        (%(KEYWORD)s\s*)*
+        %(IDENTIFIER)s
+        (%(INDIRECTION)s|\s+%(KEYWORD)s)*
+    )
     \s*(?P<name>%(IDENTIFIER)s)
     \s*\(
-    \s*[^)]*
+        (?P<args>\s*[^)]*)
     \s*\)
     \s*{
-    \s*[^}]*
-    \s*}
+        (?P<body>\s*[^}]*)
+    \s*}\s*
     ''')
     example = example(r'''
     FOUNDATION_STATIC_INLINE BOOL NSDecimalIsNotANumber(const NSDecimal *dcm)
       { return ((dcm->_length == 0) && dcm->_isNegative); }
+    FOUNDATION_STATIC_INLINE unsigned short NSSwapShort(unsigned short inv) {
+        return CFSwapInt16(inv);
+    }
     ''')
 
 
@@ -398,8 +444,7 @@ LEXICON = [
     Protocol,
     AngleImport,
     SimpleDefine,
-    GlobalString,
-    GlobalCharArray,
+    GlobalThing,
     ForwardClassReference,
     NamedEnum,
     Enum,
@@ -407,15 +452,24 @@ LEXICON = [
     Struct,
     ExportFunction,
     StaticInlineFunction,
+    CompilerDirective,
+    UninterestingTypedef,
+    MacroDefine,
 ]
 
 if __name__ == '__main__':
     from pdb import pm
     import re
     import sys
-    fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSDecimal.h'
-    fn = (sys.argv[1:] or [fn])[0]
+    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSDecimal.h'
+    fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSBundle.h'
+    files = sys.argv[1:] or [fn]
+    def deadraise(string, i, j):
+        print string[i:j]
+        import pdb
+        pdb.Pdb().set_trace()
     scan = Scanner(LEXICON)
-    for token in scan.iterscan(file(fn).read(), dead=deadspace):
-        if token is not None:
-            print token
+    for fn in files:
+        for token in scan.iterscan(file(fn).read(), dead=deadraise):
+            if token is not None:
+                print token
