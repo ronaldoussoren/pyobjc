@@ -109,9 +109,6 @@ void ObjCErr_FromObjC(NSException* localException)
 
 	PyErr_SetObject(exception, PyString_FromString(buf));
 	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
-//	if (!exc_value || !PyObject_IsInstance(exc_value, exc_type)) {
-//		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
-//	}
 	PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict);
 	PyObject_SetAttrString(exc_value, "name", PyString_FromString(
 		[[localException name] cString]));
@@ -135,14 +132,8 @@ void ObjCErr_ToObjC(void)
 
 	if (!exc_type) return;
 
-//	if (exc_value == NULL || !PyObject_IsInstance(exc_value, exc_type)) {
-//		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
-//	}
-
 	args = PyObject_GetAttrString(exc_value, "_pyobjc_info_");
-	if (args == NULL) {
-		PyErr_Clear();
-	} else {
+	if (args != NULL) {
 		/* This may be an exception that started out in 
 		 * Objective-C code.
 		 */
@@ -210,7 +201,6 @@ void ObjCErr_ToObjC(void)
 	Py_DECREF(repr);
 
 	if (ObjC_VerboseLevel) {
-
 		PyErr_Restore(exc_type, exc_value , exc_traceback);
 		NSLog(@"PyObjC: Converting exception to Objective-C:");
 		PyErr_Print();
