@@ -114,7 +114,7 @@ SIMPLE_TYPES={
         None
     ),
     'BOOL': (
-        "\tresult = PyObjCBool_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+        "\tresult = PyBool_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
         'O&',
         'PyObjC_ConvertBOOL, &%(varname)s',
         None

@@ -7,6 +7,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.2 (2004-??-??)
 ------------------------
 
+- This version no longer support Python 2.2. Python 2.3 or later is
+  required.
+
 - ``objc.loadBundle`` now returns bundle we just loaded.
 
 - Added ``objc.loadBundleVariables`` and ``objc.loadBundleFunctions``,

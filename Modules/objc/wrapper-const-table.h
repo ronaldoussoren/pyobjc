@@ -81,7 +81,7 @@ static inline int add_BOOL(PyObject*d, char* name, BOOL value)
 	int res;
 	PyObject* v;
 
-	v = PyObjCBool_FromLong(value);
+	v = PyBool_FromLong(value);
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);

@@ -144,9 +144,9 @@
 	 * for boolean True and False values.
 	 */
 	} else if (kCFBooleanTrue == (CFBooleanRef)self) {
-		rval = PyObjCBool_FromLong(1);
+		rval = PyBool_FromLong(1);
 	} else if (kCFBooleanFalse == (CFBooleanRef)self) {
-		rval = PyObjCBool_FromLong(0);
+		rval = PyBool_FromLong(0);
 #endif
 	} else {
 		rval = pythonify_c_value(typestr, buf);
@@ -1415,7 +1415,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				return -1;
 			}
 
-		} else if (PyObjCBool_Check(argument)) {
+		} else if (PyBool_Check(argument)) {
 			*(id *) datum = [NSNumber 
 				numberWithBool:PyInt_AS_LONG (argument)];
 		} else if (PyInt_Check (argument)) {

@@ -189,7 +189,7 @@ PyDoc_STRVAR(imp_class_method_doc,
 static PyObject*
 imp_class_method(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
 {
-	return PyObjCBool_FromLong(0 != (self->flags & PyObjCSelector_kCLASS_METHOD));
+	return PyBool_FromLong(0 != (self->flags & PyObjCSelector_kCLASS_METHOD));
 }
 
 PyDoc_STRVAR(imp_donates_ref_doc, 
@@ -200,7 +200,7 @@ PyDoc_STRVAR(imp_donates_ref_doc,
 static PyObject*
 imp_donates_ref(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
 {
-	return PyObjCBool_FromLong(0 != (self->flags & PyObjCSelector_kDONATE_REF));
+	return PyBool_FromLong(0 != (self->flags & PyObjCSelector_kDONATE_REF));
 }
 
 PyDoc_STRVAR(imp_is_alloc_doc, 
@@ -211,7 +211,7 @@ PyDoc_STRVAR(imp_is_alloc_doc,
 static PyObject*
 imp_is_alloc(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
 {
-	return PyObjCBool_FromLong(0 != (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED));
+	return PyBool_FromLong(0 != (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED));
 }
 
 
