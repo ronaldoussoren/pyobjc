@@ -1,4 +1,3 @@
-from __future__ import generators
 """
 dyld emulation
 """

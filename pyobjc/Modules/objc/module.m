@@ -386,11 +386,17 @@ allocateBuffer(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
 }
 
 PyDoc_STRVAR(currentBundle_doc,
-	     "currentBundle() -> bundle\n"
-	     "\n"
-	     "Get the current bundle, works for plug-ins and\n"
-	     "applications."
-	     );
+	"currentBundle() -> bundle\n"
+	"\n"
+	"Get the current bundle during module initialization.\n"
+	"Works for plug-ins and applications.\n"
+	"\n"
+	"Note that this is the default bundle used by\n"
+	"NibClassBuilder.extractClasses(...),\n"
+	"so calling it explicitly is rarely useful."
+	"After module initialization, use\n"
+	"NSBundle.bundleForClass_(ClassInYourBundle)."
+);
 static PyObject*
 currentBundle(PyObject* self __attribute__((__unused__)))
 {
