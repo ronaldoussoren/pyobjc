@@ -29,10 +29,10 @@ such.
 			<key>Install-test</key>
 			<string>
 import objc
-ver = objc.__version__
-if ver &lt; "1.1":
+from distutils.version import StrictVersion
+if objc.__version__ == '1.1c1':
 	raise OldInstalled, "Version %s installed"%objc.__version__
-if ver.startswith("1.1") and not ver.startswith("1.1.") and ver != "1.1":
+if StrictVersion(objc.__version__)  &lt; "1.1":
 	raise OldInstalled, "Version %s installed"%objc.__version__
 			</string>
 			<key>Home-page</key>
@@ -72,10 +72,10 @@ such.
 			<key>Install-test</key>
 			<string>
 import objc
-ver = objc.__version__
-if ver &lt; "1.1":
+from distutils.version import StrictVersion
+if objc.__version__ == '1.1c1':
 	raise OldInstalled, "Version %s installed"%objc.__version__
-if ver.startswith("1.1") and not ver.startswith("1.1.") and ver != "1.1":
+if StrictVersion(objc.__version__)  &lt; "1.1":
 	raise OldInstalled, "Version %s installed"%objc.__version__
 			</string>
 			<key>Home-page</key>
