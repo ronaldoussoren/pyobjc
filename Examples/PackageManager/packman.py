@@ -272,6 +272,9 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
             setString(self.itemStatus, msg)
             self.installButton.setEnabled_(True)
             self._prerequisites = package.prerequisites()
+
+            # XXX: Add the closure of all dependencies
+            
             self.prerequisitesTable.reloadData()
 
     def addToFavorites_(self, sender):
@@ -523,8 +526,6 @@ class DownloadThread (threading.Thread):
         except:
             self.master.performSelectorOnMainThread_withObject_waitUntilDone_(
                 'dbProblem:', (self.document, self.url, sys.exc_info()), False)
-            del pool
-            raise
 
         del pool
 
@@ -772,7 +773,10 @@ class PackageManager (NibClassBuilder.AutoBaseClass):
         doc.showWindows()
 
     def dbProblem_(self, (doc, url, exc_info)):
-        # TODO: Run an alert-panel
+        NSRunAlertPanel(
+                "Cannot open database",
+                "Opening database at %s failed: %s"%(url, exc_info[1]),
+                "OK", None, None)
         doc.close()
 
 
