@@ -75,6 +75,7 @@ int
 ObjC_SignatureForSelector(char* class_name, SEL selector, char* signature)
 {
 	struct replacement_signature* value;
+	PyObject*                      sublist;
 
 	value = PyMem_Malloc(sizeof(*value));
 	if (value == NULL) {
@@ -97,10 +98,19 @@ ObjC_SignatureForSelector(char* class_name, SEL selector, char* signature)
 	}
 
 	if (replacement_signatures == NULL) {
-		replacement_signatures = PyList_New(0);
+		replacement_signatures = PyDict_New();
 	}
 
-	PyList_Append(replacement_signatures, 
+	sublist = PyDict_GetItemString(replacement_signatures, 
+		(char*)SELNAME(value->selector));
+	if (sublist == NULL) {
+		sublist = PyList_New(0);
+		PyDict_SetItemString(replacement_signatures,
+			(char*)SELNAME(value->selector), sublist);
+		Py_DECREF(sublist);
+	}
+
+	PyList_Append(sublist, 
 		PyCObject_FromVoidPtr(value, free_replacement_signature));
 	return 0;
 }
@@ -112,17 +122,21 @@ static char* ObjC_FindReplacementSignature(Class cls, SEL selector)
 	struct replacement_signature* cur ;
 	Class found_class = nil;
 	char* found_signature = NULL;
+	PyObject* sublist;
 
 	if (replacement_signatures == NULL) {
 		return NULL;
 	}
 
-	len = PyList_Size(replacement_signatures);
+	sublist = PyDict_GetItemString(replacement_signatures, (char*)SELNAME(selector));
+	if (sublist == NULL) return NULL;
+
+	len = PyList_Size(sublist);
 	for (i = 0; i < len; i++) {
 		Class cur_class;
 
 		cur = PyCObject_AsVoidPtr(
-			PyList_GetItem(replacement_signatures, i));
+			PyList_GetItem(sublist, i));
 
 		if (cur->selector != selector) {
 			continue;
@@ -422,12 +436,12 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 {
 	PyObject* pyself = self->sel_self;
 	Class     pyself_class;
-	int       argslen;
 	ObjC_CallFunc_t execute = NULL;
 	int       is_super_call = 0;
 	PyObject* res;
 
 	if (pyself == NULL) {
+		int       argslen;
 		argslen = PyTuple_Size(args);
 		if (argslen < 1) {
 			ObjCErr_Set(PyExc_TypeError,
@@ -506,8 +520,9 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 	} else {
 		PyObject* arglist;
 		int       i;
+		int       argslen;
 
-
+		argslen = PyTuple_Size(args);
 		arglist = PyTuple_New(argslen - 1);
 		for (i = 1; i < argslen; i++) {
 			PyObject* v = PyTuple_GetItem(args, i);
@@ -517,6 +532,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			}
 
 			PyTuple_SetItem(arglist, i-1, v);
+			OC_CheckRevive(v);
 			Py_INCREF(v);
 		}
 
@@ -568,6 +584,7 @@ objcsel_descr_get(ObjCNativeSelector* meth, PyObject* obj, PyObject* class)
 
 	result->sel_self       = obj;
 	if (result->sel_self) {
+		OC_CheckRevive(result->sel_self);
 		Py_INCREF(result->sel_self);
 	}
 
@@ -698,6 +715,7 @@ ObjCSelector_FindNative(PyObject* self, char* name)
 			if (res != NULL) {
 				/* Bind the method to self */
 				res->sel_self = self;
+				OC_CheckRevive(res->sel_self);
 				Py_INCREF(res->sel_self);
 			}
 			return (PyObject*)res;
@@ -744,9 +762,12 @@ ObjCSelector_NewNative(Class class,
 	if (class_method) {
 		result->sel_flags |= ObjCSelector_kCLASS_METHOD;
 	}
+#if 0
+	/* This isn't really necessary: Use objc._convenience.py instead */
 	if (is_allocator_method(result->sel_selector)) {
 		result->sel_flags |= ObjCSelector_kDONATE_REF;
 	}
+#endif
 	return (PyObject*)result;
 }
 
@@ -870,11 +891,13 @@ pysel_call(ObjCPythonSelector* self, PyObject* args)
 		if (actual_args == NULL) {
 			return NULL;
 		}
+		OC_CheckRevive(self->sel_self);
 		Py_INCREF(self->sel_self);
 		PyTuple_SetItem(actual_args, 0, self->sel_self);
 		for (i = 0; i < argc; i++) {
 			PyObject* v = PyTuple_GET_ITEM(args, i);
 			if (v == NULL) return NULL;
+			OC_CheckRevive(v);
 			Py_INCREF(v);
 			if (PyTuple_SetItem(actual_args, i+1, v) < 0) 
 				return NULL;
@@ -1137,6 +1160,7 @@ pysel_descr_get(ObjCPythonSelector* meth, PyObject* obj, PyObject* class)
 	result->sel_flags = meth->sel_flags;
 	result->callable = meth->callable;
 	if (result->sel_self) {
+		OC_CheckRevive(result->sel_self);
 		Py_INCREF(result->sel_self);
 	}
 	if (result->callable) {
