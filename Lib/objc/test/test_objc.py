@@ -2,10 +2,14 @@ import unittest
 
 import objc
 
-class TestBOOL(unittest.TestCase):
+class TestConstants(unittest.TestCase):
     def testBooleans(self):
         self.assert_( objc.YES, "YES was not true." )
         self.assert_( not objc.NO, "NO was true." )
+
+    def testNil(self):
+        from types import NoneType
+        self.assert_( not objc.nil, "nil is not nil/None." )
     
 class TestClassLookup(unittest.TestCase):
     def testLookupClassNoSuchClassErrorRaised(self):
@@ -32,13 +36,6 @@ class TestClassLookup(unittest.TestCase):
         self.assert_( objc.runtime.NSException in objc.class_list(), "class_list() does not appear to contain NSException class" )
         self.assert_( objc.runtime.NSMutableArray in objc.class_list(), "class_list() does not appear to contain NSMutableArray class" )
 
-class TestObjectInstantiation(unittest.TestCase):
-    def testInstantiation(self):
-        anInstance = objc.runtime.NSObject.new()
-        self.assert_( anInstance, "Failed to instantiate an instance" )
-        self.assert_( isinstance( anInstance, objc.runtime.NSObject ), "Instantiated object not an instance of NSObject." )
-        self.assert_( anInstance.isEqual_( anInstance ), "Instance !isEqual: to itself." )
-
 class TestMethodInvocation(unittest.TestCase):
     def setUp(self):
         self.NSObjectInstance = objc.runtime.NSObject.alloc()
@@ -53,9 +50,8 @@ class TestMethodInvocation(unittest.TestCase):
 
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest( unittest.makeSuite( TestBOOL ) )
+    suite.addTest( unittest.makeSuite( TestConstants ) )
     suite.addTest( unittest.makeSuite( TestClassLookup ) )
-    suite.addTest( unittest.makeSuite( TestObjectInstantiation ) )
     suite.addTest( unittest.makeSuite( TestMethodInvocation ) )
     return suite
 

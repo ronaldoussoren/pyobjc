@@ -92,7 +92,7 @@ CoreExtensions =  [
 		   ],
 		   extra_link_args=[
 			'-g', '-framework', 'AppKit'
-		   ]),
+		   ])
 	]
 CocoaPackages = [ 'Foundation', 'AppKit' ]
 CocoaExtensions = [
