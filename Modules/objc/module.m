@@ -31,7 +31,7 @@ setStrBridgeEnabled(PyObject* self __attribute__((__unused__)), PyObject* args, 
 {
 	static char* keywords[] = { "enabled", NULL };
 	PyObject *o;
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "o:setStrBridgeEnabled",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:setStrBridgeEnabled",
 		keywords, &o)) {
 		return NULL;
 	}
