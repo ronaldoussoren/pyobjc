@@ -37,9 +37,9 @@ def copy_tutorial_file(fn, tutdir, dstname):
         cwd = os.getcwd()
         dstname = os.path.abspath(dstname)
         srcdir, srcfile = os.path.split(src)
-        os.chdir(srcdir)
+        os.chdir(os.path.abspath(srcdir))
         try:
-            args = ['zip', '-r9', dstname, srcfile]
+            args = ['/usr/bin/zip', '-rq9', dstname, srcfile, '-x', '*/.svn/*']
             os.spawnv(os.P_WAIT, args[0], args)
         finally:
             os.chdir(cwd)
