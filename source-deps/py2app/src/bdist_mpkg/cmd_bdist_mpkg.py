@@ -14,9 +14,7 @@ from distutils import log
 
 from altgraph.compat import *
 
-import pkg
-import tools
-import plists
+from bdist_mpkg import pkg, tools, plists
 
 class bdist_mpkg (Command):
 
@@ -124,7 +122,7 @@ class bdist_mpkg (Command):
             self.background = pkg.try_exts('Background', exts=pkg.IMAGE_EXTS)
 
         if self.template is None:
-            vers = os.popen('/usr/bin/sw_vers -productVersion').read().strip()
+            vers = tools.sw_vers()
             if LooseVersion(vers) < LooseVersion('10.3'):
                 self.template = 'prepanther'
             else:

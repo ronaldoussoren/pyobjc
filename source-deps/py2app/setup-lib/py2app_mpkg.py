@@ -4,10 +4,9 @@ from distutils.version import LooseVersion
 from distutils import log
 from distutils.command.bdist_mpkg import bdist_mpkg as _bdist_mpkg
 from py2app.util import copy_tree, skipscm
-try:
-    set
-except NameError:
-    from sets import Set as set
+
+from altgraph.compat import *
+from bdist_mpkg import tools
 
 JUNK = set(['.DS_Store', '.gdb_history', 'build', 'dist', 'NonFunctional'])
 JUNK_EXTS = set(['.pbxuser', '.pyc', '.pyo', '.swp'])
@@ -49,7 +48,8 @@ def write_preflight_rm(path, files):
     fobj.close()
     os.chmod(path, 0775)
 
-OSX_VERSION = LooseVersion(os.popen('/usr/bin/sw_vers -productVersion').read().strip())
+OSX_VERSION = LooseVersion(tools.sw_vers())
+
 class bdist_mpkg(_bdist_mpkg):
     def initialize_options(self):
         _bdist_mpkg.initialize_options(self)
