@@ -9,19 +9,22 @@ Version 1.3 (2005-03-??)
 
 - New ``objc.pyobjc_id`` function that returns a the id of the underlying
   NSObject as an integer.  (Python wrapper objects are often made on the
-  fly, meaning id(obj) is not constant during the lifetime of the object.)
+  fly, meaning ``id(obj)`` is not constant during the lifetime of the
+  object.)
 
 - The bridge now maintains object identity across the bridge
   in both directions. Previous versions of the bridge only did this when
   bridging from Objective-C to Python.
 
-  Exceptions: NSString and NSNumber do not have unique proxies. NSString
-  never will have. Python numbers and strings are converted, not proxied and
-  therefore also don't get unique proxies.
+  Exceptions: ``NSString`` and ``NSNumber`` do not have unique proxies.  These
+  types are converted to subclasses of Python types as appropriate, so they
+  can not have unique proxies.  The identity of the original Objective-C
+  object is maintained by these subclasses, but there may be many Python
+  "value proxies" for a single Objective-C object.
 
-  And finally, any python object that is proxied using the ``__pyobjc_object__``
-  interface will only get a unique proxy if the ``__pyobjc_object__`` method
-  implements that feature.
+  Any Python object that is proxied using the ``__pyobjc_object__``
+  interface will only get a unique proxy if the ``__pyobjc_object__``
+  method implements that feature.
 
 - New ``objc.protocolsForClass`` function that returns a list of protocols
   that the class directly claims to conform to.
