@@ -19,8 +19,6 @@ void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state);
 
 NSException* PyObjCErr_AsExc(void);
 
-PyGILState_STATE PyObjCGILState_Ensure(void);
-
 PyObject* PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc);
 
 char* PyObjCUtil_Strdup(const char* value);

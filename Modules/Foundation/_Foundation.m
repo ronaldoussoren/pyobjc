@@ -329,7 +329,7 @@ imp_objWithObjects_count_(void* cif __attribute__((__unused__)), void* resp, voi
 
 	*preturnValue = nil;
 
-	state = PyObjCGILState_Ensure();
+	state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
@@ -432,7 +432,7 @@ imp_clsWithObjects_count_(void* cif __attribute__((__unused__)), void* resp, voi
 	PyObject* result = NULL;
 	PyObject* arglist = NULL;
 	PyObject* v = NULL;
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;

@@ -88,7 +88,7 @@ imp_NSDecimalNumber_initWithDecimal_(
 	PyObject* arglist = NULL;
 	PyObject* v = NULL;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) goto error;
@@ -169,7 +169,7 @@ imp_NSDecimalNumber_decimalValue(
 	PyObject* arglist = NULL;
 	PyObject* v = NULL;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) goto error;

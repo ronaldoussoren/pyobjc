@@ -60,7 +60,7 @@
 
 +(PyObject*)__pyobjc_PythonObject__
 {
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 	PyObject *rval = (PyObject *)PyObjCClass_New(self);
 	if (rval == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);

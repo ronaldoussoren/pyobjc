@@ -71,7 +71,7 @@ imp_NSWindow_windowRef(
 	PyObject* arglist = NULL;
 	PyObject* v;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) goto error;
@@ -148,7 +148,7 @@ imp_NSWindow_initWithWindowRef_(
 	PyObject* arglist = NULL;
 	PyObject* v;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) goto error;

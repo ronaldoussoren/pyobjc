@@ -125,7 +125,7 @@ struct pyobjc_api objc_api = {
 	PyObjCIMP_GetIMP,		/* imp_get_imp */
 	PyObjCIMP_GetSelector,		/* imp_get_sel */
 	PyObjCErr_AsExc,		/* err_python_to_nsexception */
-	PyObjCGILState_Ensure,		/* gilstate_ensure */
+	PyGILState_Ensure,		/* gilstate_ensure */
 	obj_is_uninitialized
 };
 

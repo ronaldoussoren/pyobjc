@@ -86,7 +86,7 @@ imp_NSData_dataWithBytes_length_(
 	PyObject* arglist = NULL;
 	PyObject* v;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
@@ -187,7 +187,7 @@ imp_NSData_initWithBytes_length_(
 	PyObject* v;
 	PyObject* arglist = NULL;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
@@ -274,7 +274,7 @@ imp_NSData_bytes(
 	PyObject* arglist = NULL;
 	PyObject* v;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) goto error;
@@ -375,7 +375,7 @@ imp_NSMutableData_mutableBytes(
 	PyObject* arglist = NULL;
 	PyObject* v;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) goto error;

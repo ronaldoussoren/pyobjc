@@ -333,7 +333,7 @@ imp_NSMutableArray_removeObjectsFromIndices_numIndices_(
 	PyObject* v;
 	int i;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
@@ -461,7 +461,7 @@ imp_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 	PyObject* v;
 	int i;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) goto error;
