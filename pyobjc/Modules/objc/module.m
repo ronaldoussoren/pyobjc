@@ -456,7 +456,7 @@ static  char* keywords[] = { "signature", NULL };
 	result = PyList_New(0);
 	if (result == NULL) return NULL;
 	
-	while (*signature != 0) {
+	while (signature && *signature != 0) {
 		PyObject* str;
 
 		end = PyObjCRT_SkipTypeSpec(signature);

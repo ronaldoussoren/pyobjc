@@ -1,8 +1,48 @@
+# TODO: Tests for calling 
+#   initWithObjects:forKeys:count and dictionaryWithObjects:forKeys:count
 import unittest
 import objc
 import types
 
 from Foundation import *
+
+
+class TestNSDictionarySubclassing(unittest.TestCase):
+    def testExceptionInInit(self):
+        class DictTestExceptionClass (NSDictionary):
+            pass
+
+        # Don't use self.assertRaises here, we once had a bug that 
+        # causes this to fail, while the assertRaises version would
+        # (probably) have worked.
+        try:
+            d = DictTestExceptionClass.alloc().initWithDictionary_({})
+            self.fail()
+        except ValueError:
+            pass
+
+    def testAnotherExceptionInInit(self):
+        class DictTestExceptionClass2 (NSDictionary):
+            def initWithObjects_forKeys_count_(self, o, k, c):
+                return super(DictTestExceptionClass2, self).initWithObjects_forKeys_count_(o, k, c)
+
+        try:
+            d = DictTestExceptionClass2.alloc().initWithDictionary_({})
+            self.fail()
+        except ValueError:
+            pass
+
+    def testExceptionInInitClsMeth(self):
+        class DictTestExceptionClass3 (NSDictionary):
+            def initWithObjects_forKeys_count_(self, o, k, c):
+                return super(DictTestExceptionClass3, self).initWithObjects_forKeys_count_(o, k, c)
+
+        try:
+            d = DictTestExceptionClass3.dictionaryWithDictionary_({})
+            self.fail()
+        except ValueError:
+            pass
+
 
 class TestNSDictionaryInteraction(unittest.TestCase):
     def testMethods(self):

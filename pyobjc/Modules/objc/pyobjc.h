@@ -191,7 +191,7 @@ PyObjCSelector_NewNative(Class class, SEL selector, char* signature, int class_m
 PyObject* PyObjCSelector_FindNative(PyObject* self, char* name);
 
 PyObject*
-PyObjCSelector_New(PyObject* callable, SEL selector, char* signature, int class_method) ;
+PyObjCSelector_New(PyObject* callable, SEL selector, char* signature, int class_method, Class class) ;
 SEL PyObjCSelector_DefaultSelector(char* methname);
 
 

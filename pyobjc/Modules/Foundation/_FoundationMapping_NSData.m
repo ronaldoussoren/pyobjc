@@ -17,7 +17,7 @@
 
 
 static PyObject* call_NSData_dataWithBytes_length_(
-		PyObject* method __attribute__((__unused__)), PyObject* self, PyObject* arguments)
+		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	char*     bytes;
 	int       bytes_len;
@@ -36,7 +36,7 @@ static PyObject* call_NSData_dataWithBytes_length_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuperCls(&super, PyObjCClass_GetClass(self));
+		PyObjC_InitSuperCls(&super, PyObjCClass_GetClass(method), self);
 
 		objc_result = objc_msgSendSuper(&super,
 				@selector(dataWithBytes:length:),

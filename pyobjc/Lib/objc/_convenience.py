@@ -579,25 +579,6 @@ CONVENIENCE_METHODS['initWithObjectsAndKeys:'] = (
     ( 'initWithObjectsAndKeys_', initWithObjectsAndKeys_ ),
 )
 
-# 'dictionaryWithObjects:forKeys:count' is not really a varargs function, but
-# would require a custom wrapper.
-
-def dictionaryWithObjects_forKeys_count_(self, objects, keys, count):
-    return self.dictionaryWithObjects_forKeys_(objects[:count], keys[:count])
-
-CONVENIENCE_METHODS['dictionaryWithObjects:forKeys:count:'] = (
-    ('dictionaryWithObjects_forKeys_count_', 
-      selector(dictionaryWithObjects_forKeys_count_, signature='@@:^@^@i', isClassMethod=1)),
-)
-
-def initWithObjects_forKeys_count_(self, objects, keys, count):
-    return self.initWithObjects_forKeys_(objects[:count], keys[:count])
-
-CONVENIENCE_METHODS['initWithObjects:forKeys:count:'] = (
-    ( 'initWithObjects_forKeys_count_', 
-        selector(initWithObjects_forKeys_count_, signature='@@:^@^@i') ),
-)
-
 def UnsupportedMethod(self, *args):
     raise ValueError, "Unsupported method"
 
