@@ -309,11 +309,11 @@ if gs_root is None:
         "-Wno-import",
         #"-Werror",
 
+        # use the same optimization as Python, probably -O3,
+        # but can be overrided by one of the following:
+
         # no optimization, for debugging
         #"-O0",
-
-        # generic optimization
-        "-O3",
 
         # g4 optimized
         #"-fast", "-fPIC", "-mcpu=7450",
