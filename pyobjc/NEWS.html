@@ -9,7 +9,195 @@ PyObjC NEWS</title>
 <body>
 <h2>PyObjC NEWS</h2>
 <p>An overview of the relevant changes in new, and older, releases.</p>
-<h2><a name="version-1-0rc2-2003-09-04">Version 1.0rc2 (2003-09-04)</a></h2>
+<h2><a name="version-1-2-2004-12">Version 1.2 (2004-12-??)</a></h2>
+<ul>
+<li>This version no longer support Python 2.2. Python 2.3 or later is
+required.</li>
+<li>It is now possible to use <code><span>reload</span></code> on modules containing Objective-C
+classes.</li>
+<li><code><span>objc.loadBundle</span></code> now returns bundle we just loaded.</li>
+<li>Added <code><span>objc.loadBundleVariables</span></code> and <code><span>objc.loadBundleFunctions</span></code>,
+two functions for reading global variables and functions from a bundle.</li>
+<li>Rewrote the code-generating scripts, they now generate Python code and
+are exported in the <code><span>PyObjCTools.WrapperGenerator</span></code> module.
+[UNFINISHED]</li>
+<li>objc.runtime will now raise AttributeError instead of objc.nosuchclass_error
+when a class is not found.</li>
+<li>objc.Category can be used to define categories on existing classes:<pre>
+class NSObject (objc.Category(NSObject)):
+    def myMethod(self):
+        pass
+</pre>
+<p>This adds method <code><span>myMethod</span></code> to class NSObject.</p>
+</li>
+<li><code><span>py2app</span></code> is now used for all Example scripts and is the recommended method
+for creating PyObjC applications.</li>
+<li>Proxies of dict, list, and tuple now respect the invariant that you should
+get an identical instance if you ask for the same thing twice and the
+collection has not been mutated.  This fixes some problems with binary
+plist serialization, and potentially some edge cases elsewhere.</li>
+<li>There is now a <code><span>__bundle_hack__</span></code> class attribute that will cause the PyObjC
+class builder to use a statically allocated class wrapper if one is
+available via certain environment variables.  This functionality is used
+to enable +[NSBundle bundleForClass:] to work for exactly one class from
+a py2app-created plugin bundle.</li>
+<li>We now have a working Interface Builder palette example due to
+<code><span>__bundle__hack__</span></code>.</li>
+<li><code><span>bool(NSNull.null())</span></code> is now false.</li>
+<li><code><span>setup.py</span></code> supports several new commands:<pre>
+* build_libffi
+
+  builds libffi (used by build_ext)
+
+* build_html
+
+  builds html documentation from ReST source
+
+* bdist_dmg
+
+  creates a disk image with the binary installer
+
+* bdist_mpkg
+
+  creates a binary installer
+
+* test
+
+  runs unit test suite (replaces Scripts/runPyObjCTests
+  and Scripts/runalltests)
+</pre>
+</li>
+<li><code><span>PyObjCStrBridgeWarning</span></code> can now be generated when Python <code><span>str</span></code> objects
+cross the bridge by calling <code><span>objc.setStrBridgeEnabled(False)</span></code>.  It is
+HIGHLY recommended that your application never send <code><span>str</span></code> objects over
+the bridge, as it is likely to cause problems due to the required
+coercion to unicode.</li>
+<li>The coercion bridge from Python to Objective-C instances can now be
+augmented from Python as it is exposed by <code><span>OC_PythonObject</span></code>.  See
+<code><span>objc._bridges</span></code>.  This is how the <code><span>str</span></code> -&gt; <code><span>unicode</span></code> -&gt; <code><span>NSString</span></code>
+bridge with optional warnings is implemented.</li>
+<li>The coercion bridge between Python objects and Objective-C structures
+can now be augmented from Python as it is exposed by <code><span>OC_PythonObject</span></code>.
+See <code><span>objc._bridges</span></code>.  This is how the <code><span>Carbon.File.FSRef</span></code> 
+&lt;-&gt; <code><span>'{FSRef=[80c]}'</span></code> structure bridge is implemented.</li>
+<li>Extension modules such as <code><span>_objc</span></code>, <code><span>_AppKit</span></code>, etc. are now inside
+packages as <code><span>objc._objc</span></code>, <code><span>AppKit._AppKit</span></code>, etc.  They should never be
+used directly, so this should not break user code.</li>
+</ul>
+<h2><a name="version-1-1-2004-05-30">Version 1.1 (2004-05-30)</a></h2>
+<ul>
+<li>KVO now actually works from Python without using nasty hacks.</li>
+<li>Added Xcode template for document-based applications</li>
+</ul>
+<h2><a name="version-1-1b2-2004-04-11">Version 1.1b2 (2004-04-11)</a></h2>
+<ul>
+<li>More fine-grained multi-threading support</li>
+<li>Xcode templates use a smarter embedded main program</li>
+<li>Add support for WebObjects 4.5 (a one-line patch!)</li>
+<li>Add a PackageManager clone to the Examples directory</li>
+<li>Add better support for NSProxy<p>This makes it possible to use at Distributed Objects, although this
+feature has not received much testing</p>
+</li>
+<li>Function 'objc.protocolNamed' is the Python equivalent of the @protocol
+expression in Objective-C.</li>
+<li>Add several new examples</li>
+</ul>
+<h2><a name="version-1-1b1-2004-02-20">Version 1.1b1 (2004-02-20)</a></h2>
+<ul>
+<li>Fixes some regressions in 1.1 w.r.t. 1.0</li>
+<li>Add Xcode templates for python files<p>You can now select a new python file in the 'add file...' dialog in Xcode</p>
+</li>
+<li>Fix installer for Panther: the 1.1a0 version didn't behave correctly</li>
+<li>There is now an easier way to define methods that conform to the expectations
+of Cocoa bindings:<pre>
+class MyClass (NSObject):
+
+    def setSomething_(self, value):
+        pass
+
+    setSomething_ = objc.accessor(setSomething_)
+
+    def something(self):
+        return &quot;something!&quot;
+
+    something = objc.accessor(something)
+</pre>
+<p>It is not necessary to use <code><span>objc.accessor</span></code> when overriding an existing 
+accessor method.</p>
+</li>
+</ul>
+<h2><a name="version-1-1a0-2004-02-02">Version 1.1a0 (2004-02-02)</a></h2>
+<ul>
+<li>Objective-C structs can now be wrapped using struct-like types. This has
+been used to implement wrapper types for NSPoint, NSSize, NSRange and NSRect
+in Foundation and NSAffineTransformStruct in AppKit.<p>This means you can now access the x-coordinate of a point as <code><span>aPoint.x</span></code>,
+accessing <code><span>aPoint[0]</span></code> is still supported for compatibility with older 
+versions of PyObjC.</p>
+<p>It is still allowed to use tuples, or other sequences, to represent 
+Objective-C structs.</p>
+<p>NOTE: This has two side-effects that may require changes in your programs:
+the values of the types mentioned above are no longer immutable and cannot
+be used as keys in dicts or elements in sets. Another side-effect is that
+a pickle containing these values created using this version of PyObjC cannot
+be unpickled on older versions of PyObjC.</p>
+</li>
+<li>This version adds support for NSDecimal. This is a fixed-point type defined
+in Cocoa.</li>
+<li>NSDecimalNumbers are no longer converted to floats, that would loose 
+information.</li>
+<li>If an Objective-C method name is a Python keyword you can now access it
+by appending two underscores to its name, e.g. someObject.class__().<p>The same is true for defining methods, if you define a method <code><span>raise__</span></code> in
+a subclass of NSObject it will registered with the runtime as <code><span>raise</span></code>.</p>
+<p>NOTE: Currently only <code><span>class</span></code> and <code><span>raise</span></code> are treated like this, because
+those are the only Python keywords that are actually used as Objective-C
+method names.</p>
+</li>
+<li>Experimental support for <code><span>instanceMethodForSelector:</span></code> and 
+<code><span>methodForSelector:</span></code>. 
+This support is not 100% stable, and might change in the future.</li>
+<li>Backward incompatible change: class methods are no longer callable through
+the instances.</li>
+<li>Integrates full support for MacOS X 10.3 (aka Panther)</li>
+<li>Adds a convenience/wrapper module for SecurityInterface</li>
+<li>It is now safe to call from Objective-C to Python in arbitrary threads, but
+only when using Python 2.3 or later.</li>
+<li>Fixes some issues with passing structs between Python and Objective-C.</li>
+<li>Uses the Panther version of <code><span>NSKeyValueCoding</span></code>, the Jaguar version is still
+supported.</li>
+<li>method <code><span>updateNSString</span></code> of <code><span>objc.pyobjc_unicode</span></code> is deprecated, use 
+create a new unicode object using <code><span>unicode(mutableStringInstance)</span></code> instead.</li>
+<li>NSAppleEventDescriptor bridged to Carbon.AE</li>
+<li>LibFFI is used more aggressivly, this should have no user-visible effects
+other than fixing a bug related to key-value observing.</li>
+<li>Adds a number of new Examples:<ul>
+<li>OpenGLDemo<p>Shows how to use OpenGL with PyObjC</p>
+</li>
+<li>SillyBallsSaver<p>Shows how to write a screensaver in Python. Requires a framework install
+of Python (that is, MacOS X 10.3 or MacPython 2.3 on MacOS X 10.2).</p>
+</li>
+<li>Twisted/WebServicesTool<p>Shows how to integrate Twisted (1.1 or later) with Cocoa, it is a
+refactor of the WebServicesTool example that is made much simpler
+by using Twisted.</p>
+</li>
+<li>Twisted/WebServicesTool-ControllerLayer<p>Shows how to integrate Twisted (1.1 or later) with Cocoa, it is a
+refactor of the WebServicesTool example that is made much simpler
+by using Twisted as it does not need threads. This one also uses
+NSController and therefore requires MacOS X 10.3.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2><a name="version-1-0-2003-09-21">Version 1.0 (2003-09-21)</a></h2>
+<ul>
+<li>This version includes a new version of libffi that properly deals with
+complex types on MacOS X.</li>
+</ul>
+<h2><a name="version-1-0rc3-2003-09-14">Version 1.0rc3 (2003-09-14)</a></h2>
+<ul>
+<li>1.0rc2 didn't include the nibclassbuilder script</li>
+<li>Fix bug in NSRectFillList</li>
+</ul>
+<h2><a name="version-1-0rc2-2003-09-10">Version 1.0rc2 (2003-09-10)</a></h2>
 <ul>
 <li>Fix a number of bugs found in 1.0rc1.</li>
 </ul>
@@ -137,15 +325,15 @@ returned by the alloc, copy and copyWithZone: class methods.</li>
 integration with Cocoa. A partial list is of the changed names is:<pre>
 objc.lookup_class -&gt; objc.lookUpClass
 objc.selector arguments/attributes:
-        is_initializer -&gt; isInitializer
-        is_allocator -&gt; isAlloc
-        donates_ref -&gt; doesDonateReference
-        is_required -&gt; isRequired
-        class_method -&gt; isClassMethod
-        defining_class -&gt; definingClass
-        returns_self -&gt; returnsSelf
-        argument_types -&gt; argumentTypes
-        return_type -&gt; returnType
+    is_initializer -&gt; isInitializer
+    is_allocator -&gt; isAlloc
+    donates_ref -&gt; doesDonateReference
+    is_required -&gt; isRequired
+    class_method -&gt; isClassMethod
+    defining_class -&gt; definingClass
+    returns_self -&gt; returnsSelf
+    argument_types -&gt; argumentTypes
+    return_type -&gt; returnType
 objc.get_class_list -&gt; objc.getClassList
 </pre>
 </li>

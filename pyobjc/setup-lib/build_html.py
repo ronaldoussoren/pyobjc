@@ -50,7 +50,7 @@ class build_html(Command):
             print "*** Can't generate HTML, docarticle.py is missing"
             return
         os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
-        rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt', 'Installer Package/10.2/ReadMe.txt', 'Installer Package/10.3/ReadMe.txt', 'ProjectBuilder Extras/Project Templates/00README.txt', 'NEWS'])
+        rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt', 'Installer Package/10.2/ReadMe.txt', 'Installer Package/10.3/ReadMe.txt', 'ProjectBuilder Extras/Project Templates/00README.txt', 'NEWS.txt'])
         if os.path.exists('ProjectBuilder Extras/Project Templates/00README.html'):
                 os.rename('ProjectBuilder Extras/Project Templates/00README.html', 'Doc/ProjectBuilder-Templates.html')
 
