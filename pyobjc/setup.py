@@ -377,23 +377,27 @@ def package_version():
 
 # skipping CoreFoundationPackages, it's fake!
 packages = (
-      CorePackages
-    + AppKitPackages
-    + FoundationPackages
-    + AddressBookPackages
-    + PrefPanesPackages
-    + InterfaceBuilderPackages
-    + ScreenSaverPackages
-    + WebKitPackages
-    + MessagePackages
-    + SecurityInterfacePackages
-    + ExceptionHandlingPackages
-    + [ 'PyObjCTools' , 'PyObjCScripts' ]
+    CorePackages +
+    AppKitPackages +
+    FoundationPackages +
+    AddressBookPackages +
+    PrefPanesPackages +
+    InterfaceBuilderPackages +
+    ScreenSaverPackages +
+    WebKitPackages +
+    MessagePackages +
+    SecurityInterfacePackages +
+    ExceptionHandlingPackages +
+    [
+        'PyObjCTools',
+        'PyObjCTools.XcodeSupport',
+        'PyObjCScripts',
+    ]
 )
 
 # The following line is needed to allow separate flat modules
 # to be installed from a different folder
-package_dir = dict([(pkg, 'Lib/' + pkg) for pkg in packages])
+package_dir = dict([(pkg, 'Lib/' + pkg.replace('.', '/')) for pkg in packages])
 
 for aPackage in package_dir.keys():
     testDir = os.path.join(package_dir[aPackage], 'test')

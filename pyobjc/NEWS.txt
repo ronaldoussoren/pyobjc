@@ -4,8 +4,13 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 1.3 (2005-04-02)
+Version 1.3 (2005-04-03)
 ------------------------
+
+- Xcode project templates "Cocoa-Python Application" and
+  "Cocoa-Python Document-based Application" have been replaced
+  with py2app based Xcode templates named "PyObjC Application" and
+  "PyObjC Document-based Application" respectively.
 
 - New InjectBrowser example in Inject that demonstrates injection of the
   ClassBrowser example into another application using ``objc.inject``.
