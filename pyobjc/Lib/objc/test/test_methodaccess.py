@@ -6,13 +6,13 @@ import sys
 class MethodAccessTest (unittest.TestCase):
 
     def testObjCObject(self):
-        # Trying to access the methods of objc.objc_object should not 
+        # Trying to access the methods of objc.objc_object should not
         # crash the interpreter.
         self.assertRaises(AttributeError, getattr, objc.objc_object.pyobjc_classMethods, 'func_code')
         self.assertRaises(AttributeError, getattr, objc.objc_object.pyobjc_instanceMethods, 'func_code')
 
     def testNSProxyStuff(self):
-        # NSProxy is incompatitble with pyobjc_{class,instance}Methods, but 
+        # NSProxy is incompatitble with pyobjc_{class,instance}Methods, but
         # this should not crash the interpreter
         self.assertRaises(AttributeError, getattr, objc.runtime.NSProxy.pyobjc_instanceMethods, 'foobar')
         self.assertRaises(AttributeError, getattr, objc.runtime.NSProxy.pyobjc_classMethods, 'foobar')

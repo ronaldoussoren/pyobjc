@@ -26,11 +26,11 @@ Also Todo: Passing from Objective-C to python
 - Done: Return simple values, return structs, pass in basic types (c part)
 
 NOTES:
-- Always use makeCFloat when testing the value of a C float against a 
+- Always use makeCFloat when testing the value of a C float against a
   precomputed (literal) value. Just comparing against a Python float won't work
-  as that is a C double which has a different representation from C floats 
+  as that is a C double which has a different representation from C floats
   resulting in spurious test failures.
-- See also testbndl.m, the implementation there must be synchronized 
+- See also testbndl.m, the implementation there must be synchronized
   with this file.
 """
 import unittest
@@ -699,7 +699,7 @@ class PyOCTestByReferenceArguments(unittest.TestCase):
 # Below this point only TestCases that test calling Python from Objective-C
 #
 # Notes:
-# - There is both a pure python and an Python-ObjC hybrid class 
+# - There is both a pure python and an Python-ObjC hybrid class
 #   (MyPyClass and MyOCClass). The former is not used in the first few tests,
 #   we need to decide what functionality we'll support for these (e.g. do
 #   we support selector objects, or only normal methods?)
@@ -708,13 +708,13 @@ class PyOCTestByReferenceArguments(unittest.TestCase):
 #                and the forwardInvocation method
 #   * 'call'   - Calls back from ObjC to Python using a normal ObjC method call
 
-# Values for 
+# Values for
 # - 8-bit char
 # - 16-bit short
 # - 32-bit int/long
 # - 64-bit long long
 # Values are: max-negative, -42, 0, 42, max-positive, out-of-range, bad-type, None
-# 
+#
 CHAR_NUMBERS=[ -128, -42, 0, 42, 127, 'a', 128, "hello", None ]
 UCHAR_NUMBERS=[ 0, 42, 255, 'a', 256, "hello", None ]
 SHORT_NUMBERS=[ -32768, -42, 0, 32767, 32768, "hello", None ]
@@ -736,7 +736,7 @@ POINTS=[ (1.0, 2.0), (1e10, 2e10), (-0.5, 0.5) ]
 class MyPyClass:
     def __init__(self):
         self.idx = 0
-    
+
     def reset(self):
         self.idx = 0
 
@@ -748,7 +748,7 @@ class MyPyClass:
 class MyOCClass (objc.lookUpClass('NSObject')):
     def __init__(self):
         self.idx = 0
-    
+
     def reset(self):
         self.idx = 0
 
@@ -817,7 +817,7 @@ class MyOCClass (objc.lookUpClass('NSObject')):
         self.idx += 1
         return FLOAT_NUMBERS[i]
     floatFunc = objc.selector(floatFunc, signature=OC_TestClass1.floatFunc.signature)
-    
+
     def doubleFunc(self):
         i = self.idx
         self.idx += 1
@@ -938,7 +938,7 @@ class OCPyTestSimpleCalls(unittest.TestCase):
             if isinstance(o, str):
                 o = ord(o)
             self.assertEquals(self.obj.callInstanceUnsignedCharFuncOf_(self.ocobj), o)
-           
+
         self.assertRaises(ValueError, self.obj.callInstanceUnsignedCharFuncOf_, self.ocobj)
         self.assertRaises(ValueError, self.obj.callInstanceUnsignedCharFuncOf_, self.ocobj)
         self.assertRaises(ValueError, self.obj.callInstanceUnsignedCharFuncOf_, self.ocobj)

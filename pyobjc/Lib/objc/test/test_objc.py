@@ -11,7 +11,7 @@ class TestConstants(unittest.TestCase):
     def testNil(self):
         from types import NoneType
         self.assert_(not objc.nil, "nil is not nil/None.")
-    
+
 class TestClassLookup(unittest.TestCase):
     def testLookupClassNoSuchClassErrorRaised(self):
         self.assertRaises(objc.nosuchclass_error, objc.lookUpClass, "")
@@ -32,7 +32,7 @@ class TestClassLookup(unittest.TestCase):
                           "objc.runtime.NSObject and objc.lookUpClass('NSObject') were different.")
 
     def testClassList(self):
-        ###! This test should probably be moved down to the Foundation test suite... 
+        ###! This test should probably be moved down to the Foundation test suite...
         self.assert_(objc.runtime.NSObject in objc.getClassList(), "getClassList() does not appear to contain NSObject class")
         self.assert_(objc.runtime.NSException in objc.getClassList(), "getClassList() does not appear to contain NSException class")
         self.assert_(objc.runtime.NSMutableArray in objc.getClassList(), "getClassList() does not appear to contain NSMutableArray class")

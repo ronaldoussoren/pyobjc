@@ -49,7 +49,7 @@ class _runtime:
     """
     Backward compatibility interface.
 
-    This class provides (partial) support for the interface of 
+    This class provides (partial) support for the interface of
     older versions of PyObjC.
     """
     def __getattr__(self, name):

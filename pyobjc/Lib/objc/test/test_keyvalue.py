@@ -64,7 +64,7 @@ class PyKeyValueCoding (unittest.TestCase):
         # Private instance variables ('anObject.__value') are not accessible using
         # key-value coding.
         o = KeyValueClass2()
-        self.assertRaises(KeyError, 
+        self.assertRaises(KeyError,
                 STUB.keyValue_forObject_key_, DO_VALUEFORKEY, o, "private")
 
     def testValueForKey(self):
@@ -76,7 +76,7 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, "key3"), 3)
         self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, "key4"), "4")
         self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, "multiple"), o.multiple)
-       
+
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, DO_VALUEFORKEY, o, "nokey")
 
     def testValueForKey2(self):
@@ -95,7 +95,7 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key3"), 3)
         self.assertEquals(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key4"), "4")
         self.assertEquals(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "multiple"), o.multiple)
-       
+
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, DO_STOREDVALUEFORKEY, o, "nokey")
 
     def testStoredValueForKey2(self):
@@ -129,7 +129,7 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(o.key3, 3)
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEY, o, 'key3', 'drie')
         self.assertEquals(o.key3, "drie")
-        
+
         self.assertEquals(o._key4, "4")
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEY, o, 'key4', 'vier')
         self.assertEquals(o._key4, "viervierviervier")
@@ -158,7 +158,7 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(o.key3, 3)
         STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, 'key3', 'drie')
         self.assertEquals(o.key3, "drie")
-        
+
         self.assertEquals(o._key4, "4")
         STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, 'key4', 'vier')
         self.assertEquals(o._key4, "viervierviervier")
@@ -234,7 +234,7 @@ class TestAccMethod (unittest.TestCase):
             def callme(self):
                 return "FOO"
 
-        # check the result for valueForKey:"callme" on a Foo instance 
+        # check the result for valueForKey:"callme" on a Foo instance
         self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, Foo(), "callme"), "FOO")
 
     def testStr(self):
@@ -248,31 +248,31 @@ class TestAccMethod (unittest.TestCase):
 
 class AbstractKVCodingTest:
     def testBaseValueForKey(self):
-        self.assertEquals(DirectString, 
+        self.assertEquals(DirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, "directString"))
-        self.assertEquals(IndirectString, 
+        self.assertEquals(IndirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, "indirectString"))
-        self.assertEquals(DirectNumber, 
+        self.assertEquals(DirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, "directNumber"))
-        self.assertEquals(IndirectNumber, 
+        self.assertEquals(IndirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, "indirectNumber"))
-               
+
     def testPathValueForKey(self):
-        self.assertEquals(DirectString, 
+        self.assertEquals(DirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "directHead.directString"))
-        self.assertEquals(DirectString, 
+        self.assertEquals(DirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "indirectHead.directString"))
-        self.assertEquals(IndirectString, 
+        self.assertEquals(IndirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "directHead.indirectString"))
-        self.assertEquals(IndirectString, 
+        self.assertEquals(IndirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "indirectHead.indirectString"))
-        self.assertEquals(DirectNumber, 
+        self.assertEquals(DirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "directHead.directNumber"))
-        self.assertEquals(DirectNumber, 
+        self.assertEquals(DirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "indirectHead.directNumber"))
-        self.assertEquals(IndirectNumber, 
+        self.assertEquals(IndirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "directHead.indirectNumber"))
-        self.assertEquals(IndirectNumber, 
+        self.assertEquals(IndirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "indirectHead.indirectNumber"))
 
 class TestObjCKVCoding(AbstractKVCodingTest, unittest.TestCase):
@@ -296,19 +296,19 @@ class TestPythonSubOverObjC(AbstractKVCodingTest, unittest.TestCase):
         self.path = KVPySubOverObjCPath.new()
 
     def testOverValueKey(self):
-        self.assertEquals(DirectString, 
+        self.assertEquals(DirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, "overDirectString"))
-        self.assertEquals(IndirectString, 
+        self.assertEquals(IndirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, "overIndirectString"))
 
     def testOverValueKeyPath(self):
-        self.assertEquals(DirectString, 
+        self.assertEquals(DirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "overDirectHead.directString"))
-        self.assertEquals(DirectString, 
+        self.assertEquals(DirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "overIndirectHead.directString"))
-        self.assertEquals(IndirectString, 
+        self.assertEquals(IndirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "overDirectHead.indirectString"))
-        self.assertEquals(IndirectString, 
+        self.assertEquals(IndirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, "overIndirectHead.indirectString"))
 
 
@@ -316,7 +316,7 @@ class TestPythonSubOverObjC(AbstractKVCodingTest, unittest.TestCase):
 import sys, os
 if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
 
-    # MacOS X 10.3 and later use 'setValue:forKey:' instead of 
+    # MacOS X 10.3 and later use 'setValue:forKey:' instead of
     # 'takeValue:forKey:', test these as wel.
 
     class PyKeyValueCoding_10_3 (unittest.TestCase):
@@ -326,7 +326,7 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
             self.assertEquals(o.key3, 3)
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, 'key3', 'drie')
             self.assertEquals(o.key3, "drie")
-            
+
             self.assertEquals(o._key4, "4")
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, 'key4', 'vier')
             self.assertEquals(o._key4, "viervierviervier")
@@ -427,7 +427,7 @@ if PyObjCTest_KeyValueObserver is not None:
             # Exercise a bug between KVO and the old
             # initialization scheme.
             pass
-        
+
         def setBar_(self, value):
             self.initiateDestructionSequence()
             self._kvo_bar = value
@@ -475,11 +475,11 @@ if PyObjCTest_KeyValueObserver is not None:
 
             # XXX: To be debugged, when flags == 0 everything is fine,
             # otherwise we leak a reference
-            o.addObserver_forKeyPath_options_context_(observer, u'bar',  
-                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld), 
+            o.addObserver_forKeyPath_options_context_(observer, u'bar',
+                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
                 0)
-            o.addObserver_forKeyPath_options_context_(observer, u'foo',  
-                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld), 
+            o.addObserver_forKeyPath_options_context_(observer, u'foo',
+                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
                 0)
 
             try:
@@ -504,11 +504,11 @@ if PyObjCTest_KeyValueObserver is not None:
 
             self.assertEquals(len(observer.observed), 3)
 
-            self.assertEquals(observer.observed[0], 
+            self.assertEquals(observer.observed[0],
                 (u'bar', o,  { 'kind': 1, 'new':'world', 'old': 'hello' }, 0))
-            self.assertEquals(observer.observed[1], 
+            self.assertEquals(observer.observed[1],
                 (u'foo', o, { 'kind': 1, 'new':'basexxx', 'old':'base3yyy' }, 0))
-            self.assertEquals(observer.observed[2], 
+            self.assertEquals(observer.observed[2],
                 (u'foo', o, { 'kind': 1, 'new':'base2yyy', 'old':'basexxx' }, 0))
             self.assertEquals(o.bar(), "world")
 
@@ -524,8 +524,8 @@ if PyObjCTest_KeyValueObserver is not None:
             o = PyObjCTestObserved1.alloc().init()
 
 
-            o.addObserver_forKeyPath_options_context_(observer, u'bar',  
-                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld), 
+            o.addObserver_forKeyPath_options_context_(observer, u'bar',
+                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
                 0)
 
             a = objc.runtime.NSArray.arrayWithArray_([o])

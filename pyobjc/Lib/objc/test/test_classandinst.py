@@ -41,11 +41,11 @@ class TestClassAndInstance(unittest.TestCase):
     def testClassAndInstanceSubclassWorkaround(self):
         self.assertEquals(PyObjC_TestClassAndInstanceSubclass.pyobjc_classMethods.isInstance(), objc.NO)
         self.assertEquals(PyObjC_TestClassAndInstanceSubclass.alloc().init().pyobjc_instanceMethods.isInstance(), objc.YES)
-    
+
     def testClassAndInstanceWorkaround(self):
         self.assertEquals(PyObjC_TestClassAndInstance.pyobjc_classMethods.isInstance(), objc.NO)
         self.assertEquals(PyObjC_TestClassAndInstance.alloc().init().pyobjc_instanceMethods.isInstance(), objc.YES)
-    
+
     def testClassAndInstanceClassOverride(self):
         self.assertEquals(PyObjC_TestClassAndInstanceClassOverride.isInstance(), objc.YES)
         #self.assertEquals(PyObjC_TestClassAndInstanceClassOverride.alloc().init().isInstance(), objc.YES)

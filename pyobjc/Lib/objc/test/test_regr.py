@@ -36,7 +36,7 @@ class TestRegressions(unittest.TestCase):
         import objc
 
         import warnings
-        warnings.filterwarnings('ignore', 
+        warnings.filterwarnings('ignore',
             category=objc.UninitializedDeallocWarning)
 
         try:
@@ -51,7 +51,7 @@ class TestRegressions(unittest.TestCase):
         # get deallocated
         import sys
         import StringIO
-        warnings.filterwarnings('always', 
+        warnings.filterwarnings('always',
             category=objc.UninitializedDeallocWarning)
         sys.stderr = io = StringIO.StringIO()
         try:

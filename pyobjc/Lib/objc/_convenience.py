@@ -16,13 +16,13 @@ CLASS_METHODS = {}
 
 def add_convenience_methods(super_class, name, type_dict):
     """
-    Add additional methods to the type-dict of subclass 'name' of 
-    'super_class'. 
-    
+    Add additional methods to the type-dict of subclass 'name' of
+    'super_class'.
+
     CONVENIENCE_METHODS is a global variable containing a mapping from
     an Objective-C selector to a Python method name and implementation.
-    
-    CLASS_METHODS is a global variable containing a mapping from 
+
+    CLASS_METHODS is a global variable containing a mapping from
     class name to a list of Python method names and implementation.
 
     Matching entries from both mappings are added to the 'type_dict'.
@@ -34,7 +34,7 @@ def add_convenience_methods(super_class, name, type_dict):
         if sel.selector == "alloc" or sel.selector == "allocWithZone:":
             sel.isAlloc = 1
 
-        if sel.selector in ( 'copy', 'copyWithZone:', 
+        if sel.selector in ( 'copy', 'copyWithZone:',
                       'mutableCopy', 'mutableCopyWithZone:'):
             # These methods transfer ownership to the caller, the runtime uses
             # this information to adjust the reference count.
@@ -50,7 +50,7 @@ def add_convenience_methods(super_class, name, type_dict):
                     # Clone attributes of already existing version
 
                     t = type_dict[name]
-                    v = selector(value, selector=t.selector, 
+                    v = selector(value, selector=t.selector,
                         signature=t.signature, isClassMethod=t.isClassMethod)
                     v.isAlloc = t.isAlloc
 
@@ -78,7 +78,7 @@ def has_key_objectForKey(self, key):
     return res is not None
 def get_objectForKey(self, key, dflt=None):
     res = self.objectForKey_(key)
-    if res is None: 
+    if res is None:
         res = dflt
     return res
 
@@ -90,7 +90,7 @@ CONVENIENCE_METHODS['objectForKey:'] = (
 )
 
 CONVENIENCE_METHODS['removeObjectForKey:'] = (
-    ('__delitem__', lambda self, key: self.removeObjectForKey_(key)), 
+    ('__delitem__', lambda self, key: self.removeObjectForKey_(key)),
 )
 
 def dict_update(self, other):
@@ -125,7 +125,7 @@ def dict_popitem(self):
     return (o, v)
 
 CONVENIENCE_METHODS['setObject:forKey:'] = (
-    ('__setitem__', lambda self, key, value: self.setObject_forKey_(value, key)), 
+    ('__setitem__', lambda self, key, value: self.setObject_forKey_(value, key)),
     ('update', dict_update),
     ('setdefault', dict_setdefault),
     ('pop', dict_pop),
@@ -193,7 +193,7 @@ def __getitem__objectAtIndex(self, idx):
         if idx < 0:
             raise IndexError, "index out of range"
     elif idx >= len(self):
-            raise IndexError, "index out of range"
+        raise IndexError, "index out of range"
     return self.objectAtIndex_(idx)
 
 CONVENIENCE_METHODS['addObject:'] = (
@@ -232,7 +232,7 @@ def __delslice__removeObjectAtIndex(self, x, y):
     if (r - x) > l:
         r = l - x
     return self.removeObjectsInRange_( (x, r) )
-    
+
 CONVENIENCE_METHODS['removeObjectAtIndex:'] = (
     ('__delitem__', lambda self, index: self.removeObjectAtIndex_(index)),
     ('__delslice__', __delslice__removeObjectAtIndex),
@@ -252,13 +252,13 @@ def __setslice__replaceObjectAtIndex_withObject(self, x, y, v):
     return self.replaceObjectsInRange_withObjectsFromArray_( (x, r), v )
 
 CONVENIENCE_METHODS['replaceObjectsInRange:withObjectsFromArray:'] = (
-    ('__setslice__', __setslice__replaceObjectAtIndex_withObject), 
+    ('__setslice__', __setslice__replaceObjectAtIndex_withObject),
 )
 
 # Mapping protocol
 
 # Mappings (e.g. like dict)
-# TODO (not all are needed or even possible): 
+# TODO (not all are needed or even possible):
 #   iter*, update, pop, popitem, setdefault
 # __str__ would be nice (as obj.description()),
 
@@ -332,7 +332,7 @@ from _Foundation import NSDecimal
 
 def _num_to_python(v):
     """
-    Magic method that converts NSNumber values to Python, see 
+    Magic method that converts NSNumber values to Python, see
     <Foundation/CFNumber.h> for the magic numbers
     """
     global NSDecimal
@@ -475,7 +475,7 @@ def __pow__CFNumber(numA, numB, modulo=None):
         r = _num_to_python(numA)  ** _num_to_python(numB)
     else:
         r = pow(_num_to_python(numA), _num_to_python(numB), modulo)
-    
+
     if isinstance(r, NSDecimal):
         return NSDecimalNumber.decimalNumberWithDecimal_(r)
     else:
@@ -618,7 +618,7 @@ def dictionaryWithObjectsAndKeys_(self, *values):
     return self.dictionaryWithObjects_forKeys_(objects, keys)
 
 CONVENIENCE_METHODS['dictionaryWithObjectsAndKeys:'] = (
-    ('dictionaryWithObjectsAndKeys_', 
+    ('dictionaryWithObjectsAndKeys_',
       selector(dictionaryWithObjectsAndKeys_, signature='@@:@',isClassMethod=1)),
 )
 
