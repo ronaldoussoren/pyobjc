@@ -7,7 +7,7 @@ Usage:
 from distutils.core import setup
 import py2app
 
-REMOTE_REQUIREMENTS = ['netrepr', 'remote_console', 'remote_pipe']
+REMOTE_REQUIREMENTS = ['netrepr', 'remote_console', 'remote_pipe', 'remote_bootstrap']
 
 plist = dict(NSMainNibFile='PyInterpreter')
 setup(

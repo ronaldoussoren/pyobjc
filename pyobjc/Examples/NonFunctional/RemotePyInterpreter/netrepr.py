@@ -1,11 +1,10 @@
-import types, itertools
+import types, itertools, exceptions
 
 def type_string(obj):
     objType = type(obj)
     if objType is types.InstanceType:
         objType = obj.__class__
     return getattr(objType, '__module__', '-') + '.' + objType.__name__
-
 
 class NetRepr(object):
     def __init__(self, objectPool):
@@ -17,6 +16,20 @@ class NetRepr(object):
         self.cache.clear()
         self._identfactory = itertools.count()
         
+    def netrepr_tuple(self, obj):
+        return repr(tuple(itertools.imap(self.netrepr, obj)))
+
+    def netrepr_list(self, obj):
+        return repr(map(self.netrepr, obj))
+
+    def netrepr_exception(self, e):
+        cls = e.__class__
+        if cls.__module__ == 'exceptions':
+            rval = cls.__name__ + self.netrepr_tuple(e.args)
+        else:
+            rval = 'Exception(%r)' % ('[Remote] %s.%s %s' % (cls.__module__, cls.__name__, e),)
+        return rval
+
     def netrepr(self, obj):
         if obj is None:
             return 'None'
