@@ -77,8 +77,5 @@ class IDNSnitch(NSObject):
                 return NSURL.URLWithString_(u'about:blank')
         return anURL
 
-
-#from PyObjCTools import Debugging
-#Debugging.installVerboseExceptionHandler()
 idnSnitch = IDNSnitch.alloc().init()
 idnSnitch.performSelectorOnMainThread_withObject_waitUntilDone_('startIDNSnitch:', None, False)
