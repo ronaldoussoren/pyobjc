@@ -1,7 +1,7 @@
 <?
 $title = "Documentation";
 $cvs_author = '$Author: ronaldoussoren $';
-$cvs_date = '$Date: 2003/10/08 17:30:40 $';
+$cvs_date = '$Date: 2003/10/19 19:23:59 $';
 
 include "header.inc";
 ?>
@@ -9,7 +9,7 @@ include "header.inc";
 <h1>Downloads</h1>
 
 <ul>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/PyObjC-1.0.dmg?download">PyObjC 1.0 installer package for Apple's Python</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.0.dmg?download">PyObjC 1.0 installer package for Apple's Python</a>
 <li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.0.tar.gz?download">PyObjC 1.0 source release (a compressed tar archive)</a>
 </ul>
 
