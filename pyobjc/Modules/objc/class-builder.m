@@ -4,6 +4,7 @@
  */
 #include "pyobjc.h"
 
+
 #import <Foundation/NSInvocation.h>
 
 #if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
@@ -410,11 +411,17 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			}
 			if (!PyObjCObject_Check(wrapped_protocol)) {
 				PyErr_Format(PyObjCExc_Error,
-					"protocol must be a PyObjCObject, not an '%s'",
+					"protocol must be a 'Protocol', not an '%s'",
 					wrapped_protocol->ob_type->tp_name);
 				goto error_cleanup;
 			}
 			protocol = (Protocol *)PyObjCObject_GetObject(wrapped_protocol);
+			if (!PyObjCClass_IsSubClass(GETISA((id)protocol), [Protocol class])) {
+				PyErr_Format(PyObjCExc_Error,
+					"protocol must be a 'Protocol', not an '%s'",
+					wrapped_protocol->ob_type->tp_name);
+				goto error_cleanup;
+			}
 			protocol_list->list[cur_protocol] = protocol;
 			cur_protocol++;
 		}
