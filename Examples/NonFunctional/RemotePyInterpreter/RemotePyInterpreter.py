@@ -7,9 +7,9 @@ from Foundation import *
 from AppKit import *
 from PyObjCTools import NibClassBuilder, AppHelper
 
-NibClassBuilder.extractClasses("RemotePyInterpreter.nib")
+NibClassBuilder.extractClasses("RemotePyInterpreterDocument.nib")
 
-from AsyncPyInterpreter import *
+from AsyncPythonInterpreter import *
 from ConsoleReactor import *
 
 def ensure_unicode(s):
@@ -117,12 +117,15 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
         self.textView.setFont_(self.font())
         self.textView.setContinuousSpellCheckingEnabled_(False)
         self.textView.setRichText_(False)
+        self.setCharacterIndexForInput_(0)
 
     #
     #  NIB loading protocol
     #
 
     def awakeFromNib(self):
+        # XXX - should this be done later?
+        print 'awakeFromNib'
         self.setFont_(NSFont.userFixedPitchFontOfSize_(10))
         self.p_colors = {
             u'stderr': NSColor.redColor(),
@@ -131,16 +134,11 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
         }
         self.setHistoryLength_(50)
         self.setHistoryView_(0)
-        self.setCharacterIndexForInput_(0)
         self.setInteracting_(False)
         self.setAutoScroll_(True)
         self.setSingleLineInteraction_(False)
         self.p_history = [u'']
         self.p_input_callbacks = []
-        # XXX
-        #self.p_stdin = PseudoUTF8Input(self.p_nestedRunLoopReaderUntilEOLchars_)
-
-        # XXX - should this be done later?
         self.setupTextView()
         self.interpreter.connect()
 

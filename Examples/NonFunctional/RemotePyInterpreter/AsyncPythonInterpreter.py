@@ -40,6 +40,7 @@ class AsyncPythonInterpreter(NSObject):
 
     def init(self):
         self = super(AsyncPythonInterpreter, self).init()
+        print self
         self.host = None
         self.port = None
         self.interpreterPath = None
@@ -69,6 +70,7 @@ class AsyncPythonInterpreter(NSObject):
     bundleForClass = classmethod(bundleForClass)
     
     def awakeFromNib(self):
+        print self, 'awakeFromNib'
         defaults = NSUserDefaults.standardUserDefaults()
         def default(k, v, typeCheck=None):
             rval = defaults.objectForKey_(k)

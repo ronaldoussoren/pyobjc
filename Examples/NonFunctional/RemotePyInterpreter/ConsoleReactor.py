@@ -6,6 +6,7 @@ from Foundation import *
 class ConsoleReactor(NSObject):
     def init(self):
         self = super(ConsoleReactor, self).init()
+        print self
         self.pool = None
         self.netReprCenter = None
         self.connection = None
