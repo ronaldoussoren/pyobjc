@@ -1,7 +1,9 @@
 from Foundation import NSObject, NSBundle
-from AppKit import NSOutlineViewDataSource, NSTableDataSource
 from PyObjCTools import NibClassBuilder
 from objc import selector, getClassList, objc_object, IBOutlet
+
+import objc
+objc.setVerbose(1)
 
 try:
     import AddressBook
@@ -69,8 +71,8 @@ def classBundle(cls):
             framework = framework[:-len('.framework')]
     return framework
 
-class ClassesDataSource (NibClassBuilder.AutoBaseClass, NSOutlineViewDataSource, NSTableDataSource):
-    __slots__ = ('_classList', '_classTree', '_methodInfo')
+class ClassesDataSource (NibClassBuilder.AutoBaseClass):
+    __slots__ = ('_classList', '_classTree', '_methodInfo', '_classInfo')
 
     def clearClassInfo(self):
         self._methodInfo = []
@@ -107,7 +109,7 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass, NSOutlineViewDataSource,
             return
 
         self.showClass(super)
-        item = wrap_object[super]
+        item = wrap_object(super)
         rowNr = self.classTable.rowForItem_(item)
         self.classTable.expandItem_(item)
 
@@ -115,7 +117,7 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass, NSOutlineViewDataSource,
     def selectClass(self, cls):
         self.showClass(cls)
 
-        item = wrap_object[cls]
+        item = wrap_object(cls)
         rowNr = self.classTable.rowForItem_(item)
 
         self.classTable.scrollRowToVisible_(rowNr)
