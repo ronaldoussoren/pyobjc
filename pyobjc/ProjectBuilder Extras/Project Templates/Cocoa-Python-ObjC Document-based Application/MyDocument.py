@@ -39,14 +39,14 @@ class MyDocument(NibClassBuilder.AutoBaseClass):
         # load document from data (NSData instance) by interpreting
         # it as the type identified by aType.
         return YES
-        
+
     def changeHueAction_(self, sender):
         """
         An example of a standard target action method implementation.
         """
         newHue = self.hueSlider.floatValue()
         self.hueView.setHue_(newHue)
-    
+
     def awakeFromNib(self):
         """
         awakeFromNib() is invoked when the NIB that caused this object
