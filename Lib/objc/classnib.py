@@ -41,6 +41,7 @@ with explicit method signatures.
 #}
 #
 
+from Foundation import NSDictionary
 
 def parse_classes_nib(nibfile):
 	"""
@@ -48,8 +49,7 @@ def parse_classes_nib(nibfile):
 	class information.
 	"""
 	import os
-	return ClassNibParser(
-		open(os.path.join(nibfile, 'classes.nib'))).parse()
+	return NSDictionary.dictionaryWithContentsOfFile_(os.path.join(nibfile, 'classes.nib'))
 
 def generate_wrapper_module(outfp, classinfolist):
 	"""
@@ -70,143 +70,7 @@ def generate_wrapper_module(outfp, classinfolist):
 #
 
 import objc
-
 NSBundle = objc.lookup_class('NSBundle')
-
-class Tokenizer:
-	"""
-	A simple lexer for classes.nib files. This more or less assumes valid 
-	input, which should be pretty safe as the classes.nib is machine
-	generated.
-
-	There are two types of tokens: Some special characters and strings of
-	alphanumeric characters. There is optional whitespace between tokens.
-	"""
-
-	def __init__(self, fp):
-		self.buf = fp.read()
-
-	def nextToken(self):
-		while self.buf and self.buf[0].isspace():
-			self.buf = self.buf[1:]
-
-		if not self.buf:
-			return None
-
-		if self.buf[0] in '(){};=,':
-			res = self.buf[0]
-			self.buf = self.buf[1:]
-		else:
-			if not self.buf[0].isalnum():
-				raise ValueError, "Token error: "+self.buf[0]
-			res = ''
-			while self.buf[0] and self.buf[0].isalnum():
-				res += self.buf[0]
-				self.buf = self.buf[1:]
-		return res
-
-
-class ClassNibParser:
-	"""
-	This class is used to parse a 'classes.nib' file. It returns a python
-	datastructure that corresponds with the contents of the file.
-
-	The only public entry points in this class are the contructor and
-	the parse method.
-
-	NOTE: I (Ronald) have not yet found documentation about the format
-	of the classes.nib file. This implementation is based on reading a
-	number of classes.nib files.
-	"""
-
-	def __init__(self, fp):
-		self._tokenizer = Tokenizer(fp)
-		self._value = None
-
-	def _parse_dict(self):
-		# '{' (KEY = VALUE ';')* '}'
-		# The leading '{' is already consumed.
-
-		result = {}
-
-		token = self._tokenizer.nextToken()
-		if token == '}':
-			return res
-
-		while 1:
-			if not token[0].isalnum():
-				raise ValueError, "Bad dictionary: " + token
-			key = token
-
-			token = self._tokenizer.nextToken()
-			if token != '=':
-				raise ValueError, "Bad dictionary"
-
-			token = self._tokenizer.nextToken()
-			if token == '{':
-				value = self._parse_dict()
-			elif token == '(':
-				value = self._parse_tuple()
-			elif token[0].isalnum():
-				value = token
-			else:
-				raise ValueError, "Bad dictionary"
-
-			token = self._tokenizer.nextToken()
-			if token != ';':
-				raise ValueError, "Missing ';'"
-
-			result[key] = value
-
-			token = self._tokenizer.nextToken()
-			if token == '}':
-				break
-
-		return result
-
-	def _parse_tuple(self):
-		# '(' (VALUE ',')* ')'
-		# The leading '(' is already consumed.
-
-		result = []
-
-		token = self._tokenizer.nextToken()
-		if token == ')':
-			return tuple(result)
-
-		while 1:
-			if token == '{':
-				value = self._parse_dict()
-			elif token == '(':
-				value = self._parse_tuple()
-			else:
-				value = token
-
-			result.append(value)
-
-			token = self._tokenizer.nextToken()
-			if token == ',':
-				pass
-			elif token == ')':
-				break
-			else:
-				raise ValueError, "Missing ','"
-
-			token = self._tokenizer.nextToken()
-
-		return tuple(result)
-
-
-	def parse(self):
-		"""
-		Parse the file. Can safely be called multiple times.
-		"""
-		if not self._value:
-			token = self._tokenizer.nextToken()
-			if token != '{':
-				raise ValueError, "Not a classes.nib?"
-			self._value = self._parse_dict()
-		return self._value
 
 def _mergelists(l1, l2):
 	r = {}
@@ -340,7 +204,8 @@ class ClassNibGenerator:
 		self._fp.write('\t"Base class for class \'%s\'"\n'%clsname)
 		if not actions and not outlets:
 			self._fp.write('\tpass\n')
-	
+
+		print outlets
 		for o in outlets:
 			self._fp.write('\t%s = IBOutlet("%s")\n'%(o, o))
 		if outlets:

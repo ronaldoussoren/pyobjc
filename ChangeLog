@@ -1,4 +1,8 @@
 2002-10-30  Bill Bumgarner  <bbum@codefab.com>
+	* Many, many changes to the convenience methods in the objc
+	module.  Wrote a bunch of tests in test_nsarray and
+	test_nsdictionary.
+
 	* Fixed a bug in the NSDraggingDestination method declarations and
 	made all of the methods optional (the developer only needs to
 	implement a subset of the methods and none of the methods are
