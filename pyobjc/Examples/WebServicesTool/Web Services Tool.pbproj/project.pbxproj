@@ -128,12 +128,15 @@
 			buildStyles = (
 				4A9504CCFFE6A4B311CA0CBA,
 				4A9504CDFFE6A4B311CA0CBA,
+				F62CEFCE0357591F01718D22,
 			);
 			isa = PBXProject;
 			mainGroup = 29B97314FDCFA39411CA2CEA;
 			projectDirPath = "";
 			targets = (
+				F62CEFC60357586F01718D22,
 				29B97326FDCFA39411CA2CEA,
+				F62CEFC80357588701718D22,
 			);
 		};
 		29B97314FDCFA39411CA2CEA = {
@@ -174,6 +177,8 @@
 				F6ED47D803453061016073B7,
 				F6ED47D903453061016073B7,
 				F6783B7E0349DCCB01A73C9E,
+				F62CEFC20357585C01718D22,
+				F62CEFC30357585C01718D22,
 			);
 			isa = PBXGroup;
 			name = Resources;
@@ -368,6 +373,8 @@
 				F62CEFBE035724EB01718D22,
 				F62CEFBF035724EB01718D22,
 				F62CEFC0035724EB01718D22,
+				F62CEFC40357585C01718D22,
+				F62CEFC50357585C01718D22,
 			);
 			isa = PBXCopyFilesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 1;
@@ -420,6 +427,90 @@
 			isa = PBXGroup;
 			name = pyobjc;
 			refType = 4;
+		};
+		F62CEFC20357585C01718D22 = {
+			isa = PBXFileReference;
+			path = LICENSE.txt;
+			refType = 2;
+		};
+		F62CEFC30357585C01718D22 = {
+			isa = PBXFileReference;
+			path = README.txt;
+			refType = 2;
+		};
+		F62CEFC40357585C01718D22 = {
+			fileRef = F62CEFC20357585C01718D22;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F62CEFC50357585C01718D22 = {
+			fileRef = F62CEFC30357585C01718D22;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F62CEFC60357586F01718D22 = {
+			buildPhases = (
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Packaging;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+				F62CEFC70357587501718D22,
+				F62CEFCB035758DE01718D22,
+			);
+			isa = PBXAggregateTarget;
+			name = Packaging;
+			productName = Packaging;
+			shouldUseHeadermap = 0;
+		};
+		F62CEFC70357587501718D22 = {
+			isa = PBXTargetDependency;
+			target = 29B97326FDCFA39411CA2CEA;
+		};
+		F62CEFC80357588701718D22 = {
+			buildArgumentsString = "-c \"if [ \\\"$ACTION\\\" = \\\"install\\\" ]; then \\\n\tcp \\\"$SRCROOT/README.txt\\\" \\\"$SRCROOT/LICENSE.txt\\\" \\\"$DSTROOT/\\\";\t fi\"";
+			buildPhases = (
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Copy Files";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			buildToolPath = /bin/sh;
+			dependencies = (
+			);
+			isa = PBXLegacyTarget;
+			name = "Copy Files";
+			productName = "Copy Files";
+			settingsToExpand = 6;
+			settingsToPassInEnvironment = 287;
+			settingsToPassOnCommandLine = 280;
+			shouldUseHeadermap = 0;
+		};
+		F62CEFCB035758DE01718D22 = {
+			isa = PBXTargetDependency;
+			target = F62CEFC80357588701718D22;
+		};
+		F62CEFCE0357591F01718D22 = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				INSTALL_MODE_FLAG = "u+w,go-w,a+rX";
+				INSTALL_PATH = /;
+			};
+			isa = PBXBuildStyle;
+			name = Packaging;
 		};
 		F6646A4E0344927801F2B36F = {
 			isa = PBXFileReference;
