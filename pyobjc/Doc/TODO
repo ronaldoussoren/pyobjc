@@ -109,6 +109,15 @@ is so.
 Project templates
 .................
 
+* Source updates:
+  - Templates in the source tree should be working projects
+  - Convert them to templates when building the installer
+  - Add ``install_xcode`` action to setup.py that will install the
+    templates (and hook that into ``install`` action).
+
+* Is it possible to tell SVN that the main.m in the various templates should
+  be the same file (hard link)?
+
 * Add Xcode template for building a plugin (like PyObjCTools.pluginbuilder)
 
 * Possibly: add templates based on this for building specific kinds of
