@@ -38,10 +38,10 @@ class  ToDoDocument (AutoBaseClass):
 
     def __del__(self): # dealloc in Objective-C code
 
-    	if self._activeDays:
-    		self._activeDays.release()
-    	if self._currentItems:
-    		self._currentItems.release()
+    	#if self._activeDays:
+    	#	self._activeDays.release()
+    	#if self._currentItems:
+    	#	self._currentItems.release()
 
     	NSNotificationCenter.defaultCenter().removeObserver_(self)
 
@@ -65,11 +65,11 @@ class  ToDoDocument (AutoBaseClass):
     		aCell.setTarget_(self)
     		aCell.setAction_('itemStatusClicked:')
     		self.statusList.putCell_atRow_column_(aCell, index, 0)
-    		aCell.release()
+    		#aCell.release()
     	
     	if self._dataFromFile:
     		self.loadDocWithData_(self._dataFromFile)
-    		self._dataFromFile.release()
+    		#self._dataFromFile.release()
     		self._dataFromFile = None
     	else:
     		self.loadDocWithData_(None)
@@ -126,11 +126,11 @@ class  ToDoDocument (AutoBaseClass):
     			None))
 
     def initDataModelWithDictionary_(self, dict):
-    	if self._activeDays:
-    		self._activeDays.autorelease()
+    	#if self._activeDays:
+    	#	self._activeDays.autorelease()
 
     	if dict:
-    		self._activeDays = dict.retain()
+    		self._activeDays = dict # .retain()
     	else:
     		self._activeDays = NSMutableDictionary.alloc().init()
 
@@ -138,8 +138,8 @@ class  ToDoDocument (AutoBaseClass):
     	self.setCurrentItems_(self._activeDays.objectForKey_(date))
 
     def setCurrentItems_(self, newItems):
-    	if self._currentItems:
-    		self._currentItems.autorelease()
+    	#if self._currentItems:
+    	#	self._currentItems.autorelease()
 
     	if newItems:
     		self._currentItems = newItems.mutableCopy()
@@ -200,7 +200,7 @@ class  ToDoDocument (AutoBaseClass):
     	elif newName != "":
     		newItem = ToDoItem.alloc().initWithName_andDate_(newName, self.calendar.selectedDay())
     		self._currentItems.replaceObjectAtIndex_withObject_(row, newItem)
-    		newItem.release()
+    		#newItem.release()
 
     	self._selectedItem = self._currentItems.objectAtIndex_(row)
 
@@ -253,7 +253,7 @@ class  ToDoDocument (AutoBaseClass):
     	if selfcalendar:
     		self.loadDocWithData_(data)
     	else:
-    		self._dataFromFile = data.retain()
+    		self._dataFromFile = data #.retain()
 
     	return 1
 

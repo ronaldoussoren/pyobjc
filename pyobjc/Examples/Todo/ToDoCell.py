@@ -25,11 +25,11 @@ class ToDoCell (NSButtonCell):
     	self.setAlignment_(NSRightTextAlignment)
 
     	self._doneImage = NSImage.imageNamed_("DoneMark")
-    	if self._doneImage:
-    		self._doneImage.retain()
+    	#if self._doneImage:
+    	#	self._doneImage.retain()
     	self._deferredImage = NSImage.imageNamed_("DeferredMark")
-    	if self._deferredImage:
-    		self._deferredImage.retain()
+    	#if self._deferredImage:
+    	#	self._deferredImage.retain()
     	return self
 
     def setTriState_(self, newState):
@@ -89,11 +89,11 @@ class ToDoCell (NSButtonCell):
     	#else:
     		#print "setTimeDue None" 
 
-    	if self._timeDue:
-    		self._timeDue.autorelease()
+    	#if self._timeDue:
+    	#	self._timeDue.autorelease()
     	if newTime:
     		self._timeDue = newTime
-    		newTime.retain()
+    		#newTime.retain()
     		self.setTitle_(self._timeDue.descriptionWithCalendarFormat_timeZone_locale_("%I:%M %p", NSTimeZone.localTimeZone(), None))
     	else:
     		self._timeDue = None

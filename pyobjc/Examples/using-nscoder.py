@@ -7,7 +7,7 @@ class MyObject (NSObject):
     def encodeWithCoder_(self, coder):
         #super(MyObject, self).encodeWithCoder_(coder)
         #coder.encodeFloat_(2.3)
-        coder.encodeValueOfObjCType_at_(objc._objc._C_INT, 2)
+        coder.encodeValueOfObjCType_at_(objc._C_INT, 2)
     
 
 print 1
