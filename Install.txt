@@ -2,22 +2,28 @@
 Installation Instructions
 =========================
 
-.. :authors: Bill Bumgarner, Ronald Oussoren
+.. :authors: Bill Bumgarner, Ronald Oussoren, Bob Ippolito
  
-Building the package
-====================
+Notes for Subversion users
+==========================
 
-If you're using the sources from CVS you should first download a copy of 
-libffi from `the PyObjC download site`_.  Extract this in a convenient location
-and update the variable ``LIBFF_SOURCES`` at the top of setup.py.  The released
-version of PyObjC includes a compatible version of libffi.
+To build PyObjC from the Subversion repository, you will need an installation
+of libffi.  A snapshot of libffi modified to build inside the PyObjC source
+tree is available from the `PyObjC download site`_.  To use this, simply move
+the extracted libffi-src folder to your PyObjC source folder.  If you would
+like to use another libffi source location, update the variable
+``LIBFFI_SOURCES`` at the top of setup.py.  Release versions of PyObjC include
+a compatible libffi snapshot.
 
 .. _`the PyObjC download site`: http://sourceforge.net/project/showfiles.php?group_id=14534
 
-PyObjC is build and installed using the distutils package included with Python
-2.0 and beyond.  This package provides a single interface for building and
-packaging the module.   To see usage documentation for the module,
-issue the ``--help`` command::
+Building the package
+====================
+
+PyObjC is built and installed using the distutils package included with Python
+2.0 and beyond.  distutils provides a single interface for building and
+packaging the PyObjC via a ``setup.py`` script. To see usage documentation
+for ``setup.py``, issue the ``--help`` command::
 
   % python setup.py --help
 
@@ -26,22 +32,38 @@ command::
 
   % python setup.py --help-commands
 
-The following command will build and install the pyobjc module::
+The following command will build and install the PyObjC package::
 
   % python setup.py install
 
 The setup.py system can also be used to create source and binary
 distribution archives automatically.
 
-Use ``sudo`` to install the pyobjc module into a the Apple supplied
-python's site-packages directory on OS X 10.2 and greater:
+Use ``sudo`` to install the PyObjC package into a the Apple supplied
+Python's site-packages directory on OS X 10.2 and greater:
 
 % sudo python setup.py install
 
-If you have multiple versions of python installed on your system, the
-above will only install pyobjc for whatever version of python is the
-default on the command line.   Make sure you are installing python
-against the correct version of python.
+If you have multiple versions of Python installed on your system, the
+above will only install PyObjC for whatever version of Python is the
+default on the command line.   Make sure you are installing PyObjC
+against the correct version of Python.
+
+Note that there is a known bug in Python 2.3.0 
+(as shipped with MacOS X 10.3.x), such that when another framework Python is 
+installed it will not link extensions (such as PyObjC) properly, rendering them
+unusable.  If you intend to build PyObjC for Python 2.3.0, ensure that no other
+framework Python is installed, such as a previous installation for MacOS X
+10.2.  For more information on this and other Python issues on MacOS X,
+please refer to the `pythonmac.org FAQ`_.
+
+.. _`pythonmac.org FAQ`: http://pythonmac.org/wiki/FAQ
+
+If you have a previous version of PyObjC installed, you may see an exception
+such as ``Wrong version of PyObjC C API``.  If this happens, you should
+delete any previous installation of PyObjC and the build folder in your
+new sources and try again.  PyObjC will typically be installed to a folder
+of the same name in /Library/Python/2.3 or /Library/Python/2.3/site-packages.
 
 To be able to build the wrappers for the WebKit framework (included with
 Safari 1.0), you'll have to install the WebKit SDK. You can download 
@@ -50,7 +72,7 @@ this from the `ADC website <http://connect.apple.com>`_.
 PyObjC has limited support for `GNUstep`_. See `Doc/gnustep.txt`_ for 
 more information.
 
-.. _GNUStep: http://www.gnustep.org/
+.. _GNUstep: http://www.gnustep.org/
 
 .. _`Doc/gnustep.txt`: Doc/gnustep.html
 
@@ -98,8 +120,11 @@ There are two project templates:
   well as all other builds of python that support PyObjC.
 
   When building the 'install' target, the resulting application wrapper will
-  included the PyObjC module and can be launched on any stock OS X 10.3 system
+  included the PyObjC package and can be launched on any stock OS X 10.3 system
   without requiring PyObjC to be preinstalled.
+
+  Note that the optional 'BSD Subsystem' component of MacOS X is required,
+  however it is installed by default and should be present on most systems.
 
 * Cocoa-Python Document-based Application
 
@@ -108,6 +133,9 @@ There are two project templates:
   that uses Cocoa's Multiple Document Architecture in the same fashion as the
   default Cocoa Document-based Application supplied with Project Builder. 
 
+Note that Python applications built on MacOS X 10.3 are not compatible with
+MacOS X 10.2.  At this time, a MacOS X 10.2 system must be used to build
+MacOS X 10.2 compatible applications.
 
 Project Builder on MacOS X 10.2
 ...............................
