@@ -176,10 +176,17 @@ signature_to_ffi_type(const char* argtype)
  * TODO: Check that this implements the reverse of ObjC_FFICaller
  * TODO2: Do not use NSMethodSignature
  */
+
+typedef struct {
+  NSMethodSignature* methinfo;
+  PyObject* callable;
+} _method_stub_userdata;
+
 static void 
 method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 {
-	NSMethodSignature* methinfo = (NSMethodSignature*)userdata;
+  NSMethodSignature* methinfo = ((_method_stub_userdata*)userdata)->methinfo;
+  PyObject* callable = ((_method_stub_userdata*)userdata)->callable;
 	int                objc_argcount;
 	int                i;
 	PyObject*          arglist;
@@ -239,7 +246,10 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 	Py_DECREF(arglist);
 	arglist = v;
 
-	res = ObjC_call_to_python(*(id*)args[0], *(SEL*)args[1], arglist);
+	if (!callable)
+	  res = ObjC_call_to_python(*(id*)args[0], *(SEL*)args[1], arglist);
+	else
+	  res = PyObject_Call(callable, arglist, NULL);
 	Py_DECREF(arglist);
 
 	if (!have_output) {
@@ -314,8 +324,9 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
  * TODO: Do not use NSMethodSignature
  */
 IMP
-ObjC_MakeIMPForSignature(char* signature)
+ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 {
+  _method_stub_userdata* stubUserdata;
 	NSMethodSignature* methinfo;
 	int               objc_argcount;
 	ffi_cif           *cif;
@@ -381,17 +392,45 @@ ObjC_MakeIMPForSignature(char* signature)
 		PyErr_NoMemory();
 		return NULL;
 	}
-	rv = ffi_prep_closure(cl, cif, method_stub, methinfo);
+	stubUserdata = malloc(sizeof(*stubUserdata));
+	stubUserdata->methinfo = methinfo;
+
+	if (callable) {
+	  stubUserdata->callable = callable;
+	  Py_INCREF(stubUserdata->callable);
+	}
+	
+	rv = ffi_prep_closure(cl, cif, method_stub, (void*)stubUserdata);
 	if (rv != FFI_OK) {
-		[methinfo release];
-		ObjCErr_Set(PyExc_RuntimeError,
-			"Cannot create FFI closure: %d", rv);
-		return NULL;
+	  [methinfo release];
+	  if (stubUserdata->callable) {
+	    Py_DECREF(stubUserdata->callable);
+	  }
+	  free(stubUserdata);
+	  ObjCErr_Set(PyExc_RuntimeError,
+		      "Cannot create FFI closure: %d", rv);
+	  return NULL;
 	}
 
 	return (IMP)cl;
 }
 
+IMP
+ObjC_MakeIMPForObjCSelector(ObjCSelector *aSelector) {
+  if ObjCNativeSelector_Check(aSelector) {
+    ObjCNativeSelector *nativeSelector = (ObjCNativeSelector *) aSelector;
+    Method aMethod;
+    if (nativeSelector->sel_flags & ObjCSelector_kCLASS_METHOD) {
+      aMethod = class_getClassMethod(nativeSelector->sel_class, nativeSelector->sel_selector);
+    } else {
+      aMethod = class_getInstanceMethod(nativeSelector->sel_class, nativeSelector->sel_selector);
+    }
+    return aMethod->method_imp;
+  } else {
+    ObjCPythonSelector *pythonSelector = (ObjCPythonSelector *) aSelector;
+    return ObjC_MakeIMPForSignature(pythonSelector->sel_signature, pythonSelector->callable);
+  }
+}
 
 /* FIXME:
  *   This is a clone of execute_and_pythonify_objc_method in objc_support.m

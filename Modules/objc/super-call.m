@@ -281,7 +281,7 @@ static struct registry* create_ffi(char* signature)
 
 	PyErr_Clear();
 
-	ffiImp = ObjC_MakeIMPForSignature(signature);
+	ffiImp = ObjC_MakeIMPForSignature(signature, NULL);
 	if (ffiImp == NULL) 
 		goto error;
 
