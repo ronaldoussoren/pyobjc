@@ -25,7 +25,7 @@ id PyObjC_CFTypeToID(PyObject* argument)
 	int r;
 	id  val;
 
-#if PY_VERSION_HEX >= 0x020300B1 
+#if PY_VERSION_HEX >= 0x020300B2
 
 	r = CFObj_Convert(argument, (CFTypeRef*)&val);
 	if (r) return val;
@@ -65,7 +65,7 @@ id PyObjC_CFTypeToID(PyObject* argument)
 
 PyObject* PyObjC_IDToCFType(id argument)
 {
-#if PY_VERSION_HEX >= 0x020300B1 
+#if PY_VERSION_HEX >= 0x020300B2 
 	return CFObj_New((CFTypeRef)argument);
 
 #else
