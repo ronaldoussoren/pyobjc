@@ -1,3 +1,6 @@
+2002-11-11  Bill Bumgarner  <bbum@codefab.com>
+	* Fixed spelling error in NSComboxBoxDataSource definition.
+
 2002-11-11 Ronald Oussoren <oussoren@cistron.nl>
  	* Lib/objc/__init__.py: Don't remove current directory from sys.path
 
