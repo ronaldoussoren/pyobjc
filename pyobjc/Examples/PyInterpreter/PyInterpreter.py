@@ -27,7 +27,7 @@ class PseudoUTF8Output(object):
 
     def write(self, s):
         if not isinstance(s, unicode):
-            s = s.decode('utf8', 'replace')
+            s = s.decode('utf-8', 'replace')
         self._write(s)
 
     def writelines(self, lines):
@@ -53,9 +53,9 @@ class PseudoUTF8Input(object):
                 self._buffer = u''
                 if rval.endswith(u'\r'):
                     rval = rval[:-1]+u'\n'
-                return rval.encode('utf8')
+                return rval.encode('utf-8')
             else:
-                return self._readline(u'\x04')[:-1].encode('utf8')
+                return self._readline(u'\x04')[:-1].encode('utf-8')
         else:
             while len(self._buffer) < chars:
                 self._buffer += self._readline(u'\x04\r')
@@ -63,16 +63,17 @@ class PseudoUTF8Input(object):
                     self._buffer = self._buffer[:-1]
                     break
             rval, self._buffer = self._buffer[:chars], self._buffer[chars:]
-            return rval.encode('utf8').replace('\r','\n')
+            return rval.encode('utf-8').replace('\r','\n')
         
     def readline(self):
         if u'\r' not in self._buffer:
             self._buffer += self._readline(u'\x04\r')
         if self._buffer.endswith('\x04'):
-            rval = self._buffer[:-1].encode('utf8')
+            rval = self._buffer[:-1].encode('utf-8')
         elif self._buffer.endswith('\r'):
-            rval = self._buffer[:-1].encode('utf8')+'\n'
+            rval = self._buffer[:-1].encode('utf-8')+'\n'
         self._buffer = u''
+        
         return rval
 
 class AsyncInteractiveConsole(InteractiveConsole):
