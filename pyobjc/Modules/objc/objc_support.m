@@ -553,62 +553,61 @@ pythonify_c_value (const char *type, void *datum)
       break;
       
     case _C_ID:
+    {
+      id obj = *(id *) datum;
+
+      if (obj == nil)
       {
-        id obj = *(id *) datum;
-
-        if (obj == nil)
-          {
-            retobject = Py_None;
-            Py_INCREF (retobject);
-          }
-        else 
-          {
-            if ([obj isKindOfClass:[OC_PythonArray class]]) 
-	      {
-	        retobject = [(OC_PythonArray *)obj pyObject];
-		Py_INCREF(retobject);
-	      }
-            else if ([obj isKindOfClass:[OC_PythonDictionary class]]) 
-	      {
-	        retobject = [(OC_PythonDictionary *)obj pyObject];
-		Py_INCREF(retobject);
-	      }
-            else if ([obj isKindOfClass:[NSString class]]) 
-	      {
-	        /* All string classes seem to be subclasses of NSString.
-		 * We convert to a python string where possible, and a python
-		 * unicode object otherwise.
-		 * XXX: are we too smart here?
-		 */
-		NSData* data = [(NSString*)obj 
-				dataUsingEncoding:NSASCIIStringEncoding];
-		if (data == NULL) {
-			const char* utf8 = [(NSString*)obj UTF8String];
-
-			retobject = PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
-		} else {
-			retobject = PyString_FromStringAndSize(
-				[data bytes], [data length]);
-		}
-	      }
-	    else if ([obj conformsToProtocol:@protocol (PythonObject)])
-              {
-                retobject = [(OC_PythonObject *) obj pyObject];
-                Py_INCREF(retobject);
-              }
-
-	    else if (ObjC_HasPythonImplementation(obj)) 
-		{
-	     	  retobject =  ObjC_GetPythonImplementation(obj);
-		  Py_INCREF(retobject);
-		}
-	    else 
-		{
-                  retobject = (PyObject *) ObjCObject_New (obj);
-	        }
-          }
-        break;
+        retobject = Py_None;
+        Py_INCREF (retobject);
       }
+      else
+      {
+        if ([obj isKindOfClass:[OC_PythonArray class]])
+        {
+          retobject = [(OC_PythonArray *)obj pyObject];
+          Py_INCREF(retobject);
+        }
+        else if ([obj isKindOfClass:[OC_PythonDictionary class]])
+        {
+          retobject = [(OC_PythonDictionary *)obj pyObject];
+          Py_INCREF(retobject);
+        }
+        else if ([obj isKindOfClass:[NSString class]])
+        {
+          /* All string classes seem to be subclasses of NSString.
+          * We convert to a python string where possible, and a python
+          * unicode object otherwise.
+          * XXX: are we too smart here?
+          */
+          NSData* data = [(NSString*)obj dataUsingEncoding:NSASCIIStringEncoding];
+          if (data == NULL) {
+            const char* utf8 = [(NSString*)obj UTF8String];
+
+            retobject = PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
+          } else {
+            retobject = PyString_FromStringAndSize(
+                                                   [data bytes], [data length]);
+          }
+        }
+        else if ([obj conformsToProtocol:@protocol (PythonObject)])
+        {
+          retobject = [(OC_PythonObject *) obj pyObject];
+          Py_INCREF(retobject);
+        }
+
+        else if (ObjC_HasPythonImplementation(obj))
+        {
+          retobject =  ObjC_GetPythonImplementation(obj);
+          Py_INCREF(retobject);
+        }
+        else
+        {
+          retobject = (PyObject *) ObjCObject_New (obj);
+        }
+      }
+      break;
+    }
 
     case _C_SEL:
 	/* Ronald: We don't have a seperate type for methods that are not 
@@ -1421,7 +1420,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 		}
 	}
 
-#if 1
+#if 0
 	self_obj = nil;
 	if (*[methinfo methodReturnType] == _C_ID) {
 		[inv setReturnValue:&self_obj];

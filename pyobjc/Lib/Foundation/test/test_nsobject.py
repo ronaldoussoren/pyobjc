@@ -34,12 +34,8 @@ class TestNSDictionaryInteraction( unittest.TestCase ):
 
 class TestNSArrayInteraction( unittest.TestCase ):
     def testRepeatedAllocInit( self ):
-        NSCountFrames()
         for i in range(1,1000):
-            print "c: %s pre alloc()" % i
-            a = NSArray.alloc()
-            print "c: %s pre init()" % i
-            a.init()
+            a = NSArray.alloc().init()
         
 def suite():
     suite = unittest.TestSuite()
