@@ -2358,13 +2358,13 @@ static struct TestStruct3 g_structTestStruct3_values[] = {
 };
 
 static struct TestStruct4 g_structTestStruct4_values[] = {
-	{1, 500000},
+	{1, 1LL<<60},
 	{2, 4}
 };
 
 static struct TestStruct5 g_structTestStruct5_values[] = {
-	{1, 2.0},
-	{2, 4.0}
+	{1, 2.5},
+	{2, 4.5}
 };
 
 static id arg2id(const char* argtype, void* argptr)
