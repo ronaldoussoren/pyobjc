@@ -42,10 +42,12 @@ class PyModel(NibClassBuilder.AutoBaseClass, NSTableDataSource, NSTableViewDeleg
 
     def tableView_shouldSelectRow_(self, aTableView, rowIndex):
         print "shouldSelectRow_", rowIndex
-        return (rowIndex % 2)
+        # only allow odd rows to be selected
+        return rowIndex % 2
 
     def tableView_shouldEditTableColumn_row_(self, aTableView, aTableColumn, rowIndex):
-        return (rowIndex % 2)
+        # only allow cells in the second column in odd rows to be edited
+        return (rowIndex % 2) and aTableColumn == aTableView.tableColumns()[1]
 
 
 AppHelper.runEventLoop()
