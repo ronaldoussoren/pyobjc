@@ -86,7 +86,7 @@ def makeCFloat(value):
     """
     return struct.unpack('f',struct.pack('f', value))[0]
 
-class TestTypeStr(unittest.TestCase):
+class PyOCTestTypeStr(unittest.TestCase):
     # 
     # Check that typestrings have the expected values. 
     # We currently depend on these values in this file as wel as in the 
@@ -123,7 +123,7 @@ class TestTypeStr(unittest.TestCase):
         self.assertEquals(objc._C_OUT, "o")
         self.assertEquals(objc._C_INOUT, "N")
 
-class TestSimpleReturns(unittest.TestCase):
+class PyOCTestSimpleReturns(unittest.TestCase):
     #
     # Test returns of simple types from instance and classs methods
     #
@@ -348,7 +348,7 @@ class TestSimpleReturns(unittest.TestCase):
         self.assertEquals(obj.dummy2Func(), ((1,2,3,4),))
 
 
-class TestSimpleArguments(unittest.TestCase):
+class PyOCTestSimpleArguments(unittest.TestCase):
     #
     # Test argument passing of single basic values.
     #
@@ -517,7 +517,7 @@ class TestSimpleArguments(unittest.TestCase):
         self.assertRaises(objc.error, self.obj.dummy2Arg_, ((8,6,4,2,1),))
 
 
-class TestByReferenceArguments(unittest.TestCase):
+class PyOCTestByReferenceArguments(unittest.TestCase):
     #
     # Test argument passing of single basic values by reference.
     #
@@ -715,6 +715,85 @@ class TestByReferenceArguments(unittest.TestCase):
         self.assertEquals(self.obj.passInOutCharp_("abcdef"), (None, "aabbccddeeff"))
 
     # TODO: structs (including Objective-C part)
+
+
+
+#
+# Below this point only TestCases that test calling Python from Objective-C
+#
+# Notes:
+# - There is both a pure python and an Python-ObjC hybrid class 
+#   (MyPyClass and MyOCClass). The former is not used in the first few tests,
+#   we need to decide what functionality we'll support for these (e.g. do
+#   we support selector objects, or only normal methods?)
+# - Every test below should exists in two variants:
+#   * 'invoke' - Calls back from ObjC to Python using an NSInvocation
+#                and the forwardInvocation method
+#   * 'call'   - Calls back from ObjC to Python using a normal ObjC method call
+
+LONG_NUMBERS=[-(1L<<30)+2, -44, 0, 44, (1L<<30)+2]
+ULONG_NUMBERS=[0, 44, (1L<<30)+4]
+
+class MyPyClass:
+    def __init__(self):
+        self.idx = 0
+    
+    def reset(self):
+        self.idx = 0
+
+    def longFunc(self):
+        i = self.idx
+        self.idx += 1
+        return LONG_NUMBERS[i]
+    longFunc = objc.selector(longFunc, signature='l@:')
+
+    def ulongFunc(self):
+        i = self.idx
+        self.idx += 1
+        return ULONG_NUMBERS[i]
+    ulongFunc = objc.selector(ulongFunc, signature='L@:')
+
+class MyOCClass (objc.lookUpClass('NSObject')):
+    def __init__(self):
+        self.idx = 0
+    
+    def reset(self):
+        self.idx = 0
+
+    def longFunc(self):
+        i = self.idx
+        self.idx += 1
+        return LONG_NUMBERS[i]
+    longFunc = objc.selector(longFunc, signature='l@:')
+
+    def ulongFunc(self):
+        i = self.idx
+        self.idx += 1
+        return ULONG_NUMBERS[i]
+    ulongFunc = objc.selector(ulongFunc, signature='L@:')
+        
+class OCPyTestSimpleCalls(unittest.TestCase):
+    #
+    # Test argument passing of single basic values by reference.
+    #
+    def setUp(self):
+        self.pyobj = MyPyClass()
+        self.ocobj = MyOCClass.new()
+        self.obj = OC_TestClass2.new()
+
+    def testCLong(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in LONG_NUMBERS:
+            self.assertEquals(self.obj.callInstanceLongFuncOf_(self.ocobj), o)
+
+    def testILong(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in LONG_NUMBERS:
+            self.assertEquals(self.obj.invokeInstanceLongFuncOf_(self.ocobj), o)
 
 def suite():
     suite = unittest.TestSuite()

@@ -1070,11 +1070,13 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		ObjCErr_ToObjC();
 		return;
 	}
-	pymeth = ObjCObject_FindSelector(pyself, selector);
-	if (pymeth && ObjCNativeSelector_Check(pymeth)) {
+	pymeth = ObjCObject_FindSelector(pyself, [invocation selector]);
+	if ((pymeth == NULL) || ObjCNativeSelector_Check(pymeth)) {
 		struct objc_super super;
 
-		Py_DECREF(pymeth);
+		if (pymeth == NULL) PyErr_Clear();
+
+		Py_XDECREF(pymeth);
 
 		super.class = find_real_superclass(
 				GETISA(self), 
@@ -1152,6 +1154,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		ObjCErr_ToObjC();
 		return;
 	}
+	[invocation setReturnValue:arg];
 }
 
 /*
