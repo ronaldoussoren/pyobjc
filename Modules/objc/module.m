@@ -814,7 +814,7 @@ static char* keywords[] = { "value", 0 };
 }
 
 #ifdef MAC_OS_X_VERSION_10_3
-#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_3
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
 static void *
 pyject_pthread_entry_point(void *param) {
 	char *pathname = (char *)param;
