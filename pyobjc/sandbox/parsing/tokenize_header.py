@@ -162,7 +162,6 @@ class StringImport(Token):
     pattern = pattern(r'''
     \#\s*(?P<import_type>import|include)
         \s+"(?P<import_file>[^"]*)"
-    %(EOL)s
     ''')
     example = example('#import "Foo/Bar.h"')
 
