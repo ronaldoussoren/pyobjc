@@ -1,6 +1,7 @@
 import unittest
 
 import objc
+import sys
 
 NSObject = objc.lookUpClass('NSObject')
 

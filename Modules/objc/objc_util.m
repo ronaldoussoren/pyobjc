@@ -80,6 +80,14 @@ void ObjCErr_FromObjC(NSException* localException)
 			exc_type = [val  pyObject];
 			exc_value = [[userInfo objectForKey:@"__pyobjc_exc_value__"]  pyObject];
 			exc_traceback = [[userInfo objectForKey:@"__pyobjc_exc_traceback__"]  pyObject];
+
+			/* -pyObject returns a borrowed reference and 
+			 * PyErr_Restore steals one from us.
+			 */
+			Py_INCREF(exc_type);
+			Py_XINCREF(exc_value);
+			Py_XINCREF(exc_traceback);
+
 			PyErr_Restore(exc_type, exc_value , exc_traceback);
 			return;
 		}
@@ -88,7 +96,6 @@ void ObjCErr_FromObjC(NSException* localException)
 	dict = PyDict_New();
 	v = PyString_FromString([[localException name] cString]);
 	PyDict_SetItemString(dict, "name", v);
-	Py_DECREF(v);
 	PyDict_SetItemString(dict, "reason",  v);
 	Py_DECREF(v);
 	if (userInfo) {
@@ -259,11 +266,11 @@ int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict)
 	Py_INCREF(type_dict);
 
 	res = PyObject_CallObject(ObjC_class_extender, args);
+	Py_DECREF(args);
 	if (res == NULL) {
-		Py_DECREF(args);
 		return -1;
 	}
-	Py_DECREF(args);
+	Py_DECREF(res);
 
 	return 0;
 }
@@ -330,6 +337,7 @@ int ObjC_UpdateConvenienceMethods(PyObject* cls)
 		Py_DECREF(args);
 		return -1;
 	}
+	Py_DECREF(res);
 
 	keys = PyDict_Keys(dict);
 	if (keys == NULL) {
@@ -440,71 +448,3 @@ NSMapTableValueCallBacks ObjC_PyObjectValueCallBacks = {
 	pyobj_release,
 	NULL,
 };
-
-static PyObject* mod = NULL;
-
-static PyObject* refs(PyObject* obj)
-{
-	PyObject* func;
-	PyObject* res;
-	PyObject* repr;
-
-	if (mod == NULL) {
-		mod = PyImport_Import(PyString_FromString("gc"));
-		if (mod == NULL) {
-			PyErr_Clear();
-			return NULL;
-		}
-	}
-
-	func = PyObject_GetAttrString(mod, "get_referrers");
-	if (func == NULL) {
-		return NULL;
-	}
-	
-	res = PyObject_CallFunction(func, "O", obj);
-
-	Py_DECREF(func);
-	return res;
-}
-
-char* get_refcnt(PyObject* obj)
-{
-static char buf[1024];
-	PyObject* reflist;
-
-	reflist =  refs(obj);
-	if (reflist == NULL) {
-		PyErr_Print();
-		return "?A?";
-	}
-
-	sprintf(buf, "%d", PySequence_Length(reflist));
-	Py_DECREF(reflist);
-	return buf;
-}
-
-char* get_refs(PyObject* obj)
-{
-static char buf[10240];
-	PyObject* reflist;
-	PyObject* repr;
-
-	reflist =  refs(obj);
-	if (reflist == NULL) {
-		PyErr_Print();
-		return "?A?";
-	}
-
-	repr = PyObject_Repr(reflist);
-	if (repr == NULL){
-		PyErr_Print();
-		Py_DECREF(reflist);
-		return "?A?";
-	}
-	Py_DECREF(reflist);
-
-	snprintf(buf, sizeof(buf), "%s", PyString_AS_STRING(repr));
-	Py_DECREF(repr);
-	return buf;
-}

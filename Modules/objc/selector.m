@@ -540,13 +540,13 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		argslen = PyTuple_Size(args);
 		arglist = PyTuple_New(argslen - 1);
 		for (i = 1; i < argslen; i++) {
-			PyObject* v = PyTuple_GetItem(args, i);
+			PyObject* v = PyTuple_GET_ITEM(args, i);
 			if (v == NULL) {
 				Py_DECREF(arglist);
 				return NULL;
 			}
 
-			PyTuple_SetItem(arglist, i-1, v);
+			PyTuple_SET_ITEM(arglist, i-1, v);
 			Py_INCREF(v);
 		}
 

@@ -108,26 +108,6 @@ applicable.
 Support beyond that requires someone that actually tries to perform the 
 port to GNUstep (and after that maintains it). 
 
-Support for MacOS X 10.1
-.......................
-
-We also do not support MacOS X 10.1, again because nobody seems to care enough
-to perform (and maintain) the port. 
-
-Support for libFFI
-..................
-
-LibFFI_ is now fully supported and the default. Need to remove non-FFI 
-support code as it is no longer needed. Check if we can use FFI to simplify
-other code (most likely in class-builder.m)
-
-Some PPC assembly magic is necessary in libFFI to remove a link-time warning (
-see the mailing-list archives for details). The very latest version of libFFI
-doesn't need such magic, I (Ronald) will try to package this for use with
-the bridge.
-
-.. _LibFFI: http://sources.redhat.com/libffi
-
 Naming convention / coding style
 ................................
 
@@ -173,15 +153,6 @@ the testsuite that checks if the function wrappers are working as expected.
 
 Someone needs to check if we correctly export all constants from Cocoa and if
 the generation script finds all global functions.
-
-MacOS 10.1 support
-..................
-
-The native code for supporting Cocoa don't compile on MacOS 10.1. Need a way
-to conditionally compile parts of this code. Problem is that most of that code
-is generated.
-
-NOTE: At least one person has problems compiling Modules/objc on 10.1.
 
 Pickle support
 ..............

@@ -14,8 +14,9 @@
 
 -initWithPythonObject:(PyObject*)v;
 {
+	Py_INCREF(v);
+	Py_XDECREF(value);
 	value = v;
-	Py_INCREF(value);
 	return self;
 }
 

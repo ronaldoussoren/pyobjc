@@ -7,65 +7,7 @@
 #include <stddef.h>
 #include <objc/Object.h>
 
-/*
- * We use weakreferences to make sure that every objective-C object has 
- * at most one python proxy. This allows users to use the 'is' operator
- * to check if two proxy instances refer to the same objective-C object.
- *
- * There are three functions:
- * - register_proxy
- *   Add the proxy for an objective-C object to the weakref dictionary
- * - unregister_proxy
- *   Remove the proxy from the weakref dictionary
- * - find_existing_proxy
- *   Find the existing proxy for an objective-C object
- *
- * 'unregister_proxy_func' is used to remove a proxy from the dictionary when
- * there are no more references to that proxy. Note that we use the 'self' 
- * object to pass the key that should be remove, that seems to be the easiest
- * (but ugly) method of creating a closure.
- *
- *
- * FIXME: This really should be in a seperate file, with some cleanups to
- *        the API.
- */
-
 static NSMapTable* proxy_dict = NULL;
-
-struct unregister_data {
-	PyObject* function;
-	void* 	  key;
-};
-
-static PyObject* 
-unregister_proxy_func(PyObject* self, PyObject* args)
-{
-	PyObject* weakref = NULL;
-	struct unregister_data* data;
-
-
-	if (!PyArg_ParseTuple(args, "O:unregister_proxy", &weakref)) {
-		PyErr_BadInternalCall();
-		return NULL;
-	}
-
-	data = PyCObject_AsVoidPtr(self);
-
-	NSMapRemove(proxy_dict, data->key);
-	Py_XDECREF(data->function);
-	Py_DECREF(self);
-	free(data);
-
-	Py_INCREF(Py_None);
-	return Py_None;
-}
-
-static PyMethodDef unregister_proxy_method_def = {
-	"unregister_proxy",
-	unregister_proxy_func,
-	METH_VARARGS|METH_KEYWORDS,
-	NULL
-};
 
 static PyObject* 
 find_existing_proxy(id objc_obj)
@@ -79,11 +21,7 @@ find_existing_proxy(id objc_obj)
 		return NULL;
 	}
 
-	v = PyWeakref_GetObject(v);
-	if (v) {
-		Py_INCREF(v);
-	}
-
+	Py_INCREF(v);
 	return v;
 }
 
@@ -91,6 +29,7 @@ static void
 unregister_proxy(id objc_obj)
 {
 	if (proxy_dict == NULL) return;
+	if (objc_obj == nil) return;
 
 	NSMapRemove(proxy_dict, objc_obj);
 }
@@ -99,50 +38,30 @@ static int
 register_proxy(PyObject* proxy_obj) 
 {
 	id objc_obj;
-	PyObject* v;
-	PyObject* unregister_proxy;
-	struct unregister_data* data;
-
 
 	if (PyObjCObject_Check(proxy_obj)) {
 		objc_obj = PyObjCObject_GetObject(proxy_obj);
 	} else if (PyObjCClass_Check(proxy_obj)) {
+		abort();
 		objc_obj = PyObjCClass_GetClass(proxy_obj);
 	} else if (PyObjCUnicode_Check(proxy_obj)) {
+		abort();
 		objc_obj = PyObjCUnicode_Extract(proxy_obj);
 	} else {
 		PyErr_SetString(PyExc_TypeError, 
 			"bad argument for register_proxy");
 		return -1;
 	}
-		
 
 	if (proxy_dict == NULL)  {
 		proxy_dict =  NSCreateMapTable(ObjC_PointerKeyCallBacks,
-		                        ObjC_PyObjectValueCallBacks, 500);
+			ObjC_PointerValueCallBacks, 500);
 
 		if (proxy_dict == NULL) return -1;
 	}
 
-	data = malloc(sizeof(*data));
-	data->key = objc_obj;
-	data->function = NULL;
 
-
-	unregister_proxy = PyCFunction_New(
-		&unregister_proxy_method_def, PyCObject_FromVoidPtr(data, NULL));
-	if (unregister_proxy == NULL) {
-		return -1;
-	}
-	data->function  = unregister_proxy;
-
-	v = PyWeakref_NewProxy(proxy_obj, unregister_proxy);
-	if (v == NULL) {
-		return -1;
-	}
-
-	NSMapInsert(proxy_dict, objc_obj, v);
-	Py_DECREF(v);
+	NSMapInsert(proxy_dict, objc_obj, proxy_obj);
 
 	return 0;
 }
@@ -177,9 +96,7 @@ object_del(PyObject* obj)
 static void
 object_dealloc(PyObject* obj)
 {
-	if (((PyObjCObject*)obj)->weak_refs != NULL) {
-		 PyObject_ClearWeakRefs(obj);
- 	}
+	unregister_proxy(PyObjCObject_GetObject(obj));
 
 	/* If the object is not yet initialized we try to initialize it before
 	 * releasing the reference. This is necessary because of a misfeature
@@ -204,7 +121,6 @@ object_dealloc(PyObject* obj)
 		NS_ENDHANDLER
 	}
 
-	// Grr, this calls __del__ and we don't want that.
 	obj->ob_type->tp_free(obj);
 }
 
@@ -516,13 +432,13 @@ PyObjCClassObject PyObjCObject_Type = {{
 	object_getattro,			/* tp_getattro */
 	object_setattro,			/* tp_setattro */
 	0,					/* tp_as_buffer */
-	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE 
-		| Py_TPFLAGS_HAVE_WEAKREFS, 	/* tp_flags */
+	Py_TPFLAGS_DEFAULT 
+		| Py_TPFLAGS_BASETYPE,          /* tp_flags */
  	0,					/* tp_doc */
  	0,					/* tp_traverse */
  	0,					/* tp_clear */
 	0,					/* tp_richcompare */
-	offsetof(PyObjCObject, weak_refs),	/* tp_weaklistoffset */
+	0,					/* tp_weaklistoffset */
 	0,					/* tp_iter */
 	0,					/* tp_iternext */
 	0,					/* tp_methods */
@@ -582,7 +498,6 @@ PyObjCObject_New(id objc_object)
 	 */
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type);
 	
-	((PyObjCObject*)res)->weak_refs = NULL;
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = 0;
 
@@ -635,7 +550,6 @@ PyObjCObject_NewUnitialized(id objc_object)
 	 */
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type);
 	
-	((PyObjCObject*)res)->weak_refs = NULL;
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = 0;
 

@@ -33,19 +33,12 @@
 }
 
 + newWithObject:(PyObject *) obj;
-
 - initWithObject:(PyObject *) obj;
-
 - (PyObject*) pyObject;
-
 - (PyObject*) __pyobjc_PythonObject__;
-
 - (void) forwardInvocation:(NSInvocation *) invocation;
-
 - (BOOL) respondsToSelector:(SEL) aSelector;
-
 - (NSMethodSignature *) methodSignatureForSelector:(SEL) selector;
-
 - (void) doesNotRecognizeSelector:(SEL) aSelector;
 
 @end /* OC_PythonObject class interface */

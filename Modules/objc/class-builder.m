@@ -230,11 +230,10 @@ int do_slots(PyObject* super_class, PyObject* clsdict)
 
 		slot_value = PyTuple_New(0);
 		if (slot_value == NULL) {
-			Py_DECREF(slots);
 			return NULL;
 		}
 
-		if (PyDict_SetItemString(clsdict, "__slots__", slot_value) < 0) {
+		if (PyDict_SetItemString(clsdict, "__slots__", slot_value) < 0){
 			Py_DECREF(slot_value);
 			return -1;
 		}
@@ -279,7 +278,6 @@ int do_slots(PyObject* super_class, PyObject* clsdict)
 
 	slot_value = PyTuple_New(0);
 	if (slot_value == NULL) {
-		Py_DECREF(slots);
 		return NULL;
 	}
 	if (PyDict_SetItemString(clsdict, "__slots__", slot_value) < 0) {
@@ -395,7 +393,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		ivar_count        += 0;
 		meta_method_count += 0; 
-		method_count      += 5;
+		method_count      += 4;
 	}
 
 	/* First round, count new instance-vars and check for overridden 
@@ -517,11 +515,9 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				
 			if (PyDict_SetItem(class_dict, key, value) < 0) {
 				Py_DECREF(value); value = NULL;
-				Py_DECREF(key); key = NULL;
 				goto error_cleanup;
 			}
 			Py_DECREF(value); value = NULL;
-			Py_DECREF(key); key = NULL;
 			method_count++;
 		}
 	}
@@ -583,8 +579,6 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		 
 		METHOD meth;
 		PyObject* sel;
-
-		/* XXX: Make these global lists instead of macros */
 
 #		define METH(pyname, selector, types, imp) 		\
 			meth = method_list->method_list + 		\
@@ -852,6 +846,7 @@ free_ivars(id self, PyObject* cls)
 		}
 
 		len = PyList_Size(clsValues);
+		/* Check type */
 		for (i = 0; i < len; i++) {
 			PyObjCInstanceVariable* iv;
 			IVAR var;
@@ -904,9 +899,17 @@ static void object_method_dealloc(id self, SEL sel)
 	struct objc_super super;
 	PyObject* obj;
 	PyObject* delmethod;
-	PyObject* cls = ((struct class_wrapper*)self->isa)->python_class;
+	//PyObject* cls = ((struct class_wrapper*)self->isa)->python_class;
 
-	printf("dealloc!\n");
+	PyObject* cls = PyObjCClass_New(self->isa);
+	if (!PyObjCClass_HasPythonImplementation(cls)) {
+		printf("-dealloc substitute called for pure ObjC class\n");
+		abort();
+	}
+
+
+
+	//printf("dealloc!\n");
 
 	delmethod = PyObjCClass_GetDelMethod(cls);
 	if (delmethod != NULL) {
@@ -927,7 +930,8 @@ static void object_method_dealloc(id self, SEL sel)
 		@selector(dealloc), class_getInstanceMethod, 
 		(IMP)object_method_dealloc);
 	RECEIVER(super) = self;
-
+	
+	//printf("Won't dealloc\n");
 	objc_msgSendSuper(&super, @selector(dealloc)); 
 }
 
@@ -1009,6 +1013,7 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 		  	(ObjCSelector*)pymeth)->sel_signature];
 	[result autorelease];
 	Py_DECREF(pymeth);
+	Py_DECREF(pyself);
 	return result;
 }
 
@@ -1044,6 +1049,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		if (pymeth == NULL) PyErr_Clear();
 
 		Py_XDECREF(pymeth);
+		Py_XDECREF(pyself);
 
 		super.class = find_real_superclass(
 				GETISA(self), 
@@ -1054,6 +1060,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		return;
 	}
 	Py_XDECREF(pymeth);
+	Py_XDECREF(pyself);
 
 	signature = [invocation methodSignature];
 	len = [signature numberOfArguments];
@@ -1143,12 +1150,14 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist)
 	}
 	pymeth = PyObjCObject_FindSelector(pyself, selector);
 	if (pymeth == NULL) {
+		Py_DECREF(pyself);
 		ObjCErr_ToObjC();
 		return NULL;
 	}
 
 	result = PyObject_Call(pymeth, arglist, NULL);
 	Py_DECREF(pymeth);
+	Py_DECREF(pyself);
 
 	if (result == NULL) {
 		ObjCErr_ToObjC();

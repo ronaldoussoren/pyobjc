@@ -101,7 +101,7 @@ static ffi_type* signature_to_ffi_type(const char* argtype);
 static ffi_type* 
 array_to_ffi_type(const char* argtype)
 {
-static  PyObject* array_types = NULL;
+static  PyObject* array_types = NULL; // XXX: Use NSMap 
 	PyObject* v;
 	ffi_type* type;
 	int       field_count;
@@ -168,7 +168,7 @@ static  PyObject* array_types = NULL;
 static ffi_type* 
 struct_to_ffi_type(const char* argtype)
 {
-static  PyObject* struct_types = NULL;
+static  PyObject* struct_types = NULL; // XXX: Use NSMap 
 	PyObject* v;
 	ffi_type* type;
 	int       field_count;
@@ -384,6 +384,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			return;
 		}
 		if (PyList_Append(arglist, v) == -1) {
+			Py_DECREF(v);
 			Py_DECREF(arglist);
 			ObjCErr_ToObjC();
 			return;
