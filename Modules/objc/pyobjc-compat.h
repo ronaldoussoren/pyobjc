@@ -1,6 +1,7 @@
 #ifndef PyObjC_COMPAT_H
 #define PyObjC_COMPAT_H
 
+
 /* 
  * Compatibilty definitions 
  */
@@ -47,11 +48,14 @@ static inline void PyGILState_Release(
 
 #endif
 
+#ifdef MACOSX
+#import <AvailabilityMacros.h>
 /* On 10.1 there are no defines for the OS version. */
 #ifndef MAC_OS_X_VERSION_10_1
 #define PyObjC_COMPILING_ON_MACOSX_10_1
 #define MAC_OS_X_VERSION_10_1 1010
 #define MAC_OS_X_VERSION_MAX_ALLOWED MAC_OS_X_VERSION_10_1
+#error "No 10.1?"
 #endif
 
 
@@ -62,6 +66,8 @@ static inline void PyGILState_Release(
 #ifndef MAC_OS_X_VERSION_10_3
 #define MAC_OS_X_VERSION_10_3 1030
 #endif
+
+#endif /* MACOSX */
 
 /* On some versions of GCC <limits.h> defines LONG_LONG_MAX but not LLONG_MAX,
  * compensate.
