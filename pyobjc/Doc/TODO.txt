@@ -263,13 +263,6 @@ Rewrite scripts/find-raw-pointers.py
 This is a script for finding 'difficult' methods. The script should be 
 refactored to make it easier to create readable reports.
 
-Finish struct-wrapper.m
-.......................
-
-We need more unittests and an implementation of the extended slice interface.
-
-Why does the GC support cause an assertion failure when it is enabled?
-
 Finish refactoring of the code-generator scripts
 ................................................
 

@@ -8,10 +8,6 @@
  * Instances consist of the generic PyObject header followed by an array of 
  * fields. 
  *
- * TODO:
- * - Extended slice interface
- * - Add more unittests 
- *
  * NOTE: The basic implementation is quite generic, but the end of this file
  * is only usefull for PyObjC.
  */
@@ -266,12 +262,14 @@ struct_dealloc(PyObject* self)
 {
 	PyMemberDef* member = self->ob_type->tp_members;
 
+	PyObject_GC_UnTrack(self);
+
 	while (member && member->name) {
 		Py_XDECREF(*(PyObject**)(((char*)self)+member->offset));
 		member++;
 	}
 
-	PyObject_Free(self);
+	PyObject_GC_Del(self);
 }
 
 static PyObject*
@@ -281,7 +279,7 @@ struct_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 	PyMemberDef* member = type->tp_members;
 	int r;
 
-	result = PyObject_New(PyObject, type);
+	result = PyObject_GC_New(PyObject, type);
 	if (result == NULL) return NULL;
 
 	while (member && member->name) {
@@ -292,6 +290,7 @@ struct_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 		*((PyObject**)(((char*)result) + member->offset)) = NULL;
 		member++;
 	}
+	PyObject_GC_Track(result);
 
 	r = type->tp_init(result, args, kwds);
 	if (r == -1) {
@@ -625,7 +624,7 @@ static PyTypeObject StructTemplate_Type = {
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT 
 		| Py_TPFLAGS_HAVE_RICHCOMPARE 
-		/*| Py_TPFLAGS_HAVE_GC*/, 		/* tp_flags */
+		| Py_TPFLAGS_HAVE_GC, 		/* tp_flags */
 	0,					/* tp_doc */
 	struct_traverse,			/* tp_traverse */
 	struct_clear,				/* tp_clear */
@@ -732,7 +731,7 @@ PyObjC_CreateRegisteredStruct(const char* signature, int len)
 
 	member = type->tp_members;
 
-	result = PyObject_New(PyObject, type);
+	result = PyObject_GC_New(PyObject, type);
 	if (result == NULL) {
 		PyErr_Clear();
 		return NULL;
@@ -746,6 +745,8 @@ PyObjC_CreateRegisteredStruct(const char* signature, int len)
 		*((PyObject**)(((char*)result) + member->offset)) = NULL;
 		member++;
 	}
+
+	PyObject_GC_Track(result);
 	return result;
 }
 
