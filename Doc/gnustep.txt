@@ -4,7 +4,7 @@ GNUstep support in PyObjC
 
 PyObjC has limited support for GNUstep, the 'objc' and 'Foundation' packages
 build and pass some, but by far not all, unittests. More work is needed to
-make the GNUstep port as stable as the MacOS X "port".
+make the GNUstep port as stable as the Mac OS X "port".
 
 The GNUstep port was primarily developed on Linux i86 (specifically 
 the Debian testing distribution), using python 2.3.3,  gcc 3.3.2 and 

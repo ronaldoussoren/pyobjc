@@ -138,7 +138,7 @@ simply double-click it and choose ``Build and Run``.
 * `SillyBallsSaver`_
 
   A simple screensaver written in Python. This example requires a framework
-  install of Python, that is either MacOS X 10.3 or a MacPython 2.3 
+  install of Python, that is either Mac OS X 10.3 or a MacPython 2.3 
   installation.
 
 * `SimpleService`_
@@ -175,7 +175,7 @@ simply double-click it and choose ``Build and Run``.
 
     This is a refactor of the WebServicesTool example that is made much simpler
     by using Twisted as it does not need threads. This version also uses
-    NSController and therefore requires MacOS X 10.3.
+    NSController and therefore requires Mac OS X 10.3.
 
 * `WebServicesTool`_
 

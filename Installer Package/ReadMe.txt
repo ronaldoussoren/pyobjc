@@ -24,8 +24,8 @@ and examples are found in  the folder ``PyObjC Documentation and Examples``.
 Install these by dragging this folder to you disk, ``/Library/Documentation``
 is a suitable location.
 
-NOTE: The installer package is for MacOS X 10.2 *only* and is for use with
+NOTE: The installer package is for Mac OS X 10.2 *only* and is for use with
 the Apple supplied Python 2.2 installation. If you use MacPython 2.3 you should
 use the Package Manager application to install PyObjC. If you use other versions
-of MacOS X you should install from the sources, see the source archive for
+of Mac OS X you should install from the sources, see the source archive for
 details.

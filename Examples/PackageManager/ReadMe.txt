@@ -18,7 +18,7 @@ Features w.r.t. the official Package Manager:
 Building
 --------
 
-This version requires the latest version of PyObjC (1.1b1) and MacOS X 10.3.
+This version requires the latest version of PyObjC (1.1b1) and Mac OS X 10.3.
 Please let me know if it also works on OSX 10.2.
 
 Run ``python buildapp.py build`` to create the application.

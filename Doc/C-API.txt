@@ -55,7 +55,7 @@ is unsupported.
 Compatibility Macros
 --------------------
 
-On MacOS X, the version guard macro ``MAC_OS_X_VERSION_MAX_ALLOWED`` will 
+On Mac OS X, the version guard macro ``MAC_OS_X_VERSION_MAX_ALLOWED`` will 
 always be available. 
 
 The macros ``PyDoc_STR``, ``PyDoc_VAR`` and ``PyDoc_STRVAR`` are defined 
