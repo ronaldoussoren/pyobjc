@@ -9,18 +9,17 @@ extern PyObject* ObjCExc_internal_error;
 
 int ObjCUtil_Init(PyObject* module);
 
-void ObjCErr_Set(PyObject* exc, char* fmt, ...);
 void PyObjCErr_FromObjC(NSException* localException);
 void PyObjCErr_ToObjC(void);
 void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state);
 
 PyObject* PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc);
 
-char* ObjC_strdup(const char* value);
+char* PyObjCUtil_Strdup(const char* value);
 
 #include <Foundation/NSMapTable.h>
-extern NSMapTableKeyCallBacks ObjC_PointerKeyCallBacks;
-extern NSMapTableValueCallBacks ObjC_PointerValueCallBacks;
+extern NSMapTableKeyCallBacks PyObjCUtil_PointerKeyCallBacks;
+extern NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks;
 
 
 //extern NSMapTableKeyCallBacks ObjC_PyObjectKeyCallBacks;

@@ -48,29 +48,32 @@ meth_syncNSString(PyObjCUnicodeObject* self)
 {
 	PyUnicodeObject  dummy;
 	const char* utf8; 
-	PyUnicodeObject* tmp;
+	PyUnicodeObject* tmp = NULL;
 
 	if (PyErr_Warn(PyExc_DeprecationWarning, 
 			"use unicode(obj.nsstring()) instead of "
 			"obj.syncNSString().") < 0) {
 		return NULL;
 	}
+
+	PyUnicode_AS_UNICODE(&dummy) = NULL;
 	
 	utf8 = [self->nsstr UTF8String];
-	tmp = (PyUnicodeObject*)PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
-
-	if (tmp == NULL) return NULL;
+	tmp = (PyUnicodeObject*)PyUnicode_DecodeUTF8(
+			utf8, 
+			strlen(utf8), 
+			"strict");
+	if (tmp == NULL) goto error;
 
 	
 	PyUnicode_AS_UNICODE(&dummy) = PyMem_NEW(Py_UNICODE,
 		PyUnicode_GET_SIZE(tmp));
-	if (PyUnicode_AS_UNICODE(&dummy) == NULL) {
-		PyErr_NoMemory();
-		return NULL;
-	}
+	if (PyUnicode_AS_UNICODE(&dummy) == NULL) goto error;
+
 	PyMem_Free(PyUnicode_AS_UNICODE(self));
 	PyUnicode_AS_UNICODE(self) = PyUnicode_AS_UNICODE(&dummy);
 	PyUnicode_GET_SIZE(self) = PyUnicode_GET_SIZE(tmp);
+	PyUnicode_AS_UNICODE(&dummy) = NULL;
 	memcpy((char*)PyUnicode_AS_DATA(self), PyUnicode_AS_DATA(tmp),
 		PyUnicode_GET_DATA_SIZE(tmp));
 
@@ -78,51 +81,51 @@ meth_syncNSString(PyObjCUnicodeObject* self)
 	if (PyUnicode_GET_SIZE(tmp) == 0) {
 		self->base.hash = 0;
 	}
+	Py_XINCREF(tmp->defenc);
 	Py_XDECREF(self->base.defenc);
 	self->base.defenc = tmp->defenc;
-	Py_XINCREF(tmp->defenc);
 	Py_DECREF(tmp);
 
 	Py_INCREF(Py_None);
 	return Py_None;
+
+error:
+	if (PyUnicode_AS_UNICODE(&dummy) != NULL) {
+		PyMem_Free(PyUnicode_AS_UNICODE(&dummy));
+	}
+	Py_XDECREF(tmp);
+	return NULL;
+
 }
 
-/*
- * Make sure objc_unicode objects don't get pickled.
- *
- * See meth_reduce in objc-object.m for details.
- */
 static PyObject*
 meth_reduce(PyObject* self)
 {
-	PyObject* retVal;
-	PyObject *v, *v2;
+	PyObject* retVal = NULL;
+	PyObject *v = NULL;
+	PyObject *v2 = NULL;
 
 	retVal = PyTuple_New(2);
-	if (retVal == NULL) {
-		return NULL;
-	}
+	if (retVal == NULL) goto error;
 
 	v = (PyObject*)&PyUnicode_Type;
 	Py_INCREF(v);
 	PyTuple_SET_ITEM(retVal, 0, v);
 
 	v = PyUnicode_FromObject(self);
-	if (v == NULL ) {
-		Py_DECREF(retVal);
-		return NULL;
-	}
+	if (v == NULL ) goto error;
 
 	v2 = PyTuple_New(1);
-	if (v2 == NULL) {
-		Py_DECREF(v);
-		Py_DECREF(retVal);
-		return NULL;
-	}
+	if (v2 == NULL) goto error;
 	PyTuple_SET_ITEM(v2, 0, v);
 	PyTuple_SET_ITEM(retVal, 1, v2);
 
 	return retVal;
+
+error:
+	Py_XDECREF(retVal);
+	Py_XDECREF(v);
+	return NULL;
 }
 
 static PyMethodDef class_methods[] = {
@@ -153,7 +156,8 @@ class_new(
 	PyObject* args __attribute__((__unused__)), 
 	PyObject* kwds __attribute__((__unused__)))
 {
-	PyErr_SetString(PyExc_TypeError, "Cannot create objc.unicode from Python");
+	PyErr_SetString(PyExc_TypeError, 
+			"Cannot create instances of 'objc.unicode' in Python");
 	return NULL;
 }
 
@@ -214,7 +218,8 @@ PyObject*
 PyObjCUnicode_New(NSString* value)
 {
 	const char* utf8 = [value UTF8String];
-	PyUnicodeObject* tmp = (PyUnicodeObject*)PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
+	PyUnicodeObject* tmp = (PyUnicodeObject*)PyUnicode_DecodeUTF8(
+			utf8, strlen(utf8), "strict");
 	PyObjCUnicodeObject* result;
 
 	if (tmp == NULL) return NULL;

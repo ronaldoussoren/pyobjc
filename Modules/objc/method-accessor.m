@@ -26,7 +26,7 @@ find_selector(PyObject* self, char* name, int class_method)
 		 * FIXME: Some classes (NSFault, NSFinalProxy) crash hard
 		 * on these names
 		 */
-		ObjCErr_Set(PyExc_AttributeError,
+		PyErr_Format(PyExc_AttributeError,
 			"No selector %s", name);
 		return NULL;
 	}
@@ -49,28 +49,28 @@ find_selector(PyObject* self, char* name, int class_method)
 			objc_object = GETISA(objc_object);
 		}
 	} else {
-		ObjCErr_Set(PyExc_TypeError,
+		PyErr_Format(PyExc_TypeError,
 			"Need Objective-C class or instance, got "
 			"a %s", self->ob_type->tp_name);
 		return NULL;
 	}
 
 	if (objc_object == nil) {
-		ObjCErr_Set(PyExc_AttributeError,
+		PyErr_Format(PyExc_AttributeError,
 			"<nil> doesn't have attribute %s", name);
 		return NULL;
 	}
 
 
 	if (strcmp(GETISA(objc_object)->name, "_NSZombie") == 0) {
-		ObjCErr_Set(PyExc_AttributeError,
+		PyErr_Format(PyExc_AttributeError,
 			"Cannot access NSProxy.%s", name);
 		return NULL;
 	}
 
 	if (class_method && strcmp(((Class)objc_object)->name, "NSProxy") == 0 ){
 		if (sel == @selector(methodSignatureForSelector:)) {
-			ObjCErr_Set(PyExc_AttributeError,
+			PyErr_Format(PyExc_AttributeError,
 				"Cannot access NSProxy.%s", name);
 			return NULL;
 		}
@@ -88,7 +88,7 @@ find_selector(PyObject* self, char* name, int class_method)
 	NS_ENDHANDLER
 
 	if (methsig == NULL) {
-		ObjCErr_Set(PyExc_AttributeError,
+		PyErr_Format(PyExc_AttributeError,
 			"No selector %s", name);
 		return NULL;
 	}
@@ -238,7 +238,7 @@ obj_getattro(ObjCMethodAccessor* self, PyObject* name)
 	int	  class_method;
 
 	if (!PyString_Check(name)) {
-		ObjCErr_Set(PyExc_TypeError, 
+		PyErr_Format(PyExc_TypeError, 
 			"Expecting string, got %s",
 			name->ob_type->tp_name);
 		return NULL;

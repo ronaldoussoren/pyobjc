@@ -229,8 +229,9 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
 	PyObject* seq;
 
 	if (!PyObjCInformalProtocol_Check(obj)) {
-		ObjCErr_Set(PyExc_TypeError, 
-			"First argument is not an objc.informal_protocol");
+		PyErr_Format(PyExc_TypeError, 
+			"First argument is not an 'objc.informal_protocol' "
+			"but '%s'", obj->ob_type->tp_name);
 		return 0;
 	}
 
@@ -319,18 +320,21 @@ PyObjCInformalProtocol_CheckClass(
 	PyObject* seq;
 
 	if (!PyObjCInformalProtocol_Check(obj)) {
-		ObjCErr_Set(PyExc_TypeError, 
-			"First argument is not an objc.informal_protocol");
+		PyErr_Format(PyExc_TypeError, 
+			"First argument is not an 'objc.informal_protocol' "
+			"but '%s'", obj->ob_type->tp_name);
 		return 0;
 	}
 	if (!PyObjCClass_Check(super_class)) {
-		ObjCErr_Set(PyExc_TypeError, 
-			"Third argument is not an objc.objc_class");
+		PyErr_Format(PyExc_TypeError, 
+			"Third argument is not an 'objc.objc_class' but "
+			"'%s'", super_class->ob_type->tp_name);
 		return 0;
 	}
 	if (!PyDict_Check(clsdict)) {
-		ObjCErr_Set(PyExc_TypeError, 
-			"Fourth argument is not a dict");
+		PyErr_Format(PyExc_TypeError, 
+			"Fourth argument is not a 'dict' but '%s'",
+			clsdict->ob_type->tp_name);
 		return 0;
 	}
 
@@ -362,9 +366,9 @@ PyObjCInformalProtocol_CheckClass(
 
 		if (m == NULL || !PyObjCSelector_Check(m)) {
 			if (PyObjCSelector_Required(cur)) {
-				ObjCErr_Set(PyExc_TypeError,
+				PyErr_Format(PyExc_TypeError,
 					"class %s does not fully implement "
-					  "protocol %s: no implementation for %s",
+					"protocol %s: no implementation for %s",
 					name,
 					PyString_AsString(self->name),
 					PyObjCRT_SELName(sel));
@@ -377,11 +381,11 @@ PyObjCInformalProtocol_CheckClass(
 			if (!signaturesEqual(PyObjCSelector_Signature(m),
 				PyObjCSelector_Signature(cur)) != 0) {
 
-				ObjCErr_Set(PyExc_TypeError,
+				PyErr_Format(PyExc_TypeError,
 					"class %s does not correctly implement "
-					  "protocol %s: "
-					  "the signature for method %s is "
-					  "%s instead of %s",
+					"protocol %s: "
+					"the signature for method %s is "
+					"%s instead of %s",
 					name,
 					PyString_AsString(self->name),
 					PyObjCRT_SELName(sel),

@@ -912,14 +912,8 @@ static char* keywords[] = { "context", "windowDumpStream", NULL };
 	return result;
 }
 
-#ifdef GNUSTEP
-#include "_App_Functions.GNUstep.inc"
-
-#else /* !GNUSTEP */
-
 #include "_App_Functions.inc"
-
-#endif /* !GNUSTEP */
+#include "_App_Classes.inc"
 
 static PyMethodDef appkit_methods[] = {
 	{ 
@@ -1187,6 +1181,7 @@ void init_AppKit(void)
 {
 	PyObject *m, *d, *v;
 	CFBundleRef bundle;
+	const char** name;
 
 	m = Py_InitModule4("_AppKit", appkit_methods, appkit_doc, 
 		NULL, PYTHON_API_VERSION);
@@ -1207,15 +1202,8 @@ void init_AppKit(void)
 
 	//CFRelease(bundle);
 
-#ifdef GNUSTEP
-
-#	include "_App_Var.GNUstep.inc"
-
-#else /* !GNUSTEP */
-
 #	include "_App_Var.inc"
 
-#endif /* !GNUSTEP */
 
 	/* And some troublesome definitions 
 	 * All of these found by 'grep #define *.h' in the AppKit header 
@@ -1291,4 +1279,28 @@ void init_AppKit(void)
 	if (_pyobjc_install_NSSimpleHorizontalTypesetter() < 0) return;
 	if (_pyobjc_install_NSView() < 0) return;
 	if (_pyobjc_install_NSWindow() < 0) return;
+
+	/*
+	 * On OSX finding the bundle/framework for a class is *very* expensive.
+	 * We therefore have a cache of names of classes that are present in
+	 * the AppKit framework. That way we don't have to ask for the 
+	 * bundle/framework as often, which speeds up program initialization.
+	 *
+	 * On my (Ronald's) powerbook the difference is about 30% for 
+	 * 'python -c "import AppKit"' and this difference is also noticable
+	 * when starting GUI programs.
+	 */
+	v = PyString_FromString("AppKit");
+	for (name = gClassNames; *name != NULL; name++) {
+		PyObject* o;
+		Class cls = objc_lookUpClass(*name);
+		if (cls == NULL) continue;
+
+		o = PyObjCClass_New(cls);
+		if (o == NULL) return;
+
+		PyObject_SetAttrString(o, "__module__", v);
+		Py_DECREF(o);
+	}
+	Py_DECREF(v);
 }

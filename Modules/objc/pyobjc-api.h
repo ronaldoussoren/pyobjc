@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.24 2004/01/02 20:48:41 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.25 2004/01/14 20:10:15 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -108,8 +108,9 @@ static inline void PyGILState_Release(
  * - Version 5 modifies the signature for PyObjC_RegisterMethodMapping,
  *	PyObjC_RegisterSignatureMapping and PyObjCUnsupportedMethod_IMP,
  *      adds PyObjC_RegisterStructType and removes PyObjC_CallPython
+ * - Version 6 adds PyObjCIMP_Type, PyObjCIMP_GetIMP and PyObjCIMP_GetSelector
  */
-#define PYOBJC_API_VERSION 5
+#define PYOBJC_API_VERSION 6
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -221,6 +222,15 @@ struct pyobjc_api {
 
 	/* PyObjC_RegisterStructType */
 	PyObject* (*register_struct)(const char*, const char*, const char*, initproc, int, const char**);
+
+	/* PyObjCIMP_Type */
+	PyTypeObject* imp_type;
+
+	/* PyObjCIMP_GetIMP */
+	IMP  (*imp_get_imp)(PyObject*);
+
+	/* PyObjCIMP_GetSelector */
+	SEL  (*imp_get_sel)(PyObject*);
 };
 
 
@@ -233,6 +243,7 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCObject_Check(obj) PyObject_TypeCheck(obj, PyObjC_API->object_type)
 #define PyObjCClass_Check(obj)  PyObject_TypeCheck(obj, PyObjC_API->class_type)
 #define PyObjCSelector_Check(obj)  PyObject_TypeCheck(obj, PyObjC_API->select_type)
+#define PyObjCIMP_Check(obj)  PyObject_TypeCheck(obj, PyObjC_API->imp_type)
 #define PyObjCObject_GetObject (PyObjC_API->obj_get_object)
 #define PyObjCObject_ClearObject (PyObjC_API->obj_clear_object)
 #define PyObjCClass_GetClass   (PyObjC_API->cls_get_class)
@@ -266,6 +277,8 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjC_PythonToCArray	(PyObjC_API->py_to_c_array)
 #define PyObjC_CArrayToPython	(PyObjC_API->c_array_to_py)
 #define PyObjC_RegisterStructType   (PyObjC_API->register_struct)
+#define PyObjCIMP_GetIMP   (PyObjC_API->imp_get_imp)
+#define PyObjCIMP_GetSelector   (PyObjC_API->imp_get_sel)
 
 
 /* XXX: Check if we can use the following function in the bridge itself,
@@ -361,7 +374,7 @@ PyObjC_ImportAPI(PyObject* calling_module)
 	PyObject* m;
 	PyObject* d;
 	PyObject* api_obj;
-	PyObject* name = PyString_FromString("objc._objc");
+	PyObject* name = PyString_FromString("_objc");
 	
 	m = PyImport_Import(name);
 	Py_DECREF(name);

@@ -179,6 +179,15 @@ in module.m is necessary. See `bug #77730`__.
 
 .. _: http://sourceforge.net/tracker/index.php?func=detail&aid=777308&group_id=14534&atid=114534
 
+Code cleanup
+............
+
+* Check all error/exception messages
+
+* Check/cleanup error handling
+
+* Finish in-code documentation for the C code
+
 
 Cleanup Examples
 ................
@@ -300,3 +309,30 @@ implemented efficiently. The default implementation will take care of the
 methods we cannot implement efficiently.
 
 And the same is true of OC_PythonArray
+
+Finish support for methodForSelector:
+-------------------------------------
+
+* All call_ functions in Foundation and AppKit should support calling 
+  IMP-wrappers.
+
+* You should be able to use an IMP as the implementation of a method in
+  a different class.
+
+* More unittests
+
+Make it possible to redefine classes
+....................................
+
+For IDE's it would be pretty usefull to be able to redefine classes. It should
+not be possible to redefine pure ObjC classes, and the redefined class should
+be in the same module (determined by name).
+
+Both are needed to avoid accidental errors (e.g. two modules definining a class
+with the same name, which is perfectly valid in plain Python).
+
+Rewrite packaging scripts
+.........................
+
+The scripts we use for doing releases should be cleaned up, generic 
+functionality should be made available for others.

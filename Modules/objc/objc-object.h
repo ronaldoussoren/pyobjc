@@ -19,5 +19,6 @@ void 	  PyObjCObject_ClearObject(PyObject* object);
 #define   PyObjCObject_GetObject(object) (((PyObjCObject*)(object))->objc_object)
 void _PyObjCObject_FreeDeallocHelper(PyObject* obj);
 PyObject* _PyObjCObject_NewDeallocHelper(id objc_object);
+#define PyObjCObject_Flags(object) (((PyObjCObject*)(object))->flags)
 
 #endif /* PyObjC_OBJC_OBJECT_H */

@@ -1,6 +1,10 @@
 #ifndef PyObjC_UNITTEST_H
 #define PyObjC_UNITTEST_H
-/*
+/*!
+ * @header pyobjc-unittest.h
+ * @abstract Defining C-based unittests
+ * @discussion
+ *
  * This file defines a very simple unittest framework for the Objective-C
  * modules of PyObjC. 
  *
@@ -8,17 +12,20 @@
  * information on that.
  *
  * Usage:
- *
+ * <PRE>
  * BEGIN_UNITEST(IntSize)
- *	// This is a normal C block, starting with variable definitions
- *	int i = 3;
+ *     // This is a normal C block, starting with variable definitions
+ *     int i = 3;
  *
- *	ASSERT_EQUALS(sizeof(int), sizeof(i), "%d");
+ *     ASSERT_EQUALS(sizeof(int), sizeof(i), "%d");
  * 
  * END_UNITTEST
+ * </PRE>
  *
  * And in the PyMethodDef list for the module:
- * 	TESTDEF(IntSize),
+ * <PRE>
+ *     TESTDEF(IntSize),
+ * </PRE>
  *
  * Use 'FAIL_IF' to abort a test due to a Python exception.
  */

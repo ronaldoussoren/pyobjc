@@ -35,7 +35,20 @@
 
 + newWithObject:(PyObject *) obj;
 - initWithObject:(PyObject *) obj;
+
+/*!
+ * @method pyObject
+ * @result Returns a borrowed reference to the wrapped object
+ */
 - (PyObject*) pyObject;
+
+/*!
+ * @method __pyobjc_PythonObject__
+ * @result Returns a new reference to the wrapped object
+ * @discussion
+ * 	This method is part of the implementation of objc_support.m,
+ * 	see that file for details.
+ */
 - (PyObject*) __pyobjc_PythonObject__;
 - (void) forwardInvocation:(NSInvocation *) invocation;
 - (BOOL) respondsToSelector:(SEL) aSelector;

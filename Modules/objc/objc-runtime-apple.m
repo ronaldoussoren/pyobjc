@@ -27,14 +27,12 @@ int PyObjCRT_SetupClass(
 	cls->info = CLS_CLASS; // |CLS_METHOD_ARRAY;
 	metaCls->info = CLS_META; // |CLS_METHOD_ARRAY;
 
-	cls->name = strdup(name);
+	cls->name = PyObjCUtil_Strdup(name);
 	if (cls->name == NULL) {
-		PyErr_NoMemory();
 		return -1;
 	}
-	metaCls->name = strdup(name);
+	metaCls->name = PyObjCUtil_Strdup(name);
 	if (metaCls->name == NULL) {
-		PyErr_NoMemory();
 		free((char*)(cls->name));
 		return -1;
 	}

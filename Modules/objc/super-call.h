@@ -1,49 +1,111 @@
-#ifndef OBJC_SUPER_CALL_H
-#define OBJC_SUPER_CALL_H
-/*
- * This file, and the corresponding '.m' file, deal with finding the 
- * correct function to call a method, both from Python to Objective-C and
- * from Objective-C to python.
+#ifndef PyObjC_SUPER_CALL_H
+#define PyObjC_SUPER_CALL_H
+/*!
+ * @header super-call.h
+ * @abstract Finding the right functions to call Objective-C methods
+ * @discussion
+ *     This module deals with finding the correct function to call a method, 
+ *     both from Python to Objective-C and from Objective-C to python.
  *
- * The default Python to Objective-C calls for 'normal' calls is good enough
- * for most methods, in general problemetic methods are those with output 
- * parameters.
- *
- * Calling the superclass implementation is harder, and requires compile-time
- * generated stubs. The core module wil provide no such stubs, but relies on
- * extension modules to provide these (All stubs needed for Cocoa are part of
- * the pyobjc package).
- *
- * Calling from objective-C to python is simular in dificultie as super-calls.
- * The core module again provides no stubs, and again the Cocoa-related stubs
- * will be part of the pyobjc package.
+ *     The default Python to Objective-C calls for 'normal' calls is good enough
+ *     for most methods, but for some methods we need specialized functions.
  */
 
-/* Registration database that allows overriding of the function used to
- * forward a call from python to objective-C
+/*!
+ * @constant PyObjC_MappingCount
+ * @abstract The number of registered special mappings
+ * @discussion
+ *     This is NOT a constant, but there seems to be no way to mark up
+ *     variables.
+ *
+ *     This value is used by the objc-class module to detect if the methods in
+ *     a class should be regenerated.
  */
 extern int PyObjC_MappingCount;
 
-typedef PyObject* (*ObjC_CallFunc_t)(
+/*!
+ * @typedef PyObjC_CallFunc
+ * @param meth A selector object
+ * @param self The self argument
+ * @param args The other arguments
+ * @result Returns the return value, or NULL if an exception occurred
+ */
+typedef PyObject* (*PyObjC_CallFunc)(
 	PyObject* meth, PyObject* self, PyObject* args);
 
+/*!
+ * @function PyObjC_RegisterMethodMapping
+ * @abstract Register a mapping for a specific method
+ * @param aClass         Class for which this mapping is valid (+subclasses)
+ * @param sel            The selector with a custom mapping
+ * @param call_to_objc   Function for calling into Objective-C (from Python),
+ * 	                 the default is 'ObjC_FFICaller'.
+ * @param call_to_python Function for calling into Python (from Objective-C)
+ * @result Returns 0 on success, -1 on error.
+ */
 extern int PyObjC_RegisterMethodMapping(
-	Class class, 
+	Class aClass, 
 	SEL sel, 
-	ObjC_CallFunc_t call_to_objc, 
+	PyObjC_CallFunc call_to_objc, 
 	PyObjCFFI_ClosureFunc call_to_python
 	);
 
+/*!
+ * @function PyObjC_RegisterSignatureMapping
+ * @abstract Register a mapping for methods with a specific signature
+ * @param signature      An Objective-C method signature string
+ * @param call_to_objc   Function for calling into Objective-C (from Python)
+ * @param call_to_python Function for calling into Python (from Objective-C)
+ * @result Returns 0 on success, -1 on failure
+ */
 extern int PyObjC_RegisterSignatureMapping(
 	char* signature,
-	ObjC_CallFunc_t call_to_super,
+	PyObjC_CallFunc call_to_super,
 	PyObjCFFI_ClosureFunc call_to_python);
 
-extern ObjC_CallFunc_t ObjC_FindCallFunc(Class class, SEL sel);
-extern IMP PyObjC_MakeIMP(Class class, PyObject* sel, PyObject* imp);
+/*!
+ * @function PyObjC_FindCallFunc
+ * @abstract Find the function to call into Objective-C
+ * @param aClass     An Objective-C class
+ * @param sel        A selector
+ * @result Returns a function or NULL
+ * @discussion
+ * 	This finds the function that can be used to call the Objective-C
+ * 	implementation of the specified method.
+ */
+extern PyObjC_CallFunc PyObjC_FindCallFunc(Class aClass, SEL sel);
 
+/*!
+ * @function PyObjC_MakeIMP
+ * @abstract Create an IMP for calling the specified method from Objective-C
+ * @param aClass  An Objective-C class
+ * @param sel     A selector object
+ * @param imp     The Python implementation for sel
+ * @result  A method stub or NULL
+ * @discussion
+ *      Objective-C classes have method dispatch tables. This function creates
+ *      and returns functions that can be used in these tables. The returned
+ *      function will convert it's arguments to Python objects and call 'imp'.
+ *      The result of 'imp' will be converted back to Objective-C.
+ */
+extern IMP PyObjC_MakeIMP(Class aClass, PyObject* sel, PyObject* imp);
+
+/*!
+ * @constant PyObjCUnsupportedMethod_IMP
+ * @discussion
+ * 	Use this as the 'call_to_python' argument to 
+ * 	PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
+ * 	the method cannot be implemented in Python.
+ */
 extern void PyObjCUnsupportedMethod_IMP(ffi_cif*, void*, void**, void*);
+
+/*!
+ * @constant PyOBjCUnsupportedMethod_Caller
+ * @discussion
+ * 	Use this as the 'call_to_objc' argument to 
+ * 	PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
+ * 	the method cannot be called from Python.
+ */
 extern PyObject* PyObjCUnsupportedMethod_Caller(PyObject*, PyObject*, PyObject*);
 
-
-#endif /* OBJC_SUPER_CALL_H */
+#endif /* PyObjC_SUPER_CALL_H */

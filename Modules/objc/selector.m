@@ -50,17 +50,16 @@ ObjC_SignatureForSelector(char* class_name, SEL selector, char* signature)
 		PyErr_NoMemory();
 		return -1;
 	}
-	value->class_name = ObjC_strdup(class_name);
+	value->class_name = PyObjCUtil_Strdup(class_name);
 	if (value->class_name == NULL) {
 		PyMem_Free(value);
-		PyErr_NoMemory();
 		return -1;
 	}
 	
 	value->selector = selector;
-	value->signature = ObjC_strdup(signature);
+	value->signature = PyObjCUtil_Strdup(signature);
 	if (value->signature == NULL) {
-		PyMem_Free(value);
+		free(value->class_name);
 		PyErr_NoMemory();
 		return -1;
 	}
@@ -527,14 +526,14 @@ static PyObject*
 objcsel_call(ObjCNativeSelector* self, PyObject* args)
 {
 	PyObject* pyself = self->sel_self;
-	ObjC_CallFunc_t execute = NULL;
+	PyObjC_CallFunc execute = NULL;
 	PyObject* res;
 
 	if (pyself == NULL) {
 		int       argslen;
 		argslen = PyTuple_Size(args);
 		if (argslen < 1) {
-			ObjCErr_Set(PyExc_TypeError,
+			PyErr_SetString(PyExc_TypeError,
 				"Missing argument: self");
 			return NULL;
 		}
@@ -547,7 +546,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 	if (self->sel_call_func) {
 		execute = self->sel_call_func;
 	} else {
-		execute = ObjC_FindCallFunc(
+		execute = PyObjC_FindCallFunc(
 				self->sel_class, 
 				self->sel_selector);
 		if (execute == NULL) return NULL;
@@ -652,16 +651,16 @@ objcsel_descr_get(ObjCNativeSelector* meth, PyObject* volatile obj, PyObject* cl
 	}
 	result = PyObject_New(ObjCNativeSelector, &ObjCNativeSelector_Type);
 	result->sel_selector   = meth->sel_selector;
-	result->sel_signature  = ObjC_strdup(meth->sel_signature);
+	result->sel_signature  = PyObjCUtil_Strdup(meth->sel_signature);
 	if (result->sel_signature == NULL) {
 		Py_DECREF(result);
-		return PyErr_NoMemory();
+		return NULL;
 	}
 	result->sel_flags = meth->sel_flags;
 	result->sel_class = meth->sel_class;
 
 	if (meth->sel_call_func == NULL) {
-		meth->sel_call_func = ObjC_FindCallFunc(meth->sel_class,
+		meth->sel_call_func = PyObjC_FindCallFunc(meth->sel_class,
 			meth->sel_selector);
 	}
 	result->sel_call_func = meth->sel_call_func;
@@ -680,7 +679,7 @@ objcsel_descr_get(ObjCNativeSelector* meth, PyObject* volatile obj, PyObject* cl
 	}
 	result->sel_oc_signature = meth->sel_oc_signature;
 	if (result->sel_oc_signature) {
-		result->sel_oc_signature->retainCount++;
+		PyObjCMethodSignature_Retain(result->sel_oc_signature);
 	}
 
 	result->sel_self       = obj;
@@ -764,8 +763,12 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 	}
 
 	if (name[0] == '_' && name[1] == '_') {
-		/* XXX: Try to speed up pydoc */
-		ObjCErr_Set(PyExc_AttributeError,
+		/* No known Objective-C class has methods whose name
+		 * starts with '__' or '_:'. This allows us to shortcut
+		 * lookups for special names, which speeds up tools like
+		 * pydoc.
+		 */
+		PyErr_Format(PyExc_AttributeError,
 			"No attribute %s", name);
 		return NULL;
 	}
@@ -774,19 +777,19 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 		Class cls = PyObjCClass_GetClass(self);
 
 		if (!cls) {
-			ObjCErr_Set(PyExc_AttributeError,
+			PyErr_Format(PyExc_AttributeError,
 				"No attribute %s", name);
 			return NULL;
 		}
 		if (strcmp(cls->name, "_NSZombie") == 0) {
-			ObjCErr_Set(PyExc_AttributeError,
+			PyErr_Format(PyExc_AttributeError,
 				"No attribute %s", name);
 			return NULL;
 		}
 
 		if (strcmp(cls->name, "NSProxy") == 0) {
 			if (sel == @selector(methodSignatureForSelector:)) {
-				ObjCErr_Set(PyExc_AttributeError,
+				PyErr_Format(PyExc_AttributeError,
 					"Accessing NSProxy.%s is not supported",
 					name);
 				return NULL;
@@ -803,12 +806,12 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 					PyObjC_NSMethodSignatureToTypeString(
 						methsig, buf, sizeof(buf)), 1);
 			} else {
-				ObjCErr_Set(PyExc_AttributeError,
+				PyErr_Format(PyExc_AttributeError,
 					"No attribute %s", name);
 				retval = NULL;
 			}
 		NS_HANDLER
-			ObjCErr_Set(PyExc_AttributeError,
+			PyErr_Format(PyExc_AttributeError,
 				"No attribute %s", name);
 			retval = NULL;
 
@@ -835,12 +838,12 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 			}
 			return (PyObject*)res;
 		} else {
-			ObjCErr_Set(PyExc_AttributeError,
+			PyErr_Format(PyExc_AttributeError,
 				"No attribute %s", name);
 			return NULL;
 		}
 	} else {
-		ObjCErr_Set(PyExc_RuntimeError,
+		PyErr_SetString(PyExc_RuntimeError,
 			"PyObjCSelector_FindNative called on plain "
 			"python object");
 		return NULL;
@@ -864,10 +867,10 @@ PyObjCSelector_NewNative(Class class,
 	if (result == NULL) return NULL;
 
 	result->sel_selector = selector;
-	result->sel_signature = ObjC_strdup(signature);
+	result->sel_signature = PyObjCUtil_Strdup(signature);
 	if (result->sel_signature == NULL) {
 		Py_DECREF(result);
-		return PyErr_NoMemory();
+		return NULL;
 	}
 	result->sel_self = NULL;
 	result->sel_class = class;
@@ -893,10 +896,10 @@ PyObjCSelector_New(PyObject* callable,
 	if (signature == NULL) {
 		result->sel_signature = pysel_default_signature(callable);
 	} else {
-		result->sel_signature = ObjC_strdup(signature);
+		result->sel_signature = PyObjCUtil_Strdup(signature);
 		if (result->sel_signature == NULL) {
 			Py_DECREF(result);
-			return PyErr_NoMemory();
+			return NULL;
 		}
 	}
 
@@ -963,7 +966,7 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 	PyObject* result;
 
 	if (self->callable == NULL) {
-		ObjCErr_Set(PyExc_TypeError, 
+		PyErr_Format(PyExc_TypeError, 
 			"Calling abstract methods with selector %s",
 			self->sel_selector);
 		return NULL;
@@ -1299,7 +1302,7 @@ static	char*	keywords[] = { "method", "selector", "signature",
 			return NULL;
 		}
 	} else {
-		result->sel_signature = ObjC_strdup(signature);
+		result->sel_signature = PyObjCUtil_Strdup(signature);
 		if (result->sel_signature == 0) {
 			Py_DECREF(callable);
 			return PyErr_NoMemory();
@@ -1341,10 +1344,10 @@ pysel_descr_get(ObjCPythonSelector* meth, PyObject* obj, PyObject* class)
 	result = PyObject_New(ObjCPythonSelector, &ObjCPythonSelector_Type);
 	result->sel_selector   = meth->sel_selector;
 	result->sel_class   = meth->sel_class;
-	result->sel_signature  = ObjC_strdup(meth->sel_signature);
+	result->sel_signature  = PyObjCUtil_Strdup(meth->sel_signature);
 	if (result->sel_signature == NULL) {
 		Py_DECREF(result);
-		return PyErr_NoMemory();
+		return NULL;
 	}
 	result->sel_self       = obj;
 	result->sel_flags = meth->sel_flags;
@@ -1510,8 +1513,9 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 	PyObject* info;
 
 	if (!PyList_Check(protocols)) {
-		ObjCErr_Set(ObjCExc_internal_error,
-			"Protocol-list is not a list");
+		PyErr_Format(ObjCExc_internal_error,
+			"Protocol-list is not a 'list', but '%s'",
+			protocols->ob_type->tp_name);
 		return NULL;
 	}
 
@@ -1579,10 +1583,11 @@ PyObjCSelector_FromFunction(
 		result = PyObject_New(ObjCPythonSelector, &ObjCPythonSelector_Type);
 		result->sel_selector = ((ObjCPythonSelector*)callable)->sel_selector;
 		result->sel_class   = oc_class;
-		result->sel_signature  = ObjC_strdup(((ObjCPythonSelector*)callable)->sel_signature);
+		result->sel_signature  = PyObjCUtil_Strdup(
+				((ObjCPythonSelector*)callable)->sel_signature);
 		if (result->sel_signature == NULL) {
 			Py_DECREF(result);
-			return PyErr_NoMemory();
+			return NULL;
 		}
 		result->sel_self       = NULL;
 		result->sel_flags = ((ObjCPythonSelector*)callable)->sel_flags;

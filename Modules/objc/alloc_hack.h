@@ -8,7 +8,8 @@
  *      are needed for some classes on MacOS X 10.2 because those classes
  *      cause crashes when alloc is called using NSInvocation.
  *
- *      The issue seems to be fixed in MacOS X 10.3.
+ *      The issue seems to be fixed in MacOS X 10.3. We keep using these
+ *      wrapers just in case the problem returns.
  */
 
 /*!

@@ -198,7 +198,7 @@ static  PyObject* struct_types = NULL; /* XXX: Use NSMap  */
 	 */
 	field_count = count_struct(argtype);
 	if (field_count == -1) {
-		ObjCErr_Set(ObjCExc_internal_error,
+		PyErr_Format(ObjCExc_internal_error,
 			"Cannot determine layout of %s", argtype);
 		return NULL;
 	}
@@ -309,7 +309,7 @@ signature_to_ffi_type(const char* argtype)
 	case _C_STRUCT_B: 
 		return struct_to_ffi_type(argtype);
 	default:
-		ObjCErr_Set(PyExc_NotImplementedError,
+		PyErr_Format(PyExc_NotImplementedError,
 			"Type '%#x' not supported", *argtype);
 		return NULL;
 	}
@@ -519,7 +519,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 		if (*rettype != _C_VOID) {
 			if (!PyTuple_Check(res) || PyTuple_Size(res) != have_output+1) {
-				ObjCErr_Set(PyExc_TypeError,
+				PyErr_Format(PyExc_TypeError,
 					"%s: Need tuple of %d arguments as result",
 					PyObjCRT_SELName(*(SEL*)args[1]), have_output+1);
 				Py_DECREF(res);
@@ -530,7 +530,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			idx = 1;
 		} else {
 			if (!PyTuple_Check(res) || PyTuple_Size(res) != have_output) {
-				ObjCErr_Set(PyExc_TypeError,
+				PyErr_Format(PyExc_TypeError,
 					"%s: Need tuple of %d arguments as result",
 					PyObjCRT_SELName(*(SEL*)args[1]), have_output);
 				Py_DECREF(res);
@@ -651,14 +651,14 @@ ObjC_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector)
 	if (ObjCNativeSelector_Check(aSelector)) {
 		ObjCNativeSelector *nativeSelector = 
 			(ObjCNativeSelector *) aSelector;
-		PyObjCRT_Method_t aMethod;
+		PyObjCRT_Method_t aMeth;
 
 		if (nativeSelector->sel_flags & PyObjCSelector_kCLASS_METHOD) {
-			aMethod = class_getClassMethod(nativeSelector->sel_class, nativeSelector->sel_selector);
+			aMeth = class_getClassMethod(nativeSelector->sel_class, nativeSelector->sel_selector);
 		} else {
-			aMethod = class_getInstanceMethod(nativeSelector->sel_class, nativeSelector->sel_selector);
+			aMeth = class_getInstanceMethod(nativeSelector->sel_class, nativeSelector->sel_selector);
 		}
-		return aMethod->method_imp;
+		return aMeth->method_imp;
 	} else {
 		ObjCPythonSelector *pythonSelector = (ObjCPythonSelector *) aSelector;
 		return ObjC_MakeIMPForSignature(pythonSelector->sel_signature, pythonSelector->callable);
@@ -696,9 +696,15 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	int		  itemSize;
 	int		  itemAlign;
 	void*		  arg;
+	volatile int      flags;
+	SEL		  theSel;
 
-	if (meth->sel_oc_signature) {
+	if (PyObjCIMP_Check(aMeth)) {
+		methinfo = PyObjCIMP_GetSignature(aMeth);
+		flags = PyObjCIMP_GetFlags(aMeth);
+	} else if (meth->sel_oc_signature) {
 		methinfo = meth->sel_oc_signature;
+		flags = meth->sel_flags;
 	} else {
 		methinfo = PyObjCMethodSignature_FromSignature(meth->sel_signature);
 		if (methinfo == NULL) {
@@ -706,6 +712,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		}
 
 		meth->sel_oc_signature = methinfo;
+		flags = meth->sel_flags;
 	}
 	rettype = methinfo->rettype;
 
@@ -814,7 +821,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	 * input argument that is passed by reference.
 	 */
 	if (PyTuple_Size(args) != (plain_count + byref_in_count)) {
-		ObjCErr_Set(PyExc_TypeError, "Need %d arguments, got %d",
+		PyErr_Format(PyExc_TypeError, "Need %d arguments, got %d",
 			plain_count + byref_in_count, PyTuple_Size(args));
 		goto error_cleanup;
 	}
@@ -832,7 +839,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	}
 
 	/* Set 'self' argument, for class methods we use the class */ 
-	if (meth->sel_flags & PyObjCSelector_kCLASS_METHOD) {
+	if (flags & PyObjCSelector_kCLASS_METHOD) {
 		if (PyObjCObject_Check(self)) {
 			self_obj = PyObjCObject_GetObject(self);
 			if (self_obj != NULL) {
@@ -856,42 +863,56 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			}
 		}
 	}
+	/* XXX */
 
-	RECEIVER(super) = self_obj;
-	if (meth->sel_flags & PyObjCSelector_kCLASS_METHOD) {
-		super.class = GETISA(meth->sel_class);
+	if (PyObjCIMP_Check(aMeth)) {
+		arglistOffset = 0;
+		theSel = PyObjCIMP_GetSelector(aMeth);
+		arglist[arglistOffset + 0] = &ffi_type_pointer;
+		values[arglistOffset + 0] = &self_obj;
+		arglist[arglistOffset + 1] = &ffi_type_pointer;
+		values[arglistOffset + 1] = &theSel;
+		msgResult = argbuf;
+		argbuf_cur = resultSize;
+
+
 	} else {
-		super.class = meth->sel_class;
-	}
+		RECEIVER(super) = self_obj;
+		if (meth->sel_flags & PyObjCSelector_kCLASS_METHOD) {
+			super.class = GETISA(meth->sel_class);
+		} else {
+			super.class = meth->sel_class;
+		}
 
 #ifdef GNU_RUNTIME
-	arglistOffset = 0;
+		arglistOffset = 0;
 
 #else /* !GNU_RUNTIME */
-	if (*rettype == _C_DBL || *rettype == _C_FLT ||
-		 *rettype == _C_LNGLNG || *rettype == _C_ULNGLNG) {
+		if (*rettype == _C_DBL || *rettype == _C_FLT ||
+			 *rettype == _C_LNGLNG || *rettype == _C_ULNGLNG) {
 
-		/* Libffi knows how to pass them, and ..._stret doesn't work
-		 * with these...
-		 */
+			/* Libffi knows how to pass them, and ..._stret 
+			 * doesn't work with these...
+			 */
 
-		arglistOffset = 0;
-	} else if ((size_t)resultSize > sizeof(id)) {
-		arglistOffset = 1;
-		arglist[0] = &ffi_type_pointer;
-		values[0] = &msgResult;
-	} else {
-		arglistOffset = 0;
-	}
+			arglistOffset = 0;
+		} else if ((size_t)resultSize > sizeof(id)) {
+			arglistOffset = 1;
+			arglist[0] = &ffi_type_pointer;
+			values[0] = &msgResult;
+		} else {
+			arglistOffset = 0;
+		}
 #endif
-	
-	superPtr = &super;
-	arglist[arglistOffset + 0] = &ffi_type_pointer;
-	values[arglistOffset + 0] = &superPtr;
-	arglist[arglistOffset + 1] = &ffi_type_pointer;
-	values[arglistOffset + 1] = &meth->sel_selector;
-	msgResult = argbuf;
-	argbuf_cur = resultSize;
+		
+		superPtr = &super;
+		arglist[arglistOffset + 0] = &ffi_type_pointer;
+		values[arglistOffset + 0] = &superPtr;
+		arglist[arglistOffset + 1] = &ffi_type_pointer;
+		values[arglistOffset + 1] = &meth->sel_selector;
+		msgResult = argbuf;
+		argbuf_cur = resultSize;
+	}
 
 	py_arg = 0;
 	for (i = 2; i < methinfo->nargs; i++) {
@@ -1010,50 +1031,54 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			signature_to_ffi_return_type(rettype), arglist);
 	}
 	if (r != FFI_OK) {
-		ObjCErr_Set(PyExc_RuntimeError,
+		PyErr_Format(PyExc_RuntimeError,
 			"Cannot setup FFI CIF [%d]", r);
 		goto error_cleanup;
 	}
 
 	NS_DURING
+		if (PyObjCIMP_Check(aMeth)) {
+			ffi_call(&cif, FFI_FN(PyObjCIMP_GetIMP(aMeth)), 
+				msgResult, values);
+
+		} else {
 #ifdef GNU_RUNTIME
-		/* 
-		 * The GNU runtime doesn't have a objc_msgSendSuper function,
-		 * and we implement it ourselves using a macro (the 'obvious'
-		 * implementation using a function doesn't work). This means
-		 * we have duplicate part of that implementation here.
-		 *
-		 * XXX: If this works correctly with proxy objects, NSInvocation
-		 * and the like we might consider moving all platforms over
-		 * to this structure.
-		 */
-		Method_t m = class_get_instance_method(super.class, 
+			/* 
+			 * The GNU runtime doesn't have a objc_msgSendSuper 
+			 * function, and we implement it ourselves using a 
+			 * macro (the 'obvious' implementation using a 
+			 * function doesn't work). This means we have to
+			 * duplicate part of that implementation here.
+		         */
+			Method_t m = class_get_instance_method(super.class, 
 				meth->sel_selector);
 
-		if (m == NULL) {
-			/* Class doesn't really have an IMP for the selector,
-			 * find a forwarder for the method and call that.
-			 */
-			values[0] = &(super.self);
-			ffi_call(&cif, FFI_FN(__objc_msg_forward(meth->sel_selector)), 
-				msgResult, values);
-		} else {
-			values[0] = &(super.self);
-			ffi_call(&cif, FFI_FN(m->method_imp), 
-				msgResult, values);
-		}
+			if (m == NULL) {
+				/* Class doesn't really have an IMP for the 
+				 * selector, find a forwarder for the method 
+				 * and call that.
+				 */
+				values[0] = &(super.self);
+				ffi_call(&cif, FFI_FN(__objc_msg_forward(meth->sel_selector)), 
+					msgResult, values);
+			} else {
+				values[0] = &(super.self);
+				ffi_call(&cif, FFI_FN(m->method_imp), 
+					msgResult, values);
+			}
 
 #else /* !GNU_RUNTIME */
 
-		if (arglistOffset) {
-			ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), 
-				NULL, values);
-		} else {
-			ffi_call(&cif, FFI_FN(objc_msgSendSuper), 
-				msgResult, values);
+			if (arglistOffset) {
+				ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), 
+					NULL, values);
+			} else {
+				ffi_call(&cif, FFI_FN(objc_msgSendSuper), 
+					msgResult, values);
 
-		}
+			}
 #endif /* !GNU_RUNTIME */
+		}
 
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
@@ -1067,7 +1092,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		Py_INCREF(Py_None);
 		objc_result =  Py_None;
 	}
-	if ( (meth->sel_flags & PyObjCSelector_kRETURNS_SELF)
+	if ( (flags & PyObjCSelector_kRETURNS_SELF)
 		&& (objc_result != self)) {
 
 		/* meth is a method that returns a possibly reallocated
@@ -1075,7 +1100,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		 * value of self is assumed to be no longer valid
 		 */
 		if (PyObjCObject_Check(self) && PyObjCObject_Check(objc_result)
-			&& (meth->sel_flags & PyObjCSelector_kINITIALIZER) &&
+			&& (flags & PyObjCSelector_kINITIALIZER) &&
 			(((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED)) {
 			[PyObjCObject_GetObject(objc_result) release];
 		}
@@ -1229,7 +1254,7 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, int* pArgOffset)
 		cl_ret_type, cl_arg_types);
 	if (rv != FFI_OK) {
 		free(cl_arg_types);
-		ObjCErr_Set(PyExc_RuntimeError,
+		PyErr_Format(PyExc_RuntimeError,
 			"Cannot create FFI CIF: %d", rv);
 		return NULL;
 	}
@@ -1281,7 +1306,7 @@ PyObjCFFI_MakeClosure(
 	rv = ffi_prep_closure(cl, cif, func, userdata);
 	if (rv != FFI_OK) {
 		PyObjCFFI_FreeCIF(cif);
-		ObjCErr_Set(PyExc_RuntimeError,
+		PyErr_Format(PyExc_RuntimeError,
 			"Cannot create FFI closure: %d", rv);
 		return NULL;
 	}

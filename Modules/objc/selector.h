@@ -11,7 +11,7 @@
 #define PyObjCSelector_kREQUIRED              0x000004
 #define PyObjCSelector_kRETURNS_SELF          0x000008
 #define PyObjCSelector_kRETURNS_UNINITIALIZED 0x000010
-#define PyObjCSelector_kINITIALIZER    	    0x000020
+#define PyObjCSelector_kINITIALIZER    	      0x000020
 
 #define PyObjCSelector_HEAD \
 	PyObject_HEAD 			\
@@ -29,7 +29,7 @@ typedef struct {
 typedef struct {
 	PyObjCSelector_HEAD
 	PyObjCMethodSignature* sel_oc_signature;
-	ObjC_CallFunc_t sel_call_func; 
+	PyObjC_CallFunc sel_call_func; 
 } ObjCNativeSelector;
 
 typedef struct {

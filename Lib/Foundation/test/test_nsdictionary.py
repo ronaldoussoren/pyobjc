@@ -5,6 +5,8 @@ import objc
 import types
 import sys
 
+from objc.test.testbndl import PyObjC_TestClass3
+
 from Foundation import *
 
 
@@ -164,6 +166,48 @@ class TestNSDictionaryInteraction(unittest.TestCase):
         self.assert_(x['one'] == 1)
         self.assert_(y['two'] == 2)
         self.assert_(z['four'] == 4)
+
+
+class MyDictionaryBase (NSDictionary):
+    def count(self):
+        if hasattr(self, '_count'):
+            return self._count
+        return -1
+
+    def keyEnumerator(self):
+        return None
+
+    def objectForKey(self, key):
+        return None
+   
+class MyDictionary1 (MyDictionaryBase):
+    def initWithObjects_forKeys_count_(self, objects, keys, count):
+        self.count = count
+        self.objects = objects
+        self.keys = keys
+        return self
+
+class MyDictionary2 (MyDictionaryBase):
+    def dictionaryWithObjects_forKeys_count_(self, objects, keys, count):
+        if not self is MyDictionary2: raise AssertionError, self
+        return (objects, keys, count)
+
+class TestSubclassing (unittest.TestCase):
+    def testInitWithObjects(self):
+        o = PyObjC_TestClass3.makeDictFromClass_method_(MyDictionary1, 1)
+        
+        self.assert_(isinstance(o, MyDictionary1))
+        self.assertEquals(o.count, 4)
+        self.assertEquals(len(o.keys), 4)
+        self.assertEquals(len(o.objects), 4)
+
+    def testDictWithObjects(self):
+        o = PyObjC_TestClass3.makeDictFromClass_method_(MyDictionary2, 0)
+        
+        self.assert_(isinstance(o, tuple))
+        self.assertEquals(o[2], 4)
+        self.assertEquals(len(o[1]), 4)
+        self.assertEquals(len(o[0]), 4)
 
 if __name__ == '__main__':
     unittest.main( )

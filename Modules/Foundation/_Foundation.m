@@ -19,6 +19,7 @@
 #include "decimals.m"
 
 #include "_Fnd_Functions.inc"
+#include "_Fnd_Classes.inc"
 
 #ifdef MACOSX
 
@@ -271,13 +272,21 @@ static PyObject* call_objWithObjects_count_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			res = ((id(*)(id,SEL,id*,int))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					objects, count);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		res = objc_msgSendSuper(&super,
+			res = objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method),
 				objects, count);
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
@@ -370,13 +379,21 @@ static PyObject* call_clsWithObjects_count_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuperCls(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCClass_GetClass(self));
+		if (PyObjCIMP_Check(method)) {
+			res = ((id(*)(id,SEL,id*,int))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCClass_GetClass(self),
+					PyObjCIMP_GetSelector(method),
+					objects, count);
+		} else {
+			PyObjC_InitSuperCls(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCClass_GetClass(self));
 
-		res = objc_msgSendSuper(&super,
-				PyObjCSelector_GetSelector(method),
-				objects, count);
+			res = objc_msgSendSuper(&super,
+					PyObjCSelector_GetSelector(method),
+					objects, count);
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
@@ -546,6 +563,7 @@ void init_Foundation(void)
 {
 	PyObject *m, *d, *v;
 	CFBundleRef bundle;
+	const char** name;
 
 	m = Py_InitModule4("_Foundation", foundation_methods, foundation_doc, 
 			NULL, PYTHON_API_VERSION);
@@ -624,8 +642,8 @@ void init_Foundation(void)
 
 	/* Install wrappers for difficult methods */
 #ifdef MACOSX
-    /* XXX - check for OS X 10.2+ */
-    if (_pyobjc_install_NSAppleEventDescriptor() != 0) return;
+	/* XXX - check for OS X 10.2+ */
+	if (_pyobjc_install_NSAppleEventDescriptor() != 0) return;
 #endif
 	if (_pyobjc_install_NSArray() != 0) return;
 	if (_pyobjc_install_NSCoder() != 0) return;
@@ -640,4 +658,24 @@ void init_Foundation(void)
 	if (_pyobjc_install_NSString() != 0) return;
 	if (_pyobjc_install_NSStream() != 0) return;
 	if (install_decimal(m) != 0) return;
+
+	/*
+	 * On OSX finding the bundle/framework for a class is *very* expensive.
+	 * We therefore have a cache of names of classes that are present in
+	 * the Foundation framework. That way we don't have to ask for the 
+	 * bundle/framework as often, which speeds up program initialization.
+	 */
+	v = PyString_FromString("Foundation");
+	for (name = gClassNames; *name != NULL; name++) {
+		PyObject* o;
+		Class cls = objc_lookUpClass(*name);
+		if (cls == NULL) continue;
+
+		o = PyObjCClass_New(cls);
+		if (o == NULL) return;
+
+		PyObject_SetAttrString(o, "__module__", v);
+		Py_DECREF(o);
+	}
+	Py_DECREF(v);
 }

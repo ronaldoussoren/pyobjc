@@ -48,6 +48,12 @@ OBJC_HEADER="""\
 
 #import <Foundation/Foundation.h>
 
+#if defined(MACOSX) && __GNUC__ >= 3
+
+#define HAVE_BOOL
+
+#endif
+
 #if !defined(LLONG_MAX) && defined(LONG_LONG_MAX)
 
 #  define LLONG_MAX LONG_LONG_MAX
@@ -100,6 +106,11 @@ void inittestbndl2(void)
             PyObjCClass_New([PyObjC_TestClass1 class]));
         PyModule_AddObject(m, "PyObjC_TestClass2",
             PyObjCClass_New([PyObjC_TestClass2 class]));
+#ifdef HAVE_BOOL
+        PyModule_AddIntConstant(m, "HAVE_BOOL", 1);
+#else
+        PyModule_AddIntConstant(m, "HAVE_BOOL", 0);
+#endif
 
 """
 
@@ -138,6 +149,10 @@ NSArray = objc.runtime.NSArray
 
 # First make sure that the pass-by-reference methods have the correct signature
 setSignature = objc.setSignatureForSelector
+
+# FIXME
+import sys
+HAVE_BOOL=sys.platform == 'darwin'
 """
 
 PY_MIDTEXT="""
@@ -161,10 +176,10 @@ if __name__ == "__main__":
     unittest.main()
 """
 
-if hasattr(objc, '_C_BOOL'):
-    TYPES = [('bool', objc._C_BOOL, [ 'YES', 'NO' ]),]
-else:
-    TYPES = []
+#if hasattr(objc, '_C_BOOL'):
+TYPES = [('bool', objc._C_BOOL, [ 'YES', 'NO' ]),]
+#else:
+#    TYPES = []
 
 TYPES.extend([
     # ( typename, objc_signature, testvalues )
@@ -210,23 +225,39 @@ def emit_objc_interfaces(fp):
     fp.write('/* Test return values */\n')
     for tp, sign, values in TYPES:
         if not values: continue;
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
         fp.write('+(%s)%sClsMethod;\n'%(tp, tp2ident(tp)))
         fp.write('-(%s)%sMethod;\n'%(tp, tp2ident(tp)))
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
     fp.write('/* Single argument passing */\n')
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
         fp.write('-(id)%sArg:(%s)arg;\n'%(tp2ident(tp), tp))
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
     fp.write('/* Multiple arguments */\n')
     for tp1, sign1, values2 in TYPES:
         for tp2, sign2, values2 in TYPES:
+            if tp1 == 'bool' or tp2 == 'bool':
+                fp.write('#ifdef HAVE_BOOL\n')
             fp.write('-(id)%sArg:(%s)arg1 and%sArg:(%s)arg2;\n'%(tp2ident(tp1), tp1, tp2ident(tp2), tp2))
+            if tp1 == 'bool' or tp2 == 'bool':
+                fp.write('#endif /* HAVE_BOOL */\n')
 
     fp.write('/* in, out and in-out arguments */\n')
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
         fp.write('-(id)%sInArg:(%s*)arg;\n'%(tp2ident(tp), tp))
         fp.write('-(void)%sOutArg:(%s*)arg;\n'%(tp2ident(tp), tp))
         fp.write('-(id)%sInOutArg:(%s*)arg;\n'%(tp2ident(tp), tp))
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
     fp.write('\n@end // interface PyObjC_TestClass1\n')
 
@@ -234,28 +265,44 @@ def emit_objc_interfaces(fp):
     fp.write('@interface PyObjC_TestClass2 : NSObject\n{\n}\n\n')
 
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
         fp.write('+(%s)call%sMethodOf:(PyObjC_TestClass1*)obj;\n'%(tp, tp2ident(tp)))
         fp.write('+(%s)invoke%sMethodOf:(PyObjC_TestClass1*)obj;\n'%(tp, tp2ident(tp)))
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
     fp.write('/* Single argument passing */\n')
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
         fp.write('+(id)call%sArg:(%s)arg of:(PyObjC_TestClass1*)obj;\n'%(tp2ident(tp), tp))
         fp.write('+(id)invoke%sArg:(%s)arg of:(PyObjC_TestClass1*)obj;\n'%(tp2ident(tp), tp))
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
     fp.write('/* Multiple arguments */\n')
     for tp1, sign1, values2 in TYPES:
         for tp2, sign2, values2 in TYPES:
+            if tp1 == 'bool' or tp2 == 'bool':
+                fp.write('#ifdef  HAVE_BOOL\n')
             fp.write('+(id)call%sArg:(%s)arg1 and%sArg:(%s)arg2 of:(PyObjC_TestClass1*)obj;\n'%(tp2ident(tp1), tp1, tp2ident(tp2), tp2))
             fp.write('+(id)invoke%sArg:(%s)arg1 and%sArg:(%s)arg2 of:(PyObjC_TestClass1*)obj;\n'%(tp2ident(tp1), tp1, tp2ident(tp2), tp2))
+            if tp1 == 'bool' or tp2 == 'bool':
+                fp.write('#endif /* HAVE_BOOL */\n')
 
     fp.write('/* in, out and in-out arguments */\n')
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
         fp.write('+(id)invoke%sInArg:(%s*)arg of:(PyObjC_TestClass1*)obj;\n'%(tp2ident(tp), tp))
         fp.write('+(id)call%sInArg:(%s*)arg of:(PyObjC_TestClass1*)obj;\n'%(tp2ident(tp), tp))
         fp.write('+(void)invoke%sOutArg:(%s*)arg of:(PyObjC_TestClass1*)obj;\n'%(tp2ident(tp), tp))
         fp.write('+(void)call%sOutArg:(%s*)arg of:(PyObjC_TestClass1*)obj;\n'%(tp2ident(tp), tp))
         fp.write('+(id)invoke%sInOutArg:(%s*)arg of:(PyObjC_TestClass1*)obj;\n'%(tp2ident(tp), tp))
         fp.write('+(id)call%sInOutArg:(%s*)arg of:(PyObjC_TestClass1*)obj;\n'%(tp2ident(tp), tp))
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
     fp.write('\n@end // interface PyObjC_TestClass2\n\n')
 
@@ -299,6 +346,9 @@ def emit_objc_implementations(fp):
             fp.write('static %s g_%s_values[%d];\n'%(tp, tp2ident(tp), len(values)))
             continue
 
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
+
         fp.write('static %s g_%s_values[] = {\n'%(tp, tp2ident(tp)))
         for item in values[:-1]:
             fp.write('\t')
@@ -307,6 +357,9 @@ def emit_objc_implementations(fp):
         fp.write('\t')
         write_objc_item(fp, values[-1])
         fp.write('\n};\n\n')
+
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
 
     fp.write('static id arg2id(const char* argtype, void* argptr)\n')
@@ -334,6 +387,8 @@ def emit_objc_implementations(fp):
     fp.write('\n')
 
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
         fp.write('+(%s)%sClsMethod\n'%(tp, tp2ident(tp)))
         fp.write('{\n')
         fp.write('\tif (g_idx > %d) g_idx = 0;\n'%(len(values),))
@@ -345,16 +400,24 @@ def emit_objc_implementations(fp):
         fp.write('\tif (g_idx > %d) g_idx = 0;\n'%(len(values),))
         fp.write('\treturn g_%s_values[g_idx++];\n'%(tp2ident(tp),))
         fp.write('}\n\n')
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
     fp.write('/* Single argument passing */\n')
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
         fp.write('-(id)%sArg:(%s)arg\n'%(tp2ident(tp), tp))
         fp.write('{\n')
         fp.write('\treturn arg2id(@encode(%s), &arg);\n'%(tp))
         fp.write('}\n\n')
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
     for tp1, sign1, values1 in TYPES:
         for tp2, sign2, values2 in TYPES:
+            if tp1 == 'bool' or tp2 == 'bool':
+                fp.write('#ifdef HAVE_BOOL\n')
             fp.write('-(id)%sArg:(%s)arg1 and%sArg:(%s)arg2\n'%(tp2ident(tp1), tp1, tp2ident(tp2), tp2))
             fp.write('{\n')
             fp.write('\tNSMutableArray* res;\n')
@@ -363,9 +426,13 @@ def emit_objc_implementations(fp):
             fp.write('\t[res addObject:arg2id(@encode(%s), &arg2)];\n'%(tp2,))
             fp.write('\treturn res;\n')
             fp.write('}\n\n')
+            if tp1 == 'bool' or tp2 == 'bool':
+                fp.write('#endif /* HAVE_BOOL */\n')
 
     fp.write('/* in, out and in-out arguments */\n')
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
         fp.write('-(id)%sInArg:(%s*)arg\n'%(tp2ident(tp), tp))
         fp.write('{\n')
         fp.write('\treturn arg2id(@encode(%s), arg);\n'%(tp,))
@@ -384,6 +451,8 @@ def emit_objc_implementations(fp):
         fp.write('\t*arg = g_%s_values[g_idx++];\n'%(tp2ident(tp),))
         fp.write('\treturn res;\n')
         fp.write('}\n\n')
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
     fp.write('\n@end // implementation PyObjC_TestClass1\n')
 
@@ -406,6 +475,8 @@ def emit_objc_implementations(fp):
     fp.write('\n\n')
 
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
         fp.write('+(%s)call%sMethodOf:(PyObjC_TestClass1*)obj\n'%(tp, tp2ident(tp)))
         fp.write('{\n')
         fp.write('\treturn [obj %sMethod];\n'%(tp2ident(tp)))
@@ -419,9 +490,13 @@ def emit_objc_implementations(fp):
         fp.write('\t[inv getReturnValue:&res];\n')
         fp.write('\treturn res;\n')
         fp.write('}\n\n')
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
 
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
         fp.write('+(id)call%sArg:(%s)arg of:(PyObjC_TestClass1*)obj\n'%(tp2ident(tp), tp))
         fp.write('{\n')
         fp.write('\treturn [obj %sArg:arg];\n'%(tp2ident(tp),))
@@ -437,9 +512,13 @@ def emit_objc_implementations(fp):
         fp.write('\t[inv getReturnValue:&res];\n')
         fp.write('\treturn res;\n')
         fp.write('}\n\n')
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
     for tp1, sign1, values1 in TYPES:
         for tp2, sign2, values2 in TYPES:
+            if tp1 == 'bool' or tp2 == 'bool':
+                fp.write('#ifdef HAVE_BOOL\n')
             fp.write('+(id)call%sArg:(%s)arg1 and%sArg:(%s)arg2 of:(PyObjC_TestClass1*)obj\n'%(tp2ident(tp1), tp1, tp2ident(tp2), tp2))
             fp.write('{\n')
             fp.write('\treturn [obj %sArg:arg1 and%sArg:arg2];\n'%(tp2ident(tp1), tp2ident(tp2)))
@@ -456,8 +535,12 @@ def emit_objc_implementations(fp):
             fp.write('\t[inv getReturnValue:&res];\n')
             fp.write('\treturn res;\n')
             fp.write('}\n\n')
+            if tp1 == 'bool' or tp2 == 'bool':
+                fp.write('#endif /* HAVE_BOOL */\n')
 
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('#ifdef HAVE_BOOL\n')
         fp.write('+(id)call%sInArg:(%s*)arg of:(PyObjC_TestClass1*)obj\n'%(tp2ident(tp), tp))
         fp.write('{\n')
         fp.write('\treturn [obj %sInArg:arg];\n'%(tp2ident(tp),))
@@ -497,22 +580,28 @@ def emit_objc_implementations(fp):
         fp.write('\t[inv getReturnValue:&res];\n')
         fp.write('\treturn res;\n')
         fp.write('}\n\n')
+        if tp == 'bool':
+            fp.write('#endif /* HAVE_BOOL */\n')
 
     fp.write('\n@end // implementation PyObjC_TestClass2\n\n')
 
 def emit_py_method_signatures(fp):
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
-        fp.write('setSignature("PyObjC_TestClass1", "%sInOutArg:", "@@:N^%s")\n'%(nm, sign))
-        fp.write('setSignature("PyObjC_TestClass1", "%sOutArg:", "v@:o^%s")\n'%(nm, sign))
-        fp.write('setSignature("PyObjC_TestClass1", "%sInArg:", "@@:n^%s")\n'%(nm, sign))
+        if tp == 'bool':
+            pfx = 'if HAVE_BOOL: '
+        else:
+            pfx = ''
+        fp.write('%ssetSignature("PyObjC_TestClass1", "%sInOutArg:", "@@:N^%s")\n'%(pfx, nm, sign))
+        fp.write('%ssetSignature("PyObjC_TestClass1", "%sOutArg:", "v@:o^%s")\n'%(pfx, nm, sign))
+        fp.write('%ssetSignature("PyObjC_TestClass1", "%sInArg:", "@@:n^%s")\n'%(pfx, nm, sign))
 
-        fp.write('setSignature("PyObjC_TestClass2", "call%sInOutArg:of:", "@@:N^%s@")\n'%(nm, sign))
-        fp.write('setSignature("PyObjC_TestClass2", "call%sOutArg:of:", "v@:o^%s@")\n'%(nm, sign))
-        fp.write('setSignature("PyObjC_TestClass2", "call%sInArg:of:", "@@:n^%s@")\n'%(nm, sign))
-        fp.write('setSignature("PyObjC_TestClass2", "invoke%sInOutArg:of:", "@@:N^%s@")\n'%(nm, sign))
-        fp.write('setSignature("PyObjC_TestClass2", "invoke%sOutArg:of:", "v@:o^%s@")\n'%(nm, sign))
-        fp.write('setSignature("PyObjC_TestClass2", "invoke%sInArg:of:", "@@:n^%s@")\n'%(nm, sign))
+        fp.write('%ssetSignature("PyObjC_TestClass2", "call%sInOutArg:of:", "@@:N^%s@")\n'%(pfx, nm, sign))
+        fp.write('%ssetSignature("PyObjC_TestClass2", "call%sOutArg:of:", "v@:o^%s@")\n'%(pfx, nm, sign))
+        fp.write('%ssetSignature("PyObjC_TestClass2", "call%sInArg:of:", "@@:n^%s@")\n'%(pfx, nm, sign))
+        fp.write('%ssetSignature("PyObjC_TestClass2", "invoke%sInOutArg:of:", "@@:N^%s@")\n'%(pfx, nm, sign))
+        fp.write('%ssetSignature("PyObjC_TestClass2", "invoke%sOutArg:of:", "v@:o^%s@")\n'%(pfx, nm, sign))
+        fp.write('%ssetSignature("PyObjC_TestClass2", "invoke%sInArg:of:", "@@:n^%s@")\n'%(pfx, nm, sign))
 
 def emit_py_to_objc(fp):
     fp.write('class PyToObjC (TestCase):\n')
@@ -523,6 +612,8 @@ def emit_py_to_objc(fp):
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
         fp.write('\tdef testCls%sResult(self):\n'%(nm,))
+        if tp == 'bool':
+            fp.write('\t\tif not HAVE_BOOL: return\n')
         fp.write('\t\tPyObjC_TestClass1.clsReset()\n')
         for v in values:
             if tp not in ('float', 'double'):
@@ -540,6 +631,8 @@ def emit_py_to_objc(fp):
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
         fp.write('\tdef test%sResult(self):\n'%(nm,))
+        if tp == 'bool':
+            fp.write('\t\tif not HAVE_BOOL: return\n')
         fp.write('\t\to = PyObjC_TestClass1.alloc().init()\n')
         fp.write('\t\tself.assert_(o is not None)\n')
         fp.write('\t\to.reset()\n')
@@ -559,6 +652,8 @@ def emit_py_to_objc(fp):
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
         fp.write('\tdef test%sArg(self):\n'%(nm,))
+        if tp == 'bool':
+            fp.write('\t\tif not HAVE_BOOL: return\n')
         fp.write('\t\to = PyObjC_TestClass1.alloc().init()\n')
         fp.write('\t\tself.assert_(o is not None)\n')
         for v in values:
@@ -581,6 +676,8 @@ def emit_py_to_objc(fp):
         for tp2, sign2, values2 in TYPES:
             nm2 = tp2ident(tp2)
             fp.write('\tdef test%sAnd%sArg(self):\n'%(nm1,nm2))
+            if tp1 == 'bool' or tp2 == 'bool':
+                fp.write('\t\tif not HAVE_BOOL: return\n')
             fp.write('\t\to = PyObjC_TestClass1.alloc().init()\n')
             fp.write('\t\tself.assert_(o is not None)\n')
             for v1 in values1:
@@ -611,6 +708,8 @@ def emit_py_to_objc(fp):
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
         fp.write('\tdef test%sIn(self):\n'%(nm,))
+        if tp == 'bool':
+            fp.write('\t\tif not HAVE_BOOL: return\n')
         fp.write('\t\to = PyObjC_TestClass1.alloc().init()\n')
         fp.write('\t\tself.assert_(o is not None)\n')
         for v in values:
@@ -631,6 +730,8 @@ def emit_py_to_objc(fp):
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
         fp.write('\tdef test%sOut(self):\n'%(nm,))
+        if tp == 'bool':
+            fp.write('\t\tif not HAVE_BOOL: return\n')
         fp.write('\t\to = PyObjC_TestClass1.alloc().init()\n')
         fp.write('\t\tself.assert_(o is not None)\n')
         fp.write('\t\to.reset()\n')
@@ -650,6 +751,8 @@ def emit_py_to_objc(fp):
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
         fp.write('\tdef test%sInOut(self):\n'%(nm,))
+        if tp == 'bool':
+            fp.write('\t\tif not HAVE_BOOL: return\n')
         fp.write('\t\to = PyObjC_TestClass1.alloc().init()\n')
         fp.write('\t\tself.assert_(o is not None)\n')
         fp.write('\t\to.reset()\n')
@@ -698,57 +801,77 @@ def emit_python_subclass(fp):
 
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
-        fp.write('\tdef %sMethod(self):\n'%(nm,))
-        fp.write('\t\tif self.counter > %d: self.reset()\n'%(len(values),))
-        fp.write('\t\tidx = self.counter\n')
-        fp.write('\t\tself.counter += 1\n')
-        fp.write('\t\treturn g_%s_values[idx]\n'%(nm,))
-        fp.write('\t%sMethod = objc.selector(%sMethod, signature="%s@:")\n'%(
-            nm, nm, sign))
+        if tp == 'bool':
+            fp.write('\tif HAVE_BOOL:\n')
+            pfx = '\t'
+        else:
+            pfx = ''
+        fp.write('%s\tdef %sMethod(self):\n'%(pfx, nm,))
+        fp.write('%s\t\tif self.counter > %d: self.reset()\n'%(pfx, len(values),))
+        fp.write('%s\t\tidx = self.counter\n'%(pfx,))
+        fp.write('%s\t\tself.counter += 1\n'%(pfx,))
+        fp.write('%s\t\treturn g_%s_values[idx]\n'%(pfx, nm,))
+        fp.write('%s\t%sMethod = objc.selector(%sMethod, signature="%s@:")\n'%(
+            pfx, nm, nm, sign))
         fp.write('\n\n')
 
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
-        fp.write('\tdef %sArg_(self, arg):\n'%(nm,))
-        fp.write('\t\treturn arg # return the same\n')
-        fp.write('\t%sArg_ = objc.selector(%sArg_, signature="@@:%s")\n'%(
-            nm, nm, sign))
+        if tp == 'bool':
+            fp.write('\tif HAVE_BOOL:\n')
+            pfx = '\t'
+        else:
+            pfx = ''
+        fp.write('%s\tdef %sArg_(self, arg):\n'%(pfx, nm,))
+        fp.write('%s\t\treturn arg # return the same\n'%(pfx,))
+        fp.write('%s\t%sArg_ = objc.selector(%sArg_, signature="@@:%s")\n'%(
+            pfx, nm, nm, sign))
         fp.write('\n\n')
 
     for tp1, sign1, values1 in TYPES:
         for tp2, sign2, values2 in TYPES:
             nm1 = tp2ident(tp1)
             nm2 = tp2ident(tp2)
-            fp.write('\tdef %sArg_and%sArg_(self, arg1, arg2):\n'%(nm1, nm2))
-            fp.write('\t\treturn [ arg1, arg2 ]\n')
-            fp.write('\t%sArg_and%sArg_ = objc.selector(%sArg_and%sArg_, signature="@@:%s%s")\n'%(
-                nm1, nm2, nm1, nm2, sign1, sign2))
+            if tp1 == 'bool' or tp2 == 'bool':
+                fp.write('\tif HAVE_BOOL:\n')
+                pfx = '\t'
+            else:
+                pfx = ''
+            fp.write('%s\tdef %sArg_and%sArg_(self, arg1, arg2):\n'%(pfx, nm1, nm2))
+            fp.write('%s\t\treturn [ arg1, arg2 ]\n'%(pfx,))
+            fp.write('%s\t%sArg_and%sArg_ = objc.selector(%sArg_and%sArg_, signature="@@:%s%s")\n'%(
+                pfx, nm1, nm2, nm1, nm2, sign1, sign2))
             fp.write('\n\n')
 
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
-        fp.write('\tdef %sInArg_(self, arg):\n'%(nm,))
-        fp.write('\t\treturn arg\n')
-        fp.write('\t%sInArg_ = objc.selector(%sInArg_, signature="@@:%s^%s")\n'%(
-            nm, nm, objc._C_IN, sign))
+        if tp == 'bool':
+            fp.write('\tif HAVE_BOOL:\n')
+            pfx = '\t'
+        else:
+            pfx = ''
+        fp.write('%s\tdef %sInArg_(self, arg):\n'%(pfx, nm,))
+        fp.write('%s\t\treturn arg\n'%(pfx,))
+        fp.write('%s\t%sInArg_ = objc.selector(%sInArg_, signature="@@:%s^%s")\n'%(
+            pfx, nm, nm, objc._C_IN, sign))
         fp.write('\n\n')
 
-        fp.write('\tdef %sOutArg_(self):\n'%(tp2ident(tp),))
-        fp.write('\t\tif (self.counter > %d): self.reset()\n'%(len(values),))
-        fp.write('\t\tres = g_%s_values[self.counter]\n'%(nm,))
-        fp.write('\t\tself.counter += 1\n')
-        fp.write('\t\treturn res\n')
-        fp.write('\t%sOutArg_ = objc.selector(%sOutArg_, signature="v@:%s^%s")\n'%(
-            nm, nm, objc._C_OUT, sign))
+        fp.write('%s\tdef %sOutArg_(self):\n'%(pfx, tp2ident(tp),))
+        fp.write('%s\t\tif (self.counter > %d): self.reset()\n'%(pfx, len(values),))
+        fp.write('%s\t\tres = g_%s_values[self.counter]\n'%(pfx, nm,))
+        fp.write('%s\t\tself.counter += 1\n'%(pfx,))
+        fp.write('%s\t\treturn res\n'%(pfx,))
+        fp.write('%s\t%sOutArg_ = objc.selector(%sOutArg_, signature="v@:%s^%s")\n'%(
+            pfx, nm, nm, objc._C_OUT, sign))
         fp.write('\n\n')
 
-        fp.write('\tdef %sInOutArg_(self, arg):\n'%(tp2ident(tp),))
-        fp.write('\t\tif (self.counter > %d): self.reset()\n'%(len(values),))
-        fp.write('\t\tres = g_%s_values[self.counter];\n'%(nm,))
-        fp.write('\t\tself.counter += 1\n')
-        fp.write('\t\treturn (arg, res)\n')
-        fp.write('\t%sInOutArg_ = objc.selector(%sInOutArg_, signature="@@:%s^%s")\n'%(
-            nm, nm, objc._C_INOUT, sign))
+        fp.write('%s\tdef %sInOutArg_(self, arg):\n'%(pfx, tp2ident(tp),))
+        fp.write('%s\t\tif (self.counter > %d): self.reset()\n'%(pfx, len(values),))
+        fp.write('%s\t\tres = g_%s_values[self.counter];\n'%(pfx, nm,))
+        fp.write('%s\t\tself.counter += 1\n'%(pfx,))
+        fp.write('%s\t\treturn (arg, res)\n'%(pfx,))
+        fp.write('%s\t%sInOutArg_ = objc.selector(%sInOutArg_, signature="@@:%s^%s")\n'%(
+            pfx, nm, nm, objc._C_INOUT, sign))
         fp.write('\n\n')
 
 def emit_py_from_objc(fp):
@@ -758,17 +881,22 @@ def emit_py_from_objc(fp):
     # Simple returns (Instance methods)
     fp.write('\t# Simple returns from instance methods\n\n')
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('\tif HAVE_BOOL:\n')
+            pfx = '\t'
+        else:
+            pfx = ''
         for kind in   ('call', 'invoke'):
             nm = tp2ident(tp)
-            fp.write('\tdef test%s%sResult(self):\n'%(kind, nm,))
-            fp.write('\t\to = Python_TestClass.alloc().init()\n')
-            fp.write('\t\tself.assert_(o is not None)\n')
-            fp.write('\t\to.reset()\n')
+            fp.write('%s\tdef test%s%sResult(self):\n'%(pfx, kind, nm,))
+            fp.write('%s\t\to = Python_TestClass.alloc().init()\n'%(pfx,))
+            fp.write('%s\t\tself.assert_(o is not None)\n'%(pfx,))
+            fp.write('%s\t\to.reset()\n'%(pfx,))
             for v in values:
                 if tp not in ('float', 'double'):
-                    fp.write('\t\tself.assertEquals')
+                    fp.write('%s\t\tself.assertEquals'%(pfx,))
                 else:
-                    fp.write('\t\tself.assertAlmostEquals')
+                    fp.write('%s\t\tself.assertAlmostEquals'%(pfx,))
 
                 fp.write('(PyObjC_TestClass2.%s%sMethodOf_(o), '%(kind, nm, ))
                 write_py_item(fp, v)
@@ -779,23 +907,28 @@ def emit_py_from_objc(fp):
     fp.write('\t# One argument\n\n')
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
+        if tp == 'bool':
+            fp.write('\tif HAVE_BOOL:\n')
+            pfx = '\t'
+        else:
+            pfx = ''
         for kind in  ('call', 'invoke'):
-            fp.write('\tdef test%s%sArg(self):\n'%(kind, nm,))
+            fp.write('%s\tdef test%s%sArg(self):\n'%(pfx, kind, nm,))
             for kind in ('call', 'invoke'):
                 if kind == 'invoke' and IS_PROBLEM(tp):
-                    fp.write('\t\tif not nsinvoke_ok:\n')
-                    fp.write('\t\t\treturn\n')
-            fp.write('\t\to = Python_TestClass.alloc().init()\n')
-            fp.write('\t\tself.assert_(o is not None)\n')
+                    fp.write('%s\t\tif not nsinvoke_ok:\n'%(pfx,))
+                    fp.write('%s\t\t\treturn\n'%(pfx,))
+            fp.write('%s\t\to = Python_TestClass.alloc().init()\n'%(pfx,))
+            fp.write('%s\t\tself.assert_(o is not None)\n'%(pfx,))
             for v in values:
-                fp.write('\t\tr = PyObjC_TestClass2.%s%sArg_of_('%(kind, nm,))
+                fp.write('%s\t\tr = PyObjC_TestClass2.%s%sArg_of_('%(pfx, kind, nm,))
                 write_py_item(fp, v)
                 fp.write(', o)\n')
 
                 if tp not in ('float', 'double'):
-                    fp.write('\t\tself.assertEquals(r, ')
+                    fp.write('%s\t\tself.assertEquals(r, '%(pfx,))
                 else:
-                    fp.write('\t\tself.assertAlmostEquals(r, ')
+                    fp.write('%s\t\tself.assertAlmostEquals(r, '%(pfx,))
                 write_py_item(fp, v)
                 fp.write(')\n')
             fp.write('\n\n')
@@ -805,34 +938,39 @@ def emit_py_from_objc(fp):
     for tp1, sign1, values1 in TYPES:
         nm1 = tp2ident(tp1)
         for tp2, sign2, values2 in TYPES:
+            if tp1 == 'bool' or tp2 == 'bool':
+                fp.write('\tif HAVE_BOOL:\n')
+                pfx = '\t'
+            else:
+                pfx = ''
             nm2 = tp2ident(tp2)
             for kind in ('call', 'invoke'):
-                fp.write('\tdef test%s%sAnd%sArg(self):\n'%(kind, nm1,nm2))
+                fp.write('%s\tdef test%s%sAnd%sArg(self):\n'%(pfx, kind, nm1,nm2))
                 if kind == 'invoke' and (IS_PROBLEM(tp1)  or IS_PROBLEM(tp2)):
-                    fp.write('\t\tif not nsinvoke_ok:\n')
-                    fp.write('\t\t\treturn\n')
+                    fp.write('%s\t\tif not nsinvoke_ok:\n'%(pfx,))
+                    fp.write('%s\t\t\treturn\n'%(pfx,))
 
-                fp.write('\t\to = Python_TestClass.alloc().init()\n')
-                fp.write('\t\tself.assert_(o is not None)\n')
+                fp.write('%s\t\to = Python_TestClass.alloc().init()\n'%(pfx,))
+                fp.write('%s\t\tself.assert_(o is not None)\n'%(pfx,))
                 for v1 in values1:
                     for v2 in values2:
-                        fp.write('\t\tr = PyObjC_TestClass2.%s%sArg_and%sArg_of_('%(kind, nm1,nm2))
+                        fp.write('%s\t\tr = PyObjC_TestClass2.%s%sArg_and%sArg_of_('%(pfx, kind, nm1,nm2))
                         write_py_item(fp, v1)
                         fp.write(', ')
                         write_py_item(fp, v2)
                         fp.write(', o)\n')
 
                         if tp1 not in ('float', 'double'):
-                            fp.write('\t\tself.assertEquals(r[0], ')
+                            fp.write('%s\t\tself.assertEquals(r[0], '%(pfx,))
                         else:
-                            fp.write('\t\tself.assertAlmostEquals(r[0], ')
+                            fp.write('%s\t\tself.assertAlmostEquals(r[0], '%(pfx,))
                         write_py_item(fp, v1)
                         fp.write(')\n')
 
                         if tp2 not in ('float', 'double'):
-                            fp.write('\t\tself.assertEquals(r[1], ')
+                            fp.write('%s\t\tself.assertEquals(r[1], '%(pfx,))
                         else:
-                            fp.write('\t\tself.assertAlmostEquals(r[1], ')
+                            fp.write('%s\t\tself.assertAlmostEquals(r[1], '%(pfx,))
                         write_py_item(fp, v2)
                         fp.write(')\n')
                 fp.write('\n\n')
@@ -841,19 +979,25 @@ def emit_py_from_objc(fp):
     fp.write('\t# Pass by reference arguments (in)\n\n')
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
+        if tp == 'bool':
+            fp.write('\tif HAVE_BOOL:\n')
+            pfx='\t'
+        else:
+            pfx=''
+
         for kind in ('call', 'invoke'):
-            fp.write('\tdef test%s%sIn(self):\n'%(kind, nm,))
-            fp.write('\t\to = Python_TestClass.alloc().init()\n')
-            fp.write('\t\tself.assert_(o is not None)\n')
+            fp.write('%s\tdef test%s%sIn(self):\n'%(pfx, kind, nm,))
+            fp.write('%s\t\to = Python_TestClass.alloc().init()\n'%(pfx,))
+            fp.write('%s\t\tself.assert_(o is not None)\n'%(pfx,))
             for v in values:
-                fp.write('\t\tr = PyObjC_TestClass2.%s%sInArg_of_('%(kind, nm,))
+                fp.write('%s\t\tr = PyObjC_TestClass2.%s%sInArg_of_('%(pfx, kind, nm,))
                 write_py_item(fp, v)
                 fp.write(', o)\n')
 
                 if tp not in ('float', 'double'):
-                    fp.write('\t\tself.assertEquals(r, ')
+                    fp.write('%s\t\tself.assertEquals(r, '%(pfx,))
                 else:
-                    fp.write('\t\tself.assertAlmostEquals(r, ')
+                    fp.write('%s\t\tself.assertAlmostEquals(r, '%(pfx,))
                 write_py_item(fp, v)
                 fp.write(')\n')
             fp.write('\n\n')
@@ -861,20 +1005,25 @@ def emit_py_from_objc(fp):
     # Pass by reference arguments (out)
     fp.write('\t# Pass by reference arguments (out)\n\n')
     for tp, sign, values in TYPES:
+        if tp == 'bool':
+            fp.write('\tif HAVE_BOOL:\n')
+            pfx='\t'
+        else:
+            pfx=''
         nm = tp2ident(tp)
         for kind in ('call', 'invoke'):
-            fp.write('\tdef test%s%sOut(self):\n'%(kind, nm,))
-            fp.write('\t\to = Python_TestClass.alloc().init()\n')
-            fp.write('\t\tself.assert_(o is not None)\n')
-            fp.write('\t\to.reset()\n')
+            fp.write('%s\tdef test%s%sOut(self):\n'%(pfx, kind, nm,))
+            fp.write('%s\t\to = Python_TestClass.alloc().init()\n'%(pfx,))
+            fp.write('%s\t\tself.assert_(o is not None)\n'%(pfx,))
+            fp.write('%s\t\to.reset()\n'%(pfx,))
             for v in values:
-                fp.write('\t\tr = PyObjC_TestClass2.%s%sOutArg_of_(o)\n'%(
-                    kind, nm,))
+                fp.write('%s\t\tr = PyObjC_TestClass2.%s%sOutArg_of_(o)\n'%(
+                    pfx, kind, nm,))
 
                 if tp not in ('float', 'double'):
-                    fp.write('\t\tself.assertEquals(r, ')
+                    fp.write('%s\t\tself.assertEquals(r, '%(pfx,))
                 else:
-                    fp.write('\t\tself.assertAlmostEquals(r, ')
+                    fp.write('%s\t\tself.assertAlmostEquals(r, '%(pfx,))
                 write_py_item(fp, v)
                 fp.write(')\n')
             fp.write('\n\n')
@@ -883,31 +1032,36 @@ def emit_py_from_objc(fp):
     fp.write('\t# Pass by reference arguments (out)\n\n')
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
+        if tp == 'bool':
+            fp.write('\tif HAVE_BOOL:\n')
+            pfx='\t'
+        else:
+            pfx=''
         for kind in ('call', 'invoke'):
-            fp.write('\tdef test%s%sInOut(self):\n'%(kind, nm,))
-            fp.write('\t\to = Python_TestClass.alloc().init()\n')
-            fp.write('\t\tself.assert_(o is not None)\n')
-            fp.write('\t\to.reset()\n')
+            fp.write('%s\tdef test%s%sInOut(self):\n'%(pfx, kind, nm,))
+            fp.write('%s\t\to = Python_TestClass.alloc().init()\n'%(pfx,))
+            fp.write('%s\t\tself.assert_(o is not None)\n'%(pfx,))
+            fp.write('%s\t\to.reset()\n'%(pfx,))
             valuesrev = list(values[:])
             valuesrev.reverse()
             valuesrev = tuple(valuesrev)
             for vin, vout in zip(valuesrev, values):
-                fp.write('\t\tr = PyObjC_TestClass2.%s%sInOutArg_of_('%(
-                    kind, nm,))
+                fp.write('%s\t\tr = PyObjC_TestClass2.%s%sInOutArg_of_('%(
+                    pfx, kind, nm,))
                 write_py_item(fp, vin) 
                 fp.write(', o)\n')
 
                 if tp not in ('float', 'double'):
-                    fp.write('\t\tself.assertEquals(r[0], ')
+                    fp.write('%s\t\tself.assertEquals(r[0], '%(pfx,))
                 else:
-                    fp.write('\t\tself.assertAlmostEquals(r[0], ')
+                    fp.write('%s\t\tself.assertAlmostEquals(r[0], '%(pfx,))
                 write_py_item(fp, vin)
                 fp.write(')\n')
 
                 if tp not in ('float', 'double'):
-                    fp.write('\t\tself.assertEquals(r[1], ')
+                    fp.write('%s\t\tself.assertEquals(r[1], '%(pfx,))
                 else:
-                    fp.write('\t\tself.assertAlmostEquals(r[1], ')
+                    fp.write('%s\t\tself.assertAlmostEquals(r[1], '%(pfx,))
                 write_py_item(fp, vout)
                 fp.write(')\n')
             fp.write('\n\n')

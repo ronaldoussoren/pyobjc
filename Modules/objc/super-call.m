@@ -17,7 +17,7 @@ int PyObjC_MappingCount = 0;
 
 struct registry
 {
-	ObjC_CallFunc_t 	call_to_objc;
+	PyObjC_CallFunc 	call_to_objc;
 	PyObjCFFI_ClosureFunc	call_to_python;
 };
 	
@@ -51,7 +51,7 @@ init_registry(void)
  * Add a custom mapping for a method in a class
  */
 int PyObjC_RegisterMethodMapping(Class class, SEL sel, 
-	ObjC_CallFunc_t call_to_objc,
+	PyObjC_CallFunc call_to_objc,
 	PyObjCFFI_ClosureFunc call_to_python)
 {
 	struct registry* v;
@@ -73,8 +73,12 @@ int PyObjC_RegisterMethodMapping(Class class, SEL sel,
 		call_to_objc = ObjC_FFICaller;
 	}
 
-	pyclass = PyObjCClass_New(class);
-	if (pyclass == NULL) return -1;
+	if (class == nil) {
+		pyclass = Py_None; Py_INCREF(Py_None);
+	} else {	
+		pyclass = PyObjCClass_New(class);
+		if (pyclass == NULL) return -1;
+	}
 
 	v = PyMem_Malloc(sizeof(*v));
 	if (v == NULL) {
@@ -142,7 +146,7 @@ PyObjCRT_SimplifySignature(char* signature, char* buf, size_t buflen)
 	
 int PyObjC_RegisterSignatureMapping(
 	char* signature,
-	ObjC_CallFunc_t call_to_objc,
+	PyObjC_CallFunc call_to_objc,
 	PyObjCFFI_ClosureFunc call_to_python)
 {
 	struct registry* v;
@@ -154,7 +158,10 @@ int PyObjC_RegisterSignatureMapping(
 	}
 		
 
-	PyObjCRT_SimplifySignature(signature, signature_buf, sizeof(signature_buf));
+	PyObjCRT_SimplifySignature(
+			signature, 
+			signature_buf, 
+			sizeof(signature_buf));
 	if (PyErr_Occurred()) return -1;
 
 	if (!call_to_objc || !call_to_python) {
@@ -196,16 +203,11 @@ search_special(Class class, SEL sel)
 	int              special_len, i;
 
 
-	if (special_registry == NULL) {
-		ObjCErr_Set(ObjCExc_error,
-			"PyObjC: don't know how to call method %s", 
-			PyObjCRT_SELName(sel));
-		return NULL;
-	}
+	if (special_registry == NULL) goto error;
 
 	if (class) {
 		special_class = PyObjCClass_New(class);
-		if (special_class == NULL) return NULL;
+		if (special_class == NULL) goto error;
 
 	}
 
@@ -218,10 +220,17 @@ search_special(Class class, SEL sel)
 
 		if (pyclass == NULL || pysel == NULL) continue;
 		
-		if (strcmp(PyString_AsString(pysel), PyObjCRT_SELName(sel)) == 0) {
+		if (strcmp(PyString_AsString(pysel), 
+					PyObjCRT_SELName(sel)) == 0) {
+
 			if (!special_class) {
 				special_class = pyclass;
 				result = PyTuple_GetItem(entry, 2);
+
+			} else if (pyclass == Py_None) {
+				special_class = pyclass;
+				result = PyTuple_GetItem(entry, 2);
+
 			} else if (PyType_IsSubtype(
 					(PyTypeObject*)special_class,
 					(PyTypeObject*)pyclass
@@ -232,18 +241,20 @@ search_special(Class class, SEL sel)
 		}
 	}
 	Py_XDECREF(special_class);
-	if (result) {
-		return PyCObject_AsVoidPtr(result);
-	} else {
-		ObjCErr_Set(ObjCExc_error,
-			"PyObjC: don't know how to call method %s", 
+	if (!result) goto error;
+
+	return PyCObject_AsVoidPtr(result);
+
+error:
+	PyErr_Format(ObjCExc_error,
+		"PyObjC: don't know how to call method '%s'", 
 			PyObjCRT_SELName(sel));
-		return NULL;
-	}
+	return NULL;
 }
 
 
-ObjC_CallFunc_t ObjC_FindCallFunc(Class class, SEL sel)
+PyObjC_CallFunc 
+PyObjC_FindCallFunc(Class class, SEL sel)
 {
 /*
  * TODO: Should add special case code for NSUndoManager: If this
@@ -271,27 +282,27 @@ find_signature(char* signature)
 	struct registry* r;
 	char   signature_buf[1024];
 
-	PyObjCRT_SimplifySignature(signature, signature_buf, sizeof(signature_buf));
-	if (signature_registry == NULL) {
-		ObjCErr_Set(ObjCExc_error,
-			"PyObjC: don't know how to call a method with "
-			"signature %s", signature);
-		return NULL;
-	}
+	PyObjCRT_SimplifySignature(
+			signature, 
+			signature_buf, 
+			sizeof(signature_buf));
 
+	if (signature_registry == NULL) goto error;
 	o = PyDict_GetItemString(signature_registry, signature_buf);
-	if (o == NULL) {
-		ObjCErr_Set(ObjCExc_error,
-			"PyObjC: don't know how to call a method with "
-			"signature %s", signature);
-		return NULL;
-	}
+	if (o == NULL) goto error;
 
 	r = PyCObject_AsVoidPtr(o);
 	return r;
+
+error:
+	PyErr_Format(ObjCExc_error,
+		"PyObjC: don't know how to call a method with "
+		"signature '%s'", signature);
+	return NULL;
 }
 
-extern IMP PyObjC_MakeIMP(Class class, PyObject* sel, PyObject* imp)
+extern IMP 
+PyObjC_MakeIMP(Class class, PyObject* sel, PyObject* imp)
 {
 	struct registry* generic;
 	struct registry* special;
@@ -339,32 +350,37 @@ extern IMP PyObjC_MakeIMP(Class class, PyObject* sel, PyObject* imp)
 }
 
 void  
-PyObjCUnsupportedMethod_IMP(ffi_cif* cif __attribute__((__unused__)), void* resp __attribute__((__unused__)), void** args, void* userdata __attribute__((__unused__)))
+PyObjCUnsupportedMethod_IMP(
+	ffi_cif* cif __attribute__((__unused__)), 
+	void* resp __attribute__((__unused__)), 
+	void** args, 
+	void* userdata __attribute__((__unused__)))
 {
-	NSLog(@"Implementing %s from Python is not supported for %@",
-		PyObjCRT_SELName(*(SEL*)args[1]), *(id*)args[0]);
-
 	[NSException raise:NSInvalidArgumentException
 		format:@"Implementing %s from Python is not supported for %@",
 			*(id*)args[0], PyObjCRT_SELName(*(SEL*)args[1])];
 }
 
 PyObject* 
-PyObjCUnsupportedMethod_Caller(PyObject* meth, PyObject* self, PyObject* 
-	args __attribute__((__unused__)))
+PyObjCUnsupportedMethod_Caller(
+	PyObject* meth, 
+	PyObject* self, 
+	PyObject* args __attribute__((__unused__)))
 {
 	PyObject* repr;
 
 	repr = PyObject_Repr(self);
-	if (repr == NULL) return NULL;
-	if (!PyString_Check(repr)) {
-		PyErr_SetString(PyExc_RuntimeError, 
-			"repr() didn't return a string");
+	if (repr == NULL || !PyString_Check(repr)) {
+		Py_XDECREF(repr);
+		PyErr_Format(
+			"Cannot call '%s' on instances of '%s' from Python",
+			PyObjCRT_SELName(PyObjCSelector_GetSelector(meth)),
+			self->ob_type->tp_name);
 		return NULL;
 	}
 
-	ObjCErr_Set(PyExc_TypeError,
-		"Cannot call %s on %s from Python",
+	PyErr_Format(PyExc_TypeError,
+		"Cannot call '%s' on '%s' from Python",
 		PyObjCRT_SELName(PyObjCSelector_GetSelector(meth)),
 		PyString_AS_STRING(repr));
 	Py_DECREF(repr);

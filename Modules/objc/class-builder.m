@@ -97,12 +97,12 @@ int
 PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
 {
 	if (objc_class == nil) {
-		ObjCErr_Set(ObjCExc_internal_error, 
-			"Trying to set class of <nil>\n", objc_class->name);
+		PyErr_SetString(ObjCExc_internal_error, 
+			"Trying to set class of <nil>\n");
 		return -1;
 	}
 	if (py_class == NULL || !PyObjCClass_Check(py_class)) {
-		ObjCErr_Set(ObjCExc_internal_error,
+		PyErr_Format(ObjCExc_internal_error,
 			"Trying to set class to of %s to invalid value "
 			"(type %s instead of %s)",
 			objc_class->name, py_class->ob_type->tp_name,
@@ -113,7 +113,7 @@ PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
 	CHECK_MAGIC(objc_class);
 
 	if (CLASS_WRAPPER(objc_class)->python_class != NULL) {
-		ObjCErr_Set(ObjCExc_internal_error,
+		PyErr_Format(ObjCExc_internal_error,
 			"Trying to set update PythonClass of %s",
 			objc_class->name);
 		return -1;
@@ -139,7 +139,7 @@ PyObjCClass_UnbuildClass(Class objc_class)
 	struct class_wrapper* wrapper = CLASS_WRAPPER(objc_class); 
 
 	if (objc_class == nil) {
-		ObjCErr_Set(ObjCExc_internal_error, 
+		PyErr_SetString(ObjCExc_internal_error, 
 		"Trying to unregister class <nil>");
 		return;
 	}
@@ -147,7 +147,7 @@ PyObjCClass_UnbuildClass(Class objc_class)
 	CHECK_MAGIC(objc_class);
 
 	if (wrapper->python_class != NULL) {
-		ObjCErr_Set(ObjCExc_internal_error,
+		PyErr_Format(ObjCExc_internal_error,
 			"Trying to unregister objective-C class %s, but it "
 			"is already registered with the runtime",
 			objc_class->name);
@@ -159,60 +159,6 @@ PyObjCClass_UnbuildClass(Class objc_class)
 	PyObjCRT_ClearClass(&(wrapper->meta_class));
 	free(objc_class);
 }
-
-#if 0
-/*
- * Find the signature of 'selector' in the list of protocols.
- */
-static char*
-find_protocol_signature(PyObject* protocols, SEL selector)
-{
-	int len;
-	int i;
-	PyObject* proto;
-	PyObject* info;
-
-	if (!PyList_Check(protocols)) {
-		ObjCErr_Set(ObjCExc_internal_error,
-			"Protocol-list is not a list");
-		return NULL;
-	}
-
-	/* First try the explicit protocol definitions */
-	len = PyList_GET_SIZE(protocols);
-	for (i = 0; i < len; i++) {
-		proto = PyList_GET_ITEM(protocols, i);
-		if (proto == NULL) {
-			PyErr_Clear();
-			continue;
-		}
-		if (!PyObjCInformalProtocol_Check(proto)) continue;
-
-		info = PyObjCInformalProtocol_FindSelector(proto, selector);
-		if (info != NULL) {
-			return PyObjCSelector_Signature(info);
-		}
-	}
-
-	/* Then check if another protocol users this selector */
-	proto = PyObjCInformalProtocol_FindProtocol(selector);
-	if (proto == NULL) {
-		PyErr_Clear();
-		return NULL;
-	}
-
-	info = PyObjCInformalProtocol_FindSelector(proto, selector);
-	if (info != NULL) {
-		if (PyList_Append(protocols, proto) < 0) {
-			return NULL;
-		}
-		Py_INCREF(proto);
-		return PyObjCSelector_Signature(info);
-	}
-	
-	return NULL;
-}
-#endif
 
 /*
  * Be smart about slots: Push them into Objective-C and leave an empty
@@ -274,7 +220,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 		slot_value = PySequence_Fast_GET_ITEM(slots, i);
 
 		if (!PyString_Check(slot_value)) {
-			ObjCErr_Set(PyExc_TypeError, 
+			PyErr_Format(PyExc_TypeError, 
 				"__slots__ entry %d is not a string", i);
 			Py_DECREF(slots);
 			return -1;
@@ -361,27 +307,30 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	}
 
 	if (!PyList_Check(protocols)) {
-		ObjCErr_Set(ObjCExc_internal_error, "%s", 
-			"protocol list not a python 'list'");
+		PyErr_Format(ObjCExc_internal_error,  
+			"protocol list not a python 'list' but '%s'",
+			protocols->ob_type->tp_name);
 		goto error_cleanup;
 	}
 	if (!PyDict_Check(class_dict)) {
-		ObjCErr_Set(ObjCExc_internal_error, "%s", 
-			"class dict not a python 'dict'");
+		PyErr_Format(ObjCExc_internal_error, 
+			"class dict not a python 'dict', but '%s'",
+			class_dict->ob_type->tp_name);
 		goto error_cleanup;
 	}
 	if (super_class == NULL) {
-		ObjCErr_Set(ObjCExc_internal_error, "%s", 
+		PyErr_SetString(ObjCExc_internal_error, 
 			"must have super_class");
 		goto error_cleanup;
 	}
 
 	if (PyObjCRT_LookUpClass(name) != NULL) {
-		ObjCErr_Set(ObjCExc_error, "class already '%s' exists", name);
+		PyErr_Format(ObjCExc_error, "Objective-C class '%s' already", 
+				name);
 		goto error_cleanup;
 	}
 	if (strspn(name, IDENT_CHARS) != strlen(name)) {
-		ObjCErr_Set(ObjCExc_error, "'%s' not a valid name", name);
+		PyErr_Format(ObjCExc_error, "'%s' not a valid name", name);
 		goto error_cleanup;
 	}
 
@@ -391,8 +340,9 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	for (curname = dont_override_methods; *curname != NULL; curname++) {
 		key = PyDict_GetItemString(class_dict, *curname);
 		if (key != NULL) {
-			ObjCErr_Set(ObjCExc_error,
-				"Cannot override %s from python", *curname);
+			PyErr_Format(ObjCExc_error,
+				"Cannot override method '%s' from python", 
+				*curname);
 			goto error_cleanup;
 		}
 	}
@@ -436,8 +386,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	for (i = 0; i < key_count; i++) {
 		key = PyList_GetItem(key_list, i);
 		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			ObjCErr_Set(ObjCExc_internal_error,
+			PyErr_SetString(ObjCExc_internal_error,
 				"PyObjCClass_BuildClass: "
 				"Cannot fetch key in keylist");
 			goto error_cleanup;
@@ -445,8 +394,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		value = PyDict_GetItem(class_dict, key);
 		if (value == NULL) {
-			PyErr_Clear();
-			ObjCErr_Set(ObjCExc_internal_error,
+			PyErr_SetString(ObjCExc_internal_error,
 				"PyObjCClass_BuildClass: "
 				"Cannot fetch item in keylist");
 			goto error_cleanup;
@@ -455,7 +403,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		if (PyObjCInstanceVariable_Check(value)) {
 			if (class_getInstanceVariable(super_class, 
 			    ((PyObjCInstanceVariable*)value)->name) != NULL) {
-				ObjCErr_Set(ObjCExc_error,
+				PyErr_Format(ObjCExc_error,
 					"a superclass already has an instance "
 					"variable with this name: %s",
 					((PyObjCInstanceVariable*)value)->name);
@@ -654,7 +602,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	for (i = 0; i < key_count; i++) {
 		key = PyList_GetItem(key_list, i);
 		if (key == NULL) {
-			ObjCErr_Set(ObjCExc_internal_error,
+			PyErr_SetString(ObjCExc_internal_error,
 				"PyObjCClass_BuildClass: "
 				"Cannot fetch key in keylist");
 			goto error_cleanup;
@@ -662,7 +610,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		value = PyDict_GetItem(class_dict, key);
 		if (value == NULL)  {
-			ObjCErr_Set(ObjCExc_internal_error,
+			PyErr_SetString(ObjCExc_internal_error,
 				"PyObjCClass_BuildClass: "
 				"Cannot fetch item in keylist");
 			goto error_cleanup;
@@ -674,8 +622,9 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			var = ivar_list->ivar_list + ivar_list->ivar_count;
 			ivar_list->ivar_count++;
 
-			var->ivar_name = strdup(
+			var->ivar_name = PyObjCUtil_Strdup(
 				((PyObjCInstanceVariable*)value)->name);
+			if (var->ivar_name == NULL) goto error_cleanup;
 			var->ivar_offset = ivar_size;
 
 			/* XXX: Add alignment! */
@@ -684,7 +633,8 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				var->ivar_type = "^v";
 				item_size = sizeof(PyObject**);
 			} else {
-				var->ivar_type = strdup(((PyObjCInstanceVariable*)value)->type);
+				var->ivar_type = PyObjCUtil_Strdup(((PyObjCInstanceVariable*)value)->type);
+				if (var->ivar_type == NULL) goto error_cleanup;
 				item_size = PyObjCRT_SizeOfType(var->ivar_type);
 			}
 
@@ -1314,7 +1264,7 @@ object_method_forwardInvocation(
 		if (*type != _C_VOID) {
 			if (!PyTuple_Check(result) 
 			     || PyTuple_Size(result) != have_output+1) {
-				ObjCErr_Set(PyExc_TypeError,
+				PyErr_Format(PyExc_TypeError,
 					"%s: Need tuple of %d arguments as result",
 					PyObjCRT_SELName([invocation selector]),
 					have_output+1);
@@ -1342,7 +1292,7 @@ object_method_forwardInvocation(
 		} else {
 			if (!PyTuple_Check(result) 
 			     || PyTuple_Size(result) != have_output) {
-				ObjCErr_Set(PyExc_TypeError,
+				PyErr_Format(PyExc_TypeError,
 					"%s: Need tuple of %d arguments as result",
 					PyObjCRT_SELName([invocation selector]),
 					have_output);

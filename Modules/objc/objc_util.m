@@ -28,19 +28,6 @@ int ObjCUtil_Init(PyObject* module)
 	return 0;
 }
 
-void ObjCErr_Set(PyObject* exc, char* fmt, ...)
-{
-	char buf[1024];
-	va_list ap;
-	
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap);
-	va_end(ap);
-
-	PyErr_SetString(exc, buf);
-}
-
-
 static PyObject* 
 ObjCErr_PyExcForName(const char* value)
 {
@@ -240,13 +227,14 @@ void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
 }
 
 
-char* ObjC_strdup(const char* value)
+char* 
+PyObjCUtil_Strdup(const char* value)
 {
 	int len;
 	char* result;
 
 	len = strlen(value);
-	result = PyMem_Malloc(len+1);
+	result = malloc(len+1);
 	if (result == NULL) return NULL;
 
 	memcpy(result, value, len);
@@ -255,7 +243,7 @@ char* ObjC_strdup(const char* value)
 }
 
 
-NSMapTableKeyCallBacks ObjC_PointerKeyCallBacks = {
+NSMapTableKeyCallBacks PyObjCUtil_PointerKeyCallBacks = {
 	NULL,
 	NULL,
 	NULL,
@@ -264,7 +252,7 @@ NSMapTableKeyCallBacks ObjC_PointerKeyCallBacks = {
 	NULL,
 };
 
-NSMapTableValueCallBacks ObjC_PointerValueCallBacks = {
+NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks = {
 	NULL,
 	NULL,
 	NULL,

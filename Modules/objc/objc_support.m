@@ -244,7 +244,7 @@ PyObjCRT_SkipTypeSpec (const char *type)
 
     
 	default:
-		ObjCErr_Set(ObjCExc_internal_error,
+		PyErr_Format(ObjCExc_internal_error,
 			"PyObjCRT_SkipTypeSpec: Unhandled type '%#x'", *type); 
 		return NULL;
 	}
@@ -388,8 +388,8 @@ PyObjCRT_AlignOfType (const char *type)
 		return PyObjCRT_AlignOfType(type+1);
 
 	default:
-		ObjCErr_Set(ObjCExc_internal_error, 
-			"objc_align_type: Unhandled type '%#x'", *type);
+		PyErr_Format(ObjCExc_internal_error, 
+			"PyObjCRT_AlignOfType: Unhandled type '%#x'", *type);
 		return -1;
 	}
 }
@@ -510,7 +510,7 @@ PyObjCRT_SizeOfType (const char *type)
 		return PyObjCRT_SizeOfType(type+1);
 
 	default:
-		ObjCErr_Set(ObjCExc_internal_error, 
+		PyErr_Format(ObjCExc_internal_error, 
 			"PyObjCRT_SizeOfType: Unhandled type '%#x", *type);
 		abort();
 		return -1;
@@ -648,7 +648,7 @@ depythonify_c_array (const char *type, PyObject *arg, void *datum)
 		;
 	sizeofitem = PyObjCRT_AlignedSize (type);
 	if (sizeofitem == -1) {
-		ObjCErr_Set(PyExc_ValueError, 
+		PyErr_Format(PyExc_ValueError, 
 			"cannot depythonify array of unknown type");
 		return -1;
 	}
@@ -660,7 +660,7 @@ depythonify_c_array (const char *type, PyObject *arg, void *datum)
 
 	if (nitems != PySequence_Fast_GET_SIZE(seq)) {
 		Py_DECREF(seq);
-		ObjCErr_Set(PyExc_ValueError,
+		PyErr_Format(PyExc_ValueError,
 			"depythonifying array of %d items, got one of %d",
 			nitems, PyTuple_Size(arg));
 		return -1;
@@ -709,7 +709,7 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
 
 	if (nitems != PySequence_Fast_GET_SIZE(seq)) {
 		Py_DECREF(seq);
-		ObjCErr_Set(PyExc_ValueError,
+		PyErr_Format(PyExc_ValueError,
 			"depythonifying struct of %d members, got tuple of %d",
 			nitems, PyTuple_Size (arg));
 		return -1;
@@ -909,7 +909,7 @@ pythonify_c_value (const char *type, void *datum)
 		break;
 
 	default:
-		ObjCErr_Set(ObjCExc_error, 
+		PyErr_Format(ObjCExc_error, 
 			"pythonify_c_value: unhandled value type (%c|%d|%s)",
 			*type, *type, *type);
 		break;
@@ -942,14 +942,14 @@ depythonify_unsigned_int_value(PyObject* argument, char* descr,
 	if (PyInt_Check (argument)) {
 		long temp = PyInt_AsLong(argument);
 		if (temp < 0) {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got negative '%s'",
 					descr,
 					argument->ob_type->tp_name);
 			return -1;
 
 		} else if ((unsigned long long)temp > max) {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of "
 				"wrong magnitude", descr,
 					argument->ob_type->tp_name);
@@ -961,7 +961,7 @@ depythonify_unsigned_int_value(PyObject* argument, char* descr,
 	} else if (PyLong_Check(argument)) {
 		*out = PyLong_AsUnsignedLongLong(argument);
 		if (PyErr_Occurred()) {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of "
 				"wrong magnitude", descr,
 					argument->ob_type->tp_name);
@@ -969,7 +969,7 @@ depythonify_unsigned_int_value(PyObject* argument, char* descr,
 		}
 
 		if (*out > max) {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of "
 				"wrong magnitude", descr,
 					argument->ob_type->tp_name);
@@ -981,7 +981,7 @@ depythonify_unsigned_int_value(PyObject* argument, char* descr,
 		PyObject* tmp;
 
 		if (PyString_Check(argument) || PyUnicode_Check(argument)) {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of %d",
 					descr,
 					argument->ob_type->tp_name,
@@ -999,7 +999,7 @@ depythonify_unsigned_int_value(PyObject* argument, char* descr,
 			}
 		}
 
-		ObjCErr_Set(PyExc_ValueError,
+		PyErr_Format(PyExc_ValueError,
 			"depythonifying '%s', got '%s'",
 				descr,
 				argument->ob_type->tp_name);
@@ -1017,7 +1017,7 @@ depythonify_signed_int_value(PyObject* argument, char* descr,
 	if (PyInt_Check (argument)) {
 		*out = (long long)PyInt_AsLong(argument);
 		if (*out < min || *out > max) {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of "
 				"wrong magnitude", descr,
 					argument->ob_type->tp_name);
@@ -1028,7 +1028,7 @@ depythonify_signed_int_value(PyObject* argument, char* descr,
 	} else if (PyLong_Check(argument)) {
 		*out = PyLong_AsLongLong(argument);
 		if (PyErr_Occurred()) {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of "
 				"wrong magnitude", descr,
 					argument->ob_type->tp_name);
@@ -1036,7 +1036,7 @@ depythonify_signed_int_value(PyObject* argument, char* descr,
 		}
 
 		if (*out < min || *out > max) {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of "
 				"wrong magnitude", descr,
 					argument->ob_type->tp_name);
@@ -1048,7 +1048,7 @@ depythonify_signed_int_value(PyObject* argument, char* descr,
 		PyObject* tmp;
 
 		if (PyString_Check(argument) || PyUnicode_Check(argument)) {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of %d",
 					descr,
 					argument->ob_type->tp_name,
@@ -1067,7 +1067,7 @@ depythonify_signed_int_value(PyObject* argument, char* descr,
 			}
 		}
 
-		ObjCErr_Set(PyExc_ValueError,
+		PyErr_Format(PyExc_ValueError,
 			"depythonifying '%s', got '%s' of %d",
 				descr,
 				argument->ob_type->tp_name,
@@ -1170,7 +1170,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 #endif
 	case _C_CHARPTR:
 		if (!PyString_Check (argument) && argument != Py_None) {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'charptr', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
@@ -1303,7 +1303,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				PyUnicode_GetDefaultEncoding(), 
 				"strict");
 			if (as_unicode == NULL) {
-				ObjCErr_Set(PyExc_UnicodeError,
+				PyErr_Format(PyExc_UnicodeError,
 					"depythonifying 'id', got "
 					"a string with a non-default "
 					"encoding");
@@ -1319,7 +1319,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 						PyString_AS_STRING(as_utf8)];
 				Py_DECREF(as_utf8);
 			} else {
-				ObjCErr_Set(PyExc_ValueError,
+				PyErr_Format(PyExc_ValueError,
 					"depythonifying 'id', failed "
 					"to encode unicode string to UTF8");
 				return -1;
@@ -1335,7 +1335,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 						PyString_AS_STRING(utf8)];
 				Py_DECREF(utf8);
 			} else {
-				ObjCErr_Set(PyExc_ValueError,
+				PyErr_Format(PyExc_ValueError,
 					"depythonifying 'id', failed "
 					"to encode unicode string to UTF8");
 				return -1;
@@ -1391,7 +1391,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		} else if (argument == Py_None) {
 			*(Class*) datum = nil;
 		} else {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'Class', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
@@ -1415,14 +1415,14 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				if (sel)  {
 					*(SEL*) datum = sel;
 				} else {
-					ObjCErr_Set(PyExc_ValueError,
+					PyErr_Format(PyExc_ValueError,
 						"depythonifying 'SEL', cannot "
 						"register string with runtime");
 					return -1;
 				}
 			}
 		} else {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'SEL', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
@@ -1442,7 +1442,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			} else if (PyObjCPointer_Check (argument)) {
 				*(void **) datum = PyObjCPointer_Ptr(argument);
 			} else {
-				ObjCErr_Set(PyExc_ValueError,
+				PyErr_Format(PyExc_ValueError,
 					"depythonifying 'pointer', got '%s'",
 						argument->ob_type->tp_name);
 				return -1;
@@ -1456,7 +1456,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		} else if (PyInt_Check (argument)) {
 			*(float *) datum = (float) PyInt_AsLong (argument);
 		} else if (PyString_Check(argument) || PyUnicode_Check(argument)) {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'float', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
@@ -1469,7 +1469,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				return 0;
 			}
 
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'float', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
@@ -1482,7 +1482,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		} else if (PyInt_Check (argument)) {
 			*(double *) datum = (double) PyInt_AsLong (argument);
 		} else if (PyString_Check(argument) || PyUnicode_Check(argument)) {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'float', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
@@ -1495,7 +1495,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				return 0;
 			}
 
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'double', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
@@ -1507,12 +1507,12 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			int expected_size = PyObjCRT_SizeOfType (type);
 
 			if (expected_size == -1) {
-				ObjCErr_Set(PyExc_ValueError,
+				PyErr_Format(PyExc_ValueError,
 					"depythonifying 'union' of "
 					"unknown size");
 				return -1;
 			} else if (expected_size != PyString_Size (argument)) {
-				ObjCErr_Set(PyExc_ValueError,
+				PyErr_Format(PyExc_ValueError,
 					"depythonifying 'union' of size %d, "
 					"got string of %d",
 					       expected_size, 
@@ -1524,7 +1524,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				expected_size);
 			}
 		} else {
-			ObjCErr_Set(PyExc_ValueError,
+			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'union', got '%s'",
 					argument->ob_type->tp_name);
 			return -1;
@@ -1538,7 +1538,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		return depythonify_c_array (type, argument, datum);
 
 	default:
-		ObjCErr_Set(PyExc_ValueError,
+		PyErr_Format(PyExc_ValueError,
 			"depythonifying unknown typespec %#x", *type);
 		return -1;
 	}

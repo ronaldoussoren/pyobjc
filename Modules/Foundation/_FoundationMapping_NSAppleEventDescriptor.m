@@ -57,13 +57,22 @@ call_NSAppleEventDescriptor_initWithDescriptorType_bytes_length_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super,
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			objc_result = ((id(*)(id,SEL,char*,int))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					bytes, len);
+		} else {
+			PyObjC_InitSuper(&super,
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		objc_result = objc_msgSendSuper(&super,
-				PyObjCSelector_GetSelector(method),
-				bytes, len);
+			objc_result = objc_msgSendSuper(&super,
+					PyObjCSelector_GetSelector(method),
+					bytes, len);
+		}
+
 		result = PyObjC_IdToPython(objc_result);
 
 		/* XXX Ronald: If you try to use the result of 
@@ -105,13 +114,21 @@ call_NSAppleEventDescriptor_descriptorWithDescriptorType_bytes_length_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuperCls(&super,
-			PyObjCSelector_GetClass(method),
-			PyObjCClass_GetClass(self));
+		if (PyObjCIMP_Check(method)) {
+			objc_result = ((id(*)(id,SEL,char*,int))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCClass_GetClass(self),
+					PyObjCIMP_GetSelector(method),
+					bytes, len);
+		} else {
+			PyObjC_InitSuperCls(&super,
+				PyObjCSelector_GetClass(method),
+				PyObjCClass_GetClass(self));
 
-		objc_result = objc_msgSendSuper(&super,
-				PyObjCSelector_GetSelector(method),
-				descriptorType, bytes, len);
+			objc_result = objc_msgSendSuper(&super,
+					PyObjCSelector_GetSelector(method),
+					descriptorType, bytes, len);
+		}
 		result = PyObjC_IdToPython(objc_result);
 
 		/* XXX Ronald: If you try to use the result of 
@@ -149,12 +166,20 @@ call_NSAppleEventDescriptor_initWithAEDescNoCopy_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super,
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			res = ((id(*)(id,SEL,AEDesc*))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					theEvent);
+		} else {
+			PyObjC_InitSuper(&super,
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		res = (id)objc_msgSendSuper(&super,
-		    @selector(initWithAEDescNoCopy:), theEvent);
+			res = (id)objc_msgSendSuper(&super,
+			    @selector(initWithAEDescNoCopy:), theEvent);
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = NULL;
@@ -181,12 +206,19 @@ call_NSAppleEventDescriptor_aeDesc(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super,
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			res = ((AppleEvent*(*)(id,SEL))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method));
+		} else {
+			PyObjC_InitSuper(&super,
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		res = (AppleEvent*)objc_msgSendSuper(&super,
-		    @selector(aeDesc));
+			res = (AppleEvent*)objc_msgSendSuper(&super,
+			    @selector(aeDesc));
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = NULL;

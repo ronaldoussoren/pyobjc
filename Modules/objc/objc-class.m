@@ -65,8 +65,10 @@ get_class_info(PyObject* class)
 	PyObjC_class_info* info;
 
 	if (class_to_objc == NULL) {
-		class_to_objc = NSCreateMapTable(ObjC_PointerKeyCallBacks,
-			ObjC_PointerValueCallBacks, 500);
+		class_to_objc = NSCreateMapTable(
+			PyObjCUtil_PointerKeyCallBacks,
+			PyObjCUtil_PointerValueCallBacks, 
+			500);
 	}
 
 	item = NSMapGet(class_to_objc, class);
@@ -131,8 +133,10 @@ static int
 objc_class_register(Class objc_class, PyObject* py_class)
 {
 	if (class_registry == NULL) {
-		class_registry = NSCreateMapTable(ObjC_PointerKeyCallBacks,
-			ObjC_PointerValueCallBacks, 500);
+		class_registry = NSCreateMapTable(
+			PyObjCUtil_PointerKeyCallBacks,
+			PyObjCUtil_PointerValueCallBacks, 
+			500);
 	}
 
 	if (NSMapGet(class_registry, objc_class)) {
@@ -443,15 +447,12 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 	info->class = objc_class;
-	info->sel_to_py = PyDict_New(); 
+	info->sel_to_py = NULL; 
 	info->method_magic = objc_methodlist_magic(objc_class);
 	info->dictoffset = 0;
 	info->delmethod = delmethod;
 	info->hasPythonImpl = 1;
 
-
-	/* Initialize to parent version, not: this should not be necessary! */
-	info->dictoffset = PyObjCClass_DictOffset(PyTuple_GET_ITEM(bases, 0));
 
 	PyObjCClass_SetClass(objc_class, res);
 
@@ -623,7 +624,8 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 		} else if (PyObjCSelector_Check(old_value)) {
 			Py_DECREF(old_value);
 			if (!PyString_Check(name)) {
-				PyErr_SetString(PyExc_AttributeError, "cannot delete selectors");
+				PyErr_SetString(PyExc_AttributeError, 
+						"cannot delete selectors");
 			} else {
 				PyErr_Format(PyExc_AttributeError,
 					"Cannot remove selector '%s' in '%s'",
@@ -637,7 +639,12 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 		PyErr_SetString(PyExc_TypeError,
 			"Assigning native selectors is not supported");
 		return -1;
-	} else if (PyObjCSelector_Check(value) || PyFunction_Check(value) || PyMethod_Check(value) || PyObject_TypeCheck(value, &PyClassMethod_Type)) {
+
+	} else if (PyObjCSelector_Check(value) 
+			|| PyFunction_Check(value) 
+			|| PyMethod_Check(value) 
+			|| PyObject_TypeCheck(value, &PyClassMethod_Type)
+		) {
 		/*
 		 * Assignment of a function: create a new method in the ObjC
 		 * runtime.
@@ -669,12 +676,12 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 		methodsToAdd->method_count = 1;
 		objcMethod = methodsToAdd->method_list;
 		objcMethod->method_name = PyObjCSelector_GetSelector(newVal);
-		objcMethod->method_types = strdup(PyObjCSelector_Signature(newVal));
+		objcMethod->method_types = PyObjCUtil_Strdup(
+				PyObjCSelector_Signature(newVal));
 
 		if (objcMethod->method_types == NULL) {
 			free(methodsToAdd);
 			Py_DECREF(newVal);
-			PyErr_NoMemory();
 			return -1;
 		}
 		objcMethod->method_imp = ObjC_MakeIMPForPyObjCSelector(
@@ -707,7 +714,6 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 					methodsToAdd);
 		}
 		return 0;
-
 	}
 
 	res = PyType_Type.tp_setattro(self, name, value);
@@ -1084,10 +1090,10 @@ PyObjCClass_New(Class objc_class)
 	bases = PyTuple_New(1);
 
 	if (objc_class->super_class == NULL) {
-		PyTuple_SetItem(bases, 0, (PyObject*)&PyObjCObject_Type);
+		PyTuple_SET_ITEM(bases, 0, (PyObject*)&PyObjCObject_Type);
 		Py_INCREF(((PyObject*)&PyObjCObject_Type));
 	} else {
-		PyTuple_SetItem(bases, 0, 
+		PyTuple_SET_ITEM(bases, 0, 
 			PyObjCClass_New(objc_class->super_class));
 	} 
 	args = PyTuple_New(3);
@@ -1096,11 +1102,8 @@ PyObjCClass_New(Class objc_class)
 	PyTuple_SetItem(args, 2, dict);
 
 	result = PyType_Type.tp_new(&PyObjCClass_Type, args, NULL);
-	if (result == NULL) {
-		Py_DECREF(args);
-		return NULL;
-	}
-	Py_DECREF(args); 
+	Py_DECREF(args);
+	if (result == NULL) return NULL;
 
 	info = get_class_info(result);
 	if (info == NULL) {
@@ -1140,8 +1143,9 @@ PyObjCClass_GetClass(PyObject* cls)
 	PyObjC_class_info* info;
 
 	if (!PyObjCClass_Check(cls)) {
-		ObjCErr_Set(ObjCExc_internal_error,
-			"PyObjCClass_GetClass called for non-class");
+		PyErr_Format(ObjCExc_internal_error,
+			"PyObjCClass_GetClass called for non-class (%s)",
+			cls->ob_type->tp_name);
 		return nil;
 	}
 	
@@ -1162,8 +1166,9 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 
 
 	if (!PyObjCClass_Check(cls)) {
-		ObjCErr_Set(ObjCExc_internal_error,
-			"PyObjCClass_GetClass called for non-class");
+		PyErr_Format(ObjCExc_internal_error,
+			"PyObjCClass_GetClass called for non-class (%s)",
+			cls->ob_type->tp_name);
 		return NULL;
 	}
 
@@ -1184,8 +1189,8 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 	if (result != NULL) {
 		if (result == Py_None) {
 			/* negative cache entry */
-			ObjCErr_Set(PyExc_AttributeError,
-				"No selector %s (cached)",
+			PyErr_Format(PyExc_AttributeError,
+				"No selector %s",
 				PyObjCRT_SELName(selector));
 			return NULL;
 		}
@@ -1268,7 +1273,7 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 		return result;
 	}
 
-	ObjCErr_Set(PyExc_AttributeError,
+	PyErr_Format(PyExc_AttributeError,
 		"No selector %s", PyObjCRT_SELName(selector));
 	PyDict_SetItemString(info->sel_to_py, 
 			(char*)PyObjCRT_SELName(selector), Py_None);
