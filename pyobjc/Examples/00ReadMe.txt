@@ -2,45 +2,122 @@
 PyObjC Examples
 ===============
 
-XXX - UPDATE THIS BEFORE 1.2
-
 Simple scripts that demo the core modules
 -----------------------------------------
 
-The directory `Scripts`__ contains a number of simple command-line scripts that make use
-of Cocoa features.
+The directory `Scripts`__ contains a number of simple command-line scripts
+that make use of Cocoa features.
 
 .. __: Scripts
 
+* `HelloWorld.py`__
+
+  Demonstrates a nib-less Cocoa GUI (purely for informational purposes, you
+  probably shouldn't make a habit of this)
+
+.. __: Scripts/HelloWorld.py
+
+* `autoreadme.py`_
+
+  This script is a daemon that will open the ReadMe file in the root of any
+  (removable) volume that is inserted while this script is running.
+
+  The script is part of `Introduction to PyObjC`_, an article at O'Reilly
+  `MacDevCenter.com`_.
+
+.. _`autoreadme.py`: Scripts/autoreadme.py
+.. _`Introduction to PyObjC`: http://macdevcenter.com/pub/a/mac/2003/01/31/pyobjc_one.html
+.. _`MacDevCenter.com`: http://macdevcenter.com/
+
+* `debugging.py`__
+
+  This script shows how to use ``PyObjCTools.Debugging`` to show tracebacks
+  of all (Cocoa) exceptions (handled and unhandled).
+
+.. __: Scripts/debugging.py
+
+* `dictionary.py`__
+
+  Demonstrate the usage of an ``NSMutableDictionary`` object with both
+  Objective-C and Python dictionary syntax.
+
+.. __: Scripts/dictionary.py
+
 * `exportBook.py`__
 
-  An example of using the AddressBook framework, this script exports some of the information
-  about people in your addressbook to a CSV file.
+  An example of using the ``AddressBook`` framework, this script exports some
+  of the information about people in your addressbook to a CSV file.
 
 .. __: Scripts/exportBook.py
 
-* `autoreadme.py`__
+* `findPython.py`__
 
-  This script implements an autorun feature for Mac OS X: it will open the ReadMe file in
-  the root of every removable medium that is inserted when this script is running.
+  Demonstrate the usage of ``objc.loadBundleFunctions`` to access
+  functionality from the standard C library on Mac OS X (``libSystem``,
+  which is also available as the ``System.framework`` bundle).  This
+  example uses the dyld runtime to determine which dylib the Python
+  runtime came from.
 
-.. __: Scripts/autoreadme.py 
+.. __: Scripts/findPython.py
 
-* subclassing-objective-c.py
+* `kvo-debugging.py`__
 
-  Create a subclass of an objective-C class
+  XXX
+  An example script that demonstrates how PyObjC interacts with Key Value
+  Observation (KVO) at the lowest level.  This script was used to debug
+  the PyObjC runtime and should not be used as a guideline for writing
+  new KVO code.  It may be interesting to some until we ensure that we
+  have proper unit tests for KVO and remove this example!
 
-* super-call.py
+.. __: Scripts/kvo-debugging.py
 
-  Likewise, but call super-class implementation of a method
+* `pydict-to-objcdict.py`__
 
-* dictionary.py
+  Shows how ``PyObjCTools.Conversion`` can be used to convert a Python
+  collection into an Objective-C property list.  These functions should
+  not typically be necessary as the proxies for Python objects are
+  compatible with Objective-C plists.
 
-  Use a NS*Dictionary object.
+.. __: Scripts/pydict-to-objcdict.py
 
-* rendezvous.py
+* `rendezvous.py`__
 
   Use an NSNetService class to look for servers using rendezvous.
+
+.. __: Scripts/rendezvous.py
+
+* `signal-demo.py`__
+
+  Demonstrates how to get a backtrace when handling a fatal signal using
+  ``PyObjCTools.Signals``.
+
+.. __: Scripts/signal-demo.py
+
+* `subclassing-objective-c.py`__
+
+  A doctest that demonstrates the subclassing of an Objective-C class from
+  Python.  Note that it is typically discouraged to define a ``__del__``
+  method.
+
+.. __: Scripts/subclassing-objective-c.py
+
+* `super-call.py`__
+
+  Demonstrates how create a subclass of an Objective-C class that overrides
+  a selector, but calls the super implementation using Python syntax
+  equivalent to ``[super init]``.
+
+.. __: Scripts/super-call.py
+
+* `wmEnable.py`__
+
+  Another ``objc.loadBundleFunctions`` demonstration that shows how to
+  call into a private CoreGraphics SPI and enable full WindowManager
+  access from a process that would not otherwise have it due to a
+  quirk in the implementation of WindowManager (the reason why ``pythonw``
+  should be used instead of ``python``).  Use at your own risk!
+
+.. __: Scripts/wmEnable.py
 
 Cocoa applications
 ------------------

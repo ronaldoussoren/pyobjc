@@ -12,7 +12,7 @@ you'd normally use wrappers for the various frameworks, and then locate
 the class we'd like to subclass::
 
     >>> import objc
-    >>> NSEnumerator = objc.runtime.NSEnumerator
+    >>> NSEnumerator = objc.lookUpClass('NSEnumerator')
     >>> NSEnumerator
     <objective-c class NSEnumerator at 0xa0a039a8>
 

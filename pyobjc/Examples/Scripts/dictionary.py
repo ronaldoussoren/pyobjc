@@ -4,10 +4,7 @@
 # You can use both the Python and Objective-C interfaces to access a
 # dictionary.
 #
-import sys
-import objc
-
-NSMutableDictionary = objc.lookUpClass('NSMutableDictionary')
+from Foundation import *
 
 obj = NSMutableDictionary.dictionary()
 print "An empty NSMutableDictionary:", obj
