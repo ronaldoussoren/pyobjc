@@ -430,7 +430,7 @@ def test(nibFiles):
 			# instantiate class, equivalent to
 			# class <className>(AutoBaseClass):
 			#     pass
-			cls = type(className, (AutoBaseClass,), {})
+			cls = type(className.encode('ascii'), (AutoBaseClass,), {})
 		except NibLoaderError, why:
 			print "*** Failed class: %s; NibLoaderError: %s" % (
 					className, why[0])
