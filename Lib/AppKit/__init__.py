@@ -1016,6 +1016,98 @@ NSApplicationDelegate = _objc.informal_protocol(
     ]
 )
 
+NSTextViewDelegate = _objc.informal_protocol(
+    'NSTextViewDelegate',
+    [
+# - (BOOL)textView:(NSTextView *)textView clickedOnLink:(id)link atIndex:(unsigned)charIndex;
+    _objc.selector(
+    None,
+    selector='textView:clickedOnLink:atIndex:',
+    signature='c@:@@I',
+    isRequired=0
+    ),
+
+# - (void)textView:(NSTextView *)textView clickedOnCell:(id <NSTextAttachmentCell>)cell inRect:(NSRect)cellFrame atIndex:(unsigned)charIndex;
+    _objc.selector(
+    None,
+    selector='textView:clickedOnCell:inRect:atIndex:',
+    signature='v@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}I',
+    isRequired=0
+    ),
+
+# - (void)textView:(NSTextView *)textView doubleClickedOnCell:(id <NSTextAttachmentCell>)cell inRect:(NSRect)cellFrame atIndex:(unsigned)charIndex;
+    _objc.selector(
+    None,
+    selector='textView:doubleClickedOnCell:inRect:atIndex:',
+    signature='v@:@@{_NSRect={_NSPoint=ff}{_NSSize=ff}}I',
+    isRequired=0
+    ),
+ 
+# - (void)textView:(NSTextView *)view draggedCell:(id <NSTextAttachmentCell>)cell inRect:(NSRect)rect event:(NSEvent *)event atIndex:(unsigned)charIndex;
+    _objc.selector(
+    None,
+    selector='textView:draggedCell:inRect:event:atIndex:',
+    signature='v@:@@{_NSRect={_NSPoint=ff}{_NSSize=ff}}@I',
+    isRequired=0
+    ),
+ 
+# - (NSArray *)textView:(NSTextView *)view writablePasteboardTypesForCell:(id <NSTextAttachmentCell>)cell atIndex:(unsigned)charIndex;
+    _objc.selector(
+    None,
+    selector='textView:writablePasteboardTypesForCell:atIndex:',
+    signature='@@:@@I',
+    isRequired=0
+    ),
+ 
+# - (BOOL)textView:(NSTextView *)view writeCell:(id <NSTextAttachmentCell>)cell atIndex:(unsigned)charIndex toPasteboard:(NSPasteboard *)pboard type:(NSString *)type ;
+    _objc.selector(
+    None,
+    selector='textView:writeCell:atIndex:toPasteboard:type:',
+    signature='c@:@@I@@',
+    isRequired=0
+    ),
+ 
+# - (NSRange)textView:(NSTextView *)textView willChangeSelectionFromCharacterRange:(NSRange)oldSelectedCharRange toCharacterRange:(NSRange)newSelectedCharRange;
+    _objc.selector(
+    None,
+    selector='textView:willChangeSelectionFromCharacterRange:toCharacterRange:',
+    signature='{_NSRange=II}@:@{_NSRange=II}{_NSRange=II}',
+    isRequired=0
+    ),
+ 
+# - (void)textViewDidChangeSelection:(NSNotification *)notification;
+    _objc.selector(
+    None,
+    selector='textViewDidChangeSelection:',
+    signature='v@:@',
+    isRequired=0
+    ),
+ 
+# - (BOOL)textView:(NSTextView *)textView shouldChangeTextInRange:(NSRange)affectedCharRange replacementString:(NSString *)replacementString;
+    _objc.selector(
+    None,
+    selector='textView:shouldChangeTextInRange:replacementString:',
+    signature='c@:@{_NSRange=II}@',
+    isRequired=0
+    ),
+ 
+# - (BOOL)textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector;
+    _objc.selector(
+    None,
+    selector='textView:doCommandBySelector:',
+    signature='c@:@:',
+    isRequired=0
+    ),
+ 
+# - (NSUndoManager *)undoManagerForTextView:(NSTextView *)view;
+    _objc.selector(
+    None,
+    selector='undoManagerForTextView:',
+    signature='@@:@',
+    isRequired=0
+    ),
+	]
+)
+
 # TODO:
 # NSWindowScripting
-# NSTextViewDelegate
