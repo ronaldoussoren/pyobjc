@@ -4,6 +4,12 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 1.0 (2003-09-21)
+------------------------
+
+- This version includes a new version of libffi that properly deals with
+  complex types on MacOS X.
+
 Version 1.0rc3 (2003-09-14)
 ---------------------------
 
