@@ -3,6 +3,7 @@ import sys
 import struct
 
 import Foundation
+import os
 
 class GlobalFunctionTest (unittest.TestCase):
     if sys.platform == 'darwin':
@@ -65,6 +66,37 @@ class GlobalVariablesTest (unittest.TestCase):
         # VAR
         if sys.platform == 'darwin':
             self.assert_(hasattr(Foundation, 'NSFoundationVersionNumber'))
+
+class NSLogTest (unittest.TestCase):
+    def startCaptureStderr(self):
+        self.realStderr = os.dup(2)
+        self.capturedStderr = open("/tmp/stderr.$$", "wb")
+        os.dup2(self.capturedStderr.fileno(), 2)
+
+    def stopCaptureStderr(self):
+        os.dup2(self.realStderr, 2)
+        self.capturedStderr.close()
+        data = open("/tmp/stderr.$$", "rb").read()
+        return data
+
+    def testLogging(self):
+        self.startCaptureStderr()
+        try:
+            Foundation.NSLog("This is a test")
+        finally:
+
+            data = self.stopCaptureStderr()
+            self.assert_("This is a test" in data)
+
+    def testLoggingWithFormattingChars(self):
+        self.startCaptureStderr()
+        try:
+            Foundation.NSLog("This is a test %@")
+        finally:
+
+            data = self.stopCaptureStderr()
+            self.assert_("This is a test %@" in data, data)
+
 
 if __name__ == "__main__":
     unittest.main()
