@@ -2,6 +2,7 @@
     * Lib/Foundation/test/test_nsdata.py (TestNSData.testBytes): Added test
       for NSData.
     * Modules/Cocoa/_Fnd_NSData.inc: Added support for -bytes.
+    * Added support for mutableBytes
 
 2003-01-01  Bill Bumgarner  <bbum@codefab.com>
 

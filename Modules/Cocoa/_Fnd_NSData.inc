@@ -2,6 +2,7 @@
  * NSData mappings for special methods:
  * - initWithBytes_length_
  * - bytes
+ * - mutableBytes
  *
  * Should add:
  * -initWithBytesNoCopy:length:
@@ -179,9 +180,83 @@ static void *imp_NSData_bytes(id self, SEL sel)
     return NULL;
 
   if (PyBuffer_Check(result)) {
-    void *p;
+    const char *p;
     int len;
-    if (PyObject_AsCharBuffer(result, (const char **) &p, &len) == -1) {
+    if (PyObject_AsReadBuffer(result, &p, &len) == -1) {
+      ObjCErr_ToObjC();
+      return NULL;
+    }
+    return p;
+  }
+
+  PyErr_SetString(PyExc_ValueError, "No idea what to do with result.");
+  return NULL;
+}
+
+static PyObject* call_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject* arguments)
+{
+  NSMutableData *dataObject;
+  void*     bytes;
+  unsigned  bytes_len;
+  PyObject* result;
+  
+  NS_DURING
+    dataObject = ObjCObject_GetObject(self);
+
+    bytes = [dataObject mutableBytes];
+    bytes_len = [dataObject length];
+
+    result = PyBuffer_FromReadWriteMemory((void *)bytes, bytes_len);
+  NS_HANDLER
+    ObjCErr_FromObjC(localException);
+    result = NULL;
+  NS_ENDHANDLER
+
+  return result;
+}
+
+static PyObject* supercall_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject* arguments)
+{
+  void*     bytes;
+  unsigned  bytes_len;
+  PyObject* result;
+  struct objc_super super;
+
+  NS_DURING
+    super.receiver = ObjCObject_GetObject(self);
+    super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+
+#warning bbum: Not at all sure what to do here....   send both to super?  Just -bytes?
+    bytes = objc_msgSendSuper(&super, @selector(mutableBytes));
+#warning unsigned work here??
+    bytes_len = (unsigned) objc_msgSendSuper(&super, @selector(length));
+
+    result = PyBuffer_FromReadWriteMemory((void*)bytes, bytes_len);
+  NS_HANDLER
+    ObjCErr_FromObjC(localException);
+    result = NULL;
+  NS_ENDHANDLER
+
+  return result;
+}
+
+static void *imp_NSMutableData_mutableBytes(id self, SEL sel)
+{
+  PyObject* result;
+
+  result = ObjC_CallPython(self, sel, NULL);
+  if (result == NULL) {
+    ObjCErr_ToObjC();
+    return NULL;
+  }
+
+  if (result == Py_None)
+    return NULL;
+
+  if (PyBuffer_Check(result)) {
+    const char *p;
+    int len;
+    if (PyObject_AsWriteBuffer(result, &p, &len) == -1) {
       ObjCErr_ToObjC();
       return NULL;
     }
@@ -214,6 +289,17 @@ static int __pyobjc_install_NSData()
     return -1;
   }
 
+  if (ObjC_RegisterMethodMapping(objc_lookUpClass("NSMutableData"), 
+				 @selector(mutableBytes),
+				 call_NSMutableData_mutableBytes,
+				 supercall_NSMutableData_mutableBytes,
+				 (IMP)imp_NSMutableData_mutableBytes) < 0 ) {
+    NSLog(@"Error occurred while installing NSMutableData method bridge (mutableBytes).");
+    PyErr_Print();
+    return -1;
+  }
+
+  
   return 0;
 }
 
