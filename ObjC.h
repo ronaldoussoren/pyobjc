@@ -22,6 +22,11 @@
    NOT stable */
 #define PyObjC_VERSION 0.55
 
+
+#if defined(__MACH__) && defined(__APPLE__)
+#define MACOSX 1
+#endif
+
 /* Foundation headers */
 #import <Foundation/Foundation.h>
 
