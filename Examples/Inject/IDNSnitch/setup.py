@@ -3,10 +3,6 @@ import py2app
 
 # Plugin
 setup(
-    ext_modules = [
-        Extension('NSURLRequest_IDNSnitch', ['NSURLRequest_IDNSnitch.m'],
-            extra_link_args=['-framework', 'Foundation']),
-    ],
     plugin = ["IDNSnitchPlugin.py"],
 )
 

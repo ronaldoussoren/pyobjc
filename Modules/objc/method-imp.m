@@ -92,6 +92,7 @@ imp_call(PyObjCIMPObject* self, PyObject* args)
 	PyObject* pyself;
 	PyObjC_CallFunc execute = NULL;
 	PyObject* res;
+	PyObject* pyres;
 	int       argslen;
 	PyObject* arglist;
 	int       i;
@@ -121,16 +122,29 @@ imp_call(PyObjCIMPObject* self, PyObject* args)
 		Py_INCREF(v);
 	}
 
-	res = execute((PyObject*)self, pyself, arglist);
+	pyres = res = execute((PyObject*)self, pyself, arglist);
 	Py_DECREF(arglist);
 
-	if (res && PyObjCObject_Check(res)) {
+	if (pyres != NULL
+		&& PyTuple_Check(pyres)
+		&& PyTuple_GET_SIZE(pyres) > 1
+		&& PyTuple_GET_ITEM(pyres, 0) == pyself) {
+		pyres = pyself;
+	}
+
+	if (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED) {
+		if (pyself != pyres && !PyErr_Occurred()) {
+			PyObjCObject_ClearObject(pyself);
+		}
+	}
+
+	if (pyres && PyObjCObject_Check(res)) {
 		if (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
-			((PyObjCObject*)res)->flags |= PyObjCObject_kUNINITIALIZED;
-		} else if (((PyObjCObject*)res)->flags & PyObjCObject_kUNINITIALIZED) {
-			((PyObjCObject*)res)->flags &=
+			((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
+		} else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
+			((PyObjCObject*)pyres)->flags &=
 				~PyObjCObject_kUNINITIALIZED;
-			if (pyself && pyself != res && PyObjCObject_Check(pyself) && !PyErr_Occurred()) {
+			if (pyself && pyself != pyres && PyObjCObject_Check(pyself) && !PyErr_Occurred()) {
 				PyObjCObject_ClearObject(pyself);
 			}
 		}
@@ -163,15 +177,17 @@ imp_dealloc(PyObjCIMPObject* self)
 	PyObject_Free(self);
 }
 
-#if 0
 PyDoc_STRVAR(imp_signature_doc, "Objective-C signature for the IMP");
 static PyObject*
 imp_signature(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
 {
-	/* XXX */
-	return PyString_FromString(self->signature);
+	if (self->signature) {
+		return PyString_FromString(self->signature->signature);
+	} else {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
 }
-#endif
 
 PyDoc_STRVAR(imp_selector_doc, "Objective-C name for the IMP");
 static PyObject*
@@ -233,7 +249,6 @@ static PyGetSetDef imp_getset[] = {
 		imp_class_method_doc,
 		0
 	},
-#if 0
 	{ 
 		"signature", 
 		(getter)imp_signature, 
@@ -241,7 +256,6 @@ static PyGetSetDef imp_getset[] = {
 		imp_signature_doc, 
 		0
 	},
-#endif
 	{ 
 		"selector",  
 		(getter)imp_selector, 
