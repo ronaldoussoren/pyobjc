@@ -181,18 +181,18 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 		r = 0;
 #endif /* MACOSX */
 	} else {
-		NS_DURING
+		PyObjC_DURING
 			rval = [OC_PythonObject 
 				newWithCoercedObject:argument];
 
 			r = 0;
 
-		NS_HANDLER
+		PyObjC_HANDLER
 			PyObjCErr_FromObjC(localException);
 			rval = nil;
 			r = -1;
 
-		NS_ENDHANDLER
+		PyObjC_ENDHANDLER
 	}
 
 end:
@@ -631,14 +631,14 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 			}
 			argbuffer = alloca (argsize);
 
-			NS_DURING
+			PyObjC_DURING
 				[invocation getArgument:argbuffer atIndex:i];
 
-			NS_HANDLER
+			PyObjC_HANDLER
 				PyGILState_Release(_GILState); // FIXME
 				[localException raise];
 
-			NS_ENDHANDLER
+			PyObjC_ENDHANDLER
 
 			pyarg = pythonify_c_value (argtype, argbuffer);
 			if (pyarg == NULL) {
@@ -660,13 +660,13 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		if (err == -1) {
 			PyObjC_GIL_FORWARD_EXC();
 		} else {
-			NS_DURING
+			PyObjC_DURING
 				[invocation setReturnValue:retbuffer];
 
-			NS_HANDLER
+			PyObjC_HANDLER
 				PyGILState_Release(_GILState); // FIXME
 				[localException raise];
-			NS_ENDHANDLER
+			PyObjC_ENDHANDLER
 		}
 	
 	PyObjC_END_WITH_GIL
