@@ -1,12 +1,11 @@
 <?
     $title = "How to wrap an Objective-C class library";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/05/30 18:56:39 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
 <div class="document" id="how-to-wrap-an-objective-c-class-library">
-<h1 class="title">How to wrap an Objective-C class library</h1>
 <!-- :author: Ronald Oussoren -->
 <div class="section" id="introduction">
 <h1><a name="introduction">Introduction</a></h1>
@@ -74,7 +73,8 @@ and then returned from  the function).</p>
 <p>The compiler will generate a method signature for this method and this can 
 be accessed from Python using the property 'signature' of Objective-C methods. 
 You can also just make up the signature, which is quite easy once you get the
-hang of it. The signature for this method is 'v&#64;:^&#64;&#64;'.</p>
+hang of it. The signature for this method is 'v&#64;:^&#64;&#64;'.  See <a class="reference" href="http://developer.apple.com/documentation/Cocoa/Conceptual/ObjectiveC/RuntimeOverview/chapter_4_section_6.html">Type Encodings</a>
+for the list of valid encoding characters for the Apple Objective-C runtime.</p>
 <p>Let's say the first argument is an output parameter. Output parameters are 
 denoted in the signature string using the character 'o' before the actual
 argument signature. The 'correct' signature for method is therefore 'v&#64;:o^&#64;&#64;'.

@@ -1,12 +1,11 @@
 <?
     $title = "Understanding existing PyObjC examples";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/05/30 18:56:39 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
 <div class="document" id="understanding-existing-pyobjc-examples">
-<h1 class="title">Understanding existing PyObjC examples</h1>
 <div class="section" id="introduction">
 <h1><a name="introduction">Introduction</a></h1>
 <p>This tutorial is aimed primarily at people with little or no background
@@ -143,7 +142,7 @@ for the actual conversion window are in here too: <tt class="literal"><span clas
 <p>Let us have a look at the <tt class="literal"><span class="pre">ConverterController</span></tt> object by double clicking it.
 The &quot;MainMenu.nib&quot; window goes to the &quot;Classes&quot; tab, and an info window shows up.
 In the &quot;MainMenu.nib&quot; window the <tt class="literal"><span class="pre">ConverterController</span></tt> class is selected, and
-you can see it is a subclass of <tt class="literal"><span class="pre">NSobject</span></tt>. Having the same name for the class
+you can see it is a subclass of <tt class="literal"><span class="pre">NSObject</span></tt>. Having the same name for the class
 and the instance is common in Cocoa programs, the main exception being the File
 Owner object.</p>
 <p>The info window shows more information on the <tt class="literal"><span class="pre">ConverterController</span></tt> class. It

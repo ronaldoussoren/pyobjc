@@ -1,12 +1,11 @@
 <?
     $title = "Structure of the PyObjC package";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/05/30 18:56:39 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
 <div class="document" id="structure-of-the-pyobjc-package">
-<h1 class="title">Structure of the PyObjC package</h1>
 <!-- This document is in structured text markup to enable easy translation to 
 HTML. -->
 <div class="section" id="introduction">

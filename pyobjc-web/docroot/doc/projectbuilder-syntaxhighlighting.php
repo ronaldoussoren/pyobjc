@@ -1,7 +1,7 @@
 <?
     $title = "Project Builder Python Support";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/05/30 18:56:39 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
@@ -19,14 +19,15 @@
 <td>12/16/2002</td></tr>
 </tbody>
 </table>
+<div class="document" id="project-builder-python-support">
 <div class="warning">
-<p class="admonition-title">Warning</p>
+<p class="admonition-title first">Warning</p>
 None of this is documented or supported by <strong>Apple</strong>.  Don't ask <strong>Apple</strong> for
 support and don't blame me if something breaks.  A lot could break as
 <strong>Project Builder</strong> stores a tremendous amount of highly dynamic information in
 both the user defaults and within project files.</div>
 <div class="contents topic" id="contents">
-<p class="topic-title"><a name="contents">Contents</a></p>
+<p class="topic-title first"><a name="contents">Contents</a></p>
 <ul class="simple">
 <li><a class="reference" href="#installation" id="id2" name="id2">Installation</a></li>
 <li><a class="reference" href="#documentation" id="id3" name="id3">Documentation</a></li>

@@ -1,15 +1,14 @@
 <?
-    $title = "Notes on supported APIs and classes on MacOS X";
+    $title = "Notes on supported APIs and classes on Mac OS X";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
-<div class="document" id="notes-on-supported-apis-and-classes-on-macos-x">
-<h1 class="title">Notes on supported APIs and classes on MacOS X</h1>
+<div class="document" id="notes-on-supported-apis-and-classes-on-mac-os-x">
 <!-- :author: Ronald Oussoren -->
 <div class="contents topic" id="contents">
-<p class="topic-title"><a name="contents">Contents</a></p>
+<p class="topic-title first"><a name="contents">Contents</a></p>
 <ul class="simple">
 <li><a class="reference" href="#introduction" id="id2" name="id2">Introduction</a></li>
 <li><a class="reference" href="#core-objective-c-runtime" id="id3" name="id3">Core objective-C runtime</a><ul>
@@ -42,31 +41,33 @@
 <li><a class="reference" href="#class-nsdata" id="id26" name="id26">Class <tt class="literal"><span class="pre">NSData</span></tt></a></li>
 <li><a class="reference" href="#class-nsdecimalnumber-and-the-nsdecimal-type" id="id27" name="id27">Class <tt class="literal"><span class="pre">NSDecimalNumber</span></tt> and the <tt class="literal"><span class="pre">NSDecimal</span></tt> type</a></li>
 <li><a class="reference" href="#class-nsdictionary" id="id28" name="id28">Class <tt class="literal"><span class="pre">NSDictionary</span></tt></a></li>
-<li><a class="reference" href="#class-nsfault" id="id29" name="id29">Class <tt class="literal"><span class="pre">NSFault</span></tt></a></li>
-<li><a class="reference" href="#class-nsindexset" id="id30" name="id30">Class <tt class="literal"><span class="pre">NSIndexSet</span></tt></a></li>
-<li><a class="reference" href="#class-nsinvocation" id="id31" name="id31">Class <tt class="literal"><span class="pre">NSInvocation</span></tt></a></li>
-<li><a class="reference" href="#class-nsmutablearray" id="id32" name="id32">Class <tt class="literal"><span class="pre">NSMutableArray</span></tt></a></li>
-<li><a class="reference" href="#class-nsnetservice" id="id33" name="id33">Class <tt class="literal"><span class="pre">NSNetService</span></tt></a></li>
-<li><a class="reference" href="#class-nsobject" id="id34" name="id34">Class <tt class="literal"><span class="pre">NSObject</span></tt></a></li>
-<li><a class="reference" href="#class-nsscriptobjectspecifier" id="id35" name="id35">Class <tt class="literal"><span class="pre">NSScriptObjectSpecifier</span></tt></a></li>
-<li><a class="reference" href="#class-nsset" id="id36" name="id36">Class <tt class="literal"><span class="pre">NSSet</span></tt></a></li>
-<li><a class="reference" href="#class-nsstring" id="id37" name="id37">Class <tt class="literal"><span class="pre">NSString</span></tt></a></li>
-<li><a class="reference" href="#class-nsthread" id="id38" name="id38">class <tt class="literal"><span class="pre">NSThread</span></tt></a></li>
+<li><a class="reference" href="#class-nsexception" id="id29" name="id29">Class <tt class="literal"><span class="pre">NSException</span></tt></a></li>
+<li><a class="reference" href="#class-nsfault" id="id30" name="id30">Class <tt class="literal"><span class="pre">NSFault</span></tt></a></li>
+<li><a class="reference" href="#class-nsindexset" id="id31" name="id31">Class <tt class="literal"><span class="pre">NSIndexSet</span></tt></a></li>
+<li><a class="reference" href="#class-nsinvocation" id="id32" name="id32">Class <tt class="literal"><span class="pre">NSInvocation</span></tt></a></li>
+<li><a class="reference" href="#class-nsmutablearray" id="id33" name="id33">Class <tt class="literal"><span class="pre">NSMutableArray</span></tt></a></li>
+<li><a class="reference" href="#class-nsmutablestring" id="id34" name="id34">Class <tt class="literal"><span class="pre">NSMutableString</span></tt></a></li>
+<li><a class="reference" href="#class-nsnetservice" id="id35" name="id35">Class <tt class="literal"><span class="pre">NSNetService</span></tt></a></li>
+<li><a class="reference" href="#class-nsobject" id="id36" name="id36">Class <tt class="literal"><span class="pre">NSObject</span></tt></a></li>
+<li><a class="reference" href="#class-nsscriptobjectspecifier" id="id37" name="id37">Class <tt class="literal"><span class="pre">NSScriptObjectSpecifier</span></tt></a></li>
+<li><a class="reference" href="#class-nsset" id="id38" name="id38">Class <tt class="literal"><span class="pre">NSSet</span></tt></a></li>
+<li><a class="reference" href="#class-nsstring" id="id39" name="id39">Class <tt class="literal"><span class="pre">NSString</span></tt></a></li>
+<li><a class="reference" href="#class-nsthread" id="id40" name="id40">class <tt class="literal"><span class="pre">NSThread</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference" href="#interfacebuilder-framework" id="id39" name="id39">InterfaceBuilder framework</a><ul>
-<li><a class="reference" href="#class-ibobjcsourceparser" id="id40" name="id40">Class <tt class="literal"><span class="pre">IBObjCSourceParser</span></tt></a></li>
-<li><a class="reference" href="#id1" id="id41" name="id41">Class <tt class="literal"><span class="pre">NSView</span></tt></a></li>
-<li><a class="reference" href="#class-nsibobjectdata" id="id42" name="id42">Class <tt class="literal"><span class="pre">NSIBObjectData</span></tt></a></li>
-<li><a class="reference" href="#class-ibobjectcontainer" id="id43" name="id43">Class <tt class="literal"><span class="pre">IBObjectContainer</span></tt></a></li>
-<li><a class="reference" href="#class-ibxmldecoder" id="id44" name="id44">Class <tt class="literal"><span class="pre">IBXMLDecoder</span></tt></a></li>
-<li><a class="reference" href="#class-ibsplitscrollview" id="id45" name="id45">Class <tt class="literal"><span class="pre">IBSplitScrollView</span></tt></a></li>
+<li><a class="reference" href="#interfacebuilder-framework" id="id41" name="id41">InterfaceBuilder framework</a><ul>
+<li><a class="reference" href="#class-ibobjcsourceparser" id="id42" name="id42">Class <tt class="literal"><span class="pre">IBObjCSourceParser</span></tt></a></li>
+<li><a class="reference" href="#id1" id="id43" name="id43">Class <tt class="literal"><span class="pre">NSView</span></tt></a></li>
+<li><a class="reference" href="#class-nsibobjectdata" id="id44" name="id44">Class <tt class="literal"><span class="pre">NSIBObjectData</span></tt></a></li>
+<li><a class="reference" href="#class-ibobjectcontainer" id="id45" name="id45">Class <tt class="literal"><span class="pre">IBObjectContainer</span></tt></a></li>
+<li><a class="reference" href="#class-ibxmldecoder" id="id46" name="id46">Class <tt class="literal"><span class="pre">IBXMLDecoder</span></tt></a></li>
+<li><a class="reference" href="#class-ibsplitscrollview" id="id47" name="id47">Class <tt class="literal"><span class="pre">IBSplitScrollView</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference" href="#preferencepanes-framework" id="id46" name="id46">PreferencePanes framework</a></li>
-<li><a class="reference" href="#screensaver-framework" id="id47" name="id47">ScreenSaver framework</a><ul>
-<li><a class="reference" href="#class-screensaverdefaults" id="id48" name="id48">Class <tt class="literal"><span class="pre">ScreenSaverDefaults</span></tt></a></li>
-<li><a class="reference" href="#class-screensaverview" id="id49" name="id49">Class <tt class="literal"><span class="pre">ScreenSaverView</span></tt></a></li>
+<li><a class="reference" href="#preferencepanes-framework" id="id48" name="id48">PreferencePanes framework</a></li>
+<li><a class="reference" href="#screensaver-framework" id="id49" name="id49">ScreenSaver framework</a><ul>
+<li><a class="reference" href="#class-screensaverdefaults" id="id50" name="id50">Class <tt class="literal"><span class="pre">ScreenSaverDefaults</span></tt></a></li>
+<li><a class="reference" href="#class-screensaverview" id="id51" name="id51">Class <tt class="literal"><span class="pre">ScreenSaverView</span></tt></a></li>
 </ul>
 </li>
 </ul>
@@ -75,7 +76,7 @@
 <div class="section" id="introduction">
 <h1><a class="toc-backref" href="#id2" name="introduction">Introduction</a></h1>
 <p>This document describes the restrictions w.r.t. supported APIs and classes
-on MacOS X. In general you can use classes and global functions just like
+on Mac OS X. In general you can use classes and global functions just like
 in Objective-C (e.g. the Apple developer documentation applies), but in some
 cases there are special considerations.</p>
 <p>We also do not provide access to global functions that are not useful for
@@ -85,9 +86,9 @@ to return additional values, the Python wrapper for that method returns a tuple
 containing the original return value and the additional values. You don't have
 to pass values for those arguments, unless the method uses the values you
 pass in.</p>
-<p>This document is targeted at the latest supported version of MacOS X (currently
-MacOS X 10.3.x); unless specifically noted the same restrictions apply to 
-earlier versions of MacOS X. Earlier versions of the OS have less extensive
+<p>This document is targeted at the latest supported version of Mac OS X (currently
+Mac OS X 10.3.x); unless specifically noted the same restrictions apply to 
+earlier versions of Mac OS X. Earlier versions of the OS have less extensive
 APIs, PyObjC does <em>not</em> provide a compatibility layer.</p>
 <p>Frameworks not listed below are not wrapped by PyObjC, they can still be
 accessed although without access to constants and global functions defined
@@ -239,15 +240,15 @@ are QT.Movie objects. Using these methods requires the use of MacPython 2.3.</p>
 <li><p class="first"><tt class="literal"><span class="pre">setOffScreen:width:height:rowbytes:</span></tt></p>
 <p>This method is not yet supported.</p>
 </li>
+<li><p class="first"><tt class="literal"><span class="pre">CGLContextObj</span></tt></p>
+<p>This method is not yet supported.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="class-nsopenglpixelformat">
 <h2><a class="toc-backref" href="#id16" name="class-nsopenglpixelformat">Class <tt class="literal"><span class="pre">NSOpenGLPixelFormat</span></tt></a></h2>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">getValues:forAttribute:forVirtualScreen:</span></tt></p>
-<p>This method is not yet supported</p>
-</li>
-<li><p class="first"><tt class="literal"><span class="pre">initWithAttributes:</span></tt></p>
 <p>This method is not yet supported</p>
 </li>
 </ul>
@@ -362,9 +363,11 @@ while &lt;test&gt;:
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">bundleForClass:</span></tt></p>
 <p>This method does not work correctly for classes defined in Python, these
-all seem be defined in the <tt class="literal"><span class="pre">mainBundle()</span></tt>. As a workaround you can use
-the function <tt class="literal"><span class="pre">objc.pluginBundle(name)</span></tt> to find the NSBundle for your
-Python based bundle. See Examples/PrefPane for an example of its usage.</p>
+all seem be defined in the <tt class="literal"><span class="pre">mainBundle()</span></tt>. As a workaround for plugin
+bundles built with py2app, you can declare <tt class="literal"><span class="pre">__bundle_hack__</span> <span class="pre">=</span> <span class="pre">True</span></tt>
+on one class in the bundle (probably the NSPrincipalClass).  For this
+class, <tt class="literal"><span class="pre">bundleForClass:</span></tt> will return the expected value.  See
+Examples/Plugins for examples of this.</p>
 </li>
 </ul>
 </div>
@@ -441,13 +444,22 @@ int or long (not a float because of the representation issues for floats).</p>
 <p>The (undocumented) methods <tt class="literal"><span class="pre">getKeys:</span></tt>, <tt class="literal"><span class="pre">getObjects:</span></tt> and 
 <tt class="literal"><span class="pre">getObjects:andKeys:</span></tt> are not supported.</p>
 </div>
+<div class="section" id="class-nsexception">
+<h2><a class="toc-backref" href="#id29" name="class-nsexception">Class <tt class="literal"><span class="pre">NSException</span></tt></a></h2>
+<ul>
+<li><p class="first"><tt class="literal"><span class="pre">raise:format:</span></tt>, <tt class="literal"><span class="pre">raise:format:arguments:</span></tt></p>
+<p>These methods are not supported because they accept a variable number of
+arguments. Use Python's <tt class="literal"><span class="pre">%</span></tt> operator to format the message.</p>
+</li>
+</ul>
+</div>
 <div class="section" id="class-nsfault">
-<h2><a class="toc-backref" href="#id29" name="class-nsfault">Class <tt class="literal"><span class="pre">NSFault</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id30" name="class-nsfault">Class <tt class="literal"><span class="pre">NSFault</span></tt></a></h2>
 <p>The <tt class="literal"><span class="pre">extraData</span></tt> argument/return value for <tt class="literal"><span class="pre">-extraData</span></tt> and 
 <tt class="literal"><span class="pre">setTargetClassextraData:</span></tt> is represented as an integer.</p>
 </div>
 <div class="section" id="class-nsindexset">
-<h2><a class="toc-backref" href="#id30" name="class-nsindexset">Class <tt class="literal"><span class="pre">NSIndexSet</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id31" name="class-nsindexset">Class <tt class="literal"><span class="pre">NSIndexSet</span></tt></a></h2>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">getIndexes:maxCount:inIndexRange:</span></tt>
 The usage is:</p>
@@ -459,14 +471,14 @@ The usage is:</p>
 </ul>
 </div>
 <div class="section" id="class-nsinvocation">
-<h2><a class="toc-backref" href="#id31" name="class-nsinvocation">Class <tt class="literal"><span class="pre">NSInvocation</span></tt></a></h2>
-<p>In some versions of MacOS X, NSInvocation doesn't work properly with structs
-that contain padding. Such structs are not used in the MacOS X API, but may
+<h2><a class="toc-backref" href="#id32" name="class-nsinvocation">Class <tt class="literal"><span class="pre">NSInvocation</span></tt></a></h2>
+<p>In some versions of Mac OS X, NSInvocation doesn't work properly with structs
+that contain padding. Such structs are not used in the Mac OS X API, but may
 be present in 3th party code. This leads to problems when <tt class="literal"><span class="pre">forwardInvocation:</span></tt>
 is used to call a method that has such a struct as one of its arguments.</p>
 </div>
 <div class="section" id="class-nsmutablearray">
-<h2><a class="toc-backref" href="#id32" name="class-nsmutablearray">Class <tt class="literal"><span class="pre">NSMutableArray</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id33" name="class-nsmutablearray">Class <tt class="literal"><span class="pre">NSMutableArray</span></tt></a></h2>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">sortUsingFunction:context:</span></tt>, <tt class="literal"><span class="pre">sortUsingFunction:context:range:</span></tt></p>
 <p>Calling this method from Python is supported, overriding it in a subclass
@@ -475,8 +487,17 @@ is not. This limitation will be fixed in a later version of PyObjC.</p>
 </li>
 </ul>
 </div>
+<div class="section" id="class-nsmutablestring">
+<h2><a class="toc-backref" href="#id34" name="class-nsmutablestring">Class <tt class="literal"><span class="pre">NSMutableString</span></tt></a></h2>
+<ul>
+<li><p class="first"><tt class="literal"><span class="pre">appendFormat:</span></tt></p>
+<p>This method is not supported because it accepts a variable number of 
+arguments. Use Python's <tt class="literal"><span class="pre">%</span></tt> operator to format strings.</p>
+</li>
+</ul>
+</div>
 <div class="section" id="class-nsnetservice">
-<h2><a class="toc-backref" href="#id33" name="class-nsnetservice">Class <tt class="literal"><span class="pre">NSNetService</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id35" name="class-nsnetservice">Class <tt class="literal"><span class="pre">NSNetService</span></tt></a></h2>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">addresses</span></tt></p>
 <p>When calling this from Python this methods returns a tuple of address info
@@ -485,7 +506,7 @@ tuples, like the values returned by <tt class="literal"><span class="pre">socket
 </ul>
 </div>
 <div class="section" id="class-nsobject">
-<h2><a class="toc-backref" href="#id34" name="class-nsobject">Class <tt class="literal"><span class="pre">NSObject</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id36" name="class-nsobject">Class <tt class="literal"><span class="pre">NSObject</span></tt></a></h2>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">observationInfo</span></tt>, <tt class="literal"><span class="pre">setObservationInfo:</span></tt></p>
 <p>These methods can be used from Python, but the <tt class="literal"><span class="pre">observationInfo</span></tt> is 
@@ -509,7 +530,7 @@ of PyObjC.</p>
 </ul>
 </div>
 <div class="section" id="class-nsscriptobjectspecifier">
-<h2><a class="toc-backref" href="#id35" name="class-nsscriptobjectspecifier">Class <tt class="literal"><span class="pre">NSScriptObjectSpecifier</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id37" name="class-nsscriptobjectspecifier">Class <tt class="literal"><span class="pre">NSScriptObjectSpecifier</span></tt></a></h2>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">indicesOfObjectsByEvaluatingWithContainer:count:</span></tt></p>
 <p>Implementing this in Python is not supported yet. We're looking for a way
@@ -519,7 +540,7 @@ internal data-structure.</p>
 </ul>
 </div>
 <div class="section" id="class-nsset">
-<h2><a class="toc-backref" href="#id36" name="class-nsset">Class <tt class="literal"><span class="pre">NSSet</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id38" name="class-nsset">Class <tt class="literal"><span class="pre">NSSet</span></tt></a></h2>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">initWithObjects:</span></tt>, <tt class="literal"><span class="pre">setWithObjects:</span></tt></p>
 <p>This method is not supported, use <tt class="literal"><span class="pre">initWithArray:</span></tt> instead.</p>
@@ -527,7 +548,7 @@ internal data-structure.</p>
 </ul>
 </div>
 <div class="section" id="class-nsstring">
-<h2><a class="toc-backref" href="#id37" name="class-nsstring">Class <tt class="literal"><span class="pre">NSString</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id39" name="class-nsstring">Class <tt class="literal"><span class="pre">NSString</span></tt></a></h2>
 <p>Objective-C strings are usually represented as instances of a subclass of
 the Python type <tt class="literal"><span class="pre">unicode</span></tt>. It is possible to access the &quot;real&quot; Objective-C
 string by using the method <tt class="literal"><span class="pre">NSString</span></tt>. This should only be necessary when
@@ -552,21 +573,23 @@ bridge.</p>
 the length of the string as the maximum length). This limitation will be
 lifted in a future version of the bridge.</p>
 </li>
+<li><p class="first"><tt class="literal"><span class="pre">stringWithFormat:</span></tt>, <tt class="literal"><span class="pre">initWithFormat:</span></tt>, <tt class="literal"><span class="pre">initWithFormat:locale:</span></tt>,
+<tt class="literal"><span class="pre">stringByAppendingFormat:</span></tt></p>
+<p>These methods are not supported because they accept a variable number of 
+arguments. Use Python's <tt class="literal"><span class="pre">%</span></tt> operator to format strings.</p>
+</li>
+<li><p class="first"><tt class="literal"><span class="pre">initWithFormat:arguments:</span></tt>, <tt class="literal"><span class="pre">initWithFormat:locale:arguments:</span></tt></p>
+<p>These are also not supported, with the same workaround.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="class-nsthread">
-<h2><a class="toc-backref" href="#id38" name="class-nsthread">class <tt class="literal"><span class="pre">NSThread</span></tt></a></h2>
-<p>When you're using Python 2.3 or later it is safe to call from Objective-C to
-Python on any thread. Otherwise you must be sure that the current thread has
-acquired the GIL. This means you shouldn't use API's that will call back on
-an arbitrary thread unless you're using Python 2.3 or later. It is safe to 
-start new threads using the Python threading API and run non-Cocoa code on 
-those threads, PyObjC contains code that acquires the GIL whenever the runloop
-in the main thread runs.</p>
+<h2><a class="toc-backref" href="#id40" name="class-nsthread">class <tt class="literal"><span class="pre">NSThread</span></tt></a></h2>
+<p>It is safe to call from Objective-C to Python on any thread.  It is safe to
+start new threads using the Python threading API and run non-Cocoa code on
+those threads.</p>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">detachNewThreadSelector:toTarget:withObject:</span></tt></p>
-<p>This method can safely be used when using Python 2.3 or later, on earlier
-releases this will crash the interpreter.</p>
 <p>Make sure that you've either created a thread from Python using the 
 <tt class="literal"><span class="pre">thread</span></tt> or <tt class="literal"><span class="pre">threading</span></tt> module, or called <tt class="literal"><span class="pre">objc.enableThreading</span></tt> before
 using this API. This is necessary to enable threading in the Python 
@@ -577,18 +600,18 @@ performance impact.</p>
 </div>
 </div>
 <div class="section" id="interfacebuilder-framework">
-<h1><a class="toc-backref" href="#id39" name="interfacebuilder-framework">InterfaceBuilder framework</a></h1>
+<h1><a class="toc-backref" href="#id41" name="interfacebuilder-framework">InterfaceBuilder framework</a></h1>
 <p>I (Ronald) have not found documentation for this framework, therefore the
 following methods with a &quot;difficult&quot; signature are not supported.</p>
 <p>Please let me know if there is documentation for this framework.</p>
 <div class="section" id="class-ibobjcsourceparser">
-<h2><a class="toc-backref" href="#id40" name="class-ibobjcsourceparser">Class <tt class="literal"><span class="pre">IBObjCSourceParser</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id42" name="class-ibobjcsourceparser">Class <tt class="literal"><span class="pre">IBObjCSourceParser</span></tt></a></h2>
 <ul class="simple">
 <li><tt class="literal"><span class="pre">parseClass:</span></tt></li>
 </ul>
 </div>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id41" name="id1">Class <tt class="literal"><span class="pre">NSView</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id43" name="id1">Class <tt class="literal"><span class="pre">NSView</span></tt></a></h2>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">objectAtPoint:rect:</span></tt></p>
 <p>Defined in a catagory on <tt class="literal"><span class="pre">NSView</span></tt>.</p>
@@ -596,47 +619,47 @@ following methods with a &quot;difficult&quot; signature are not supported.</p>
 </ul>
 </div>
 <div class="section" id="class-nsibobjectdata">
-<h2><a class="toc-backref" href="#id42" name="class-nsibobjectdata">Class <tt class="literal"><span class="pre">NSIBObjectData</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id44" name="class-nsibobjectdata">Class <tt class="literal"><span class="pre">NSIBObjectData</span></tt></a></h2>
 <ul class="simple">
 <li><tt class="literal"><span class="pre">restoreFromObjectDataInfo:</span></tt></li>
 <li><tt class="literal"><span class="pre">snapshotIntoObjectDataInfo:</span></tt></li>
 </ul>
 </div>
 <div class="section" id="class-ibobjectcontainer">
-<h2><a class="toc-backref" href="#id43" name="class-ibobjectcontainer">Class <tt class="literal"><span class="pre">IBObjectContainer</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id45" name="class-ibobjectcontainer">Class <tt class="literal"><span class="pre">IBObjectContainer</span></tt></a></h2>
 <ul class="simple">
 <li><tt class="literal"><span class="pre">decodeObjectToIntMapTableForKey:fromCoder:alwaysCreate:</span></tt></li>
 <li><tt class="literal"><span class="pre">decodeObjectToObjectMapTableForKey:fromCoder:alwaysCreate:</span></tt></li>
 </ul>
 </div>
 <div class="section" id="class-ibxmldecoder">
-<h2><a class="toc-backref" href="#id44" name="class-ibxmldecoder">Class <tt class="literal"><span class="pre">IBXMLDecoder</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id46" name="class-ibxmldecoder">Class <tt class="literal"><span class="pre">IBXMLDecoder</span></tt></a></h2>
 <ul class="simple">
 <li><tt class="literal"><span class="pre">allocObjectWithClassName:</span></tt></li>
 </ul>
 </div>
 <div class="section" id="class-ibsplitscrollview">
-<h2><a class="toc-backref" href="#id45" name="class-ibsplitscrollview">Class <tt class="literal"><span class="pre">IBSplitScrollView</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id47" name="class-ibsplitscrollview">Class <tt class="literal"><span class="pre">IBSplitScrollView</span></tt></a></h2>
 <ul class="simple">
 <li><tt class="literal"><span class="pre">getMinimumX:maximumX:</span></tt></li>
 </ul>
 </div>
 </div>
 <div class="section" id="preferencepanes-framework">
-<h1><a class="toc-backref" href="#id46" name="preferencepanes-framework">PreferencePanes framework</a></h1>
+<h1><a class="toc-backref" href="#id48" name="preferencepanes-framework">PreferencePanes framework</a></h1>
 <p>This framework seems to define useful classes like <tt class="literal"><span class="pre">NSAuthorization</span></tt> and
 <tt class="literal"><span class="pre">NSKeychain</span></tt>, but these are not documented and some useful methods have
 a hard signature.</p>
 <p>The only documented class, <tt class="literal"><span class="pre">NSPreferencePane</span></tt>, is fully supported.</p>
 </div>
 <div class="section" id="screensaver-framework">
-<h1><a class="toc-backref" href="#id47" name="screensaver-framework">ScreenSaver framework</a></h1>
+<h1><a class="toc-backref" href="#id49" name="screensaver-framework">ScreenSaver framework</a></h1>
 <div class="section" id="class-screensaverdefaults">
-<h2><a class="toc-backref" href="#id48" name="class-screensaverdefaults">Class <tt class="literal"><span class="pre">ScreenSaverDefaults</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id50" name="class-screensaverdefaults">Class <tt class="literal"><span class="pre">ScreenSaverDefaults</span></tt></a></h2>
 <p>This class is fully supported.</p>
 </div>
 <div class="section" id="class-screensaverview">
-<h2><a class="toc-backref" href="#id49" name="class-screensaverview">Class <tt class="literal"><span class="pre">ScreenSaverView</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id51" name="class-screensaverview">Class <tt class="literal"><span class="pre">ScreenSaverView</span></tt></a></h2>
 <p>This class is fully supported.</p>
 </div>
 </div>

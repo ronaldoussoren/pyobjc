@@ -26,7 +26,7 @@ This documentation should focus on the user.  Of course, the user is really a de
 <LI><A HREF="tutorial_reading.php">Understanding existing PyObjC examples</A>
 <LI><A HREF="projectbuilder-syntaxhighlighting.php">Project Builder Python Support</A>
 <LI><A HREF="pyobjctools.php">PyObjCTools: The PyObjC Toolbox</A>
-<LI><A HREF="api-notes-macosx.php">Notes on supported APIs and classes on MacOS X</A>
+<LI><A HREF="api-notes-macosx.php">Notes on supported APIs and classes on Mac OS X</A>
 <LI><A HREF="wrapping.php">How to wrap an Objective-C class library</A>
 <!-- /USERDOC -->
 </ul>

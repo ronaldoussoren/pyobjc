@@ -6,7 +6,7 @@
 #  Copyright (c) 2003 __MyCompanyName__. All rights reserved.
 #
 
-from objc import YES, NO
+import objc
 from Foundation import *
 from AppKit import *
 
@@ -19,42 +19,44 @@ import iTunes
 # we can subclass our ITunesCommunication from AutoBaseClass
 # later on, and its actual baseclass will be ITunesCommunication
 # from the NIB file.
-NibClassBuilder.extractClasses("CDInfoDocument")
+NibClassBuilder.extractClasses("CDInfoDocument", bundle=NSBundle.mainBundle())
 
 class ITunesCommunication(NibClassBuilder.AutoBaseClass):
     def init(self):
         self = super(ITunesCommunication, self).init()
-        if self:
-            # subclass specific initialization here
-            # nib not loaded yet
-            self.itunes = iTunes.iTunes()
+        if self is None:
+            return None
+        # subclass specific initialization here
+        # nib not loaded yet
+        self.itunes = iTunes.iTunes()
         return self
 
-    def getItunesInfo(self):
+    def getITunesInfo(self):
         curtrk = self.itunes.current_track
         try:
             current_track = self.itunes.get(curtrk)
         except iTunes.Error:
-            print "iTunes failed to return current track"
+            NSRunAlertPanel(
+                u'iTunes Communication Error',
+                u'iTunes failed to return the current track',
+                None,
+                None,
+                None)
             return None
         album = self.itunes.get(current_track.album)
         artist = self.itunes.get(current_track.artist)
         genre = self.itunes.get(current_track.genre)
         return album, artist, genre
-        
+
     def askITunes_(self, obj):
         # obj is the button the user pressed. We can go from here
         # to the document (an instance of CDInfoDocument)
         document = obj.window().windowController().document()
         # Try to get the iTunes info
-        info = self.getItunesInfo()
-        if info:
-            album, artist, genre = info
-        else:
-            album = ""
-            artist = ""
-            genre = ""
+        info = self.getITunesInfo()
+        if info is None:
+            return
+        album, artist, genre = info
         document.setCDTitle_(album)
         document.setBandName_(artist)
         document.setMusicGenre_(genre)
-

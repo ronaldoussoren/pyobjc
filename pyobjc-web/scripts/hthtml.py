@@ -88,6 +88,7 @@ class HTTranslator(HTMLTranslator):
         document.settings.base_section = int(document.settings.base_section)
         document.settings.xml_declaration = None
 
+        document.settings.initial_header_level = 1
         HTMLTranslator.__init__(self, document)
 
         # ht2html likes having a title, so add a default one

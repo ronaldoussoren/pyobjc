@@ -1,7 +1,7 @@
 <?
     $title = "Coding style for PyObjC";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
@@ -21,8 +21,9 @@
 <td>2002 The PyObjC Project</td></tr>
 </tbody>
 </table>
+<div class="document" id="coding-style-for-pyobjc">
 <div class="contents topic" id="contents">
-<p class="topic-title"><a name="contents">Contents</a></p>
+<p class="topic-title first"><a name="contents">Contents</a></p>
 <ul class="simple">
 <li><a class="reference" href="#introduction" id="id1" name="id1">Introduction</a></li>
 <li><a class="reference" href="#python-code" id="id2" name="id2">Python code</a></li>

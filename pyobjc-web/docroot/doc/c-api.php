@@ -1,12 +1,11 @@
 <?
     $title = "Documentation for the PyObjC C-API (Preliminary)";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
 <div class="document" id="documentation-for-the-pyobjc-c-api-preliminary">
-<h1 class="title">Documentation for the PyObjC C-API (Preliminary)</h1>
 <div class="section" id="introduction">
 <h1><a name="introduction">Introduction</a></h1>
 <p><em>WARNING: This API is unstable and might change in the future. Please let
@@ -49,7 +48,7 @@ is unsupported.</p>
 </div>
 <div class="section" id="compatibility-macros">
 <h1><a name="compatibility-macros">Compatibility Macros</a></h1>
-<p>On MacOS X, the version guard macro <tt class="literal"><span class="pre">MAC_OS_X_VERSION_MAX_ALLOWED</span></tt> will 
+<p>On Mac OS X, the version guard macro <tt class="literal"><span class="pre">MAC_OS_X_VERSION_MAX_ALLOWED</span></tt> will 
 always be available.</p>
 <p>The macros <tt class="literal"><span class="pre">PyDoc_STR</span></tt>, <tt class="literal"><span class="pre">PyDoc_VAR</span></tt> and <tt class="literal"><span class="pre">PyDoc_STRVAR</span></tt> are defined 
 when they are not defined in <tt class="literal"><span class="pre">Python.h</span></tt>.</p>
@@ -183,16 +182,6 @@ Class PyObjCSelector_GetClass(PyObject* sel);
 SEL PyObjCSelector_GetSelector(PyObject* sel);
 </pre>
 <p>Return the Objective-C method name for <tt class="literal"><span class="pre">sel</span></tt>.</p>
-<pre class="literal-block">
-int PyObjCBool_Check(PyObject* obj);
-</pre>
-<p>Check if <tt class="literal"><span class="pre">obj</span></tt> is a boolean object (either the python bool type in Python
-2.3 or the PyObjC bool type in Python 2.2)</p>
-<pre class="literal-block">
-PyObject* PyObjCBool_FromLong(long i);
-</pre>
-<p>Create a new bool object. This will return a Python bool object in Python 2.3
-(and later) and the PyObjC bool type in Python 2.2.</p>
 <pre class="literal-block">
 void PyObjC_InitSuper(struct objc_super*, Class, id);
 </pre>

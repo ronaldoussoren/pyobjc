@@ -1,7 +1,7 @@
 <?
     $title = "PyObjC Architecture";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
@@ -13,6 +13,7 @@
 <td>Ronald Oussoren</td></tr>
 </tbody>
 </table>
+<div class="document" id="pyobjc-architecture">
 <div class="section" id="introduction">
 <h1><a name="introduction">Introduction</a></h1>
 <p>XXX: This documentent is outdated and incomplete.</p>

@@ -7,8 +7,8 @@ $navbox = array(
    "doc/install.php", "Installation",
   "doc/usage.php", "User Docs",
   "doc/developer.php", "Developer Docs",
-  "http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/pyobjc", "Browse CVS",
-  "http://sourceforge.net/cvs/?group_id=14534", "Access CVS"
+  "http://svn.red-bean.com/pyobjc/", "Browse SVN",
+  "development/index.php", "Access SVN"
 );
 
 ?>

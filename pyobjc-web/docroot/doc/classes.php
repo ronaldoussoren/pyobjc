@@ -1,12 +1,11 @@
 <?
     $title = "Python classes and Objective-C code";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
 <div class="document" id="python-classes-and-objective-c-code">
-<h1 class="title">Python classes and Objective-C code</h1>
 <!-- This file is formatted using the rules for StructuredText -->
 <!-- Version 0.1 -->
 <div class="section" id="introduction">
@@ -109,8 +108,8 @@ Python method names: Concatenate all parts of the Objective-C method name
 (without any whitespace) and then replace all colons by underscores.</p>
 <p>Examples:</p>
 <pre class="literal-block">
-(void)myAction:(id)sender     &lt;-&gt;     def `myAction_`(self, sender)
-method:(int)x andY:y          &lt;-&gt;     def `method_andY_`(self, x, y)
+(void)myAction:(id)sender     &lt;-&gt;     def myAction_(self, sender)
+method:(int)x andY:y          &lt;-&gt;     def method_andY_(self, x, y)
 </pre>
 <p>As can be seen in the examples above, Objective-C allows you to specify
 the types of arguments and the return value, while this is not possible in
@@ -123,27 +122,28 @@ in subclasses of Objective-C classes. This function, objc.selector, should be
 used whenever you define a method that does not extend or override an existing
 Objective-C method in the superclass.</p>
 <p>The following Objective-C class:</p>
-<blockquote>
-<p>&#64;interface MyClass : NSObject
+<pre class="literal-block">
+&#64;interface MyClass : NSObject
 {
-}</p>
-<p>-(int)methodWithX:(int)x andY:(float)y;
--(void)myAction:(id)sender;</p>
-</blockquote>
+}
+
+-(int)methodWithX:(int)x andY:(float)y;
+-(void)myAction:(id)sender;
+</pre>
 <p>can be defined in Python like this:</p>
 <pre class="literal-block">
 class MyClass (NSObject):
 
-        def `methodWithX_andY_`(self, x, y):
+        def methodWithX_andY_(self, x, y):
                 pass
 
-        `methodWithX_and_Y_` = selector(`methodWithX_andY_`,
+        methodWithX_and_Y_ = selector(methodWithX_andY_,
                 signature='i&#64;:if')
 
-        def `myAction_`(self, sender):
+        def myAction_(self, sender):
                 pass
 
-        myAction_ = selector(`myAction_`,
+        myAction_ = selector(myAction_,
                 signature='v&#64;:')
 </pre>
 <p>The explicit selectors don't really help to increase readability, especially

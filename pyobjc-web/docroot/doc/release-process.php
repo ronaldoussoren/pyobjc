@@ -1,12 +1,11 @@
 <?
     $title = "The PyObjC release process";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/05/30 18:56:39 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
 <div class="document" id="the-pyobjc-release-process">
-<h1 class="title">The PyObjC release process</h1>
 <!-- :author: Ronald Oussoren -->
 <p>This document gives an exhaustive overview of what needs to be done when 
 building and releasing a new version of PyObjC. It is meant for the project
@@ -14,13 +13,13 @@ administrators, and not of much use for users of PyObjC.</p>
 <p>The timeframe is a guideline only and should be taken with a grain of salt.</p>
 <div class="section" id="release-date-2-weeks">
 <h1><a name="release-date-2-weeks">Release date -2 weeks</a></h1>
-<p>Full feature freeze, documentation updates and critical bug-fixes only. At this
-time:</p>
+<p>Full feature freeze, documentation updates and critical bug-fixes only. At
+this time:</p>
 <ul class="simple">
 <li>Check if the NEWS file is up-to-date</li>
 <li>Tests the tutorial(s)
-Read the tutorial(s) and follow the instructions exactly, the tutorials should
-be completely bug-free.</li>
+Read the tutorial(s) and follow the instructions exactly, the tutorials
+should be completely bug-free.</li>
 <li>Proofread the documentation</li>
 <li>Update the announcement messages.</li>
 </ul>
@@ -28,24 +27,18 @@ be completely bug-free.</li>
 <div class="section" id="release-date-3-days">
 <h1><a name="release-date-3-days">Release-date -3 days</a></h1>
 <p>Build the release tarball and dmg:</p>
-<ul>
-<li><p class="first">Add the correct date to the NEWS file, and set the right version in
-<tt class="literal"><span class="pre">Modules/objc/pyobjc.h</span></tt>.</p>
-</li>
-<li><p class="first">Run Scripts/make_distrib.py</p>
-</li>
-<li><p class="first">Create an empty disk image (named <tt class="literal"><span class="pre">PyObjC</span> <span class="pre">X.Y</span></tt>) and copy the installer
-package, License and ReadMe to this disk image. Resize the icons in this
-folder to largish icons (about 64 pixels) and resize the view to be just
-large enough to contain the icons.</p>
-<p>NOTE: This should be scripted, and maybe we should add a nice background
-image to the folder.</p>
-</li>
+<ul class="simple">
+<li>Add the correct date to the NEWS file, and set the right version in
+<tt class="literal"><span class="pre">Modules/objc/pyobjc.h</span></tt>.</li>
+<li>Run <tt class="literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">sdist</span></tt> to build the source tarball.</li>
+<li>Run <tt class="literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">bdist_dmg</span></tt> to build a binary installer.  This should
+be done on each supported version of Mac OS X.</li>
 </ul>
 <p>Trash you existing PyObjC installation and reinstall from the new release. Test
-that the new release is working correctly. Installing and testing should be done
-both for the binary installer and for the source archive. The latter should be
-done in all supported configurations.</p>
+that the new release is working correctly. Installing and testing should be
+done for the binary installer and for the source archive. The latter should
+be done in all supported configurations.  Also test to make sure that an
+upgrade from a previous release works as expected.</p>
 <p>If the package works as expected upload to a convenient location and ask some
 other people (like the other maintainers) to test the new release.</p>
 </div>
@@ -79,7 +72,7 @@ of full-fledged Cocoa programs in pure Python.</p>
 </li>
 <li><p class="first">update the information at a number of software databases:</p>
 <ul class="simple">
-<li>versiontracker.com (billb knows how)</li>
+<li>versiontracker.com (bbum knows how)</li>
 <li>macupdate.com</li>
 <li>freshmeat.net (ronald knows how)</li>
 <li>PyPI database at python.org (run <tt class="literal"><span class="pre">python2.3</span> <span class="pre">setup.py</span> <span class="pre">register</span></tt>)</li>

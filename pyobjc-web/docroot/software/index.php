@@ -29,7 +29,7 @@ upgrade an earlier version of PyObjC.
 
 <p>Older releases are available in the <a href="http://sourceforge.net/project/showfiles.php?group_id=14534">Files section of our SourceForge project</a>.
 
-<p>If you want to install PyObjC from CVS you'll have to download the latest 
+<p>If you want to install PyObjC from SVN you'll have to download the latest 
 archive with libFFI <a href="http://prdownloads.sourceforge.net/pyobjc/libffi-src-20030921.tar.gz?download">here</a>. This is not an official libffi release, it contains a (small) number of changes to make it work correctly with PyObjC.
 
 <h2>Unstable release</h2>

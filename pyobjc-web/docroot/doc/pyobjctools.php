@@ -1,13 +1,11 @@
 <?
     $title = "PyObjCTools: The PyObjC Toolbox";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/05/30 18:56:39 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
 <div class="document" id="pyobjctools-the-pyobjc-toolbox">
-<h1 class="title">PyObjCTools: The PyObjC Toolbox</h1>
-<h2 class="subtitle" id="introduction">Introduction</h2>
 <p>The package <tt class="literal"><span class="pre">PyObjCTools</span></tt> contains a number of (basically unrelated) modules
 with useful functionality. These have been placed inside a module to avoid
 cluttering the global namespace.</p>
@@ -36,11 +34,10 @@ actual super-class and implemented actions and outlets from a NIB file.</p>
 <p>Module to make it possible to integrate signal handling into the main
 runloop.</p>
 <ul class="simple">
-<li><tt class="literal"><span class="pre">PyObjCTools.pluginbuilder</span></tt></li>
+<li><tt class="literal"><span class="pre">PyObjCTools.Debugging</span></tt></li>
 </ul>
-<p>Extension of <tt class="literal"><span class="pre">bundlebuilder</span></tt> (XXX: Link) that allows you to build python-based
-plugin bundles, such as panes for the System Preferences application and
-screen savers.</p>
+<p>Allows logging of NSException stack traces.  This module should only be used
+during development.</p>
 <ul class="simple">
 <li><tt class="literal"><span class="pre">PyObjCTools.Signals</span></tt></li>
 </ul>
@@ -197,30 +194,6 @@ dumpStackOnFatalSignal.</p>
 handling. Nor is it intended to be terribly robust. It may give useful
 information when your program gets unexpected signals, but it might just
 as easily cause a crash when such a signal gets in.</p>
-</div>
-<div class="section" id="pyobjctools-pluginbuilder">
-<h1><a name="pyobjctools-pluginbuilder">PyObjCTools.pluginbuilder</a></h1>
-<p>This module defines one class to build python based plugin bundles for MacOS X.
-Examples of plugin bundles include PreferencePanes and InterfaceBuilder 
-palletes.</p>
-<p>The PluginBuilder class is instantiated with a number of keyword arguments and
-has a <tt class="literal"><span class="pre">build()</span></tt> method that will do all the work.</p>
-<p>XXX: Add documentation about the constructor arguments</p>
-<p>The module contains a main program that can be used in two ways:</p>
-<pre class="literal-block">
-% python pluginbuilder.py [options] build
-
-% python buildplugin.py [options] build
-</pre>
-<p>Where &quot;buildplugin.py&quot; is a user-supplied setup.py-like script following this
-model:</p>
-<pre class="literal-block">
-from PyObjCTools.pluginbuilder import buildplugin
-
-buildplugin(&lt;lots-of-keyword-args&gt;)
-</pre>
-<p>The script will tell you about the supported arguments if you run it without 
-any arguments.</p>
 </div>
 </div>
 <?

@@ -1,15 +1,14 @@
 <?
     $title = "GNUstep support in PyObjC";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/05/30 18:56:38 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
 <div class="document" id="gnustep-support-in-pyobjc">
-<h1 class="title">GNUstep support in PyObjC</h1>
 <p>PyObjC has limited support for GNUstep, the 'objc' and 'Foundation' packages
 build and pass some, but by far not all, unittests. More work is needed to
-make the GNUstep port as stable as the MacOS X &quot;port&quot;.</p>
+make the GNUstep port as stable as the Mac OS X &quot;port&quot;.</p>
 <p>The GNUstep port was primarily developed on Linux i86 (specifically 
 the Debian testing distribution), using python 2.3.3,  gcc 3.3.2 and 
 gnustep-base1 1.9.0-1. The code in setup.py works for this configuration,
@@ -21,7 +20,7 @@ classes.</p>
 <div class="section" id="todo">
 <h1><a name="todo">TODO</a></h1>
 <ul>
-<li><p class="first">[Serious] Fix linkage problems. The objC runtime doesn't seem to be 
+<li><p class="first">[Serious] Fix linkage problems. The ObjC runtime doesn't seem to be 
 initialized correctly and/or the classes in newly loaded frameworks are
 not correctly registered in the runtime.</p>
 </li>
