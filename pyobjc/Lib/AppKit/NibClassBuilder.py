@@ -203,8 +203,11 @@ class NibInfo(object):
 
 		for a in clsInfo.actions:
 			if not methods.has_key(a):
-				# XXX could issue warning here!
-				methods[a] = _actionStub
+				# XXX we could issue warning here!
+				pass
+				# don't insert a stub as it effectively disables
+				# AppKit's own method validation
+				#methods[a] = _actionStub
 
 		return metaClass(name, bases, methods)
 
@@ -311,8 +314,6 @@ def _classExists(className):
 		return 0
 	else:
 		return 1
-
-def _actionStub(self, sender): pass
 
 
 class IndentWriter:
