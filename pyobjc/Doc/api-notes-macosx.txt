@@ -4,6 +4,8 @@ Notes on supported APIs and classes on MacOS X
 
 .. :author: Ronald Oussoren
 
+.. Contents::
+
 Introduction
 ------------
 
@@ -28,6 +30,7 @@ APIs, PyObjC does *not* provide a compatibility layer.
 Frameworks not listed below are not wrapped by PyObjC, they can still be
 accessed although without access to constants and global functions defined
 by those frameworks.
+
 
 Addressbook framework
 ---------------------
@@ -71,6 +74,16 @@ Foundation framework
 The ``-forward::`` method is not supported. It's functionality can be accessed
 using the python function ``apply``. The ``performv::`` method is also not
 supported, with a simular work-around.
+
+Class NSBundle
+..............
+
+* ``bundleForClass:``
+  This method does not work correctly for classes defined in Python, these
+  all seem be defined in the ``mainBundle()``. As a workaround you can use
+  the function ``objc.pluginBundle(name)`` to find the NSBundle for your
+  Python based bundle. See Examples/PrefPane for an example of its usage.
+
 
 Class NSDictionary
 ..................

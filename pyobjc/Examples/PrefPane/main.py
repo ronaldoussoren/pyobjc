@@ -4,14 +4,18 @@ Example showing of preference panes in Python
 print "loading python prefpane"
 
 from AppKit import *
+from Foundation import NSBundle
 from PreferencePanes import *
 import objc
+from PyObjCTools import NibClassBuilder
 
-class SimplePreferencePane (NSPreferencePane):
-    value1Field = objc.IBOutlet('value1Field')
-    value2Field = objc.IBOutlet('value2Field')
-    resultField = objc.IBOutlet('resultField')
-    button = objc.IBOutlet('button')
+# NibClassBuilder needs to read our Nib files to do its work,
+# we need to specify the optional second argument to extractClasses
+# because we're not in the main bundle.
+NibClassBuilder.extractClasses("SimplePreferencePane", 
+    objc.pluginBundle("SimplePreferencePane"))
+
+class SimplePreferencePane (NibClassBuilder.AutoBaseClass):
 
     def doIt_(self, sender):
         v1 = self.value1Field.floatValue()
