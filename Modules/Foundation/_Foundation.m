@@ -12,7 +12,7 @@
 #import <Foundation/NSDebug.h>
 #include "pyobjc-api.h"
 #include "objc_support.h"
-#include "const-table.h"
+#include "wrapper-const-table.h"
 
 /** Functions */
 
@@ -53,7 +53,6 @@ static	char* keywords[] = { "key", "comment", NULL };
 	oc_result = NSLocalizedString(oc_key, oc_comment);
 
 	result = ObjC_IdToPython(oc_result);
-	[oc_result release];
 	return result;
 }
 
@@ -74,7 +73,6 @@ static	char* keywords[] = { "key", "tableName", "comment", NULL };
 
 	oc_result = NSLocalizedStringFromTable(oc_key, oc_tableName, oc_comment);
 	result = ObjC_IdToPython(oc_result);
-	[oc_result release];
 	return result;
 }
 
@@ -105,7 +103,6 @@ static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
 			oc_key, oc_tableName, oc_bundle, oc_comment);
 
 	result = ObjC_IdToPython(oc_result);
-	[oc_result release];
 	return result;
 }
 

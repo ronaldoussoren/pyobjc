@@ -4,19 +4,20 @@
 # This script is based on some (not to clever) regular expressions, and seems
 # to work pretty well with the current version of the Cocoa headers.
 #
-# We recognize:
-# - enum definitions
-# - NSString constants (as 'extern NSString*' variables)
+# NOTES:
+# - This script is probably MacOSX specific.
 #
-# TODO:
-# - Generate stubs for function wrappers (but: will most likely need manual
-#   work to get the actual function wrappers)
 import enum_generator
 import strconst_generator
 import var_generator
 import func_collector
 import func_builder
 import os
+import sys
+
+if not os.path.isdir('Modules'):
+    print "Run me from the root of the PyObjC source tree"
+    sys.exit(1)
 
 FRAMEWORKS="/System/Library/Frameworks"
 FOUNDATION=os.path.join(FRAMEWORKS, "Foundation.framework")
@@ -30,17 +31,17 @@ ADDRESSBOOK_HDRS=os.path.join(ADDRESSBOOK, 'Headers')
 PREFPANES_HDRS=os.path.join(PREFPANES, 'Headers')
 IB_HDRS=os.path.join(IB, 'Headers')
 
-enum_generator.generate(FOUNDATION_HDRS, '_Fnd_Enum.inc')
-enum_generator.generate(APPKIT_HDRS, '_App_Enum.inc')
-enum_generator.generate(ADDRESSBOOK_HDRS, '_Addr_Enum.inc')
-enum_generator.generate(PREFPANES_HDRS, '_PrefPanes_Enum.inc')
-enum_generator.generate(IB_HDRS, '_InterfaceBuilder_Enum.inc')
+enum_generator.generate(FOUNDATION_HDRS, 'Modules/Foundation/_Fnd_Enum.inc')
+enum_generator.generate(APPKIT_HDRS, 'Modules/AppKit/_App_Enum.inc')
+enum_generator.generate(ADDRESSBOOK_HDRS, 'Modules/AddressBook/_Addr_Enum.inc')
+enum_generator.generate(PREFPANES_HDRS, 'Modules/PreferencePanes/_PrefPanes_Enum.inc')
+enum_generator.generate(IB_HDRS, 'Modules/InterfaceBuilder/_InterfaceBuilder_Enum.inc')
 
-strconst_generator.generate(FOUNDATION_HDRS, '_Fnd_Str.inc')
-strconst_generator.generate(APPKIT_HDRS, '_App_Str.inc')
-strconst_generator.generate(ADDRESSBOOK_HDRS, '_Addr_Str.inc')
-strconst_generator.generate(PREFPANES_HDRS, '_PrefPanes_Str.inc')
-strconst_generator.generate(IB_HDRS, '_InterfaceBuilder_Str.inc')
+strconst_generator.generate(FOUNDATION_HDRS, 'Modules/Foundation/_Fnd_Str.inc')
+strconst_generator.generate(APPKIT_HDRS, 'Modules/AppKit/_App_Str.inc')
+strconst_generator.generate(ADDRESSBOOK_HDRS, 'Modules/AddressBook/_Addr_Str.inc')
+strconst_generator.generate(PREFPANES_HDRS, 'Modules/PreferencePanes/_PrefPanes_Str.inc')
+strconst_generator.generate(IB_HDRS, 'Modules/InterfaceBuilder/_InterfaceBuilder_Str.inc')
 
 FOUNDATION_PREFIX="FOUNDATION_EXPORT"
 FOUNDATION_IGNORE_LIST=(
@@ -69,7 +70,7 @@ FOUNDATION_IGNORE_LIST=(
         "NSHangOnMallocError",
 )
 
-var_generator.generate(FOUNDATION_HDRS, '_Fnd_Var.inc', FOUNDATION_PREFIX, FOUNDATION_IGNORE_LIST)
+var_generator.generate(FOUNDATION_HDRS, 'Modules/Foundation/_Fnd_Var.inc', FOUNDATION_PREFIX, FOUNDATION_IGNORE_LIST)
 
 APPKIT_PREFIX="APPKIT_EXTERN"
 APPKIT_IGNORE_LIST=(
@@ -80,7 +81,7 @@ APPKIT_IGNORE_LIST=(
 	# NSApp is a 'real' variable, will probably add get/set functions
 	'NSApp')
 
-var_generator.generate(APPKIT_HDRS, '_App_Var.inc', APPKIT_PREFIX, APPKIT_IGNORE_LIST)
+var_generator.generate(APPKIT_HDRS, 'Modules/AppKit/_App_Var.inc', APPKIT_PREFIX, APPKIT_IGNORE_LIST)
 
 FOUNDATION_IGNORE_LIST=(
 	# Private functions in NSException.h 
@@ -100,10 +101,11 @@ APPKIT_IGNORE_LIST=(
         'NSCountWindowsForContext(',
         'NSAvailableWindowDepths(',
         'NSRectFillList(',
+        'NSGetWindowServerMemory(',
 )
-func_collector.generate(FOUNDATION_HDRS, 'Foundation.prototypes', 
+func_collector.generate(FOUNDATION_HDRS, 'Modules/Foundation/Foundation.prototypes', 
 	FOUNDATION_PREFIX, FOUNDATION_IGNORE_LIST)
-func_collector.generate(APPKIT_HDRS, 'AppKit.prototypes', 
+func_collector.generate(APPKIT_HDRS, 'Modules/AppKit/AppKit.prototypes', 
 	APPKIT_PREFIX, APPKIT_IGNORE_LIST)
 
 # Add easy to handle types in Foundation:
@@ -150,7 +152,7 @@ func_builder.FUNC_MAP['NSBeginAlertSheet'] = BeginSheetMapper
 func_builder.FUNC_MAP['NSBeginInformationalAlertSheet'] = BeginSheetMapper
 func_builder.FUNC_MAP['NSBeginCriticalAlertSheet'] = BeginSheetMapper
 
-fd = file('_Fnd_Functions.inc', 'w')
+fd = file('Modules/Foundation/_Fnd_Functions.inc', 'w')
 structs = ['NSPoint', 'NSSize', 'NSRect', 'NSRange']
 for s in structs:
 	func_builder.SIMPLE_TYPES[s] = (
@@ -172,12 +174,12 @@ static inline int convert_%(type)s(PyObject* object, void* pvar)
 '''%{'type': s })
 
 
-func_builder.process_list(fd , file('Foundation.prototypes'))
+func_builder.process_list(fd , file('Modules/Foundation/Foundation.prototypes'))
 fd = None
 for s in structs:
 	del func_builder.SIMPLE_TYPES[s]
 
-fd = file('_App_Functions.inc', 'w')
+fd = file('Modules/AppKit/_App_Functions.inc', 'w')
 structs = ['NSAffineTransformStruct', 'NSRect', 'NSPoint']
 for s in structs:
 	func_builder.SIMPLE_TYPES[s] = (
@@ -231,6 +233,6 @@ func_builder.INT_ALIASES.extend([
 ])
 
 
-func_builder.process_list(fd, file('AppKit.prototypes'))
+func_builder.process_list(fd, file('Modules/AppKit/AppKit.prototypes'))
 for s in structs:
 	del func_builder.SIMPLE_TYPES[s]

@@ -14,7 +14,7 @@
  * - This interface is in development, the the API will probably change in
  *   incompatible ways.
  *
- * $Id: pyobjc-api.h,v 1.7 2003/02/23 08:58:43 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.8 2003/02/26 14:26:36 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -30,6 +30,8 @@
 #if PY_VERSION_HEX < 0x0203000A /* Python < 2.3.0a */
 
 /* PyBool_Type was introduced in Python 2.3 */
+
+#define PyObjC_HAVE_PYTHON_BOOL
 #define PyBool_Check(_x_) (0)
 #define PyBool_FromLong(_x_) PyInt_FromLong(_x_)
 

@@ -8,7 +8,7 @@ import shutil
 import sys
 import os
 
-#os.environ['MACOSX_DEPLOYMENT_TARGET'] = '1'
+os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.2'
 
 site=None
 for e in sys.path:

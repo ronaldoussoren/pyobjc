@@ -19,7 +19,7 @@
 #include "pyobjc-api.h"
 #include "objc_support.h"
 #include "OC_PythonObject.h"
-#include "const-table.h"
+#include "wrapper-const-table.h"
 #ifndef GNU_RUNTIME
 #include <objc/objc-runtime.h>
 #endif
@@ -268,6 +268,82 @@ objc_NSRectFillList(PyObject* self, PyObject* args, PyObject* kwds)
   return Py_None; 
 }
 
+static PyObject*
+objc_NSGetWindowServerMemory(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "context", "windowDumpStream", NULL };
+	int context;
+	int virtualMemory = 0;
+	int doDumpStream;
+	int res;
+	int windowBackingMemory = 0;
+	NSString* windowDumpStream = NULL;
+	PyObject* result;
+	PyObject* v;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "ii:NSGetWindowServerMemory", keywords, &context, &doDumpStream)) {
+		return NULL;
+	}
+
+	NS_DURING
+		if (doDumpStream) {
+			res = NSGetWindowServerMemory(
+				context, &virtualMemory, &windowBackingMemory,
+				&windowDumpStream);
+		} else {
+			res = NSGetWindowServerMemory(
+				context, &virtualMemory, &windowBackingMemory,
+				NULL);
+		}
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+	NS_ENDHANDLER
+
+	if (PyErr_Occurred()) {
+		return NULL;
+	}
+
+	result = PyTuple_New(4);
+	if (result == NULL) return NULL;
+
+	v = PyInt_FromLong(res);
+	if (v == NULL) {
+		Py_DECREF(result);
+		return NULL;
+	}
+
+	PyTuple_SET_ITEM(result, 0, v);
+
+	v = PyInt_FromLong(virtualMemory);
+	if (v == NULL) {
+		Py_DECREF(result);
+		return NULL;
+	}
+
+	PyTuple_SET_ITEM(result, 1, v);
+
+	v = PyInt_FromLong(windowBackingMemory);
+	if (v == NULL) {
+		Py_DECREF(result);
+		return NULL;
+	}
+
+	PyTuple_SET_ITEM(result, 2, v);
+
+	v = ObjC_IdToPython(windowDumpStream);
+	if (v == NULL) {
+		Py_DECREF(result);
+		return NULL;
+	}
+
+	PyTuple_SET_ITEM(result, 3, v);
+
+	return result;
+}
+
+	
+
+
 #ifdef GNUSTEP
 #include "_App_Functions.GNUstep.inc"
 
@@ -313,6 +389,12 @@ static PyMethodDef appkit_methods[] = {
 	{
 	        "NSAvailableWindowDepths",
 		(PyCFunction)objc_NSAvailableWindowDepths,
+		METH_VARARGS,
+		NULL
+	},
+	{
+		"NSGetWindowServerMemory",
+		(PyCFunction)objc_NSGetWindowServerMemory,
 		METH_VARARGS,
 		NULL
 	},
