@@ -82,7 +82,7 @@ class MyCoder (NSCoder):
 class TestPythonCoder(unittest.TestCase):
     #
     # This test accesses a NSCoder implemented in Python from Objective-C
-    # 
+    #
     # The tests only use those methods that require a custom IMP-stub.
     #
     def testEncoding(self):

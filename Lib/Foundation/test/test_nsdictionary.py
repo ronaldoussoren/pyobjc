@@ -1,4 +1,4 @@
-# TODO: Tests for calling 
+# TODO: Tests for calling
 #   initWithObjects:forKeys:count and dictionaryWithObjects:forKeys:count
 import unittest
 import objc
@@ -18,11 +18,11 @@ class TestNSDictionarySubclassing(unittest.TestCase):
         class DictTestExceptionClass (NSDictionary):
             pass
 
-        # Don't use self.assertRaises here, we once had a bug that 
+        # Don't use self.assertRaises here, we once had a bug that
         # causes this to fail, while the assertRaises version would
         # (probably) have worked.
         import warnings
-        warnings.filterwarnings('ignore', 
+        warnings.filterwarnings('ignore',
             category=objc.UninitializedDeallocWarning)
 
         try:
@@ -42,7 +42,7 @@ class TestNSDictionarySubclassing(unittest.TestCase):
                 return super(DictTestExceptionClass2, self).initWithObjects_forKeys_count_(o, k, c)
 
         import warnings
-        warnings.filterwarnings('ignore', 
+        warnings.filterwarnings('ignore',
             category=objc.UninitializedDeallocWarning)
 
         try:
@@ -134,10 +134,10 @@ class TestNSDictionaryInteraction(unittest.TestCase):
 
         for k in d:
             self.assertEqual( d.objectForKey_( k ), d[k] )
-            
+
         del d['a']
         self.assert_( 'a' not in d )
-    
+
     def test_varargConstruction(self):
         u = NSDictionary.dictionaryWithObjects_forKeys_([1,2,3,4], ['one', 'two', 'three', 'four'])
         v = NSDictionary.alloc().initWithObjects_forKeys_([1,2,3,4], ['one', 'two', 'three', 'four'])
@@ -192,9 +192,9 @@ class MyDictionaryBase (NSDictionary):
     def keyEnumerator(self):
         return None
 
-    def objectForKey(self, key):
+    def objectForKey_(self, key):
         return None
-   
+
 class MyDictionary1 (MyDictionaryBase):
     def initWithObjects_forKeys_count_(self, objects, keys, count):
         self.count = count
@@ -210,7 +210,7 @@ class MyDictionary2 (MyDictionaryBase):
 class TestSubclassing (unittest.TestCase):
     def testInitWithObjects(self):
         o = PyObjC_TestClass3.makeDictFromClass_method_(MyDictionary1, 1)
-        
+
         self.assert_(isinstance(o, MyDictionary1))
         self.assertEquals(o.count, 4)
         self.assertEquals(len(o.keys), 4)
@@ -218,7 +218,7 @@ class TestSubclassing (unittest.TestCase):
 
     def testDictWithObjects(self):
         o = PyObjC_TestClass3.makeDictFromClass_method_(MyDictionary2, 0)
-        
+
         self.assert_(isinstance(o, tuple))
         self.assertEquals(o[2], 4)
         self.assertEquals(len(o[1]), 4)

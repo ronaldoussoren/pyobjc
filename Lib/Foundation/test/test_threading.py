@@ -103,7 +103,7 @@ if "%02d%02d"%(sys.version_info[:2]) >= '0203':
                     'runThread:', my,  cb)
 
             time.sleep(2)
-            
+
             retval = my.returnObject()
             self.assert_(isinstance(retval, Dummy))
 

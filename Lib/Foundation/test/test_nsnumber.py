@@ -12,7 +12,7 @@ def stripDocType(val):
     """
     r =  re.sub('<!DOCTYPE [^>]*>', '<!DOCTYPE>', val)
     return r.replace('version="0.9"', 'version="1.0"')
-  
+
 
 if 0:
     # NSNumber is proxied into python
@@ -60,31 +60,31 @@ else:
 
     class TestNSNumber( unittest.TestCase ):
         def testNSNumber( self ):
-                self.assertEquals(NSNumber.numberWithFloat_(1.0), 1,0)
-                self.assertEquals(NSNumber.numberWithInt_(1), 1)
-                self.assertEquals(NSNumber.numberWithFloat_(-0.5), -0.5)
-                self.assertEquals(NSNumber.numberWithInt_(-4), -4)
-                self.assertEquals(NSNumber.numberWithInt_(0), 0)
-                self.assertEquals(NSNumber.numberWithFloat_(0.0), 0,0)
-            
+            self.assertEquals(NSNumber.numberWithFloat_(1.0), 1,0)
+            self.assertEquals(NSNumber.numberWithInt_(1), 1)
+            self.assertEquals(NSNumber.numberWithFloat_(-0.5), -0.5)
+            self.assertEquals(NSNumber.numberWithInt_(-4), -4)
+            self.assertEquals(NSNumber.numberWithInt_(0), 0)
+            self.assertEquals(NSNumber.numberWithFloat_(0.0), 0,0)
+
     PLIST="""\
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>bool</key>
-	<true/>
-	<key>plain</key>
-	<integer>1</integer>
+\t<key>bool</key>
+\t<true/>
+\t<key>plain</key>
+\t<integer>1</integer>
 </dict>
 </plist>
 """
 
 if objc.platform == 'MACOSX':
     class TestPropList (unittest.TestCase):
-        #Test if numbers are stored properly in property-list. The most 
+        #Test if numbers are stored properly in property-list. The most
         #important part of the testcase are boolean values.
-        # 
+        #
         # NOTE: GNUstep uses the old NeXT property lists, and these tests
         # will fail.
 
@@ -97,7 +97,7 @@ if objc.platform == 'MACOSX':
 
             self.assertEquals(d.writeToFile_atomically_(
                 "/tmp/pyobjctest.plist", 0), 1)
-            
+
             fd = open('/tmp/pyobjctest.plist', 'ru')
             data = fd.read()
             fd.close()
@@ -112,7 +112,7 @@ if objc.platform == 'MACOSX':
 
             self.assertEquals(d.writeToFile_atomically_(
                 "/tmp/pyobjctest.plist", 0), 1)
-            
+
             fd = open('/tmp/pyobjctest.plist', 'ru')
             data = fd.read()
             fd.close()

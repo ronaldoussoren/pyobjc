@@ -38,14 +38,14 @@ if hasattr(Foundation, 'NSIndexSpecifier'):
             idx = NSIndexSpecifier.alloc().init()
             idx.setIndex_(0)
 
-            def test(self,i):
-                self.undo.prepareWithInvocationTarget_(self).test(self.idx.index())
+            def test_(self,i):
+                self.undo.prepareWithInvocationTarget_(self).test_(self.idx.index())
                 self.idx.setIndex_(i)
 
         def testUndoInt(self):
             # test that undo works
             x = TestUndoInt.UndoInt.alloc().init()
-            x.test(3)
+            x.test_(3)
             assert(x.idx.index() == 3)
             x.undo.undo()
             assert(x.idx.index() == 0)

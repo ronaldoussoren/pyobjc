@@ -67,7 +67,7 @@ class TestNSData(unittest.TestCase):
 
             mutableData = NSMutableData.dataWithBytes_length_(bigRawBytes, len(bigRawBytes))
             data = NSData.dataWithBytes_length_(bigRawBytes, len(bigRawBytes))
-        
+
             self.assertDataContents(data, mutableData, bigRawBytes)
 
             mutableBytes = mutableData.mutableBytes()
