@@ -1,7 +1,7 @@
 <?
 $title = "Home";
 $cvs_author = '$Author: ronaldoussoren $';
-$cvs_date = '$Date: 2004/02/02 15:23:01 $';
+$cvs_date = '$Date: 2004/02/21 19:47:55 $';
 $is_home = 1;
 
 $metatags = '<meta name="description" content="PyObjC, a universal bridge between the Objective-C and Python languages.">
@@ -52,7 +52,7 @@ There is limited support for <a href="http://www.gnustep.org/">GNUstep</a>,
 most of the unittests pass on GNUstep on Linux/ix86. However, we do not yet
 support the AppKit framework on GNUstep.
 <P>
-Contact <a href="mailto:pyobjc-dev@lists.sourceforge.net">the mailinglist</a> if you want to help out.
+Contact <a href="mailto:pyobjc-dev@lists.sourceforge.net">the mailinglist</a> if you want to help out with GNUstep or MacOS X 10.1 support.
 
 <h1>Resources</h1>
 

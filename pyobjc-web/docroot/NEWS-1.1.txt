@@ -4,8 +4,38 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version "1.1a0" (2004-02-02)
-----------------------------
+Version 1.1b1 (2004-02-20)
+---------------------------
+
+- Fixes some regressions in 1.1 w.r.t. 1.0
+
+- Add Xcode templates for python files
+
+  You can now select a new python file in the 'add file...' dialog in Xcode
+
+- Fix installer for Panther: the 1.1a0 version didn't behave correctly
+
+- There is now an easier way to define methods that conform to the expectations
+  of Cocoa bindings::
+
+  	class MyClass (NSObject):
+
+		def setSomething_(self, value):
+			pass
+
+		setSomething_ = objc.accessor(setSomething_)
+
+		def something(self):
+			return "something!"
+
+		something = objc.accessor(something)
+
+  It is not necessary to use ``objc.accessor`` when overriding an existing 
+  accessor method.
+
+Version 1.1a0 (2004-02-02)
+--------------------------
+
 - Objective-C structs can now be wrapped using struct-like types. This has
   been used to implement wrapper types for NSPoint, NSSize, NSRange and NSRect
   in Foundation and NSAffineTransformStruct in AppKit.
