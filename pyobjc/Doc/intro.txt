@@ -326,10 +326,8 @@ More information on Cocoa programming can be found at:
 
 .. _`stepwise.com`: http://www.stepwise.com/
 
-Special tasks
--------------
-
-XXX: Rename this section
+Notes on specific tasks
+-----------------------
 
 Working with threads
 ....................
@@ -416,11 +414,8 @@ See `the documentation for the templates`__ for more details.
 
 .. __: ProjectBuilder-Templates.html
 
-XXX: But what about Panther, which seems to ship with Python 2.3, at the 
-very least you'll get warnings about the PyObjC extension modules (wrong 
-ABI version).
-
-XXX: The documentation for the templates should be installed into the 
-documentation folder on the DMG, otherwise the link above won't work, I've
-hacked ``Scripts/update_html.py`` to copy the HTML file to the Doc directory,
-but that is not a pretty solution.
+MacOS X 10.3 seems to ship with Python 2.3 as /usr/bin/python. This means that
+standalone applications build using the Project Builder templates will start
+to complain about Python ABI versions in the ``Console`` when you run them
+on MacOS X 10.3. These are harmless messages caused by the extension modules
+in PyObjC.

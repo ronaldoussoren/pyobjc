@@ -25,7 +25,7 @@ start with a short overview.</p>
 <ul>
 <li><code><span>PyObjCTools.KeyValueCoding.py</span></code></li>
 </ul>
-<p>A python API for working with Key-Value Coding. XXX: Link</p>
+<p>A python API for working with <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i">Key-Value Coding</a>.</p>
 <ul>
 <li><code><span>PyObjCTools.NibClassBuilder.py</span></code></li>
 </ul>
@@ -113,10 +113,76 @@ the path upto the last item, and then <code><span>setKey</span></code> is used t
 </li>
 </ul>
 <h2><a name="pyobjctools-nibclassbuilder">PyObjCTools.NibClassBuilder</a></h2>
-<p>XXX: Read the online documetation</p>
+<h3><a name="extracting-class-definitions-from-nibs">Extracting class definitions from nibs</a></h3>
+<p>The module maintains a global set of class definitions, extracted from
+nibs. To add the classes from a nib to this set, use the <code><span>extractClasses()</span></code>
+function. It can be called in two ways:</p>
+<ul>
+<li><code><span>extractClasses(nibName,</span> <span>bundle=&lt;main-bundle&gt;)</span></code><p>This finds the nib by name from a bundle. If no bundle
+if given, the main bundle is searched.</p>
+</li>
+<li><code><span>extractClasses(path=pathToNib)</span></code><p>This uses an explicit path to a nib.</p>
+</li>
+</ul>
+<p><code><span>extractClasses()</span></code> can be called multiple times for the same bundle: the
+results are cached so no almost extra overhead is caused.</p>
+<h3><a name="using-the-class-definitions">Using the class definitions</a></h3>
+<p>The module contains a &quot;magic&quot; base (super) class called <code><span>AutoBaseClass</span></code>.
+Subclassing <code><span>AutoBaseClass</span></code> will invoke some magic that will look up the
+proper base class in the class definitions extraced from the nib(s).
+If you use multiple inheritance to use Cocoa's &quot;informal protocols&quot;,
+you <i>must</i> list <code><span>AutoBaseClass</span></code> as the first base class. For example:</p>
+<pre>
+class PyModel(AutoBaseClass, NSTableSource):
+    ...
+</pre>
+<h3><a name="the-nibinfo-class">The <code><span>NibInfo</span></code> class</a></h3>
+<p>The parsing of nibs and collecting the class definition is done by the
+<code><span>NibInfo</span></code> class. You normally don't use it directly, but it's here if you
+have special needs.</p>
+<h3><a name="the-command-line-tool">The command line tool</a></h3>
+<p>When run from the command line, this module invokes a simple command
+line program, which you feed paths to nibs. This will print a Python
+template for all classes defined in the nib(s). For more doco, see
+the commandline_doc variable, or simply run the program wothout
+arguments. It also contains a simple test program.</p>
 <h2><a name="pyobjctools-signals">PyObjCTools.Signals</a></h2>
-<p>XXX: Read the online documetation</p>
+<p>This module provides two functions that can be usefull while investigating
+random crashes of a PyObjC program. These crashes are often caused by 
+Objective-C style weak references or incorrectly implemented protocols.</p>
+<ul>
+<li><code><span>dumpStackOnFatalSignal()</span></code><p>This function will install signal handlers that print a stacktrace and
+then reraise the signal.</p>
+</li>
+<li><code><span>resetFatalSignals()</span></code><p>Restores the signal handlers to the state they had before the call to
+dumpStackOnFatalSignal.</p>
+</li>
+</ul>
+<p>This module is not designed to provide fine grained control over signal 
+handling. Nor is it intended to be terribly robust. It may give usefull
+information when your program gets unexpected signals, but it might just
+as easily cause a crash when such a signal gets in.</p>
 <h2><a name="pyobjctools-pluginbuilder">PyObjCTools.pluginbuilder</a></h2>
-<p>XXX: Read the online documetation</p>
+<p>This module defines one class to build python based plugin bundles for MacOS X.
+Examples of plugin bundles include PreferencePanes and InterfaceBuilder 
+palletes.</p>
+<p>The PluginBuilder class is instantated with a number of keyword arguments and
+have a <code><span>build()</span></code> method that will do all the work.</p>
+<p>XXX: Add documentation about the constructor arguments</p>
+<p>The module contains a main program that can be used in two ways:</p>
+<pre>
+% python pluginbuilder.py [options] build
+
+% python buildplugin.py [options] build
+</pre>
+<p>Where &quot;buildplugin.py&quot; is a user-supplied setup.py-like script following this
+model:</p>
+<pre>
+from PyObjCTools.pluginbuilder import buildplugin
+
+buildplugin(&lt;lots-of-keyword-args&gt;)
+</pre>
+<p>The script will tell you about the supported arguments if you run it without 
+any arguments.</p>
 </body>
 </html>
