@@ -1,11 +1,8 @@
-import sys
-from Foundation import NSObject
-from AppKit import NSApplicationMain
-from PyObjCTools import NibClassBuilder
-from objc import *
+from PyObjCTools import NibClassBuilder, AppHelper
 
 NibClassBuilder.extractClasses('MainMenu.nib')
 
-from CGraphController import *
+import CGraphController
 
-sys.exit(NSApplicationMain(sys.argv))
+AppHelper.runEventLoop()
+
