@@ -38,31 +38,8 @@ class ConverterController(AutoBaseClass):
         if rate != 0:
             rate = 1/rate
         self.rateField.setFloatValue_(rate)
-        
-def main():
-    from AppKit import NSApplicationMain, NSRunAlertPanel, NSApp
-    import traceback
-    import sys
-    def unexpectedErrorAlert():
-        exceptionInfo = traceback.format_exception_only(*sys.exc_info()[:2])[0].strip()
-        return NSRunAlertPanel("An unexpected error has occurred",
-                "(%s)" % exceptionInfo,
-                "Continue", "Quit", None)
-    
-    
-    mainFunc = NSApplicationMain
-    args = (sys.argv,)
-    while 1:
-        try:
-            mainFunc(*args)
-        except:
-            if not unexpectedErrorAlert():
-                raise
-            mainFunc = NSApp().run
-            args = ()
-        else:
-            break
 
 if __name__ == '__main__':
-    main()
-    
+	import sys
+	import PyObjCTools.AppHelper
+	PyObjCTools.AppHelper.runEventloop(sys.argv)
