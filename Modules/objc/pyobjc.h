@@ -10,7 +10,7 @@
 #include "OC_PythonDictionary.h"
 #include "super-call.h"
 
-#define OBJC_VERSION "0.7.1"
+#define OBJC_VERSION "0.8"
 
 #ifdef MACOSX
 

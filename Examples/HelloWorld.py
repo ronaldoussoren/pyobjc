@@ -1,17 +1,8 @@
 # HelloWorld.py
 #
-# You have to run this script from the command line with 
-# the full pathname for python:
-#    /usr/local/bin/python HelloWorld.py 
-#
-# or else run from DropShell or gdb. Anything else and you will get a:
-# 	Error 1011 in _sendFinishLaunchingNotification 
-# and it wont work.
-#
-# -- Steve Majewski <sdm7g@Virginia.EDU>
+# The original PyObjC interface example by Steve Majewski.
 #
 
-# You can look up these classes and methods in the Cocoa docs.
 # A quick guide to runtime name mangling:
 #
 #      ObjC 		becomes 	  Python
@@ -20,28 +11,27 @@
 #    [ obj method: arg1 withOtherArgs: arg2 ] 
 #				obj.method_withOtherArgs_( arg1, arg2 )
 
-import objc
+###
+### NOTE:  This is no longer the recommended way to build applications
+### using the pyobjc bridge under with OS X.  In particular, applications
+### work much better if they are constructed in a proper app wrapper.
+###
+### This app does demonstrate that it is possible to build full
+### featured Cocoa apps without InterfaceBuilder.
+###
 
-# We should import AppKit and Foundation, but don't do that
-# here to show we're using just the basic objective-C bindings.
-NSBundle = objc.lookUpClass('NSBundle')
-NSAutoreleasePool = objc.lookUpClass('NSAutoreleasePool')
-NSApplication = objc.lookUpClass('NSApplication')
-NSWindow = objc.lookUpClass('NSWindow')
-NSButton = objc.lookUpClass('NSButton')
-NSSound = objc.lookUpClass('NSSound')
-NSObject = objc.lookUpClass('NSObject')
+import objc
+from Foundation import *
+from AppKit import *
 
 class AppDelegate (NSObject):
     def applicationDidFinishLaunching_(self, aNotification):
         print "Hello, World!"
 
+    def sayHello_(self, sender):
+        print "Hello again, World!"
+
 def main():
-
-    # Load Application Framework:
-    NSBundle.bundleWithPath_(
-	'/System/Library/Frameworks/AppKit.framework').load()
-
     NSApp = NSApplication.sharedApplication()
 
     NSApp.setDelegate_( AppDelegate.alloc().init() )
@@ -56,10 +46,11 @@ def main():
     win.contentView().addSubview_ (hel)
     hel.setBezelStyle_( 4 )
     hel.setTitle_( 'Hello!' )
+    hel.setTarget_( NSApp.delegate() )
+    hel.setAction_( "sayHello:" )
 
     beep = NSSound.alloc()
-    beep.initWithContentsOfFile_byReference_( 
-	'/System/Library/Sounds/tink.aiff', 1 )
+    beep.initWithContentsOfFile_byReference_( '/System/Library/Sounds/Tink.Aiff', 1 )
     hel.setSound_( beep )
 
     bye = NSButton.alloc().initWithFrame_ (((100.0, 10.0), (80.0, 80.0)))
@@ -71,12 +62,10 @@ def main():
     bye.setTitle_( 'Goodbye!' )
 
     adios = NSSound.alloc()
-    adios.initWithContentsOfFile_byReference_( 
-	'/System/Library/Sounds/Basso.aiff', 1 )
+    adios.initWithContentsOfFile_byReference_(  '/System/Library/Sounds/Basso.aiff', 1 )
     bye.setSound_( adios )
     
     win.display()
-#    win.makeKeyAndOrderFront_ (NSApp)	## This doesn't seem to  work 
     win.orderFrontRegardless()		## but this one does
 
     NSApp.run()    

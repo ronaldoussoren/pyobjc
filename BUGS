@@ -14,40 +14,25 @@ the logic behind the methods that take varargs;  i.e. reimplementing
 everything necessary to deal with +stringWithFormat: or
 +arrayWithObjects: type API-- two very different beasts [bbum]). 
 
-(-) Does not handle methods returning values of size bigger than
-sizeof (void *).  (This is also hard to fix;  to do so requires either
-creating a bunch of methods with the various possible return types or
-doing some very serious hardcore pointer magic. [bbum])
-  Ronald: Seems to be solved, NSInvocation happily works with large
-  return values.
-
 (-) It's impossible to send messages containing '$' in the name: ObjC
 allows it, Python does not.
-
-(-) Fix issues with API that requires pointers;  NSScanner, for
-example.  See Mssh.
-   Ronald: Infrastructure for this is present, but not optimal.
 
 Known portability problems
 --------------------------
 
-(?) The GNU Runtime is still untested. This is because I wasn't able
-link this module on my NeXT using the latest GNU gcc and runtime:
-multiple defined symbols between libgcc.a and libsys_s.a. Oh, well.
-Once the NeXT support is stable, I will jump on this.
+(?) GNU runtime support is currently non-existant.  We need volunteers
+with GNU runtime expertise to move this forward.  Either that, or a
+recipe for working with the pure-GNU runtime on OS X.
 
-(-) When WITH_FOUNDATION is not defined (it is only when using the GNU
+(?) When WITH_FOUNDATION is not defined (it is only when using the GNU
 Runtime, and will be on OpenStep), Objective-C objects are not
 retained nor released, so the code may access freed objects.
 
-(-) GNUstep Base wants the main function of the application be
+(?) GNUstep Base wants the main function of the application be
 ``gnustep_base_user_main''. NSProcessInfo implements its own ``main''
 function to initialize internal copies of arguments and environ,
 then calls gnustep_base_user_main(). We have to patch pythonrun.c for
 this. 
-
-(-) Does OpenStep behave badly as NeXTSTEP on NSPasteboard's names and
-types?
 
 Others
 ------
@@ -57,27 +42,12 @@ The ``argument arena'' in objc_support.c should be rewritten thread-safe.
   Ronald: The ``argument arena'' should be removed completely, we're mostly 
   there.
 
-(-) The ``forward'' mechanism should be revised: the current
-implementation assumes the arguments passed are ALL Objective-C
-objects, since no check is possible...  (Not sure this can be fixed,
-but it should be revisited given that the Mac OS X/XS APIs for
-forwarding are a bit different than the old forward:: APIs. [bbum])
-  Ronald: Fixed. It is now possible to specify the signature of a 
-  python method.
-
-(-) [OC_MemoryStream close] should deallocate the stream's buffer with
-vm_deallocate(). See NXCloseMemory() documentation. (NXStream APIs are
-gone, gone, gone.  But we might want to revit this in light of NSData,
-NSFileHandle, etc... [bbum]?)
-
 (-) Suspicious code is marked with 'XXX'.
 
 Missing
 -------
 
-(*) With Foundation, pythonify_c_value and its counterpart should convert
-to/from NSString and PyStringObject. (What about Unicode???? [bbum])
-  Ronald: Should we? It might be more usefull to provide a function/method
-  to convert NSString values to Python string/unicode objects: NSString
-  seems to have a number of methods without a Python equivalent. I've no
-  problems with automaticly translating Python strings to NSString objects.
+(-) It is impossible to pass a reference to an NSString object into
+    the python runtime such that the fact that it remains an
+    NSString.  As such, it is impossible to invoke NSString specific
+    methods directly.

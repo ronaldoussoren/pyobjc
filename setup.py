@@ -98,7 +98,8 @@ CoreExtensions =  [
 CocoaPackages = [ 'Foundation', 'AppKit' ]
 CocoaExtensions = [
 	  Extension("Foundation._Foundation", 
-		   ["Modules/Cocoa/_Foundation.m"],
+		   ["Modules/Cocoa/_Foundation.m",
+            "Modules/Cocoa/NSAutoreleasePoolSupport.m"],
 		   extra_compile_args=[
 			"-g", "-IModules/objc",  
 		   ],

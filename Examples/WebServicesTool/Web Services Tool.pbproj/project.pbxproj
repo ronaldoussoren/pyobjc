@@ -107,6 +107,7 @@
 				4A9504CDFFE6A4B311CA0CBA,
 				F62CEFCE0357591F01718D22,
 			);
+			hasScannedForEncodings = 1;
 			isa = PBXProject;
 			mainGroup = 29B97314FDCFA39411CA2CEA;
 			projectDirPath = "";
@@ -254,7 +255,6 @@
 </dict>
 </plist>
 ";
-			shouldUseHeadermap = 1;
 		};
 		29B97327FDCFA39411CA2CEA = {
 			buildActionMask = 2147483647;
@@ -329,6 +329,28 @@
 //4A2
 //4A3
 //4A4
+//770
+//771
+//772
+//773
+//774
+		77E90B1C03A29B42002FB0D7 = {
+			isa = PBXFileReference;
+			name = _socket.so;
+			path = "/usr/lib/python2.2/site-packages/_socket.so";
+			refType = 0;
+		};
+		77E90B1D03A29B42002FB0D7 = {
+			fileRef = 77E90B1C03A29B42002FB0D7;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//770
+//771
+//772
+//773
+//774
 //F60
 //F61
 //F62
@@ -350,6 +372,7 @@
 				F62CEFC0035724EB01718D22,
 				F62CEFC40357585C01718D22,
 				F62CEFC50357585C01718D22,
+				77E90B1D03A29B42002FB0D7,
 			);
 			isa = PBXCopyFilesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 1;
@@ -398,17 +421,20 @@
 				F62CEFA6035724EB01718D22,
 				F62CEFAD035724EB01718D22,
 				F62CEFB2035724EB01718D22,
+				77E90B1C03A29B42002FB0D7,
 			);
 			isa = PBXGroup;
 			name = pyobjc;
 			refType = 4;
 		};
 		F62CEFC20357585C01718D22 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = LICENSE.txt;
 			refType = 2;
 		};
 		F62CEFC30357585C01718D22 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = README.txt;
 			refType = 2;
@@ -443,7 +469,6 @@
 			isa = PBXAggregateTarget;
 			name = Packaging;
 			productName = Packaging;
-			shouldUseHeadermap = 0;
 		};
 		F62CEFC70357587501718D22 = {
 			isa = PBXTargetDependency;
@@ -466,11 +491,11 @@
 			);
 			isa = PBXLegacyTarget;
 			name = "Copy Files (Install)";
+			passBuildSettingsInEnvironment = 1;
 			productName = "Copy Files";
 			settingsToExpand = 6;
 			settingsToPassInEnvironment = 287;
 			settingsToPassOnCommandLine = 280;
-			shouldUseHeadermap = 0;
 		};
 		F62CEFCB035758DE01718D22 = {
 			isa = PBXTargetDependency;
@@ -532,6 +557,7 @@
 			};
 		};
 		F6AAC478035708BD01B76035 = {
+			fileEncoding = 30;
 			indentWidth = 4;
 			isa = PBXFileReference;
 			path = "bin-python-main.m";
