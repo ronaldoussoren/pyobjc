@@ -242,27 +242,13 @@ class NibInfo(object):
         self._printTemplateFooter(writer)
 
     def _printTemplateHeader(self, writer):
-        frameworks = {}
         nibs = {}
         for clsInfo in self.classes.values():
             for nib in clsInfo.nibs:
                 nibs[nib] = 1
-            super = clsInfo.super
-            framework = _frameworkForClass(super)
-            if not framework:
-                continue  # don't know what to do
-            if framework not in frameworks:
-                frameworks[framework] = [super]
-            elif super not in frameworks[framework]:
-                frameworks[framework].append(super)
 
-        items = frameworks.items()
-        if items:
-            items.sort()
-            for framework, classes in items:
-                classes.sort()
-                writer.writeln("from %s import %s" % (framework, ", ".join(classes)))
         writer.writeln("from PyObjCTools import NibClassBuilder, AppHelper")
+        writer.writeln()
         writer.writeln()
         nibs = nibs.keys()
         nibs.sort()
