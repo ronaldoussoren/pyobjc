@@ -103,8 +103,6 @@ call_NSMatrix_sortUsingFunction_context_(
 	return result;
 }
 
-
-
 static int 
 _pyobjc_install_NSMatrix(void)
 {

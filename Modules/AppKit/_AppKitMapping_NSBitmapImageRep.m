@@ -56,26 +56,14 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
 		PyTuple_SET_ITEM(result, 0, Py_None);
 		Py_INCREF(Py_None);
 	} else {
-		int i;
-		PyObject* v = PyTuple_New(numTypes);
-
+		PyObject* v = PyObjC_CArrayToPython(
+				@encode(NSTIFFCompression),
+				list, numTypes);
 		if (v == NULL) {
 			Py_DECREF(result);
 			return NULL;
 		}
-
 		PyTuple_SET_ITEM(result, 0, v);
-
-		for (i = 0; i < numTypes; i++) {
-			PyObject* o = PyObjC_ObjCToPython(
-				@encode(NSTIFFCompression), 
-				list + i);
-			if (o == NULL) {
-				Py_DECREF(result);
-				return NULL;
-			}
-			PyTuple_SET_ITEM(v, i, o);
-		}
 	}
 
 	return result;

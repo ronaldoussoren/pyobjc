@@ -37,15 +37,15 @@ call_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 		return NULL;
 	}
 
-	glyphs = malloc(sizeof(NSGlyph));
+	glyphs = PyMem_Malloc(sizeof(NSGlyph));
 	if (glyphs == NULL) {
 		Py_DECREF(seq);
 		return NULL;
 	}
 
-	points = malloc(sizeof(NSPoint));
+	points = PyMem_Malloc(sizeof(NSPoint));
 	if (glyphs == NULL) {
-		free(glyphs);
+		PyMem_Free(glyphs);
 		Py_DECREF(seq);
 		return NULL;
 	}
@@ -57,7 +57,8 @@ call_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 			PySequence_Fast_GET_ITEM(seq, i),
 			glyphs + i);
 		if (r == -1) {
-			free(glyphs);
+			PyMem_Free(glyphs);
+			PyMem_Free(points);
 			Py_DECREF(seq);
 			return NULL;
 		}
@@ -86,31 +87,23 @@ call_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 	PyObjC_ENDHANDLER
 
 	if (len == -1 && PyErr_Occurred()) {
-		free(points);
-		free(glyphs);
+		PyMem_Free(points);
+		PyMem_Free(glyphs);
 		return NULL;
 	}
 
-	free(glyphs);
+	PyMem_Free(glyphs);
+	
+	if (len > 0) {
+		seq = PyObjC_CArrayToPython(@encode(NSPoint), points, len);
+	} else {
+		seq = PyTuple_New(0);
+	}
+	PyMem_Free(points);
 
-	seq = PyTuple_New(len > 0? len: 0);
 	if (seq == NULL) {
-		free(points);
 		return NULL;
 	}
-
-	for (i = 0; i < len; i++) {
-		PyObject* v;
-
-		v = PyObjC_ObjCToPython(@encode(NSPoint), points + i);
-		if (v == NULL) {
-			free(points);
-			return NULL;
-		}
-
-		PyTuple_SET_ITEM(seq, i, v);
-	}
-	free(points);
 
 	result = Py_BuildValue("(iO)", len, seq);
 	Py_DECREF(seq);
@@ -147,17 +140,9 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 0, v);
 
-	v = PyTuple_New(numGlyphs);
+	v = PyObjC_CArrayToPython(@encode(NSGlyph), glyphs, numGlyphs);
 	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 1, v);
-
-	for (i = 0; i < numGlyphs; i++) {
-		PyObject* t;
-
-		t = PyObjC_ObjCToPython(@encode(NSGlyph), glyphs + i);
-		if (t == NULL) goto error;
-		PyTuple_SET_ITEM(v, i, t);
-	}
 
 	v = PyInt_FromLong(numGlyphs);
 	if (v == NULL) goto error;
@@ -364,7 +349,6 @@ call_NSFont_matrix(
 	struct objc_super super;
 	PyObject* pyFontMatrix;
 	float* matrix;
-	int i;
 
 	if (!PyArg_ParseTuple(arguments, "")) {
 		return 0;
@@ -393,16 +377,9 @@ call_NSFont_matrix(
 		return NULL;
 	}
 
-	pyFontMatrix = PyTuple_New(6);
+	pyFontMatrix = PyObjC_CArrayToPython(@encode(float), matrix, 6);
 	if (pyFontMatrix == NULL) {
 		return NULL;
-	}
-	for (i = 0; i < 6; i++) {
-		PyObject* t = PyFloat_FromDouble(matrix[i]);
-		if (t == NULL) {
-			Py_DECREF(pyFontMatrix);
-		}
-		PyTuple_SET_ITEM(pyFontMatrix, i, t);
 	}
 
 	return pyFontMatrix;

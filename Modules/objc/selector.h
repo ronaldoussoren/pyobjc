@@ -9,10 +9,6 @@
 #define PyObjCSelector_kCLASS_METHOD          0x000001
 #define PyObjCSelector_kDONATE_REF            0x000002
 #define PyObjCSelector_kREQUIRED              0x000004
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-#define PyObjCSelector_kRETURNS_SELF          0x000008
-#define PyObjCSelector_kINITIALIZER    	      0x000020
-#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 #define PyObjCSelector_kRETURNS_UNINITIALIZED 0x000010
 
 #define PyObjCSelector_HEAD \

@@ -35,6 +35,13 @@ struct Struct4 {
 	long long i;
 };
 
+struct Struct5 {
+	long i;
+	char ch;
+};
+
+typedef struct Struct5 Struct5Array[2];
+
 
 
 /* Helper stuff for TestNSInvoke */
@@ -249,6 +256,38 @@ BEGIN_UNITTEST(FillStruct4)
 
 END_UNITTEST
 
+BEGIN_UNITTEST(FillStruct5Array)
+
+	PyObject* input;
+	PyObject* v;
+	Struct5Array output;
+	int r;
+
+	input = PyTuple_New(2);
+	FAIL_IF(input == NULL);
+
+	v = PyTuple_New(2);
+	PyTuple_SET_ITEM(v, 0, PyInt_FromLong(500000));
+	PyTuple_SET_ITEM(v, 1,  PyString_FromStringAndSize("\001", 1));
+	PyTuple_SET_ITEM(input, 0, v);
+
+	v = PyTuple_New(2);
+	PyTuple_SET_ITEM(v, 0, PyInt_FromLong(1000000));
+	PyTuple_SET_ITEM(v, 1,  PyString_FromStringAndSize("\002", 1));
+	PyTuple_SET_ITEM(input, 1, v);
+	
+	r = PyObjC_PythonToObjC(@encode(Struct5Array), input, &output);
+	FAIL_IF(r < 0);
+
+	Py_DECREF(input);
+
+	ASSERT_EQUALS(output[0].ch, '\001',    "%d");
+	ASSERT_EQUALS(output[0].i, 500000,  "%ll");
+	ASSERT_EQUALS(output[1].ch, '\002',    "%d");
+	ASSERT_EQUALS(output[1].i, 1000000,  "%ll");
+
+END_UNITTEST
+
 BEGIN_UNITTEST(ExtractStruct1) 
 
 	struct Struct1 input;
@@ -360,6 +399,39 @@ BEGIN_UNITTEST(ExtractStruct4)
 
 END_UNITTEST
 
+BEGIN_UNITTEST(ExtractStruct5Array) 
+
+	Struct5Array input;
+	PyObject* output;
+	PyObject* v;
+
+	input[0].ch = 1;
+	input[0].i = 500000;
+	input[1].ch = 2;
+	input[1].i = 1000000;
+
+	output = PyObjC_ObjCToPython(@encode(Struct5Array), &input);
+	FAIL_IF(output == NULL);
+
+	ASSERT_ISINSTANCE(output, Tuple);	
+	ASSERT_EQUALS(PyTuple_GET_SIZE(output), 2, "%d");
+
+	v = PyTuple_GET_ITEM(output, 0);
+	ASSERT_ISINSTANCE(v, Tuple);
+	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(v, 0), Int);
+	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(v, 1), Int);
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(v, 0)), 500000, "%d");
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(v, 1)), 1, "%d");
+
+	v = PyTuple_GET_ITEM(output, 1);
+	ASSERT_ISINSTANCE(v, Tuple);
+	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(v, 0), Int);
+	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(v, 1), Int);
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(v, 0)), 1000000, "%d");
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(v, 1)), 2, "%d");
+
+END_UNITTEST
+
 #ifdef _C_BOOL
 
 BEGIN_UNITTEST(TestSizeOfBool)
@@ -436,16 +508,18 @@ END_UNITTEST
 static PyMethodDef unittest_methods[] = {
 	TESTDEF(CheckNSInvoke),
 
-	TESTDEF(StructSize),	
-	TESTDEF(StructAlign),	
-	TESTDEF(FillStruct1),	
-	TESTDEF(FillStruct2),	
-	TESTDEF(FillStruct3),	
-	TESTDEF(FillStruct4),	
-	TESTDEF(ExtractStruct1),	
-	TESTDEF(ExtractStruct2),	
-	TESTDEF(ExtractStruct3),	
-	TESTDEF(ExtractStruct4),	
+	TESTDEF(StructSize),
+	TESTDEF(StructAlign),
+	TESTDEF(FillStruct1),
+	TESTDEF(FillStruct2),
+	TESTDEF(FillStruct3),
+	TESTDEF(FillStruct4),
+	TESTDEF(FillStruct5Array),
+	TESTDEF(ExtractStruct1),
+	TESTDEF(ExtractStruct2),
+	TESTDEF(ExtractStruct3),
+	TESTDEF(ExtractStruct4),
+	TESTDEF(ExtractStruct5Array),
 #ifdef _C_BOOL
 	TESTDEF(TestSizeOfBool),	
 #endif

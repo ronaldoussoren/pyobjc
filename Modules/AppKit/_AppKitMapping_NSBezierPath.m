@@ -141,12 +141,12 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(
 	PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
+	PyObject* v;
 	struct objc_super super;
 	int    idx;
 	int    pointCount;
 	NSPoint points[3];
 	NSBezierPathElement res;
-	int i;
 	
 	if  (!PyArg_ParseTuple(arguments, "i", &idx)) {
 		return NULL;
@@ -194,27 +194,20 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(
 	result = PyTuple_New(2);
 	if (result == NULL) return NULL;
 
-	PyTuple_SET_ITEM(result, 0,
-		PyObjC_ObjCToPython(@encode(NSBezierPathElement), &res));
-	if (PyTuple_GET_ITEM(result, 0) == NULL) {
+	v = PyObjC_ObjCToPython(@encode(NSBezierPathElement), &res);
+	if (v == NULL) {
 		Py_DECREF(result);
 		return NULL;
 	}
 
-	PyTuple_SET_ITEM(result, 1, PyTuple_New(pointCount));
-	if (PyTuple_GET_ITEM(result, 1) == NULL) {
+	PyTuple_SET_ITEM(result, 0, v);
+
+	v = PyObjC_CArrayToPython(@encode(NSPoint), points, pointCount);
+	if (v == NULL) {
 		Py_DECREF(result);
 		return NULL;
 	}
-
-	for (i = 0; i < pointCount; i++) {
-		PyTuple_SET_ITEM(PyTuple_GET_ITEM(result, 1), i,
-			PyObjC_ObjCToPython(@encode(NSPoint), &points[i]));
-		if (PyErr_Occurred()) {
-			Py_DECREF(result);
-			return NULL;
-		}
-	}
+	PyTuple_SET_ITEM(result, 1, v);
 
 	return result;
 }
@@ -320,7 +313,7 @@ call_NSBezierPath_setLineDash_count_phase_(
 		return NULL;
 	}
 
-	pattern = malloc(count * sizeof(float));
+	pattern = PyMem_Malloc(count * sizeof(float));
 	if (pattern == NULL) {
 		Py_DECREF(seq);
 		PyErr_NoMemory();
@@ -357,6 +350,8 @@ call_NSBezierPath_setLineDash_count_phase_(
 		result = NULL;
 	PyObjC_ENDHANDLER
 
+	PyMem_Free(pattern);
+
 	if (PyErr_Occurred()) return NULL;
 
 	result = Py_None;
@@ -374,7 +369,7 @@ call_NSBezierPath_getLineDash_count_phase_(
 	struct objc_super super;
 	PyObject* v;
 	float* volatile pattern;
-	int countIn, countOut, i;
+	int countIn, countOut;
 	float phase;
 
 	
@@ -383,7 +378,7 @@ call_NSBezierPath_getLineDash_count_phase_(
 	}
 
 	if (countIn) {
-		pattern = malloc(countIn * sizeof(float));
+		pattern = PyMem_Malloc(countIn * sizeof(float));
 		if (pattern == NULL) {
 			PyErr_NoMemory();
 			return NULL;
@@ -415,6 +410,9 @@ call_NSBezierPath_getLineDash_count_phase_(
 	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
+		if (pattern) {
+			PyMem_Free(pattern);
+		}
 		return NULL;
 	}
 
@@ -427,22 +425,13 @@ call_NSBezierPath_getLineDash_count_phase_(
 		PyTuple_SET_ITEM(result, 0, Py_None);
 		Py_INCREF(Py_None);
 	} else {
-		v = PyTuple_New(countOut);
+		v = PyObjC_CArrayToPython(@encode(float), pattern, countOut);
 		if (v == NULL) {
 			Py_DECREF(result);
 			return NULL;
 		}
 
 		PyTuple_SET_ITEM(result, 0, v);
-
-		for (i = 0; i < countOut; i++) {
-			PyObject* p = PyFloat_FromDouble(pattern[i]);
-			if (p == NULL) {
-				Py_DECREF(result);
-				return NULL;
-			}
-			PyTuple_SET_ITEM(v, i, p);
-		}
 	}
 
 	v = PyInt_FromLong(countOut);
@@ -687,7 +676,6 @@ imp_NSBezierPath_setLineDash_count_phase_(
 	PyObject* result;
 	PyObject* arglist = NULL;
 	PyObject* v;
-	int i;
 
 	PyGILState_STATE state = PyObjCGILState_Ensure();
 
@@ -698,15 +686,9 @@ imp_NSBezierPath_setLineDash_count_phase_(
 	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 0, v);
 
-	v = PyTuple_New(count);
+	v = PyObjC_CArrayToPython(@encode(float), pattern, count);
 	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 1, v);
-
-	for (i = 0; i < count; i++) {
-		PyTuple_SET_ITEM(v, i, 
-			PyObjC_ObjCToPython(@encode(float), pattern+i));
-		if (PyTuple_GET_ITEM(v, i) == NULL) goto error;
-	}
 
 	v = PyInt_FromLong(count);
 	if (v == NULL) goto error;

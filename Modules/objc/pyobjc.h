@@ -21,8 +21,6 @@
 #endif
 
 
-
-
 #include "objc_support.h"
 #include "OC_PythonObject.h"
 #include "OC_PythonArray.h"

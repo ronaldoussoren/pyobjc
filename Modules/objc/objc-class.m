@@ -76,7 +76,7 @@ get_class_info(PyObject* class)
 		return (PyObjC_class_info*)item;
 	}
 
-	info = malloc(sizeof(PyObjC_class_info));
+	info = PyMem_Malloc(sizeof(PyObjC_class_info));
 	if (info == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -159,11 +159,11 @@ objc_class_register(Class objc_class, PyObject* py_class)
 static int 
 objc_class_unregister(Class objc_class)
 {
+	PyObject* val;
 	if (class_registry == NULL) return 0;
 
-	/* XXX: Aren't we leaking memory here, I'd expect that we'd have
-         *      to DECREF the py_class.
-	 */ 
+	val = NSMapGet(class_registry, objc_class);
+	Py_XDECREF(val);
 	NSMapRemove(class_registry, objc_class);
 	return 0;
 }
@@ -175,7 +175,7 @@ objc_class_unregister(Class objc_class)
  * @param objc_class An Objective-C class
  * @result Returns the Python wrapper for the class, or NULL
  * @discussion
- *     This functioin does not raise an Python exception when the
+ *     This function does not raise an Python exception when the
  *     wrapper cannot be found.
  */
 static PyObject*
@@ -187,6 +187,7 @@ objc_class_locate(Class objc_class)
 	if (objc_class == NULL) return NULL;
 
 	result = NSMapGet(class_registry, objc_class);
+	Py_XINCREF(result);
 	return result;
 }
 
@@ -241,18 +242,17 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
-	v = PyTuple_GET_ITEM(bases, 0);
-	if (v == NULL) {
+	py_super_class = PyTuple_GET_ITEM(bases, 0);
+	if (py_super_class == NULL) {
 		return NULL;
 	}
 
-	if (!PyObjCClass_Check(v)) {
+	if (!PyObjCClass_Check(py_super_class)) {
 		PyErr_SetString(PyExc_TypeError, 
 				"first base class must "
 				"be objective-C based");
 		return NULL;
 	}
-	py_super_class = v;
 	super_class = PyObjCClass_GetClass(py_super_class);
 	if (super_class) {
 		PyObjCClass_CheckMethodList(py_super_class, 1);
@@ -298,7 +298,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		Py_DECREF(protocols);
 		return NULL;
 	}
-	PyList_Append(real_bases, v);
+	PyList_Append(real_bases, py_super_class);
 	if (PyErr_Occurred()) {
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
@@ -541,7 +541,6 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 		if (!recursive) break;
 		if (info->class->super_class == NULL) break;
 		cls = PyObjCClass_New(info->class->super_class);
-
 		Py_DECREF(cls);
 		info = get_class_info(cls);
 	}
@@ -941,14 +940,6 @@ add_class_fields(Class objc_class, PyObject* dict)
 						selbuf, 
 						sizeof(selbuf));
 
-			/* FIXME: because we scan again later on, we should
-			 * take care to avoid replacing Python methods with
-			 * a custom selector ('selector' argument to function
-			 * objc.selector)
-			 *
-			 * We're save for now because none of the example code 
-			 * uses this feature.
-			 */
 			curItem = PyDict_GetItemString(dict, name);
 			if (curItem == NULL) {
 				PyErr_Clear();
@@ -1076,9 +1067,22 @@ PyObjCClass_New(Class objc_class)
 
 	result = objc_class_locate(objc_class);
 	if (result != NULL) {
-		Py_INCREF(result);
 		return result;
 	}
+
+#ifdef GNU_RUNTIME
+	/*
+	 * FIXME: we do get unresolved classes when fetching the class list
+	 * (especially when loading multiple frameworks). I'm not sure why
+	 * this occurs, it might be the way we link/compile our code.
+	 *
+	 * The test below seems to fix the problems, but is obviously a hack.
+	 */
+	if (!CLS_ISRESOLV(objc_class)) {
+		extern void __objc_resolve_class_links(void);
+		__objc_resolve_class_links();
+	}
+#endif
 
 	dict = PyDict_New();
 	PyDict_SetItemString(dict, "__slots__", PyTuple_New(0));
@@ -1110,7 +1114,7 @@ PyObjCClass_New(Class objc_class)
 	}
 
 	info->class = objc_class;
-	info->sel_to_py = PyDict_New(); 
+	info->sel_to_py = NULL;
 	info->method_magic = 0;
 	info->dictoffset = 0;
 	info->delmethod = NULL;

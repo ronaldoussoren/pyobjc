@@ -44,7 +44,6 @@ static void SIGCallback(CFMachPortRef port, void *msg, CFIndex size, void *info)
 		if (!callable) break;
 
 		tmp = PyObject_CallFunction(callable, "i", signum);
-		Py_DECREF(callable);
 		Py_XDECREF(tmp);
 	} while (0);
 	if (PyErr_Occurred())

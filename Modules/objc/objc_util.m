@@ -16,31 +16,7 @@ PyObject* PyObjCExc_UnInitDeallocWarning;
 
 PyGILState_STATE PyObjCGILState_Ensure(void)
 {
-	/* Now that PyObjCUnicode_New no longer uses autorelead objects it 
-	 * should no longer be necessary to create a transient release-pool
-	 * for calls from ObjC to python. 
-	 * The pool might also be unsafe because at least some python methods
-	 * return objects whose only reference is in the autorelease pool (
-	 * it is unverified if this really is a problem)
-	 */
-#if 1
 	return PyGILState_Ensure();
-#else
-	int shouldCreateThreadPool = (PyGILState_GetThisThreadState() == NULL) ? 1 : 0;
-	PyGILState_STATE state = PyGILState_Ensure();
-	if (shouldCreateThreadPool) {
-		int err;
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		PyObject *pypool = PyObjC_IdToPython(pool);
-		PyObject *tdict = PyThreadState_GetDict();
-		assert(tdict != NULL);
-		assert(pypool != NULL);
-		err = PyDict_SetItemString(tdict, THREADSTATE_AUTORELEASEPOOL, pypool);
-		assert(err == 0);
-		Py_DECREF(pypool);
-	}
-	return state;
-#endif
 }
 
 int ObjCUtil_Init(PyObject* module)
@@ -401,32 +377,6 @@ buffer_get(PyObject* obj, void** bufptr, int* sizeptr)
 	}
 
 	return 0;
-
-#if 0
-	PyBufferProcs* pb = obj->ob_type->tp_as_buffer;
-	if (!PyType_HasFeature(obj->ob_type,
-				Py_TPFLAGS_HAVE_GETCHARBUFFER) ||
-				pb == NULL || 
-				pb->bf_getcharbuffer == NULL ||
-				pb->bf_getsegcount == NULL) {
-		PyErr_SetString(PyExc_TypeError, "cannot access buffer");
-		return -1;
-	}
-
-	if (pb->bf_getsegcount(obj, NULL) != 1) {
-		PyErr_SetString(PyExc_TypeError, 
-				"cannot access multi-segment buffer");
-		return -1;
-	}
-	
-	*sizeptr = pb->bf_getcharbuffer(obj, 0, (const char**)bufptr);
-	if (*sizeptr < 0) {
-		PyErr_SetString(PyExc_TypeError,
-				"error accessing buffer object");
-		return -1;
-	}
-	return 0;
-#endif
 }
 
 static char struct_elem_code(const char* typestr);

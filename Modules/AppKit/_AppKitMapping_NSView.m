@@ -57,7 +57,6 @@ call_NSView_sortSubviewsUsingFunction_context_(
 	return result;
 }
 
-
 static PyObject* 
 call_NSView_getRectsBeingDrawn_count_(
 	PyObject* method, PyObject* self, PyObject* arguments)

@@ -274,7 +274,7 @@ call_NSMutableArray_removeObjectsFromIndices_numIndices_(
 		return NULL;
 	}
 
-	indices = alloca(sizeof(unsigned) * count);
+	indices = PyMem_Malloc(sizeof(unsigned) * count);
 	if (indices == NULL) {
 		Py_DECREF(indicesSeq);
 		PyErr_NoMemory();
@@ -285,6 +285,7 @@ call_NSMutableArray_removeObjectsFromIndices_numIndices_(
 		err = PyObjC_PythonToObjC(@encode(unsigned), 
 			PySequence_Fast_GET_ITEM(indicesSeq, i), indices + i);
 		if (err == -1) {
+			PyMem_Free(indices);
 			Py_DECREF(indicesSeq);
 			PyErr_NoMemory();
 			return NULL;
@@ -304,6 +305,7 @@ call_NSMutableArray_removeObjectsFromIndices_numIndices_(
 	PyObjC_ENDHANDLER
 
 	Py_DECREF(indicesSeq);
+	PyMem_Free(indices);
 
 	if (PyErr_Occurred()) {
 		return NULL;
@@ -399,7 +401,7 @@ call_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 		return NULL;
 	}
 
-	objects = alloca(sizeof(id) * count);
+	objects = PyMem_Malloc(sizeof(id) * count);
 	if (objects == NULL) {
 		Py_DECREF(objectSeq);
 		PyErr_NoMemory();
@@ -410,6 +412,7 @@ call_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 		err = PyObjC_PythonToObjC(@encode(id), 
 			PySequence_Fast_GET_ITEM(objectSeq, i), objects + i);
 		if (err == -1) {
+			PyMem_Free(objects);
 			Py_DECREF(objectSeq);
 			PyErr_NoMemory();
 			return NULL;
@@ -430,6 +433,7 @@ call_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 	PyObjC_ENDHANDLER
 
 	Py_DECREF(objectSeq);
+	PyMem_Free(objects);
 
 	if (PyErr_Occurred()) {
 		return NULL;

@@ -296,15 +296,6 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	PyObject*                py_superclass;
 	int                      item_size;
 
-
-	/* XXX: May as well directly pass this in... */
-	py_superclass = PyObjCClass_New(super_class);
-	if (py_superclass == NULL) return NULL;
-
-	if (do_slots(py_superclass, class_dict) < 0) {
-		goto error_cleanup;
-	}
-
 	if (!PyList_Check(protocols)) {
 		PyErr_Format(ObjCExc_internal_error,  
 			"protocol list not a python 'list' but '%s'",
@@ -332,6 +323,14 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		PyErr_Format(ObjCExc_error, "'%s' not a valid name", name);
 		goto error_cleanup;
 	}
+
+	py_superclass = PyObjCClass_New(super_class);
+	if (py_superclass == NULL) return NULL;
+
+	if (do_slots(py_superclass, class_dict) < 0) {
+		goto error_cleanup;
+	}
+
 
 	/* 
 	 * Check for methods/variables that must not be overridden in python.
@@ -383,7 +382,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	 * methods.
 	 */
 	for (i = 0; i < key_count; i++) {
-		key = PyList_GetItem(key_list, i);
+		key = PyList_GET_ITEM(key_list, i);
 		if (PyErr_Occurred()) {
 			PyErr_SetString(ObjCExc_internal_error,
 				"PyObjCClass_BuildClass: "
@@ -728,7 +727,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		meta_method_list = NULL;
 	}
 
-	Py_XDECREF(py_superclass);
+	Py_XDECREF(py_superclass); py_superclass = NULL;
 
 	if (PyDict_DelItemString(class_dict, "__dict__") < 0) {
 		PyErr_Clear();
@@ -1118,8 +1117,7 @@ object_method_forwardInvocation(
 		PyObjCSelector_Signature(pymeth));
 	len = signature->nargs;
 
-	Py_XDECREF(pyself);
-	Py_XDECREF(pymeth);
+	Py_XDECREF(pymeth); pymeth = NULL;
 
 	arglist = PyList_New(1);
 	if (arglist == NULL) {
@@ -1128,15 +1126,8 @@ object_method_forwardInvocation(
 		return;
 	}
 
-	i = PyList_SetItem(arglist, 0, pythonify_c_value(
-					signature->argtype[0],
-					(void*)&self));
-	if (i < 0) {
-		Py_DECREF(arglist);
-		PyObjCMethodSignature_Free(signature);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	PyList_SET_ITEM(arglist, 0, pyself);
+	pyself = NULL;
 
 	for (i = 2; i < len; i++) {
 		type = signature->argtype[i];
@@ -1200,7 +1191,7 @@ object_method_forwardInvocation(
 		return;
 	}
 	Py_DECREF(arglist);
-	arglist = v;
+	arglist = v; v = NULL;
 
 	result = PyObjC_CallPython(self, theSelector, arglist, &isAlloc);
 	Py_DECREF(arglist);
@@ -1279,7 +1270,7 @@ object_method_forwardInvocation(
 					PyObjCErr_ToObjCWithGILState(&state);
 					return;
 				}
-				if (v->ob_refcnt == 1 && type[0] == _C_ID) {
+				if (result->ob_refcnt == 1 && type[0] == _C_ID) {
 					/* make sure return value doesn't die before
 					 * the caller can get its hands on it.
 					 */
@@ -1893,6 +1884,7 @@ object_method_takeStoredValue_forKey_(
 				(char*)[key cString],
 				val);
 			Py_DECREF(val);
+			Py_DECREF(selfObj);
 			if (r == -1) {
 				PyErr_Clear();
 				PyGILState_Release(state);
@@ -1979,6 +1971,7 @@ object_method_takeValue_forKey_(
 				(char*)[key cString],
 				val);
 			Py_DECREF(val);
+			Py_DECREF(selfObj);
 			if (r == -1) {
 				PyErr_Clear();
 				PyGILState_Release(state);

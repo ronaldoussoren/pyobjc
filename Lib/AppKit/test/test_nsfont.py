@@ -15,7 +15,12 @@ class TestNSFont(unittest.TestCase):
 
     def testConstants(self):
         self.assert_(hasattr(AppKit, 'NSFontIdentityMatrix'))
-        self.assertEquals(AppKit.NSFontIdentityMatrix, None)
+
+        if AppKit.NSFontIdentityMatrix is None:
+            # MacOSX
+            return
+
+        self.assertEquals(AppKit.NSFontIdentityMatrix, (1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
 
     def testMatrixMethods(self):
         o = AppKit.NSFont.boldSystemFontOfSize_(10);

@@ -308,7 +308,6 @@ if gs_root is None:
         sys.exit(1)
 
     CFLAGS=[
-        "-DPYOBJC_NEW_INITIALIZER_PATTERN",
         "-DMACOSX",
         "-DAPPLE_RUNTIME",
         "-no-cpp-precomp",
@@ -332,7 +331,7 @@ if gs_root is None:
         #"-Werror",
 
         # no optimization, for debugging
-        #"-O0", "-g",
+        "-O0", "-g",
 
         # g4 optimized
         #"-O3", "-mcpu=7450", "-maltivec",
@@ -431,7 +430,7 @@ else:
     APPKIT_LDFLAGS=OBJC_LDFLAGS + ['-lgnustep-gui']
     APPMAP_LDFLAGS=OBJC_LDFLAGS + ['-lgnustep-gui']
     CF_LDFLAGS=[]
-    ADDRESSBOOK_LDFLAGS=[]
+    ADDRESSBOOK_LDFLAGS=OBJC_LDFLAGS + ['-lAddresses']
     PREFPANES_LDFLAGS=[]
     SECURITY_INTERFACE_LDFLAGS=[]
     EXCEPTION_HANDLING_LDFLAGS=[]

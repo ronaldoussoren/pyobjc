@@ -31,7 +31,7 @@ setSignatureForSelector("NSFont", "positionOfGlyph:struckOverGlyph:metricsExist:
 setSignatureForSelector("NSFont", "positionOfGlyph:struckOverRect:metricsExist:", "{_NSPoint=ff}@:I{_NSRect={_NSPoint=ff}{_NSSize=ff}}o^c")
 setSignatureForSelector("NSFont", "positionOfGlyph:withRelation:toBaseGlyph:totalAdvancement:metricsExist:", "{_NSPoint=ff}@:IiIo^{_NSSize=ff}o^c")
 setSignatureForSelector("NSWorkspace", "getFileSystemInfoForPath:isRemovable:isWritable:isUnmountable:description:type:", "c28@4:8@12o^c16o^c20o^c24o^@28o^@32")
-setSignatureForSelector("NSWorkspace", "getInfoForFile:application:type:", "c16@4:8@12o^@16o^@20")
+setSignatureForSelector("NSWorkspace", "getInfoForFile:application:type:", "c@:@o^@o^@")
 setSignatureForSelector("NSWorkspace", "performFileOperation:source:destination:files:tag:", "c@:@@@@o^i")
 setSignatureForSelector("NSDocument", "_changeAlertDidEnd:returnCode:contextInfo:", "v16@4:8@12i16i20")
 setSignatureForSelector("NSDocument", "_compatibility_canCloseDocumentWithDelegate:shouldCloseSelector:contextInfo:", "v16@4:8@12:16i20")

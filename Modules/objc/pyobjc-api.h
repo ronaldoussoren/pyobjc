@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.33 2004/05/07 00:23:26 etrepum Exp $
+ * $Id: pyobjc-api.h,v 1.34 2004/05/21 20:44:31 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -194,8 +194,9 @@ static inline void PyGILState_Release(
  * - Version 7 adds PyObjCErr_AsExc, PyObjCGILState_Ensure
  * - Version 8 adds PyObjCObject_IsUninitialized,
         removes PyObjCSelector_IsInitializer
+ * - Version 9 (???)
  */
-#define PYOBJC_API_VERSION 8
+#define PYOBJC_API_VERSION 9
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -323,10 +324,6 @@ struct pyobjc_api {
     /* PyObjCGILState_Ensure */
     PyGILState_STATE (*gilstate_ensure)(void);
 
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-    /* PyObjCSelector_IsInitializer */
-    int (*sel_is_init)(PyObject*);
-#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
     int (*obj_is_uninitialized)(PyObject*);
 };
 
@@ -378,7 +375,6 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCIMP_GetIMP   (PyObjC_API->imp_get_imp)
 #define PyObjCIMP_GetSelector   (PyObjC_API->imp_get_sel)
 #define PyObjCGILState_Ensure (PyObjC_API->gilstate_ensure)
-#define PyObjCSelector_IsInitializer (PyObjC_API->sel_is_init)
 #define PyObjCObject_IsUninitialized (PyObjC_API->obj_is_uninitialized)
 
 
@@ -475,6 +471,7 @@ PyObjCClass_Convert(PyObject* object, void* pvar)
 
 
 #ifndef PYOBJC_METHOD_STUB_IMPL
+
 static int
 PyObjC_ImportAPI(PyObject* calling_module)
 {

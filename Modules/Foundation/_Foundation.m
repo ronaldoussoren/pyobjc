@@ -304,19 +304,11 @@ static PyObject* call_objWithObjects_count_(
 	
 	result = PyObjC_IdToPython(res);
 
-#if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 	if (PyObjCObject_IsUninitialized(self)) {
-        if (result != self) {
-            PyObjCObject_ClearObject(self);
-        }
-	}
-#else
-	if (PyObjCSelector_IsInitializer(method)) {
 		if (result != self) {
 			PyObjCObject_ClearObject(self);
 		}
 	}
-#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
 
 	return result;
 }

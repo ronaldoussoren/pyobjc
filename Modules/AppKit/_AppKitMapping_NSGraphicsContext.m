@@ -40,11 +40,11 @@ call_NSGraphicsContext_graphicsPort(
 
 	PyObjC_DURING
 		PyObjC_InitSuper(&super,
-		    PyObjCSelector_GetClass(method),
-		    PyObjCObject_GetObject(self));
+			PyObjCSelector_GetClass(method),
+			PyObjCObject_GetObject(self));
 
-		res = (CGContextRef)objc_msgSendSuper(&super,
-		    @selector(graphicsPort));
+		res = (CGContextRef)objc_msgSendSuper(&super, 
+				@selector(graphicsPort));
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = NULL;
@@ -57,7 +57,8 @@ call_NSGraphicsContext_graphicsPort(
 
 	sprintf(ptrString, "%08x", (unsigned int)res);
 	sillySwigThing = PyString_FromFormat("_%s_CGContextRef", ptrString);
-	retVal = PyObject_CallFunctionObjArgs(pyCGContextPtr, sillySwigThing, NULL);
+	retVal = PyObject_CallFunctionObjArgs(
+			pyCGContextPtr, sillySwigThing, NULL);
 	Py_DECREF(sillySwigThing);
 	Py_DECREF(pyCGContextPtr);
 	return retVal;

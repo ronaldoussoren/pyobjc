@@ -14,17 +14,6 @@
 #undef PyObjCObject_GetObject
 #endif
 
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-static int sel_is_init(PyObject* object)
-{
-	if (!PyObjCSelector_Check(object)) {
-		return -1;
-	}
-
-	return (PyObjCSelector_GetFlags(object) & PyObjCSelector_kINITIALIZER) != 0;
-}
-#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
-	
 static int obj_is_uninitialized(PyObject* object)
 {
 	if (!PyObjCObject_Check(object)) {
@@ -137,9 +126,6 @@ struct pyobjc_api objc_api = {
 	PyObjCIMP_GetSelector,		/* imp_get_sel */
 	PyObjCErr_AsExc,		/* err_python_to_nsexception */
 	PyObjCGILState_Ensure,		/* gilstate_ensure */
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-	sel_is_init,			/* sel_is_init */
-#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 	obj_is_uninitialized
 };
 

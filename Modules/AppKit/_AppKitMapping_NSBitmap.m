@@ -122,6 +122,8 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
 		return NULL;
 	}
 
+	memset(dataPlanes, 0, sizeof(dataPlanes));
+
 	PyObjC_DURING
 
 		PyObjC_InitSuper(&super,
@@ -185,7 +187,6 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
     
 		bitmapData = (unsigned char *) objc_msgSendSuper(&super, 
 				PyObjCSelector_GetSelector(method));
-
 			
 		bytesPerPlane = [
 			(NSBitmapImageRep*)PyObjCObject_GetObject(self) 

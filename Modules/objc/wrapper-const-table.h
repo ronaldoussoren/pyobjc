@@ -160,7 +160,6 @@ static inline int register_strings(PyObject* d, struct stringtable* table)
 #ifdef GNU_RUNTIME
 
 #import <Foundation/NSBundle.h>
-
 #define CFBundleRef NSBundle*
 
 static inline int
