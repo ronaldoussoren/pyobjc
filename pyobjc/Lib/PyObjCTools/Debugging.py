@@ -1,8 +1,20 @@
 """
-Debugging - logging of (unhandled) exceptions
+Low level debugging helper for PyObjC.
 
-XXX: this module is undocumented
+Allows you to log Python and ObjC (via atos) stack traces for NSExceptions
+raised.
+
+General guidelines for use:
+
+- It's typically only useful when you log EVERY exception, because Foundation
+  and AppKit will swallow most of them.  This means that you should never
+  use this module in a release build.
+
+- Typical use involves only calling installDebuggingHandler or
+  installVerboseDebuggingHandler.  It may be removed at any time by calling
+  removeDebuggingHandler.
 """
+
 from Foundation import NSObject, NSLog
 import objc
 import os
@@ -92,6 +104,10 @@ class PyObjCDebuggingDelegate(NSObject):
     exceptionHandler_shouldHandleException_mask_ = objc.selector(exceptionHandler_shouldHandleException_mask_, signature='c@:@@I')
 
 def installExceptionHandler(verbosity=DEFAULTVERBOSITY, mask=DEFAULTMASK):
+    """
+    Install the exception handling delegate that will log every exception
+    matching the given mask with the given verbosity.
+    """
     # we need to retain this, cause the handler doesn't
     global _exceptionHandlerDelegate
     delegate = PyObjCDebuggingDelegate.alloc().initWithVerbosity_(verbosity)
@@ -100,14 +116,32 @@ def installExceptionHandler(verbosity=DEFAULTVERBOSITY, mask=DEFAULTMASK):
     _exceptionHandlerDelegate = delegate
 
 def installPythonExceptionHandler():
+    """
+    Install a verbose exception handling delegate that logs every exception
+    raised.
+
+    Will log only Python stack traces, if available.
+    """
     installExceptionHandler(verbosity=DEFAULTVERBOSITY, mask=EVERYTHINGMASK)
 
 def installVerboseExceptionHandler():
+    """
+    Install a verbose exception handling delegate that logs every exception
+    raised.
+
+    Will log both Python and ObjC stack traces, if available.
+    """
     installExceptionHandler(verbosity=LOGSTACKTRACE, mask=EVERYTHINGMASK)
 
 def removeExceptionHandler():
+    """
+    Remove the current exception handler delegate
+    """
     NSExceptionHandler.defaultExceptionHandler().setDelegate_(None)
     NSExceptionHandler.defaultExceptionHandler().setExceptionHandlingMask_(0)
 
 def handlerInstalled():
+    """
+    Is an exception handler delegate currently installed?
+    """
     return NSExceptionHandler.defaultExceptionHandler().delegate() is not None
