@@ -261,6 +261,18 @@ later.
 
 .. __: CocoaBindings
 
+* `Bookmarks`_
+
+  Shows custom array controller that implements table view data
+  source methods to support drag and drop, including copying
+  objects from one window to another, drop of URLs, and 
+  re-ordering of the content array.
+
+  Originally from `Cocoa Bindings Examples and Hints`_,
+  converted to PyObjC by u.fiedler.
+
+.. _`Bookmarks`: CocoaBindings/Bookmarks
+
 * `ControlledPreferences`_
   
   Demonstrates how to use Cocoa Bindings to simplify storing and
@@ -332,6 +344,47 @@ later.
 
 .. _`TemperatureTransformer`: CocoaBindings/TemperatureTransformer
 .. _`Value Transformers`: http://developer.apple.com/documentation/Cocoa/Conceptual/ValueTransformers/index.html
+
+* `ToDos`_
+
+  Shows two array controllers, one to manage the contents of a table
+  view, the other to manage a pop-up menu in a table column. Also 
+  shows two value transformers to alter the color of text.
+
+  Originally from `Cocoa Bindings Examples and Hints`_,
+  converted to PyObjC by u.fiedler.
+
+.. _`ToDos`: CocoaBindings/ToDos
+
+Inject
+------
+
+The directory `Inject`_ contains a number of examples that use the
+``objc.inject`` facility to inject code into another process.  These
+examples require Mac OS X 10.3 or later.
+
+.. _`Inject`: Inject
+
+* `IDNSnitch`_
+
+  A proof of concept `IDN spoofing defense`_ for Safari (tested with
+  v1.2.4 on Mac OS X 10.3.8).  Demonstrates how to write an application
+  that detects the launch of another application by bundle identifier,
+  how to use ``objc.inject`` to load code into another application,
+  how to override the implementation of an existing class but still
+  call back into the original implementation, and how to reduce the
+  size of such an application/plugin combination by using symlinks
+  to share object files (the PyObjC extensions in this case).
+
+.. _`IDNSnitch`: Inject/IDNSnitch
+.. _`IDN spoofing defense`: http://bob.pythonmac.org/archives/2005/02/07/idn-spoofing-defense-for-safari/
+
+* `InjectInterpreter`_:
+
+  Shows how to inject an in-process Python interpreter into another
+  process.  Based on the AppKit PyInterpreter example.
+
+.. _`InjectInterpreter`: Inject/InjectInterpreter
 
 OpenGL
 ------

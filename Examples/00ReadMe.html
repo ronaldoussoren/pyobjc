@@ -186,6 +186,15 @@ toolbar as well as how to use multi-threading.  Contains a
 Key-Value Coding and Cocoa Bindings. These scripts require Mac OS X 10.3 or
 later.</p>
 <ul>
+<li><a href="CocoaBindings/Bookmarks">Bookmarks</a><p>Shows custom array controller that implements table view data
+source methods to support drag and drop, including copying
+objects from one window to another, drop of URLs, and 
+re-ordering of the content array.</p>
+<p>Originally from <a href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
 <li><a href="CocoaBindings/ControlledPreferences">ControlledPreferences</a><p>Demonstrates how to use Cocoa Bindings to simplify storing and
 retrieving user preferences.  Also demonstrates how to use an
 <code><span>NSValueTransformer</span></code> to archive/unarchive a non-property-list
@@ -229,10 +238,38 @@ as well as a <code><span>setup.py</span></code> script.</p>
 </li>
 </ul>
 <ul>
-<li><a href="CocoaBindings/TemperatureTransformer">TemperatureTransformer</a><p>An example that uses NSValueTransformer to convert between Celsius
+<li><a href="CocoaBindings/TemperatureTransformer">TemperatureTransformer</a><p>An example that uses <code><span>NSValueTransformer</span></code> to convert between Celsius
 and Fahrenheit.</p>
 <p>Based on Apple's <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/ValueTransformers/index.html">Value Transformers</a> documentation,
 converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><a href="CocoaBindings/ToDos">ToDos</a><p>Shows two array controllers, one to manage the contents of a table
+view, the other to manage a pop-up menu in a table column. Also 
+shows two value transformers to alter the color of text.</p>
+<p>Originally from <a href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<h2><a name="inject">Inject</a></h2>
+<p>The directory <a href="Inject">Inject</a> contains a number of examples that use the
+<code><span>objc.inject</span></code> facility to inject code into another process.  These
+examples require Mac OS X 10.3 or later.</p>
+<ul>
+<li><a href="Inject/IDNSnitch">IDNSnitch</a><p>A proof of concept <a href="http://bob.pythonmac.org/archives/2005/02/07/idn-spoofing-defense-for-safari/">IDN spoofing defense</a> for Safari (tested with
+v1.2.4 on Mac OS X 10.3.8).  Demonstrates how to write an application
+that detects the launch of another application by bundle identifier,
+how to use <code><span>objc.inject</span></code> to load code into another application,
+how to override the implementation of an existing class but still
+call back into the original implementation, and how to reduce the
+size of such an application/plugin combination by using symlinks
+to share object files (the PyObjC extensions in this case).</p>
+</li>
+</ul>
+<ul>
+<li><a href="Inject/InjectInterpreter">InjectInterpreter</a>:<p>Shows how to inject an in-process Python interpreter into another
+process.  Based on the AppKit PyInterpreter example.</p>
 </li>
 </ul>
 <h2><a name="opengl">OpenGL</a></h2>
