@@ -49,10 +49,23 @@ class PyDETextView(NSTextView):
 
     def awakeFromNib(self):
         self.setTypingAttributes_(getBasicTextAttributes())
+
+        #style = NSMutableParagraphStyle.alloc().init()
+        #style.setParagraphStyle_(NSParagraphStyle.defaultParagraphStyle())
+        #self.setDefaultParagraphStyle_(style)
         self.usesTabs = 0
         self.indentSize = 4
         self._string = self.textStorage().mutableString().nsstring()
         self._storageDelegate = PyDETextStorageDelegate(self.textStorage())
+        self.setHorizontallyResizable_(True)
+
+        # Add a horizontal scrollbar to our scrollview
+        self.superview().superview().setHasHorizontalScroller_(True)
+
+        # And to make that useable we make our textContainer a fixed, large
+        # width. 
+        self.textContainer().setWidthTracksTextView_(False)
+        self.textContainer().setContainerSize_((1000000, 1000000))
 
         nc = NSNotificationCenter.defaultCenter()
         nc.addObserver_selector_name_object_(self, "textFontChanged:", "PyDETextFontChanged", None)

@@ -15,12 +15,12 @@ plist = Plist(
     )
 
 buildapp(
-        name = "Python IDE",
+        name = "PyDE",
         mainprogram = "main.py",
         resources = [ 
             os.path.join("Resources", x) 
                 for x in os.listdir("Resources")
-                if x != 'CVS' ],
+                if x != 'CVS' ] + [ 'pythonfile.py', 'PyDETextView.py', 'PyFontify.py'],
         nibname = "MainMenu.nib",
         plist = plist,
     )

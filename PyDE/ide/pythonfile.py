@@ -1,6 +1,7 @@
 """
 Support for Python source files
 """
+from AppKit import *
 
 from PyObjCTools import NibClassBuilder
 import re
@@ -8,6 +9,23 @@ import re
 NIBNAME="PythonDocument"
 
 NibClassBuilder.extractClasses(NIBNAME)
+
+UNKNOWN_ENCODING_WR="""\
+The source code specifies a source code encoding that is unknown to the
+runtime system. Please specify a different encoding (such as utf-8).
+
+Your file is not saved.
+"""
+
+
+ENCODING_FAILED="""\
+The source file does not specify an encoding, or specifies an encoding that
+cannot represent all characters used in the file. Please specify a different
+encoding (such as utf-8).
+
+Your file is not saved.
+"""
+
 
 class PyDEPythonDocument (NibClassBuilder.AutoBaseClass):
     """
@@ -35,7 +53,23 @@ class PyDEPythonDocument (NibClassBuilder.AutoBaseClass):
 
         text = self.textView.string()
         encoding = self.guessEncoding(text)
-        text = text.encode(encoding)
+
+        try:
+            text = text.encode(encoding)
+
+        except LookupError:
+            NSBeginAlertSheet(
+                    "Cannot encode file",
+                    "ok", None, None, self.textView.window(),
+                    None, None, None, 0,  UNKNOWN_ENCODING_WR)
+            return False
+
+        except UnicodeDecodeError:
+            NSBeginAlertSheet(
+                    "Cannot encode file",
+                    "ok", None, None, self.textView.window(),
+                    None, None, None, 0,  ENCODING_FAILED)
+            return False
 
         fp = open(path, 'w')
         fp.write(text)
@@ -71,6 +105,9 @@ class PyDEPythonDocument (NibClassBuilder.AutoBaseClass):
         text = fp.read()
         fp.close()
 
+        # XXX: Decoding might fail as wel (invalid encoding, or the decoder
+        # failed). Show an alertsheet that allows to user to load the text
+        # using some default encoding.
         encoding = self.guessEncoding(text)
         text = unicode(text, encoding)
         self.textView.setString_(text)
