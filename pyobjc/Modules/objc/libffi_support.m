@@ -177,7 +177,7 @@ static  PyObject* array_types = NULL; /* XXX: Use NSMap  */
 static ffi_type* 
 struct_to_ffi_type(const char* argtype)
 {
-static  PyObject* struct_types = NULL; /* XXX: Use NSMap  */
+	static  PyObject* struct_types = NULL; /* XXX: Use NSMap  */
 	PyObject* v;
 	ffi_type* type;
 	int       field_count;
