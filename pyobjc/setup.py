@@ -333,25 +333,29 @@ if gs_root is None:
         '-framework', 'Foundation',
         ]
 
+    CF_LDFLAGS=[
+        '-framework', 'CoreFoundation', '-framework', 'Foundation',
+        ]
+
     FND_LDFLAGS=[
-        '-framework CoreFoundation', '-framework', 'Foundation',
+        '-framework', 'CoreFoundation', '-framework', 'Foundation',
         ]
 
     APPKIT_LDFLAGS=[
-        '-framework CoreFoundation', '-framework', 'AppKit',
+        '-framework', 'CoreFoundation', '-framework', 'AppKit',
         ]
 
     ADDRESSBOOK_LDFLAGS=[
-        '-framework CoreFoundation', '-framework', 'AddressBook', '-framework', 'Foundation',
-    ]
+        '-framework', 'CoreFoundation', '-framework', 'AddressBook', '-framework', 'Foundation',
+        ]
 
     SECURITY_INTERFACE_LDFLAGS=[
-        '-framework CoreFoundation', '-framework', 'SecurityInterface', '-framework', 'Foundation',
-    ]
+        '-framework', 'CoreFoundation', '-framework', 'SecurityInterface', '-framework', 'Foundation',
+        ]
 
     PREFPANES_LDFLAGS=[
-        '-framework CoreFoundation', '-framework', 'PreferencePanes', '-framework', 'Foundation',
-    ]
+        '-framework', 'CoreFoundation', '-framework', 'PreferencePanes', '-framework', 'Foundation',
+        ]
 
 else:
     #
@@ -410,6 +414,7 @@ else:
     FNDMAP_LDFLAGS=OBJC_LDFLAGS
     APPKIT_LDFLAGS=OBJC_LDFLAGS + ['-lgnustep-gui']
     APPMAP_LDFLAGS=OBJC_LDFLAGS + ['-lgnustep-gui']
+    CF_LDFLAGS=[]
     ADDRESSBOOK_LDFLAGS=[]
     PREFPANES_LDFLAGS=[]
     SECURITY_INTERFACE_LDFLAGS=[]
@@ -459,6 +464,8 @@ if sys.version >= '2.3':
     AddressBookDepends = {
         'depends': glob.glob('build/codegen/*.inc'),
     }
+    CoreFoundationDepends = {
+    }
     SecurityInterfaceDepends = {
         'depends': glob.glob('build/codegen/*.inc'),
     }
@@ -475,6 +482,7 @@ else:
     FoundationDepends = {}
     AppKitDepends = {}
     AddressBookDepends = {}
+    CoreFoundationDepends = {}
     SecurityInterfaceDepends = {}
     PrefPanesDepends = {}
     InterfaceBuilderDepends = {}
@@ -523,8 +531,18 @@ AddressBookPackages, AddressBookExtensions = \
                       ),
         ])
 
-
-SecurityInterfacePackages, SecurityInterfaceExtensions = [], []
+CoreFoundationPackages, CoreFoundationExtensions = \
+        IfFrameWork('CoreFoundation.framework', [ 'CoreFoundation' ], [
+            Extension("_machsignals",
+                      [ 'Modules/CoreFoundation/machsignals.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=[
+                      ] + CF_LDFLAGS,
+                      **CoreFoundationDepends),
+        ])
+        
 SecurityInterfacePackages, SecurityInterfaceExtensions = \
         IfFrameWork('SecurityInterface.framework', [ 'SecurityInterface' ], [
             Extension('_SecurityInterface',
@@ -595,7 +613,9 @@ def package_version():
     raise ValueError, "Version not found"
 
 
+# skipping CoreFoundationPackages, it's fake!
 packages = CorePackages + AppKitPackages + FoundationPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + ScreenSaverPackages + WebKitPackages + SecurityInterfacePackages + [ 'PyObjCTools' ]
+
 # The following line is needed to allow separate flat modules
 # to be installed from a different folder (needed for the
 # bundlebuilder test below).
@@ -637,6 +657,7 @@ dist = setup(name = "pyobjc",
                            + InterfaceBuilderExtensions
                            + ScreenSaverExtensions
                            + SecurityInterfaceExtensions
+                           + CoreFoundationExtensions
                            + WebKitExtensions
                            ),
              packages = packages,

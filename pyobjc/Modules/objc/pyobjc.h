@@ -108,33 +108,4 @@ PyObject* PyObjC_IDToCFType(id argument);
 	if (!(expr)) { PyObjCErr_InternalError(); return (retval); }
 
 
-/* threading support */
-#define PyObjC_DURING \
-		Py_BEGIN_ALLOW_THREADS \
-		NS_DURING
-
-#define PyObjC_HANDLER NS_HANDLER
-
-#define PyObjC_ENDHANDLER \
-		NS_ENDHANDLER \
-		Py_END_ALLOW_THREADS
-
-#define PyObjC_BEGIN_WITH_GIL \
-	{ \
-		PyGILState_STATE _GILState; \
-		_GILState = PyGILState_Ensure(); 
-
-#define PyObjC_GIL_FORWARD_EXC() \
-		do { \
-			NSException* exc = PyObjCErr_AsExc(); \
-			PyGILState_Release(_GILState); \
-			[exc raise]; \
-		} while (0)
-
-
-#define PyObjC_END_WITH_GIL \
-		PyGILState_Release(_GILState); \
-	}
-
-
 #endif /* PyObjC_H */

@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.26 2004/03/19 14:01:44 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.27 2004/04/01 03:53:45 etrepum Exp $
  */
 
 #include <Python.h>
@@ -35,6 +35,34 @@ static inline void PyGILState_Release(
 #endif
 
 #endif
+
+
+/* threading support */
+#define PyObjC_DURING \
+		Py_BEGIN_ALLOW_THREADS \
+		NS_DURING
+
+#define PyObjC_HANDLER NS_HANDLER
+
+#define PyObjC_ENDHANDLER \
+		NS_ENDHANDLER \
+		Py_END_ALLOW_THREADS
+
+#define PyObjC_BEGIN_WITH_GIL \
+	{ \
+		PyGILState_STATE _GILState; \
+		_GILState = PyGILState_Ensure(); 
+
+#define PyObjC_GIL_FORWARD_EXC() \
+		do { \
+            PyObjCErr_ToObjCWithGILState(&_GILState); \
+		} while (0)
+
+
+#define PyObjC_END_WITH_GIL \
+		PyGILState_Release(_GILState); \
+	}
+
 
 #ifndef GNU_RUNTIME
 #include <objc/objc-runtime.h>
