@@ -1060,7 +1060,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	char		   argbuf[1024];
 	const char* 		type;
 	void* arg = NULL;
-	const char* err;
+	int  err;
 	int   arglen;
 	PyObject* pymeth;
 	PyObject* pyself;
