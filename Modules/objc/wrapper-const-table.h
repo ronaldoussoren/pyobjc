@@ -159,6 +159,8 @@ static inline int register_strings(PyObject* d, struct stringtable* table)
 
 #ifdef GNU_RUNTIME
 
+#import <Foundation/NSBundle.h>
+
 #define CFBundleRef NSBundle*
 
 static inline int
@@ -179,6 +181,8 @@ register_variableList(PyObject* d, CFBundleRef bundle, struct vartable* table, s
 }
 
 #else /* !GNU_RUNTIME */
+
+#import <CoreFoundation/CoreFoundation.h>
 
 static inline int
 register_variableList(PyObject* d, CFBundleRef bundle __attribute__((__unused__)), struct vartable* table, size_t count)

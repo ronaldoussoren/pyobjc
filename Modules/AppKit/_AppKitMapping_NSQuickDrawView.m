@@ -9,6 +9,7 @@
 #include <AppKit/AppKit.h>
 #include "pyobjc-api.h"
 
+#ifdef MACOSX
 
 static PyObject* 
 call_NSQuickDrawView_qdport(
@@ -109,3 +110,13 @@ _pyobjc_install_NSQuickDrawView(void)
 
 	return 0;
 }
+
+#else
+
+static int 
+_pyobjc_install_NSQuickDrawView(void)
+{
+	return 0;
+}
+
+#endif

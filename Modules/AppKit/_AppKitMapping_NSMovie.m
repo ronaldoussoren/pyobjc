@@ -9,6 +9,8 @@
 #include <Foundation/Foundation.h>
 #include "pyobjc-api.h"
 
+#ifdef MACOSX
+
 #include "pymactoolbox.h"
 
 static PyObject* 
@@ -192,3 +194,13 @@ _pyobjc_install_NSMovie(void)
 
 	return 0;
 }
+
+#else /* GNUSTEP */
+
+static int 
+_pyobjc_install_NSMovie(void)
+{
+	return 0;
+}
+
+#endif

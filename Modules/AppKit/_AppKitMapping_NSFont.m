@@ -386,10 +386,10 @@ call_NSFont_matrix(
 		}
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-		matrix = nil;
+		matrix = NULL;
 	PyObjC_ENDHANDLER
 
-	if (matrix == nil && PyErr_Occurred()) {
+	if (matrix == NULL && PyErr_Occurred()) {
 		return NULL;
 	}
 

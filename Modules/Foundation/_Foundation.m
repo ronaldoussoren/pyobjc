@@ -8,7 +8,6 @@
 #import <Foundation/NSDebug.h>
 
 #ifdef MACOSX
-#import <CoreFoundation/CoreFoundation.h>
 #include <pymactoolbox.h>
 
 #else

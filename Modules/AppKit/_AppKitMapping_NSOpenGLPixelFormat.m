@@ -10,6 +10,9 @@
 #include <Python.h>
 #include <AppKit/AppKit.h>
 #include "pyobjc-api.h"
+
+#ifdef MACOSX 
+
 #include <OpenGL/gl.h>
 
 static PyObject*
@@ -106,3 +109,13 @@ _pyobjc_install_NSOpenGLPixelFormat(void)
 
 	return 0;
 }
+
+#else
+
+static int 
+_pyobjc_install_NSOpenGLPixelFormat(void)
+{
+	return 0;
+}
+
+#endif

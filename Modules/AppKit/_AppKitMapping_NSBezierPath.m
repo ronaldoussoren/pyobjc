@@ -24,43 +24,22 @@ call_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
 	PyObject* result;
 	struct objc_super super;
 	PyObject* glyphList;
-	PyObject* seq;
+	PyObject* pyCount;
 	NSGlyph* glyphs;
 	int count;
 	id fontObj;
-	int i;
+	int token;
 	
-	if  (!PyArg_ParseTuple(arguments, "OiO&", &glyphList, &count, 
+	if  (!PyArg_ParseTuple(arguments, "OOO&", &glyphList, &pyCount, 
 			PyObjCObject_Convert, &fontObj)) {
 		return NULL;
 	}
 
-	seq = PySequence_Fast(glyphList, "glyphs must be a sequence");
-	if (count > PySequence_Fast_GET_SIZE(seq)) {
-		Py_DECREF(seq);
-		PyErr_SetString(PyExc_ValueError, "Count larger than sequence");
+	token = PyObjC_PythonToCArray(@encode(NSGlyph), glyphList, pyCount, 
+		(void**)&glyphs, &count);
+	if (token == -1) {
 		return NULL;
 	}
-
-	glyphs = malloc (sizeof(NSGlyph) * count);
-	if (glyphs == NULL) {
-		Py_DECREF(seq);
-		PyErr_NoMemory();
-		return NULL;
-	}
-
-	for (i = 0; i < count; i++) {
-		int err;
-
-		err = PyObjC_PythonToObjC(@encode(NSGlyph), 
-			PySequence_Fast_GET_ITEM(seq, i),
-			glyphs + i);
-		if (err == -1) {
-			Py_DECREF(seq);
-			free(glyphs);
-			return NULL;
-		}
-	} 
 
 	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
@@ -85,12 +64,12 @@ call_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
 				fontObj);
 		}
 
-		free(glyphs);
 	PyObjC_HANDLER
-		free(glyphs);
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
 	PyObjC_ENDHANDLER
+
+	PyObjC_FreeCArray(token, glyphs);
 
 	if (PyErr_Occurred()) return NULL;
 	
@@ -108,41 +87,20 @@ call_NSBezierPath_appendBezierPathWithPoints_count_(
 	PyObject* result;
 	struct objc_super super;
 	PyObject* pointList;
-	PyObject* seq;
+	PyObject* pyCount = NULL;
 	NSPoint* points;
 	int count;
-	int i;
+	int token;
 	
-	if  (!PyArg_ParseTuple(arguments, "Oi", &pointList, &count)) {
+	if  (!PyArg_ParseTuple(arguments, "O|O", &pointList, &pyCount)) {
 		return NULL;
 	}
 
-	seq = PySequence_Fast(pointList, "points must be a sequence");
-	if (count > PySequence_Fast_GET_SIZE(seq)) {
-		Py_DECREF(seq);
-		PyErr_SetString(PyExc_ValueError, "Count larger than sequence");
+	token = PyObjC_PythonToCArray(@encode(NSPoint), pointList, pyCount,
+		(void**)&points, &count);	
+	if (token == -1) {
 		return NULL;
 	}
-
-	points = malloc (sizeof(NSPoint) * count);
-	if (points == NULL) {
-		Py_DECREF(seq);
-		PyErr_NoMemory();
-		return NULL;
-	}
-
-	for (i = 0; i < count; i++) {
-		int err;
-
-		err = PyObjC_PythonToObjC(@encode(NSPoint), 
-			PySequence_Fast_GET_ITEM(seq, i),
-			points + i);
-		if (err == -1) {
-			Py_DECREF(seq);
-			free(points);
-			return NULL;
-		}
-	} 
 
 	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
@@ -163,12 +121,12 @@ call_NSBezierPath_appendBezierPathWithPoints_count_(
 				points,
 				count);
 		}
-		free(points);
 	PyObjC_HANDLER
-		free(points);
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
 	PyObjC_ENDHANDLER
+
+	PyObjC_FreeCArray(token, points);
 
 	if (PyErr_Occurred()) return NULL;
 
