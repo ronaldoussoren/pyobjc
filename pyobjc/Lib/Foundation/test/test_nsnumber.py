@@ -1,7 +1,12 @@
 import unittest
 import objc
+import re
 
 from Foundation import *
+
+def stripDocType(val):
+    return re.sub('<!DOCTYPE [^>]*>', '<!DOCTYPE>', val)
+  
 
 if 0:
     # NSNumber is proxied into python
@@ -89,7 +94,7 @@ else:
             data = fd.read()
             fd.close()
 
-            self.assertEquals(data, PLIST)
+            self.assertEquals(stripDocType(data), stripDocType(PLIST))
 
         def testPropertyList1(self):
             d = NSMutableDictionary.dictionary()

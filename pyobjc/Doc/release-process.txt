@@ -1,0 +1,93 @@
+==========================
+The PyObjC release process
+==========================
+
+.. :author: Ronald Oussoren
+
+This document gives an exhaustive overview of what needs to be done when 
+building and releasing a new version of PyObjC. It is meant for the project
+administrators, and not of much use for users of PyObjC.
+
+The timeframe is a guideline only and should be taken with a grain of salt.
+
+Release date -2 weeks
+---------------------
+
+Full feature freeze, documenation updates and critical bugfixes only. At this
+time:
+
+* Check if the NEWS file is up-to-date
+
+* Tests the tutorial(s)
+  Read the tutorial(s) and follow the instructions exactly, the tutorials should
+  be completely bugfree.
+
+* Update the announcement messages.
+
+Release-date -3 days
+---------------------
+
+Build the release tarball and dmg:
+
+* Run Scripts/make_distrib.py
+
+* Create an empty disk image (named ``PyObjC X.Y``) and copy the installer
+  package, License and ReadMe to this disk image. Resize the icons in this
+  folder to largish icons (about 64 pixels) and resize the view to be just
+  large enough to contain the icons.
+
+  NOTE: This should be scripted, and maybe we should add a nice background
+  image to the folder.
+
+Trash you existing PyObjC installation and reinstall from the new release. Test
+that the new release is working correctly. Installing and testing should be done
+both for the binary installer and for the source archive. The latter should be
+done in all supported configurations.
+
+If the package works as expected upload to a convenient location and ask some
+other people (like the other maintainers) to test the new release.
+
+Release-date
+------------
+
+* Upload the release files to sourceforge
+
+* add a news item to the website and update the download page
+
+* announce the new version at ADC news: 
+	http://developer.apple.com/devnews/submit.html
+
+  - Organization: PyObjC Team
+  
+  - Name of Produt... : PyObjC
+
+  - URL: http://pyobjc.sourceforge.net
+
+  - Describe your product... :
+    
+    PyObjC is a bridge between Python and Objective-C and allows development
+    of full-fledged Cocoa programs in pure Python.
+
+
+* update the information at a number of software databases:
+
+  - versiontrack.com (billb knows how)
+
+  - macupdate.com
+
+  - PyPI database at python.org
+
+* send the announcement text to:
+
+  - python-list@python.org
+
+  - python-announce-list@python.org
+  
+  - macosx-dev@omnigroup.com
+
+  - pyobjc-dev@sourceforge.net
+
+  - pythonmac-sig@python.org
+
+  - cocoa-dev@lists.apple.com
+
