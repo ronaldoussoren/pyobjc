@@ -2,15 +2,15 @@
 """
 Script to generate Lib/objc/test/testbnd2.m and Lib/objc/test/test_methods2.py.
 
-These files test method passing from Objective-C to Python subclasses of 
-Objective-C classes, and method passing from Python to Objective-C. 
+These files test method passing from Objective-C to Python subclasses of
+Objective-C classes, and method passing from Python to Objective-C.
 
 Note that we need two variations for calls from Objective-C to Python: direct
 calls and calls using an NSInvocation. The latter use a different calling
 mechanism.
 
 NOTES:
-* These tests are generated because doing this by hand is *very* labour 
+* These tests are generated because doing this by hand is *very* labour
   intensive and boring. The chance of bugs in the testsuite is IMHO larger when
   you manually build these.
 * Two argument test-cases are needed to check argument aligment. Three argument
@@ -26,7 +26,7 @@ TODO:
 - The 'values' items in the TYPES array need more work: We don't really test
   boundary conditions.
 - We don't test invalid arguments, bad number of arguments
-- We don't test calling class-methods defined in Python. I wouldn't be 
+- We don't test calling class-methods defined in Python. I wouldn't be
   surprised if that doesn't work at all.
 """
 import sys
@@ -37,7 +37,7 @@ OBJC_HEADER="""\
  *          THIS IS A GENERATED FILE DO NOT EDIT
  *
  * This file implements a number classes that are used to test calling methods,
- * both from Python to Objective-C and from Objective-C to Python. See 
+ * both from Python to Objective-C and from Objective-C to Python. See
  * test_methods.py for the actual tests.
  *
  */
@@ -65,13 +65,13 @@ OBJC_HEADER="""\
 
 struct TestStruct1 {
     int i;
-    int d; 
+    int d;
     short  s[5];
 };
 
 struct TestStruct2 {
     int i;
-    double d; 
+    double d;
     short  s[5];
 };
 
@@ -93,7 +93,7 @@ struct TestStruct5 {
 
 OBJC_FOOTER="""\
 
-/* 
+/*
  * Some glue to make this a valid Python extension module
  */
 
@@ -141,7 +141,7 @@ import sys
 from objc.test import ctests
 
 #
-# NSInvocation in MacOS X 10.2 doesn't like some struct definition, it 
+# NSInvocation in MacOS X 10.2 doesn't like some struct definition, it
 # garbles the contents of those structs. These unittests disable NSInvocation
 # tests that fail because of this problem.
 #
@@ -220,7 +220,7 @@ TYPES.extend([
 
 
 def IS_PROBLEM(tp):
-    # See CheckNSInvoke in PYTHON_HEADER 
+    # See CheckNSInvoke in PYTHON_HEADER
     return tp in ['struct TestStruct1', 'struct TestStruct2', 'struct TestStruct3', 'struct TestStruct4', 'struct TestStruct5']
 
 def tp2ident(tp):
@@ -516,7 +516,7 @@ def emit_objc_implementations(fp):
         fp.write('{\n')
         fp.write('\treturn [obj %sArg:arg];\n'%(tp2ident(tp),))
         fp.write('}\n\n')
-            
+
         fp.write('+(id)invoke%sArg:(%s)arg of:(PyObjC_TestClass1*)obj\n'%(tp2ident(tp), tp))
         fp.write('{\n')
         fp.write('\tid res;\n')
@@ -760,7 +760,7 @@ def emit_py_to_objc(fp):
             write_py_item(fp, v)
             fp.write(')\n')
         fp.write('\n\n')
-        
+
     # Pass by reference arguments (inout)
     fp.write('\t# Pass by reference arguments (inout)\n\n')
     for tp, sign, values in TYPES:
@@ -776,7 +776,7 @@ def emit_py_to_objc(fp):
         valuesrev = tuple(valuesrev)
         for vin, vout in zip(valuesrev, values):
             fp.write('\t\tr = o.%sInOutArg_('%(nm,))
-            write_py_item(fp, vin) 
+            write_py_item(fp, vin)
             fp.write(')\n')
 
             if tp not in ('float', 'double'):
@@ -1042,7 +1042,7 @@ def emit_py_from_objc(fp):
                 write_py_item(fp, v)
                 fp.write(')\n')
             fp.write('\n\n')
-            
+
     # Pass by reference arguments (inout)
     fp.write('\t# Pass by reference arguments (out)\n\n')
     for tp, sign, values in TYPES:
@@ -1063,7 +1063,7 @@ def emit_py_from_objc(fp):
             for vin, vout in zip(valuesrev, values):
                 fp.write('%s\t\tr = PyObjC_TestClass2.%s%sInOutArg_of_('%(
                     pfx, kind, nm,))
-                write_py_item(fp, vin) 
+                write_py_item(fp, vin)
                 fp.write(', o)\n')
 
                 if tp not in ('float', 'double'):
@@ -1090,15 +1090,15 @@ emit_objc_implementations(fp)
 fp.write(OBJC_FOOTER)
 for tp, sign, values in TYPES:
     if tp != 'id': continue
-    
+
     fp.write('\t/* Initialize g_id_values */\n')
     def counted(lst):
         """ 'enumurate' for dummies """
         i = 0
         result = []
         for item in lst:
-                result.append((i, item))
-                i = i+1
+            result.append((i, item))
+            i = i+1
         return result
 
     for idx, v in counted(values):
@@ -1119,4 +1119,3 @@ emit_py_from_objc(fp)
 fp.write(PY_FOOTER)
 
 fp.close()
-
