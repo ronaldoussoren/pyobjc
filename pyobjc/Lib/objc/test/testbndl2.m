@@ -6887,8 +6887,9 @@ static id arg2id(const char* argtype, void* argptr)
 	{\
 		id sign = [target methodSignatureForSelector:selector];\
 		if (sign == NULL) {\
+			PyGILState_STATE state = PyGILState_Ensure();\
 			PyErr_SetString(PyExc_AttributeError, PyObjCRT_SELName(selector));\
-			PyObjCErr_ToObjC();\
+			PyObjCErr_ToObjCWithGILState(&state);\
 		}\
 		inv = [NSInvocation invocationWithMethodSignature:\
 			[target methodSignatureForSelector:selector]];\
