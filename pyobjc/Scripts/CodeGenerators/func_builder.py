@@ -7,15 +7,21 @@
 
 verbose=0
 
-try:
-    import objc
-except ImportError:
-    objc = None
+### We tried to import objc to detect if a name denotes a class. Now that
+# this script is started before we have a valid PyObjC installation this
+# is less usefull. Just rely on the static class list below.
+#
+#try:
+#    import objc
+#except ImportError:
+#    objc = None
+#
+#try:
+#    import AppKit
+#except ImportError:
+#    pass
 
-try:
-    import AppKit
-except ImportError:
-    pass
+objc = None
 
 
 import re
