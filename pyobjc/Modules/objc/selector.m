@@ -547,7 +547,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 				"Missing argument: self");
 			return NULL;
 		}
-		pyself = PyTuple_GetItem(args, 0);
+		pyself = PyTuple_GET_ITEM(args, 0);
 		if (pyself == NULL) {
 			return NULL;
 		}
@@ -1023,7 +1023,7 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 				PyErr_SetString(ObjCExc_error, "need self argument");
 				return NULL;
 			}
-			self_arg = PyTuple_GetItem(args, 0);
+			self_arg = PyTuple_GET_ITEM(args, 0);
 			if (!PyObjCObject_Check(self_arg) && !PyObjCClass_Check(self_arg)) {
 				PyErr_SetString(ObjCExc_error, "bad self type");
 				abort();
