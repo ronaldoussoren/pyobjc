@@ -273,12 +273,14 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
+#if 0
 	if (PyObjCInformalProtocol_Warnings(name, dict, protocols) < 0) {
 		PyObjCClass_UnbuildClass(objc_class);
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
 		return NULL;
 	}
+#endif
 
 	delmethod = PyDict_GetItemString(dict, "__del__");
 	if (delmethod == NULL) {

@@ -360,6 +360,8 @@ PyObjCInformalProtocol_Warnings(char* name, PyObject* clsDict, PyObject* protoco
 			Py_DECREF(seq);
 			Py_DECREF(protoMap);
 			return -1;
+		} else {
+			Py_INCREF(obj->name);
 		}
 	}
 	Py_DECREF(seq);
