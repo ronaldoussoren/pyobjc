@@ -33,10 +33,11 @@ def runEventLoop(argv=None, unexpectedErrorAlert=unexpectedErrorAlert):
             else:
                 NSApp().run()
         except:
-            NSLog("An exception has occured:")
             if not unexpectedErrorAlert():
+                NSLog("An exception has occured:")
                 raise
             else:
+                NSLog("An exception has occured:")
                 traceback.print_exc()
         else:
             break

@@ -121,7 +121,6 @@ for ln in fd.xreadlines():
 print "Copying readme and license"
 shutil.copyfile("ReadMe.txt", os.path.join(OUTPUTDIR, "ReadMe.txt"))
 shutil.copyfile("License.txt", os.path.join(OUTPUTDIR, "License.txt"))
-shutil.copyfile("ChangeLog", os.path.join(OUTPUTDIR, "ChangeLog"))
 
 print "Setting up developer templates"
 
