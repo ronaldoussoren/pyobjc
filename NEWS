@@ -10,6 +10,9 @@ Version 1.2 (2004-??-??)
 - This version no longer support Python 2.2. Python 2.3 or later is
   required.
 
+- It is now possible to use ``reload`` on modules containing Objective-C
+  classes.
+
 - ``objc.loadBundle`` now returns bundle we just loaded.
 
 - Added ``objc.loadBundleVariables`` and ``objc.loadBundleFunctions``,
