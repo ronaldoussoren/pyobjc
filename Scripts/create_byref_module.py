@@ -23,7 +23,7 @@ fp_out.write("""
 # Generated from '%s'.
 #
 #
-from objc import set_signature_for_selector
+from objc import setSignatureForSelector
 
 """%sys.argv[1])
 
@@ -33,5 +33,5 @@ for ln in fp_in:
         continue
     if repl_sign.startswith('%'):
         continue
-    fp_out.write('set_signature_for_selector("%s", "%s", "%s")\n'%(
+    fp_out.write('setSignatureForSelector("%s", "%s", "%s")\n'%(
             cls, selector, repl_sign))

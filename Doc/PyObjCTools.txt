@@ -1,0 +1,46 @@
+===============================
+PyObjCTools: The PyObjC Toolbox
+===============================
+
+Introduction
+------------
+
+The package ``PyObjCTools`` contains a number of (basicly unrelated) modules
+with usefull functionality. These have been placed inside a module to avoid
+cluttering the global namespace.
+
+The rest of this document provides documentation for these modules, but lets
+start with a short overview.
+
+* ``PyObjCTools.AppHelper``
+
+Utility functions for use with the ``AppKit`` module.
+
+* ``PyObjCTools.Conversion.py``
+
+Functions for converting between Cocoa and pure Python data structures.
+
+* ``PyObjCTools.KeyValueCoding.py``
+
+A python API for working with Key-Value Coding. XXX: Link
+
+* ``PyObjCTools.KeyValueCodingSupport.py``
+
+Utility functions and mix-in classes for working with Key-Value Coding. This
+module is deprecated.
+
+* ``PyObjCTools.NibClassBuilder.py``
+
+Module containing a magic super-class that can read information about the
+actual super-class and implemented actions and outlets from a NIB file.
+
+* ``PyObjCTools.pluginbuilder.py``
+
+Extension of ``bundlebuilder`` (XXX: Link) that allows you to build python-based
+plugin bundles, such as panes for the System Preferences application and
+screen savers.
+
+* ``PyObjCTools.Signals.py``
+
+Module that tries to print usefull information when the program gets a fatal
+exception. This module should only be used during development.

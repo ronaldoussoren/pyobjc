@@ -43,8 +43,8 @@ static	char* keywords[] = { "key", "comment", NULL };
 	NSString* oc_comment;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSLocalizedString",
-			keywords, convert_id, &oc_key, 
-			convert_id, &oc_comment)) {
+			keywords, PyObjCObject_Convert, &oc_key, 
+			PyObjCObject_Convert, &oc_comment)) {
 		return NULL;
 	}
 
@@ -67,9 +67,9 @@ static	char* keywords[] = { "key", "tableName", "comment", NULL };
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
 			"O&O&O&:NSLocalizedStringFromTable",
 			keywords, 
-			convert_id, &oc_tableName, 
-			convert_id, &oc_key, 
-			convert_id, &oc_comment)) {
+			PyObjCObject_Convert, &oc_tableName, 
+			PyObjCObject_Convert, &oc_key, 
+			PyObjCObject_Convert, &oc_comment)) {
 		return NULL;
 	}
 
@@ -93,10 +93,10 @@ static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
 			"O&O&O&O:NSLocalizedStringFromTableInBundle",
 			keywords, 
-			convert_id, &oc_tableName, 
-			convert_id, &oc_key, 
-			convert_id, &oc_comment, 
-			convert_id, &oc_bundle)) {
+			PyObjCObject_Convert, &oc_tableName, 
+			PyObjCObject_Convert, &oc_key, 
+			PyObjCObject_Convert, &oc_comment, 
+			PyObjCObject_Convert, &oc_bundle)) {
 		return NULL;
 	}
 
@@ -149,7 +149,7 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
 			"O&:NSHFSTypeCodeFromFileType",
-			keywords, convert_id, &fileType)) {
+			keywords, PyObjCObject_Convert, &fileType)) {
 		return NULL;
 	}
 	
@@ -168,6 +168,61 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 
 #endif /* MACOSX */
 
+
+static int
+NSRect_Convert(PyObject* value, void* prect)
+{
+	int res = PyObjC_PythonToObjC(@encode(NSRect), 	value, prect);
+	if (res == -1) {
+		return 0;
+	}
+	return 1;
+}
+
+PyDoc_STRVAR(NSDivideRect_doc,
+	"NSDivideRect(inRect, amount, edge) -> (slice, remainder)");
+
+static PyObject* objc_NSDivideRect(PyObject* self __attribute__((__unused__)), 
+		PyObject* args, PyObject* kwds)
+{
+static	char* keywords[] = { "inRect", "amount", "edge", NULL };
+	NSRect inRect;
+	NSRect slice;
+	NSRect rem;
+	float amount;
+	NSRectEdge edge;
+	PyObject* result;
+	PyObject* v;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
+			"O&fi:NSDivideRect",
+			keywords, NSRect_Convert, &inRect,
+			&amount, &edge)) {
+		return NULL;
+	}
+
+	NSDivideRect(inRect, &slice, &rem, amount, edge);
+
+	result = PyTuple_New(2);
+	if (result == NULL) {
+		return NULL;
+	}
+
+	v = PyObjC_ObjCToPython(@encode(NSRect), &slice);
+	if (v == NULL) {
+		Py_DECREF(result);
+		return NULL;
+	}
+	PyTuple_SET_ITEM(result, 0, v);
+
+	v = PyObjC_ObjCToPython(@encode(NSRect), &rem);
+	if (v == NULL) {
+		Py_DECREF(result);
+		return NULL;
+	}
+	PyTuple_SET_ITEM(result, 1, v);
+	return result;
+}
 
 static PyMethodDef foundation_methods[] = {
 #ifdef MACOSX
@@ -202,6 +257,12 @@ static PyMethodDef foundation_methods[] = {
 		(PyCFunction)objc_NSLocalizedStringFromTableInBundle, 
 		METH_VARARGS|METH_KEYWORDS, 
 		NSLocalizedStringFromTable_doc 
+	},
+	{
+		"NSDivideRect",
+		(PyCFunction)objc_NSDivideRect,
+		METH_VARARGS|METH_KEYWORDS,
+		NSDivideRect_doc
 	},
 
 	METHOD_TABLE_ENTRIES

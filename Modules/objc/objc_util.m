@@ -51,7 +51,9 @@ ObjCErr_PyExcForName(const char* value)
 		return PyExc_ValueError;
 	}  else if (strcmp(value, "NSMallocException") == 0) {
 		return PyExc_MemoryError;
-	} 
+	}  else if (strcmp(value, "NSUnknownKeyException") == 0) {
+		return PyExc_KeyError;
+	}
 
 	return ObjCExc_error;
 }

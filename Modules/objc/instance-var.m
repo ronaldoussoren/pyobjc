@@ -26,7 +26,12 @@ ivar_repr(PyObjCInstanceVariable* self)
 {
 	char buf[256];
 
-	snprintf(buf, sizeof(buf), "<instance-variable %s>", self->name);
+	if (self->isOutlet) {
+		snprintf(buf, sizeof(buf), "<IBOutlet %s>", self->name);
+	} else {
+		snprintf(buf, sizeof(buf), "<instance-variable %s>", 
+			self->name);
+	}
 	return PyString_FromString(buf);
 }
 

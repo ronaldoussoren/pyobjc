@@ -23,6 +23,11 @@
 #import  <Foundation/NSObject.h>  
 #import  <Foundation/NSMethodSignature.h>
 #import  <Foundation/NSInvocation.h>
+#import  <Foundation/NSString.h>
+#import  <Foundation/NSDictionary.h>
+#import  <Foundation/NSEnumerator.h>
+
+extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 
 @implementation OC_PythonObject
 
@@ -303,4 +308,271 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	Py_INCREF(pyObject);
 	return pyObject;
 }
+
+
+/*
+ * Implementation for Key-Value Coding.
+ *
+ * Because this is a subclass of NSProxy we must implement all of the protocol,
+ * and cannot rely on the implementation in our superclass. 
+ *
+ */
+
++ (BOOL)useStoredAccessor
+{
+ 	return YES;
+}
+
++ (BOOL)accessInstanceVariablesDirectly;
+{
+	return YES;
+}
+
+
+
+/* First try the accessor functions 'getKey' and 'get_key', then
+ * the attribute 'key' and finally instance variable '_key' (the last one
+ * only if we're allowed to access instance variables directly).
+ */
+- valueForKey:(NSString*) key;
+{
+	NSString* tmpName;
+	PyObject* val;
+	id res;
+	
+
+	tmpName = [NSString stringWithFormat:@"get%@", [key capitalizedString]];
+	val = PyObject_CallMethod(pyObject, (char*)[tmpName cString], NULL);
+	if (val == NULL) {
+		PyErr_Clear();
+	} else {
+		if ( depythonify_c_value(@encode(id), val, &res) < 0) {
+			Py_DECREF(val);
+			PyObjCErr_ToObjC();
+			return nil;
+		} 
+		Py_DECREF(val);
+		return res;
+	}
+
+	tmpName = [NSString stringWithFormat:@"get_%@", key];
+	val = PyObject_CallMethod(pyObject, (char*)[tmpName cString], NULL);
+	if (val == NULL) {
+		PyErr_Clear();
+	} else {
+		if ( depythonify_c_value(@encode(id), val, &res) < 0) {
+			Py_DECREF(val);
+			PyObjCErr_ToObjC();
+			return nil;
+		} 
+		Py_DECREF(val);
+		return res;
+	}
+
+	val = PyObject_GetAttrString(pyObject, (char*)[key cString]);
+	if (val == NULL) {
+		PyErr_Clear();
+	} else {
+		if ( depythonify_c_value(@encode(id), val, &res) < 0) {
+			Py_DECREF(val);
+			PyObjCErr_ToObjC();
+			return nil;
+		} 
+		Py_DECREF(val);
+		return res;
+	}
+
+	if ([[self class] accessInstanceVariablesDirectly]) {
+		tmpName = [NSString stringWithFormat:@"_%@", key];
+		val = PyObject_GetAttrString(pyObject, (char*)[tmpName cString]);
+		if (val == NULL) {
+			PyErr_Clear();
+		} else {
+			if ( depythonify_c_value(@encode(id), val, &res) < 0) {
+				Py_DECREF(val);
+				PyObjCErr_ToObjC();
+				return nil;
+			}
+			Py_DECREF(val);
+			return res;
+		}
+	}
+
+	[self handleQueryWithUnboundKey:key];
+	return nil;
+}
+
+- storedValueForKey: (NSString*) key;
+{
+	return [self valueForKey: key];
+}
+
+/* First check if there is a setter method (setKey or set_key), otherwise
+ * check if '_key' exists as an attribute and try to replace that, otherwise
+ * try set 'key' as an attribute.
+ * 
+ * NOTE: We never call setValue:forUnboundKey:
+ */
+- (void)takeValue: value forKey: (NSString*) key;
+{
+	PyObject* meth;
+	PyObject* val;
+	NSString* tmpName;
+
+	val = pythonify_c_value(@encode(id), &value);
+	if (val == NULL) {
+		PyObjCErr_ToObjC();
+		return;
+	}
+
+	tmpName = [NSString stringWithFormat:@"set%@", [key capitalizedString]];
+	meth = PyObject_GetAttrString(pyObject, (char*)[tmpName cString]);
+	if (meth == NULL) {
+		PyErr_Clear();
+	} else if (PyFunction_Check(meth) || PyMethod_Check(meth) || PyObjCSelector_Check(meth)) {
+		PyObject* o = PyObject_CallFunction(meth, "O", val);
+		if (o == NULL) {
+			Py_DECREF(meth);
+			Py_DECREF(val);
+			PyObjCErr_ToObjC();
+			return;
+		}
+		Py_DECREF(o);
+		Py_DECREF(meth);
+		return;
+	} else {
+		Py_DECREF(meth);
+	}
+
+	tmpName = [NSString stringWithFormat:@"set_%@", key];
+	meth = PyObject_GetAttrString(pyObject, (char*)[tmpName cString]);
+	if (meth == NULL) {
+		PyErr_Clear();
+	} else if (PyMethod_Check(meth) || PyObjCSelector_Check(meth)) {
+		PyObject* o = PyObject_CallFunction(meth, "O", val);
+		if (o == NULL) {
+			Py_DECREF(meth);
+			Py_DECREF(val);
+			PyObjCErr_ToObjC();
+			return;
+		}
+		Py_DECREF(o);
+		Py_DECREF(meth);
+		return;
+	} else {
+		Py_DECREF(meth);
+	}
+
+	tmpName = [NSString stringWithFormat:@"_%@", key];
+	if (PyObject_HasAttrString(pyObject, (char*)[tmpName cString])) {
+		if (PyObject_SetAttrString(pyObject, 
+				(char*)[tmpName cString], val) < 0) {
+			Py_DECREF(val);
+			PyObjCErr_ToObjC();
+			return;
+		}
+		Py_DECREF(val);
+		return;
+	}
+
+	if (PyObject_SetAttrString(pyObject, (char*)[key cString], val) < 0) {
+		Py_DECREF(val);
+		if (PyErr_ExceptionMatches(PyExc_AttributeError)) {
+			/* Unbound key */
+			PyErr_Clear();
+			[self handleTakeValue: value forUnboundKey: key];
+		}
+		PyObjCErr_ToObjC();
+		return;
+	}
+	Py_DECREF(val);
+}
+
+- (void)takeStoredValue: value forKey: (NSString*) key;
+{
+	[self takeValue: value forKey: key];
+}
+
+- (NSDictionary*) valuesForKeys: (NSArray*)keys;
+{
+	NSMutableDictionary* result;
+	NSEnumerator* enumerator;
+	id aKey, aValue;
+
+	enumerator = [keys objectEnumerator];
+	result = [NSMutableDictionary dictionary];
+
+	while ((aKey = [enumerator nextObject]) != NULL) {
+		aValue = [self valueForKey: aKey];
+		[result setObject: aValue forKey: aKey];
+	}
+
+	return result;
+}
+
+- valueForKeyPath: (NSString*) keyPath;
+{
+	NSArray* elems = [keyPath componentsSeparatedByString:@"."];
+	NSEnumerator* enumerator = [elems objectEnumerator];
+	id aKey;
+	id target;
+
+	target = self;
+	while ((aKey = [enumerator nextObject]) != NULL) {
+		target = [target valueForKey: aKey];
+	}
+
+	return target;
+}
+
+- (void)takeValue: value forKeyPath: (NSString*) keyPath;
+{
+	NSArray* elems = [keyPath componentsSeparatedByString:@"."];
+	id target;
+	int len;
+	int i;
+
+	len = [elems count];
+	target = self;
+	for (i = 0; i < len-1; i++) {
+		target = [target valueForKey: [elems objectAtIndex: i]];
+	}
+
+	[target takeValue: value forKey: [elems objectAtIndex: len-1]];
+}
+
+- (void)takeValuesFromDictionary: (NSDictionary*) aDictionary;
+{
+	NSEnumerator* enumerator = [aDictionary keyEnumerator];
+	id aKey;
+	id aValue;
+
+	while ((aKey = [enumerator nextObject]) != NULL) {
+		aValue = [aDictionary objectForKey: aKey];
+		[self takeValue: aValue forKey: aKey];
+	}
+}
+
+- (void)unableToSetNilForKey: (NSString*) key;
+{
+	[NSException 
+		raise: NSUnknownKeyException 
+		format: @"cannot set Nil for key: %@", key];
+}
+
+- (void)handleQueryWithUnboundKey: (NSString*) key;
+{
+	[NSException 
+		raise: NSUnknownKeyException
+		format: @"query for unknown key: %@", key];
+}
+
+- (void)handleTakeValue: value forUnboundKey: (NSString*) key;
+{
+	[NSException 
+		raise: NSUnknownKeyException 
+		format: @"setting unknown key: %@ to <%@>", key, value];
+}
+
+
 @end /* OC_PythonObject class implementation */

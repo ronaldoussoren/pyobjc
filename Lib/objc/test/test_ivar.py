@@ -77,14 +77,14 @@ class TestInstanceVariables(unittest.TestCase):
         self.deleted = 0
         self.object.idVar = Base(lambda : setattr(self, 'deleted', 1))
         self.object.idVar = None
-        objc.recycle_autorelease_pool()
+        objc.recyleAutoreleasePool()
         self.assertEquals(self.deleted, 1)
 
     def testLeak2(self):
         self.deleted = 0
         self.object.idVar = Base(lambda : setattr(self, 'deleted', 1))
         del self.object
-        objc.recycle_autorelease_pool()
+        objc.recyleAutoreleasePool()
         self.assertEquals(self.deleted, 1)
 
     def testOCLeak(self):
@@ -93,14 +93,14 @@ class TestInstanceVariables(unittest.TestCase):
         self.deleted = 0
         self.object.idVar = OCBase.alloc().init_(lambda : setattr(self, 'deleted', 1))
         self.object.idVar = None
-        objc.recycle_autorelease_pool()
+        objc.recyleAutoreleasePool()
         self.assertEquals(self.deleted, 1)
 
     def testOCLeak2(self):
         self.deleted = 0
         self.object.idVar = OCBase.alloc().init_(lambda : setattr(self, 'deleted', 1))
         del self.object
-        objc.recycle_autorelease_pool()
+        objc.recyleAutoreleasePool()
         self.assertEquals(self.deleted, 1)
 
     def testDelete(self):

@@ -17,9 +17,14 @@ work with Objective-C objects, using (static) methods in a class is much
 more convenient.
 
 The C API is defined in ``pyobjc-api.h``. This file is currently not installed
-because the API is not entirely stable.
+because the API is not entirely stable. This is the only file that can
+be included from outside of the 'Modules/objc' directory, future versions of
+the bridge may use additional linker flags to make sure that the module doesn't
+export symbols other than the module init function.
 
-XXX: Insert reference to the CodeGeneration scripts.
+The easiest way to wrap global functions and constants is by using the scripts
+in Scripts/CodeGenerators. This script is unsupported and might not work on
+anything but the Apple headers, but if it works it will save you a lot of work.
 
 Limititations
 -------------
@@ -27,6 +32,7 @@ Limititations
 An important limitation of the current C API is that you can only use the API
 from one C file in the implementation of an extension module. This limitation
 will probably not be removed in future versions of the API.
+
 
 Initialization
 --------------
@@ -41,6 +47,9 @@ otherwise. Reasons for failure include: not being able to locate the module
 and API version conflicts.
 
 Loading the API will make it impossible to unload the ``calling_module``.
+
+NOTE: Using the API other than by the mechanism described in this document 
+is unsupported.
 
 Compatibility Macros
 --------------------
@@ -280,3 +289,31 @@ Use this as an argument for ``PyObjC_RegisterMethodMapping`` or
 
 This is a variation on ``PyObjC_PythonToId`` than can be used with 
 ``PyArg_Parse``.
+
+:: 
+ 
+  int PyObjCClass_Convert(PyObject* object, void* pvar);
+
+This is a variation on ``PyObjCClass_GetClass`` than can be used with 
+``PyArg_Parse``.
+
+::
+
+  int PyObjCSelector_Convert(PyObject* object, void* pvar);
+
+Write the ``SEL`` for a selector object into *pvar. 
+For use with ``PyArg_Parse``.
+
+::
+
+  int PyObjC_ConvertBOOL(PyObject* object, void* pvar);
+
+Write ``YES`` into *pvar if ``object`` is true, write ``NO`` otherwise.
+*pvar should be of type BOOL.  For use with ``PyArg_Parse``.
+
+::
+
+  int PyObjC_ConvertChar(PyObject* object, void* pvar);
+
+Write the value of a string of length 1 into the character (type char)
+at ``*pvar``. For use with ``PyArg_Parse``.

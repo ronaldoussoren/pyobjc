@@ -1456,6 +1456,8 @@ static 	char buf[1024];
 {
 }
 +makeACopy:source;
++keyValue:(int)idx forObject: value key: id;
++(void)setKeyValue:(int)idx forObject: object key: key value: value;
 @end
 
 @implementation PyObjC_TestClass3
@@ -1476,6 +1478,27 @@ static 	char buf[1024];
 	pool = nil;
 	
 	return theCopy;
+}
+
++keyValue:(int)idx forObject: object key: key
+{
+	switch (idx) {
+	case 0: return [object valueForKey: key];
+	case 1: return [object valueForKeyPath: key];
+	case 2: return [object storedValueForKey: key];
+	case 3: return [object valuesForKeys: key];
+	}
+	return nil;
+}
+
++(void)setKeyValue:(int)idx forObject: object key: key value: value
+{
+	switch (idx) {
+	case 0: [object takeValue: value forKey: key]; break;
+	case 1: [object takeValue: value forKeyPath: key]; break;
+	case 2: [object takeStoredValue: value forKey: key]; break;
+	case 3: [object takeValuesFromDictionary: value]; break;
+	}
 }
 
 @end

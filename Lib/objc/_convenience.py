@@ -9,7 +9,7 @@ This module contains no user callable code.
 TODO:
 - Add external interface: Framework specific modules may want to add to this.
 """
-from objc import set_class_extender, selector, runtime
+from objc import setClassExtender, selector, runtime
 
 CONVENIENCE_METHODS = {}
 CLASS_METHODS = {}
@@ -78,7 +78,7 @@ def add_convenience_methods(super_class, name, type_dict):
         for name, value in CLASS_METHODS[name]:
             type_dict[name] = value
 
-set_class_extender(add_convenience_methods)
+setClassExtender(add_convenience_methods)
 
 # NOTE: the '!= 0' in the definition of the comparison function
 # is there to force conversion to type 'bool' on Python releases

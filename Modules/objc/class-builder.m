@@ -28,6 +28,12 @@ static NSMethodSignature*  object_method_methodSignatureForSelector(id self,
 	SEL selector, SEL aSelector);
 static void object_method_forwardInvocation(id self, SEL selector, 
 	NSInvocation* invocation);
+static id object_method_storedValueForKey_(id self, SEL _meth, NSString* key);
+static id object_method_valueForKey_(id self, SEL _meth, NSString* key);
+static void object_method_takeStoredValue_forKey_(id self, SEL _meth, 
+	id value, NSString* key);
+static void object_method_takeValue_forKey_(id self, SEL _meth, 
+	id vlaue, NSString* key);
 
 
 /*
@@ -425,7 +431,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		ivar_count        += 0;
 		meta_method_count += 0; 
-		method_count      += 4;
+		method_count      += 8;
 	}
 
 	/* Allocate the class as soon as possible, for new selector objects */
@@ -668,6 +674,26 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			@selector(forwardInvocation:), 
 			"v@:@", 
 			object_method_forwardInvocation);
+		METH(
+			"storedValueForKey_",
+			@selector(storedValueForKey:),
+			"@@:@",
+			object_method_storedValueForKey_);
+		METH(
+			"valueForKey_",
+			@selector(valueForKey:),
+			"@@:@",
+			object_method_valueForKey_);
+		METH(
+			"takeStoredValue_forKey_",
+			@selector(takeStoredValue:forKey:),
+			"@@:@@",
+			object_method_takeStoredValue_forKey_);
+		METH(
+			"takeValue_forKey_",
+			@selector(takeValue:forKey:),
+			"@@:@@",
+			object_method_takeValue_forKey_);
 #undef		METH
 	}
 
@@ -1420,4 +1446,493 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 	}
 
 	return result;
+}
+
+/*
+ * Suppport for key-value encoding for Python/ObjC hybrids.
+ * 
+ * NOTE: This implementation is likely to change, which probably will have
+ * user-visible effects.
+ *
+ * We check python-specific ways to read/write attributes, and then defer
+ * to the super-class implementation. This seems to be the best way to 
+ * play nice with when subclassing arbitrary Objective-C classes.
+ */
+
+static int
+getAttribute(id self, NSString* key, id* result)
+{
+	PyObject* cls = PyObjCClass_New(self->isa);
+	PyObject* val;
+	PyObject* att;
+	PyObject* dict;
+	int dictoffset;
+	int r;
+	id  tmpVal;
+
+	dictoffset = PyObjCClass_DictOffset(cls);
+	if (dictoffset != 0) {
+		PyObject** dictptr = (PyObject**)(((char*)self) + dictoffset);
+		if (*dictptr != NULL) {
+			val = PyDict_GetItemString(*dictptr, 
+				(char*)[key cString]);
+			if (val == NULL) {
+				PyErr_Clear();
+			} else {
+				tmpVal = nil;
+				r = depythonify_c_value(
+					@encode(id), val, (void*)&tmpVal);
+				if (r == -1) {
+					PyErr_Clear();
+				}
+				*result = tmpVal;
+				return r;
+			}
+		}
+	}
+
+	/* 
+	 * Maybe this is a descriptor object, check if there is a
+	 * non-method attribute in the class
+	 */
+	att = PyObject_GetAttrString(cls, (char*)[key cString]);
+	if (att == NULL) {
+		PyErr_Clear();
+	} else {
+		if (!PyObjCSelector_Check(att)) {
+			Py_DECREF(att);
+			val = PyObject_GetAttrString(
+				PyObjCObject_New(self),
+				(char*)[key cString]);
+			if (val == NULL) {
+				PyErr_Clear();
+				return -1;
+			} else {
+				r = depythonify_c_value(@encode(id),
+					val, result);
+				Py_DECREF(val);
+				if (r == -1) {
+					PyErr_Clear();
+				}
+				return r;
+			}
+		} 
+		Py_DECREF(att);
+	}
+
+	/* Check for properties, data properties won't be found using
+	 * getattr(cls, propname).
+	 */
+	dict = PyObject_GetAttrString(cls, "__dict__");
+	if (dict == NULL) {
+		PyErr_Clear();
+	} else {
+		/* Class __dict__ need not be an actual dict! */
+		att = PyMapping_GetItemString(dict, (char*)[key cString]);
+		if (att == NULL) {
+			PyErr_Clear();
+		} else if (!PyObjCSelector_Check(att)) {
+			val = PyObject_GetAttrString(
+				PyObjCObject_New(self),
+				(char*)[key cString]);
+			if (val == NULL) {
+				PyErr_Clear();
+				return -1;
+			} else {
+				r = depythonify_c_value(@encode(id),
+					val, result);
+				Py_DECREF(val);
+				if (r == -1) {
+					PyErr_Clear();
+				}
+				return r;
+			}
+		} 
+	}
+	return -1;
+}
+
+static int
+getAccessor(id self, NSString* key, id* result)
+{
+	PyObject* cls = PyObjCClass_New(self->isa);
+	PyObject* val;
+	PyObject* att;
+	int r;
+
+	att = PyObject_GetAttrString(cls, (char*)[key cString]);
+	if (att == NULL) {
+		PyErr_Clear();
+	} else {
+		if (PyObjCSelector_Check(att) 
+				|| PyFunction_Check(att) 
+				|| PyMethod_Check(att)) {
+			Py_DECREF(att);
+			val = PyObject_CallMethod(
+				PyObjCObject_New(self),
+				(char*)[key cString],
+				NULL);
+			if (val == NULL) {
+				PyErr_Clear();
+				return -1;
+			} else {
+				r = depythonify_c_value(@encode(id),
+					val, result);
+				if (r == -1) {
+					PyErr_Clear();
+				}
+				return r;
+			}
+		} 
+		Py_DECREF(att);
+	}
+
+	return -1;
+}
+
+static int
+setAttribute(id self, NSString* key, id value)
+{
+	PyObject* cls = PyObjCClass_New(self->isa);
+	PyObject* val;
+	PyObject* att;
+	int dictoffset;
+	int r;
+
+	dictoffset = PyObjCClass_DictOffset(cls);
+	if (dictoffset != 0) {
+		PyObject** dictptr = (PyObject**)(((char*)self) + dictoffset);
+		if (*dictptr != NULL && PyDict_GetItemString(
+				*dictptr, (char*)[key cString]) != NULL) {
+
+			val = pythonify_c_value(@encode(id), &value);
+			if (val == NULL) {
+				PyErr_Clear();
+				return -1;
+			}
+
+			r = PyDict_SetItemString(*dictptr, 
+				(char*)[key cString], val);
+			if (r == -1) {
+				PyErr_Clear();
+			}
+			Py_DECREF(val);
+			return r;
+		}
+	}
+
+	/* 
+	 * Maybe this is a descriptor object, check if there is a
+	 * non-method attribute in the class
+	 */
+	att = PyObject_GetAttrString(cls, (char*)[key cString]);
+	if (att == NULL) {
+		PyErr_Clear();
+	} else {
+		if (!PyObjCSelector_Check(att)) {
+			Py_DECREF(att);
+
+			val = pythonify_c_value(@encode(id), &value);
+			if (val == NULL) {
+				PyErr_Clear();
+				return -1;
+			}
+
+			r = PyObject_SetAttrString(
+				PyObjCObject_New(self),
+				(char*)[key cString], val);
+			if (r == -1) {
+				PyErr_Clear();
+			}
+			Py_DECREF(val);
+			return r;
+		}
+		Py_DECREF(att);
+	}
+
+	return -1;
+}
+
+static int
+setAccessor(id self, NSString* key, id value)
+{
+	PyObject* cls = PyObjCClass_New(self->isa);
+	PyObject* val;
+	PyObject* att;
+
+	att = PyObject_GetAttrString(cls, (char*)[key cString]);
+	if (att == NULL) {
+		PyErr_Clear();
+	} else {
+		if (PyObjCSelector_Check(att) 
+				|| PyFunction_Check(att) 
+				|| PyMethod_Check(att)) {
+
+			Py_DECREF(att);
+
+			val = pythonify_c_value(@encode(id), &value);
+			if (val == NULL) {
+				PyErr_Clear();
+				return -1;
+			}
+
+			att = PyObject_CallMethod(
+				PyObjCObject_New(self),
+				(char*)[key cString], "O", val);
+			if (att == NULL) {
+				PyErr_Print();
+				PyErr_Clear();
+			}
+			Py_XDECREF(att);
+			Py_DECREF(val);
+			return (att == NULL) ? -1 : 0;
+		}
+		Py_DECREF(att);
+	}
+
+	return -1;
+}
+
+static id
+object_method_storedValueForKey_(id self, SEL _meth, NSString* key)
+{
+	id result;
+	int r;
+	struct objc_super super;
+
+	r = getAccessor(self, [NSString stringWithFormat: @"get_%@", key], 
+		&result);
+	if (r == 0) {
+		return result;
+	}
+
+	r = getAttribute(self, key, &result);
+	if (r == 0) {
+		return result;
+	}
+
+
+	r = getAccessor(self, [NSString stringWithFormat: @"_get_%@", key], 
+		&result);
+	if (r == 0) {
+		return result;
+	}
+
+	r = getAttribute(self, [NSString stringWithFormat: @"_%@", key], 
+		&result);
+	if (r == 0) {
+		return result;
+	}
+
+	/* Call super */
+	super.class = find_real_superclass(
+		GETISA(self),
+		_meth,
+		class_getInstanceMethod,
+		(IMP)object_method_storedValueForKey_);
+	super.receiver = self;
+	return objc_msgSendSuper(&super, _meth, key);
+}
+
+static id
+object_method_valueForKey_(id self, SEL _meth, NSString* key)
+{
+	id result;
+	int r;
+	struct objc_super super;
+
+	r = getAccessor(self, [NSString stringWithFormat: @"get_%@", key], 
+		&result);
+	if (r == 0) {
+		return result;
+	}
+
+	r = getAttribute(self, key, &result);
+	if (r == 0) {
+		return result;
+	}
+
+
+	r = getAccessor(self, [NSString stringWithFormat: @"_get_%@", key], 
+		&result);
+	if (r == 0) {
+		return result;
+	}
+
+	r = getAttribute(self, [NSString stringWithFormat: @"_%@", key], 
+		&result);
+	if (r == 0) {
+		return result;
+	}
+
+
+	/* Call super */
+	super.class = find_real_superclass(
+		GETISA(self),
+		_meth,
+		class_getInstanceMethod,
+		(IMP)object_method_valueForKey_);
+	super.receiver = self;
+	return objc_msgSendSuper(&super, _meth, key);
+}
+
+static void
+object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* key)
+{
+	struct objc_super super;
+	int r;
+
+	r = setAccessor(self, 
+		[NSString stringWithFormat:@"set_%@", key], value);
+	if (r == 0) {
+		return;
+	}
+
+	r = setAccessor(self, 
+		[NSString stringWithFormat:@"set%@", [key capitalizedString]], 
+		value);
+	if (r == 0) {
+		return;
+	}
+
+	r = setAttribute(self, key, value);
+	if (r == 0) {
+		return;
+	}
+
+	r = setAccessor(self, 
+		[NSString stringWithFormat:@"_set_%@", key], value);
+	if (r == 0) {
+		return;
+	}
+
+	r = setAccessor(self, 
+		[NSString stringWithFormat:@"_set%@", [key capitalizedString]], 
+		value);
+	if (r == 0) {
+		return;
+	}
+
+	r = setAttribute(self, [NSString stringWithFormat:@"_%@", key], value);
+	if (r == 0) {
+		return;
+	}
+
+	/* Call super */
+	NS_DURING
+		super.class = find_real_superclass(
+			GETISA(self),
+			_meth,
+			class_getInstanceMethod,
+			(IMP)object_method_takeStoredValue_forKey_);
+		super.receiver = self;
+		(void)objc_msgSendSuper(&super, _meth, value, key);
+	NS_HANDLER
+		/* Parent doesn't know the key, try to create in the 
+		 * python side, just like for plain python objects.
+		 */
+		if ([[localException name] isEqual:@"NSUnknownKeyException"]) {
+			PyObject* selfObj = PyObjCObject_New(self);
+			PyObject* val;
+
+			val = pythonify_c_value(@encode(id), &value);
+			if (val == NULL) {
+				PyErr_Clear();
+				[localException raise];
+			}
+
+			r = PyObject_SetAttrString(selfObj, 
+				(char*)[key cString],
+				val);
+			Py_DECREF(val);
+			if (r == -1) {
+				PyErr_Clear();
+				[localException raise];
+			}
+				
+		} else {
+			[localException raise];
+		}
+	NS_ENDHANDLER
+}
+
+static void
+object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
+{
+	struct objc_super super;
+	int r;
+
+	r = setAccessor(self, 
+		[NSString stringWithFormat:@"set_%@", key], value);
+	if (r == 0) {
+		return;
+	}
+
+	r = setAccessor(self, 
+		[NSString stringWithFormat:@"set%@", [key capitalizedString]], 
+		value);
+	if (r == 0) {
+		return;
+	}
+
+	r = setAttribute(self, key, value);
+	if (r == 0) {
+		return;
+	}
+
+	r = setAccessor(self, 
+		[NSString stringWithFormat:@"_set_%@", key], value);
+	if (r == 0) {
+		return;
+	}
+
+	r = setAccessor(self, 
+		[NSString stringWithFormat:@"_set%@", [key capitalizedString]], 
+		value);
+	if (r == 0) {
+		return;
+	}
+
+	r = setAttribute(self, [NSString stringWithFormat:@"_%@", key], value);
+	if (r == 0) {
+		return;
+	}
+
+
+	/* Call super */
+	NS_DURING
+		super.class = find_real_superclass(
+			GETISA(self),
+			_meth,
+			class_getInstanceMethod,
+			(IMP)object_method_takeValue_forKey_);
+		super.receiver = self;
+		(void)objc_msgSendSuper(&super, _meth, value, key);
+	NS_HANDLER
+		/* Parent doesn't know the key, try to create in the 
+		 * python side, just like for plain python objects.
+		 */
+		if ([[localException name] isEqual:@"NSUnknownKeyException"]) {
+			PyObject* selfObj = PyObjCObject_New(self);
+			PyObject* val;
+
+			val = pythonify_c_value(@encode(id), &value);
+			if (val == NULL) {
+				PyErr_Clear();
+				[localException raise];
+			}
+
+			r = PyObject_SetAttrString(selfObj, 
+				(char*)[key cString],
+				val);
+			Py_DECREF(val);
+			if (r == -1) {
+				PyErr_Clear();
+				[localException raise];
+			}
+				
+		} else {
+			[localException raise];
+		}
+	NS_ENDHANDLER
 }

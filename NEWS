@@ -6,6 +6,14 @@
 WHAT'S NEW:
 
 Version 1.0b1+ (CVS):
+
+- Better support for the NSKeyValueCoding protocol.  The module 
+  ``PyObjCTools.KeyValueCoding`` provides a python interface that makes it
+  possible to use key-value coding with python objects as well as 
+  Objective-C objects. Key-Value Coding also works as one would expect with
+  Python objects when accessing them from Objective-C (both for plain Python
+  objects and Python/Objective-C hybrid objects).
+
 - objc.pyobjc_unicode objects are now pickled as unicode objects, previously
   the couldn't be pickled or were pickled as incomplete objects (protocol 
   version 2). 
@@ -29,6 +37,12 @@ Version 1.0b1+ (CVS):
   
   This is a backward incompatible change, but there are not many of such
   methods.
+
+- Another backward incompatible change is a minor cleanup of the names in
+  the ``objc`` module. The most significant of these is the change from
+  ``recycle_autorelease_pool`` to ``recycleAutoreleasePool``. The other 
+  changed names are internal to the bridge and should not be used in other
+  code.
 
 Version 1.0b1 (2003-07-05):
 
