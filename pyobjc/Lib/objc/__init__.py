@@ -58,6 +58,8 @@ from _descriptors import *
 _PLUGINS = {}
 def registerPlugin(pluginName):
     """
+    Deprecated: use currentBundle()
+
     Register the current py2app plugin by name and return its bundle
     """
     import os
@@ -70,9 +72,13 @@ def registerPlugin(pluginName):
 
 def pluginBundle(pluginName):
     """
+    Deprecated: use currentBundle()
+
     Return the main bundle for the named plugin. This should be used
     only after it has been registered with registerPlugin
     """
+    import warnings
+    warnings.warn("Deprecated: use currentBundle()", DeprecationWarning)
     return lookUpClass('NSBundle').bundleWithPath_(_PLUGINS[pluginName])
 
 from _convenience import CONVENIENCE_METHODS, CLASS_METHODS

@@ -140,7 +140,7 @@ class NibInfo(object):
 
     def _extractClassesFromNibFromBundle(self, nibName, bundle=None):
         if not bundle:
-            bundle = NSBundle.mainBundle()
+            bundle = objc.currentBundle()
         if nibName[-4:] == '.nib':
             resType = None
         else:

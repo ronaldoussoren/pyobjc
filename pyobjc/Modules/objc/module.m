@@ -369,7 +369,7 @@ PyDoc_STRVAR(allocateBuffer_doc,
 static PyObject*
 allocateBuffer(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-static	char* keywords[] = { "length", 0 };
+	static	char* keywords[] = { "length", 0 };
 	int length;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "i", keywords, &length)) {
@@ -383,6 +383,23 @@ static	char* keywords[] = { "length", 0 };
 	}
 
 	return PyBuffer_New(length);
+}
+
+PyDoc_STRVAR(currentBundle_doc,
+	     "currentBundle() -> bundle\n"
+	     "\n"
+	     "Get the current bundle, works for plug-ins and\n"
+	     "applications."
+	     );
+static PyObject*
+currentBundle(PyObject* self __attribute__((__unused__)))
+{
+	id rval;
+	char *bundle_address = getenv("PYOBJC_BUNDLE_ADDRESS");
+	if (!(bundle_address && sscanf(bundle_address, "%p", &rval) == 1)) {
+		rval = [NSBundle mainBundle];
+	}
+	return pythonify_c_value(@encode(id), &rval);
 }
 
 
@@ -772,6 +789,7 @@ static PyMethodDef mod_methods[] = {
 	  METH_VARARGS|METH_KEYWORDS,
 	  classAddMethods_doc
 	},
+	{ "currentBundle", (PyCFunction)currentBundle, METH_NOARGS, currentBundle_doc },
 	{ "getClassList", (PyCFunction)getClassList, METH_NOARGS, getClassList_doc },
 	{ "setClassExtender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
 	{ "setSignatureForSelector", (PyCFunction)set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
