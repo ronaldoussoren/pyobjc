@@ -338,6 +338,9 @@ PyObjC_MakeIMP(Class class, PyObject* sel, PyObject* imp)
 		methinfo = PyObjCMethodSignature_FromSignature(
 				PyObjCSelector_Signature(sel));
 		retval = PyObjCFFI_MakeClosure(methinfo, func, imp);
+		if (retval != NULL) {
+			Py_INCREF(imp);
+		}
 		PyObjCMethodSignature_Free(methinfo);
 		return retval;
 	} else {
