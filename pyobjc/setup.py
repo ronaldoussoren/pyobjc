@@ -112,6 +112,10 @@ if gs_root is None:
         '-framework', 'AppKit'
         ]
 
+    ADDRESSBOOK_LDFLAGS=[
+        '-framework', 'AddressBook', '-framework', 'Foundation'
+    ]
+
 else:
     #
     # GNUstep
@@ -179,6 +183,7 @@ else:
         '-l', 'objc'
         ]
 
+    ADDRESSBOOK_LDFLAGS=[]
 
 def IfFrameWork(name, packages, extensions):
     """
@@ -240,7 +245,15 @@ CocoaExtensions = [
 # The AdressBook module is only installed when the user actually has the
 # AddressBook framework.
 AddressBookPackages, AddressBookExtensions = \
-        IfFrameWork('AddressBook.framework', [ 'AddressBook' ], [])
+        IfFrameWork('AddressBook.framework', [ 'AddressBook' ], [
+            Extension('AddressBook._AddressBook',
+                      [ 'Modules/Cocoa/_AddressBook.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=[
+                      ] + ADDRESSBOOK_LDFLAGS),
+        ])
 
 
 def package_version():

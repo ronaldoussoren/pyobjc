@@ -21,14 +21,18 @@ import os
 FRAMEWORKS="/System/Library/Frameworks"
 FOUNDATION=os.path.join(FRAMEWORKS, "Foundation.framework")
 APPKIT=os.path.join(FRAMEWORKS, "AppKit.framework")
+ADDRESSBOOK=os.path.join(FRAMEWORKS, "AddressBook.framework")
 FOUNDATION_HDRS=os.path.join(FOUNDATION, 'Headers')
 APPKIT_HDRS=os.path.join(APPKIT, 'Headers')
+ADDRESSBOOK_HDRS=os.path.join(ADDRESSBOOK, 'Headers')
 
 enum_generator.generate(FOUNDATION_HDRS, '_Fnd_Enum.inc')
 enum_generator.generate(APPKIT_HDRS, '_App_Enum.inc')
+enum_generator.generate(ADDRESSBOOK_HDRS, '_Addr_Enum.inc')
 
 strconst_generator.generate(FOUNDATION_HDRS, '_Fnd_Str.inc')
 strconst_generator.generate(APPKIT_HDRS, '_App_Str.inc')
+strconst_generator.generate(ADDRESSBOOK_HDRS, '_Addr_Str.inc')
 
 FOUNDATION_PREFIX="FOUNDATION_EXPORT"
 FOUNDATION_IGNORE_LIST=(
@@ -125,7 +129,7 @@ def BeginSheetMapper(funcname, args):
     new_args = []
     for tp, name in args:
         if name == 'contextInfo':
-            tp = 'int'
+            tp = 'PYOBJC_VOIDPTR'
         new_args.append((tp, name))
     return tuple(new_args)
 func_builder.FUNC_MAP['NSBeginAlertSheet'] = BeginSheetMapper

@@ -34,6 +34,8 @@ HDR="""\
  * This is a generated file.
  */
 
+typedef void* PYOBJC_VOIDPTR;
+
 static inline int convert_BOOL(PyObject* object, void* pvar)
 {
     BOOL* pbool = (BOOL*)pvar;
@@ -150,6 +152,12 @@ SIMPLE_TYPES={
 		'convert_Class, &%(varname)s', 
 	),
 	'int': (
+		"\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+		'i',
+		'&%(varname)s',
+		None
+	),
+	'PYOBJC_VOIDPTR': (
 		"\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
 		'i',
 		'&%(varname)s',
