@@ -1,5 +1,5 @@
 =========
-Todo list
+TODO list
 =========
 
 .. contents::
@@ -15,7 +15,19 @@ Important items
 Better documentation
 ....................
 
-There should be more developer and and end-user documentation.
+* There should be more developer and and end-user documentation.
+
+* The tutorials should have screenshots for the website.
+
+* There should be a document containing references to "third party" tutorials,
+  articles, and information about PyObjC.
+
+* The documentation should be updated to take advantage of reStructuredText
+  features.  Currently, documentation doesn't refer to itself consistently
+  (usually without hyperlink), and most documents are missing metadata.
+
+* build_html should include a step that performs syntax highlighting for
+  Python and Objective-C code snippets.
 
 Test suite
 ..........
