@@ -113,14 +113,17 @@ is a shame.</p>
 <h3><a href="#id10" name="complete-cocoa-wrapping">Complete Cocoa wrapping</a></h3>
 <p>We do not yet have a 100% coverage of the Cocoa API's. We also need code in
 the testsuite that checks if the function wrappers are working as expected.</p>
-<p>Someone needs to check if we correctly export all constants from Cocoa and if
-the generation script finds all global functions. Simularly for the annotations
-for input/output arguments.</p>
-<p>XXX: I'm pretty sure we don't wrap all constants: the newer, yet incomplete
-wrapper scripts found some enums inside interface definitions. Don't bother
-about fixing this before 1.2.</p>
+<p>Not all constants and enums from Cocoa are currently wrapped.  The annotations
+for input/output arguments are not all checked and may not be complete or
+correct.</p>
 <p>We also don't support all &quot;difficult&quot; methods yet, implementing these is
 not too hard but it is a lot of work.</p>
+<p>Note that even though we do not have 100% coverage of Cocoa, the majority
+of useful functions, constants, and &quot;difficult&quot; methods are wrapped.  If you
+run across a missing or incorrectly wrapped constant, function, or method
+please report it as a bug and/or post to pyobjc-dev about the issue.  This is
+one area we intend to improve after the release of 1.2 when our new
+wrapper-generators are in a more complete state.</p>
 <h3><a href="#id11" name="pickle-support">Pickle support</a></h3>
 <p>Objective-C objects don't support pickling.</p>
 <p>This is post-1.2 work, in general this is a hard problem because it may 
@@ -141,10 +144,10 @@ generic code (you have to reimplement allmost all of the logic of these
 methods in order to know how many and which types of arguments are expected).
 Luckily there are not many varargs methods and most (if no all) of them can
 be easily avoided.</p>
-<p>XXX: The paragraph above should be moved to the documentation, it is not a 
-todo item.</p>
 <p>All existing varargs methods should be located and documented. Where possible
 we should provide custom wrappers, otherwise we should document alternatives.</p>
+<p>Limitations such as the above should be clearly documented elsewhere, these
+are not necessarily TODO items.</p>
 <h3><a href="#id15" name="code-cleanup">Code cleanup</a></h3>
 <ul>
 <li>Check all error/exception messages</li>

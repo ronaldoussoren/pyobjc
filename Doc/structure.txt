@@ -2,56 +2,43 @@
 Structure of the PyObjC package
 ===============================
 
-.. This document is in structured text markup to enable easy translation to 
-   HTML.
-
 Introduction
 ------------
 
-XXX:  This document is outdated and incomplete.
-
 This document gives an overview of the PyObjC for developers (of the package).
 
-One of the sections describes how all of it works, and some of the limitation.
+One of the sections describes how all of it works, and some of the limitations.
 
-This document is a little dated, it should be updated.
+This document is a incomplete, it should be updated.
 
 
 Methods
 -------
 
-Classes are scanned for methods when the python wrapper for a class is created.
-We then create python wrappers for those methods. This way users can use the
-normal python introspection methods to check which methods are available.
+Classes are scanned for methods when the Python wrapper for a class is created.
+We then create Python wrappers for those methods. This way users can use the
+normal Python introspection methods to check which methods are available.
 
-Sadly enough some classes in the Cocoa frameworks on Mac OSX grow new methods
-when the first instance of those classes is created. We therefore have added 
-some additional code that rescans the method tables on several occasions.
+There are several occasions when these method tables are rescanned, because
+classes can grow new methods when categories are loaded into the runtime.
+Additionally, it is known that some Cocoa frameworks in Mac OS X change
+their method tables when the first instance is created.
 
 Subclassing
 -----------
 
-It is possible to subclass objective-C classes in python and this results in a
-hybrid Python/Objective-C class. Instances of these classes consist of a
-cluster of 2 objects, a Python object and an Objective-C object.
+It is possible to subclass Objective-C classes from Python.  These classes
+end up in a structure containing both a Python type object and an Objective-C
+class.  Instances of these classes also contain both a Python instance and
+an Objective-C object.
 
-The reference count (or retainCount in objective-C speak) is stored in the 
-Python object, mostly because that is the only way to maintain a single 
-reference count for the cluster. The pointers from the python half of the 
-cluster to the objective-C half, and the pointers the other way around, are
-not counted in the reference count. If those would be counted we would
-introduce cycles that are not detectable by the cycle-breaking garbage 
-collector in python and all python/objective-C hybrids would be immortal.
-
-The first python subclass of an objective-C class introduces a new instance
-variable in the objective-C object to store the pointer to the python half of
-the cluster. This variable is always referenced by name.  The python half is 
-a subclass of objc_object that already contains a pointer to an objective-C 
-object. 
-
-The first python subclass of an objective-C class also introduces a number of
-methods (both class methods and instance methods) that allow us to maintain the
-illusion of a single object. Check class-builder.m for details.
+The first Python subclass of an Objective-C class introduces a new instance
+variable in the Objective-C object to store the pointer to the Python half of
+the cluster.  This variable is always referenced by name.  The Python half is 
+a subclass of objc_object that already contains a pointer to an Objective-C 
+object.  This first subclass also introduces a number of class and instance
+methods that the PyObjC bridge uses to maintain the illusion of a single
+object on both sides.  Check class-builder.m for details.
 
 
 Directory structure
@@ -64,31 +51,51 @@ Examples/
   Example scripts and applets.
 
 Lib/
-  Python modules that will be installed in the library. Currently contains
-  the modules/packages 'objc', 'AddressBook', 'AppKit', 'Foundation',
-  'InterfaceBuilder', 'PreferencePanes', 'PyObjCTools' and 'ScreenSaver.py'.
+  The pure Python parts of the packages that comprise PyObjC.  Currently
+  contains the packages 'objc', 'PyObjCScripts', 'PyObjCTools' and the
+  semi-automatically generated wrappers for the 'AddressBook',
+  'AppKit', 'ExceptionHandling', 'Foundation', 'InterfaceBuilder', 'Message',
+  'PreferencePanes', 'ScreenSaver', 'SecurityInterface' and 'WebKit'
+  frameworks.
 
 Modules/
-  Extension modules related to the packages in 'Lib'. This directory contains
-  both the core module 'objc._objc' and a number of extension modules that
-  help in wrapping all of Cocoa.
+  Extension modules related to the packages in 'Lib'.
 
 Scripts/
   Scripts used during building and/or development of PyObjC.
 
-Tools/
-  Scripts that are useful for users of PyObjC
+Installer Package/
+  Resources used for building the Apple Installer packages.
+
+ProjectBuilder Extras/
+  Project Builder templates and syntax specifications for PyObjC development.
+
+Xcode/
+  Xcode templates for PyObjC development.
+
+libffi-src/
+  A local copy of libffi, the Foreign Function Interface library used by
+  PyObjC.
+
+setup-lib/
+  Modules used by setup.py for building and distributing PyObjC.
+
+source-deps/
+  Local copies of Python packages and modules used by PyObjC that are not
+  expected to be found in the minimum supported version of Python.  These
+  are not automatically installed by setup.py, but some may be included in
+  a bdist_mpkg installer (currently, just py2app).
 
 Reference counts
 ----------------
 
 The Objective-C rules for reference counts are pretty easy: A small number
 of class methods (alloc, allocWithZone:, copy, ...) transfer object ownership
-to the caller. For all other objects you have to call 'retain' if you want
-to keep a reference. This includes all factory methods (e.g. 
-[String stringWithCString:"bla"])!
+to the caller.  For all other objects you have to call 'retain' if you want
+to keep a reference.  This includes all factory methods (e.g. 
+[NSString stringWithCString:"bla"])!
 
-When programming Cocoa in Python, you almost never need to worry about
+When programming Cocoa in Python, you rarely need to worry about
 reference counts: the objc module makes this completely transparent to user.
 This is mostly implemented in [de]pythonify_c_value. Additonal code is needed
 when calling methods that transfer ownership of their return value (as
@@ -98,19 +105,25 @@ object (retain new and release old, in that order). Both are implemented.
 Strings
 -------
 
-We currently automatically convert from Python strings to NSStrings (and
-back). An NSString is represented in Python as a subclass of the 'unicode'
-class: objc.pyobjc_unicode. This is a conversion as well as a *reference* to
-the original NSString. The NSString is accessible in Python with the
-.nsstring() method, to allow access to NSString's methods (NSMutableString's
-methods, actually).
+Python unicode instances are automatically converted to NSString and
+back. An NSString is represented in Python as a subclass of the 'unicode'
+class: objc.pyobjc_unicode.  This is a conversion, because Python's unicode
+type is immutable, but it also maintains a *reference* to the original
+NSString.  Currently, the conversion is done using UTF-8 for exchange,
+because unicode's internal representation may be changed with a compile
+time flag.
 
-Converting a Python string to Objective-C and back currently converts the 
-string to Unicode. If may be useful to try to convert to a normal string
-(using [NSString dataUsingEncoding:allowLossyConversion:]) and only return
-a Unicode object if that fails.
+The original, unwrapped, NSString instance is accessible from Python
+with the .nsstring() method of objc.pyobjc_unicode, mostly for creating an
+updated copy of an NSMutableString's contents.  Since PyObjC 1.2,
+NSString and NSMutableString methods are available from the objc.pyobjc_unicode
+object, though they do not show up via Python's introspection mechanisms.
 
-When translating from NSString to a Python unicode object (and back) we first 
-translate to a UTF8 encoding. This way we don't have to worry about any
-differences in the representation of Unicode strings in Python and Objective-C
-(Python has two different representations, selection is at compile-time).
+For legacy and convenience, Python str instances are automatically coerced
+into unicode when they cross the bridge using the same mechanism that
+automatically converts from str to unicode (using 
+``sys.getdefaultencoding()``).  This automatic conversion can cause terrible
+things to happen at runtime that are hard to test for, so you may enable an
+``objc.PyObjCStrBridgeWarning`` at each coercion by calling
+``objc.setStrBridgeEnabled(False)``.  To promote this warning to an exception,
+see the documentation for the ``warnings`` module in the standard library.
