@@ -3,9 +3,9 @@ import objc
 
 from Foundation import *
 
-
 class TestNSCoderUsage(unittest.TestCase):
     if not hasattr(unittest.TestCase, 'assertAlmostEquals'):
+        # XXX Move to a PyObjC unittest module?
         def assertAlmostEquals(self, val1, val2):
             self.assert_ (abs(val1 - val2) <  0.000001)
 
@@ -18,6 +18,7 @@ class TestNSCoderUsage(unittest.TestCase):
                 coder.encodeValueOfObjCType_at_(objc._C_INT, 2)
                 coder.encodeValueOfObjCType_at_(objc._C_DBL, 2.0)
                 coder.encodeArrayOfObjCType_count_at_(objc._C_DBL, 4, (1.0, 2.0, 3.0, 4.0))
+                coder.encodeBytes_length_("hello world!", 5)
 
             def initWithCoder_(self, coder):
                 # NSObject does not implement NSCoding, no need to
@@ -27,6 +28,7 @@ class TestNSCoderUsage(unittest.TestCase):
                 self.intVal = coder.decodeValueOfObjCType_at_(objc._C_INT)
                 self.dblVal = coder.decodeValueOfObjCType_at_(objc._C_DBL)
                 self.dblArray = coder.decodeArrayOfObjCType_count_at_(objc._C_DBL, 4)
+                self.decodedBytes = coder.decodeBytesWithReturnedLength_()
                 return self
 
         origObj = CoderClass1.alloc().init()
@@ -44,6 +46,8 @@ class TestNSCoderUsage(unittest.TestCase):
         self.assertAlmostEquals(newObj.dblArray[1], 2.0)
         self.assertAlmostEquals(newObj.dblArray[2], 3.0)
         self.assertAlmostEquals(newObj.dblArray[3], 4.0)
+        self.assertEquals(newObj.decodedBytes[0], "hello")
+        self.assertEquals(newObj.decodedBytes[1], 5)
 
 if __name__ == '__main__':
     unittest.main( )
