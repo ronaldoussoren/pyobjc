@@ -37,14 +37,14 @@ class TestNSDecimal (unittest.TestCase):
         self.assertEquals(str(o), "-1234")
 
         o = NSDecimal(1L << 64 - 1)
-        
+
         # This is wrong, explict conversion should be allowed!
         #self.assertRaises(TypeError, NSDecimal, 1.2)
         self.assertRaises(OverflowError, NSDecimal, 1L << 128)
         self.assertRaises(OverflowError, NSDecimal, -1L << 128)
 
     def testFunction(self):
-        # We only test addition, as all function wrappers are generated this 
+        # We only test addition, as all function wrappers are generated this
         # should be enough to verify that the machinery is working correctly.
         o = NSDecimal("1.5")
         p = NSDecimal(12345, -2, objc.YES)
@@ -93,7 +93,7 @@ class TestNSDecimal (unittest.TestCase):
     if not hasattr(unittest.TestCase, 'assertAlmostEquals'):
         def assertAlmostEquals(self, val1, val2, eta=0.000001):
             self.assert_(abs(val1 - val2) < eta)
-            
+
 
 class TestNSDecimalNumber (unittest.TestCase):
     def testCreation1(self):

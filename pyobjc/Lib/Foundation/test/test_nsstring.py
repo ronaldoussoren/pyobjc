@@ -6,10 +6,10 @@ from Foundation import *
 
 class TestNSString(unittest.TestCase):
     def testCompare(self):
-        self.assert_( 
+        self.assert_(
             NSString.localizedCaseInsensitiveCompare_('foo','bar') == 1,
             "NSString doesn't compare correctly")
-        self.assert_( 
+        self.assert_(
             NSString.localizedCaseInsensitiveCompare_('foo','Foo') == 0,
             "NSString doesn't compare correctly")
 
