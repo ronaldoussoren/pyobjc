@@ -7,8 +7,10 @@ PyObjC Architecture
 Introduction
 ------------
 
+XXX: This documented is outdated and incomplete.
+
 This document gives a (brief) description of how the PyObjc package is 
-structured. Too bad this document is outdated and incomplete...
+structured. 
 
 Objective-C classes and objects
 -------------------------------
