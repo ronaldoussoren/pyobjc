@@ -22,7 +22,7 @@ class TestNSCell(unittest.TestCase):
       self.assertEquals(cell.intValue(), i)
 
    def testFloat(self):
-      f = 3.14159
+      f = 3.125
       cell = NSCell.alloc().initTextCell_("")
       cell.setFloatValue_(f)
       self.assertEquals(cell.floatValue(), f)
