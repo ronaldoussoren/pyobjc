@@ -36,7 +36,126 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 PyObject *OC_PythonObject_DepythonifyTable = NULL;
 PyObject *OC_PythonObject_PythonifyStructTable = NULL;
 
+#if 0
+static void
+nsmaptable_python_retain(NSMapTable *table __attribute__((__unused__)), const void *datum) {
+	Py_INCREF((PyObject *)datum);
+}
+
+static void
+nsmaptable_python_release(NSMapTable *table __attribute__((__unused__)), void *datum) {
+	Py_DECREF((PyObject *)datum);
+}
+
+static void
+nsmaptable_objc_retain(NSMapTable *table __attribute__((__unused__)), const void *datum) {
+	[(id)datum retain];
+}
+
+static void
+nsmaptable_objc_release(NSMapTable *table __attribute__((__unused__)), void *datum) {
+	[(id)datum release];
+}
+
+NSMapTableKeyCallBacks PyObjC_ObjectToIdTable_KeyCallBacks = {
+	NULL, // use pointer value for hash
+	NULL, // use pointer value for equality
+	&nsmaptable_python_retain,
+	&nsmaptable_python_release,
+	NULL, // generic description
+	NULL // not a key
+};
+
+NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
+	&nsmaptable_objc_retain,
+	&nsmaptable_objc_release,
+	NULL  // generic description
+};
+
+NSMapTable *PyObjC_ObjectToIdTable = NULL;
+#endif
+
 @implementation OC_PythonObject
++ (int)wrapPyObject:(PyObject *)argument toId:(id *)datum
+{
+	int r = 0;
+	id rval = nil;
+	 
+	if (argument == Py_None) {
+		*datum = nil;
+		return 0;
+	}
+#if 0
+	if (!PyObjC_ObjectToIdTable) {
+		PyObjC_ObjectToIdTable = NSCreateMapTable(PyObjC_ObjectToIdTable_KeyCallBacks, PyObjC_ObjectToIdTable_ValueCallBacks, 1024);
+	}
+	if ((*datum = (id)NSMapGet(PyObjC_ObjectToIdTable, argument))) {
+		// key found
+		return 0;
+	}
+#endif
+	
+	if (PyObjCClass_Check (argument)) {
+		rval = (id)PyObjCClass_GetClass(argument);
+	} else if (PyObjCObject_Check (argument)) {
+		rval = PyObjCObject_GetObject(argument);
+	} else if (PyObjCUnicode_Check(argument)) {
+		rval = PyObjCUnicode_Extract(argument);
+	} else if (PyUnicode_Check(argument)) {
+		PyObject* utf8 = PyUnicode_AsUTF8String(argument);
+
+		if (utf8) {
+			rval = [NSString 
+				stringWithUTF8String:
+					PyString_AS_STRING(utf8)];
+			Py_DECREF(utf8);
+		} else {
+			PyErr_Format(PyExc_ValueError,
+				"depythonifying 'id', failed "
+				"to encode unicode string to UTF8");
+			return -1;
+		}
+
+	} else if (PyBool_Check(argument)) {
+		rval = [NSNumber 
+			numberWithBool:PyInt_AS_LONG (argument)];
+	} else if (PyInt_Check (argument)) {
+		rval = [NSNumber 
+			numberWithLong:PyInt_AS_LONG (argument)];
+	} else if (PyFloat_Check (argument)) {
+		rval = [NSNumber 
+			numberWithDouble:PyFloat_AS_DOUBLE (argument)];
+	} else if (PyLong_Check(argument)) {
+		/* XXX: What if the value doesn't fit into a 
+		 * 'long long' 
+		 */
+		rval = [NSNumber 
+			numberWithLongLong:PyLong_AsLongLong(argument)];
+		if (PyErr_Occurred()) {
+			/* Probably overflow */
+			r = -1;
+		}
+	} else if (PyList_Check(argument) || PyTuple_Check(argument)) {
+		rval = [OC_PythonArray 
+			newWithPythonObject:argument];
+	} else if (PyDict_Check(argument)) {
+		rval = [OC_PythonDictionary 
+			newWithPythonObject:argument];
+#ifdef MACOSX
+	} else if ((rval = PyObjC_CFTypeToID(argument))) {
+		// unwrapped cf
+#endif /* MACOSX */
+	} else {
+		rval = [OC_PythonObject 
+			newWithCoercedObject:argument];
+	}
+#if 0
+	NSMapInsert(PyObjC_ObjectToIdTable, (const void *)argument, (const void *)rval);
+#endif
+	*datum = rval;
+	return r;
+}
+
 + newWithObject:(PyObject *) obj
 {
 	id instance;
@@ -110,36 +229,36 @@ PyObject *OC_PythonObject_PythonifyStructTable = NULL;
 
 + pythonifyStructTable
 {
-    PyObjC_BEGIN_WITH_GIL
-        if (OC_PythonObject_PythonifyStructTable == NULL) {
-            OC_PythonObject_PythonifyStructTable = PyDict_New();
-        }
+	PyObjC_BEGIN_WITH_GIL
+		if (OC_PythonObject_PythonifyStructTable == NULL) {
+			OC_PythonObject_PythonifyStructTable = PyDict_New();
+		}
 		id rval;
 		int err = depythonify_c_value(@encode(id), OC_PythonObject_PythonifyStructTable, &rval);
 		if (err == -1) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
 		PyObjC_GIL_RETURN(rval);
-    PyObjC_END_WITH_GIL
+	PyObjC_END_WITH_GIL
 }
 
 + (PyObject *)__pythonifyStruct:(PyObject*)obj withType:(const char *)type length:(int)length
 {
-    if (OC_PythonObject_PythonifyStructTable == NULL) {
-        Py_INCREF(obj);
-        return obj;
-    }
-    PyObject *typeString = PyString_FromStringAndSize(type, length);
-    if (type == NULL) {
-        return NULL;
-    }
-    PyObject *convert = PyDict_GetItem(OC_PythonObject_PythonifyStructTable, typeString);
-    Py_DECREF(typeString);
-    if (convert == NULL) {
-        Py_INCREF(obj);
-        return obj;
-    }
-    return PyObject_CallFunctionObjArgs(convert, obj, NULL);
+	if (OC_PythonObject_PythonifyStructTable == NULL) {
+		Py_INCREF(obj);
+		return obj;
+	}
+	PyObject *typeString = PyString_FromStringAndSize(type, length);
+	if (type == NULL) {
+		return NULL;
+	}
+	PyObject *convert = PyDict_GetItem(OC_PythonObject_PythonifyStructTable, typeString);
+	Py_DECREF(typeString);
+	if (convert == NULL) {
+		Py_INCREF(obj);
+		return obj;
+	}
+	return PyObject_CallFunctionObjArgs(convert, obj, NULL);
 }
 
 
@@ -222,7 +341,7 @@ check_argcount (PyObject *pymethod, int argcount)
 	PyCodeObject *func_code;
 
 	if (PyFunction_Check(pymethod)) {
-        	func_code = (PyCodeObject *)PyFunction_GetCode(pymethod);
+		func_code = (PyCodeObject *)PyFunction_GetCode(pymethod);
 		if (argcount == func_code->co_argcount) {
 			return pymethod;
 		}
@@ -772,12 +891,12 @@ static  PyObject* setKeyFunc = NULL;
 #if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
 - (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
 {
-    NSLog(@"*** Ignoring *** %@ for '%@' (of %@ with %#x in %p).\n", NSStringFromSelector(_cmd), keyPath, observer, options, context);
-    return;
+	NSLog(@"*** Ignoring *** %@ for '%@' (of %@ with %#x in %p).\n", NSStringFromSelector(_cmd), keyPath, observer, options, context);
+	return;
 }
 - (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath;
 {
-    NSLog(@"*** Ignoring *** %@ for '%@' (of %@).", NSStringFromSelector(_cmd), keyPath, observer);
+	NSLog(@"*** Ignoring *** %@ for '%@' (of %@).", NSStringFromSelector(_cmd), keyPath, observer);
 }
 #endif
 
