@@ -161,7 +161,7 @@ convenient to you.
 
 PyObjC includes a copy of the ``bundlebuilder`` module. This module will be
 part of the Python 2.3 MacPython release and offers a way to build
-distutil-style scripts  for building (standalone) applications.
+distutils-style scripts  for building (standalone) applications.
 
 An example ``buildapp.py`` script::
 
