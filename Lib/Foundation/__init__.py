@@ -70,3 +70,20 @@ def propertyListFromPythonCollection(aPyCollection, conversionHelper=None):
             return conversionHelper(aPyCollection)
         raise "UnrecognizedTypeException", "Type %s encountered in python collection;  don't know how to convert." % containerType
 
+def pythonCollectionFromPropertyList(aCollection, conversionHelper=None):
+    if isinstance(aCollection, NSDictionary):
+        pyCollection = {}
+        for k in aCollection:
+            pyCollection[k] = pythonCollectionFromPropertyList(aCollection[k], conversionHelper)
+        return pyCollection
+    elif isinstance(aCollection, NSArray):
+        pyCollection = [None] * len(aCollection)
+        for i in range(len(aCollection)):
+            pyCollection[i] = pythonCollectionFromPropertyList(aCollection[i], conversionHelper)
+        return pyCollection
+    elif type(aCollection) in StringTypes:
+        return aCollection
+    else:
+        if conversionHelper:
+            return conversionHelper(aCollection)
+        raise "UnrecognizedTypeException", "Type %s encountered in ObjC collection;  don't know how to convert." % type(aCollection)
