@@ -2,9 +2,14 @@ import os
 from altgraph.compat import *
 
 class Xcode(object):
-    def __init__(self, archive, env):
+    def __init__(self, project, archive, env):
+        self.project = project
         self.archive = archive
-        self.env = env
+        self.env = dict(
+            BUILT_PRODUCTS_DIR='build',
+            TARGET_TEMP_DIR=os.path.join('build', project + '.py2app.build'),
+        )
+        self.env.update(env)
 
     def py2app_argv(self, argv):
         action = self.env.get('ACTION', '').strip()
@@ -81,7 +86,12 @@ class Xcode(object):
                 if children is not None:
                     refs = chain(ref.children, refs)
                     break
-                yield unicode(ref.path).encode('utf8')
+                path = ref.path
+                sourceTree = self.env.get(getattr(ref, 'sourceTree', None))
+                dirname = unicode(os.path.dirname(path))
+                if sourceTree:
+                    path = os.path.join(unicode(sourceTree, 'utf-8'), path)
+                yield dirname, [unicode(path).encode('utf8')]
             else:
                 break
 
@@ -92,12 +102,10 @@ class Xcode(object):
         resources = list(self.iterResources())
         if self.env.get('BUILD_STYLE') == 'Development':
             py2app['alias'] = True
-        if 'BUILT_PRODUCTS_DIR' in self.env:
-            py2app['dist_dir'] = self.env['BUILT_PRODUCTS_DIR']
-        if 'TARGET_TEMP_DIR' in self.env:
-            py2app['bdist_base'] = self.env['TARGET_TEMP_DIR']
+        py2app['dist_dir'] = self.env['BUILT_PRODUCTS_DIR']
+        py2app['bdist_base'] = self.env['TARGET_TEMP_DIR']
         rval = dict(
-            data_files=[(os.path.dirname(rsrc), [rsrc]) for rsrc in resources],
+            data_files=resources,
             options=dict(py2app=py2app),
         )
         rval[buildstyle] = [self.getTarget(nibFiles, modules)]

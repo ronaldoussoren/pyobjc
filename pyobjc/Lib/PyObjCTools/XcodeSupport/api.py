@@ -7,4 +7,4 @@ def xcodeFromEnvironment(project, env):
     path = os.path.join(project, 'project.pbxproj')
     if not os.path.exists(path):
         path = glob.glob('*.xcode/project.pbxproj')[0]
-    return Xcode.Xcode(ArchiveGraph.ArchiveGraph.fromPath(path), env)
+    return Xcode.Xcode(project, ArchiveGraph.ArchiveGraph.fromPath(path), env)
