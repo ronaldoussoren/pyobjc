@@ -7,164 +7,89 @@ import sys
 from distutils.version import LooseVersion
 from distutils import log
 from bdist_mpkg.command import bdist_mpkg as _bdist_mpkg
-from py2app.util import skipscm
+from py2app.util import skipfunc, skipjunk
 
 from altgraph.compat import *
 from bdist_mpkg import tools
 
-JUNK = set(['.DS_Store', '.gdb_history', 'build', 'dist', 'NonFunctional'])
-JUNK_EXTS = set(['.pbxuser', '.pyc', '.pyo', '.swp'])
-def skipjunk(fn, junk=JUNK, junk_exts=JUNK_EXTS):
-    if not skipscm(fn):
-        return False
-    elif os.path.basename(fn) in junk:
-        return False
-    elif os.path.splitext(fn)[1] in junk_exts:
-        return False
-    return True
+# XXX - not used
+SCHEME_REMOVE = dict(
+    # This should take care of any previous version of PyObjC
+    platlib = [
+        'PyObjC',
+        'PyObjC.pth',
+    ],
+    # Remove old examples and documentation
+    examples = ['.'],
+    documentation = ['.'],
+    # Remove old nibclassbuilder
+    scripts = ['nibclassbuilder'],
+    # Remove old Project Builder templates
+    pbx = [
+        'ProjectBuilder Extras/Cocoa-Python Application',
+        'ProjectBuilder Extras/Cocoa-Python Document-based Application',
+        'ProjectBuilder Extras/Cocoa-Python-ObjC Application',
+        'ProjectBuilder Extras/Cocoa-Python-ObjC Document-based Application',
+    ],
+    # Remove old Xcode templates
+    xcode = [
+        'File Templates/Cocoa/Python NIB class.pbfiletemplate',
+        'File Templates/Cocoa/Python class.pbfiletemplate',
+        'Pure Python',
+        'Project Templates/Application/Cocoa-Python Application',
+        'Project Templates/Application/Cocoa-Python Document-based Application',
+    ],
+)
 
-PREFLIGHT_RM = """#!/usr/bin/python
-import shutil, os
-for fn in %(files)r:
-    if os.path.isdir(fn):
-        shutil.rmtree(fn, ignore_errors=1)
-    elif os.path.exists(fn):
-        os.unlink(fn)
-"""
-def run_setup(*args, **kwargs):
-    import distutils.core
-    d = {
-        '_setup_stop_after':None,
-        '_setup_distribution':None,
-    }
-    for k in d:
-        d[k] = getattr(distutils.core, k, None)
-    try:
-        return distutils.core.run_setup(*args, **kwargs)
-    finally:
-        for k,v in d.iteritems():
-            setattr(distutils.core, k, v)
-    
-    
-def write_preflight_rm(path, files):
-    fobj = file(path, 'w')
-    fobj.write(PREFLIGHT_RM % dict(files=map(os.path.normpath, files)))
-    fobj.close()
-    os.chmod(path, 0775)
+CUSTOM_SCHEMES = dict(
+    pbx=(
+        u'(Optional) Project Builder File and Project templates for PyObjC',
+        '/Developer/ProjectBuilder Extras',
+        'ProjectBuilder Extras',
+    ),
+    xcode=(
+        u'(Optional) Xcode File and Project templates for PyObjC',
+        '/Library/Application Support/Apple/Developer Tools',
+        'Xcode',
+    ),
+    docs=(
+        u'(Optional) PyObjC Documentation',
+        '/Developer/Python/PyObjC/Documentation',
+        'Doc',
+    ),
+    examples=(
+        u'(Optional) PyObjC Example Code',
+        '/Developer/Python/PyObjC/Examples',
+        'Examples',
+    ),
+)
 
-OSX_VERSION = LooseVersion(tools.sw_vers())
+SUBPROJECT_SCHEMES = dict(
+    py2app='source-deps/py2app/setup.py',
+)
+
+
 class pyobjc_bdist_mpkg(_bdist_mpkg):
     def initialize_options(self):
         _bdist_mpkg.initialize_options(self)
-        self.readme = 'Installer Package/%s/Resources/ReadMe.txt' % ('.'.join(map(str, OSX_VERSION.version[:2])),)
-        self.preflight_rm = {}
-        self.scheme_descriptions.update(dict(
-            pbx   = u'(Optional) Project Builder File and Project templates for PyObjC\nInstalled to: /Developer/ProjectBuilder Extras',
-            xcode = u'(Optional) Xcode File and Project templates for PyObjC\nInstalled to: /Library/Application Support/Apple/Developer Tools',
-            docs  = u'(Optional) PyObjC Documentation\nInstalled to: /Developer/Python/PyObjC/Documentation',
-            examples = u'(Optional) PyObjC Example Code\nInstalled to: /Developer/Python/PyObjC/Examples',
-        ))
-
-
-    def run_extra(self):
-        _bdist_mpkg.run_extra(self)
-        prepanther = OSX_VERSION < LooseVersion('10.3')
-        if prepanther:
-            self.pyobjc_pb_template()
+        self.readme = 'Installer Package/%s/Resources/ReadMe.txt' % (
+            '.'.join(map(str, self.macosx_version.version[:2])),
+        )
+        schemes = CUSTOM_SCHEMES.copy()
+        if self.macosx_version < LooseVersion('10.3'):
+            del schemes['xcode']
         else:
-            self.pyobjc_xcode_template()
-        self.pyobjc_documentation()
-        self.pyobjc_examples()
-        self.pyobjc_platlib()
-        self.pyobjc_py2app()
+            del schemes['pbx']
+        for scheme, (description, prefix, source) in schemes.iteritems():
+            self.scheme_descriptions[scheme] = description
+            self.scheme_map[scheme] = prefix
+            self.scheme_copy[scheme] = source
+        self.scheme_command['doc'] = 'build_html'
+        self.scheme_subprojects.update(SUBPROJECT_SCHEMES)
 
-    def scheme_hook(self, scheme, pkgname, version, files, common, prefix, pkgdir):
-        _bdist_mpkg.scheme_hook(self, scheme, pkgname, version, files, common, prefix, pkgdir)
-        #rmfiles = self.preflight_rm.get(scheme)
-        #if rmfiles is None:
-        #    return
-        #rmfiles = [os.path.normpath(os.path.join(prefix, fn)) for fn in rmfiles]
-        #preflight = os.path.join(pkgdir, 'Contents', 'Resources', 'preflight')
-        #write_preflight_rm(preflight, rmfiles)
-
-    def pyobjc_py2app(self):
-        build_base = os.path.abspath(os.path.join(self.build_base, 'py2app'))
-        dist_dir = os.path.abspath(self.packagesdir)
-        cwd = os.getcwd()
-        srcdir = os.path.abspath('source-deps/py2app')
-        os.chdir(srcdir)
-        old_path = list(sys.path)
-        sys.path.insert(0, srcdir)
-        args = ['bdist_mpkg', '--build-base=' + build_base, '--dist-dir=' + dist_dir]
-        if self.keep_temp:
-            args.append('--keep-temp')
-        try:
-            sub = run_setup(os.path.abspath('setup.py'), args)
-            pkg = sub.get_command_obj('bdist_mpkg').metapackagename
-        finally:
-            sys.path = old_path
-            os.chdir(cwd)
-        if pkg is not None:
-            self.packages.append((pkg, 'selected'))
-
-    def pyobjc_platlib(self):
-        scheme = 'platlib'
-        schemedir = os.path.join(self.pkg_base, scheme)
-        self.preflight_rm[scheme] = os.listdir(schemedir)
-        
-    def pyobjc_pb_template(self):
-        scheme = 'pbx'
-        schemedir = os.path.join(self.pkg_base, scheme)
-        self.scheme_map[scheme] = '/Developer/ProjectBuilder Extras'
-        self.copy_tree('ProjectBuilder Extras', schemedir,
-            condition=skipjunk)
-        # skip clean.py
-        cleanpath = os.path.join(schemedir, 'ProjectBuilder Extras', 'Project Templates', 'clean.py')
-        if os.path.exists(cleanpath):
-            os.unlink(cleanpath)
-        files = []
-        files.extend([
-            os.path.join('Project Templates', fn)
-            for fn in os.listdir(os.path.join(schemedir, 'Project Templates'))])
-        files.extend([
-            os.path.join('Specifications', fn)
-            for fn in os.listdir(os.path.join(schemedir, 'Specifications'))])
-        self.preflight_rm[scheme] = files
-
-    def pyobjc_xcode_template(self):
-        scheme = 'xcode'
-        schemedir = os.path.join(self.pkg_base, scheme)
-        self.scheme_map[scheme] = '/Library/Application Support/Apple/Developer Tools'
-        files = []
-        for path in [
-                    'Project Templates/Application',
-                    'File Templates/Cocoa',
-                    'File Templates/Pure Python',
-                ]:
-            self.copy_tree(
-                os.path.join('Xcode', path),
-                os.path.join(schemedir, path),
-                condition=skipjunk)
-            files.extend([
-                os.path.join(path, fn)
-                for fn in os.listdir(os.path.join(schemedir, path))])
-        self.preflight_rm[scheme] = files
-
-    def pyobjc_documentation(self):
-        self.run_command('build_html')
-        scheme = 'docs'
-        schemedir = os.path.join(self.pkg_base, scheme)
-        self.scheme_map[scheme] = '/Developer/Python/PyObjC/Documentation'
-        self.copy_tree('Doc', schemedir,
-            condition=skipjunk)
-        self.preflight_rm[scheme] = ['.']
-
-    def pyobjc_examples(self):
-        scheme = 'examples'
-        schemedir = os.path.join(self.pkg_base, scheme)
-        self.scheme_map[scheme] = '/Developer/Python/PyObjC/Examples'
-        self.copy_tree('Examples', schemedir,
-            condition=skipjunk)
-        self.preflight_rm[scheme] = ['.']
+    def copy_tree(self, *args, **kw):
+        if kw.get('condition') is None:
+            kw['condition'] = skipjunk
+        return _bdist_mpkg.copy_tree(self, *args, **kw)
 
 cmdclass = {'bdist_mpkg': pyobjc_bdist_mpkg}

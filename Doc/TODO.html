@@ -40,10 +40,11 @@ Contents</title>
 <li><a href="#finish-refactoring-of-the-code-generator-scripts" id="id25" name="id25">Finish refactoring of the code-generator scripts</a></li>
 <li><a href="#setup-py-cleanup" id="id26" name="id26">setup.py cleanup</a></li>
 <li><a href="#unique-proxies-for-python-objects" id="id27" name="id27">Unique proxies for Python objects</a></li>
-<li><a href="#nsdecimal-vs-decimal" id="id28" name="id28">NSDecimal vs decimal</a></li>
-<li><a href="#nsset-vs-set" id="id29" name="id29">NSSet vs set</a></li>
-<li><a href="#python-2-4" id="id30" name="id30">Python 2.4</a></li>
-<li><a href="#nslog-stringwithformat" id="id31" name="id31">NSLog, stringWithFormat, ...</a></li>
+<li><a href="#nsnumber" id="id28" name="id28">NSNumber</a></li>
+<li><a href="#nsdecimal-vs-decimal" id="id29" name="id29">NSDecimal vs decimal</a></li>
+<li><a href="#nsset-vs-set" id="id30" name="id30">NSSet vs set</a></li>
+<li><a href="#python-2-4" id="id31" name="id31">Python 2.4</a></li>
+<li><a href="#nslog-stringwithformat" id="id32" name="id32">NSLog, stringWithFormat, ...</a></li>
 </ul>
 </li>
 </ul>
@@ -227,13 +228,16 @@ container wrappers contain support for that, but we should try to move that
 into the generic core: there should be at most one Objective-C proxy object
 alive for every Python object (just like there's at most one Python proxy for
 every Objective-C object).</p>
-<h3><a href="#id28" name="nsdecimal-vs-decimal">NSDecimal vs decimal</a></h3>
+<h3><a href="#id28" name="nsnumber">NSNumber</a></h3>
+<p>The implementation of NSNumber on Mac OS X can not be trusted to return the
+right thing for objCType, it should be a proxied object like NSString.</p>
+<h3><a href="#id29" name="nsdecimal-vs-decimal">NSDecimal vs decimal</a></h3>
 <p>Check if it is possible to wrap <code><span>NSDecimal</span></code> using <code><span>decimal</span></code> (and v.v.).</p>
 <p>Only implement this when it is possible to convert without loss of information.</p>
-<h3><a href="#id29" name="nsset-vs-set">NSSet vs set</a></h3>
+<h3><a href="#id30" name="nsset-vs-set">NSSet vs set</a></h3>
 <p>Check if it is possible to wrap <code><span>NSSet</span></code> using <code><span>set</span></code> (and v.v.).</p>
 <p>Only implement this when it is possible to convert without loss of information.</p>
-<h3><a href="#id30" name="python-2-4">Python 2.4</a></h3>
+<h3><a href="#id31" name="python-2-4">Python 2.4</a></h3>
 <p>Python 2.4 introduces a decorator syntax. Add convenience functions that
 make it easier to use decorators with PyObjC.</p>
 <p>Also add example programs using decorators. Actually, first add the example(s)
@@ -255,7 +259,7 @@ class FooClass (NSObject):
         def myIntMethod_(self, value):
                 pass
 </pre>
-<h3><a href="#id31" name="nslog-stringwithformat">NSLog, stringWithFormat, ...</a></h3>
+<h3><a href="#id32" name="nslog-stringwithformat">NSLog, stringWithFormat, ...</a></h3>
 <p>Functions and methods that use format strings are not properly wrapped. Fix
 that.</p>
 </body>
