@@ -402,7 +402,6 @@ static  PyObject* setKeyFunc = NULL;
 	PyObject* keyName;
 	PyObject* pyValue;
 	PyObject* val;
-	id res;
 
 	if (setKeyFunc == NULL) {
 		PyObject* name;
