@@ -16,6 +16,7 @@ SUBPATTERNS = dict(
     EXTERN=r'((([A-Z-a-z_]\w*?_)?EXTERN|extern))',
     EXPORT=r'((([A-Z-a-z_]\w*?_)?EXPORT|extern))',
     STATIC_INLINE=r'((([A-Z-a-z_]\w*?_)?INLINE|static inline|static __inline__))',
+    BRACES=r'(([^\n}]*|([^}][^\n]*\n)*))',
     INDIRECTION=r'(\s*\*)',
     BOL=r'(\s*^\s*)',
     EOL=r'(\s*$\n?)',
@@ -78,7 +79,7 @@ class Interface(Token):
         \s*(?:\((?P<category>%(IDENTIFIER)s)\))?
         \s*(?::\s*(?P<super>%(IDENTIFIER)s))?
         \s*(?:<(?P<protocols>[^>]*)>)?
-        \s*(?:{(?P<ivars>[^}])})?
+        \s*(?:{(?P<ivars>%(BRACES)s)})?
         \s*(?P<interface_body>.*?)
     @end
     ''')
@@ -285,8 +286,8 @@ class Struct(Token):
     struct
     \s*(?P<structname>%(IDENTIFIER)s)?
     \s*{
-        (?P<content>[^}]*)
-    \s*}
+        (?P<content>%(BRACES)s)
+    }
     \s*%(SEMI)s
     ''')
     example = example(r'''
@@ -306,17 +307,16 @@ class NamedStruct(Token):
     typedef
     \s+struct
     \s*(?P<structname>%(IDENTIFIER)s)?
-    \s*{
-    (?P<body>
-        (
-            [^}][^\n]*\n
-        )*
-    )
+    \s*
+    {
+    (?P<body>%(BRACES)s)
     }
     \s*%(IDENTIFIER)s
     \s*%(SEMI)s
     ''')
     example = example(r'''
+    typedef struct {unsigned long v;} NSSwappedFloat;
+    typedef struct { int bar; } FooBar;
     typedef struct {
         signed foo name;
         int bar;
@@ -435,11 +435,9 @@ class StaticInlineFunction(Token):
     \s*\(
         (?P<args>\s*[^)]*)
     \s*\)
-    (?P<body>
-            \s*{[^}\n]*}(\n|$)
-        |
-            \s*{([^}\n]|[^\n]}|\n[^}])*\n}
-    )\s*
+    \s*{
+        (?P<body>%(BRACES)s)
+    }
     ''')
     example = example(r'''
     FOUNDATION_STATIC_INLINE BOOL NSDecimalIsNotANumber(const NSDecimal *dcm)
@@ -485,7 +483,8 @@ if __name__ == '__main__':
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSDecimal.h'
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSBundle.h'
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSException.h'
-    fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSInvocation.h'
+    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSInvocation.h'
+    fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSByteOrder.h'
     files = sys.argv[1:] or [fn]
     def deadraise(string, i, j):
         print string[i:j]
