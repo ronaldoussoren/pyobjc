@@ -33,7 +33,7 @@ class MyDocument(NibClassBuilder.AutoBaseClass):
     def dataRepresentationOfType_(self, aType):
         # return an NSData containing the document's data represented as
         # the type identified by aType.
-        return nil
+        return None
 
     def loadDataRepresentation_ofType_(self, data, aType):
         # load document from data (NSData instance) by interpreting
