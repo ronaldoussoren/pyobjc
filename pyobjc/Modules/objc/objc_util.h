@@ -13,8 +13,9 @@ int ObjCUtil_Init(PyObject* module);
 void PyObjCErr_FromObjC(NSException* localException);
 void PyObjCErr_ToObjC(void);
 
-#define PyObjCErr_ToObjCWithGILState(state) PyObjCErr_ToObjCWithGILState_(state, __FUNCTION__)
-void PyObjCErr_ToObjCWithGILState_(PyGILState_STATE* state, const char* __function__);
+void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state);
+
+NSException* PyObjCErr_AsExc(void);
 
 PyObject* PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc);
 

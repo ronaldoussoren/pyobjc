@@ -71,7 +71,7 @@ imp_NSObject_alloc(
 	PyObject* v = NULL;
 	PyObject* result = NULL;
 
-	PyGILState_STATE state = xPyGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) goto error;
@@ -90,7 +90,7 @@ imp_NSObject_alloc(
 	Py_DECREF(result); result = NULL;
 	if (err == -1) goto error;
 
-	xPyGILState_Release(state);
+	PyGILState_Release(state);
 	return;
 
 error:

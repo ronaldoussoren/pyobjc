@@ -60,12 +60,12 @@
 
 +(PyObject*)__pyobjc_PythonObject__
 {
-	PyGILState_STATE state = xPyGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 	PyObject *rval = (PyObject *)PyObjCClass_New(self);
 	if (rval == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
-	xPyGILState_Release(state);
+	PyGILState_Release(state);
 	return rval;
 }
 
@@ -132,7 +132,6 @@
 	const char* typestr = [self objCType];
 	char*        buf;
 	PyObject* rval;
-	PyGILState_STATE state;
 	
 	buf = alloca(PyObjCRT_SizeOfType(typestr));
 

@@ -56,10 +56,10 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 
 - (void)dealloc
 {
-	PyGILState_STATE state = xPyGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	Py_XDECREF(pyObject);
-	xPyGILState_Release(state);
+	PyGILState_Release(state);
 	[super dealloc];
 }
 
@@ -70,7 +70,7 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 
 	if (pyObject == NULL) return @"no python object";
 	
-	state = xPyGILState_Ensure();
+	state = PyGILState_Ensure();
 	repr = PyObject_Repr (pyObject);
 	if (repr) {
 		int err;
@@ -82,7 +82,7 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 			PyObjCErr_ToObjCWithGILState(&state);		
 			return @"a python object";
 		}
-		xPyGILState_Release(state);
+		PyGILState_Release(state);
 		return result;
 	} else {
 		PyObjCErr_ToObjCWithGILState(&state);
@@ -171,7 +171,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	} 
 
 	
-	state = xPyGILState_Ensure();
+	state = PyGILState_Ensure();
     
 	m = get_method_for_selector(pyObject, aSelector);
 
@@ -182,7 +182,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		r = NO;
 	}
 
-	xPyGILState_Release(state);
+	PyGILState_Release(state);
 	return r;
 
 }
@@ -206,11 +206,11 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		return [NSMethodSignature signatureWithObjCTypes:encoding];
 	}
 
-	state = xPyGILState_Ensure();
+	state = PyGILState_Ensure();
 	pymethod = get_method_for_selector(pyObject, sel);
 	if (!pymethod) {
 		PyErr_Clear();
-		xPyGILState_Release(state);
+		PyGILState_Release(state);
 		[NSException raise:NSInvalidArgumentException 
 			format:@"Class %s: no such selector: %s", 
 			GETISA(self)->name, PyObjCRT_SELName(sel)];
@@ -231,7 +231,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	memset(encoding, '@', argcount+3);
 	encoding[argcount+3] = '\0';
 	encoding[2] = ':';
-	xPyGILState_Release(state);
+	PyGILState_Release(state);
 	return [NSMethodSignature signatureWithObjCTypes:encoding];
 }
 
@@ -249,7 +249,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	unsigned int       argcount;      
 	int		   retsize;
 	char*              retbuffer;
-	PyGILState_STATE   state = xPyGILState_Ensure();
+	PyGILState_STATE   state = PyGILState_Ensure();
 
 	retsize = PyObjCRT_SizeOfType (rettype);
 	if (retsize == -1) {
@@ -270,10 +270,10 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		if (aSelector == @selector(description)) {
 			id res = [self description];
 			[invocation setReturnValue:&res];
-			xPyGILState_Release(state);
+			PyGILState_Release(state);
 			return;
 		}
-		xPyGILState_Release(state);
+		PyGILState_Release(state);
 		[self doesNotRecognizeSelector:aSelector];
 		return;
 	}
@@ -323,7 +323,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	} else {
 		[invocation setReturnValue:retbuffer];
 	}
-	xPyGILState_Release(state);
+	PyGILState_Release(state);
 }
 
 
@@ -369,7 +369,7 @@ static  PyObject* getKeyFunc = NULL;
 	PyObject* keyName;
 	PyObject* val;
 	id res;
-	PyGILState_STATE state = xPyGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	if (getKeyFunc == NULL) {
 		PyObject* name;
@@ -415,7 +415,7 @@ static  PyObject* getKeyFunc = NULL;
 		return nil;
 	}
 	Py_DECREF(val);
-	xPyGILState_Release(state);
+	PyGILState_Release(state);
 	return res;
 }
 
@@ -440,7 +440,7 @@ static  PyObject* setKeyFunc = NULL;
 	PyObject* keyName;
 	PyObject* pyValue;
 	PyObject* val;
-	PyGILState_STATE state = xPyGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	if (setKeyFunc == NULL) {
 		PyObject* name;
@@ -489,7 +489,7 @@ static  PyObject* setKeyFunc = NULL;
 	}
 
 	Py_DECREF(val);
-	xPyGILState_Release(state);
+	PyGILState_Release(state);
 }
 
 - (void)takeStoredValue: value forKey: (NSString*) key;

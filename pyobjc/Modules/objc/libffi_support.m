@@ -366,7 +366,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	int                have_output = 0;
 	const char*        rettype;
 
-	PyGILState_STATE   state = xPyGILState_Ensure();
+	PyGILState_STATE   state = PyGILState_Ensure();
 
 	rettype = methinfo->rettype;
 
@@ -519,7 +519,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 				break;
 			}
 
-			xPyGILState_Release(state);
+			PyGILState_Release(state);
 			return;
 		}
 
@@ -605,7 +605,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 	}
 
-	xPyGILState_Release(state);
+	PyGILState_Release(state);
 	
 	return;
 

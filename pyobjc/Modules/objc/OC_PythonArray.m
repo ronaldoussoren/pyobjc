@@ -53,22 +53,22 @@
 	PyObject* v;
 	id  result;
 	int err;
-	PyGILState_STATE state = xPyGILState_Ensure();
 
-	v = PySequence_GetItem(value, idx);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	PyObjC_BEGIN_WITH_GIL
 
-	err = depythonify_c_value("@", v, &result);
-	Py_DECREF(v);
-	if (err == -1) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+		v = PySequence_GetItem(value, idx);
+		if (v == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	xPyGILState_Release(state);
+		err = depythonify_c_value("@", v, &result);
+		Py_DECREF(v);
+		if (err == -1) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+	
+	PyObjC_END_WITH_GIL
+
 	return result;
 }
 
@@ -76,7 +76,7 @@
 -(void)replaceObjectAtIndex:(int)idx withObject:newValue;
 {
 	PyObject* v;
-	PyGILState_STATE state = xPyGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	v = pythonify_c_value("@", &newValue);
 	if (v == NULL) {
@@ -90,7 +90,7 @@
 		return;
 	}
 	Py_DECREF(v);
-	xPyGILState_Release(state);
+	PyGILState_Release(state);
 }
 
 -(void)getObjects:(id*)buffer inRange:(NSRange)range
