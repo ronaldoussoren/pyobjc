@@ -15,4 +15,9 @@ del objc
 
 import protocols  # no need to export these, just register with PyObjC
 
+# these are #define'd convenience enumerators
+NSLogAndHandleEveryExceptionMask = (NSLogUncaughtExceptionMask|NSLogUncaughtSystemExceptionMask|NSLogUncaughtRuntimeErrorMask|NSHandleUncaughtExceptionMask|NSHandleUncaughtSystemExceptionMask|NSHandleUncaughtRuntimeErrorMask|NSLogTopLevelExceptionMask|NSHandleTopLevelExceptionMask|NSLogOtherExceptionMask|NSHandleOtherExceptionMask)
+
+NSHangOnEveryExceptionMask = (NSHangOnUncaughtExceptionMask|NSHangOnUncaughtSystemExceptionMask|NSHangOnUncaughtRuntimeErrorMask|NSHangOnTopLevelExceptionMask|NSHangOnOtherExceptionMask)
+
 # Define useful utility methods here
