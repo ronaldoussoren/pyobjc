@@ -134,6 +134,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         '_methodPrefix',
         '_workQueue',
         '_working',
+        '_workerThread',
         '_windowIsClosing')
     
     def connectionWindowController(self):
