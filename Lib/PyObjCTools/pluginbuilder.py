@@ -152,16 +152,16 @@ static void changeClass(id obj, Class newClass)
 
 +(void)load
 {
-	NSBundle* bundle;
-	NSString* mainPath;
-	FILE*     fp;
+    NSBundle* bundle;
+    NSString* mainPath;
+    FILE*     fp;
         PyObject *m, *d, *v;
         
 
         //NSLog(@"Loading prefpane %(MAINFILE)s %(BUNDLE)s");
 
-	bundle = [NSBundle bundleForClass:self];
-	[bundle load];
+    bundle = [NSBundle bundleForClass:self];
+    [bundle load];
 
 #if 1
         /* This is *very* ugly */
@@ -170,24 +170,24 @@ static void changeClass(id obj, Class newClass)
 
         mainPath = [bundle pathForResource:@"%(MAINFILE)s" ofType:@"py"];
 
-	if (mainPath == NULL) {
-		mainPath = [bundle pathForResource:@"%(MAINFILE)s" ofType:@"pyc"];
-		[NSException raise:NSInternalInconsistencyException 
-			format:@"Bundle %%@ does not contain a %(MAINFILE)s file",
-			bundle];
-	}
+    if (mainPath == NULL) {
+        mainPath = [bundle pathForResource:@"%(MAINFILE)s" ofType:@"pyc"];
+        [NSException raise:NSInternalInconsistencyException 
+            format:@"Bundle %%@ does not contain a %(MAINFILE)s file",
+            bundle];
+    }
 
-	if (!Py_IsInitialized()) {
-		Py_Initialize();
-	}
+    if (!Py_IsInitialized()) {
+        Py_Initialize();
+    }
 
 
-	fp = fopen([mainPath cString], "r");
-	if (fp == NULL) {
-		[NSException raise:NSInternalInconsistencyException 
-			format:@"Cannot open %(MAINFILE)s in bundle %%@",
-			bundle];
-	}
+    fp = fopen([mainPath cString], "r");
+    if (fp == NULL) {
+        [NSException raise:NSInternalInconsistencyException 
+            format:@"Cannot open %(MAINFILE)s in bundle %%@",
+            bundle];
+    }
 
         /*
          * We cannot use 'PyRun_SimpleFile' because that would make it 
@@ -198,15 +198,15 @@ static void changeClass(id obj, Class newClass)
          * we don't have to update sys.path, and that will hopefully avoid
          * most interference between plugins.
          *
-	 * PyRun_SimpleFile(fp, [mainPath cString]);
+     * PyRun_SimpleFile(fp, [mainPath cString]);
          */
         m = PyImport_AddModule("__main_%(BUNDLE)s__");
         if (m == NULL) {
                 PyErr_Print();
-		[NSException raise:NSInternalInconsistencyException 
-			format:@"Cannot create main module for bundle %%@",
-			bundle];
-	}
+        [NSException raise:NSInternalInconsistencyException 
+            format:@"Cannot create main module for bundle %%@",
+            bundle];
+    }
 
         PyModule_AddStringConstant(m, "__file__", (char*)[mainPath cString]);
         PyModule_AddStringConstant(m, "__path__", 
@@ -214,34 +214,34 @@ static void changeClass(id obj, Class newClass)
         d = PyModule_GetDict(m);
         if (d == NULL) {
                 PyErr_Print();
-		[NSException raise:NSInternalInconsistencyException 
-			format:@"Failed to initialize bundle %%@",
-			bundle];
+        [NSException raise:NSInternalInconsistencyException 
+            format:@"Failed to initialize bundle %%@",
+            bundle];
         }
 
         if (PyDict_GetItemString(d, "__builtins__") == NULL) {
             PyObject* bimod = PyImport_ImportModule("__builtin__");
             if (bimod == NULL || PyDict_SetItemString(d, "__builtins__", bimod) != 0) {
                 PyErr_Print();
-		[NSException raise:NSInternalInconsistencyException 
-			format:@"Failed to initialize bundle %%@",
-			bundle];
+        [NSException raise:NSInternalInconsistencyException 
+            format:@"Failed to initialize bundle %%@",
+            bundle];
             }
             Py_XDECREF(bimod);
         }
 
         if (PyErr_Occurred()) {
                 PyErr_Print();
-		[NSException raise:NSInternalInconsistencyException 
-			format:@"Failed to initialize bundle %%@",
-			bundle];
+        [NSException raise:NSInternalInconsistencyException 
+            format:@"Failed to initialize bundle %%@",
+            bundle];
         }
         v = PyRun_File(fp, [mainPath cString], Py_file_input, d, d);
         if (v == NULL) {
             PyErr_Print();
-	    [NSException raise:NSInternalInconsistencyException 
-		format:@"Failed to initialize bundle %%@",
-		bundle];
+        [NSException raise:NSInternalInconsistencyException 
+        format:@"Failed to initialize bundle %%@",
+        bundle];
         }
         Py_DECREF(v);
         if (Py_FlushLine()) {
@@ -424,86 +424,86 @@ Options:
 """
 
 def usage(msg=None):
-	if msg:
-		print msg
-	print cmdline_doc
-	sys.exit(1)
+    if msg:
+        print msg
+    print cmdline_doc
+    sys.exit(1)
 
 def main(builder=None):
-	if builder is None:
-		builder = PluginBuilder(verbosity=1)
+    if builder is None:
+        builder = PluginBuilder(verbosity=1)
 
-	shortopts = "b:n:r:f:m:p:x:i:hvq"
-	longopts = ("builddir=", "name=", "resource=", "file=", 
-		"mainmodule=", "creator=", "nib=", "principalClas=",
+    shortopts = "b:n:r:f:m:p:x:i:hvq"
+    longopts = ("builddir=", "name=", "resource=", "file=", 
+        "mainmodule=", "creator=", "nib=", "principalClas=",
                 "plist=", "help", "verbose", "quiet", "standalone",
-		"exclude=", "include=", "package=", "strip", "iconfile=",
-		"lib=")
+        "exclude=", "include=", "package=", "strip", "iconfile=",
+        "lib=")
 
-	try:
-		options, args = getopt.getopt(sys.argv[1:], shortopts, longopts)
-	except getopt.error:
-		usage()
+    try:
+        options, args = getopt.getopt(sys.argv[1:], shortopts, longopts)
+    except getopt.error:
+        usage()
 
-	for opt, arg in options:
-		if opt in ('-b', '--builddir'):
-			builder.builddir = arg
-		elif opt in ('-n', '--name'):
-			builder.name = arg
-		elif opt in ('-r', '--resource'):
-			builder.resources.append(arg)
-		elif opt in ('-f', '--file'):
-			srcdst = arg.split(':')
-			if len(srcdst) != 2:
-				usage("-f or --file argument must be two paths, "
-				      "separated by a colon")
-			builder.files.append(srcdst)
-		elif opt == '--iconfile':
-			builder.iconfile = arg
-		elif opt == "--lib":
-			builder.libs.append(arg)
-		elif opt == "--nib":
-			builder.nibname = arg
-		elif opt in ('-p', '--plist'):
-			builder.plist = Plist.fromFile(arg)
-		elif opt in ('-h', '--help'):
-			usage()
-		elif opt in ('-v', '--verbose'):
-			builder.verbosity += 1
-		elif opt in ('-q', '--quiet'):
-			builder.verbosity -= 1
-		elif opt == '--standalone':
-			builder.standalone = 1
-		elif opt in ('-x', '--exclude'):
-			builder.excludeModules.append(arg)
-		elif opt in ('-i', '--include'):
-			builder.includeModules.append(arg)
-		elif opt == '--package':
-			builder.includePackages.append(arg)
-		elif opt == '--strip':
-			builder.strip = 1
-		elif opt == '--principalClass':
-			builder.principalClass = arg
+    for opt, arg in options:
+        if opt in ('-b', '--builddir'):
+            builder.builddir = arg
+        elif opt in ('-n', '--name'):
+            builder.name = arg
+        elif opt in ('-r', '--resource'):
+            builder.resources.append(arg)
+        elif opt in ('-f', '--file'):
+            srcdst = arg.split(':')
+            if len(srcdst) != 2:
+                usage("-f or --file argument must be two paths, "
+                      "separated by a colon")
+            builder.files.append(srcdst)
+        elif opt == '--iconfile':
+            builder.iconfile = arg
+        elif opt == "--lib":
+            builder.libs.append(arg)
+        elif opt == "--nib":
+            builder.nibname = arg
+        elif opt in ('-p', '--plist'):
+            builder.plist = Plist.fromFile(arg)
+        elif opt in ('-h', '--help'):
+            usage()
+        elif opt in ('-v', '--verbose'):
+            builder.verbosity += 1
+        elif opt in ('-q', '--quiet'):
+            builder.verbosity -= 1
+        elif opt == '--standalone':
+            builder.standalone = 1
+        elif opt in ('-x', '--exclude'):
+            builder.excludeModules.append(arg)
+        elif opt in ('-i', '--include'):
+            builder.includeModules.append(arg)
+        elif opt == '--package':
+            builder.includePackages.append(arg)
+        elif opt == '--strip':
+            builder.strip = 1
+        elif opt == '--principalClass':
+            builder.principalClass = arg
 
-	if len(args) != 1:
-		usage("Must specify one command ('build', 'report' or 'help')")
-	command = args[0]
+    if len(args) != 1:
+        usage("Must specify one command ('build', 'report' or 'help')")
+    command = args[0]
 
-	if command == "build":
-		builder.setup()
-		builder.build()
-	elif command == "report":
-		builder.setup()
-		builder.report()
-	elif command == "help":
-		usage()
-	else:
-		usage("Unknown command '%s'" % command)
+    if command == "build":
+        builder.setup()
+        builder.build()
+    elif command == "report":
+        builder.setup()
+        builder.report()
+    elif command == "help":
+        usage()
+    else:
+        usage("Unknown command '%s'" % command)
 
 
 def buildplugin(**kwargs):
-	builder = PluginBuilder(**kwargs)
-	main(builder)
+    builder = PluginBuilder(**kwargs)
+    main(builder)
 
 if __name__ == "__main__":
-	main()
+    main()
