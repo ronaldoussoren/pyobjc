@@ -321,7 +321,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1058C7A3FEA54F0111CA2CBB,
-				F6646A58034494A401F2B36F,
 			);
 			isa = PBXFrameworksBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -539,12 +538,6 @@
 			name = libpython2.2.a;
 			path = /sw/lib/python2.2/config/libpython2.2.a;
 			refType = 0;
-		};
-		F6646A58034494A401F2B36F = {
-			fileRef = F6646A57034494A401F2B36F;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		F6646A5C0344985501F2B36F = {
 			isa = PBXFileReference;
