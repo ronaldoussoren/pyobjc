@@ -16,36 +16,36 @@ Contents</title>
 :copyright: 2003 The PyObjC Project -->
 <h2>Contents</h2>
 <ul>
-<li><a href="#preface" id="id3" name="id3">Preface</a></li>
-<li><a href="#objective-c-for-pyobjc-users" id="id4" name="id4">Objective-C for PyObjC users</a></li>
-<li><a href="#overview-of-the-bridge" id="id5" name="id5">Overview of the bridge</a><ul>
-<li><a href="#classes" id="id6" name="id6">Classes</a></li>
-<li><a href="#methods-and-functions" id="id7" name="id7">Methods and functions</a></li>
-<li><a href="#reference-counting" id="id8" name="id8">Reference counting</a></li>
-<li><a href="#informal-protocols" id="id9" name="id9">(Informal) protocols</a></li>
-<li><a href="#cocoa-bindings" id="id10" name="id10">Cocoa Bindings</a></li>
+<li><a href="#preface" id="id4" name="id4">Preface</a></li>
+<li><a href="#objective-c-for-pyobjc-users" id="id5" name="id5">Objective-C for PyObjC users</a></li>
+<li><a href="#overview-of-the-bridge" id="id6" name="id6">Overview of the bridge</a><ul>
+<li><a href="#classes" id="id7" name="id7">Classes</a></li>
+<li><a href="#methods-and-functions" id="id8" name="id8">Methods and functions</a></li>
+<li><a href="#reference-counting" id="id9" name="id9">Reference counting</a></li>
+<li><a href="#informal-protocols" id="id10" name="id10">(Informal) protocols</a></li>
+<li><a href="#cocoa-bindings" id="id11" name="id11">Cocoa Bindings</a></li>
 </ul>
 </li>
-<li><a href="#cocoa-for-python-programmers" id="id11" name="id11">Cocoa for Python programmers</a></li>
-<li><a href="#notes-on-specific-tasks" id="id12" name="id12">Notes on specific tasks</a><ul>
-<li><a href="#working-with-threads" id="id13" name="id13">Working with threads</a></li>
-<li><a href="#finalizers" id="id14" name="id14">Finalizers</a></li>
+<li><a href="#cocoa-for-python-programmers" id="id12" name="id12">Cocoa for Python programmers</a></li>
+<li><a href="#notes-on-specific-tasks" id="id13" name="id13">Notes on specific tasks</a><ul>
+<li><a href="#working-with-threads" id="id14" name="id14">Working with threads</a></li>
+<li><a href="#finalizers" id="id15" name="id15">Finalizers</a></li>
 </ul>
 </li>
-<li><a href="#building-applications" id="id15" name="id15">Building applications</a><ul>
-<li><a href="#pure-python-buildapp-py" id="id16" name="id16">&quot;Pure Python&quot; :  buildapp.py</a></li>
-<li><a href="#ide-approach-project-builder" id="id17" name="id17">&quot;IDE approach&quot; : Project builder</a></li>
+<li><a href="#building-applications" id="id16" name="id16">Building applications</a><ul>
+<li><a href="#pure-python-buildapp-py" id="id17" name="id17">&quot;Pure Python&quot; :  buildapp.py</a></li>
+<li><a href="#ide-approach-xcode" id="id18" name="id18">&quot;IDE approach&quot; : Xcode</a></li>
 </ul>
 </li>
 </ul>
-<h2><a href="#id3" name="preface">Preface</a></h2>
+<h2><a href="#id4" name="preface">Preface</a></h2>
 <p>PyObjC is a bridge between Python and Objective-C. It allows you to write 
 Python scripts that use and extend existing Objective-C class libraries, 
 most importantly the <a href="http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html">Cocoa libraries</a> by <a href="http://www.apple.com/">Apple</a>.</p>
 <p>This document describes how to use Objective-C class libraries from Python
 scripts and how to interpret the documentation of those libraries, from the 
 point of view of a Python programmer.</p>
-<h2><a href="#id4" name="objective-c-for-pyobjc-users">Objective-C for PyObjC users</a></h2>
+<h2><a href="#id5" name="objective-c-for-pyobjc-users">Objective-C for PyObjC users</a></h2>
 <p>It is necessary to understand a little bit of Objective-C to use PyObjC,
 this helps you to better understand the class libraries and makes it easier
 to read (and translate) example code.</p>
@@ -61,10 +61,10 @@ be used as the types of arguments and the return value of methods.</p>
 Objective-C. The former is done by the class-method <code><span>alloc</span></code>, while the
 latter is done by instance-methods whose name customarily starts with <code><span>init</span></code>.</p>
 <p>Objective-C code looks just like plain C code, with some easily recognizable
-extensions for the Object-Oriented parts of the language. And example class
+extensions for the Object-Oriented parts of the language. An example class
 declaration (usually found in <code><span>.h</span></code> files) and implementation (usually found
-in <code><span>.m</span></code> files) are listed below). Class declarations are easily recognized as 
-blocks of code between <code><span>@interface</span></code> and <code><span>@end</span></code>, and simularly the 
+in <code><span>.m</span></code> files) are listed below. Class declarations are easily recognized as 
+blocks of code between <code><span>@interface</span></code> and <code><span>@end</span></code>, and similarly the 
 implementation is between <code><span>@implementation</span></code> and <code><span>@end</span></code>. Calling methods
 is done using expressions enclosed with brackets (name?), e.g. 
 <code><span>[foo</span> <span>method]</span></code>.  This is the same as <code><span>foo.method()</span></code> in Python.</p>
@@ -104,36 +104,36 @@ is done using expressions enclosed with brackets (name?), e.g.
 
 @end
 </pre>
-<p>Objective-C also features exceptions, but as those are mostly used for disaster
+<p>Objective-C also features exceptions, but as they are mostly used for disaster
 recovery and not for normal error handling you won't see them very often
-in example code. The <a href="http://developer.apple.com/techpubs/macosx/Cocoa/ObjectiveC/index.html">The Objective-C Programming Language</a> if you want to
+in example code. Read <a href="http://developer.apple.com/techpubs/macosx/Cocoa/ObjectiveC/index.html">The Objective-C Programming Language</a> if you want to
 know more about exceptions in Objective-C.</p>
 <p>One thing to keep in mind when translating Objective-C snippets to python is
 that it is valid to call methods on <code><span>nil</span></code> (that is the NULL pointer). Those
 method calls are ignored by the runtime. The value <code><span>nil</span></code> is represented in
-Python by the <code><span>None</span></code>, this means that calls to non-existing methods are
-not ignored but will raise <code><span>AttributeError</span></code>.</p>
+Python by the <code><span>None</span></code>; this means to access a non-existing method will raise
+<code><span>AttributeError</span></code>.</p>
 <p>For more information about Objective-C see:</p>
 <ul>
 <li><a href="http://developer.apple.com/techpubs/macosx/Cocoa/ObjectiveC/index.html">The Objective-C Programming Language</a> at <a href="http://www.apple.com/">Apple</a>.</li>
 </ul>
-<h2><a href="#id5" name="overview-of-the-bridge">Overview of the bridge</a></h2>
-<h3><a href="#id6" name="classes">Classes</a></h3>
+<h2><a href="#id6" name="overview-of-the-bridge">Overview of the bridge</a></h2>
+<h3><a href="#id7" name="classes">Classes</a></h3>
 <p>Objective-C classes are visible as (new-style) Python classes and can be 
 subclassed just like normal Python classes. All the usual introspection
-mechanism work as well, as do __slots__ and descriptors. The major 
+mechanisms work as well, as do __slots__ and descriptors. The major 
 differences between normal Python classes and Objective-C classes are the way 
 you create instances and the fact that Objective-C methods have odd names.</p>
 <p>You can use multiple inheritance with Objective-C classes, as long as the
-Objetive-C is the first base-class and there is only one Objective-C 
-base-class. E.g. it is not possible to subclass from the Objective-C classes
+Objetive-C class is the first base-class and there is only one Objective-C 
+base-class. E.g. it is not possible to subclass from multiple Objective-C classes
 at the same time. Multiple inheritance should also not be used to mix-in
-different implementations for Objective-C methods, that will not work and
+different implementations for Objective-C methods. It will not work and
 you won't get errors about this.</p>
 <p>Another thing to keep in mind is that the names of Objective-C classes must
-be unique, without taking modules into account. That is, it is <i>not</i> possible
-to have two modules that define a class with the same name. If you write classes
-that will be used outside of a single project it is customary to pick a 
+be unique, including across Python modules. That is, it is <i>not</i> possible
+to have two Python modules that define a class with the same name. If you write 
+classes that will be used outside of a single project it is customary to pick a 
 (short) prefix and stick that in front of all class names, e.g. Apple <code><span>NS</span></code> 
 as the prefix in the <a href="http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html">Cocoa libraries</a>.</p>
 <p>As described in <a href="#objective-c-for-pyobjc-users">Objective-C for PyObjC users</a> the creation of Objective-C 
@@ -141,7 +141,7 @@ objects is a two-stage process. You first call the class method <code><span>allo
 then call some variation of <code><span>init</span></code> to initialize the objects. The newly
 created object is the result of the call to <code><span>init</span></code>. Most classes have 
 convienence class methods that combine the calls to <code><span>alloc</span></code> and <code><span>init</span></code>.</p>
-<h3><a href="#id7" name="methods-and-functions">Methods and functions</a></h3>
+<h3><a href="#id8" name="methods-and-functions">Methods and functions</a></h3>
 <p>Objective-C methods are bridged to Python callables. Because Objective-C method 
 names can contain colons it is necessary to translate methods names. The rules
 for translation are:</p>
@@ -160,7 +160,7 @@ Cocoa on MacOS X).</p>
 <p>One group of exceptions to this rule can be described in a global way. Some
 methods and functions have pointers as arguments, specifically pointers to
 a single value that is passed in and/or out of the function. These arguments
-are sometimes called <i>pass by reference</i> arguments, and can be subdived into
+are sometimes called <i>pass by reference</i> arguments, and can be subdivided into
 three types of arguments: <code><span>in</span></code> arguments are used to pass data to the 
 function, <code><span>out</span></code> arguments are used to pass data from the function (e.g. and
 additional return value) and <code><span>inout</span></code> arguments are a combination of the two.</p>
@@ -220,12 +220,13 @@ class MyObject (NSObject):
 
         someMethod_ = objc.selector(someMethod_, ...)
 </pre>
-<h3><a href="#id8" name="reference-counting">Reference counting</a></h3>
+<h3><a href="#id9" name="reference-counting">Reference counting</a></h3>
 <p>The <a href="http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html">Cocoa libraries</a>, and most (if not all) other class libraries for 
 Objective-C use explicit reference counting to manage memory. The methods
 <code><span>retain</span></code>, <code><span>release</span></code> and <code><span>autorelease</span></code> are used to manage these 
 reference counts. You won't have to manage reference counts in Python, the
-bridge does all that work for you.</p>
+bridge does all that work for you (but see <a href="api-notes-macosx.html">Notes on supported APIs and classes 
+on MacOS X</a> for some advanced issues).</p>
 <p>The only reasons reference counts are mentioned at all are to tell you about
 ignoring them, and more importantly to introduce you to some issues w.r.t. 
 reference counting.</p>
@@ -252,7 +253,7 @@ subclasses of <code><span>NSObject</span></code> to represent the nodes in the o
 <p>Another gotcha is when you're manually allocating and assigning delegate(-like)
 objects: most of the time <code><span>obj.setDelegate_()</span></code> will <i>not</i> retain the 
 delegate, so you must keep a reference manually.</p>
-<h3><a href="#id9" name="informal-protocols">(Informal) protocols</a></h3>
+<h3><a href="#id10" name="informal-protocols">(Informal) protocols</a></h3>
 <p>Cocoa defines a number of formal and informal protocols that specify methods
 that should be implemented by a class if it is to be used in a specific role,
 such as the data source for an NSTableView.</p>
@@ -263,24 +264,24 @@ wrappers up-to-date.</p>
 <p>PyObjC will automaticly use the information in the <code><span>informal_protocol</span></code> 
 objects to add the right method signatures to methods, and to warn about
 classes that partially implement a protocol.</p>
-<h3><a href="#id10" name="cocoa-bindings">Cocoa Bindings</a></h3>
+<h3><a href="#id11" name="cocoa-bindings">Cocoa Bindings</a></h3>
 <p>In Mac OS X 10.3 Apple introduced <i>Cocoa Bindings</i>, a method to make it easier
 to create and use <i>Controller</i> objects.</p>
 <p>Use <code><span>objc.accessor</span></code> to create accessor methods that conform to the 
 expectations of Cocoa Bindings.</p>
-<h2><a href="#id11" name="cocoa-for-python-programmers">Cocoa for Python programmers</a></h2>
-<p>Cocoa frameworks are mapped onto Python packages with the same name, that is
-the classes, constants and functioins from the AppKit framework are available
+<h2><a href="#id12" name="cocoa-for-python-programmers">Cocoa for Python programmers</a></h2>
+<p>Cocoa frameworks are mapped onto Python packages with the same name; that is
+the classes, constants and functions from the AppKit framework are available
 after you import <code><span>AppKit</span></code> in your Python script.</p>
 <p>These helper modules contain <i>only</i> functions, constants and classes that 
 wrap items in the corresponding framework. All utility functions and classes 
 are located in the <code><span>PyObjCTools</span></code> package and <code><span>objc</span></code> module. Note that it
 is possible to use <code><span>pydoc</span></code> (or the <code><span>help()</span></code>) function with the framework
-wrappers, but that this is not very usefull for the entire module due to the
+wrappers, but that this is not very useful for the entire module due to the
 size of these modules.</p>
 <p>This makes it easier to find documentation for an item: if you import it 
 from the wrapper module for an Objective-C framework the documentation for
-that item can be found in the documentation for the framework, otherwise the
+that item can be found in the documentation for the framework; otherwise the
 item is documented in the PyObjC documentation.</p>
 <p>The module <code><span>PyObjCTools.NibClassBuilder</span></code> can be used to make working with 
 NIB files more convenient. This module can be used to extract information 
@@ -296,8 +297,8 @@ Python. The <a href="../Examples/00ReadMe.html">PyObjC Example index</a> contain
 <li><a href="http://www.stepwise.com/">stepwise.com</a></li>
 <li>Your local bookstore or library</li>
 </ul>
-<h2><a href="#id12" name="notes-on-specific-tasks">Notes on specific tasks</a></h2>
-<h3><a href="#id13" name="working-with-threads">Working with threads</a></h3>
+<h2><a href="#id13" name="notes-on-specific-tasks">Notes on specific tasks</a></h2>
+<h3><a href="#id14" name="working-with-threads">Working with threads</a></h3>
 <p>When you create a thread and want to use PyObjC from that thread you will
 have to create an <code><span>NSAutoreleasePool</span></code> in that thread and clean it up when
 you're done. The easiest way to that is to create an instance of that class
@@ -309,21 +310,21 @@ create new threads, but must use the python primitives instead.</p>
 thread that owns the Python GIL (that's also the reason for not being able 
 to use <code><span>NSThread</span></code> to create new threads).  This restriction will be lifted
 in a future version of PyObjC (at least when using Python 2.3).</p>
-<h3><a href="#id14" name="finalizers">Finalizers</a></h3>
+<h3><a href="#id15" name="finalizers">Finalizers</a></h3>
 <p>In Python you can use the method <code><span>__del__</span></code> to clean up resources when your
 object is garbage collected. In Objective-C/Cocoa this is done with a method 
 named <code><span>dealloc</span></code>.</p>
 <p>In PyObjC you should always use the <code><span>__del__</span></code> method, the <code><span>dealloc</span></code> method
 can safely be ignored and the bridge will complain when you try to override
 this method.</p>
-<h2><a href="#id15" name="building-applications">Building applications</a></h2>
+<h2><a href="#id16" name="building-applications">Building applications</a></h2>
 <p>There are two different ways to build applications with PyObjC. There are no
 major advantages to using either one of them, use the one that is most 
 convenient to you.</p>
-<h3><a href="#id16" name="pure-python-buildapp-py">&quot;Pure Python&quot; :  buildapp.py</a></h3>
-<p>PyObjC includes a copy of the <code><span>bundlebuilder</span></code> module. This module will be
+<h3><a href="#id17" name="pure-python-buildapp-py">&quot;Pure Python&quot; :  buildapp.py</a></h3>
+<p>PyObjC includes a copy of the <code><span>bundlebuilder</span></code> module. This module is
 part of the Python 2.3 MacPython release and offers a way to build
-distutils-style scripts  for building (standalone) applications.</p>
+distutils-style scripts for building (standalone) applications.</p>
 <p>An example <code><span>buildapp.py</span></code> script:</p>
 <pre>
 from bundlebuilder import buildapp
@@ -354,10 +355,10 @@ incompatible Python version.</p>
 <p>The online documentation for <code><span>bundlebuilder</span></code> contains more information on 
 building <code><span>buildapp.py</span></code> scripts and how to invoke them. There are plenty of
 example <code><span>buildapp.py</span></code> scripts in the various <a href="../Examples/00ReadMe.txt">Examples</a> subfolders.</p>
-<h3><a href="#id17" name="ide-approach-project-builder">&quot;IDE approach&quot; : Project builder</a></h3>
-<p>PyObjC includes a number of Project Builder templates that can be used to 
+<h3><a href="#id18" name="ide-approach-xcode">&quot;IDE approach&quot; : Xcode</a></h3>
+<p>PyObjC includes a number of Xcode templates that can be used to 
 build (standalone) applications. Those templates are used like any other
-Project Builder template. The only non-obvious detail is that you have to
+Xcode template. The only non-obvious detail is that you have to
 add your sources as resources, but Project Builder usually does the right
 thing when you add a new file.</p>
 <p>The templates will build an application that makes use of the installed copy
