@@ -220,7 +220,7 @@ static PyObject** _get_dictptr(PyObject* obj)
 static PyObject *
 object_getattro(PyObject *obj, PyObject * volatile name)
 {
-	PyTypeObject *tp;
+	PyTypeObject *tp = NULL;
 	PyObject *descr = NULL;
 	PyObject *res = NULL;
 	descrgetfunc f;
@@ -248,8 +248,9 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 			return NULL;
 		}
 	}
-	else
+	else {
 		Py_INCREF(name);
+	}
 
 
 	namestr = PyString_AS_STRING(name);
@@ -258,7 +259,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	 * ISA is changed by the runtime. We change the python type as well.
 	 */
 	obj_inst = PyObjCObject_GetObject(obj);
-	if (obj_inst == nil) {
+	if (!obj_inst) {
 		PyErr_Format(PyExc_AttributeError,
 		     "cannot access attribute '%.400s' of NIL '%.50s' object",
 		     PyString_AS_STRING(name),
