@@ -60,6 +60,7 @@ def get_objectForKey(self, key, dflt=None):
     if res is None: 
         res = dflt
     return res
+
 CONVENIENCE_METHODS['objectForKey:'] = (
     ('__getitem__', __getitem__objectForKey),
     ('has_key', has_key_objectForKey),
@@ -204,9 +205,13 @@ CONVENIENCE_METHODS['keyEnumerator'] = (
 )
 
 CONVENIENCE_METHODS['objectEnumerator'] = (
-    ('values', lambda self: self.allValues()),
     ('__iter__', lambda self: enumeratorGenerator(self.objectEnumerator())),
     ('itervalues', lambda self: enumeratorGenerator( self.objectEnumerator())),
+)
+
+CONVENIENCE_METHODS['reverseObjectEnumerator'] = (
+    ('__iter__', lambda self: enumeratorGenerator(self.reverseObjectEnumerator())),
+    ('itervalues', lambda self: enumeratorGenerator(self.reverseObjectEnumerator()))
 )
 
 CONVENIENCE_METHODS['removeAllObjects'] = (
@@ -215,8 +220,12 @@ CONVENIENCE_METHODS['removeAllObjects'] = (
 
 CONVENIENCE_METHODS['dictionaryWithDictionary:'] = (
     ('copy', lambda self: type(self).dictionaryWithDictionary_(self)),
-) 
+)
 
+CONVENIENCE_METHODS['nextObject'] = (
+    ('__iter__', lambda self: enumeratorGenerator(self)),
+    ('itervalues', lambda self: enumeratorGenerator(self)),
+)
 
 #
 # NSNumber seems to be and abstract base-class that is implemented using
