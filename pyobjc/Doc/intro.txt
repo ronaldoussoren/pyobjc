@@ -13,7 +13,7 @@ An introduction to PyObjC
 WORK IN PROGRESS
 ----------------
 
-This document is work in progress and thin on details.
+This document is work in progress.
 
 
 Preface
@@ -110,16 +110,29 @@ For more information about Objective-C see:
 Overview of the bridge
 ----------------------
 
+Classes
+.......
+
 Objective-C classes are visible as Python classes and can be subclassed just
 like normal Python classes. The major differences between normal Python classes
 and Objective-C classes are the way you create instances and the fact that 
-Objective-C classes have odd names.
+Objective-C methods have odd names.
+
+Another thing to keep in mind is that the names of Objective-C classes must
+be unique, without taking modules into account. That is, it is *not* possible
+to have two modules that define a class with the same name. If you write classes
+that will be used outside of a single project it is customary to pick a 
+(short) prefix and stick that in front of all class names, e.g. Apple ``NS`` 
+as the prefix in the `Cocoa libraries`_.
 
 As described in `Objective-C for PyObjC users`_ the creation of Objective-C 
 objects is a two-stage process. You first call the class method ``alloc``, and
 then call some variation of ``init`` to initialize the objects. The newly
 created object is the result of the call to ``init``. Most classes have 
 convienence class methods that combine the calls to ``alloc`` and ``init``.
+
+Methods and functions
+.....................
 
 Objective-C methods are bridged to Python callables. Because Objective-C method 
 names can contain colons it is necessary to translate methods names. The rules
@@ -129,22 +142,68 @@ for translation are:
 
 * Then convert all colons to underscores: ``someMethod_withFoo_andBar_``
 
-The bridged method usually has the same number of arguments as the orginal 
-method and also returns the same as the original method. In special 
-circumstances the method interface may be different from the Objective-C 
-interface, those methods are document in 'some other document'. Furthermore,
-some methods have pass-by-reference arguments (that is a pointer to a single
-value that is used to transfer data to (in), from (out) or to-and-from (inout)
-the method. The arguments that are passed to methods is present as normal 
-arguments in the bridged method (e.g. if the method has an ``int*`` argument
-the bridged method has has an integer argument).  Data that is passed from the
-function results in additional return values from the function.
+Wrapped/bridged methods (and functions) have the same number of arguments
+as the corresponding Objective-C method or function, unless otherwise noted
+in the documentation (`Notes on supported APIs and classes on MacOS X`_ for
+Cocoa on MacOS X).
 
-When the bridge cannot automaticly deduce the right signature for a method, or
-if you want to add a method whose name cannot be transformed into Python (
-for example a methodname containing ``$``), you'll have to add explicit hints
-to your code. You do this by calling the function ``objc.selector`` and using
-the result instead of your method definition::
+.. _`Notes on supported APIs and classes on MacOS X`: api-notes-macosx.html
+
+One group of exceptions to this rule can be described in a global way. Some
+methods and functions have pointers as arguments, specifically pointers to
+a single value that is passed in and/or out of the function. These arguments
+are sometimes called *pass by reference* arguments, and can be subdived into
+three types of arguments: ``in`` arguments are used to pass data to the 
+function, ``out`` arguments are used to pass data from the function (e.g. and
+additional return value) and ``inout`` arguments are a combination of the two.
+
+The ``in`` and ``inout`` arguments for a method are also present in the Python
+interface for that method (or function). In python the value passed to the
+function is a "normal" argument. ``Out`` arguments are not present in the 
+argument list of the Python function.
+
+If a function (or method) has one or more output arguments (``out`` or 
+``inout``) the output values are returned as part of the return value of the
+method. That is, the return value of the function is a tuple containing
+the return value of the C function (or method), followed by the values of
+the ``out`` in ``inout`` arguments in the order the are present in the argument
+list. If the C function (or method) has return type ``void``, the tuple contains
+only the output arguments. As a final complication, methods with a single output
+argument and return type ``void``, have the value of the output argument as
+the return value (e.g. not a tuple containing the return value). 
+
+The rules for pass by reference arguments may look quite complicated, but
+it turns out this is very straightforward when working with them.
+
+As an example of a method with two output arguments, NSMatrix has a method
+named ``getNumberOfRows_columns_`` with the following signature::
+
+   (void)getNumberOfRows:(int *)rowCount columns:(int *)columnCount
+
+You use this method in python like this::
+
+   rowCount, columnCount = matrix.getNumberOfRows_columns_()
+
+When you define methods in a subclass of an Objective-C class, the bridge has
+to tell the Objective-C runtime what the signature of those methods is. The
+basic rule is that all arguments as well as the return value are objects (just
+like with normal Python methods). The bridge will automaticly pick a better 
+signature when it has more information available. Specifically, if you 
+overide an existing method the bridge will assume you want to use the same
+method signature. And furthermore, if you implement a method in an (informal)
+protocol known to the bridge it will use the signature from the corresponding
+method in that signature.
+
+The end result is that you almost never have to add information about the
+signature of methods. The only known case where you have to tell the bridge
+about the signature of a method is the call-back method for sheets. You can
+use the function ``PyObjCTools.AppHelper.endSheetMethod`` to create an object
+that contains the right information. This function is used like 
+``staticmethod`` and ``classmethod`` (as introduced in Python 2.2).
+
+For complete control of the mapping to Objective-C you can use the function
+``objc.selector``. See the documentation of the ``objc`` module for the
+arguments you can use with this function. It is normally used like this::
 
 	class MyObject (NSObject):
 		def someMethod_(self, arg):
@@ -152,17 +211,43 @@ the result instead of your method definition::
 
 		someMethod_ = objc.selector(someMethod_, ...)
 
-The other arguments of ``objc.selector`` (not shown in the example) provide
-additional information about the method to the bridge, see the online 
-documentation for more information about this function. It is almost never
-necessary to use this technique.
+Reference counts
+................
 
-If you write a method for an Objecitve-C class in Python, PyObjC will try to
-deduce the method's signature. If it's overriding a method, the signature of
-the method that is overridden is taken. If it's a method that appears
-*anywhere* in an informal protocol definition in a framework that's currently
-loaded, PyObjC takes the signature from there. (Most wrapped frameworks have a
-submodule named ``protocols.py`` that contains informal protocol definitions.)
+The `Cocoa libraries`_, and most (if not all) other class libraries for 
+Objective-C use explicit reference counting to manage memory. The methods
+``retain``, ``release`` and ``autorelease`` are used to manage these 
+reference counts. You won't have to manage reference counts in Python, the
+bridge does all that work for you.
+
+The only reasons reference counts are mentioned at all are to tell you about
+ignoring them, and more importantly to introduce you to some issues w.r.t. 
+reference counting.
+
+It turns out that Cocoa uses a primitive form of `weak references`_. Those 
+are not true `weak references`_ as in Python, but use-cases where an object 
+stores a reference to another object without increasing the reference count
+for that other object. The bridge cannot solve the issues this introduces
+for you, which means that you get hard crashes when you're not carefull when
+dealing with those `weak references`_.
+
+.. _`weak references`: http://www.python.org/doc/current/lib/module-weakref.html
+
+The basic rule to deal with weak references is: make sure objects stays
+alive as long as someone might have a weak reference to them. Due to the way
+the bridge works, this means that you must make sure that you don't create
+weak references from Objective-C to a plain Python object. The Python
+object stays alive, but the proxy object as seen by the Objective-C code is
+actually an autoreleased object that will be cleaned up unless the Objective-C
+code increases its reference count.
+
+The document `Notes on supported APIs and classes on MacOS X`_ contains 
+information about classes that work with weak references. The most important
+are notification centers and ``NSOutlineView``, to be exact: the outline view
+stores weak references to the objects return by the method 
+``outlineView:child:ofItem:`` of its data source. The easiest way to avoid
+crashes with outline views is to make sure that you model for the view uses
+subclasses of ``NSObject`` to represent the nodes in the outline view.
 
 
 Cocoa for Python programmers
@@ -170,7 +255,16 @@ Cocoa for Python programmers
 
 Cocoa frameworks are mapped onto Python packages with the same name, that is
 the classes, constants and functioins from the AppKit framework are available
-after you import ``AppKit`` in your Python script.
+after you import ``AppKit`` in your Python script. 
+
+These helper modules contain *only* functions, constants and classes that 
+wrap items in the corresponding framework. All utility functions and classes 
+are located in the ``PyObjCTools`` package and ``objc`` module. 
+
+This makes it easier to find documentation for an item: if you import it 
+from the wrapper module for an Objective-C framework the documentation for
+that item can be found in the documentation for the framework, otherwise the
+item is documented in the PyObjC documentation.
 
 The module ``PyObjCTools.NibClassBuilder`` can be used to make working with 
 NIB files more convenient. This module can be used to extract information 
@@ -178,10 +272,8 @@ about classes from NIB files, both as a standalone tool generating source code
 and during runtime. See the online documentation for this module for more
 information.
 
-**TODO**:
-
-* Links to example PyObjC scripts.
-
+PyObjC includes a number of examples that show how to use Cocoa from
+Python. The `PyObjC Example index`_ contains an overview of those examples.
 
 More information on Cocoa programming can be found at:
 
@@ -192,6 +284,8 @@ More information on Cocoa programming can be found at:
 * `stepwise.com`_
 
 * Your local bookstore or library
+
+.. _`PyObjC Example index`: ../Examples/00ReadMe.html
 
 ..  _`Cocoa libraries`: http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html
 
@@ -248,19 +342,32 @@ The online documentation for ``bundlebuilder`` contains more information on
 building ``buildapp.py`` scripts and how to invoke them. There are plenty of
 example ``buildapp.py`` scripts in the various `Examples`__ subfolders.
 
-.. __: ../Examples
+.. __: ../Examples/00ReadMe.txt
 
 
 "IDE approach" : Project builder
 ................................
 
 PyObjC includes a number of Project Builder templates that can be used to 
-build (standalone) applications.
+build (standalone) applications. Those templates are used like any other
+Project Builder template. The only non-obvious detail is that you have to
+add your sources as resources, but Project Builder usually does the right
+thing when you add a new file.
 
-**TODO**:
+The templates will build an application that makes use of the installed copy
+``/usr/bin/python`` (e.g. the one shipped by Apple in MacOS X 10.2) and will 
+copy the PyObjC modules into the application bundle. This means that this 
+application bundle should be useable on any MacOS X 10.2 system.
 
-* Expand this section, input needed as I don't use Project Builder
+See `the documentation for the templates`__ for more details.
 
-* Add link to documentation about our templates
+.. __: ProjectBuilder-Templates.html
 
-* Add link to documentation for Project Builder
+XXX: But what about Panther, which seems to ship with Python 2.3, at the 
+very least you'll get warnings about the PyObjC extension modules (wrong 
+ABI version).
+
+XXX: The documentation for the templates should be installed into the 
+documentation folder on the DMG, otherwise the link above won't work, I've
+hacked ``Scripts/update_html.py`` to copy the HTML file to the Doc directory,
+but that is not a pretty solution.

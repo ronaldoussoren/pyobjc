@@ -89,7 +89,7 @@ that uses Cocoa's Multiple Document Architecture in the same fashion as the
 default Cocoa Document-based Application supplied with Project Builder.
 
 Cocoa-Python-ObjC Document-based Application
------------------------------
+--------------------------------------------
 
 A project created from this template includes an embedded framework project
 into which all compiled code can be placed.  Upon launch, the application

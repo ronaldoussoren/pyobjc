@@ -6,6 +6,9 @@ Notes on supported APIs and classes on MacOS X
 
 .. Contents::
 
+TODO: Add documentation about weak linking (see intro.txt).
+
+
 Introduction
 ------------
 
