@@ -1358,59 +1358,31 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		return r;
 
 	case _C_ID:
+		/*
+			XXX
+			
+			This should, for values other than Py_None, always return the same id
+			for the same PyObject for as long as that id lives.  I think that the
+			implementation of this should be moved to OC_PythonObject,
+			which would itself have a map of PyObject->id.  The dealloc
+			of each of these custom objects should notify OC_PythonObject
+			to remove map entry.  We need to significantly change how immutable types
+			are bridged, and create OC_PythonString, OC_PythonBool, etc. which are 
+			subclasses of what they should be from the the Objective C side.
+
+			If we don't do this, we break binary plist serialization, and likely
+			other things, which assume that foo[bar] is foo[bar] for the duration of
+			the serialization process.  I would imagine that other things also
+			assume this kind of invariant, so we should do it here rather than in every
+			container object.
+		*/
+				
 		if (argument == Py_None) {
 			*(id *) datum = nil;
 		} else if (PyObjCClass_Check (argument)) {
 			*(id *) datum = (id)PyObjCClass_GetClass(argument);
 		} else if (PyObjCObject_Check (argument)) {
 			*(id *) datum = PyObjCObject_GetObject(argument);
-		/*
-		} else if (PyString_Check (argument)) {
-		*/
-			/* NSString values are Unicode strings, convert 
-			 * the string to Unicode, assuming the default encoding.
-			 */
-/*            
-			char* strval;
-			int   len;
-			PyObject* as_unicode;
-			PyObject* as_utf8;
-
-			if (!PyObjC_StrBridgeEnabled) {
-				PyErr_Warn(PyExc_DeprecationWarning, "use unicode(str, encoding) for NSString or buffer(str) for NSData, str will not be bridged in PyObjC 1.2");
-			}
-
-			strval = PyString_AS_STRING(argument);
-			len = PyString_GET_SIZE(argument);
-
-			as_unicode = PyUnicode_Decode(
-				strval, 
-				len, 
-				PyUnicode_GetDefaultEncoding(), 
-				"strict");
-			if (as_unicode == NULL) {
-				PyErr_Format(PyExc_UnicodeError,
-					"depythonifying 'id', got "
-					"a string with a non-default "
-					"encoding");
-				return -1;
-			}
-
-			as_utf8 = PyUnicode_AsUTF8String(as_unicode);
-			Py_DECREF(as_unicode);
-
-			if (as_utf8) {
-				*(id *) datum = [NSString 
-					stringWithUTF8String:
-						PyString_AS_STRING(as_utf8)];
-				Py_DECREF(as_utf8);
-			} else {
-				PyErr_Format(PyExc_ValueError,
-					"depythonifying 'id', failed "
-					"to encode unicode string to UTF8");
-				return -1;
-			}
-*/
 		} else if (PyObjCUnicode_Check(argument)) {
 			*(id*) datum = PyObjCUnicode_Extract(argument);
 		} else if (PyUnicode_Check(argument)) {
@@ -1484,7 +1456,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			*(SEL*)datum = NULL;
 		} else if (PyObjCSelector_Check (argument)) {
 			*(SEL *) datum = PyObjCSelector_GetSelector(argument); 
-        	} else if (PyString_Check(argument)) {
+		} else if (PyString_Check(argument)) {
 			char *selname = PyString_AsString (argument);
 			SEL sel;
 
