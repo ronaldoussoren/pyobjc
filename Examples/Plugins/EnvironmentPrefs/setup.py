@@ -1,3 +1,9 @@
+"""
+Script for building the example.
+
+Usage:
+    python setup.py py2app
+"""
 from distutils.core import setup
 import py2app
 
@@ -14,10 +20,10 @@ infoPlist = dict(
 )
 
 setup(
-    plugin = ['ShellEnv.py'],
-    data_files = ["English.lproj", "Dutch.lproj", "ShellEnv.icns"],
-    options = dict(py2app=dict(
-        extension = ".prefPane",
-        plist = infoPlist,
+    plugin=['ShellEnv.py'],
+    data_files=["English.lproj", "Dutch.lproj", "ShellEnv.icns"],
+    options=dict(py2app=dict(
+        extension=".prefPane",
+        plist=infoPlist,
     )),
 )
