@@ -1148,9 +1148,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	arg = alloca(arglen+1);
 
 	err = depythonify_c_value(type, result, arg);
-	if (err != NULL) {
-		ObjCErr_Set(ObjCExc_error,
-			"Cannot depythonify result: %s", err);
+	if (err == -1) {
 		ObjCErr_ToObjC();
 		return;
 	}

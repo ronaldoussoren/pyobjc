@@ -18,10 +18,9 @@
 #include "objc_support.h"
 #include <unistd.h>
 #include "objc/objc.h"
-// #include "myctype.h"
 
-#import <Foundation/NSInvocation.h>      /* sdm7g - changed #include to #import */
-#import <Foundation/NSMethodSignature.h> /* sdm7g */
+#import <Foundation/NSInvocation.h>
+#import <Foundation/NSMethodSignature.h>
 #import <Foundation/NSData.h> 
 #import <Foundation/NSValue.h> 
 
@@ -79,19 +78,6 @@
 -(PyObject*)__pyobjc_PythonObject__
 {
 	return ObjCUnicode_New(self);
-#if 0
-	const char* utf8 = [self UTF8String];
-	return PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
-#endif
-#if 0
-	NSData* data = [self dataUsingEncoding:NSASCIIStringEncoding];
-	if (data == NULL) {
-		const char* utf8 = [self UTF8String];
-		return PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
-	} else {
-		return PyString_FromStringAndSize([data bytes], [data length]);
-	}
-#endif
 }
 
 @end /* NSString (PyObjCSupport) */
@@ -107,84 +93,82 @@
 static inline const int
 ROUND(int v, int a)
 {
-  return a * ((v+a-1)/a);
+	return a * ((v+a-1)/a);
 }
 
 const char * 
 objc_skip_typespec (const char *type)
 {
-  type = objc_skip_type_qualifiers (type);
+	type = objc_skip_type_qualifiers (type);
 
-  switch (*type)
-    {
-      /* The following are one character type codes */
-    case _C_ID:
+	switch (*type) {
+	/* The following are one character type codes */
+	case _C_ID:
+	case _C_CLASS:
+	case _C_SEL:
+	case _C_CHR:
+	case _C_UCHR:
+	case _C_CHARPTR:
+	case _C_SHT:
+	case _C_USHT:
+	case _C_INT:
+	case _C_UINT:
+	case _C_LNG:
+	case _C_ULNG:
+	case _C_FLT:
+	case _C_DBL:
+	case _C_VOID:
+	case _C_LNGLNG:
+	case _C_ULNGLNG:
+		++type;
+		break;
 
-    case _C_CLASS:
-    case _C_SEL:
-    case _C_CHR:
-    case _C_UCHR:
-    case _C_CHARPTR:
-    case _C_SHT:
-    case _C_USHT:
-    case _C_INT:
-    case _C_UINT:
-    case _C_LNG:
-    case _C_ULNG:
-    case _C_FLT:
-    case _C_DBL:
-    case _C_VOID:
-    case _C_LNGLNG:
-    case _C_ULNGLNG:
-      ++type;
-      break;
-
-    case _C_ARY_B:
-      /* skip digits, typespec and closing ']' */
+	case _C_ARY_B:
+		/* skip digits, typespec and closing ']' */
     
-      while (isdigit (*++type));
-      type = objc_skip_typespec (type);
-      //assert (*type == _C_ARY_E);
-      ++type;
-      break;
+		while (isdigit (*++type));
+		type = objc_skip_typespec (type);
+		assert (*type == _C_ARY_E);
+		++type;
+		break;
       
-    case _C_STRUCT_B:
-      /* skip name, and elements until closing '}'  */
+	case _C_STRUCT_B:
+		/* skip name, and elements until closing '}'  */
     
-      while (*type != _C_STRUCT_E && *type++ != '=');
-      while (*type != _C_STRUCT_E)
-        type = objc_skip_typespec (type);
-      ++type;
-      break;
+		while (*type != _C_STRUCT_E && *type++ != '=');
+		while (*type != _C_STRUCT_E)
+			type = objc_skip_typespec (type);
+		++type;
+		break;
 
-    case _C_UNION_B:
-      /* skip name, and elements until closing ')'  */
-      type++;
-      while (*type != _C_UNION_E) { type = objc_skip_typespec (type); }
-      ++type;
-      break;
+	case _C_UNION_B:
+		/* skip name, and elements until closing ')'  */
+		type++;
+		while (*type != _C_UNION_E) { type = objc_skip_typespec (type); }
+		++type;
+		break;
       
-    case _C_PTR:
-    case _C_CONST:
-    case _C_IN:
-    case _C_INOUT:
-    case _C_OUT:
-    case _C_BYCOPY:
-    case _C_ONEWAY:
+	case _C_PTR:
+	case _C_CONST:
+	case _C_IN:
+	case _C_INOUT:
+	case _C_OUT:
+	case _C_BYCOPY:
+	case _C_ONEWAY:
 
-      /* Just skip the following typespec */
-      type = objc_skip_typespec (type+1);
-      break;
+		/* Just skip the following typespec */
+		type = objc_skip_typespec (type+1);
+		break;
 
     
-    default:
-      ObjCErr_Set(ObjCExc_internal_error,
-      	"objc_skip_typespec: Unhandled type '%#x'", *type); 
-      return NULL;
-    }
+	default:
+		ObjCErr_Set(ObjCExc_internal_error,
+			"objc_skip_typespec: Unhandled type '%#x'", *type); 
+		return NULL;
+	}
 
-    while (isdigit(*type)) type++;
-    return type;
+	while (isdigit(*type)) type++;
+	return type;
 }
 
 /*
@@ -194,120 +178,119 @@ objc_skip_typespec (const char *type)
 int
 objc_alignof_type (const char *type)
 {
-  switch (*type)
-    {
-    case _C_ID:
-      return __alignof__ (id);
-      break;
+	switch (*type) {
+	case _C_ID:
+		return __alignof__ (id);
+		break;
 
-    case _C_CLASS:
-      return __alignof__ (Class);
-      break;
+	case _C_CLASS:
+		return __alignof__ (Class);
+		break;
     
-    case _C_SEL:
-      return __alignof__ (SEL);
-      break;
+	case _C_SEL:
+		return __alignof__ (SEL);
+		break;
 
-    case _C_CHR:
-      return __alignof__ (char);
-      break;
-    
-    case _C_UCHR:
-      return __alignof__ (unsigned char);
-      break;
+	case _C_CHR:
+		return __alignof__ (char);
+		break;
+	    
+	case _C_UCHR:
+		return __alignof__ (unsigned char);
+		break;
 
-    case _C_SHT:
-      return __alignof__ (short);
-      break;
+	case _C_SHT:
+		return __alignof__ (short);
+		break;
 
-    case _C_USHT:
-      return __alignof__ (unsigned short);
-      break;
+	case _C_USHT:
+		return __alignof__ (unsigned short);
+		break;
 
-    case _C_INT:
-      return __alignof__ (int);
-      break;
+	case _C_INT:
+		return __alignof__ (int);
+		break;
 
-    case _C_UINT:
-      return __alignof__ (unsigned int);
-      break;
+	case _C_UINT:
+		return __alignof__ (unsigned int);
+		break;
 
-    case _C_LNG:
-      return __alignof__ (long);
-      break;
+	case _C_LNG:
+		return __alignof__ (long);
+		break;
 
-    case _C_ULNG:
-      return __alignof__ (unsigned long);
-      break;
+	case _C_ULNG:
+		return __alignof__ (unsigned long);
+		break;
 
-    case _C_FLT:
-      return __alignof__ (float);
-      break;
+	case _C_FLT:
+		return __alignof__ (float);
+		break;
 
-    case _C_DBL:
-      return __alignof__ (double);
-      break;
+	case _C_DBL:
+		return __alignof__ (double);
+		break;
 
-    case _C_CHARPTR:
-      return __alignof__ (char *);
-      break;
+	case _C_CHARPTR:
+		return __alignof__ (char *);
+		break;
 
-    case _C_PTR:
-      return __alignof__ (void *);
-      break;
+	case _C_PTR:
+		return __alignof__ (void *);
+		break;
+
+	case _C_ARY_B:
+		while (isdigit(*++type)) /* do nothing */;
+		return objc_alignof_type (type);
       
-    case _C_ARY_B:
-      while (isdigit(*++type)) /* do nothing */;
-      return objc_alignof_type (type);
-      
-    case _C_STRUCT_B:
-      {
-      	/* XXX Ronald: Is this valid? */
-        struct { int x; double y; } fooalign;
-	int    item_align;
-        while(*type != _C_STRUCT_E && *type++ != '=') /* do nothing */;
-        if (*type != _C_STRUCT_E) {
-	  item_align = objc_alignof_type(type);
-	  if (item_align == -1) return -1;
-          return MAX (item_align, __alignof__ (fooalign));
-        } else {
-          return __alignof__ (fooalign);
+	case _C_STRUCT_B:
+	{
+		/* XXX Ronald: Is this valid? */
+		struct { int x; double y; } fooalign;
+		int    item_align;
+		while(*type != _C_STRUCT_E && *type++ != '=') /* do nothing */;
+		if (*type != _C_STRUCT_E) {
+			item_align = objc_alignof_type(type);
+			if (item_align == -1) return -1;
+			return MAX (item_align, __alignof__ (fooalign));
+		} else {
+			return __alignof__ (fooalign);
+		}
 	}
-      }
 
-    case _C_UNION_B:
-      {
-        int maxalign = 0;
-        type++;
-        while (*type != _C_UNION_E)
-          {
-	    int item_align = objc_alignof_type(type);
-	    if (item_align == -1) return -1;
-            maxalign = MAX (maxalign, item_align);
-            type = objc_skip_typespec (type);
-          }
-        return maxalign;
-      }
+	case _C_UNION_B:
+	{
+		int maxalign = 0;
+		type++;
+		while (*type != _C_UNION_E)
+		{
+			int item_align = objc_alignof_type(type);
+			if (item_align == -1) return -1;
+			maxalign = MAX (maxalign, item_align);
+			type = objc_skip_typespec (type);
+		}
+		return maxalign;
+	}
 
-    case _C_CONST:
-    case _C_IN:
-    case _C_INOUT:
-    case _C_OUT:
-    case _C_BYCOPY:
-    case _C_ONEWAY:
-	    return objc_alignof_type(type+1);
+	case _C_CONST:
+	case _C_IN:
+	case _C_INOUT:
+	case _C_OUT:
+	case _C_BYCOPY:
+	case _C_ONEWAY:
+		return objc_alignof_type(type+1);
 
-    case _C_LNGLNG:
-	    return __alignof__(long long);
+	case _C_LNGLNG:
+		return __alignof__(long long);
 
-    case _C_ULNGLNG:
-	    return __alignof__(unsigned long long);
+	case _C_ULNGLNG:
+		return __alignof__(unsigned long long);
     
-    default:
-      ObjCErr_Set(ObjCExc_internal_error, 
-      	"objc_align_type: Unhandled type '%#x'", *type);
-      return -1;
-    }
+	default:
+		ObjCErr_Set(ObjCExc_internal_error, 
+			"objc_align_type: Unhandled type '%#x'", *type);
+		return -1;
+	}
 }
 
 /*
@@ -317,11 +300,11 @@ objc_alignof_type (const char *type)
 static int
 objc_aligned_size (const char *type)
 {
-  int size = objc_sizeof_type (type);
-  int align = objc_alignof_type (type);
+	int size = objc_sizeof_type (type);
+	int align = objc_alignof_type (type);
 
-  if (size == -1 || align == -1) return -1;
-  return ROUND (size, align);
+	if (size == -1 || align == -1) return -1;
+	return ROUND (size, align);
 }
 
 /*
@@ -331,131 +314,87 @@ objc_aligned_size (const char *type)
 int
 objc_sizeof_type (const char *type)
 {
-  int itemSize;
-  switch (*type)
-    {
-    case _C_VOID:
-      return 0;
+	int itemSize;
+	switch (*type) {
+	case _C_VOID:    return 0;
+	case _C_ID:      return sizeof(id);
+	case _C_CLASS:   return sizeof(Class);
+	case _C_SEL:     return sizeof(SEL);
+	case _C_CHR:     return sizeof(char);
+	case _C_UCHR:    return sizeof(unsigned char);
+	case _C_SHT:     return sizeof(short);
+	case _C_USHT:    return sizeof(unsigned short);
+	case _C_INT:     return sizeof(int);
+	case _C_UINT:    return sizeof(unsigned int);
+	case _C_LNG:     return sizeof(long);
+	case _C_ULNG:    return sizeof(unsigned long);
+	case _C_FLT:     return sizeof(float);
+	case _C_DBL:     return sizeof(double);
+	case _C_LNGLNG:  return sizeof(long long);
+	case _C_ULNGLNG: return sizeof(unsigned long long);
+
       
-    case _C_ID:
-      return sizeof(id);
-      break;
+	case _C_PTR:
+	case _C_CHARPTR:
+		return sizeof(char*);
+		break;
       
-    case _C_CLASS:
-      return sizeof(Class);
-      break;
-      
-    case _C_SEL:
-      return sizeof(SEL);
-      break;
-      
-    case _C_CHR:
-      return sizeof(char);
-      break;
-      
-    case _C_UCHR:
-      return sizeof(unsigned char);
-      break;
-      
-    case _C_SHT:
-      return sizeof(short);
-      break;
-      
-    case _C_USHT:
-      return sizeof(unsigned short);
-      break;
-      
-    case _C_INT:
-      return sizeof(int);
-      break;
-      
-    case _C_UINT:
-      return sizeof(unsigned int);
-      break;
-      
-    case _C_LNG:
-      return sizeof(long);
-      break;
-      
-    case _C_ULNG:
-      return sizeof(unsigned long);
-      break;
-      
-    case _C_FLT:
-      return sizeof(float);
-      break;
-      
-    case _C_DBL:
-      return sizeof(double);
-      break;
-      
-    case _C_PTR:
-    case _C_CHARPTR:
-      return sizeof(char*);
-      break;
-      
-    case _C_ARY_B:
-      {
-        int len = atoi(type+1);
-	int item_align;
-        while (isdigit(*++type));
-	item_align = objc_aligned_size(type);
-	if (item_align == NULL) return -1;
-        return len*item_align;
-      }
-    break; 
+	case _C_ARY_B:
+	{
+		int len = atoi(type+1);
+		int item_align;
+		while (isdigit(*++type))
+			;
+		item_align = objc_aligned_size(type);
+		if (item_align == NULL) return -1;
+		return len*item_align;
+	}
+	break; 
     
-    case _C_STRUCT_B:
-      {
-        int acc_size = 0;
-        int align;
-        while (*type != _C_STRUCT_E && *type++ != '='); /* skip "<name>=" */
-        while (*type != _C_STRUCT_E)
-          {
-            align = objc_alignof_type (type);       /* padd to alignment */
-	    if (align == -1) return -1;
-            acc_size = ROUND (acc_size, align);
-	    itemSize = objc_sizeof_type (type);   /* add component size */
-	    if (itemSize == -1) return -1;
-            acc_size += itemSize;
-            type = objc_skip_typespec (type);            /* skip component */
-          }
-        return acc_size;
-      }
+	case _C_STRUCT_B:
+	{
+		int acc_size = 0;
+		int align;
+		while (*type != _C_STRUCT_E && *type++ != '=')
+			; /* skip "<name>=" */
+		while (*type != _C_STRUCT_E) {
+			align = objc_alignof_type (type); 
+			if (align == -1) return -1;
+			acc_size = ROUND (acc_size, align);
+			itemSize = objc_sizeof_type (type); 
+			if (itemSize == -1) return -1;
+			acc_size += itemSize;
+			type = objc_skip_typespec (type);
+		}
+		return acc_size;
+	}
     
-    case _C_UNION_B:
-      {
-        int max_size = 0;
-        type++;
-        while (*type != _C_UNION_E)
-          {
-	    itemSize = objc_sizeof_type (type);
-	    if (itemSize == -1) return -1;
-            max_size = MAX (max_size, itemSize);
-            type = objc_skip_typespec (type);
-          }
-        return max_size;
-      }
+	case _C_UNION_B:
+	{
+		int max_size = 0;
+		type++;
+		while (*type != _C_UNION_E) {
+			itemSize = objc_sizeof_type (type);
+			if (itemSize == -1) return -1;
+			max_size = MAX (max_size, itemSize);
+			type = objc_skip_typespec (type);
+		}
+		return max_size;
+	}
 
-    case _C_CONST:
-    case _C_IN:
-    case _C_INOUT:
-    case _C_OUT:
-    case _C_BYCOPY:
-    case _C_ONEWAY:
-	    return objc_sizeof_type(type+1);
+	case _C_CONST:
+	case _C_IN:
+	case _C_INOUT:
+	case _C_OUT:
+	case _C_BYCOPY:
+	case _C_ONEWAY:
+		return objc_sizeof_type(type+1);
 
-    case _C_LNGLNG:
-	    return sizeof(long long);
-
-    case _C_ULNGLNG:
-	    return sizeof(unsigned long long);
-
-    default:
-      ObjCErr_Set(ObjCExc_internal_error, 
-      	"objc_sizeof_type: Unhandled type '%#x", *type);
-      return -1;
-    }
+	default:
+		ObjCErr_Set(ObjCExc_internal_error, 
+			"objc_sizeof_type: Unhandled type '%#x", *type);
+		return -1;
+	}
 }
 
 #endif
@@ -465,38 +404,34 @@ objc_sizeof_type (const char *type)
 static PyObject *
 pythonify_c_array (const char *type, void *datum)
 {
-  PyObject *ret;
-  unsigned int nitems, offset, itemidx, sizeofitem;
+	PyObject *ret;
+	unsigned int nitems, offset, itemidx, sizeofitem;
   
-  nitems = atoi (type+1);
-  while (isdigit (*++type));
-  sizeofitem = objc_sizeof_type (type);
-  if (sizeofitem == -1) {
-	  return NULL;
-  }
+	nitems = atoi (type+1);
+	while (isdigit (*++type))
+		;
+	sizeofitem = objc_sizeof_type (type);
+	if (sizeofitem == -1) return NULL;
 
-  ret = PyTuple_New (nitems);
-  if (!ret)
-    return NULL;
+	ret = PyTuple_New (nitems);
+	if (!ret) return NULL;
 
-  for (offset=itemidx=0; itemidx < nitems; itemidx++)
-    {
-      PyObject *pyitem = NULL;
+	for (offset=itemidx=0; itemidx < nitems; itemidx++) {
+		PyObject *pyitem = NULL;
 
-      pyitem = pythonify_c_value (type, datum+offset);
+		pyitem = pythonify_c_value (type, datum+offset);
 
-      if (pyitem)
-        PyTuple_SET_ITEM (ret, itemidx, pyitem);
-      else
-        {
-          Py_DECREF(ret);
-          return NULL;
-        }
+		if (pyitem) {
+			PyTuple_SET_ITEM (ret, itemidx, pyitem);
+		} else {
+			Py_DECREF(ret);
+			return NULL;
+		}
 
-      offset += sizeofitem;
-    }
+		offset += sizeofitem;
+	}
   
-  return ret;
+	return ret;
 }
 
 /*#F Returns a tuple of objects representing the content of a C structure
@@ -504,529 +439,631 @@ pythonify_c_array (const char *type, void *datum)
 static PyObject *
 pythonify_c_struct (const char *type, void *datum)
 {
-  PyObject *ret;
-  unsigned int nitems, offset, itemidx;
-  const char *item;
+	PyObject *ret;
+	unsigned int nitems, offset, itemidx;
+	const char *item;
 
-  while (*type != _C_STRUCT_E && *type++ != '='); /* skip "<name>=" */
-  for (item=type, nitems=0; *item != _C_STRUCT_E; item = objc_skip_typespec (item))
-    nitems++;
+	while (*type != _C_STRUCT_E && *type++ != '='); /* skip "<name>=" */
+	for (item=type, nitems=0; 
+			*item != _C_STRUCT_E; item = objc_skip_typespec (item)){
+		nitems++;
+	}
 
-  ret = PyTuple_New (nitems);
-  if (!ret)
-    return NULL;
+	ret = PyTuple_New (nitems);
+	if (!ret) return NULL;
 
-  for (item=type, offset=itemidx=0; *item != _C_STRUCT_E; item = objc_skip_typespec (item))
-    {
-      PyObject *pyitem;
+	for (item=type, offset=itemidx=0; 
+			*item != _C_STRUCT_E; item = objc_skip_typespec (item)){
+		PyObject *pyitem;
 
-      pyitem = pythonify_c_value (item, datum+offset);
+		pyitem = pythonify_c_value (item, datum+offset);
 
-      if (pyitem)
-        {
-          PyTuple_SET_ITEM (ret, itemidx, pyitem);
-        }
-      else
-        {
-          Py_DECREF(ret);
-          return NULL;
-        }
+		if (pyitem) {
+			PyTuple_SET_ITEM (ret, itemidx, pyitem);
+		} else {
+			Py_DECREF(ret);
+			return NULL;
+		}
 
-      itemidx++;
-      offset += objc_sizeof_type (item);
-    }
+		itemidx++;
+		offset += objc_sizeof_type (item);
+	}
   
-  return ret;
+	return ret;
 }
 
 /*#F Extracts the elements from the tuple @var{arg} and fills a C array
   of type @var{type} pointed by @var{datum}. Returns an error message, or
   NULL on success. */
-static const char *
+static int
 depythonify_c_array (const char *type, PyObject *arg, void *datum)
 {
-  unsigned int nitems, offset, itemidx, sizeofitem;
+	unsigned int nitems, offset, itemidx, sizeofitem;
 
-  nitems = atoi (type+1);
-  while (isdigit (*++type));
-  sizeofitem = objc_sizeof_type (type);
-  if (sizeofitem == -1) return "cannot depythonify array of unknown type";
+	nitems = atoi (type+1);
+	while (isdigit (*++type))
+		;
+	sizeofitem = objc_sizeof_type (type);
+	if (sizeofitem == -1) {
+		ObjCErr_Set(ObjCExc_error, 
+			"cannot depythonify array of unknown type");
+		return -1;
+	}
 
-  if (nitems != PyTuple_Size (arg))
-    {
-#define ERRMSG "a tuple of %d items, got one of %d"
-      static char errmsg[sizeof ERRMSG + 4]; /* XXX Static buffer */
+	if (nitems != PyTuple_Size (arg)) {
+		ObjCErr_Set(ObjCExc_error,
+			"depythonifying array of %d items, got one of %d",
+			nitems, PyTuple_Size(arg));
+		return -1;
+	}
 
-      snprintf (errmsg, sizeof(errmsg), ERRMSG, nitems, PyTuple_Size (arg));
-      return errmsg;
-#undef ERRMSG
-    }
+	for (offset=itemidx=0; itemidx < nitems; itemidx++) {
+		PyObject *pyarg = PyTuple_GetItem (arg, itemidx);
+		int err;
 
-  for (offset=itemidx=0; itemidx < nitems; itemidx++)
-    {
-      PyObject *pyarg = PyTuple_GetItem (arg, itemidx);
-      const char *error;
-
-      error = depythonify_c_value (type, pyarg, datum+offset);
-      if (error)
-        return error;
+		err = depythonify_c_value (type, pyarg, datum+offset);
+		if (err == -1) return err;
       
-      offset += sizeofitem;
-    }
+		offset += sizeofitem;
+	}
 
-  return NULL;
+	return 0;
 }
 
 /*#F Extracts the elements from the tuple @var{arg} and fills a C structure
   of type @var{type} pointed by @var{datum}. Returns an error message, or
   NULL on success. */
-static const char *
+static int
 depythonify_c_struct (const char *types, PyObject *arg, void *datum)
 {
-  unsigned int nitems, offset, itemidx;
-  const char *type;
+	unsigned int nitems, offset, itemidx;
+	const char *type;
 
-  while (*types != _C_STRUCT_E && *types++ != '='); /* skip "<name>=" */
-  for (type=types, nitems=0; *type != _C_STRUCT_E; type = objc_skip_typespec (type))
-    nitems++;
+	while (*types != _C_STRUCT_E && *types++ != '='); /* skip "<name>=" */
+	for (type=types, nitems=0; 
+			*type != _C_STRUCT_E; type = objc_skip_typespec (type)){
+		nitems++;
+	}
 
-  if (nitems != PyTuple_Size (arg))
-    {
-#define ERRMSG "a tuple of %d items, got one of %d"
-      static char errmsg[sizeof ERRMSG + 4];
+	if (nitems != PyTuple_Size (arg)) {
+		ObjCErr_Set(ObjCExc_error,
+			"depythonifying struct of %d members, got tuple of %d",
+			nitems, PyTuple_Size (arg));
+		return -1;
+	}
 
-      snprintf (errmsg, sizeof(errmsg), ERRMSG, nitems, PyTuple_Size (arg));
-      return errmsg;
-#undef ERRMSG
-    }
+	for (type=types, offset=itemidx=0; 
+			*type != _C_STRUCT_E; type = objc_skip_typespec (type)){
+		PyObject *argument = PyTuple_GetItem (arg, itemidx);
+		int error;
 
-  for (type=types, offset=itemidx=0; *type != _C_STRUCT_E; type = objc_skip_typespec (type))
-    {
-      PyObject *argument = PyTuple_GetItem (arg, itemidx);
-      const char *error;
-
-      error = depythonify_c_value (type, argument, datum+offset);
-      if (error)
-        return error;
+		error = depythonify_c_value (type, argument, datum+offset);
+		if (error == -1) return error;
       
-      itemidx++;
-      offset += objc_sizeof_type (type);
-    }
-  return NULL;
+		itemidx++;
+		offset += objc_sizeof_type (type);
+	}
+	return 0;
 }
 
 PyObject *
 pythonify_c_value (const char *type, void *datum)
 {
-  PyObject *retobject = NULL;
+	PyObject *retobject = NULL;
 
-  type = objc_skip_type_qualifiers (type);
+	type = objc_skip_type_qualifiers (type);
 
-  switch (*type)
-    {
-    case _C_LNGLNG: case _C_ULNGLNG:
-      retobject = (PyObject*) PyLong_FromLongLong(*(long long*)datum);
-      break;
+	switch (*type) {
+	case _C_ULNGLNG:
+		retobject = (PyObject*)PyLong_FromUnsignedLongLong(*(unsigned long long*)datum);
+		break;
 
-    case _C_CHR:
-    case _C_UCHR:
-      retobject = (PyObject *) PyInt_FromLong ((int) (*(char *) datum));
-      break;
+	case _C_LNGLNG: 
+		retobject = (PyObject*)PyLong_FromLongLong(*(long long*)datum);
+		break;
 
-    case _C_CHARPTR:
-      {
-        char *cp = *(char **) datum;
+	case _C_CHR:
+	case _C_UCHR:
+		retobject = (PyObject*)PyInt_FromLong ((int)(*(char*)datum));
+		break;
 
-        if (! cp)
-          cp = "(null pointer)"; /* XXX */
-        retobject = (PyObject *) PyString_FromString (cp);
-        break;
-      }
+	case _C_CHARPTR:
+	{
+		char *cp = *(char **) datum;
 
-    case _C_INT:
-    case _C_UINT:
-      retobject = (PyObject *) PyInt_FromLong (*(int *) datum);
-      break;
+		if (cp == NULL) {
+			Py_INCREF(Py_None);
+			retobject = Py_None;
+		} else {
+			retobject = (PyObject*)PyString_FromString(cp);
+		}
+		break;
+	}
 
-    case _C_SHT:
-    case _C_USHT:
-      retobject = (PyObject *) PyInt_FromLong (*(short *) datum);
-      break;
+	case _C_INT:
+	case _C_UINT:
+		retobject = (PyObject *) PyInt_FromLong (*(int *) datum);
+		break;
 
-    case _C_LNG:
-    case _C_ULNG:
-      retobject = (PyObject *) PyInt_FromLong (*(long *) datum);
-      break;
+	case _C_SHT:
+	case _C_USHT:
+		retobject = (PyObject *) PyInt_FromLong (*(short *) datum);
+		break;
 
-    case _C_FLT:
-      retobject = (PyObject *) PyFloat_FromDouble (*(float *) datum);
-      break;
+	case _C_LNG:
+	case _C_ULNG:
+		retobject = (PyObject *) PyInt_FromLong (*(long *) datum);
+		break;
 
-    case _C_DBL:
-      retobject = (PyObject *) PyFloat_FromDouble (*(double *) datum);
-      break;
+	case _C_FLT:
+		retobject = (PyObject *) PyFloat_FromDouble (*(float *) datum);
+		break;
+
+	case _C_DBL:
+		retobject = (PyObject *) PyFloat_FromDouble (*(double *) datum);
+		break;
       
-    case _C_ID:
-    {
-      id obj = *(id *) datum;
+	case _C_ID:
+	{
+		id obj = *(id *) datum;
 
-      if (obj == nil) {
-        retobject = Py_None;
-        Py_INCREF (retobject);
-      } else {
-        retobject = [obj  __pyobjc_PythonObject__];
-      }
-    }
-    break;
+		if (obj == nil) {
+			retobject = Py_None;
+			Py_INCREF (retobject);
+		} else {
+			retobject = [obj  __pyobjc_PythonObject__];
+		}
+		break;
+	}
 
-    case _C_SEL:
-      if (*(SEL*)datum == NULL) {
-	      retobject = Py_None;
-	      Py_INCREF(retobject);
-      } else {
-	      retobject = PyString_FromString(SELNAME(*(SEL*)datum)); 
-      }
-      break;
+	case _C_SEL:
+		if (*(SEL*)datum == NULL) {
+			retobject = Py_None;
+			Py_INCREF(retobject);
+		} else {
+			retobject = PyString_FromString(SELNAME(*(SEL*)datum)); 
+		}
+		break;
 
-    case _C_CLASS:
-      {
-        Class c = *(Class *) datum;
+	case _C_CLASS:
+	{
+		Class c = *(Class *) datum;
 
-        if (c == Nil)
-          {
-            retobject = Py_None;
-            Py_INCREF (retobject);
-          }
-        else
-          retobject = (PyObject *) ObjCClass_New(c);
-        break;
-      }
+		if (c == Nil) {
+			retobject = Py_None;
+			Py_INCREF (retobject);
+		} else {
+			retobject = (PyObject *) ObjCClass_New(c);
+		}
+		break;
+	}
 
-    case _C_PTR:
-      retobject = (PyObject *) ObjCPointer_new (*(void **) datum, type+1);
-      break;
+	case _C_PTR:
+		retobject = (PyObject*)ObjCPointer_new(*(void**) datum, type+1);
+		break;
       
-    case _C_UNION_B:
-      {
-        int size = objc_sizeof_type (type);
-	if (size == -1) return NULL;
-        retobject = PyString_FromStringAndSize ((void*)datum, size);
-        break;
-      }
+	case _C_UNION_B:
+	{
+		int size = objc_sizeof_type (type);
+		if (size == -1) return NULL;
+		retobject = PyString_FromStringAndSize ((void*)datum, size);
+		break;
+	}
     
-    case _C_STRUCT_B:
-      retobject = pythonify_c_struct (type, datum);
-      break;
+	case _C_STRUCT_B:
+		retobject = pythonify_c_struct (type, datum);
+		break;
 
-    case _C_ARY_B:
-      retobject = pythonify_c_array (type, datum);
-      break;
+	case _C_ARY_B:
+		retobject = pythonify_c_array (type, datum);
+		break;
 
-    case _C_VOID:
-      retobject = Py_None;
-      Py_INCREF (retobject);
-      break;
+	case _C_VOID:
+		retobject = Py_None;
+		Py_INCREF (retobject);
+		break;
 
-    default:
-	ObjCErr_Set(ObjCExc_error, 
-		"pythonify_c_value: unhandled value type (%c|%d|%s)",
-		*type, *type, *type);
-        break;
-    }
+	default:
+		ObjCErr_Set(ObjCExc_error, 
+			"pythonify_c_value: unhandled value type (%c|%d|%s)",
+			*type, *type, *type);
+		break;
+	}
 
-  return retobject;
+	return retobject;
 }
 
-/* XXX: This function shouldn't return a string, but should raise a
- * python exception and return 0 or -1: we could do better error handling 
- * that way.
+/* TODO: Examine whether using PyArg_Parse would be usefull to translate
+ *       basic types (range checking for free!)
  */
-const char *
+int
 depythonify_c_value (const char *type, PyObject *argument, void *datum)
 {
-  const char *error = NULL;
-
-  /* Pass by reference output arguments are sometimes passed a NULL pointer,
-   * this surpresses a core dump.
-   */
-  if (!datum) return error;
-
-  type = objc_skip_type_qualifiers (type);
-  
-  switch (*type)
-    {
-    case _C_LNGLNG: case _C_ULNGLNG:
-      if (PyInt_Check(argument)) {
-	      *(long long*)datum = PyInt_AsLong(argument);
-      } else if (PyLong_Check(argument)) {
-      	      if (*type == _C_LNGLNG) {
-		      *(long long*)datum = PyLong_AsLongLong(argument);
-	      } else {
-		      *(unsigned long long*)datum = PyLong_AsUnsignedLongLong(argument);
-	      }
-      }
-      break;
-    case _C_CHR:
-      if (! PyString_Check (argument) &&
-          ! PyInt_Check (argument) )
-	  {
-        error = "a string or an integer";
-	  }
-      else
-        if (PyInt_Check (argument) || PyBool_Check(argument))
-          *(char *) datum = PyInt_AsLong (argument);
-        else
-          *(char *) datum = PyString_AsString (argument)[0];
-      break;
-
-    case _C_UCHR:
-      if (! PyString_Check (argument) &&
-          ! PyInt_Check (argument) &&
-          ! PyBool_Check (argument))
-        error = "a string or an integer";
-      else
-        if (PyInt_Check (argument) || PyBool_Check(argument))
-          *(unsigned char *) datum = PyInt_AsLong (argument);
-        else
-          *(unsigned char *) datum = PyString_AsString (argument)[0];
-      break;
-
-    case _C_CHARPTR:
-      if (! PyString_Check (argument) && argument != Py_None)
-        error = "a string or None";
-      else
-        if (argument == Py_None)
-          *(char **) datum = NULL;
-        else
-          *(char **) datum = PyString_AS_STRING ((PyStringObject *) argument);
-      break;
-
-    case _C_INT:
-      if (! PyInt_Check (argument))
-        error = "an integer";
-      else
-        *(int *) datum = PyInt_AsLong (argument);
-      break;
-
-    case _C_SHT:
-      if (! PyInt_Check (argument))
-        error = "an integer";
-      else
-        *(short *) datum = PyInt_AsLong (argument);
-      break;
-
-    case _C_UINT:
-      if (! PyInt_Check (argument))
-        error = "an integer";
-      else
-        *(unsigned int *) datum = PyInt_AsLong (argument);
-      break;
-
-    case _C_USHT:
-      if (! PyInt_Check (argument))
-        error = "an integer";
-      else
-        *(unsigned short *) datum = PyInt_AsLong (argument);
-      break;
-
-    case _C_LNG:
-      if (! PyInt_Check (argument))
-        error = "an integer";
-      else
-        *(long *) datum = PyInt_AsLong (argument);
-      break;
-
-    case _C_ULNG:
-      if (! PyInt_Check (argument))
-        error = "an integer";
-      else
-        *(unsigned long *) datum = PyInt_AsLong (argument);
-      break;
-
-    case _C_ID:
-      if (argument == Py_None)
-        *(id *) datum = nil;
-      else if (ObjCClass_Check (argument))
-        *(id *) datum = (id)ObjCClass_GetClass(argument);
-      else if (ObjCObject_Check (argument)) {
-        *(id *) datum = ObjCObject_GetObject(argument);
-      } else if (PyString_Check (argument))
-        {
-	/* NSString values are Unicode strings, convert the string to 
-	 * Unicode, assuming the default encoding.
+	/* Pass by reference output arguments are sometimes passed a NULL 
+	 * pointer, this surpresses a core dump.
 	 */
-	unsigned char* strval = (unsigned char*)PyString_AS_STRING(argument);
-	int   len = PyString_GET_SIZE(argument);
-	PyObject* as_unicode;
-	PyObject* as_utf8;
+	if (!datum) return 0;
 
-	as_unicode = PyUnicode_Decode(strval, len, 
-		PyUnicode_GetDefaultEncoding(),
-		"strict");
-	if (as_unicode == NULL) {
-		PyErr_Print();
-		PyErr_Clear();
-		return "string in default encoding";
-	}
-
-	as_utf8 = PyUnicode_AsUTF8String(as_unicode);
-
-	if (as_utf8) {
-		*(id *) datum = [NSString 
-			stringWithUTF8String:PyString_AS_STRING(as_utf8)];
-		Py_DECREF(as_utf8);
-	} else {
-		PyErr_Print();
-		error = "Cannot convert Unicode string";
-	}
-
-	}
-      else if (ObjCUnicode_Check(argument))
-	{
-		*(id*) datum = ObjCUnicode_Extract(argument);
-	}
-      else if (PyUnicode_Check(argument)) 
-	{
-		PyObject* utf8 = PyUnicode_AsUTF8String(argument);
-
-		if (utf8) {
-			*(id *) datum = [NSString 
-				stringWithUTF8String:PyString_AS_STRING(utf8)];
-			Py_DECREF(utf8);
+	type = objc_skip_type_qualifiers (type);
+  
+	switch (*type) {
+	case _C_ULNGLNG:
+		if (PyInt_Check(argument)) {
+			*(unsigned long long*)datum = PyInt_AsLong(argument);
+		} else if (PyLong_Check(argument)) {
+			*(unsigned long long*)datum = 
+				PyLong_AsUnsignedLongLong(argument);
 		} else {
-			error = "Cannot convert Unicode string";
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'unsigned long long', got %s",
+					argument->ob_type->tp_name);
+			return -1;
 		}
-	}
-      else if (PyInt_Check (argument))
-	*(id *) datum = [NSNumber numberWithLong:PyInt_AS_LONG (argument)];
-      else if (PyFloat_Check (argument))
-	*(id *) datum = [NSNumber numberWithDouble:PyFloat_AS_DOUBLE (argument)];
-      else if (PyLong_Check(argument)) 
-	*(id *) datum = [NSNumber numberWithLongLong:PyLong_AsLongLong(argument) ];
-      else if (PyList_Check(argument) || PyTuple_Check(argument))  
-	*(id *) datum = [OC_PythonArray newWithPythonObject:argument];
-      else if (PyDict_Check(argument))  
-	*(id *) datum = [OC_PythonDictionary newWithPythonObject:argument];
-      else
-        *(id *) datum = [OC_PythonObject newWithObject:argument];
+		break;
 
-      break;
+	case _C_LNGLNG: 
+		if (PyInt_Check(argument)) {
+			*(long long*)datum = PyInt_AsLong(argument);
+		} else if (PyLong_Check(argument)) {
+			*(long long*)datum = 
+				PyLong_AsLongLong(argument);
+		} else {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'long long', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		}
+		break;
 
-    case _C_CLASS:
-      if (ObjCClass_Check(argument)) 
-	      *(Class*) datum = ObjCClass_GetClass(argument);
-      else if (argument == Py_None) 
-	      *(Class*) datum = nil;
-      else
-        error = "a ObjC class or None";
+	case _C_CHR:
+		if (!PyString_Check(argument) && !PyInt_Check (argument)) {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'char', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		} else if (PyInt_Check (argument) || PyBool_Check(argument)) {
+			*(char *) datum = PyInt_AsLong (argument);
+		} else if (PyString_Size(argument) == 1) {
+			*(char *) datum = PyString_AsString (argument)[0];
+		} else {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'char', got %s of %d",
+					argument->ob_type->tp_name,
+					PyString_Size(argument));
+			return -1;
+		}
+		break;
 
-      break;
+	case _C_UCHR:
+		if (!PyString_Check (argument) && !PyInt_Check (argument)) {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'unsigned char', got %s of %d",
+					argument->ob_type->tp_name,
+					PyString_Size(argument));
 
-    case _C_SEL:
-      if (argument == Py_None) {
-	  *(SEL*)datum = NULL;
-      } else if (! ObjCSelector_Check (argument) && ! PyString_Check (argument))
-        error = "a ObjC method or a string";
-      else
-        if (ObjCSelector_Check (argument))
-          *(SEL *) datum = ObjCSelector_Selector(argument); 
-        else
-          {
-            char *selname = PyString_AsString (argument);
-            SEL sel = SELUID (selname);
+		} else if (PyInt_Check (argument) || PyBool_Check(argument)) {
+			*(unsigned char *) datum = PyInt_AsLong (argument);
+		} else if (PyString_Size(argument) == 1) {
+			  *(unsigned char *) datum = 
+			  	PyString_AsString (argument)[0];
+		} else {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'unsigned char', got %s of %d",
+					argument->ob_type->tp_name,
+					PyString_Size(argument));
+			return -1;
+		}
+		break;
 
-	    if (sel) 
-	      *(SEL*) datum = sel;
-	    else
-	      error = "cannot register selector name";
-          }
-      break;
+	case _C_CHARPTR:
+		if (!PyString_Check (argument) && argument != Py_None) {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'charptr', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		} else if (argument == Py_None) {
+			*(char **) datum = NULL;
+		} else {
+			*(char **) datum = PyString_AS_STRING(
+				(PyStringObject*)argument);
+		}
+		break;
+
+	case _C_INT:
+		if (!PyInt_Check(argument)) {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'int', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		} else {
+			*(int *) datum = PyInt_AsLong (argument);
+		}
+		break;
+
+	case _C_SHT:
+		if (!PyInt_Check (argument)) {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'short', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		} else {
+			*(short *) datum = PyInt_AsLong (argument);
+		}
+		break;
+
+	case _C_UINT:
+		if (!PyInt_Check (argument)) {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'unsigned int', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		} else {
+			*(unsigned int *) datum = PyInt_AsLong (argument);
+		}
+		break;
+
+	case _C_USHT:
+		if (! PyInt_Check (argument)) {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'unsigned short', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		} else {
+			*(unsigned short *) datum = PyInt_AsLong (argument);
+		}
+		break;
+
+	case _C_LNG:
+		if (!PyInt_Check (argument)) {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'long', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		} else {
+			*(long *) datum = PyInt_AsLong (argument);
+		}
+		break;
+
+	case _C_ULNG:
+		if (!PyInt_Check (argument)) {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'unsigned long', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		} else {
+			*(unsigned long *) datum = PyInt_AsLong (argument);
+		}
+		break;
+
+	case _C_ID:
+		if (argument == Py_None) {
+			*(id *) datum = nil;
+		} else if (ObjCClass_Check (argument)) {
+			*(id *) datum = (id)ObjCClass_GetClass(argument);
+		} else if (ObjCObject_Check (argument)) {
+			*(id *) datum = ObjCObject_GetObject(argument);
+		} else if (PyString_Check (argument)) {
+			/* NSString values are Unicode strings, convert 
+			 * the string to Unicode, assuming the default encoding.
+			 */
+			unsigned char* strval;
+			int   len;
+			PyObject* as_unicode;
+			PyObject* as_utf8;
+
+			strval = (unsigned char*)PyString_AS_STRING(argument);
+			len = PyString_GET_SIZE(argument);
+
+			as_unicode = PyUnicode_Decode(
+				strval, 
+				len, 
+				PyUnicode_GetDefaultEncoding(), 
+				"strict");
+			if (as_unicode == NULL) {
+				ObjCErr_Set(ObjCExc_error,
+					"depythonifying 'id', got "
+					"a string with a non-default "
+					"encoding");
+				return -1;
+			}
+
+			as_utf8 = PyUnicode_AsUTF8String(as_unicode);
+			Py_DECREF(as_unicode);
+
+			if (as_utf8) {
+				*(id *) datum = [NSString 
+					stringWithUTF8String:
+						PyString_AS_STRING(as_utf8)];
+				Py_DECREF(as_utf8);
+			} else {
+				ObjCErr_Set(ObjCExc_error,
+					"depythonifying 'id', failed "
+					"to encode unicode string to UTF8");
+				return -1;
+			}
+		} else if (ObjCUnicode_Check(argument)) {
+			*(id*) datum = ObjCUnicode_Extract(argument);
+		} else if (PyUnicode_Check(argument)) {
+			PyObject* utf8 = PyUnicode_AsUTF8String(argument);
+
+			if (utf8) {
+				*(id *) datum = [NSString 
+					stringWithUTF8String:
+						PyString_AS_STRING(utf8)];
+				Py_DECREF(utf8);
+			} else {
+				ObjCErr_Set(ObjCExc_error,
+					"depythonifying 'id', failed "
+					"to encode unicode string to UTF8");
+				return -1;
+			}
+		} else if (PyInt_Check (argument)) {
+			*(id *) datum = [NSNumber 
+				numberWithLong:PyInt_AS_LONG (argument)];
+		} else if (PyFloat_Check (argument)) {
+			*(id *) datum = [NSNumber 
+				numberWithDouble:PyFloat_AS_DOUBLE (argument)];
+		} else if (PyLong_Check(argument)) {
+			/* XXX: What if the value doesn't fit into a 
+			 * 'long long' 
+			 */
+			*(id *) datum = [NSNumber 
+				numberWithLongLong:PyLong_AsLongLong(argument)];
+		} else if (PyList_Check(argument) || PyTuple_Check(argument)) {
+			*(id *) datum = [OC_PythonArray 
+				newWithPythonObject:argument];
+		} else if (PyDict_Check(argument)) {
+			*(id *) datum = [OC_PythonDictionary 
+				newWithPythonObject:argument];
+		} else {
+			*(id *) datum = [OC_PythonObject 
+				newWithObject:argument];
+		}
+		break;
+
+	case _C_CLASS:
+		if (ObjCClass_Check(argument))  {
+			*(Class*) datum = ObjCClass_GetClass(argument);
+		} else if (argument == Py_None) {
+			*(Class*) datum = nil;
+		} else {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'Class', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		}
+		break;
+
+	case _C_SEL:
+		if (argument == Py_None) {
+			*(SEL*)datum = NULL;
+		} if (ObjCSelector_Check (argument)) {
+			*(SEL *) datum = ObjCSelector_Selector(argument); 
+        	} else if (PyString_Check(argument)) {
+			char *selname = PyString_AsString (argument);
+			SEL sel = SELUID (selname);
+
+			if (sel)  {
+				*(SEL*) datum = sel;
+			} else {
+				ObjCErr_Set(ObjCExc_error,
+					"depythonifying 'SEL', got cannot "
+					"register string with runtime");
+				return -1;
+			}
+		} else {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'SEL', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		}
+		break;
 
  
-    case _C_PTR:
-	/* Pointers are hard and the code below
-	 * (1) Uses PyString in an unsafe way
-	 * (2) Is not threadsafe
-	 * (3) Is not needed for *most* Cocoa code
-	 *     [We should only get here for pointers inside data structures]
-	 */
+	case _C_PTR:
+		/* Pointers are hard and the code below
+		 * (1) Uses PyString in an unsafe way
+		 * (2) Is not threadsafe
+		 * (3) Is not needed for *most* Cocoa code
+		 *     [We should only get here for pointers inside data 
+		 *      structures]
+		 */
 
-      if (ObjCPointer_Check (argument))
-        *(void **) datum = ((ObjCPointer *) argument)->ptr;
-      else
-	error = "nested pointers unimplemented";
+		if (ObjCPointer_Check (argument)) {
+			*(void **) datum = ((ObjCPointer *) argument)->ptr;
+		} else {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'pointer', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		}
+		break;
 
-      break;
+	case _C_FLT:
+		if (PyFloat_Check (argument)) {
+			*(float *) datum = (float)PyFloat_AsDouble (argument);
+		} else if (PyInt_Check (argument)) {
+			*(float *) datum = (float) PyInt_AsLong (argument);
+		} else {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'float', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		}
+		break;
 
-    case _C_FLT:
-      if (PyFloat_Check (argument))
-        *(float *) datum = (float) PyFloat_AsDouble (argument);
-      else if (PyInt_Check (argument))
-        *(float *) datum = (float) PyInt_AsLong (argument);
-      else
-        error = "a float or an integer";
-      break;
+	case _C_DBL:
+		if (PyFloat_Check (argument)) {
+			*(double *) datum = PyFloat_AsDouble (argument);
+		} else if (PyInt_Check (argument)) {
+			*(double *) datum = (double) PyInt_AsLong (argument);
+		} else {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'double', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		}
+		break;
 
-    case _C_DBL:
-      if (PyFloat_Check (argument))
-        *(double *) datum = PyFloat_AsDouble (argument);
-      else if (PyInt_Check (argument))
-        *(double *) datum = (double) PyInt_AsLong (argument);
-      else
-        error = "a float or an integer";
-      break;
+	case _C_UNION_B:
+		if (PyString_Check (argument)) {
+			unsigned int expected_size = objc_sizeof_type (type);
 
-    case _C_UNION_B:
-      if (PyString_Check (argument))
-        {
-          unsigned int expected_size = objc_sizeof_type (type);
+			if (expected_size == (unsigned int)-1) {
+				ObjCErr_Set(ObjCExc_error,
+					"depythonifying 'union' of "
+					"unknown size");
+				return -1;
+			} else if (expected_size != PyString_Size (argument)) {
+				ObjCErr_Set(ObjCExc_error,
+					"depythonifying 'union' of size %d, "
+					"got string of %d",
+					       expected_size, 
+					       PyString_Size (argument));
+				return -1;
+			} else {
+			    memcpy ((void *) datum, 
+			    	PyString_AS_STRING (argument), 
+				expected_size);
+			}
+		} else {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'union', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		}
+		break;
 
-	  if (expected_size == (unsigned int)-1) {
-		  error = "cannot depythonify union of unknown size";
-          } else if (expected_size != PyString_Size (argument))
-            {
-#define ERRMSG "a string of size %d instead of %d"
-              static char errmsg[sizeof (ERRMSG)+6+6]; /* XXX Static buffer */
+	case _C_STRUCT_B:
+		if (! PyTuple_Check (argument)) {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'struct', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		} else {
+			return depythonify_c_struct (type, argument, datum);
+		}
+		break;
 
-              snprintf (errmsg, sizeof(errmsg), ERRMSG, expected_size, PyString_Size (argument));
-              error = errmsg;
-#undef ERRMSG
-            }
-          else
-            memcpy ((void *) datum, PyString_AS_STRING ((PyStringObject *) argument), expected_size);
-        }
-      else
-        error = "a string";
-      break;
+	case _C_ARY_B:
+		if (! PyTuple_Check (argument)) {
+			ObjCErr_Set(ObjCExc_error,
+				"depythonifying 'array', got %s",
+					argument->ob_type->tp_name);
+			return -1;
+		} else {
+			return depythonify_c_array (type, argument, datum);
+		}
+		break;
 
-    case _C_STRUCT_B:
-      if (! PyTuple_Check (argument))
-        error = "a tuple";
-      else
-        error = depythonify_c_struct (type, argument, datum);
-      break;
-
-    case _C_ARY_B:
-      if (! PyTuple_Check (argument))
-        error = "a tuple";
-      else
-        error = depythonify_c_array (type, argument, datum);
-      break;
-
-    default:
-      {
-#define ERRMSG "unhandled typespec %c"
-        static char msg[sizeof ERRMSG];
-
-        snprintf (msg, sizeof(msg), ERRMSG, *type);
-        error = msg;
-        break;
-#undef ERRMSG
-      }
-    }
-
-  return error;
+	default:
+		ObjCErr_Set(ObjCExc_error,
+			"depythonifying unknown typespec %#x", *type);
+		return -1;
+	}
 }
+
+#ifndef OC_USE_FFI_SHORTCUTS
 
 /*
  * This function is used to call the objective-C implementation of a method.
@@ -1195,16 +1232,14 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 			goto error_cleanup;
 		}
 	} else {
-		const char* err;
+		int err;
 
 		if (ObjCObject_Check(self)) {
 			self_obj = ObjCObject_GetObject(self);
 
 		} else {
 			err = depythonify_c_value("@", self, &self_obj);
-			if (err) {
-				PyErr_SetString(PyExc_TypeError, 
-					"Need objective-C object as self");
+			if (err == -1) {
 				goto error_cleanup;
 			}
 		}
@@ -1215,7 +1250,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 
 	py_arg = 0;
 	for (curspec = objc_skip_typespec(meth->sel_signature), i = 0; *curspec; curspec = objc_skip_typespec(curspec), i ++) {
-		const char* error;
+		int error;
 		PyObject *argument;
 		const char *argtype = curspec;
 
@@ -1248,7 +1283,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 						argument, 
 						arg);
 
-					if (!error) {
+					if (error == 0) {
 						[inv setArgument:arg atIndex:i];
 					}
 				} 
@@ -1265,7 +1300,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 						argument, 
 						arg);
 
-					if (!error) {
+					if (error == 0) {
 						[inv setArgument:&arg atIndex:i];
 					}
 				} 
@@ -1284,7 +1319,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 						argument, 
 						arg);
 
-					if (!error) {
+					if (error == 0) {
 						[inv setArgument:&arg atIndex:i];
 					}
 				} else {
@@ -1293,7 +1328,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 						argtype+1, 
 						argument, 
 						argbuffer);
-					if (!error) {
+					if (error == 0) {
 						[inv setArgument:argbuffer atIndex:i];
 					}
 				}
@@ -1303,17 +1338,12 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 					argtype, 
 					argument, 
 					argbuffer);
-				if (!error) {
+				if (error == 0) {
 					[inv setArgument:argbuffer atIndex:i];
 				}
 			}
 
-			if (error) {
-				const char* typeend = objc_skip_typespec(argtype);
-				ObjCErr_Set(PyExc_TypeError,
-					"expected %s for argument %d: its "
-					"typespec is '%.*s'",
-					error, py_arg+1, typeend-argtype, argtype);
+			if (error == -1) {
 				goto error_cleanup;
 			}
 			py_arg++;
@@ -1440,6 +1470,8 @@ error_cleanup:
 	}
 	return NULL;
 }
+
+#endif /* ! OC_USE_FFI_SHORTCUTS */
 
 #ifdef GNU_RUNTIME
 

@@ -310,7 +310,7 @@ extern PyObject *pythonify_c_value (const char *type,
   directive.
   Returns NULL on success, or a static error string describing the
   error. */
-extern const char *depythonify_c_value (const char *type,
+extern int depythonify_c_value (const char *type,
 					PyObject *arg,
 					void *datum);
 

@@ -9,6 +9,8 @@
 #include <stddef.h>
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSBundle.h>
+#import <Foundation/NSProcessInfo.h>
+#import <Foundation/NSString.h>
 #include "objc_support.h"
 
 /* defined in register.m (a generated file) */
@@ -297,7 +299,7 @@ objc_loadBundle(PyObject* self, PyObject* args, PyObject* kwds)
 static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bundle_identifier", NULL };
 	id        bundle;
 	id        strval;
-	const char* errstr;
+	int err;
 	PyObject* bundle_identifier = NULL;
 	PyObject* bundle_path = NULL;
 	PyObject* module_name;
@@ -327,16 +329,14 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	}
 
 	if (bundle_path) {
-		errstr = depythonify_c_value("@", bundle_path, &strval);
-		if (errstr != NULL) {
-			PyErr_SetString(PyExc_ValueError, errstr);
+		err = depythonify_c_value("@", bundle_path, &strval);
+		if (err == -1) {
 			return NULL;
 		}
 		bundle = [NSBundle bundleWithPath:strval];
 	} else {
-		errstr = depythonify_c_value("@", bundle_identifier, &strval);
-		if (errstr != NULL) {
-			PyErr_SetString(PyExc_ValueError, errstr);
+		err = depythonify_c_value("@", bundle_identifier, &strval);
+		if (err == -1) {
 			return NULL;
 		}
 		bundle = [NSBundle bundleWithIdentifier:strval];
@@ -430,7 +430,41 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	return Py_None;
 }
 
+PyObject* func_setArgv0(PyObject* self, PyObject* args, PyObject* kwds)
+{
+	typedef struct {
+		@defs(NSProcessInfo)
+	} NSProcessInfoStruct;
+
+static  char* keywords[] = { "argv0", NULL };
+	char*	  argv0;
+	NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+	NSMutableArray *argv = [NSMutableArray arrayWithArray:
+		  ((NSProcessInfoStruct *)processInfo)->arguments];
+	[argv retain];
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
+			"s:setArgv0",
+			keywords, &argv0)) {
+		return NULL;
+	}
+
+	  
+        //[argv replaceObjectAtIndex:0 withObject: [NSString stringWithUTF8String:argv0]];
+        [argv insertObject: [NSString stringWithUTF8String:argv0] atIndex:0];
+	((NSProcessInfoStruct *)processInfo)->arguments = argv;
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
 static PyMethodDef meta_methods[] = {
+	{
+	  "setArgv0",
+	  (PyCFunction)func_setArgv0,
+	  METH_VARARGS|METH_KEYWORDS,
+	  NULL
+	},
 	{
 	  "lookUpClass",
 	  (PyCFunction)lookUpClass,
