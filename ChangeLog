@@ -1,3 +1,6 @@
+2002-11-11 Ronald Oussoren <oussoren@cistron.nl>
+ 	* Lib/objc/__init__.py: Don't remove current directory from sys.path
+
 2002-11-08 Ronald Oussoren <oussoren@cistron.nl>
 	* Use integer for lots of userInfo arguments in the AppKit
 
