@@ -21,10 +21,6 @@ Cocoa applications in Python.
   An overview of the PyObjC package and how to use it. Read this before
   you start using the package, it will help you to avoid some surprises.
 
-* `Userguide for PyObjC`_
-
-  An older overview of PyObjC. 
-
 * `Python classes and Objective-C code`_
 
   Another older overview of PyObjC. 
@@ -93,8 +89,6 @@ you want to write Cocoa programs in Python.
 .. _`Project Builder Python Support`: ProjectBuilder-SyntaxHighlighting.html
 
 .. _`An introduction to PyObjC`: intro.html
-
-.. _`Userguide for PyObjC`: users.html
 
 .. _`Python classes and Objective-C code`: classes.html
 

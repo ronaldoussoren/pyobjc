@@ -105,10 +105,10 @@ if not basedir:
 	sys.stderr.write("%s: Cannot determine basedir\n"%(sys.argv[0]))
 	sys.exit(1)
 
-print "Generateing HTML documentation"
+print "Generating HTML documentation"
 os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
 rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt', 'Installer Package/ReadMe.txt', 'ProjectBuilder Extras/Project Templates/00README.txt'])
-os.rename('NEWS', ProjectBuilder Extras/Project Templates/00README.html', 'Doc/ProjectBuilder-Templates.html')
+os.rename('ProjectBuilder Extras/Project Templates/00README.html', 'Doc/ProjectBuilder-Templates.html')
 
 if DOC_ONLY:
     sys.exit(0)

@@ -4,8 +4,8 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 1.0b1+ (CVS)
---------------------
+Version 1.0rc1 (2003-08-10)
+---------------------------
 
 - Better support for the NSKeyValueCoding protocol.  The module 
   ``PyObjCTools.KeyValueCoding`` provides a python interface that makes it
