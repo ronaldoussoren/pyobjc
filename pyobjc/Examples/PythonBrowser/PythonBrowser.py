@@ -16,10 +16,10 @@ None, any other kind of object is fine.
 
 To build the demo program, run this line in Terminal.app:
 
-    $ python buildapp.py --link build
+    $ python setup.py py2app -A
 
-This creates a directory "build" containing PythonBrowser.app. (The
---link option causes the files to be symlinked to the .app bundle instead
+This creates a directory "dist" containing PythonBrowser.app. (The
+-A option causes the files to be symlinked to the .app bundle instead
 of copied. This means you don't have to rebuild the app if you edit the
 sources or nibs.)
 """
