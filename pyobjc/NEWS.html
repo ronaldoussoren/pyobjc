@@ -22,9 +22,6 @@ classes.</li>
 <li><code><span>objc.loadBundle</span></code> now returns bundle we just loaded.</li>
 <li>Added <code><span>objc.loadBundleVariables</span></code> and <code><span>objc.loadBundleFunctions</span></code>,
 two functions for reading global variables and functions from a bundle.</li>
-<li>Rewrote the code-generating scripts, they now generate Python code and
-are exported in the <code><span>PyObjCTools.WrapperGenerator</span></code> module.
-[UNFINISHED]</li>
 <li>objc.runtime will now raise AttributeError instead of objc.nosuchclass_error
 when a class is not found.</li>
 <li>objc.Category can be used to define categories on existing classes:<pre>
