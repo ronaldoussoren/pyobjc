@@ -96,7 +96,7 @@ static inline PyObject* PyObjC_IdToPython(id value)
 {
 	PyObject* res;
 
-	res = pythonify_c_value(@encode(id), value);
+	res = pythonify_c_value(@encode(id), &value);
 	return res;
 }
 
