@@ -95,6 +95,11 @@ class TestNSStringBridging(unittest.TestCase):
         finally:
             objc.setStrBridgeEnabled(curEnabledFlag)
 
+    def testNSStringMethodAccess(self):
+        self.assert_(isinstance(self.nsUniString, objc.pyobjc_unicode))
+        v = self.nsUniString.stringByAppendingString_
+        self.assert_(isinstance(v, objc.selector))
+
 class TestMutable(unittest.TestCase):
     def testSync(self):
         """
