@@ -21,7 +21,6 @@ SUBPATTERNS = dict(
     INDIRECTION=r'(\s*\*)',
     BOL=r'(\s*^\s*)',
     EOL=r'(\s*$\n?)',
-    SEMI=r';',
 )
 
 def deadspace(string, begin, end):
@@ -52,7 +51,7 @@ class UninterestingTypedef(Token):
     pattern = pattern(r'''
     typedef
     \s*(?P<body>[^;]*)
-    %(SEMI)s
+    ;
     ''')
     example = example('''
     typedef baz wibble fun* SomethingGreat;
@@ -194,7 +193,7 @@ class GlobalThing(Token):
         (\s*//(?P<comment>[^\n]*)(\n|$))?
         (?:\s+%(AVAILABLE)s)
     )?
-    %(SEMI)s
+    ;
     ''')
     example = example(r'''
     extern const double FooBar;
@@ -209,7 +208,7 @@ class GlobalThing(Token):
     ''')
 
 class ForwardClassReference(Token):
-    pattern = pattern(r'@class (?P<name>[^;]+)%(SEMI)s')
+    pattern = pattern(r'@class (?P<name>[^;]+);')
     example = example(r'@class Foo;')
 
 class EnumBareMember(Token):
@@ -243,7 +242,7 @@ class NamedEnumEnd(Token):
     pattern = pattern(r'''
     \s*}
     \s*(?P<name>%(IDENTIFIER)s)
-    \s*%(SEMI)s
+    \s*;
     ''')
     example = example(r'''
     } FooBarBazWible;
@@ -280,12 +279,23 @@ class NamedEnum(ScanningToken):
 class EnumEnd(Token):
     pattern = pattern(r'''
     \s*}
-    \s*%(SEMI)s
+    \s*;
     ''')
     example = example(r'''
     };
     ''')
 
+class UninterestingStruct(Token):
+    # XXX handle comments? need its own internal parser?
+    pattern = pattern(r'''
+    struct[^{;]+;
+    ''')
+    example = example(r'''
+    struct Foo;
+    struct Foo Bar;
+    ''')
+
+ 
 class Struct(Token):
     # XXX handle comments? need its own internal parser?
     pattern = pattern(r'''
@@ -294,7 +304,7 @@ class Struct(Token):
     \s*{
         (?P<content>%(BRACES)s)
     }
-    \s*%(SEMI)s
+    \s*;
     ''')
     example = example(r'''
     struct {
@@ -318,7 +328,7 @@ class NamedStruct(Token):
     (?P<body>%(BRACES)s)
     }
     \s*%(IDENTIFIER)s
-    \s*%(SEMI)s
+    \s*;
     ''')
     example = example(r'''
     typedef struct {unsigned long v;} NSSwappedFloat;
@@ -371,7 +381,7 @@ class FunctionEnd(Token):
     # XXX - UNUSED
     pattern = pattern(r'''
     \)
-    \s*%(SEMI)s
+    \s*;
     ''')
     example = example(r'''
     );
@@ -422,7 +432,7 @@ class ExportFunction(Token):
         (?P<args>\s*[^)]*)
     \s*\)
     (\s*(?P<available>%(AVAILABLE)s))?
-    \s*%(SEMI)s
+    \s*;
     ''')
     example = example(r'''
     APPKIT_EXTERN NSString *NSSomething(NSString *arg, NSString *arg)
@@ -485,6 +495,7 @@ LEXICON = [
     ExportFunction,
     StaticInlineFunction,
     UninterestingTypedef,
+    UninterestingStruct,
     MacroDefine,
     CompilerDirective,
 ]
@@ -502,7 +513,8 @@ if __name__ == '__main__':
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSZone.h'
     #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSAccessibility.h'
     #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSEvent.h'
-    fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSProgressIndicator.h'
+    #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSProgressIndicator.h'
+    fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSWorkspace.h'
     files = sys.argv[1:] or [fn]
     def deadraise(string, i, j):
         print string[i:j]
