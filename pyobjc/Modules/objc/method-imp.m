@@ -102,7 +102,7 @@ imp_call(PyObjCIMPObject* self, PyObject* args)
 		return NULL;
 	}
 
-	pyself = PyTuple_GetItem(args, 0);
+	pyself = PyTuple_GET_ITEM(args, 0);
 	if (pyself == NULL) {
 		return NULL;
 	}
@@ -535,6 +535,7 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 int PyObjCIMP_SetUpMethodWrappers(void)
 {
 	int r;
+
 
 	r = PyObjC_RegisterMethodMapping(
 			nil, 
