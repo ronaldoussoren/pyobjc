@@ -98,10 +98,10 @@ fd = os.popen("'%s' setup.py sdist -d '%s'"%(
 for ln in fd.xreadlines():
 	sys.stdout.write(ln)
 
-print "Running: '%s' setup.py install --prefix='%s/package%s'"%(
-	escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir))
-fd = os.popen("'%s' setup.py install --prefix='%s/package%s'"%(
-	escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir)), 'r')
+print "Running: '%s' setup.py install --prefix='%s/package%s' --install-scripts=%s/package/usr/local/bin"%(
+	escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir), escquotes(BUILDDIR))
+fd = os.popen("'%s' setup.py install --prefix='%s/package%s' --install-scripts=%s/package/usr/local/bin"%(
+	escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir), escquotes(BUILDDIR)), 'r')
 for ln in fd.xreadlines():
 	sys.stdout.write(ln)
 
