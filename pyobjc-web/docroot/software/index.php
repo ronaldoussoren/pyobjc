@@ -11,8 +11,8 @@ include "header.inc";
 <h2>Stable release</h2>
 
 <ul>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2-macosx10.2.dmg?download">PyObjC 1.2 installer package for MacPython 2.3 (MacOS X 10.2)</a>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2-macosx10.3.dmg?download">PyObjC 1.2 installer package for Apple's Python (MacOS X 10.3)</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2-python2.3-macosx10.2.dmg?download">PyObjC 1.2 installer package for MacPython 2.3 (MacOS X 10.2)</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2-python2.3-macosx10.3.dmg?download">PyObjC 1.2 installer package for Apple's Python (MacOS X 10.3)</a>
 <li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2.tar.gz?download">PyObjC 1.2 source release (a compressed tar archive)</a>
 </ul>
 
