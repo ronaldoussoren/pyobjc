@@ -333,22 +333,19 @@ static char* keywords[] = { "rects", "count", 0 };
 	}
 
 
-	if (rectCount < -1 ) {
+	if (rectCount < 0) {
 		Py_DECREF(seq);
 		PyErr_SetString(PyExc_ValueError, "RectCount was less than zero.");
 		return NULL;
 	}
 
-#warning The (*4) in the following is bogus.
-	/* Without it, we crash with what appears to be corrupted memory.  I don't know why but figure that not crashing is preferable to crashing until one of us has time to figure this out.  Really,  I suspect Ronald will take one look at this and, being about 10x brighter than me at this sort of thing, will know exactly what is wrong...  :-) */
 	rects = malloc((rectCount * sizeof(NSRect)) * 4);
 	if (rects == NULL) {
 		PyErr_NoMemory();
 		return NULL;
 	}
 
-	len = PySequence_Fast_GET_SIZE(seq);
-	for (i = 0; i < len; i++) {
+	for (i = 0; i < rectCount; i++) {
 		PyObject* v = PySequence_Fast_GET_ITEM(seq, i);
 		int r  = PyObjC_PythonToObjC(@encode(NSRect), v, rects + i);
 		if (r == -1) {
@@ -356,7 +353,7 @@ static char* keywords[] = { "rects", "count", 0 };
 			return NULL;
 		}
 	}
-
+	Py_DECREF(seq);
 	NSRectFillList(rects, rectCount);
 
 	free(rects);
@@ -636,7 +633,7 @@ fontMatrix(PyObject* d, const char* name, const float* value)
 	int i;
 
 	if (value == NULL) {
-		return PyDict_SetItemString(d, name, Py_None);
+		return PyDict_SetItemString(d, (char*)name, Py_None);
 	}
 	PyObject* v = PyTuple_New(6);
 	if (v == NULL) {
@@ -653,7 +650,7 @@ fontMatrix(PyObject* d, const char* name, const float* value)
 		}
 	}
 	
-	if (PyDict_SetItemString(d, name, v) == -1) {
+	if (PyDict_SetItemString(d, (char*)name, v) == -1) {
 		Py_DECREF(v);
 		return -1;
 	}

@@ -520,7 +520,7 @@ dist = setup(name = "pyobjc",
 			   ),
 	     packages = packages,
 	     package_dir = package_dir,
-	     #scripts = [ 'Scripts/nibclassbuilder', ],
+	     scripts = [ 'Scripts/nibclassbuilder', ],
 	     extra_path = "PyObjC",
              **SetupExtraArguments
 )

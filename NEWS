@@ -4,6 +4,13 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 1.0rc3 (2003-09-14)
+---------------------------
+
+- 1.0rc2 didn't include the nibclassbuilder script
+
+- Fix bug in NSRectFillList
+
 Version 1.0rc2 (2003-09-10)
 ---------------------------
 
