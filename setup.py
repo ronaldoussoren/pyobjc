@@ -282,6 +282,8 @@ sourceFiles = [
         "Modules/objc/pointer-support.m",
         "Modules/objc/struct-wrapper.m",
         "Modules/objc/method-imp.m",
+        "Modules/objc/bundle-variables.m",
+        "Modules/objc/function.m",
 ]
 
 # On GNUstep we can read some configuration from the environment.
@@ -618,6 +620,9 @@ PrefPanesPackages, PrefPanesExtensions = \
 
 ScreenSaverPackages, ScreenSaverExtensions = \
         IfFrameWork('ScreenSaver.framework', [ 'ScreenSaver' ], [])
+        
+MessagePackages, MessageExtensions = \
+        IfFrameWork('Message.framework', [ 'Message' ], [])
 
 InterfaceBuilderPackages, InterfaceBuilderExtensions = \
         IfFrameWork('InterfaceBuilder.framework', [ 'InterfaceBuilder' ], [
@@ -661,7 +666,7 @@ def package_version():
 
 
 # skipping CoreFoundationPackages, it's fake!
-packages = CorePackages + AppKitPackages + FoundationPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + ScreenSaverPackages + WebKitPackages + SecurityInterfacePackages + ExceptionHandlingPackages + [ 'PyObjCTools' ]
+packages = CorePackages + AppKitPackages + FoundationPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + ScreenSaverPackages + WebKitPackages + MessagePackages + SecurityInterfacePackages + ExceptionHandlingPackages + [ 'PyObjCTools' ]
 
 # The following line is needed to allow separate flat modules
 # to be installed from a different folder (needed for the
@@ -703,6 +708,7 @@ dist = setup(name = "pyobjc",
                            + PrefPanesExtensions
                            + InterfaceBuilderExtensions
                            + ScreenSaverExtensions
+                           + MessageExtensions
                            + SecurityInterfaceExtensions
                            + ExceptionHandlingExtensions
                            + CoreFoundationExtensions

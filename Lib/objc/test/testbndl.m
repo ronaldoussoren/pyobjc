@@ -33,8 +33,6 @@
 
 #endif
 
-
-
 struct dummy
 {
 	int f1;

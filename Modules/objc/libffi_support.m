@@ -886,8 +886,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		values[arglistOffset + 1] = &theSel;
 		msgResult = argbuf;
 		argbuf_cur = resultSize;
-
-
+		
 	} else {
 		RECEIVER(super) = self_obj;
 		if (meth->sel_flags & PyObjCSelector_kCLASS_METHOD) {

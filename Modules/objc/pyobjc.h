@@ -43,6 +43,8 @@
 #include "class-list.h"
 #include "struct-wrapper.h"
 #include "method-imp.h"
+#include "bundle-variables.h"
+#include "function.h"
 
 
 /*
