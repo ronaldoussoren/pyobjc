@@ -120,15 +120,25 @@ if objc.platform == 'MACOSX':
 
             self.assertEquals(stripDocType(data), stripDocType(PLIST))
 
-class TestDecimalNumber (unittest.TestCase):
-    # NSDecimalNumber is treated specially
+if isinstance(NSDecimalNumber.decimalNumberWithString_(u'1.00'), NSDecimalNumber):
+    class TestDecimalNumber (unittest.TestCase):
+        # NSDecimalNumber is treated specially
 
-    # TODO: Add tests for using decimal numbers (addition, multiplication, ...)
+        # TODO: Add tests for using decimal numbers (addition, multiplication, ...)
 
-    def testProxy (self):
-        o = NSDecimalNumber.decimalNumberWithString_(u"1.00")
+        def testProxy (self):
+            o = NSDecimalNumber.decimalNumberWithString_(u"1.00")
+            self.assert_(isinstance(o, NSDecimalNumber))
 
-        self.assert_(isinstance(o, NSDecimalNumber))
+else:
+    class TestDecimalNumber (unittest.TestCase):
+        # NSDecimalNumber is treated specially
+
+        # TODO: Add tests for using decimal numbers (addition, multiplication, ...)
+
+        def testProxy (self):
+            o = NSDecimalNumber.decimalNumberWithString_(u"1.00")
+            self.assert_(isinstance(o, NSDecimal))
 
 if __name__ == '__main__':
     unittest.main( )
