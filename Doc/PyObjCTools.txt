@@ -112,9 +112,11 @@ interface is modelled on the ``getattr`` and ``setattr`` functions.
 
   - the return value of ``object._getKey()``
 
-  - the value of the attribute ``key``
+  - the value of the attribute ``key``, or the value of ``object.key()`` if
+    ``object.key`` is a method.
 
-  - the value of the attribue ``_key``
+  - the value of the attribue ``_key``, or the vale of ``object._key()`` if
+    ``object._key`` is a method.
 
 * ``getKeyPath(object, keypath) -> value``
 
