@@ -273,7 +273,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
-#if 0
+#if 1
 	if (PyObjCInformalProtocol_Warnings(name, dict, protocols) < 0) {
 		PyObjCClass_UnbuildClass(objc_class);
 		Py_DECREF(protocols);

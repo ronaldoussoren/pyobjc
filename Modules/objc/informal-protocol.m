@@ -32,6 +32,10 @@ proto_dealloc(PyObject* object)
 {
 	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)object;	
 #if 0
+	/*
+	 * For some reason this code causes a crash, while it should
+	 * be the reverse of the code in proto_new.
+	 */
 	int len = PyTuple_Size(self->selectors);
 	int i;
 
@@ -99,7 +103,7 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 	result->name = name;
 	result->selectors = selectors;
 
-#if 0
+#if 1
 	len = PyTuple_Size(result->selectors);
 	for (i = 0; i < len; i++) {
 		if (!ObjCSelector_Check(PyTuple_GET_ITEM(selectors, i))) {

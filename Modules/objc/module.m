@@ -657,6 +657,8 @@ void init_objc(void)
 				PyString_FromStringAndSize(&cur->value, 1));
 		}
 	}
+	/* Add a _C_BOOL value, the actual type might vary acros platforms */
+	PyDict_SetItemString(d, "_C_BOOL", PyString_FromString(@encode(BOOL)));
 
 	PyDict_SetItemString(d, "__version__", 
 		PyString_FromString(OBJC_VERSION));
