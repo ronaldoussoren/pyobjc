@@ -115,7 +115,7 @@ def makeTypeCodes(frameworkName, types):
     os.remove(tempExecutable)
 
 
-def genProtocol(frameworkPath):
+def genProtocols(frameworkPath, outFile=None):
     frameworkPath = os.path.normpath(frameworkPath)
     assert frameworkPath.endswith(".framework")
     frameworkName = os.path.basename(frameworkPath)
@@ -136,28 +136,28 @@ def genProtocol(frameworkPath):
     makeTypeCodes(frameworkName, allTypes)
     protocols = allProtocols.items()
     protocols.sort()
-    print "# generated from %r" % frameworkPath
-    print "import objc as _objc\n\n"
+    print >> outFile, "# generated from %r" % frameworkPath
+    print >> outFile, "import objc as _objc\n\n"
     for protoName, selectors in protocols:
-        print '%s = _objc.informal_protocol(' % protoName
-        print '    "%s",' % protoName
-        print '    ['
+        print >> outFile, '%s = _objc.informal_protocol(' % protoName
+        print >> outFile, '    "%s",' % protoName
+        print >> outFile, '    ['
         for selector, types, line in selectors:
             types = [allTypes[tp] for tp in types]
-            print "#", line.strip()
-            print "        _objc.selector("
-            print "            None,"
-            print "            selector='%s'," % selector
-            print "            signature='%s'," % (types[0] + "@:" + "".join(types[1:]))
-            print "            isRequired=0,"
-            print "        ),"
-        print "    ]"
-        print ")"
-        print
+            print >> outFile, "#", line.strip()
+            print >> outFile, "        _objc.selector("
+            print >> outFile, "            None,"
+            print >> outFile, "            selector='%s'," % selector
+            print >> outFile, "            signature='%s'," % (types[0] + "@:" + "".join(types[1:]))
+            print >> outFile, "            isRequired=0,"
+            print >> outFile, "        ),"
+        print >> outFile, "    ]"
+        print >> outFile, ")"
+        print >> outFile,
 
 if __name__ == "__main__":
     if sys.argv[1:]:
         for frameworkPath in sys.argv[1:]:
-            genProtocol(frameworkPath)
+            genProtocols(frameworkPath)
     else:
         print __doc__
