@@ -22,6 +22,8 @@ Version "Panther" (Off-CVS)
 - method ``updateNSString`` of ``objc.pyobjc_unicode`` is deprecated, use 
   create a new unicode object using ``unicode(mutableStringInstance)`` instead.
 
+- NSAppleEventDescriptor bridged to Carbon.AE
+
 - Adds a number of new Examples:
   
   * OpenGLDemo
