@@ -52,14 +52,7 @@ Contents</title>
 <p>This document contains an (incomplete) list of work items.</p>
 <h2><a href="#id2" name="important-items">Important items</a></h2>
 <h3><a href="#id3" name="better-documentation">Better documentation</a></h3>
-<p>There should be more developer documentation and end-user documentation is
-virtually non-existant. Related to this is the website: This should be filled.</p>
-<p>We should also add scripts to convert documentation to a format that is 
-useable on the website.</p>
-<p>Also needed: document listing the differences between Objective-C Cocoa and
-Python Cocoa: which functions/methods are not available, list differences
-in arguments (e.g. NSBeginAlertSheet has a variable number of arguments in
-Objective-C, the format-arguments are not present in Python).</p>
+<p>There should be more developer and and end-user documentation.</p>
 <h3><a href="#id4" name="test-suite">Test suite</a></h3>
 <p>The test suite needs to be enhanced.</p>
 <ul>
@@ -82,7 +75,8 @@ the wrong value (type, number of values)</li>
 <p>From the top of my head:</p>
 <ul>
 <li>Restructure selector.m, this file is too long and complicated. We could
-do away with the difference between method implemented in Python and ObjC.</li>
+do away with the difference between method implemented in Python and
+Objective-C.</li>
 <li>Likewise for class-builder.m, this file is way to large.</li>
 <li>We've several types that wrap pointer values, such as <code><span>SessionWrapper</span></code> in
 <code><span>Modules/AppKit</span></code>. Should add a function for creating these types, 
@@ -129,10 +123,10 @@ wrapper-generators are in a more complete state.</p>
 <p>This is post-1.2 work, in general this is a hard problem because it may 
 involve object cycles that cross the Python-ObjC boundary.</p>
 <h3><a href="#id12" name="nscoder-support">NSCoder support</a></h3>
-<p>It might be usefull to add default implementations of <code><span>encodeWithCoder:</span></code> and
+<p>It might be useful to add default implementations of <code><span>encodeWithCoder:</span></code> and
 <code><span>initWithCoder:</span></code> methods to Python subclasses of Objective-C classes that 
 implement these.  Note that property list types should already be serializable
-(int, long, unicode, list, tuple, dict).</p>
+(<code><span>int</span></code>, <code><span>long</span></code>, <code><span>unicode</span></code>, <code><span>list</span></code>, <code><span>tuple</span></code>, <code><span>dict</span></code>).</p>
 <p>See also <cite>Pickle support</cite>.</p>
 <h3><a href="#id13" name="copy"><code><span>-copy</span></code></a></h3>
 <p>There are issues with implementing <code><span>-copy</span></code> in python, these need to be fixed.</p>
@@ -140,7 +134,7 @@ implement these.  Note that property list types should already be serializable
 unless <code><span>__slots__</span> <span>==</span> <span>()</span></code></p>
 <h3><a href="#id14" name="known-issues">Known issues</a></h3>
 <p>It is impossible to support methods with a variable number of arguments in the
-generic code (you have to reimplement allmost all of the logic of these 
+generic code (you have to re-implement almost all of the logic of these 
 methods in order to know how many and which types of arguments are expected).
 Luckily there are not many varargs methods and most (if no all) of them can
 be easily avoided.</p>
@@ -154,12 +148,12 @@ are not necessarily TODO items.</p>
 <li>Check/cleanup error handling</li>
 <li>Finish in-code documentation for the C code</li>
 <li>SessionWrapper (in <code><span>Modules/AppKit</span></code>) is one of several types that wrap 
-a single pointer, create a function to build such types (simular to
+a single pointer, create a function to build such types (similar to
 <code><span>Modules/objc/struct-wrapper.m</span></code>)</li>
 <li>Use the <code><span>CArray</span></code> API whenever appropriate.</li>
 </ul>
 <h3><a href="#id16" name="cleanup-examples">Cleanup Examples</a></h3>
-<p>The CurrencyConvertor example should be removed, this should be the same as the
+<p>The CurrencyConverter example should be removed, this should be the same as the
 final step of the tutorial. It isn't at the moment because additional cruft in
 the example.</p>
 <ul>
@@ -193,8 +187,8 @@ new protocols in Python.</p>
 <p>Links to Apple documentation are not stable, can we add a layer of indirection
 here, e.g. link to the PyObjC website that will redirect to the right
 location?</p>
-<p>But: we should also provide links to locally installed documetation, especially
-in the documentation that will be installed on the users machine.</p>
+<p>We should also provide links to locally installed documentation,
+especially in the documentation that will be installed on the users machine.</p>
 <h3><a href="#id21" name="implement-more-of-nsmutabledictionary-in-oc-pythondictionary">Implement more of NSMutableDictionary in OC_PythonDictionary</a></h3>
 <p>The implementation of OC_PythonDictionary is very minimal, we should add
 additional methods in the NSMutableDictionary interface if those can be 
@@ -224,9 +218,9 @@ for that.</li>
 <h3><a href="#id27" name="unique-proxies-for-python-objects">Unique proxies for Python objects</a></h3>
 <p>Some Cocoa/CoreFoundation API's basically require that <code><span>a[0]</span> <span>is</span> <span>a[0]</span></code>. The
 container wrappers contain support for that, but we should try to move that
-into the generic core: there should be at most one ObjC proxy object alive
-for every Python object (just like there's at most one Python proxy for every
-ObjC object).</p>
+into the generic core: there should be at most one Objective-C proxy object
+alive for every Python object (just like there's at most one Python proxy for
+every Objective-C object).</p>
 <h3><a href="#id28" name="nsdecimal-vs-decimal">NSDecimal vs decimal</a></h3>
 <p>Check if it is possible to wrap <code><span>NSDecimal</span></code> using <code><span>decimal</span></code> (and v.v.).</p>
 <p>Only implement this when it is possible to convert without loss of information.</p>
@@ -237,7 +231,7 @@ ObjC object).</p>
 <p>Python 2.4 introduces a decorator syntax. Add convenience functions that
 make it easier to use decorators with PyObjC.</p>
 <p>Also add example programs using decorators. Actually, first add the example(s)
-and extract usefull convenience functions from those.</p>
+and extract useful convenience functions from those.</p>
 <p>An example of a convenience function would be:</p>
 <pre>
 import objc

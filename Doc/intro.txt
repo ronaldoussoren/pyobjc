@@ -286,7 +286,9 @@ simple translations must take place.  The rules for these translations are:
       translates to
       ``result = someObject.someMethod_withFoo_andBar_(firstArg, foo, bar)``
 
-XXX: Notes about varargs
+Note that it is currently not possible to support methods with a variable
+number of arguments from Python.  These selectors must be wrapped by
+custom Objective-C code in order to be accessible by Python.
 
 Wrapped/bridged methods (and functions) have the same number of arguments
 as the corresponding Objective-C method or function, unless otherwise noted
@@ -364,18 +366,22 @@ method signature.  Furthermore, if you implement a method in an (informal)
 protocol known to the bridge it will use the signature from the corresponding
 method in that signature.
 
-XXX: Add information about setters.
-
 The end result is that you rarely have to add information about the
-signature of methods.  The only known case where you have to tell the bridge
-about the signature of a method is the callback method for sheets.  You can
-use the function ``PyObjCTools.AppHelper.endSheetMethod`` to create an object
-that contains the right information.  This function is used like 
-``staticmethod`` and ``classmethod`` (as introduced in Python 2.2).
+signature of methods.  For the two most common cases where this is necessary,
+we have provided convenience decorators (used like ``staticmethod`` or
+``classmethod``):
+
+``objc.accessor``:
+    Use this to wrap a `Key-Value Coding`_ or `Key-Value Observing`_ compliant
+    accessor.
+
+``PyObjCTools.AppHelper.endSheetMethod``:
+    Use this to wrap the implementation of a sheet's "didEndSelector" callback.
 
 For complete control of the mapping to Objective-C you can use the function
-``objc.selector``. See the documentation of the ``objc`` module for the
-arguments you can use with this function. It is normally used like this::
+``objc.selector`` to create custom descriptors. See the documentation of the
+``objc`` module for the arguments you can use with this function. It is
+normally used like this::
 
 	class MyObject (NSObject):
 		def someMethod_(self, arg):
@@ -446,13 +452,14 @@ classes that partially implement a protocol.
 Cocoa Bindings
 ..............
 
-In Mac OS X 10.3 Apple introduced *Cocoa Bindings*, a method to make it easier
-to create and use *Controller* objects. 
+In Mac OS X 10.3 Apple introduced `Cocoa Bindings`_, a method to make it easier
+to create and use *Controller* objects using `Key-Value Observing`_ and `Key-Value
+Coding`_.  In order to create accessors compatible with this, you
+must use ``objc.accessor`` to create an appropriate selector descriptor.
 
-XXX - Add more here, links, etc.
-
-Use ``objc.accessor`` to create accessor methods that conform to the 
-expectations of Cocoa Bindings.
+.. _`Cocoa Bindings`: http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaBindings/
+.. _`Key-Value Coding`: http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/
+.. _`Key-Value Observing`: http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueObserving/
 
 Categories
 ..........

@@ -28,7 +28,7 @@ an Objective-C object.</p>
 <p>The first Python subclass of an Objective-C class introduces a new instance
 variable in the Objective-C object to store the pointer to the Python half of
 the cluster.  This variable is always referenced by name.  The Python half is 
-a subclass of objc_object that already contains a pointer to an Objective-C 
+a subclass of <code><span>objc_object</span></code> that already contains a pointer to an Objective-C 
 object.  This first subclass also introduces a number of class and instance
 methods that the PyObjC bridge uses to maintain the illusion of a single
 object on both sides.  Check class-builder.m for details.</p>
@@ -79,35 +79,37 @@ a bdist_mpkg installer (currently, just py2app).</p>
 </dl>
 <h2><a name="reference-counts">Reference counts</a></h2>
 <p>The Objective-C rules for reference counts are pretty easy: A small number
-of class methods (alloc, allocWithZone:, copy, ...) transfer object ownership
-to the caller.  For all other objects you have to call 'retain' if you want
-to keep a reference.  This includes all factory methods (e.g. 
-[NSString stringWithCString:&quot;bla&quot;])!</p>
+of class methods (<code><span>alloc</span></code>, <code><span>allocWithZone:</span></code>, <code><span>copy</span></code>, ...) transfer
+object ownership to the caller.  For all other objects you have to call
+<code><span>retain</span></code> if you want to keep a reference.  This includes all factory
+methods, such as <code><span>[NSString</span> <span>stringWithCString:&quot;bla&quot;]</span></code>!</p>
 <p>When programming Cocoa in Python, you rarely need to worry about
-reference counts: the objc module makes this completely transparent to user.
-This is mostly implemented in [de]pythonify_c_value. Additonal code is needed
-when calling methods that transfer ownership of their return value (as
-described above) and when updating a instance variable in an Objective-C
-object (retain new and release old, in that order). Both are implemented.</p>
+reference counts: the <code><span>objc</span></code> module makes this completely transparent to
+user.  This is mostly implemented in <code><span>[de]pythonify_c_value</span></code>. Additonal
+code is needed when calling methods that transfer ownership of their return
+value (as described above) and when updating a instance variable in an
+Objective-C object (retain new and release old, in that order). Both are
+implemented.</p>
 <h2><a name="strings">Strings</a></h2>
-<p>Python unicode instances are automatically converted to NSString and
-back. An NSString is represented in Python as a subclass of the 'unicode'
-class: objc.pyobjc_unicode.  This is a conversion, because Python's unicode
-type is immutable, but it also maintains a <i>reference</i> to the original
-NSString.  Currently, the conversion is done using UTF-8 for exchange,
-because unicode's internal representation may be changed with a compile
-time flag.</p>
-<p>The original, unwrapped, NSString instance is accessible from Python
-with the .nsstring() method of objc.pyobjc_unicode, mostly for creating an
-updated copy of an NSMutableString's contents.  Since PyObjC 1.2,
-NSString and NSMutableString methods are available from the objc.pyobjc_unicode
-object, though they do not show up via Python's introspection mechanisms.</p>
-<p>For legacy and convenience, Python str instances are automatically coerced
-into unicode when they cross the bridge using the same mechanism that
-automatically converts from str to unicode (using 
+<p>Python <code><span>unicode</span></code> instances are automatically converted to <code><span>NSString</span></code> and
+back.  An <code><span>NSString</span></code> is represented in Python as a subtype of <code><span>unicode</span></code>:
+<code><span>objc.pyobjc_unicode</span></code>.  This performs a conversion, because Python's
+<code><span>unicode</span></code> type is immutable, but it also maintains a <i>reference</i> to the
+original <code><span>NSString</span></code>.  Currently, the conversion is done using UTF-8 for
+exchange, because the internal representation of <code><span>unicode</span></code> is dependent on
+compile time settings.</p>
+<p>The original, unwrapped, <code><span>NSString</span></code> instance is accessible from Python
+with the <code><span>nsstring()</span></code> method of <code><span>objc.pyobjc_unicode</span></code>, primarily used
+to access an updated copy of an <code><span>NSMutableString</span></code>'s contents.  Since
+PyObjC 1.2, <code><span>NSString</span></code> and <code><span>NSMutableString</span></code> methods are available from
+the <code><span>objc.pyobjc_unicode</span></code> object, though they do not show up via Python's
+introspection mechanisms.</p>
+<p>For legacy and convenience, Python <code><span>str</span></code> instances are automatically coerced
+to <code><span>unicode</span></code> when they cross the bridge using the same mechanism that
+automatically converts from <code><span>str</span></code> to <code><span>unicode</span></code> (using 
 <code><span>sys.getdefaultencoding()</span></code>).  This automatic conversion can cause terrible
 things to happen at runtime that are hard to test for, so you may enable an
-<code><span>objc.PyObjCStrBridgeWarning</span></code> at each coercion by calling
+<code><span>objc.PyObjCStrBridgeWarning</span></code> at each coercion attempt by calling
 <code><span>objc.setStrBridgeEnabled(False)</span></code>.  To promote this warning to an exception,
 see the documentation for the <code><span>warnings</span></code> module in the standard library.</p>
 </body>

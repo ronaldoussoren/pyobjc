@@ -16,37 +16,37 @@ Contents</title>
 :copyright: 2003-2005 The PyObjC Project -->
 <h2>Contents</h2>
 <ul>
-<li><a href="#preface" id="id4" name="id4">Preface</a></li>
-<li><a href="#objective-c-for-pyobjc-users" id="id5" name="id5">Objective-C for PyObjC users</a></li>
-<li><a href="#overview-of-the-bridge" id="id6" name="id6">Overview of the bridge</a><ul>
-<li><a href="#classes" id="id7" name="id7">Classes</a></li>
-<li><a href="#messages-and-functions" id="id8" name="id8">Messages and Functions</a></li>
-<li><a href="#reference-counting" id="id9" name="id9">Reference counting</a></li>
-<li><a href="#informal-protocols" id="id10" name="id10">(Informal) protocols</a></li>
-<li><a href="#cocoa-bindings" id="id11" name="id11">Cocoa Bindings</a></li>
-<li><a href="#categories" id="id12" name="id12">Categories</a></li>
+<li><a href="#preface" id="id5" name="id5">Preface</a></li>
+<li><a href="#objective-c-for-pyobjc-users" id="id6" name="id6">Objective-C for PyObjC users</a></li>
+<li><a href="#overview-of-the-bridge" id="id7" name="id7">Overview of the bridge</a><ul>
+<li><a href="#classes" id="id8" name="id8">Classes</a></li>
+<li><a href="#messages-and-functions" id="id9" name="id9">Messages and Functions</a></li>
+<li><a href="#reference-counting" id="id10" name="id10">Reference counting</a></li>
+<li><a href="#informal-protocols" id="id11" name="id11">(Informal) protocols</a></li>
+<li><a href="#cocoa-bindings" id="id12" name="id12">Cocoa Bindings</a></li>
+<li><a href="#categories" id="id13" name="id13">Categories</a></li>
 </ul>
 </li>
-<li><a href="#cocoa-for-python-programmers" id="id13" name="id13">Cocoa for Python programmers</a></li>
-<li><a href="#notes-on-specific-tasks" id="id14" name="id14">Notes on specific tasks</a><ul>
-<li><a href="#working-with-threads" id="id15" name="id15">Working with threads</a></li>
-<li><a href="#finalizers" id="id16" name="id16">Finalizers</a></li>
+<li><a href="#cocoa-for-python-programmers" id="id14" name="id14">Cocoa for Python programmers</a></li>
+<li><a href="#notes-on-specific-tasks" id="id15" name="id15">Notes on specific tasks</a><ul>
+<li><a href="#working-with-threads" id="id16" name="id16">Working with threads</a></li>
+<li><a href="#finalizers" id="id17" name="id17">Finalizers</a></li>
 </ul>
 </li>
-<li><a href="#building-applications" id="id17" name="id17">Building applications</a><ul>
-<li><a href="#py2app-setup-py" id="id18" name="id18">&quot;py2app&quot; :  setup.py</a></li>
-<li><a href="#ide-approach-xcode" id="id19" name="id19">&quot;IDE approach&quot; : Xcode</a></li>
+<li><a href="#building-applications" id="id18" name="id18">Building applications</a><ul>
+<li><a href="#py2app-setup-py" id="id19" name="id19">&quot;py2app&quot; :  setup.py</a></li>
+<li><a href="#ide-approach-xcode" id="id20" name="id20">&quot;IDE approach&quot; : Xcode</a></li>
 </ul>
 </li>
 </ul>
-<h2><a href="#id4" name="preface">Preface</a></h2>
+<h2><a href="#id5" name="preface">Preface</a></h2>
 <p>PyObjC is a bridge between Python and Objective-C.  It allows you to write 
 Python scripts that use and extend existing Objective-C class libraries, 
 most importantly the <a href="http://developer.apple.com/referencelibrary/API_Fundamentals/Cocoa-api-date.html">Cocoa libraries</a> by <a href="http://www.apple.com/">Apple</a>.</p>
 <p>This document describes how to use Objective-C class libraries from Python
 scripts and how to interpret the documentation of those libraries from the 
 point of view of a Python programmer.</p>
-<h2><a href="#id5" name="objective-c-for-pyobjc-users">Objective-C for PyObjC users</a></h2>
+<h2><a href="#id6" name="objective-c-for-pyobjc-users">Objective-C for PyObjC users</a></h2>
 <p>It is recommended that you take the time to understand a little bit about
 Objective-C before jumping into PyObjC development.  The class libraries
 that you will be using from Cocoa are not documented in Python, and their
@@ -237,8 +237,8 @@ bridge, so any such attempt will raise an <code><span>AttributeError</span></cod
 <ul>
 <li><a href="http://developer.apple.com/documentation/Cocoa/Conceptual/ObjectiveC/index.html">The Objective-C Programming Language</a> at <a href="http://www.apple.com/">Apple</a>.</li>
 </ul>
-<h2><a href="#id6" name="overview-of-the-bridge">Overview of the bridge</a></h2>
-<h3><a href="#id7" name="classes">Classes</a></h3>
+<h2><a href="#id7" name="overview-of-the-bridge">Overview of the bridge</a></h2>
+<h3><a href="#id8" name="classes">Classes</a></h3>
 <p>Objective-C classes are visible as (new-style) Python classes and can be 
 subclassed just like normal Python classes.  All the usual introspection
 mechanisms work as well, as do <code><span>__slots__</span></code> and descriptors.  The major 
@@ -265,7 +265,7 @@ class method to allocate the memory (typically <code><span>alloc</span></code>),
 initializer (typically starts with <code><span>init</span></code>).  Some classes have class methods
 which perform this behind the scenes, especially classes that create cached,
 immutable, or singleton instances.</p>
-<h3><a href="#id8" name="messages-and-functions">Messages and Functions</a></h3>
+<h3><a href="#id9" name="messages-and-functions">Messages and Functions</a></h3>
 <p>Objective-C methods are bridged to Python methods.  Because Objective-C
 message dispatch syntax can not be translated directly to Python, a few
 simple translations must take place.  The rules for these translations are:</p>
@@ -296,7 +296,9 @@ translates to
 </blockquote>
 </li>
 </ol>
-<p>XXX: Notes about varargs</p>
+<p>Note that it is currently not possible to support methods with a variable
+number of arguments from Python.  These selectors must be wrapped by
+custom Objective-C code in order to be accessible by Python.</p>
 <p>Wrapped/bridged methods (and functions) have the same number of arguments
 as the corresponding Objective-C method or function, unless otherwise noted
 in the documentation (<a href="api-notes-macosx.html">Notes on supported APIs and classes on Mac OS X</a> for
@@ -367,16 +369,23 @@ override an existing method the bridge will assume you want to use the same
 method signature.  Furthermore, if you implement a method in an (informal)
 protocol known to the bridge it will use the signature from the corresponding
 method in that signature.</p>
-<p>XXX: Add information about setters.</p>
 <p>The end result is that you rarely have to add information about the
-signature of methods.  The only known case where you have to tell the bridge
-about the signature of a method is the callback method for sheets.  You can
-use the function <code><span>PyObjCTools.AppHelper.endSheetMethod</span></code> to create an object
-that contains the right information.  This function is used like 
-<code><span>staticmethod</span></code> and <code><span>classmethod</span></code> (as introduced in Python 2.2).</p>
+signature of methods.  For the two most common cases where this is necessary,
+we have provided convenience decorators (used like <code><span>staticmethod</span></code> or
+<code><span>classmethod</span></code>):</p>
+<dl>
+<dt><code><span>objc.accessor</span></code>:</dt>
+<dd><p>Use this to wrap a <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/">Key-Value Coding</a> or <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueObserving/">Key-Value Observing</a> compliant
+accessor.</p>
+</dd>
+<dt><code><span>PyObjCTools.AppHelper.endSheetMethod</span></code>:</dt>
+<dd><p>Use this to wrap the implementation of a sheet's &quot;didEndSelector&quot; callback.</p>
+</dd>
+</dl>
 <p>For complete control of the mapping to Objective-C you can use the function
-<code><span>objc.selector</span></code>. See the documentation of the <code><span>objc</span></code> module for the
-arguments you can use with this function. It is normally used like this:</p>
+<code><span>objc.selector</span></code> to create custom descriptors. See the documentation of the
+<code><span>objc</span></code> module for the arguments you can use with this function. It is
+normally used like this:</p>
 <pre>
 class MyObject (NSObject):
         def someMethod_(self, arg):
@@ -384,7 +393,7 @@ class MyObject (NSObject):
 
         someMethod_ = objc.selector(someMethod_, ...)
 </pre>
-<h3><a href="#id9" name="reference-counting">Reference counting</a></h3>
+<h3><a href="#id10" name="reference-counting">Reference counting</a></h3>
 <p>The <a href="http://developer.apple.com/referencelibrary/API_Fundamentals/Cocoa-api-date.html">Cocoa libraries</a>, and most (if not all) other class libraries for 
 Objective-C use explicit reference counting to manage memory. The methods
 <code><span>retain</span></code>, <code><span>release</span></code> and <code><span>autorelease</span></code> are used to manage these 
@@ -416,7 +425,7 @@ crashes with outline views is to make sure that you model for the view uses
 subclasses of <code><span>NSObject</span></code> to represent the nodes in the outline view.</p>
 <p>Another gotcha is that <code><span>obj.setDelegate_()</span></code> often does <i>not</i> retain the
 delegate, so a reference should be maintained elsewhere.</p>
-<h3><a href="#id10" name="informal-protocols">(Informal) protocols</a></h3>
+<h3><a href="#id11" name="informal-protocols">(Informal) protocols</a></h3>
 <p>Cocoa defines a number of formal and informal protocols that specify methods
 that should be implemented by a class if it is to be used in a specific role,
 such as the data source for an <code><span>NSTableView</span></code>.</p>
@@ -427,13 +436,12 @@ wrappers up-to-date.</p>
 <p>PyObjC will automatically use the information in the <code><span>informal_protocol</span></code> 
 objects to add the right method signatures to methods, and to warn about
 classes that partially implement a protocol.</p>
-<h3><a href="#id11" name="cocoa-bindings">Cocoa Bindings</a></h3>
-<p>In Mac OS X 10.3 Apple introduced <i>Cocoa Bindings</i>, a method to make it easier
-to create and use <i>Controller</i> objects.</p>
-<p>XXX - Add more here, links, etc.</p>
-<p>Use <code><span>objc.accessor</span></code> to create accessor methods that conform to the 
-expectations of Cocoa Bindings.</p>
-<h3><a href="#id12" name="categories">Categories</a></h3>
+<h3><a href="#id12" name="cocoa-bindings">Cocoa Bindings</a></h3>
+<p>In Mac OS X 10.3 Apple introduced <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaBindings/">Cocoa Bindings</a>, a method to make it easier
+to create and use <i>Controller</i> objects using <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueObserving/">Key-Value Observing</a> and <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/">Key-Value
+Coding</a>.  In order to create accessors compatible with this, you
+must use <code><span>objc.accessor</span></code> to create an appropriate selector descriptor.</p>
+<h3><a href="#id13" name="categories">Categories</a></h3>
 <p>Objective-C has a mechanism for modularize a class definition, it is possible
 to add methods to an existing class in a separate compilation unit and even
 a separate library. This mechanism is named categories and is used to enhance
@@ -465,7 +473,7 @@ class NSObject (objc.Category(NSObject)):
 <p>To make it clear that <code><span>objc.Category</span></code> performs a special task the name in
 the class definition must be the same as the <code><span>__name__</span></code> of the argument
 to <code><span>objc.Category</span></code>.</p>
-<h2><a href="#id13" name="cocoa-for-python-programmers">Cocoa for Python programmers</a></h2>
+<h2><a href="#id14" name="cocoa-for-python-programmers">Cocoa for Python programmers</a></h2>
 <p>Cocoa frameworks are mapped onto Python packages with the same name; that is
 the classes, constants and functions from the AppKit framework are available
 after you import <code><span>AppKit</span></code> in your Python script.</p>
@@ -493,25 +501,25 @@ Python. The <a href="../Examples/00ReadMe.html">PyObjC Example index</a> contain
 <li><a href="http://www.stepwise.com/">stepwise.com</a></li>
 <li>Your local bookstore or library</li>
 </ul>
-<h2><a href="#id14" name="notes-on-specific-tasks">Notes on specific tasks</a></h2>
-<h3><a href="#id15" name="working-with-threads">Working with threads</a></h3>
+<h2><a href="#id15" name="notes-on-specific-tasks">Notes on specific tasks</a></h2>
+<h3><a href="#id16" name="working-with-threads">Working with threads</a></h3>
 <p>When you create a thread and want to use PyObjC from that thread you will
 have to create an <code><span>NSAutoreleasePool</span></code> in that thread and clean it up when
 you're done. The easiest way to that is to create an instance of that class
 bound to a local variable. If the thread is long-lived you may want to arrange
 for recycling the pool once in a while.</p>
-<h3><a href="#id16" name="finalizers">Finalizers</a></h3>
+<h3><a href="#id17" name="finalizers">Finalizers</a></h3>
 <p>In Python you can use the method <code><span>__del__</span></code> to clean up resources when your
 object is garbage collected. In Objective-C/Cocoa this is done with a method 
 named <code><span>dealloc</span></code>.</p>
 <p>In PyObjC you should always use the <code><span>__del__</span></code> method, the <code><span>dealloc</span></code> method
 can safely be ignored and the bridge will complain when you try to override
 this method.</p>
-<h2><a href="#id17" name="building-applications">Building applications</a></h2>
+<h2><a href="#id18" name="building-applications">Building applications</a></h2>
 <p>There are two different ways to build applications with PyObjC. py2app
 should be the preferred method, however using the Xcode template can
 be convenient for development.</p>
-<h3><a href="#id18" name="py2app-setup-py">&quot;py2app&quot; :  setup.py</a></h3>
+<h3><a href="#id19" name="py2app-setup-py">&quot;py2app&quot; :  setup.py</a></h3>
 <p>The PyObjC installer includes a copy of the <code><span>py2app</span></code> package. This package
 offers a way to build distutils scripts for building (standalone)
 applications and plugin bundles.</p>
@@ -546,7 +554,7 @@ following command to see the list of options:</p>
 <pre>
 python setup.py py2app --help
 </pre>
-<h3><a href="#id19" name="ide-approach-xcode">&quot;IDE approach&quot; : Xcode</a></h3>
+<h3><a href="#id20" name="ide-approach-xcode">&quot;IDE approach&quot; : Xcode</a></h3>
 <p>PyObjC includes a number of Xcode templates that can be used to 
 develop applications. Those templates are used like any other
 Xcode template. The only non-obvious detail is that you have to

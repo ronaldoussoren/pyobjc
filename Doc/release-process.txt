@@ -37,15 +37,15 @@ Build the release tarball and dmg:
 * Run ``python setup.py sdist`` to build the source tarball.
 
 * Run ``python setup.py bdist_dmg`` to build a binary installer.  This should
-  be done on each supported version of Mac OS X.
+  be done for each supported version combination of Mac OS X and Python.
 
 Trash you existing PyObjC installation and reinstall from the new release. Test
 that the new release is working correctly. Installing and testing should be
 done for the binary installer and for the source archive. The latter should
-be done in all supported configurations.  Also test to make sure that an
+be done for all supported configurations.  Also test to make sure that an
 upgrade from a previous release works as expected.
 
-If the package works as expected upload to a convenient location and ask some
+If the package works as expected, upload to a convenient location and ask some
 other people (like the other maintainers) to test the new release.
 
 Release-date

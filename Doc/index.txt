@@ -47,7 +47,7 @@ Tutorials
 
   This tutorial guides you though creating a Python based Cocoa application.
 
-* `Adding Python code to an existing ObjC application`_
+* `Adding Python code to an existing Objective-C application`_
 
   This tutorial teaches you how to extend you existing Objective-C based
   Cocoa application using Python.
@@ -109,6 +109,6 @@ you want to write Cocoa programs in Python.
 
 .. _`Creating your first PyObjC application (tutorial)`: tutorial/tutorial.html
 
-.. _`Adding Python code to an existing ObjC application`: tutorial_embed/extending_objc_with_python.html
+.. _`Adding Python code to an existing Objective-C application`: tutorial_embed/extending_objc_with_python.html
 
 .. _`Notes on supported APIs and classes on Mac OS X`: api-notes-macosx.html

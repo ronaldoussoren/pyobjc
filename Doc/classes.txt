@@ -2,7 +2,7 @@
 Python classes and Objective-C code
 ===================================
 
-.. This file is formatted using the rules for StructuredText
+.. This file is formatted using the rules for reStructuredText
 
 .. Version 0.1
 

@@ -597,7 +597,7 @@ Class ``NSView``
 
 * ``objectAtPoint:rect:``
 
-  Defined in a catagory on ``NSView``.
+  Defined in a category on ``NSView``.
 
 Class ``NSIBObjectData``
 ........................

@@ -91,13 +91,13 @@ for the list of valid encoding characters for the Apple Objective-C runtime.
 Let's say the first argument is an output parameter. Output parameters are 
 denoted in the signature string using the character 'o' before the actual
 argument signature. The 'correct' signature for method is therefore 'v@:o^@@'.
-The following code tells the brigde about this better method signature::
+The following code tells the bridge about this better method signature::
 
    import objc
    objc.setSignatureForSelector("ClassName", "selector:withArguments:",
    	"v@:o^@:@")
 
-To anotate method signatures you'll have to add a single character before all
+To annotate method signatures you'll have to add a single character before all
 '^' characters in the signature of a method. The characters are:
 
 - output parameter: o
@@ -117,7 +117,7 @@ implementation of the method from Python and 1 to call a Python implementation
 of the method from Objective-C.
 
 You also must write a custom wrapper when the method has a variable number
-of arguments. It is often adviseable to documented varargs method as 
+of arguments. It is often advisable to documented varargs method as 
 unsupported, or to support them only using a fixed number of arguments.
 
 For now it is best to check the source code for the wrappers for the Cocoa 
