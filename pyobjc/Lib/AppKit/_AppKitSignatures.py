@@ -24,6 +24,7 @@ set_signature_for_selector("NSColor", "getCyan:magenta:yellow:black:alpha:", "v@
 set_signature_for_selector("NSColor", "getHue:saturation:brightness:alpha:", "v@:o^fo^fo^fo^f")
 set_signature_for_selector("NSColor", "getRed:green:blue:alpha:", "v@:o^fo^fo^fo^f")
 set_signature_for_selector("NSColor", "getWhite:alpha:", "v@:o^fo^f")
+set_signature_for_selector("NSWorkspace", "getInfoForFile:application:type:", "c16@4:8@12o^@16o^@20")
 set_signature_for_selector("NSDocument", "_changeAlertDidEnd:returnCode:contextInfo:", "v16@4:8@12i16i20")
 set_signature_for_selector("NSDocument", "_compatibility_canCloseDocumentWithDelegate:shouldCloseSelector:contextInfo:", "v16@4:8@12:16i20")
 set_signature_for_selector("NSDocument", "_compatibility_doSavePanelSave:delegate:didSaveSelector:contextInfo:", "v20@4:8i12@16:20i24")
