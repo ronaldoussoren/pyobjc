@@ -72,10 +72,10 @@ class  ToDoDocument (AutoBaseClass):
 
     def loadDocWithData_(self, data):
         if data:
-            dict = NSUnarchiver.unarchiveObjectWithData_(data)
-            self.initDataModelWithDictinary_(dict)
+            dct = NSUnarchiver.unarchiveObjectWithData_(data)
+            self.initDataModelWithDictinary_(dct)
             dayEnum = self._activeDays.keyEnumerator()
-            now = NSData.date()
+            now = NSDate.date()
 
             itemDate = dayEnum.nextObject()
             while itemDate:

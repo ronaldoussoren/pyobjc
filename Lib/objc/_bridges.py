@@ -38,6 +38,17 @@ else:
         return (tuple(array('B').fromstring(fsRef.data)),)
     BRIDGED_TYPES.append((FSRef, FSRef_to_struct))
 
+
+class PyObjCData(lookUpClass('NSData')):
+    def dataWithPyObject_(cls, anObject):
+        self = cls.dataWithBytes_length_(anObject, len(anObject))
+        self.__pyobjc_object__ = anObject
+        return self
+    dataWithPyObject_ = classmethod(dataWithPyObject_)
+
+BRIDGED_TYPES.append((buffer, PyObjCData.dataWithPyObject_))
+
+
 def _bridgePythonTypes():
     # python TO Obj-C
     OC_PythonObject = lookUpClass('OC_PythonObject')

@@ -47,7 +47,7 @@ class PyDocURLProtocol(NSURLProtocol):
             )
             client.URLProtocol_didLoadData_(
                 self,
-                NSData.dataWithBytes_length_(data, len(data)),
+                buffer(data),
             )
             client.URLProtocolDidFinishLoading_(self)
 

@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {browserAction = id; }; 
+            CLASS = ClassBrowserDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {browser = id; pathLabel = id; table = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

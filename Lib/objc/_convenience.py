@@ -482,28 +482,55 @@ CONVENIENCE_METHODS['hasSuffix:'] = (
 )
 
 CLASS_METHODS['NSNull'] = (
-        (   '__nonzero__',  lambda self: False ),
+    ('__nonzero__',  lambda self: False ),
 )
 
 NSDecimalNumber = lookUpClass('NSDecimalNumber')
-def _makeD(v): 
+def _makeD(v):
     if isinstance(v, NSDecimalNumber):
         return v
     return NSDecimalNumber.decimalNumberWithDecimal_(v)
 
 CLASS_METHODS['NSDecimalNumber'] = (
-        ( '__add__',  lambda self, other: _makeD(self.decimalValue()+other) ),
-        ( '__radd__', lambda self, other: _makeD(other+self.decimalValue()) ),
-        ( '__sub__',  lambda self, other: _makeD(self.decimalValue()-other) ),
-        ( '__rsub__', lambda self, other: _makeD(other-self.decimalValue()) ),
-        ( '__mul__',  lambda self, other: _makeD(self.decimalValue()*other) ),
-        ( '__rmul__', lambda self, other: _makeD(other*self.decimalValue()) ),
-        ( '__div__',  lambda self, other: _makeD(self.decimalValue()/other) ),
-        ( '__rdiv__', lambda self, other: _makeD(other/self.decimalValue()) ),
-        ( '__mod__',  lambda self, other: _makeD(self.decimalValue()%other) ),
-        ( '__rmod__', lambda self, other: _makeD(other%self.decimalValue()) ),
-        ( '__neg__',  lambda self: _makeD(-(self.decimalValue())) ),
-        ( '__pos__',  lambda self: _makeD(+(self.decimalValue())) ),
-        ( '__abs__',  lambda self: _makeD(abs(self.decimalValue())) ),
-        
+    ('__add__', lambda self, other: _makeD(self.decimalValue() + other)),
+    ('__radd__', lambda self, other: _makeD(other + self.decimalValue())),
+    ('__sub__', lambda self, other: _makeD(self.decimalValue() - other)),
+    ('__rsub__', lambda self, other: _makeD(other - self.decimalValue())),
+    ('__mul__', lambda self, other: _makeD(self.decimalValue() * other)),
+    ('__rmul__', lambda self, other: _makeD(other * self.decimalValue())),
+    ('__div__', lambda self, other: _makeD(self.decimalValue() / other)),
+    ('__rdiv__', lambda self, other: _makeD(other / self.decimalValue())),
+    ('__mod__', lambda self, other: _makeD(self.decimalValue() % other)),
+    ('__rmod__', lambda self, other: _makeD(other % self.decimalValue())),
+    ('__neg__', lambda self: _makeD(-(self.decimalValue()))),
+    ('__pos__', lambda self: _makeD(+(self.decimalValue()))),
+    ('__abs__', lambda self: _makeD(abs(self.decimalValue()))),
+)
+
+def NSData__getslice__(self, i, j):
+    return self.bytes()[i:j]
+
+def NSData__getitem__(self, item):
+    buff = self.bytes()
+    try:
+        return buff[item]
+    except TypeError:
+        return buff[:][item]
+
+CLASS_METHODS['NSData'] = (
+    ('__str__', lambda self: self.bytes()[:]),
+    ('__getitem__', NSData__getitem__),
+    ('__getslice__', NSData__getslice__),
+)
+
+def NSMutableData__setslice__(self, i, j, sequence):
+    # XXX - could use replaceBytes:inRange:, etc.
+    self.mutableBytes()[i:j] = sequence
+    
+def NSMutableData__setitem__(self, item, value):
+    self.mutableBytes()[item] = value
+
+CLASS_METHODS['NSMutableData'] = (
+    ('__setslice__', NSMutableData__setslice__),
+    ('__setitem__', NSMutableData__setitem__),
 )

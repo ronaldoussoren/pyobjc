@@ -32,7 +32,7 @@
 int PyObjC_VerboseLevel = 0;
 PyObject* PyObjCClass_DefaultModule = NULL;
 PyObject* PyObjC_NSNumberWrapper = NULL;
-int PyObjC_StrBridgeEnabled = 0;
+int PyObjC_StrBridgeEnabled = 1;
 
 static NSAutoreleasePool* global_release_pool = nil;
 
