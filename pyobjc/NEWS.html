@@ -11,6 +11,10 @@ PyObjC NEWS</title>
 <p>An overview of the relevant changes in new, and older, releases.</p>
 <h2><a name="version-1-2-2004-12">Version 1.2 (2004-12-??)</a></h2>
 <ul>
+<li><code><span>PyObjCTools.AppHelper.stopEventLoop</span></code> will attempt to stop the current
+<code><span>NSRunLoop</span></code> (if started by <code><span>runConsoleEventLoop</span></code>) or terminate the
+current <code><span>NSApplication</span></code> (which may or may not have been started by
+<code><span>runEventLoop</span></code>).</li>
 <li>This version no longer support Python 2.2. Python 2.3 or later is
 required.</li>
 <li>It is now possible to use <code><span>reload</span></code> on modules containing Objective-C
