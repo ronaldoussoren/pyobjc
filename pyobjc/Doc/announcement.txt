@@ -8,9 +8,9 @@ to
    pythonmac-sig@python.org
    cocoa-dev@lists.apple.com
 
-subject: ANN: PyObjC 1.1
+subject: ANN: PyObjC 1.2
 
-PyObjC 1.1 is now available for download at http://pyobjc.sourceforge.net/  
+PyObjC 1.2 is now available for download at http://pyobjc.sourceforge.net/  
 
 PyObjC is a bridge between Python and Objective-C.  It allows full
 featured Cocoa applications to be written in pure Python.  It is also
@@ -20,21 +20,20 @@ from Python and to mix in Objective-C, C and C++ source.
 Python is a highly dynamic programming language with a shallow learning 
 curve.  It combines remarkable power with very clear syntax.
 
-The installer package includes a number of Xcode and Project Builder templates 
-for easily creating new Cocoa-Python projects, as well as support for 
-syntax-coloring Python files in Project Builder.
+The installer package includes a number of Xcode templates 
+for easily creating new Cocoa-Python projects.
 
 PyObjC also supports full introspection of Objective-C classes and 
 direct invocation of Objective-C APIs from the interactive interpreter.
 
-PyObjC requires Mac OS X 10.2 or later.  PyObjC works both with the Apple 
-provided Python installation in Mac OS X 10.2 (and later) and with 
-MacPython 2.3.  Users of MacPython 2.3 can install PyObjC though the 
-PackageManager application.
+PyObjC requires Mac OS X 10.2 or later and Python 2.3 or later.  PyObjC works 
+both with the Apple provided Python installation in Mac OS X 10.3 (and later) 
+and with MacPython 2.3.  
 
-The major improvement of PyObjC 1.1 is support for Key-Value Observing. It
-is now possible to write programs that use Cocoa Bindings. There are also 
-numerous new examples.
+This release features several bugfixes, improved documentation as well as
+support for categories, easier customization and basic support for creating 
+Interface Builder palettes. See the news file at 
+http://pyobjc.sourceforge.net/NEWS-1.2.txt for more information.
 
 PyObjC is released with an open source license (MIT style).
 
