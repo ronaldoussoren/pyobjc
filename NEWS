@@ -33,6 +33,17 @@ Version "Panther" (Off-CVS)
     Shows how to write a screensaver in Python. Requires a framework install
     of Python (that is, MacOS X 10.3 or MacPython 2.3 on MacOS X 10.2).
   
+  * Twisted/WebServicesTool
+
+    Shows how to integrate Twisted (1.1 or later) with Cocoa, it is a
+    refactor of the WebServicesTool example that is made much simpler
+    by using Twisted.
+
+  * Twisted/WebServicesTool
+
+    Shows how to integrate Twisted (1.1 or later) with Cocoa, it is a
+    refactor of the WebServicesTool example that is made much simpler
+    by using Twisted as it does not need threads.
 
 Version 1.0 (2003-09-21)
 ------------------------
