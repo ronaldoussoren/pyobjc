@@ -74,16 +74,16 @@ _bundle = _objc.loadBundle(
 FOOTER="""\
 
 # Load global variables
-_objc.bundleVariables(_bundle, globals(), _VARIABLES)
+_objc.loadBundleVariables(_bundle, globals(), _VARIABLES)
 
 # Load global functions
-_objc.bundleVariables(_bundle, globals(), _FUNCTIONS)
+_objc.loadBundleFunctions(_bundle, globals(), _FUNCTIONS)
 
 # Clean up after ourselfs
 del _objc, _bundle, _VARIABLES, _FUNCTIONS
 """
 
-def generateWrappersForFramework(outfp, frameworkPath, frameworkIdentifier=None, frameworkName=None, globalVariablePrefix=None, functionPrefix=None, ignoreHeaders=(), ignoreFunctions=(), frameworkInclude=None, frameworkLink=None):
+def generateWrappersForFramework(outfp, frameworkPath, frameworkIdentifier=None, frameworkName=None, globalVariablePrefix=None, functionPrefix=None, ignoreHeaders=(), ignoreFunctions=(), frameworkInclude=None, frameworkLink=None, opaquePointers=()):
 
     # Try to load the framework, this helps the parser to find classes
     # in method/variable signatures
@@ -95,6 +95,7 @@ def generateWrappersForFramework(outfp, frameworkPath, frameworkIdentifier=None,
             ignore_functions=ignoreFunctions,
             framework_include=frameworkInclude,
             framework_link=frameworkLink,
+            opaque_pointers=opaquePointers,
     )
     for fn in os.listdir(os.path.join(frameworkPath, 'Headers')):
         if not fn.endswith('.h'):
@@ -137,12 +138,12 @@ def generateWrappersForFramework(outfp, frameworkPath, frameworkIdentifier=None,
     outfp.write(')\n\n')
 
     outfp.write("# Special type signatures\n")
-    outfp.write('TYPE_SIGNATURES=(\n')
+    outfp.write('TYPE_SIGNATURES={\n')
     for k,v in p.type_signatures.iteritems():
         if v.endswith('*'): continue
         if v == 'va_list': continue
         outfp.write('    %s: %s,\n'%(repr(k), repr(v)))
-    outfp.write(')\n\n')
+    outfp.write('}\n\n')
 
     outfp.write('# Global constants/enums\n')
     names = p.enums.keys()
@@ -228,6 +229,7 @@ FUNCTION_PROTOTYPE=(
     r'%(PFX)s(.+\s+.+\([^);{]+\)\s*(?:[;{]|$))'
 )
 
+
 CALCULATE_SIGNATURE_SOURCE="""
 #import %(framework)s
 #include <stdio.h>
@@ -238,8 +240,6 @@ int main(void)
     return 0;
 }
 """
-
-    
 
 def stripcomment(fp):
     """
@@ -268,7 +268,7 @@ def stripcomment(fp):
             yield ln.strip()
 
 class DumbHeaderParser (object):
-    def __init__(self, global_variable_prefix=None, function_prefix=None, ignore_functions = (), framework_include=None, framework_link=None):
+    def __init__(self, global_variable_prefix=None, function_prefix=None, ignore_functions = (), framework_include=None, framework_link=None, opaque_pointers=()):
         self.in_interface = False
         self.in_protocol = False
         self.in_enum = False
@@ -276,6 +276,7 @@ class DumbHeaderParser (object):
         self.ignore_functions = ignore_functions
         self.framework_include = framework_include
         self.framework_link = framework_link
+        self.opaque_pointers = opaque_pointers
 
         self.global_variables = []
         self.protocols = []
@@ -498,23 +499,19 @@ class DumbHeaderParser (object):
                 prototype = m.group(1).strip()
                 if prototype[-1] != ')':
                     prototype = prototype[:-1].strip() + ';'
-
                 rettype, funcname, arguments = self.parse_prototype(prototype)
                 if funcname is None:
                     return
 
                 if funcname in self.ignore_functions:
                     return
-
                 signature = self.make_func_signature(rettype, arguments)
                 if signature is None:
                     print >>sys.stderr, "WARN: Ignore function:\n%s"%(prototype,)
-                return
-
+                    return
                 self.simple_functions.append(
                         (funcname, signature, prototype)
                 )
-        
 
     def encode(self, tp):
         # This needs to be fixed, see the gen_protocols script for details
@@ -572,6 +569,9 @@ class DumbHeaderParser (object):
         self.type_signatures[tp] = typestr
         return typestr
 
+    def isOpaquePointer(self, value):
+        return value.replace('const', '').replace(' ', '') in self.opaque_pointers
+
     def make_func_signature(self, rettype, arguments):
         result = []
 
@@ -580,7 +580,8 @@ class DumbHeaderParser (object):
             return None
 
         if rettype[0] == objc._C_PTR:
-            return None
+            if not self.isOpaquePointer(rettype):
+                return None
 
         result.append(rettype)
 
@@ -590,7 +591,8 @@ class DumbHeaderParser (object):
                 return None
 
             if a[0] == objc._C_PTR:
-                return None
+                if not self.isOpaquePointer(a):
+                    return None
 
             result.append(a)
 
@@ -628,7 +630,6 @@ class DumbHeaderParser (object):
         arguments = tuple(new_arguments)
 
         return retval, funcname, arguments
-        
 
 if __name__ == "__main__":
     import sys
@@ -640,4 +641,5 @@ if __name__ == "__main__":
             functionPrefix=['FOUNDATION_STATIC_INLINE', 'FOUNDATION_EXPORT'],
             frameworkInclude="<Foundation/Foundation.h>",
             frameworkLink="-framework Foundation",
+            opaquePointers=('NSZone*', 'NSDecimal*'),
     )
