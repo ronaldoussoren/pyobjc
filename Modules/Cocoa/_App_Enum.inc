@@ -1,6 +1,6 @@
 /*
  * Enumeration constants. This file is generated from files in
- * /System/Library/Frameworks/AppKit.framework/Headers/
+ * /System/Library/Frameworks/AppKit.framework/Headers
  */
 static struct inttable enum_table[] = {
 

@@ -124,7 +124,7 @@ SIMPLE_TYPES={
 	),
 	'BOOL': (
 		"\tresult = PyBool_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
-		'i',
+		'b',
 		'&%(varname)s',
 		None
 	),

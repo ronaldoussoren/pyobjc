@@ -229,7 +229,7 @@ static	char* keywords[] = { "itemName", "enabled", NULL };
 	id objc_itemName;
 	BOOL objc_enabled;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&i:NSSetShowsServicesMenuItem", keywords, convert_id, &objc_itemName, &objc_enabled) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&b:NSSetShowsServicesMenuItem", keywords, convert_id, &objc_itemName, &objc_enabled) < 0) return NULL;
 	NS_DURING
 		objc_result = NSSetShowsServicesMenuItem(
 objc_itemName, objc_enabled);
@@ -257,27 +257,6 @@ static	char* keywords[] = { NULL };
 	NS_ENDHANDLER
 	result = Py_None;
 	Py_INCREF(Py_None);
-	return result;
-}
-/* BOOL NSPerformService(NSString *itemName, NSPasteboard *pboard); */
-PyObject* objc_NSPerformService(PyObject* self, PyObject* args, PyObject* kwds)
-{
-static	char* keywords[] = { "itemName", "pboard", NULL };
-	PyObject* result;
-	BOOL objc_result;
-	id objc_itemName;
-	id objc_pboard;
-
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSPerformService", keywords, convert_id, &objc_itemName, convert_id, &objc_pboard) < 0) return NULL;
-	NS_DURING
-		objc_result = NSPerformService(
-objc_itemName, objc_pboard);
-	NS_HANDLER
-		ObjCErr_FromObjC(localException);
-		return NULL;
-	NS_ENDHANDLER
-		result = PyBool_FromLong(objc_result);
-	if (result == NULL) return NULL;
 	return result;
 }
 /* void NSRegisterServicesProvider(id provider, NSString *name); */
@@ -635,25 +614,6 @@ objc_aRect);
 	Py_INCREF(Py_None);
 	return result;
 }
-/* NSColor *NSReadPixel(NSPoint passedPoint); */
-PyObject* objc_NSReadPixel(PyObject* self, PyObject* args, PyObject* kwds)
-{
-static	char* keywords[] = { "passedPoint", NULL };
-	PyObject* result;
-	NSColor* objc_result;
-	NSPoint objc_passedPoint;
-
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSReadPixel", keywords, convert_NSPoint, &objc_passedPoint) < 0) return NULL;
-	NS_DURING
-		objc_result = NSReadPixel(
-objc_passedPoint);
-	NS_HANDLER
-		ObjCErr_FromObjC(localException);
-		return NULL;
-	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
-	return result;
-}
 /* void NSCopyBits(int srcGState, NSRect srcRect, NSPoint destPoint); */
 PyObject* objc_NSCopyBits(PyObject* self, PyObject* args, PyObject* kwds)
 {
@@ -809,27 +769,6 @@ objc_placement);
 	Py_INCREF(Py_None);
 	return result;
 }
-/* NSInterfaceStyle NSInterfaceStyleForKey(NSString *key, NSResponder *responder); */
-PyObject* objc_NSInterfaceStyleForKey(PyObject* self, PyObject* args, PyObject* kwds)
-{
-static	char* keywords[] = { "key", "responder", NULL };
-	PyObject* result;
-	NSInterfaceStyle objc_result;
-	id objc_key;
-	id objc_responder;
-
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSInterfaceStyleForKey", keywords, convert_id, &objc_key, convert_id, &objc_responder) < 0) return NULL;
-	NS_DURING
-		objc_result = NSInterfaceStyleForKey(
-objc_key, objc_responder);
-	NS_HANDLER
-		ObjCErr_FromObjC(localException);
-		return NULL;
-	NS_ENDHANDLER
-		result = PyInt_FromLong(objc_result);
-	if (result == NULL) return NULL;
-	return result;
-}
 /* void NSReleaseAlertPanel(id panel); */
 PyObject* objc_NSReleaseAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
 {
@@ -936,7 +875,6 @@ objc_pboardTypes);
 	{ "NSShowsServicesMenuItem", (PyCFunction)objc_NSShowsServicesMenuItem, METH_VARARGS|METH_KEYWORDS, "BOOL NSShowsServicesMenuItem(NSString * itemName);" }, \
 	{ "NSSetShowsServicesMenuItem", (PyCFunction)objc_NSSetShowsServicesMenuItem, METH_VARARGS|METH_KEYWORDS, "int NSSetShowsServicesMenuItem(NSString * itemName, BOOL enabled);" }, \
 	{ "NSUpdateDynamicServices", (PyCFunction)objc_NSUpdateDynamicServices, METH_VARARGS|METH_KEYWORDS, "void NSUpdateDynamicServices(void);" }, \
-	{ "NSPerformService", (PyCFunction)objc_NSPerformService, METH_VARARGS|METH_KEYWORDS, "BOOL NSPerformService(NSString *itemName, NSPasteboard *pboard);" }, \
 	{ "NSRegisterServicesProvider", (PyCFunction)objc_NSRegisterServicesProvider, METH_VARARGS|METH_KEYWORDS, "void NSRegisterServicesProvider(id provider, NSString *name);" }, \
 	{ "NSUnregisterServicesProvider", (PyCFunction)objc_NSUnregisterServicesProvider, METH_VARARGS|METH_KEYWORDS, "void NSUnregisterServicesProvider(NSString *name);" }, \
 	{ "NSPlanarFromDepth", (PyCFunction)objc_NSPlanarFromDepth, METH_VARARGS|METH_KEYWORDS, "BOOL NSPlanarFromDepth (NSWindowDepth depth);" }, \
@@ -955,7 +893,6 @@ objc_pboardTypes);
 	{ "NSDrawWhiteBezel", (PyCFunction)objc_NSDrawWhiteBezel, METH_VARARGS|METH_KEYWORDS, "void NSDrawWhiteBezel(NSRect aRect, NSRect clipRect);" }, \
 	{ "NSDrawButton", (PyCFunction)objc_NSDrawButton, METH_VARARGS|METH_KEYWORDS, "void NSDrawButton(NSRect aRect, NSRect clipRect);" }, \
 	{ "NSEraseRect", (PyCFunction)objc_NSEraseRect, METH_VARARGS|METH_KEYWORDS, "void NSEraseRect(NSRect aRect);" }, \
-	{ "NSReadPixel", (PyCFunction)objc_NSReadPixel, METH_VARARGS|METH_KEYWORDS, "NSColor *NSReadPixel(NSPoint passedPoint);" }, \
 	{ "NSCopyBits", (PyCFunction)objc_NSCopyBits, METH_VARARGS|METH_KEYWORDS, "void NSCopyBits(int srcGState, NSRect srcRect, NSPoint destPoint);" }, \
 	{ "NSHighlightRect", (PyCFunction)objc_NSHighlightRect, METH_VARARGS|METH_KEYWORDS, "void NSHighlightRect(NSRect aRect);" }, \
 	{ "NSBeep", (PyCFunction)objc_NSBeep, METH_VARARGS|METH_KEYWORDS, "void NSBeep(void);" }, \
@@ -964,7 +901,6 @@ objc_pboardTypes);
 	{ "NSDottedFrameRect", (PyCFunction)objc_NSDottedFrameRect, METH_VARARGS|METH_KEYWORDS, "void NSDottedFrameRect(NSRect aRect);" }, \
 	{ "NSDrawWindowBackground", (PyCFunction)objc_NSDrawWindowBackground, METH_VARARGS|METH_KEYWORDS, "void NSDrawWindowBackground(NSRect aRect);" }, \
 	{ "NSSetFocusRingStyle", (PyCFunction)objc_NSSetFocusRingStyle, METH_VARARGS|METH_KEYWORDS, "void NSSetFocusRingStyle(NSFocusRingPlacement placement);" }, \
-	{ "NSInterfaceStyleForKey", (PyCFunction)objc_NSInterfaceStyleForKey, METH_VARARGS|METH_KEYWORDS, "NSInterfaceStyle NSInterfaceStyleForKey(NSString *key, NSResponder *responder);" }, \
 	{ "NSReleaseAlertPanel", (PyCFunction)objc_NSReleaseAlertPanel, METH_VARARGS|METH_KEYWORDS, "void NSReleaseAlertPanel(id panel);" }, \
 	{ "NSCreateFilenamePboardType", (PyCFunction)objc_NSCreateFilenamePboardType, METH_VARARGS|METH_KEYWORDS, "NSString *NSCreateFilenamePboardType(NSString *fileType);" }, \
 	{ "NSCreateFileContentsPboardType", (PyCFunction)objc_NSCreateFileContentsPboardType, METH_VARARGS|METH_KEYWORDS, "NSString *NSCreateFileContentsPboardType(NSString *fileType);" }, \

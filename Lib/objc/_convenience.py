@@ -37,6 +37,9 @@ def add_convenience_methods(super_class, name, type_dict):
             # return 'self'. If they don't they reallocated the previous 
             # value, don't use that afterwards.
             sel.returns_reallocated_self = 1
+            sel.is_initializer = 1
+        elif sel.selector == "alloc" or sel.selector == "allocWithZone:":
+            sel.is_alloc = 1
 
         sel = sel.selector
 
@@ -89,7 +92,10 @@ CONVENIENCE_METHODS['count'] = (
 )
 
 CONVENIENCE_METHODS['description'] = (
-#    ('__repr__', lambda self: self.description()),
+    # Don't do '__repr__', if the object is not yet initialized this may
+    # cause coredumps (and __repr__ is used by the interpreter to print
+    # objects in interactive mode)
+    #('__repr__', lambda self: self.description()),
     ('__str__', lambda self: self.description()),
 )
 
