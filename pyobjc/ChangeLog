@@ -1,3 +1,7 @@
+2003-02-02  Bill Bumgarner  <bbum@codefab.com>
+    * Project Templates/clean.py: Added a simple script to clean the project
+      template tree.
+
 2003-02-01  Bill Bumgarner  <bbum@codefab.com>
     * Moved project templates to copy the PyObjC directory from
       site-packages.  Fixed Web Services Tool example appropriately.
