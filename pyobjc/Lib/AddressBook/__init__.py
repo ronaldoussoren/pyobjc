@@ -8,10 +8,10 @@ documentation for details on how to use these functions and classes.
 # Load the AddressBook bundle, and gather all classes defined there
 import Foundation
 class_list = Foundation.load_bundle(
-	'/System/Library/Frameworks/AddressBook.framework')
+    '/System/Library/Frameworks/AddressBook.framework')
 gl = globals()
 for cls in class_list:
-	gl[cls.__name__] = cls
+    gl[cls.__name__] = cls
 
 # clean-up after ourselves.
 del class_list

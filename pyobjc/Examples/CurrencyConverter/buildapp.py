@@ -1,7 +1,9 @@
-# These modules are otherwise completely standalone, they don't need any
-# Mac- or PyObjC-specific stuff.
 #
-
+# Script for building the .app bundle. 
+#
+# Usage:
+#   python buildapp.py build
+#
 from bundlebuilder import buildapp 
     
 buildapp(
