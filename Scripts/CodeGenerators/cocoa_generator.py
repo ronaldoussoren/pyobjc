@@ -117,7 +117,13 @@ if FOUNDATION_HDRS is not None:
 		'build/codegen/_Fnd_Enum.inc')
 	strconst_generator.generate(
 		FOUNDATION_HDRS, 
-		'build/codegen/_Fnd_Str.inc')
+		'build/codegen/_Fnd_Str.inc',
+                ignore=(
+                    # Declared on GNUstep, but not actually inside the
+                    # shared lib?
+                    'ConnectionBecameInvalidNotification',
+                )
+        )
 
 	FOUNDATION_IGNORE_LIST=(
 	    # All have types that are not (yet) mapped to python

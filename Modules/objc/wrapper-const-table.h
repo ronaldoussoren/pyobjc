@@ -17,6 +17,10 @@
 struct vartable {
 	NSString* name;
 	char* type;
+
+#ifdef GNU_RUNTIME
+	const void* ptr;
+#endif
 };
 
 struct inttable {
@@ -160,14 +164,24 @@ static inline int register_strings(PyObject* d, struct stringtable* table)
 static inline int
 register_variableList(PyObject* d, CFBundleRef bundle, struct vartable* table, size_t count)
 {
-	/* XXX: Implement me */
+	PyObject* val;
+	int i;
+
+	for (i = 0; i < count; i++) {
+		val  = PyObjC_ObjCToPython(table[i].type, (void*)table[i].ptr);
+		if (val == NULL) {
+			return -1;
+		}
+		PyDict_SetItemString(d, (char*)[table[i].name cString], val);
+		Py_DECREF(val);
+	}
 	return 0;
 }
 
 #else /* !GNU_RUNTIME */
 
 static inline int
-register_variableList(PyObject* d, CFBundleRef bundle, struct vartable* table, size_t count)
+register_variableList(PyObject* d, CFBundleRef bundle __attribute__((__unused__)), struct vartable* table, size_t count)
 {
 	void** ptrs = NULL;
 	NSMutableArray* names = nil;
@@ -217,5 +231,3 @@ cleanup:
 	return retVal;
 }
 #endif /* !GNU_RUNTIME */
-
-

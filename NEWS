@@ -16,8 +16,23 @@ Version "Panther" (Off-CVS)
 
 - Fixes some issues with passing structs between Python and Objective-C. 
 
-- Uses the Panther version of NSKeyValueCoding, the Jaguar version is still
+- Uses the Panther version of ``NSKeyValueCoding``, the Jaguar version is still
   supported.
+
+- method ``updateNSString`` of ``objc.pyobjc_unicode`` is deprecated, use 
+  create a new unicode object using ``unicode(mutableStringInstance)`` instead.
+
+- Adds a number of new Examples:
+  
+  * OpenGLDemo
+   
+    Shows how to use OpenGL with PyObjC
+
+  * SillyBallsSaver
+
+    Shows how to write a screensaver in Python. Requires a framework install
+    of Python (that is, MacOS X 10.3 or MacPython 2.3 on MacOS X 10.2).
+  
 
 Version 1.0 (2003-09-21)
 ------------------------

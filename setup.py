@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 
-# Set this to the path to an extracted tree of libffi to automaticly build
-# a compatible version of libffi
-LIBFFI_SOURCES=None
-LIBFFI_SOURCES='libffi-src'
 
 import sys
 import os
@@ -70,6 +66,11 @@ if sys.platform == 'darwin':
 from distutils.core import setup, Extension
 import os
 
+LIBFFI_SOURCES='libffi-src'
+if sys.platform != 'darwin' and os.path.exists('/usr/include/ffi.h'):
+    # A system with a pre-existing libffi.
+    LIBFFI_SOURCES=None
+
 def subprocess(taskName, cmd, validRes=None):
     print "Performing task: %s" % (taskName,)
     fd = os.popen(cmd, 'r')
@@ -120,17 +121,17 @@ if LIBFFI_SOURCES is not None:
         subprocess('Building FFI', "cd build/libffi/BLD && '%s/configure' --prefix='%s' --disable-shared --enable-static && make install"%(src_path, inst_dir), None)
         
     LIBFFI_BASE='build/libffi'
+    LIBFFI_CFLAGS=[ 
+        "-isystem", "%s/include"%LIBFFI_BASE, 
+    ]
+    LIBFFI_LDFLAGS=[ 
+        '-L%s/lib'%LIBFFI_BASE, '-lffi', 
+    ]
 
-elif os.environ.has_key('LIBFFI_BASE'):
-    LIBFFI_BASE=os.environ['LIBFFI_BASE']
 else:
-    LIBFFI_BASE='libffi'
-LIBFFI_CFLAGS=[ 
-    "-isystem", "%s/include"%LIBFFI_BASE, 
-]
-LIBFFI_LDFLAGS=[ 
-    '-L%s/lib'%LIBFFI_BASE, '-lffi', 
-]
+    LIBFFI_CFLAGS=[]
+    LIBFFI_LDFLAGS=['-lffi']
+
 
 sourceFiles = [
 	"Modules/objc/objc-runtime-apple.m",
