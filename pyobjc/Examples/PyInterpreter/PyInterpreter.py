@@ -479,7 +479,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
                 # of the interactive line
                 return NO
             # multiline paste support
-            self.clearLine()
+            #self.clearLine()
             newString = self.currentLine() + newString
             for s in newString.strip().split('\n'):
                 self.writeCode_(s+'\n')
