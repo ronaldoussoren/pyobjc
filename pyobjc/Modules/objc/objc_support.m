@@ -90,7 +90,8 @@ objc_skip_typespec (const char *type)
       return objc_skip_typespec (++type);
     
     default:
-      fprintf (stderr, "objc_skip_typespec: Unhandled type '%c'\n", *type);
+      PySys_WriteStderr("PyObjC: objc_skip_typespec: Unhandled type '%c'\n", 
+      	*type);
       abort();
     }
 }
@@ -205,7 +206,8 @@ objc_alignof_type (const char *type)
 	    return __alignof__(unsigned long long);
     
     default:
-      fprintf (stderr, "objc_align_type: Unhandled type '%c'\n", *type);
+      PySys_WriteStderr("PyObjC: objc_align_type: Unhandled type '%c'\n", 
+      	*type);
       abort();
     }
 }
@@ -343,7 +345,8 @@ objc_sizeof_type (const char *type)
 	    return sizeof(unsigned long long);
 
     default:
-      fprintf (stderr, "objc_sizeof_type: Unhandled type '%c'\n", *type);
+      PySys_WriteStderr("PyObjC: objc_sizeof_type: Unhandled type '%c'\n", 
+      	*type);
       abort();
     }
 }
@@ -443,7 +446,7 @@ depythonify_c_array (const char *type, PyObject *arg, void *datum)
 #define ERRMSG "a tuple of %d items, got one of %d"
       static char errmsg[sizeof ERRMSG + 4];
 
-      sprintf (errmsg, ERRMSG, nitems, PyTuple_Size (arg));
+      snprintf (errmsg, sizeof(errmsg), ERRMSG, nitems, PyTuple_Size (arg));
       return errmsg;
 #undef ERRMSG
     }
@@ -481,7 +484,7 @@ depythonify_c_struct (const char *types, PyObject *arg, void *datum)
 #define ERRMSG "a tuple of %d items, got one of %d"
       static char errmsg[sizeof ERRMSG + 4];
 
-      sprintf (errmsg, ERRMSG, nitems, PyTuple_Size (arg));
+      snprintf (errmsg, sizeof(errmsg), ERRMSG, nitems, PyTuple_Size (arg));
       return errmsg;
 #undef ERRMSG
     }
@@ -599,6 +602,7 @@ pythonify_c_value (const char *type, void *datum)
         else if (ObjC_HasPythonImplementation(obj))
         {
           retobject =  ObjC_GetPythonImplementation(obj);
+	  OC_CheckRevive(retobject);
           Py_INCREF(retobject);
         }
         else
@@ -913,7 +917,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	*(id *) datum = [NSNumber numberWithLong:PyInt_AS_LONG (argument)];
       else if (PySequence_Check(argument))  
 	*(id *) datum = [OC_PythonArray newWithPythonObject:argument];
-      else if (PyMapping_Check(argument))  
+      else if (PyDict_Check(argument))  
 	*(id *) datum = [OC_PythonDictionary newWithPythonObject:argument];
       else
         *(id *) datum = [OC_PythonObject newWithObject:argument];
@@ -973,7 +977,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 #define ERRMSG "a string of size %d instead of %d"
 		  static char errmsg[sizeof (ERRMSG)+6+6];
 		  
-		  sprintf (errmsg, ERRMSG, expected_size, PyString_Size (argument));
+		  snprintf (errmsg, sizeof(errmsg), ERRMSG, expected_size, PyString_Size (argument));
 		  error = errmsg;
 #undef ERRMSG
 		  break;
@@ -1029,7 +1033,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 #define ERRMSG "a string of size %d instead of %d"
               static char errmsg[sizeof (ERRMSG)+6+6];
 
-              sprintf (errmsg, ERRMSG, expected_size, PyString_Size (argument));
+              snprintf (errmsg, sizeof(errmsg), ERRMSG, expected_size, PyString_Size (argument));
               error = errmsg;
 #undef ERRMSG
             }
@@ -1059,7 +1063,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 #define ERRMSG "unhandled typespec %c"
         static char msg[sizeof ERRMSG];
 
-        sprintf (msg, ERRMSG, *type);
+        snprintf (msg, sizeof(msg), ERRMSG, *type);
         error = msg;
         break;
 #undef ERRMSG
