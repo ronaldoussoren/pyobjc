@@ -1,0 +1,26 @@
+/**
+	Python source file specs.
+*/
+(
+{
+  Identifier = text.script.python;
+  BasedOn = text.script;
+  Extensions = (py);
+  MIMETypes = ("text/x-python-script");
+  MagicWord = ("#!/bin/python",
+	       "#! /bin/python",
+	       "#!/usr/bin/python",
+	       "#! /usr/bin/python",
+	       "#!/usr/local/bin/python",
+	       "#! /usr/local/bin/python",
+	       "#!/usr/bin/env python",
+	       "#! /usr/bin/env python",
+	       );
+  ComputerLanguage = shell.python;
+},
+{
+  Identifier = compiled.python;
+  BasedOn = compiled;
+  Extensions = (pyc,pyo);
+}
+)

@@ -124,9 +124,6 @@ shutil.copyfile("License.txt", os.path.join(OUTPUTDIR, "License.txt"))
 
 print "Setting up developer templates"
 
-
-
-
 nastyFiles = ['.DS_Store', '.gdb_history']
 
 def killNasties(irrelevant, dirName, names):
@@ -143,8 +140,8 @@ def killNasties(irrelevant, dirName, names):
 
 basedir = '%s/package'%(BUILDDIR)
 
-makeDir(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application')
-templateDestination = os.path.join(basedir, 'Developer', 'ProjectBuilder Extras',
+makeDir(basedir, 'Library', 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application')
+templateDestination = os.path.join(basedir, 'Library', 'Developer', 'ProjectBuilder Extras',
                                    'Project Templates', 'Application')
 
 for dname in os.listdir('Project Templates'):
@@ -153,17 +150,20 @@ for dname in os.listdir('Project Templates'):
     if not os.path.isdir(path): continue
     shutil.copytree(path, os.path.join(templateDestination, dname))
 
-print "Setting up developer examples"
+print "Setting up project builder Python language specifications"
+makeDir(basedir, 'Library', 'Developer', 'ProjectBuilder Extras')
+pbxSpecificationsDestination = os.path.join(basedir, 'Library', 'Developer', 'ProjectBuilder Extras', 'Specifications')
+shutil.copytree(os.path.join('ProjectBuilder Extras','Specifications'), pbxSpecificationsDestination)
 
-makeDir(basedir, 'Developer', 'Examples')
-examplesDestination = os.path.join(basedir, 'Developer', 'Examples', 'PyObjC')
+print "Setting up developer examples"
+makeDir(basedir, 'Library', 'Developer', 'Examples')
+examplesDestination = os.path.join(basedir, 'Library', 'Developer', 'Examples', 'PyObjC')
 shutil.copytree('Examples', examplesDestination)
 
 print "Setting up some documentation"
-makeDir(basedir, 'Developer', 'Documentation')
-docsDestination = os.path.join(basedir, 'Developer', 'Documentation', 'PyObjC')
+makeDir(basedir, 'Library', 'Developer', 'Documentation')
+docsDestination = os.path.join(basedir, 'Library', 'Developer', 'Documentation', 'PyObjC')
 shutil.copytree('Doc', docsDestination)
-
 
 os.path.walk(templateDestination, killNasties, None)
 os.path.walk(examplesDestination, killNasties, None)
@@ -184,4 +184,4 @@ pm.build(os.path.join(basedir),
 	Relocatable="NO",
         RootVolumeOnly="YES")
 
-print "Done, don't forget to test the output!"
+print "Done. Don't forget to test the output!"
