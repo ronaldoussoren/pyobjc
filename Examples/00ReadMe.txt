@@ -261,6 +261,18 @@ later.
 
 .. __: CocoaBindings
 
+* `ControlledPreferences`_
+  
+  Demonstrates how to use Cocoa Bindings to simplify storing and
+  retrieving user preferences.  Also demonstrates how to use an
+  ``NSValueTransformer`` to archive/unarchive a non-property-list
+  type automatically (``NSColor``, in this case).
+
+  Originally from `Cocoa Bindings Examples and Hints`_,
+  converted to PyObjC by u.fiedler.
+
+.. _`ControlledPreferences`: CocoaBindings/ControlledPreferences
+
 * `CurrencyConvBinding`_
 
   A rewrite of `CurrencyConverter`_ using Cocoa Bindings.
@@ -271,6 +283,16 @@ later.
 
 .. _`CurrencyConvBinding`: CocoaBindings/CurrencyConvBinding
 .. _`Introduction to Developing Cocoa Applications Using Bindings`: http://developer.apple.com/documentation/Cocoa/Conceptual/CurrencyConverterBindings/index.html
+
+* `FilteringController`_
+
+  Demonstrates how to subclass ``NSArrayController`` to implement filtering
+  of a ``NSTableView``.  Also demonstrates the use of indexed accessors.
+  
+  Originally from `Cocoa Bindings Examples and Hints`_,
+  converted to PyObjC by u.fiedler.
+
+.. _`FilteringController`: CocoaBindings/FilteringController
 
 * `ManualBindings`_
 
