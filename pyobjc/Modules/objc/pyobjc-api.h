@@ -333,7 +333,7 @@ PyObjC_ImportAPI(PyObject* calling_module)
 	PyObject* m;
 	PyObject* d;
 	PyObject* api_obj;
-	PyObject* name = PyString_FromString("_objc");
+	PyObject* name = PyString_FromString("objc");
 	
 	m = PyImport_Import(name);
 	Py_DECREF(name);
