@@ -16,6 +16,17 @@
 
 /** Functions */
 
+#ifdef GNUSTEP
+#include "_Fnd_Functions.GNUstep.inc"
+
+#else /* !GNUSTEP */
+
+#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
+#include "_Fnd_Functions.inc"
+#endif
+
+#endif /* !GNUSTEP */
+
 /* The headings below refer to the reference pages on developer.apple.com */
 
 /* 'Assertions' */
@@ -29,23 +40,17 @@
 PyObject* objc_NSLocalizedString(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "key", "comment", NULL };
-	char* key;
-	char* comment;
 	PyObject*  result;
 	NSString* oc_result;
 	NSString* oc_key;
 	NSString* oc_comment;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "ss:NSLocalizedString",
-			keywords, &key, &comment)) {
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSLocalizedString",
+			keywords, convert_id, &oc_key, convert_id, &oc_comment)) {
 		return NULL;
 	}
 
-	oc_key = [NSString stringWithCString:key];
-	oc_comment = [NSString stringWithCString:comment];
 	oc_result = NSLocalizedString(oc_key, oc_comment);
-	[oc_key release];
-	[oc_comment release];
 
 	result = ObjC_IdToPython(oc_result);
 	[oc_result release];
@@ -56,28 +61,18 @@ static	char* keywords[] = { "key", "comment", NULL };
 PyObject* objc_NSLocalizedStringFromTable(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "key", "tableName", "comment", NULL };
-	char* key;
-	char* tableName;
-	char* comment;
 	PyObject*  result;
 	NSString* oc_result;
 	NSString* oc_key;
 	NSString* oc_tableName;
 	NSString* oc_comment;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sss:NSLocalizedString",
-			keywords, &tableName, &key, &comment)) {
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&:NSLocalizedString",
+			keywords, convert_id, &oc_tableName, convert_id, &oc_key, convert_id, &oc_comment)) {
 		return NULL;
 	}
 
-	oc_key = [NSString stringWithCString:key];
-	oc_tableName = [NSString stringWithCString:tableName];
-	oc_comment = [NSString stringWithCString:comment];
 	oc_result = NSLocalizedStringFromTable(oc_key, oc_tableName, oc_comment);
-	[oc_key release];
-	[oc_tableName release];
-	[oc_comment release];
-
 	result = ObjC_IdToPython(oc_result);
 	[oc_result release];
 	return result;
@@ -87,9 +82,6 @@ static	char* keywords[] = { "key", "tableName", "comment", NULL };
 PyObject* objc_NSLocalizedStringFromTableInBundle(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
-	char* key;
-	char* tableName;
-	char* comment;
 	PyObject* bundle;
 	PyObject*  result;
 	NSString* oc_result;
@@ -98,8 +90,8 @@ static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
 	NSString* oc_tableName;
 	NSString* oc_comment;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sssO:NSLocalizedString",
-			keywords, &tableName, &key, &comment, &bundle)) {
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O:NSLocalizedString",
+			keywords, convert_id, &oc_tableName, convert_id, &oc_key, convert_id, &oc_comment, &bundle)) {
 		return NULL;
 	}
 	if (!ObjCObject_Check(bundle)) {
@@ -108,31 +100,15 @@ static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
 		return NULL;
 	}
 
-	oc_key = [NSString stringWithCString:key];
-	oc_tableName = [NSString stringWithCString:tableName];
-	oc_comment = [NSString stringWithCString:comment];
 	oc_bundle = ObjCObject_GetObject(bundle);
 	oc_result = NSLocalizedStringFromTableInBundle(
 			oc_key, oc_tableName, oc_bundle, oc_comment);
-	[oc_key release];
-	[oc_tableName release];
-	[oc_comment release];
 
 	result = ObjC_IdToPython(oc_result);
 	[oc_result release];
 	return result;
 }
 
-#ifdef GNUSTEP
-#include "_Fnd_Functions.GNUstep.inc"
-
-#else /* !GNUSTEP */
-
-#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
-#include "_Fnd_Functions.inc"
-#endif
-
-#endif /* !GNUSTEP */
 
 static PyMethodDef foundation_methods[] = {
 	{ 
