@@ -627,6 +627,37 @@ struct uchar_table {
 };
 
 
+static int 
+fontMatrix(PyObject* d, const char* name, const float* value)
+{
+	int i;
+
+	if (value == NULL) {
+		return PyDict_SetItemString(d, name, Py_None);
+	}
+	PyObject* v = PyTuple_New(6);
+	if (v == NULL) {
+		return -1;
+	}
+
+	for (i = 0; i < 6; i++) {
+		PyObject* t;
+
+		t = PyFloat_FromDouble(value[i]);
+		if (t == NULL) {
+			Py_DECREF(v);
+			return -1;
+		}
+	}
+	
+	if (PyDict_SetItemString(d, name, v) == -1) {
+		Py_DECREF(v);
+		return -1;
+	}
+	Py_DECREF(v);
+	return 0;
+}
+
 
 void init_AppKit(void);
 
@@ -785,4 +816,8 @@ void init_AppKit(void)
 	          if (res < 0) return;
 	  }
 	}
+
+
+	/* Some special constants */
+	fontMatrix(d, "NSFontIdentityMatrix", NSFontIdentityMatrix);
 }
