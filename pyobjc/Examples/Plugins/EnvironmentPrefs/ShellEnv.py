@@ -12,7 +12,6 @@ TODO:
 - Undo
 """
 import objc
-objc.registerPlugin('EnvironmentPane')
 from AppKit import *
 from Foundation import *
 from PreferencePanes import *
@@ -23,11 +22,7 @@ import os
 # the Python code fails.
 #objc.setVerbose(1)
 
-# NibClassBuilder needs to read our Nib files to do its work,
-# we need to specify the optional second argument to extractClasses
-# because we're not in the main bundle.
-NibClassBuilder.extractClasses("EnvironmentPane",
-    objc.pluginBundle("EnvironmentPane"))
+NibClassBuilder.extractClasses("EnvironmentPane")
 
 # Location of the environment.plist
 ENVPLIST="~/.MacOSX/environment.plist"
@@ -39,7 +34,6 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
     """
     The 'model/controller' for the "Shell Environment" preference pane
     """
-    __bundle_hack__ = True
 
     #__slots__ = (
     #    'environ',  # The actual environment, as a NSMutableDictionary

@@ -12,7 +12,6 @@ from ProgressCell import ProgressCell
 #pprint.pprint(dict(os.environ))
 
 class ProgressViewPalette (IBPalette):
-    __bundle_hack__ = True
     def finishInstantiate(self):
         # `finishInstantiate' can be used to associate non-view objects with
         # a view in the palette's nib.  For example:

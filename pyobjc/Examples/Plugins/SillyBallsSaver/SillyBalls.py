@@ -5,20 +5,15 @@ Based on "Silly Balls.saver" by Eric Peyton <epeyton@epicware.com>
     http://www.epicware.com/macosxsavers.html
 """
 import objc
-objc.registerPlugin('SillyBalls')
 
 from AppKit import NSBezierPath, NSColor
 from ScreenSaver import *
 from random import random, randrange
 from PyObjCTools import NibClassBuilder
 
-# NibClassBuilder needs to read our Nib files to do its work,
-# we need to specify the optional second argument to extractClasses
-# because we're not in the main bundle.
-NibClassBuilder.extractClasses("SillyBalls", objc.pluginBundle("SillyBalls"))
+NibClassBuilder.extractClasses("SillyBalls")
 
 class SillyBalls (NibClassBuilder.AutoBaseClass):
-    __bundle_hack__ = True
 
     def animateOneFrame(self):
         # choose a random point.
