@@ -423,19 +423,28 @@ if PyObjCTest_KeyValueObserver is not None:
                 self._kvo_foo = None
             return self
 
+        def initiateDestructionSequence(self):
+            # Exercise a bug between KVO and the old
+            # initialization scheme.
+            pass
+        
         def setBar_(self, value):
+            self.initiateDestructionSequence()
             self._kvo_bar = value
         setBar_ = objc.accessor(setBar_)
 
         def bar(self):
+            self.initiateDestructionSequence()
             return self._kvo_bar
         bar = objc.accessor(bar)
 
         def setFoo_(self, value):
+            self.initiateDestructionSequence()
             self._kvo_foo = self.FOOBASE + value
         setFoo_ = objc.accessor(setFoo_)
 
         def foo(self):
+            self.initiateDestructionSequence()
             return self._kvo_foo
         foo = objc.accessor(foo)
 

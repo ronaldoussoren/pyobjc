@@ -332,13 +332,13 @@ if gs_root is None:
         #"-Werror",
 
         # no optimization, for debugging
-        #"-O0"
+        #"-O0",
 
         # g4 optimized
         #"-O3", "-mcpu=7450", "-maltivec",
 
         # g5 optimized
-        #"-fast", "-fPIC"
+        #"-fast", "-fPIC",
         ]
 
     OBJC_LDFLAGS=[
