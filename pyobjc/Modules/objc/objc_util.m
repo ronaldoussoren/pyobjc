@@ -140,12 +140,13 @@ NSException* PyObjCErr_AsExc(void)
 	PyObject* exc_traceback;
 	PyObject* args;
 	PyObject* repr;
+	PyObject* typerepr;
 	NSException* val;
 	NSMutableDictionary* userInfo;
 
 	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
 	if (!exc_type)
-		return;
+		return nil;
 
 	PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
@@ -202,6 +203,7 @@ NSException* PyObjCErr_AsExc(void)
 	Py_XDECREF(args);
 
 	repr = PyObject_Str(exc_value);
+	typerepr = PyObject_Str(exc_type);
 	userInfo = [NSMutableDictionary dictionaryWithCapacity: 3];
 	[userInfo setObject:
 		[OC_PythonObject newWithObject:exc_type]
@@ -216,10 +218,11 @@ NSException* PyObjCErr_AsExc(void)
 			forKey:@"__pyobjc_exc_traceback__"];
 
 	val = [NSException 
-		exceptionWithName:@"OC_PythonException"
-		reason:[NSString stringWithCString:PyString_AS_STRING(repr)]
+		exceptionWithName:@"OC_PythonException_%s"
+		reason:[NSString stringWithFormat:@"%s: %s", PyString_AS_STRING(typerepr), PyString_AS_STRING(repr)]
 		userInfo:userInfo];
 
+	Py_DECREF(typerepr);
 	Py_DECREF(repr);
 
 	if (ObjC_VerboseLevel) {
