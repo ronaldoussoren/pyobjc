@@ -30,6 +30,11 @@ struct Struct3 {
 	int  i;
 };
 
+struct Struct4 {
+	char ch;
+	long long i;
+};
+
 
 
 /* Helper stuff for TestNSInvoke */
@@ -111,6 +116,10 @@ BEGIN_UNITTEST(StructSize)
 	    sizeof(struct Struct3), PyObjCRT_SizeOfType(@encode(struct Struct3)),
 	    "%d");
 
+	ASSERT_EQUALS(
+	    sizeof(struct Struct4), PyObjCRT_SizeOfType(@encode(struct Struct4)),
+	    "%d");
+
 END_UNITTEST
 
 BEGIN_UNITTEST(StructAlign)
@@ -128,6 +137,11 @@ BEGIN_UNITTEST(StructAlign)
 	ASSERT_EQUALS(
 	    __alignof__(struct Struct3), 
 	    PyObjCRT_AlignOfType(@encode(struct Struct3)),
+	    "%d");
+
+	ASSERT_EQUALS(
+	    __alignof__(struct Struct4), 
+	    PyObjCRT_AlignOfType(@encode(struct Struct4)),
 	    "%d");
 
 END_UNITTEST
@@ -210,6 +224,28 @@ BEGIN_UNITTEST(FillStruct3)
 
 	ASSERT_EQUALS(output.ch, '\001',    "%d");
 	ASSERT_EQUALS(output.i, 2,  "%d");
+
+END_UNITTEST
+
+BEGIN_UNITTEST(FillStruct4)
+
+	PyObject* input;
+	struct Struct4 output;
+	int r;
+
+	input = PyTuple_New(2);
+	FAIL_IF(input == NULL);
+
+	PyTuple_SET_ITEM(input, 0,  PyString_FromStringAndSize("\001", 1));
+	PyTuple_SET_ITEM(input, 1, PyInt_FromLong(500000));
+	
+	r = PyObjC_PythonToObjC(@encode(struct Struct4), input, &output);
+	FAIL_IF(r < 0);
+
+	Py_DECREF(input);
+
+	ASSERT_EQUALS(output.ch, '\001',    "%d");
+	ASSERT_EQUALS(output.i, 500000,  "%ll");
 
 END_UNITTEST
 
@@ -304,6 +340,26 @@ BEGIN_UNITTEST(ExtractStruct3)
 
 END_UNITTEST
 
+BEGIN_UNITTEST(ExtractStruct4) 
+
+	struct Struct4 input;
+	PyObject* output;
+
+	input.ch = 1;
+	input.i = 500000;
+
+	output = PyObjC_ObjCToPython(@encode(struct Struct4), &input);
+	FAIL_IF(output == NULL);
+
+	ASSERT_ISINSTANCE(output, Tuple);	
+	ASSERT_EQUALS(PyTuple_GET_SIZE(output), 2, "%d");
+	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 0), Int);
+	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 1), Long);
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(output, 0)), 1, "%d");
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(output, 1)), 500000, "%d");
+
+END_UNITTEST
+
 #ifdef _C_BOOL
 
 BEGIN_UNITTEST(TestSizeOfBool)
@@ -347,9 +403,11 @@ static PyMethodDef unittest_methods[] = {
 	TESTDEF(FillStruct1),	
 	TESTDEF(FillStruct2),	
 	TESTDEF(FillStruct3),	
+	TESTDEF(FillStruct4),	
 	TESTDEF(ExtractStruct1),	
 	TESTDEF(ExtractStruct2),	
 	TESTDEF(ExtractStruct3),	
+	TESTDEF(ExtractStruct4),	
 #ifdef _C_BOOL
 	TESTDEF(TestSizeOfBool),	
 #endif

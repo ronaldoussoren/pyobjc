@@ -225,6 +225,24 @@ setSignature("PyObjC_TestClass2", "callstructTestStruct3InArg:of:", "@@:n^{_Test
 setSignature("PyObjC_TestClass2", "invokestructTestStruct3InOutArg:of:", "@@:N^{_TestStruct3=ci}@")
 setSignature("PyObjC_TestClass2", "invokestructTestStruct3OutArg:of:", "v@:o^{_TestStruct3=ci}@")
 setSignature("PyObjC_TestClass2", "invokestructTestStruct3InArg:of:", "@@:n^{_TestStruct3=ci}@")
+setSignature("PyObjC_TestClass1", "structTestStruct4InOutArg:", "@@:N^{_TestStruct4=cq}")
+setSignature("PyObjC_TestClass1", "structTestStruct4OutArg:", "v@:o^{_TestStruct4=cq}")
+setSignature("PyObjC_TestClass1", "structTestStruct4InArg:", "@@:n^{_TestStruct4=cq}")
+setSignature("PyObjC_TestClass2", "callstructTestStruct4InOutArg:of:", "@@:N^{_TestStruct4=cq}@")
+setSignature("PyObjC_TestClass2", "callstructTestStruct4OutArg:of:", "v@:o^{_TestStruct4=cq}@")
+setSignature("PyObjC_TestClass2", "callstructTestStruct4InArg:of:", "@@:n^{_TestStruct4=cq}@")
+setSignature("PyObjC_TestClass2", "invokestructTestStruct4InOutArg:of:", "@@:N^{_TestStruct4=cq}@")
+setSignature("PyObjC_TestClass2", "invokestructTestStruct4OutArg:of:", "v@:o^{_TestStruct4=cq}@")
+setSignature("PyObjC_TestClass2", "invokestructTestStruct4InArg:of:", "@@:n^{_TestStruct4=cq}@")
+setSignature("PyObjC_TestClass1", "structTestStruct5InOutArg:", "@@:N^{_TestStruct5=cd}")
+setSignature("PyObjC_TestClass1", "structTestStruct5OutArg:", "v@:o^{_TestStruct5=cd}")
+setSignature("PyObjC_TestClass1", "structTestStruct5InArg:", "@@:n^{_TestStruct5=cd}")
+setSignature("PyObjC_TestClass2", "callstructTestStruct5InOutArg:of:", "@@:N^{_TestStruct5=cd}@")
+setSignature("PyObjC_TestClass2", "callstructTestStruct5OutArg:of:", "v@:o^{_TestStruct5=cd}@")
+setSignature("PyObjC_TestClass2", "callstructTestStruct5InArg:of:", "@@:n^{_TestStruct5=cd}@")
+setSignature("PyObjC_TestClass2", "invokestructTestStruct5InOutArg:of:", "@@:N^{_TestStruct5=cd}@")
+setSignature("PyObjC_TestClass2", "invokestructTestStruct5OutArg:of:", "v@:o^{_TestStruct5=cd}@")
+setSignature("PyObjC_TestClass2", "invokestructTestStruct5InArg:of:", "@@:n^{_TestStruct5=cd}@")
 
 from objc.test.testbndl2 import *
 
@@ -389,6 +407,18 @@ class PyToObjC (TestCase):
 		PyObjC_TestClass1.clsReset()
 		self.assertEquals(PyObjC_TestClass1.structTestStruct3ClsMethod(), (1, 2))
 		self.assertEquals(PyObjC_TestClass1.structTestStruct3ClsMethod(), (2, 4))
+
+
+	def testClsstructTestStruct4Result(self):
+		PyObjC_TestClass1.clsReset()
+		self.assertEquals(PyObjC_TestClass1.structTestStruct4ClsMethod(), (1, 500000))
+		self.assertEquals(PyObjC_TestClass1.structTestStruct4ClsMethod(), (2, 4))
+
+
+	def testClsstructTestStruct5Result(self):
+		PyObjC_TestClass1.clsReset()
+		self.assertEquals(PyObjC_TestClass1.structTestStruct5ClsMethod(), (1, 2.0))
+		self.assertEquals(PyObjC_TestClass1.structTestStruct5ClsMethod(), (2, 4.0))
 
 
 	# Simple returns from instance methods
@@ -582,6 +612,22 @@ class PyToObjC (TestCase):
 		o.reset()
 		self.assertEquals(o.structTestStruct3Method(), (1, 2))
 		self.assertEquals(o.structTestStruct3Method(), (2, 4))
+
+
+	def teststructTestStruct4Result(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		self.assertEquals(o.structTestStruct4Method(), (1, 500000))
+		self.assertEquals(o.structTestStruct4Method(), (2, 4))
+
+
+	def teststructTestStruct5Result(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		self.assertEquals(o.structTestStruct5Method(), (1, 2.0))
+		self.assertEquals(o.structTestStruct5Method(), (2, 4.0))
 
 
 	# One argument
@@ -818,6 +864,24 @@ class PyToObjC (TestCase):
 		self.assertEquals(r, (1, 2))
 		r = o.structTestStruct3Arg_((2, 4))
 		self.assertEquals(r, (2, 4))
+
+
+	def teststructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_((1, 500000))
+		self.assertEquals(r, (1, 500000))
+		r = o.structTestStruct4Arg_((2, 4))
+		self.assertEquals(r, (2, 4))
+
+
+	def teststructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_((1, 2.0))
+		self.assertEquals(r, (1, 2.0))
+		r = o.structTestStruct5Arg_((2, 4.0))
+		self.assertEquals(r, (2, 4.0))
 
 
 	# Two arguments
@@ -1332,6 +1396,42 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testboolAndstructTestStruct4Arg(self):
+		if not HAVE_BOOL: return
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andstructTestStruct4Arg_(YES, (1, 500000))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.boolArg_andstructTestStruct4Arg_(YES, (2, 4))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (2, 4))
+		r = o.boolArg_andstructTestStruct4Arg_(NO, (1, 500000))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.boolArg_andstructTestStruct4Arg_(NO, (2, 4))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testboolAndstructTestStruct5Arg(self):
+		if not HAVE_BOOL: return
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andstructTestStruct5Arg_(YES, (1, 2.0))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.boolArg_andstructTestStruct5Arg_(YES, (2, 4.0))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.boolArg_andstructTestStruct5Arg_(NO, (1, 2.0))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.boolArg_andstructTestStruct5Arg_(NO, (2, 4.0))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	def testBOOLAndboolArg(self):
 		if not HAVE_BOOL: return
 		o = PyObjC_TestClass1.alloc().init()
@@ -1820,6 +1920,40 @@ class PyToObjC (TestCase):
 		r = o.BOOLArg_andstructTestStruct3Arg_(NO, (2, 4))
 		self.assertEquals(r[0], NO)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testBOOLAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.BOOLArg_andstructTestStruct4Arg_(YES, (1, 500000))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.BOOLArg_andstructTestStruct4Arg_(YES, (2, 4))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (2, 4))
+		r = o.BOOLArg_andstructTestStruct4Arg_(NO, (1, 500000))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.BOOLArg_andstructTestStruct4Arg_(NO, (2, 4))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testBOOLAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.BOOLArg_andstructTestStruct5Arg_(YES, (1, 2.0))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.BOOLArg_andstructTestStruct5Arg_(YES, (2, 4.0))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.BOOLArg_andstructTestStruct5Arg_(NO, (1, 2.0))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.BOOLArg_andstructTestStruct5Arg_(NO, (2, 4.0))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	def testcharAndboolArg(self):
@@ -2502,6 +2636,52 @@ class PyToObjC (TestCase):
 		r = o.charArg_andstructTestStruct3Arg_(127, (2, 4))
 		self.assertEquals(r[0], 127)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcharAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.charArg_andstructTestStruct4Arg_(-128, (1, 500000))
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.charArg_andstructTestStruct4Arg_(-128, (2, 4))
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], (2, 4))
+		r = o.charArg_andstructTestStruct4Arg_(0, (1, 500000))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.charArg_andstructTestStruct4Arg_(0, (2, 4))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.charArg_andstructTestStruct4Arg_(127, (1, 500000))
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.charArg_andstructTestStruct4Arg_(127, (2, 4))
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcharAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.charArg_andstructTestStruct5Arg_(-128, (1, 2.0))
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.charArg_andstructTestStruct5Arg_(-128, (2, 4.0))
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.charArg_andstructTestStruct5Arg_(0, (1, 2.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.charArg_andstructTestStruct5Arg_(0, (2, 4.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.charArg_andstructTestStruct5Arg_(127, (1, 2.0))
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.charArg_andstructTestStruct5Arg_(127, (2, 4.0))
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	def testsignedshortAndboolArg(self):
@@ -3570,6 +3750,76 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testsignedshortAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.signedshortArg_andstructTestStruct4Arg_(-(1<<14), (1, 500000))
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedshortArg_andstructTestStruct4Arg_(-(1<<14), (2, 4))
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedshortArg_andstructTestStruct4Arg_(-42, (1, 500000))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedshortArg_andstructTestStruct4Arg_(-42, (2, 4))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedshortArg_andstructTestStruct4Arg_(0, (1, 500000))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedshortArg_andstructTestStruct4Arg_(0, (2, 4))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedshortArg_andstructTestStruct4Arg_(42, (1, 500000))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedshortArg_andstructTestStruct4Arg_(42, (2, 4))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedshortArg_andstructTestStruct4Arg_(1 << 14, (1, 500000))
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedshortArg_andstructTestStruct4Arg_(1 << 14, (2, 4))
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testsignedshortAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.signedshortArg_andstructTestStruct5Arg_(-(1<<14), (1, 2.0))
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedshortArg_andstructTestStruct5Arg_(-(1<<14), (2, 4.0))
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedshortArg_andstructTestStruct5Arg_(-42, (1, 2.0))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedshortArg_andstructTestStruct5Arg_(-42, (2, 4.0))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedshortArg_andstructTestStruct5Arg_(0, (1, 2.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedshortArg_andstructTestStruct5Arg_(0, (2, 4.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedshortArg_andstructTestStruct5Arg_(42, (1, 2.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedshortArg_andstructTestStruct5Arg_(42, (2, 4.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedshortArg_andstructTestStruct5Arg_(1 << 14, (1, 2.0))
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedshortArg_andstructTestStruct5Arg_(1 << 14, (2, 4.0))
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	def testsignedintAndboolArg(self):
 		if not HAVE_BOOL: return
 		o = PyObjC_TestClass1.alloc().init()
@@ -4634,6 +4884,76 @@ class PyToObjC (TestCase):
 		r = o.signedintArg_andstructTestStruct3Arg_(1 << 30, (2, 4))
 		self.assertEquals(r[0], 1 << 30)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testsignedintAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.signedintArg_andstructTestStruct4Arg_(-(1<<30), (1, 500000))
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedintArg_andstructTestStruct4Arg_(-(1<<30), (2, 4))
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedintArg_andstructTestStruct4Arg_(-42, (1, 500000))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedintArg_andstructTestStruct4Arg_(-42, (2, 4))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedintArg_andstructTestStruct4Arg_(0, (1, 500000))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedintArg_andstructTestStruct4Arg_(0, (2, 4))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedintArg_andstructTestStruct4Arg_(42, (1, 500000))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedintArg_andstructTestStruct4Arg_(42, (2, 4))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedintArg_andstructTestStruct4Arg_(1 << 30, (1, 500000))
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedintArg_andstructTestStruct4Arg_(1 << 30, (2, 4))
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testsignedintAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.signedintArg_andstructTestStruct5Arg_(-(1<<30), (1, 2.0))
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedintArg_andstructTestStruct5Arg_(-(1<<30), (2, 4.0))
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedintArg_andstructTestStruct5Arg_(-42, (1, 2.0))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedintArg_andstructTestStruct5Arg_(-42, (2, 4.0))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedintArg_andstructTestStruct5Arg_(0, (1, 2.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedintArg_andstructTestStruct5Arg_(0, (2, 4.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedintArg_andstructTestStruct5Arg_(42, (1, 2.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedintArg_andstructTestStruct5Arg_(42, (2, 4.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedintArg_andstructTestStruct5Arg_(1 << 30, (1, 2.0))
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedintArg_andstructTestStruct5Arg_(1 << 30, (2, 4.0))
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	def testsignedlongAndboolArg(self):
@@ -5702,6 +6022,76 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testsignedlongAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.signedlongArg_andstructTestStruct4Arg_(-(1<<30), (1, 500000))
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedlongArg_andstructTestStruct4Arg_(-(1<<30), (2, 4))
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedlongArg_andstructTestStruct4Arg_(-42, (1, 500000))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedlongArg_andstructTestStruct4Arg_(-42, (2, 4))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedlongArg_andstructTestStruct4Arg_(0, (1, 500000))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedlongArg_andstructTestStruct4Arg_(0, (2, 4))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedlongArg_andstructTestStruct4Arg_(42, (1, 500000))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedlongArg_andstructTestStruct4Arg_(42, (2, 4))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedlongArg_andstructTestStruct4Arg_(1 << 30, (1, 500000))
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedlongArg_andstructTestStruct4Arg_(1 << 30, (2, 4))
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testsignedlongAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.signedlongArg_andstructTestStruct5Arg_(-(1<<30), (1, 2.0))
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedlongArg_andstructTestStruct5Arg_(-(1<<30), (2, 4.0))
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedlongArg_andstructTestStruct5Arg_(-42, (1, 2.0))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedlongArg_andstructTestStruct5Arg_(-42, (2, 4.0))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedlongArg_andstructTestStruct5Arg_(0, (1, 2.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedlongArg_andstructTestStruct5Arg_(0, (2, 4.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedlongArg_andstructTestStruct5Arg_(42, (1, 2.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedlongArg_andstructTestStruct5Arg_(42, (2, 4.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedlongArg_andstructTestStruct5Arg_(1 << 30, (1, 2.0))
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedlongArg_andstructTestStruct5Arg_(1 << 30, (2, 4.0))
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	def testsignedlonglongAndboolArg(self):
 		if not HAVE_BOOL: return
 		o = PyObjC_TestClass1.alloc().init()
@@ -6768,6 +7158,76 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testsignedlonglongAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.signedlonglongArg_andstructTestStruct4Arg_(-(1L << 60), (1, 500000))
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedlonglongArg_andstructTestStruct4Arg_(-(1L << 60), (2, 4))
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedlonglongArg_andstructTestStruct4Arg_(-42, (1, 500000))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedlonglongArg_andstructTestStruct4Arg_(-42, (2, 4))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedlonglongArg_andstructTestStruct4Arg_(0, (1, 500000))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedlonglongArg_andstructTestStruct4Arg_(0, (2, 4))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedlonglongArg_andstructTestStruct4Arg_(42, (1, 500000))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedlonglongArg_andstructTestStruct4Arg_(42, (2, 4))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = o.signedlonglongArg_andstructTestStruct4Arg_(1L << 60, (1, 500000))
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.signedlonglongArg_andstructTestStruct4Arg_(1L << 60, (2, 4))
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testsignedlonglongAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.signedlonglongArg_andstructTestStruct5Arg_(-(1L << 60), (1, 2.0))
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedlonglongArg_andstructTestStruct5Arg_(-(1L << 60), (2, 4.0))
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedlonglongArg_andstructTestStruct5Arg_(-42, (1, 2.0))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedlonglongArg_andstructTestStruct5Arg_(-42, (2, 4.0))
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedlonglongArg_andstructTestStruct5Arg_(0, (1, 2.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedlonglongArg_andstructTestStruct5Arg_(0, (2, 4.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedlonglongArg_andstructTestStruct5Arg_(42, (1, 2.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedlonglongArg_andstructTestStruct5Arg_(42, (2, 4.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.signedlonglongArg_andstructTestStruct5Arg_(1L << 60, (1, 2.0))
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.signedlonglongArg_andstructTestStruct5Arg_(1L << 60, (2, 4.0))
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	def testunsignedcharAndboolArg(self):
 		if not HAVE_BOOL: return
 		o = PyObjC_TestClass1.alloc().init()
@@ -7448,6 +7908,52 @@ class PyToObjC (TestCase):
 		r = o.unsignedcharArg_andstructTestStruct3Arg_(255, (2, 4))
 		self.assertEquals(r[0], 255)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testunsignedcharAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedcharArg_andstructTestStruct4Arg_(0, (1, 500000))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedcharArg_andstructTestStruct4Arg_(0, (2, 4))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.unsignedcharArg_andstructTestStruct4Arg_(128, (1, 500000))
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedcharArg_andstructTestStruct4Arg_(128, (2, 4))
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], (2, 4))
+		r = o.unsignedcharArg_andstructTestStruct4Arg_(255, (1, 500000))
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedcharArg_andstructTestStruct4Arg_(255, (2, 4))
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testunsignedcharAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedcharArg_andstructTestStruct5Arg_(0, (1, 2.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedcharArg_andstructTestStruct5Arg_(0, (2, 4.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.unsignedcharArg_andstructTestStruct5Arg_(128, (1, 2.0))
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedcharArg_andstructTestStruct5Arg_(128, (2, 4.0))
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.unsignedcharArg_andstructTestStruct5Arg_(255, (1, 2.0))
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedcharArg_andstructTestStruct5Arg_(255, (2, 4.0))
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	def testunsignedshortAndboolArg(self):
@@ -8132,6 +8638,52 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testunsignedshortAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedshortArg_andstructTestStruct4Arg_(0, (1, 500000))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedshortArg_andstructTestStruct4Arg_(0, (2, 4))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.unsignedshortArg_andstructTestStruct4Arg_(42, (1, 500000))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedshortArg_andstructTestStruct4Arg_(42, (2, 4))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = o.unsignedshortArg_andstructTestStruct4Arg_(1<<14, (1, 500000))
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedshortArg_andstructTestStruct4Arg_(1<<14, (2, 4))
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testunsignedshortAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedshortArg_andstructTestStruct5Arg_(0, (1, 2.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedshortArg_andstructTestStruct5Arg_(0, (2, 4.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.unsignedshortArg_andstructTestStruct5Arg_(42, (1, 2.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedshortArg_andstructTestStruct5Arg_(42, (2, 4.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.unsignedshortArg_andstructTestStruct5Arg_(1<<14, (1, 2.0))
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedshortArg_andstructTestStruct5Arg_(1<<14, (2, 4.0))
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	def testunsignedintAndboolArg(self):
 		if not HAVE_BOOL: return
 		o = PyObjC_TestClass1.alloc().init()
@@ -8812,6 +9364,52 @@ class PyToObjC (TestCase):
 		r = o.unsignedintArg_andstructTestStruct3Arg_(1 << 30, (2, 4))
 		self.assertEquals(r[0], 1 << 30)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testunsignedintAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedintArg_andstructTestStruct4Arg_(0, (1, 500000))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedintArg_andstructTestStruct4Arg_(0, (2, 4))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.unsignedintArg_andstructTestStruct4Arg_(42, (1, 500000))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedintArg_andstructTestStruct4Arg_(42, (2, 4))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = o.unsignedintArg_andstructTestStruct4Arg_(1 << 30, (1, 500000))
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedintArg_andstructTestStruct4Arg_(1 << 30, (2, 4))
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testunsignedintAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedintArg_andstructTestStruct5Arg_(0, (1, 2.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedintArg_andstructTestStruct5Arg_(0, (2, 4.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.unsignedintArg_andstructTestStruct5Arg_(42, (1, 2.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedintArg_andstructTestStruct5Arg_(42, (2, 4.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.unsignedintArg_andstructTestStruct5Arg_(1 << 30, (1, 2.0))
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedintArg_andstructTestStruct5Arg_(1 << 30, (2, 4.0))
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	def testunsignedlongAndboolArg(self):
@@ -9496,6 +10094,52 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testunsignedlongAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedlongArg_andstructTestStruct4Arg_(0, (1, 500000))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedlongArg_andstructTestStruct4Arg_(0, (2, 4))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.unsignedlongArg_andstructTestStruct4Arg_(42, (1, 500000))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedlongArg_andstructTestStruct4Arg_(42, (2, 4))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = o.unsignedlongArg_andstructTestStruct4Arg_(1L << 30, (1, 500000))
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedlongArg_andstructTestStruct4Arg_(1L << 30, (2, 4))
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testunsignedlongAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedlongArg_andstructTestStruct5Arg_(0, (1, 2.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedlongArg_andstructTestStruct5Arg_(0, (2, 4.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.unsignedlongArg_andstructTestStruct5Arg_(42, (1, 2.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedlongArg_andstructTestStruct5Arg_(42, (2, 4.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.unsignedlongArg_andstructTestStruct5Arg_(1L << 30, (1, 2.0))
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedlongArg_andstructTestStruct5Arg_(1L << 30, (2, 4.0))
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	def testunsignedlonglongAndboolArg(self):
 		if not HAVE_BOOL: return
 		o = PyObjC_TestClass1.alloc().init()
@@ -10176,6 +10820,52 @@ class PyToObjC (TestCase):
 		r = o.unsignedlonglongArg_andstructTestStruct3Arg_(1L << 62, (2, 4))
 		self.assertEquals(r[0], 1L << 62)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testunsignedlonglongAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedlonglongArg_andstructTestStruct4Arg_(0, (1, 500000))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedlonglongArg_andstructTestStruct4Arg_(0, (2, 4))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.unsignedlonglongArg_andstructTestStruct4Arg_(42, (1, 500000))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedlonglongArg_andstructTestStruct4Arg_(42, (2, 4))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = o.unsignedlonglongArg_andstructTestStruct4Arg_(1L << 62, (1, 500000))
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.unsignedlonglongArg_andstructTestStruct4Arg_(1L << 62, (2, 4))
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testunsignedlonglongAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedlonglongArg_andstructTestStruct5Arg_(0, (1, 2.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedlonglongArg_andstructTestStruct5Arg_(0, (2, 4.0))
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.unsignedlonglongArg_andstructTestStruct5Arg_(42, (1, 2.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedlonglongArg_andstructTestStruct5Arg_(42, (2, 4.0))
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.unsignedlonglongArg_andstructTestStruct5Arg_(1L << 62, (1, 2.0))
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.unsignedlonglongArg_andstructTestStruct5Arg_(1L << 62, (2, 4.0))
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	def testfloatAndboolArg(self):
@@ -11052,6 +11742,64 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testfloatAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.floatArg_andstructTestStruct4Arg_(0.128, (1, 500000))
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.floatArg_andstructTestStruct4Arg_(0.128, (2, 4))
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (2, 4))
+		r = o.floatArg_andstructTestStruct4Arg_(1.0, (1, 500000))
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.floatArg_andstructTestStruct4Arg_(1.0, (2, 4))
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.floatArg_andstructTestStruct4Arg_(42.0, (1, 500000))
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.floatArg_andstructTestStruct4Arg_(42.0, (2, 4))
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.floatArg_andstructTestStruct4Arg_(1e10, (1, 500000))
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.floatArg_andstructTestStruct4Arg_(1e10, (2, 4))
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testfloatAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.floatArg_andstructTestStruct5Arg_(0.128, (1, 2.0))
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.floatArg_andstructTestStruct5Arg_(0.128, (2, 4.0))
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.floatArg_andstructTestStruct5Arg_(1.0, (1, 2.0))
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.floatArg_andstructTestStruct5Arg_(1.0, (2, 4.0))
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.floatArg_andstructTestStruct5Arg_(42.0, (1, 2.0))
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.floatArg_andstructTestStruct5Arg_(42.0, (2, 4.0))
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.floatArg_andstructTestStruct5Arg_(1e10, (1, 2.0))
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.floatArg_andstructTestStruct5Arg_(1e10, (2, 4.0))
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	def testdoubleAndboolArg(self):
 		if not HAVE_BOOL: return
 		o = PyObjC_TestClass1.alloc().init()
@@ -11926,6 +12674,64 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testdoubleAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.doubleArg_andstructTestStruct4Arg_(0.128, (1, 500000))
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.doubleArg_andstructTestStruct4Arg_(0.128, (2, 4))
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (2, 4))
+		r = o.doubleArg_andstructTestStruct4Arg_(1.0, (1, 500000))
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.doubleArg_andstructTestStruct4Arg_(1.0, (2, 4))
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.doubleArg_andstructTestStruct4Arg_(42.0, (1, 500000))
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.doubleArg_andstructTestStruct4Arg_(42.0, (2, 4))
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (2, 4))
+		r = o.doubleArg_andstructTestStruct4Arg_(1e10, (1, 500000))
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.doubleArg_andstructTestStruct4Arg_(1e10, (2, 4))
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testdoubleAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.doubleArg_andstructTestStruct5Arg_(0.128, (1, 2.0))
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.doubleArg_andstructTestStruct5Arg_(0.128, (2, 4.0))
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.doubleArg_andstructTestStruct5Arg_(1.0, (1, 2.0))
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.doubleArg_andstructTestStruct5Arg_(1.0, (2, 4.0))
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.doubleArg_andstructTestStruct5Arg_(42.0, (1, 2.0))
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.doubleArg_andstructTestStruct5Arg_(42.0, (2, 4.0))
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.doubleArg_andstructTestStruct5Arg_(1e10, (1, 2.0))
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.doubleArg_andstructTestStruct5Arg_(1e10, (2, 4.0))
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	def testidAndboolArg(self):
 		if not HAVE_BOOL: return
 		o = PyObjC_TestClass1.alloc().init()
@@ -12222,6 +13028,28 @@ class PyToObjC (TestCase):
 		r = o.idArg_andstructTestStruct3Arg_(NSPriorDayDesignations, (2, 4))
 		self.assertEquals(r[0], NSPriorDayDesignations)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testidAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.idArg_andstructTestStruct4Arg_(NSPriorDayDesignations, (1, 500000))
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], (1, 500000))
+		r = o.idArg_andstructTestStruct4Arg_(NSPriorDayDesignations, (2, 4))
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testidAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.idArg_andstructTestStruct5Arg_(NSPriorDayDesignations, (1, 2.0))
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.idArg_andstructTestStruct5Arg_(NSPriorDayDesignations, (2, 4.0))
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	def testcharPtrAndboolArg(self):
@@ -12906,6 +13734,52 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcharPtrAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.charPtrArg_andstructTestStruct4Arg_("hello", (1, 500000))
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], (1, 500000))
+		r = o.charPtrArg_andstructTestStruct4Arg_("hello", (2, 4))
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], (2, 4))
+		r = o.charPtrArg_andstructTestStruct4Arg_("world", (1, 500000))
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], (1, 500000))
+		r = o.charPtrArg_andstructTestStruct4Arg_("world", (2, 4))
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], (2, 4))
+		r = o.charPtrArg_andstructTestStruct4Arg_("foobar", (1, 500000))
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], (1, 500000))
+		r = o.charPtrArg_andstructTestStruct4Arg_("foobar", (2, 4))
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcharPtrAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.charPtrArg_andstructTestStruct5Arg_("hello", (1, 2.0))
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.charPtrArg_andstructTestStruct5Arg_("hello", (2, 4.0))
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.charPtrArg_andstructTestStruct5Arg_("world", (1, 2.0))
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.charPtrArg_andstructTestStruct5Arg_("world", (2, 4.0))
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.charPtrArg_andstructTestStruct5Arg_("foobar", (1, 2.0))
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.charPtrArg_andstructTestStruct5Arg_("foobar", (2, 4.0))
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	def testNSPointAndboolArg(self):
 		if not HAVE_BOOL: return
 		o = PyObjC_TestClass1.alloc().init()
@@ -13394,6 +14268,40 @@ class PyToObjC (TestCase):
 		r = o.NSPointArg_andstructTestStruct3Arg_((3, 4), (2, 4))
 		self.assertEquals(r[0], (3, 4))
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testNSPointAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.NSPointArg_andstructTestStruct4Arg_((1, 2), (1, 500000))
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.NSPointArg_andstructTestStruct4Arg_((1, 2), (2, 4))
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (2, 4))
+		r = o.NSPointArg_andstructTestStruct4Arg_((3, 4), (1, 500000))
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.NSPointArg_andstructTestStruct4Arg_((3, 4), (2, 4))
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testNSPointAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.NSPointArg_andstructTestStruct5Arg_((1, 2), (1, 2.0))
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.NSPointArg_andstructTestStruct5Arg_((1, 2), (2, 4.0))
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.NSPointArg_andstructTestStruct5Arg_((3, 4), (1, 2.0))
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.NSPointArg_andstructTestStruct5Arg_((3, 4), (2, 4.0))
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	def testNSRectAndboolArg(self):
@@ -13886,6 +14794,40 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testNSRectAndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.NSRectArg_andstructTestStruct4Arg_(((1, 2), (3, 4)), (1, 500000))
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.NSRectArg_andstructTestStruct4Arg_(((1, 2), (3, 4)), (2, 4))
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], (2, 4))
+		r = o.NSRectArg_andstructTestStruct4Arg_(((7, 8), (9, 10)), (1, 500000))
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.NSRectArg_andstructTestStruct4Arg_(((7, 8), (9, 10)), (2, 4))
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testNSRectAndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.NSRectArg_andstructTestStruct5Arg_(((1, 2), (3, 4)), (1, 2.0))
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.NSRectArg_andstructTestStruct5Arg_(((1, 2), (3, 4)), (2, 4.0))
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.NSRectArg_andstructTestStruct5Arg_(((7, 8), (9, 10)), (1, 2.0))
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.NSRectArg_andstructTestStruct5Arg_(((7, 8), (9, 10)), (2, 4.0))
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	def teststructTestStruct1AndboolArg(self):
 		if not HAVE_BOOL: return
 		o = PyObjC_TestClass1.alloc().init()
@@ -14374,6 +15316,40 @@ class PyToObjC (TestCase):
 		r = o.structTestStruct1Arg_andstructTestStruct3Arg_((9, 8, (-1, -2, -3, -4, -5)), (2, 4))
 		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
 		self.assertEquals(r[1], (2, 4))
+
+
+	def teststructTestStruct1AndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct1Arg_andstructTestStruct4Arg_((1, 2, (1, 2, 3, 4, 5)), (1, 500000))
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.structTestStruct1Arg_andstructTestStruct4Arg_((1, 2, (1, 2, 3, 4, 5)), (2, 4))
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (2, 4))
+		r = o.structTestStruct1Arg_andstructTestStruct4Arg_((9, 8, (-1, -2, -3, -4, -5)), (1, 500000))
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.structTestStruct1Arg_andstructTestStruct4Arg_((9, 8, (-1, -2, -3, -4, -5)), (2, 4))
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def teststructTestStruct1AndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct1Arg_andstructTestStruct5Arg_((1, 2, (1, 2, 3, 4, 5)), (1, 2.0))
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.structTestStruct1Arg_andstructTestStruct5Arg_((1, 2, (1, 2, 3, 4, 5)), (2, 4.0))
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.structTestStruct1Arg_andstructTestStruct5Arg_((9, 8, (-1, -2, -3, -4, -5)), (1, 2.0))
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.structTestStruct1Arg_andstructTestStruct5Arg_((9, 8, (-1, -2, -3, -4, -5)), (2, 4.0))
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	def teststructTestStruct2AndboolArg(self):
@@ -14866,6 +15842,40 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def teststructTestStruct2AndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct2Arg_andstructTestStruct4Arg_((1, 2, (1, 2, 3, 4, 5)), (1, 500000))
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.structTestStruct2Arg_andstructTestStruct4Arg_((1, 2, (1, 2, 3, 4, 5)), (2, 4))
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (2, 4))
+		r = o.structTestStruct2Arg_andstructTestStruct4Arg_((9, 8, (-1, -2, -3, -4, -5)), (1, 500000))
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.structTestStruct2Arg_andstructTestStruct4Arg_((9, 8, (-1, -2, -3, -4, -5)), (2, 4))
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def teststructTestStruct2AndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct2Arg_andstructTestStruct5Arg_((1, 2, (1, 2, 3, 4, 5)), (1, 2.0))
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.structTestStruct2Arg_andstructTestStruct5Arg_((1, 2, (1, 2, 3, 4, 5)), (2, 4.0))
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.structTestStruct2Arg_andstructTestStruct5Arg_((9, 8, (-1, -2, -3, -4, -5)), (1, 2.0))
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.structTestStruct2Arg_andstructTestStruct5Arg_((9, 8, (-1, -2, -3, -4, -5)), (2, 4.0))
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	def teststructTestStruct3AndboolArg(self):
 		if not HAVE_BOOL: return
 		o = PyObjC_TestClass1.alloc().init()
@@ -15356,6 +16366,1088 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def teststructTestStruct3AndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct3Arg_andstructTestStruct4Arg_((1, 2), (1, 500000))
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.structTestStruct3Arg_andstructTestStruct4Arg_((1, 2), (2, 4))
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (2, 4))
+		r = o.structTestStruct3Arg_andstructTestStruct4Arg_((2, 4), (1, 500000))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.structTestStruct3Arg_andstructTestStruct4Arg_((2, 4), (2, 4))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def teststructTestStruct3AndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct3Arg_andstructTestStruct5Arg_((1, 2), (1, 2.0))
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.structTestStruct3Arg_andstructTestStruct5Arg_((1, 2), (2, 4.0))
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.structTestStruct3Arg_andstructTestStruct5Arg_((2, 4), (1, 2.0))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.structTestStruct3Arg_andstructTestStruct5Arg_((2, 4), (2, 4.0))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def teststructTestStruct4AndboolArg(self):
+		if not HAVE_BOOL: return
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andboolArg_((1, 500000), YES)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct4Arg_andboolArg_((1, 500000), NO)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], NO)
+		r = o.structTestStruct4Arg_andboolArg_((2, 4), YES)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct4Arg_andboolArg_((2, 4), NO)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], NO)
+
+
+	def teststructTestStruct4AndBOOLArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andBOOLArg_((1, 500000), YES)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct4Arg_andBOOLArg_((1, 500000), NO)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], NO)
+		r = o.structTestStruct4Arg_andBOOLArg_((2, 4), YES)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct4Arg_andBOOLArg_((2, 4), NO)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], NO)
+
+
+	def teststructTestStruct4AndcharArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andcharArg_((1, 500000), -128)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -128)
+		r = o.structTestStruct4Arg_andcharArg_((1, 500000), 0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andcharArg_((1, 500000), 127)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 127)
+		r = o.structTestStruct4Arg_andcharArg_((2, 4), -128)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -128)
+		r = o.structTestStruct4Arg_andcharArg_((2, 4), 0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andcharArg_((2, 4), 127)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 127)
+
+
+	def teststructTestStruct4AndsignedshortArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andsignedshortArg_((1, 500000), -(1<<14))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -(1<<14))
+		r = o.structTestStruct4Arg_andsignedshortArg_((1, 500000), -42)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct4Arg_andsignedshortArg_((1, 500000), 0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andsignedshortArg_((1, 500000), 42)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andsignedshortArg_((1, 500000), 1 << 14)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1 << 14)
+		r = o.structTestStruct4Arg_andsignedshortArg_((2, 4), -(1<<14))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -(1<<14))
+		r = o.structTestStruct4Arg_andsignedshortArg_((2, 4), -42)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct4Arg_andsignedshortArg_((2, 4), 0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andsignedshortArg_((2, 4), 42)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andsignedshortArg_((2, 4), 1 << 14)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1 << 14)
+
+
+	def teststructTestStruct4AndsignedintArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andsignedintArg_((1, 500000), -(1<<30))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -(1<<30))
+		r = o.structTestStruct4Arg_andsignedintArg_((1, 500000), -42)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct4Arg_andsignedintArg_((1, 500000), 0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andsignedintArg_((1, 500000), 42)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andsignedintArg_((1, 500000), 1 << 30)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1 << 30)
+		r = o.structTestStruct4Arg_andsignedintArg_((2, 4), -(1<<30))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -(1<<30))
+		r = o.structTestStruct4Arg_andsignedintArg_((2, 4), -42)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct4Arg_andsignedintArg_((2, 4), 0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andsignedintArg_((2, 4), 42)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andsignedintArg_((2, 4), 1 << 30)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def teststructTestStruct4AndsignedlongArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andsignedlongArg_((1, 500000), -(1<<30))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -(1<<30))
+		r = o.structTestStruct4Arg_andsignedlongArg_((1, 500000), -42)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct4Arg_andsignedlongArg_((1, 500000), 0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andsignedlongArg_((1, 500000), 42)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andsignedlongArg_((1, 500000), 1 << 30)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1 << 30)
+		r = o.structTestStruct4Arg_andsignedlongArg_((2, 4), -(1<<30))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -(1<<30))
+		r = o.structTestStruct4Arg_andsignedlongArg_((2, 4), -42)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct4Arg_andsignedlongArg_((2, 4), 0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andsignedlongArg_((2, 4), 42)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andsignedlongArg_((2, 4), 1 << 30)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def teststructTestStruct4AndsignedlonglongArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andsignedlonglongArg_((1, 500000), -(1L << 60))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -(1L << 60))
+		r = o.structTestStruct4Arg_andsignedlonglongArg_((1, 500000), -42)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct4Arg_andsignedlonglongArg_((1, 500000), 0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andsignedlonglongArg_((1, 500000), 42)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andsignedlonglongArg_((1, 500000), 1L << 60)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1L << 60)
+		r = o.structTestStruct4Arg_andsignedlonglongArg_((2, 4), -(1L << 60))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -(1L << 60))
+		r = o.structTestStruct4Arg_andsignedlonglongArg_((2, 4), -42)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct4Arg_andsignedlonglongArg_((2, 4), 0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andsignedlonglongArg_((2, 4), 42)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andsignedlonglongArg_((2, 4), 1L << 60)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1L << 60)
+
+
+	def teststructTestStruct4AndunsignedcharArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andunsignedcharArg_((1, 500000), 0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andunsignedcharArg_((1, 500000), 128)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 128)
+		r = o.structTestStruct4Arg_andunsignedcharArg_((1, 500000), 255)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 255)
+		r = o.structTestStruct4Arg_andunsignedcharArg_((2, 4), 0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andunsignedcharArg_((2, 4), 128)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 128)
+		r = o.structTestStruct4Arg_andunsignedcharArg_((2, 4), 255)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 255)
+
+
+	def teststructTestStruct4AndunsignedshortArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andunsignedshortArg_((1, 500000), 0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andunsignedshortArg_((1, 500000), 42)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andunsignedshortArg_((1, 500000), 1<<14)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1<<14)
+		r = o.structTestStruct4Arg_andunsignedshortArg_((2, 4), 0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andunsignedshortArg_((2, 4), 42)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andunsignedshortArg_((2, 4), 1<<14)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1<<14)
+
+
+	def teststructTestStruct4AndunsignedintArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andunsignedintArg_((1, 500000), 0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andunsignedintArg_((1, 500000), 42)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andunsignedintArg_((1, 500000), 1 << 30)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1 << 30)
+		r = o.structTestStruct4Arg_andunsignedintArg_((2, 4), 0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andunsignedintArg_((2, 4), 42)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andunsignedintArg_((2, 4), 1 << 30)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def teststructTestStruct4AndunsignedlongArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andunsignedlongArg_((1, 500000), 0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andunsignedlongArg_((1, 500000), 42)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andunsignedlongArg_((1, 500000), 1L << 30)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1L << 30)
+		r = o.structTestStruct4Arg_andunsignedlongArg_((2, 4), 0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andunsignedlongArg_((2, 4), 42)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andunsignedlongArg_((2, 4), 1L << 30)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1L << 30)
+
+
+	def teststructTestStruct4AndunsignedlonglongArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andunsignedlonglongArg_((1, 500000), 0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andunsignedlonglongArg_((1, 500000), 42)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andunsignedlonglongArg_((1, 500000), 1L << 62)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1L << 62)
+		r = o.structTestStruct4Arg_andunsignedlonglongArg_((2, 4), 0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct4Arg_andunsignedlonglongArg_((2, 4), 42)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct4Arg_andunsignedlonglongArg_((2, 4), 1L << 62)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1L << 62)
+
+
+	def teststructTestStruct4AndfloatArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andfloatArg_((1, 500000), 0.128)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = o.structTestStruct4Arg_andfloatArg_((1, 500000), 1.0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = o.structTestStruct4Arg_andfloatArg_((1, 500000), 42.0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = o.structTestStruct4Arg_andfloatArg_((1, 500000), 1e10)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 1e10)
+		r = o.structTestStruct4Arg_andfloatArg_((2, 4), 0.128)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = o.structTestStruct4Arg_andfloatArg_((2, 4), 1.0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = o.structTestStruct4Arg_andfloatArg_((2, 4), 42.0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = o.structTestStruct4Arg_andfloatArg_((2, 4), 1e10)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def teststructTestStruct4AnddoubleArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_anddoubleArg_((1, 500000), 0.128)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = o.structTestStruct4Arg_anddoubleArg_((1, 500000), 1.0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = o.structTestStruct4Arg_anddoubleArg_((1, 500000), 42.0)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = o.structTestStruct4Arg_anddoubleArg_((1, 500000), 1e10)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 1e10)
+		r = o.structTestStruct4Arg_anddoubleArg_((2, 4), 0.128)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = o.structTestStruct4Arg_anddoubleArg_((2, 4), 1.0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = o.structTestStruct4Arg_anddoubleArg_((2, 4), 42.0)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = o.structTestStruct4Arg_anddoubleArg_((2, 4), 1e10)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def teststructTestStruct4AndidArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andidArg_((1, 500000), NSPriorDayDesignations)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], NSPriorDayDesignations)
+		r = o.structTestStruct4Arg_andidArg_((2, 4), NSPriorDayDesignations)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], NSPriorDayDesignations)
+
+
+	def teststructTestStruct4AndcharPtrArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andcharPtrArg_((1, 500000), "hello")
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], "hello")
+		r = o.structTestStruct4Arg_andcharPtrArg_((1, 500000), "world")
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], "world")
+		r = o.structTestStruct4Arg_andcharPtrArg_((1, 500000), "foobar")
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], "foobar")
+		r = o.structTestStruct4Arg_andcharPtrArg_((2, 4), "hello")
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], "hello")
+		r = o.structTestStruct4Arg_andcharPtrArg_((2, 4), "world")
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], "world")
+		r = o.structTestStruct4Arg_andcharPtrArg_((2, 4), "foobar")
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], "foobar")
+
+
+	def teststructTestStruct4AndNSPointArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andNSPointArg_((1, 500000), (1, 2))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2))
+		r = o.structTestStruct4Arg_andNSPointArg_((1, 500000), (3, 4))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (3, 4))
+		r = o.structTestStruct4Arg_andNSPointArg_((2, 4), (1, 2))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2))
+		r = o.structTestStruct4Arg_andNSPointArg_((2, 4), (3, 4))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (3, 4))
+
+
+	def teststructTestStruct4AndNSRectArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andNSRectArg_((1, 500000), ((1, 2), (3, 4)))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = o.structTestStruct4Arg_andNSRectArg_((1, 500000), ((7, 8), (9, 10)))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+		r = o.structTestStruct4Arg_andNSRectArg_((2, 4), ((1, 2), (3, 4)))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = o.structTestStruct4Arg_andNSRectArg_((2, 4), ((7, 8), (9, 10)))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+
+
+	def teststructTestStruct4AndstructTestStruct1Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andstructTestStruct1Arg_((1, 500000), (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = o.structTestStruct4Arg_andstructTestStruct1Arg_((1, 500000), (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = o.structTestStruct4Arg_andstructTestStruct1Arg_((2, 4), (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = o.structTestStruct4Arg_andstructTestStruct1Arg_((2, 4), (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def teststructTestStruct4AndstructTestStruct2Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andstructTestStruct2Arg_((1, 500000), (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = o.structTestStruct4Arg_andstructTestStruct2Arg_((1, 500000), (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = o.structTestStruct4Arg_andstructTestStruct2Arg_((2, 4), (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = o.structTestStruct4Arg_andstructTestStruct2Arg_((2, 4), (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def teststructTestStruct4AndstructTestStruct3Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andstructTestStruct3Arg_((1, 500000), (1, 2))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2))
+		r = o.structTestStruct4Arg_andstructTestStruct3Arg_((1, 500000), (2, 4))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (2, 4))
+		r = o.structTestStruct4Arg_andstructTestStruct3Arg_((2, 4), (1, 2))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2))
+		r = o.structTestStruct4Arg_andstructTestStruct3Arg_((2, 4), (2, 4))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def teststructTestStruct4AndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andstructTestStruct4Arg_((1, 500000), (1, 500000))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.structTestStruct4Arg_andstructTestStruct4Arg_((1, 500000), (2, 4))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (2, 4))
+		r = o.structTestStruct4Arg_andstructTestStruct4Arg_((2, 4), (1, 500000))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.structTestStruct4Arg_andstructTestStruct4Arg_((2, 4), (2, 4))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def teststructTestStruct4AndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4Arg_andstructTestStruct5Arg_((1, 500000), (1, 2.0))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.structTestStruct4Arg_andstructTestStruct5Arg_((1, 500000), (2, 4.0))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.structTestStruct4Arg_andstructTestStruct5Arg_((2, 4), (1, 2.0))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.structTestStruct4Arg_andstructTestStruct5Arg_((2, 4), (2, 4.0))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def teststructTestStruct5AndboolArg(self):
+		if not HAVE_BOOL: return
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andboolArg_((1, 2.0), YES)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct5Arg_andboolArg_((1, 2.0), NO)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], NO)
+		r = o.structTestStruct5Arg_andboolArg_((2, 4.0), YES)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct5Arg_andboolArg_((2, 4.0), NO)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], NO)
+
+
+	def teststructTestStruct5AndBOOLArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andBOOLArg_((1, 2.0), YES)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct5Arg_andBOOLArg_((1, 2.0), NO)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], NO)
+		r = o.structTestStruct5Arg_andBOOLArg_((2, 4.0), YES)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct5Arg_andBOOLArg_((2, 4.0), NO)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], NO)
+
+
+	def teststructTestStruct5AndcharArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andcharArg_((1, 2.0), -128)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -128)
+		r = o.structTestStruct5Arg_andcharArg_((1, 2.0), 0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andcharArg_((1, 2.0), 127)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 127)
+		r = o.structTestStruct5Arg_andcharArg_((2, 4.0), -128)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -128)
+		r = o.structTestStruct5Arg_andcharArg_((2, 4.0), 0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andcharArg_((2, 4.0), 127)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 127)
+
+
+	def teststructTestStruct5AndsignedshortArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andsignedshortArg_((1, 2.0), -(1<<14))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -(1<<14))
+		r = o.structTestStruct5Arg_andsignedshortArg_((1, 2.0), -42)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct5Arg_andsignedshortArg_((1, 2.0), 0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andsignedshortArg_((1, 2.0), 42)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andsignedshortArg_((1, 2.0), 1 << 14)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1 << 14)
+		r = o.structTestStruct5Arg_andsignedshortArg_((2, 4.0), -(1<<14))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -(1<<14))
+		r = o.structTestStruct5Arg_andsignedshortArg_((2, 4.0), -42)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct5Arg_andsignedshortArg_((2, 4.0), 0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andsignedshortArg_((2, 4.0), 42)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andsignedshortArg_((2, 4.0), 1 << 14)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1 << 14)
+
+
+	def teststructTestStruct5AndsignedintArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andsignedintArg_((1, 2.0), -(1<<30))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -(1<<30))
+		r = o.structTestStruct5Arg_andsignedintArg_((1, 2.0), -42)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct5Arg_andsignedintArg_((1, 2.0), 0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andsignedintArg_((1, 2.0), 42)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andsignedintArg_((1, 2.0), 1 << 30)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1 << 30)
+		r = o.structTestStruct5Arg_andsignedintArg_((2, 4.0), -(1<<30))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -(1<<30))
+		r = o.structTestStruct5Arg_andsignedintArg_((2, 4.0), -42)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct5Arg_andsignedintArg_((2, 4.0), 0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andsignedintArg_((2, 4.0), 42)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andsignedintArg_((2, 4.0), 1 << 30)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def teststructTestStruct5AndsignedlongArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andsignedlongArg_((1, 2.0), -(1<<30))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -(1<<30))
+		r = o.structTestStruct5Arg_andsignedlongArg_((1, 2.0), -42)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct5Arg_andsignedlongArg_((1, 2.0), 0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andsignedlongArg_((1, 2.0), 42)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andsignedlongArg_((1, 2.0), 1 << 30)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1 << 30)
+		r = o.structTestStruct5Arg_andsignedlongArg_((2, 4.0), -(1<<30))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -(1<<30))
+		r = o.structTestStruct5Arg_andsignedlongArg_((2, 4.0), -42)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct5Arg_andsignedlongArg_((2, 4.0), 0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andsignedlongArg_((2, 4.0), 42)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andsignedlongArg_((2, 4.0), 1 << 30)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def teststructTestStruct5AndsignedlonglongArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andsignedlonglongArg_((1, 2.0), -(1L << 60))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -(1L << 60))
+		r = o.structTestStruct5Arg_andsignedlonglongArg_((1, 2.0), -42)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct5Arg_andsignedlonglongArg_((1, 2.0), 0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andsignedlonglongArg_((1, 2.0), 42)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andsignedlonglongArg_((1, 2.0), 1L << 60)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1L << 60)
+		r = o.structTestStruct5Arg_andsignedlonglongArg_((2, 4.0), -(1L << 60))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -(1L << 60))
+		r = o.structTestStruct5Arg_andsignedlonglongArg_((2, 4.0), -42)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -42)
+		r = o.structTestStruct5Arg_andsignedlonglongArg_((2, 4.0), 0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andsignedlonglongArg_((2, 4.0), 42)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andsignedlonglongArg_((2, 4.0), 1L << 60)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1L << 60)
+
+
+	def teststructTestStruct5AndunsignedcharArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andunsignedcharArg_((1, 2.0), 0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andunsignedcharArg_((1, 2.0), 128)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 128)
+		r = o.structTestStruct5Arg_andunsignedcharArg_((1, 2.0), 255)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 255)
+		r = o.structTestStruct5Arg_andunsignedcharArg_((2, 4.0), 0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andunsignedcharArg_((2, 4.0), 128)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 128)
+		r = o.structTestStruct5Arg_andunsignedcharArg_((2, 4.0), 255)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 255)
+
+
+	def teststructTestStruct5AndunsignedshortArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andunsignedshortArg_((1, 2.0), 0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andunsignedshortArg_((1, 2.0), 42)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andunsignedshortArg_((1, 2.0), 1<<14)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1<<14)
+		r = o.structTestStruct5Arg_andunsignedshortArg_((2, 4.0), 0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andunsignedshortArg_((2, 4.0), 42)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andunsignedshortArg_((2, 4.0), 1<<14)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1<<14)
+
+
+	def teststructTestStruct5AndunsignedintArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andunsignedintArg_((1, 2.0), 0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andunsignedintArg_((1, 2.0), 42)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andunsignedintArg_((1, 2.0), 1 << 30)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1 << 30)
+		r = o.structTestStruct5Arg_andunsignedintArg_((2, 4.0), 0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andunsignedintArg_((2, 4.0), 42)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andunsignedintArg_((2, 4.0), 1 << 30)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def teststructTestStruct5AndunsignedlongArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andunsignedlongArg_((1, 2.0), 0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andunsignedlongArg_((1, 2.0), 42)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andunsignedlongArg_((1, 2.0), 1L << 30)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1L << 30)
+		r = o.structTestStruct5Arg_andunsignedlongArg_((2, 4.0), 0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andunsignedlongArg_((2, 4.0), 42)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andunsignedlongArg_((2, 4.0), 1L << 30)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1L << 30)
+
+
+	def teststructTestStruct5AndunsignedlonglongArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andunsignedlonglongArg_((1, 2.0), 0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andunsignedlonglongArg_((1, 2.0), 42)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andunsignedlonglongArg_((1, 2.0), 1L << 62)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1L << 62)
+		r = o.structTestStruct5Arg_andunsignedlonglongArg_((2, 4.0), 0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = o.structTestStruct5Arg_andunsignedlonglongArg_((2, 4.0), 42)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = o.structTestStruct5Arg_andunsignedlonglongArg_((2, 4.0), 1L << 62)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1L << 62)
+
+
+	def teststructTestStruct5AndfloatArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andfloatArg_((1, 2.0), 0.128)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = o.structTestStruct5Arg_andfloatArg_((1, 2.0), 1.0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = o.structTestStruct5Arg_andfloatArg_((1, 2.0), 42.0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = o.structTestStruct5Arg_andfloatArg_((1, 2.0), 1e10)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 1e10)
+		r = o.structTestStruct5Arg_andfloatArg_((2, 4.0), 0.128)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = o.structTestStruct5Arg_andfloatArg_((2, 4.0), 1.0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = o.structTestStruct5Arg_andfloatArg_((2, 4.0), 42.0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = o.structTestStruct5Arg_andfloatArg_((2, 4.0), 1e10)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def teststructTestStruct5AnddoubleArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_anddoubleArg_((1, 2.0), 0.128)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = o.structTestStruct5Arg_anddoubleArg_((1, 2.0), 1.0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = o.structTestStruct5Arg_anddoubleArg_((1, 2.0), 42.0)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = o.structTestStruct5Arg_anddoubleArg_((1, 2.0), 1e10)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 1e10)
+		r = o.structTestStruct5Arg_anddoubleArg_((2, 4.0), 0.128)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = o.structTestStruct5Arg_anddoubleArg_((2, 4.0), 1.0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = o.structTestStruct5Arg_anddoubleArg_((2, 4.0), 42.0)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = o.structTestStruct5Arg_anddoubleArg_((2, 4.0), 1e10)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def teststructTestStruct5AndidArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andidArg_((1, 2.0), NSPriorDayDesignations)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], NSPriorDayDesignations)
+		r = o.structTestStruct5Arg_andidArg_((2, 4.0), NSPriorDayDesignations)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], NSPriorDayDesignations)
+
+
+	def teststructTestStruct5AndcharPtrArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andcharPtrArg_((1, 2.0), "hello")
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], "hello")
+		r = o.structTestStruct5Arg_andcharPtrArg_((1, 2.0), "world")
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], "world")
+		r = o.structTestStruct5Arg_andcharPtrArg_((1, 2.0), "foobar")
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], "foobar")
+		r = o.structTestStruct5Arg_andcharPtrArg_((2, 4.0), "hello")
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], "hello")
+		r = o.structTestStruct5Arg_andcharPtrArg_((2, 4.0), "world")
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], "world")
+		r = o.structTestStruct5Arg_andcharPtrArg_((2, 4.0), "foobar")
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], "foobar")
+
+
+	def teststructTestStruct5AndNSPointArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andNSPointArg_((1, 2.0), (1, 2))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2))
+		r = o.structTestStruct5Arg_andNSPointArg_((1, 2.0), (3, 4))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (3, 4))
+		r = o.structTestStruct5Arg_andNSPointArg_((2, 4.0), (1, 2))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2))
+		r = o.structTestStruct5Arg_andNSPointArg_((2, 4.0), (3, 4))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (3, 4))
+
+
+	def teststructTestStruct5AndNSRectArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andNSRectArg_((1, 2.0), ((1, 2), (3, 4)))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = o.structTestStruct5Arg_andNSRectArg_((1, 2.0), ((7, 8), (9, 10)))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+		r = o.structTestStruct5Arg_andNSRectArg_((2, 4.0), ((1, 2), (3, 4)))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = o.structTestStruct5Arg_andNSRectArg_((2, 4.0), ((7, 8), (9, 10)))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+
+
+	def teststructTestStruct5AndstructTestStruct1Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andstructTestStruct1Arg_((1, 2.0), (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = o.structTestStruct5Arg_andstructTestStruct1Arg_((1, 2.0), (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = o.structTestStruct5Arg_andstructTestStruct1Arg_((2, 4.0), (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = o.structTestStruct5Arg_andstructTestStruct1Arg_((2, 4.0), (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def teststructTestStruct5AndstructTestStruct2Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andstructTestStruct2Arg_((1, 2.0), (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = o.structTestStruct5Arg_andstructTestStruct2Arg_((1, 2.0), (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = o.structTestStruct5Arg_andstructTestStruct2Arg_((2, 4.0), (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = o.structTestStruct5Arg_andstructTestStruct2Arg_((2, 4.0), (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def teststructTestStruct5AndstructTestStruct3Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andstructTestStruct3Arg_((1, 2.0), (1, 2))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2))
+		r = o.structTestStruct5Arg_andstructTestStruct3Arg_((1, 2.0), (2, 4))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (2, 4))
+		r = o.structTestStruct5Arg_andstructTestStruct3Arg_((2, 4.0), (1, 2))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2))
+		r = o.structTestStruct5Arg_andstructTestStruct3Arg_((2, 4.0), (2, 4))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def teststructTestStruct5AndstructTestStruct4Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andstructTestStruct4Arg_((1, 2.0), (1, 500000))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.structTestStruct5Arg_andstructTestStruct4Arg_((1, 2.0), (2, 4))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (2, 4))
+		r = o.structTestStruct5Arg_andstructTestStruct4Arg_((2, 4.0), (1, 500000))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.structTestStruct5Arg_andstructTestStruct4Arg_((2, 4.0), (2, 4))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def teststructTestStruct5AndstructTestStruct5Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5Arg_andstructTestStruct5Arg_((1, 2.0), (1, 2.0))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.structTestStruct5Arg_andstructTestStruct5Arg_((1, 2.0), (2, 4.0))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (2, 4.0))
+		r = o.structTestStruct5Arg_andstructTestStruct5Arg_((2, 4.0), (1, 2.0))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.structTestStruct5Arg_andstructTestStruct5Arg_((2, 4.0), (2, 4.0))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	# Pass by reference arguments (in)
 
 	def testboolIn(self):
@@ -15590,6 +17682,24 @@ class PyToObjC (TestCase):
 		self.assertEquals(r, (1, 2))
 		r = o.structTestStruct3InArg_((2, 4))
 		self.assertEquals(r, (2, 4))
+
+
+	def teststructTestStruct4In(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct4InArg_((1, 500000))
+		self.assertEquals(r, (1, 500000))
+		r = o.structTestStruct4InArg_((2, 4))
+		self.assertEquals(r, (2, 4))
+
+
+	def teststructTestStruct5In(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct5InArg_((1, 2.0))
+		self.assertEquals(r, (1, 2.0))
+		r = o.structTestStruct5InArg_((2, 4.0))
+		self.assertEquals(r, (2, 4.0))
 
 
 	# Pass by reference arguments (out)
@@ -15847,6 +17957,26 @@ class PyToObjC (TestCase):
 		self.assertEquals(r, (1, 2))
 		r = o.structTestStruct3OutArg_()
 		self.assertEquals(r, (2, 4))
+
+
+	def teststructTestStruct4Out(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = o.structTestStruct4OutArg_()
+		self.assertEquals(r, (1, 500000))
+		r = o.structTestStruct4OutArg_()
+		self.assertEquals(r, (2, 4))
+
+
+	def teststructTestStruct5Out(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = o.structTestStruct5OutArg_()
+		self.assertEquals(r, (1, 2.0))
+		r = o.structTestStruct5OutArg_()
+		self.assertEquals(r, (2, 4.0))
 
 
 	# Pass by reference arguments (inout)
@@ -16170,6 +18300,30 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def teststructTestStruct4InOut(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = o.structTestStruct4InOutArg_((2, 4))
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 500000))
+		r = o.structTestStruct4InOutArg_((1, 500000))
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def teststructTestStruct5InOut(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = o.structTestStruct5InOutArg_((2, 4.0))
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2.0))
+		r = o.structTestStruct5InOutArg_((1, 2.0))
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (2, 4.0))
+
+
 # Helper arrays
 g_bool_values = (YES, NO)
 g_BOOL_values = (YES, NO)
@@ -16192,6 +18346,8 @@ g_NSRect_values = (((1, 2), (3, 4)), ((7, 8), (9, 10)))
 g_structTestStruct1_values = ((1, 2, (1, 2, 3, 4, 5)), (9, 8, (-1, -2, -3, -4, -5)))
 g_structTestStruct2_values = ((1, 2, (1, 2, 3, 4, 5)), (9, 8, (-1, -2, -3, -4, -5)))
 g_structTestStruct3_values = ((1, 2), (2, 4))
+g_structTestStruct4_values = ((1, 500000), (2, 4))
+g_structTestStruct5_values = ((1, 2.0), (2, 4.0))
 
 
 class Python_TestClass (objc.runtime.NSObject):
@@ -16374,6 +18530,22 @@ class Python_TestClass (objc.runtime.NSObject):
 	structTestStruct3Method = objc.selector(structTestStruct3Method, signature="{_TestStruct3=ci}@:")
 
 
+	def structTestStruct4Method(self):
+		if self.counter > 2: self.reset()
+		idx = self.counter
+		self.counter += 1
+		return g_structTestStruct4_values[idx]
+	structTestStruct4Method = objc.selector(structTestStruct4Method, signature="{_TestStruct4=cq}@:")
+
+
+	def structTestStruct5Method(self):
+		if self.counter > 2: self.reset()
+		idx = self.counter
+		self.counter += 1
+		return g_structTestStruct5_values[idx]
+	structTestStruct5Method = objc.selector(structTestStruct5Method, signature="{_TestStruct5=cd}@:")
+
+
 	if HAVE_BOOL:
 		def boolArg_(self, arg):
 			return arg # return the same
@@ -16478,6 +18650,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	def structTestStruct3Arg_(self, arg):
 		return arg # return the same
 	structTestStruct3Arg_ = objc.selector(structTestStruct3Arg_, signature="@@:{_TestStruct3=ci}")
+
+
+	def structTestStruct4Arg_(self, arg):
+		return arg # return the same
+	structTestStruct4Arg_ = objc.selector(structTestStruct4Arg_, signature="@@:{_TestStruct4=cq}")
+
+
+	def structTestStruct5Arg_(self, arg):
+		return arg # return the same
+	structTestStruct5Arg_ = objc.selector(structTestStruct5Arg_, signature="@@:{_TestStruct5=cd}")
 
 
 	if HAVE_BOOL:
@@ -16607,6 +18789,18 @@ class Python_TestClass (objc.runtime.NSObject):
 
 
 	if HAVE_BOOL:
+		def boolArg_andstructTestStruct4Arg_(self, arg1, arg2):
+			return [ arg1, arg2 ]
+		boolArg_andstructTestStruct4Arg_ = objc.selector(boolArg_andstructTestStruct4Arg_, signature="@@:B{_TestStruct4=cq}")
+
+
+	if HAVE_BOOL:
+		def boolArg_andstructTestStruct5Arg_(self, arg1, arg2):
+			return [ arg1, arg2 ]
+		boolArg_andstructTestStruct5Arg_ = objc.selector(boolArg_andstructTestStruct5Arg_, signature="@@:B{_TestStruct5=cd}")
+
+
+	if HAVE_BOOL:
 		def BOOLArg_andboolArg_(self, arg1, arg2):
 			return [ arg1, arg2 ]
 		BOOLArg_andboolArg_ = objc.selector(BOOLArg_andboolArg_, signature="@@:cB")
@@ -16710,6 +18904,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	def BOOLArg_andstructTestStruct3Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
 	BOOLArg_andstructTestStruct3Arg_ = objc.selector(BOOLArg_andstructTestStruct3Arg_, signature="@@:c{_TestStruct3=ci}")
+
+
+	def BOOLArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	BOOLArg_andstructTestStruct4Arg_ = objc.selector(BOOLArg_andstructTestStruct4Arg_, signature="@@:c{_TestStruct4=cq}")
+
+
+	def BOOLArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	BOOLArg_andstructTestStruct5Arg_ = objc.selector(BOOLArg_andstructTestStruct5Arg_, signature="@@:c{_TestStruct5=cd}")
 
 
 	if HAVE_BOOL:
@@ -16818,6 +19022,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	charArg_andstructTestStruct3Arg_ = objc.selector(charArg_andstructTestStruct3Arg_, signature="@@:c{_TestStruct3=ci}")
 
 
+	def charArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	charArg_andstructTestStruct4Arg_ = objc.selector(charArg_andstructTestStruct4Arg_, signature="@@:c{_TestStruct4=cq}")
+
+
+	def charArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	charArg_andstructTestStruct5Arg_ = objc.selector(charArg_andstructTestStruct5Arg_, signature="@@:c{_TestStruct5=cd}")
+
+
 	if HAVE_BOOL:
 		def signedshortArg_andboolArg_(self, arg1, arg2):
 			return [ arg1, arg2 ]
@@ -16922,6 +19136,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	def signedshortArg_andstructTestStruct3Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
 	signedshortArg_andstructTestStruct3Arg_ = objc.selector(signedshortArg_andstructTestStruct3Arg_, signature="@@:s{_TestStruct3=ci}")
+
+
+	def signedshortArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	signedshortArg_andstructTestStruct4Arg_ = objc.selector(signedshortArg_andstructTestStruct4Arg_, signature="@@:s{_TestStruct4=cq}")
+
+
+	def signedshortArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	signedshortArg_andstructTestStruct5Arg_ = objc.selector(signedshortArg_andstructTestStruct5Arg_, signature="@@:s{_TestStruct5=cd}")
 
 
 	if HAVE_BOOL:
@@ -17030,6 +19254,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	signedintArg_andstructTestStruct3Arg_ = objc.selector(signedintArg_andstructTestStruct3Arg_, signature="@@:i{_TestStruct3=ci}")
 
 
+	def signedintArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	signedintArg_andstructTestStruct4Arg_ = objc.selector(signedintArg_andstructTestStruct4Arg_, signature="@@:i{_TestStruct4=cq}")
+
+
+	def signedintArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	signedintArg_andstructTestStruct5Arg_ = objc.selector(signedintArg_andstructTestStruct5Arg_, signature="@@:i{_TestStruct5=cd}")
+
+
 	if HAVE_BOOL:
 		def signedlongArg_andboolArg_(self, arg1, arg2):
 			return [ arg1, arg2 ]
@@ -17134,6 +19368,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	def signedlongArg_andstructTestStruct3Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
 	signedlongArg_andstructTestStruct3Arg_ = objc.selector(signedlongArg_andstructTestStruct3Arg_, signature="@@:l{_TestStruct3=ci}")
+
+
+	def signedlongArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	signedlongArg_andstructTestStruct4Arg_ = objc.selector(signedlongArg_andstructTestStruct4Arg_, signature="@@:l{_TestStruct4=cq}")
+
+
+	def signedlongArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	signedlongArg_andstructTestStruct5Arg_ = objc.selector(signedlongArg_andstructTestStruct5Arg_, signature="@@:l{_TestStruct5=cd}")
 
 
 	if HAVE_BOOL:
@@ -17242,6 +19486,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	signedlonglongArg_andstructTestStruct3Arg_ = objc.selector(signedlonglongArg_andstructTestStruct3Arg_, signature="@@:q{_TestStruct3=ci}")
 
 
+	def signedlonglongArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	signedlonglongArg_andstructTestStruct4Arg_ = objc.selector(signedlonglongArg_andstructTestStruct4Arg_, signature="@@:q{_TestStruct4=cq}")
+
+
+	def signedlonglongArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	signedlonglongArg_andstructTestStruct5Arg_ = objc.selector(signedlonglongArg_andstructTestStruct5Arg_, signature="@@:q{_TestStruct5=cd}")
+
+
 	if HAVE_BOOL:
 		def unsignedcharArg_andboolArg_(self, arg1, arg2):
 			return [ arg1, arg2 ]
@@ -17346,6 +19600,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	def unsignedcharArg_andstructTestStruct3Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
 	unsignedcharArg_andstructTestStruct3Arg_ = objc.selector(unsignedcharArg_andstructTestStruct3Arg_, signature="@@:C{_TestStruct3=ci}")
+
+
+	def unsignedcharArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedcharArg_andstructTestStruct4Arg_ = objc.selector(unsignedcharArg_andstructTestStruct4Arg_, signature="@@:C{_TestStruct4=cq}")
+
+
+	def unsignedcharArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedcharArg_andstructTestStruct5Arg_ = objc.selector(unsignedcharArg_andstructTestStruct5Arg_, signature="@@:C{_TestStruct5=cd}")
 
 
 	if HAVE_BOOL:
@@ -17454,6 +19718,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	unsignedshortArg_andstructTestStruct3Arg_ = objc.selector(unsignedshortArg_andstructTestStruct3Arg_, signature="@@:S{_TestStruct3=ci}")
 
 
+	def unsignedshortArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedshortArg_andstructTestStruct4Arg_ = objc.selector(unsignedshortArg_andstructTestStruct4Arg_, signature="@@:S{_TestStruct4=cq}")
+
+
+	def unsignedshortArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedshortArg_andstructTestStruct5Arg_ = objc.selector(unsignedshortArg_andstructTestStruct5Arg_, signature="@@:S{_TestStruct5=cd}")
+
+
 	if HAVE_BOOL:
 		def unsignedintArg_andboolArg_(self, arg1, arg2):
 			return [ arg1, arg2 ]
@@ -17558,6 +19832,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	def unsignedintArg_andstructTestStruct3Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
 	unsignedintArg_andstructTestStruct3Arg_ = objc.selector(unsignedintArg_andstructTestStruct3Arg_, signature="@@:I{_TestStruct3=ci}")
+
+
+	def unsignedintArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedintArg_andstructTestStruct4Arg_ = objc.selector(unsignedintArg_andstructTestStruct4Arg_, signature="@@:I{_TestStruct4=cq}")
+
+
+	def unsignedintArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedintArg_andstructTestStruct5Arg_ = objc.selector(unsignedintArg_andstructTestStruct5Arg_, signature="@@:I{_TestStruct5=cd}")
 
 
 	if HAVE_BOOL:
@@ -17666,6 +19950,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	unsignedlongArg_andstructTestStruct3Arg_ = objc.selector(unsignedlongArg_andstructTestStruct3Arg_, signature="@@:L{_TestStruct3=ci}")
 
 
+	def unsignedlongArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedlongArg_andstructTestStruct4Arg_ = objc.selector(unsignedlongArg_andstructTestStruct4Arg_, signature="@@:L{_TestStruct4=cq}")
+
+
+	def unsignedlongArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedlongArg_andstructTestStruct5Arg_ = objc.selector(unsignedlongArg_andstructTestStruct5Arg_, signature="@@:L{_TestStruct5=cd}")
+
+
 	if HAVE_BOOL:
 		def unsignedlonglongArg_andboolArg_(self, arg1, arg2):
 			return [ arg1, arg2 ]
@@ -17770,6 +20064,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	def unsignedlonglongArg_andstructTestStruct3Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
 	unsignedlonglongArg_andstructTestStruct3Arg_ = objc.selector(unsignedlonglongArg_andstructTestStruct3Arg_, signature="@@:Q{_TestStruct3=ci}")
+
+
+	def unsignedlonglongArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedlonglongArg_andstructTestStruct4Arg_ = objc.selector(unsignedlonglongArg_andstructTestStruct4Arg_, signature="@@:Q{_TestStruct4=cq}")
+
+
+	def unsignedlonglongArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedlonglongArg_andstructTestStruct5Arg_ = objc.selector(unsignedlonglongArg_andstructTestStruct5Arg_, signature="@@:Q{_TestStruct5=cd}")
 
 
 	if HAVE_BOOL:
@@ -17878,6 +20182,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	floatArg_andstructTestStruct3Arg_ = objc.selector(floatArg_andstructTestStruct3Arg_, signature="@@:f{_TestStruct3=ci}")
 
 
+	def floatArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	floatArg_andstructTestStruct4Arg_ = objc.selector(floatArg_andstructTestStruct4Arg_, signature="@@:f{_TestStruct4=cq}")
+
+
+	def floatArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	floatArg_andstructTestStruct5Arg_ = objc.selector(floatArg_andstructTestStruct5Arg_, signature="@@:f{_TestStruct5=cd}")
+
+
 	if HAVE_BOOL:
 		def doubleArg_andboolArg_(self, arg1, arg2):
 			return [ arg1, arg2 ]
@@ -17982,6 +20296,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	def doubleArg_andstructTestStruct3Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
 	doubleArg_andstructTestStruct3Arg_ = objc.selector(doubleArg_andstructTestStruct3Arg_, signature="@@:d{_TestStruct3=ci}")
+
+
+	def doubleArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	doubleArg_andstructTestStruct4Arg_ = objc.selector(doubleArg_andstructTestStruct4Arg_, signature="@@:d{_TestStruct4=cq}")
+
+
+	def doubleArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	doubleArg_andstructTestStruct5Arg_ = objc.selector(doubleArg_andstructTestStruct5Arg_, signature="@@:d{_TestStruct5=cd}")
 
 
 	if HAVE_BOOL:
@@ -18090,6 +20414,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	idArg_andstructTestStruct3Arg_ = objc.selector(idArg_andstructTestStruct3Arg_, signature="@@:@{_TestStruct3=ci}")
 
 
+	def idArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	idArg_andstructTestStruct4Arg_ = objc.selector(idArg_andstructTestStruct4Arg_, signature="@@:@{_TestStruct4=cq}")
+
+
+	def idArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	idArg_andstructTestStruct5Arg_ = objc.selector(idArg_andstructTestStruct5Arg_, signature="@@:@{_TestStruct5=cd}")
+
+
 	if HAVE_BOOL:
 		def charPtrArg_andboolArg_(self, arg1, arg2):
 			return [ arg1, arg2 ]
@@ -18194,6 +20528,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	def charPtrArg_andstructTestStruct3Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
 	charPtrArg_andstructTestStruct3Arg_ = objc.selector(charPtrArg_andstructTestStruct3Arg_, signature="@@:*{_TestStruct3=ci}")
+
+
+	def charPtrArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	charPtrArg_andstructTestStruct4Arg_ = objc.selector(charPtrArg_andstructTestStruct4Arg_, signature="@@:*{_TestStruct4=cq}")
+
+
+	def charPtrArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	charPtrArg_andstructTestStruct5Arg_ = objc.selector(charPtrArg_andstructTestStruct5Arg_, signature="@@:*{_TestStruct5=cd}")
 
 
 	if HAVE_BOOL:
@@ -18302,6 +20646,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	NSPointArg_andstructTestStruct3Arg_ = objc.selector(NSPointArg_andstructTestStruct3Arg_, signature="@@:{_NSPoint=ff}{_TestStruct3=ci}")
 
 
+	def NSPointArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	NSPointArg_andstructTestStruct4Arg_ = objc.selector(NSPointArg_andstructTestStruct4Arg_, signature="@@:{_NSPoint=ff}{_TestStruct4=cq}")
+
+
+	def NSPointArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	NSPointArg_andstructTestStruct5Arg_ = objc.selector(NSPointArg_andstructTestStruct5Arg_, signature="@@:{_NSPoint=ff}{_TestStruct5=cd}")
+
+
 	if HAVE_BOOL:
 		def NSRectArg_andboolArg_(self, arg1, arg2):
 			return [ arg1, arg2 ]
@@ -18406,6 +20760,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	def NSRectArg_andstructTestStruct3Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
 	NSRectArg_andstructTestStruct3Arg_ = objc.selector(NSRectArg_andstructTestStruct3Arg_, signature="@@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}{_TestStruct3=ci}")
+
+
+	def NSRectArg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	NSRectArg_andstructTestStruct4Arg_ = objc.selector(NSRectArg_andstructTestStruct4Arg_, signature="@@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}{_TestStruct4=cq}")
+
+
+	def NSRectArg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	NSRectArg_andstructTestStruct5Arg_ = objc.selector(NSRectArg_andstructTestStruct5Arg_, signature="@@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}{_TestStruct5=cd}")
 
 
 	if HAVE_BOOL:
@@ -18514,6 +20878,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	structTestStruct1Arg_andstructTestStruct3Arg_ = objc.selector(structTestStruct1Arg_andstructTestStruct3Arg_, signature="@@:{_TestStruct1=ii[5s]}{_TestStruct3=ci}")
 
 
+	def structTestStruct1Arg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct1Arg_andstructTestStruct4Arg_ = objc.selector(structTestStruct1Arg_andstructTestStruct4Arg_, signature="@@:{_TestStruct1=ii[5s]}{_TestStruct4=cq}")
+
+
+	def structTestStruct1Arg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct1Arg_andstructTestStruct5Arg_ = objc.selector(structTestStruct1Arg_andstructTestStruct5Arg_, signature="@@:{_TestStruct1=ii[5s]}{_TestStruct5=cd}")
+
+
 	if HAVE_BOOL:
 		def structTestStruct2Arg_andboolArg_(self, arg1, arg2):
 			return [ arg1, arg2 ]
@@ -18620,6 +20994,16 @@ class Python_TestClass (objc.runtime.NSObject):
 	structTestStruct2Arg_andstructTestStruct3Arg_ = objc.selector(structTestStruct2Arg_andstructTestStruct3Arg_, signature="@@:{_TestStruct2=id[5s]}{_TestStruct3=ci}")
 
 
+	def structTestStruct2Arg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct2Arg_andstructTestStruct4Arg_ = objc.selector(structTestStruct2Arg_andstructTestStruct4Arg_, signature="@@:{_TestStruct2=id[5s]}{_TestStruct4=cq}")
+
+
+	def structTestStruct2Arg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct2Arg_andstructTestStruct5Arg_ = objc.selector(structTestStruct2Arg_andstructTestStruct5Arg_, signature="@@:{_TestStruct2=id[5s]}{_TestStruct5=cd}")
+
+
 	if HAVE_BOOL:
 		def structTestStruct3Arg_andboolArg_(self, arg1, arg2):
 			return [ arg1, arg2 ]
@@ -18724,6 +21108,248 @@ class Python_TestClass (objc.runtime.NSObject):
 	def structTestStruct3Arg_andstructTestStruct3Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
 	structTestStruct3Arg_andstructTestStruct3Arg_ = objc.selector(structTestStruct3Arg_andstructTestStruct3Arg_, signature="@@:{_TestStruct3=ci}{_TestStruct3=ci}")
+
+
+	def structTestStruct3Arg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct3Arg_andstructTestStruct4Arg_ = objc.selector(structTestStruct3Arg_andstructTestStruct4Arg_, signature="@@:{_TestStruct3=ci}{_TestStruct4=cq}")
+
+
+	def structTestStruct3Arg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct3Arg_andstructTestStruct5Arg_ = objc.selector(structTestStruct3Arg_andstructTestStruct5Arg_, signature="@@:{_TestStruct3=ci}{_TestStruct5=cd}")
+
+
+	if HAVE_BOOL:
+		def structTestStruct4Arg_andboolArg_(self, arg1, arg2):
+			return [ arg1, arg2 ]
+		structTestStruct4Arg_andboolArg_ = objc.selector(structTestStruct4Arg_andboolArg_, signature="@@:{_TestStruct4=cq}B")
+
+
+	def structTestStruct4Arg_andBOOLArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andBOOLArg_ = objc.selector(structTestStruct4Arg_andBOOLArg_, signature="@@:{_TestStruct4=cq}c")
+
+
+	def structTestStruct4Arg_andcharArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andcharArg_ = objc.selector(structTestStruct4Arg_andcharArg_, signature="@@:{_TestStruct4=cq}c")
+
+
+	def structTestStruct4Arg_andsignedshortArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andsignedshortArg_ = objc.selector(structTestStruct4Arg_andsignedshortArg_, signature="@@:{_TestStruct4=cq}s")
+
+
+	def structTestStruct4Arg_andsignedintArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andsignedintArg_ = objc.selector(structTestStruct4Arg_andsignedintArg_, signature="@@:{_TestStruct4=cq}i")
+
+
+	def structTestStruct4Arg_andsignedlongArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andsignedlongArg_ = objc.selector(structTestStruct4Arg_andsignedlongArg_, signature="@@:{_TestStruct4=cq}l")
+
+
+	def structTestStruct4Arg_andsignedlonglongArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andsignedlonglongArg_ = objc.selector(structTestStruct4Arg_andsignedlonglongArg_, signature="@@:{_TestStruct4=cq}q")
+
+
+	def structTestStruct4Arg_andunsignedcharArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andunsignedcharArg_ = objc.selector(structTestStruct4Arg_andunsignedcharArg_, signature="@@:{_TestStruct4=cq}C")
+
+
+	def structTestStruct4Arg_andunsignedshortArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andunsignedshortArg_ = objc.selector(structTestStruct4Arg_andunsignedshortArg_, signature="@@:{_TestStruct4=cq}S")
+
+
+	def structTestStruct4Arg_andunsignedintArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andunsignedintArg_ = objc.selector(structTestStruct4Arg_andunsignedintArg_, signature="@@:{_TestStruct4=cq}I")
+
+
+	def structTestStruct4Arg_andunsignedlongArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andunsignedlongArg_ = objc.selector(structTestStruct4Arg_andunsignedlongArg_, signature="@@:{_TestStruct4=cq}L")
+
+
+	def structTestStruct4Arg_andunsignedlonglongArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andunsignedlonglongArg_ = objc.selector(structTestStruct4Arg_andunsignedlonglongArg_, signature="@@:{_TestStruct4=cq}Q")
+
+
+	def structTestStruct4Arg_andfloatArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andfloatArg_ = objc.selector(structTestStruct4Arg_andfloatArg_, signature="@@:{_TestStruct4=cq}f")
+
+
+	def structTestStruct4Arg_anddoubleArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_anddoubleArg_ = objc.selector(structTestStruct4Arg_anddoubleArg_, signature="@@:{_TestStruct4=cq}d")
+
+
+	def structTestStruct4Arg_andidArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andidArg_ = objc.selector(structTestStruct4Arg_andidArg_, signature="@@:{_TestStruct4=cq}@")
+
+
+	def structTestStruct4Arg_andcharPtrArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andcharPtrArg_ = objc.selector(structTestStruct4Arg_andcharPtrArg_, signature="@@:{_TestStruct4=cq}*")
+
+
+	def structTestStruct4Arg_andNSPointArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andNSPointArg_ = objc.selector(structTestStruct4Arg_andNSPointArg_, signature="@@:{_TestStruct4=cq}{_NSPoint=ff}")
+
+
+	def structTestStruct4Arg_andNSRectArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andNSRectArg_ = objc.selector(structTestStruct4Arg_andNSRectArg_, signature="@@:{_TestStruct4=cq}{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
+
+
+	def structTestStruct4Arg_andstructTestStruct1Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andstructTestStruct1Arg_ = objc.selector(structTestStruct4Arg_andstructTestStruct1Arg_, signature="@@:{_TestStruct4=cq}{_TestStruct1=ii[5s]}")
+
+
+	def structTestStruct4Arg_andstructTestStruct2Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andstructTestStruct2Arg_ = objc.selector(structTestStruct4Arg_andstructTestStruct2Arg_, signature="@@:{_TestStruct4=cq}{_TestStruct2=id[5s]}")
+
+
+	def structTestStruct4Arg_andstructTestStruct3Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andstructTestStruct3Arg_ = objc.selector(structTestStruct4Arg_andstructTestStruct3Arg_, signature="@@:{_TestStruct4=cq}{_TestStruct3=ci}")
+
+
+	def structTestStruct4Arg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andstructTestStruct4Arg_ = objc.selector(structTestStruct4Arg_andstructTestStruct4Arg_, signature="@@:{_TestStruct4=cq}{_TestStruct4=cq}")
+
+
+	def structTestStruct4Arg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct4Arg_andstructTestStruct5Arg_ = objc.selector(structTestStruct4Arg_andstructTestStruct5Arg_, signature="@@:{_TestStruct4=cq}{_TestStruct5=cd}")
+
+
+	if HAVE_BOOL:
+		def structTestStruct5Arg_andboolArg_(self, arg1, arg2):
+			return [ arg1, arg2 ]
+		structTestStruct5Arg_andboolArg_ = objc.selector(structTestStruct5Arg_andboolArg_, signature="@@:{_TestStruct5=cd}B")
+
+
+	def structTestStruct5Arg_andBOOLArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andBOOLArg_ = objc.selector(structTestStruct5Arg_andBOOLArg_, signature="@@:{_TestStruct5=cd}c")
+
+
+	def structTestStruct5Arg_andcharArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andcharArg_ = objc.selector(structTestStruct5Arg_andcharArg_, signature="@@:{_TestStruct5=cd}c")
+
+
+	def structTestStruct5Arg_andsignedshortArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andsignedshortArg_ = objc.selector(structTestStruct5Arg_andsignedshortArg_, signature="@@:{_TestStruct5=cd}s")
+
+
+	def structTestStruct5Arg_andsignedintArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andsignedintArg_ = objc.selector(structTestStruct5Arg_andsignedintArg_, signature="@@:{_TestStruct5=cd}i")
+
+
+	def structTestStruct5Arg_andsignedlongArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andsignedlongArg_ = objc.selector(structTestStruct5Arg_andsignedlongArg_, signature="@@:{_TestStruct5=cd}l")
+
+
+	def structTestStruct5Arg_andsignedlonglongArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andsignedlonglongArg_ = objc.selector(structTestStruct5Arg_andsignedlonglongArg_, signature="@@:{_TestStruct5=cd}q")
+
+
+	def structTestStruct5Arg_andunsignedcharArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andunsignedcharArg_ = objc.selector(structTestStruct5Arg_andunsignedcharArg_, signature="@@:{_TestStruct5=cd}C")
+
+
+	def structTestStruct5Arg_andunsignedshortArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andunsignedshortArg_ = objc.selector(structTestStruct5Arg_andunsignedshortArg_, signature="@@:{_TestStruct5=cd}S")
+
+
+	def structTestStruct5Arg_andunsignedintArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andunsignedintArg_ = objc.selector(structTestStruct5Arg_andunsignedintArg_, signature="@@:{_TestStruct5=cd}I")
+
+
+	def structTestStruct5Arg_andunsignedlongArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andunsignedlongArg_ = objc.selector(structTestStruct5Arg_andunsignedlongArg_, signature="@@:{_TestStruct5=cd}L")
+
+
+	def structTestStruct5Arg_andunsignedlonglongArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andunsignedlonglongArg_ = objc.selector(structTestStruct5Arg_andunsignedlonglongArg_, signature="@@:{_TestStruct5=cd}Q")
+
+
+	def structTestStruct5Arg_andfloatArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andfloatArg_ = objc.selector(structTestStruct5Arg_andfloatArg_, signature="@@:{_TestStruct5=cd}f")
+
+
+	def structTestStruct5Arg_anddoubleArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_anddoubleArg_ = objc.selector(structTestStruct5Arg_anddoubleArg_, signature="@@:{_TestStruct5=cd}d")
+
+
+	def structTestStruct5Arg_andidArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andidArg_ = objc.selector(structTestStruct5Arg_andidArg_, signature="@@:{_TestStruct5=cd}@")
+
+
+	def structTestStruct5Arg_andcharPtrArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andcharPtrArg_ = objc.selector(structTestStruct5Arg_andcharPtrArg_, signature="@@:{_TestStruct5=cd}*")
+
+
+	def structTestStruct5Arg_andNSPointArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andNSPointArg_ = objc.selector(structTestStruct5Arg_andNSPointArg_, signature="@@:{_TestStruct5=cd}{_NSPoint=ff}")
+
+
+	def structTestStruct5Arg_andNSRectArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andNSRectArg_ = objc.selector(structTestStruct5Arg_andNSRectArg_, signature="@@:{_TestStruct5=cd}{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
+
+
+	def structTestStruct5Arg_andstructTestStruct1Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andstructTestStruct1Arg_ = objc.selector(structTestStruct5Arg_andstructTestStruct1Arg_, signature="@@:{_TestStruct5=cd}{_TestStruct1=ii[5s]}")
+
+
+	def structTestStruct5Arg_andstructTestStruct2Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andstructTestStruct2Arg_ = objc.selector(structTestStruct5Arg_andstructTestStruct2Arg_, signature="@@:{_TestStruct5=cd}{_TestStruct2=id[5s]}")
+
+
+	def structTestStruct5Arg_andstructTestStruct3Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andstructTestStruct3Arg_ = objc.selector(structTestStruct5Arg_andstructTestStruct3Arg_, signature="@@:{_TestStruct5=cd}{_TestStruct3=ci}")
+
+
+	def structTestStruct5Arg_andstructTestStruct4Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andstructTestStruct4Arg_ = objc.selector(structTestStruct5Arg_andstructTestStruct4Arg_, signature="@@:{_TestStruct5=cd}{_TestStruct4=cq}")
+
+
+	def structTestStruct5Arg_andstructTestStruct5Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct5Arg_andstructTestStruct5Arg_ = objc.selector(structTestStruct5Arg_andstructTestStruct5Arg_, signature="@@:{_TestStruct5=cd}{_TestStruct5=cd}")
 
 
 	if HAVE_BOOL:
@@ -19168,6 +21794,48 @@ class Python_TestClass (objc.runtime.NSObject):
 	structTestStruct3InOutArg_ = objc.selector(structTestStruct3InOutArg_, signature="@@:N^{_TestStruct3=ci}")
 
 
+	def structTestStruct4InArg_(self, arg):
+		return arg
+	structTestStruct4InArg_ = objc.selector(structTestStruct4InArg_, signature="@@:n^{_TestStruct4=cq}")
+
+
+	def structTestStruct4OutArg_(self):
+		if (self.counter > 2): self.reset()
+		res = g_structTestStruct4_values[self.counter]
+		self.counter += 1
+		return res
+	structTestStruct4OutArg_ = objc.selector(structTestStruct4OutArg_, signature="v@:o^{_TestStruct4=cq}")
+
+
+	def structTestStruct4InOutArg_(self, arg):
+		if (self.counter > 2): self.reset()
+		res = g_structTestStruct4_values[self.counter];
+		self.counter += 1
+		return (arg, res)
+	structTestStruct4InOutArg_ = objc.selector(structTestStruct4InOutArg_, signature="@@:N^{_TestStruct4=cq}")
+
+
+	def structTestStruct5InArg_(self, arg):
+		return arg
+	structTestStruct5InArg_ = objc.selector(structTestStruct5InArg_, signature="@@:n^{_TestStruct5=cd}")
+
+
+	def structTestStruct5OutArg_(self):
+		if (self.counter > 2): self.reset()
+		res = g_structTestStruct5_values[self.counter]
+		self.counter += 1
+		return res
+	structTestStruct5OutArg_ = objc.selector(structTestStruct5OutArg_, signature="v@:o^{_TestStruct5=cd}")
+
+
+	def structTestStruct5InOutArg_(self, arg):
+		if (self.counter > 2): self.reset()
+		res = g_structTestStruct5_values[self.counter];
+		self.counter += 1
+		return (arg, res)
+	structTestStruct5InOutArg_ = objc.selector(structTestStruct5InOutArg_, signature="@@:N^{_TestStruct5=cd}")
+
+
 class ObjCToPy (TestCase):
 	# Test calling Python from Objective-C
 	# Simple returns from instance methods
@@ -19551,6 +22219,38 @@ class ObjCToPy (TestCase):
 		o.reset()
 		self.assertEquals(PyObjC_TestClass2.invokestructTestStruct3MethodOf_(o), (1, 2))
 		self.assertEquals(PyObjC_TestClass2.invokestructTestStruct3MethodOf_(o), (2, 4))
+
+
+	def testcallstructTestStruct4Result(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		self.assertEquals(PyObjC_TestClass2.callstructTestStruct4MethodOf_(o), (1, 500000))
+		self.assertEquals(PyObjC_TestClass2.callstructTestStruct4MethodOf_(o), (2, 4))
+
+
+	def testinvokestructTestStruct4Result(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		self.assertEquals(PyObjC_TestClass2.invokestructTestStruct4MethodOf_(o), (1, 500000))
+		self.assertEquals(PyObjC_TestClass2.invokestructTestStruct4MethodOf_(o), (2, 4))
+
+
+	def testcallstructTestStruct5Result(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		self.assertEquals(PyObjC_TestClass2.callstructTestStruct5MethodOf_(o), (1, 2.0))
+		self.assertEquals(PyObjC_TestClass2.callstructTestStruct5MethodOf_(o), (2, 4.0))
+
+
+	def testinvokestructTestStruct5Result(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		self.assertEquals(PyObjC_TestClass2.invokestructTestStruct5MethodOf_(o), (1, 2.0))
+		self.assertEquals(PyObjC_TestClass2.invokestructTestStruct5MethodOf_(o), (2, 4.0))
 
 
 	# One argument
@@ -20032,6 +22732,42 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r, (1, 2))
 		r = PyObjC_TestClass2.invokestructTestStruct3Arg_of_((2, 4), o)
 		self.assertEquals(r, (2, 4))
+
+
+	def testcallstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_of_((1, 500000), o)
+		self.assertEquals(r, (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_of_((2, 4), o)
+		self.assertEquals(r, (2, 4))
+
+
+	def testinvokestructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_of_((1, 500000), o)
+		self.assertEquals(r, (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_of_((2, 4), o)
+		self.assertEquals(r, (2, 4))
+
+
+	def testcallstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_of_((1, 2.0), o)
+		self.assertEquals(r, (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_of_((2, 4.0), o)
+		self.assertEquals(r, (2, 4.0))
+
+
+	def testinvokestructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_of_((1, 2.0), o)
+		self.assertEquals(r, (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_of_((2, 4.0), o)
+		self.assertEquals(r, (2, 4.0))
 
 
 	# Two arguments
@@ -21042,6 +23778,76 @@ class ObjCToPy (TestCase):
 
 
 	if HAVE_BOOL:
+		def testcallboolAndstructTestStruct4Arg(self):
+			o = Python_TestClass.alloc().init()
+			self.assert_(o is not None)
+			r = PyObjC_TestClass2.callboolArg_andstructTestStruct4Arg_of_(YES, (1, 500000), o)
+			self.assertEquals(r[0], YES)
+			self.assertEquals(r[1], (1, 500000))
+			r = PyObjC_TestClass2.callboolArg_andstructTestStruct4Arg_of_(YES, (2, 4), o)
+			self.assertEquals(r[0], YES)
+			self.assertEquals(r[1], (2, 4))
+			r = PyObjC_TestClass2.callboolArg_andstructTestStruct4Arg_of_(NO, (1, 500000), o)
+			self.assertEquals(r[0], NO)
+			self.assertEquals(r[1], (1, 500000))
+			r = PyObjC_TestClass2.callboolArg_andstructTestStruct4Arg_of_(NO, (2, 4), o)
+			self.assertEquals(r[0], NO)
+			self.assertEquals(r[1], (2, 4))
+
+
+		def testinvokeboolAndstructTestStruct4Arg(self):
+			o = Python_TestClass.alloc().init()
+			self.assert_(o is not None)
+			r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct4Arg_of_(YES, (1, 500000), o)
+			self.assertEquals(r[0], YES)
+			self.assertEquals(r[1], (1, 500000))
+			r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct4Arg_of_(YES, (2, 4), o)
+			self.assertEquals(r[0], YES)
+			self.assertEquals(r[1], (2, 4))
+			r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct4Arg_of_(NO, (1, 500000), o)
+			self.assertEquals(r[0], NO)
+			self.assertEquals(r[1], (1, 500000))
+			r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct4Arg_of_(NO, (2, 4), o)
+			self.assertEquals(r[0], NO)
+			self.assertEquals(r[1], (2, 4))
+
+
+	if HAVE_BOOL:
+		def testcallboolAndstructTestStruct5Arg(self):
+			o = Python_TestClass.alloc().init()
+			self.assert_(o is not None)
+			r = PyObjC_TestClass2.callboolArg_andstructTestStruct5Arg_of_(YES, (1, 2.0), o)
+			self.assertEquals(r[0], YES)
+			self.assertEquals(r[1], (1, 2.0))
+			r = PyObjC_TestClass2.callboolArg_andstructTestStruct5Arg_of_(YES, (2, 4.0), o)
+			self.assertEquals(r[0], YES)
+			self.assertEquals(r[1], (2, 4.0))
+			r = PyObjC_TestClass2.callboolArg_andstructTestStruct5Arg_of_(NO, (1, 2.0), o)
+			self.assertEquals(r[0], NO)
+			self.assertEquals(r[1], (1, 2.0))
+			r = PyObjC_TestClass2.callboolArg_andstructTestStruct5Arg_of_(NO, (2, 4.0), o)
+			self.assertEquals(r[0], NO)
+			self.assertEquals(r[1], (2, 4.0))
+
+
+		def testinvokeboolAndstructTestStruct5Arg(self):
+			o = Python_TestClass.alloc().init()
+			self.assert_(o is not None)
+			r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct5Arg_of_(YES, (1, 2.0), o)
+			self.assertEquals(r[0], YES)
+			self.assertEquals(r[1], (1, 2.0))
+			r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct5Arg_of_(YES, (2, 4.0), o)
+			self.assertEquals(r[0], YES)
+			self.assertEquals(r[1], (2, 4.0))
+			r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct5Arg_of_(NO, (1, 2.0), o)
+			self.assertEquals(r[0], NO)
+			self.assertEquals(r[1], (1, 2.0))
+			r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct5Arg_of_(NO, (2, 4.0), o)
+			self.assertEquals(r[0], NO)
+			self.assertEquals(r[1], (2, 4.0))
+
+
+	if HAVE_BOOL:
 		def testcallBOOLAndboolArg(self):
 			o = Python_TestClass.alloc().init()
 			self.assert_(o is not None)
@@ -22024,6 +24830,74 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokeBOOLArg_andstructTestStruct3Arg_of_(NO, (2, 4), o)
 		self.assertEquals(r[0], NO)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallBOOLAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callBOOLArg_andstructTestStruct4Arg_of_(YES, (1, 500000), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callBOOLArg_andstructTestStruct4Arg_of_(YES, (2, 4), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callBOOLArg_andstructTestStruct4Arg_of_(NO, (1, 500000), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callBOOLArg_andstructTestStruct4Arg_of_(NO, (2, 4), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokeBOOLAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeBOOLArg_andstructTestStruct4Arg_of_(YES, (1, 500000), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeBOOLArg_andstructTestStruct4Arg_of_(YES, (2, 4), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeBOOLArg_andstructTestStruct4Arg_of_(NO, (1, 500000), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeBOOLArg_andstructTestStruct4Arg_of_(NO, (2, 4), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallBOOLAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callBOOLArg_andstructTestStruct5Arg_of_(YES, (1, 2.0), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callBOOLArg_andstructTestStruct5Arg_of_(YES, (2, 4.0), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callBOOLArg_andstructTestStruct5Arg_of_(NO, (1, 2.0), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callBOOLArg_andstructTestStruct5Arg_of_(NO, (2, 4.0), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokeBOOLAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeBOOLArg_andstructTestStruct5Arg_of_(YES, (1, 2.0), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeBOOLArg_andstructTestStruct5Arg_of_(YES, (2, 4.0), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeBOOLArg_andstructTestStruct5Arg_of_(NO, (1, 2.0), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeBOOLArg_andstructTestStruct5Arg_of_(NO, (2, 4.0), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	if HAVE_BOOL:
@@ -23393,6 +26267,98 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct3Arg_of_(127, (2, 4), o)
 		self.assertEquals(r[0], 127)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallcharAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callcharArg_andstructTestStruct4Arg_of_(-128, (1, 500000), o)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callcharArg_andstructTestStruct4Arg_of_(-128, (2, 4), o)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callcharArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callcharArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callcharArg_andstructTestStruct4Arg_of_(127, (1, 500000), o)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callcharArg_andstructTestStruct4Arg_of_(127, (2, 4), o)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokecharAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct4Arg_of_(-128, (1, 500000), o)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct4Arg_of_(-128, (2, 4), o)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct4Arg_of_(127, (1, 500000), o)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct4Arg_of_(127, (2, 4), o)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallcharAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callcharArg_andstructTestStruct5Arg_of_(-128, (1, 2.0), o)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callcharArg_andstructTestStruct5Arg_of_(-128, (2, 4.0), o)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callcharArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callcharArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callcharArg_andstructTestStruct5Arg_of_(127, (1, 2.0), o)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callcharArg_andstructTestStruct5Arg_of_(127, (2, 4.0), o)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokecharAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct5Arg_of_(-128, (1, 2.0), o)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct5Arg_of_(-128, (2, 4.0), o)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct5Arg_of_(127, (1, 2.0), o)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct5Arg_of_(127, (2, 4.0), o)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	if HAVE_BOOL:
@@ -25532,6 +28498,146 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallsignedshortAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct4Arg_of_(-(1<<14), (1, 500000), o)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct4Arg_of_(-(1<<14), (2, 4), o)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct4Arg_of_(-42, (1, 500000), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct4Arg_of_(-42, (2, 4), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct4Arg_of_(1 << 14, (1, 500000), o)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct4Arg_of_(1 << 14, (2, 4), o)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokesignedshortAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct4Arg_of_(-(1<<14), (1, 500000), o)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct4Arg_of_(-(1<<14), (2, 4), o)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct4Arg_of_(-42, (1, 500000), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct4Arg_of_(-42, (2, 4), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct4Arg_of_(1 << 14, (1, 500000), o)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct4Arg_of_(1 << 14, (2, 4), o)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallsignedshortAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct5Arg_of_(-(1<<14), (1, 2.0), o)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct5Arg_of_(-(1<<14), (2, 4.0), o)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct5Arg_of_(-42, (1, 2.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct5Arg_of_(-42, (2, 4.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct5Arg_of_(1 << 14, (1, 2.0), o)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedshortArg_andstructTestStruct5Arg_of_(1 << 14, (2, 4.0), o)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokesignedshortAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct5Arg_of_(-(1<<14), (1, 2.0), o)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct5Arg_of_(-(1<<14), (2, 4.0), o)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct5Arg_of_(-42, (1, 2.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct5Arg_of_(-42, (2, 4.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct5Arg_of_(1 << 14, (1, 2.0), o)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedshortArg_andstructTestStruct5Arg_of_(1 << 14, (2, 4.0), o)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	if HAVE_BOOL:
 		def testcallsignedintAndboolArg(self):
 			o = Python_TestClass.alloc().init()
@@ -27667,6 +30773,146 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct3Arg_of_(1 << 30, (2, 4), o)
 		self.assertEquals(r[0], 1 << 30)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallsignedintAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct4Arg_of_(-(1<<30), (1, 500000), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct4Arg_of_(-(1<<30), (2, 4), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct4Arg_of_(-42, (1, 500000), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct4Arg_of_(-42, (2, 4), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct4Arg_of_(1 << 30, (1, 500000), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct4Arg_of_(1 << 30, (2, 4), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokesignedintAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct4Arg_of_(-(1<<30), (1, 500000), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct4Arg_of_(-(1<<30), (2, 4), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct4Arg_of_(-42, (1, 500000), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct4Arg_of_(-42, (2, 4), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct4Arg_of_(1 << 30, (1, 500000), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct4Arg_of_(1 << 30, (2, 4), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallsignedintAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct5Arg_of_(-(1<<30), (1, 2.0), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct5Arg_of_(-(1<<30), (2, 4.0), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct5Arg_of_(-42, (1, 2.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct5Arg_of_(-42, (2, 4.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct5Arg_of_(1 << 30, (1, 2.0), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedintArg_andstructTestStruct5Arg_of_(1 << 30, (2, 4.0), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokesignedintAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct5Arg_of_(-(1<<30), (1, 2.0), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct5Arg_of_(-(1<<30), (2, 4.0), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct5Arg_of_(-42, (1, 2.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct5Arg_of_(-42, (2, 4.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct5Arg_of_(1 << 30, (1, 2.0), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct5Arg_of_(1 << 30, (2, 4.0), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	if HAVE_BOOL:
@@ -29806,6 +33052,146 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallsignedlongAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct4Arg_of_(-(1<<30), (1, 500000), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct4Arg_of_(-(1<<30), (2, 4), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct4Arg_of_(-42, (1, 500000), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct4Arg_of_(-42, (2, 4), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct4Arg_of_(1 << 30, (1, 500000), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct4Arg_of_(1 << 30, (2, 4), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokesignedlongAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct4Arg_of_(-(1<<30), (1, 500000), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct4Arg_of_(-(1<<30), (2, 4), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct4Arg_of_(-42, (1, 500000), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct4Arg_of_(-42, (2, 4), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct4Arg_of_(1 << 30, (1, 500000), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct4Arg_of_(1 << 30, (2, 4), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallsignedlongAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct5Arg_of_(-(1<<30), (1, 2.0), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct5Arg_of_(-(1<<30), (2, 4.0), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct5Arg_of_(-42, (1, 2.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct5Arg_of_(-42, (2, 4.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct5Arg_of_(1 << 30, (1, 2.0), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedlongArg_andstructTestStruct5Arg_of_(1 << 30, (2, 4.0), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokesignedlongAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct5Arg_of_(-(1<<30), (1, 2.0), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct5Arg_of_(-(1<<30), (2, 4.0), o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct5Arg_of_(-42, (1, 2.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct5Arg_of_(-42, (2, 4.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct5Arg_of_(1 << 30, (1, 2.0), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedlongArg_andstructTestStruct5Arg_of_(1 << 30, (2, 4.0), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	if HAVE_BOOL:
 		def testcallsignedlonglongAndboolArg(self):
 			o = Python_TestClass.alloc().init()
@@ -31943,6 +35329,146 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallsignedlonglongAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct4Arg_of_(-(1L << 60), (1, 500000), o)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct4Arg_of_(-(1L << 60), (2, 4), o)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct4Arg_of_(-42, (1, 500000), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct4Arg_of_(-42, (2, 4), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct4Arg_of_(1L << 60, (1, 500000), o)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct4Arg_of_(1L << 60, (2, 4), o)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokesignedlonglongAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct4Arg_of_(-(1L << 60), (1, 500000), o)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct4Arg_of_(-(1L << 60), (2, 4), o)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct4Arg_of_(-42, (1, 500000), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct4Arg_of_(-42, (2, 4), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct4Arg_of_(1L << 60, (1, 500000), o)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct4Arg_of_(1L << 60, (2, 4), o)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallsignedlonglongAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct5Arg_of_(-(1L << 60), (1, 2.0), o)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct5Arg_of_(-(1L << 60), (2, 4.0), o)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct5Arg_of_(-42, (1, 2.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct5Arg_of_(-42, (2, 4.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct5Arg_of_(1L << 60, (1, 2.0), o)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callsignedlonglongArg_andstructTestStruct5Arg_of_(1L << 60, (2, 4.0), o)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokesignedlonglongAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct5Arg_of_(-(1L << 60), (1, 2.0), o)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct5Arg_of_(-(1L << 60), (2, 4.0), o)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct5Arg_of_(-42, (1, 2.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct5Arg_of_(-42, (2, 4.0), o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct5Arg_of_(1L << 60, (1, 2.0), o)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andstructTestStruct5Arg_of_(1L << 60, (2, 4.0), o)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	if HAVE_BOOL:
 		def testcallunsignedcharAndboolArg(self):
 			o = Python_TestClass.alloc().init()
@@ -33310,6 +36836,98 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct3Arg_of_(255, (2, 4), o)
 		self.assertEquals(r[0], 255)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallunsignedcharAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedcharArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedcharArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callunsignedcharArg_andstructTestStruct4Arg_of_(128, (1, 500000), o)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedcharArg_andstructTestStruct4Arg_of_(128, (2, 4), o)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callunsignedcharArg_andstructTestStruct4Arg_of_(255, (1, 500000), o)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedcharArg_andstructTestStruct4Arg_of_(255, (2, 4), o)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokeunsignedcharAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct4Arg_of_(128, (1, 500000), o)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct4Arg_of_(128, (2, 4), o)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct4Arg_of_(255, (1, 500000), o)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct4Arg_of_(255, (2, 4), o)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallunsignedcharAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedcharArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedcharArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callunsignedcharArg_andstructTestStruct5Arg_of_(128, (1, 2.0), o)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedcharArg_andstructTestStruct5Arg_of_(128, (2, 4.0), o)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callunsignedcharArg_andstructTestStruct5Arg_of_(255, (1, 2.0), o)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedcharArg_andstructTestStruct5Arg_of_(255, (2, 4.0), o)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokeunsignedcharAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct5Arg_of_(128, (1, 2.0), o)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct5Arg_of_(128, (2, 4.0), o)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct5Arg_of_(255, (1, 2.0), o)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct5Arg_of_(255, (2, 4.0), o)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	if HAVE_BOOL:
@@ -34681,6 +38299,98 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallunsignedshortAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedshortArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedshortArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callunsignedshortArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedshortArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callunsignedshortArg_andstructTestStruct4Arg_of_(1<<14, (1, 500000), o)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedshortArg_andstructTestStruct4Arg_of_(1<<14, (2, 4), o)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokeunsignedshortAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andstructTestStruct4Arg_of_(1<<14, (1, 500000), o)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andstructTestStruct4Arg_of_(1<<14, (2, 4), o)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallunsignedshortAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedshortArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedshortArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callunsignedshortArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedshortArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callunsignedshortArg_andstructTestStruct5Arg_of_(1<<14, (1, 2.0), o)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedshortArg_andstructTestStruct5Arg_of_(1<<14, (2, 4.0), o)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokeunsignedshortAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andstructTestStruct5Arg_of_(1<<14, (1, 2.0), o)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andstructTestStruct5Arg_of_(1<<14, (2, 4.0), o)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	if HAVE_BOOL:
 		def testcallunsignedintAndboolArg(self):
 			o = Python_TestClass.alloc().init()
@@ -36048,6 +39758,98 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct3Arg_of_(1 << 30, (2, 4), o)
 		self.assertEquals(r[0], 1 << 30)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallunsignedintAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedintArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedintArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callunsignedintArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedintArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callunsignedintArg_andstructTestStruct4Arg_of_(1 << 30, (1, 500000), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedintArg_andstructTestStruct4Arg_of_(1 << 30, (2, 4), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokeunsignedintAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct4Arg_of_(1 << 30, (1, 500000), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct4Arg_of_(1 << 30, (2, 4), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallunsignedintAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedintArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedintArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callunsignedintArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedintArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callunsignedintArg_andstructTestStruct5Arg_of_(1 << 30, (1, 2.0), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedintArg_andstructTestStruct5Arg_of_(1 << 30, (2, 4.0), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokeunsignedintAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct5Arg_of_(1 << 30, (1, 2.0), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct5Arg_of_(1 << 30, (2, 4.0), o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	if HAVE_BOOL:
@@ -37419,6 +41221,98 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallunsignedlongAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedlongArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedlongArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callunsignedlongArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedlongArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callunsignedlongArg_andstructTestStruct4Arg_of_(1L << 30, (1, 500000), o)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedlongArg_andstructTestStruct4Arg_of_(1L << 30, (2, 4), o)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokeunsignedlongAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andstructTestStruct4Arg_of_(1L << 30, (1, 500000), o)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andstructTestStruct4Arg_of_(1L << 30, (2, 4), o)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallunsignedlongAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedlongArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedlongArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callunsignedlongArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedlongArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callunsignedlongArg_andstructTestStruct5Arg_of_(1L << 30, (1, 2.0), o)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedlongArg_andstructTestStruct5Arg_of_(1L << 30, (2, 4.0), o)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokeunsignedlongAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andstructTestStruct5Arg_of_(1L << 30, (1, 2.0), o)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andstructTestStruct5Arg_of_(1L << 30, (2, 4.0), o)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	if HAVE_BOOL:
 		def testcallunsignedlonglongAndboolArg(self):
 			o = Python_TestClass.alloc().init()
@@ -38786,6 +42680,98 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct3Arg_of_(1L << 62, (2, 4), o)
 		self.assertEquals(r[0], 1L << 62)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallunsignedlonglongAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andstructTestStruct4Arg_of_(1L << 62, (1, 500000), o)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andstructTestStruct4Arg_of_(1L << 62, (2, 4), o)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokeunsignedlonglongAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct4Arg_of_(0, (1, 500000), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct4Arg_of_(0, (2, 4), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct4Arg_of_(42, (1, 500000), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct4Arg_of_(42, (2, 4), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct4Arg_of_(1L << 62, (1, 500000), o)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct4Arg_of_(1L << 62, (2, 4), o)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallunsignedlonglongAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andstructTestStruct5Arg_of_(1L << 62, (1, 2.0), o)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andstructTestStruct5Arg_of_(1L << 62, (2, 4.0), o)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokeunsignedlonglongAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct5Arg_of_(0, (1, 2.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct5Arg_of_(0, (2, 4.0), o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct5Arg_of_(42, (1, 2.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct5Arg_of_(42, (2, 4.0), o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct5Arg_of_(1L << 62, (1, 2.0), o)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct5Arg_of_(1L << 62, (2, 4.0), o)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	if HAVE_BOOL:
@@ -40541,6 +44527,122 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallfloatAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct4Arg_of_(0.128, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct4Arg_of_(0.128, (2, 4), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct4Arg_of_(1.0, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct4Arg_of_(1.0, (2, 4), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct4Arg_of_(42.0, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct4Arg_of_(42.0, (2, 4), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct4Arg_of_(1e10, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct4Arg_of_(1e10, (2, 4), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokefloatAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct4Arg_of_(0.128, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct4Arg_of_(0.128, (2, 4), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct4Arg_of_(1.0, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct4Arg_of_(1.0, (2, 4), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct4Arg_of_(42.0, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct4Arg_of_(42.0, (2, 4), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct4Arg_of_(1e10, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct4Arg_of_(1e10, (2, 4), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallfloatAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct5Arg_of_(0.128, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct5Arg_of_(0.128, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct5Arg_of_(1.0, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct5Arg_of_(1.0, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct5Arg_of_(42.0, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct5Arg_of_(42.0, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct5Arg_of_(1e10, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callfloatArg_andstructTestStruct5Arg_of_(1e10, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokefloatAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct5Arg_of_(0.128, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct5Arg_of_(0.128, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct5Arg_of_(1.0, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct5Arg_of_(1.0, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct5Arg_of_(42.0, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct5Arg_of_(42.0, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct5Arg_of_(1e10, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokefloatArg_andstructTestStruct5Arg_of_(1e10, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	if HAVE_BOOL:
 		def testcalldoubleAndboolArg(self):
 			o = Python_TestClass.alloc().init()
@@ -42294,6 +46396,122 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcalldoubleAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct4Arg_of_(0.128, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct4Arg_of_(0.128, (2, 4), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct4Arg_of_(1.0, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct4Arg_of_(1.0, (2, 4), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct4Arg_of_(42.0, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct4Arg_of_(42.0, (2, 4), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct4Arg_of_(1e10, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct4Arg_of_(1e10, (2, 4), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokedoubleAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct4Arg_of_(0.128, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct4Arg_of_(0.128, (2, 4), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct4Arg_of_(1.0, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct4Arg_of_(1.0, (2, 4), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct4Arg_of_(42.0, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct4Arg_of_(42.0, (2, 4), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct4Arg_of_(1e10, (1, 500000), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct4Arg_of_(1e10, (2, 4), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcalldoubleAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct5Arg_of_(0.128, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct5Arg_of_(0.128, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct5Arg_of_(1.0, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct5Arg_of_(1.0, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct5Arg_of_(42.0, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct5Arg_of_(42.0, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct5Arg_of_(1e10, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.calldoubleArg_andstructTestStruct5Arg_of_(1e10, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokedoubleAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct5Arg_of_(0.128, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct5Arg_of_(0.128, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct5Arg_of_(1.0, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct5Arg_of_(1.0, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct5Arg_of_(42.0, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct5Arg_of_(42.0, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct5Arg_of_(1e10, (1, 2.0), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokedoubleArg_andstructTestStruct5Arg_of_(1e10, (2, 4.0), o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	if HAVE_BOOL:
 		def testcallidAndboolArg(self):
 			o = Python_TestClass.alloc().init()
@@ -42893,6 +47111,50 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokeidArg_andstructTestStruct3Arg_of_(NSPriorDayDesignations, (2, 4), o)
 		self.assertEquals(r[0], NSPriorDayDesignations)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallidAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callidArg_andstructTestStruct4Arg_of_(NSPriorDayDesignations, (1, 500000), o)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callidArg_andstructTestStruct4Arg_of_(NSPriorDayDesignations, (2, 4), o)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokeidAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeidArg_andstructTestStruct4Arg_of_(NSPriorDayDesignations, (1, 500000), o)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeidArg_andstructTestStruct4Arg_of_(NSPriorDayDesignations, (2, 4), o)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallidAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callidArg_andstructTestStruct5Arg_of_(NSPriorDayDesignations, (1, 2.0), o)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callidArg_andstructTestStruct5Arg_of_(NSPriorDayDesignations, (2, 4.0), o)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokeidAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeidArg_andstructTestStruct5Arg_of_(NSPriorDayDesignations, (1, 2.0), o)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeidArg_andstructTestStruct5Arg_of_(NSPriorDayDesignations, (2, 4.0), o)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	if HAVE_BOOL:
@@ -44264,6 +48526,98 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallcharPtrAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct4Arg_of_("hello", (1, 500000), o)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct4Arg_of_("hello", (2, 4), o)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct4Arg_of_("world", (1, 500000), o)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct4Arg_of_("world", (2, 4), o)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct4Arg_of_("foobar", (1, 500000), o)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct4Arg_of_("foobar", (2, 4), o)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokecharPtrAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct4Arg_of_("hello", (1, 500000), o)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct4Arg_of_("hello", (2, 4), o)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct4Arg_of_("world", (1, 500000), o)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct4Arg_of_("world", (2, 4), o)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct4Arg_of_("foobar", (1, 500000), o)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct4Arg_of_("foobar", (2, 4), o)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallcharPtrAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct5Arg_of_("hello", (1, 2.0), o)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct5Arg_of_("hello", (2, 4.0), o)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct5Arg_of_("world", (1, 2.0), o)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct5Arg_of_("world", (2, 4.0), o)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct5Arg_of_("foobar", (1, 2.0), o)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct5Arg_of_("foobar", (2, 4.0), o)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokecharPtrAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct5Arg_of_("hello", (1, 2.0), o)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct5Arg_of_("hello", (2, 4.0), o)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct5Arg_of_("world", (1, 2.0), o)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct5Arg_of_("world", (2, 4.0), o)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct5Arg_of_("foobar", (1, 2.0), o)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct5Arg_of_("foobar", (2, 4.0), o)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	if HAVE_BOOL:
 		def testcallNSPointAndboolArg(self):
 			o = Python_TestClass.alloc().init()
@@ -45249,6 +49603,74 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallNSPointAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callNSPointArg_andstructTestStruct4Arg_of_((1, 2), (1, 500000), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callNSPointArg_andstructTestStruct4Arg_of_((1, 2), (2, 4), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callNSPointArg_andstructTestStruct4Arg_of_((3, 4), (1, 500000), o)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callNSPointArg_andstructTestStruct4Arg_of_((3, 4), (2, 4), o)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokeNSPointAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeNSPointArg_andstructTestStruct4Arg_of_((1, 2), (1, 500000), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeNSPointArg_andstructTestStruct4Arg_of_((1, 2), (2, 4), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeNSPointArg_andstructTestStruct4Arg_of_((3, 4), (1, 500000), o)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeNSPointArg_andstructTestStruct4Arg_of_((3, 4), (2, 4), o)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallNSPointAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callNSPointArg_andstructTestStruct5Arg_of_((1, 2), (1, 2.0), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callNSPointArg_andstructTestStruct5Arg_of_((1, 2), (2, 4.0), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callNSPointArg_andstructTestStruct5Arg_of_((3, 4), (1, 2.0), o)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callNSPointArg_andstructTestStruct5Arg_of_((3, 4), (2, 4.0), o)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokeNSPointAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeNSPointArg_andstructTestStruct5Arg_of_((1, 2), (1, 2.0), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeNSPointArg_andstructTestStruct5Arg_of_((1, 2), (2, 4.0), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeNSPointArg_andstructTestStruct5Arg_of_((3, 4), (1, 2.0), o)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeNSPointArg_andstructTestStruct5Arg_of_((3, 4), (2, 4.0), o)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	if HAVE_BOOL:
 		def testcallNSRectAndboolArg(self):
 			o = Python_TestClass.alloc().init()
@@ -46232,6 +50654,74 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokeNSRectArg_andstructTestStruct3Arg_of_(((7, 8), (9, 10)), (2, 4), o)
 		self.assertEquals(r[0], ((7, 8), (9, 10)))
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallNSRectAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callNSRectArg_andstructTestStruct4Arg_of_(((1, 2), (3, 4)), (1, 500000), o)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callNSRectArg_andstructTestStruct4Arg_of_(((1, 2), (3, 4)), (2, 4), o)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callNSRectArg_andstructTestStruct4Arg_of_(((7, 8), (9, 10)), (1, 500000), o)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callNSRectArg_andstructTestStruct4Arg_of_(((7, 8), (9, 10)), (2, 4), o)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokeNSRectAndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeNSRectArg_andstructTestStruct4Arg_of_(((1, 2), (3, 4)), (1, 500000), o)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeNSRectArg_andstructTestStruct4Arg_of_(((1, 2), (3, 4)), (2, 4), o)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeNSRectArg_andstructTestStruct4Arg_of_(((7, 8), (9, 10)), (1, 500000), o)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokeNSRectArg_andstructTestStruct4Arg_of_(((7, 8), (9, 10)), (2, 4), o)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallNSRectAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callNSRectArg_andstructTestStruct5Arg_of_(((1, 2), (3, 4)), (1, 2.0), o)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callNSRectArg_andstructTestStruct5Arg_of_(((1, 2), (3, 4)), (2, 4.0), o)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callNSRectArg_andstructTestStruct5Arg_of_(((7, 8), (9, 10)), (1, 2.0), o)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callNSRectArg_andstructTestStruct5Arg_of_(((7, 8), (9, 10)), (2, 4.0), o)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokeNSRectAndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeNSRectArg_andstructTestStruct5Arg_of_(((1, 2), (3, 4)), (1, 2.0), o)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeNSRectArg_andstructTestStruct5Arg_of_(((1, 2), (3, 4)), (2, 4.0), o)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokeNSRectArg_andstructTestStruct5Arg_of_(((7, 8), (9, 10)), (1, 2.0), o)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokeNSRectArg_andstructTestStruct5Arg_of_(((7, 8), (9, 10)), (2, 4.0), o)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	if HAVE_BOOL:
@@ -47255,6 +51745,78 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallstructTestStruct1AndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct1Arg_andstructTestStruct4Arg_of_((1, 2, (1, 2, 3, 4, 5)), (1, 500000), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct1Arg_andstructTestStruct4Arg_of_((1, 2, (1, 2, 3, 4, 5)), (2, 4), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callstructTestStruct1Arg_andstructTestStruct4Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (1, 500000), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct1Arg_andstructTestStruct4Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (2, 4), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokestructTestStruct1AndstructTestStruct4Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct1Arg_andstructTestStruct4Arg_of_((1, 2, (1, 2, 3, 4, 5)), (1, 500000), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct1Arg_andstructTestStruct4Arg_of_((1, 2, (1, 2, 3, 4, 5)), (2, 4), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokestructTestStruct1Arg_andstructTestStruct4Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (1, 500000), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct1Arg_andstructTestStruct4Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (2, 4), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallstructTestStruct1AndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct1Arg_andstructTestStruct5Arg_of_((1, 2, (1, 2, 3, 4, 5)), (1, 2.0), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct1Arg_andstructTestStruct5Arg_of_((1, 2, (1, 2, 3, 4, 5)), (2, 4.0), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callstructTestStruct1Arg_andstructTestStruct5Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (1, 2.0), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct1Arg_andstructTestStruct5Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (2, 4.0), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokestructTestStruct1AndstructTestStruct5Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct1Arg_andstructTestStruct5Arg_of_((1, 2, (1, 2, 3, 4, 5)), (1, 2.0), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct1Arg_andstructTestStruct5Arg_of_((1, 2, (1, 2, 3, 4, 5)), (2, 4.0), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokestructTestStruct1Arg_andstructTestStruct5Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (1, 2.0), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct1Arg_andstructTestStruct5Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (2, 4.0), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	if HAVE_BOOL:
 		def testcallstructTestStruct2AndboolArg(self):
 			o = Python_TestClass.alloc().init()
@@ -48274,6 +52836,78 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andstructTestStruct3Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (2, 4), o)
 		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallstructTestStruct2AndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct2Arg_andstructTestStruct4Arg_of_((1, 2, (1, 2, 3, 4, 5)), (1, 500000), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct2Arg_andstructTestStruct4Arg_of_((1, 2, (1, 2, 3, 4, 5)), (2, 4), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callstructTestStruct2Arg_andstructTestStruct4Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (1, 500000), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct2Arg_andstructTestStruct4Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (2, 4), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokestructTestStruct2AndstructTestStruct4Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andstructTestStruct4Arg_of_((1, 2, (1, 2, 3, 4, 5)), (1, 500000), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andstructTestStruct4Arg_of_((1, 2, (1, 2, 3, 4, 5)), (2, 4), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andstructTestStruct4Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (1, 500000), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andstructTestStruct4Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (2, 4), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallstructTestStruct2AndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct2Arg_andstructTestStruct5Arg_of_((1, 2, (1, 2, 3, 4, 5)), (1, 2.0), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct2Arg_andstructTestStruct5Arg_of_((1, 2, (1, 2, 3, 4, 5)), (2, 4.0), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callstructTestStruct2Arg_andstructTestStruct5Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (1, 2.0), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct2Arg_andstructTestStruct5Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (2, 4.0), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokestructTestStruct2AndstructTestStruct5Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andstructTestStruct5Arg_of_((1, 2, (1, 2, 3, 4, 5)), (1, 2.0), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andstructTestStruct5Arg_of_((1, 2, (1, 2, 3, 4, 5)), (2, 4.0), o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andstructTestStruct5Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (1, 2.0), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andstructTestStruct5Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (2, 4.0), o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], (2, 4.0))
 
 
 	if HAVE_BOOL:
@@ -49297,6 +53931,2184 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallstructTestStruct3AndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct3Arg_andstructTestStruct4Arg_of_((1, 2), (1, 500000), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct3Arg_andstructTestStruct4Arg_of_((1, 2), (2, 4), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callstructTestStruct3Arg_andstructTestStruct4Arg_of_((2, 4), (1, 500000), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct3Arg_andstructTestStruct4Arg_of_((2, 4), (2, 4), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokestructTestStruct3AndstructTestStruct4Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct3Arg_andstructTestStruct4Arg_of_((1, 2), (1, 500000), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct3Arg_andstructTestStruct4Arg_of_((1, 2), (2, 4), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokestructTestStruct3Arg_andstructTestStruct4Arg_of_((2, 4), (1, 500000), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct3Arg_andstructTestStruct4Arg_of_((2, 4), (2, 4), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallstructTestStruct3AndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct3Arg_andstructTestStruct5Arg_of_((1, 2), (1, 2.0), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct3Arg_andstructTestStruct5Arg_of_((1, 2), (2, 4.0), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callstructTestStruct3Arg_andstructTestStruct5Arg_of_((2, 4), (1, 2.0), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct3Arg_andstructTestStruct5Arg_of_((2, 4), (2, 4.0), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokestructTestStruct3AndstructTestStruct5Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct3Arg_andstructTestStruct5Arg_of_((1, 2), (1, 2.0), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct3Arg_andstructTestStruct5Arg_of_((1, 2), (2, 4.0), o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokestructTestStruct3Arg_andstructTestStruct5Arg_of_((2, 4), (1, 2.0), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct3Arg_andstructTestStruct5Arg_of_((2, 4), (2, 4.0), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	if HAVE_BOOL:
+		def testcallstructTestStruct4AndboolArg(self):
+			o = Python_TestClass.alloc().init()
+			self.assert_(o is not None)
+			r = PyObjC_TestClass2.callstructTestStruct4Arg_andboolArg_of_((1, 500000), YES, o)
+			self.assertEquals(r[0], (1, 500000))
+			self.assertEquals(r[1], YES)
+			r = PyObjC_TestClass2.callstructTestStruct4Arg_andboolArg_of_((1, 500000), NO, o)
+			self.assertEquals(r[0], (1, 500000))
+			self.assertEquals(r[1], NO)
+			r = PyObjC_TestClass2.callstructTestStruct4Arg_andboolArg_of_((2, 4), YES, o)
+			self.assertEquals(r[0], (2, 4))
+			self.assertEquals(r[1], YES)
+			r = PyObjC_TestClass2.callstructTestStruct4Arg_andboolArg_of_((2, 4), NO, o)
+			self.assertEquals(r[0], (2, 4))
+			self.assertEquals(r[1], NO)
+
+
+		def testinvokestructTestStruct4AndboolArg(self):
+			o = Python_TestClass.alloc().init()
+			self.assert_(o is not None)
+			r = PyObjC_TestClass2.invokestructTestStruct4Arg_andboolArg_of_((1, 500000), YES, o)
+			self.assertEquals(r[0], (1, 500000))
+			self.assertEquals(r[1], YES)
+			r = PyObjC_TestClass2.invokestructTestStruct4Arg_andboolArg_of_((1, 500000), NO, o)
+			self.assertEquals(r[0], (1, 500000))
+			self.assertEquals(r[1], NO)
+			r = PyObjC_TestClass2.invokestructTestStruct4Arg_andboolArg_of_((2, 4), YES, o)
+			self.assertEquals(r[0], (2, 4))
+			self.assertEquals(r[1], YES)
+			r = PyObjC_TestClass2.invokestructTestStruct4Arg_andboolArg_of_((2, 4), NO, o)
+			self.assertEquals(r[0], (2, 4))
+			self.assertEquals(r[1], NO)
+
+
+	def testcallstructTestStruct4AndBOOLArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andBOOLArg_of_((1, 500000), YES, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andBOOLArg_of_((1, 500000), NO, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andBOOLArg_of_((2, 4), YES, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andBOOLArg_of_((2, 4), NO, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokestructTestStruct4AndBOOLArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andBOOLArg_of_((1, 500000), YES, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andBOOLArg_of_((1, 500000), NO, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andBOOLArg_of_((2, 4), YES, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andBOOLArg_of_((2, 4), NO, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], NO)
+
+
+	def testcallstructTestStruct4AndcharArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharArg_of_((1, 500000), -128, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -128)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharArg_of_((1, 500000), 127, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 127)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharArg_of_((2, 4), -128, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -128)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharArg_of_((2, 4), 127, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 127)
+
+
+	def testinvokestructTestStruct4AndcharArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharArg_of_((1, 500000), -128, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -128)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharArg_of_((1, 500000), 127, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 127)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharArg_of_((2, 4), -128, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -128)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharArg_of_((2, 4), 127, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 127)
+
+
+	def testcallstructTestStruct4AndsignedshortArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedshortArg_of_((1, 500000), -(1<<14), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -(1<<14))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedshortArg_of_((1, 500000), -42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedshortArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedshortArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedshortArg_of_((1, 500000), 1 << 14, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1 << 14)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedshortArg_of_((2, 4), -(1<<14), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -(1<<14))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedshortArg_of_((2, 4), -42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedshortArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedshortArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedshortArg_of_((2, 4), 1 << 14, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1 << 14)
+
+
+	def testinvokestructTestStruct4AndsignedshortArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedshortArg_of_((1, 500000), -(1<<14), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -(1<<14))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedshortArg_of_((1, 500000), -42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedshortArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedshortArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedshortArg_of_((1, 500000), 1 << 14, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1 << 14)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedshortArg_of_((2, 4), -(1<<14), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -(1<<14))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedshortArg_of_((2, 4), -42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedshortArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedshortArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedshortArg_of_((2, 4), 1 << 14, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1 << 14)
+
+
+	def testcallstructTestStruct4AndsignedintArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedintArg_of_((1, 500000), -(1<<30), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedintArg_of_((1, 500000), -42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedintArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedintArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedintArg_of_((1, 500000), 1 << 30, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedintArg_of_((2, 4), -(1<<30), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedintArg_of_((2, 4), -42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedintArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedintArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedintArg_of_((2, 4), 1 << 30, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testinvokestructTestStruct4AndsignedintArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedintArg_of_((1, 500000), -(1<<30), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedintArg_of_((1, 500000), -42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedintArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedintArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedintArg_of_((1, 500000), 1 << 30, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedintArg_of_((2, 4), -(1<<30), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedintArg_of_((2, 4), -42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedintArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedintArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedintArg_of_((2, 4), 1 << 30, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testcallstructTestStruct4AndsignedlongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlongArg_of_((1, 500000), -(1<<30), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlongArg_of_((1, 500000), -42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlongArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlongArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlongArg_of_((1, 500000), 1 << 30, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlongArg_of_((2, 4), -(1<<30), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlongArg_of_((2, 4), -42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlongArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlongArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlongArg_of_((2, 4), 1 << 30, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testinvokestructTestStruct4AndsignedlongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlongArg_of_((1, 500000), -(1<<30), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlongArg_of_((1, 500000), -42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlongArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlongArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlongArg_of_((1, 500000), 1 << 30, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlongArg_of_((2, 4), -(1<<30), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlongArg_of_((2, 4), -42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlongArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlongArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlongArg_of_((2, 4), 1 << 30, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testcallstructTestStruct4AndsignedlonglongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlonglongArg_of_((1, 500000), -(1L << 60), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -(1L << 60))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlonglongArg_of_((1, 500000), -42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlonglongArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlonglongArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlonglongArg_of_((1, 500000), 1L << 60, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1L << 60)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlonglongArg_of_((2, 4), -(1L << 60), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -(1L << 60))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlonglongArg_of_((2, 4), -42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlonglongArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlonglongArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andsignedlonglongArg_of_((2, 4), 1L << 60, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1L << 60)
+
+
+	def testinvokestructTestStruct4AndsignedlonglongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlonglongArg_of_((1, 500000), -(1L << 60), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -(1L << 60))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlonglongArg_of_((1, 500000), -42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlonglongArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlonglongArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlonglongArg_of_((1, 500000), 1L << 60, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1L << 60)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlonglongArg_of_((2, 4), -(1L << 60), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -(1L << 60))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlonglongArg_of_((2, 4), -42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlonglongArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlonglongArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andsignedlonglongArg_of_((2, 4), 1L << 60, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1L << 60)
+
+
+	def testcallstructTestStruct4AndunsignedcharArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedcharArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedcharArg_of_((1, 500000), 128, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 128)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedcharArg_of_((1, 500000), 255, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 255)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedcharArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedcharArg_of_((2, 4), 128, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 128)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedcharArg_of_((2, 4), 255, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 255)
+
+
+	def testinvokestructTestStruct4AndunsignedcharArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedcharArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedcharArg_of_((1, 500000), 128, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 128)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedcharArg_of_((1, 500000), 255, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 255)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedcharArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedcharArg_of_((2, 4), 128, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 128)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedcharArg_of_((2, 4), 255, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 255)
+
+
+	def testcallstructTestStruct4AndunsignedshortArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedshortArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedshortArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedshortArg_of_((1, 500000), 1<<14, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1<<14)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedshortArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedshortArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedshortArg_of_((2, 4), 1<<14, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1<<14)
+
+
+	def testinvokestructTestStruct4AndunsignedshortArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedshortArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedshortArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedshortArg_of_((1, 500000), 1<<14, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1<<14)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedshortArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedshortArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedshortArg_of_((2, 4), 1<<14, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1<<14)
+
+
+	def testcallstructTestStruct4AndunsignedintArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedintArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedintArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedintArg_of_((1, 500000), 1 << 30, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedintArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedintArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedintArg_of_((2, 4), 1 << 30, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testinvokestructTestStruct4AndunsignedintArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedintArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedintArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedintArg_of_((1, 500000), 1 << 30, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedintArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedintArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedintArg_of_((2, 4), 1 << 30, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testcallstructTestStruct4AndunsignedlongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedlongArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedlongArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedlongArg_of_((1, 500000), 1L << 30, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1L << 30)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedlongArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedlongArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedlongArg_of_((2, 4), 1L << 30, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1L << 30)
+
+
+	def testinvokestructTestStruct4AndunsignedlongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedlongArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedlongArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedlongArg_of_((1, 500000), 1L << 30, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1L << 30)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedlongArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedlongArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedlongArg_of_((2, 4), 1L << 30, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1L << 30)
+
+
+	def testcallstructTestStruct4AndunsignedlonglongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedlonglongArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedlonglongArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedlonglongArg_of_((1, 500000), 1L << 62, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1L << 62)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedlonglongArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedlonglongArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andunsignedlonglongArg_of_((2, 4), 1L << 62, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1L << 62)
+
+
+	def testinvokestructTestStruct4AndunsignedlonglongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedlonglongArg_of_((1, 500000), 0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedlonglongArg_of_((1, 500000), 42, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedlonglongArg_of_((1, 500000), 1L << 62, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], 1L << 62)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedlonglongArg_of_((2, 4), 0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedlonglongArg_of_((2, 4), 42, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andunsignedlonglongArg_of_((2, 4), 1L << 62, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], 1L << 62)
+
+
+	def testcallstructTestStruct4AndfloatArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andfloatArg_of_((1, 500000), 0.128, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andfloatArg_of_((1, 500000), 1.0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andfloatArg_of_((1, 500000), 42.0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andfloatArg_of_((1, 500000), 1e10, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 1e10)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andfloatArg_of_((2, 4), 0.128, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andfloatArg_of_((2, 4), 1.0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andfloatArg_of_((2, 4), 42.0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andfloatArg_of_((2, 4), 1e10, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testinvokestructTestStruct4AndfloatArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andfloatArg_of_((1, 500000), 0.128, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andfloatArg_of_((1, 500000), 1.0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andfloatArg_of_((1, 500000), 42.0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andfloatArg_of_((1, 500000), 1e10, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 1e10)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andfloatArg_of_((2, 4), 0.128, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andfloatArg_of_((2, 4), 1.0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andfloatArg_of_((2, 4), 42.0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andfloatArg_of_((2, 4), 1e10, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testcallstructTestStruct4AnddoubleArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_anddoubleArg_of_((1, 500000), 0.128, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_anddoubleArg_of_((1, 500000), 1.0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_anddoubleArg_of_((1, 500000), 42.0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_anddoubleArg_of_((1, 500000), 1e10, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 1e10)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_anddoubleArg_of_((2, 4), 0.128, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_anddoubleArg_of_((2, 4), 1.0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_anddoubleArg_of_((2, 4), 42.0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_anddoubleArg_of_((2, 4), 1e10, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testinvokestructTestStruct4AnddoubleArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_anddoubleArg_of_((1, 500000), 0.128, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_anddoubleArg_of_((1, 500000), 1.0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_anddoubleArg_of_((1, 500000), 42.0, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_anddoubleArg_of_((1, 500000), 1e10, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertAlmostEquals(r[1], 1e10)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_anddoubleArg_of_((2, 4), 0.128, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_anddoubleArg_of_((2, 4), 1.0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_anddoubleArg_of_((2, 4), 42.0, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_anddoubleArg_of_((2, 4), 1e10, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testcallstructTestStruct4AndidArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andidArg_of_((1, 500000), NSPriorDayDesignations, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], NSPriorDayDesignations)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andidArg_of_((2, 4), NSPriorDayDesignations, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], NSPriorDayDesignations)
+
+
+	def testinvokestructTestStruct4AndidArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andidArg_of_((1, 500000), NSPriorDayDesignations, o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], NSPriorDayDesignations)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andidArg_of_((2, 4), NSPriorDayDesignations, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], NSPriorDayDesignations)
+
+
+	def testcallstructTestStruct4AndcharPtrArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharPtrArg_of_((1, 500000), "hello", o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], "hello")
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharPtrArg_of_((1, 500000), "world", o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], "world")
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharPtrArg_of_((1, 500000), "foobar", o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], "foobar")
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharPtrArg_of_((2, 4), "hello", o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], "hello")
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharPtrArg_of_((2, 4), "world", o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], "world")
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharPtrArg_of_((2, 4), "foobar", o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], "foobar")
+
+
+	def testinvokestructTestStruct4AndcharPtrArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharPtrArg_of_((1, 500000), "hello", o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], "hello")
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharPtrArg_of_((1, 500000), "world", o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], "world")
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharPtrArg_of_((1, 500000), "foobar", o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], "foobar")
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharPtrArg_of_((2, 4), "hello", o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], "hello")
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharPtrArg_of_((2, 4), "world", o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], "world")
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharPtrArg_of_((2, 4), "foobar", o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], "foobar")
+
+
+	def testcallstructTestStruct4AndNSPointArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andNSPointArg_of_((1, 500000), (1, 2), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andNSPointArg_of_((1, 500000), (3, 4), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (3, 4))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andNSPointArg_of_((2, 4), (1, 2), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andNSPointArg_of_((2, 4), (3, 4), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (3, 4))
+
+
+	def testinvokestructTestStruct4AndNSPointArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andNSPointArg_of_((1, 500000), (1, 2), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andNSPointArg_of_((1, 500000), (3, 4), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (3, 4))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andNSPointArg_of_((2, 4), (1, 2), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andNSPointArg_of_((2, 4), (3, 4), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (3, 4))
+
+
+	def testcallstructTestStruct4AndNSRectArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andNSRectArg_of_((1, 500000), ((1, 2), (3, 4)), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andNSRectArg_of_((1, 500000), ((7, 8), (9, 10)), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andNSRectArg_of_((2, 4), ((1, 2), (3, 4)), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andNSRectArg_of_((2, 4), ((7, 8), (9, 10)), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+
+
+	def testinvokestructTestStruct4AndNSRectArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andNSRectArg_of_((1, 500000), ((1, 2), (3, 4)), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andNSRectArg_of_((1, 500000), ((7, 8), (9, 10)), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andNSRectArg_of_((2, 4), ((1, 2), (3, 4)), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andNSRectArg_of_((2, 4), ((7, 8), (9, 10)), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+
+
+	def testcallstructTestStruct4AndstructTestStruct1Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct1Arg_of_((1, 500000), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct1Arg_of_((1, 500000), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct1Arg_of_((2, 4), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct1Arg_of_((2, 4), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testinvokestructTestStruct4AndstructTestStruct1Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct1Arg_of_((1, 500000), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct1Arg_of_((1, 500000), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct1Arg_of_((2, 4), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct1Arg_of_((2, 4), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testcallstructTestStruct4AndstructTestStruct2Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct2Arg_of_((1, 500000), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct2Arg_of_((1, 500000), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct2Arg_of_((2, 4), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct2Arg_of_((2, 4), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testinvokestructTestStruct4AndstructTestStruct2Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct2Arg_of_((1, 500000), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct2Arg_of_((1, 500000), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct2Arg_of_((2, 4), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct2Arg_of_((2, 4), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testcallstructTestStruct4AndstructTestStruct3Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct3Arg_of_((1, 500000), (1, 2), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct3Arg_of_((1, 500000), (2, 4), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct3Arg_of_((2, 4), (1, 2), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct3Arg_of_((2, 4), (2, 4), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokestructTestStruct4AndstructTestStruct3Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct3Arg_of_((1, 500000), (1, 2), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct3Arg_of_((1, 500000), (2, 4), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct3Arg_of_((2, 4), (1, 2), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct3Arg_of_((2, 4), (2, 4), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallstructTestStruct4AndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct4Arg_of_((1, 500000), (1, 500000), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct4Arg_of_((1, 500000), (2, 4), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct4Arg_of_((2, 4), (1, 500000), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct4Arg_of_((2, 4), (2, 4), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokestructTestStruct4AndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct4Arg_of_((1, 500000), (1, 500000), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct4Arg_of_((1, 500000), (2, 4), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct4Arg_of_((2, 4), (1, 500000), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct4Arg_of_((2, 4), (2, 4), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallstructTestStruct4AndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct5Arg_of_((1, 500000), (1, 2.0), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct5Arg_of_((1, 500000), (2, 4.0), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct5Arg_of_((2, 4), (1, 2.0), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct4Arg_andstructTestStruct5Arg_of_((2, 4), (2, 4.0), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokestructTestStruct4AndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct5Arg_of_((1, 500000), (1, 2.0), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct5Arg_of_((1, 500000), (2, 4.0), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct5Arg_of_((2, 4), (1, 2.0), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct4Arg_andstructTestStruct5Arg_of_((2, 4), (2, 4.0), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	if HAVE_BOOL:
+		def testcallstructTestStruct5AndboolArg(self):
+			o = Python_TestClass.alloc().init()
+			self.assert_(o is not None)
+			r = PyObjC_TestClass2.callstructTestStruct5Arg_andboolArg_of_((1, 2.0), YES, o)
+			self.assertEquals(r[0], (1, 2.0))
+			self.assertEquals(r[1], YES)
+			r = PyObjC_TestClass2.callstructTestStruct5Arg_andboolArg_of_((1, 2.0), NO, o)
+			self.assertEquals(r[0], (1, 2.0))
+			self.assertEquals(r[1], NO)
+			r = PyObjC_TestClass2.callstructTestStruct5Arg_andboolArg_of_((2, 4.0), YES, o)
+			self.assertEquals(r[0], (2, 4.0))
+			self.assertEquals(r[1], YES)
+			r = PyObjC_TestClass2.callstructTestStruct5Arg_andboolArg_of_((2, 4.0), NO, o)
+			self.assertEquals(r[0], (2, 4.0))
+			self.assertEquals(r[1], NO)
+
+
+		def testinvokestructTestStruct5AndboolArg(self):
+			o = Python_TestClass.alloc().init()
+			self.assert_(o is not None)
+			r = PyObjC_TestClass2.invokestructTestStruct5Arg_andboolArg_of_((1, 2.0), YES, o)
+			self.assertEquals(r[0], (1, 2.0))
+			self.assertEquals(r[1], YES)
+			r = PyObjC_TestClass2.invokestructTestStruct5Arg_andboolArg_of_((1, 2.0), NO, o)
+			self.assertEquals(r[0], (1, 2.0))
+			self.assertEquals(r[1], NO)
+			r = PyObjC_TestClass2.invokestructTestStruct5Arg_andboolArg_of_((2, 4.0), YES, o)
+			self.assertEquals(r[0], (2, 4.0))
+			self.assertEquals(r[1], YES)
+			r = PyObjC_TestClass2.invokestructTestStruct5Arg_andboolArg_of_((2, 4.0), NO, o)
+			self.assertEquals(r[0], (2, 4.0))
+			self.assertEquals(r[1], NO)
+
+
+	def testcallstructTestStruct5AndBOOLArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andBOOLArg_of_((1, 2.0), YES, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andBOOLArg_of_((1, 2.0), NO, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andBOOLArg_of_((2, 4.0), YES, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andBOOLArg_of_((2, 4.0), NO, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokestructTestStruct5AndBOOLArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andBOOLArg_of_((1, 2.0), YES, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andBOOLArg_of_((1, 2.0), NO, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andBOOLArg_of_((2, 4.0), YES, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andBOOLArg_of_((2, 4.0), NO, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], NO)
+
+
+	def testcallstructTestStruct5AndcharArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharArg_of_((1, 2.0), -128, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -128)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharArg_of_((1, 2.0), 127, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 127)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharArg_of_((2, 4.0), -128, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -128)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharArg_of_((2, 4.0), 127, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 127)
+
+
+	def testinvokestructTestStruct5AndcharArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharArg_of_((1, 2.0), -128, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -128)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharArg_of_((1, 2.0), 127, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 127)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharArg_of_((2, 4.0), -128, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -128)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharArg_of_((2, 4.0), 127, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 127)
+
+
+	def testcallstructTestStruct5AndsignedshortArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedshortArg_of_((1, 2.0), -(1<<14), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -(1<<14))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedshortArg_of_((1, 2.0), -42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedshortArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedshortArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedshortArg_of_((1, 2.0), 1 << 14, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1 << 14)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedshortArg_of_((2, 4.0), -(1<<14), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -(1<<14))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedshortArg_of_((2, 4.0), -42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedshortArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedshortArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedshortArg_of_((2, 4.0), 1 << 14, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1 << 14)
+
+
+	def testinvokestructTestStruct5AndsignedshortArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedshortArg_of_((1, 2.0), -(1<<14), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -(1<<14))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedshortArg_of_((1, 2.0), -42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedshortArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedshortArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedshortArg_of_((1, 2.0), 1 << 14, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1 << 14)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedshortArg_of_((2, 4.0), -(1<<14), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -(1<<14))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedshortArg_of_((2, 4.0), -42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedshortArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedshortArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedshortArg_of_((2, 4.0), 1 << 14, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1 << 14)
+
+
+	def testcallstructTestStruct5AndsignedintArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedintArg_of_((1, 2.0), -(1<<30), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedintArg_of_((1, 2.0), -42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedintArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedintArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedintArg_of_((1, 2.0), 1 << 30, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedintArg_of_((2, 4.0), -(1<<30), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedintArg_of_((2, 4.0), -42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedintArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedintArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedintArg_of_((2, 4.0), 1 << 30, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testinvokestructTestStruct5AndsignedintArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedintArg_of_((1, 2.0), -(1<<30), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedintArg_of_((1, 2.0), -42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedintArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedintArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedintArg_of_((1, 2.0), 1 << 30, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedintArg_of_((2, 4.0), -(1<<30), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedintArg_of_((2, 4.0), -42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedintArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedintArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedintArg_of_((2, 4.0), 1 << 30, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testcallstructTestStruct5AndsignedlongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlongArg_of_((1, 2.0), -(1<<30), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlongArg_of_((1, 2.0), -42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlongArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlongArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlongArg_of_((1, 2.0), 1 << 30, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlongArg_of_((2, 4.0), -(1<<30), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlongArg_of_((2, 4.0), -42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlongArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlongArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlongArg_of_((2, 4.0), 1 << 30, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testinvokestructTestStruct5AndsignedlongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlongArg_of_((1, 2.0), -(1<<30), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlongArg_of_((1, 2.0), -42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlongArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlongArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlongArg_of_((1, 2.0), 1 << 30, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlongArg_of_((2, 4.0), -(1<<30), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlongArg_of_((2, 4.0), -42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlongArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlongArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlongArg_of_((2, 4.0), 1 << 30, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testcallstructTestStruct5AndsignedlonglongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlonglongArg_of_((1, 2.0), -(1L << 60), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -(1L << 60))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlonglongArg_of_((1, 2.0), -42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlonglongArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlonglongArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlonglongArg_of_((1, 2.0), 1L << 60, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1L << 60)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlonglongArg_of_((2, 4.0), -(1L << 60), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -(1L << 60))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlonglongArg_of_((2, 4.0), -42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlonglongArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlonglongArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andsignedlonglongArg_of_((2, 4.0), 1L << 60, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1L << 60)
+
+
+	def testinvokestructTestStruct5AndsignedlonglongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlonglongArg_of_((1, 2.0), -(1L << 60), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -(1L << 60))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlonglongArg_of_((1, 2.0), -42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlonglongArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlonglongArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlonglongArg_of_((1, 2.0), 1L << 60, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1L << 60)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlonglongArg_of_((2, 4.0), -(1L << 60), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -(1L << 60))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlonglongArg_of_((2, 4.0), -42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlonglongArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlonglongArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andsignedlonglongArg_of_((2, 4.0), 1L << 60, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1L << 60)
+
+
+	def testcallstructTestStruct5AndunsignedcharArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedcharArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedcharArg_of_((1, 2.0), 128, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 128)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedcharArg_of_((1, 2.0), 255, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 255)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedcharArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedcharArg_of_((2, 4.0), 128, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 128)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedcharArg_of_((2, 4.0), 255, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 255)
+
+
+	def testinvokestructTestStruct5AndunsignedcharArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedcharArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedcharArg_of_((1, 2.0), 128, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 128)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedcharArg_of_((1, 2.0), 255, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 255)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedcharArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedcharArg_of_((2, 4.0), 128, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 128)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedcharArg_of_((2, 4.0), 255, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 255)
+
+
+	def testcallstructTestStruct5AndunsignedshortArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedshortArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedshortArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedshortArg_of_((1, 2.0), 1<<14, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1<<14)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedshortArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedshortArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedshortArg_of_((2, 4.0), 1<<14, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1<<14)
+
+
+	def testinvokestructTestStruct5AndunsignedshortArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedshortArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedshortArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedshortArg_of_((1, 2.0), 1<<14, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1<<14)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedshortArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedshortArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedshortArg_of_((2, 4.0), 1<<14, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1<<14)
+
+
+	def testcallstructTestStruct5AndunsignedintArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedintArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedintArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedintArg_of_((1, 2.0), 1 << 30, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedintArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedintArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedintArg_of_((2, 4.0), 1 << 30, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testinvokestructTestStruct5AndunsignedintArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedintArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedintArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedintArg_of_((1, 2.0), 1 << 30, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedintArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedintArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedintArg_of_((2, 4.0), 1 << 30, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testcallstructTestStruct5AndunsignedlongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedlongArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedlongArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedlongArg_of_((1, 2.0), 1L << 30, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1L << 30)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedlongArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedlongArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedlongArg_of_((2, 4.0), 1L << 30, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1L << 30)
+
+
+	def testinvokestructTestStruct5AndunsignedlongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedlongArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedlongArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedlongArg_of_((1, 2.0), 1L << 30, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1L << 30)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedlongArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedlongArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedlongArg_of_((2, 4.0), 1L << 30, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1L << 30)
+
+
+	def testcallstructTestStruct5AndunsignedlonglongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedlonglongArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedlonglongArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedlonglongArg_of_((1, 2.0), 1L << 62, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1L << 62)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedlonglongArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedlonglongArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andunsignedlonglongArg_of_((2, 4.0), 1L << 62, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1L << 62)
+
+
+	def testinvokestructTestStruct5AndunsignedlonglongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedlonglongArg_of_((1, 2.0), 0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedlonglongArg_of_((1, 2.0), 42, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedlonglongArg_of_((1, 2.0), 1L << 62, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], 1L << 62)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedlonglongArg_of_((2, 4.0), 0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedlonglongArg_of_((2, 4.0), 42, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andunsignedlonglongArg_of_((2, 4.0), 1L << 62, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], 1L << 62)
+
+
+	def testcallstructTestStruct5AndfloatArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andfloatArg_of_((1, 2.0), 0.128, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andfloatArg_of_((1, 2.0), 1.0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andfloatArg_of_((1, 2.0), 42.0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andfloatArg_of_((1, 2.0), 1e10, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 1e10)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andfloatArg_of_((2, 4.0), 0.128, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andfloatArg_of_((2, 4.0), 1.0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andfloatArg_of_((2, 4.0), 42.0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andfloatArg_of_((2, 4.0), 1e10, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testinvokestructTestStruct5AndfloatArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andfloatArg_of_((1, 2.0), 0.128, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andfloatArg_of_((1, 2.0), 1.0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andfloatArg_of_((1, 2.0), 42.0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andfloatArg_of_((1, 2.0), 1e10, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 1e10)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andfloatArg_of_((2, 4.0), 0.128, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andfloatArg_of_((2, 4.0), 1.0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andfloatArg_of_((2, 4.0), 42.0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andfloatArg_of_((2, 4.0), 1e10, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testcallstructTestStruct5AnddoubleArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_anddoubleArg_of_((1, 2.0), 0.128, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_anddoubleArg_of_((1, 2.0), 1.0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_anddoubleArg_of_((1, 2.0), 42.0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_anddoubleArg_of_((1, 2.0), 1e10, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 1e10)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_anddoubleArg_of_((2, 4.0), 0.128, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_anddoubleArg_of_((2, 4.0), 1.0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_anddoubleArg_of_((2, 4.0), 42.0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_anddoubleArg_of_((2, 4.0), 1e10, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testinvokestructTestStruct5AnddoubleArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_anddoubleArg_of_((1, 2.0), 0.128, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_anddoubleArg_of_((1, 2.0), 1.0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_anddoubleArg_of_((1, 2.0), 42.0, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_anddoubleArg_of_((1, 2.0), 1e10, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertAlmostEquals(r[1], 1e10)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_anddoubleArg_of_((2, 4.0), 0.128, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_anddoubleArg_of_((2, 4.0), 1.0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_anddoubleArg_of_((2, 4.0), 42.0, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_anddoubleArg_of_((2, 4.0), 1e10, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testcallstructTestStruct5AndidArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andidArg_of_((1, 2.0), NSPriorDayDesignations, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], NSPriorDayDesignations)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andidArg_of_((2, 4.0), NSPriorDayDesignations, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], NSPriorDayDesignations)
+
+
+	def testinvokestructTestStruct5AndidArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andidArg_of_((1, 2.0), NSPriorDayDesignations, o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], NSPriorDayDesignations)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andidArg_of_((2, 4.0), NSPriorDayDesignations, o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], NSPriorDayDesignations)
+
+
+	def testcallstructTestStruct5AndcharPtrArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharPtrArg_of_((1, 2.0), "hello", o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], "hello")
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharPtrArg_of_((1, 2.0), "world", o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], "world")
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharPtrArg_of_((1, 2.0), "foobar", o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], "foobar")
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharPtrArg_of_((2, 4.0), "hello", o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], "hello")
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharPtrArg_of_((2, 4.0), "world", o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], "world")
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharPtrArg_of_((2, 4.0), "foobar", o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], "foobar")
+
+
+	def testinvokestructTestStruct5AndcharPtrArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharPtrArg_of_((1, 2.0), "hello", o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], "hello")
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharPtrArg_of_((1, 2.0), "world", o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], "world")
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharPtrArg_of_((1, 2.0), "foobar", o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], "foobar")
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharPtrArg_of_((2, 4.0), "hello", o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], "hello")
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharPtrArg_of_((2, 4.0), "world", o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], "world")
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharPtrArg_of_((2, 4.0), "foobar", o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], "foobar")
+
+
+	def testcallstructTestStruct5AndNSPointArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andNSPointArg_of_((1, 2.0), (1, 2), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andNSPointArg_of_((1, 2.0), (3, 4), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (3, 4))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andNSPointArg_of_((2, 4.0), (1, 2), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andNSPointArg_of_((2, 4.0), (3, 4), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (3, 4))
+
+
+	def testinvokestructTestStruct5AndNSPointArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andNSPointArg_of_((1, 2.0), (1, 2), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andNSPointArg_of_((1, 2.0), (3, 4), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (3, 4))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andNSPointArg_of_((2, 4.0), (1, 2), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andNSPointArg_of_((2, 4.0), (3, 4), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (3, 4))
+
+
+	def testcallstructTestStruct5AndNSRectArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andNSRectArg_of_((1, 2.0), ((1, 2), (3, 4)), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andNSRectArg_of_((1, 2.0), ((7, 8), (9, 10)), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andNSRectArg_of_((2, 4.0), ((1, 2), (3, 4)), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andNSRectArg_of_((2, 4.0), ((7, 8), (9, 10)), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+
+
+	def testinvokestructTestStruct5AndNSRectArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andNSRectArg_of_((1, 2.0), ((1, 2), (3, 4)), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andNSRectArg_of_((1, 2.0), ((7, 8), (9, 10)), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andNSRectArg_of_((2, 4.0), ((1, 2), (3, 4)), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andNSRectArg_of_((2, 4.0), ((7, 8), (9, 10)), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+
+
+	def testcallstructTestStruct5AndstructTestStruct1Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct1Arg_of_((1, 2.0), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct1Arg_of_((1, 2.0), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct1Arg_of_((2, 4.0), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct1Arg_of_((2, 4.0), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testinvokestructTestStruct5AndstructTestStruct1Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct1Arg_of_((1, 2.0), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct1Arg_of_((1, 2.0), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct1Arg_of_((2, 4.0), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct1Arg_of_((2, 4.0), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testcallstructTestStruct5AndstructTestStruct2Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct2Arg_of_((1, 2.0), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct2Arg_of_((1, 2.0), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct2Arg_of_((2, 4.0), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct2Arg_of_((2, 4.0), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testinvokestructTestStruct5AndstructTestStruct2Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct2Arg_of_((1, 2.0), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct2Arg_of_((1, 2.0), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct2Arg_of_((2, 4.0), (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct2Arg_of_((2, 4.0), (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testcallstructTestStruct5AndstructTestStruct3Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct3Arg_of_((1, 2.0), (1, 2), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct3Arg_of_((1, 2.0), (2, 4), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct3Arg_of_((2, 4.0), (1, 2), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct3Arg_of_((2, 4.0), (2, 4), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokestructTestStruct5AndstructTestStruct3Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct3Arg_of_((1, 2.0), (1, 2), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct3Arg_of_((1, 2.0), (2, 4), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct3Arg_of_((2, 4.0), (1, 2), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct3Arg_of_((2, 4.0), (2, 4), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallstructTestStruct5AndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct4Arg_of_((1, 2.0), (1, 500000), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct4Arg_of_((1, 2.0), (2, 4), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct4Arg_of_((2, 4.0), (1, 500000), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct4Arg_of_((2, 4.0), (2, 4), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokestructTestStruct5AndstructTestStruct4Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct4Arg_of_((1, 2.0), (1, 500000), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct4Arg_of_((1, 2.0), (2, 4), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct4Arg_of_((2, 4.0), (1, 500000), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct4Arg_of_((2, 4.0), (2, 4), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallstructTestStruct5AndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct5Arg_of_((1, 2.0), (1, 2.0), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct5Arg_of_((1, 2.0), (2, 4.0), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct5Arg_of_((2, 4.0), (1, 2.0), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct5Arg_andstructTestStruct5Arg_of_((2, 4.0), (2, 4.0), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokestructTestStruct5AndstructTestStruct5Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct5Arg_of_((1, 2.0), (1, 2.0), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct5Arg_of_((1, 2.0), (2, 4.0), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (2, 4.0))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct5Arg_of_((2, 4.0), (1, 2.0), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct5Arg_andstructTestStruct5Arg_of_((2, 4.0), (2, 4.0), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (2, 4.0))
+
+
 	# Pass by reference arguments (in)
 
 	if HAVE_BOOL:
@@ -49764,6 +56576,42 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r, (1, 2))
 		r = PyObjC_TestClass2.invokestructTestStruct3InArg_of_((2, 4), o)
 		self.assertEquals(r, (2, 4))
+
+
+	def testcallstructTestStruct4In(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct4InArg_of_((1, 500000), o)
+		self.assertEquals(r, (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct4InArg_of_((2, 4), o)
+		self.assertEquals(r, (2, 4))
+
+
+	def testinvokestructTestStruct4In(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct4InArg_of_((1, 500000), o)
+		self.assertEquals(r, (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct4InArg_of_((2, 4), o)
+		self.assertEquals(r, (2, 4))
+
+
+	def testcallstructTestStruct5In(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct5InArg_of_((1, 2.0), o)
+		self.assertEquals(r, (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct5InArg_of_((2, 4.0), o)
+		self.assertEquals(r, (2, 4.0))
+
+
+	def testinvokestructTestStruct5In(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct5InArg_of_((1, 2.0), o)
+		self.assertEquals(r, (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct5InArg_of_((2, 4.0), o)
+		self.assertEquals(r, (2, 4.0))
 
 
 	# Pass by reference arguments (out)
@@ -50275,6 +57123,46 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r, (1, 2))
 		r = PyObjC_TestClass2.invokestructTestStruct3OutArg_of_(o)
 		self.assertEquals(r, (2, 4))
+
+
+	def testcallstructTestStruct4Out(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = PyObjC_TestClass2.callstructTestStruct4OutArg_of_(o)
+		self.assertEquals(r, (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct4OutArg_of_(o)
+		self.assertEquals(r, (2, 4))
+
+
+	def testinvokestructTestStruct4Out(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = PyObjC_TestClass2.invokestructTestStruct4OutArg_of_(o)
+		self.assertEquals(r, (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct4OutArg_of_(o)
+		self.assertEquals(r, (2, 4))
+
+
+	def testcallstructTestStruct5Out(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = PyObjC_TestClass2.callstructTestStruct5OutArg_of_(o)
+		self.assertEquals(r, (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct5OutArg_of_(o)
+		self.assertEquals(r, (2, 4.0))
+
+
+	def testinvokestructTestStruct5Out(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = PyObjC_TestClass2.invokestructTestStruct5OutArg_of_(o)
+		self.assertEquals(r, (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct5OutArg_of_(o)
+		self.assertEquals(r, (2, 4.0))
 
 
 	# Pass by reference arguments (out)
@@ -50914,6 +57802,54 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokestructTestStruct3InOutArg_of_((1, 2), o)
 		self.assertEquals(r[0], (1, 2))
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallstructTestStruct4InOut(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = PyObjC_TestClass2.callstructTestStruct4InOutArg_of_((2, 4), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.callstructTestStruct4InOutArg_of_((1, 500000), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokestructTestStruct4InOut(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = PyObjC_TestClass2.invokestructTestStruct4InOutArg_of_((2, 4), o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], (1, 500000))
+		r = PyObjC_TestClass2.invokestructTestStruct4InOutArg_of_((1, 500000), o)
+		self.assertEquals(r[0], (1, 500000))
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallstructTestStruct5InOut(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = PyObjC_TestClass2.callstructTestStruct5InOutArg_of_((2, 4.0), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.callstructTestStruct5InOutArg_of_((1, 2.0), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (2, 4.0))
+
+
+	def testinvokestructTestStruct5InOut(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = PyObjC_TestClass2.invokestructTestStruct5InOutArg_of_((2, 4.0), o)
+		self.assertEquals(r[0], (2, 4.0))
+		self.assertEquals(r[1], (1, 2.0))
+		r = PyObjC_TestClass2.invokestructTestStruct5InOutArg_of_((1, 2.0), o)
+		self.assertEquals(r[0], (1, 2.0))
+		self.assertEquals(r[1], (2, 4.0))
 
 
 
