@@ -15,7 +15,7 @@ objc.loadBundle("SecurityInterface", globals(), bundle_path="/System/Library/Fra
 objc.loadBundle("SecurityInterface", globals(), bundle_path="/System/Library/Frameworks/SecurityInterface.framework")
 
 from _SecurityInterface import *
-del _SecurityInterface, objc
+del objc
 
 import protocols  # no need to export these, just register with PyObjC
 

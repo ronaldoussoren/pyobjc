@@ -288,7 +288,7 @@ static inline PyTypeObject* fetch_array_type(void)
 		return NULL;
 	}
 
-	array_type = (PyTypeObject*)PyObject_GetAttrString(mod, "array");
+	array_type = (PyTypeObject*)PyObject_GetAttrString(mod, "ArrayType");
 	Py_DECREF(mod);
 	if (array_type == NULL) {
 		return NULL;

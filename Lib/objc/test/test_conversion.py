@@ -277,8 +277,8 @@ class TestCArray (unittest.TestCase):
         self.assertRaises(ValueError, carrayMaker, objc._C_SHT, ["a", "b"], 1)
 
     def testShortArray(self):
-        arr = array.array('h', (1,2,3,4,5))
-        arr2 = array.array('f', (1,2,3,4,5))
+        arr = array.array('h', [1,2,3,4,5])
+        arr2 = array.array('f', [1,2,3,4,5])
 
         res = carrayMaker(objc._C_SHT, arr, None)
         self.assertEquals(res, tuple(arr))
@@ -302,9 +302,9 @@ class TestCArray (unittest.TestCase):
         self.assertRaises(ValueError, carrayMaker, objc._C_INT, ["a", "b"], 1)
 
     def testIntArray(self):
-        arr = array.array('i', (1,2,3,4,5))
-        arr2 = array.array('f', (1,2,3,4,5))
-        arr3 = array.array('h', (1,2,3,4,5))
+        arr = array.array('i', [1,2,3,4,5])
+        arr2 = array.array('f', [1,2,3,4,5])
+        arr3 = array.array('h', [1,2,3,4,5])
 
         res = carrayMaker(objc._C_INT, arr, None)
         self.assertEquals(res, tuple(arr))
@@ -329,8 +329,8 @@ class TestCArray (unittest.TestCase):
         self.assertRaises(ValueError, carrayMaker, objc._C_INT, ["a", "b"], 1)
 
     def testFloatArray(self):
-        arr = array.array('f', (1.5,2.5,3.5,4.5,5.5))
-        arr2 = array.array('i', (1,2,3,4,5))
+        arr = array.array('f', [1.5,2.5,3.5,4.5,5.5])
+        arr2 = array.array('i', [1,2,3,4,5])
 
         res = carrayMaker(objc._C_FLT, arr, None)
         self.assertEquals(res, tuple(arr))
@@ -356,20 +356,20 @@ class TestCArray (unittest.TestCase):
         self.assertRaises(TypeError, carrayMaker, '{Point=ff}', arr2, None)
 
     def testPointArray(self):
-        arr = array.array('f', (
+        arr = array.array('f', [
             1.0, 1.5, 
             2.0, 2.5, 
             3.0, 3.5, 
             4.0, 4.5, 
-            5.0, 5.5))
+            5.0, 5.5])
         lst = ((1.0, 1.5), (2.0, 2.5), (3.0, 3.5), (4.0, 4.5), (5.0, 5.5))
 
-        arr2 = array.array('i', (
+        arr2 = array.array('i', [
             1, 1, 
             2, 2, 
             3, 3, 
             4, 4, 
-            5, 5))
+            5, 5])
 
         res = carrayMaker('{Point=ff}', arr, None)
         self.assertEquals(res, lst)
@@ -380,12 +380,12 @@ class TestCArray (unittest.TestCase):
         self.assertRaises(ValueError, carrayMaker, '{Point=ff}', arr2, None)
 
     def testRectArray(self):
-        arr = array.array('f', (
+        arr = array.array('f', [
             1.0, 1.5, -1.0, -1.5,
             2.0, 2.5, -2.0, -2.5,
             3.0, 3.5, -3.0, -3.5,
             4.0, 4.5, -4.0, -4.5,
-            5.0, 5.5, -5.0, -5.5))
+            5.0, 5.5, -5.0, -5.5])
         lst = (
                 ((1.0, 1.5),  (-1.0, -1.5)),
                 ((2.0, 2.5),  (-2.0, -2.5)),
@@ -394,12 +394,12 @@ class TestCArray (unittest.TestCase):
                 ((5.0, 5.5),  (-5.0, -5.5)),
             )
 
-        arr2 = array.array('i', (
+        arr2 = array.array('i', [
             1, 1, 1, 1,
             2, 2, 2, 2,
             3, 3, 3, 3,
             4, 4, 4, 4, 
-            5, 5, 5, 5))
+            5, 5, 5, 5])
 
         res = carrayMaker('{Rect={P=ff}{S=ff}}', arr, None)
         self.assertEquals(res, lst)
@@ -416,12 +416,12 @@ class TestCArray (unittest.TestCase):
         self.assertRaises(ValueError, carrayMaker, '{Rect={P=ff}{S=ff}}', arr2, None)
 
     def testMixedArray(self):
-        arr = array.array('f', (
+        arr = array.array('f', [
             1.0, 1.5, -1.0, -1.5,
             2.0, 2.5, -2.0, -2.5,
             3.0, 3.5, -3.0, -3.5,
             4.0, 4.5, -4.0, -4.5,
-            5.0, 5.5, -5.0, -5.5))
+            5.0, 5.5, -5.0, -5.5])
 
         self.assertRaises(ValueError, carrayMaker, '{M={P=ff}{S=ii}}', arr, 4)
         self.assertRaises(ValueError, carrayMaker, '{M=if{S=ii}}', arr, None)

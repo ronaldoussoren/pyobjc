@@ -287,6 +287,9 @@ The right notifications are not yet emitted for:
   The documentation should mention that observations don't work for pure
   Python objects.
 
+Scott Anguish mentioned on one of the Cocoa lists that the right way to 
+override the key-value related methods is different from what we're doing.
+
 Formal Protocols, Distributed Objects
 .....................................
 
@@ -352,3 +355,10 @@ Rewrite packaging scripts
 
 The scripts we use for doing releases should be cleaned up, generic 
 functionality should be made available for others.
+
+Rewrite scripts/find-raw-pointers.py
+....................................
+
+This is a script for finding 'difficult' methods. The script should be 
+refactored to make it easier to create readable reports.
+

@@ -293,6 +293,14 @@ PyObjC will automaticly use the information in the ``informal_protocol``
 objects to add the right method signatures to methods, and to warn about
 classes that partially implement a protocol.
 
+Cocoa Bindings
+..............
+
+In Mac OS X 10.3 Apple introduced *Cocoa Bindings*, a method to make it easier
+to create and use *Controller* objects. 
+
+Use ``objc.accessor`` to create accessor methods that conform to the 
+expectations of Cocoa Bindings.
 
 Cocoa for Python programmers
 ----------------------------

@@ -242,8 +242,9 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 		else
 #endif
 		{
-			PyErr_SetString(PyExc_TypeError,
-					"attribute name must be string");
+			PyErr_Format(PyExc_TypeError,
+				"attribute name must be string, got %s",
+				name->ob_type->tp_name);
 			return NULL;
 		}
 	}
@@ -372,8 +373,9 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 		else
 #endif
 		{
-			PyErr_SetString(PyExc_TypeError,
-					"attribute name must be string");
+			PyErr_Format(PyExc_TypeError,
+				"attribute name must be string, got %s",
+				name->ob_type->tp_name);
 			return -1;
 		}
 	}

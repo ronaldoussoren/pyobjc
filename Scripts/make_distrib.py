@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Build the distribution. Requires Python2.2 on Jaguar, docutils and DocArticle.
+# Build the distribution. Requires DocArticle and docutils.
 # 
 # NOTES: Really needs a rewrite!
 
@@ -22,6 +22,12 @@ osvers = '.'.join(osvers.split('.')[:2])
 PYTHON=sys.executable
 
 def rest2HTML(irrelevant, dirName, names):
+    try:
+        import DocArticle
+    except ImportError:
+        print "*** WARNING: Cannot recreate HTML"
+        return
+
     for aName in names:
         if aName.endswith('.txt'):
             anInputPath = os.path.join(dirName, aName)
@@ -37,7 +43,7 @@ def package_version():
         fp = open('Modules/objc/pyobjc.h', 'r')  
         for ln in fp.readlines():
                 if ln.startswith('#define OBJC_VERSION'):
-                	fp.close()
+                        fp.close()
                         break
         return ln.split()[-1][1:-1]
 
@@ -55,8 +61,8 @@ def escquotes(val):
 
 try:
         opts, args = getopt.getopt(
-        	sys.argv[1:],
-        	'p:h?o:', ['with-python=', 'help', 'output-directory='])
+                sys.argv[1:],
+                'p:h?o:', ['with-python=', 'help', 'output-directory='])
 except getopt.error, msg:
         sys.stderr.write('%s: %s\n'%(sys.argv[0], msg))
         sys.stderr.write(USAGE)
@@ -64,14 +70,14 @@ except getopt.error, msg:
 
 for key, value in opts:
         if key in [ '-h', '-?', '--help' ]:
-        	sys.stdout.write(USAGE)
-        	sys.exit(0)
+                sys.stdout.write(USAGE)
+                sys.exit(0)
         elif key in [ '-p', '--with-python' ]:
-        	PYTHON=value
+                PYTHON=value
         elif key in [ '-o', '--output-directory' ]:
-        	BUILDDIR=value
+                BUILDDIR=value
         else:
-        	raise ValueError, "Unsupported option: %s=%s"%(key, value)
+                raise ValueError, "Unsupported option: %s=%s"%(key, value)
 
 def makeDir(basedir, *path):
         base = basedir
@@ -95,18 +101,18 @@ if PYTHON==sys.executable:
         PYTHONPATH=sys.path
 else:
         fd = os.popen("'%s' -c 'import sys;print \".\".join(map(str, sys.version_info[:2]))'"%(
-        	escquotes(PYTHON)))
+                escquotes(PYTHON)))
         PYTHONVER=fd.readline().strip()
         fd = os.popen("'%s' -c 'import sys;print \"\\n\".join(sys.path)'"%(
-        	escquotes(PYTHON)))
+                escquotes(PYTHON)))
         PYTHONPATH=map(lambda x:x[:-1], fd.readlines())
 
 
 basedir = ''
 for p in PYTHONPATH:
         if p.endswith('lib/python%s'%PYTHONVER):
-        	basedir = os.path.split(os.path.split(p)[0])[0]
-        	break
+                basedir = os.path.split(os.path.split(p)[0])[0]
+                break
 
 if not basedir:
         sys.stderr.write("%s: Cannot determine basedir\n"%(sys.argv[0]))
@@ -115,15 +121,17 @@ if not basedir:
 print "Generating HTML documentation"
 os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
 rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt', 'Installer Package/10.2/ReadMe.txt', 'Installer Package/10.3/ReadMe.txt', 'ProjectBuilder Extras/Project Templates/00README.txt'])
-os.rename('ProjectBuilder Extras/Project Templates/00README.html', 'Doc/ProjectBuilder-Templates.html')
+
+if os.path.exists('ProjectBuilder Extras/Project Templates/00README.html'):
+        os.rename('ProjectBuilder Extras/Project Templates/00README.html', 'Doc/ProjectBuilder-Templates.html')
 
 if DOC_ONLY:
     sys.exit(0)
 
 print "Running: '%s' setup.py sdist -d '%s'"%(
-        		escquotes(PYTHON), escquotes(os.path.dirname(OUTPUTDIR)))
+                        escquotes(PYTHON), escquotes(os.path.dirname(OUTPUTDIR)))
 fd = os.popen("'%s' setup.py sdist -d '%s'"%(
-        		escquotes(PYTHON), escquotes(os.path.dirname(OUTPUTDIR))), 'r')
+                        escquotes(PYTHON), escquotes(os.path.dirname(OUTPUTDIR))), 'r')
 for ln in fd.xreadlines():
         sys.stdout.write(ln)
 
@@ -170,8 +178,8 @@ def killNasties(irrelevant, dirName, names):
                         if aName.find(".pbxuser") > 0:
                                 os.remove( os.path.join(dirName, aName) )
         if dirName[-3:] == 'CVS':
-        	while len(names): del names[0]
-        	shutil.rmtree(dirName)
+                while len(names): del names[0]
+                shutil.rmtree(dirName)
 
 basedir = '%s/package'%(BUILDDIR)
 
@@ -271,9 +279,9 @@ open(fn, 'w').write(data)
 # the binary PackMan installer (which is built manually)
 #
 print "Running: '%s' setup.py bdist -d '%s'"%(
-        		escquotes("python2.3"), escquotes(os.path.dirname(OUTPUTDIR)))
+                        escquotes("python2.3"), escquotes(os.path.dirname(OUTPUTDIR)))
 fd = os.popen("'%s' setup.py bdist -d '%s'"%(
-        		escquotes("python2.3"), escquotes(os.path.dirname(OUTPUTDIR))), 'r')
+                        escquotes("python2.3"), escquotes(os.path.dirname(OUTPUTDIR))), 'r')
 for ln in fd.xreadlines():
         sys.stdout.write(ln)
 

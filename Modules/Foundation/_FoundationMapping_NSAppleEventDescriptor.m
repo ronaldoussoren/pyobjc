@@ -34,6 +34,12 @@
 #include "pyobjc-api.h"
 #include "pymactoolbox.h"
 
+#if PY_VERSION_HEX >= 0x0203000A
+
+#define HAVE_AEDESC_NEWBORROWED
+
+#endif
+
 static PyObject* 
 call_NSAppleEventDescriptor_initWithDescriptorType_bytes_length_(
 	PyObject* method, PyObject* self, PyObject* arguments)
@@ -193,6 +199,7 @@ call_NSAppleEventDescriptor_initWithAEDescNoCopy_(
 	return retVal;
 }
 
+#ifdef HAVE_AEDESC_NEWBORROWED
 static PyObject*
 call_NSAppleEventDescriptor_aeDesc(
 	PyObject* method, PyObject* self, PyObject* arguments)
@@ -231,6 +238,7 @@ call_NSAppleEventDescriptor_aeDesc(
 	retVal = AEDesc_NewBorrowed(res);
 	return retVal;
 }
+#endif
 
 static int 
 _pyobjc_install_NSAppleEventDescriptor(void)
@@ -254,6 +262,7 @@ _pyobjc_install_NSAppleEventDescriptor(void)
 		return -1;
 	}
 
+#ifdef HAVE_AEDESC_NEWBORROWED
 	if (PyObjC_RegisterMethodMapping(
 		classNSAppleEventDescriptor,
 		@selector(aeDesc),
@@ -261,6 +270,7 @@ _pyobjc_install_NSAppleEventDescriptor(void)
 		PyObjCUnsupportedMethod_IMP) < 0) {
 		return -1;
 	}
+#endif
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSAppleEventDescriptor,

@@ -33,6 +33,7 @@ static PyObject* decimal_add(PyObject* left, PyObject* right);
 static PyObject* decimal_subtract(PyObject* left, PyObject* right);
 static PyObject* decimal_multiply(PyObject* left, PyObject* right);
 static PyObject* decimal_divide(PyObject* left, PyObject* right);
+static PyObject* decimal_power(PyObject* left, PyObject* right, PyObject* power);
 static int decimal_nonzero(PyObject* self);
 static int decimal_coerce(PyObject** l, PyObject** r);
 static PyObject* decimal_inplace_add(PyObject* left, PyObject* right);
@@ -50,7 +51,7 @@ static PyNumberMethods decimal_asnumber = {
 	decimal_divide,			/* nb_divide */
 	NULL,				/* nb_remainder */
 	NULL,				/* nb_divmod */
-	NULL,				/* nb_power */
+	decimal_power,			/* nb_power */
 	decimal_negative,		/* nb_negative */
 	decimal_positive,		/* nb_positive */
 	decimal_absolute,		/* nb_absolute */
@@ -326,7 +327,7 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
 
 	if (!Decimal_Check(other)) {
 		if (type == Py_EQ) {
-			return PyBool_FromLong(0);
+			return PyObjCBool_FromLong(0);
 		}
 		PyErr_Format(PyExc_TypeError,
 			"Cannot compare NSDecimal and %s", 
@@ -337,12 +338,12 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
 	res = NSDecimalCompare(&Decimal_Value(self), &Decimal_Value(other));
 
 	switch (type) {
-	case Py_LT: return PyBool_FromLong(res ==  NSOrderedAscending);
-	case Py_LE: return PyBool_FromLong(res != NSOrderedDescending);
-	case Py_EQ: return PyBool_FromLong(res == NSOrderedSame);
-	case Py_NE: return PyBool_FromLong(res != NSOrderedSame);
-	case Py_GE: return PyBool_FromLong(res != NSOrderedAscending);
-	case Py_GT: return PyBool_FromLong(res == NSOrderedDescending);
+	case Py_LT: return PyObjCBool_FromLong(res ==  NSOrderedAscending);
+	case Py_LE: return PyObjCBool_FromLong(res != NSOrderedDescending);
+	case Py_EQ: return PyObjCBool_FromLong(res == NSOrderedSame);
+	case Py_NE: return PyObjCBool_FromLong(res != NSOrderedSame);
+	case Py_GE: return PyObjCBool_FromLong(res != NSOrderedAscending);
+	case Py_GT: return PyObjCBool_FromLong(res == NSOrderedDescending);
 	default: 
 		    PyErr_SetString(PyExc_TypeError,
 				  "Bad comparison arg");
@@ -367,6 +368,16 @@ static PyObject* decimal_asfloat(PyObject* self)
 	[tmp release];
 
 	return PyFloat_FromDouble(retval);
+}
+
+static PyObject* decimal_power(
+	PyObject* left __attribute__((__unused__)),  
+	PyObject* right __attribute__((__unused__)), 
+	PyObject* extra __attribute__((__unused__)))
+{
+	PyErr_SetString(PyExc_TypeError,
+		"pow() and ** are not supported for NSDecimal");
+	return NULL;
 }
 
 static PyObject* decimal_add(PyObject* left, PyObject* right)
@@ -728,7 +739,10 @@ static PyObject*
 decimal_repr(PyObject* self)
 {
 	NSString* val = NSDecimalString(&Decimal_Value(self), NULL);
-	return PyObjC_IdToPython(val);
+	PyObject* tmp =  PyObjC_IdToPython(val);
+	PyObject* repr = PyObject_Str(tmp);
+	Py_DECREF(tmp);
+	return repr;
 }
 
 static inline int
