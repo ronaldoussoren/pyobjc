@@ -86,7 +86,7 @@ CorePackages = [ 'objc' ]
 CoreExtensions =  [
 	Extension("objc._objc", sourceFiles,
 		   extra_compile_args=[
-			"-g", "-O0",
+                        # "-g", "-O0",
 			"-DOBJC_PARANOIA_MODE",
 			"-DPyOBJC_UNIQUE_PROXY",
 			"-DMACOSX",
