@@ -14,7 +14,7 @@
  * - This interface is in development, the the API will probably change in
  *   incompatible ways.
  *
- * $Id: pyobjc-api.h,v 1.4 2002/12/20 20:44:43 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.5 2003/01/03 21:35:19 bbum Exp $
  */
 
 #include <Python.h>
@@ -41,6 +41,13 @@
 /* 
  * Only add items to the end of this list!
  */
+typedef int (RegisterMethodMappingFunctionType)(
+			Class, 
+			SEL, 
+			PyObject *(*)(PyObject*, PyObject*, PyObject*),
+			PyObject *(*)(PyObject*, PyObject*, PyObject*),
+			IMP);
+
 struct pyobjc_api {
 	int	      api_version;	/* API version */
 	PyTypeObject* class_type;	/* ObjCClass_Type    */
@@ -48,12 +55,7 @@ struct pyobjc_api {
 	PyTypeObject* select_type;	/* ObjCSelector_Type */
 
 	/* ObjC_RegisterMethodMapping */
-	int (*register_method_mapping)(
-			Class, 
-			SEL, 
-			PyObject *(*)(PyObject*, PyObject*, PyObject*),
-			PyObject *(*)(PyObject*, PyObject*, PyObject*),
-			IMP);
+	RegisterMethodMappingFunctionType *register_method_mapping;
 
 	/* ObjC_RegisterSignatureMapping */
 	int (*register_signature_mapping)(

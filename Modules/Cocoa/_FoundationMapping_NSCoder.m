@@ -7,6 +7,10 @@
  * - encodeValuesOfObjCType:
  * - decodeValuesOfObjCType:
  */
+#include <Python.h>
+#include <Foundation/Foundation.h>
+#include <objc/objc-runtime.h>
+#include "pyobjc-api.h"
 
 static PyObject* call_NSCoder_encodeValueOfObjCType_at_(
 		PyObject* method, PyObject* self, PyObject* arguments)
@@ -323,4 +327,32 @@ static void imp_NSCoder_encodeArrayOfObjCType_count_at_(id self, SEL sel,
 		return;
 	}
 	Py_DECREF(result);
+}
+
+int __pyobjc_install_NSCoder(void)
+{
+  Class classNSCoder = objc_lookUpClass("NSCoder");
+  
+  if (ObjC_RegisterMethodMapping(
+				 classNSCoder,
+				 @selector(encodeArrayOfObjCType:count:at:),
+				 call_NSCoder_encodeArrayOfObjCType_count_at_,
+				 supercall_NSCoder_encodeArrayOfObjCType_count_at_,
+				 (IMP)imp_NSCoder_encodeArrayOfObjCType_count_at_) < 0) {
+    NSLog(@"Error occurred while installing NSCoder bridge method -encodeArrayOfObjCType:count:at:");
+    PyErr_Print();
+    return -1;
+  }
+  if (ObjC_RegisterMethodMapping(
+				 classNSCoder,
+				 @selector(encodeValueOfObjCType:at:),
+				 call_NSCoder_encodeValueOfObjCType_at_,
+				 supercall_NSCoder_encodeValueOfObjCType_at_,
+				 (IMP)imp_NSCoder_encodeValueOfObjCType_at_) < 0) {
+    NSLog(@"Error occurred while installing NSCoder bridge method -encodeArrayOfObjCType:at:");
+    PyErr_Print();
+    return -1;
+  }
+
+  return 0;
 }

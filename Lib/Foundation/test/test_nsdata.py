@@ -9,36 +9,74 @@ otherBytes = array.array('c')
 otherBytes.fromstring('12345678901234567890' * 5)
 
 class TestNSData(unittest.TestCase):
-    def setUp(self):
-        self.data = NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
-        self.mutableData = NSMutableData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
-        
-    def testInitWithBytes_Length_(self):
-        self.assertEquals(len(self.data), self.data.length(), "len() and -length didn't match.")
-        self.assertEquals(len(self.data), len(rawBytes), "len(<data>) and len(<input>) didn't match.")
-        self.assertEquals(len(self.mutableData), self.mutableData.length(),
-                          "Mutable: len() and -length didn't match.")
-        self.assertEquals(len(self.mutableData), len(rawBytes),
-                          "Mutable: len(<data>) and len(<input>) didn't match.")
+    def assertDataContents(self, d1, d2, rawData):
+        self.assertEquals(len(d1), d1.length(), "d1: len() and -length didn't match.")
+        self.assertEquals(len(d1), len(rawData), "d1: len(<data>) and len(<input>) didn't match.")
+        self.assertEquals(len(d2), d2.length(), "d2: len() and -length didn't match.")
+        self.assertEquals(len(d2), len(rawData), "d2: len(<data>) and len(<input>) didn't match.")
+
+    def testDataWithBytes_length_(self):
+        """Test +dataWithBytes:length:"""
+        data = NSData.dataWithBytes_length_(rawBytes, len(rawBytes))
+        mutableData = NSMutableData.dataWithBytes_length_(rawBytes, len(rawBytes))
+        self.assertDataContents(data, mutableData, rawBytes)
+
+    def testInitWithBytes_length_(self):
+        """Test -initWithBytes:length:"""
+        data = NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
+        mutableData = NSMutableData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
+        self.assertDataContents(data, mutableData, rawBytes)
 
     def testBytes(self):
-        bytes = self.data.bytes()
+        """Test -bytes"""
+        data = NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
+        bytes = data.bytes()
         self.assertEquals(len(bytes), len(rawBytes), "bytes() and rawBytes not equal length.")
         for i in range(0,len(bytes)):
             self.assertEquals(rawBytes[i], bytes[i], "byte %s of bytes and rawBytes are not equal." % i)
 
+        try:
+            bytes[3] = 0xAE
+        except TypeError, r:
+            if str(r).find('buffer is read-only') is not 0:
+                raise
+
     def testMutableBytes(self):
-        mutableBytes = self.mutableData.mutableBytes()
+        """Test -mutableBytes"""
+        mutableData = NSMutableData.dataWithBytes_length_(rawBytes, len(rawBytes))
+        mutableBytes = mutableData.mutableBytes()
         for i in range(0, len(mutableBytes)):
             mutableBytes[i] = otherBytes[i]
         mutableBytes[1:8] = otherBytes[1:8]
 
         try:
             mutableBytes[2:10] = otherBytes[1:5]
-        except TypeError:
-            pass
+        except TypeError, r:
+            if str(r).find('right operand length must match slice length') is not 0:
+                raise
+
+    def testVariousDataLengths(self):
+        """Test data of different lengths.
+
+        Data of different lengths may be stored in different subclasses within the class cluster.
+        """
+        testFactor = [1, 10, 1000, 10000, 10000000]
+        for aFactor in testFactor:
+            bigRawBytes = "1234567890" * aFactor
+
+            mutableData = NSMutableData.dataWithBytes_length_(bigRawBytes, len(bigRawBytes))
+            data = NSData.dataWithBytes_length_(bigRawBytes, len(bigRawBytes))
         
-        
+            self.assertDataContents(data, mutableData, bigRawBytes)
+
+            mutableBytes = mutableData.mutableBytes()
+            bytes = data.bytes()
+
+            self.assertEquals(len(bytes), data.length())
+            self.assertEquals(len(mutableBytes), mutableData.length())
+
+            self.assertEquals(bytes, mutableBytes)
+
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestNSData))

@@ -4,10 +4,17 @@
       non-varargs versions under the hood)
 
 2003-01-03  Bill Bumgarner  <bbum@codefab.com>
-    * Lib/Foundation/test/test_nsdata.py (TestNSData.testBytes): Added test
-      for NSData.
-    * Modules/Cocoa/_Fnd_NSData.inc: Added support for -bytes.
-    * Added support for mutableBytes
+    * Scripts/runalltests: also check to make sure file ends with '.py' (to
+      avoid '.py~' files.
+    * Modules/Cocoa/_FoundationMapping.m: Started moving the various class
+      specific method registrations to separate source files but static
+      variables defeated me.  
+    * Lib/Foundation/test/test_nsdata.py: Added test for NSData class cluster
+      (including NSMutableData).   Refined tests a bit;  test for more
+      conditions and for situations that should raise an exception.
+    * NSData: Added support for -bytes.
+    * NSMutableData: Added support for mutableBytes
+    * NSData: Added support for +dataWithBytes:length:
 
 2003-01-01  Bill Bumgarner  <bbum@codefab.com>
 
