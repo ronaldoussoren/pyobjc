@@ -23,10 +23,14 @@ static struct inttable enum_table[] = {
 	/* From: NSBundle.h */
 
 	/* From: NSByteOrder.h */
+	 { "NS_UnknownByteOrder", NS_UnknownByteOrder },
+	 { "NS_LittleEndian", NS_LittleEndian },
+	 { "NS_BigEndian", NS_BigEndian },
 
 	/* From: NSCalendarDate.h */
 
 	/* From: NSCharacterSet.h */
+	 { "NSOpenStepUnicodeReservedBase", NSOpenStepUnicodeReservedBase },
 
 	/* From: NSClassDescription.h */
 
@@ -92,6 +96,23 @@ static struct inttable enum_table[] = {
 	/* From: NSHost.h */
 
 	/* From: NSInvocation.h */
+	 { "NSObjCNoType", NSObjCNoType },
+	 { "NSObjCVoidType", NSObjCVoidType },
+	 { "NSObjCCharType", NSObjCCharType },
+	 { "NSObjCShortType", NSObjCShortType },
+	 { "NSObjCLongType", NSObjCLongType },
+	 { "NSObjCLonglongType", NSObjCLonglongType },
+	 { "NSObjCFloatType", NSObjCFloatType },
+	 { "NSObjCDoubleType", NSObjCDoubleType },
+	 { "NSObjCBoolType", NSObjCBoolType },
+	 { "NSObjCSelectorType", NSObjCSelectorType },
+	 { "NSObjCObjectType", NSObjCObjectType },
+	 { "NSObjCStructType", NSObjCStructType },
+	 { "NSObjCPointerType", NSObjCPointerType },
+	 { "NSObjCStringType", NSObjCStringType },
+	 { "NSObjCArrayType", NSObjCArrayType },
+	 { "NSObjCUnionType", NSObjCUnionType },
+	 { "NSObjCBitfield", NSObjCBitfield },
 
 	/* From: NSJavaSetup.h */
 
@@ -165,6 +186,13 @@ static struct inttable enum_table[] = {
 	/* From: NSPortNameServer.h */
 
 	/* From: NSProcessInfo.h */
+	 { "NSWindowsNTOperatingSystem", NSWindowsNTOperatingSystem },
+	 { "NSWindows95OperatingSystem", NSWindows95OperatingSystem },
+	 { "NSSolarisOperatingSystem", NSSolarisOperatingSystem },
+	 { "NSHPUXOperatingSystem", NSHPUXOperatingSystem },
+	 { "NSMACHOperatingSystem", NSMACHOperatingSystem },
+	 { "NSSunOSOperatingSystem", NSSunOSOperatingSystem },
+	 { "NSOSF1OperatingSystem", NSOSF1OperatingSystem },
 
 	/* From: NSPropertyList.h */
 	 { "NSPropertyListImmutable", NSPropertyListImmutable },
@@ -189,6 +217,17 @@ static struct inttable enum_table[] = {
 	/* From: NSScriptCoercionHandler.h */
 
 	/* From: NSScriptCommand.h */
+	 { "NSNoScriptError", NSNoScriptError },
+	 { "NSReceiverEvaluationScriptError", NSReceiverEvaluationScriptError },
+	 { "NSKeySpecifierEvaluationScriptError", NSKeySpecifierEvaluationScriptError },
+	 { "NSArgumentEvaluationScriptError", NSArgumentEvaluationScriptError },
+	 { "NSReceiversCantHandleCommandScriptError", NSReceiversCantHandleCommandScriptError },
+	 { "NSRequiredArgumentsMissingScriptError", NSRequiredArgumentsMissingScriptError },
+	 { "NSArgumentsWrongScriptError", NSArgumentsWrongScriptError },
+	 { "NSUnknownKeyScriptError", NSUnknownKeyScriptError },
+	 { "NSInternalScriptError", NSInternalScriptError },
+	 { "NSOperationNotSupportedForKeyScriptError", NSOperationNotSupportedForKeyScriptError },
+	 { "NSCannotCreateScriptCommandError", NSCannotCreateScriptCommandError },
 
 	/* From: NSScriptCommandDescription.h */
 
@@ -197,6 +236,13 @@ static struct inttable enum_table[] = {
 	/* From: NSScriptKeyValueCoding.h */
 
 	/* From: NSScriptObjectSpecifiers.h */
+	 { "NSNoSpecifierError", NSNoSpecifierError },
+	 { "NSNoTopLevelContainersSpecifierError", NSNoTopLevelContainersSpecifierError },
+	 { "NSContainerSpecifierError", NSContainerSpecifierError },
+	 { "NSUnknownKeySpecifierError", NSUnknownKeySpecifierError },
+	 { "NSInvalidIndexSpecifierError", NSInvalidIndexSpecifierError },
+	 { "NSInternalSpecifierError", NSInternalSpecifierError },
+	 { "NSOperationNotSupportedForKeySpecifierError", NSOperationNotSupportedForKeySpecifierError },
 	 { "NSPositionAfter", NSPositionAfter },
 	 { "NSPositionBefore", NSPositionBefore },
 	 { "NSPositionBeginning", NSPositionBeginning },
@@ -234,6 +280,28 @@ static struct inttable enum_table[] = {
 	/* From: NSSpellServer.h */
 
 	/* From: NSString.h */
+	 { "NSCaseInsensitiveSearch", NSCaseInsensitiveSearch },
+	 { "NSLiteralSearch", NSLiteralSearch },
+	 { "NSBackwardsSearch", NSBackwardsSearch },
+	 { "NSAnchoredSearch", NSAnchoredSearch },
+	 { "NSASCIIStringEncoding", NSASCIIStringEncoding },
+	 { "NSNEXTSTEPStringEncoding", NSNEXTSTEPStringEncoding },
+	 { "NSJapaneseEUCStringEncoding", NSJapaneseEUCStringEncoding },
+	 { "NSUTF8StringEncoding", NSUTF8StringEncoding },
+	 { "NSISOLatin1StringEncoding", NSISOLatin1StringEncoding },
+	 { "NSSymbolStringEncoding", NSSymbolStringEncoding },
+	 { "NSNonLossyASCIIStringEncoding", NSNonLossyASCIIStringEncoding },
+	 { "NSShiftJISStringEncoding", NSShiftJISStringEncoding },
+	 { "NSISOLatin2StringEncoding", NSISOLatin2StringEncoding },
+	 { "NSUnicodeStringEncoding", NSUnicodeStringEncoding },
+	 { "NSWindowsCP1251StringEncoding", NSWindowsCP1251StringEncoding },
+	 { "NSWindowsCP1252StringEncoding", NSWindowsCP1252StringEncoding },
+	 { "NSWindowsCP1253StringEncoding", NSWindowsCP1253StringEncoding },
+	 { "NSWindowsCP1254StringEncoding", NSWindowsCP1254StringEncoding },
+	 { "NSWindowsCP1250StringEncoding", NSWindowsCP1250StringEncoding },
+	 { "NSISO2022JPStringEncoding", NSISO2022JPStringEncoding },
+	 { "NSMacOSRomanStringEncoding", NSMacOSRomanStringEncoding },
+	 { "NSProprietaryStringEncoding", NSProprietaryStringEncoding },
 
 	/* From: NSTask.h */
 
@@ -244,6 +312,7 @@ static struct inttable enum_table[] = {
 	/* From: NSTimeZone.h */
 
 	/* From: NSUndoManager.h */
+	 { "NSUndoCloseGroupingRunLoopOrdering", NSUndoCloseGroupingRunLoopOrdering },
 
 	/* From: NSURL.h */
 

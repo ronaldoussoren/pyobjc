@@ -45,8 +45,7 @@ set_class_extender(add_convenience_methods)
 # is there to force conversion to type 'bool' on Python releases
 # that have such a type.
 def __contains__(self, elem):
-	print "doesContain_", elem
-	return self.doesContain_(elem) != 0
+	return self.containsObject_(elem) != 0
 def __eq__1(self, other):
 	return self.isEqualTo_(other) != 0
 def __eq__2(self, other):

@@ -8,7 +8,7 @@
 import re
 import os
 
-START_RE=re.compile('typedef enum.*{')
+START_RE=re.compile('(typedef[\w]|)enum.*{')
 END_RE=re.compile('}')
 IDENT_RE=re.compile('[A-Za-z_][A-Za-z_0-9]*')
 LINE_COMMENT_RE=re.compile('//.*')

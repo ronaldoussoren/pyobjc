@@ -1,6 +1,6 @@
 /*
  * Enumeration constants. This file is generated from files in
- * /System/Library/Frameworks/AppKit.framework/Headers
+ * /System/Library/Frameworks/AppKit.framework/Headers/
  */
 static struct inttable enum_table[] = {
 
@@ -17,6 +17,10 @@ static struct inttable enum_table[] = {
 	/* From: NSAppleScriptExtensions.h */
 
 	/* From: NSApplication.h */
+	 { "NSRunStoppedResponse", NSRunStoppedResponse },
+	 { "NSRunAbortedResponse", NSRunAbortedResponse },
+	 { "NSRunContinuesResponse", NSRunContinuesResponse },
+	 { "NSUpdateWindowsRunLoopOrdering", NSUpdateWindowsRunLoopOrdering },
 	 { "NSCriticalRequest", NSCriticalRequest },
 	 { "NSInformationalRequest", NSInformationalRequest },
 	 { "NSTerminateCancel", NSTerminateCancel },
@@ -26,6 +30,8 @@ static struct inttable enum_table[] = {
 	/* From: NSApplicationScripting.h */
 
 	/* From: NSAttributedString.h */
+	 { "NSNoUnderlineStyle", NSNoUnderlineStyle },
+	 { "NSSingleUnderlineStyle", NSSingleUnderlineStyle },
 
 	/* From: NSBezierPath.h */
 	 { "NSButtLineCapStyle", NSButtLineCapStyle },
@@ -108,6 +114,13 @@ static struct inttable enum_table[] = {
 	/* From: NSCachedImageRep.h */
 
 	/* From: NSCell.h */
+	 { "NSAnyType", NSAnyType },
+	 { "NSIntType", NSIntType },
+	 { "NSPositiveIntType", NSPositiveIntType },
+	 { "NSFloatType", NSFloatType },
+	 { "NSPositiveFloatType", NSPositiveFloatType },
+	 { "NSDoubleType", NSDoubleType },
+	 { "NSPositiveDoubleType", NSPositiveDoubleType },
 	 { "NSNullCellType", NSNullCellType },
 	 { "NSTextCellType", NSTextCellType },
 	 { "NSImageCellType", NSImageCellType },
@@ -138,6 +151,11 @@ static struct inttable enum_table[] = {
 	 { "NSMixedState", NSMixedState },
 	 { "NSOffState", NSOffState },
 	 { "NSOnState", NSOnState },
+	 { "NSNoCellMask", NSNoCellMask },
+	 { "NSContentsCellMask", NSContentsCellMask },
+	 { "NSPushInCellMask", NSPushInCellMask },
+	 { "NSChangeGrayCellMask", NSChangeGrayCellMask },
+	 { "NSChangeBackgroundCellMask", NSChangeBackgroundCellMask },
 	 { "NSDefaultControlTint", NSDefaultControlTint },
 	 { "NSClearControlTint", NSClearControlTint },
 	 { "NSRegularControlSize", NSRegularControlSize },
@@ -150,6 +168,23 @@ static struct inttable enum_table[] = {
 	/* From: NSColorList.h */
 
 	/* From: NSColorPanel.h */
+	 { "NSGrayModeColorPanel", NSGrayModeColorPanel },
+	 { "NSRGBModeColorPanel", NSRGBModeColorPanel },
+	 { "NSCMYKModeColorPanel", NSCMYKModeColorPanel },
+	 { "NSHSBModeColorPanel", NSHSBModeColorPanel },
+	 { "NSCustomPaletteModeColorPanel", NSCustomPaletteModeColorPanel },
+	 { "NSColorListModeColorPanel", NSColorListModeColorPanel },
+	 { "NSWheelModeColorPanel", NSWheelModeColorPanel },
+	 { "NSCrayonModeColorPanel", NSCrayonModeColorPanel },
+	 { "NSColorPanelGrayModeMask", NSColorPanelGrayModeMask },
+	 { "NSColorPanelRGBModeMask", NSColorPanelRGBModeMask },
+	 { "NSColorPanelCMYKModeMask", NSColorPanelCMYKModeMask },
+	 { "NSColorPanelHSBModeMask", NSColorPanelHSBModeMask },
+	 { "NSColorPanelCustomPaletteModeMask", NSColorPanelCustomPaletteModeMask },
+	 { "NSColorPanelColorListModeMask", NSColorPanelColorListModeMask },
+	 { "NSColorPanelWheelModeMask", NSColorPanelWheelModeMask },
+	 { "NSColorPanelCrayonModeMask", NSColorPanelCrayonModeMask },
+	 { "NSColorPanelAllModesMask", NSColorPanelAllModesMask },
 
 	/* From: NSColorPicker.h */
 
@@ -180,6 +215,15 @@ static struct inttable enum_table[] = {
 	/* From: NSDocumentScripting.h */
 
 	/* From: NSDragging.h */
+	 { "NSDragOperationNone", NSDragOperationNone },
+	 { "NSDragOperationCopy", NSDragOperationCopy },
+	 { "NSDragOperationLink", NSDragOperationLink },
+	 { "NSDragOperationGeneric", NSDragOperationGeneric },
+	 { "NSDragOperationPrivate", NSDragOperationPrivate },
+	 { "NSDragOperationAll_Obsolete", NSDragOperationAll_Obsolete },
+	 { "NSDragOperationMove", NSDragOperationMove },
+	 { "NSDragOperationDelete", NSDragOperationDelete },
+	 { "NSDragOperationEvery", NSDragOperationEvery },
 
 	/* From: NSDrawer.h */
 	 { "NSDrawerClosedState", NSDrawerClosedState },
@@ -213,12 +257,123 @@ static struct inttable enum_table[] = {
 	 { "NSOtherMouseDown", NSOtherMouseDown },
 	 { "NSOtherMouseUp", NSOtherMouseUp },
 	 { "NSOtherMouseDragged", NSOtherMouseDragged },
+	 { "NSLeftMouseDownMask", NSLeftMouseDownMask },
+	 { "NSLeftMouseUpMask", NSLeftMouseUpMask },
+	 { "NSRightMouseDownMask", NSRightMouseDownMask },
+	 { "NSRightMouseUpMask", NSRightMouseUpMask },
+	 { "NSMouseMovedMask", NSMouseMovedMask },
+	 { "NSLeftMouseDraggedMask", NSLeftMouseDraggedMask },
+	 { "NSRightMouseDraggedMask", NSRightMouseDraggedMask },
+	 { "NSMouseEnteredMask", NSMouseEnteredMask },
+	 { "NSMouseExitedMask", NSMouseExitedMask },
+	 { "NSKeyDownMask", NSKeyDownMask },
+	 { "NSKeyUpMask", NSKeyUpMask },
+	 { "NSFlagsChangedMask", NSFlagsChangedMask },
+	 { "NSAppKitDefinedMask", NSAppKitDefinedMask },
+	 { "NSSystemDefinedMask", NSSystemDefinedMask },
+	 { "NSApplicationDefinedMask", NSApplicationDefinedMask },
+	 { "NSPeriodicMask", NSPeriodicMask },
+	 { "NSCursorUpdateMask", NSCursorUpdateMask },
+	 { "NSScrollWheelMask", NSScrollWheelMask },
+	 { "NSOtherMouseDownMask", NSOtherMouseDownMask },
+	 { "NSOtherMouseUpMask", NSOtherMouseUpMask },
+	 { "NSOtherMouseDraggedMask", NSOtherMouseDraggedMask },
+	 { "NSAnyEventMask", NSAnyEventMask },
+	 { "NSAlphaShiftKeyMask", NSAlphaShiftKeyMask },
+	 { "NSShiftKeyMask", NSShiftKeyMask },
+	 { "NSControlKeyMask", NSControlKeyMask },
+	 { "NSAlternateKeyMask", NSAlternateKeyMask },
+	 { "NSCommandKeyMask", NSCommandKeyMask },
+	 { "NSNumericPadKeyMask", NSNumericPadKeyMask },
+	 { "NSHelpKeyMask", NSHelpKeyMask },
+	 { "NSFunctionKeyMask", NSFunctionKeyMask },
+	 { "NSUpArrowFunctionKey", NSUpArrowFunctionKey },
+	 { "NSDownArrowFunctionKey", NSDownArrowFunctionKey },
+	 { "NSLeftArrowFunctionKey", NSLeftArrowFunctionKey },
+	 { "NSRightArrowFunctionKey", NSRightArrowFunctionKey },
+	 { "NSF1FunctionKey", NSF1FunctionKey },
+	 { "NSF2FunctionKey", NSF2FunctionKey },
+	 { "NSF3FunctionKey", NSF3FunctionKey },
+	 { "NSF4FunctionKey", NSF4FunctionKey },
+	 { "NSF5FunctionKey", NSF5FunctionKey },
+	 { "NSF6FunctionKey", NSF6FunctionKey },
+	 { "NSF7FunctionKey", NSF7FunctionKey },
+	 { "NSF8FunctionKey", NSF8FunctionKey },
+	 { "NSF9FunctionKey", NSF9FunctionKey },
+	 { "NSF10FunctionKey", NSF10FunctionKey },
+	 { "NSF11FunctionKey", NSF11FunctionKey },
+	 { "NSF12FunctionKey", NSF12FunctionKey },
+	 { "NSF13FunctionKey", NSF13FunctionKey },
+	 { "NSF14FunctionKey", NSF14FunctionKey },
+	 { "NSF15FunctionKey", NSF15FunctionKey },
+	 { "NSF16FunctionKey", NSF16FunctionKey },
+	 { "NSF17FunctionKey", NSF17FunctionKey },
+	 { "NSF18FunctionKey", NSF18FunctionKey },
+	 { "NSF19FunctionKey", NSF19FunctionKey },
+	 { "NSF20FunctionKey", NSF20FunctionKey },
+	 { "NSF21FunctionKey", NSF21FunctionKey },
+	 { "NSF22FunctionKey", NSF22FunctionKey },
+	 { "NSF23FunctionKey", NSF23FunctionKey },
+	 { "NSF24FunctionKey", NSF24FunctionKey },
+	 { "NSF25FunctionKey", NSF25FunctionKey },
+	 { "NSF26FunctionKey", NSF26FunctionKey },
+	 { "NSF27FunctionKey", NSF27FunctionKey },
+	 { "NSF28FunctionKey", NSF28FunctionKey },
+	 { "NSF29FunctionKey", NSF29FunctionKey },
+	 { "NSF30FunctionKey", NSF30FunctionKey },
+	 { "NSF31FunctionKey", NSF31FunctionKey },
+	 { "NSF32FunctionKey", NSF32FunctionKey },
+	 { "NSF33FunctionKey", NSF33FunctionKey },
+	 { "NSF34FunctionKey", NSF34FunctionKey },
+	 { "NSF35FunctionKey", NSF35FunctionKey },
+	 { "NSInsertFunctionKey", NSInsertFunctionKey },
+	 { "NSDeleteFunctionKey", NSDeleteFunctionKey },
+	 { "NSHomeFunctionKey", NSHomeFunctionKey },
+	 { "NSBeginFunctionKey", NSBeginFunctionKey },
+	 { "NSEndFunctionKey", NSEndFunctionKey },
+	 { "NSPageUpFunctionKey", NSPageUpFunctionKey },
+	 { "NSPageDownFunctionKey", NSPageDownFunctionKey },
+	 { "NSPrintScreenFunctionKey", NSPrintScreenFunctionKey },
+	 { "NSScrollLockFunctionKey", NSScrollLockFunctionKey },
+	 { "NSPauseFunctionKey", NSPauseFunctionKey },
+	 { "NSSysReqFunctionKey", NSSysReqFunctionKey },
+	 { "NSBreakFunctionKey", NSBreakFunctionKey },
+	 { "NSResetFunctionKey", NSResetFunctionKey },
+	 { "NSStopFunctionKey", NSStopFunctionKey },
+	 { "NSMenuFunctionKey", NSMenuFunctionKey },
+	 { "NSUserFunctionKey", NSUserFunctionKey },
+	 { "NSSystemFunctionKey", NSSystemFunctionKey },
+	 { "NSPrintFunctionKey", NSPrintFunctionKey },
+	 { "NSClearLineFunctionKey", NSClearLineFunctionKey },
+	 { "NSClearDisplayFunctionKey", NSClearDisplayFunctionKey },
+	 { "NSInsertLineFunctionKey", NSInsertLineFunctionKey },
+	 { "NSDeleteLineFunctionKey", NSDeleteLineFunctionKey },
+	 { "NSInsertCharFunctionKey", NSInsertCharFunctionKey },
+	 { "NSDeleteCharFunctionKey", NSDeleteCharFunctionKey },
+	 { "NSPrevFunctionKey", NSPrevFunctionKey },
+	 { "NSNextFunctionKey", NSNextFunctionKey },
+	 { "NSSelectFunctionKey", NSSelectFunctionKey },
+	 { "NSExecuteFunctionKey", NSExecuteFunctionKey },
+	 { "NSUndoFunctionKey", NSUndoFunctionKey },
+	 { "NSRedoFunctionKey", NSRedoFunctionKey },
+	 { "NSFindFunctionKey", NSFindFunctionKey },
+	 { "NSHelpFunctionKey", NSHelpFunctionKey },
+	 { "NSModeSwitchFunctionKey", NSModeSwitchFunctionKey },
+	 { "NSWindowExposedEventType", NSWindowExposedEventType },
+	 { "NSApplicationActivatedEventType", NSApplicationActivatedEventType },
+	 { "NSApplicationDeactivatedEventType", NSApplicationDeactivatedEventType },
+	 { "NSWindowMovedEventType", NSWindowMovedEventType },
+	 { "NSScreenChangedEventType", NSScreenChangedEventType },
+	 { "NSAWTEventType", NSAWTEventType },
+	 { "NSPowerOffEventType", NSPowerOffEventType },
 
 	/* From: NSExtendedUndoManager.h */
 
 	/* From: NSFileWrapper.h */
 
 	/* From: NSFont.h */
+	 { "NSControlGlyph", NSControlGlyph },
+	 { "NSNullGlyph", NSNullGlyph },
 	 { "NSGlyphBelow", NSGlyphBelow },
 	 { "NSGlyphAbove", NSGlyphAbove },
 	 { "NSOneByteGlyphPacking", NSOneByteGlyphPacking },
@@ -229,6 +384,18 @@ static struct inttable enum_table[] = {
 	 { "NSNativeShortGlyphPacking", NSNativeShortGlyphPacking },
 
 	/* From: NSFontManager.h */
+	 { "NSItalicFontMask", NSItalicFontMask },
+	 { "NSBoldFontMask", NSBoldFontMask },
+	 { "NSUnboldFontMask", NSUnboldFontMask },
+	 { "NSNonStandardCharacterSetFontMask", NSNonStandardCharacterSetFontMask },
+	 { "NSNarrowFontMask", NSNarrowFontMask },
+	 { "NSExpandedFontMask", NSExpandedFontMask },
+	 { "NSCondensedFontMask", NSCondensedFontMask },
+	 { "NSSmallCapsFontMask", NSSmallCapsFontMask },
+	 { "NSPosterFontMask", NSPosterFontMask },
+	 { "NSCompressedFontMask", NSCompressedFontMask },
+	 { "NSFixedPitchFontMask", NSFixedPitchFontMask },
+	 { "NSUnitalicFontMask", NSUnitalicFontMask },
 	 { "NSNoFontChangeAction", NSNoFontChangeAction },
 	 { "NSViaPanelFontAction", NSViaPanelFontAction },
 	 { "NSAddTraitFontAction", NSAddTraitFontAction },
@@ -239,6 +406,13 @@ static struct inttable enum_table[] = {
 	 { "NSRemoveTraitFontAction", NSRemoveTraitFontAction },
 
 	/* From: NSFontPanel.h */
+	 { "NSFPPreviewButton", NSFPPreviewButton },
+	 { "NSFPRevertButton", NSFPRevertButton },
+	 { "NSFPSetButton", NSFPSetButton },
+	 { "NSFPPreviewField", NSFPPreviewField },
+	 { "NSFPSizeField", NSFPSizeField },
+	 { "NSFPSizeTitle", NSFPSizeTitle },
+	 { "NSFPCurrentField", NSFPCurrentField },
 
 	/* From: NSForm.h */
 
@@ -267,6 +441,8 @@ static struct inttable enum_table[] = {
 	 { "NSCompositePlusDarker", NSCompositePlusDarker },
 	 { "NSCompositeHighlight", NSCompositeHighlight },
 	 { "NSCompositePlusLighter", NSCompositePlusLighter },
+	 { "NSAlphaEqualToData", NSAlphaEqualToData },
+	 { "NSAlphaAlwaysOne", NSAlphaAlwaysOne },
 	 { "NSBackingStoreRetained", NSBackingStoreRetained },
 	 { "NSBackingStoreNonretained", NSBackingStoreNonretained },
 	 { "NSBackingStoreBuffered", NSBackingStoreBuffered },
@@ -316,6 +492,7 @@ static struct inttable enum_table[] = {
 	 { "NSImageFrameButton", NSImageFrameButton },
 
 	/* From: NSImageRep.h */
+	 { "NSImageRepMatchesDevice", NSImageRepMatchesDevice },
 
 	/* From: NSImageView.h */
 
@@ -330,6 +507,10 @@ static struct inttable enum_table[] = {
 	 { "NSMacintoshInterfaceStyle", NSMacintoshInterfaceStyle },
 
 	/* From: NSLayoutManager.h */
+	 { "NSGlyphAttributeSoft", NSGlyphAttributeSoft },
+	 { "NSGlyphAttributeElastic", NSGlyphAttributeElastic },
+	 { "NSGlyphAttributeBidiLevel", NSGlyphAttributeBidiLevel },
+	 { "NSGlyphAttributeInscribe", NSGlyphAttributeInscribe },
 	 { "NSGlyphInscribeBase", NSGlyphInscribeBase },
 	 { "NSGlyphInscribeBelow", NSGlyphInscribeBelow },
 	 { "NSGlyphInscribeAbove", NSGlyphInscribeAbove },
@@ -421,8 +602,26 @@ static struct inttable enum_table[] = {
 	 { "NSOutlineViewDropOnItemIndex", NSOutlineViewDropOnItemIndex },
 
 	/* From: NSPageLayout.h */
+	 { "NSPLImageButton", NSPLImageButton },
+	 { "NSPLTitleField", NSPLTitleField },
+	 { "NSPLPaperNameButton", NSPLPaperNameButton },
+	 { "NSPLUnitsButton", NSPLUnitsButton },
+	 { "NSPLWidthForm", NSPLWidthForm },
+	 { "NSPLHeightForm", NSPLHeightForm },
+	 { "NSPLOrientationMatrix", NSPLOrientationMatrix },
+	 { "NSPLCancelButton", NSPLCancelButton },
+	 { "NSPLOKButton", NSPLOKButton },
 
 	/* From: NSPanel.h */
+	 { "NSAlertDefaultReturn", NSAlertDefaultReturn },
+	 { "NSAlertAlternateReturn", NSAlertAlternateReturn },
+	 { "NSAlertOtherReturn", NSAlertOtherReturn },
+	 { "NSAlertErrorReturn", NSAlertErrorReturn },
+	 { "NSOKButton", NSOKButton },
+	 { "NSCancelButton", NSCancelButton },
+	 { "NSUtilityWindowMask", NSUtilityWindowMask },
+	 { "NSDocModalWindowMask", NSDocModalWindowMask },
+	 { "NSNonactivatingPanelMask", NSNonactivatingPanelMask },
 
 	/* From: NSParagraphStyle.h */
 	 { "NSLeftTabStopType", NSLeftTabStopType },
@@ -470,6 +669,25 @@ static struct inttable enum_table[] = {
 	 { "NSUnknownPageOrder", NSUnknownPageOrder },
 
 	/* From: NSPrintPanel.h */
+	 { "NSPPSaveButton", NSPPSaveButton },
+	 { "NSPPPreviewButton", NSPPPreviewButton },
+	 { "NSFaxButton", NSFaxButton },
+	 { "NSPPTitleField", NSPPTitleField },
+	 { "NSPPImageButton", NSPPImageButton },
+	 { "NSPPNameTitle", NSPPNameTitle },
+	 { "NSPPNameField", NSPPNameField },
+	 { "NSPPNoteTitle", NSPPNoteTitle },
+	 { "NSPPNoteField", NSPPNoteField },
+	 { "NSPPStatusTitle", NSPPStatusTitle },
+	 { "NSPPStatusField", NSPPStatusField },
+	 { "NSPPCopiesField", NSPPCopiesField },
+	 { "NSPPPageChoiceMatrix", NSPPPageChoiceMatrix },
+	 { "NSPPPageRangeFrom", NSPPPageRangeFrom },
+	 { "NSPPPageRangeTo", NSPPPageRangeTo },
+	 { "NSPPScaleField", NSPPScaleField },
+	 { "NSPPOptionsButton", NSPPOptionsButton },
+	 { "NSPPPaperFeedButton", NSPPPaperFeedButton },
+	 { "NSPPLayoutButton", NSPPLayoutButton },
 
 	/* From: NSProgressIndicator.h */
 	 { "NSProgressIndicatorPreferredThickness", NSProgressIndicatorPreferredThickness },
@@ -490,6 +708,15 @@ static struct inttable enum_table[] = {
 	 { "NSVerticalRuler", NSVerticalRuler },
 
 	/* From: NSSavePanel.h */
+	 { "NSFileHandlingPanelImageButton", NSFileHandlingPanelImageButton },
+	 { "NSFileHandlingPanelTitleField", NSFileHandlingPanelTitleField },
+	 { "NSFileHandlingPanelBrowser", NSFileHandlingPanelBrowser },
+	 { "NSFileHandlingPanelCancelButton", NSFileHandlingPanelCancelButton },
+	 { "NSFileHandlingPanelOKButton", NSFileHandlingPanelOKButton },
+	 { "NSFileHandlingPanelForm", NSFileHandlingPanelForm },
+	 { "NSFileHandlingPanelHomeButton", NSFileHandlingPanelHomeButton },
+	 { "NSFileHandlingPanelDiskButton", NSFileHandlingPanelDiskButton },
+	 { "NSFileHandlingPanelDiskEjectButton", NSFileHandlingPanelDiskEjectButton },
 
 	/* From: NSScreen.h */
 
@@ -568,13 +795,32 @@ static struct inttable enum_table[] = {
 	 { "NSPressedTab", NSPressedTab },
 
 	/* From: NSText.h */
+	 { "NSParagraphSeparatorCharacter", NSParagraphSeparatorCharacter },
+	 { "NSLineSeparatorCharacter", NSLineSeparatorCharacter },
+	 { "NSTabCharacter", NSTabCharacter },
+	 { "NSFormFeedCharacter", NSFormFeedCharacter },
+	 { "NSNewlineCharacter", NSNewlineCharacter },
+	 { "NSCarriageReturnCharacter", NSCarriageReturnCharacter },
+	 { "NSEnterCharacter", NSEnterCharacter },
+	 { "NSBackspaceCharacter", NSBackspaceCharacter },
+	 { "NSBackTabCharacter", NSBackTabCharacter },
+	 { "NSDeleteCharacter", NSDeleteCharacter },
 	 { "NSLeftTextAlignment", NSLeftTextAlignment },
 	 { "NSRightTextAlignment", NSRightTextAlignment },
 	 { "NSCenterTextAlignment", NSCenterTextAlignment },
 	 { "NSJustifiedTextAlignment", NSJustifiedTextAlignment },
 	 { "NSNaturalTextAlignment", NSNaturalTextAlignment },
+	 { "NSIllegalTextMovement", NSIllegalTextMovement },
+	 { "NSReturnTextMovement", NSReturnTextMovement },
+	 { "NSTabTextMovement", NSTabTextMovement },
+	 { "NSBacktabTextMovement", NSBacktabTextMovement },
+	 { "NSLeftTextMovement", NSLeftTextMovement },
+	 { "NSRightTextMovement", NSRightTextMovement },
+	 { "NSUpTextMovement", NSUpTextMovement },
+	 { "NSDownTextMovement", NSDownTextMovement },
 
 	/* From: NSTextAttachment.h */
+	 { "NSAttachmentCharacter", NSAttachmentCharacter },
 
 	/* From: NSTextContainer.h */
 	 { "NSLineSweepLeft", NSLineSweepLeft },
@@ -594,6 +840,8 @@ static struct inttable enum_table[] = {
 	 { "NSTextFieldRoundedBezel", NSTextFieldRoundedBezel },
 
 	/* From: NSTextStorage.h */
+	 { "NSTextStorageEditedAttributes", NSTextStorageEditedAttributes },
+	 { "NSTextStorageEditedCharacters", NSTextStorageEditedCharacters },
 
 	/* From: NSTextStorageScripting.h */
 
@@ -629,12 +877,27 @@ static struct inttable enum_table[] = {
 	/* From: NSUserInterfaceValidation.h */
 
 	/* From: NSView.h */
+	 { "NSViewNotSizable", NSViewNotSizable },
+	 { "NSViewMinXMargin", NSViewMinXMargin },
+	 { "NSViewWidthSizable", NSViewWidthSizable },
+	 { "NSViewMaxXMargin", NSViewMaxXMargin },
+	 { "NSViewMinYMargin", NSViewMinYMargin },
+	 { "NSViewHeightSizable", NSViewHeightSizable },
+	 { "NSViewMaxYMargin", NSViewMaxYMargin },
 	 { "NSNoBorder", NSNoBorder },
 	 { "NSLineBorder", NSLineBorder },
 	 { "NSBezelBorder", NSBezelBorder },
 	 { "NSGrooveBorder", NSGrooveBorder },
 
 	/* From: NSWindow.h */
+	 { "NSBorderlessWindowMask", NSBorderlessWindowMask },
+	 { "NSTitledWindowMask", NSTitledWindowMask },
+	 { "NSClosableWindowMask", NSClosableWindowMask },
+	 { "NSMiniaturizableWindowMask", NSMiniaturizableWindowMask },
+	 { "NSResizableWindowMask", NSResizableWindowMask },
+	 { "NSTexturedBackgroundWindowMask", NSTexturedBackgroundWindowMask },
+	 { "NSDisplayWindowRunLoopOrdering", NSDisplayWindowRunLoopOrdering },
+	 { "NSResetCursorRectsRunLoopOrdering", NSResetCursorRectsRunLoopOrdering },
 	 { "NSDirectSelection", NSDirectSelection },
 	 { "NSSelectingNext", NSSelectingNext },
 	 { "NSSelectingPrevious", NSSelectingPrevious },
