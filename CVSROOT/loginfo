@@ -24,3 +24,13 @@
 #DEFAULT (echo ""; id; echo %s; date; cat) >> $CVSROOT/CVSROOT/commitlog
 # or
 #DEFAULT (echo ""; id; echo %{sVv}; date; cat) >> $CVSROOT/CVSROOT/commitlog
+
+
+# ignore ChangeLog
+pyobjc/ChangeLog /bin/true
+
+# send CVSROOT changes to admin
+CVSROOT $CVSROOT/CVSROOT/syncmail %{sVv} pyobjc-checkins-admin@lists.sourceforge.net
+
+# send rest to checkins list
+DEFAULT $CVSROOT/CVSROOT/syncmail %{sVv} pyobjc-checkins@lists.sourceforge.net
