@@ -133,7 +133,9 @@ void ObjCErr_ToObjC(void)
 	if (!exc_type) return;
 
 	args = PyObject_GetAttrString(exc_value, "_pyobjc_info_");
-	if (args != NULL) {
+	if (args == NULL) {
+		PyErr_Clear();
+	} else {
 		/* This may be an exception that started out in 
 		 * Objective-C code.
 		 */
