@@ -11,13 +11,18 @@
 
 #import <AppKit/AppKit.h>
 #import <AppKit/NSGraphics.h>
+#ifndef GNUSTEP
 #import <AppKit/NSAccessibility.h>
 #import <AppKit/NSTypesetter.h>
+#endif
 
 #include "pyobjc-api.h"
+#include "objc_support.h"
 #include "OC_PythonObject.h"
 #include "const-table.h"
+#ifndef GNU_RUNTIME
 #include <objc/objc-runtime.h>
+#endif
 
 /** Functions */
 
@@ -308,13 +313,22 @@ GetXPanel(NSGetCriticalAlertPanel)
 		return NULL;\
 	}\
 
+#ifndef GNUSTEP
 RunXPanel(NSRunAlertPanel)
 RunXPanel(NSRunInformationalAlertPanel)
 RunXPanel(NSRunCriticalAlertPanel)
+#endif
+
+#ifdef GNUSTEP
+#include "_App_Functions.GNUstep.inc"
+
+#else /* !GNUSTEP */
 
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_App_Functions.inc"
 #endif
+
+#endif /* !GNUSTEP */
 
 static PyMethodDef appkit_methods[] = {
 	{ 
@@ -329,6 +343,7 @@ static PyMethodDef appkit_methods[] = {
 		METH_VARARGS|METH_KEYWORDS, 
 		NULL
 	},
+#ifndef GNUSTEP
 	{ 
 		"NSRunAlertPanel", 
 		(PyCFunction)objc_NSRunAlertPanel, 
@@ -347,6 +362,7 @@ static PyMethodDef appkit_methods[] = {
 		METH_VARARGS|METH_KEYWORDS, 
 		NULL
 	},
+#endif
 	{ 
 		"NSGetAlertPanel", 
 		(PyCFunction)objc_NSGetAlertPanel, 
@@ -418,10 +434,19 @@ PyDoc_STRVAR(appkit_doc,
  */
 
 
+#ifdef GNUSTEP
+
+#include "_App_Enum.GNUstep.inc"
+#include "_App_Str.GNUstep.inc"
+
+#else /* !GNUSTEP */
+
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_App_Enum.inc"
 #include "_App_Str.inc"
 #endif
+
+#endif /* !GNUSTEP */
 
 /*
  * Manually added, will be automatic in next version of generator script
@@ -524,15 +549,25 @@ void init_AppKit(void)
 
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_strings(d, string_table) < 0) return;
+
+#ifdef GNUSTEP
+
+#	include "_App_Var.GNUstep.inc"
+
+#else /* !GNUSTEP */
+
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #	include "_App_Var.inc"
 #endif
+
+#endif /* !GNUSTEP */
 
 	/* And some troublesome definitions 
 	 * All of these found by 'grep #define *.h' in the AppKit header 
 	 * directory
 	 */
 
+#ifndef GNUSTEP
 	/* NSOpenGL.h */
 	INT_VAR(NSOPENGL_CURRENT_VERSION);
 
@@ -543,6 +578,7 @@ void init_AppKit(void)
 	/* NSTypesetter.h */
 	INT_VAR(NSBaselineNotSet);
 	INT_VAR(NumGlyphsToGetEachTime);
+#endif
 
 	/* NSWindow.h */
 	INT_VAR(NSNormalWindowLevel);
@@ -568,7 +604,9 @@ void init_AppKit(void)
 	INT_VAR(NSColorPanelCustomPaletteModeMask);
 	INT_VAR(NSColorPanelColorListModeMask);
 	INT_VAR(NSColorPanelWheelModeMask);
+#ifndef GNUSTEP
 	INT_VAR(NSColorPanelCrayonModeMask);
+#endif
 	INT_VAR(NSColorPanelAllModesMask);
 	INT_VAR(NSLeftMouseDownMask);
 	INT_VAR(NSLeftMouseUpMask);
@@ -614,13 +652,17 @@ void init_AppKit(void)
 	INT_VAR(NSUnitalicFontMask);
 	INT_VAR(NSUtilityWindowMask);
 	INT_VAR(NSDocModalWindowMask);
+#ifndef GNUSTEP
 	INT_VAR(NSNonactivatingPanelMask);
+#endif
 	INT_VAR(NSBorderlessWindowMask);
 	INT_VAR(NSTitledWindowMask);
 	INT_VAR(NSClosableWindowMask);
 	INT_VAR(NSMiniaturizableWindowMask);
 	INT_VAR(NSResizableWindowMask);
+#ifndef GNUSTEP
 	INT_VAR(NSTexturedBackgroundWindowMask);
+#endif
 
 	{
 	  struct uchar_table*  cur = g_unicode_characters;

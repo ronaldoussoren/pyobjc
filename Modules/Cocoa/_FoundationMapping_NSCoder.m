@@ -9,8 +9,11 @@
  */
 #include <Python.h>
 #include <Foundation/Foundation.h>
+#ifndef GNU_RUNTIME
 #include <objc/objc-runtime.h>
+#endif
 #include "pyobjc-api.h"
+#include "objc_support.h"
 
 static PyObject* call_NSCoder_encodeValueOfObjCType_at_(
 		PyObject* method, PyObject* self, PyObject* arguments)
@@ -85,7 +88,7 @@ static PyObject* supercall_NSCoder_encodeValueOfObjCType_at_(
 	}
 
 	NS_DURING
-		super.receiver = ObjCObject_GetObject(self);
+		RECEIVER(super) = ObjCObject_GetObject(self);
 		super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
 
 		(void)objc_msgSendSuper(&super,
@@ -253,7 +256,7 @@ static PyObject* supercall_NSCoder_encodeArrayOfObjCType_count_at_(
 	}
 
 	NS_DURING
-		super.receiver = ObjCObject_GetObject(self);
+		RECEIVER(super) = ObjCObject_GetObject(self);
 		super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
 
 		(void)objc_msgSendSuper(&super,
