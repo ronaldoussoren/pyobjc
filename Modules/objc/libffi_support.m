@@ -149,6 +149,18 @@ static  PyObject* struct_types = NULL;
 	}
 	return type;
 }
+static ffi_type*
+signature_to_ffi_return_type(const char* argtype)
+{
+	switch (*argtype) {
+	case _C_CHR: case _C_SHT:
+		return &ffi_type_sint;
+	case _C_UCHR: case _C_USHT:
+		return &ffi_type_uint;
+	default:
+		return signature_to_ffi_type(argtype);
+	}
+}
 
 static ffi_type*
 signature_to_ffi_type(const char* argtype)
@@ -199,8 +211,9 @@ typedef struct {
 static void 
 method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 {
-  NSMethodSignature* methinfo = ((_method_stub_userdata*)userdata)->methinfo;
-  PyObject* callable = ((_method_stub_userdata*)userdata)->callable;
+	NSMethodSignature* methinfo = 
+		((_method_stub_userdata*)userdata)->methinfo;
+	PyObject* callable = ((_method_stub_userdata*)userdata)->callable;
 	int                objc_argcount;
 	int                i;
 	PyObject*          arglist;
@@ -286,13 +299,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 
 		if (*rettype != _C_VOID) {
 			const char* rettype = [methinfo methodReturnType];
-			if (*rettype == _C_CHR || *rettype == _C_UCHR) {
-				rettype = "i";
-			}
-			if (*rettype == _C_SHT || *rettype == _C_USHT) {
-				rettype = "i";
-			}
-			err = depythonify_c_value(rettype, res, resp);
+			err = depythonify_c_return_value(rettype, res, resp);
 			Py_DECREF(res);
 			if (err == -1) {
 				ObjCErr_ToObjC();
@@ -368,24 +375,7 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 
 	/* Build FFI returntype description */
 	rettype = [methinfo methodReturnType];
-	if (*rettype == _C_CHR) {
-		rettype = buf;
-		buf[0] = _C_INT;
-		buf[1] = 0;
-	} else if (*rettype == _C_UCHR) {
-		rettype = buf;
-		buf[0] = _C_UINT;
-		buf[1] = 0;
-	} else if (*rettype == _C_SHT) {
-		rettype = buf;
-		buf[0] = _C_INT;
-		buf[1] = 0;
-	} else if (*rettype == _C_USHT) {
-		rettype = buf;
-		buf[0] = _C_UINT;
-		buf[1] = 0;
-	} 
-	cl_ret_type = signature_to_ffi_type(rettype);
+	cl_ret_type = signature_to_ffi_return_type(rettype);
 	if (cl_ret_type == NULL) {
 		[methinfo release];
 		return NULL;
@@ -419,6 +409,11 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 		PyErr_NoMemory();
 		return NULL;
 	}
+
+	/*  XXX: When calling a method with a structured return-value we
+	 * use objc_msgSendSuper_stret, should the method stub have a return
+	 * buffer argument in those cases? Hmm, maybe libffi knows about this.
+	 */
 	rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, objc_argcount, 
 		cl_ret_type, cl_arg_types);
 	if (rv != FFI_OK) {
@@ -463,19 +458,21 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 
 IMP
 ObjC_MakeIMPForObjCSelector(ObjCSelector *aSelector) {
-  if ObjCNativeSelector_Check(aSelector) {
-    ObjCNativeSelector *nativeSelector = (ObjCNativeSelector *) aSelector;
-    Method aMethod;
-    if (nativeSelector->sel_flags & ObjCSelector_kCLASS_METHOD) {
-      aMethod = class_getClassMethod(nativeSelector->sel_class, nativeSelector->sel_selector);
-    } else {
-      aMethod = class_getInstanceMethod(nativeSelector->sel_class, nativeSelector->sel_selector);
-    }
-    return aMethod->method_imp;
-  } else {
-    ObjCPythonSelector *pythonSelector = (ObjCPythonSelector *) aSelector;
-    return ObjC_MakeIMPForSignature(pythonSelector->sel_signature, pythonSelector->callable);
-  }
+	if ObjCNativeSelector_Check(aSelector) {
+		ObjCNativeSelector *nativeSelector = 
+			(ObjCNativeSelector *) aSelector;
+		Method aMethod;
+
+		if (nativeSelector->sel_flags & ObjCSelector_kCLASS_METHOD) {
+			aMethod = class_getClassMethod(nativeSelector->sel_class, nativeSelector->sel_selector);
+		} else {
+			aMethod = class_getInstanceMethod(nativeSelector->sel_class, nativeSelector->sel_selector);
+		}
+		return aMethod->method_imp;
+	} else {
+		ObjCPythonSelector *pythonSelector = (ObjCPythonSelector *) aSelector;
+		return ObjC_MakeIMPForSignature(pythonSelector->sel_signature, pythonSelector->callable);
+	}
 }
 
 /* FIXME:
@@ -483,7 +480,7 @@ ObjC_MakeIMPForObjCSelector(ObjCSelector *aSelector) {
  *   Need to either abstract away differences or remove one of these...
  *
  * Changes w.r.t. execute_and_...
- * - All arguments are stored in 'argbuf', not only the structs
+ * - All arguments are stored in 'argbuf', not only the pass-by-reference ones.
  * - libffi support
  */
 PyObject *
@@ -521,37 +518,14 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	if (meth->sel_oc_signature) {
 		methinfo = meth->sel_oc_signature;
 	} else {
-		methinfo = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
+		methinfo = [NSMethodSignature 
+				signatureWithObjCTypes:meth->sel_signature];
 		meth->sel_oc_signature = methinfo;
 	}
 	rettype = [methinfo methodReturnType];
-	if (*rettype == _C_CHR) {
-		/* This might be ABI related: On MacOSX the return value is
-		 * bogus unless we act as if a method return a 'char' (BOOL)
-		 * returns an 'int'.
-		 */
-		rettype = tpBuf;
-		tpBuf[0] = _C_INT;
-		tpBuf[1] = 0;
-	} else if (*rettype == _C_UCHR) {
-		rettype = tpBuf;
-		tpBuf[0] = _C_UINT;
-		tpBuf[1] = 0;
-	} else if (*rettype == _C_SHT) {
-		/* This might be ABI related: On MacOSX the return value is
-		 * bogus unless we act as if a method return a 'char' (BOOL)
-		 * returns an 'int'.
-		 */
-		rettype = tpBuf;
-		tpBuf[0] = _C_INT;
-		tpBuf[1] = 0;
-	} else if (*rettype == _C_USHT) {
-		rettype = tpBuf;
-		tpBuf[0] = _C_UINT;
-		tpBuf[1] = 0;
-	}
+
 	objc_argcount = [methinfo numberOfArguments];
-	resultSize = objc_sizeof_type(rettype);
+	resultSize = objc_sizeof_return_type(rettype);
 	if (resultSize == -1) {
 		return NULL;
 	}
@@ -866,7 +840,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			&ffi_type_void, arglist);
 	} else {
 		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, objc_argcount,
-			signature_to_ffi_type(rettype), arglist);
+			signature_to_ffi_return_type(rettype), arglist);
 	}
 	if (r != FFI_OK) {
 		ObjCErr_Set(PyExc_RuntimeError,
@@ -891,7 +865,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 	if ( (*rettype != _C_VOID) && ([methinfo isOneway] == NO) )
 	{
-		objc_result = pythonify_c_value (rettype, msgResult);
+		objc_result = pythonify_c_return_value (rettype, msgResult);
 	} else {
 		Py_INCREF(Py_None);
 		objc_result =  Py_None;

@@ -104,7 +104,7 @@ static inline int add_string(PyObject* d, char* name, NSString* value)
 	int res;
 	PyObject* v;
 
-	v = PyString_FromStringAndSize([value cString], [value length]);
+	v = ObjC_ObjCToPython("@", &value);
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);
