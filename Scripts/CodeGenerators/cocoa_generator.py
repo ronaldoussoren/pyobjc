@@ -280,15 +280,19 @@ if FOUNDATION_HDRS is not None:
             FOUNDATION_IGNORE_LIST)
 
 
-    func_builder.INT_ALIASES.extend([
+
+    for arg in [
         'NSSearchPathDomainMask', 'NSCalculationError',
         'NSComparisonResult', 'NSInsertionPosition',
         'NSNotificationCoalescing', 'NSNotificationCoalescing',
         'NSRectEdge', 'NSRelativePosition',
         'NSRoundingMode', 'NSSaveOptions', 'NSSearchPathDirectory',
         'NSSearchPathDomainMask', 'NSTestComparisonOperation',
-        'NSURLHandleStatus', 'NSWhoseSubelementIdentifier']
-    )
+        'NSURLHandleStatus', 'NSWhoseSubelementIdentifier']:
+        func_builder.TYPE_ALIASES[arg] = 'int'
+
+    func_builder.TYPE_ALIASES['NSGlyph'] = 'unsigned int'
+
     func_builder.IGNORE_VARARGS.extend([
         # Some of these are Foundation some are AppKit
         'NSGetInformationalAlertPanel',
@@ -445,7 +449,7 @@ if APPKIT_HDRS is not None:
     }
     '''%{'type': s })
 
-    func_builder.INT_ALIASES.extend([
+    for arg in [
         'NSApplicationTerminateReply', 'NSBackingStoreType',
         'NSBezelStyle', 'NSBezierPathElement',
         'NSBitmapImageFileType', 'NSBorderType', 'NSBoxType',
@@ -475,7 +479,8 @@ if APPKIT_HDRS is not None:
         'NSTIFFCompression', 'NSTitlePosition', 'NSToolbarDisplayMode',
         'NSToolTipTag', 'NSTrackingRectTag', 'NSUsableScrollerParts',
         'NSWindingRule', 'NSWindowDepth', 'NSWindowOrderingMode',
-    ])
+        ]:
+        func_builder.TYPE_ALIASES[arg] = 'int'
 
 
     fd.write('typedef void* PYOBJC_VOIDPTR;\n')

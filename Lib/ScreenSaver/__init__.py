@@ -18,17 +18,18 @@ if _objc.platform == 'MACOSX':
     _objc.loadBundle(
         "ScreenSaver",
         globals(),
-        # Why doesn't this work?
+        # We can't use bundle_identifier because we're not linked to
+        # ScreenSaver.framework
         #bundle_identifier='com.apple.ScreenSaver',
         bundle_path=_objc.pathForFramework(
-            "/System/Library/Frameworks/ScreenSaver.framework")
+            u"/System/Library/Frameworks/ScreenSaver.framework")
     )
 else:
     _objc.loadBundle(
         "ScreenSaver",
         globals(),
         bundle_path=_objc.pathForFramework(
-            "/System/Library/Frameworks/ScreenSaver.framework")
+            u"/System/Library/Frameworks/ScreenSaver.framework")
     )
 
 # NOTE: One MacOSX 10.2.4 the framework doesn't define constants,

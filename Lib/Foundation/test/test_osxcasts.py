@@ -14,7 +14,7 @@ try:
 
     class TestTollFreeBridging( unittest.TestCase ):
         def testExplicitToCF(self):
-            o = NSArray.arrayWithArray_(("a", 1, 1.9))
+            o = NSArray.arrayWithArray_((u"a", 1, 1.9))
             self.assert_(isinstance(o, NSArray))
 
             c = ObjectToCF(o)

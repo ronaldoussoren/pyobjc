@@ -254,6 +254,18 @@ PyTypeObject ZoneWrapper_Type = {
 #define ZoneWrapper_Check(obj) PyObject_TypeCheck((obj), &ZoneWrapper_Type)
 
 
+static PyObject*
+PyObjectPtr_New(void *obj)
+{
+	return (PyObject*)obj;
+}
+
+static int
+PyObjectPtr_Convert(PyObject* obj, void* pObj)
+{
+	*(void**)pObj = (void *)obj;
+	return 0;
+}
 
 /* This should do for now, although we should generate a new type for this */
 static PyObject* 
@@ -352,6 +364,9 @@ PyObjCPointerWrapper_Init(void)
 		NSZone_New, NSZone_Convert);
 	if (r == -1) return -1;
 
+	r = PyObjCPointerWrapper_Register(@encode(PyObject*),
+		PyObjectPtr_New, PyObjectPtr_Convert);
+	if (r == -1) return -1;
 
 	return 0;
 }

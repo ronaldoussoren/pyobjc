@@ -95,7 +95,7 @@ imp_NSObject_alloc(
 
 		Py_DECREF(arglist); 
 
-		err = depythonify_c_value("@", result, resp);
+		err = depythonify_c_value(@encode(id), result, resp);
 		Py_DECREF(result); 
 		if (err == -1) {
 			PyObjC_GIL_FORWARD_EXC();

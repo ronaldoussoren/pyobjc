@@ -19,8 +19,8 @@ class GlobalFunctionTest (unittest.TestCase):
                     Foundation.NSFileTypeForHFSTypeCode(fourchar))
 
         def testNSHFSTypeCodeFromFileType(self):
-            self.assertEquals("rtfx",
-                    Foundation.NSHFSFTypeCodeFromFileType("'rtfx'"))
+            self.assertEquals(u"rtfx",
+                    Foundation.NSHFSFTypeCodeFromFileType(u"'rtfx'"))
 
 
     def testMakeNSRect(self):

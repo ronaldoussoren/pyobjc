@@ -68,9 +68,10 @@
 #endif
 
 extern int PyObjC_VerboseLevel;
+extern int PyObjC_StrBridgeEnabled;
 
 
-int PyObjCAPI_Register(PyObject* module_dict);
+int PyObjCAPI_Register(PyObject* module);
 #define PYOBJC_BUILD
 #include "pyobjc-api.h"
 

@@ -9,7 +9,7 @@ class TestNSAutoreleasePoolInteraction(unittest.TestCase):
         pool = NSAutoreleasePool.alloc().init()
         bar = NSMutableArray.array()
         pool.release()
-        bar.addObject_( "a" ) # should still exist because of python GC
+        bar.addObject_( u"a" ) # should still exist because of python GC
 
     def testNSAutoreleasePool(self):
 
@@ -21,7 +21,7 @@ class TestNSAutoreleasePoolInteraction(unittest.TestCase):
             NSAutoreleasePool.pyobjcPushPool()
             bar = NSMutableArray.array()
             NSAutoreleasePool.pyobjcPopPool()
-            bar.addObject_( "a" ) # should still exist because of python GC
+            bar.addObject_( u"a" ) # should still exist because of python GC
         finally:
             del warnings.filters[0]
 

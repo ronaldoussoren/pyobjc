@@ -12,36 +12,36 @@ preEverythingInstance = MEClass.new()
 
 class Methods(objc.runtime.NSObject):
     def description(self):
-        return "<methods>"
+        return u"<methods>"
 
     def newMethod(self):
-        return "<new-method>"
+        return u"<new-method>"
 
 class MethodsSub(objc.runtime.NSObject):
     def description(self):
-        return "<sub-methods>"
+        return u"<sub-methods>"
 
     def newMethod(self):
-        return "<sub-new-method>"
+        return u"<sub-new-method>"
 
     def newSubMethod(self):
-        return "<new-method-sub>"
+        return u"<new-method-sub>"
 
 class PurePython:
     def description(self):
-        return "<pure>"
+        return u"<pure>"
 
     def newMethod(self):
-        return "<pure-new>"
+        return u"<pure-new>"
 
     def purePythonMethod(self):
-        return "<pure-py>"
+        return u"<pure-py>"
 
 class TestFromObjCSuperToObjCClass(unittest.TestCase):
     def testBasicBehavior(self):
         anInstance = Methods.new()
-        self.assertEquals(anInstance.description(), "<methods>")
-        self.assertEquals(anInstance.newMethod(), "<new-method>")
+        self.assertEquals(anInstance.description(), u"<methods>")
+        self.assertEquals(anInstance.newMethod(), u"<new-method>")
 
     def testDescriptionOverride(self):
         objc.classAddMethods(MEClass, [Methods.description])
@@ -50,8 +50,8 @@ class TestFromObjCSuperToObjCClass(unittest.TestCase):
 
         newInstance = MEClass.new()
 
-        self.assertEquals(newInstance.description(), "<methods>")
-        self.assertEquals(preEverythingInstance.description(), "<methods>")
+        self.assertEquals(newInstance.description(), u"<methods>")
+        self.assertEquals(preEverythingInstance.description(), u"<methods>")
 
     def testNewMethod(self):
         objc.classAddMethods(MEClass, [Methods.newMethod])
@@ -60,8 +60,8 @@ class TestFromObjCSuperToObjCClass(unittest.TestCase):
 
         newInstance = MEClass.new()
 
-        self.assertEquals(newInstance.newMethod(), "<new-method>")
-        self.assertEquals(preEverythingInstance.newMethod(), "<new-method>")
+        self.assertEquals(newInstance.newMethod(), u"<new-method>")
+        self.assertEquals(preEverythingInstance.newMethod(), u"<new-method>")
 
     def testSubDescriptionOverride(self):
         objc.classAddMethods(MEClass, [MethodsSub.description])
@@ -70,8 +70,8 @@ class TestFromObjCSuperToObjCClass(unittest.TestCase):
 
         newInstance = MEClass.new()
 
-        self.assertEquals(newInstance.description(), "<sub-methods>")
-        self.assertEquals(preEverythingInstance.description(), "<sub-methods>")
+        self.assertEquals(newInstance.description(), u"<sub-methods>")
+        self.assertEquals(preEverythingInstance.description(), u"<sub-methods>")
 
     def testSubNewMethod(self):
         objc.classAddMethods(MEClass, [MethodsSub.newMethod, MethodsSub.newSubMethod])
@@ -81,10 +81,10 @@ class TestFromObjCSuperToObjCClass(unittest.TestCase):
 
         newInstance = MEClass.new()
 
-        self.assertEquals(newInstance.newMethod(), "<sub-new-method>")
-        self.assertEquals(preEverythingInstance.newMethod(), "<sub-new-method>")
-        self.assertEquals(newInstance.newSubMethod(), "<new-method-sub>")
-        self.assertEquals(preEverythingInstance.newSubMethod(), "<new-method-sub>")
+        self.assertEquals(newInstance.newMethod(), u"<sub-new-method>")
+        self.assertEquals(preEverythingInstance.newMethod(), u"<sub-new-method>")
+        self.assertEquals(newInstance.newSubMethod(), u"<new-method-sub>")
+        self.assertEquals(preEverythingInstance.newSubMethod(), u"<new-method-sub>")
 
 
 class TestFromPythonClassToObjCClass(unittest.TestCase):
@@ -106,13 +106,13 @@ class TestFromPythonClassToObjCClass(unittest.TestCase):
         newInstance = MEClass.new()
 
         # This is bogus, see above:
-        #self.assertEquals(newInstance.description(), "<pure>")
-        #self.assertEquals(newInstance.newMethod(), "<pure-new>")
-        #self.assertEquals(newInstance.purePythonMethod(), "<pure-py>")
+        #self.assertEquals(newInstance.description(), u"<pure>")
+        #self.assertEquals(newInstance.newMethod(), u"<pure-new>")
+        #self.assertEquals(newInstance.purePythonMethod(), u"<pure-py>")
 
-        #self.assertEquals(preEverythingInstance.description(), "<pure>")
-        #self.assertEquals(preEverythingInstance.newMethod(), "<pure-new>")
-        #self.assertEquals(preEverythingInstance.purePythonMethod(), "<pure-py>")
+        #self.assertEquals(preEverythingInstance.description(), u"<pure>")
+        #self.assertEquals(preEverythingInstance.newMethod(), u"<pure-new>")
+        #self.assertEquals(preEverythingInstance.purePythonMethod(), u"<pure-py>")
 
         self.assertRaises(TypeError, newInstance.description)
         self.assertRaises(TypeError, newInstance.newMethod)
@@ -138,13 +138,13 @@ class TestFromPythonClassToObjCClass(unittest.TestCase):
 
         newInstance = MEClass.new()
 
-        self.assertEquals(newInstance.description(), "<pure>")
-        self.assertEquals(newInstance.newMethod(), "<pure-new>")
-        self.assertEquals(newInstance.purePythonMethod(), "<pure-py>")
+        self.assertEquals(newInstance.description(), u"<pure>")
+        self.assertEquals(newInstance.newMethod(), u"<pure-new>")
+        self.assertEquals(newInstance.purePythonMethod(), u"<pure-py>")
 
-        self.assertEquals(preEverythingInstance.description(), "<pure>")
-        self.assertEquals(preEverythingInstance.newMethod(), "<pure-new>")
-        self.assertEquals(preEverythingInstance.purePythonMethod(), "<pure-py>")
+        self.assertEquals(preEverythingInstance.description(), u"<pure>")
+        self.assertEquals(preEverythingInstance.newMethod(), u"<pure-new>")
+        self.assertEquals(preEverythingInstance.purePythonMethod(), u"<pure-py>")
 
 
 
@@ -221,7 +221,7 @@ class TestCategory (unittest.TestCase):
             class NSObject ( objc.Category(objc.runtime.NSObject), object ):
                 pass
 
-            raise AssertionError, "Can use objc.Category with MI"
+            raise AssertionError, u"Can use objc.Category with MI"
         except TypeError:
             pass
 
@@ -230,7 +230,7 @@ class TestCategory (unittest.TestCase):
             class NSFoo (objc.Category(objc.runtime.NSObject)):
                     pass
 
-            raise AssertionError, "Category name != class name"
+            raise AssertionError, u"Category name != class name"
 
         except TypeError:
             pass
@@ -242,7 +242,7 @@ class TestCategory (unittest.TestCase):
             class list (objc.Category(list)):
                 pass
 
-            raise AssertionError, "Category on list???"
+            raise AssertionError, u"Category on list???"
 
         except TypeError:
             pass

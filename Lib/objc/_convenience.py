@@ -10,6 +10,7 @@ TODO:
 - Add external interface: Framework specific modules may want to add to this.
 """
 from objc import setClassExtender, selector, runtime
+import warnings
 
 CONVENIENCE_METHODS = {}
 CLASS_METHODS = {}
@@ -349,7 +350,7 @@ def _num_to_python(v):
         elif tp in [ 5, 6, 12, 13 ]:
             v = v.doubleValue()
         else:
-            print "Unhandled numeric type: %s"%tp
+            warnings.warn(RuntimeWarning, "Unhandled numeric type: %r" % (tp,))
 
     return v
 

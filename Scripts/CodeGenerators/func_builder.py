@@ -28,8 +28,8 @@ import re
 import sys
 import types
 
-# Types that are also int-values (mostly enums)
-INT_ALIASES=[]
+# Types that are also simple values (mostly enums)
+TYPE_ALIASES={}
 
 # Varargs functions to be treated like normal functions
 IGNORE_VARARGS = []
@@ -170,52 +170,27 @@ else:
         'PyObjCSelector_Convert, &%(varname)s',
     )
 
-# Python2.3 has better PyArgs_Parse format-chars for unsigned integral types,
-# use those when available and use plain ints when not.
-if sys.version >= '2.3':
-    SIMPLE_TYPES['unsigned long long'] =  (
-        "\t result = PyLong_FromUnsignedLongLong(%(varname)s);\n\tif (result == NULL) return NULL;",
-        'K',
-        '&%(varname)s',
-        None
-    )
-    SIMPLE_TYPES['unsigned'] = (
-        "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
-        'I',
-        '&%(varname)s',
-        None
-    )
-    SIMPLE_TYPES['unsigned int'] = SIMPLE_TYPES['unsigned']
-    SIMPLE_TYPES['unsigned long'] = SIMPLE_TYPES['unsigned']
+SIMPLE_TYPES['unsigned long long'] =  (
+    "\t result = PyLong_FromUnsignedLongLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+    'K',
+    '&%(varname)s',
+    None
+)
+SIMPLE_TYPES['unsigned'] = (
+    "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+    'I',
+    '&%(varname)s',
+    None
+)
+SIMPLE_TYPES['unsigned int'] = SIMPLE_TYPES['unsigned']
+SIMPLE_TYPES['unsigned long'] = SIMPLE_TYPES['unsigned']
 
-    SIMPLE_TYPES['unsigned short'] = (
-        "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
-        'H',
-        '&%(varname)s',
-        None
-    )
-
-else:
-    SIMPLE_TYPES['unsigned long long'] =  (
-        "\t result = PyLong_FromUnsignedLongLong(%(varname)s);\n\tif (result == NULL) return NULL;",
-        'L',
-        '&%(varname)s',
-        None
-    )
-    SIMPLE_TYPES['unsigned'] = (
-        "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
-        'i',
-        '&%(varname)s',
-        None
-    )
-    SIMPLE_TYPES['unsigned int'] = SIMPLE_TYPES['unsigned']
-    SIMPLE_TYPES['unsigned long'] = SIMPLE_TYPES['unsigned']
-    SIMPLE_TYPES['unsigned short'] = (
-        "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
-        'h',
-        '&%(varname)s',
-        None
-    )
+SIMPLE_TYPES['unsigned short'] = (
+    "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+    'H',
+    '&%(varname)s',
+    None
+)
 
 def hidden_from_python(typestr):
     if typestr is FORCE_VALUE: return 1
@@ -225,10 +200,7 @@ def hidden_from_python(typestr):
     if is_id(typestr):
         return 0
 
-    if typestr in INT_ALIASES:
-        x = SIMPLE_TYPES['int']
-    else:
-        x = SIMPLE_TYPES[typestr]
+    x = SIMPLE_TYPES[TYPE_ALIASES.get(typestr, typestr)]
 
     if x[2] is '':
         return 1
@@ -242,11 +214,8 @@ def simple_to_python(varname, typestr):
     if is_id(typestr):
         return "\tresult = PyObjC_IdToPython(%(varname)s); if (result == NULL) return NULL;"%{ 'varname': varname }
 
-    if typestr in INT_ALIASES:
-        x = SIMPLE_TYPES['int']
-    else:
-        x = SIMPLE_TYPES[typestr]
-
+    x = SIMPLE_TYPES[TYPE_ALIASES.get(typestr, typestr)]
+    
     if x[0] is None:
         return
     elif isinstance(x[0], str):
@@ -263,10 +232,8 @@ def parsetuple_fmt(typestr):
     if is_id(typestr):
         return 'O&';
 
-    if typestr in INT_ALIASES:
-        x = SIMPLE_TYPES['int']
-    else:
-        x = SIMPLE_TYPES[typestr]
+    x = SIMPLE_TYPES[TYPE_ALIASES.get(typestr, typestr)]
+
     return x[1]
 
 def parsetuple_arguments(typestr, varname):
@@ -276,11 +243,8 @@ def parsetuple_arguments(typestr, varname):
     if is_id(typestr):
         return "PyObjCObject_Convert, &%(varname)s"%{ 'varname': varname }
 
-    if typestr in INT_ALIASES:
-        x = SIMPLE_TYPES['int']
-    else:
-        x = SIMPLE_TYPES[typestr]
-
+    x = SIMPLE_TYPES[TYPE_ALIASES.get(typestr, typestr)]
+    
     if x[2] is None:
         return
     elif isinstance(x[2], str):
@@ -294,15 +258,7 @@ def is_simple_type(typestr):
     if typestr.startswith('const ') or typestr.startswith('const\t'):
         typestr = typestr[6:].strip()
 
-    if typestr in INT_ALIASES:
-        return 1
-
-    elif typestr in SIMPLE_TYPES:
-        return 1
-
-    else:
-        return is_id(typestr)
-
+    return (typestr in TYPE_ALIASES) or (typestr in SIMPLE_TYPES) or is_id(typestr)
 
 def parse_prototype(protostr):
     protostr = protostr.strip()
@@ -428,7 +384,7 @@ def process_list(fp, lst):
 
     fp.write(HDR)
 
-    for l in lst:
+    for i, l in enumerate(lst):
         l = l.strip()
         if not l: continue
         if l[0] == '#': continue
@@ -442,8 +398,11 @@ def process_list(fp, lst):
             ok_count += 1
 
         except ValueError, msg:
-            sys.stderr.write("Converting '%s' ..."%l.strip())
-            sys.stderr.write("failed: %s\n"%msg)
+            fn = getattr(lst, 'name', None)
+            if fn is not None:
+                sys.stderr.write('%s:%d\n' % (fn, i+1))
+            sys.stderr.write("%s\n"%l.strip())
+            sys.stderr.write("Converting failed: %s\n"%msg)
             sys.stderr.flush()
 
     fp.write("\n")
@@ -468,5 +427,5 @@ def gen_method_table_entries(fp, funcs):
 
 if __name__ == "__main__":
     import sys
-    INT_ALIASES.append('NSWindowDepth')
+    TYPE_ALIASES['NSWindowDepth'] = 'int'
     process_list(sys.stdout, file(sys.argv[1]))

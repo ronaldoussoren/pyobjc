@@ -838,7 +838,10 @@ def emit_python_subclass(fp):
         else:
             pfx = ''
         fp.write('%s\tdef %sArg_(self, arg):\n'%(pfx, nm,))
-        fp.write('%s\t\treturn arg # return the same\n'%(pfx,))
+        if tp == 'char*':
+            fp.write('%s\t\treturn unicode(arg) # return the unicode\n'%(pfx,))
+        else:
+            fp.write('%s\t\treturn arg # return the same\n'%(pfx,))
         fp.write('%s\t%sArg_ = objc.selector(%sArg_, signature="@@:%s")\n'%(
             pfx, nm, nm, sign))
         fp.write('\n\n')
@@ -853,6 +856,10 @@ def emit_python_subclass(fp):
             else:
                 pfx = ''
             fp.write('%s\tdef %sArg_and%sArg_(self, arg1, arg2):\n'%(pfx, nm1, nm2))
+            if tp1 == 'char*':
+                fp.write('%s\t\targ1 = unicode(arg1)\n'%(pfx,))
+            if tp2 == 'char*':
+                fp.write('%s\t\targ2 = unicode(arg2)\n'%(pfx,))
             fp.write('%s\t\treturn [ arg1, arg2 ]\n'%(pfx,))
             fp.write('%s\t%sArg_and%sArg_ = objc.selector(%sArg_and%sArg_, signature="@@:%s%s")\n'%(
                 pfx, nm1, nm2, nm1, nm2, sign1, sign2))
@@ -866,7 +873,10 @@ def emit_python_subclass(fp):
         else:
             pfx = ''
         fp.write('%s\tdef %sInArg_(self, arg):\n'%(pfx, nm,))
-        fp.write('%s\t\treturn arg\n'%(pfx,))
+        if tp == 'char*':
+            fp.write('%s\t\treturn unicode(arg) # return the unicode\n'%(pfx,))
+        else:
+            fp.write('%s\t\treturn arg # return the same\n'%(pfx,))
         fp.write('%s\t%sInArg_ = objc.selector(%sInArg_, signature="@@:%s^%s")\n'%(
             pfx, nm, nm, objc._C_IN, sign))
         fp.write('\n\n')

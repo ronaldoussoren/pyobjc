@@ -13,7 +13,7 @@ class TestNSStreamUsage(unittest.TestCase):
 
         # Try to create a connection to the IPP port on the local host
         inputStream, outputStream = Foundation.NSStream.getStreamsToHost_port_inputStream_outputStream_(
-                Foundation.NSHost.hostWithAddress_("127.0.0.1"), 
+                Foundation.NSHost.hostWithAddress_(u"127.0.0.1"), 
                 631 # IPP port
 
         )

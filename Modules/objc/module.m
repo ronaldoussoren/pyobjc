@@ -15,8 +15,49 @@
 
 int PyObjC_VerboseLevel = 0;
 PyObject* PyObjCClass_DefaultModule = NULL;
+int PyObjC_StrBridgeEnabled = 1;
 
 static NSAutoreleasePool* global_release_pool = nil;
+
+PyDoc_STRVAR(setStrBridgeEnabled_doc,
+  "setStrBridgeEnabled(bool)\n"
+  "\n"
+  "False disables the transparent str bridge (default) \n"
+  "True enables the transparent str bridge, note that \n"
+  "this is discouraged.");
+
+static PyObject*
+setStrBridgeEnabled(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+	static char* keywords[] = { "enabled", NULL };
+	PyObject *o;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "o:setStrBridgeEnabled",
+		keywords, &o)) {
+		return NULL;
+	}
+	PyObjC_StrBridgeEnabled = PyObject_IsTrue(o);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
+PyDoc_STRVAR(getStrBridgeEnabled_doc,
+	"getStrBridgeEnabled() -> bool\n"
+	"\n"
+	"Return the status of the transparent str bridge.");
+
+static PyObject* 
+getStrBridgeEnabled(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+	static char* keywords[] = { NULL };
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":getStrBridgeEnabled",
+			keywords)) {
+		return NULL;
+	}
+
+	return PyBool_FromLong(PyObjC_StrBridgeEnabled);
+}
+
 
 PyDoc_STRVAR(lookUpClass_doc,
   "lookUpClass(class_name) -> class\n"
@@ -336,11 +377,9 @@ static PyObject*
 loadBundle(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bundle_identifier", NULL };
-	NSBundle* bundle;
-	NSString* strval;
-	int err;
-	PyObject* bundle_identifier = NULL;
-	PyObject* bundle_path = NULL;
+	NSBundle* bundle = nil;
+	id bundle_identifier = nil;
+	id bundle_path = nil;
 	PyObject* module_name;
 	PyObject* module_globals;
 	PyObject* class_list;
@@ -348,9 +387,9 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	PyObject* module_key = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-			"SO|SS:loadBundle",
+			"SO|O&O&:loadBundle",
 			keywords, &module_name, &module_globals,
-			&bundle_path, &bundle_identifier)) {
+            PyObjCObject_Convert, &bundle_path, PyObjCObject_Convert, &bundle_identifier)) {
 		return NULL;
 	}
 
@@ -368,19 +407,20 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	}
 
 	if (bundle_path) {
-		err = depythonify_c_value("@", bundle_path, &strval);
-		if (err == -1) {
-			return NULL;
-		}
-		bundle = [NSBundle bundleWithPath:strval];
+        if (![bundle_path isKindOfClass:[NSString class]]) {
+            PyErr_SetString(PyExc_TypeError,
+                    "bundle_path is not a string");
+            return NULL;
+        }
+		bundle = [NSBundle bundleWithPath:bundle_path];
 	} else {
 #ifdef MACOSX
-		err = depythonify_c_value("@", bundle_identifier, &strval);
-		if (err == -1) {
+		if (![bundle_identifier isKindOfClass:[NSString class]]) {
+			PyErr_SetString(PyExc_TypeError,
+					"bundle_identifier is not a string");
 			return NULL;
-		}
-		bundle = [NSBundle bundleWithIdentifier:strval];
-
+        }
+		bundle = [NSBundle bundleWithIdentifier:bundle_identifier];
 #else  /* !MACOSX */
 		/* GNUstep doesn't seem to support ``bundleWithIdentifier:``
            but it could be emulated by enumerating allFrameworks and
@@ -567,7 +607,7 @@ static  char* keywords[] = { "value", 0 };
 		return NULL;
 	}
 
-	return pythonify_c_value("@", &res);
+	return pythonify_c_value(@encode(id), &res);
 }
 
 PyDoc_STRVAR(objc_ObjectToCF_doc,
@@ -713,6 +753,8 @@ static PyMethodDef mod_methods[] = {
 	{ "recycleAutoreleasePool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
 	{ "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
 	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
+	{ "setStrBridgeEnabled", (PyCFunction)setStrBridgeEnabled, METH_VARARGS|METH_KEYWORDS, setStrBridgeEnabled_doc },
+	{ "getStrBridgeEnabled", (PyCFunction)getStrBridgeEnabled, METH_VARARGS|METH_KEYWORDS, getStrBridgeEnabled_doc },
 	{ "loadBundle", (PyCFunction)loadBundle, METH_VARARGS|METH_KEYWORDS, loadBundle_doc },
 	{ "allocateBuffer", (PyCFunction)allocateBuffer, METH_VARARGS|METH_KEYWORDS, allocateBuffer_doc },
 
@@ -818,8 +860,9 @@ init_objc(void)
 
 	m = Py_InitModule4("_objc", mod_methods, NULL,
 			NULL, PYTHON_API_VERSION);
-	d = PyModule_GetDict(m);
 
+    d = PyModule_GetDict(m);
+    /* use PyDict_SetItemString for the retain, non-heap types can't be dealloc'ed */
 	PyDict_SetItemString(d, "objc_class", (PyObject*)&PyObjCClass_Type);
 	PyDict_SetItemString(d, "objc_object", (PyObject*)&PyObjCObject_Type);
 	PyDict_SetItemString(d, "pyobjc_unicode", (PyObject*)&PyObjCUnicode_Type);
@@ -832,7 +875,7 @@ init_objc(void)
 	PyDict_SetItemString(d, "NO", PyBool_FromLong(0));
 
 	if (PyObjCUtil_Init(m) < 0) return;
-	if (PyObjCAPI_Register(d) < 0) return;
+	if (PyObjCAPI_Register(m) < 0) return;
 	if (PyObjCIMP_SetUpMethodWrappers() < 0) return;
 
 #if 1
@@ -843,7 +886,7 @@ init_objc(void)
 		PyObject* v = PyCObject_FromVoidPtr((void*)(PyObjCClass_GetClass), NULL);
 		if (v == NULL) return;
 
-		PyDict_SetItemString(d, "__C_GETCLASS__", v);
+		PyModule_AddObject(m, "__C_GETCLASS__", v);
 	}
 #endif
 
@@ -851,15 +894,14 @@ init_objc(void)
 		struct objc_typestr_values* cur = objc_typestr_values;
 
 		for (; cur->name != NULL; cur ++)  {
-			PyDict_SetItemString(d, cur->name,
+			PyModule_AddObject(m, cur->name,
 				PyString_FromStringAndSize(&cur->value, 1));
 		}
 	}
 	/* Add a _C_NSBOOL value, the actual type might vary acros platforms */
-	PyDict_SetItemString(d, "_C_NSBOOL", PyString_FromString(@encode(BOOL)));
+	PyModule_AddStringConstant(m, "_C_NSBOOL", @encode(BOOL));
 
-	PyDict_SetItemString(d, "__version__", 
-		PyString_FromString(OBJC_VERSION));
+	PyModule_AddStringConstant(m, "__version__", OBJC_VERSION);
 
 	PyObjCPointerWrapper_Init();
 	PyObjC_InstallAllocHack();

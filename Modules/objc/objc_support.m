@@ -1358,14 +1358,21 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			*(id *) datum = (id)PyObjCClass_GetClass(argument);
 		} else if (PyObjCObject_Check (argument)) {
 			*(id *) datum = PyObjCObject_GetObject(argument);
+		/*
 		} else if (PyString_Check (argument)) {
+		*/
 			/* NSString values are Unicode strings, convert 
 			 * the string to Unicode, assuming the default encoding.
 			 */
+/*            
 			char* strval;
 			int   len;
 			PyObject* as_unicode;
 			PyObject* as_utf8;
+
+			if (!PyObjC_StrBridgeEnabled) {
+				PyErr_Warn(PyExc_DeprecationWarning, "use unicode(str, encoding) for NSString or buffer(str) for NSData, str will not be bridged in PyObjC 1.2");
+			}
 
 			strval = PyString_AS_STRING(argument);
 			len = PyString_GET_SIZE(argument);
@@ -1397,6 +1404,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 					"to encode unicode string to UTF8");
 				return -1;
 			}
+*/
 		} else if (PyObjCUnicode_Check(argument)) {
 			*(id*) datum = PyObjCUnicode_Extract(argument);
 		} else if (PyUnicode_Check(argument)) {
@@ -1448,7 +1456,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 #endif /* MACOSX */
 
 			*(id *) datum = [OC_PythonObject 
-				newWithObject:argument];
+				newWithCoercedObject:argument];
 		}
 		break;
 

@@ -8,33 +8,33 @@ import objc
 
 class TestNSDecimal (unittest.TestCase):
     def testCreation(self):
-        o = NSDecimal("1.25")
+        o = NSDecimal(u"1.25")
         self.assert_(isinstance(o, NSDecimal))
-        self.assertEquals(str(o), "1.25")
+        self.assertEquals(str(o), u"1.25")
 
         o = NSDecimal(12345, -2, objc.YES)
         self.assert_(isinstance(o, NSDecimal))
-        self.assertEquals(str(o), "-123.45")
+        self.assertEquals(str(o), u"-123.45")
 
         o = NSDecimal()
         self.assert_(isinstance(o, NSDecimal))
-        self.assert_(str(o) in ("0", "0.0"))
+        self.assert_(str(o) in (u"0", u"0.0"))
 
         o = NSDecimal(1234)
         self.assert_(isinstance(o, NSDecimal))
-        self.assertEquals(str(o), "1234")
+        self.assertEquals(str(o), u"1234")
 
         o = NSDecimal(-1234)
         self.assert_(isinstance(o, NSDecimal))
-        self.assertEquals(str(o), "-1234")
+        self.assertEquals(str(o), u"-1234")
 
         o = NSDecimal(long(1234))
         self.assert_(isinstance(o, NSDecimal))
-        self.assertEquals(str(o), "1234")
+        self.assertEquals(str(o), u"1234")
 
         o = NSDecimal(long(-1234))
         self.assert_(isinstance(o, NSDecimal))
-        self.assertEquals(str(o), "-1234")
+        self.assertEquals(str(o), u"-1234")
 
         o = NSDecimal(1L << 64 - 1)
 
@@ -46,9 +46,9 @@ class TestNSDecimal (unittest.TestCase):
     def testFunction(self):
         # We only test addition, as all function wrappers are generated this
         # should be enough to verify that the machinery is working correctly.
-        o = NSDecimal("1.5")
+        o = NSDecimal(u"1.5")
         p = NSDecimal(12345, -2, objc.YES)
-        r = NSDecimal("-121.95")
+        r = NSDecimal(u"-121.95")
         q = NSDecimal()
 
         NSDecimalAdd(q, o, p, NSRoundPlain)
@@ -56,9 +56,9 @@ class TestNSDecimal (unittest.TestCase):
         self.assertEquals(str(q), str(r))
 
     def testCompare(self):
-        small = NSDecimal("1")
-        small2 = NSDecimal("1")
-        large = NSDecimal("42")
+        small = NSDecimal(u"1")
+        small2 = NSDecimal(u"1")
+        large = NSDecimal(u"42")
 
         self.assert_(small == small2)
         self.assert_(not (small == large))
@@ -77,10 +77,10 @@ class TestNSDecimal (unittest.TestCase):
         self.assert_(not(small >= large))
 
     def testConversion(self):
-        o = NSDecimal("1234.44")
+        o = NSDecimal(u"1234.44")
         self.assertEquals(o.as_int(), 1234)
 
-        o = NSDecimal("1.5")
+        o = NSDecimal(u"1.5")
         self.assertEquals(o.as_float(), 1.5)
 
         self.assertRaises(TypeError, int, o)
@@ -97,22 +97,22 @@ class TestNSDecimal (unittest.TestCase):
 
 class TestNSDecimalNumber (unittest.TestCase):
     def testCreation1(self):
-        o = NSDecimalNumber.decimalNumberWithString_("1.1234")
-        self.assertEquals(o.description(), "1.1234")
+        o = NSDecimalNumber.decimalNumberWithString_(u"1.1234")
+        self.assertEquals(o.description(), u"1.1234")
 
         p = o.decimalValue()
         self.assert_(isinstance(p, NSDecimal))
-        self.assertEquals(str(p), "1.1234")
+        self.assertEquals(str(p), u"1.1234")
 
     def testCreation2(self):
-        p = NSDecimal("1.1234")
+        p = NSDecimal(u"1.1234")
         o = NSDecimalNumber.decimalNumberWithDecimal_(p)
-        self.assertEquals(o.description(), "1.1234")
+        self.assertEquals(o.description(), u"1.1234")
 
     def testCreation3(self):
-        p = NSDecimal("1.1234")
+        p = NSDecimal(u"1.1234")
         o = NSDecimalNumber.alloc().initWithDecimal_(p)
-        self.assertEquals(o.description(), "1.1234")
+        self.assertEquals(o.description(), u"1.1234")
 
 class NSDecimalOperators (unittest.TestCase):
     def testAddition(self):

@@ -33,25 +33,88 @@
 
 extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 
+PyObject *OC_PythonObject_DepythonifyTable = NULL;
+
 @implementation OC_PythonObject
 + newWithObject:(PyObject *) obj
 {
+	id instance;
 	if (PyObjCObject_Check (obj)) {
-		id objc_obj = PyObjCObject_GetObject(obj);
-		return objc_obj;
+		instance = PyObjCObject_GetObject(obj);
 	} else {
-		id instance = [[self alloc] initWithObject:obj];
+		instance = [[self alloc] initWithObject:obj];
 		[instance autorelease];
-		return instance;
 	}
+	return instance;
+}
+
++ newWithCoercedObject:(PyObject *)obj
+{
+	id instance;
+	PyObjC_BEGIN_WITH_GIL
+		if (PyObjCObject_Check (obj)) {
+			instance = PyObjCObject_GetObject(obj);
+			PyObjC_GIL_RETURN(instance);
+		}
+		if (OC_PythonObject_DepythonifyTable != NULL &&
+			PyList_Check(OC_PythonObject_DepythonifyTable)) {
+			int i;
+			for (i=0; i<PyList_GET_SIZE(OC_PythonObject_DepythonifyTable); i++) {
+				PyObject *tpl = PyList_GET_ITEM(OC_PythonObject_DepythonifyTable, i);
+				PyObject *cls = PyTuple_GET_ITEM(tpl, 0);
+				if (!PyTuple_Check(tpl)) continue;
+				if (PyObject_IsInstance(obj, cls)) {
+					PyObject *fn;
+					PyObject *res;
+					int err;
+					fn = PyTuple_GET_ITEM(tpl, 1);
+					res = PyObject_CallFunctionObjArgs(fn, obj, NULL);
+					if (res == NULL) {
+						PyObjC_GIL_RETURN(nil);
+					}
+					if (PyObject_IsInstance(res, cls)) {
+						Py_DECREF(res);
+						continue;
+					}
+					err = depythonify_c_value (@encode(id), res, &instance);
+					Py_DECREF(res);
+					if (err == -1) {
+						PyObjC_GIL_RETURN(nil);
+					} else {
+						PyObjC_GIL_RETURN(instance);
+					}
+				}
+			}
+		}
+		instance = [[self alloc] initWithObject:obj];
+	PyObjC_END_WITH_GIL
+	[instance autorelease];
+	return instance;
+}
+
++ depythonifyTable
+{
+	PyObjC_BEGIN_WITH_GIL
+		if (OC_PythonObject_DepythonifyTable == NULL) {
+			OC_PythonObject_DepythonifyTable = PyList_New(0);
+		}
+		id rval;
+		int err = depythonify_c_value(@encode(id), OC_PythonObject_DepythonifyTable, &rval);
+		if (err == -1) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+		PyObjC_GIL_RETURN(rval);
+	PyObjC_END_WITH_GIL
 }
 
 - initWithObject:(PyObject *) obj
 {
-	Py_XINCREF(obj);
-	Py_XDECREF(pyObject);
-	pyObject = obj;
-	return self;
+	PyObjC_BEGIN_WITH_GIL
+		Py_XINCREF(obj);
+		Py_XDECREF(pyObject);
+		pyObject = obj;
+		PyObjC_GIL_RETURN(self);
+	PyObjC_END_WITH_GIL
 }
 
 - (void)dealloc
@@ -82,9 +145,16 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 		if (repr) {
 			int err;
 			NSString* result;
-
-			err = depythonify_c_value ("@", repr, &result);
-			Py_DECREF (repr);
+			PyObject *urepr = PyUnicode_FromEncodedObject(
+				repr,
+				NULL,
+				"replace");
+			Py_DECREF(repr);
+			if (urepr == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+			err = depythonify_c_value (@encode(id), urepr, &result);
+			Py_DECREF (urepr);
 			if (err == -1) {
 				PyObjC_GIL_FORWARD_EXC();
 			}
@@ -400,8 +470,10 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (PyObject *)  __pyobjc_PythonObject__
 {
+	PyObjC_BEGIN_WITH_GIL
 	Py_INCREF(pyObject);
-	return pyObject;
+	PyObjC_GIL_RETURN(pyObject);
+	PyObjC_END_WITH_GIL
 }
 
 

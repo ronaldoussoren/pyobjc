@@ -17,6 +17,8 @@ if _sys.version_info[:3] == (2,2,0):
     import gc
     gc.disable()
 
+import warnings as _warnings
+
 # Aliases for some common Objective-C constants
 nil=None
 
@@ -215,12 +217,26 @@ def Category(cls):
     return retval
 
 
+class PyObjCStrBridgeWarning(DeprecationWarning):
+    pass
+
+def _str_to_unicode(s):
+    if not getStrBridgeEnabled():
+        _warnings.warn("use unicode(str, encoding) for NSString", PyObjCStrBridgeWarning, stacklevel=2)
+    return unicode(s)
+
+def _bridgePythonTypes():
+    lst = lookUpClass('OC_PythonObject').depythonifyTable()
+    lst.append((str, _str_to_unicode))
+    
+_bridgePythonTypes()
+
 ######
 # Backward compatibility stuff
 # (deprecated functionality)
 
 def recycle_autorelease_pool():
-    """Depricated: Use recycleAutoreleasePool"""
+    """Deprecated: Use recycleAutoreleasePool"""
     import warnings
     warnings.warn(
         "Use recycleAutoreleasePool instead of recycle_autorelease_pool",

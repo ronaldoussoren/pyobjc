@@ -381,7 +381,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	}
 
 	arglist = PyList_New(0);
-	v = pythonify_c_value("@", args[0+argOffset]);
+	v = pythonify_c_value(@encode(id), args[0+argOffset]);
 	if (v == NULL) {
 		goto error;
 	}
@@ -1110,7 +1110,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		if (PyObjCObject_Check(self)) {
 			self_obj = PyObjCObject_GetObject(self);
 		} else {
-			err = depythonify_c_value("@", self, &self_obj);
+			err = depythonify_c_value(@encode(id), self, &self_obj);
 			if (err == -1) {
 				goto error_cleanup;
 			}

@@ -34,6 +34,8 @@
 }
 
 + newWithObject:(PyObject *) obj;
++ depythonifyTable;
++ newWithCoercedObject:(PyObject *) obj;
 - initWithObject:(PyObject *) obj;
 
 /*!

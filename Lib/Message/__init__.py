@@ -13,26 +13,26 @@ if _objc.platform == 'MACOSX':
         "Message",
         globals(),
         bundle_path=_objc.pathForFramework(
-            "/System/Library/Frameworks/Message.framework")
+            u"/System/Library/Frameworks/Message.framework")
     )
 else:
     _objc.loadBundle(
         "Message",
         globals(),
         bundle_path=_objc.pathForFramework(
-            "/System/Library/Frameworks/Message.framework")
+            u"/System/Library/Frameworks/Message.framework")
     )
 
 b =  _objc.runtime.NSBundle.bundleWithPath_(_objc.pathForFramework(
-        '/System/Library/Frameworks/Message.framework'))
+        u'/System/Library/Frameworks/Message.framework'))
 b.load()
 
 # XXX: Need to generate this part
 _objc.loadBundleVariables(b, globals(), [ 
-        ('NSMIMEMailFormat', _objc._C_ID),
-        ('NSASCIIMailFormat', _objc._C_ID),
-        ('NSSMTPDeliveryProtocol', _objc._C_ID),
-        ('NSSendmailDeliveryProtocol', _objc._C_ID),
+        (u'NSMIMEMailFormat', _objc._C_ID),
+        (u'NSASCIIMailFormat', _objc._C_ID),
+        (u'NSSMTPDeliveryProtocol', _objc._C_ID),
+        (u'NSSendmailDeliveryProtocol', _objc._C_ID),
 ])
 del b
 

@@ -68,7 +68,7 @@
 			}
 
 			v = PySequence_Fast_GET_ITEM(value, cur++);
-			err = depythonify_c_value("@", v, &result);
+			err = depythonify_c_value(@encode(id), v, &result);
 			if (err == -1) {
 				PyObjC_GIL_FORWARD_EXC();
 			}
@@ -147,7 +147,7 @@
 
 	PyObjC_BEGIN_WITH_GIL
 
-		k = pythonify_c_value("@", &key);
+		k = pythonify_c_value(@encode(id), &key);
 		if (k == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
@@ -160,7 +160,7 @@
 			PyObjC_GIL_RETURN(nil);
 		}
 
-		err = depythonify_c_value("@", v, &result);
+		err = depythonify_c_value(@encode(id), v, &result);
 		if (err == -1) {
 			PyObjC_GIL_FORWARD_EXC();
 		}

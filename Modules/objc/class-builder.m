@@ -1431,7 +1431,7 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 	PyObject* pymeth = NULL;
 	PyObject* result;
 
-	pyself = pythonify_c_value("@", &self);
+	pyself = pythonify_c_value(@encode(id), &self);
 	if (pyself == NULL) {
 		return NULL;
 	}

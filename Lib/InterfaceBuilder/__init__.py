@@ -15,14 +15,14 @@ if _objc.platform == 'MACOSX':
     _objc.loadBundle(
         "InterfaceBuilder",
         globals(),
-        bundle_identifier='com.apple.InterfaceBuilderFramework',
+        bundle_identifier=u'com.apple.InterfaceBuilderFramework',
     )
 else:
     _objc.loadBundle(
         "InterfaceBuilder",
         globals(),
         bundle_path=_objc.pathForFramework(
-            "/System/Library/Frameworks/InterfaceBuilder.framework",
+            u"/System/Library/Frameworks/InterfaceBuilder.framework",
         ),
     )
 

@@ -64,7 +64,7 @@
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-		err = depythonify_c_value("@", v, &result);
+		err = depythonify_c_value(@encode(id), v, &result);
 		Py_DECREF(v);
 		if (err == -1) {
 			PyObjC_GIL_FORWARD_EXC();
@@ -81,7 +81,7 @@
 	PyObject* v;
 
 	PyObjC_BEGIN_WITH_GIL
-		v = pythonify_c_value("@", &newValue);
+		v = pythonify_c_value(@encode(id), &newValue);
 		if (v == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
@@ -110,7 +110,7 @@
 	PyObject* w;
 
 	PyObjC_BEGIN_WITH_GIL
-		v = pythonify_c_value("@", &anObject);
+		v = pythonify_c_value(@encode(id), &anObject);
 		if (v == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
@@ -132,7 +132,7 @@
 	PyObject* w;
 
 	PyObjC_BEGIN_WITH_GIL
-		v = pythonify_c_value("@", &anObject);
+		v = pythonify_c_value(@encode(id), &anObject);
 		if (v == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
