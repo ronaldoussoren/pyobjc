@@ -1,3 +1,8 @@
+2002-10-22  Bill Bumgarner  <bbum@codefab.com>
+	* Added basic unit tests to objc.
+	* Implemented __ne__ in terms of isEqual_ (not isNotEqual_).
+	* Added unit test that tests that an object is equal to itself.
+
 2002-10-18  Bill Bumgarner  <bbum@codefab.com>
 	* Fixed the -dealloc method in OC_PythonDictionary.
 	* Disabled gc in objc's __init__.py (I thought we had done this in
