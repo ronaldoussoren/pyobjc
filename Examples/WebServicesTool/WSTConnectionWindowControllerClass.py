@@ -95,8 +95,10 @@ class WSTConnectionWindowController(NSWindowController):
         self.createToolbarItems()
         
         self.window().setToolbar_(toolbar)
-        
-        self._urlTextField.setStringValue_("http://localhost:8500/cgi-bin/WebObjects/Intent.woa/wa/XmlRpcV1")
+
+        lastURL = NSUserDefaults.standardUserDefaults().stringForKey_("LastURL")
+        if lastURL and len(lastURL):
+            self._urlTextField.setStringValue_(lastURL)
         
     def createToolbarItems(self):
         addToolbarItem(self, kWSTReloadContentsToolbarItemIdentifier, "Reload", "Reload", "Reload Contents", None, "reloadVisibleData:", NSImage.imageNamed_("Reload"), None)
@@ -186,6 +188,7 @@ class WSTConnectionWindowController(NSWindowController):
             self._methodsTable.display()
             self.setStatusTextFieldMessage_("Retrieving information about %d methods." % len(self._methods))
             self.window().setTitle_(url)
+            NSUserDefaults.standardUserDefaults().setObject_forKey_(url, "LastURL")
             
             index = 0
             for aMethod in self._methods:
@@ -196,6 +199,8 @@ class WSTConnectionWindowController(NSWindowController):
                 self.setStatusTextFieldMessage_("Retrieving signature for method %s (%d of %d)." % (aMethod , index, len(self._methods)))
                 methodSignature = getattr(self._server, self._methodPrefix + "methodSignature")(aMethod)
                 signatures = None
+                if not len(methodSignature):
+                    continue
                 for aSignature in methodSignature:
                     if (type(aSignature) == types.ListType) and (len(aSignature) > 0):
                         signature = "%s %s(%s)" % (aSignature[0], aMethod, string.join(aSignature[1:], ", "))
