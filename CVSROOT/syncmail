@@ -98,7 +98,7 @@ def calculate_diff(filespec, contextlines):
             if os.path.exists(file):
                 fp = open(file)
             else:
-                update_cmd = "cvs -fn update -r %s -p '%s'" % (newrev, file)
+                update_cmd = "cvs -fn update -r %s -p \'%s\'" % (newrev, file)
                 fp = os.popen(update_cmd)
             lines = fp.readlines()
             fp.close()
@@ -115,7 +115,7 @@ def calculate_diff(filespec, contextlines):
             difftype = "-C " + str(contextlines)
         else:
             difftype = "-u"
-        diffcmd = "/usr/bin/cvs -f diff -kk %s --minimal -r %s -r %s '%s'" % (
+        diffcmd = "/usr/bin/cvs -f diff -kk %s --minimal -r %s -r %s \'%s\'" % (
             difftype, oldrev, newrev, file)
         fp = os.popen(diffcmd)
         lines = fp.readlines()
