@@ -18,8 +18,9 @@ class Converter(NibClassBuilder.AutoBaseClass):
 		
 	def amountInOtherCurrency(self):
 		return self.dollarsToConvert * self.exchangeRate
-#		return float(self.dollarsToConvert) * float(self.exchangeRate)
 
 Converter.setKeys_triggerChangeNotificationsForDependentKey_(
-["dollarsToConvert", "exchangeRate"], "amountInOtherCurrency")
+    [u"dollarsToConvert", u"exchangeRate"],
+    u"amountInOtherCurrency"
+)
 
