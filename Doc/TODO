@@ -60,15 +60,6 @@ The first two bullets require at least some GUI tests.
 Less important items
 --------------------
 
-Drop support for Python 2.2
-...........................
-
-None of the core developers uses Python 2.2 anymore, which means Python 2.2
-suffers from bitrot. Furthermore, Python 2.2 on Jaguar is not very useful in
-the first place.
-
-Removing Python 2.2 support allows for slightly cleaner code.
-
 Refactor some parts of the bridge
 .................................
 
@@ -89,25 +80,29 @@ Support for GNUstep
 The current CVS version contains some support for GNUstep, this needs to
 be enhanced.
 
-Naming convention / coding style
-................................
+Unless somebody actually starts working on this GNUstep support will slowly
+fade away.
 
-Global symbols should be named with a prefix. We currently use several
-prefixes and some symbols do not have a prefix at all. 
+Plugin bundles
+..............
 
-See the document `Coding style` for a proposal for a coding style and naming
-convention. The code should be changed to conform to this document.
+The code in PyObjCTools.pluginbuilder is a hack. 
 
-.. _`Coding style`: coding-style.txt
+Need to investigate how to support multiple independent Python-based plugins 
+in a single application. Currently plugins don't seem to be completely 
+independent (see mailinglist archives).
 
 Interface Builder Palettes
-..........................
+++++++++++++++++++++++++++
 
 IB doesn't "see" PyObjC class definitions. We need to investigate why this
 is so.
 
 Project templates
 .................
+
+Nobody seems to care enough about the templates to actually maintain them, this
+is a shame. 
 
 * Source updates:
   - Templates in the source tree should be working projects
@@ -119,6 +114,9 @@ Project templates
   be the same file (hard link)?
 
 * Add Xcode template for building a plugin (like PyObjCTools.pluginbuilder)
+
+* Add '--semi-standalone' and '--standalone' functionality to the templates
+  (if feaseable).
 
 * Possibly: add templates based on this for building specific kinds of
   plugins (ScreenSaver, PreferencePane)
@@ -187,11 +185,6 @@ todo item.
 
 All existing varargs methods should be located and documented. Where possible
 we should provide custom wrappers, otherwise we should document alternatives.
-
-We should further investigate why the call to ``PyType_Ready(&PyTuple_Type)``
-in module.m is necessary. See `bug #77730`__.
-
-.. _: http://sourceforge.net/tracker/index.php?func=detail&aid=777308&group_id=14534&atid=114534
 
 Code cleanup
 ............
