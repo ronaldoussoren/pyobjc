@@ -87,26 +87,6 @@ Refactor some parts of the bridge
 
 From the top of my head:
 
-* Should write a function for calculating the signature for a function/method
-  object that is to be added to a class (check informal_protocols and methods
-  in the superclass for signature and "class-methodness"). Use this when 
-  defining python subclasses of ObjC classes (currently has this hardcoded) 
-  and in the implementation of objc.classAddMethod (currently doesn't support
-  raw functions).
-
-  Interface:
-    PyObject* PyObjCSelector_MakeDefaultSelector(
-    	PyObject* class, PyObject* protocols, PyObject* callable);
-
-    - protocols is optional, and should be a writable list if passed in.
-    - callable could be any callable, it should be a method, function,
-      selector or classmethod({method,function}).
-    - Return NULL and set PyExc if no conversion was performed, the new
-      selector otherwise.
-
-  Use this method in class-builder.m and in the implementation of 
-  classAddMethods.
-
 * Restructure selector.m, this file is too long and complicated. We could
   do away with the difference between method implemented in Python and ObjC.
 
@@ -114,10 +94,6 @@ From the top of my head:
 
 * Use libffi to do away with class-builder.m:find_real_superclass. And check
   if we can use libffi to simplify code.
-
-* See XXX in Lib/objc/_convenience.py. That code masks a real, but elusive,
-  bug.
-
 
 Support for GNUstep
 ...................

@@ -16,11 +16,14 @@ Introduction
 This document describes the coding style for PyObjC. Please use this style for
 new code and try apply this style to existing code while working on it.
 
+The managment summary: 4-space indents in Python code, 1-TAB indents in C
+code.
+
 Python code
 -----------
 
 The coding style for core Python is used (see `PEP 8`_). For consistency with
-Cocoa we use mixed-case identifiers (like ``lookUpClass``). 
+Cocoa we use mixed-case identifiers (like ``lookUpClass``).
 
 PyObjC extensions to Apple frameworks should be clearly marked as such, 
 preferably by prefixing names with ``PyObjC`` or ``pyobjc``. This should make it

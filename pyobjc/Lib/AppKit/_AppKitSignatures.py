@@ -113,4 +113,5 @@ setSignatureForSelector("NSATSTypesetter", "lineFragmentRectForProposedRect:rema
 setSignatureForSelector("NSATSTypesetter", "getLineFragmentRect:usedRect:forParagraphSeparatorGlyphRange:atProposedOrigin:", "v@:o^{_NSRect={_NSPoint=ff}{_NSSize=ff}}o^{_NSRect={_NSPoint=ff}{_NSSize=ff}}{_NSRange=II}{_NSPoint=ff}")
 setSignatureForSelector("NSATSTypesetter", "glyphRangeForCharacterRange:actualCharacterRange:", "{_NSRange=II}@:{_NSRange=II}o^{_NSRange=II}")
 setSignatureForSelector("NSSavePanel", "beginForDirectory:file:types:modelessDelegate:didEndSelector:contextInfo:", 'v@:@@@@:i')
+setSignatureForSelector("NSOpenGLPixelFormat", "getValues:forAttribute:forVirtualScreen:", 'v@:o^lii')
 
