@@ -4,7 +4,7 @@ from sre import VERBOSE, MULTILINE, DOTALL
 import re
 
 
-__all__ = ['Scanner', 'Token', 'IgnoreToken', 'ScanningToken']
+__all__ = ['Scanner', 'Token', 'IgnoreToken', 'ScanningToken', 'InsignificantWhitespace']
 
 class Scanner(object):
     def __init__(self, lexicon, flags=(VERBOSE | MULTILINE | DOTALL), verify=True):
@@ -39,7 +39,7 @@ class Scanner(object):
                     print '--- UNMATCHED CHUNK ---'
                     print repr(string[i:j])
                     raise ValueError, "Token %s can not be verified" % token.__name__
-                s = Scanner([token], verify=False)
+                s = Scanner([token, InsignificantWhitespace], verify=False)
                 for m in s.iterscan(example, dead=dead):
                     pass
 
@@ -150,3 +150,7 @@ class ScanningToken(Token):
 class IgnoreToken(Token):
     def found(self, match):
         return None, None
+
+class InsignificantWhitespace(IgnoreToken):
+    pattern = r'\s+'
+    example = '  \t \n \r   '

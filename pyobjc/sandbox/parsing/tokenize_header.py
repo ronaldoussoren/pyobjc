@@ -3,23 +3,23 @@ from textwrap import dedent
 
 
 SUBPATTERNS = dict(
-    AVAILABLE=r'(?:AVAILABLE_\w+)',
-    KEYWORD=r'((?:double|float|int|unsigned|long|char|extern|volatile|void|inline|__(?:\w+?)__|const|typedef|static|const))',
+    AVAILABLE=r'(AVAILABLE_\w+)',
+    KEYWORD=r'((double|float|int|unsigned|long|char|extern|volatile|void|inline|__(\w+?)__|const|typedef|static|const))',
     IDENTIFIER=r'([A-Za-z_]\w*)',
-    SIZEOF=r'(?:sizeof\(([^)]+)\))',
-    DECIMAL=r'(?:[+\-]?\d*(?:\.\d*)?(?:[eE]\d+)?[fF]?)',
-    INTEGER=r'(?:[+\-]?\d*[uU]?[lL]?)',
-    CHARS=r"(?:'(?:[^\\'\n]|\\')*')",
-    STRING=r'(?:"(?:[^\\"\n]|\\")*")',
-    CFSTRING=r'(?:CFSTR\("(?:[^\\"\n]|\\")*"\))',
-    HEX=r'(?:0[xX][0-9a-fA-F]+[lL]?)',
-    EXTERN=r'(?:(?:(?:[A-Z-a-z_]\w*?_)?EXTERN|extern))',
-    EXPORT=r'(?:(?:(?:[A-Z-a-z_]\w*?_)?EXPORT|extern))',
-    STATIC_INLINE=r'(?:(?:(?:[A-Z-a-z_]\w*?_)?INLINE|static inline|static __inline__))',
-    INDIRECTION=r'(?:\s*\*)',
-    BOL=r'(?:\s*^\s*)',
-    EOL=r'(?:\s*$\n?)',
-    SEMI=r';\s*',
+    SIZEOF=r'(sizeof\(([^)]+)\))',
+    DECIMAL=r'([+\-]?((\.\d+)|(\d+(\.\d*)?))([eE]\d+)?[fF]?)',
+    INTEGER=r'([+\-]?\d+[uU]?[lL]?)',
+    CHARS=r"('([^\\'\n]|\\')*')",
+    STRING=r'("([^\\"\n]|\\")*")',
+    CFSTRING=r'(CFSTR\("([^\\"\n]|\\")*"\))',
+    HEX=r'(0[xX][0-9a-fA-F]+[lL]?)',
+    EXTERN=r'((([A-Z-a-z_]\w*?_)?EXTERN|extern))',
+    EXPORT=r'((([A-Z-a-z_]\w*?_)?EXPORT|extern))',
+    STATIC_INLINE=r'((([A-Z-a-z_]\w*?_)?INLINE|static inline|static __inline__))',
+    INDIRECTION=r'(\s*\*)',
+    BOL=r'(\s*^\s*)',
+    EOL=r'(\s*$\n?)',
+    SEMI=r';',
 )
 
 def deadspace(string, begin, end):
@@ -33,7 +33,6 @@ def example(s):
 
 class BlockComment(Token):
     pattern = pattern(r'''
-    \s*
     \/\*
     (?P<comment>([^*]|\*(?!/))*)
     \*\/
@@ -47,10 +46,6 @@ class SingleLineComment(Token):
     pattern = pattern(r'\s*//(?P<comment>[^\n]*)(\n|$)')
     example = example(r'// this is a single line comment')
 
-class InsignificantWhitespace(IgnoreToken):
-    pattern = pattern(r'''\s+''')
-    example = example('  \t\n\r   ')
-
 class UninterestingTypedef(Token):
     pattern = pattern(r'''
     typedef
@@ -63,8 +58,7 @@ class UninterestingTypedef(Token):
 
 class CompilerDirective(Token):
     pattern = pattern(r'''
-    \s*
-    \#(?P<name>undef|if|ifdef|ifndef|endif|else|elif|pragma|error|warn|define)
+    \#\s*(?P<name>undef|if|ifdef|ifndef|endif|else|elif|pragma|error|warn|define)
     \s*(?P<body>([^\\\n]|\\(\n|$))*)
     ''')
     example = example(r'''
@@ -87,7 +81,6 @@ class Interface(Token):
         \s*(?:{(?P<ivars>[^}])})?
         \s*(?P<interface_body>.*?)
     @end
-    %(EOL)s
     ''')
     example = example(r'''
     @interface Foo(Bar): Baz <protocols> {
@@ -107,7 +100,6 @@ class Protocol(Token):
         \s*(?:<(?P<super>%(IDENTIFIER)s)>)?
         \s*(?P<protocol_body>.*?)
     @end
-    %(EOL)s
     ''')
     example = example(r'''
     @protocol FooProtocol <Foo>
@@ -119,7 +111,6 @@ class AngleImport(Token):
     pattern = pattern(r'''
     \#\s*(?P<import_type>import|include)
         \s+<(?P<import_file>[^>]*)>
-    %(EOL)s
     ''')
     example = example('#import <Foo/Bar.h>')
 
@@ -138,23 +129,27 @@ class SimpleDefine(Token):
     pattern = pattern(r'''
     \#\s*define\s*
         (?P<name>%(IDENTIFIER)s)\s+
-        \(?(?P<value>
-            (?!%(KEYWORD)s)%(IDENTIFIER)s
-            | %(HEX)s
-            | %(INTEGER)s
-            | %(DECIMAL)s
-            | %(CHARS)s
-            | %(STRING)s
-            | %(CFSTRING)s
-            | %(SIZEOF)s
-        )\)?
-    %(EOL)s
+        \(?
+            (?P<value>
+                (?!%(KEYWORD)s)
+                (
+                    %(CFSTRING)s
+                    | %(CHARS)s
+                    | %(STRING)s
+                    | %(HEX)s
+                    | %(DECIMAL)s
+                    | %(INTEGER)s
+                    | %(SIZEOF)s
+                    | %(IDENTIFIER)s
+                )
+            )
+        \)?
     ''')
     example = example(r'''
+    #define foo 'foo!'
     #define foo bar
     #define foo 0x200
     #define foo 2.0
-    #define foo 'foo!'
     #define foo "foo"
     #define foo CFSTR("foo")
     #define foo sizeof(bar)
@@ -163,7 +158,7 @@ class SimpleDefine(Token):
     
 class MacroDefine(Token):
     pattern = pattern(r'''
-    \s*\#\s*define\s*
+    \#\s*define\s*
         (?P<name>%(IDENTIFIER)s)
         \s*\(
             (?P<args>
