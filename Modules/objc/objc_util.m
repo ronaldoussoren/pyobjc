@@ -81,18 +81,18 @@ void PyObjCErr_FromObjC(NSException* localException)
 			/* -pyObject returns a borrowed reference and 
 			 * PyErr_Restore steals one from us.
 			 */
-			state = xPyGILState_Ensure();
+			state = PyGILState_Ensure();
 			Py_INCREF(exc_type);
 			Py_XINCREF(exc_value);
 			Py_XINCREF(exc_traceback);
 
 			PyErr_Restore(exc_type, exc_value , exc_traceback);
-			xPyGILState_Release(state);
+			PyGILState_Release(state);
 			return;
 		}
 	}
 
-	state = xPyGILState_Ensure();
+	state = PyGILState_Ensure();
 	dict = PyDict_New();
 	v = PyString_FromString(c_localException_name);
 	PyDict_SetItemString(dict, "name", v);
@@ -124,7 +124,7 @@ void PyObjCErr_FromObjC(NSException* localException)
 	PyObject_SetAttrString(exc_value, "name", PyString_FromString(
 		c_localException_name));
 	PyErr_Restore(exc_type, exc_value, exc_traceback);
-	xPyGILState_Release(state);
+	PyGILState_Release(state);
 }
 
 void PyObjCErr_ToObjC(void)
@@ -132,13 +132,8 @@ void PyObjCErr_ToObjC(void)
 	PyObjCErr_ToObjCWithGILState(NULL);
 }
 
-void (PyObjCErr_ToObjCWithGILState)(PyGILState_STATE* state);
-void (PyObjCErr_ToObjCWithGILState)(PyGILState_STATE* state)
-{
-	return PyObjCErr_ToObjCWithGILState_(state, "<!!!>");
-}
 
-void PyObjCErr_ToObjCWithGILState_(PyGILState_STATE* state, const char* __function__)
+NSException* PyObjCErr_AsExc(void)
 {
 	PyObject* exc_type;
 	PyObject* exc_value;
@@ -147,12 +142,6 @@ void PyObjCErr_ToObjCWithGILState_(PyGILState_STATE* state, const char* __functi
 	PyObject* repr;
 	NSException* val;
 	NSMutableDictionary* userInfo;
-
-#if 0
-	if  (state) {
-		printf("ObjCErr %s [0]\n", __function__);
-	}
-#endif
 
 	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
 	if (!exc_type)
@@ -207,11 +196,7 @@ void PyObjCErr_ToObjCWithGILState_(PyGILState_STATE* state, const char* __functi
 			Py_XDECREF(exc_value);
 			Py_XDECREF(exc_traceback);
 			
-			if (state) {
-				//printf("ObjCErr %s [1]\n", __function__);
-				PyGILState_Release(*state);
-			}
-			[val raise];
+			return val;
 		}
 	}
 	Py_XDECREF(args);
@@ -246,11 +231,17 @@ void PyObjCErr_ToObjCWithGILState_(PyGILState_STATE* state, const char* __functi
 		Py_XDECREF(exc_value);
 		Py_XDECREF(exc_traceback);
 	}
+	return val;
+}
+
+void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
+{
+	NSException* exc = PyObjCErr_AsExc();
+
 	if (state) {
-		//printf("ObjCErr %s [2]\n", __function__);
 		PyGILState_Release(*state);
 	}
-	[val raise];
+	[exc raise];
 }
 
 

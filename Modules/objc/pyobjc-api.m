@@ -77,8 +77,6 @@ static void 	fill_super_cls(struct objc_super* super, Class cls, Class self)
 }
 
 
-extern void (PyObjCErr_ToObjCWithGILState)(PyGILState_STATE* state);
-
 struct pyobjc_api objc_api = {
 	PYOBJC_API_VERSION,		/* api_version */
 	sizeof(struct pyobjc_api),	/* struct_size */
@@ -107,7 +105,7 @@ struct pyobjc_api objc_api = {
 	PyObjCPointerWrapper_Register,	/* register_pointer_wrapper */
 	(void(*)(void*,void*,void**,void*))PyObjCUnsupportedMethod_IMP,    /* unsupported_method_imp */
 	PyObjCUnsupportedMethod_Caller, /* unsupported_method_caller */
-	(PyObjCErr_ToObjCWithGILState),	/* objc_err_to_objc_gil */
+	PyObjCErr_ToObjCWithGILState,	/* objc_err_to_objc_gil */
 	PyObjCRT_AlignOfType,		/* alignof_type */
 	PyObjCRT_SELName,		/* selname */
 	PyObjCRT_SimplifySignature,	/* simplify_sig */
