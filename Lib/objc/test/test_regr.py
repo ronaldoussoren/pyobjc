@@ -28,5 +28,19 @@ class TestRegressions(unittest.TestCase):
         self.assertRaises(TypeError, fm.stringWithFileSystemRepresentation_length_, "/var")
         self.assertEquals(u"/var", fm.stringWithFileSystemRepresentation_length_("/var/boo", 4))
 
+    def testUninitWarning(self):
+        """
+        Check that calling methods on unitialized objects raises an error
+        """
+        import warnings
+        import Foundation
+
+        o = Foundation.NSObject.alloc() # Not yet initialized
+        warnings.simplefilter('error', RuntimeWarning)
+        try:
+            self.assertRaises(RuntimeWarning, o.description)
+        finally:
+            del warnings.filters[0]
+
 if __name__ == '__main__':
     unittest.main()

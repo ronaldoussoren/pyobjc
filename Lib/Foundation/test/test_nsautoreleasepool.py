@@ -4,6 +4,7 @@ import objc
 from Foundation import *
 
 class TestNSAutoreleasePoolInteraction(unittest.TestCase):
+
     def testNSAutoreleasePoolPlain(self):
         pool = NSAutoreleasePool.alloc().init()
         bar = NSMutableArray.array()
@@ -11,10 +12,18 @@ class TestNSAutoreleasePoolInteraction(unittest.TestCase):
         bar.addObject_( "a" ) # should still exist because of python GC
 
     def testNSAutoreleasePool(self):
-        NSAutoreleasePool.pyobjcPushPool()
-        bar = NSMutableArray.array()
-        NSAutoreleasePool.pyobjcPopPool()
-        bar.addObject_( "a" ) # should still exist because of python GC
+
+        # The actual test will issue a DeprecationWarning, the warnings code
+        # below surpresses that warning.
+        import warnings
+        warnings.simplefilter('ignore', category=DeprecationWarning)
+        try:
+            NSAutoreleasePool.pyobjcPushPool()
+            bar = NSMutableArray.array()
+            NSAutoreleasePool.pyobjcPopPool()
+            bar.addObject_( "a" ) # should still exist because of python GC
+        finally:
+            del warnings.filters[0]
 
 if __name__ == '__main__':
     unittest.main( )
