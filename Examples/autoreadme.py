@@ -3,7 +3,7 @@
 This script is a daemon that will open the ReadMe file in the root of any
 (removable) volume that is inserted while this script is running.
 
-The script is part of an article at MAcDevCenter: 
+The script is part of an article at MAcDevCenter:
     http://www.macdevcenter.com/pub/a/mac/2003/01/31/pyobjc_one.html
 """
 import sys
@@ -29,7 +29,7 @@ class NotificationHandler(NSObject):
                     NSLog("Failed to find application to open file %s" % fullPath)
                     return
                 workspace.openFile_withApplication_(fullPath, app)
-            
+
 notificationHandler = NotificationHandler.new()
 notificationCenter.addObserver_selector_name_object_(notificationHandler,
                                                      "handleMountNotification:",
