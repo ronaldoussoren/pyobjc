@@ -1,12 +1,13 @@
 2002-10-30  Bill Bumgarner  <bbum@codefab.com>
-
+	* Fixed a bug in the NSDraggingDestination method declarations and
+	made all of the methods optional (the developer only needs to
+	implement a subset of the methods and none of the methods are
+	required to be a part of that subset).
 	* Fixed 'in' operation on arrays to use containsObject:.  Should
 	work with sets.  Will not work with NSDictionary.
-
 	* Fixed enum parser to handle enums that don't start with a
 	typedef.  Regenerated appkit and foundation enumerated types files
 	to pick up missing enums.
-
 	* Added some tests and cleaned up a bit of the existing tests in
 	test_subclass.py
 
