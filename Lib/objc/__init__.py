@@ -74,11 +74,11 @@ class _runtime:
     """
     def __getattr__(self, name):
         if name == '__objc_classes__':
-            return class_list()
+            return getClassList()
         elif name == '__kind__':
             return 'python'
 
-        return lookup_class(name)
+        return lookUpClass(name)
 
     def __eq__(self, other):
         return self is other
@@ -125,7 +125,7 @@ except ImportError:
 # - It must be at the start of the path
 # - The CWD must not be on the path
 if 1 :
-    b = lookup_class('NSBundle').mainBundle()
+    b = lookUpClass('NSBundle').mainBundle()
     if b:
         sys.path.insert(0, '%s/Contents/Resources'%str(b.bundlePath()))
     del b

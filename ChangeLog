@@ -1,3 +1,8 @@
+2002-11-20 Ronald Oussoren <oussoren@cistron.nl>
+	Translated a number of names to a more Cocoa like syntax:
+	* objc.lookup_class -> objc.lookUpClass
+	* objc.class_list -> objc.getClassList
+
 2002-11-18 Ronald Oussoren <oussoren@cistron.nl>
 	* Doc/classes.txt: new file documenting how classes work
 	* Lib/objc: Reformatted (4-space indent) and remove superfluos 

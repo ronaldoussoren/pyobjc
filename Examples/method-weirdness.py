@@ -18,7 +18,7 @@ import objc
 # Todo example)
 
 def testClass( className, methodToTest ):
-	c = objc.lookup_class( className )
+	c = objc.lookUpClass( className )
 	mE = 'c.%s' % methodToTest
 	before =  eval(mE)
 	#before = getattr(c, methodToTest)

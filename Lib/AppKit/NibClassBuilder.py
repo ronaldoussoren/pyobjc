@@ -64,9 +64,9 @@ import objc
 __all__ = ["AutoBaseClass", "NibInfo", "extractClasses"]
 
 
-NSDictionary = objc.lookup_class("NSDictionary")
-NSObject = objc.lookup_class("NSObject")
-NSBundle = objc.lookup_class("NSBundle")
+NSDictionary = objc.lookUpClass("NSDictionary")
+NSObject = objc.lookUpClass("NSObject")
+NSBundle = objc.lookUpClass("NSBundle")
 
 
 class NibLoaderError(Exception): pass
@@ -190,7 +190,7 @@ class NibInfo(object):
 					"nibs" % name)
 
 		try:
-			superClass = objc.lookup_class(clsInfo.super)
+			superClass = objc.lookUpClass(clsInfo.super)
 		except objc.nosuchclass_error:
 			raise NibLoaderError, ("Superclass '%s' for '%s' not "
 					"found." % (clsInfo.super, name))
@@ -291,7 +291,7 @@ class NibInfo(object):
 def _frameworkForClass(className):
 	"""Return the name of the framework containing the class."""
 	try:
-		cls = objc.lookup_class(className)
+		cls = objc.lookUpClass(className)
 	except objc.error:
 		return ""
 	path = NSBundle.bundleForClass_(cls).bundlePath()
@@ -306,7 +306,7 @@ def _frameworkForClass(className):
 def _classExists(className):
 	"""Return True if a class exists in the Obj-C runtime."""
 	try:
-		objc.lookup_class(className)
+		objc.lookUpClass(className)
 	except objc.error:
 		return 0
 	else:

@@ -18,7 +18,7 @@ Overview
 
 Using PyObjC is pretty simple, as it strives to make the bridge completely
 transparent. On the lowest level you can import the 'objc' module and use that
-to locate classes (objc.lookup_class). For most users it is more usefull to
+to locate classes (objc.lookUpClass). For most users it is more usefull to
 just import 'Foundation' and 'AppKit' and use the familiar Cocoa classes
 and functions.
 

@@ -38,7 +38,7 @@ del Foundation
 
 
 # Define usefull utility methods here
-NSClassForName = _objc.lookup_class
+NSClassForName = _objc.lookUpClass
 
 
 #

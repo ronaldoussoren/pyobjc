@@ -12,20 +12,20 @@
 
 NSAutoreleasePool* ObjC_global_release_pool = nil;
 
-PyDoc_STRVAR(objc_lookup_class_doc,
-  "lookup_class(class_name) -> class\n"
+PyDoc_STRVAR(lookUpClass_doc,
+  "lookUpClass(class_name) -> class\n"
   "\n"
   "Search for the named classes in the Objective-C runtime and return it.\n"
   "Raises noclass_error when the class doesn't exist.");
 
 static PyObject* 
-objc_lookup_class(PyObject* self, PyObject* args, PyObject* kwds)
+lookUpClass(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static 	char* keywords[] = { "class_name", NULL };
 	char* class_name = NULL;
 	Class objc_class;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "s:lookup_class",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "s:lookUpClass",
 			keywords, &class_name)) {
 		return NULL;
 	}
@@ -103,14 +103,14 @@ static 	char* keywords[] = { "callback", NULL };
 }
 
 
-PyDoc_STRVAR(objc_class_list_doc,
-  "class_list() -> [ cls, ...] n"
+PyDoc_STRVAR(getClassList_doc,
+  "getClassList() -> [ cls, ...] n"
   "\n"
   "Return a list with all Objective-C classes known to the runtime.\n"
 );
 
 static PyObject* 
-objc_class_list(PyObject* self)
+getClassList(PyObject* self)
 {
 	return ObjC_GetClassList();
 }
@@ -147,8 +147,8 @@ static 	char* keywords[] = { "class_name", "selector", "signature", NULL };
 
 
 static PyMethodDef meta_methods[] = {
-	{ "lookup_class", (PyCFunction)objc_lookup_class, METH_VARARGS|METH_KEYWORDS, objc_lookup_class_doc },
-	{ "class_list", (PyCFunction)objc_class_list, METH_NOARGS, objc_class_list_doc },
+	{ "lookUpClass", (PyCFunction)lookUpClass, METH_VARARGS|METH_KEYWORDS, lookUpClass_doc },
+	{ "getClassList", (PyCFunction)getClassList, METH_NOARGS, getClassList_doc },
 	{ "set_class_extender", (PyCFunction)objc_set_class_extender, METH_VARARGS|METH_KEYWORDS, objc_set_class_extender_doc  },
 	{ "set_signature_for_selector", (PyCFunction)objc_set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
 	{ "recycle_autorelease_pool", (PyCFunction)objc_recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, objc_recycle_autorelease_pool_doc },

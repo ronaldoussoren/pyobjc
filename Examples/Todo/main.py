@@ -17,6 +17,6 @@ import ToDoDocument
 import ToDoItem
 import TodoAppDelegate
 
-print objc.lookup_class('ToDoDocument')
+print objc.lookUpClass('ToDoDocument')
 
 NSApplicationMain(sys.argv)

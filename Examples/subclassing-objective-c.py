@@ -7,7 +7,7 @@
 import sys
 import objc
 
-NSEnumerator = objc.lookup_class('NSEnumerator')
+NSEnumerator = objc.lookUpClass('NSEnumerator')
 
 class Demo (NSEnumerator):
 	__slots__ = ('cnt',)
