@@ -278,7 +278,7 @@ NSDraggingDestination = _objc.informal_protocol(
 			None, 
 			selector='concludeDragOperation:',
 			signature='v@:@',
-			required=1
+			required=0
 		),
 		_objc.selector(
 			None, 
@@ -288,33 +288,33 @@ NSDraggingDestination = _objc.informal_protocol(
 		),
 		_objc.selector(
 			None, 
-			selector='draggingEntered',
+			selector='draggingEntered:',
 			signature='i@:@',
-			required=1
+			required=0
 		),
 		_objc.selector(
 			None, 
 			selector='draggingExited:',
 			signature='v@:@',
-			required=1
+			required=0
 		),
 		_objc.selector(
 			None, 
 			selector='draggingUpdated:',
 			signature='i@:@',
-			required=1
+			required=0
 		),
 		_objc.selector(
 			None, 
 			selector='performDragOperation:',
 			signature='c@:@',
-			required=1
+			required=0
 		),
 		_objc.selector(
 			None, 
 			selector='prepareForDragOperation:',
 			signature='c@:@',
-			required=1
+			required=0
 		),
 	]
 )
