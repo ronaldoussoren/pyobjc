@@ -11,7 +11,6 @@
 PyObject* PyObjCExc_Error;
 PyObject* PyObjCExc_NoSuchClassError;
 PyObject* PyObjCExc_InternalError;
-PyObject* PyObjCExc_NoProtocol;
 PyObject* PyObjCExc_UnInitDeallocWarning;
 
 int 
@@ -26,7 +25,6 @@ PyObjCUtil_Init(PyObject* module)
 	NEW_EXC(PyObjCExc_Error, "error", NULL);
 	NEW_EXC(PyObjCExc_NoSuchClassError, "nosuchclass_error", PyObjCExc_Error);
 	NEW_EXC(PyObjCExc_InternalError, "internal_error", PyObjCExc_Error);
-	NEW_EXC(PyObjCExc_NoProtocol, "ProtocolError", PyObjCExc_Error);
 	NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning", PyExc_Warning);
 
 	return 0;

@@ -25,6 +25,7 @@ if platform == 'MACOSX':
 else:
     from _gnustep import *
 
+from _protocols import *
 from _descriptors import *
 from _convenience import *
 from _category import *
