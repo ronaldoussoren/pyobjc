@@ -17,10 +17,17 @@ class TestNSObjectInteraction( unittest.TestCase ):
         self.assert_( isinstance( instance, objc.runtime.NSObject ), "Instantiated object not an instance of NSObject." )
         self.assert_( instance == instance, "Python identity check failed." )
         self.assert_( instance.isEqual_( instance ), "Obj-C identity check failed." )
+
+class TestNSArrayInteraction( unittest.TestCase ):
+    def testNSArrayAllocation( self ):
+        for i in range(1,1000):
+            a = NSArray.array()
+            b = NSArray.alloc().init()
         
 def suite():
     suite = unittest.TestSuite()
     suite.addTest( unittest.makeSuite( TestNSObjectInteraction ) )
+    suite.addTest( unittest.makeSuite( TestNSArrayInteraction ) )
     return suite
 
 if __name__ == '__main__':
