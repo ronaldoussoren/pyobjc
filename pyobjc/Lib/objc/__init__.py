@@ -77,11 +77,14 @@ def IBAction(func):
     """
     return selector(func, signature="v@:@")
 
-def Accessor(func):
+def accessor(func):
     """
     Return an Objective-C method object that is conformant with key-value coding
     and key-value observing.
     """
+    if not isinstance(func, type(accessor)):
+        raise ValueError, '%s is not a function'%(func,)
+
     argCount = func.func_code.co_argcount
     if argCount is 2:
         return selector(func, signature="v@:@")
@@ -91,6 +94,12 @@ def Accessor(func):
         raise ValueError, "Too few arguments to function '%s'.  Cannot create selector." % foo.func_name
     else:
         raise ValueError, "Too many arguments to function '%s'.  Cannot create selector." % foo.func_name
+
+def Accessor(func):
+    import warnings
+    warnings.warn(
+        "Use objc.accessor instead of objc.Accessor", DeprecationWarning)
+    return accessor(func)
 
 def pluginBundle(pluginName):
     """
@@ -132,7 +141,7 @@ def classAddMethod(cls, name, method):
 def recycle_autorelease_pool():
     """Depricated: Use recycleAutoreleasePool"""
     import warnings
-    warings.warn(
+    warnings.warn(
         "Use recycleAutoreleasePool instead of recycle_autorelease_pool",
         DeprecationWarning)
     recycleAutoreleasePool()

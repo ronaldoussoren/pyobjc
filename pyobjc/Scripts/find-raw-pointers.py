@@ -10,11 +10,12 @@ likewise for methods that won't be supported by the bridge.
 Don't forget to add unittests for methods that are wrapped, or whose signature 
 you change.
 
-XXX: 
-- Use the values in the WRAPPED_METHODS dict to explain why a method is there.
-- Use this information to print information about incorrect entries in the table (e.g. method should be
-  in current OS, but isn't)
-- Use the information to make reports for the website
+XXX:
+- The data should be stored in a seperate file, to make it possible to use the
+  data for other purposes
+- The new annotation possibilities should be used, add a comment possibility 
+  as well.
+- Write tools for editing the data, and creating HTML reports (for the website)
 """
 
 import objc
@@ -25,27 +26,35 @@ try:
 except ImportError:
     pass
 
-if 0:
-    try:
-        import PreferencePanes
-    except ImportError:
-        pass
-    try:
-        import ScreenSaver
-    except ImportError:
-        pass
-    try:
-        import InterfaceBuilder
-    except ImportError:
-        pass
-    try:
-        import AddressBook
-    except ImportError:
-        pass
-    try:
-        import WebKit
-    except ImportError:
-        pass
+try:
+    import PreferencePanes
+except ImportError:
+    pass
+
+try:
+    import ScreenSaver
+except ImportError:
+    pass
+
+try:
+    import InterfaceBuilder
+except ImportError:
+    pass
+
+try:
+    import AddressBook
+except ImportError:
+    pass
+
+try:
+    import WebKit
+except ImportError:
+    pass
+
+try:
+    import SecurityInterface
+except ImportError:
+    pass
 
 PTRSIG={}
 
@@ -60,10 +69,14 @@ TP_UNDOCUMENTED = 'undocumented' #  Unsupported because there is no documentatio
 
 # Keys are 'Class_MethodName' value is ( initial-release, entrytype+)
 
+# XXX: This should be a data file, need to add framework info and comments.
 WRAPPED_METHODS={
-# Supported methods:
+    # Internal methods
+    'OC_PythonArray_getObjects_inRange_': (REL_OSX_10_3, TP_UNSUPPORTED),
 
     #<Foundation>
+    'NSBinHexDecoder_decodeAllIntoBuffer_size_useZeroBytesForCRC_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSBinHexDecoder_decodeIntoBuffer_size_useZeroBytesForCRC_': (REL_OSX_10_3, TP_UNDOCUMENTED),
     'NSKeyValueAccessor_extraArgument1': (REL_OSX_10_3, TP_UNDOCUMENTED),
     'NSKeyValueAccessor_extraArgument2': (REL_OSX_10_3, TP_UNDOCUMENTED),
     'NSKeyValueAccessor_initWithContainerClass_key_implementation_selector_extraArgument1_extraArgument2_extraArgument3_': (REL_OSX_10_3, TP_UNDOCUMENTED),
@@ -119,6 +132,29 @@ WRAPPED_METHODS={
     'NSMutableArray_sortUsingFunction_context_range_': (REL_OSX_10_2, TP_SUPPORTED),    
 
     #<AppKit>
+    'NSATSUStyleObject_initWithStyle_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSATSUStyleObject_mergeInVariations_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSATSUStyleObject_merge_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSATSUStyleObject_setAttributes_Values_ValueSizes_Count_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSATSUStyleObject_setFeatures_selectors_count_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSATSUStyleObject_setVariations_Values_Count_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSATSUStyleObject_style': (REL_OSX_10_3, TP_UNDOCUMENTED),
+
+    # XX: selectionMode is a pointer
+    'NSArrayDetailBinder_addObjectToMasterArrayRelationship_selectionMode_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSArrayDetailBinder_addObjectsToMasterArrayRelationship_selectionMode_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSArrayDetailBinder_insertObjectIntoMasterArrayRelationship_atIndex_selectionMode_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSArrayDetailBinder_insertObjectsIntoMasterArrayRelationship_atIndexes_selectionMode_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSArrayDetailBinder_removeObjectFromMasterArrayRelationshipAtIndex_selectionMode_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSArrayDetailBinder_removeObjectsFromMasterArrayRelationshipAtIndexes_selectionMode_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+
+    'NSFontEffectsBox_carbonNotificationProc': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSValueBinder_handleValidationError_description_inEditor_errorUserInterfaceHandled_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSValueBinder_validateAndCommitValueInEditor_editingIsEnding_errorUserInterfaceHandled_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSToolTipStringDrawingLayoutManager_sizeForDisplayingAttributedString_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSAATAttributes_fillPlatformStyle_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    
+
     'NSATSTypesetter_getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_': (REL_OSX_10_2, TP_SUPPORTED),
     'NSATSTypesetter_getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_': (REL_OSX_10_2, TP_SUPPORTED),
     'NSATSTypesetter_substituteGlyphsInRange_withGlyphs_': (REL_OSX_10_2, TP_SUPPORTED),
@@ -343,10 +379,20 @@ WRAPPED_METHODS={
     'HIViewAdapter_initWithFrame_view_':1,
     'WebBaseNetscapePluginView_write_len_buffer_':1,
     'WebCoreDOMText_textImpl':1,
+    'KWQResourceLoader_initWithJob_': 1,
+    'KWQSecureTextField_initWithQLineEdit_':1,
+    'KWQAccObject_anchorElement':1,
+    'KWQAccObject_initWithRenderer_':1,
+    'WebBridge_pollForAppletInView_':1,
+    'WebBridge_syncLoadResourceWithURL_customHeaders_postData_finalURL_responseHeaders_statusCode_':1,
+    'WebTextRenderer_floatWidthForRun_style_widths_':1,
+    'WebBaseNetscapePluginStream_setNotifyData_':1,
+
 
 
 
     # From 'import PreferencePanes', some undocumented framework?
+    'SFCertificateData_parseGeneralNames_indent_':(REL_OSX_10_2, TP_UNDOCUMENTED),
     'SFCertificateTrustPanel_beginSheetForWindow_modalDelegate_didEndSelector_contextInfo_trust_message_':1,
     'SFCertificateTrustPanel_runModalForTrust_message_':1,
     'SFKeychainSavePanel_keychain':1,
@@ -654,6 +700,79 @@ WRAPPED_METHODS={
     'IBObjectContainer_decodeObjectToObjectMapTableForKey_fromCoder_alwaysCreate_':1,
     'IBXMLDecoder_allocObjectWithClassName_':1,
     'IBSplitScrollView_getMinimumX_maximumX_':1,
+    
+    # XXX: Loads of 10.3 stuff
+    'PBXReference_pruneReferencesBySendingBooleanSelector_toObject_withContext_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXObject_copyWithZone_getUnretainedObjectMappings_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXFileType_bestFileTypeForRepresentingFileAtPath_withFileAttributes_withLessSpecificFileType_getExtraFileProperties_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXFileType_fileTypeForPath_getExtraFileProperties_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXFileType_guessFileTypeForGenericFileAtPath_withFileAttributes_getExtraFileProperties_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXCStringStorage_applyFunction_context_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXCStringStorage_offsetsOfStringsMatching_ignoreCase_matchStyle_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXThreadableWorkQueueOperation_launchExecutableAtPath_arguments_environment_workingDirectoryPath_keepStdinOpen_getErrorString_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXTypeDescriptor_typeRecord':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXLexicalRules_isNumber_withRange_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXProject_expandedValueForString_getRecursiveSettingName_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXProject_expandedValueForString_getRecursiveSettingName_options_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXBTree_initMaxWidth_lookupFailedValue_keepUnique_comparisonFunction_comparisonContext_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXBTree_initWithContentsOfFile_comparisonFunction_comparisonContext_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXBTree_printValueFunction':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXBTree_setPrintValueFunction_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXCodeSenseManager_getProjectInfo_forReference_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXTarget_expandedCurrentValueForBuildSetting_getRecursiveSettingName_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXTarget_expandedValueForString_getRecursiveSettingName_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXTarget_getLiteralStringValue_currentExpandedStringValue_isCurrentlyShadowed_recursiveSettingName_forBuildSettingKeyPath_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXTarget_hasOriginalForCopiedReference_usingCopiesToOriginalsMappings_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXTarget_moveBuildPhasesFromIndices_numIndices_toIndex_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXTarget_moveBuildRulesFromIndices_numIndices_toIndex_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXBuildOperation_expandedValueForString_getRecursiveSettingName_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXBuildContext_expandedValueForString_getRecursiveSettingName_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXBuildContext_expandedValueForString_getRecursiveSettingName_options_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXSymbol_symbolRecord':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXSymbol_symbolWithSymbolRecord_projectIndex_location_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXBuildOptionDefinition_initWithName_type_allowedValues_defaultValue_isCommon_commandLineArguments_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXBuildSettingsDictionary_buildSettingForKeyPath_getOperation_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXBuildSettingsDictionary_expandedBuildSettingForString_withExpansionDictionaries_getRecursiveSettingName_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXBuildSettingsDictionary_expandedBuildSettingForString_withExpansionDictionaries_getRecursiveSettingName_options_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXBuildOutputParseRule_getBuildLogMessageItem_andBuildMessage_byMatchingAgainstString_withContext_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXMemberContainerSymbol_memberSymbolsOfType_withMapTable_includingInherited_includingCategories_projectOnly_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXRecordVector_currentRecord':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXRecordVector_firstRecord':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXRecordVector_getCurrentRecord_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXRecordVector_getNextRecord_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXRecordVector_getPreviousRecord_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXRecordVector_getRecord_atRow_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXRecordVector_lastRecord':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXRecordVector_recordAtRow_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXRecordVector_records':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'PBXRecordVector_rowForRecord_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSString_dictionaryByParsingAsSimpleAssignmentsAndGetLocalizedErrorString_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSString_getLineStartOffsets_count_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSString_initWithContentsOfFile_defaultCStringEncoding_getStringEncoding_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSString_initWithPotentiallyMalformedUTF8Bytes_length_stopAtTrailingIncompleteUTF8Sequence_getUsedLength_getNumberOfMalformedSequences_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSString_initWithUnicodeOrMacOSRomanContentsOfFile_getStringEncoding_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSString_stringByExpandingBuildSettingsUsingDictionaries_getRecursiveSettingName_percentMacroDelegate_options_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSString_stringFromOSType_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'JKJavaExceptionsAttribute_initWithName_byteStream_constantPool_': (REL_OSX_10_3, TP_UNDOCUMENTED),
+    'JKJavaSourceAttribute_initWithName_byteStream_constantPool_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'JKJavaUnknownAttribute_initWithName_byteStream_constantPool_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'JKJavaCodeExceptionAttribute_initWithByteStream_constantPool_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSArray_arrayByRecursivelyExpandingStringValuesWithExpansionDictionaries_getRecursiveSettingName_applyStringPostprocessingSelector_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSMutableArray_correctlyRemoveObjectsFromIndices_numIndices_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSMutableArray_moveObjectsFromIndices_numIndices_toIndex_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'TSCachedFileManager_registerFileInfoDerivationFunction_forKeyName_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'JKJavaInnerClassesAttribute_initWithName_byteStream_constantPool_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'TSStackBacktrace_initWithStackFramesNoCopy_count_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'JKJavaAttribute_attributeWithName_byteStream_constantPool_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'JKJavaMethod_parseMethodSignature_methodReturnType_methodArguments_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'TSMergedSortedArray_arrayWithArray_array_usingFunction_context_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'TSMergedSortedArray_initWithArray_array_usingFunction_context_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'XCStringList_initWithStrings_count_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'TSLineDataBuffer_processCompleteLinesUsingFunction_context_andRemove_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'JKJavaCodeAttribute_initWithName_byteStream_constantPool_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'NSDictionary_dictionaryByRecursivelyExpandingStringValuesWithExpansionDictionaries_getRecursiveSettingName_applyStringPostprocessingSelector_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+    'JKJavaConstantAttribute_initWithName_byteStream_constantPool_':(REL_OSX_10_3, TP_UNDOCUMENTED),
+
 
     #<PreferencePanes>
     "NSAuthorization_authorizationRef":1,

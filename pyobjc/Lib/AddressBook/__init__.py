@@ -16,7 +16,6 @@ del AppKit
 objc.loadBundle("AddressBook", globals(), bundle_path="/System/Library/Frameworks/AddressBook.framework")
 
 from _AddressBook import *
-del _AddressBook
 
 import protocols  # no need to export these, just register with PyObjC
 
@@ -28,5 +27,6 @@ objc.setSignatureForSelector('NSImagePickerController', 'setTarget:selector:user
 objc.setSignatureForSelector('ABAuthenticationInfo', 'appliesToRequest:', 'c@:@')
 objc.setSignatureForSelector('ABAuthenticationInfo', 'applyToRequest:', 'c@:@')
 objc.setSignatureForSelector('ABDAVQuery', 'buildRequest', '@@:')
+objc.setSignatureForSelector('ABPerson', 'encodedDataForValue:charsetName:', '@@:@o^@')
 
 del objc

@@ -15,6 +15,5 @@ objc.loadBundle("PreferencePanes", globals(), bundle_path="/System/Library/Frame
 
 del objc
 from _PreferencePanes import *
-del _PreferencePanes
 
 # Define usefull utility methods here

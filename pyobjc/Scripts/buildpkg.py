@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# This module has been modified by Ronald Oussoren for use in PyObjC
+
 """buildpkg.py -- Build OS X packages for Apple's Installer.app.
 
 This is an experimental command-line tool for building packages to be

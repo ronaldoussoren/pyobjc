@@ -54,6 +54,9 @@ setSignatureForSelector("NSAttributedString", "initWithHTML:options:documentAttr
 setSignatureForSelector("NSAttributedString", "initWithDocFormat:documentAttributes:", "@@:@o^@")
 setSignatureForSelector("NSKeyValueProperty", "keyPathIfAffectedByValueForKey:exactMatch:", "@@:@o^c")
 setSignatureForSelector("NSKeyValueObservationForwarder", "initWithObserver:relationshipKey:keyPathFromRelatedObject:options:context:", "@@:@@@Ii")
+setSignatureForSelector("NSDeserializer", "deserializePropertyListFromData:atCursor:mutableContainers:", "@@:@O^Ic")
+setSignatureForSelector("NSDeserializer", "deserializePropertyListLazilyFromData:atCursor:length:mutableContainers:", "@@:@O^IIc")
+setSignatureForSelector("OC_PythonObject", "addObserver:forKeyPath:options:context:", "v@:@@Ii")
 
 
 # Technically incorrect, but not used anyway

@@ -114,4 +114,6 @@ setSignatureForSelector("NSATSTypesetter", "getLineFragmentRect:usedRect:forPara
 setSignatureForSelector("NSATSTypesetter", "glyphRangeForCharacterRange:actualCharacterRange:", "{_NSRange=II}@:{_NSRange=II}o^{_NSRange=II}")
 setSignatureForSelector("NSSavePanel", "beginForDirectory:file:types:modelessDelegate:didEndSelector:contextInfo:", 'v@:@@@@:i')
 setSignatureForSelector("NSOpenGLPixelFormat", "getValues:forAttribute:forVirtualScreen:", 'v@:o^lii')
-
+setSignatureForSelector("NSSavePanel", "gotoSheetDidEnd:returnCode:contextInfo:", "v16@4:8@12i16i20")
+setSignatureForSelector("NSNavFilepathInputController", "sheetDidEnd:returnCode:contextInfo:", "v16@4:8@12i16i20")
+setSignatureForSelector("NSNavFilepathInputController", "beginSheetForSavePanel:withFilepath:didEndSelector:contextInfo:", 'v@:@@:i')

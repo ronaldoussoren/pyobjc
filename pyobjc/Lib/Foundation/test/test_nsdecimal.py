@@ -4,6 +4,7 @@
 import unittest
 from Foundation import *
 import operator
+import objc
 
 class TestNSDecimal (unittest.TestCase):
     def testCreation(self):
@@ -11,7 +12,7 @@ class TestNSDecimal (unittest.TestCase):
         self.assert_(isinstance(o, NSDecimal))
         self.assertEquals(str(o), "1.25")
 
-        o = NSDecimal(12345, -2, True)
+        o = NSDecimal(12345, -2, objc.YES)
         self.assert_(isinstance(o, NSDecimal))
         self.assertEquals(str(o), "-123.45")
 
@@ -45,7 +46,7 @@ class TestNSDecimal (unittest.TestCase):
         # We only test addition, as all function wrappers are generated this 
         # should be enough to verify that the machinery is working correctly.
         o = NSDecimal("1.5")
-        p = NSDecimal(12345, -2, True)
+        p = NSDecimal(12345, -2, objc.YES)
         r = NSDecimal("-121.95")
         q = NSDecimal()
 

@@ -18,7 +18,7 @@ class TestNSView (unittest.TestCase):
 
     def test_rectForPage(self):
         method = ObjCTestNSView_KnowPageRange.rectForPage_
-        self.assertEquals(method.signature, "{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@0:4i8")
+        self.assertEquals(objc.splitSignature(method.signature), objc.splitSignature("{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@0:4i8"))
 
 if __name__ == "__main__":
     unittest.main()

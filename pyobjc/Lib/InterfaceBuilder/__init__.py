@@ -15,7 +15,6 @@ objc.loadBundle("InterfaceBuilder", globals(), bundle_path="/System/Library/Fram
 
 del objc
 from _InterfaceBuilder import *
-del _InterfaceBuilder
 
 import protocols  # no need to export these, just register with PyObjC
 

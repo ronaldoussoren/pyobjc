@@ -462,12 +462,12 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 			/* skip, posed-as type */
 		} else if (PyDict_SetItemString(module_globals, 
 				((PyTypeObject*)item)->tp_name, item) == -1) {
-			Py_DECREF(module_key);
+		//	Py_DECREF(module_key);
 			Py_DECREF(class_list);
 			return NULL;
 		}
 	}
-	Py_XDECREF(module_key);
+	//Py_XDECREF(module_key);
 	Py_XDECREF(class_list);
 
 	//NSLog(@"loadBundle %@ DONE", strval);

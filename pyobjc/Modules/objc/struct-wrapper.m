@@ -37,7 +37,8 @@ static inline void
 SET_FIELD(PyObject* self, PyMemberDef* member, PyObject* val)
 {
 	Py_XINCREF(val);
-	Py_XDECREF((PyObject*)(((char*)self) + member->offset));
+	
+	Py_XDECREF(*(PyObject**)(((char*)self) + member->offset));
 	*((PyObject**)(((char*)self) + member->offset)) = val;
 }
 

@@ -48,7 +48,7 @@ OBJC_HEADER="""\
 
 #import <Foundation/Foundation.h>
 
-#if defined(MACOSX) && __GNUC__ >= 3
+#if defined(MACOSX) && ((__GNUC__* 100) + (__GNUC_MINOR__)) >= 303
 
 #define HAVE_BOOL
 

@@ -382,8 +382,8 @@ else:
         return [], []
 
     CFLAGS=[
-        '-g',
-        '-O0',
+        #'-g',
+        ##'-O0',
         '-Wno-import',
 
         # The flags below should somehow be extracted from the GNUstep
@@ -398,7 +398,7 @@ else:
         ]
 
     OBJC_LDFLAGS=[
-        '-g',
+        #'-g',
         '-L', gs_root + '/Libraries/',
         '-L', gs_root + '/Libraries/' + gs_flib_dir,
         '-L', gs_root + '/Libraries/' + gs_lib_dir,
@@ -522,7 +522,7 @@ AppKitPackages, AppKitExtensions = \
 # AddressBook framework.
 AddressBookPackages, AddressBookExtensions = \
         IfFrameWork('AddressBook.framework', [ 'AddressBook' ], [
-            Extension('AddressBook._AddressBook',
+            Extension('_AddressBook',
                       [ 'Modules/AddressBook/_AddressBook.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
@@ -537,7 +537,7 @@ AddressBookPackages, AddressBookExtensions = \
 SecurityInterfacePackages, SecurityInterfaceExtensions = [], []
 SecurityInterfacePackages, SecurityInterfaceExtensions = \
         IfFrameWork('SecurityInterface.framework', [ 'SecurityInterface' ], [
-            Extension('SecurityInterface._SecurityInterface',
+            Extension('_SecurityInterface',
                       [ 'Modules/SecurityInterface/_SecurityInterface.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
@@ -550,7 +550,7 @@ SecurityInterfacePackages, SecurityInterfaceExtensions = \
 
 PrefPanesPackages, PrefPanesExtensions = \
         IfFrameWork('PreferencePanes.framework', [ 'PreferencePanes' ], [
-            Extension('PreferencePanes._PreferencePanes',
+            Extension('_PreferencePanes',
                       [ 'Modules/PreferencePanes/_PreferencePanes.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
@@ -566,7 +566,7 @@ ScreenSaverPackages, ScreenSaverExtensions = \
 
 InterfaceBuilderPackages, InterfaceBuilderExtensions = \
         IfFrameWork('InterfaceBuilder.framework', [ 'InterfaceBuilder' ], [
-            Extension('InterfaceBuilder._InterfaceBuilder',
+            Extension('_InterfaceBuilder',
                       [ 'Modules/InterfaceBuilder/_InterfaceBuilder.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
@@ -581,7 +581,7 @@ InterfaceBuilderPackages, InterfaceBuilderExtensions = \
 
 WebKitPackages, WebKitExtensions = \
         IfFrameWork('WebKit.framework', [ 'WebKit' ], [
-            Extension('WebKit._WebKit',
+            Extension('_WebKit',
                       [ 'Modules/WebKit/_WebKit.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
@@ -672,3 +672,16 @@ if "install" in sys.argv:
             elif os.path.isfile(path):
                 print "(removing old version: %s)" % path
                 os.remove(path)
+
+    # In version 1.1 some of the extension modules moved, clean up the old
+    # location
+    if install_dir is not None:
+        for name in ('objc', 'AppKit', 'Foundation', 'AddressBook', 'WebKit', 'InterfaceBuilder', 'PreferencePanes', 'SecurityInterface'):
+            path = os.path.join(install_dir, 'PyObjC', name)
+            if not os.path.exists(path): continue
+
+            exts = [ fn for fn in os.listdir(path) if fn.endswith('.so') ]
+            for fn in exts:
+                p = os.path.join(path, fn)
+                print "(removing old version: %s)"%(p,)
+                os.unlink(p)

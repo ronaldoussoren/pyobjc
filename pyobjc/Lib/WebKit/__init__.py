@@ -19,4 +19,6 @@ _objc.loadBundle("WebKit", globals(), bundle_path="/System/Library/Frameworks/We
 _objc.recycleAutoreleasePool()
 
 import protocols  # no need to export these, just register with PyObjC
+
+_objc.setSignatureForSelector('NSJavaVirtualMachine', 'versionRangeFromString:lower:upper:', 'v@:r*o^Io^I')
 del _objc
