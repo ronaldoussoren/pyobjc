@@ -418,6 +418,14 @@ Class ``NSDictionary``
 The (undocumented) methods ``getKeys:``, ``getObjects:`` and 
 ``getObjects:andKeys:`` are not supported.
 
+Class ``NSException``
+.....................
+
+* ``raise:format:``, ``raise:format:arguments:``
+
+  These methods are not supported because they accept a variable number of
+  arguments. Use Python's ``%`` operator to format the message.
+
 Class ``NSFault``
 .................
 
@@ -450,6 +458,15 @@ Class ``NSMutableArray``
   is not. This limitation will be fixed in a later version of PyObjC.
 
   The ``context`` can be an arbitrary python object.
+
+Class ``NSMutableString``
+.........................
+
+* ``appendFormat:``
+
+  This method is not supported because it accepts a variable number of 
+  arguments. Use Python's ``%`` operator to format strings.
+
 
 Class ``NSNetService``
 ......................
@@ -533,6 +550,16 @@ have a Python equivalent.
   This method is not supported. Use ``getCString:maxLength:`` instead (using
   the length of the string as the maximum length). This limitation will be
   lifted in a future version of the bridge.
+ 
+* ``stringWithFormat:``, ``initWithFormat:``, ``initWithFormat:locale:``,
+  ``stringByAppendingFormat:``
+
+  These methods are not supported because they accept a variable number of 
+  arguments. Use Python's ``%`` operator to format strings.
+
+* ``initWithFormat:arguments:``, ``initWithFormat:locale:arguments:``
+
+  These are also not supported, with the same workaround.
  
 
 class ``NSThread``
