@@ -24,6 +24,12 @@ def perform_some_tests(dummy, dirname, fnames):
                 if not nm.endswith('.py'): continue
         	path = os.path.join(dirname, nm)
         	print "-- Running '%s'"%path
+
+                if 0:
+                    os.environ['DYLD_INSERT_LIBRARIES']='/usr/lib/libgmalloc.dylib'
+                    os.environ['DYLD_FORCE_FLAT_NAMESPACE']='1'
+
+
         	fd = os.popen("'%s' '%s' 2>&1"%(sys.executable, path), 'r')
                 ln = ''
                 for _ln in fd.xreadlines():
@@ -33,7 +39,13 @@ def perform_some_tests(dummy, dirname, fnames):
                     if _ln.startswith('Unable to retrieve information about SIGPIPE'): continue
 
                     # Debugging version of python
-                    if _ln.startswith('[') and _ln.endswith(' refs]\n'): continue
+                    if _ln[0] == '[' and _ln.endswith(' refs]\n'): continue
+
+                    # MallocGuard output
+                    if _ln.startswith('GuardMalloc-'): continue
+                    if _ln.startswith('Allocations will be placed on '):continue
+                    if _ln.startswith(' - Small buffer overruns may '): continue
+                    if _ln.startswith(' - Applications using AltiVec '):continue
 
                     ln = _ln
 
