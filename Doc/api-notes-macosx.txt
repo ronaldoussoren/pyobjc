@@ -9,8 +9,6 @@ Notes on supported APIs and classes on MacOS X
 Introduction
 ------------
 
-*NOTE*: This document is very incomplete.
-
 This document describes the restrictions w.r.t. supported APIs and classes
 on MacOS X. In general you can use classes and global functions just like
 in Objective-C (e.g. the Apple developer documentaton applies), but in some
@@ -19,8 +17,11 @@ cases there are special considerations.
 We also do not provide access to global functions that are not usefull for
 Python programs, those functions are listed below.
 
-The general rules are listed in ..., this document provides the exceptions to
-those rules.
+This document list the examples to the basic rules. If a method uses pointers
+to return additional values, the Python wrapper for that method returns a tuple
+containing the original return value and the additional values. You don't have
+to pass values for those arguments, unless the method uses the values you
+pass in.
 
 This document is target at the latest supported version of MacOS X (currenlty
 MacOS X 10.2.x), unless specifically noted the same restrictions apply to 
@@ -30,6 +31,8 @@ APIs, PyObjC does *not* provide a compatibility layer.
 Frameworks not listed below are not wrapped by PyObjC, they can still be
 accessed although without access to constants and global functions defined
 by those frameworks.
+
+This document is not entirely complete, but does cover the most used APIs.
 
 Core objective-C runtime
 ------------------------
