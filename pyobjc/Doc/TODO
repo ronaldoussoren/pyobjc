@@ -168,3 +168,17 @@ to conditionally compile parts of this code. Problem is that most of that code
 is generated.
 
 NOTE: At least one person has problems compiling Modules/objc on 10.1.
+
+Pickle support
+..............
+
+Objective-C objects don't support pickling. They do pickle without errors using
+protocol version 2 (Python >= 2.3a2), but that doesn't include the state of
+the Objective-C object only that of the proxy.
+
+NSCoder support
+...............
+
+It might be usefull to add default implementations of ``encodeWithCoder:`` and
+``initWithCoder:`` methods to Python subclasses of Objective-C classes that 
+implement these.

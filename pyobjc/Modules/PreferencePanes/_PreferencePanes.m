@@ -11,7 +11,7 @@
 #include "pyobjc-api.h"
 #include "objc_support.h"
 #include "OC_PythonObject.h"
-#include "const-table.h"
+#include "wrapper-const-table.h"
 
 static PyMethodDef prefpanes_methods[] = {
 	{ 0, 0, 0, 0 }

@@ -31,6 +31,7 @@
 /* PyBool_Type was introduced in Python 2.3 */
 #define PyBool_Check(_x_) (0)
 #define PyBool_FromLong(_x_) PyInt_FromLong(_x_)
+#define PyObjC_HAVE_PYTHON_BOOL
 
 #endif /* Python < 2.3.0a */
 

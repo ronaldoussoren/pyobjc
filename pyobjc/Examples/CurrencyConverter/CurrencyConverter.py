@@ -17,6 +17,7 @@ after('import sys')
 from Foundation import NSObject
 after('import Foundation')
 from AppKit import NSApplicationMain, NibClassBuilder
+from AppKit import NSRunAlertPanel
 after('import AppKit')
 from objc import *
 after('import objc')
@@ -48,6 +49,10 @@ class ConverterController (NibClassBuilder.AutoBaseClass):
         total = self.converter.convertAmount(rate, amt)
         self.totalField.setFloatValue_(total)
         self.rateField.selectText_(self)
+
+        x = NSRunAlertPanel("Calculation Result", 
+            "The result is %s"%(total), "OK", None, None)
+        print x
 
 after('class ConverterController')
 

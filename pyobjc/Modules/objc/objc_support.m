@@ -52,6 +52,13 @@
 
 @end /* PyObjCSupport */
 
+#if 1
+
+/*
+ * Automaticly mapping from NSNumber to python numbers doesn't work when
+ * you want to add the result of NSNumber.numberWithBool_ to a property list.
+ */
+
 @interface NSNumber (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
 @end /* NSNumber (PyObjCSupport) */
@@ -68,6 +75,8 @@
 }
 
 @end /* NSNumber (PyObjCSupport) */
+
+#endif
 
 @interface NSString (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
@@ -1189,6 +1198,12 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 					"to encode unicode string to UTF8");
 				return -1;
 			}
+
+#ifdef PyObjC_HAVE_PYTHON_BOOL
+		} else if (PyBool_Check(argument)) {
+			*(id *) datum = [NSNumber 
+				numberWithBool:PyInt_AS_LONG (argument)];
+#endif			
 		} else if (PyInt_Check (argument)) {
 			*(id *) datum = [NSNumber 
 				numberWithLong:PyInt_AS_LONG (argument)];
