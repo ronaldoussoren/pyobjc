@@ -285,6 +285,29 @@ static char* keywords2[] = { "string", NULL };
 					mantissa, 0, NO);
 				return 0;
 			}
+		} else if (PyFloat_Check(pyValue)) {
+			/* Explicit conversion from float to NSDecimal
+			 * first convert the float to a string using repr, that
+			 * is easier than extracting the components of the 
+			 * float.
+			 */
+			PyObject* strVal = PyObject_Repr(pyValue);
+
+			if (strVal == NULL) return -1;
+			
+			stringVal = PyObjC_PythonToId(strVal);
+			Py_DECREF(strVal);
+
+			NS_DURING
+				DecimalFromString(&Decimal_Value(self), stringVal, NULL);
+			NS_HANDLER
+				PyObjCErr_FromObjC(localException);
+			NS_ENDHANDLER
+
+			if (PyErr_Occurred()) return -1;
+			return 0;
+			
+
 		} else if (!PyString_Check(pyValue) && !PyUnicode_Check(pyValue)) {
 			PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal", pyValue->ob_type->tp_name);
 			return -1;
