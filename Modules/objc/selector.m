@@ -1194,7 +1194,7 @@ static	char*	keywords[] = { "method", "selector", "signature",
 		signature = python_signature_to_objc(rettype, argtypes,
 			signature_buf, sizeof(signature_buf));
 		if (signature == NULL) return NULL;
-	} else {
+	} else if (signature != NULL) {
 		/* Check if the signature string is valid */
 		char* cur;
 
