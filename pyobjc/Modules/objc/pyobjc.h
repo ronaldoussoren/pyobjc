@@ -46,6 +46,8 @@ Class     ObjCClass_GetClass(PyObject* object);
 PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector);
 void 	  ObjCClass_MaybeRescan(PyObject* class);
 int 	  ObjCClass_IsSubClass(Class child, Class parent);
+int 	  ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
+
 
 
 PyObject* ObjCObject_New(id objc_object);

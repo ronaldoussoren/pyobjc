@@ -2,8 +2,9 @@ from Foundation import NSObject
 from AppKit import NSApplicationMain, NSTableDataSource
 from objc import selector
 import sys
+from nibwrapper import PyModelBase
 
-class PyModel (NSObject, NSTableDataSource):
+class PyModel (PyModelBase, NSTableDataSource):
 	__slots__  = ('rowcount')
 
 	def awakeFromNib(self):

@@ -48,7 +48,7 @@ def build_applet(app_name,
 	assert os.path.exists(dirname(app_name))
 	assert isinstance(main_py, str)
 	assert os.path.exists(main_py)
-	assert isinstance(extra_src, list) or isinstance(extra_src, tuple)
+	assert isinstance(extra_src, (list, tuple))
 	assert reduce(lambda x, y: x and y, 
 		[ os.path.exists(x) for x in extra_src ], True)
 	assert isinstance(extra_files, list) or isinstance(extra_files, tuple)

@@ -10,9 +10,7 @@ TODO:
 from objc import set_class_extender, selector
 
 CONVENIENCE_METHODS = {}
-
-
-CLASS_METHODS = { }
+CLASS_METHODS = {}
 
 def add_convenience_methods(super_class, name, type_dict):
 	"""
@@ -34,7 +32,8 @@ def add_convenience_methods(super_class, name, type_dict):
 
 		if CONVENIENCE_METHODS.has_key(sel):
 			v = CONVENIENCE_METHODS[sel]
-			type_dict[v[0]] = v[1]
+			for name, value in v:
+				type_dict[name] = value
 	
 	if CLASS_METHODS.has_key(name):
 		for name, value in CLASS_METHODS[name]:
@@ -73,6 +72,15 @@ def __getitem__1(self, key):
 	if res == None:
 		raise KeyError, key
 	return res
+def has_key_1(self, key):
+	res = self.objectForKey_(key)
+	return not (res is None)
+def get_1(self, key, dflt=None):
+	res = self.objectForKey_(key)
+	if res is None: 
+		res = dflt
+	return res
+
 def __delitem__1(self, key):
 	self.removeObjectForKey_(key)
 def __setitem__1(self, key, value):
@@ -90,24 +98,24 @@ def __hash__(self):
 	return self.hash()
 		
 
-CONVENIENCE_METHODS['objectForKey:'] = ('__getitem__', __getitem__1)
-CONVENIENCE_METHODS['removeObjectForKey:'] = ('__delitem__', __delitem__1)
-CONVENIENCE_METHODS['setObject:forKey:'] = ('__setitem__', __setitem__1)
-CONVENIENCE_METHODS['count'] = ('__len__', __len__1)
-CONVENIENCE_METHODS['description'] = ('__repr__', __repr__)
-CONVENIENCE_METHODS['doesContain:'] = ('__contains__', __contains__)
-CONVENIENCE_METHODS['hash'] = ('__hash__', __hash__)
-CONVENIENCE_METHODS['isEqualTo:'] = ('__eq__', __eq__1)
-CONVENIENCE_METHODS['isEqual:'] = ('__eq__', __eq__2)
-CONVENIENCE_METHODS['isGreaterThan:'] = ('__gt__', __gt__)
-CONVENIENCE_METHODS['isGreaterThanOrEqualTo:'] = ('__ge__', __ge__)
-CONVENIENCE_METHODS['isLessThan:'] = ('__lt__', __lt__)
-CONVENIENCE_METHODS['isLessThanOrEqualTo:'] = ('__le__', __le__)
-CONVENIENCE_METHODS['isNotEqualTo:'] = ('__ne__', __ne__)
-CONVENIENCE_METHODS['lenght'] = ('__len__', __len__2)
-CONVENIENCE_METHODS['objectAtIndex:'] = ('__getitem__', __getitem__2)
-CONVENIENCE_METHODS['removeObjectAtIndex:'] = ('__detitem__', __delitem__2)
-CONVENIENCE_METHODS['replaceObjectAtIndex:withObject:'] = ('__setitem__', __setitem__2)
+CONVENIENCE_METHODS['objectForKey:'] = (('__getitem__', __getitem__1), ('has_key', has_key_1), ('get', get_1))
+CONVENIENCE_METHODS['removeObjectForKey:'] = (('__delitem__', __delitem__1),)
+CONVENIENCE_METHODS['setObject:forKey:'] = (('__setitem__', __setitem__1),)
+CONVENIENCE_METHODS['count'] = (('__len__', __len__1),)
+CONVENIENCE_METHODS['description'] = (('__repr__', __repr__),)
+CONVENIENCE_METHODS['doesContain:'] = (('__contains__', __contains__),)
+CONVENIENCE_METHODS['hash'] = (('__hash__', __hash__),)
+CONVENIENCE_METHODS['isEqualTo:'] = (('__eq__', __eq__1),)
+CONVENIENCE_METHODS['isEqual:'] = (('__eq__', __eq__2),)
+CONVENIENCE_METHODS['isGreaterThan:'] = (('__gt__', __gt__),)
+CONVENIENCE_METHODS['isGreaterThanOrEqualTo:'] = (('__ge__', __ge__),)
+CONVENIENCE_METHODS['isLessThan:'] = (('__lt__', __lt__),)
+CONVENIENCE_METHODS['isLessThanOrEqualTo:'] = (('__le__', __le__),)
+CONVENIENCE_METHODS['isNotEqualTo:'] = (('__ne__', __ne__),)
+CONVENIENCE_METHODS['lenght'] = (('__len__', __len__2),)
+CONVENIENCE_METHODS['objectAtIndex:'] = (('__getitem__', __getitem__2),)
+CONVENIENCE_METHODS['removeObjectAtIndex:'] = (('__detitem__', __delitem__2),)
+CONVENIENCE_METHODS['replaceObjectAtIndex:withObject:'] = (('__setitem__', __setitem__2),)
 
 
 
@@ -142,7 +150,7 @@ def mapping_values(self):
 # TODO (not all are needed or even possible): 
 #   iter*, update, pop, popitem, setdefault
 # __str__ would be nice (as obj.description()),
-CONVENIENCE_METHODS['keyEnumerator'] = ('keys', mapping_keys)
-CONVENIENCE_METHODS['objectEnumerator'] = ('values', mapping_values)
-CONVENIENCE_METHODS['removeAllObjects'] = ('clear', lambda self: self.removeAllObjects())
-CONVENIENCE_METHODS['dictionaryWithDictionary:'] = ('copy', lambda self: type(self).dictionaryWithDictionary_(self))
+CONVENIENCE_METHODS['keyEnumerator'] = (('keys', mapping_keys),)
+CONVENIENCE_METHODS['objectEnumerator'] = (('values', mapping_values),)
+CONVENIENCE_METHODS['removeAllObjects'] = (('clear', lambda self: self.removeAllObjects()),)
+CONVENIENCE_METHODS['dictionaryWithDictionary:'] = (('copy', lambda self: type(self).dictionaryWithDictionary_(self)),)

@@ -1,6 +1,7 @@
 from Foundation import NSObject, NSBundle
 from AppKit import NSOutlineViewDataSource, NSTableDataSource
 from objc import selector, class_list, objc_object, IBOutlet
+from nibwrapper import  ClassesDataSourceBase
 
 WRAPPED={}
 class Wrapper (NSObject):
@@ -41,29 +42,22 @@ def classBundle(cls):
 			framework = framework[:-len('.framework')]
 	return framework
 
-class ClassesDataSource (NSObject, NSOutlineViewDataSource, NSTableDataSource):
+class ClassesDataSource (ClassesDataSourceBase, NSOutlineViewDataSource, NSTableDataSource):
 	__slots__ = ('_classList', '_classTree', '_methodInfo')
-
-	_window = IBOutlet('window')
-	_methodTable = IBOutlet('methodTable')
-	_classTable = IBOutlet('classTable')
-	_searchBox = IBOutlet('searchBox')
-	_classLabel = IBOutlet('classLabel')
-	_frameworkLabel = IBOutlet('frameworkLabel')
 
 	def clearClassInfo(self):
 		print "clearClassInfo"
 		self._methodInfo = []
-		self._methodTable.reloadData()
-		self._window.setTitle_('iClass')
+		self.methodTable.reloadData()
+		self.window.setTitle_('iClass')
 
 
 	def setClassInfo(self, cls):
 		print "setClassInfo for",cls
-		self._window.setTitle_('iClass: %s'%cls.__name__)
-		self._classLabel.setStringValue_(classPath(cls))
+		self.window.setTitle_('iClass: %s'%cls.__name__)
+		self.classLabel.setStringValue_(classPath(cls))
 		print (classPath(cls))
-		self._frameworkLabel.setStringValue_(classBundle(cls))
+		self.frameworkLabel.setStringValue_(classBundle(cls))
 		self._methodInfo = []
 		for nm in dir(cls):
 			meth = getattr(cls, nm)
@@ -72,15 +66,15 @@ class ClassesDataSource (NSObject, NSOutlineViewDataSource, NSTableDataSource):
 			self._methodInfo.append(
 				(meth.selector, nm, meth.signature))
 		self._methodInfo.sort()
-		self._methodTable.reloadData()
+		self.methodTable.reloadData()
 
 	def selectClass_(self, event):
 		print "selectClass:"
-		rowNr = self._classTable.selectedRow()
+		rowNr = self.classTable.selectedRow()
 		if rowNr == -1:
 			self.clearClassInfo()
 		else:
-			item = self._classTable.itemAtRow_(rowNr)
+			item = self.classTable.itemAtRow_(rowNr)
 			item = item.value
 			self.setClassInfo(item)
 
@@ -93,8 +87,8 @@ class ClassesDataSource (NSObject, NSOutlineViewDataSource, NSTableDataSource):
 
 		self.showClass(super)
 		item = WRAPPED[super]
-		rowNr = self._classTable.rowForItem_(item)
-		self._classTable.expandItem_(item)
+		rowNr = self.classTable.rowForItem_(item)
+		self.classTable.expandItem_(item)
 
 
 	def selectClass(self, cls):
@@ -102,15 +96,15 @@ class ClassesDataSource (NSObject, NSOutlineViewDataSource, NSTableDataSource):
 		self.showClass(cls)
 
 		item = WRAPPED[cls]
-		rowNr = self._classTable.rowForItem_(item)
+		rowNr = self.classTable.rowForItem_(item)
 
-		self._classTable.scrollRowToVisible_(rowNr)
-		self._classTable.selectRow_byExtendingSelection_(rowNr, False)
+		self.classTable.scrollRowToVisible_(rowNr)
+		self.classTable.selectRow_byExtendingSelection_(rowNr, False)
 
 
 	def searchClass_(self, event):
 		print "searchClass:"
-		val = self._searchBox.stringValue()
+		val = self.searchBox.stringValue()
 		if not val:
 			return
 		print "Searching", val

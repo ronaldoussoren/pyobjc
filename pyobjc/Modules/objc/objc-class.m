@@ -126,6 +126,12 @@ objc_class_register(Class objc_class, PyObject* py_class)
 		abort();
 	}
 	Py_INCREF(py_class);
+
+	res = ObjC_RegisterClassProxy(objc_class, py_class);
+	if (res != 0) {
+		abort();
+	}
+
 	return res;
 }
 

@@ -95,10 +95,21 @@ find_existing_proxy(id objc_obj)
 static int
 register_proxy(PyObject* proxy_obj) 
 {
-	id objc_obj = ObjCObject_GetObject(proxy_obj);
+	id objc_obj;
 	PyObject* v;
 	PyObject* unregister_proxy;
 	struct unregister_data* data;
+
+	if (ObjCObject_Check(proxy_obj)) {
+		objc_obj = ObjCObject_GetObject(proxy_obj);
+	} else if (ObjCClass_Check(proxy_obj)) {
+		objc_obj = ObjCClass_GetClass(proxy_obj);
+	} else {
+		PyErr_SetString(PyExc_TypeError, 
+			"bad argument for register_proxy");
+		return -1;
+	}
+		
 
 	if (proxy_dict == NULL)  {
 		proxy_dict = PyDict_New();
@@ -133,6 +144,11 @@ register_proxy(PyObject* proxy_obj)
 }
 
 #endif /* PyOBJC_UNIQUE_PROXY */
+
+int ObjC_RegisterClassProxy(Class cls, PyObject* classProxy)
+{
+	return register_proxy(classProxy);
+}
 
 static PyObject*
 object_new(PyTypeObject*  type, PyObject* args, PyObject* kwds)

@@ -9,6 +9,22 @@
 	* Reset '__module__' of classes in the __init__.py of AppKit and 
 	  Foundation. help(AppKit) now works (and generates an lot of
 	  output)
+	* pythonify_c_value("@", ...) now correctly process Class objects.
+	* Modules/objc/class-builder.m: Can't just call 
+	  objc_msgSendSuper({ self->super_class->isa, self }, ...), that
+	  won't work when we are the super-class of self...
+	* lib/objc/test/test_subclass.py: Added testcases for above
+	* Digits are valid characters in Objective-C classnames,
+	  class-builder.m incorrectly assumed they are not.
+	* Lib/objc/_convenience.py: It is now possible to add multiple
+	  convenience methods when an Objective-C selector is present, use
+	  this to provide better wrapping of NSDictionary
+	* Lib/AppKit/classnib.py: Moved from Lib/objc/classnib.py, removed
+	  custom parser and use NSDictionary instead.
+	* Tools/mknibwrapper: Script using AppKit.classnib for generating
+	  a module declaring base classes for classes defined in NIB files.
+	* Examples/{TableModel,iClass}: Use script above
+
 
 2002-10-29  Bill Bumgarner  <bbum@bumbox.local.>
 
