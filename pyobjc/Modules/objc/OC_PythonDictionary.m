@@ -122,6 +122,11 @@
 
 	v = PyDict_GetItem(value, k);
 
+	if (!v) {
+	  Py_DECREF(k);
+	  return nil;
+	}
+
 	err = depythonify_c_value("@", v, &result);
 	Py_DECREF(v);
 	Py_DECREF(k);
