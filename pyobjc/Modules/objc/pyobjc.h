@@ -155,6 +155,7 @@ PyObject* ObjCSelect_NewWithSelector(Class objc_class, SEL selector);
 PyObject*
 ObjCSelector_NewNative(Class class, SEL selector, char* signature, int class_method) ;
 PyObject* ObjCSelector_FindNative(PyObject* self, char* name);
+
 PyObject*
 ObjCSelector_New(PyObject* callable, SEL selector, char* signature, int class_method) ;
 SEL ObjCSelector_DefaultSelector(char* methname);
@@ -202,5 +203,11 @@ extern PyObject* ObjCMethodAccessor_New(PyObject* base, int class_method);
 
 /* Needed by method-accessor, name will be changed soon */
 char* pythonify_selector(SEL, char*, size_t);
+
+/* unicode-object.m */
+extern PyTypeObject ObjCUnicode_Type;
+#define ObjCUnicode_Check(obj) PyObject_TypeCheck(obj, &ObjCUnicode_Type)
+PyObject* ObjCUnicode_New(NSString* value);
+NSString* ObjCUnicode_Extract(PyObject* value);
 
 #endif /* META_H */

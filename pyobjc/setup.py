@@ -2,8 +2,7 @@
 
 USE_FFI = 1
 
-USE_FFI_SHORTCUTS = 0
-
+USE_FFI_SHORTCUTS = 1
 import sys
 
 if sys.platform == 'darwin':
@@ -61,6 +60,7 @@ sourceFiles = [
         "Modules/objc/class-list.m",
         "Modules/objc/ObjCPointer.m",
         "Modules/objc/objc-class.m",
+        "Modules/objc/unicode-object.m",
         "Modules/objc/informal-protocol.m",
         "Modules/objc/objc-object.m",
         "Modules/objc/super-call.m",
@@ -89,7 +89,7 @@ if gs_root is None:
         "-DMACOSX",
         "-no-cpp-precomp",
         "-Wno-long-double",
-        #"-O0", "-g",
+        "-O0", "-g",
         ]
 
     OBJC_LDFLAGS=[
