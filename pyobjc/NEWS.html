@@ -27,7 +27,7 @@ Pythonic Key-Value Coding.<ul>
 <li><code><span>__getattr__</span></code> is mapped to <code><span>valueForKey:</span></code></li>
 <li><code><span>__setattr__</span></code> is mapped to <code><span>setValue:forKey:</span></code></li>
 </ul>
-<p>The <code><span>kvc</span></code> class uses <code><span>__pyobjc_object</span></code>, so it may cross the bridge
+<p>The <code><span>kvc</span></code> class uses <code><span>__pyobjc_object__</span></code>, so it may cross the bridge
 as the wrapped object.</p>
 </li>
 <li><code><span>NSNumber</span></code> instances are bridged to a <code><span>float</span></code>, <code><span>long</span></code>, or <code><span>int</span></code>

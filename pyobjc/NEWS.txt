@@ -25,7 +25,7 @@ Version 1.3 (2005-03-??)
   - ``__getattr__`` is mapped to ``valueForKey:``
   - ``__setattr__`` is mapped to ``setValue:forKey:``
 
-  The ``kvc`` class uses ``__pyobjc_object``, so it may cross the bridge
+  The ``kvc`` class uses ``__pyobjc_object__``, so it may cross the bridge
   as the wrapped object.
 
 - ``NSNumber`` instances are bridged to a ``float``, ``long``, or ``int``
