@@ -7,14 +7,31 @@ build and pass some, but by far not all, unittests. More work is needed to
 make the GNUstep port as stable as the MacOS X "port".
 
 The GNUstep port was primarily developed on Linux i86 (specifically 
-the Debian testing distribution), using python 2.3.2,  gcc 3.3.2 and 
-gnustep-base 1.7.3-1. The code in setup.py works for this configuration,
+the Debian testing distribution), using python 2.3.3,  gcc 3.3.2 and 
+gnustep-base1 1.9.0-1. The code in setup.py works for this configuration,
 but probably not for other configurations.
+
+GNUstep support is *very* fragile, in some versions of the the selectors for
+new classes should be strings, in others they should be SEL objects (as you
+would expect). We also use undocumented private functions to initialize new
+classes.
 
 TODO
 ----
 
+* Fix the odd bug...
+
+  I currently get the following text when importing objc::
+
+  	Unable to retrieve information about SIGPIPE
+
+  This text is not printed by PyObjC and I haven't been able to find who
+  does print that text...
+
 * Fix bugs found using the unittests
+
+  runPyObjCTests finds some problems that disapear when those tests are run
+  seperately...
 
 * Port the AppKit wrappers
 

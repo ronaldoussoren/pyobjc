@@ -576,6 +576,7 @@ CONVENIENCE_METHODS['_cfNumberType'] = (
     ('__xor__', __xor__CFNumber),
     ('__nonzero__', __nonzero__CFNumber),
 )
+CONVENIENCE_METHODS['decimalNumberByAdding:'] = CONVENIENCE_METHODS['_cfNumberType']
 
 #CONVENIENCE_METHODS['boolValue'] = (
 #    ('__nonzero__', lambda (self): self.boolValue() != 0),

@@ -26,8 +26,13 @@ def perform_some_tests(dummy, dirname, fnames):
         	print "-- Running '%s'"%path
         	fd = os.popen("'%s' '%s' 2>&1"%(sys.executable, path), 'r')
                 ln = ''
-                for ln in fd.xreadlines():
-                    sys.stdout.write(ln)
+                for _ln in fd.xreadlines():
+                    sys.stdout.write(_ln)
+
+                    # Odd GNUstep bug...
+                    if _ln.startswith('Unable to retrieve information about SIGPIPE'): continue
+
+                    ln = _ln
 
                 xit = fd.close()
                 if ln.startswith('OK'):
@@ -48,6 +53,8 @@ def perform_some_tests(dummy, dirname, fnames):
 
         	print "-- Done"
 
+#os.path.walk('Lib/objc', perform_some_tests, None)
+#os.path.walk('Lib/Foundation', perform_some_tests, None)
 os.path.walk('Lib', perform_some_tests, None)
 
 keys = tests.keys()
