@@ -310,10 +310,10 @@ if gs_root is None:
         #"-Werror",
 
         # no optimization, for debugging
-        "-O0"
+        #"-O0",
 
         # generic optimization
-        #"-03",
+        "-O3",
 
         # g4 optimized
         #"-fast", "-fPIC", "-mcpu=7450",
