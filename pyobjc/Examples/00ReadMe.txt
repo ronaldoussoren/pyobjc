@@ -23,7 +23,9 @@ And a number of Cocoa applications. These use the 'AppKit' package.
 
 - Web Services Tool
   Another Project Builder Cocoa project.  Quiries an XML-RPC enabled web
-  server for the methods that it implements.
+  server for the methods that it implements.  Demonstrates a more advanced
+  use of an NSTableView, how to make a toolbar as well as how to use
+  multi-threading.
 
 - Todo
   A more complex NIB based applications. This is a document-based application.
