@@ -85,6 +85,8 @@ class KeyValueClass7 (objc.runtime.NSObject):
     def set_key5(self, value):
         self.key5 = value * 5
 
+    def keyM(self):
+        return "m"
 
 class KeyValueClass8 (objc.runtime.NSObject):
     __slots__ = ('foo', )
@@ -206,6 +208,13 @@ class OcKeyValueCoding (unittest.TestCase):
         self.assertEquals(getKey(o, "key3"), 3)
         self.assertEquals(getKey(o, "key4"), "4")
         self.assertEquals(getKey(o, "multiple"), o.multiple)
+
+        self.assertEquals(o.valueForKey_("keyM"), "m")
+
+        a = objc.runtime.NSMutableArray.array()
+        a.addObject_(o)
+        b = objc.runtime.NSMutableArray.arrayWithObject_("m")
+        self.assertEquals(a.valueForKey_("keyM"), b)
        
         self.assertRaises(KeyError, getKey, o, "nokey")
 
