@@ -765,8 +765,8 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	new_class->class.METHODLISTS = NULL;
 	new_class->meta_class.METHODLISTS = NULL;
 	GETISA(&new_class->class) = &new_class->meta_class;
-	new_class->class.info = CLS_CLASS;
-	new_class->meta_class.info = CLS_META;
+	new_class->class.info = CLS_CLASS|CLS_METHOD_ARRAY;
+	new_class->meta_class.info = CLS_META|CLS_METHOD_ARRAY;
 
 	new_class->class.name = strdup(name);
 	new_class->meta_class.name = new_class->class.name;
@@ -787,6 +787,8 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	 * The code in the objc runtime assumes that the method lists are 
 	 * terminated by '-1', and will happily overwite existing data if
 	 * they aren't.
+	 *
+	 * Ronald filed a bugreport for this: Radar #3317376
 	 */
 	new_class->class.METHODLISTS[0] = (struct objc_method_list*)-1;
 	new_class->meta_class.METHODLISTS[0] = (struct objc_method_list*)-1;

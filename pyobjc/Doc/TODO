@@ -232,32 +232,6 @@ Add examples that demonstrate:
 - how to integrate with MacPython
 
 
-Platform dependencies in Foundation & AppKit
-............................................
-
-Both modules contain some ugly defines and includes to add platform/version
-specific definitions, like this::
-
-   #ifdef  GNUSTEP
-   #       include "_Fnd_Var.GNUstep.inc"
-   #else /* !GNUSTEP */
-   #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
-   #       include "_Fnd_Var.inc"
-   #else
-   #       include "_Fnd_Var.10.1.inc"
-   #endif
-   #endif /* !GNUSTEP */
-
-It would be nice if this could be abstracted away to something like::
-
-   #include PyObjC_PLAT_FILE("_Fnd_Var", ".inc")
-
-Another option would be to make the generator script slightly smarter: have
-it emit #if version guards based on the guards found in the header files.
-
-NOTE: This is mostly solved for MacOSX by running the generator script from
-setup.py, although the mechanism needs to be cleaned up.
-
 Access to method implementations
 ................................
 

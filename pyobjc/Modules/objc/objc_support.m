@@ -1332,6 +1332,8 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 #ifdef GNU_RUNTIME
 
+/* TODO: Move this code to 'gnu-runtime.m' */
+
 # error "GNU_RUNTIME not supported at the moment"
 
 Ivar_t class_getInstanceVariable(Class aClass, const char *name)
@@ -1469,29 +1471,35 @@ void objc_freeMethodList(struct objc_method_list *list)
 
 struct objc_method_list *objc_allocMethodList(int numMethods)
 {
-  struct objc_method_list *mlist;
+	struct objc_method_list *mlist;
 
-  mlist = malloc(sizeof(struct objc_method_list)
+	mlist = malloc(sizeof(struct objc_method_list)
 		 + ((numMethods+1) * sizeof(struct objc_method)));
 
-  if (mlist == NULL)
-    return NULL;
+	if (mlist == NULL) {
+		return NULL;
+	}
 
-  mlist->method_count = 0;
-  mlist->obsolete = NULL; 
+	mlist->method_count = 0;
+	mlist->obsolete = NULL; 
 
-  return mlist;
+	return mlist;
 }
 
 void objc_freeMethodList(struct objc_method_list **list)
 {
-  if (list)
-    {
-      if (list[0])
-	free(list[0]);
+	struct objc_method_list** cur;
 
-      free(list);
-    }
+	if (list) {
+		cur = list;
+		while (*cur != (struct objc_method_list*) -1) {
+			if (*cur != NULL) {
+				free(*cur);
+			}
+			cur++;
+		}
+		free(list);
+	}
 }
 
 #endif
