@@ -40,7 +40,7 @@ class PseudoUTF8Output(object):
 
     def isatty(self):
         return True
-    
+
 class PseudoUTF8Input(object):
     softspace = 0
     def __init__(self, readlinemethod):
@@ -65,7 +65,7 @@ class PseudoUTF8Input(object):
                     break
             rval, self._buffer = self._buffer[:chars], self._buffer[chars:]
             return rval.encode('utf-8').replace('\r','\n')
-        
+
     def readline(self):
         if u'\r' not in self._buffer:
             self._buffer += self._readline(u'\x04\r')
@@ -74,7 +74,7 @@ class PseudoUTF8Input(object):
         elif self._buffer.endswith('\r'):
             rval = self._buffer[:-1].encode('utf-8')+'\n'
         self._buffer = u''
-        
+
         return rval
 
 class AsyncInteractiveConsole(InteractiveConsole):
@@ -118,7 +118,7 @@ class AsyncInteractiveConsole(InteractiveConsole):
             self.lock = False
             raise
         self.lock = False
-    
+
     def resetbuffer(self):
         self.lastbuffer = self.buffer
         InteractiveConsole.resetbuffer(self)
@@ -170,7 +170,7 @@ class AsyncInteractiveConsole(InteractiveConsole):
             check = filter(lambda s:s.lower().startswith(wordlower), check)
         check.sort()
         return check, 0
-        
+
 DEBUG_DELEGATE = 0
 PASSTHROUGH = (
    'deleteBackward:',
@@ -184,7 +184,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     PyInterpreter is a delegate/controller for a NSTextView,
     turning it into a full featured interactive Python interpreter.
     """
-    
+
     #
     #  Outlets - for documentation only
     #
@@ -192,7 +192,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     _NIBOutlets_ = (
         (NSTextView,    'textView',         'The interpreter'),
     )
-    
+
     #
     #  NSApplicationDelegate methods
     #
@@ -202,7 +202,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         self.textView.setContinuousSpellCheckingEnabled_(False)
         self.textView.setRichText_(False)
         self._executeWithRedirectedIO(self._interp)
-   
+
     #
     #  NIB loading protocol
     #
@@ -231,7 +231,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     #
     #  Modal input dialog support
     #
-    
+
     def _nestedRunLoopReaderUntilEOLchars_(self, eolchars):
         """
         This makes the baby jesus cry.
@@ -277,7 +277,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
             sys.stdin, sys.stdout, sys.stderr = old
             self.setCharacterIndexForInput_(self.lengthOfTextView())
         return rval
-        
+
     def executeLine_(self, line):
         self.addHistoryLine_(line)
         self._executeWithRedirectedIO(self._executeLine_, line)
@@ -322,7 +322,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         if len(self._history) > self.historyLength():
             self._history.pop(0)
         return True
-        
+
     def historyDown_(self, sender):
         if self._historyView == (len(self._history) - 1):
             return
@@ -338,11 +338,11 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         self._historyView -= 1
         self.replaceLineWithCode_(self._history[self._historyView])
         self.moveToEndOfLine_(self)
-            
+
     #
     #  Convenience methods to create/write decorated text
     #
-    
+
     def _formatString_forOutput_(self, s, name):
         return NSAttributedString.alloc().initWithString_attributes_(
             s,
@@ -389,9 +389,9 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     writeStdout_  = lambda self, s: self._writeString_forOutput_(s, 'stdout')
 
     #
-    #  Accessors 
+    #  Accessors
     #
-    
+
     def more(self):
         return self._more
 
@@ -412,13 +412,13 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
 
     def setStdoutColor_(self, color):
         self._stdoutColor = color
-     
+
     def codeColor(self):
         return self._codeColor
 
     def setStdoutColor_(self, color):
         self._codeColor = color
-        
+
     def isInteracting(self):
         return self._isInteracting
 
@@ -435,7 +435,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     #
     #  Convenience methods for manipulating the NSTextView
     #
-    
+
     def currentLine(self):
         return self.textView.textStorage().mutableString()[self.characterIndexForInput():]
 
@@ -456,7 +456,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     #
     #  NSTextViewDelegate methods
     #
-    
+
     def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, (begin, length), index):
         txt = self.textView.textStorage().mutableString()
         end = begin+length
@@ -494,7 +494,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
             # no cursor movement off the interactive line
             return fromRange
         return toRange
-    
+
     def textView_doCommandBySelector_(self, aTextView, aSelector):
         # deleteForward: is ctrl-d
         if self.isInteracting():
@@ -513,7 +513,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     #
     #  doCommandBySelector "posers" on the textView
     #
-    
+
     def insertTabIgnoringFieldEditor_(self, sender):
         # this isn't terribly necessary, b/c F5 and opt-esc do completion
         # but why not
@@ -532,7 +532,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
             self.textView.setSelectedRange_((pos, begin+length-pos))
         else:
             self.moveToBeginningOfLine_(sender)
-    
+
     def moveToEndOfLineAndModifySelection_(self, sender):
         begin, length = self.textView.selectedRange()
         pos = max(self.characterIndexForInput(), begin)
@@ -542,13 +542,13 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         line = self.currentLine()
         self.writeCode_('\n')
         self.executeInteractiveLine_(line)
-    
+
     moveToBeginningOfParagraph_ = moveToBeginningOfLine_
     moveToEndOfParagraph_ = moveToEndOfLine_
     insertNewlineIgnoringFieldEditor_ = insertNewline_
     moveDown_ = historyDown_
     moveUp_ = historyUp_
-    
+
 
 if __name__ == '__main__':
     AppHelper.runEventLoop()

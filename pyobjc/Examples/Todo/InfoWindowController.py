@@ -114,7 +114,7 @@ class InfoWindowController (AutoBaseClass):
     sharedInfoWindowController = selector(
         sharedInfoWindowController, isClassMethod=1)
 
-    
+
     def init(self):
         # XXX: Not sure if the native code works correctly if the return value
         # from super != self.
@@ -155,7 +155,7 @@ class InfoWindowController (AutoBaseClass):
 
         self.notesView.retain()
         self.notesView.removeFromSuperview()
-        
+
         self.infoWindowViews = None
 
         self.infoNotes.setDelegate_(self)
@@ -181,7 +181,7 @@ class InfoWindowController (AutoBaseClass):
 
 
     def __del__(self): # dealloc
-        
+
         NSNotificationCenter.defaultCenter().removeObserver_(self)
 
         # Cannot to this
