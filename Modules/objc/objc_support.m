@@ -730,6 +730,10 @@ pythonify_c_value (const char *type, void *datum)
   return retobject;
 }
 
+/* XXX: This function shouldn't return a string, but should raise a
+ * python exception and return 0 or -1: we could do better error handling 
+ * that way.
+ */
 const char *
 depythonify_c_value (const char *type, PyObject *argument, void *datum)
 {
@@ -845,6 +849,17 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	 * encoding (which is ASCII and may be different from the NSString
 	 * default encoding)
 	 */
+	unsigned char* strval = (unsigned char*)PyString_AS_STRING(argument);
+	int   len = PyString_GET_SIZE(argument);
+	int   i;
+
+	for (i = 0; i < len; i++) {
+		if (strval[i] >= 128) {
+			error = "string with ordinals in range(128)";
+			return error;
+		}
+	}
+
 	*(id *) datum = [NSString 
 			stringWithCString:PyString_AS_STRING(argument)
 				  length:PyString_GET_SIZE(argument)];
