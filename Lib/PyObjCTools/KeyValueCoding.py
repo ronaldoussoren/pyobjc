@@ -156,3 +156,17 @@ def setKeyPath(obj, keypath, value):
         cur = getKey(cur, e)
 
     return setKey(cur, elements[-1], value)
+
+class KeyValueCodingMixIn:
+    def valueForKey_(self, aKey):
+        return getKey(self, aKey)
+
+    def takeValue_forKey_(self, aValue, aKey):
+        return setKey(self, aKey, aValue)
+
+    def valueForKeyPath_(self, aKey):
+        return getKeyPath(self, aKey)
+                    
+    def takeValue_forKeyPath_(self, aValue, aKey):
+        return setKeyPath(self, aKey, aValue)
+
