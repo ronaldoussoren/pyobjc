@@ -22,6 +22,12 @@ by default, but it is part of Apple's free Developer Tools, which can
 be gotten from http://developer.apple.com/tools as a hefty 300 MB download
 after registering (for free).
 
+This tutorial shows a number of shell commands. It uses the syntax used by
+the ``bash`` shell (the default shell on Mac OS X 10.3). If you're using a 
+``csh`` you'll have to adapt those commands a little. In ``bash`` you can
+modify shell variables using the syntax ``NAME=value``, in ``csh`` you do
+the same using ``setenv NAME value``.
+
 Getting Started
 ---------------
 
@@ -31,18 +37,6 @@ Getting Started
    but Apple's ``/usr/bin/python`` comes first in your ``$PATH``. Make sure you
    use the right python whereever it says ``python`` in this tutorial.
    
-   For convenience, set a shell variable PYLIB
-   to the Python Lib directory. For MacPython-2.3 this will be::
-   
-       $ setenv PYLIB /Library/Frameworks/Python.framework/Versions/Current/lib/python2.3
-       
-   or if you use bash as your shell::
-   
-       $ export PYLIB=/Library/Frameworks/Python.framework/Versions/Current/lib/python2.3
-       
-   For Apple's ``/usr/bin/python`` set the variable to ``/usr/lib/python2.2``,
-   if you are running on MacOS X set it to ``/System/Library/Frameworks/Python.framework/Versions/Current/lib/python2.3``.
-           
 2. Start Interface Builder, select *Cocoa Application*
    in the new file dialog, save this file as ``src/MainMenu.nib``.
    
@@ -63,11 +57,11 @@ Getting Started
    parse the NIB file and create a skeleton module for you. Invoke
    it as follows (from the ``src`` directory)::
    
-       $ python $PYLIB/site-packages/PyObjC/PyObjCTools/NibClassBuilder.py \
-               MainMenu.nib > CurrencyConverter.py
+       $ NCB="`python -c 'from PyObjCTools import NibClassBuilder; print NibClassBuilder.__file__'`"
+       $ python "${NCB}" MainMenu.nib > CurrencyConverter.py
                
    The result of this can be seen in step4-CurrencyConverter.py_.
-   
+
 .. _step4-CurrencyConverter.py: step4-CurrencyConverter.py
                
 5. There is no step 5.
@@ -79,15 +73,10 @@ Testing the user interface
    in the future it could well be that this step is not needed during 
    development, or that it becomes simpler, but for now we do the following::
    
-       $ python $PYLIB/site-packages/PyObjC/bundlebuilder.py --link --nib=MainMenu \
+       $ BB="`python -c 'import bundlebuilder; print bundlebuilder.__file__'`"
+       $ python "${BB}" --link --nib=MainMenu \
                --mainprogram=CurrencyConverter.py --resource=MainMenu.nib build
 
-   If you are using Python 2.3 the script is located in ``plat-mac`` instead
-   of ``site-packages`` and the command is::
-
-       $ python2.3 $PYLIB/plat-mac/bundlebuilder.py --link --nib=MainMenu \
-               --mainprogram=CurrencyConverter.py --resource=MainMenu.nib build
-               
    There are a few things to note:
    
    - We use the ``--link`` argument. This creates a ``.app`` bundle which has symlinks
