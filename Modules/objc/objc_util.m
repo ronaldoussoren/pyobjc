@@ -75,10 +75,10 @@ void ObjCErr_FromObjC(NSException* localException)
 	if (userInfo) {
 		id val;
 
-		val = [userInfo objectForKey:@"__pyobjc_exc_value__"];
+		val = [userInfo objectForKey:@"__pyobjc_exc_type__"];
 		if (val) {
-			exc_value = [val pyObject];
-			exc_type = [[userInfo objectForKey:@"__pyobjc_exc_type__"] pyObject];
+			exc_type = [val pyObject];
+			exc_value = [[userInfo objectForKey:@"__pyobjc_exc_value__"] pyObject];
 			exc_traceback = [[userInfo objectForKey:@"__pyobjc_exc_traceback__"] pyObject];
 			PyErr_Restore(exc_type, exc_value , exc_traceback);
 			return;
@@ -184,14 +184,16 @@ void ObjCErr_ToObjC(void)
 	repr = PyObject_Str(exc_value);
 	userInfo = [NSMutableDictionary dictionaryWithCapacity: 3];
 	[userInfo setObject:
-		[OC_PythonObject newWithObject:exc_value]
-		forKey:@"__pyobjc_exc_value__"];
-	[userInfo setObject:
 		[OC_PythonObject newWithObject:exc_type]
 		forKey:@"__pyobjc_exc_type__"];
-	[userInfo setObject:
-		[OC_PythonObject newWithObject:exc_traceback]
-		forKey:@"__pyobjc_exc_traceback__"];
+	if (exc_value != NULL)
+		[userInfo setObject:
+			[OC_PythonObject newWithObject:exc_value]
+			forKey:@"__pyobjc_exc_value__"];
+	if (exc_traceback != NULL)
+		[userInfo setObject:
+			[OC_PythonObject newWithObject:exc_traceback]
+			forKey:@"__pyobjc_exc_traceback__"];
 
 	val = [NSException 
 		exceptionWithName:@"OC_PythonException"
@@ -205,7 +207,6 @@ void ObjCErr_ToObjC(void)
 		NSLog(@"PyObjC: Converting exception to Objective-C:");
 		PyErr_Print();
 	} else {
-
 		Py_DECREF(exc_type);
 		Py_XDECREF(exc_value);
 		Py_XDECREF(exc_traceback);
