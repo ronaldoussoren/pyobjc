@@ -16,3 +16,13 @@ for framework in ["AppKit", "Foundation", "AddressBook", "InterfaceBuilder"]:
     protfile = file(os.path.join(libdir, framework, "protocols.py"), "w")
     print "generating protocols for", framework
     genProtocols(path, protfile)
+
+# Optional frameworks
+for framework in ["WebKit", ]:
+    path = "/System/Library/Frameworks/%s.framework" % framework
+    protfile = file(os.path.join(libdir, framework, "protocols.py"), "w")
+
+    if not os.path.exists(path): continue
+
+    print "generating protocols for", framework
+    genProtocols(path, protfile)

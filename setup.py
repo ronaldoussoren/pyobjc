@@ -344,6 +344,9 @@ if sys.version >= '2.3':
     InterfaceBuilderDepends = {
         'depends': glob.glob('Modules/InterfaceBuilder/*.inc'),
     }
+    WebKitDepends = {
+        'depends': glob.glob('Modules/WebKit/*.inc'),
+    }
 else:
     FoundationDepends = {}
     AppKitDepends = {}
@@ -352,6 +355,7 @@ else:
     AddressBookDepends = {}
     PrefPanesDepends = {}
     InterfaceBuilderDepends = {}
+    WebKitDepends = {}
 
 CocoaExtensions = [
           Extension("Foundation._Foundation", 
@@ -438,6 +442,21 @@ InterfaceBuilderPackages, InterfaceBuilderExtensions = \
                       ),
         ])
 
+WebKitPackages, WebKitExtensions = \
+        IfFrameWork('WebKit.framework', [ 'WebKit' ], [
+            Extension('WebKit._WebKit',
+                      [ 'Modules/WebKit/_WebKit.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=[
+                        '-framework', 'WebKit', 
+                        '-framework', 'Foundation'
+                      ],
+                      **WebKitDepends
+                      ),
+        ])
+
 
 def package_version():
     fp = open('Modules/objc/pyobjc.h', 'r')
@@ -449,7 +468,7 @@ def package_version():
     raise ValueError, "Version not found"
 
 
-packages = CorePackages + CocoaPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + ScreenSaverPackages + [ 'PyObjCTools' ] 
+packages = CorePackages + CocoaPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + ScreenSaverPackages + WebKitPackages + [ 'PyObjCTools' ] 
 # The following line is needed to allow separate flat modules
 # to be installed from a different folder (needed for the 
 # bundlebuilder test below).
@@ -489,6 +508,7 @@ dist = setup(name = "pyobjc",
                            + PrefPanesExtensions
                            + InterfaceBuilderExtensions
                            + ScreenSaverExtensions
+                           + WebKitExtensions
 			   ),
 	     packages = packages,
 	     package_dir = package_dir,

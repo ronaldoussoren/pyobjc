@@ -6,6 +6,7 @@
 #
 # NOTES:
 # - This script is probably MacOSX specific.
+# - This script should be rewritten, it's getting unmaintainable.
 #
 import enum_generator
 import strconst_generator
@@ -24,24 +25,31 @@ FOUNDATION=os.path.join(FRAMEWORKS, "Foundation.framework")
 APPKIT=os.path.join(FRAMEWORKS, "AppKit.framework")
 ADDRESSBOOK=os.path.join(FRAMEWORKS, "AddressBook.framework")
 PREFPANES=os.path.join(FRAMEWORKS, "PreferencePanes.framework")
+WEBKIT=os.path.join(FRAMEWORKS, "WebKit.framework")
 IB=os.path.join(FRAMEWORKS, "InterfaceBuilder.framework")
 FOUNDATION_HDRS=os.path.join(FOUNDATION, 'Headers')
 APPKIT_HDRS=os.path.join(APPKIT, 'Headers')
 ADDRESSBOOK_HDRS=os.path.join(ADDRESSBOOK, 'Headers')
 PREFPANES_HDRS=os.path.join(PREFPANES, 'Headers')
 IB_HDRS=os.path.join(IB, 'Headers')
+WEBKIT_HDRS=os.path.join(WEBKIT, 'Headers')
 
 enum_generator.generate(FOUNDATION_HDRS, 'Modules/Foundation/_Fnd_Enum.inc')
 enum_generator.generate(APPKIT_HDRS, 'Modules/AppKit/_App_Enum.inc')
 enum_generator.generate(ADDRESSBOOK_HDRS, 'Modules/AddressBook/_Addr_Enum.inc')
 enum_generator.generate(PREFPANES_HDRS, 'Modules/PreferencePanes/_PrefPanes_Enum.inc')
 enum_generator.generate(IB_HDRS, 'Modules/InterfaceBuilder/_InterfaceBuilder_Enum.inc')
+enum_generator.generate(WEBKIT_HDRS, 'Modules/WebKit/_WebKit_Enum.inc')
 
 strconst_generator.generate(FOUNDATION_HDRS, 'Modules/Foundation/_Fnd_Str.inc')
 strconst_generator.generate(APPKIT_HDRS, 'Modules/AppKit/_App_Str.inc')
 strconst_generator.generate(ADDRESSBOOK_HDRS, 'Modules/AddressBook/_Addr_Str.inc')
 strconst_generator.generate(PREFPANES_HDRS, 'Modules/PreferencePanes/_PrefPanes_Str.inc')
 strconst_generator.generate(IB_HDRS, 'Modules/InterfaceBuilder/_InterfaceBuilder_Str.inc')
+
+# The two items on the ignore-list cause link errors, to-be-investigated.
+strconst_generator.generate(WEBKIT_HDRS, 'Modules/WebKit/_WebKit_Str.inc', ignore=('WebElementImageAltStringKey', 'WebPreferencesChangedNotification')
+)
 
 FOUNDATION_PREFIX="FOUNDATION_EXPORT"
 FOUNDATION_IGNORE_LIST=(
