@@ -1309,7 +1309,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 				} else {
 					/* just encode */
 	  				error = depythonify_c_value (
-						argtype+2, 
+						argtype+1, 
 						argument, 
 						argbuffer);
 					if (!error) {

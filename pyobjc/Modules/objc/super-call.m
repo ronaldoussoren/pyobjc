@@ -130,6 +130,8 @@ simplify_signature(char* signature, char* buf, size_t buflen)
 	 */
 	[sig release]; 
 }
+
+
 	
 int ObjC_RegisterSignatureMapping(
 	char*           signature,
@@ -266,13 +268,52 @@ find_signature(char* signature)
 	return r;
 }
 
+#ifdef OC_WITH_LIBFFI
+static struct registry* create_ffi(char* signature)
+{
+	IMP ffiImp = NULL;
+	int r;
+
+	PyErr_Clear();
+
+	ffiImp = ObjC_MakeIMPForSignature(signature);
+	if (ffiImp == NULL) 
+		goto error;
+
+	r = ObjC_RegisterSignatureMapping(signature, ObjC_FFICaller, ffiImp);
+	if (r == -1) {
+		PyErr_Print();
+		goto error;
+	}
+
+	return find_signature(signature);
+error:
+	/* TODO: Clean up ffiImp */
+	return NULL;
+}
+
+#endif /* OC_WITH_LIBFFI */
+
+
 IMP ObjC_FindIMPForSignature(char* signature)
 {
 	struct registry* r;
 
 	r = find_signature(signature);
+	if (r) {
+		return r->call_to_python;
+	}
 
-	return r?r->call_to_python:NULL;
+#ifdef OC_WITH_LIBFFI
+
+	r = create_ffi(signature);
+	if (r) {
+		return r->call_to_python;
+	}
+
+#endif /* OC_WITH_LIBFFI */
+
+	return NULL;
 }
 
 IMP ObjC_FindIMP(Class class, SEL sel)
@@ -305,6 +346,16 @@ IMP ObjC_FindIMP(Class class, SEL sel)
 	if (generic) {
 		return generic->call_to_python;
 	}
+
+#ifdef OC_WITH_LIBFFI
+
+	generic = create_ffi(ObjCSelector_Signature(objc_sel));
+	if (generic) {
+		return generic->call_to_python;
+	}
+
+#endif /* OC_WITH_LIBFFI */
+
 	return NULL;
 }
 
@@ -334,5 +385,15 @@ ObjC_CallFunc_t ObjC_FindSupercaller(Class class, SEL sel)
 	if (generic) {
 		return generic->call_to_super;
 	}
+
+#ifdef OC_WITH_LIBFFI
+
+	generic = create_ffi(m->method_types);
+	if (generic) {
+		return generic->call_to_super;
+	}
+
+#endif /* OC_WITH_LIBFFI */
+
 	return NULL;
 }

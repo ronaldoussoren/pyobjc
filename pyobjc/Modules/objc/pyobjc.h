@@ -198,4 +198,11 @@ PyObject* ObjCIPFindInfo(PyObject* obj, SEL selector);
 /* See alloc_hack.m */
 int ObjC_InstallAllocHack(void);
 
+#ifdef OC_WITH_LIBFFI
+
+IMP ObjC_MakeIMPForSignature(char* signature);
+PyObject *ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args);
+
+#endif /* OC_WITH_LIBFFI */
+
 #endif /* META_H */
