@@ -15,6 +15,9 @@ Version 1.2 (2004-??-??)
 - Rewrote the code-generating scripts, they now generate Python code and
   are exported in the ``PyObjCTools.WrapperGenerator`` module.
   [UNFINISHED]
+ 
+- objc.runtime will now raise AttributeError instead of objc.nosuchclass_error
+  when a class is not found.
 
 
 Version 1.1 (2004-05-30)
