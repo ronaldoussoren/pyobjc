@@ -28,8 +28,5 @@ extern NSMapTableValueCallBacks ObjC_PointerValueCallBacks;
 extern NSMapTableKeyCallBacks ObjC_PyObjectKeyCallBacks;
 extern NSMapTableValueCallBacks ObjC_PyObjectValueCallBacks;
 
-char* get_refcnt(PyObject* obj);
-char* get_refs(PyObject* obj);
-
 
 #endif /* OBJC_UTIL */

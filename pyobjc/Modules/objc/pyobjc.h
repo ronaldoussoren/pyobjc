@@ -87,7 +87,6 @@ typedef struct {
 #define PyObjCObject_kUNINITIALIZED 	0x01
 typedef struct {
 	PyObject_HEAD
-	PyObject* weak_refs;
 	id        objc_object;
 	int 	  flags;
 } PyObjCObject;

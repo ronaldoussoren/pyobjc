@@ -36,6 +36,14 @@ Version 0.10CVS (Work in progress):
   attributes to Objective-C objects. This was never the intention and had 
   very odd semantics. Pure Objective-C objects not longer have a __dict__.
 
+- Weakrefs are no longer used in the implementation of the bridge. Because
+  the weakrefs to proxy objects isn't very usefull the entire feature has 
+  been removed: It is no longer possible to create weakrefs to Objective-C
+  objects. 
+
+  NOTE: You could create weakrefs in previous versions, but those would
+  expire as soon as the last reference from Python died, *not* when the 
+  Objective-C object died.
 
 Version 0.9.1 (May-??-2003):
 

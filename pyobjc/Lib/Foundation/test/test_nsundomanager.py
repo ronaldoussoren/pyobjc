@@ -18,6 +18,9 @@ class TestNSUndoManager(unittest.TestCase):
 
         self.assertEquals(l[0], 1)
 
+    def __del__(self):
+        objc.recycle_autorelease_pool()
+
 ## Undo Integer test
 ## From David Eppstein
 # test ability of int argument to pass through undo and then
@@ -49,6 +52,9 @@ class TestUndoInt(unittest.TestCase):
 class TestSubclassingUndo(unittest.TestCase):
     # Bugreport: 678759 Subclassing NSUndoManager fails
 
+    pass
+
+if 0:
     def testSubclass(self):
         class UndoSubclass (NSUndoManager):
             pass

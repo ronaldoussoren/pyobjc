@@ -44,8 +44,7 @@ PyObjCPointer_unpack (PyObjCPointer *self, PyObject *args)
               return NULL;
             }
           else
-            return pythonify_c_value (PyString_AS_STRING (self->type),
-                                      self->ptr);
+            return pythonify_c_value (type, self->ptr);
         }
       else
         {

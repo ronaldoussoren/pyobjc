@@ -55,7 +55,11 @@
 
 - (NSString *) description
 {
-	PyObject *repr = PyObject_Repr (pyObject);
+	PyObject *repr;
+
+	if (pyObject == NULL) return @"no python object";
+	
+	repr = PyObject_Repr (pyObject);
 	if (repr) {
 		int err;
 		NSString* result;

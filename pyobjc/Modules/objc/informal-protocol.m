@@ -183,6 +183,7 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
 			"First argument is not an objc.informal_protocol");
 		return 0;
 	}
+	/* XXX: should use PySequence_Fast */
 	len = PySequence_Length(self->selectors);
 	for (i = 0; i < len; i++) {
 		cur = PySequence_GetItem(self->selectors, i);

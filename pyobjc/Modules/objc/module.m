@@ -175,9 +175,9 @@ static 	char* keywords[] = { "callback", NULL };
 		return NULL;
 	}
 	
+	Py_INCREF(callback);
 	Py_XDECREF(ObjC_class_extender);
 	ObjC_class_extender = callback;
-	Py_INCREF(ObjC_class_extender);
 
 	Py_INCREF(Py_None);
 	return Py_None;

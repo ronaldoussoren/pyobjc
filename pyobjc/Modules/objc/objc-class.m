@@ -31,6 +31,9 @@ static int add_class_fields(Class objc_class, PyObject* dict);
  * The struct class_info contains the additional information for a class object,
  * and class_to_objc stores a mapping from a class object to its additional
  * information.
+ *
+ * In Python 2.3 we can, and do, store the additional information directly in
+ * the type struct.
  */
 
 #if PY_VERSION_HEX < 0x020300A2 /* Python 2.2 and early 2.3 alpha's */
@@ -58,7 +61,7 @@ get_class_info(PyObject* class)
 	PyObjC_class_info* info;
 
 	if (class_to_objc == NULL) {
-		class_to_objc = NSCreateMapTable(ObjC_PyObjectKeyCallBacks,
+		class_to_objc = NSCreateMapTable(ObjC_PointerKeyCallBacks,
 			ObjC_PointerValueCallBacks, 500);
 	}
 
@@ -77,6 +80,7 @@ get_class_info(PyObject* class)
 	info->sel_to_py = NULL;
 	info->method_magic = 0;
 
+	Py_INCREF(class); 
 	NSMapInsert(class_to_objc, class, info);
 	return info;
 }
@@ -106,7 +110,7 @@ objc_class_register(Class objc_class, PyObject* py_class)
 {
 	if (class_registry == NULL) {
 		class_registry = NSCreateMapTable(ObjC_PointerKeyCallBacks,
-			ObjC_PyObjectValueCallBacks, 500);
+			ObjC_PointerValueCallBacks, 500);
 	}
 
 	if (NSMapGet(class_registry, objc_class)) {
@@ -114,6 +118,7 @@ objc_class_register(Class objc_class, PyObject* py_class)
 		return -1;
 	}
 
+	Py_INCREF(py_class); 
 	NSMapInsert(class_registry, objc_class, py_class);
 
 	return 0;
@@ -326,7 +331,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			}
 		}
 	}
-
+	
 	Py_DECREF(protocols);
 	protocols = NULL;
 
@@ -394,8 +399,12 @@ class_repr(PyObject* obj)
 static void
 class_dealloc(PyObject* cls)
 {
+	char buf[1024];
+
+	snprintf(buf, sizeof(buf), "Deallocating objective-C class %s", ((PyTypeObject*)cls)->tp_name);
+
 	/* This should never happen */
-	Py_FatalError("Deallocating objective-C class");
+	Py_FatalError(buf);
 }
 
 void 
@@ -828,7 +837,6 @@ PyObjCClass_New(Class objc_class)
 	}
 	PyErr_Clear();
 
-
 	dict = PyDict_New();
 	PyDict_SetItemString(dict, "__slots__", PyTuple_New(0));
 
@@ -1046,5 +1054,3 @@ PyObjCClass_HasPythonImplementation(PyObject* cls)
 	info = get_class_info(cls);
 	return info->hasPythonImpl;
 }
-
-
