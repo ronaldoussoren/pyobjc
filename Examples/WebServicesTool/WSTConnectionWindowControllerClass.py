@@ -60,14 +60,14 @@ class WSTConnectionWindowController(NSWindowController):
         '_methodPrefix' )
     
     def connectionWindowController(self):
-        return WSTConnectionWindowController.alloc().init()
+        return WSTConnectionWindowController.alloc().init().autorelease()
            
     def init(self):
         self = self.initWithWindowNibName_("WSTConnection")
         
         self._toolbarItems = NSMutableDictionary.alloc().init()
         self._toolbarDefaultItemIdentifiers = NSMutableArray.alloc().init()
-        self._toolbarAllowedItemIdentifiers = NSMutableArray.alloc().init()\
+        self._toolbarAllowedItemIdentifiers = NSMutableArray.alloc().init()
         
         self._methods = []
                 
