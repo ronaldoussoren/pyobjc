@@ -740,6 +740,9 @@ LONGLONG_NUMBERS=[-(1L<<36)+2, -44, 0, 44, (1L<<36)+2]
 ULONGLONG_NUMBERS=[0, 44, (1L<<36)+4]
 FLOAT_NUMBERS = [ makeCFloat(0.1), makeCFloat(100.0) ]
 DOUBLE_NUMBERS = [ 1.5, 3.5, 1e10, 1.99e10 ]
+OBJECTS = [ "hello", 1.0, range(4), lambda x: 10 ]
+DUMMY_OBJECTS = [ (0xabcd, 0xfedcba), (1, 1), (-10, -10), (-4, -5), (0, 0), (10, 20) ]
+POINTS=[ (1.0, 2.0), (1e10, 2e10), (-0.5, 0.5) ]
 
 class MyPyClass:
     def __init__(self):
@@ -748,17 +751,10 @@ class MyPyClass:
     def reset(self):
         self.idx = 0
 
-    def longFunc(self):
+    def idFunc(self):
         i = self.idx
         self.idx += 1
-        return LONG_NUMBERS[i]
-    longFunc = objc.selector(longFunc, signature='l@:')
-
-    def ulongFunc(self):
-        i = self.idx
-        self.idx += 1
-        return ULONG_NUMBERS[i]
-    ulongFunc = objc.selector(ulongFunc, signature='L@:')
+        return OBJECTS[i]
 
 class MyOCClass (objc.lookUpClass('NSObject')):
     def __init__(self):
@@ -802,7 +798,24 @@ class MyOCClass (objc.lookUpClass('NSObject')):
         self.idx += 1
         return DOUBLE_NUMBERS[i]
     doubleFunc = objc.selector(doubleFunc, signature='d@:')
-        
+
+    def idFunc(self):
+        i = self.idx
+        self.idx += 1
+        return OBJECTS[i]
+
+    def dummyFunc(self):
+        i = self.idx
+        self.idx += 1
+        return DUMMY_OBJECTS[i]
+    dummyFunc = objc.selector(dummyFunc, signature=OC_TestClass1.dummyFunc.signature)
+
+    def nspointFunc(self):
+        i = self.idx
+        self.idx += 1
+        return POINTS[i]
+    nspointFunc = objc.selector(nspointFunc, signature=OC_TestClass1.nspointFunc.signature)
+
 class OCPyTestSimpleCalls(unittest.TestCase):
     #
     # Test argument passing of single basic values by reference.
@@ -845,8 +858,7 @@ class OCPyTestSimpleCalls(unittest.TestCase):
         self.ocobj.reset()
 
         for o in LONGLONG_NUMBERS:
-            #self.assertEquals(self.obj.callInstanceLongLongFuncOf_(self.ocobj), o)
-            pass
+            self.assertEquals(self.obj.callInstanceLongLongFuncOf_(self.ocobj), o)
 
     def testILongLong(self):
         self.pyobj.reset()
@@ -860,8 +872,7 @@ class OCPyTestSimpleCalls(unittest.TestCase):
         self.ocobj.reset()
 
         for o in ULONGLONG_NUMBERS:
-            #self.assertEquals(self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj), o)
-            pass
+            self.assertEquals(self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj), o)
 
     def testIULongLong(self):
         self.pyobj.reset()
@@ -877,12 +888,82 @@ class OCPyTestSimpleCalls(unittest.TestCase):
         for o in FLOAT_NUMBERS:
             self.assertEquals(self.obj.callInstanceFloatFuncOf_(self.ocobj), o)
 
+    def testIFloat(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in FLOAT_NUMBERS:
+            self.assertEquals(self.obj.invokeInstanceFloatFuncOf_(self.ocobj), o)
+
+    def testCDouble(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in DOUBLE_NUMBERS:
+            self.assertEquals(self.obj.callInstanceDoubleFuncOf_(self.ocobj), o)
+
     def testIDouble(self):
         self.pyobj.reset()
         self.ocobj.reset()
 
         for o in DOUBLE_NUMBERS:
             self.assertEquals(self.obj.invokeInstanceDoubleFuncOf_(self.ocobj), o)
+
+    def testCId(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in OBJECTS:
+            self.assertEquals(self.obj.callInstanceIdFuncOf_(self.ocobj), o)
+
+    def testIId(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in OBJECTS:
+            self.assertEquals(self.obj.invokeInstanceIdFuncOf_(self.ocobj), o)
+
+    def testCId2(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in OBJECTS:
+            self.assertEquals(self.obj.callInstanceIdFuncOf_(self.pyobj), o)
+
+    def testIId2(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in OBJECTS:
+            self.assertEquals(self.obj.invokeInstanceIdFuncOf_(self.pyobj), o)
+
+    def testCStruct1(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in DUMMY_OBJECTS:
+            self.assertEquals(self.obj.callInstanceDummyFuncOf_(self.ocobj), o)
+
+    def testIStruct1(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in DUMMY_OBJECTS:
+            self.assertEquals(self.obj.invokeInstanceDummyFuncOf_(self.ocobj), o)
+
+    def testCNSPoint(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in POINTS:
+            self.assertEquals(self.obj.callInstanceNSPointFuncOf_(self.ocobj), o)
+
+    def testINSPoint(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in POINTS:
+            self.assertEquals(self.obj.invokeInstanceNSPointFuncOf_(self.ocobj), o)
 
 
 def suite():
