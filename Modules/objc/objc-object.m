@@ -134,6 +134,7 @@ object_dealloc(PyObject* obj)
 	/* XXX: This should not be necessary, but if we don't do this we
 	 * sometimes loose exception information...
 	 */
+	PyThreadState *_save;
 	PyObject* ptype, *pvalue, *ptraceback;
 	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
@@ -149,20 +150,24 @@ object_dealloc(PyObject* obj)
 		/* pass */
 	} else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
 		/* Lets hope 'init' is always a valid initializer */
+		Py_UNBLOCK_THREADS
 		NS_DURING
 			[[((PyObjCObject*)obj)->objc_object init] release];
 		NS_HANDLER
 			NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
 				localException);
 		NS_ENDHANDLER
+		Py_BLOCK_THREADS
 		((PyObjCObject*)obj)->objc_object = nil;
 	} else {
+		Py_UNBLOCK_THREADS
 		NS_DURING
 			[((PyObjCObject*)obj)->objc_object release];
 		NS_HANDLER
 			NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
 				localException);
 		NS_ENDHANDLER
+		Py_BLOCK_THREADS
 		((PyObjCObject*)obj)->objc_object = nil;
 	}
 
@@ -329,12 +334,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	namestr = PyString_AS_STRING(name);
 
 	if (!PyObjCObject_IsClassic(obj)) {
-		NS_DURING
-			res = PyObjCSelector_FindNative(obj, namestr);
-		NS_HANDLER
-			PyObjCErr_FromObjC(localException);
-			res = NULL;
-		NS_ENDHANDLER
+		res = PyObjCSelector_FindNative(obj, namestr);
 		if (res) goto done;
 	}
 
