@@ -13,8 +13,6 @@ class CGraphView(NibClassBuilder.AutoBaseClass):
 		self.gain = 0.5
 	
 	def initWithFrame_(self, frame):
-		self.graphCenter = (frame[1][0]/2, frame[1][1]/2)
-		self.graphRadius = frame[1][0]/2 - 4
 		super(CGraphView, self).initWithFrame_(frame)
 		self.setGridColor()
 		self.setRmsColor()
@@ -38,15 +36,16 @@ class CGraphView(NibClassBuilder.AutoBaseClass):
 		
 	def setPath(self, path, maxMag):
 		self.path = path
-		transform = NSAffineTransform.transform()
-		center = self.graphCenter
-		transform.translateXBy_yBy_(center[0], center[1])
-                if maxMag < 1e-5:
-                    maxMag = 1e-5
-		transform.scaleBy_(self.graphRadius  / maxMag)
-		self.path.transformUsingAffineTransform_(transform)
+		if maxMag < 1e-5:
+			# prevent divide by zero
+			maxMag = 1e-5
+		self.maxMag = maxMag
 		
 	def drawRect_(self, rect):
+		frame = self.frame()
+		self.graphCenter = (frame[1][0]/2, frame[1][1]/2)
+		self.graphRadius = min(frame[1][0], frame[1][1]) / 2 - 4
+		
 		NSColor.whiteColor().set()
 		NSRectFill(self.bounds())
 		
@@ -88,5 +87,11 @@ class CGraphView(NibClassBuilder.AutoBaseClass):
 		path.stroke()
 
 	def drawField(self):
+		transform = NSAffineTransform.transform()
+		center = self.graphCenter
+		transform.translateXBy_yBy_(center[0], center[1])
+		transform.scaleBy_(self.graphRadius / self.maxMag)
+		path = self.path.copy()
+		path.transformUsingAffineTransform_(transform)
 		self.graphColor.set()
-		self.path.stroke()
+		path.stroke()
