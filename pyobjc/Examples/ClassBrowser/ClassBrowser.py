@@ -8,6 +8,8 @@ This creates a directory "build" containing PythonBrowser.app. (The
 --link option causes the files to be symlinked to the .app bundle instead
 of copied. This means you don't have to rebuild the app if you edit the
 sources or nibs.)
+
+See also the iClass demo.
 """
 
 from PyObjCTools import NibClassBuilder, AppHelper
