@@ -20,7 +20,11 @@ NibClassBuilder.extractClasses("MainMenu")
 
 ROWCOUNT = 200
 
+# class defined in MainMenu.nib
 class PyModel(NibClassBuilder.AutoBaseClass):
+    # the actual base class is NSObject
+    # The following outlets are added to the class:
+    # tableView
 
     def awakeFromNib(self):
         self.editedFields = {}
@@ -51,7 +55,6 @@ class PyModel(NibClassBuilder.AutoBaseClass):
 
     def tableView_setObjectValue_forTableColumn_row_(
             self, aTableView, anObject, aTableColumn, rowIndex):
-        col = aTableColumn.identifier()
         self.editedFields[(aTableColumn, rowIndex)] = anObject
 
     # delegate methods
