@@ -584,6 +584,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			[obj release];
 		}
 	}
+
 	return res;
 }
 

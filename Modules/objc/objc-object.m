@@ -110,7 +110,7 @@ object_dealloc(PyObject* obj)
 			NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
 				localException);
 		NS_ENDHANDLER
-
+		((PyObjCObject*)obj)->objc_object = nil;
 	} else {
 		NS_DURING
 			[((PyObjCObject*)obj)->objc_object release];
@@ -118,6 +118,7 @@ object_dealloc(PyObject* obj)
 			NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
 				localException);
 		NS_ENDHANDLER
+		((PyObjCObject*)obj)->objc_object = nil;
 	}
 
 	obj->ob_type->tp_free(obj);

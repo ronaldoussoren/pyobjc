@@ -32,7 +32,6 @@ call_NSObject_alloc(PyObject* method __attribute__((__unused__)),
 		result = nil;
 	NS_ENDHANDLER;
 
-
 	if (result == nil && PyErr_Occurred()) {
 		return NULL;
 	}

@@ -1089,7 +1089,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	byref = NULL;
 	[methinfo release];
 	methinfo = nil;
-	
+
 	return result;
 
 error_cleanup:
