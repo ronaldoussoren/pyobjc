@@ -193,7 +193,11 @@ CoreExtensions =  [
               extra_compile_args=[
                     "-DOBJC_PARANOIA_MODE",
               ] + LIBFFI_CFLAGS + CFLAGS,
-              extra_link_args=LIBFFI_LDFLAGS + OBJC_LDFLAGS)
+              extra_link_args=LIBFFI_LDFLAGS + OBJC_LDFLAGS),
+    Extension("autoGIL", 
+              ["Modules/autoGIL.c"],
+              extra_compile_args = CFLAGS,
+              extra_link_args = ['-framework', 'CoreFoundation']),
     ]
 CocoaPackages = [ 'Foundation', 'AppKit' ]
 CocoaExtensions = [
