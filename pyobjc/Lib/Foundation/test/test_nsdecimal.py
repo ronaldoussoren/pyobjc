@@ -38,8 +38,12 @@ class TestNSDecimal (unittest.TestCase):
 
         o = NSDecimal(1L << 64 - 1)
 
-        # This is wrong, explict conversion should be allowed!
-        #self.assertRaises(TypeError, NSDecimal, 1.2)
+        # Explicit conversion is supported, but might not do
+        # what a naive user expects...
+        o = NSDecimal(1.1)
+        self.assert_(isinstance(o, NSDecimal))
+        self.assertEquals(str(o), repr(1.1))
+
         self.assertRaises(OverflowError, NSDecimal, 1L << 128)
         self.assertRaises(OverflowError, NSDecimal, -1L << 128)
 
