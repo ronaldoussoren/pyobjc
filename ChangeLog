@@ -1,3 +1,7 @@
+2002-11-15  Bill Bumgarner  <bbum@codefab.com>
+	* Fixed a minor bug in NibLoader.py when specifying NIBs without
+	the .nib extension
+
 2002-11-15 Ronald Oussoren <oussoren@cistron.nl>
 	- Modules/objc: Remove sel_class_method and sel_allocator from
 	  selector objects, and introduce a sel_flags.
@@ -11,6 +15,10 @@
 	  instead of calling objc_class.__getattr__.
 
 2002-11-15  Bill Bumgarner  <bbum@codefab.com>
+	* Changed the names of various methods from loadNib to
+	loadClassesForNib to better follow the Cocoa APIs.
+	* Just rewrote the NibLoader.py;  added the new version.
+
 	* Modified NibLoader to not generate a class for FirstResponder.
 	* Integrated Just van Rossum's NibLoader script into the module.
 
