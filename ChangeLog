@@ -1,3 +1,15 @@
+2002-11-15 Ronald Oussoren <oussoren@cistron.nl>
+	- Modules/objc: Remove sel_class_method and sel_allocator from
+	  selector objects, and introduce a sel_flags.
+	- Modules/objc/selector.m: Add Python visible attributes that allow
+	  reflection to access more information about selectors/methods.
+	- Modules/objc/selector.m: donate_ref attribute is writable, allowing
+	  python code to update this flag. Should be used only in setup
+	  code.
+	- Also check for updated Objective-C method-tables in obj.__getattr__,
+	  PyObject_GenericGetAttr directly pokes into the class __dict__
+	  instead of calling objc_class.__getattr__.
+
 2002-11-15  Bill Bumgarner  <bbum@codefab.com>
 	* Modified NibLoader to not generate a class for FirstResponder.
 	* Integrated Just van Rossum's NibLoader script into the module.

@@ -47,6 +47,8 @@ PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector);
 void 	  ObjCClass_MaybeRescan(PyObject* class);
 int 	  ObjCClass_IsSubClass(Class child, Class parent);
 int 	  ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
+void ObjCClass_CheckMethodList(PyObject* cls);
+
 
 
 
@@ -78,14 +80,17 @@ extern char objcclass_descr_doc[];
 
 extern PyObject* allocator_dict;
 
+#define ObjCSelector_kCLASS_METHOD    0x1
+#define ObjCSelector_kDONATE_REF      0x2
+#define ObjCSelector_kREQUIRED        0x4
+
 #define ObjCSelector_HEAD \
 	PyObject_HEAD 			\
 	char*		sel_signature;  \
 	SEL		sel_selector;	\
 	PyObject*	sel_self;	\
-	int		sel_class_method;  \
-	int		sel_allocator;
-
+	Class		sel_class;	\
+	int		sel_flags;
 
 
 typedef struct {
@@ -94,7 +99,6 @@ typedef struct {
 
 typedef struct {
 	ObjCSelector_HEAD
-	Class		class;
 	ObjC_CallFunc_t sel_call_self; 
 	ObjC_CallFunc_t sel_call_super;
 } ObjCNativeSelector;
@@ -102,9 +106,6 @@ typedef struct {
 typedef struct {
 	ObjCSelector_HEAD
 	PyObject*	callable;
-
-	/* Protocol support: */
-	unsigned int	is_required:1;
 } ObjCPythonSelector;
 
 extern PyTypeObject ObjCSelector_Type;

@@ -4,6 +4,7 @@
 #include <Python.h>
 #include "pyobjc.h"
 #include <stddef.h>
+#include <objc/Object.h>
 
 #import <Foundation/NSString.h> /*XXX*/
 
@@ -79,7 +80,6 @@ find_existing_proxy(id objc_obj)
 
 	if (proxy_dict == NULL) return NULL;
 
-
 	key = PyInt_FromLong((long)objc_obj);
 	v = PyDict_GetItem(proxy_dict, key);
 	Py_DECREF(key); key = NULL;
@@ -89,6 +89,7 @@ find_existing_proxy(id objc_obj)
 	if (v) {
 		Py_INCREF(v);
 	}
+
 	return v;
 }
 
@@ -184,6 +185,8 @@ object_getattro(PyObject* obj, PyObject* name)
 {
 	PyObject* result;
 
+	ObjCClass_CheckMethodList(obj->ob_type);
+
 	result = PyObject_GenericGetAttr(obj, name);
 	if (result) return result;
 
@@ -251,6 +254,7 @@ PyObject* ObjCObject_New(id objc_object)
 	Class cls = objc_object->isa;
 	PyTypeObject* cls_type;
 	PyObject*     res;
+
 
 	res = find_existing_proxy(objc_object);
 	if (res) return res;

@@ -103,6 +103,20 @@ objc_methodlist_magic(Class cls)
 	while ((mlist = class_nextMethodList(cls, &iterator))) {
 		res += mlist->method_count;
 		cnt ++;
+#if 0
+	/* add information about actuall methods, this is expensive and
+	 * shouldn't be necessary
+	 */ 
+	     {
+		int i;
+		for (i = 0; i < mlist->method_count; i++) {
+			int x = (int)(mlist->method_list[i].method_imp);
+
+			res ^= (x >> 16) ^ (x && 0xffff);
+		}
+	     }
+#endif
+
 	}
 
 	return (cnt << 16) | (res & 0xFFFF);

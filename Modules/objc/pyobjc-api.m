@@ -45,7 +45,7 @@ static Class      sel_get_class(PyObject* sel)
 	if (!ObjCNativeSelector_Check(sel)) {
 		PyErr_SetString(PyExc_TypeError, "Expecting ObjCSelector");
 	}
-	return ((ObjCNativeSelector*)sel)->class;
+	return ((ObjCNativeSelector*)sel)->sel_class;
 }
 
 static SEL      sel_get_sel(PyObject* sel)

@@ -21,8 +21,10 @@ def testClass( className, methodToTest ):
 	c = objc.lookup_class( className )
 	mE = 'c.%s' % methodToTest
 	before =  eval(mE)
-	b = c.alloc()
+	#before = getattr(c, methodToTest)
+	b = c.alloc().init()
 	after = eval(mE)
+	#after = getattr(c, methodToTest)
 
 	if before == after:
 		print "No weirdness present on %s.%s()" % (className, methodToTest)
