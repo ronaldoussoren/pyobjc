@@ -23,7 +23,7 @@ def folderContents(name):
 buildapp(
     name = "Package Manager",
     mainprogram = "packman.py",
-    resources = folderContents("Resources") + [ 'pimp2.py' ],
+    resources = folderContents("Resources"),
     nibname = "MainMenu",
     plist = Plist(
         CFBundleIconFile='PackageManager.icns',
