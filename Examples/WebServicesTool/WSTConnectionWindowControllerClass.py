@@ -72,6 +72,7 @@ def doWork(queue):
         func(*args, **kwargs)
         NSAutoreleasePool.pyobjcPopPool()
 
+
 from PyObjCTools import NibClassBuilder
 NibClassBuilder.extractClasses( "WSTConnection" )
 
@@ -92,8 +93,9 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         '_methodDescriptions',
         '_server',
         '_methodPrefix',
-        '_queue',
-        '_working')
+        '_workQueue',
+        '_working',
+        '_windowIsClosing')
     
     def connectionWindowController(self):
         """
@@ -118,15 +120,16 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
 
         self._methods = []
         self._working = 0
+        self._windowIsClosing = 0
         self.spawnWorkerThread()
         return self
     
     def spawnWorkerThread(self):
         from threading import Thread
         from Queue import Queue
-        self._queue = Queue()
-        t = Thread(target=doWork, args=(self._queue,))
-        t.start()
+        self._workQueue = Queue()
+        self._workerThread = Thread(target=doWork, args=(self._workQueue,))
+        self._workerThread.start()
     
     def awakeFromNib(self):
         """
@@ -141,11 +144,17 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         self.progressIndicator.setDisplayedWhenStopped_(NO)
         
         self.createToolbar()
-        
+    
+    def scheduleWork(self, func, *args, **kwargs):
+        self._workQueue.put((func, args, kwargs))
+    
     def windowWillClose_(self, aNotification):
         """
         Clean up when the document window is closed.
         """
+        self._windowIsClosing = 1
+        self._workQueue.put(None)
+        self._workerThread.join()
         self.autorelease()
 
     def createToolbar(self):
@@ -283,10 +292,11 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
 
         self.setStatusTextFieldMessage_("Retrieving method list...")
         self.beginWorking()
-        self._queue.put((self.getMethods, (url,), {}))
+        self.scheduleWork(self.getMethods, url)
     
     def getMethods(self, url):
         self._server = xmlrpclib.ServerProxy(url)
+        NSAutoreleasePool.pyobjcPushPool()
         try:
             self._methods = self._server.listMethods()
             self._methodPrefix = ""
@@ -307,7 +317,11 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
                     (exceptionType, exceptionValue, "\n".join(traceback.format_tb(exceptionTraceback))),
                     0)
                 self.stopWorking()
+                NSAutoreleasePool.pyobjcPopPool()
                 return
+        NSAutoreleasePool.pyobjcPopPool()
+        if self._windowIsClosing:
+            return
         self.getMethodInfo(url)
     
     def getMethodInfo(self, url):
@@ -317,6 +331,9 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         
         index = 0
         for aMethod in self._methods:
+            if self._windowIsClosing:
+                return
+            NSAutoreleasePool.pyobjcPushPool()
             index = index + 1
             if not (index % 5):
                 self.reloadData()
@@ -324,6 +341,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
             methodSignature = getattr(self._server, self._methodPrefix + "methodSignature")(aMethod)
             signatures = None
             if not len(methodSignature):
+                NSAutoreleasePool.pyobjcPopPool()
                 continue
             for aSignature in methodSignature:
                 if (type(aSignature) == types.ListType) and (len(aSignature) > 0):
@@ -335,6 +353,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
             else:
                 signatures = signature
             self._methodSignatures[aMethod] = signatures
+            NSAutoreleasePool.pyobjcPopPool()
         self.setStatusTextFieldMessage_(None)
         self.reloadData()
         self.stopWorking()
@@ -360,7 +379,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
                 self.setStatusTextFieldMessage_(None)
                 self.methodDescriptionTextView.setString_(methodDescription)
                 self.stopWorking()
-            self._queue.put((work, (), {}))
+            self.scheduleWork(work)
         else:
             methodDescription = self._methodDescriptions[selectedMethod]
             self.setStatusTextFieldMessage_(None)
