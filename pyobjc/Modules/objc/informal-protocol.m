@@ -296,6 +296,7 @@ signaturesEqual(char* sig1, char* sig2)
 {
 	char buf1[1024];
 	char buf2[1024];
+	int r;
 
 	/* Return 0 if the two signatures are not equal */
 	if (strcmp(sig1, sig2) == 0) return 1;
@@ -303,8 +304,16 @@ signaturesEqual(char* sig1, char* sig2)
 	/* For some reason compiler-generated signatures contain numbers that
 	 * are not used by the runtime. These are irrelevant for our comparison
 	 */
-	PyObjCRT_SimplifySignature(sig1, buf1, sizeof(buf1));
-	PyObjCRT_SimplifySignature(sig2, buf2, sizeof(buf2));
+	r = PyObjCRT_SimplifySignature(sig1, buf1, sizeof(buf1));
+	if (r == -1) { 
+		return 0; 
+	}
+
+	r = PyObjCRT_SimplifySignature(sig2, buf2, sizeof(buf2));
+	if (r == -1) { 
+		return 0; 
+	}
+
 
 	return strcmp(buf1, buf2) == 0;
 }

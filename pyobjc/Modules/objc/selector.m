@@ -923,12 +923,12 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 		if (self->sel_self == NULL) {
 			PyObject* self_arg;
 			if (PyTuple_Size(args) < 1) {
-				PyErr_SetString(ObjCExc_error, "need self argument");
+				PyErr_SetString(PyObjCExc_Error, "need self argument");
 				return NULL;
 			}
 			self_arg = PyTuple_GET_ITEM(args, 0);
 			if (!PyObjCObject_Check(self_arg) && !PyObjCClass_Check(self_arg)) {
-				PyErr_SetString(ObjCExc_error, "bad self type");
+				PyErr_SetString(PyObjCExc_Error, "bad self type");
 				abort();
 				return NULL;
 			}
@@ -1440,7 +1440,7 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 	PyObject* info;
 
 	if (!PyList_Check(protocols)) {
-		PyErr_Format(ObjCExc_internal_error,
+		PyErr_Format(PyObjCExc_InternalError,
 			"Protocol-list is not a 'list', but '%s'",
 			protocols->ob_type->tp_name);
 		return NULL;

@@ -39,7 +39,7 @@ lookUpClass(PyObject* self __attribute__((__unused__)),
 
 	objc_class = PyObjCRT_LookUpClass(class_name);
 	if (objc_class == NULL) {
-		PyErr_SetString(ObjCExc_noclass_error, class_name);
+		PyErr_SetString(PyObjCExc_NoSuchClassError, class_name);
 		return NULL;
 	}
 

@@ -3,8 +3,6 @@
  * module. 
  *
  * The PyObjC unittest objc.test.test_ctests executes the tests in this file.
- *
- * TODO: Need more tests
  */
 #include "pyobjc-api.h"
 #include "pyobjc-unittest.h"
@@ -457,11 +455,14 @@ END_UNITTEST
 BEGIN_UNITTEST(TestSimplifySignature)
 	/* Make sure PyObjCRT_SimplifySignature works */
 	char b[1024];
+	int  r;
 
-	PyObjCRT_SimplifySignature("@1234@0:{_NSPoint=ff}02i22", b, sizeof(b));
+	r = PyObjCRT_SimplifySignature("@1234@0:{_NSPoint=ff}02i22", b, sizeof(b));
+	ASSERT(r != -1);
 	ASSERT_STREQUALS("@@:{_NSPoint=ff}i", b);
 
-	PyObjCRT_SimplifySignature("@@:{_NSPoint=ff}i", b, sizeof(b));
+	r = PyObjCRT_SimplifySignature("@@:{_NSPoint=ff}i", b, sizeof(b));
+	ASSERT(r != -1);
 	ASSERT_STREQUALS("@@:{_NSPoint=ff}i", b);
 END_UNITTEST
 
@@ -657,7 +658,7 @@ END_UNITTEST
 BEGIN_UNITTEST(NSLogging)
 	/* This is a pretty lame test ...
 	 *
-	 * What this does is that that the proxies of plain Python objects
+	 * What this does is tests that the proxies of plain Python objects
 	 * can be logged. This used to be impossible upto (and including)
 	 * release 1.1!
 	 */

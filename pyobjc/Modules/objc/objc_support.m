@@ -309,7 +309,7 @@ PyObjCRT_SkipTypeSpec (const char *type)
 
     
 	default:
-		PyErr_Format(ObjCExc_internal_error,
+		PyErr_Format(PyObjCExc_InternalError,
 			"PyObjCRT_SkipTypeSpec: Unhandled type '%#x'", *type); 
 		return NULL;
 	}
@@ -453,7 +453,7 @@ PyObjCRT_AlignOfType (const char *type)
 		return PyObjCRT_AlignOfType(type+1);
 
 	default:
-		PyErr_Format(ObjCExc_internal_error, 
+		PyErr_Format(PyObjCExc_InternalError, 
 			"PyObjCRT_AlignOfType: Unhandled type '%#x'", *type);
 		return -1;
 	}
@@ -575,7 +575,7 @@ PyObjCRT_SizeOfType (const char *type)
 		return PyObjCRT_SizeOfType(type+1);
 
 	default:
-		PyErr_Format(ObjCExc_internal_error, 
+		PyErr_Format(PyObjCExc_InternalError, 
 			"PyObjCRT_SizeOfType: Unhandled type '%#x", *type);
 		abort();
 		return -1;
@@ -985,7 +985,7 @@ pythonify_c_value (const char *type, void *datum)
 		break;
 
 	default:
-		PyErr_Format(ObjCExc_error, 
+		PyErr_Format(PyObjCExc_Error, 
 			"pythonify_c_value: unhandled value type (%c|%d|%s)",
 			*type, *type, type);
 		break;

@@ -99,7 +99,7 @@ PyObject* PyObjC_IDToCFType(id argument);
 #endif
 
 #define PyObjCErr_InternalError() \
-	PyErr_Format(ObjCExc_internal_error, \
+	PyErr_Format(PyObjCExc_InternalError, \
 	   "PyObjC: internal error in %s at %s:%d", \
 	   __FUNCTION__, __FILE__, __LINE__)
 #define PyObjC_Assert(expr, retval) \

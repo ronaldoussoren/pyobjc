@@ -55,16 +55,16 @@ int PyObjC_RegisterMethodMapping(Class class, SEL sel,
 	PyObjCFFI_ClosureFunc call_to_python)
 {
 	struct registry* v;
-	const char*      selname = PyObjCRT_SELName(sel);
-	PyObject*        pyclass;
-	PyObject* 	 entry;
+	const char* selname = PyObjCRT_SELName(sel);
+	PyObject* pyclass;
+	PyObject* entry;
 
 	if (signature_registry == NULL) {
 		if (init_registry() < 0) return -1;
 	}
 
 	if (!call_to_python) {
-		PyErr_SetString(ObjCExc_error, 
+		PyErr_SetString(PyObjCExc_Error, 
 			"PyObjC_RegisterMethodMapping: all functions required");
 		return -1;
 	}
@@ -110,62 +110,31 @@ int PyObjC_RegisterMethodMapping(Class class, SEL sel,
 	return 0;
 }
 
-void
-PyObjCRT_SimplifySignature(char* signature, char* buf, size_t buflen)
-{
-	char* cur;
-	char* end;
-	char* next;
-
-	cur = signature;
-	*buf = '\0';
-
-	while (*cur != '\0') {
-		next = end = (char*)PyObjCRT_SkipTypeSpec(cur);
-		end -= 1;
-		while (end != cur && isdigit(*end)) {
-			end --;
-		}
-		end++;
-
-		if ((size_t)(end - cur) > buflen) {
-			// XXX: should signal an error
-			abort();
-			return;
-		}
-
-		memcpy(buf, cur, end-cur);
-		buflen -= (end-cur);
-		buf += (end-cur);
-		*buf = '\0';
-		cur = next;
-	}
-}
-
-
-	
 int PyObjC_RegisterSignatureMapping(
 	char* signature,
 	PyObjC_CallFunc call_to_objc,
 	PyObjCFFI_ClosureFunc call_to_python)
 {
 	struct registry* v;
-	PyObject* 	 entry;
-	char             signature_buf[1024];
+	PyObject*  entry;
+	char signature_buf[1024];
+	int r;
 
 	if (special_registry == NULL) {
 		if (init_registry() < 0) return -1;
 	}
-		
 
-	PyObjCRT_SimplifySignature(
+	r = PyObjCRT_SimplifySignature(
 			signature, 
 			signature_buf, 
 			sizeof(signature_buf));
-	if (PyErr_Occurred()) return -1;
+	if (r == -1) {
+		PyErr_SetString(PyObjCExc_Error, "cannot simplify signature");
+		return -1;
+	}	
 
 	if (!call_to_objc || !call_to_python) {
-		PyErr_SetString(ObjCExc_error, 
+		PyErr_SetString(PyObjCExc_Error, 
 		   "PyObjC_RegisterSignatureMapping: all functions required");
 		return -1;
 	}
@@ -198,10 +167,10 @@ int PyObjC_RegisterSignatureMapping(
 static struct registry*
 search_special(Class class, SEL sel)
 {
-	PyObject* 	 result = NULL;
-	PyObject*        special_class = NULL;
-	int              special_len, i;
-
+	PyObject* result = NULL;
+	PyObject* special_class = NULL;
+	int special_len;
+	int i;
 
 	if (special_registry == NULL) goto error;
 
@@ -251,7 +220,7 @@ search_special(Class class, SEL sel)
 	return PyCObject_AsVoidPtr(result);
 
 error:
-	PyErr_Format(ObjCExc_error,
+	PyErr_Format(PyObjCExc_Error,
 		"PyObjC: don't know how to call method '%s'", 
 			PyObjCRT_SELName(sel));
 	return NULL;
@@ -285,12 +254,17 @@ find_signature(char* signature)
 {
 	PyObject* o;
 	struct registry* r;
-	char   signature_buf[1024];
+	char signature_buf[1024];
+	int res;
 
-	PyObjCRT_SimplifySignature(
+	res = PyObjCRT_SimplifySignature(
 			signature, 
 			signature_buf, 
 			sizeof(signature_buf));
+	if (res == -1) {
+		PyErr_SetString(PyObjCExc_Error, "cannot simplify signature");
+		return -1;
+	}	
 
 	if (signature_registry == NULL) goto error;
 	o = PyDict_GetItemString(signature_registry, signature_buf);
@@ -300,7 +274,7 @@ find_signature(char* signature)
 	return r;
 
 error:
-	PyErr_Format(ObjCExc_error,
+	PyErr_Format(PyObjCExc_Error,
 		"PyObjC: don't know how to call a method with "
 		"signature '%s'", signature);
 	return NULL;
@@ -350,6 +324,7 @@ PyObjC_MakeIMP(Class class, PyObject* sel, PyObject* imp)
 		return retval;
 	} else {
 		/* XXX: To be replaced */
+		/* 20040713: But why??? */
 		PyErr_Clear();
 		retval = ObjC_MakeIMPForSignature(
 				PyObjCSelector_Signature(sel), imp);

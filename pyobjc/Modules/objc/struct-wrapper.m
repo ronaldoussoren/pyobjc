@@ -36,10 +36,12 @@ GET_FIELD(PyObject* self, PyMemberDef* member)
 static inline void
 SET_FIELD(PyObject* self, PyMemberDef* member, PyObject* val)
 {
+	PyObject* tmp;
 	Py_XINCREF(val);
 	
-	Py_XDECREF(*(PyObject**)(((char*)self) + member->offset));
+	tmp = *(PyObject**)(((char*)self) + member->offset);
 	*((PyObject**)(((char*)self) + member->offset)) = val;
+	Py_XDECREF(tmp);
 }
 
 /*
@@ -528,6 +530,7 @@ struct_traverse(PyObject* self, visitproc visit, void* arg)
 	for (member = self->ob_type->tp_members; 
 				member && member->name; member++) {
 		v = GET_FIELD(self, member);
+		if (v == NULL) continue;
 		err = visit(v, arg);
 		if (err) return err;
 	}

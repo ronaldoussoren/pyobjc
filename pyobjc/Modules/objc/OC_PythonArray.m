@@ -54,7 +54,7 @@
 -objectAtIndex:(int)idx
 {
 	PyObject* v;
-	id  result;
+	id result;
 	int err;
 
 	PyObjC_BEGIN_WITH_GIL
@@ -150,14 +150,24 @@
 
 -(void)removeLastObject
 {
-	PyObject* w;
+	int r;
+	int idx;
 
 	PyObjC_BEGIN_WITH_GIL
-		w = PyObject_CallMethod(value, "pop", "");
-		if (w == NULL) {
+		idx = PySequence_Length(value);
+		if (idx == -1) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
-		Py_DECREF(w);
+
+		if (idx == 0) {
+			PyErr_SetString(PyExc_ValueError, "pop empty sequence");
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+		r = PySequence_DelItem(value, idx-1);
+		if (r == -1) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
 	PyObjC_END_WITH_GIL;
 }
@@ -179,6 +189,5 @@
 
 	PyObjC_END_WITH_GIL;
 }
-
 
 @end /* implementation OC_PythonArray */

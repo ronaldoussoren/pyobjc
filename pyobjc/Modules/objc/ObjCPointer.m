@@ -31,7 +31,7 @@ PyObjCPointer_unpack (PyObjCPointer *self)
 		const char *type = PyString_AS_STRING (self->type);
 
 		if (*type == _C_VOID) {
-			PyErr_SetString (ObjCExc_error, 
+			PyErr_SetString (PyObjCExc_Error, 
 				"Cannot dereference a pointer to void");
 			return NULL;
 		} else {
