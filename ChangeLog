@@ -1,7 +1,3 @@
-2002-11-26  Bill Bumgarner  <bbum@codefab.com>
-	* Added support for (NSString **) methods found on NSWorkspace.
-	A proof of concept; may change in the future.
-
 2002-11-25 Ronald Oussoren <oussoren@cistron.nl>
 	* Examples/{TableModel, CurrencyConverter, Todo}:
 	  - Use NibClassBuilder module
