@@ -9,6 +9,7 @@ TODO:
 """
 import objc
 import unittest
+import sys
 from objc.test.testbndl import PyObjC_TestClass3 as STUB
 
 class KeyValueClass1 (objc.runtime.NSObject):
@@ -260,6 +261,7 @@ class TestBaseExceptions (unittest.TestCase):
             o.takeStoredValue_forKey_, "value", "unknownKey")
 
     def testKVO(self):
+        # MacOS X 10.3 ?
         o = KVOClass.alloc().init()
         o.addObserver_forKeyPath_options_context_(self, "test", 0, 0)
 

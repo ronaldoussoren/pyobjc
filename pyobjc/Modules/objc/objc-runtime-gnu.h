@@ -33,7 +33,7 @@
    extern void __objc_add_class_to_hash(Class);
 #endif
 
-static void
+static inline void
 PyObjCRT_ClassAddMethodList(Class cls, MethodList_t lst)
 {
 	class_add_method_list(cls, lst);

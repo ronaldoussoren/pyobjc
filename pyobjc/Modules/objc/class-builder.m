@@ -1073,7 +1073,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	int		isAlloc;
 	int             i;
 	int 		len;
-	NSMethodSignature* signature;
+	PyObjCMethodSignature* signature;
 	char		   argbuf[1024];
 	const char* 		type;
 	void* arg = NULL;
@@ -1110,33 +1110,38 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		return;
 	}
 
-	Py_XDECREF(pymeth);
-	Py_XDECREF(pyself);
 
-	signature = [invocation methodSignature];
-	len = [signature numberOfArguments];
+	signature = PyObjCMethodSignature_FromSignature(
+		PyObjCSelector_Signature(pymeth));
+	len = signature->nargs;
+
+	Py_XDECREF(pyself);
+	Py_XDECREF(pymeth);
 
 	args = PyList_New(1);
 	if (args == NULL) {
+		PyObjCMethodSignature_Free(signature);
 		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	i = PyList_SetItem(args, 0, pythonify_c_value(
-					[signature getArgumentTypeAtIndex:0],
+					signature->argtype[0],
 					(void*)&self));
 	if (i < 0) {
 		Py_DECREF(args);
+		PyObjCMethodSignature_Free(signature);
 		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	for (i = 2; i < len; i++) {
-		type = [signature getArgumentTypeAtIndex:i];
+		type = signature->argtype[i];
 		arglen = PyObjCRT_SizeOfType(type);
 
 		if (arglen == -1) {
 			Py_DECREF(args);
+			PyObjCMethodSignature_Free(signature);
 			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
@@ -1169,12 +1174,14 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 		if (v == NULL) {
 			Py_DECREF(args);
+			PyObjCMethodSignature_Free(signature);
 			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
 
 		if (PyList_Append(args, v) < 0) {
 			Py_DECREF(args);
+			PyObjCMethodSignature_Free(signature);
 			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
@@ -1183,6 +1190,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	v = PyList_AsTuple(args);
 	if (v == NULL) {
 		Py_DECREF(args);
+		PyObjCMethodSignature_Free(signature);
 		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
@@ -1192,14 +1200,16 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	result = PyObjC_CallPython(self, [invocation selector], args, &isAlloc);
 	Py_DECREF(args);
 	if (result == NULL) {
+		PyObjCMethodSignature_Free(signature);
 		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
-	type = [signature methodReturnType];
+	type = signature->rettype;
 	arglen = PyObjCRT_SizeOfType(type);
 
 	if (arglen == -1) {
+		PyObjCMethodSignature_Free(signature);
 		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
@@ -1210,6 +1220,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 			err = depythonify_c_value(type, result, arg);
 			if (err == -1) {
+				PyObjCMethodSignature_Free(signature);
 				PyObjCErr_ToObjCWithGILState(&state);
 				return;
 			}
@@ -1235,9 +1246,10 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 			for (i = 2; i < len;i++) {
 				void* ptr;
-				type = [signature getArgumentTypeAtIndex:i];
+				type = signature->argtype[i];
 
 				if (arglen == -1) {
+					PyObjCMethodSignature_Free(signature);
 					PyObjCErr_ToObjCWithGILState(&state);
 					return;
 				}
@@ -1256,7 +1268,9 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 				[invocation getArgument:&ptr atIndex:i];
 				err = depythonify_c_value(type, result, ptr);
 				if (err == -1) {
+					PyObjCMethodSignature_Free(signature);
 					PyObjCErr_ToObjCWithGILState(&state);
+					return;
 				}
 				if (v->ob_refcnt == 1 && type[0] == _C_ID) {
 					/* make sure return value doesn't die before
@@ -1270,6 +1284,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 			}
 
+			PyObjCMethodSignature_Free(signature);
 			Py_DECREF(result);
 			return;
 		}
@@ -1282,6 +1297,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 					PyObjCRT_SELName([invocation selector]),
 					have_output+1);
 				Py_DECREF(result);
+				PyObjCMethodSignature_Free(signature);
 				PyObjCErr_ToObjCWithGILState(&state);
 				return;
 			}
@@ -1292,6 +1308,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 			err = depythonify_c_value(type, real_res, arg);
 			if (err == -1) {
+				PyObjCMethodSignature_Free(signature);
 				PyObjCErr_ToObjCWithGILState(&state);
 				return;
 			}
@@ -1307,6 +1324,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 					"%s: Need tuple of %d arguments as result",
 					PyObjCRT_SELName([invocation selector]),
 					have_output);
+				PyObjCMethodSignature_Free(signature);
 				Py_DECREF(result);
 				PyObjCErr_ToObjCWithGILState(&state);
 				return;
@@ -1317,9 +1335,10 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 		for (i = 2; i < len;i++) {
 			void* ptr;
-			type = [signature getArgumentTypeAtIndex:i];
+			type = signature->argtype[i];
 
 			if (arglen == -1) {
+				PyObjCMethodSignature_Free(signature);
 				PyObjCErr_ToObjCWithGILState(&state);
 				return;
 			}
@@ -1339,7 +1358,9 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 			v = PyTuple_GET_ITEM(result, idx++);
 			err = depythonify_c_value(type, v, ptr);
 			if (err == -1) {
+				PyObjCMethodSignature_Free(signature);
 				PyObjCErr_ToObjCWithGILState(&state);
+				return;
 			}
 			if (v->ob_refcnt == 1 && type[0] == _C_ID) {
 				/* make sure return value doesn't die before
@@ -1351,6 +1372,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		}
 		Py_DECREF(result);
 	}
+	PyObjCMethodSignature_Free(signature);
 	PyGILState_Release(state);
 }
 

@@ -109,6 +109,12 @@ simply double-click it and choose ``Build and Run``.
   port of Apple's "CocoaGL" example.  Note that this requires `PyOpenGL`_ to 
   be installed.
 
+* `SillyBallsSaver`_
+
+  A simple screensaver written in Python. This example requires a framework
+  install of Python, that is either MacOS X 10.3 or a MacPython 2.3 
+  installation.
+
 .. _`PyOpenGL`:  http://pyopengl.sourceforge.net/
 .. _`ClassBrowser`: ClassBrowser
 .. _`CurrencyConverter`: CurrencyConverter
@@ -124,3 +130,4 @@ simply double-click it and choose ``Build and Run``.
 .. _`FieldGraph`: FieldGraph
 .. _`PyInterpreter`: PyInterpreter
 .. _`OpenGLDemo`: OpenGLDemo
+.. _`SillyBallsSaver`: SillyBallsSaver

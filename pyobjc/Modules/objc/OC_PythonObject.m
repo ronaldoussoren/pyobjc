@@ -27,7 +27,7 @@
 #import  <Foundation/NSDictionary.h>
 #import  <Foundation/NSEnumerator.h>
 
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
+#if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
 #import  <Foundation/NSKeyValueObserving.h>
 #endif
 
@@ -595,7 +595,7 @@ static  PyObject* setKeyFunc = NULL;
 		format: @"setting unknown key: %@ to <%@>", key, value];
 }
 
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
+#if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
 - (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
 {
     NSLog(@"*** Ignoring *** %@ for '%@'.\n", NSStringFromSelector(_cmd), keyPath);

@@ -1,6 +1,6 @@
 import unittest
 import objc
-from testclassandinst import PyObjC_TestClassAndInstance
+from objc.test.testclassandinst import PyObjC_TestClassAndInstance
 
 class PyObjC_TestClassAndInstanceSubclass(PyObjC_TestClassAndInstance):
     """Simple subclass, just make sure it still works"""

@@ -47,8 +47,17 @@ static PyObject*
 meth_syncNSString(PyObjCUnicodeObject* self)
 {
 	PyUnicodeObject  dummy;
-	const char* utf8 = [self->nsstr UTF8String];
-	PyUnicodeObject* tmp = (PyUnicodeObject*)PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
+	const char* utf8; 
+	PyUnicodeObject* tmp;
+
+	if (PyErr_Warn(PyExc_DeprecationWarning, 
+			"use unicode(obj.nsstring()) instead of "
+			"obj.syncNSString().") < 0) {
+		return NULL;
+	}
+	
+	utf8 = [self->nsstr UTF8String];
+	tmp = (PyUnicodeObject*)PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
 
 	if (tmp == NULL) return NULL;
 

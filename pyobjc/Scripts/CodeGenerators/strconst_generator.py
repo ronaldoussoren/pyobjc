@@ -7,7 +7,10 @@
 
 import re
 import os
+import sys
 from dupfile import *
+
+ON_OSX= (sys.platform == "darwin")
 
 MATCH_RE=re.compile(r'NSString\s*\*\s*(const\s+)?([A-Za-z_][A-Za-z0-9_]*(\s*,\s\*\s*[A-Za-z_][A-Za-z0-9_]*)*);')
 
@@ -15,14 +18,20 @@ def entry(fp, val, ignore):
     vals = val.split(',')
     if len(vals) == 1:
         if val in ignore: return
-        fp.write('\t { @"%s", @encode(NSString*) },\n'%(val, ))
+        if ON_OSX:
+            fp.write('\t { @"%s", @encode(NSString*) },\n'%(val, ))
+        else:
+            fp.write('\t { @"%s", @encode(NSString*), &(%s) },\n'%(val, val))
     else:
         for  v in vals:
             v = v.strip()
             if v[0] == '*':
                 v = v[1:].strip()
             if v in ignore: continue
-            fp.write('\t { @"%s", @encode(NSString*) },\n'%(v, ))
+            if ON_OSX:
+                fp.write('\t { @"%s", @encode(NSString*) },\n'%(v, ))
+            else:
+                fp.write('\t { @"%s", @encode(NSString*), &(%s) },\n'%(v, v))
 
 def process_file(outfp, filename, ignore):
     fp = open(filename, 'r')
@@ -30,6 +39,7 @@ def process_file(outfp, filename, ignore):
     outfp.write("\n\t/* From: %s */\n"%os.path.basename(filename))
 
     in_class = 0
+    struct_level = 0
 
     for ln in fp.xreadlines():
 
@@ -42,6 +52,19 @@ def process_file(outfp, filename, ignore):
             if ln.startswith("@end"):
                 in_class = 0
             continue
+
+        # Also skip struct definitions
+        # XXX: This is very minimal, but good enough..
+        if struct_level:
+            if ln.strip().startswith('}'):
+                struct_level -= 1
+
+        if ln.strip().startswith('struct '):
+            struct_level += 1
+
+        if struct_level:
+            continue
+            
 
         m = MATCH_RE.search(ln)
         if m: 

@@ -5,8 +5,9 @@
  * PyObjC couldn't be used to create autoreleasepools in the regular way,
  * that is no longer a problem.
  */
-#import <Foundation/Foundation.h>
 #include <Python.h>
+
+#import <Foundation/Foundation.h>
 
 static NSString *_threadPoolIdentifier = @"PyObjC:  NSThread AutoreleasePool Identifier.";
 
