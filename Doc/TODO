@@ -320,16 +320,6 @@ Clean up OC_PythonObject
 
 The code is a mess.
 
-Make it possible to redefine classes
-....................................
-
-For IDE's it would be pretty usefull to be able to redefine classes. It should
-not be possible to redefine pure ObjC classes, and the redefined class should
-be in the same module (determined by name).
-
-Both are needed to avoid accidental errors (e.g. two modules definining a class
-with the same name, which is perfectly valid in plain Python).
-
 Rewrite packaging scripts
 .........................
 
