@@ -273,8 +273,13 @@ signature_to_ffi_type(const char* argtype)
 	case _C_USHT: return &ffi_type_ushort;
 	case _C_INT: return &ffi_type_sint;
 	case _C_UINT: return &ffi_type_uint;
-	case _C_LNG: return &ffi_type_slong;
-	case _C_ULNG: return &ffi_type_ulong;
+
+	 /* The next to defintions are incorrect, but the correct definitions
+	  * don't work (e.g. give testsuite failures). We should be fine
+	  * as long as sizeof(long) == sizeof(int)
+	  */
+	case _C_LNG: return &ffi_type_sint;  // ffi_type_slong
+	case _C_ULNG: return &ffi_type_uint;  // ffi_type_ulong
 	case _C_LNGLNG: return &ffi_type_sint64;
 	case _C_ULNGLNG: return &ffi_type_uint64;
 	case _C_FLT: return &ffi_type_float;
@@ -334,8 +339,6 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 		argOffset = 0;
 	}
 
-
-
 	arglist = PyList_New(0);
 	v = pythonify_c_value("@", args[0+argOffset]);
 	if (v == NULL) {
@@ -366,7 +369,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			if (argtype[1] == _C_PTR) {
 				v = pythonify_c_value(argtype+2, *(void**)args[i+argOffset]);
 			} else {
-				v = pythonify_c_value(argtype+2, args[i+argOffset]);
+				v = pythonify_c_value(argtype+1, args[i+argOffset]);
 			}
 			break;
 		case _C_OUT:
@@ -401,10 +404,11 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 	Py_DECREF(arglist);
 	arglist = v;
 
-	if (!callable)
-	  res = PyObjC_CallPython(*(id*)args[0+argOffset], *(SEL*)args[1+argOffset], arglist);
-	else
-	  res = PyObject_Call(callable, arglist, NULL);
+	if (!callable) {
+		res = PyObjC_CallPython(*(id*)args[0+argOffset], *(SEL*)args[1+argOffset], arglist);
+	} else {
+		res = PyObject_Call(callable, arglist, NULL);
+	}
 	Py_DECREF(arglist);
 
 	if (!have_output) {
@@ -431,7 +435,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 		 */
 		int idx;
 		PyObject* real_res;
-		
+
 		if (!PyTuple_Check(res) || PyTuple_Size(res) != have_output+1) {
 			ObjCErr_Set(PyExc_TypeError,
 				"%s: Need tuple of %d arguments as result",
@@ -593,9 +597,6 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 	  Py_INCREF(stubUserdata->callable);
 	}
 
-	//printf ("make closure\n");
-	//describe_cif(cif);
-	
 	rv = ffi_prep_closure(cl, cif, method_stub, (void*)stubUserdata);
 	if (rv != FFI_OK) {
 	  [methinfo release];

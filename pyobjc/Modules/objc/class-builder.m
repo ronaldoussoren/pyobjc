@@ -1053,8 +1053,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	int   arglen;
 	PyObject* pymeth;
 	PyObject* pyself;
-
-	//printf("forwardInv %p of %s\n", self, self->isa->name);
+	int have_output = 0;
 
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
@@ -1084,12 +1083,12 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	signature = [invocation methodSignature];
 	len = [signature numberOfArguments];
 
-	args = PyTuple_New(len - 1);
+	args = PyList_New(1);
 	if (args == NULL) {
 		ObjCErr_ToObjC();
 	}
 
-	i = PyTuple_SetItem(args, 0, pythonify_c_value(
+	i = PyList_SetItem(args, 0, pythonify_c_value(
 					[signature getArgumentTypeAtIndex:0],
 					(void*)&self));
 	if (i < 0) {
@@ -1111,19 +1110,54 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		arg = alloca(arglen);
 		
 		[invocation getArgument:argbuf atIndex:i];
-		v = pythonify_c_value(type, argbuf);
+
+		switch (*type) {
+		case _C_PTR:
+			have_output ++;
+			v = pythonify_c_value(type+1, *(void**)argbuf);
+			break;
+		case _C_INOUT:
+			if (type[1] == _C_PTR) {
+				have_output ++;
+			}
+			/* FALL THROUGH */
+		case _C_IN: case _C_CONST:
+			if (type[1] == _C_PTR) {
+				v = pythonify_c_value(type+2, *(void**)argbuf);
+			} else {
+				v = pythonify_c_value(type+1, argbuf);
+			}
+			break;
+		case _C_OUT:
+			if (type[1] == _C_PTR) {
+				have_output ++;
+			}
+			continue;
+		default:
+			v = pythonify_c_value(type, argbuf);
+		}
+
 		if (v == NULL) {
 			Py_DECREF(args);
 			ObjCErr_ToObjC();
 			return;
 		}
 
-		if (PyTuple_SetItem(args, i-1, v) < 0) {
+		if (PyList_Append(args, v) < 0) {
 			Py_DECREF(args);
 			ObjCErr_ToObjC();
 			return;
 		}
 	}
+
+	v = PyList_AsTuple(args);
+	if (v == NULL) {
+		Py_DECREF(args);
+		ObjCErr_ToObjC();
+		return;
+	}
+	Py_DECREF(args);
+	args = v;
 
 	result = PyObjC_CallPython(self, [invocation selector], args);
 	Py_DECREF(args);
@@ -1140,14 +1174,78 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		return;
 	}
 
-	arg = alloca(arglen+1);
+	if (!have_output) {
+		if (*type  != _C_VOID && *type != _C_ONEWAY) {
+			arg = alloca(arglen+1);
 
-	err = depythonify_c_value(type, result, arg);
-	if (err == -1) {
-		ObjCErr_ToObjC();
-		return;
+			err = depythonify_c_value(type, result, arg);
+			if (err == -1) {
+				ObjCErr_ToObjC();
+				return;
+			}
+			[invocation setReturnValue:arg];
+		}
+		Py_DECREF(result);
+	} else {
+		int idx;
+		PyObject* real_res;
+
+		if (!PyTuple_Check(result) 
+				|| PyTuple_Size(result) != have_output+1) {
+			ObjCErr_Set(PyExc_TypeError,
+				"%s: Need tuple of %d arguments as result",
+				SELNAME([invocation selector]), have_output+1);
+			Py_DECREF(result);
+			ObjCErr_ToObjC();
+			return;
+		}
+
+		real_res = PyTuple_GET_ITEM(result, 0);
+		if (*type  != _C_VOID && *type != _C_ONEWAY) {
+			arg = alloca(arglen+1);
+
+			err = depythonify_c_value(type, real_res, arg);
+			if (err == -1) {
+				ObjCErr_ToObjC();
+				return;
+			}
+			[invocation setReturnValue:arg];
+		}
+		idx = 1;
+
+		for (i = 2; i < len;i++) {
+			type = [signature getArgumentTypeAtIndex:i];
+			int err;
+			void* ptr;
+
+			if (arglen == -1) {
+				ObjCErr_ToObjC();
+				return;
+			}
+
+			switch (*type) {
+			case _C_PTR:
+				type ++;
+				break;
+			case _C_INOUT: case _C_OUT:
+				if (type[1] != _C_PTR) {
+					continue;
+				}
+				type += 2;
+				break;
+			default:
+				continue;
+			}
+
+			[invocation getArgument:&ptr atIndex:i];
+			v = PyTuple_GET_ITEM(result, idx++);
+			err = depythonify_c_value(type, v, ptr);
+			if (err == -1) {
+				ObjCErr_ToObjC();
+			}
+		}
+		Py_DECREF(result);
 	}
-	[invocation setReturnValue:arg];
 }
 
 /*
