@@ -114,4 +114,4 @@ you want to write Cocoa programs in Python.
 
 .. _`Adding Python code to an existing ObjC application`: tutorial_embed/extending_objc_with_python.html
 
-.. _`Notes on supported APIs and classes on MacOS X`: api-notes-macosx.txt
+.. _`Notes on supported APIs and classes on MacOS X`: api-notes-macosx.html
