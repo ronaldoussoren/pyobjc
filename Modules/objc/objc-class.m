@@ -183,7 +183,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	PyObject* v;
 	int       i;
 	int       len;
-	char normalized_name[1024];
 	Class      objc_class = NULL;
 	Class	   super_class = NULL;
 	struct class_info* info;
