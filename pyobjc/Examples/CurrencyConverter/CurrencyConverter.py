@@ -12,7 +12,7 @@ class Converter (NibClassBuilder.AutoBaseClass):
     def convertAmount(self, amt, rate):
         return amt*rate
 
-        
+
 class ConverterController (NibClassBuilder.AutoBaseClass):
 
     # First define the IB Outlets, the 'ivar' calls below define new
@@ -32,7 +32,7 @@ class ConverterController (NibClassBuilder.AutoBaseClass):
         self.totalField.setFloatValue_(total)
         self.rateField.selectText_(self)
 
-        x = NSRunAlertPanel("Calculation Result", 
+        x = NSRunAlertPanel("Calculation Result",
             "The result is %s"%(total), "OK", None, None)
 
 

@@ -92,8 +92,8 @@ class PackageController(NibClassBuilder.AutoBaseClass):
         #   Name, Version, Flavor
         #
         packages.sort(lambda a,b:(
-            cmp(a['Name'].lower(), b['Name'].lower()) or 
-            cmp(a.get('Version'), b.get('Version')) or 
+            cmp(a['Name'].lower(), b['Name'].lower()) or
+            cmp(a.get('Version'), b.get('Version')) or
             cmp(a.get('Flavor'), b.get('Flavor'))))
         self._allPackagesIncludingHidden = packages
         self._allPackages = self.packages = [x for x in packages if x.get('Version', None)]

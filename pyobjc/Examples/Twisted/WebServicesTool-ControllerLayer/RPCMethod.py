@@ -24,7 +24,7 @@ class RPCMethod(NSObject):
             self._methodDescription = "<description not yet received>"
             self.document.fetchMethodDescription_(self)
         return self._methodDescription
-        
+
     def setMethodDescription_(self, aDescription):
         NSObject.willChangeValueForKey_(self, "methodDescription")
         self._methodDescription = aDescription
