@@ -1,10 +1,10 @@
 # This should be done inline, I don't know how at the moment how to do that
-INSTALL,user
-architecture.txt,developer
-classes.txt,developer
-coding-style.txt,developer
-libffi.txt,developer
-structure.txt,developer
-users.txt,user
-warts.txt,user
-wrapping.txt,user
+INSTALL,user,0
+users.txt,user,10
+warts.txt,user,20
+wrapping.txt,user,30
+coding-style.txt,developer,10
+architecture.txt,developer,30
+classes.txt,developer,30
+libffi.txt,developer,30
+structure.txt,developer,20
