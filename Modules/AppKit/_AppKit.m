@@ -324,7 +324,6 @@ static char* keywords[] = { "rects", "count", 0 };
 	if (seq == NULL) {
 		return NULL;
 	}
-	Py_DECREF(rectList);
 
 	if (PySequence_Fast_GET_SIZE(seq) < rectCount) {
 		Py_DECREF(seq);
