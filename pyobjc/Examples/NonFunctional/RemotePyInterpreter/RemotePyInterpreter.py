@@ -15,7 +15,7 @@ from netrepr import RemoteObjectReference
 
 def ensure_unicode(s):
     if not isinstance(s, unicode):
-        s = unicode(s, 'utf-8')
+        s = unicode(s, 'utf-8', 'replace')
     return s
 
 def ensure_utf8(s):
@@ -50,7 +50,22 @@ class RemotePyInterpreterReactor(NibClassBuilder.AutoBaseClass):
                 self.deferCallback_sequence_value_(displayhook_respond, seq, 'repr(%s)' % (netrepr(obj),))
             else:
                 self.doCallback_sequence_args_(displayhook_local, seq, args)
-        #elif name.startswith('RemoteFileLike.'):
+        elif name.startswith('RemoteFileLike.'):
+            method = name[len('RemoteFileLike.'):]
+            if method == 'write':
+                style, msg = map(ensure_unicode, args)
+                args = [msg, style]
+                self.doCallback_sequence_args_(self.delegate.writeString_forOutput_, seq, args)
+            else:
+                self.doCallback_sequence_args_(NSLog, seq, [u'%r does not respond to expect %r' % (self, command,)])
+        elif name == 'RemoteConsole.initialize':
+            def gotTitle(repr_versioninfo, executable, pid):
+                self.delegate.setVersion_executable_pid_(
+                    u'.'.join(map(unicode, self.netEval_(repr_versioninfo)[:3])),
+                    ensure_unicode(executable),
+                    pid,
+                )
+            self.doCallback_sequence_args_(gotTitle, seq, args)
         #    fh = getattr(sys, args[0])
         #    meth = getattr(fh, name[len('RemoteFileLike.'):])
         #    self.doCallback_sequence_args_(meth, seq, args[1:])
@@ -128,9 +143,19 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
         self.textView.setRichText_(False)
         self.setCharacterIndexForInput_(0)
 
-    #
-    #  NIB loading protocol
-    #
+    def setVersion_executable_pid_(self, version, executable, pid):
+        self.version = version
+        self.pid = pid
+        self.executable = executable
+        self.setFileName_(executable)
+
+    def displayName(self):
+        if not hasattr(self, 'version'):
+            return u'Starting...'
+        return u'Python %s - %s - %s' % (self.version, self.executable, self.pid)
+    
+    def updateChangeCount_(self, val):
+        return
 
     def windowWillClose_(self, window):
         if self.commandReactor is not None:
@@ -198,22 +223,6 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
     #    if eol == u'\r':
     #        self.writeNewLine()
     #    return cl + eol
-
-    #
-    #  Interpreter functions
-    #
-
-    #def p_executeWithRedirectedIO(self, fn, *args, **kwargs):
-    #    old = sys.stdin, sys.stdout, sys.stderr
-    #    if self.p_stdin is not None:
-    #        sys.stdin = self.p_stdin
-    #    sys.stdout, sys.stderr = self.p_stdout, self.p_stderr
-    #    try:
-    #        rval = fn(*args, **kwargs)
-    #    finally:
-    #        sys.stdin, sys.stdout, sys.stderr = old
-    #        self.setCharacterIndexForInput_(self.lengthOfTextView())
-    #    return rval
 
     def executeLine_(self, line):
         self.addHistoryLine_(line)
