@@ -1,0 +1,14 @@
+{
+    IBClasses = (
+        {CLASS = BookmarksDocument; LANGUAGE = ObjC; SUPERCLASS = NSDocument; }, 
+        {
+            CLASS = DNDArrayController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {tableView = id; }; 
+            SUPERCLASS = NSArrayController; 
+        }, 
+        {CLASS = DNDTableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
