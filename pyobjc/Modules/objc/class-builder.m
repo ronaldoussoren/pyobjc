@@ -1829,6 +1829,8 @@ object_method_valueForKey_(
 		void** args,
 		void* userdata)
 {
+	// XXX - THIS METHOD IS TOTALLY INCORRECT!  FIX FOR 1.3!
+	//       See <Foundation/NSKeyValueCoding.h>
 	int r;
 	id self = *(id*)args[0];
 	SEL _meth = *(SEL*)args[1];
