@@ -72,6 +72,17 @@ class TestNSBitmapImageRep(unittest.TestCase):
         self.assertEquals(len(bitmapData), len(singlePlane))
         self.assertEquals(bitmapData, singlePlane)
 
+class TestBadCreation(unittest.TestCase):
+    def test_AllocInit(self):
+        y = NSBitmapImageRep.alloc()
+        try:
+            self.assertRaises(ValueError, y.init)
+        finally:
+            width = 256
+            height = 256
+            dataPlanes = (None, None, None, None, None)
+            y = y.initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
+
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestNSBitmapImageRep))

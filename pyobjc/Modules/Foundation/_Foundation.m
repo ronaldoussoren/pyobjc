@@ -117,7 +117,6 @@ static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
 PyObject* objc_NSFileTypeForHFSTypeCode(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "hfsTypeCode", NULL };
-	PyObject* bundle;
 	PyObject*  result;
 	NSString*  oc_result;
 	OSType hfsTypeCode;
@@ -144,8 +143,6 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 PyObject* objc_NSHFSTypeCodeFromFileType(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "hfsTypeCode", NULL };
-	PyObject* bundle;
-	PyObject*  result;
 	NSString*  fileType;
 	OSType hfsTypeCode;
 

@@ -190,7 +190,6 @@ static PyObject*
 objc_NSAvailableWindowDepths(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { NULL };
-	int       count;
 	const NSWindowDepth*	  depths;
 	PyObject *result, *tmp;
 
