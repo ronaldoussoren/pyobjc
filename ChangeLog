@@ -1,3 +1,32 @@
+2002-12-17  Bill Bumgarner  <bbum@codefab.com>
+
+    * Project Templates/Cocoa-Python Application/MyAppDelegate.py: Moved to
+    AutoBaseClass.  Added significant documentation.
+
+    * Project Templates/Cocoa-Python Application/bin-python-main.m: Integrated
+    all of Jack's, Ronald's and my suggestions/patches/changes (that I could
+    remember).
+
+    * Project Templates/Cocoa-Python Application/__main__.py: Brought in line
+    with Web Services Tool example.  Minimized the # of lines.
+
+    * setup.py: Added test directories.
+
+    * MANIFEST: Completely redid.
+
+    * Scripts/buildpkg.py (PackageMaker.build): Tried to add RootOnly install
+    flag.  Won't work until we move to new style packaging format.
+
+    * ReadMe.txt: Added brief note about installing the packaged version.
+
+    * Scripts/make_distrib.py (fd): Numerous changes.  Final products are
+    built into a directory that can be directly disk imaged.  Directory
+    contains readme, license, and changelog.  Package now contains developer
+    examples. More cleanup of spurious files from trees to be packaged.
+
+    * Cleaned up Cocoa-Python template;  synchronized with WebServicesTool
+      example.  Added lots of comments.
+
 2002-12-15 Ronald Oussoren <oussoren@cistron.nl>
     * Erase reference to the Python half before doing the [super release] 
       call that will release the Objective-C half of an instance of a

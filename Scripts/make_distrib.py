@@ -3,6 +3,7 @@
 import sys
 import getopt
 import os
+import errno
 import buildpkg
 import shutil
 
@@ -10,17 +11,23 @@ USAGE='Usage: %s [-p python | --with-python=%s] [-h|--help] [-o release-dir|--ou
 	sys.argv[0], sys.executable)
 
 PYTHON=sys.executable
-OUTPUTDIR='release-dir'
 
 def package_version():
 	fp = open('Modules/objc/pyobjc.h', 'r')  
 	for ln in fp.readlines():
 		if ln.startswith('#define OBJC_VERSION'):
 			fp.close()
+                        break
 	return ln.split()[-1][1:-1]
 
 	raise ValueError, "Version not found"
 
+packageVersion = package_version()
+if (len(packageVersion) < 3) or (len(packageVersion) > 7):
+        raise ValueError, "Version 'found' (%s), but seems preposterously short or long." % packageVersion
+
+BUILDDIR='release-dir'
+OUTPUTDIR='release-dir/PyObjC-%s' % package_version()
 
 def escquotes(val):
 	return val.replace("'", "'\"'\"'")
@@ -45,13 +52,21 @@ for key, value in opts:
 	else:
 		raise ValueError, "Unsupported option: %s=%s"%(key, value)
 
+def makeDir(basedir, *path):
+        base = basedir
+        for p in path:
+                base = os.path.join(base, p)
+                try:
+                        os.mkdir(base)
+                except OSError, e:
+                        if e.errno <> errno.EEXIST: raise
+
+
+if not os.path.exists(BUILDDIR):
+        apply(makeDir, ["."] + BUILDDIR.split(os.sep))
+
 if not os.path.exists(OUTPUTDIR):
-	try:
-		os.mkdir(OUTPUTDIR)
-	except os.error, msg:
-		sys.stderr.write("%s: Cannot create %s: %s\n"%(
-			sys.argv[0], OUTPUTDIR, msg))
-		sys.exit(1)
+        apply(makeDir, ["."] + OUTPUTDIR.split(os.sep))
 
 
 if PYTHON==sys.executable:
@@ -84,34 +99,50 @@ for ln in fd.xreadlines():
 	sys.stdout.write(ln)
 
 print "Running: '%s' setup.py install --prefix='%s/package%s'"%(
-	escquotes(PYTHON), escquotes(OUTPUTDIR), escquotes(basedir))
+	escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir))
 fd = os.popen("'%s' setup.py install --prefix='%s/package%s'"%(
-	escquotes(PYTHON), escquotes(OUTPUTDIR), escquotes(basedir)), 'r')
+	escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir)), 'r')
 for ln in fd.xreadlines():
 	sys.stdout.write(ln)
 
+print "Copying readme and license"
+shutil.copyfile("ReadMe.txt", os.path.join(OUTPUTDIR, "ReadMe.txt"))
+shutil.copyfile("License.txt", os.path.join(OUTPUTDIR, "License.txt"))
+shutil.copyfile("ChangeLog", os.path.join(OUTPUTDIR, "ChangeLog"))
+
 print "Setting up developer templates"
 
-basedir = '%s/package'%(OUTPUTDIR)
-os.mkdir(os.path.join(basedir, 'Developer'))
-os.mkdir(os.path.join(basedir, 'Developer', 'ProjectBuilder Extras'))
-os.mkdir(os.path.join(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates'))
-os.mkdir(os.path.join(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application'))
-
-destination = os.path.join(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application', 'Cocoa-Python Application')
-shutil.copytree('Project Templates/Cocoa-Python Application', destination)
-
-def findCVS(irrelevant, dirName, names):
-	if '.DS_Store' in names:
-		os.remove( os.path.join(dirName, '.DS_Store') )
+nastyFiles = ['.DS_Store', '.gdb_history']
+def killNasties(irrelevant, dirName, names):
+        for aName in names:
+                if aName in nastyFiles:
+                        os.remove( os.path.join(dirName, aName) )
+        if dirName.find(".pbproj") > 0:
+                for aName in names:
+                        if aName.find(".pbxuser") > 0:
+                                os.remove( os.path.join(dirName, aName) )
 	if dirName[-3:] == 'CVS':
 		while len(names): del names[0]
 		shutil.rmtree(dirName)
 
-os.path.walk(destination, findCVS, None)
+basedir = '%s/package'%(BUILDDIR)
+
+makeDir(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application')
+templateDestination = os.path.join(basedir, 'Developer', 'ProjectBuilder Extras',
+                                   'Project Templates', 'Application', 'Cocoa-Python Application')
+shutil.copytree('Project Templates/Cocoa-Python Application', templateDestination)
+
+print "Setting up developer examples"
+
+makeDir(basedir, 'Developer', 'Examples')
+examplesDestination = os.path.join(basedir, 'Developer', 'Examples', 'PyObjC')
+shutil.copytree('Examples', examplesDestination)
+
+os.path.walk(templateDestination, killNasties, None)
+os.path.walk(examplesDestination, killNasties, None)
 
 print 'Building package'
-pm = buildpkg.PackageMaker('PyObjC', package_version(), 
+pm = buildpkg.PackageMaker('PyObjC-%s' % package_version(), package_version(), 
 """\
 Python <-> Objective-C bridge that supports building full featured Cocoa
 applications.
@@ -121,6 +152,7 @@ pm.build(os.path.join(basedir),
 	OutputDir=os.path.join(os.getcwd(), OUTPUTDIR),
 	Version=package_version(),
 	NeedsAuthorization="YES",
-	Relocatable="NO")
+	Relocatable="NO",
+        RootVolumeOnly="YES")
 
 print "Done, don't forget to test the output!"

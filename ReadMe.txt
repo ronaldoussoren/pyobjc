@@ -1,3 +1,8 @@
+If you are reading this from the PyObjC disk image that contains the Installer
+package, simply Install the package and look in /Developer/Examples/PyObjC.
+Documentation is completely lacking at this point.  Sorry-- it is next on the
+list of things to add to the module.
+
 The PyObjC package provides the glue needed to interface the Python interpreter with the Objective-C language. The 'objc' module makes Objective-C objects and classes available as first-class Python citizens, it is not only possible to use Objective-C objects but you can also subclass Objective-C classes.
 
 If you are installing from the Installer package, it also installs a Project Builder template for building Python based Cocoa applications.  Once installed, create a new "Cocoa-Python Application" project in Project Builder.  The newly created project includes an application delegate implementation and a simple set of Cocoa controls-- i.e. it provides a complete example of how to build a Cocoa application using Python and the PyObjC bridge.
