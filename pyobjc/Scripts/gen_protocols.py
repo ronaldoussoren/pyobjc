@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-"""This script will generate Python code that defines (informal) protocols
-byparsing header files from frameworks.
+"""This script/module generate Python code that defines (informal) protocols
+by parsing header files from frameworks. It is used bu gen_all_protocols.py,
+but can also be used separately, in which case you invoke it like this:
 
-Invoke it like this:
     ./gen_protocols.py <full_path_to_a_framework> > <outputfile>.py
 """
 
@@ -20,11 +20,6 @@ selPartRE = re.compile(r"(\w+:?)\s*")
 argNameRE = re.compile(r"(\w+)\s*")
 
 def getSelector(line):
-    assert line[:2] == "- "
-    line = line[2:]
-    end = line.find(";")
-    assert end > 0
-    line = line[:end]
     types = []
     selParts = []
     m = typeRE.match(line)
@@ -65,11 +60,17 @@ def parseHeader(headerPath):
         end = header.find("@end", m.end())
         
         protocol = []
-        rawProto = header[m.end():end].splitlines()
-        for line in rawProto:
-            if line.startswith("- "):
-                selector, types = getSelector(line)
-                protocol.append((selector, types, line))
+        rawProto = header[m.end():end]
+        start = 0
+        while 1:
+            start = rawProto.find("\n- ", start)
+            if start < 0:
+                break
+            selend = rawProto.find(";", start)
+            rawSelector = rawProto[start + 3:selend]
+            selector, types = getSelector(rawSelector)
+            protocol.append((selector, types, " ".join(rawSelector.split())))
+            start = selend + 1
         protocol.sort()
         assert end >= 0
         pos = end + 5
@@ -116,6 +117,9 @@ def makeTypeCodes(frameworkName, types):
 
 
 def genProtocols(frameworkPath, outFile=None):
+    """Generate protocol definitions for a framework. If outFile is None,
+    the generated Python code will be printed to sys.stdout.
+    """
     frameworkPath = os.path.normpath(frameworkPath)
     assert frameworkPath.endswith(".framework")
     frameworkName = os.path.basename(frameworkPath)
@@ -153,7 +157,7 @@ def genProtocols(frameworkPath, outFile=None):
             print >> outFile, "        ),"
         print >> outFile, "    ]"
         print >> outFile, ")"
-        print >> outFile,
+        print >> outFile
 
 if __name__ == "__main__":
     if sys.argv[1:]:
