@@ -16,15 +16,22 @@ import objc
 # NSButtonCell is one of the classes that acts like this, NSTextView is
 # another one (both detected accidently while debugging a problem with the
 # Todo example)
-NSButtonCell = objc.lookup_class('NSButtonCell')
 
-before =  NSButtonCell.setEnabled_
-b = NSButtonCell.alloc()
-after = NSButtonCell.setEnabled_
+def testClass( className, methodToTest ):
+	c = objc.lookup_class( className )
+	mE = 'c.%s' % methodToTest
+	before =  eval(mE)
+	b = c.alloc()
+	after = eval(mE)
 
-if before == after:
-	print "No weirdness present"
-else:
-	print "Method weirdness detected"
-	print "before:", before
-	print "after:", after
+	if before == after:
+		print "No weirdness present on %s.%s()" % (className, methodToTest)
+	else:
+		print "Method weirdness detected on %s.%s()" % (className, methodToTest)
+		print "\tbefore alloc(): ", before
+		print "\tafter  alloc(): ", after
+
+
+testClass( "NSButtonCell", "setEnabled_" )
+testClass( "NSTextView", "setEditable_" )
+
