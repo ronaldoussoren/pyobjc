@@ -832,21 +832,18 @@ PyObjCSelector_New(PyObject* callable,
 	SEL selector, char* signature, int class_method, Class cls)
 {
 	PyObjCPythonSelector* result;
+	if (signature == NULL) {
+		signature = pysel_default_signature(callable);
+	} else {
+		signature = PyObjCUtil_Strdup(signature);
+	}
+	if (signature == NULL) return NULL;
 
 	result = PyObject_New(PyObjCPythonSelector, &PyObjCPythonSelector_Type);
 	if (result == NULL) return NULL;
 
 	result->sel_selector = selector;
-	if (signature == NULL) {
-		result->sel_signature = pysel_default_signature(callable);
-	} else {
-		result->sel_signature = PyObjCUtil_Strdup(signature);
-		if (result->sel_signature == NULL) {
-			Py_DECREF(result);
-			return NULL;
-		}
-	}
-
+	result->sel_signature = signature;
 	result->sel_self = NULL;
 	result->sel_class = cls;
 	result->sel_flags = 0;
@@ -992,7 +989,12 @@ pysel_default_signature(PyObject* callable)
 	}
 
 	arg_count = func_code->co_argcount;
-
+	if (arg_count < 1) {
+		PyErr_SetString(PyExc_TypeError,
+			"Objective-C callable methods must take at least one argument");
+		return NULL;
+	}
+	
 	/* arguments + return-type + selector */
 	result = PyMem_Malloc(arg_count+3);
 	if (result == 0) {
@@ -1179,6 +1181,7 @@ static	char*	keywords[] = { "function", "selector", "signature",
 	char* 	  argtypes = NULL;
 	char*     rettype = NULL;
 	char*	  selector = NULL;
+	SEL       objc_selector;
 	int	  class_method=0;
 	char      signature_buf[1024];
 	int       required=1;
@@ -1249,39 +1252,22 @@ static	char*	keywords[] = { "function", "selector", "signature",
 		Py_INCREF(callable);
 	}
 
-	result = (PyObjCPythonSelector*)PyObject_New(
-			PyObjCPythonSelector, &PyObjCPythonSelector_Type);
-	if (signature == NULL) {
-		result->sel_signature = pysel_default_signature(callable);
-		if (result->sel_signature == NULL) {
-			Py_DECREF(callable);
-			Py_DECREF(result);
-			return NULL;
-		}
-	} else {
-		result->sel_signature = PyObjCUtil_Strdup(signature);
-		if (result->sel_signature == 0) {
-			Py_DECREF(callable);
-			return PyErr_NoMemory();
-		}
-	}
 	if (selector == NULL) {
-		result->sel_selector = pysel_default_selector(callable);
+		objc_selector = pysel_default_selector(callable);
 	} else {
-		result->sel_selector = sel_registerName(selector);
+		objc_selector = sel_registerName(selector);
 	}
-	result->callable = callable;
-	result->sel_self = NULL;
-	result->sel_flags = 0;
-	result->sel_class = NULL;
-	if (class_method) {
-		result->sel_flags |= PyObjCSelector_kCLASS_METHOD;
+		
+	result = (PyObjCPythonSelector*)PyObjCSelector_New(callable,
+			objc_selector, signature, class_method, nil);
+	Py_DECREF(callable);
+	if (!result) {
+		return NULL;
 	}
 	if (required) {
 		result->sel_flags |= PyObjCSelector_kREQUIRED;
 	}
-
-	return (PyObject*)result;
+	return result;
 }
 
 static PyObject*
