@@ -19,7 +19,7 @@ BRIDGED_TYPES.append((str, str_to_unicode))
 try:
     from array import array
     from Carbon.File import FSRef
-except:
+except ImportError:
     pass
 else:
     def struct_to_FSRef(s):
