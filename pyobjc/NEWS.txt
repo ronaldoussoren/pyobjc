@@ -4,7 +4,7 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 1.2 (2004-12-??)
+Version 1.2 (2004-12-29)
 ------------------------
 
 - ``PyObjCTools.AppHelper.stopEventLoop`` will attempt to stop the current
@@ -53,26 +53,22 @@ Version 1.2 (2004-12-??)
 
 - ``bool(NSNull.null())`` is now false.
 
-- ``setup.py`` supports several new commands::
+- ``setup.py`` supports several new commands:
 
-    * build_libffi
+    build_libffi:
     
       builds libffi (used by build_ext)
 
-    * build_html
-
+    build_html:
       builds html documentation from ReST source
 
-    * bdist_dmg
-
+    bdist_dmg:
       creates a disk image with the binary installer
 
-    * bdist_mpkg
-
+    bdist_mpkg:
       creates a binary installer
 
-    * test
-
+    test:
       runs unit test suite (replaces Scripts/runPyObjCTests
       and Scripts/runalltests)
 
