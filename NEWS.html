@@ -11,6 +11,16 @@ PyObjC NEWS</title>
 <p>An overview of the relevant changes in new, and older, releases.</p>
 <h2><a name="version-1-3-1-2005-04">Version 1.3.1 (2005-04-??)</a></h2>
 <ul>
+<li>Added <code><span>OC_PythonUnicode</span></code> and <code><span>OC_PythonString</span></code> classes that
+preserve the identity of <code><span>str</span></code> and <code><span>unicode</span></code> objects across
+the bridge.  Additionally, bridge for <code><span>str</span></code> now uses the default
+encoding of <code><span>NSString</span></code>, rather than <code><span>sys.getdefaultencoding()</span></code>
+from Python.  For Mac OS X, this is typically MacRoman.  The reason
+for this is that not all Python <code><span>str</span></code> instances could cross the
+bridge at all previously.  <code><span>objc.setStrBridgeEnabled(False)</span></code> will
+still trigger warnings, if you are attempting to track down an
+encoding bug.  However, the symptoms of the bug will be incorrectly
+encoded text, not an exception.</li>
 <li>New Xcode project template &quot;PyObjC Mixed Application&quot; that is
 a py2app based Python application that loads an Objective-C
 plug-in built as a separate target.</li>

@@ -7,6 +7,17 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3.1 (2005-04-??)
 --------------------------
 
+- Added ``OC_PythonUnicode`` and ``OC_PythonString`` classes that
+  preserve the identity of ``str`` and ``unicode`` objects across
+  the bridge.  Additionally, bridge for ``str`` now uses the default
+  encoding of ``NSString``, rather than ``sys.getdefaultencoding()``
+  from Python.  For Mac OS X, this is typically MacRoman.  The reason
+  for this is that not all Python ``str`` instances could cross the
+  bridge at all previously.  ``objc.setStrBridgeEnabled(False)`` will
+  still trigger warnings, if you are attempting to track down an
+  encoding bug.  However, the symptoms of the bug will be incorrectly
+  encoded text, not an exception.
+
 - New Xcode project template "PyObjC Mixed Application" that is
   a py2app based Python application that loads an Objective-C
   plug-in built as a separate target.
