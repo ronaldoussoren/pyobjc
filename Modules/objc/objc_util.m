@@ -129,8 +129,10 @@ void ObjCErr_ToObjC(void)
 	NSMutableDictionary* userInfo;
 
 	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
+	if (!exc_type)
+		return;
 
-	if (!exc_type) return;
+	PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
 	args = PyObject_GetAttrString(exc_value, "_pyobjc_info_");
 	if (args == NULL) {
