@@ -48,12 +48,12 @@ Your nib file should now be the same as <a href="step3-MainMenu.nib">step3-MainM
 <li>Create the skeleton Python script by running the <code><span>nibclassbuilder</span></code> script.
 <code><span>nibclassbuilder</span></code> will parse the NIB file and create a skeleton module for you.
 Invoke it as follows (from the <code><span>src</span></code> directory):<pre>
-$ python -c &quot;import PyObjCScripts.nibclassbuilder&quot; English.lproj/MainMenu.nib &gt; CurrencyConverter.py
+$ python -c &quot;import PyObjCScripts.nibclassbuilder&quot; MainMenu.nib &gt; CurrencyConverter.py
 </pre>
 <p>Depending on your installation, the <code><span>nibclassbuilder</span></code> script may be on your <code><span>$PATH</span></code>.
 If so, it can be invoked as such:</p>
 <pre>
-$ nibclassbuilder English.lproj/MainMenu.nib &gt; CurrencyConverter.py
+$ nibclassbuilder MainMenu.nib &gt; CurrencyConverter.py
 </pre>
 <p>The result of this can be seen in <a href="step4-CurrencyConverter.py">step4-CurrencyConverter.py</a>.</p>
 </li>
@@ -67,7 +67,7 @@ import py2app
 
 setup(
     app=['CurrencyConverter.py'],
-    data_files=['English.lproj'],
+    data_files=['MainMenu.nib'],
 )
 </pre>
 <p>The result of this can be seen in <a href="step5-setup.py">step5-setup.py</a>.</p>
@@ -81,7 +81,7 @@ $ python setup.py py2app -A
 <p>Note that we use the <code><span>-A</span></code> argument to create an alias bundle at 
 <code><span>dist/CurrencyConverter.app</span></code>.  Alias bundles contain an alias to the
 main script (<code><span>CurrencyConverter.py</span></code>) and symlinks to the data files
-(<code><span>English.lproj</span></code>), rather than including them and their dependencies
+(<code><span>MainMenu.nib</span></code>), rather than including them and their dependencies
 into a standalone application bundle.  This allows us to keep working on
 the source files without having to rebuild the application.  This alias
 bundle is similar to a ZeroLink executable for Xcode - it is for
