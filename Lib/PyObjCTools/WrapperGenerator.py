@@ -412,6 +412,13 @@ class DumbHeaderParser (object):
     def process_line(self, ln):
         if not ln:
             return
+
+        if self.in_interface or self.in_protocol:
+            if not ln.startswith('@end'):
+                self.in_object_definition += ln.count('{')
+                self.in_object_definition -= ln.count('}')
+                if self.in_object_definition or ln.startswith('}'):
+                    return
         if ln.startswith('#'): return # Skip preprocessor stuff
         if self.in_enum:
             if ln.startswith('}'):
@@ -501,7 +508,6 @@ class DumbHeaderParser (object):
 
 
         if self.in_interface or self.in_protocol:
-            ln = ln.strip()
             if not ln.startswith('@end'):
                 self.in_object_definition += ln.count('{')
                 self.in_object_definition -= ln.count('}')
@@ -700,7 +706,7 @@ class DumbHeaderParser (object):
         if not v:
             return None
 
-        if v[0] == objc._C_PTR:
+        if v[0] == objc._C_PTR or '?' in v:
             if not self.isOpaquePointer(rettype):
                 return None
 
@@ -711,7 +717,7 @@ class DumbHeaderParser (object):
             if not v:
                 return None
 
-            if v[0] == objc._C_PTR:
+            if v[0] == objc._C_PTR or '?' in v:
                 if not self.isOpaquePointer(a):
                     return None
 
