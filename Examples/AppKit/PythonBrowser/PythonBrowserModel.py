@@ -117,7 +117,8 @@ class PythonItem(NSObject):
         return cls.alloc().init()
 
     def __init__(self, name, obj, parent, setvalue):
-        self.name = name
+        self.realName = name
+        self.name = str(name)
         self.parent = parent
         self._setValue = setvalue
         self.type = type(obj).__name__
@@ -151,8 +152,8 @@ class PythonItem(NSObject):
         self._childRefs = {}
 
     def setValue(self, value):
-        self._setValue(self.parent, self.name, value)
-        self.__init__(self.name, value, self.parent, self._setValue)
+        self._setValue(self.parent, self.realName, value)
+        self.__init__(self.realName, value, self.parent, self._setValue)
 
     def isEditable(self):
         return self._setValue is not None
