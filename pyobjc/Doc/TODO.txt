@@ -232,8 +232,9 @@ Formal Protocols, Distributed Objects
 .....................................
 
 ``DO`` seems to use formal protocols, we don't fully support those. There is 
-an equivalent to ``@protocol(Foo)``, but it is not yet possible to define
-new protocols in Python.
+an equivalent to ``@protocol(Foo)``, and classes can declare that they
+implement formal protocols, but it is not yet possible to define
+a new formal protocol in Python.
 
 Links to Apple documentation
 ............................

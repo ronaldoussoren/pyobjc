@@ -10,6 +10,13 @@ Version 1.3 (2005-03-??)
 - (UNFINISHED) New RemotePyInterpreter example that demonstrates an
   out-of-process Python interpreter (primarily for IDE uses).
 
+- PyObjC classes can now declare that they implement formal protocols,
+  for example::
+
+    class MyLockingClass(NSObject, objc.protocolNamed('NSLocking')):
+        # implementation
+        pass
+        
 - PyObjCTools.KeyValueCoding has a new ``kvc`` class that allows
   Pythonic Key-Value Coding.
 
