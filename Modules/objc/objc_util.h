@@ -12,6 +12,7 @@ int ObjCUtil_Init(PyObject* module);
 
 extern PyObject* ObjC_class_extender;
 int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict);
+int  ObjC_UpdateConvenienceMethods(PyObject* cls);
 
 void ObjCErr_Set(PyObject* exc, char* fmt, ...);
 void ObjCErr_FromObjC(NSException* localException);

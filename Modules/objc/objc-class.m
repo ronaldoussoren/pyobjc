@@ -149,6 +149,7 @@ objc_class_locate(Class objc_class)
 	PyObject* result;
 
 	if (class_registry == NULL) return NULL;
+	if (objc_class == NULL) return NULL;
 
 	result = PyDict_GetItemString(class_registry, 
 		(char*)objc_class->name);
@@ -245,6 +246,9 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 	super_class = ObjCClass_GetClass(v);
+	if (super_class) {
+		ObjCClass_CheckMethodList(v);
+	}
 
 	protocols = PyList_New(0);
 	if (protocols == NULL) return NULL;
@@ -400,6 +404,7 @@ class_repr(PyObject* obj)
 	return PyString_FromString(buffer);
 }
 
+
 static void
 class_dealloc(PyObject* cls)
 {
@@ -416,8 +421,17 @@ ObjCClass_CheckMethodList(PyObject* cls)
 	int		   magic;
 
 	info = get_class_info(cls);
+
+	if (info->class == NULL) return;
+
+
+	if (info->method_magic == 0 && info->class->super_class != 0) {
+		ObjCClass_CheckMethodList(ObjCClass_New(info->class->super_class));
+	}
+
 	if (info->method_magic != (magic = objc_methodlist_magic(info->class))){
 		int r;
+
 		r = add_class_fields(
 			info->class,
 			((PyTypeObject*)cls)->tp_dict);
@@ -426,13 +440,13 @@ ObjCClass_CheckMethodList(PyObject* cls)
 				"Cannot rescan method table");
 			return;
 		}
-		r = ObjC_AddConvenienceMethods(info->class, 
-			((PyTypeObject*)cls)->tp_dict);
+		r =  ObjC_UpdateConvenienceMethods(cls);
 		if (r < 0) {
 			PyErr_SetString(PyExc_RuntimeError,
 				"Cannot rescan method table");
 			return;
 		}
+
 		info->method_magic = magic;
 		if (info->sel_to_py) {
 			Py_DECREF(info->sel_to_py);
@@ -471,8 +485,12 @@ class_getattro(PyObject* self, PyObject* name)
 			Py_INCREF(x->sel_self);
 		}
 		if (res < 0) {
-			printf("Cannot add method to dict:\n");
-			PyErr_Print();
+			if (ObjC_VerboseLevel) {
+				PySys_WriteStderr(
+					"PyObjC[class_getattro]: Cannot "
+					"add new method to dict:\n");
+				PyErr_Print();
+			}
 			PyErr_Clear();
 		}
 	}
@@ -632,10 +650,10 @@ add_class_fields(Class objc_class, PyObject* dict)
 			 *
 			 * We're save for now because none of the example code 
 			 * uses this feature.
-			 */
 			if (PyDict_GetItemString(dict, name) != NULL) {
 				continue;
 			} 
+			 */
 
 			descr = ObjCSelector_NewNative(
 					objc_class,
@@ -753,15 +771,8 @@ PyObject* ObjCClass_New(Class objc_class)
 	}
 	PyErr_Clear();
 
+
 	dict = PyDict_New();
-	if (add_class_fields(objc_class, dict) < 0)  {
-		Py_DECREF(dict);
-		return NULL;
-	}
-	if (ObjC_AddConvenienceMethods(objc_class, dict) < 0) {
-		Py_DECREF(dict);
-		return NULL;
-	}
 
 	bases = PyTuple_New(1);
 
@@ -789,7 +800,7 @@ PyObject* ObjCClass_New(Class objc_class)
 
 	info->class = objc_class;
 	info->sel_to_py = PyDict_New(); 
-	info->method_magic = objc_methodlist_magic(objc_class);
+	info->method_magic = 0;
 
 	objc_class_register(objc_class, result);
 
