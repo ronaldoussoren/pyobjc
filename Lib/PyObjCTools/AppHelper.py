@@ -1,12 +1,24 @@
-"""Application helpers.
+"""AppKit helpers.
 
-Currently only a single function is exported: runEventLoop().
+Exported functions:
+* runEventLoop - run NSApplicationMain in a safer way
+* sheetEndMethod - set correct signature for NSSheet callbacks
 """
 
 from AppKit import NSApplicationMain, NSApp, NSRunAlertPanel
 from Foundation import NSLog
 import sys
 import traceback
+import objc as _objc
+
+
+def endSheetMethod(meth):
+    """
+    Return a selector that can be used as the delegate callback for
+    sheet methods
+    """
+    return _objc.selector(meth, signature='v@:@ii')
+
 
 
 def unexpectedErrorAlert():

@@ -70,7 +70,8 @@ callback::
 			""" Actual implementation goes here """
 			pass
 
-		mysheetDidEnd = AppKit.endSheetMethod(mysheetDidEnd)
+		mysheetDidEnd = PyObjCTools.AppHelper.endSheetMethod(
+			mysheetDidEnd)
 
 
 Class NSApplication

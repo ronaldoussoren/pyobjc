@@ -141,7 +141,7 @@ struct pyobjc_api objc_api = {
 	fill_super,			/* fill_super */
 	fill_super_cls,			/* fill_super_cls*/
 	PyObjCPointerWrapper_Register,	/* register_pointer_wrapper */
-	unsupported_method_imp,		/* unsupported_method_imp */
+	(IMP)unsupported_method_imp,	/* unsupported_method_imp */
 	unsupported_method_caller	/* unsupported_method_caller */
 };
 

@@ -164,6 +164,8 @@ for input/output arguments.
 We also don't support all "difficult" methods yet, implementing these is
 not too hard but it is a lot of work.
 
+NSDecimal (the C-type) is not yet supported.
+
 Pickle support
 ..............
 

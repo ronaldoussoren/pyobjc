@@ -7,12 +7,13 @@
  * - exceptions 
  * - global functions (TODO)
  */
+#import <AppKit/AppKit.h>
+#import <AppKit/NSGraphics.h>
+#import <CoreFoundation/CoreFoundation.h>
+
 #include <Python.h>
 #include "pyobjc-api.h"
 #include "wrapper-const-table.h"
-
-#import <AppKit/AppKit.h>
-#import <AppKit/NSGraphics.h>
 
 #ifndef GNUSTEP
 
@@ -553,6 +554,7 @@ void init_AppKit(void);
 void init_AppKit(void)
 {
 	PyObject *m, *d;
+	CFBundleRef bundle;
 
 	m = Py_InitModule4("_AppKit", appkit_methods, appkit_doc, 
 		NULL, PYTHON_API_VERSION);
@@ -565,8 +567,13 @@ void init_AppKit(void)
 		return;
 	}
 
+	bundle = CFBundleCreate(NULL,
+		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/AppKit.framework"]);
+
 	if (register_ints(d, enum_table) < 0) return;
-	if (register_strings(d, string_table) < 0) return;
+	if (register_variableList(d, bundle, string_table, (sizeof(string_table)/sizeof(string_table[0]))-1) < 0) return;
+
+	//CFRelease(bundle);
 
 #ifdef GNUSTEP
 

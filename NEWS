@@ -5,7 +5,14 @@
 
 WHAT'S NEW:
 
-Version 0.10CVS (Work in progress):
+Version 1.0b1 (2003-07-03 [preliminary date]):
+
+- More tutorials
+  Two new tutorials were added: 'Adding Python code to an existing ObjC 
+  application' and 'Understanding existing PyObjC examples'. The former
+  explains how you can use Python to add new functionality to an already
+  existing Objective-C application, the latter explains how to understand
+  PyObjC programs written by other people.
 
 - More examples
   Three examples were added: DotView, ClassBrowser and PythonBrowser,
@@ -20,7 +27,17 @@ Version 0.10CVS (Work in progress):
   Note: The port to MacOS X 10.1 is not as well supported as the 10.2 port.
   The developers do not have full-time access to a MacOS X 10.1 system.
 
-- All suppport for non-FFI builds has been removed.
+- Support for the WebKit framework, included with Safari 1.0.
+  If you build PyObjC from source you will have to build on a system that has
+  the WebKit SDK installed to make use of this. Note that the additional 
+  functionality will only be usuable on systems that have Safari 1.0 installed,
+  however as long as you don't use the additional functionality it is safe
+  to run a 'WebKit-enabled' PyObjC on systems without Safari 1.0.
+
+- It is no longer necessary to specify which protocols are implemented by
+  a class, this information is automaticly deduced from the list of implemented
+  methods. You'll still a runtime error if you implement some methods of a 
+  protocol and one of the unimplemented methods is required.
 
 - Support for "toll-free bridging" of Carbon.CF types to Objective-C objects.
   It is now possible to use instances of Carbon.CF types in places where 
@@ -33,12 +50,25 @@ Version 0.10CVS (Work in progress):
   * NSMovie.initWithMovie_ and NSMovie.QTMovie now use QT.Movie objects instead
     of generic pointer wrappers.
 
+  * NSWindow.initWithWindowRef_ and Window.windowRef now use Carbon.Window 
+    objects instead of generic pointer wrappers.
+
   * Methods returning CoreFoundation objects will return MacPython objects,
     and likewise, methods with CoreFoundation arguments will accept MacPython
     objects.
 
+- It is now possible to write plugin bundles, such as preference panes for 
+  use in System Preferences, in Python. See Examples/PrefPanes for an example
+  of this feature.
+ 
+- The methods ``pyobjcPopPool`` and ``pyobjcPushPool`` of ``NSAutoreleasePool``
+  are deprecated. These were introduced when PyObjC did not yet support the
+  usual method for creating autorelease pools and are no longer necessary.
+
 - Improved unittests, greatly increasing the confidence in the correctness
   of the bridge.
+
+- All suppport for non-FFI builds has been removed.
 
 - Object state is completely stored in the Objective-C object.  This has no
   user-visible effects, but makes the implementation a lot easier to 
@@ -58,21 +88,12 @@ Version 0.10CVS (Work in progress):
   Objective-C object died, therefore code that uses weakrefs to Objective-C
   objects is almost certainly incorrect.
 
-- It is no longer necessary to specify which protocols are implemented by
-  a class, this information is automaticly deduced from the list of implemented
-  methods. You'll still a runtime error if you implement some methods of a 
-  protocol and one of the unimplemented methods is required.
-
 - Added support for custom conversion for pointer types. The end result is that
   we support more Cocoa APIs without special mappings.
 
-- It is now possible to write plugin bundles, such as preference panes for 
-  use in System Preferences, in Python. See Examples/PrefPanes for an example
-  of this feature.
- 
-- The methods ``pyobjcPopPool`` and ``pyobjcPushPool`` of ``NSAutoreleasePool``
-  are deprecated. These were introduced when PyObjC did not yet support the
-  usual method for creating autorelease pools and are no longer necessary.
+- The generator scripts are automaticly called when building PyObjC. This
+  should make it easier to support multiple versions of MacOS X.
+
 
 Version 0.9 (May-02-2003):
 - This version includes numerous bugfixes and improvements.

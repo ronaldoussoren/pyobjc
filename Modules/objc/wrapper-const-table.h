@@ -12,6 +12,12 @@
  */
 
 #import <Foundation/NSString.h>
+#import <Foundation/NSArray.h>
+
+struct vartable {
+	NSString* name;
+	char* type;
+};
 
 struct inttable {
 	char* 	name;
@@ -145,4 +151,55 @@ static inline int register_strings(PyObject* d, struct stringtable* table)
 	}
 	return 0;
 }
+
+static inline int
+register_variableList(PyObject* d, CFBundleRef bundle, struct vartable* table, size_t count)
+{
+	void** ptrs = NULL;
+	NSMutableArray* names = nil;
+	size_t i;
+	int retVal = 0;
+
+	ptrs = malloc(sizeof(void*) * count);
+	if (ptrs == NULL) {
+		PyErr_NoMemory();
+		return -1;
+	}
+
+	names = [[NSMutableArray alloc] init];
+	if (names == NULL) {
+		PyErr_NoMemory();
+		retVal = -1;
+		goto cleanup;
+	}
+
+	for (i = 0; i < count; i++) {
+		[names addObject:table[i].name];
+	}
+
+	CFBundleGetDataPointersForNames(bundle,
+		(CFArrayRef)names, ptrs);
+
+	for (i = 0; i < count; i++) {
+		if (ptrs[i] == NULL) continue; /* Skip undefined names */
+
+		PyObject* val = PyObjC_ObjCToPython(table[i].type, ptrs[i]);
+		if (val == NULL) {
+			retVal = -1;
+			goto cleanup;
+		}
+		PyDict_SetItemString(d, (char*)[table[i].name cString], val);
+		Py_DECREF(val);
+	}
+
+cleanup:
+	if (ptrs) {
+		free(ptrs);
+	}
+
+	[names release];
+
+	return retVal;
+}
+
 

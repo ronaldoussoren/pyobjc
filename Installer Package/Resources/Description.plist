@@ -9,7 +9,7 @@
 
 The ObjC package provides the glue needed to interface the Python interpreter with the Objective-C language. The 'objc' module makes Objective-C objects and classes available as first-class Python citizens, it is not only possible to use Objective-C objects but you can also subclass Objective-C classes.
 
-The package also includes support for the Foundation, AppKit and AddressBook frameworks.   As a result, it is possible to build complete Cocoa applications entirely in Python.
+The package also includes support for the Foundation, AppKit, WebKit and AddressBook frameworks.   As a result, it is possible to build complete Cocoa applications entirely in Python.
 
 The package also includes a project template from which the developer can create new Cocoa projects implemented in Python.
 
@@ -18,6 +18,6 @@ Must be installed on boot volume.
 	<key>IFPkgDescriptionTitle</key>
 	<string>PyObjC</string>
 	<key>IFPkgDescriptionVersion</key>
-	<string>0.9</string>
+	<string>1.0b1</string>
 </dict>
 </plist>

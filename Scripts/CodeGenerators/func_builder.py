@@ -5,6 +5,8 @@
 # has only 'by value' arguments, and return a simple object or an 'id'
 #
 
+verbose=0
+
 try:
     import objc
 except ImportError:
@@ -137,6 +139,11 @@ def is_id(typestr):
             except:
                     return 0
         else:
+            # These types are used in function definition (OSX 10.2), this
+            # list is necessary for people that build without an installed
+            # PyObjC.
+            if typestr[:-1] in ('NSString', 'NSArray', 'NSWindow', 'NSColor', 'NSPasteboard', 'NSBundle', 'NSDictionary', 'NSResponder'):
+                return 1
             return 0
 
 # TODO: actually use this, and add more types (when using: always check here
@@ -390,14 +397,15 @@ def process_list(fp, lst):
 		if l[0] == '#': continue
 		total_count += 1
 		try:
-			sys.stderr.write("Converting '%s' ..."%l.strip())
-			sys.stderr.flush()
 
 			funcs.append((process_function(fp, l), l))
-			sys.stderr.write("done\n")
+                        if verbose:
+			    sys.stderr.write("Converting '%s' ..."%l.strip())
+                            sys.stderr.write("done\n")
 			sys.stderr.flush()
 			ok_count += 1
 		except ValueError, msg:
+			sys.stderr.write("Converting '%s' ..."%l.strip())
 			sys.stderr.write("failed: %s\n"%msg)
 			sys.stderr.flush()
 
@@ -413,7 +421,8 @@ def process_list(fp, lst):
 		fp.write("\t/* END */\n")
 
 
-	sys.stderr.write("Converted %d of %d functions\n"%(ok_count, total_count))
+        if verbose:
+            sys.stderr.write("Converted %d of %d functions\n"%(ok_count, total_count))
 
 if __name__ == "__main__":
 	import sys
