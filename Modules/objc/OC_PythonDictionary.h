@@ -25,7 +25,6 @@
 @interface OC_PythonDictionary : NSMutableDictionary
 {
 	PyObject* value;
-    NSMapTable* table;
 }
 
 /*!

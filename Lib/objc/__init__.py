@@ -17,6 +17,7 @@ def _update(g=globals()):
 _update()
 del _update
 
+from _convenience import *
 import _FoundationSignatures
 
 # Add useful utility functions below
@@ -27,7 +28,6 @@ else:
 
 from _protocols import *
 from _descriptors import *
-from _convenience import *
 from _category import *
 from _bridges import *
 from _compat import *

@@ -32,6 +32,8 @@ class_dealloc(PyObject* obj)
 	PyObject* weakrefs = uobj->weakrefs;
 	PyObject* py_nsstr = uobj->py_nsstr;
 
+	PyObjC_UnregisterPythonProxy(nsstr, obj);
+
 	Py_XDECREF(py_nsstr);
 	[nsstr release];
 
@@ -52,6 +54,7 @@ meth_nsstring(PyObject* self)
 	Py_INCREF(uobj->py_nsstr);
 	return uobj->py_nsstr;
 }
+
 
 static PyObject*
 meth_getattro(PyObject *o, PyObject *attr_name)
@@ -118,7 +121,7 @@ nsstring_get__pyobjc_object__(PyObject *self, void *closure __attribute__((__unu
 	return meth_nsstring(self);
 }
 
-static PyGetSetDef nsstring_getseters[] = {
+static PyGetSetDef nsstring_getsetters[] = {
 	{
 		"__pyobjc_object__",
 		(getter)nsstring_get__pyobjc_object__, NULL,
@@ -176,7 +179,7 @@ PyTypeObject PyObjCUnicode_Type = {
 	0,					/* tp_iternext */
 	class_methods,				/* tp_methods */
 	0,					/* tp_members */
-	nsstring_getseters,	/* tp_getset */
+	nsstring_getsetters,			/* tp_getset */
 	&PyUnicode_Type,			/* tp_base */
 	0,					/* tp_dict */
 	0,					/* tp_descr_get */

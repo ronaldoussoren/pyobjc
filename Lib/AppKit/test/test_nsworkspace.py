@@ -12,8 +12,7 @@ class TestNSWorkspace(unittest.TestCase):
 
         # A method with 2 output parameters, this means the result
         # is a tuple with 3 elements (return value, param1, param2)
-        res = ws.getInfoForFile_application_type_(
-            os.getcwd().decode('utf8'))
+        res = ws.getInfoForFile_application_type_(u'/')
         self.assert_(isinstance(res, tuple))
         self.assert_(len(res) == 3)
         self.assert_(res[0] == 1)

@@ -73,9 +73,9 @@ class TestNSStringBridging(unittest.TestCase):
         curEnabledFlag = objc.getStrBridgeEnabled()
         objc.setStrBridgeEnabled(True)
         try:
-            v = NSString.stringWithString_("hello")
+            v = NSString.stringWithString_("hello2")
             self.assert_(isinstance(v, objc.pyobjc_unicode))
-            self.assertEquals(v, u"hello")
+            self.assertEquals(v, u"hello2")
 
 
             self.assertRaises(UnicodeError, unicode, "\xff")
@@ -87,7 +87,7 @@ class TestNSStringBridging(unittest.TestCase):
             try:
                 #v = NSString.stringWithString_("hello")
                 self.assertRaises(objc.PyObjCStrBridgeWarning,
-                        NSString.stringWithString_, "hello")
+                        NSString.stringWithString_, "hello2")
 
             finally:
                 del warnings.filters[0]

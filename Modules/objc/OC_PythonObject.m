@@ -75,27 +75,25 @@ NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
 NSMapTable *PyObjC_ObjectToIdTable = NULL;
 #endif
 
+/* FIXME: PyObjC_RegisterObjCProxy should be moved to a central location! */
 @implementation OC_PythonObject
 + (int)wrapPyObject:(PyObject *)argument toId:(id *)datum
 {
 	int r;
 	id rval;
-    PyObject *anObject;
+	PyObject *anObject;
 	 
 	if (argument == Py_None) {
 		rval = nil;
 		r = 0;
 		goto end;
 	}
-#if 0
-	if (!PyObjC_ObjectToIdTable) {
-		PyObjC_ObjectToIdTable = NSCreateMapTable(PyObjC_ObjectToIdTable_KeyCallBacks, PyObjC_ObjectToIdTable_ValueCallBacks, 1024);
+
+	rval = PyObjC_FindObjCProxy(argument);
+	if (rval != nil) { 
+		r = 0; 
+		goto end; 
 	}
-	if ((*datum = (id)NSMapGet(PyObjC_ObjectToIdTable, argument))) {
-		// key found
-		return 0;
-	}
-#endif
 	
 	if (PyObjCClass_Check (argument)) {
 		rval = (id)PyObjCClass_GetClass(argument);
@@ -161,10 +159,12 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 	} else if (PyList_Check(argument) || PyTuple_Check(argument)) {
 		rval = [OC_PythonArray 
 			newWithPythonObject:argument];
+		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
 	} else if (PyDict_Check(argument)) {
 		rval = [OC_PythonDictionary 
 			newWithPythonObject:argument];
+		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
 #ifdef MACOSX
 	} else if ((rval = PyObjC_CFTypeToID(argument))) {
@@ -175,6 +175,7 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 		NS_DURING
 			rval = [OC_PythonObject 
 				newWithCoercedObject:argument];
+
 			r = 0;
 
 		NS_HANDLER
@@ -184,9 +185,7 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 
 		NS_ENDHANDLER
 	}
-#if 0
-	NSMapInsert(PyObjC_ObjectToIdTable, (const void *)argument, (const void *)rval);
-#endif
+
 end:
 	*datum = rval;
 	return r;
@@ -301,6 +300,10 @@ end:
 - initWithObject:(PyObject *) obj
 {
 	PyObjC_BEGIN_WITH_GIL
+		if (pyObject) {
+			PyObjC_UnregisterObjCProxy(pyObject, self);
+		}
+		PyObjC_RegisterObjCProxy(obj, self);
 		Py_XINCREF(obj);
 		Py_XDECREF(pyObject);
 		pyObject = obj;
@@ -311,6 +314,7 @@ end:
 - (void)dealloc
 {
 	PyObjC_BEGIN_WITH_GIL
+		PyObjC_UnregisterObjCProxy(pyObject, self);
 		Py_XDECREF(pyObject);
 
 	PyObjC_END_WITH_GIL
