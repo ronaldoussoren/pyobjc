@@ -27,7 +27,7 @@
 #define PyDoc_STRVAR(name, str) PyDoc_VAR(name) = PyDoc_STR(str)
 #endif
 
-#define OBJC_VERSION "0.9pre1"
+#define OBJC_VERSION "0.9"
 
 #ifdef MACOSX
 
