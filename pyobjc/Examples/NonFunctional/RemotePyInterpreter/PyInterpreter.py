@@ -9,6 +9,13 @@ from PyObjCTools import NibClassBuilder, AppHelper
 
 NibClassBuilder.extractClasses("PyInterpreter.nib")
 
+from AsyncPyInterpreter import *
+from ConsoleReactor import *
+
+class RemotePyInterpreterReactor(ConsoleReactor):
+    def handleExpectCommand_(self, command):
+        super(RemotePyInterpreterReactor, self).handleExpectCommand_(command)
+    
 
 class PseudoUTF8Input(object):
     softspace = 0
