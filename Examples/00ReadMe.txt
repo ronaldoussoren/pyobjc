@@ -63,7 +63,7 @@ that make use of Cocoa features.
 * `kvo-debugging.py`__
 
   XXX
-  An example script that demonstrates how PyObjC interacts with Key Value
+  An example script that demonstrates how PyObjC interacts with Key-Value
   Observation (KVO) at the lowest level.  This script was used to debug
   the PyObjC runtime and should not be used as a guideline for writing
   new KVO code.  It may be interesting to some until we ensure that we
