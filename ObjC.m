@@ -140,7 +140,7 @@ initpyobjc (void)
   PyDict_SetItemString (d, "error", ObjC_Error);
 
   PyDict_SetItemString (d, "runtime", (PyObject *) ObjCRuntime_new());
-  PyDict_SetItemString (d, "__version__", PyFloat_FromDouble (PyObjC_VERSION));
+  PyDict_SetItemString (d, "__version__", PyString_FromString(PyObjC_VERSION));
 
   // Force the load of these classes/categories
   [OC_PythonBundle class];
