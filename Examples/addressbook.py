@@ -9,13 +9,13 @@ me = book.me()
 propNames = me.properties()
 d = {}
 for i in propNames:
-	d[i] = me.valueForProperty_(i)
+    d[i] = me.valueForProperty_(i)
 
 keys = d.keys()
 keys.sort()
 print "Information about me"
 print "--------------------"
 for k in keys:
-	if d[k] == None: continue
-	print '%s: %s'%(k, d[k])
+    if d[k] == None: continue
+    print '%s: %s'%(k, d[k])
 

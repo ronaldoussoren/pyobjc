@@ -13,19 +13,19 @@ NSObject = objc.lookUpClass('NSObject')
 N = 1
 
 class MyObject (NSObject):
-	def init(self):
-		global N
-		if N == 1:
-			print "Calling super.init"
-			N = 0
+    def init(self):
+        global N
+        if N == 1:
+            print "Calling super.init"
+            N = 0
 
-			# Call super-class implementation.
-			super(MyObject, self).init()
+            # Call super-class implementation.
+            super(MyObject, self).init()
 
-			# The older convention also works:
-			#NSObject.init(self)
-		else:
-			print "Cyclic call detected"
+            # The older convention also works:
+            #NSObject.init(self)
+        else:
+            print "Cyclic call detected"
 
 
 x = MyObject.alloc().init()

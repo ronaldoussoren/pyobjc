@@ -18,20 +18,18 @@ import objc
 # Todo example)
 
 def testClass( className, methodToTest ):
-	c = objc.lookUpClass( className )
-	mE = 'c.%s' % methodToTest
-	before =  eval(mE)
-	#before = getattr(c, methodToTest)
-	b = c.alloc().init()
-	after = eval(mE)
-	#after = getattr(c, methodToTest)
+    c = objc.lookUpClass( className )
+    mE = 'c.%s' % methodToTest
+    before =  eval(mE)
+    b = c.alloc().init()
+    after = eval(mE)
 
-	if before == after:
-		print "No weirdness present on %s.%s()" % (className, methodToTest)
-	else:
-		print "Method weirdness detected on %s.%s()" % (className, methodToTest)
-		print "\tbefore alloc(): ", before
-		print "\tafter  alloc(): ", after
+    if before == after:
+        print "No weirdness present on %s.%s()" % (className, methodToTest)
+    else:
+        print "Method weirdness detected on %s.%s()" % (className, methodToTest)
+        print "\tbefore alloc(): ", before
+        print "\tafter  alloc(): ", after
 
 
 testClass( "NSButtonCell", "setEnabled_" )

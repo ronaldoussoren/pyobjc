@@ -10,21 +10,21 @@ import objc
 NSEnumerator = objc.lookUpClass('NSEnumerator')
 
 class Demo (NSEnumerator):
-	__slots__ = ('cnt',)
+    __slots__ = ('cnt',)
 
-	def init(self):
-		self.cnt = 10
-		return self
+    def init(self):
+        self.cnt = 10
+        return self
 
-	def nextObject(self):
-		print "nextObject" ,  self.retainCount()
-		if self.cnt == 0:
-			return None
-		self.cnt -= 1
-		return self.cnt
+    def nextObject(self):
+        print "nextObject" ,  self.retainCount()
+        if self.cnt == 0:
+            return None
+        self.cnt -= 1
+        return self.cnt
 
-	def __del__(self):
-		print "Bye from Demo instance"
+    def __del__(self):
+        print "Bye from Demo instance"
 
 print Demo.alloc
 obj = Demo.alloc()
