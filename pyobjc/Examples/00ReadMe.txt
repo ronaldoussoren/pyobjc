@@ -17,7 +17,13 @@ And a number of Cocoa applications. These use the 'AppKit' package.
   hierarchical widget) and NSTableView.
 
 - CurrencyConverter
-  A simple NIB based application.
+  A simple NIB based application. Start with this one. Also see the PyObjC
+  tutorial.
+
+- DotView
+  A simple one-window demo showing how to custom drawing in a custom
+  NSView. Additionally shows how easy it is to embed a view in an
+  NSScrollView, as well as how to use an NSColorWell.
 
 - iClass
   A more elaborate class browser; demonstrates NSOutlineView and NSTableView.
@@ -27,7 +33,9 @@ And a number of Cocoa applications. These use the 'AppKit' package.
   System Preferences application. Requires a framework build of Python.
 
 - PythonBrowser
-  A reusable Python object browser, demonstrating the use of NSOutlineView. 
+  A reusable Python object browser, demonstrating the use of NSOutlineView
+  as well as how to use an NSWindowController subclass to create a window
+  from a menu action.
 
 - TableModel
   Basic demo that shows how to use a NSTableView.
