@@ -1,3 +1,7 @@
+2003-02-01  Bill Bumgarner  <bbum@codefab.com>
+    * Lib/Foundation/Conversion.py:  Now handles NSValue instances correctly
+      [like NSNumber].
+
 2003-01-31  Just van Rossum <just@letterror.com>
     * Added autoGIL extension module.  It's a top-level module as it's not
       Cocoa- or PyObjC-specific. In fact it may end up in the Python
