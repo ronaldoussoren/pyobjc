@@ -188,6 +188,11 @@
 
 @end /* NSString (PyObjCSupport) */
 
+#if 0
+/*
+ * This is actually a bad idea.. turning off for now,
+ * and specializing containers a bit further.
+ */
 @implementation NSNull (PyObjCSupport)
 
 -(PyObject*)__pyobjc_PythonObject__
@@ -197,6 +202,7 @@
 }
 
 @end /* NSNull (PyObjCSupport) */
+#endif
 
 
 #ifndef MAX

@@ -174,9 +174,14 @@ NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
 
 	PyObjC_BEGIN_WITH_GIL
 
-		k = pythonify_c_value(@encode(id), &key);
-		if (k == NULL) {
-			PyObjC_GIL_FORWARD_EXC();
+		if (key == [NSNull null]) {
+			Py_INCREF(Py_None);
+			k = Py_None;
+		} else {
+			k = PyObjC_IdToPython(key);
+			if (k == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
 		}
 
 		v = PyDict_GetItem(value, k);
@@ -201,17 +206,28 @@ NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
 {
 	PyObject* v = NULL;
 	PyObject* k = NULL;
+	id null = [NSNull null];
 
 	PyObjC_BEGIN_WITH_GIL
-		v = PyObjC_IdToPython(val);
-		if (v == NULL) {
-			PyObjC_GIL_FORWARD_EXC();
+		if (val == null) {
+			Py_INCREF(Py_None);
+			v = Py_None;
+		} else {
+			v = PyObjC_IdToPython(val);
+			if (v == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
 		}
 
-		k = PyObjC_IdToPython(key);
-		if (k == NULL) {
-			Py_XDECREF(v);
-			PyObjC_GIL_FORWARD_EXC();
+		if (key == null) {
+			Py_INCREF(Py_None);
+			k = Py_None;
+		} else {
+			k = PyObjC_IdToPython(key);
+			if (k == NULL) {
+				Py_XDECREF(v);
+				PyObjC_GIL_FORWARD_EXC();
+			}
 		}
 
 		if (PyDict_SetItem(value, k, v) < 0) {
@@ -255,9 +271,14 @@ NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
 	PyObject* k;
 
 	PyObjC_BEGIN_WITH_GIL
-		k = PyObjC_IdToPython(key);
-		if (k == NULL) {
-			PyObjC_GIL_FORWARD_EXC();
+		if (key == [NSNull null]) {
+			Py_INCREF(Py_None);
+			k = Py_None;
+		} else {
+			k = PyObjC_IdToPython(key);
+			if (k == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
 		}
 
 		if (PyDict_DelItem(value, k) < 0) {
