@@ -136,7 +136,6 @@
 @end /* NSNumber (PyObjCSupport) */
 
 @implementation NSNumber (PyObjCSupport)
-
 -(PyObject*)__pyobjc_PythonObject__
 {
 	PyObject *rval = [super __pyobjc_PythonObject__];
@@ -147,7 +146,7 @@
 	}
 	return rval;
 }
-
+@end
 
 #ifndef MAX
 static inline int
