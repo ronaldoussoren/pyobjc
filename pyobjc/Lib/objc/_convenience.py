@@ -7,7 +7,7 @@ This module contains no user callable code.
 TODO:
 - Add external interface: Framework specific modules may want to add to this.
 """
-from _objc import setClassExtender, selector, lookUpClass, internal_error
+from _objc import setClassExtender, selector, lookUpClass, internal_error, currentBundle
 
 __all__ = ['CONVENIENCE_METHODS', 'CLASS_METHODS']
 
@@ -27,6 +27,18 @@ def add_convenience_methods(super_class, name, type_dict):
 
     Matching entries from both mappings are added to the 'type_dict'.
     """
+    if type_dict.get('__objc_python_subclass__'):
+        if 'bundleForClass' not in type_dict:
+            cb = currentBundle()
+            def bundleForClass(cls):
+                return cb
+            type_dict['bundleForClass'] = selector(bundleForClass, isClassMethod=True)
+        if '__bundle_hack__' in type_dict:
+            import warnings
+            warnings.warn(
+                "__bundle_hack__ is not necessary in PyObjC 1.3+ / py2app 0.1.8+",
+                DeprecationWarning)
+
     for k, sel in type_dict.items():
         if not isinstance(sel, selector):
             continue

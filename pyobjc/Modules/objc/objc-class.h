@@ -56,11 +56,11 @@ extern PyObject* PyObjC_ClassExtender;
  *                  for a selector.
  * @field method_magic  The most recent objc_methodlist_magic() for the class
  * @field dictoffset  Offset in the Objective-C instance for the instance 
- *  		      __dict__
+ *                    __dict__
  * @field delmethod  The method that implements __del__
- * @field hasPythonImp True if the class is implemented in Python
+ * @field hasPythonImpl True if the class is implemented in Python
  * @field generation   The value of PyObjC_MappingCount at the last time
- * 		       the method-list was updated.
+ *                     the method-list was updated.
  *
  * @discussion
  *      This struct is the type-object for on Objective-C class. It stores
