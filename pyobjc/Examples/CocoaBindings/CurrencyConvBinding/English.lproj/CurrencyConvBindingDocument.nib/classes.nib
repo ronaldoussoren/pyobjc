@@ -4,7 +4,6 @@
         {
             CLASS = CurrencyConvBindingDocument; 
             LANGUAGE = ObjC; 
-            OUTLETS = {}; 
             SUPERCLASS = NSDocument; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
