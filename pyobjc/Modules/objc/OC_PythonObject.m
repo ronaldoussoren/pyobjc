@@ -164,6 +164,11 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 		r = 0;
 #endif /* MACOSX */
 	} else {
+		PyObject *anObject = PyObject_GetAttrString(argument, "__pyobjc_object__");
+		if (anObject && anObject != argument) {
+			return [self wrapPyObject:anObject toId:datum];
+		}
+		PyErr_Clear();
 		NS_DURING
 			rval = [OC_PythonObject 
 				newWithCoercedObject:argument];

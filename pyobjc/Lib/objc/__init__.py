@@ -30,6 +30,7 @@ from _convenience import *
 from _category import *
 from _bridges import *
 from _compat import *
+from _pythonify import *
 
 ###
 # This can be usefull to hunt down memory problems in the testsuite.

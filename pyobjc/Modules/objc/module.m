@@ -31,6 +31,7 @@
 
 int PyObjC_VerboseLevel = 0;
 PyObject* PyObjCClass_DefaultModule = NULL;
+PyObject* PyObjC_NSNumberWrapper = NULL;
 int PyObjC_StrBridgeEnabled = 1;
 
 static NSAutoreleasePool* global_release_pool = nil;
@@ -402,6 +403,54 @@ static 	char* keywords[] = { "class_name", "selector", "signature", NULL };
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+
+PyDoc_STRVAR(setNSNumberWrapper_doc,
+	"setNSNumberWrapper(wrapper) -> None\n"
+	"\n"
+	"Set the NSNumber wrapper function to the new value."
+);
+static PyObject* 
+setNSNumberWrapper(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static 	char* keywords[] = { "wrapper", NULL };
+	PyObject* o;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:setNSNumberWrapper",
+			keywords, &o)) {
+		return NULL;
+	}
+
+	Py_XDECREF(PyObjC_NSNumberWrapper);
+	Py_INCREF(o);
+	PyObjC_NSNumberWrapper = o;
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
+PyDoc_STRVAR(getNSNumberWrapper_doc,
+	"getNSNumberWrapper() -> wrapper\n"
+	"\n"
+	"Return the verbosity value."
+);
+static PyObject* 
+getNSNumberWrapper(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static 	char* keywords[] = { NULL };
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":getNSNumberWrapper",
+			keywords)) {
+		return NULL;
+	}
+
+	if (PyObjC_NSNumberWrapper == NULL) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+	Py_INCREF(PyObjC_NSNumberWrapper);
+	return PyObjC_NSNumberWrapper;
+}
+
 
 PyDoc_STRVAR(setVerbose_doc,
 	"setVerbose(bool) -> None\n"
@@ -943,6 +992,8 @@ static PyMethodDef mod_methods[] = {
 	{ "setClassExtender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
 	{ "setSignatureForSelector", (PyCFunction)set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
 	{ "recycleAutoreleasePool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
+	{ "setNSNumberWrapper", (PyCFunction)setNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, setNSNumberWrapper_doc },
+	{ "getNSNumberWrapper", (PyCFunction)getNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, getNSNumberWrapper_doc },
 	{ "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
 	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
 	{ "repythonify", (PyCFunction)repythonify, METH_VARARGS|METH_KEYWORDS, repythonify_doc },

@@ -13,8 +13,16 @@ def str_to_unicode(s):
     if not getStrBridgeEnabled():
         warnings.warn("use unicode(str, encoding) for NSString", PyObjCStrBridgeWarning, stacklevel=2)
     return unicode(s)
-
 BRIDGED_TYPES.append((str, str_to_unicode))
+
+# XXX - these could let us remove code from OC_PythonObject
+#NSNumber = lookUpClass('NSNumber')
+#BRIDGED_TYPES.extend([
+#    (bool, NSNumber.numberWithBool_),
+#    (int, NSNumber.numberWithInt_),
+#    (float, NSNumber.numberWithDouble_),
+#    (long, NSNumber.numberWithLongLong_),
+#])
 
 try:
     from array import array
