@@ -144,9 +144,10 @@ makeDir(basedir, 'Library', 'Developer', 'ProjectBuilder Extras', 'Project Templ
 templateDestination = os.path.join(basedir, 'Library', 'Developer', 'ProjectBuilder Extras',
                                    'Project Templates', 'Application')
 
-for dname in os.listdir('Project Templates'):
+templateDir = os.path.join('ProjectBuilder Extras', 'Project Templates')
+for dname in os.listdir(templateDir):
     if dname == 'CVS': continue
-    path = os.path.join('Project Templates', dname)
+    path = os.path.join(templateDir, dname)
     if not os.path.isdir(path): continue
     shutil.copytree(path, os.path.join(templateDestination, dname))
 
