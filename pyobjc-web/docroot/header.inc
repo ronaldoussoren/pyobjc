@@ -1,5 +1,5 @@
 <?
-/* $Id: header.inc,v 1.1 2002/11/12 07:41:06 bbum Exp $ */
+/* $Id: header.inc,v 1.2 2002/11/13 15:18:24 ronaldoussoren Exp $ */
 
 // section navigation (always visible)
 $sections = array(
@@ -145,7 +145,11 @@ for ($i = 0; $i < sizeof($navbox); $i += 2) {
     $link = $navbox[$i];
     if (substr($link,-2) == ".*")
       $link = substr($link,0,-2);
-    $link = '<a href="'.$root.$link.'">';
+    if (substr($link, 0, 7) == "http://") {
+      $link = '<a href="'.$link.'">';
+    } else {
+      $link = '<a href="'.$root.$link.'">';
+    }
   } else {
     $link = 0;
   }
