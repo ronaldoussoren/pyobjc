@@ -695,12 +695,12 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		METH(
 			"takeStoredValue_forKey_",
 			@selector(takeStoredValue:forKey:),
-			"@@:@@",
+			"v@:@@",
 			object_method_takeStoredValue_forKey_);
 		METH(
 			"takeValue_forKey_",
 			@selector(takeValue:forKey:),
-			"@@:@@",
+			"v@:@@",
 			object_method_takeValue_forKey_);
 #undef		METH
 	}
