@@ -1,7 +1,7 @@
 <?
     $title = "Creating your first PyObjC application.";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
+    $cvs_date = '$Date: 2003/05/07 17:47:06 $';
 
     include "header.inc";
 ?>
@@ -28,7 +28,7 @@ after registering (for free).</p>
 <h1><a name="getting-started">Getting Started</a></h1>
 <ol class="arabic">
 <li><p class="first">Create a work directory <tt class="literal"><span class="pre">src</span></tt>. Check which Python you have installed PyObjC
-for, by running <tt class="literal"><span class="pre">python</span></tt> and checking that <tt class="literal"><span class="pre">import</span> <span class="pre">PyObjC</span></tt> works. If it
+for, by running <tt class="literal"><span class="pre">python</span></tt> and checking that <tt class="literal"><span class="pre">import</span> <span class="pre">Foundation</span></tt> works. If it
 does not work it could be that you have installed PyObjC for <tt class="literal"><span class="pre">/usr/local/python</span></tt>
 but Apple's <tt class="literal"><span class="pre">/usr/bin/python</span></tt> comes first in your <tt class="literal"><span class="pre">$PATH</span></tt>. Make sure you
 use the right python whereever it says <tt class="literal"><span class="pre">python</span></tt> in this tutorial.</p>
@@ -48,10 +48,11 @@ in the new file dialog, save this file as <tt class="literal"><span class="pre">
 </li>
 <li><p class="first">Proceed with the instructions as lined out in Apple's
 <a class="reference" href="http://developer.apple.com/techpubs/macosx/Cocoa/ObjCTutorial/index.html">Developing Cocoa Objective-C Applications: a Tutorial</a>, <a class="reference" href="http://developer.apple.com/techpubs/macosx/Cocoa/ObjCTutorial/chapter03/index.html">chapter 3</a>,
-just after the section &quot;<em>Creating the Currency Converter Interface</em>&quot;. Stop when you get
-to the section &quot;<em>Implementing the Classes of Currency Converter</em>&quot;,
-as we are going to do this in Python, not Objective-C. Your nib file
-should now be the same as <a class="reference" href="step3-MainMenu.nib.zip">step3-MainMenu.nib</a>.</p>
+just after the section &quot;<em>Creating the Currency Converter Interface</em>&quot;.
+Work through &quot;Defining the Classes of Currency Converter&quot;, &quot;Connecting
+ConverterController to the Interface&quot;, and stop at &quot;<em>Implementing the Classes
+of Currency Converter</em>&quot;, as we are going to do this in Python, not Objective-C.
+Your nib file should now be the same as <a class="reference" href="step3-MainMenu.nib.zip">step3-MainMenu.nib</a>.</p>
 </li>
 </ol>
 <ol class="arabic" start="4">
@@ -67,14 +68,8 @@ $ python $PYLIB/site-packages/PyObjC/PyObjCTools/NibClassBuilder.py \
 </li>
 </ol>
 <ol class="arabic simple" start="5">
-<li>Next we need to add a little more boilerplate code to <tt class="literal"><span class="pre">CurrencyConverter.py</span></tt>. At some point
-in the future this will become simpler, but for now we need to add a main program
-that jumps through various hoops to get the application started.
-The results of this can be seen in <a class="reference" href="step5-CurrencyConverter.py">step5-CurrencyConverter.py</a>.</li>
+<li>There is no step 5.</li>
 </ol>
-<blockquote>
-<em>XXXX Implementation Note:</em> NibClassBuilder should do this for you, at least
-optionally.</blockquote>
 </div>
 <div class="section" id="testing-the-user-interface">
 <h1><a name="testing-the-user-interface">Testing the user interface</a></h1>

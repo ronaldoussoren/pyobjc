@@ -17,7 +17,7 @@ PHP_HEADER='''\
 <?
     $title = "%(title)s";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
+    $cvs_date = '$Date: 2003/05/07 17:47:07 $';
 
     include "header.inc";
 ?>'''
@@ -161,7 +161,10 @@ def copy_project_docs(srctree):
         if fn.endswith('.nib') or fn.endswith('.py'):
             dstname = os.path.join('docroot', 'doc', fn)
             if os.path.exists(dstname):
-                shutil.rmtree(dstname)
+                if os.path.isdir(dstname):
+                    shutil.rmtree(dstname)
+                else:
+                    os.unlink(dstname)
             if os.path.isdir(os.path.join(tutdir, fn)):
                 shutil.copytree(os.path.join(tutdir, fn), dstname)
             else:

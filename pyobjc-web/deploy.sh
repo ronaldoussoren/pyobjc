@@ -1,3 +1,5 @@
 #!/bin/sh
-rsync --progress -C -e ssh --delete -a -v -z  docroot/ "${1:-bbum}@shell.sourceforge.net:/home/groups/p/py/pyobjc/htdocs/"
+# We don't use '-a', because we don't want to muck with permissions on the
+# server.
+rsync --progress -C -e ssh --delete  -v -z -rltgoD docroot/ "${1:-bbum}@shell.sourceforge.net:/home/groups/p/py/pyobjc/htdocs/"
 

@@ -1,7 +1,7 @@
 <?
     $title = "Coding style for PyObjC";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
+    $cvs_date = '$Date: 2003/05/07 17:47:05 $';
 
     include "header.inc";
 ?>
@@ -74,8 +74,8 @@ in the DocUtils source tree.</p>
 <pre class="literal-block">
 # Author: David Goodger
 # Contact: goodger&#64;users.sourceforge.net
-# Revision: $Revision: 1.2 $
-# Date: $Date: 2003/05/04 12:56:38 $
+# Revision: $Revision: 1.3 $
+# Date: $Date: 2003/05/07 17:47:05 $
 # Copyright: This module has been placed in the public domain.
 </pre>
 </li>
