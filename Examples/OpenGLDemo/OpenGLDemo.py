@@ -1,15 +1,15 @@
-"""ClassBrowser.py -- A simple class browser, demonstrating the use of an NSBrowser.
+"""OpenGLDemo.py -- A simple demo of using OpenGL with Cocoa
 
 To build the demo program, run this line in Terminal.app:
 
     $ python buildapp.py --link build
 
-This creates a directory "build" containing ClassBrowser.app. (The
+This creates a directory "build" containing OpenGLDemo.app. (The
 --link option causes the files to be symlinked to the .app bundle instead
 of copied. This means you don't have to rebuild the app if you edit the
 sources or nibs.)
 
-See also the iClass demo.
+This example requires PyOpenGL
 """
 
 from PyObjCTools import NibClassBuilder, AppHelper

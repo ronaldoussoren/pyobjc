@@ -102,7 +102,14 @@ simply double-click it and choose ``Build and Run``.
   A full featured embedded Python interpreter.  This demonstrates
   more complicated uses of NSTextView, manual event dispatching,
   and the new text completion feature of OS X 10.3.
-  
+
+* `OpenGLDemo`_
+
+  A simple program that shows how to use OpenGL in a Cocoa program.  It is a 
+  port of Apple's "CocoaGL" example.  Note that this requires `PyOpenGL`_ to 
+  be installed.
+
+.. _`PyOpenGL`:  http://pyopengl.sourceforge.net/
 .. _`ClassBrowser`: ClassBrowser
 .. _`CurrencyConverter`: CurrencyConverter
 .. _`DotView`: DotView
@@ -116,3 +123,4 @@ simply double-click it and choose ``Build and Run``.
 .. _`WebServicesTool`: WebServicesTool
 .. _`FieldGraph`: FieldGraph
 .. _`PyInterpreter`: PyInterpreter
+.. _`OpenGLDemo`: OpenGLDemo
