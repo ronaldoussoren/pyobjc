@@ -646,3 +646,11 @@ def sort(self, cmpfunc=cmp):
 CONVENIENCE_METHODS['sortUsingFunction:context:'] = (
     ('sort', sort),
 )
+
+CONVENIENCE_METHODS['hasPrefix:'] = (
+    ('startswith', lambda self, pfx: self.hasPrefix_(pfx)),
+)
+
+CONVENIENCE_METHODS['hasSuffix:'] = (
+    ('endswith', lambda self, pfx: self.hasSuffix_(pfx)),
+)

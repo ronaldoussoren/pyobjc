@@ -1,7 +1,6 @@
-# This module should be kept compatible with Python 1.5.2.
-
-__revision__ = "$Id: install_lib.py,v 1.42 2002/11/19 13:12:28 akuchling Exp $"
-
+"""
+'test' action for setup.py
+"""
 import sys, os, string, glob
 from os.path import basename, dirname, splitext, join, expanduser, walk
 from fnmatch import fnmatch

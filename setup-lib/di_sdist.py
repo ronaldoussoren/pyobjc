@@ -1,3 +1,7 @@
+"""
+Custom 'sdist' action for setup.py
+"""
+
 # distutils doesn't know about subversion and I'm to lazy to reverse engineer
 # distutils in the hope of detecting how to specify that all svn directories
 # should be removed.
