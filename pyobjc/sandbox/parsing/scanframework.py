@@ -186,6 +186,24 @@ def _initialize():
     objc.loadBundleVariables(b, globals(), [
 %(bundle_variables)s
     ])
+
+    # XXX - hack to fix-up NSError** args
+    for cls in globals().values():
+        if not isinstance(cls, objc.objc_class):
+            continue
+        for selname in dir(cls):
+            if selname.startswith('_'):
+                continue
+            o = getattr(cls, selname, None)
+            if not isinstance(o, objc.selector):
+                continue
+            if o.selector.endswith(':error:') and o.signature.endswith('^@'):
+                if o.signature[-3] in 'onN':
+                    continue
+                sel = objc.selector(None,
+                    selector=o.selector,
+                    o.signature[:-2] + 'n^@')
+                setattr(cls, selname, sel)
 _initialize()
     """ % locals()
 
