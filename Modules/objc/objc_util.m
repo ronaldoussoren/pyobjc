@@ -223,79 +223,53 @@ void ObjCErr_ToObjC(void)
 	[val raise];
 }
 
-PyObject* convenience_dict = NULL;
+PyObject* ObjC_class_extender = NULL;
 
 int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict)
 {
-	PyObject* values = NULL;
-	int       i, len;
+	PyObject* super_class;
+	PyObject* name;
+	PyObject* res;
+	PyObject* args;
 
-	values = PyDict_Values(type_dict);
-	if (values == NULL) return -1;
+	if (ObjC_class_extender == NULL || cls == nil) return 0;
 
-	len = PySequence_Length(values);
-	for (i = 0; i < len; i++) {
-		PyObject* value;
-		PyObject* mapping;
-
-		value = PySequence_GetItem(values, i);
-		if (value == NULL) {
-			Py_DECREF(values);
+	if (cls->super_class == nil) {
+		super_class = Py_None;
+		Py_INCREF(super_class);
+	} else {
+		super_class = ObjCClass_New(cls->super_class);
+		if (super_class == NULL) {
 			return -1;
-		}
-
-		if (!ObjCSelector_Check(value)) {
-			Py_DECREF(value);
-			continue;
-		}
-
-		mapping = PyDict_GetItemString(convenience_dict, 
-			(char*)SELNAME(((ObjCSelector*)value)->sel_selector));
-		if (mapping == NULL) {
-			PyErr_Clear();
-			Py_DECREF(value);
-			continue;
-		}
-		Py_DECREF(value);
-
-		if (PyString_Check(mapping)) {
-			/* Default mapping */
-			int r;
-			r = PyDict_SetItem(type_dict, mapping, value);
-			if (r < 0) return -1;
-
-			Py_INCREF(mapping);
-		} else if (!PySequence_Check(mapping) || PySequence_Length(mapping) != 2) {
-			PyErr_SetString(PyExc_RuntimeError,
-				"objc.CONVENIENCE_METHODS must contain 2-tuples");
-		} else {
-			/* (name, imp) */
-			PyObject* name;
-			PyObject* imp;
-			int r;
-
-			name = PySequence_GetItem(mapping, 0);
-			imp = PySequence_GetItem(mapping, 1);
-
-			if (name == NULL || imp == NULL) return -1;
-
-			if (imp == Py_None) {
-				/* Default mapping */
-				r = PyDict_SetItem(type_dict, name, value);
-
-				if (r < 0) return -1;
-				Py_DECREF(imp);
-			} else {
-				r = PyDict_SetItem(type_dict, name, imp);
-
-				if (r < 0) return -1;
-
-				Py_DECREF(imp);
-			}
 		}
 	}
 
-	Py_DECREF(values);
+	name = PyString_FromString(cls->name);
+	if (name == NULL) {
+		Py_DECREF(super_class);
+		return -1;
+	}
+
+	args = PyTuple_New(3);
+	if (args == NULL) {
+		Py_DECREF(super_class);
+		Py_DECREF(name);
+		return -1;
+	}
+
+	PyTuple_SET_ITEM(args, 0, super_class);
+	PyTuple_SET_ITEM(args, 1, name);
+	PyTuple_SET_ITEM(args, 2, type_dict);
+	Py_INCREF(type_dict);
+
+	res = PyObject_CallObject(ObjC_class_extender, args);
+	if (res == NULL) {
+		Py_DECREF(args);
+		return -1;
+	}
+	Py_DECREF(args);
+	Py_DECREF(super_class);
+
 	return 0;
 }
 

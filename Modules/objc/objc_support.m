@@ -563,12 +563,16 @@ pythonify_c_value (const char *type, void *datum)
           }
         else 
           {
-            if ([obj conformsToProtocol:@protocol (PythonObject)])
-              {
-                retobject = [(OC_PythonObject *) obj pyObject];
-                Py_INCREF(retobject);
-              }
-
+            if ([obj isKindOfClass:[OC_PythonArray class]]) 
+	      {
+	        retobject = [(OC_PythonArray *)obj pyObject];
+		Py_INCREF(retobject);
+	      }
+            else if ([obj isKindOfClass:[OC_PythonDictionary class]]) 
+	      {
+	        retobject = [(OC_PythonDictionary *)obj pyObject];
+		Py_INCREF(retobject);
+	      }
             else if ([obj isKindOfClass:[NSString class]]) 
 	      {
 	        /* All string classes seem to be subclasses of NSString.
@@ -587,6 +591,11 @@ pythonify_c_value (const char *type, void *datum)
 				[data bytes], [data length]);
 		}
 	      }
+	    else if ([obj conformsToProtocol:@protocol (PythonObject)])
+              {
+                retobject = [(OC_PythonObject *) obj pyObject];
+                Py_INCREF(retobject);
+              }
 
 	    else if (ObjC_HasPythonImplementation(obj)) 
 		{
@@ -913,6 +922,10 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	}
       else if (PyInt_Check (argument))
 	*(id *) datum = [NSNumber numberWithLong:PyInt_AS_LONG (argument)];
+      else if (PySequence_Check(argument))  
+	*(id *) datum = [OC_PythonArray newWithPythonObject:argument];
+      else if (PyMapping_Check(argument))  
+	*(id *) datum = [OC_PythonDictionary newWithPythonObject:argument];
       else
         *(id *) datum = [OC_PythonObject newWithObject:argument];
       break;

@@ -10,7 +10,7 @@ extern PyObject* objc_internal_error;
 
 int ObjCUtil_Init(PyObject* module);
 
-extern PyObject* convenience_dict;
+extern PyObject* ObjC_class_extender;
 int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict);
 
 void ObjCErr_Set(PyObject* exc, char* fmt, ...);
