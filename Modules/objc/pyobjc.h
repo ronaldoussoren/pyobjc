@@ -119,6 +119,8 @@ PyObject* PyObjCObject_FindSelector(PyObject* cls, SEL selector);
 id 	  PyObjCObject_GetObject(PyObject* object);
 void 	  PyObjCObject_ClearObject(PyObject* object);
 #define   PyObjCObject_GetObject(object) (((PyObjCObject*)(object))->objc_object)
+void _PyObjCObject_FreeDeallocHelper(PyObject* obj);
+PyObject* _PyObjCObject_NewDeallocHelper(id objc_object);
 
 
 /* in class-descriptor.m */

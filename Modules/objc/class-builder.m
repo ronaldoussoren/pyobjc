@@ -1008,9 +1008,9 @@ static void object_method_dealloc(id self, SEL sel __attribute__((__unused__)))
 
 	delmethod = PyObjCClass_GetDelMethod(cls);
 	if (delmethod != NULL) {
-		PyObject* s = PyObjCObject_New(self);
+		PyObject* s = _PyObjCObject_NewDeallocHelper(self);
 		obj = PyObject_CallFunction(delmethod, "O", s);
-		Py_DECREF(s);
+		_PyObjCObject_FreeDeallocHelper(s);
 		if (obj == NULL) {
 			PyErr_WriteUnraisable(delmethod);
 		} else {
