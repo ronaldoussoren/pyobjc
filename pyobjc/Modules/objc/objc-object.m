@@ -185,7 +185,7 @@ object_getattro(PyObject* obj, PyObject* name)
 {
 	PyObject* result;
 
-	ObjCClass_CheckMethodList(obj->ob_type);
+	ObjCClass_CheckMethodList((PyObject*)obj->ob_type);
 
 	result = PyObject_GenericGetAttr(obj, name);
 	if (result) return result;

@@ -124,7 +124,6 @@ static char* ObjC_FindReplacementSignature(Class cls, SEL selector)
 		cur = PyCObject_AsVoidPtr(
 			PyList_GetItem(replacement_signatures, i));
 
-	
 		if (cur->selector != selector) {
 			continue;
 		}
@@ -525,14 +524,19 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		Py_DECREF(arglist);
 	}
 
+#if 0
+	/* There are some issues with this code, Bill doesn't like it while
+	 * Ronald does.
+	 */
 	if (res && ObjCObject_Check(res) && 
 			(self->sel_flags & ObjCSelector_kDONATE_REF)) {
 		/* Ownership transfered to us, but 'execute' method has
 		 * increased retainCount, the retainCount is now one too high
 		 */
 		id obj = ObjCObject_GetObject(res);
-    		/*[ObjCObject_GetObject(res) release]; XXX */
+    		[ObjCObject_GetObject(res) release];
 	}
+#endif
 	return res;
 }
 
@@ -766,6 +770,7 @@ ObjCSelector_New(PyObject* callable,
 		}
 	}
 	result->sel_self = NULL;
+	result->sel_class = NULL;
 	result->sel_flags = 0;
 	result->callable = callable;
 	if (class_method) {

@@ -5,8 +5,11 @@ This module defines the core interfaces of the Python<->Objective-C bridge.
 """
 
 ##
-## Disable gc -- blows up w/Python 2.2
+## Disable gc -- blows up w/Python 2.2.0
 ##
+## XXX Fix me: This is probably a bug in PyObjC, need to check why this
+## fails on Python 2.2.0 and not on Python 2.2.2. Copying gcmodule.c from
+## Python 2.2.2 to 2.2.0 causes the crash to go away...
 import sys
 if sys.version_info[:3] == (2,2,0):
     import gc
@@ -24,6 +27,7 @@ nil=None
 
 from _objc import *
 from _objc import __version__
+import _FoundationSignatures
 
 # Import values used to define signatures
 import _objc
@@ -108,11 +112,6 @@ from _convenience import CONVENIENCE_METHODS, CLASS_METHODS
 # methods in the Foundation framework. Doing it here
 # is ugly, but it is also something that would be very
 # hard to avoid...
-try:
-    import _FoundationSignatures
-    del _FoundationSignatures
-except ImportError:
-    pass
 
 try:
     import _FoundationMapping
@@ -120,13 +119,4 @@ try:
 except ImportError:
     pass
 
-# This is a hack, should probably patch python:
-# - We want the resources directory to be on the python search-path
-# - It must be at the start of the path
-# - The CWD must not be on the path
-if 1 :
-    b = lookUpClass('NSBundle').mainBundle()
-    if b:
-        sys.path.insert(0, '%s/Contents/Resources'%str(b.bundlePath()))
-    del b
 del sys, __builtin__
