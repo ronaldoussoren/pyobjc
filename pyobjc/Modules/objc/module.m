@@ -351,6 +351,8 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		bundle = [NSBundle bundleWithIdentifier:strval];
 	}
 
+	//NSLog(@"loadBundle %@", strval);
+
 	[bundle load];
 
 	class_list = PyObjC_GetClassList();
@@ -431,6 +433,8 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	}
 	Py_XDECREF(module_key);
 	Py_XDECREF(class_list);
+
+	//NSLog(@"loadBundle %@ DONE", strval);
 
 	Py_INCREF(Py_None);
 	return Py_None;
@@ -640,6 +644,8 @@ void init_objc(void);
 void init_objc(void)
 {
 	PyObject *m, *d;
+
+	//NSLog(@"initobjc");
 
 	/* Allocate an auto-release pool for our own use, this avoids numerous
 	 * warnings during startup of a python script.

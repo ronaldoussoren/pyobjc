@@ -59,6 +59,10 @@ we should add code that enables using python in multiple threads:
 NOTE: If we don't mind doing this only for Python 2.3 we can use the interface
 defined by PEP 311
 
+NOTE2: The autoGIL is quite usefull, but unless our code gets called from a
+different thread, that does not yet have a Python thread context. This may 
+happen when embedding a PyObjC solution in an existing Cocoa application.
+
 
 Test suite
 ..........
@@ -179,12 +183,6 @@ implement these.
 
 See also `Pickle support`.
 
-Build cleanups
-..............
-
-The contents of MANIFEST are no longer valid. We should move to a generated 
-MANIFEST (using MANIFEST.in).
-
 Known issues
 ............
 
@@ -260,12 +258,6 @@ It would be nice if this could be abstracted away to something like::
 Another option would be to make the generator script slightly smarter: have
 it emit #if version guards based on the guards found in the header files.
 
-Convenience functions
-.....................
-
-Add function to PyObjCTools that can be used to decode the values returned
-by NSNetService.address()
-
 Access to method implementations
 ................................
 
@@ -286,3 +278,10 @@ Robustness
 Make core bridge more robust w.r.t. order of loading frameworks. You currently
 get incorrect wrappers if you manually load the AppKit.framework and then 
 import AppKit.
+
+Add freelists
+.............
+
+PyObjCSelector objects and (especially) PyObjCObject objects are created on
+a regular basis, we should check if using freelists would speed this up.
+

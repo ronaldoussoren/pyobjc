@@ -1,0 +1,15 @@
+include ChangeLog *.txt *.html MANIFEST.in NEWS setup.py
+graft Doc 
+graft Examples 
+graft Installer?Package
+graft Lib 
+graft MPCompat 
+graft Modules 
+graft ProjectBuilder?Extras
+graft Scripts 
+graft libffi-src 
+prune Examples/*/build
+prune Examples/*/*~.nib
+prune Examples/*/*/*~.nib
+global-exclude .DS_Store
+global-exclude *.pbxuser

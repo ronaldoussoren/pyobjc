@@ -64,6 +64,8 @@
 
 	/* From: NSEnumerator.h */
 
+	/* From: NSError.h */
+
 	/* From: NSException.h */
 
 	/* From: NSFileHandle.h */
@@ -79,6 +81,10 @@
 	/* From: NSHFSFileTypes.h */
 
 	/* From: NSHost.h */
+
+	/* From: NSHTTPCookie.h */
+
+	/* From: NSHTTPCookieStorage.h */
 
 	/* From: NSInvocation.h */
 
@@ -175,7 +181,29 @@
 
 	/* From: NSURL.h */
 
+	/* From: NSURLAuthenticationChallenge.h */
+
+	/* From: NSURLCache.h */
+
+	/* From: NSURLConnection.h */
+
+	/* From: NSURLCredential.h */
+
+	/* From: NSURLCredentialStorage.h */
+
+	/* From: NSURLDownload.h */
+
+	/* From: NSURLError.h */
+
 	/* From: NSURLHandle.h */
+
+	/* From: NSURLProtectionSpace.h */
+
+	/* From: NSURLProtocol.h */
+
+	/* From: NSURLRequest.h */
+
+	/* From: NSURLResponse.h */
 
 	/* From: NSUserDefaults.h */
 

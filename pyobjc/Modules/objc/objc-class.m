@@ -468,7 +468,7 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 	PyObjC_class_info* info;
 	int		   magic;
 
-	//printf("chkml_called %s %d\n", ((PyTypeObject*)cls)->tp_name, recursive);
+	//NSLog(@"chkml_called %s %d\n", ((PyTypeObject*)cls)->tp_name, recursive);
 	info = get_class_info(cls);
 
 	if (info->class == NULL) return;
@@ -522,7 +522,9 @@ class_getattro(PyObject* self, PyObject* name)
 	 *       and modify as needed, that would avoid unnecessary rescans
 	 * 	 of superclasses. The same strategy is used in object_getattro.
 	 */
-	if (PyString_Check(name) && strncmp(PyString_AS_STRING(name), "__", 2) == 0) {
+	if (PyString_Check(name) 
+			&& strncmp(PyString_AS_STRING(name), "__", 2) == 0 
+			&& strcmp(PyString_AS_STRING(name), "__dict__") != 0) {
 		result = PyType_Type.tp_getattro(self, name);
 		if (result != NULL) {
 			return result;

@@ -4,6 +4,7 @@ Python mapping for the Cocoa AppKit.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
+
 import Foundation
 import _AppKitSignatures 
 import objc as _objc
@@ -57,3 +58,4 @@ from protocols import NSAccessibility, NSChangeSpelling, NSColorPickingCustom, \
                        NSTableViewDelegate, NSTableDataSource, NSToolTipOwner, \
                        NSToolbarItemValidation, NSToolbarDelegate, NSUserInterfaceValidations, \
                        NSValidatedUserInterfaceItem, NSApplicationDelegate, NSTextViewDelegate
+

@@ -52,6 +52,8 @@ int PyObjC_RegisterMethodMapping(Class class, SEL sel,
 	PyObject*        pyclass;
 	PyObject* 	 entry;
 
+	//NSLog(@"Register mapping for %s in %s", SELNAME(sel), class->name);
+
 	if (signature_registry == NULL) {
 		if (init_registry() < 0) return -1;
 	}

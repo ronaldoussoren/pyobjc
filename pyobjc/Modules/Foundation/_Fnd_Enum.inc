@@ -75,6 +75,8 @@ static struct inttable enum_table[] = {
 
 	/* From: NSEnumerator.h */
 
+	/* From: NSError.h */
+
 	/* From: NSException.h */
 
 	/* From: NSFileHandle.h */
@@ -94,6 +96,13 @@ static struct inttable enum_table[] = {
 	/* From: NSHFSFileTypes.h */
 
 	/* From: NSHost.h */
+
+	/* From: NSHTTPCookie.h */
+
+	/* From: NSHTTPCookieStorage.h */
+	 { "NSHTTPCookieAcceptPolicyAlways", NSHTTPCookieAcceptPolicyAlways },
+	 { "NSHTTPCookieAcceptPolicyNever", NSHTTPCookieAcceptPolicyNever },
+	 { "NSHTTPCookieAcceptPolicyOnlyFromMainDocumentDomain", NSHTTPCookieAcceptPolicyOnlyFromMainDocumentDomain },
 
 	/* From: NSInvocation.h */
 	 { "NSObjCNoType", NSObjCNoType },
@@ -316,11 +325,36 @@ static struct inttable enum_table[] = {
 
 	/* From: NSURL.h */
 
+	/* From: NSURLAuthenticationChallenge.h */
+
+	/* From: NSURLCache.h */
+
+	/* From: NSURLConnection.h */
+
+	/* From: NSURLCredential.h */
+	 { "NSURLCredentialPersistenceNone", NSURLCredentialPersistenceNone },
+	 { "NSURLCredentialPersistenceForSession", NSURLCredentialPersistenceForSession },
+	 { "NSURLCredentialPersistencePermanent", NSURLCredentialPersistencePermanent },
+
+	/* From: NSURLCredentialStorage.h */
+
+	/* From: NSURLDownload.h */
+
+	/* From: NSURLError.h */
+
 	/* From: NSURLHandle.h */
 	 { "NSURLHandleNotLoaded", NSURLHandleNotLoaded },
 	 { "NSURLHandleLoadSucceeded", NSURLHandleLoadSucceeded },
 	 { "NSURLHandleLoadInProgress", NSURLHandleLoadInProgress },
 	 { "NSURLHandleLoadFailed", NSURLHandleLoadFailed },
+
+	/* From: NSURLProtectionSpace.h */
+
+	/* From: NSURLProtocol.h */
+
+	/* From: NSURLRequest.h */
+
+	/* From: NSURLResponse.h */
 
 	/* From: NSUserDefaults.h */
 

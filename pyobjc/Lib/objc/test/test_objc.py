@@ -40,6 +40,7 @@ class TestMethodInvocation(unittest.TestCase):
     def setUp(self):
         self.NSObjectInstance = objc.runtime.NSObject.alloc().init()
 
+
     def testWithZones(self):
         obj = objc.runtime.NSObject.allocWithZone_(None).init()
         zone = obj.zone()
@@ -63,6 +64,11 @@ class TestMethodInvocation(unittest.TestCase):
 
     def testVarargsInvocation(self):
         objc.runtime.NSArray.arrayWithObjects_("foo", "bar", None)
+
+class TestClassDict(unittest.TestCase):
+    def testDict(self):
+        self.assert_("drawAtPoint_" in objc.runtime.NSAttributedString.__dict__)
+
 
 if __name__ == '__main__':
     unittest.main()

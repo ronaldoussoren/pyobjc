@@ -65,10 +65,7 @@ id PyObjC_CFTypeToID(PyObject* argument)
 
 PyObject* PyObjC_IDToCFType(id argument)
 {
-#if PY_VERSION_HEX >= 0x020300B2
-	return CFObj_New((CFTypeRef)argument);
 
-#else
 	if ([argument isKindOfClass:[NSMutableString class]]) {
 		return CFMutableStringRefObj_New((CFMutableStringRef)argument);
 	}
@@ -103,6 +100,9 @@ PyObject* PyObjC_IDToCFType(id argument)
 	 * type.  As is is not document which type this is, we use the most
 	 * generic one.
 	 */
+#if PY_VERSION_HEX >= 0x020300B2
+	return CFObj_New((CFTypeRef)argument);
+#else
 	return CFTypeRefObj_New((CFTypeRef)argument);
 #endif 
 }
