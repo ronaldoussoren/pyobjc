@@ -1,10 +1,14 @@
 import unittest
 import objc
 import types
+import warnings
 
 from Foundation import *
 
 class TestNSString(unittest.TestCase):
+    def testClassTree(self):
+        self.assert_(issubclass(objc.pyobjc_unicode, unicode))
+
     def testCompare(self):
         self.assert_(
             NSString.localizedCaseInsensitiveCompare_(u'foo',u'bar') == 1,
@@ -64,6 +68,32 @@ class TestNSStringBridging(unittest.TestCase):
     def testTypesAndClasses(self):
         self.assert_(isinstance(self.nsUniString, unicode))
         self.assert_(isinstance(self.pyUniString, unicode))
+
+    def testStrConversion(self):
+        curEnabledFlag = objc.setStrBridgeEnabled(True)
+        try:
+            v = NSString.stringWithString_("hello")
+            self.assert_(isinstance(v, objc.pyobjc_unicode))
+            self.assertEquals(v, u"hello")
+
+
+            self.assertRaises(UnicodeError, unicode, "\xff")
+            self.assertRaises(UnicodeError, NSString.stringWithString_, '\xff')
+
+            objc.setStrBridgeEnabled(False)
+
+            warnings.filterwarnings('error', category=objc.PyObjCStrBridgeWarning) 
+            try:
+                #v = NSString.stringWithString_("hello")
+                self.assertRaises(objc.PyObjCStrBridgeWarning,
+                        NSString.stringWithString_, "hello")
+
+            finally:
+                del warnings.filters[0]
+
+
+        finally:
+            objc.setStrBridgeEnabled(curEnabledFlag)
 
 class TestMutable(unittest.TestCase):
     def testSync(self):
