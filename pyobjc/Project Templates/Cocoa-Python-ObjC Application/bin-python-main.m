@@ -40,7 +40,7 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
     // set up paths to be prepended to the PYTHONPATH
     const char *pythonPathInWrapper = [[NSString stringWithFormat: @"%@:%@",
         [[NSBundle mainBundle] resourcePath],
-        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: @"pyobjc"]] UTF8String];
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: @"PyObjC"]] UTF8String];
 
     // count entries in environment and find the PYTHONPATH setting, if present
     for (envc = 0; envp[envc] != NULL; envc++) {
