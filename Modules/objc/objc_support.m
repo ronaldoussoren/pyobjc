@@ -136,6 +136,7 @@ PyObjCRT_SkipTypeQualifiers (const char* type)
 	       *type == _C_ONEWAY) {
 			type++;
 	}
+	while (isdigit(*type)) type++;
 	return type;
 }
 
@@ -147,12 +148,6 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	type = PyObjCRT_SkipTypeQualifiers (type);
 
 	switch (*type) {
-	case 'B':	
-		/* This turned up on Panther, without documentation */
-		NSLog(@"Parsing typespec containing unsupported code 'B'");
-		type++;
-		break;
-
 	/* The following are one character type codes */
 	case _C_UNDEF:
 	case _C_ID:
@@ -163,6 +158,9 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	case _C_CHARPTR:
 #ifdef _C_ATOM
 	case _C_ATOM:
+#endif
+#ifdef _C_BOOL
+	case _C_BOOL:
 #endif
 	case _C_SHT:
 	case _C_USHT:
@@ -221,6 +219,7 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	default:
 		ObjCErr_Set(ObjCExc_internal_error,
 			"PyObjCRT_SkipTypeSpec: Unhandled type '%#x'", *type); 
+		abort();
 		return NULL;
 	}
 
@@ -245,6 +244,9 @@ objc_alignof_type (const char *type)
 	case _C_UCHR:  return __alignof__ (unsigned char);
 	case _C_SHT:   return __alignof__ (short);
 	case _C_USHT:  return __alignof__ (unsigned short);
+#ifdef _C_BOOL
+	case _C_BOOL:   return __alignof__ (bool);
+#endif
 	case _C_INT:   return __alignof__ (int);
 	case _C_UINT:  return __alignof__ (unsigned int);
 	case _C_LNG:   return __alignof__ (long);
@@ -265,21 +267,13 @@ objc_alignof_type (const char *type)
       
 	case _C_STRUCT_B:
 	{
-		/* The align of a struct is the largest alignment of one of 
-		 * its members
+		/* The alignment of a struct is the alignment of it's first
+		 * member
 		 */
 		struct { int x; double y; } fooalign;
 		while(*type != _C_STRUCT_E && *type++ != '=') /* do nothing */;
 		if (*type != _C_STRUCT_E) {
-			int    item_align;
-			int    maxalign = 0;
-			while (*type != _C_STRUCT_E) {
-				item_align = objc_alignof_type(type);
-				if (item_align == -1) return -1;
-				type = PyObjCRT_SkipTypeSpec(type);
-				maxalign = MAX(item_align, maxalign);
-			}
-			return maxalign;
+			return objc_alignof_type(type);
 		} else {
 			return __alignof__ (fooalign);
 		}
@@ -345,6 +339,9 @@ objc_sizeof_type (const char *type)
 	case _C_UCHR:    return sizeof(unsigned char);
 	case _C_SHT:     return sizeof(short);
 	case _C_USHT:    return sizeof(unsigned short);
+#ifdef _C_BOOL
+	case _C_BOOL:    return sizeof(bool);
+#endif
 	case _C_INT:     return sizeof(int);
 	case _C_UINT:    return sizeof(unsigned int);
 	case _C_LNG:     return sizeof(long);
@@ -612,6 +609,12 @@ pythonify_c_value (const char *type, void *datum)
 		}
 		break;
 	}
+
+#ifdef _C_BOOL
+	case _C_BOOL:
+		retobject = (PyObject *) PyInt_FromLong (*(bool*) datum);
+		break;
+#endif
 
 	case _C_INT:
 		retobject = (PyObject *) PyInt_FromLong (*(int*) datum);
@@ -1028,6 +1031,12 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			*(unsigned short*)datum = utemp;
 		}
 		return r;
+
+#ifdef _C_BOOL:
+	case _C_BOOL:
+		*(bool*)datum = PyObject_IsTrue(argument);
+		return 0;
+#endif
 
 	case _C_INT:
 		r = depythonify_signed_int_value(argument, "int",

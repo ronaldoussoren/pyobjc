@@ -93,6 +93,7 @@ _pyobjc_install_NSBitmapImageRep(void)
 		return -1;
 	}
 
+#if 0
 	if (PyObjC_RegisterMethodMapping(class_NSBitmapImageRep, 
 		@selector(initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:),
 		PyObjCUnsupportedMethod_Caller,
@@ -100,6 +101,7 @@ _pyobjc_install_NSBitmapImageRep(void)
 
 		return -1;
 	}
+#endif
 
 	return 0;
 }

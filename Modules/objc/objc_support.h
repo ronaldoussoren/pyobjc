@@ -154,6 +154,7 @@ objc_methodlist_magic(Class cls)
 #define _C_ONEWAY   'V'
 #define _C_LNGLNG   'q'
 #define _C_ULNGLNG   'Q'
+#define _C_BOOL	'B'		/* (Objective-)C++ 'bool' */
 
 
 /* Return a number that is likely to change when the method list changes,
