@@ -117,7 +117,8 @@ call_NSArray_sortedArrayUsingFunction_context_(
 	return result;
 }
 
-static PyObject* call_NSArray_sortedArrayUsingFunction_context_hint_(
+static PyObject* 
+call_NSArray_sortedArrayUsingFunction_context_hint_(
 		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
@@ -318,7 +319,7 @@ _pyobjc_install_NSArray(void)
 		classNSArray,
 		@selector(arrayByAddingObjects:count:),
 		call_objWithObjects_count_,
-		(IMP)imp_objWithObjects_count_) < 0) {
+		imp_objWithObjects_count_) < 0) {
 
 		return -1;
 	}
@@ -363,7 +364,7 @@ _pyobjc_install_NSArray(void)
 		classNSArray,
 		@selector(arrayWithObjects:count:),
 		call_clsWithObjects_count_,
-		(IMP)imp_clsWithObjects_count_) < 0) {
+		imp_clsWithObjects_count_) < 0) {
 
 		return -1;
 	}
@@ -372,7 +373,7 @@ _pyobjc_install_NSArray(void)
 		classNSArray,
 		@selector(initWithObjects:count:),
 		call_objWithObjects_count_,
-		(IMP)imp_objWithObjects_count_)) {
+		imp_objWithObjects_count_)) {
 
 		return -1;
 	}

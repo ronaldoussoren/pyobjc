@@ -14,10 +14,10 @@ static PyObject*
 find_selector(PyObject* self, char* name, int class_method)
 {
 	SEL   sel = PyObjCSelector_DefaultSelector(name);
-	id    objc_object;
+	volatile id    objc_object;
 	NSMethodSignature* methsig;
 	char  buf[1024];
-	int   unbound_instance_method = 0;
+	volatile int   unbound_instance_method = 0;
 	char* flattened;
 
 

@@ -15,7 +15,7 @@
 
 static PyObject*
 call_NSIndexSet_getIndexes_maxCount_inIndexRange_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	NSRange range;
 	int maxCount;

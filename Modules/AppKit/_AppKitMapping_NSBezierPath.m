@@ -86,9 +86,10 @@ call_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
 	return result;
 }
 
-static PyObject* call_NSBezierPath_appendBezierPathWithPoints_count_(
-		PyObject* method, 
-		PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSBezierPath_appendBezierPathWithPoints_count_(
+	PyObject* method, 
+	PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -152,9 +153,10 @@ static PyObject* call_NSBezierPath_appendBezierPathWithPoints_count_(
 	return result;
 }
 
-static PyObject* call_NSBezierPath_elementAtIndex_associatedPoints_(
-		PyObject* method, 
-		PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSBezierPath_elementAtIndex_associatedPoints_(
+	PyObject* method, 
+	PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -226,9 +228,10 @@ static PyObject* call_NSBezierPath_elementAtIndex_associatedPoints_(
 	return result;
 }
 
-static PyObject* call_NSBezierPath_setAssociatedPoints_atIndex_(
-		PyObject* method, 
-		PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSBezierPath_setAssociatedPoints_atIndex_(
+	PyObject* method, 
+	PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -285,9 +288,10 @@ static PyObject* call_NSBezierPath_setAssociatedPoints_atIndex_(
 	return result;
 }
 
-static PyObject* call_NSBezierPath_setLineDash_count_phase_(
-		PyObject* method, 
-		PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSBezierPath_setLineDash_count_phase_(
+	PyObject* method, 
+	PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	PyObject* seq;
@@ -349,9 +353,10 @@ static PyObject* call_NSBezierPath_setLineDash_count_phase_(
 	return result;
 }
 
-static PyObject* call_NSBezierPath_getLineDash_count_phase_(
-		PyObject* method, 
-		PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSBezierPath_getLineDash_count_phase_(
+	PyObject* method, 
+	PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -442,148 +447,131 @@ static PyObject* call_NSBezierPath_getLineDash_count_phase_(
 
 
 
-static void imp_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(id self, SEL sel, NSGlyph* glyphs, int count, NSFont* font)
+static void 
+imp_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
+	void* cif __attribute__((__unused__)), 
+	void* resp __attribute__((__unused__)), 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	NSGlyph* glyphs = *(NSGlyph**)args[2];
+	int count = *(int*)args[3];
+	NSFont* font = *(NSFont**)args[4];
+
 	PyObject* result;
-	PyObject* arglist;
+	PyObject* arglist = NULL;
 	PyObject* v;
 	int i;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(4);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (arglist == NULL) goto error;
 
 	v = PyObjC_IdToPython(self);
-	if (self == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
+	if (self == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 0, v);
 
 	v = PyTuple_New(count);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 1, v);
 
 	for (i = 0; i < count; i++) {
 		PyTuple_SET_ITEM(v, i, 
 			PyObjC_ObjCToPython(@encode(NSGlyph), glyphs+i));
+		if (PyTuple_GET_ITEM(v, i) == NULL) goto error;
 	}
-	if (PyErr_Occurred()) {
-		Py_DECREF(v);
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
-	PyTuple_SET_ITEM(arglist, 1, v);
 
 	v = PyInt_FromLong(count);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 2, v);
 
 	v = PyObjC_ObjCToPython(@encode(NSFont*), &font);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 3, v);
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
 
 	Py_DECREF(result);
 	PyGILState_Release(state);
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
-static void imp_NSBezierPath_appendBezierPathWithPoints_count_(id self, SEL sel, NSPoint* points, int count)
+static void 
+imp_NSBezierPath_appendBezierPathWithPoints_count_(
+	void* cif __attribute__((__unused__)), 
+	void* resp __attribute__((__unused__)), 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	NSPoint* points = *(NSPoint**)args[2];
+	int count = *(int*)args[3];
+
 	PyObject* result;
-	PyObject* arglist;
+	PyObject* arglist = NULL;
 	PyObject* v;
 	int i;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (arglist == NULL) goto error;
 
 	v = PyObjC_IdToPython(self);
-	if (self == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (self == NULL) goto error;
 
 	v = PyTuple_New(count);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 1, v);
 
 	for (i = 0; i < count; i++) {
 		PyTuple_SET_ITEM(v, i, 
 			PyObjC_ObjCToPython(@encode(NSPoint), points+i));
+		if (PyTuple_GET_ITEM(v, i) == NULL) goto error;
 	}
-	if (PyErr_Occurred()) {
-		Py_DECREF(v);
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
-
-	PyTuple_SET_ITEM(arglist, 1, v);
-
 	v = PyInt_FromLong(count);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 2, v);
 
-
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
 
 	Py_DECREF(result);
 	PyGILState_Release(state);
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
-static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id self, SEL sel, int idx, NSPoint* points)
+static void 
+imp_NSBezierPath_elementAtIndex_associatedPoints_(
+	void* cif __attribute__((__unused__)), 
+	void* resp, 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	int idx = *(int*)args[2];
+	NSPoint* points = *(NSPoint**)points;
+
 	PyObject* result;
-	PyObject* seq;
-	PyObject* arglist;
+	PyObject* seq = NULL;
+	PyObject* arglist = NULL;
 	PyObject* v;
-	NSBezierPathElement res;
 	int err;
 	int pointCount;
 	int i;
@@ -591,69 +579,40 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(2);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return 0;
-	}
+	if (arglist == NULL) goto error;
 
 	v = PyObjC_IdToPython(self);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return 0;
-	}
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 0, v);
 
-
 	v = PyInt_FromLong(idx);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return 0;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 1, v);
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return 0;
-	}
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
 
 	seq = PySequence_Fast(result, "should return tuple of lenght 2");
 	Py_DECREF(result);
-	if (seq == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return 0;
-	}
+	if (seq == NULL) goto error;
 
 	if (PySequence_Fast_GET_SIZE(seq) != 2) {
 		PyErr_SetString(PyExc_ValueError, 
 			"should return tuple of lenght 2");
-		Py_DECREF(seq);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return 0;
+		goto error;
 	}
 
 	v = PySequence_Fast_GET_ITEM(seq, 0);
 
-	err = PyObjC_PythonToObjC(@encode(NSBezierPathElement), v, &res);
-	if (err == -1) {
-		Py_DECREF(seq);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return 0;
-	}
+	err = PyObjC_PythonToObjC(@encode(NSBezierPathElement), v, resp);
+	if (err == -1) goto error;
 
 	v = PySequence_Fast(PySequence_Fast_GET_ITEM(seq, 1),
 		"result[1] should be a sequence");
-	if (v == NULL) {
-		Py_DECREF(seq);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return 0;
-	}
+	if (v == NULL) goto error;
 
-	switch (res) {
+	switch (*(NSBezierPathElement*)resp) {
 	case NSMoveToBezierPathElement: pointCount = 1; break;
 	case NSLineToBezierPathElement: pointCount = 1; break;
 	case NSCurveToBezierPathElement: pointCount = 3; break;
@@ -661,15 +620,15 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 	default:
 		PyErr_SetString(PyExc_ValueError, 
 			"Return[0] should be NS{*}PathElement");
-		PyObjCErr_ToObjCWithGILState(&state);
-		return 0;
+		Py_DECREF(v);
+		goto error;
 	}
 
 	if (PySequence_Fast_GET_SIZE(v) != pointCount) {
 		PyErr_SetString(PyExc_ValueError,
 			"wrong number of points");
-		PyObjCErr_ToObjCWithGILState(&state);
-		return 0;
+		Py_DECREF(v);
+		goto error;
 	}
 
 	for (i = 0; i < pointCount; i++) {
@@ -678,101 +637,78 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 			points + i);
 		if (err == -1) {
 			Py_DECREF(v);
-			Py_DECREF(seq);
-			PyObjCErr_ToObjCWithGILState(&state);
-			return 0;
+			goto error;
 		}
 	}
 
 	Py_DECREF(v);
 	Py_DECREF(seq);
 	PyGILState_Release(state);
-	return res;
-}
-
-#define U(x) x __attribute__((__unused__))
-static void imp_NSBezierPath_setAssociatedPoints_atIndex_(U(id self), U(SEL sel), U(NSPoint* points), U(int idx))
-{
-	PyGILState_STATE state = PyGILState_Ensure();
-	PyErr_SetString(PyExc_RuntimeError,
-		"NSBezierPath -setAssociatedPoints:atIndex: -> Python implementation not supported");
-	PyObjCErr_ToObjCWithGILState(&state);
 	return;
-}
-#undef U
 
-static void imp_NSBezierPath_setLineDash_count_phase_(id self, SEL sel, float* pattern, int count, float phase)
+error:
+	*(NSBezierPathElement*)resp = 0;
+	Py_XDECREF(arglist);
+	Py_XDECREF(seq);
+	PyObjCErr_ToObjCWithGILState(&state);
+}
+
+static void 
+imp_NSBezierPath_setLineDash_count_phase_(
+	void* cif __attribute__((__unused__)), 
+	void* resp __attribute__((__unused__)), 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	float* pattern = *(float**)args[2];
+	int count = *(int*)args[3];
+	float phase = *(float*)args[4];
+
 	PyObject* result;
-	PyObject* arglist;
+	PyObject* arglist = NULL;
 	PyObject* v;
 	int i;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(4);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (arglist == NULL) goto error;
 
 	v = PyObjC_IdToPython(self);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 0, v);
 
 	v = PyTuple_New(count);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 1, v);
 
 	for (i = 0; i < count; i++) {
 		PyTuple_SET_ITEM(v, i, 
 			PyObjC_ObjCToPython(@encode(float), pattern+i));
+		if (PyTuple_GET_ITEM(v, i) == NULL) goto error;
 	}
-	if (PyErr_Occurred()) {
-		Py_DECREF(v);
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
-
-	PyTuple_SET_ITEM(arglist, 1, v);
 
 	v = PyInt_FromLong(count);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 2, v);
 
 	v = PyFloat_FromDouble(phase);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 3, v);
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
 
 	Py_DECREF(result);
 	PyGILState_Release(state);
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
 
@@ -782,7 +718,7 @@ _pyobjc_install_NSBezierPath(void)
 	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSBezierPath"), 
 		@selector(appendBezierPathWithGlyphs:count:inFont:),
 		call_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_,
-		(IMP)imp_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_) < 0 ) {
+		imp_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_) < 0 ) {
 
 		return -1;
 	}
@@ -790,7 +726,7 @@ _pyobjc_install_NSBezierPath(void)
 	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSBezierPath"), 
 		@selector(appendBezierPathWithPoints:count:),
 		call_NSBezierPath_appendBezierPathWithPoints_count_,
-		(IMP)imp_NSBezierPath_appendBezierPathWithPoints_count_) < 0 ) {
+		imp_NSBezierPath_appendBezierPathWithPoints_count_) < 0 ) {
 
 		return -1;
 	}
@@ -798,7 +734,7 @@ _pyobjc_install_NSBezierPath(void)
 	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSBezierPath"), 
 		@selector(elementAtIndex:associatedPoints:),
 		call_NSBezierPath_elementAtIndex_associatedPoints_,
-		(IMP)imp_NSBezierPath_elementAtIndex_associatedPoints_) < 0 ) {
+		imp_NSBezierPath_elementAtIndex_associatedPoints_) < 0 ) {
 
 		return -1;
 	}
@@ -806,7 +742,7 @@ _pyobjc_install_NSBezierPath(void)
 	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSBezierPath"), 
 		@selector(setAssociatedPoints:atIndex:),
 		call_NSBezierPath_setAssociatedPoints_atIndex_,
-		(IMP)imp_NSBezierPath_setAssociatedPoints_atIndex_) < 0 ) {
+		PyObjCUnsupportedMethod_IMP) < 0 ) {
 
 		return -1;
 	}
@@ -814,7 +750,7 @@ _pyobjc_install_NSBezierPath(void)
 	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSBezierPath"), 
 		@selector(setLineDash:count:phase:),
 		call_NSBezierPath_setLineDash_count_phase_,
-		(IMP)imp_NSBezierPath_setLineDash_count_phase_) < 0 ) {
+		imp_NSBezierPath_setLineDash_count_phase_) < 0 ) {
 
 		return -1;
 	}

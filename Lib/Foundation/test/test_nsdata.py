@@ -3,6 +3,7 @@ import objc
 import array
 
 from Foundation import NSData, NSMutableData
+from objc.test.testbndl import PyObjC_TestClass3
 
 rawBytes = "a\x13b\x00cd\xFFef\xEFgh"
 otherBytes = array.array('c')
@@ -77,6 +78,81 @@ class TestNSData(unittest.TestCase):
             self.assertEquals(bytes, mutableBytes)
 
             mutableBytes[0:len(mutableBytes)] = bytes[0:len(bytes)]
+
+class MyData (NSData):
+    def dataWithBytes_length_(self, bytes, length):
+        return ("data", bytes, length)
+
+BYTES="dummy bytes"
+class MyData2 (NSData):
+    def initWithBytes_length_(self, bytes, length):
+        return ("init", bytes, length)
+
+    def length(self):
+        return 42
+
+    def bytes(self):
+        return BYTES
+
+
+class MyData3 (NSData):
+    def initWithBytes_length_(self, bytes, length):
+        self.bytes = bytes
+        self.length = length
+        return self
+
+    def bytes(self):
+        return self.bytes
+
+    def length(self):
+        if hasattr(self, 'length'):
+            return self.length
+        return -1
+
+class MyData4 (NSData):
+    def initWithBytes_length_(self, bytes, length):
+        return self
+
+    def bytes(self):
+        return None
+
+    def length(self):
+        return -1
+
+class MyData5(NSData):
+    def initWithBytes_length_(self, bytes, length):
+        return self
+
+    def bytes(self):
+        raise ValueError, "No bytes available"
+
+    def length(self):
+        return -1
+
+
+
+class TestMyData (unittest.TestCase):
+    # 'initWithBytes:lenght:' and 'dataWithBytes:lenght:' have custom IMP's
+    def testData(self):
+        r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData, 0)
+        self.assertEquals(r, ('data', 'hello world', 11))
+
+    def testInit(self):
+        r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData2, 1)
+        self.assertEquals(r, ('init', 'hello world', 11))
+
+    def testBytes(self):
+        r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData3, 1)
+        b = PyObjC_TestClass3.getBytes_(r)
+        self.assertEquals(str(b.bytes()), 'hello world')
+
+    def testBytesNone(self):
+        b = PyObjC_TestClass3.makeDataWithBytes_method_(MyData4, 1)
+        self.assertEquals(b.bytes(), None)
+
+    def testBytesRaises(self):
+        b = PyObjC_TestClass3.makeDataWithBytes_method_(MyData5, 1)
+        self.assertRaises(ValueError, b.bytes)
 
 if __name__ == '__main__':
     unittest.main( )

@@ -10,7 +10,8 @@
 #include "pyobjc-api.h"
 
 
-static PyObject* call_NSQuickDrawView_qdport(
+static PyObject* 
+call_NSQuickDrawView_qdport(
 		PyObject* method, 
 		PyObject* self, PyObject* arguments)
 {
@@ -45,37 +46,46 @@ static PyObject* call_NSQuickDrawView_qdport(
 	return result;
 }
 
-static void* imp_NSQuickDrawView_qdport(id self, SEL sel)
+static void 
+imp_NSQuickDrawView_qdport(
+	void* cif __attribute__((__unused__)), 
+	void* resp, 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	GrafPtr* pretval = (GrafPtr*)resp;
+
 	PyObject* result;
-	PyObject* arglist;
-	void*    objc_result;
+	PyObject* arglist = NULL;
+	PyObject* v;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
-	arglist = PyTuple_New(0);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	arglist = PyTuple_New(1);
+	if (arglist == NULL) goto error;
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	v = PyObjC_IdToPython(self);
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 0, v);
 
-	GrafObj_Convert(result, (GrafPtr*)&objc_result); 
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
+
+	GrafObj_Convert(result, pretval);
 	Py_DECREF(result);
 
-	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (PyErr_Occurred()) goto error;
 
 	PyGILState_Release(state);
-	return objc_result;
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	*pretval = NULL;
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
 
@@ -88,7 +98,7 @@ _pyobjc_install_NSQuickDrawView(void)
 		classNSQuickDrawView,
 		@selector(qdport),
 		call_NSQuickDrawView_qdport,
-		(IMP)imp_NSQuickDrawView_qdport) < 0) {
+		imp_NSQuickDrawView_qdport) < 0) {
 
 		return -1;
 	}

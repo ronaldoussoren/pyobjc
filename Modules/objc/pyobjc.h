@@ -8,6 +8,7 @@
 #define OBJC_VERSION "1.0+"
 
 #include <Python.h>
+#include "structmember.h"
 #include "pyobjc-compat.h"
 
 
@@ -27,6 +28,7 @@
 #include "OC_PythonArray.h"
 #include "OC_PythonDictionary.h"
 #include "method-signature.h"
+#include "libffi_support.h"
 #include "super-call.h"
 #include "objc_util.h"
 #include "objc-class.h"
@@ -40,6 +42,7 @@
 #include "unicode-object.h"
 #include "class-descriptor.h"
 #include "class-list.h"
+#include "struct-wrapper.h"
 
 
 /*
@@ -102,9 +105,5 @@ PyObject* PyObjC_IDToCFType(id argument);
 	   __FUNCTION__, __FILE__, __LINE__)
 #define PyObjC_Assert(expr, retval) \
 	if (!(expr)) { PyObjCErr_InternalError(); return (retval); }
-
-
-// in pyobjc-api.m
-extern id PyObjCUnsupportedMethod_IMP(id, SEL);
 
 #endif /* PyObjC_H */

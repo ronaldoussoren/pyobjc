@@ -80,6 +80,7 @@ ObjC_SignatureForSelector(char* class_name, SEL selector, char* signature)
 
 	PyList_Append(sublist, 
 		PyCObject_FromVoidPtr(value, free_replacement_signature));
+	PyObjC_MappingCount += 1;
 	return 0;
 }
 
@@ -575,6 +576,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		res = execute((PyObject*)self, self->sel_self, args);
 	} else {
 		PyObject* arglist;
+		PyObject* myClass;
 		int       i;
 		int       argslen;
 
@@ -590,6 +592,20 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			PyTuple_SET_ITEM(arglist, i-1, v);
 			Py_INCREF(v);
 		}
+
+		myClass = PyObjCClass_New(self->sel_class);
+		if (!(PyObject_IsInstance(pyself, myClass)
+			|| (PyString_Check(pyself) && PyObjCClass_IsSubClass(self->sel_class, [NSString class])) 
+			|| (PyUnicode_Check(pyself) && PyObjCClass_IsSubClass(self->sel_class, [NSString class])) 
+		     )) {
+			Py_DECREF(arglist);
+			PyErr_Format(PyExc_TypeError,
+				"Expecting instance of %s as self, got one "
+				"of %s", self->sel_class->name,
+				pyself->ob_type->tp_name);
+			return NULL;
+		}
+		
 
 		res = execute((PyObject*)self, pyself, arglist);
 		Py_DECREF(arglist);
@@ -1089,8 +1105,20 @@ PyObjCSelector_DefaultSelector(const char* methname)
 {
 	char buf[1024]; 
 	char* cur;
+	int   ln;
 
-	snprintf(buf, sizeof(buf), "%s", methname);
+	ln = snprintf(buf, sizeof(buf), "%s", methname);
+
+	cur = buf + ln;
+	if (cur - buf > 3) {
+		if (cur[-1] == '_' && cur[-2] == '_') {
+			cur[-2] = '\0';
+			if (PyObjC_IsPythonKeyword(buf)) {
+				return sel_registerName(buf);
+			}
+			cur[-2] = '_';
+		}
+	}
 
 	cur = strchr(buf, '_');
 	while (cur != NULL) {
@@ -1453,7 +1481,20 @@ int   PyObjCSelector_Required(PyObject* obj)
 
 int   PyObjCSelector_IsClassMethod(PyObject* obj)
 {
-	return (((PyObjCSelector*)obj)->sel_flags & PyObjCSelector_kCLASS_METHOD) != 0;
+	return (PyObjCSelector_GetFlags(obj) & PyObjCSelector_kCLASS_METHOD) != 0;
+}
+
+int   PyObjCSelector_DonatesRef(PyObject* obj)
+{
+	if (!PyObjCSelector_Check(obj)) {
+		return 0;
+	}
+	return (PyObjCSelector_GetFlags(obj) & PyObjCSelector_kDONATE_REF) != 0;
+}
+
+int   PyObjCSelector_GetFlags(PyObject* obj)
+{
+	return ((PyObjCSelector*)obj)->sel_flags;
 }
 
 
@@ -1526,6 +1567,30 @@ PyObjCSelector_FromFunction(
 
 	if (oc_class == NULL) {
 		return NULL;
+	}
+
+	if (ObjCPythonSelector_Check(callable)) {
+		ObjCPythonSelector* result;
+
+		if (((ObjCPythonSelector*)callable)->callable == NULL || ((ObjCPythonSelector*)callable)->callable == Py_None) {
+			PyErr_SetString(PyExc_ValueError, "selector object without callable");
+			return NULL;
+		}
+		result = PyObject_New(ObjCPythonSelector, &ObjCPythonSelector_Type);
+		result->sel_selector = ((ObjCPythonSelector*)callable)->sel_selector;
+		result->sel_class   = oc_class;
+		result->sel_signature  = ObjC_strdup(((ObjCPythonSelector*)callable)->sel_signature);
+		if (result->sel_signature == NULL) {
+			Py_DECREF(result);
+			return PyErr_NoMemory();
+		}
+		result->sel_self       = NULL;
+		result->sel_flags = ((ObjCPythonSelector*)callable)->sel_flags;
+		result->callable = ((ObjCPythonSelector*)callable)->callable;
+		if (result->callable) {
+			Py_INCREF(result->callable);
+		}
+		return (PyObject*)result;
 	}
 
 	if (!PyFunction_Check(callable) && !PyMethod_Check(callable) &&

@@ -10,8 +10,9 @@
 #include <Foundation/Foundation.h>
 #include "pyobjc-api.h"
 
-static PyObject* call_NSMutableArray_sortUsingFunction_context_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSMutableArray_sortUsingFunction_context_(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -59,8 +60,9 @@ static PyObject* call_NSMutableArray_sortUsingFunction_context_(
 	return result;
 }
 
-static PyObject* call_NSMutableArray_sortUsingFunction_context_range_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSMutableArray_sortUsingFunction_context_range_(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -244,8 +246,9 @@ imp_NSMutableArray_sortUsingFunction_context_range(id self, SEL sel,
 }
 #endif
 
-static PyObject* call_NSMutableArray_removeObjectsFromIndices_numIndices_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSMutableArray_removeObjectsFromIndices_numIndices_(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	int err;
@@ -311,68 +314,61 @@ static PyObject* call_NSMutableArray_removeObjectsFromIndices_numIndices_(
 	return result;
 }
 
-static void imp_NSMutableArray_removeObjectsFromIndices_numIndices_(id self, 
-	SEL sel, unsigned* indices, int count)
+static void 
+imp_NSMutableArray_removeObjectsFromIndices_numIndices_(
+	void* cif __attribute__((__unused__)), 
+	void* resp __attribute__((__unused__)), 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	unsigned* indices = *(unsigned**)args[2];
+	int count = *(int*)args[3];
+
 	PyObject* result;
-	PyObject* arglist;
+	PyObject* arglist = NULL;
 	PyObject* v;
 	int i;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (arglist == NULL) goto error;
 
 	v = PyObjC_IdToPython(self);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 0, v);
 
 	v = PyTuple_New(count);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 1, v);
 	for (i = 0; i < count; i++) {
 		PyTuple_SET_ITEM(v, i, PyObjC_ObjCToPython(@encode(unsigned),
 				indices + i));
-		if (PyTuple_GET_ITEM(v, i) == NULL) {
-			Py_DECREF(v);
-			Py_DECREF(arglist);
-			PyObjCErr_ToObjCWithGILState(&state);
-			return;
-		}
+		if (PyTuple_GET_ITEM(v, i) == NULL) goto error;
 	}
-	PyTuple_SET_ITEM(arglist, 1, v);
 
 	v = PyInt_FromLong(count);
-	if (v == NULL) {	
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 2,  v);
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
 
 	Py_DECREF(result);
 	PyGILState_Release(state);
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
-static PyObject* call_NSMutableArray_replaceObjectsInRange_withObjects_count_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSMutableArray_replaceObjectsInRange_withObjects_count_(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	int err;
 	struct objc_super super;
@@ -443,73 +439,61 @@ static PyObject* call_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 	return Py_None;
 }
 
-static void imp_NSMutableArray_replaceObjectsInRange_withObjects_count_(
-	id self, SEL sel, NSRange range, id* objects, int count)
+static void 
+imp_NSMutableArray_replaceObjectsInRange_withObjects_count_(
+	void* cif __attribute__((__unused__)), 
+	void* resp __attribute__((__unused__)), 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	NSRange range = *(NSRange*)args[2];
+	id* objects = *(id**)args[3];
+	int count = *(int*)args[4];
+
 	PyObject* result;
-	PyObject* arglist;
+	PyObject* arglist = NULL;
 	PyObject* v;
 	int i;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(4);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (arglist == NULL) goto error;
 
 	v = PyObjC_IdToPython(self);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 0, v);
 
 	v = PyObjC_ObjCToPython(@encode(NSRange), &range);
-	if (v == NULL) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 1, v);
 
 	v = PyTuple_New(count);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-	for (i = 0; i < count; i++) {
-		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(objects[i]));
-		if (PyTuple_GET_ITEM(v, i) == NULL) {
-			Py_DECREF(v);
-			Py_DECREF(arglist);
-			PyObjCErr_ToObjCWithGILState(&state);
-			return;
-		}
-	}
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 2, v);
 
-	v = PyInt_FromLong(count);
-	if (v == NULL) {	
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
+	for (i = 0; i < count; i++) {
+		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(objects[i]));
+		if (PyTuple_GET_ITEM(v, i) == NULL) goto error;
 	}
+
+	v = PyInt_FromLong(count);
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 3,  v);
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
 
 	Py_DECREF(result);
 	PyGILState_Release(state);
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
 
@@ -541,7 +525,7 @@ _pyobjc_install_NSMutableArray(void)
 		classNSMutableArray,
 		@selector(removeObjectsFromIndices:numIndices:),
 		call_NSMutableArray_removeObjectsFromIndices_numIndices_,
-		(IMP)imp_NSMutableArray_removeObjectsFromIndices_numIndices_) < 0) {
+		imp_NSMutableArray_removeObjectsFromIndices_numIndices_) < 0) {
 
 		return -1;
 	}
@@ -550,7 +534,7 @@ _pyobjc_install_NSMutableArray(void)
 		classNSMutableArray,
 		@selector(replaceObjectsInRange:withObjects:count:),
 		call_NSMutableArray_replaceObjectsInRange_withObjects_count_,
-		(IMP)imp_NSMutableArray_replaceObjectsInRange_withObjects_count_) < 0) {
+		imp_NSMutableArray_replaceObjectsInRange_withObjects_count_) < 0) {
 
 		return -1;
 	}

@@ -8,8 +8,9 @@
 #include "pyobjc-api.h"
 
 
-static PyObject* call_NSView_sortSubviewsUsingFunction_context_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSView_sortSubviewsUsingFunction_context_(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;

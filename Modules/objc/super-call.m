@@ -13,10 +13,12 @@
  */
 #include "pyobjc.h"
 
+int PyObjC_MappingCount = 0;
+
 struct registry
 {
-	ObjC_CallFunc_t call_to_objc;
-	IMP		call_to_python;
+	ObjC_CallFunc_t 	call_to_objc;
+	PyObjCFFI_ClosureFunc	call_to_python;
 };
 	
 /* Dict mapping from signature-string to a 'struct registry' */
@@ -25,6 +27,9 @@ static PyObject* signature_registry = NULL;
 /* List of 3-tuples: (Class, "selector", 'struct registry' */
 static PyObject* special_registry  = NULL;
 
+/*
+ * Initialize the data structures
+ */
 static int
 init_registry(void)
 {
@@ -41,9 +46,13 @@ init_registry(void)
 	return 0;
 }
 
+
+/*
+ * Add a custom mapping for a method in a class
+ */
 int PyObjC_RegisterMethodMapping(Class class, SEL sel, 
 	ObjC_CallFunc_t call_to_objc,
-	IMP		    call_to_python)
+	PyObjCFFI_ClosureFunc call_to_python)
 {
 	struct registry* v;
 	const char*      selname = PyObjCRT_SELName(sel);
@@ -92,6 +101,8 @@ int PyObjC_RegisterMethodMapping(Class class, SEL sel,
 		return -1;
 	}
 
+	PyObjC_MappingCount += 1;
+
 	return 0;
 }
 
@@ -130,9 +141,9 @@ PyObjCRT_SimplifySignature(char* signature, char* buf, size_t buflen)
 
 	
 int PyObjC_RegisterSignatureMapping(
-	char*           signature,
+	char* signature,
 	ObjC_CallFunc_t call_to_objc,
-	IMP		call_to_python)
+	PyObjCFFI_ClosureFunc call_to_python)
 {
 	struct registry* v;
 	PyObject* 	 entry;
@@ -171,6 +182,7 @@ int PyObjC_RegisterSignatureMapping(
 		return -1;
 	}
 	Py_DECREF(entry); 
+	PyObjC_MappingCount += 1;
 
 	return 0;
 }
@@ -270,79 +282,82 @@ find_signature(char* signature)
 	return r;
 }
 
-static struct registry* create_ffi(char* signature)
-{
-	IMP ffiImp = NULL;
-	int r;
-
-	PyErr_Clear();
-
-	ffiImp = ObjC_MakeIMPForSignature(signature, NULL);
-	if (ffiImp == NULL) 
-		goto error;
-
-	r = PyObjC_RegisterSignatureMapping(signature, ObjC_FFICaller, ffiImp);
-	if (r == -1) {
-		goto error;
-	}
-
-	return find_signature(signature);
-error:
-	/* TODO: Clean up ffiImp */
-	return NULL;
-}
-
-
-IMP ObjC_FindIMPForSignature(char* signature)
-{
-	struct registry* r;
-
-	r = find_signature(signature);
-	if (r) {
-		return r->call_to_python;
-	}
-
-	r = create_ffi(signature);
-	if (r) {
-		return r->call_to_python;
-	}
-
-	return NULL;
-}
-
-IMP ObjC_FindIMP(Class class, SEL sel)
+extern IMP PyObjC_MakeIMP(Class class, PyObject* sel, PyObject* imp)
 {
 	struct registry* generic;
 	struct registry* special;
-	PyObject*        objc_class;
-	PyObject*        objc_sel;
+	SEL aSelector = PyObjCSelector_GetSelector(sel);
+	PyObjCFFI_ClosureFunc func = NULL;
+	IMP retval;
+	PyObjCMethodSignature* methinfo;
 
-	/* Search using the python wrapper of the class: That one may have
-	 * a more specific method signature.
-	 */
+	if (class != nil) {
+		special = search_special(class, aSelector);
+		if (special) {
+			func = special->call_to_python;
+		} else {
+			PyErr_Clear();
+		}
+	}
 
-	objc_class = PyObjCClass_New(class);
-	if (objc_class == NULL) return NULL;
-	
-	objc_sel = PyObjCClass_FindSelector(objc_class, sel);
-	if (objc_sel == NULL) return NULL;
+	if (func == NULL) {
+		generic = find_signature(PyObjCSelector_Signature(sel));
+		if (generic != NULL) {
+			func = generic->call_to_python;
+		} 
+	}
 
-	special = search_special(class, sel);
-	if (special) {
-		return special->call_to_python;
+	if (func == PyObjCUnsupportedMethod_IMP) {
+		PyErr_Format(PyExc_TypeError,
+			"Implementing %s in Python is not supported",
+			PyObjCRT_SELName(aSelector));
+		return NULL;
+	}
+
+	if (func != NULL) {
+		methinfo = PyObjCMethodSignature_FromSignature(
+				PyObjCSelector_Signature(sel));
+		retval = PyObjCFFI_MakeClosure(methinfo, func, imp);
+		PyObjCMethodSignature_Free(methinfo);
+		return retval;
 	} else {
+		/* XXX: To be replaced */
 		PyErr_Clear();
+		retval = ObjC_MakeIMPForSignature(
+				PyObjCSelector_Signature(sel), imp);
+		return retval;
+	}
+}
+
+void  
+PyObjCUnsupportedMethod_IMP(ffi_cif* cif __attribute__((__unused__)), void* resp __attribute__((__unused__)), void** args, void* userdata __attribute__((__unused__)))
+{
+	NSLog(@"Implementing %s from Python is not supported for %@",
+		PyObjCRT_SELName(*(SEL*)args[1]), *(id*)args[0]);
+
+	[NSException raise:NSInvalidArgumentException
+		format:@"Implementing %s from Python is not supported for %@",
+			*(id*)args[0], PyObjCRT_SELName(*(SEL*)args[1])];
+}
+
+PyObject* 
+PyObjCUnsupportedMethod_Caller(PyObject* meth, PyObject* self, PyObject* 
+	args __attribute__((__unused__)))
+{
+	PyObject* repr;
+
+	repr = PyObject_Repr(self);
+	if (repr == NULL) return NULL;
+	if (!PyString_Check(repr)) {
+		PyErr_SetString(PyExc_RuntimeError, 
+			"repr() didn't return a string");
+		return NULL;
 	}
 
-	generic = find_signature(PyObjCSelector_Signature(objc_sel));
-	if (generic) {
-		return generic->call_to_python;
-	}
-
-	generic = create_ffi(PyObjCSelector_Signature(objc_sel));
-	if (generic) {
-		return generic->call_to_python;
-	}
-
+	ObjCErr_Set(PyExc_TypeError,
+		"Cannot call %s on %s from Python",
+		PyObjCRT_SELName(PyObjCSelector_GetSelector(meth)),
+		PyString_AS_STRING(repr));
+	Py_DECREF(repr);
 	return NULL;
 }

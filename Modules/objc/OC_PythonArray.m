@@ -2,7 +2,7 @@
 
 @implementation OC_PythonArray 
 
-+newWithPythonObject:(PyObject*)v;
++ newWithPythonObject:(PyObject*)v;
 {
 	OC_PythonArray* res;
 
@@ -11,7 +11,7 @@
 	return res;
 }
 
--initWithPythonObject:(PyObject*)v;
+- initWithPythonObject:(PyObject*)v;
 {
 	Py_INCREF(v);
 	Py_XDECREF(value);

@@ -12,8 +12,6 @@
  */
 #include "pyobjc.h"
 
-#include "ffi.h"
-
 #ifndef FFI_CLOSURES
 #    error "Need FFI_CLOSURES!"
 #endif
@@ -441,13 +439,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	arglist = v;
 
 	if (!callable) {
-		res = PyObjC_CallPython(*(id*)args[0+argOffset], *(SEL*)args[1+argOffset], arglist, &isAlloc);
-	} else {
-		if (callable != userdata->callable) abort();
+		abort();
+	} 
 
-		res = PyObject_Call(callable, arglist, NULL);
-		isAlloc = 0;
-	}
+	res = PyObject_Call(callable, arglist, NULL);
+	isAlloc = PyObjCSelector_DonatesRef(callable);
+
 	Py_DECREF(arglist);
 	if (res == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
@@ -610,94 +607,20 @@ IMP
 ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 {
 	_method_stub_userdata* stubUserdata;
-	ffi_cif           *cif;
-	ffi_closure       *cl;
-	ffi_type**        cl_arg_types;
-	ffi_type*         cl_ret_type;
-	ffi_status        rv;
-	int               i;
-	const char*  rettype;
-	int argOffset;
 	PyObjCMethodSignature* methinfo;
+	IMP closure;
 
-	/* Build FFI returntype description */
 	methinfo = PyObjCMethodSignature_FromSignature(signature);
 	if (methinfo == NULL) {
 		return NULL;
 	}
-	rettype = methinfo->rettype;
 
-	if (((size_t)PyObjCRT_SizeOfType(rettype) > sizeof(id))
-		 	&& *rettype != _C_DBL && *rettype != _C_FLT
-		 	&& *rettype != _C_LNGLNG && *rettype != _C_ULNGLNG) {
-		/* the prototype is objc_msgSend_stret(void* retbuf, ... */
-		argOffset = 1;
-		cl_ret_type = &ffi_type_void;
-	} else {
-		argOffset = 0;
-		cl_ret_type = signature_to_ffi_return_type(rettype);
-		if (cl_ret_type == NULL) {
-			PyObjCMethodSignature_Free(methinfo);
-			return NULL;
-		}
-	}
-
-	/* Build FFI argumentlist description */
-	cl_arg_types = malloc(sizeof(ffi_type*) * (argOffset+methinfo->nargs));
-	if (cl_arg_types == NULL) {
-		PyObjCMethodSignature_Free(methinfo);
-		free(cl_ret_type);
-		PyErr_NoMemory();
-		return NULL;
-	}
-
-	if (argOffset) {
-		cl_arg_types[0] = &ffi_type_pointer;
-	}
-
-	for (i = 0; i < methinfo->nargs; i++) {
-		cl_arg_types[i+argOffset] = arg_signature_to_ffi_type(
-			methinfo->argtype[i]);
-		if (cl_arg_types[i+argOffset] == NULL) {
-			PyObjCMethodSignature_Free(methinfo);
-			free(cl_arg_types);
-			return NULL;
-		}
-	}
-
-	/* Create the invocation description */
-	cif = malloc(sizeof(*cif));
-	if (cif == NULL) {
-		PyObjCMethodSignature_Free(methinfo);
-		free(cl_arg_types);
-		PyErr_NoMemory();
-		return NULL;
-	}
-
-	/*  XXX: When calling a method with a structured return-value we
-	 * use objc_msgSendSuper_stret, should the method stub have a return
-	 * buffer argument in those cases? Hmm, maybe libffi knows about this.
-	 */
-	rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, methinfo->nargs+argOffset, 
-		cl_ret_type, cl_arg_types);
-	if (rv != FFI_OK) {
-		PyObjCMethodSignature_Free(methinfo);
-		free(cl_arg_types);
-		ObjCErr_Set(PyExc_RuntimeError,
-			"Cannot create FFI CIF: %d", rv);
-		return NULL;
-	}
-
-	/* And finally create the actual closure */
-	cl = malloc(sizeof(*cl));
-	if (cl == NULL) {
-		PyObjCMethodSignature_Free(methinfo);
-		free(cl_arg_types);
-		free(cif);
-		PyErr_NoMemory();
-		return NULL;
-	}
 	stubUserdata = malloc(sizeof(*stubUserdata));
+	if (stubUserdata == NULL) {
+		PyObjCMethodSignature_Free(methinfo);
+		return NULL;
+	}
+
 	stubUserdata->methinfo = methinfo;
 
 	if (callable) {
@@ -707,19 +630,17 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 		stubUserdata->callable = NULL;
 	}
 
-	rv = ffi_prep_closure(cl, cif, method_stub, (void*)stubUserdata);
-	if (rv != FFI_OK) {
+	closure = PyObjCFFI_MakeClosure(methinfo, method_stub, stubUserdata);
+	if (closure == NULL) {
 		PyObjCMethodSignature_Free(methinfo);
 		if (stubUserdata->callable) {
 			Py_DECREF(stubUserdata->callable);
 		}
 		free(stubUserdata);
-		ObjCErr_Set(PyExc_RuntimeError,
-			"Cannot create FFI closure: %d", rv);
 		return NULL;
 	}
 
-	return (IMP)cl;
+	return closure;
 }
 
 IMP
@@ -1228,4 +1149,150 @@ error_cleanup:
 		byref = NULL;
 	}
 	return NULL;
+}
+
+/*
+ * PyObjCFFI_CIFForSignature - Create CIF for a method signature
+ *
+ * return the CIF, return NULL on error. pArgOffset is set to 1 if the method
+ * should be called using objc_sendMsg_sret (using a pointer to the return value
+ * as an initial argument), and is set to 0 otherwise.
+ */
+ffi_cif*
+PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, int* pArgOffset)
+{
+	ffi_cif* cif;
+	ffi_type** cl_arg_types;
+	ffi_type* cl_ret_type;
+	const char* rettype;
+	int argOffset;
+	ffi_status rv;
+	int i;
+
+	rettype = methinfo->rettype;
+
+	if (((size_t)PyObjCRT_SizeOfType(rettype) > sizeof(id))
+		 	&& *rettype != _C_DBL && *rettype != _C_FLT
+		 	&& *rettype != _C_LNGLNG && *rettype != _C_ULNGLNG) {
+		/* the prototype is objc_msgSend_stret(void* retbuf, ... */
+		argOffset = 1;
+		cl_ret_type = &ffi_type_void;
+	} else {
+		argOffset = 0;
+		cl_ret_type = signature_to_ffi_return_type(rettype);
+		if (cl_ret_type == NULL) {
+			return NULL;
+		}
+	}
+
+	/* Build FFI argumentlist description */
+	cl_arg_types = malloc(sizeof(ffi_type*) * (argOffset+methinfo->nargs));
+	if (cl_arg_types == NULL) {
+		free(cl_ret_type);
+		PyErr_NoMemory();
+		return NULL;
+	}
+
+	if (argOffset) {
+		cl_arg_types[0] = &ffi_type_pointer;
+	}
+
+	for (i = 0; i < methinfo->nargs; i++) {
+		cl_arg_types[i+argOffset] = arg_signature_to_ffi_type(
+			methinfo->argtype[i]);
+		if (cl_arg_types[i+argOffset] == NULL) {
+			free(cl_arg_types);
+			return NULL;
+		}
+	}
+
+	/* Create the invocation description */
+	cif = malloc(sizeof(*cif));
+	if (cif == NULL) {
+		free(cl_arg_types);
+		PyErr_NoMemory();
+		return NULL;
+	}
+
+	rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, methinfo->nargs+argOffset, 
+		cl_ret_type, cl_arg_types);
+	if (rv != FFI_OK) {
+		free(cl_arg_types);
+		ObjCErr_Set(PyExc_RuntimeError,
+			"Cannot create FFI CIF: %d", rv);
+		return NULL;
+	}
+
+	*pArgOffset = argOffset;
+	return cif;
+}
+
+/*
+ * PyObjCFFI_FreeCIF - Free the CIF created by PyObjCFFI_CIFForSignature
+ */
+void
+PyObjCFFI_FreeCIF(ffi_cif* cif)
+{
+	if (cif->arg_types) free(cif->arg_types);
+	free(cif);
+}
+
+/*
+ * PyObjCFFI_MakeClosure - Create a closure for an Objective-C method
+ *
+ * Return the closure, or NULL. The 'func' will be called with a CIF object,
+ * a pointer to the return value, the argument array and the 'userdata'.
+ */
+IMP
+PyObjCFFI_MakeClosure(
+	PyObjCMethodSignature* methinfo,
+	PyObjCFFI_ClosureFunc func,
+	void* userdata)
+{
+	ffi_cif *cif;
+	ffi_closure *cl;
+	ffi_status rv;
+	int argOffset;
+
+	cif = PyObjCFFI_CIFForSignature(methinfo, &argOffset);
+	if (cif == NULL) {
+		return NULL;
+	}
+
+	/* And finally create the actual closure */
+	cl = malloc(sizeof(*cl));
+	if (cl == NULL) {
+		PyObjCFFI_FreeCIF(cif);
+		PyErr_NoMemory();
+		return NULL;
+	}
+
+	rv = ffi_prep_closure(cl, cif, func, userdata);
+	if (rv != FFI_OK) {
+		PyObjCFFI_FreeCIF(cif);
+		ObjCErr_Set(PyExc_RuntimeError,
+			"Cannot create FFI closure: %d", rv);
+		return NULL;
+	}
+
+	return (IMP)cl;
+}
+
+/* 
+ * PyObjCFFI_FreeClosure - Free the closure created by PyObjCFFI_MakeClosure
+ *
+ * Returns the userdata.
+ */
+void*
+PyObjCFFI_FreeClosure(IMP closure)
+{
+	void* retval;
+	ffi_closure* cl;
+	
+	cl = (ffi_closure*)closure;
+	retval = cl->user_data;
+	PyObjCFFI_FreeCIF(cl->cif);
+	free(cl);
+
+	return retval;
 }

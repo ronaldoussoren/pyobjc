@@ -13,7 +13,6 @@
  */
 
 #include "pyobjc.h"
-#include "structmember.h" /* needed for PyMemberDef */
 
 static void
 PyObjCPointer_dealloc (PyObjCPointer *self)

@@ -150,6 +150,11 @@ for translation are:
 
 * Then convert all colons to underscores: ``someMethod_withFoo_andBar_``
 
+It is possible to use Python keywords as method names in Objective-C. To access
+or define such methods append two underscores to its name (e.g. ``class__``). 
+This is currently only supported for ``raise`` and ``class`` because those are
+the only Python keywords that are actually used in Cocoa.
+
 Wrapped/bridged methods (and functions) have the same number of arguments
 as the corresponding Objective-C method or function, unless otherwise noted
 in the documentation (`Notes on supported APIs and classes on MacOS X`_ for

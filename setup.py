@@ -64,7 +64,14 @@ if sys.platform == 'darwin':
         distutils.sysconfig._config_vars['LDSHARED'] = y
 
 from distutils.core import setup, Extension
+from distutils.command.build_ext import build_ext
 import os
+
+class pyobjc_build_ext (build_ext):
+    def run(self):
+        task_build_libffi()
+        subprocess("Generating wrappers & stubs", "%s Scripts/CodeGenerators/cocoa_generator.py" % (sys.executable,), None)
+        build_ext.run(self)
 
 LIBFFI_SOURCES='libffi-src'
 if sys.platform != 'darwin' and os.path.exists('/usr/include/ffi.h'):
@@ -90,38 +97,40 @@ if sys.version_info < req_ver:
     sys.exit(1)
 
 if LIBFFI_SOURCES is not None:
-    if not os.path.isdir(LIBFFI_SOURCES):
-        sys.stderr.write(
-            'LIBFFI_SOURCES is not a directory: %s\n'%LIBFFI_SOURCES)
-        sys.stderr.write('\tSee Install.txt or Install.html for more information.\n')
-        sys.exit(1)
 
-    if not os.path.exists('build'):
-        os.mkdir('build')
+    def task_build_libffi():
+        if not os.path.isdir(LIBFFI_SOURCES):
+            sys.stderr.write(
+                'LIBFFI_SOURCES is not a directory: %s\n'%LIBFFI_SOURCES)
+            sys.stderr.write('\tSee Install.txt or Install.html for more information.\n')
+            sys.exit(1)
 
-    if not os.path.exists('build/libffi'):
-        os.mkdir('build/libffi')
+        if not os.path.exists('build'):
+            os.mkdir('build')
 
-    if not os.path.exists('build/libffi/BLD'):
-        os.mkdir('build/libffi/BLD')
+        if not os.path.exists('build/libffi'):
+            os.mkdir('build/libffi')
 
-    if not os.path.exists('build/libffi/lib/libffi.a'):
-        # No pre-build version available, build it now.
-        # Do not use a relative path for the build-tree, libtool on
-        # MacOS X doesn't like that.
-        inst_dir = os.path.join(os.getcwd(), 'build/libffi')
-        src_path = os.path.abspath(LIBFFI_SOURCES)
+        if not os.path.exists('build/libffi/BLD'):
+            os.mkdir('build/libffi/BLD')
 
-        if ' ' in src_path+inst_dir:
-            print >>sys.stderr, "LIBFFI can not build correctly in a path that contains spaces."
-            print >>sys.stderr, "This limitation includes the entire path (all parents, etc.)"
-            print >>sys.stderr, "Move the PyObjC and libffi source to a path without spaces and build again."
-            #sys.exit(1)
+        if not os.path.exists('build/libffi/lib/libffi.a'):
+            # No pre-build version available, build it now.
+            # Do not use a relative path for the build-tree, libtool on
+            # MacOS X doesn't like that.
+            inst_dir = os.path.join(os.getcwd(), 'build/libffi')
+            src_path = os.path.abspath(LIBFFI_SOURCES)
 
-        inst_dir = inst_dir.replace("'", "'\"'\"'")
-        src_path = src_path.replace("'", "'\"'\"'")
+            if ' ' in src_path+inst_dir:
+                print >>sys.stderr, "LIBFFI can not build correctly in a path that contains spaces."
+                print >>sys.stderr, "This limitation includes the entire path (all parents, etc.)"
+                print >>sys.stderr, "Move the PyObjC and libffi source to a path without spaces and build again."
+                sys.exit(1)
 
-        subprocess('Building FFI', "cd build/libffi/BLD && '%s/configure' --prefix='%s' --disable-shared --enable-static && make install"%(src_path, inst_dir), None)
+            inst_dir = inst_dir.replace("'", "'\"'\"'")
+            src_path = src_path.replace("'", "'\"'\"'")
+
+            subprocess('Building FFI', "cd build/libffi/BLD && '%s/configure' --prefix='%s' --disable-shared --enable-static && make install"%(src_path, inst_dir), None)
 
     LIBFFI_BASE='build/libffi'
     LIBFFI_CFLAGS=[
@@ -132,6 +141,8 @@ if LIBFFI_SOURCES is not None:
     ]
 
 else:
+    def task_build_libffi():
+        pass
     LIBFFI_CFLAGS=[]
     LIBFFI_LDFLAGS=['-lffi']
 
@@ -163,7 +174,7 @@ sourceFiles = [
         "Modules/objc/module.m",
         "Modules/objc/libffi_support.m",
         "Modules/objc/pointer-support.m",
-        #"Modules/objc/generic-callable.m",
+        "Modules/objc/struct-wrapper.m",
 ]
 
 # On GNUstep we can read some configuration from the environment.
@@ -214,8 +225,9 @@ if gs_root is None:
         #"-pedantic",
 
         "-Wno-import",
-        "-O0", "-g",
+        #"-O0", "-g",
         #"-Werror",
+        #"-O3", "-mcpu=7450", "-maltivec",
         ]
 
     OBJC_LDFLAGS=[
@@ -343,18 +355,17 @@ if gs_root is None:
                 extra_link_args = ['-framework', 'CoreFoundation']),
     )
 
-subprocess("Generating wrappers & stubs", "%s Scripts/CodeGenerators/cocoa_generator.py" % (sys.executable,), None)
 
 # Provide some dependency information on Python 2.3 and later, this
 # makes development slightly more convenient.
 if sys.version >= '2.3':
     FoundationDepends = {
         'depends': (glob.glob('build/codegen/_Fnd_*.inc')
-                + glob.glob('Modules/Foundation/_FoundationMapping_*.m'))
+                + glob.glob('Modules/Foundation/*.m'))
     }
     AppKitDepends = {
         'depends': (glob.glob('build/codegen/_App_*.inc')
-                + glob.glob('Modules/AppKit/_AppKitMapping_*.m'))
+                + glob.glob('Modules/AppKit/*.m'))
     }
     AddressBookDepends = {
         'depends': glob.glob('build/codegen/*.inc'),
@@ -543,6 +554,7 @@ dist = setup(name = "pyobjc",
              package_dir = package_dir,
              scripts = [ 'Scripts/nibclassbuilder', 'Scripts/runPyObjCTests'],
              extra_path = "PyObjC",
+             cmdclass = {'build_ext': pyobjc_build_ext},
              **SetupExtraArguments
 )
 

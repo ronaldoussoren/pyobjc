@@ -29,38 +29,20 @@ Objective-C, the format-arguments are not present in Python).
 Multi-threading support
 .......................
 
-The code should be mostly thread-safe, but this should be checked. Furthermore
-we should add code that enables using python in multiple threads:
-
-* Give up the global interpreter lock (GIL) before calling into Objective-C
-
-* Make sure the current thread-state is stored in thread-local storage (TLS)
-  before calling into Objective-C 
-
-* Fetch the thread-state from a TLS during callbacks from Objective-C and
-  create one if it doesn't exist yet. The latter assumes 1 python interpreter
-  per process.
-
-* Acquire the GIL during callbacks from Objective-C (this includes python
-  methods called from Objective-C)
-
-* A number of functions use static buffers, all in pyobjc_support.m and
-  related to depythonify_c_value. Fixing this is relatively straightforward:
-  raise a python exception if the conversion fails, instead of returning an
-  error-string.
-
-This version has limited multithreading safety: it is possible to call from
-Objective-C to python from arbitrary threads. This only works when using 
-Python 2.3, because this uses the interfaces defined in PEP 311. This is only
-meant to make it safer to embed a PyObjC in existing applications, and not
-a solution for finegrained threading.
+Thanks to the autoGIL module the GIL is given up when the main runloop
+sleeps. We could give up the GIL before calling into Objective-C, but that
+requires a lot of work for minimal advantages.
 
 Test suite
 ..........
 
 The test suite needs to be enhanced.
 
+* Tests that exercise Key-Value Observing in a way that crashes older versions
+  of PyObjC.
+
 * tests for all functions in ``Modules/*/*Mapping*.m``
+  (inclusing IMPs)
 
 * tests for all non-generated function wrappers (and some for the generated
   functions as well, just in case the generator script is buggy)
@@ -91,9 +73,6 @@ From the top of my head:
   do away with the difference between method implemented in Python and ObjC.
 
 * Likewise for class-builder.m, this file is way to large.
-
-* Use libffi to do away with class-builder.m:find_real_superclass. And check
-  if we can use libffi to simplify code.
 
 Support for GNUstep
 ...................
@@ -251,14 +230,6 @@ Performance tuning/testing
 Design and implement a set of performance tests for the bridge. Use this to 
 investigate and fix any possible performance problems.
 
-Robustness
-..........
-
-Make core bridge more robust w.r.t. order of loading frameworks. You currently
-get incorrect wrappers if you manually load the AppKit.framework and then 
-import AppKit. I (Ronald) know how to do this, but this can wait until after 
-1.0.
-
 Add freelists
 .............
 
@@ -269,6 +240,8 @@ also `Performance tuning/testing`.
 
 Key-Value Encoding
 ..................
+
+XXX: Need to check if the current implementation is correct.
 
 The takeValue:forKey: implementation correctly emits notifications (on MacOS X
 10.3). MacOS X 10.3 is currently detected at compile-time, this should probably
@@ -304,33 +277,10 @@ location?
 But: we should also provide links to locally installed documetation, especially
 in the documentation that will be installed on the users machine.
 
-Efficient conversion of arrays of C-types
-.........................................
-
-Make it possible to represent arrays for NSPoints/NSRects/... as (numeric) 
-arrays. This should be implemented as a genericly as possible, a possible
-interface in pyobjc-api.h::
-
-	void*	PyObjC_PythonArrayToObjC(
-			char* typestr, PyObject* array, PyObject* count);
-
-	PyObject* PyObjC_ObjCArrayToPython(
-		char* typestr, void* array, int count);
-
-If the ``count`` argument for PythonArrayToObjC is NULL or Py_None, all objects
-in the array are converted. This should accept:
-
-1) a python sequence (list, array, iterator, ...) containing Python objects
-   representing the elements of the array (e.g. [ (1,2), (3,4), (4,5) ] as a 
-   list of 3 points).
-2) an array.array of suitable dimensions/types
-3) a numeric array of suitable dimensions/types
-
-Items 2 and 3 must be checked for correctness (e.g. don't blindly convert a
-array.array containing bytes to an array of NSPoints).
-
 Installer support for OSX 10.3
 ..............................
+
+XXX: I have an osxpkg module, but that is completely untested.
 
 There should be at least two installers: one for Jaguar and one for Panther,
 they should share as much source-code as possible.

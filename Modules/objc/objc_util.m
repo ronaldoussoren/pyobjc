@@ -239,177 +239,6 @@ void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
 	[val raise];
 }
 
-PyObject* ObjC_class_extender = NULL;
-
-int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict)
-{
-	PyObject* super_class;
-	PyObject* name;
-	PyObject* res;
-	PyObject* args;
-
-	if (ObjC_class_extender == NULL || cls == nil) return 0;
-
-	if (cls->super_class == nil) {
-		super_class = Py_None;
-		Py_INCREF(super_class);
-	} else {
-		super_class = PyObjCClass_New(cls->super_class);
-		if (super_class == NULL) {
-			return -1;
-		}
-	}
-
-	name = PyString_FromString(cls->name);
-	if (name == NULL) {
-		Py_DECREF(super_class);
-		return -1;
-	}
-
-	args = PyTuple_New(3);
-	if (args == NULL) {
-		Py_DECREF(super_class);
-		Py_DECREF(name);
-		return -1;
-	}
-
-	PyTuple_SET_ITEM(args, 0, super_class);
-	PyTuple_SET_ITEM(args, 1, name);
-	PyTuple_SET_ITEM(args, 2, type_dict);
-	Py_INCREF(type_dict);
-
-	res = PyObject_CallObject(ObjC_class_extender, args);
-	Py_DECREF(args);
-	if (res == NULL) {
-		return -1;
-	}
-	Py_DECREF(res);
-
-	return 0;
-}
-
-/* 
- * Update the convenience methods. We can't just change the type dict here,
- * because the type doesn't pick up new '__' methods  (like __getitem__) 
- * that way.
- */
-int ObjC_UpdateConvenienceMethods(PyObject* cls)
-{
-	PyObject* super_class;
-	PyObject* name;
-	PyObject* res;
-	PyObject* args;
-	Class     objc_cls;
-	PyObject* dict;
-	PyObject* keys;
-	PyObject* v;
-	int       i, len;
-
-	if (!PyObjCClass_Check(cls)) {
-		PyErr_SetString(PyExc_TypeError, "not a class");
-		return -1;
-	}
-	
-
-	if (ObjC_class_extender == NULL || cls == NULL) return 0;
-
-	objc_cls = PyObjCClass_GetClass(cls);
-
-	if (objc_cls->super_class == nil) {
-		super_class = Py_None;
-		Py_INCREF(super_class);
-	} else {
-		super_class = PyObjCClass_New(objc_cls->super_class);
-		if (super_class == NULL) {
-			return -1;
-		}
-	}
-
-	name = PyString_FromString(objc_cls->name);
-	if (name == NULL) {
-		Py_DECREF(super_class);
-		return -1;
-	}
-
-	dict = /*PyDict_Copy*/(((PyTypeObject*)cls)->tp_dict);
-	Py_INCREF(dict);
-	if (dict == NULL) {
-		Py_DECREF(super_class);
-		Py_DECREF(name);
-		return -1;
-	}
-
-	args = PyTuple_New(3);
-	if (args == NULL) {
-		Py_DECREF(super_class);
-		Py_DECREF(name);
-		Py_DECREF(dict);
-		return -1;
-	}
-
-	PyTuple_SET_ITEM(args, 0, super_class);
-	PyTuple_SET_ITEM(args, 1, name);
-	PyTuple_SET_ITEM(args, 2, dict);
-
-	res = PyObject_CallObject(ObjC_class_extender, args);
-	if (res == NULL) {
-		Py_DECREF(args);
-		return -1;
-	}
-	Py_DECREF(res);
-	keys = PyDict_Keys(dict);
-	if (keys == NULL) {
-		Py_DECREF(args);
-		return -1;
-	}
-
-	v = PySequence_Fast(keys, "PyDict_Keys didn't return a sequence");
-	Py_DECREF(keys);
-	if (v == NULL) {
-		return -1;
-	}
-	keys = v;
-
-	len = PySequence_Fast_GET_SIZE(keys);
-	for (i = 0; i < len; i++) {
-		PyObject* k = PySequence_Fast_GET_ITEM(keys, i);
-		char*     n;
-		
-		if (k == NULL) {
-			PyErr_Clear();
-			continue;
-		}
-
-		if (!PyString_Check(k)) {
-			continue;
-		}
-		n = PyString_AS_STRING(k);
-		if (n[0] != '_' || n[1] != '_') {
-			continue;
-		}
-		if (	   strcmp(n, "__dict__") == 0 
-			|| strcmp(n, "__bases__") == 0
-			|| strcmp(n, "__slots__") == 0
-			|| strcmp(n, "__mro__") == 0
-		   ) {
-
-			continue;
-		}
-
-		v = PyDict_GetItem(dict, k);
-		if (v == NULL) {
-			continue;
-		}
-		if (PyObject_SetAttr(cls, k, v) == -1) {
-			continue;
-		}
-	}
-
-	Py_DECREF(keys);
-	Py_DECREF(args);
-
-	return 0;
-}
 
 char* ObjC_strdup(const char* value)
 {
@@ -887,3 +716,29 @@ PyObject* PyObjC_CArrayToPython(
 
 	return result;
 }
+
+int
+PyObjC_IsPythonKeyword(const char* word)
+{
+	/*
+	 * We cheat a little: this list only contains those keywords that
+	 * are actually used in Cocoa.
+	 *
+	 * XXX: If we ever add the complete list here we should optimize
+	 * this function.
+	 */
+	static const char* keywords[] = {
+		"class",
+		"raise",
+		NULL
+	};
+	const char** cur;
+
+	for (cur = keywords; *cur != NULL; cur++) {
+		if (strcmp(word, *cur) == 0) {
+			return 1;
+		}
+	}
+	return 0;
+}
+

@@ -13,8 +13,9 @@
 #include <Foundation/Foundation.h>
 #include "pyobjc-api.h"
 
-static PyObject* call_NSDictionary_initWithObjects_forKeys_count_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSDictionary_initWithObjects_forKeys_count_(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	int err;
@@ -118,88 +119,75 @@ static PyObject* call_NSDictionary_initWithObjects_forKeys_count_(
 	return result;
 }
 
-static id imp_NSDictionary_initWithObjects_forKeys_count_(id self, SEL sel,
-		id* objects, id* keys, int count)
+static void 
+imp_NSDictionary_initWithObjects_forKeys_count_(
+	void* cif __attribute__((__unused__)), 
+	void* resp, 
+	void** args, 
+	void* callable)
 {
-	PyObject* result;
-	PyObject* arglist;
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	id* objects = *(id**)args[2];
+	id* keys = *(id**)args[3];
+	int count = *(int*)args[4];
+	id* pretval = (id*)resp;
+
+	PyObject* result = NULL;
+	PyObject* arglist = NULL;
 	PyObject* v;
 	int i;
-	id  returnValue;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(4);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (arglist == NULL) goto error;
 
 	v = PyObjC_IdToPython(self);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 0, v);
 
 	v = PyTuple_New(count);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
-	for (i = 0; i < count; i++) {
-		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(objects[i]));
-		if (PyTuple_GET_ITEM(v, i) == NULL) {
-			Py_DECREF(v);
-			Py_DECREF(arglist);
-			PyObjCErr_ToObjCWithGILState(&state);
-			return nil;
-		}
-	}
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 1, v);
 
-	v = PyTuple_New(count);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
+	for (i = 0; i < count; i++) {
+		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(objects[i]));
+		if (PyTuple_GET_ITEM(v, i) == NULL) goto error;
 	}
+
+	v = PyTuple_New(count);
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 2, v);
+
 	for (i = 0; i < count; i++) {
 		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(keys[i]));
-		if (PyTuple_GET_ITEM(v, i) == NULL) {
-			Py_DECREF(v);
-			Py_DECREF(arglist);
-			PyObjCErr_ToObjCWithGILState(&state);
-			return nil;
-		}
-	}
-	PyTuple_SET_ITEM(arglist, 2, v);
-	PyTuple_SET_ITEM(arglist, 3, PyInt_FromLong(count));
-	if (PyTuple_GET_ITEM(arglist, 3) == NULL) {	
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
+		if (PyTuple_GET_ITEM(v, i) == NULL) goto error;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	v = PyInt_FromLong(count);
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 3, v);
 
-	returnValue = PyObjC_PythonToId(result);
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
+
+	*pretval = PyObjC_PythonToId(result);
 	Py_DECREF(result);
-	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (*pretval == nil && PyErr_Occurred()) goto error;
 	PyGILState_Release(state);
-	return returnValue;
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	*pretval = nil;
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
-static PyObject* call_NSDictionary_dictionaryWithObjects_forKeys_count_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSDictionary_dictionaryWithObjects_forKeys_count_(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	int err;
@@ -304,84 +292,69 @@ static PyObject* call_NSDictionary_dictionaryWithObjects_forKeys_count_(
 	return result;
 }
 
-static id imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
-	id self, SEL sel, id* objects, id* keys, int count)
+static void 
+imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
+	void* cif __attribute__((__unused__)), 
+	void* resp, 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	id* objects = *(id**)args[2];
+	id* keys = *(id**)args[3];
+	int count = *(int*)args[4];
+	id* pretval = (id*)resp;
+
 	PyObject* result;
-	PyObject* arglist;
+	PyObject* arglist = NULL;
 	PyObject* v;
 	int i;
-	id  returnValue;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(4);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (arglist == NULL) goto error;
 
 	v = PyObjC_IdToPython(self);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 0, v);
 
 	v = PyTuple_New(count);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
-	for (i = 0; i < count; i++) {
-		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(objects[i]));
-		if (PyTuple_GET_ITEM(v, i) == NULL) {
-			Py_DECREF(v);
-			Py_DECREF(arglist);
-			PyObjCErr_ToObjCWithGILState(&state);
-			return nil;
-		}
-	}
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 1, v);
 
-	v = PyTuple_New(count);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
+	for (i = 0; i < count; i++) {
+		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(objects[i]));
+		if (PyTuple_GET_ITEM(v, i) == NULL) goto error;
 	}
+
+	v = PyTuple_New(count);
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 2, v);
 	for (i = 0; i < count; i++) {
 		PyTuple_SET_ITEM(v, i, PyObjC_IdToPython(keys[i]));
-		if (PyTuple_GET_ITEM(v, i) == NULL) {
-			Py_DECREF(v);
-			Py_DECREF(arglist);
-			PyObjCErr_ToObjCWithGILState(&state);
-			return nil;
-		}
-	}
-	PyTuple_SET_ITEM(arglist, 2, v);
-	PyTuple_SET_ITEM(arglist, 3, PyInt_FromLong(count));
-	if (PyTuple_GET_ITEM(arglist, 3) == NULL) {	
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
+		if (PyTuple_GET_ITEM(v, i) == NULL) goto error;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	v = PyInt_FromLong(count);
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 3, v); 
 
-	returnValue = PyObjC_PythonToId(result);
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
+
+	*pretval = PyObjC_PythonToId(result);
 	Py_DECREF(result);
-	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (*pretval == nil && PyErr_Occurred()) goto error;
 	PyGILState_Release(state);
-	return returnValue;
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	*pretval = nil;
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
 static int 
@@ -394,7 +367,7 @@ _pyobjc_install_NSDictionary(void)
 		classNSDictionary,
 		@selector(initWithObjects:forKeys:count:),
 		call_NSDictionary_initWithObjects_forKeys_count_,
-		(IMP)imp_NSDictionary_initWithObjects_forKeys_count_) < 0) {
+		imp_NSDictionary_initWithObjects_forKeys_count_) < 0) {
 
 		return -1;
 	}
@@ -403,7 +376,7 @@ _pyobjc_install_NSDictionary(void)
 		classNSDictionary,
 		@selector(dictionaryWithObjects:forKeys:count:),
 		call_NSDictionary_dictionaryWithObjects_forKeys_count_,
-		(IMP)imp_NSDictionary_dictionaryWithObjects_forKeys_count_) < 0) {
+		imp_NSDictionary_dictionaryWithObjects_forKeys_count_) < 0) {
 
 		return -1;
 	}

@@ -598,12 +598,12 @@ static  PyObject* setKeyFunc = NULL;
 #if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
 - (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
 {
-    NSLog(@"*** Ignoring *** %@ for '%@'.\n", NSStringFromSelector(_cmd), keyPath);
+    NSLog(@"*** Ignoring *** %@ for '%@' (of %@ with %#x in %p).\n", NSStringFromSelector(_cmd), keyPath, observer, options, context);
     return;
 }
 - (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath;
 {
-    NSLog(@"*** Ignoring *** %@ for '%@'.", NSStringFromSelector(_cmd), keyPath);
+    NSLog(@"*** Ignoring *** %@ for '%@' (of %@).", NSStringFromSelector(_cmd), keyPath, observer);
 }
 #endif
 @end /* OC_PythonObject class implementation */

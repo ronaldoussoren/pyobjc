@@ -4,7 +4,6 @@
  * See the module DOCSTR for more information.
  */
 #include "pyobjc.h"
-#include "structmember.h"	/* needed for PyMemberDef */
 
 PyDoc_STRVAR(proto_cls_doc,
 "objc.informal_protocol(name, selector_list)\n"

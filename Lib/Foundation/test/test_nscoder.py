@@ -2,6 +2,7 @@ import unittest
 import objc
 
 from Foundation import *
+from objc.test.testbndl import PyObjC_TestClass4
 
 class TestNSCoderUsage(unittest.TestCase):
     if not hasattr(unittest.TestCase, 'assertAlmostEquals'):
@@ -48,6 +49,66 @@ class TestNSCoderUsage(unittest.TestCase):
         self.assertAlmostEquals(newObj.dblArray[3], 4.0)
         self.assertEquals(newObj.decodedBytes[0], "hello")
         self.assertEquals(newObj.decodedBytes[1], 5)
+
+
+class MyCoder (NSCoder):
+    def init(self):
+        self = super(MyCoder, self).init()
+        if self is None: return None
+        self.coded = []
+        return self
+
+    def encodeValueOfObjCType_at_(self, tp, value):
+        self.coded.append( ("value", tp, value) )
+
+    def encodeArrayOfObjCType_count_at_(self, tp, cnt, value):
+        self.coded.append( ("array", tp, cnt, value) )
+
+    def encodeBytes_length_(self, bytes, length):
+        self.coded.append( ("bytes", bytes, length) )
+
+    def decodeValueOfObjCType_at_(self, tp):
+        if tp == 'i':
+            return 42
+        elif tp == 'd':
+            return 1.5
+
+    def decodeArrayOfObjCType_count_at_(self, tp, cnt):
+        return range(cnt)
+
+    def decodeBytesWithReturnedLength_(self):
+        return ("ABCDEabcde", 10)
+
+class TestPythonCoder(unittest.TestCase):
+    #
+    # This test accesses a NSCoder implemented in Python from Objective-C
+    # 
+    # The tests only use those methods that require a custom IMP-stub.
+    #
+    def testEncoding(self):
+        coder = MyCoder.alloc().init()
+        o = PyObjC_TestClass4.alloc().init()
+        o.encodeWithCoder_(coder)
+        self.assertEquals(coder.coded,
+                [
+                    ("value", "d", 1.5),
+                    ("array", "i", 4, (3,4,5,6)),
+                    ("bytes", "hello world", 11),
+                ])
+
+    def testDecoding(self):
+        coder = MyCoder.alloc().init()
+        o = PyObjC_TestClass4
+
+        self.assertEquals(o.fetchInt_(coder), 42)
+        self.assertEquals(o.fetchDouble_(coder), 1.5)
+
+        d = o.fetchData_(coder)
+        self.assertEquals(d.length(), 10)
+        self.assertEquals(str(d.bytes()), "ABCDEabcde")
+
+        d = o.fetchArray_(coder)
+        self.assertEquals(tuple(range(10)), tuple(d))
 
 if __name__ == '__main__':
     unittest.main( )

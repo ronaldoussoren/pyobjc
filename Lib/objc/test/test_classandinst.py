@@ -6,6 +6,8 @@ class PyObjC_TestClassAndInstanceSubclass(PyObjC_TestClassAndInstance):
     """Simple subclass, just make sure it still works"""
     pass
 
+
+# XXX: Huh? The next two classes have the same definition?
 class PyObjC_TestClassAndInstanceClassOverride(PyObjC_TestClassAndInstance):
     """return YES for both"""
     def isInstance(klass):
@@ -32,7 +34,9 @@ class TestClassAndInstance(unittest.TestCase):
 
     def testClassAndInstanceClassOverrideWorkaround(self):
         self.assertEquals(PyObjC_TestClassAndInstanceClassOverride.pyobjc_classMethods.isInstance(), objc.YES)
-        self.assertEquals(PyObjC_TestClassAndInstanceClassOverride.alloc().init().pyobjc_instanceMethods.isInstance(), objc.YES)
+
+        # XXX: Class methods are no longer accessible through instances.
+        #self.assertEquals(PyObjC_TestClassAndInstanceClassOverride.alloc().init().pyobjc_instanceMethods.isInstance(), objc.YES)
 
     def testClassAndInstanceSubclassWorkaround(self):
         self.assertEquals(PyObjC_TestClassAndInstanceSubclass.pyobjc_classMethods.isInstance(), objc.NO)
@@ -44,7 +48,7 @@ class TestClassAndInstance(unittest.TestCase):
     
     def testClassAndInstanceClassOverride(self):
         self.assertEquals(PyObjC_TestClassAndInstanceClassOverride.isInstance(), objc.YES)
-        self.assertEquals(PyObjC_TestClassAndInstanceClassOverride.alloc().init().isInstance(), objc.YES)
+        #self.assertEquals(PyObjC_TestClassAndInstanceClassOverride.alloc().init().isInstance(), objc.YES)
 
     def testClassAndInstanceInstanceOverride(self):
         # Having the next line true would be nice:

@@ -39,7 +39,7 @@ _pyobjc_install_NSSet(void)
 		classNSSet,
 		@selector(setWithObjects:count:),
 		call_clsWithObjects_count_,
-		(IMP)imp_clsWithObjects_count_) < 0) {
+		imp_clsWithObjects_count_) < 0) {
 
 		return -1;
 	}
@@ -48,7 +48,7 @@ _pyobjc_install_NSSet(void)
 		classNSSet,
 		@selector(initWithObjects:count:),
 		call_objWithObjects_count_,
-		(IMP)imp_objWithObjects_count_) < 0) {
+		imp_objWithObjects_count_) < 0) {
 
 		return -1;
 	}

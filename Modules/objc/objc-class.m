@@ -21,12 +21,16 @@ PyDoc_STRVAR(class_doc,
 "of the created class."
 );
 
+PyObject* PyObjC_ClassExtender = NULL;
+
 static int add_class_fields(Class objc_class, PyObject* dict);
+static int add_convenience_methods(Class cls, PyObject* type_dict);
+static int update_convenience_methods(PyObject* cls);
 
 /*
  * Due to the way dynamicly created PyTypeObject's are processed it is not 
- * possible to add new fields to a type struct. For now we store the additional
- * information in a seperate data-structure. 
+ * possible to add new fields to a type struct in Python 2.2. We therefore
+ * store the additional information in a seperate data-structure. 
  *
  * The struct class_info contains the additional information for a class object,
  * and class_to_objc stores a mapping from a class object to its additional
@@ -45,10 +49,10 @@ typedef struct {
 	int	  dictoffset;
 	PyObject* delmethod;
 	int       hasPythonImpl;
+	int       generation;
 } PyObjC_class_info;
 
 static NSMapTable* 	class_to_objc = NULL;
-
 
 /*
  * Fetch the additional information for a class. If the information is
@@ -90,24 +94,39 @@ get_class_info(PyObject* class)
 
 #else /* defined PyObjC_CLASS_INFO_IN_TYPE */
 
-/* NOTE: This requires a version that more recent that 2.3a2 */
+/* NOTE: This requires a Python version that more recent that 2.3a2 */
 
 #define get_class_info(tp) ((PyObjCClassObject*)(tp))
 #define PyObjC_class_info PyObjCClassObject
 
-
 #endif /* defined PyObjC_CLASS_INFO_IN_TYPE */
 
 
-/* 
- * We keep references to all class objects we have created. This is needed
- * to correctly handle subclassing and avoids creating two python classes that
- * represent the same objective-C object.
+/*
+ *
+ *  Class Registry
+ *
+ */
+
+/*!
+ * @const class_registry
+ * @discussion
+ *    This structure is used to keep references to all class objects created
+ *    by this module. This is necessary to be able to avoid creating two
+ *    wrappers for an Objective-C class.
+ *
+ *    The key is the Objective-C class, the value is its wrapper.
  */
 static NSMapTable*	class_registry = NULL;
 
 
-	
+/*!
+ * @function objc_class_register
+ * @abstract Add a class to the class registry
+ * @param objc_class An Objective-C class
+ * @param py_class   The python wrapper for the Objective-C class
+ * @result Returns -1 on error, 0 on success
+ */
 static int 
 objc_class_register(Class objc_class, PyObject* py_class)
 {
@@ -127,6 +146,12 @@ objc_class_register(Class objc_class, PyObject* py_class)
 	return 0;
 }
 
+/*!
+ * @function objc_class_unregister
+ * @abstract Remove a class from the class registry
+ * @param objc_class An Objective-C class
+ * @result Returns -1 on error, 0 on success
+ */
 static int 
 objc_class_unregister(Class objc_class)
 {
@@ -136,6 +161,16 @@ objc_class_unregister(Class objc_class)
 	return 0;
 }
 
+
+/*!
+ * @function objc_class_locate
+ * @abstract Find the Python wrapper for an Objective-C class
+ * @param objc_class An Objective-C class
+ * @result Returns the Python wrapper for the class, or NULL
+ * @discussion
+ *     This functioin does not raise an Python exception when the
+ *     wrapper cannot be found.
+ */
 static PyObject*
 objc_class_locate(Class objc_class)
 {
@@ -366,7 +401,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	 * call to super-class implementation, because '__*' methods
 	 * are treated specially there.
 	 */
-	if (ObjC_AddConvenienceMethods(objc_class, dict) < 0) {
+	if (add_convenience_methods(objc_class, dict) < 0) {
 		PyObjCClass_UnbuildClass(objc_class);
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
@@ -472,10 +507,10 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 
 	if (info->class == NULL) return;
 
-	while (info->class != 0) {
+	while (info->class != NULL) {
 
-		if (info->method_magic != 
-				(magic = objc_methodlist_magic(info->class))) {
+		if ((info->method_magic != 
+				(magic = objc_methodlist_magic(info->class))) || (info->generation != PyObjC_MappingCount)) {
 
 			int r;
 
@@ -487,7 +522,9 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 					"Cannot rescan method table");
 				return;
 			}
-			r =  ObjC_UpdateConvenienceMethods(cls);
+			info->generation = PyObjC_MappingCount;
+
+			r =  update_convenience_methods(cls);
 			if (r < 0) {
 				PyErr_SetString(PyExc_RuntimeError,
 					"Cannot rescan method table");
@@ -508,6 +545,7 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 
 	}
 }
+
 
 static PyObject*
 class_getattro(PyObject* self, PyObject* name)
@@ -567,6 +605,106 @@ class_getattro(PyObject* self, PyObject* name)
 		}
 	}
 	return result;
+}
+
+static int
+class_setattro(PyObject* self, PyObject* name, PyObject* value)
+{
+	int res;
+	if (value == NULL) {
+		/* delattr(), deny the operation when the name is bound
+		 * to a selector.
+		 */
+		PyObject* old_value = class_getattro(self, name);
+		if (old_value == NULL) {
+			PyErr_Clear();
+			return PyType_Type.tp_setattro(self, name, value);
+
+		} else if (PyObjCSelector_Check(old_value)) {
+			Py_DECREF(old_value);
+			if (!PyString_Check(name)) {
+				PyErr_SetString(PyExc_AttributeError, "cannot delete selectors");
+			} else {
+				PyErr_Format(PyExc_AttributeError,
+					"Cannot remove selector '%s' in '%s'",
+					PyString_AS_STRING(name),
+					self->ob_type->tp_name
+				);
+			}
+			return -1;
+		}
+	} else if (ObjCNativeSelector_Check(value)) {
+		PyErr_SetString(PyExc_TypeError,
+			"Assigning native selectors is not supported");
+		return -1;
+	} else if (PyObjCSelector_Check(value) || PyFunction_Check(value) || PyMethod_Check(value) || PyObject_TypeCheck(value, &PyClassMethod_Type)) {
+		/*
+		 * Assignment of a function: create a new method in the ObjC
+		 * runtime.
+		 */
+		PyObject* newVal;
+		int r;
+		struct objc_method* objcMethod;
+		struct objc_method_list* methodsToAdd;
+		
+		newVal = PyObjCSelector_FromFunction(
+				name, value, self, NULL);
+		if (newVal == NULL) {
+			return -1;
+		} 
+		if (!PyObjCSelector_Check(newVal)) {
+			Py_DECREF(newVal);
+			PyErr_SetString(PyExc_ValueError, "cannot convert callable to selector");
+			return -1;
+		}
+
+		methodsToAdd = PyObjCRT_AllocMethodList(1);
+		if (methodsToAdd == NULL) {
+			Py_DECREF(newVal);
+			PyErr_NoMemory();
+			return -1;
+		}
+
+		methodsToAdd->method_count = 1;
+		objcMethod = methodsToAdd->method_list;
+		objcMethod->method_name = PyObjCSelector_GetSelector(newVal);
+		objcMethod->method_types = strdup(PyObjCSelector_Signature(newVal));
+		if (objcMethod->method_types == NULL) {
+			free(methodsToAdd);
+			Py_DECREF(newVal);
+			PyErr_NoMemory();
+			return -1;
+		}
+		objcMethod->method_imp = ObjC_MakeIMPForPyObjCSelector((PyObjCSelector*)newVal);
+		if (objcMethod->method_imp == NULL) {
+			free(objcMethod->method_types);
+			free(methodsToAdd);
+			Py_DECREF(newVal);
+			PyErr_NoMemory();
+			return -1;
+		}
+
+		r = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, newVal);
+		Py_DECREF(newVal);
+		if (r == -1) {
+			free(objcMethod->method_types);
+			free(methodsToAdd);
+			PyErr_NoMemory();
+			return -1;
+		}
+
+		
+		if (PyObjCSelector_IsClassMethod(newVal)) {
+			PyObjCRT_ClassAddMethodList(GETISA(PyObjCClass_GetClass(self)), methodsToAdd);
+		} else {
+			PyObjCRT_ClassAddMethodList(PyObjCClass_GetClass(self), methodsToAdd);
+		}
+		return 0;
+
+	}
+
+	res = PyType_Type.tp_setattro(self, name, value);
+	return res;
 }
 
 static int
@@ -693,7 +831,7 @@ PyTypeObject PyObjCClass_Type = {
 	0,					/* tp_call */
 	0,					/* tp_str */
 	class_getattro,				/* tp_getattro */
-	0,					/* tp_setattro */
+	class_setattro,				/* tp_setattro */
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT,			/* tp_flags */
  	class_doc,				/* tp_doc */
@@ -726,7 +864,6 @@ PyTypeObject PyObjCClass_Type = {
 #endif
 };
 
-
 /* FIXME: objc_support.[hm] also has version of this function! */
 char*
 PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
@@ -736,6 +873,13 @@ PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
 
 	if (res != strlen(PyObjCRT_SELName(sel))) {
 		return NULL;
+	}
+	if (PyObjC_IsPythonKeyword(buf)) {
+		res = snprintf(buf, buflen, "%s__", PyObjCRT_SELName(sel));
+		if (res != 2+strlen(PyObjCRT_SELName(sel))) {
+			return NULL;
+		}
+		return buf;
 	}
 	cur = strchr(buf, ':');
 	while (cur) {
@@ -779,6 +923,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 
 		for (i = 0; i < mlist->method_count; i++) {
 			char* name;
+			PyObject* curItem;
 
 			meth = mlist->method_list + i;
 
@@ -795,9 +940,12 @@ add_class_fields(Class objc_class, PyObject* dict)
 			 * We're save for now because none of the example code 
 			 * uses this feature.
 			 */
-			if (PyDict_GetItemString(dict, name) != NULL) {
+			curItem = PyDict_GetItemString(dict, name);
+			if (curItem == NULL) {
+				PyErr_Clear();
+			} else if (!ObjCNativeSelector_Check(curItem)) {
 				continue;
-			} 
+			}
 
 			descr = PyObjCSelector_NewNative(
 					objc_class,
@@ -1166,3 +1314,200 @@ PyObjCClass_HasPythonImplementation(PyObject* cls)
 	info = get_class_info(cls);
 	return info->hasPythonImpl;
 }
+
+
+
+/*!
+ * @function add_convenience_methods
+ * @abstract Add the convenience methods for a class wrapper
+ * @param cls  An Objective-C class wrapper
+ * @param type_dict the __dict__ for the new class
+ * @result Returns -1 on error, 0 on success 
+ * @discussion
+ *     This function calls the PyObjC_ClassExtender function (if one is
+ *     registered) and then updates the class __dict__. 
+ */
+static int
+add_convenience_methods(Class cls, PyObject* type_dict)
+{
+	PyObject* super_class;
+	PyObject* name;
+	PyObject* res;
+	PyObject* args;
+
+	if (PyObjC_ClassExtender == NULL || cls == nil) return 0;
+
+	if (cls->super_class == nil) {
+		super_class = Py_None;
+		Py_INCREF(super_class);
+	} else {
+		super_class = PyObjCClass_New(cls->super_class);
+		if (super_class == NULL) {
+			return -1;
+		}
+	}
+
+	name = PyString_FromString(cls->name);
+	if (name == NULL) {
+		Py_DECREF(super_class);
+		return -1;
+	}
+
+	args = PyTuple_New(3);
+	if (args == NULL) {
+		Py_DECREF(super_class);
+		Py_DECREF(name);
+		return -1;
+	}
+
+	PyTuple_SET_ITEM(args, 0, super_class);
+	PyTuple_SET_ITEM(args, 1, name);
+	PyTuple_SET_ITEM(args, 2, type_dict);
+	Py_INCREF(type_dict);
+
+	res = PyObject_CallObject(PyObjC_ClassExtender, args);
+	Py_DECREF(args);
+	if (res == NULL) {
+		return -1;
+	}
+	Py_DECREF(res);
+
+	return 0;
+}
+
+/*!
+ * @function update_convenience_methods
+ * @abstract Update the convenience methods for a class
+ * @param cls  An Objective-C class wrapper
+ * @result Returns -1 on error, 0 on success 
+ * @discussion
+ *     This function calls the PyObjC_ClassExtender function (if one is
+ *     registered) and then updates the class __dict__. 
+ *
+ *     NOTE: We change the __dict__ using a setattro function because the type
+ *     doesn't notice the existance of new special methods otherwise.
+ *
+ *     NOTE2: We use PyType_Type.tp_setattro instead of PyObject_SetAttr because
+ *     the tp_setattro of Objective-C class wrappers does not allow some of
+ *     the assignments we do here.
+ */
+static int 
+update_convenience_methods(PyObject* cls)
+{
+	PyObject* super_class;
+	PyObject* name;
+	PyObject* res;
+	PyObject* args;
+	Class     objc_cls;
+	PyObject* dict;
+	PyObject* keys;
+	PyObject* v;
+	int       i, len;
+
+	if (PyObjC_ClassExtender == NULL || cls == NULL) return 0;
+
+	if (!PyObjCClass_Check(cls)) {
+		PyErr_SetString(PyExc_TypeError, "not a class");
+		return -1;
+	}
+
+	objc_cls = PyObjCClass_GetClass(cls);
+
+	if (objc_cls->super_class == nil) {
+		super_class = Py_None;
+		Py_INCREF(super_class);
+	} else {
+		super_class = PyObjCClass_New(objc_cls->super_class);
+		if (super_class == NULL) {
+			return -1;
+		}
+	}
+
+	name = PyString_FromString(objc_cls->name);
+	if (name == NULL) {
+		Py_DECREF(super_class);
+		return -1;
+	}
+
+	dict = /*PyDict_Copy*/(((PyTypeObject*)cls)->tp_dict);
+	Py_INCREF(dict);
+	if (dict == NULL) {
+		Py_DECREF(super_class);
+		Py_DECREF(name);
+		return -1;
+	}
+
+	args = PyTuple_New(3);
+	if (args == NULL) {
+		Py_DECREF(super_class);
+		Py_DECREF(name);
+		Py_DECREF(dict);
+		return -1;
+	}
+
+	PyTuple_SET_ITEM(args, 0, super_class);
+	PyTuple_SET_ITEM(args, 1, name);
+	PyTuple_SET_ITEM(args, 2, dict);
+
+	res = PyObject_Call(PyObjC_ClassExtender, args, NULL);
+	if (res == NULL) {
+		Py_DECREF(args);
+		return -1;
+	}
+	Py_DECREF(res);
+	keys = PyDict_Keys(dict);
+	if (keys == NULL) {
+		Py_DECREF(args);
+		return -1;
+	}
+
+	v = PySequence_Fast(keys, "PyDict_Keys didn't return a sequence");
+	Py_DECREF(keys);
+	if (v == NULL) {
+		return -1;
+	}
+	keys = v;
+
+	len = PySequence_Fast_GET_SIZE(keys);
+	for (i = 0; i < len; i++) {
+		PyObject* k = PySequence_Fast_GET_ITEM(keys, i);
+		char*     n;
+		
+		if (k == NULL) {
+			PyErr_Clear();
+			continue;
+		}
+
+		if (!PyString_Check(k)) {
+			continue;
+		}
+		n = PyString_AS_STRING(k);
+		if (n[0] != '_' || n[1] != '_') {
+			continue;
+		}
+		if (	   strcmp(n, "__dict__") == 0 
+			|| strcmp(n, "__bases__") == 0
+			|| strcmp(n, "__slots__") == 0
+			|| strcmp(n, "__mro__") == 0
+		   ) {
+
+			continue;
+		}
+
+		v = PyDict_GetItem(dict, k);
+		if (v == NULL) {
+			PyErr_Clear();
+			continue;
+		}
+		if (PyType_Type.tp_setattro(cls, k, v) == -1) {
+			PyErr_Clear();
+			continue;
+		}
+	}
+
+	Py_DECREF(keys);
+	Py_DECREF(args);
+
+	return 0;
+}
+

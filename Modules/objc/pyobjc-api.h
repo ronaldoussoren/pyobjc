@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.22 2003/11/23 19:23:40 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.23 2004/01/01 19:07:07 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -93,8 +93,11 @@ static inline void PyGILState_Release(
  * - Version 4.3 adds PyObjCRT_SimplifySignature
  * - Version 4.4 adds PyObjC_FreeCArray, PyObjC_PythonToCArray and
  *   		PyObjC_CArrayToPython
+ * - Version 5 modifies the signature for PyObjC_RegisterMethodMapping,
+ *	PyObjC_RegisterSignatureMapping and PyObjCUnsupportedMethod_IMP,
+ *      adds PyObjC_RegisterStructType and removes PyObjC_CallPython
  */
-#define PYOBJC_API_VERSION 4
+#define PYOBJC_API_VERSION 5
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -105,7 +108,7 @@ typedef int (RegisterMethodMappingFunctionType)(
 			Class, 
 			SEL, 
 			PyObject *(*)(PyObject*, PyObject*, PyObject*),
-			IMP);
+			void (*)(void*, void*, void**, void*));
 
 struct pyobjc_api {
 	int	      api_version;	/* API version */
@@ -121,7 +124,7 @@ struct pyobjc_api {
 	int (*register_signature_mapping)(
 			char*,
 			PyObject *(*)(PyObject*, PyObject*, PyObject*),
-			IMP);
+			void (*)(void*, void*, void**, void*));
 
 	/* PyObjCObject_GetObject */
 	id (*obj_get_object)(PyObject*);
@@ -153,9 +156,6 @@ struct pyobjc_api {
 	/* PyObjC_ObjCToPython */
 	PyObject* (*objc_to_py)(const char*, void*);
 
-	/* PyObjC_CallPython */
-	PyObject* (*call_to_python)(id, SEL, PyObject*, int*);
-
 	/* PyObjC_SizeOfType */
 	int 	   (*sizeof_type)(const char*);
 
@@ -183,7 +183,7 @@ struct pyobjc_api {
 			int (*depythonify)(PyObject*, void*)
 		);
 
-	IMP  unsupported_method_imp;
+	void (*unsupported_method_imp)(void*, void*, void**, void*);
 	PyObject* (*unsupported_method_caller)(PyObject*, PyObject*, PyObject*);
 
 	/* PyObjCErr_ToObjCWithGILState */
@@ -207,6 +207,8 @@ struct pyobjc_api {
 	/* PyObjC_CArrayToPython */
 	PyObject* (*c_array_to_py)(const char*, void*, int);
 
+	/* PyObjC_RegisterStructType */
+	PyObject* (*register_struct)(const char*, const char*, const char*, initproc, int, const char**);
 };
 
 
@@ -232,7 +234,6 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCErr_ToObjCWithGILState       (PyObjC_API->err_python_to_objc_gil)
 #define PyObjC_PythonToObjC    (PyObjC_API->py_to_objc)
 #define PyObjC_ObjCToPython    (PyObjC_API->objc_to_py)
-#define PyObjC_CallPython	     (PyObjC_API->call_to_python)
 #define PyObjC_RegisterMethodMapping (PyObjC_API->register_method_mapping)
 #define PyObjC_RegisterSignatureMapping (PyObjC_API->register_signature_mapping)
 #define PyObjC_SizeOfType      (PyObjC_API->sizeof_type)
@@ -252,6 +253,7 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjC_FreeCArray	(PyObjC_API->free_c_array)
 #define PyObjC_PythonToCArray	(PyObjC_API->py_to_c_array)
 #define PyObjC_CArrayToPython	(PyObjC_API->c_array_to_py)
+#define PyObjC_RegisterStructType   (PyObjC_API->register_struct)
 
 
 /* XXX: Check if we can use the following function in the bridge itself,

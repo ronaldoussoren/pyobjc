@@ -360,7 +360,7 @@ def process_function(fp, protostr, funclist):
     fp.write("static\tchar* keywords[] = { %sNULL };\n"%keywords)
     fp.write("\tPyObject* result;\n")
     if retval != 'void':
-        fp.write("\t%s objc_result;\n"%retval)
+        fp.write("\t%s _objc__result_;\n"%retval)
     
     fmt = ''
     arglist = ''
@@ -385,7 +385,7 @@ def process_function(fp, protostr, funclist):
 
     fp.write("\tNS_DURING\n")
     if retval != 'void':
-        fp.write("\t\tobjc_result = %s(\n"%funcname,)
+        fp.write("\t\t_objc__result_ = %s(\n"%funcname,)
     else:
         fp.write("\t\t%s(\n"%funcname,)
     sep = "\t\t\t\t"
@@ -402,7 +402,7 @@ def process_function(fp, protostr, funclist):
     fp.write("\tNS_ENDHANDLER\n")
 
     if retval != 'void':
-        fp.write("\t%s\n"%simple_to_python("objc_result", retval))
+        fp.write("\t%s\n"%simple_to_python("_objc__result_", retval))
     else:
         fp.write("\tresult = Py_None;\n\tPy_INCREF(Py_None);\n");
 

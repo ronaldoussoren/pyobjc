@@ -4,12 +4,13 @@ module loaded correctly.
 """
 
 import unittest
-import ScreenSaver
 import objc
 
 class SSTest (unittest.TestCase):
 
     def testClasses(self):
+        import ScreenSaver
+
         # Check that we loaded the ScreenSaver framework by looking for a
         # class that should exist
         self.assert_(hasattr(ScreenSaver, 'ScreenSaverView'))

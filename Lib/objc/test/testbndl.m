@@ -1472,11 +1472,36 @@ static 	char buf[1024];
 {
 }
 +makeACopy:source;
++makeDataWithBytes:(Class)cls method:(int)i;
++getBytes:(NSData*)data;
 +keyValue:(int)idx forObject: value key: id;
 +(void)setKeyValue:(int)idx forObject: object key: key value: value;
 @end
 
 @implementation PyObjC_TestClass3
+
++getBytes:(NSData*)data
+{
+	const void* bytes = [data bytes];
+
+	if (bytes == NULL) {
+		return nil;
+	} else {
+		return [NSData dataWithBytes:bytes length:[data length]];
+	}
+}
+
+
++makeDataWithBytes:(Class)cls method:(int)i
+{
+	if (i == 0) {
+		return [cls dataWithBytes:"hello world" length:sizeof("hello world")-1];
+	} else {
+		id o = [cls alloc];
+		return [o initWithBytes:"hello world" length:sizeof("hello world")-1];
+	}
+}
+
 
 +makeACopy:source
 {
@@ -1521,6 +1546,71 @@ static 	char buf[1024];
 	case 6: [object setValuesForKeysWithDictionary: value]; break;
 #endif
 	}
+}
+
+@end
+
+@interface PyObjC_TestClass4 : NSObject
+{
+}
+- (void)encodeWithCoder:(NSCoder*)coder;
+
++ (int)fetchInt:(NSCoder*)coder;
++ (double)fetchDouble:(NSCoder*)coder;
++ (NSData*)fetchData:(NSCoder*)coder;
++ (NSArray*)fetchArray:(NSCoder*)coder;
+@end
+
+@implementation PyObjC_TestClass4
+- (void)encodeWithCoder:(NSCoder*)coder
+{
+	double d = 1.5;
+	int iArray[] = { 3,4,5,6};
+	[coder encodeValueOfObjCType:@encode(double) at:&d];
+	[coder encodeArrayOfObjCType:@encode(int) count:4 at:iArray];
+	[coder encodeBytes:"hello world" length:11];
+}
+
++ (int)fetchInt:(NSCoder*)coder
+{
+	int i;
+	[coder decodeValueOfObjCType:@encode(int) at:&i];
+	return i;
+}
+
++ (double)fetchDouble:(NSCoder*)coder
+{
+	double i;
+	[coder decodeValueOfObjCType:@encode(double) at:&i];
+	return i;
+}
+
++ (NSData*)fetchData:(NSCoder*)coder
+{
+	void* data;
+	int length;
+
+	data = [coder decodeBytesWithReturnedLength:&length];
+	return [NSData dataWithBytes:data length:length];
+}
+
++ (NSArray*)fetchArray:(NSCoder*)coder
+{
+	int data[10];
+
+	[coder decodeArrayOfObjCType:@encode(int) count:10 at:data];
+	return [NSArray arrayWithObjects:
+			[NSNumber numberWithInt:data[0]],
+			[NSNumber numberWithInt:data[1]],
+			[NSNumber numberWithInt:data[2]],
+			[NSNumber numberWithInt:data[3]],
+			[NSNumber numberWithInt:data[4]],
+			[NSNumber numberWithInt:data[5]],
+			[NSNumber numberWithInt:data[6]],
+			[NSNumber numberWithInt:data[7]],
+			[NSNumber numberWithInt:data[8]],
+			[NSNumber numberWithInt:data[9]],
+			nil];
 }
 
 @end
@@ -1592,6 +1682,73 @@ static 	char buf[1024];
     [indirectHead release];
     indirectHead = aHead;
 }
+@end
+
+@interface PyObjCTest_KeyValueObserver : NSObject
+{
+	id observed;
+	NSString* key;
+	id value;
+}
+-initWithInstanceOfClass:(Class)cls withKey:(NSString*)key;
+-getValue;
+-(void)dealloc;
+-(void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context;
+@end
+
+@implementation PyObjCTest_KeyValueObserver
+
+-initWithInstanceOfClass:(Class)cls withKey:(NSString*)aKey
+{
+	self = [super init];
+	if (self == nil) return nil;
+	value = nil;
+	observed = nil;
+
+	observed = [[cls alloc] init];
+	if (observed == nil) {
+		[self release];
+		return nil;
+	}
+
+	key = aKey;
+	[aKey retain];
+
+	[observed addObserver:self 
+		  forKeyPath:key 
+		  options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld 
+		  context:0];
+	value = [observed valueForKey:key];
+	return self;
+}
+
+-(void)dealloc
+{
+	[observed removeObserver:self forKeyPath:key];
+	[key release];
+	[observed release];
+	[value release];
+}
+
+-getValue
+{
+	return value;
+}
+
+-(void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
+{
+	id newValue = [change objectForKey:NSKeyValueChangeNewKey];
+	[newValue retain];
+	[value release];
+	value = newValue;
+
+	// use all arguments to avoid warnings...
+	(void)&keyPath;
+	(void)&context;
+	(void)&object;
+}
+
+
 @end
 
 
@@ -1696,10 +1853,14 @@ void inittestbndl(void)
 		PyObjCClass_New([OC_TestClass2 class]));
 	PyModule_AddObject(m, "PyObjC_TestClass3", 
 		PyObjCClass_New([PyObjC_TestClass3 class]));
+	PyModule_AddObject(m, "PyObjC_TestClass4", 
+		PyObjCClass_New([PyObjC_TestClass4 class]));
 	PyModule_AddObject(m, "PyObjCTest_KVBaseClass", 
 		PyObjCClass_New([PyObjCTest_KVBaseClass class]));
 	PyModule_AddObject(m, "PyObjCTest_KVPathClass", 
 		PyObjCClass_New([PyObjCTest_KVPathClass class]));
+	PyModule_AddObject(m, "PyObjCTest_KeyValueObserver", 
+		PyObjCClass_New([PyObjCTest_KeyValueObserver class]));
 
 	PyModule_AddObject(m, "DO_VALUEFORKEY", PyInt_FromLong(0));
 	PyModule_AddObject(m, "DO_VALUEFORKEYPATH", PyInt_FromLong(1));

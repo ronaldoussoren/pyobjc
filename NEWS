@@ -6,6 +6,32 @@ An overview of the relevant changes in new, and older, releases.
 
 Version "Panther" (Off-CVS)
 ---------------------------
+- Objective-C structs can now be wrapped using struct-like types. This has
+  been used to implement wrapper types for NSPoint, NSSize, NSRange and NSRect
+  in Foundation and NSAffineTransformStruct in AppKit.
+
+  This means you can now access the x-coordinate of a point as ``aPoint.x``,
+  accessing ``aPoint[0]`` is still supported for compatibility with older 
+  versions of PyObjC.
+
+  It is still allowed to use tuples, or other sequences, to represent 
+  Objective-C structs.
+  
+  NOTE: This has two side-effects that may require changes in your programs:
+  the values of the types mentioned above are no longer immutable and cannot
+  be used as keys in dicts or elements in sets. Another side-effect is that
+  a pickle containing these values created using this version of PyObjC cannot
+  be unpickled on older versions of PyObjC.
+
+- If an Objective-C method name is a Python keyword you can now access it
+  by appending two underscores to its name, e.g. someObject.class__().
+
+  The same is true for defining methods, if you define a method 'raise__' in a 
+  subclass of NSObject it will registered with the runtime as 'raise'.
+
+  NOTE: Currently only 'class' and 'raise' are treated like this, because
+  those are the only Python keywords that are actually used as Objective-C
+  method names.
 
 - Backward incompatible change: class methods are no longer callable through
   the instances.
@@ -26,6 +52,10 @@ Version "Panther" (Off-CVS)
   create a new unicode object using ``unicode(mutableStringInstance)`` instead.
 
 - NSAppleEventDescriptor bridged to Carbon.AE
+
+- LibFFI is used more aggressivly, this should have no user-visible effects
+  other than fixing a bug related to key-value observing.
+
 
 - Adds a number of new Examples:
   

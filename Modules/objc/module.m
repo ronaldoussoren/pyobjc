@@ -104,21 +104,17 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		 * FIXME: We should support functions here, just like with
 		 * class definitions.
 		 */
-		if (PyObjCSelector_Check(aMethod)) {
-			Py_INCREF(aMethod);
-		} else {
-			aMethod = PyObjCSelector_FromFunction(
-				NULL,
-				aMethod,
-				classObject,
-				NULL);
-			if (aMethod == NULL) {
-				PyErr_SetString(PyExc_TypeError ,
-				      "All objects in methodArray must be of "
-				      "type <objc.selector>, <function>, "
-				      " <method> or <classmethod>");
-				goto cleanup_and_return_error;
-			}
+		aMethod = PyObjCSelector_FromFunction(
+			NULL,
+			aMethod,
+			classObject,
+			NULL);
+		if (aMethod == NULL) {
+			PyErr_SetString(PyExc_TypeError ,
+			      "All objects in methodArray must be of "
+			      "type <objc.selector>, <function>, "
+			      " <method> or <classmethod>");
+			goto cleanup_and_return_error;
 		}
 
 		/* install in methods to add */
@@ -201,8 +197,8 @@ static 	char* keywords[] = { "callback", NULL };
 	}
 	
 	Py_INCREF(callback);
-	Py_XDECREF(ObjC_class_extender);
-	ObjC_class_extender = callback;
+	Py_XDECREF(PyObjC_ClassExtender);
+	PyObjC_ClassExtender = callback;
 
 	Py_INCREF(Py_None);
 	return Py_None;

@@ -3,6 +3,12 @@ import unittest
 import objc
 
 class TestRegressions(unittest.TestCase):
+    def testNSObjectRespondsToCommonMethods(self):
+        NSObject=objc.runtime.NSObject
+        self.assert_(NSObject.pyobjc_classMethods.respondsToSelector_('alloc'))
+        self.assert_(NSObject.instancesRespondToSelector_('init'))
+        self.assert_(not NSObject.instancesRespondToSelector_('frodel'))
+
     def testQualifiersInSignature(self):
         import Foundation
         import AppKit

@@ -8,6 +8,24 @@ import types
 NSObject = objc.lookUpClass('NSObject')
 
 class TestSubclassing(unittest.TestCase):
+    def testMethodRaise(self):
+        # Defining a method whose name is a keyword followed by two underscores
+        # should define the method name without underscores in the runtime,
+        # and this method should be accesible both with and without the
+        # underscores.
+
+        class RaiseClass (NSObject):
+            def raise__(self):
+                pass
+
+        self.assert_(not hasattr(NSObject, 'raise__'))
+        self.assert_(not hasattr(NSObject, 'raise'))
+
+        self.assert_(hasattr(RaiseClass, 'raise__'))
+        self.assert_(hasattr(RaiseClass, 'raise'))
+        self.assertEquals(RaiseClass.raise__.selector, 'raise')
+        self.assertEquals(getattr(RaiseClass, 'raise').selector, 'raise')
+
     def testMIObjC(self):
         try:
             class MIClass1(NSObject, objc.runtime.NSArray):

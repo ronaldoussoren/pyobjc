@@ -46,6 +46,8 @@ extern PyTypeObject ObjCPythonSelector_Type;
 
 char* PyObjCSelector_Signature(PyObject* obj);
 SEL   PyObjCSelector_GetSelector(PyObject* obj);
+int   PyObjCSelector_GetFlags(PyObject* obj);
+int   PyObjCSelector_DonatesRef(PyObject* obj);
 Class PyObjCSelector_GetClass(PyObject* obj);
 int   PyObjCSelector_Required(PyObject* obj);
 int   PyObjCSelector_IsClassMethod(PyObject* obj);
