@@ -44,7 +44,7 @@ NSBundle = objc.lookUpClass('NSBundle')
 def load_bundle(path):
         NSBundle.bundleWithPath_(path).load()
 	classes = [ cls 
-		for  cls in objc.lookUpClass()
+		for  cls in objc.getClassList()
 		if path == NSBundle.bundleForClass_(cls).bundlePath() ]
 	return classes
 classes = load_bundle(sys.argv[1])
