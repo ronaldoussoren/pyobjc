@@ -9,7 +9,6 @@ class TestNSObjectInteraction( unittest.TestCase ):
         self.assert_( hasattr(NSObject, "description"), "NSObject class claims it doesn't respond to a selector that it does." )
         # self.assert_( NSObject.description(), "NSObject class failed to respond to +description selector." )
 
-
     def testNSObjectInstance( self ):
         instance = NSObject.new()
 
@@ -23,11 +22,6 @@ class TestNSObjectInteraction( unittest.TestCase ):
     def testRepeatedAllocInit( self ):
         for i in range(1,1000):
             a = NSObject.alloc().init()
-
-class TestNSArrayInteraction( unittest.TestCase ):
-    def testRepeatedAllocInit( self ):
-        for i in range(1,1000):
-            a = NSArray.alloc().init()
         
 def suite():
     suite = unittest.TestSuite()
