@@ -425,7 +425,7 @@ ObjCClass_CheckMethodList(PyObject* cls)
 	if (info->class == NULL) return;
 
 
-	if (info->method_magic == 0 && info->class->super_class != 0) {
+	if (/*info->method_magic == 0 && */ info->class->super_class != 0) {
 		ObjCClass_CheckMethodList(ObjCClass_New(info->class->super_class));
 	}
 

@@ -227,7 +227,6 @@ def _num_to_python(v):
     Magic method that converts NSNumber values to Python, see 
     <Foundation/CFNumber.h> for the magic numbers
     """
-    print '_num_to_python %s %s'%(type(v), `v`)
     if hasattr(v, '_cfNumberType'):
         tp = v._cfNumberType()
         if tp in [ 1, 2, 3, 7, 8, 9, 10 ]:
@@ -252,6 +251,9 @@ def __and__CFNumber(numA, numB):
 
 def __div__CFNumber(numA, numB):
     return _num_to_python(numA) / _num_to_python(numB)
+
+def __divmod__CFNumber(numA, numB):
+    return divmod(_num_to_python(numA), _num_to_python(numB))
 
 def __float__CFNumber(numA):
     return float(_num_to_python(numA))
@@ -295,6 +297,12 @@ def __or__CFNumber(numA, numB):
 def __pos__CFNumber(numA):
     return +_num_to_python(numA)
 
+def __pow__CFNumber(numA, numB, modulo=None):
+    if modulo is None:
+        return _num_to_python(numA)  ** _num_to_python(numB)
+    else:
+        return pow(_num_to_python(numA), _num_to_python(numB), modulo)
+
 def __sub__CFNumber(numA, numB):
     return _num_to_python(numA)  - _num_to_python(numB)
 
@@ -309,6 +317,7 @@ CONVENIENCE_METHODS['_cfNumberType'] = (
     ('__add__', __add__CFNumber),
     ('__and__', __and__CFNumber),
     ('__div__', __div__CFNumber),
+    ('__divmod__', __divmod__CFNumber),
     ('__float__', __float__CFNumber),
     ('__floordiv__', __floordiv__CFNumber),
     ('__hex__', __hex__CFNumber),
@@ -316,14 +325,29 @@ CONVENIENCE_METHODS['_cfNumberType'] = (
     ('__invert__', __invert__CFNumber),
     ('__long__', __long__CFNumber),
     ('__lshift__', __lshift__CFNumber),
-    ('__rshift__', __rshift__CFNumber),
     ('__mod__', __mod__CFNumber),
     ('__mul__', __mul__CFNumber),
     ('__neg__', __neg__CFNumber),
     ('__oct__', __oct__CFNumber),
     ('__or__', __or__CFNumber),
     ('__pos__', __pos__CFNumber),
+    ('__pow__', __pow__CFNumber),
+    ('__radd__', lambda x, y: __add__CFNumber(y, x)),
+    ('__rand__', lambda x, y: __and__CFNumber(y, x)),
+    ('__rdiv__', lambda x, y: __div__CFNumber(y, x)),
+    ('__rdivmod__', lambda x, y: __divmod__CFNumber(y, x)),
+    ('__rfloordiv__', lambda x, y: _rfloordiv__CFNumber(y, x)),
+    ('__rlshift__', lambda x, y: __lshift__CFNumber(y, x)),
+    ('__rmod__', lambda x, y: __mod__CFNumber(y, x)),
+    ('__rmul__', lambda x, y: __mul__CFNumber(y, x)),
+    ('__ror__', lambda x, y: __or__CFNumber(y, x)),
+    ('__rpow__', lambda x, y, z=None: __pow__CFNumber(y, x, z)),
+    ('__rrshift__', lambda x, y: __rshift__CFNumber(y, x)),
+    ('__rshift__', lambda x, y: __shift__CFNumber(y, x)),
+    ('__rsub__', lambda x, y: __sub__CFNumber(y, x)),
+    ('__rtruediv__', lambda x, y: __truediv__CFNumber(y, x)),
+    ('__rxor__', lambda x, y: __xor__CFNumber(y, x)),
     ('__sub__', __sub__CFNumber),
     ('__truediv__', __truediv__CFNumber),
-    ('__xor__', __xor__CFNumber)
+    ('__xor__', __xor__CFNumber),
 )
