@@ -13,6 +13,11 @@ a number of modules that are wrappers for the Cocoa frameworks, such as
 Foundation and AppKit. These modules not only give you access to the classes in
 these frameworks but also to the functions and constants in those modules.
 
+More information on PyObjC can be found on 
+`our website <http://pyobjc.sf.net>`_.
+
+.. _`our website <http://pyobjc.sf.net>`: http://pyobjc.sf.net/
+
 To install this package double-click on ``PyObjC.pkg``. This will install the
 PyObjC python package and some Project Builder templates. The documentation
 and examples are found in  the folder ``PyObjC Documentation and Examples``. 
