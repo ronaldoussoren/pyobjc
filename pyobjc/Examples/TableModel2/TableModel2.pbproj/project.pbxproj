@@ -8,6 +8,7 @@
 		080E96DDFE201D6D7F000001 = {
 			children = (
 				F67591E9034123C701336B42,
+				F57653070371679F01A801DC,
 			);
 			isa = PBXGroup;
 			name = Classes;
@@ -301,6 +302,21 @@
 //4A2
 //4A3
 //4A4
+//F50
+//F51
+//F52
+//F53
+//F54
+		F57653070371679F01A801DC = {
+			isa = PBXFileReference;
+			path = nibwrapper.py;
+			refType = 4;
+		};
+//F50
+//F51
+//F52
+//F53
+//F54
 //F60
 //F61
 //F62

@@ -1,17 +1,14 @@
 from Foundation import *
 from AppKit import *
 from objc import IBOutlet
+from nibwrapper import CalendarMatrixBase
 
 gNumDaysInMonth = ( 0, 31, 28, 31, 30, 21, 30, 31, 31, 30, 31, 30, 31 )
 
 def isLeap(year):
 	return (((year % 4) == 0 and ((year % 100) != 0)) or (year % 400) == 0)
 
-class CalendarMatrix (NSMatrix):
-	_lastMonthButton = IBOutlet('lastMonthButton')
-	_monthName       = IBOutlet('monthName')
-	_nextMonthButton = IBOutlet('nextMonthButton')
-
+class CalendarMatrix (CalendarMatrixBase):
 	__slots__ = ('_selectedDay', '_startOffset')
 
 	def initWithFrame_(self, frameRect):
@@ -70,17 +67,13 @@ class CalendarMatrix (NSMatrix):
 		currentYear = thisDate.yearOfCommonEra()
 		currentMonth = thisDate.monthOfYear()
 
-		print sender, self._nextMonthButton, self._lastMonthButton
-
-		if sender is self._nextMonthButton:
-			print "NEXT MONTH", sender, self._nextMonthButton
+		if sender is self.nextMonthButton:
 			if currentMonth == 12:
 				currentMonth = 1
 				currentYear += 1
 			else:
 				currentMonth += 1
 		else:
-			print "PREVIOUS MONTH"
 			if currentMonth == 1:
 				currentMonth = 12
 				currentYear -= 1
@@ -111,7 +104,7 @@ class CalendarMatrix (NSMatrix):
 					0,
 					0,
 					NSTimeZone.localTimeZone())
-		self._monthName.setStringValue_(
+		self.monthName.setStringValue_(
 			firstOfMonth.descriptionWithCalendarFormat_("%B %Y"))
 		daysInMonth = gNumDaysInMonth[currentMonth]
 

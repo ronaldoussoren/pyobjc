@@ -40,8 +40,8 @@ with explicit method signatures.
 #    IBVersion = 1;
 #}
 #
+import sys
 
-from Foundation import NSDictionary
 
 def parse_classes_nib(nibfile):
 	"""
@@ -49,7 +49,12 @@ def parse_classes_nib(nibfile):
 	class information.
 	"""
 	import os
-	return NSDictionary.dictionaryWithContentsOfFile_(os.path.join(nibfile, 'classes.nib'))
+	d = NSDictionary.dictionaryWithContentsOfFile_(
+		os.path.join(nibfile, 'classes.nib'))
+
+	if not d:
+		raise ValueError, "Invalid or non-existing NIB: %s"%nibfile
+	return d
 
 def generate_wrapper_module(outfp, classinfolist):
 	"""
@@ -61,6 +66,7 @@ def generate_wrapper_module(outfp, classinfolist):
 		generator.add_classnib(n)
 	generator.generate()
 
+
 #
 #
 # Beyond this are classes and functions used to implement the public functions,
@@ -69,7 +75,9 @@ def generate_wrapper_module(outfp, classinfolist):
 #
 
 import objc
+
 NSBundle = objc.lookup_class('NSBundle')
+NSDictionary = objc.lookup_class('NSDictionary')
 
 def _mergelists(l1, l2):
 	r = {}
@@ -140,6 +148,9 @@ class ClassNibGenerator:
 				frameworks[self._frameworkForClass(cls['SUPERCLASS'])].append(cls['SUPERCLASS'])
 			except KeyError:
 				frameworks[self._frameworkForClass(cls['SUPERCLASS'])] = [cls['SUPERCLASS']]
+			except objc.error:
+				continue
+
 		self._fp.write("# THIS FILE IS GENERATED. DO NOT EDIT!!!\n")
 		self._fp.write("# Interface classes for using NIB files\n")
 		self._fp.write("\n")
@@ -195,22 +206,33 @@ class ClassNibGenerator:
 		supername = classinfo['SUPERCLASS']
 		actions = classinfo.get('ACTIONS', ())
 		outlets = classinfo.get('OUTLETS', ())
-		fw = self._frameworkForClass(supername)
-		if fw:
-			supername = '%s'%(supername)
+		try:
+			fw = self._frameworkForClass(supername)
+		except objc.error:
+			sys.stderr.write(
+				'WARN: Skipping %s: no superclass %s\n'%(
+					clsname, supername))
+			return
+
+		#if fw:
+		#	supername = '%s.%s'%(fw, supername)
 	
 		self._fp.write('class %sBase (%s):\n'%(clsname, supername))
 		self._fp.write('\t"Base class for class \'%s\'"\n'%clsname)
 		if not actions and not outlets:
 			self._fp.write('\tpass\n')
+	
+		if outlets:
+			for o in outlets.keys():
+				# Might want to check type (outlets[o])
+				self._fp.write('\t%s = IBOutlet("%s")\n'%(o, o))
 
-		for o in outlets:
-			self._fp.write('\t%s = IBOutlet("%s")\n'%(o, o))
 		if outlets:
 			self._fp.write('\n')
 
-		for a in actions:
-			self._fp.write('\tdef %s_(self, sender): pass\n\n'%a)
+		if actions:
+			for a in actions.keys():
+				self._fp.write('\tdef %s_(self, sender): pass\n\n'%a)
 
 		self._fp.write('\n')
 
@@ -218,6 +240,5 @@ class ClassNibGenerator:
 
 if __name__ == '__main__':
 	import sys
-	for nibFile in sys.argv[1:]:
-		classinfo = parse_classes_nib(nibFile)
-		generate_wrapper_module(sys.stdout, [classinfo])
+	classinfo = parse_classes_nib('English.lproj/MainMenu.nib')
+	generate_wrapper_module(sys.stdout, [classinfo])

@@ -1,6 +1,7 @@
 from AppKit import *
 from objc import selector, IBOutlet
 from ToDoDocument import *
+from nibwrapper import InfoWindowControllerBase
 
 NOTIFY_TAG     = 0
 RESCHEDULE_TAG = 1
@@ -14,27 +15,9 @@ NotifyLengthOther   = 4
 
 _sharedInfoWindowController = None
 
-class InfoWindowController (NSWindowController):
+class InfoWindowController (InfoWindowControllerBase):
 
 	__slots__ = ('_inspectingDocument', )
-
-	dummyView = IBOutlet('dummyView')
-	infoDate  = IBOutlet('infoDate')
-	infoItem  = IBOutlet('infoItem')
-	infoNotes = IBOutlet('infoNotes')
-	infoNotifyAMPM = IBOutlet('infoNotifyAMPM')
-	infoNotifyHour = IBOutlet('infoNotifyHour')
-	infoNotifyMinute = IBOutlet('infoNotifyMinute')
-	infoNotifyOtherHours = IBOutlet('infoNotifyOtherHours')
-	infoNotifySwitchMatrix = IBOutlet('infoNotifySwitchMatrix')
-	infoPopUp = IBOutlet('infoPopUp')
-	infoSchedComplete = IBOutlet('infoSchedComplete')
-	infoSchedDate     = IBOutlet('infoSchedDate')
-	infoSchedMatrix   = IBOutlet('infoSchedMatrix')
-	infoWindowViews   = IBOutlet('infoWindowViews')
-	notesView         = IBOutlet('notesView')
-	notifyView        = IBOutlet('notifyView')
-	reschedView       = IBOutlet('reschedView')
 
 	def switchClicked_(self, sender):
 		dueSecs = 0
