@@ -43,6 +43,7 @@ typedef void (*Py_InitializePtr)(void);
 typedef int (*PyRun_SimpleFilePtr)(FILE *, const char *);
 typedef void (*Py_FinalizePtr)(void);
 typedef PyObject *(*PySys_GetObjectPtr)(const char *);
+typedef int *(*PySys_SetArgvPtr)(int argc, char **argv);
 typedef PyObject *(*PyObject_StrPtr)(PyObject *);
 typedef const char *(*PyString_AsStringPtr)(PyObject *);
 typedef PyObject *(*PyObject_GetAttrStringPtr)(PyObject *, const char *);
@@ -307,45 +308,23 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
 	
 	NSSymbol tmpSymbol;
 
-	tmpSymbol = NSLookupSymbolInImage(py_dylib, "_Py_SetProgramName", PYMACAPP_NSLOOKUPSYMBOLINIMAGEFLAGS);
-	if ( !tmpSymbol ) 
-		return report_linkEdit_error();
-	Py_SetProgramNamePtr Py_SetProgramName = (Py_SetProgramNamePtr)NSAddressOfSymbol(tmpSymbol);
-	
-	tmpSymbol = NSLookupSymbolInImage(py_dylib, "_Py_Initialize", PYMACAPP_NSLOOKUPSYMBOLINIMAGEFLAGS);
-	if ( !tmpSymbol ) 
-		return report_linkEdit_error();
-	Py_InitializePtr Py_Initialize = (Py_InitializePtr)NSAddressOfSymbol(tmpSymbol);
+#define LOOKUP(NAME) \
+	tmpSymbol = NSLookupSymbolInImage(py_dylib, "_" #NAME, PYMACAPP_NSLOOKUPSYMBOLINIMAGEFLAGS); \
+	if ( !tmpSymbol ) \
+		return report_linkEdit_error(); \
+	NAME ## Ptr NAME = (NAME ## Ptr)NSAddressOfSymbol(tmpSymbol)
 
-	tmpSymbol = NSLookupSymbolInImage(py_dylib, "_PyRun_SimpleFile", PYMACAPP_NSLOOKUPSYMBOLINIMAGEFLAGS);
-	if ( !tmpSymbol )
-		return report_linkEdit_error();
-	PyRun_SimpleFilePtr PyRun_SimpleFile = (PyRun_SimpleFilePtr)NSAddressOfSymbol(tmpSymbol);
-	
-	tmpSymbol = NSLookupSymbolInImage(py_dylib, "_Py_Finalize", PYMACAPP_NSLOOKUPSYMBOLINIMAGEFLAGS);
-	if ( !tmpSymbol ) 
-		return report_linkEdit_error();
-	Py_FinalizePtr Py_Finalize = (Py_FinalizePtr)NSAddressOfSymbol(tmpSymbol);
-	
-	tmpSymbol = NSLookupSymbolInImage(py_dylib, "_PySys_GetObject", PYMACAPP_NSLOOKUPSYMBOLINIMAGEFLAGS);
-	if ( !tmpSymbol ) 
-		return report_linkEdit_error();
-	PySys_GetObjectPtr PySys_GetObject = (PySys_GetObjectPtr)NSAddressOfSymbol(tmpSymbol);
+    LOOKUP(Py_SetProgramName);
+    LOOKUP(Py_Initialize);
+    LOOKUP(PyRun_SimpleFile);
+    LOOKUP(Py_Finalize);
+    LOOKUP(PySys_GetObject);
+    LOOKUP(PySys_SetArgv);
+    LOOKUP(PyObject_Str);
+    LOOKUP(PyString_AsString);
+    LOOKUP(PyObject_GetAttrString);
 
-	tmpSymbol = NSLookupSymbolInImage(py_dylib, "_PyObject_Str", PYMACAPP_NSLOOKUPSYMBOLINIMAGEFLAGS);
-	if ( !tmpSymbol ) 
-		return report_linkEdit_error();
-	PyObject_StrPtr PyObject_Str = (PyObject_StrPtr)NSAddressOfSymbol(tmpSymbol);
-
-	tmpSymbol = NSLookupSymbolInImage(py_dylib, "_PyString_AsString", PYMACAPP_NSLOOKUPSYMBOLINIMAGEFLAGS);
-	if ( !tmpSymbol ) 
-		return report_linkEdit_error();
-	PyString_AsStringPtr PyString_AsString = (PyString_AsStringPtr)NSAddressOfSymbol(tmpSymbol);
-
-	tmpSymbol = NSLookupSymbolInImage(py_dylib, "_PyObject_GetAttrString", PYMACAPP_NSLOOKUPSYMBOLINIMAGEFLAGS);
-	if ( !tmpSymbol ) 
-		return report_linkEdit_error();
-	PyObject_GetAttrStringPtr PyObject_GetAttrString = (PyObject_GetAttrStringPtr)NSAddressOfSymbol(tmpSymbol);
+#undef LOOKUP
 
 	NSString *pythonProgramName;
 	// XXX - this is NOT tested with dylib builds.. but it might work if you do things "right"
@@ -367,6 +346,7 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
 	pythonProgramName = [[[pythonProgramName stringByAppendingPathComponent:@"bin"] stringByAppendingPathComponent:pyExecutableName] retain];
 	Py_SetProgramName([pythonProgramName fileSystemRepresentation]);
 	Py_Initialize();
+    PySys_SetArgv(argc, (char **)argv);
 	
 	FILE *mainPy = fopen([[mainPyPath retain] fileSystemRepresentation], "r");
 	NSString *scriptName = [mainPyPath lastPathComponent];
