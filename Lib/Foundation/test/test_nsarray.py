@@ -115,6 +115,13 @@ class TestNSArrayInteraction( unittest.TestCase ):
 
         self.assertSlicesEqual(x, y, z)
 
+    def test_mixSliceNDice(self):
+        x = range(0, 10)
+        y = NSMutableArray.arrayWithArray_( range(0, 10) )
+
+        y[2:4] = x[1:5]
+        x[2:8] = y[3:7]
+        y[2:4] = y[1:8]
 
 def suite():
     suite = unittest.TestSuite()
