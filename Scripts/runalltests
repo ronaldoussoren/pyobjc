@@ -1,0 +1,26 @@
+#!/usr/bin/env python
+
+# Run all PyObjC tests. Every testscript will be started in a 
+# fresh interpreter: Some tests depend on the availability or
+# non-availability of some frameworks.
+#
+# Run from the root of the source-tree.
+#
+# NOTE: There should probably be a script that can run the
+# scripts from the installed tree, but this should be enough
+# to make it easy to actually run the full testsuite.
+
+import sys
+import os
+
+def perform_some_tests(dummy, dirname, fnames):
+	if os.path.split(dirname)[-1] != 'test': return
+
+	for nm in fnames:
+                if not nm.startswith('test_'): continue
+		path = os.path.join(dirname, nm)
+		print "-- Running '%s'"%path
+		os.system("'%s' '%s'"%(sys.executable, path))
+		print "-- Done"
+
+os.path.walk('Lib', perform_some_tests, None)
