@@ -33,7 +33,7 @@ find_selector(PyObject* self, char* name, int class_method)
 
 	if (PyObjCClass_Check(self)) {
 		objc_object = (id)PyObjCClass_GetClass(self);
-	
+
 		if (!class_method) {
 			unbound_instance_method = 1;
 		}
@@ -55,6 +55,12 @@ find_selector(PyObject* self, char* name, int class_method)
 		return NULL;
 	}
 
+	if (objc_object == nil) {
+		ObjCErr_Set(PyExc_AttributeError,
+			"<nil> doesn't have attribute %s", name);
+		return NULL;
+	}
+
 	if (class_method && strcmp(((Class)objc_object)->name, "NSProxy") == 0){
 		if (sel == @selector(methodSignatureForSelector:)) {
 			ObjCErr_Set(PyExc_AttributeError,
@@ -63,11 +69,15 @@ find_selector(PyObject* self, char* name, int class_method)
 		}
 	}
 
-	if (unbound_instance_method) {
-		methsig = [objc_object instanceMethodSignatureForSelector:sel];
-	} else {
-		methsig = [objc_object methodSignatureForSelector:sel];
-	}
+	NS_DURING
+		if (unbound_instance_method) {
+			methsig = [objc_object instanceMethodSignatureForSelector:sel];
+		} else {
+			methsig = [objc_object methodSignatureForSelector:sel];
+		}
+	NS_HANDLER
+		methsig = nil;
+	NS_ENDHANDLER
 
 	if (methsig == NULL) {
 		ObjCErr_Set(PyExc_AttributeError,
