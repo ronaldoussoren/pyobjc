@@ -204,10 +204,6 @@ argument.
 
 XXX: Add information about ``array.array`` rules.
 
-XXX: We don't use the right functions for conversion to C-arrays throughout
-the bridge (yet), the information is therefore not entirely correct.
-
-
 When you define methods in a subclass of an Objective-C class, the bridge has
 to tell the Objective-C runtime what the signature of those methods is. The
 basic rule is that all arguments as well as the return value are objects (just
@@ -304,6 +300,39 @@ to create and use *Controller* objects.
 
 Use ``objc.accessor`` to create accessor methods that conform to the 
 expectations of Cocoa Bindings.
+
+Categories
+..........
+
+Objective-C has a mechanism for modularize a class definition, it is possible
+to add methods to an existing class in a seperate compilation unit and even
+a seperate library. This mechanism is named categories and is used to enhance
+existing classes, for splitting classes in several parts and to document
+informal protocols.
+
+An example of a category definition::
+
+	@interface NSObject (MyCategory)
+	- (NSSize)objectFootprint;
+	@end
+
+This declares an additional category on ``NSObject``. This category contains
+a single method.
+
+The function ``objc.classAddMethods`` can be used to get the same effect in
+Python::
+
+	def objectFootprint(self):
+		pass
+
+	objc.classAddMethods(NSObject, [objectFootprint])
+
+This is not very clear, PyObjC therefore also provides the following 
+mechanism, implemented on top of ``objc.classAddMethods``::
+
+	class NSObject (objc.Category(NSObject)):
+		def objectFootprint(self):
+			pass
 
 Cocoa for Python programmers
 ----------------------------
