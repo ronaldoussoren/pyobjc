@@ -18,9 +18,37 @@ class TestNSUndoManager(unittest.TestCase):
 
         self.assertEquals(l[0], 1)
 
+## Undo Integer test
+## From David Eppstein
+# test ability of int argument to pass through undo and then
+# be used as parameter to another routine expecting an int
+#
+# the actual routine I want to use is
+# NSTableView.editColumn_row_withEvent_select_
+# but that involves setting up a UI; instead use NSIndexSpecifier
+class TestUndoInt(unittest.TestCase):
+    class UndoInt(NSObject):
+        undo = NSUndoManager.alloc().init()
+        idx = NSIndexSpecifier.alloc().init()
+        idx.setIndex_(0)
+
+        def test(self,i):
+            self.undo.prepareWithInvocationTarget_(self).test(self.idx.index())
+            self.idx.setIndex_(i)
+
+    def testUndoInt(self):
+        # test that undo works
+        x = TestUndoInt.UndoInt.alloc().init()
+        x.test(3)
+        assert(x.idx.index() == 3)
+        x.undo.undo()
+        assert(x.idx.index() == 0)
+## end Undo Integer test
+
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite( TestNSUndoManager))
+    suite.addTest(unittest.makeSuite(TestNSUndoManager))
+    suite.addTest(unittest.makeSuite(TestUndoInt))
     return suite
 
 if __name__ == '__main__':
