@@ -104,7 +104,7 @@ static ffi_type* signature_to_ffi_type(const char* argtype);
 static ffi_type* 
 array_to_ffi_type(const char* argtype)
 {
-static  PyObject* array_types = NULL; // XXX: Use NSMap 
+static  PyObject* array_types = NULL; /* XXX: Use NSMap  */
 	PyObject* v;
 	ffi_type* type;
 	int       field_count;
@@ -171,7 +171,7 @@ static  PyObject* array_types = NULL; // XXX: Use NSMap
 static ffi_type* 
 struct_to_ffi_type(const char* argtype)
 {
-static  PyObject* struct_types = NULL; // XXX: Use NSMap 
+static  PyObject* struct_types = NULL; /* XXX: Use NSMap  */
 	PyObject* v;
 	ffi_type* type;
 	int       field_count;
@@ -245,7 +245,7 @@ static  PyObject* struct_types = NULL; // XXX: Use NSMap
 		Py_DECREF(v);
 		return NULL;
 	}
-	//Py_DECREF(v);
+	Py_DECREF(v);
 	return type;
 }
 
@@ -281,8 +281,8 @@ signature_to_ffi_type(const char* argtype)
 	  * don't work (e.g. give testsuite failures). We should be fine
 	  * as long as sizeof(long) == sizeof(int)
 	  */
-	case _C_LNG: return &ffi_type_sint;  // ffi_type_slong
-	case _C_ULNG: return &ffi_type_uint;  // ffi_type_ulong
+	case _C_LNG: return &ffi_type_sint;  /* ffi_type_slong */
+	case _C_ULNG: return &ffi_type_uint;  /* ffi_type_ulong */
 	case _C_LNGLNG: return &ffi_type_sint64;
 	case _C_ULNGLNG: return &ffi_type_uint64;
 	case _C_FLT: return &ffi_type_float;
@@ -315,7 +315,7 @@ typedef struct {
 } _method_stub_userdata;
 
 static void 
-method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
+method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, void* userdata)
 {
 	NSMethodSignature* methinfo = 
 		((_method_stub_userdata*)userdata)->methinfo;
@@ -332,7 +332,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 	objc_argcount = [methinfo numberOfArguments];
 	rettype = [methinfo methodReturnType];
 
-	if ((objc_sizeof_type(rettype) > sizeof(id))
+	if (((size_t)objc_sizeof_type(rettype) > sizeof(id))
 		 	&& *rettype != _C_DBL && *rettype != _C_FLT
 		 	&& *rettype != _C_LNGLNG && *rettype != _C_ULNGLNG) {
 		/* the prototype is objc_msgSend_stret(void* retbuf, ... */
@@ -390,7 +390,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			return;
 		}
 		if (PyList_Append(arglist, v) == -1) {
-			//Py_DECREF(v);
+			Py_DECREF(v);
 			Py_DECREF(arglist);
 			ObjCErr_ToObjC();
 			return;
@@ -418,7 +418,6 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 		int err;
 
 		if (*rettype != _C_VOID) {
-			const char* rettype = [methinfo methodReturnType];
 			err = depythonify_c_return_value(rettype, res, resp);
 
 			if (*rettype == _C_ID && res->ob_refcnt == 1) {
@@ -472,10 +471,15 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			if (err == -1) {
 				ObjCErr_ToObjC();
 			}
+			if (v->ob_refcnt == 1 && argtype[0] == _C_ID) {
+				/* make sure return value doesn't die before
+				 * the caller can get its hands on it.
+				 */
+				[[**(id**)args[i] retain] autorelease];
+			}
 		}
 
 		if (*rettype != _C_VOID) {
-			const char* rettype = [methinfo methodReturnType];
 			int err = depythonify_c_return_value(rettype, real_res, resp);
 
 			if (*rettype == _C_ID && real_res->ob_refcnt == 1) {
@@ -521,7 +525,7 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 	/* Build FFI returntype description */
 	rettype = [methinfo methodReturnType];
 
-	if ((objc_sizeof_type(rettype) > sizeof(id))
+	if (((size_t)objc_sizeof_type(rettype) > sizeof(id))
 		 	&& *rettype != _C_DBL && *rettype != _C_FLT
 		 	&& *rettype != _C_LNGLNG && *rettype != _C_ULNGLNG) {
 		/* the prototype is objc_msgSend_stret(void* retbuf, ... */
@@ -639,19 +643,19 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 {
 	size_t            argbuf_len = 0;
 	size_t            argbuf_cur = 0;
-	unsigned char*    argbuf = NULL;	/* by-reference arguments */
-	size_t            byref_in_count = 0;
-	size_t            byref_out_count = 0;
-	size_t            plain_count = 0;
-	size_t            objc_argcount;
+	unsigned char* volatile    argbuf = NULL;
+	int            byref_in_count = 0;
+	volatile int            byref_out_count = 0;
+	int            plain_count = 0;
+	int            objc_argcount;
 	size_t            py_arg;
 	int               i;
-	void**		  byref = NULL; /* offset for arguments in argbuf */
+	void** volatile	byref = NULL; /* offset for arguments in argbuf */
 	const char* 	  rettype;
-	NSMethodSignature*  methinfo;
+	NSMethodSignature*  volatile methinfo;
 	ObjCNativeSelector* meth = (ObjCNativeSelector*)aMeth;
-	PyObject*	  objc_result = NULL;
-	PyObject*	  result = NULL;
+	PyObject* volatile  objc_result = NULL;
+	PyObject* volatile  result = NULL;
 	id		  self_obj = nil;
 	struct objc_super super;
 	struct objc_super* superPtr;
@@ -661,7 +665,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	int               r;
 	void*		  msgResult;
 	int               resultSize;
-	int               arglistOffset;
+	volatile int               arglistOffset;
 	int		  itemSize;
 	int		  itemAlign;
 	void*		  arg;
@@ -849,7 +853,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		 */
 
 		arglistOffset = 0;
-	} else if (resultSize > sizeof(id)) {
+	} else if ((size_t)resultSize > sizeof(id)) {
 		arglistOffset = 1;
 		arglist[0] = &ffi_type_pointer;
 		values[0] = &msgResult;
@@ -873,7 +877,6 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 		if (argtype[0] == _C_OUT && argtype[1] == _C_PTR) {
 			/* Just allocate room in argbuf and set that*/
-			void* arg;
 			argbuf_cur = align(argbuf_cur, 
 				objc_alignof_type(argtype+2));
 			arg = argbuf + argbuf_cur;
@@ -1050,7 +1053,6 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		for (i = 2; i < objc_argcount; i++) {
 			const char *argtype = [methinfo 
 						getArgumentTypeAtIndex:i];
-			void*       arg;
 			PyObject*   v;
 
 			switch (*argtype) {

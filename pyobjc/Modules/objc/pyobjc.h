@@ -16,7 +16,6 @@
 #include "OC_PythonObject.h"
 #include "OC_PythonArray.h"
 #include "OC_PythonDictionary.h"
-//#include "OC_PythonString.h"
 #include "super-call.h"
 
 /*
@@ -55,7 +54,7 @@
  */
 @interface NSMethodSignature (WarningKiller)
 	+signatureWithObjCTypes:(const char*)types;
-@end // interface NSMethodSignature
+@end /* interface NSMethodSignature */
 #endif
 
 extern int ObjC_VerboseLevel;
@@ -63,7 +62,7 @@ extern int ObjC_VerboseLevel;
 extern PyTypeObject PyObjCClass_Type;
 #define PyObjCClass_Check(obj) PyObject_TypeCheck(obj, &PyObjCClass_Type)
 
-#if PY_VERSION_HEX >= 0x020300A2 /* 0x020300A2 */
+#if PY_VERSION_HEX >= 0x020300A2 
 
 #define PyObjC_CLASS_INFO_IN_TYPE 1
 

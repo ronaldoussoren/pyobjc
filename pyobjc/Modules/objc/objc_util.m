@@ -106,7 +106,7 @@ void ObjCErr_FromObjC(NSException* localException)
 		v = PyObjCObject_New(userInfo);
 		if (v != NULL) {
 			PyDict_SetItemString(dict, "userInfo", v);
-	//		Py_DECREF(v);
+			Py_DECREF(v);
 		} else { 
 			PyErr_Clear();
 		}
@@ -155,7 +155,6 @@ void ObjCErr_ToObjC(void)
 		PyObject* v;
 		char*     reason = NULL;
 		char*     name = NULL;
-		id        userInfo = nil;
 
 		v = PyDict_GetItemString(args, "reason"); 
 		if (v && PyString_Check(v)) {
@@ -175,6 +174,7 @@ void ObjCErr_ToObjC(void)
 		if (v && PyObjCObject_Check(v)) {
 			userInfo = PyObjCObject_GetObject(v);
 		} else {
+			userInfo = nil;
 			PyErr_Clear();
 		}
 
@@ -270,7 +270,7 @@ int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict)
 	Py_INCREF(type_dict);
 
 	res = PyObject_CallObject(ObjC_class_extender, args);
-//	Py_DECREF(args);
+	Py_DECREF(args);
 	if (res == NULL) {
 		return -1;
 	}
@@ -428,12 +428,12 @@ NSMapTableValueCallBacks ObjC_PointerValueCallBacks = {
 	NULL,
 };
 
-static void pyobj_retain(NSMapTable* table, const void* v)
+static void pyobj_retain(NSMapTable* table __attribute__((__unused__)), const void* v)
 {
 	Py_XINCREF((PyObject*)v);
 }
 
-static void pyobj_release(NSMapTable* table, void* v)
+static void pyobj_release(NSMapTable* table __attribute__((__unused__)), void* v)
 {
 	Py_XDECREF((PyObject*)v);
 }

@@ -26,6 +26,10 @@ class TestClass (NSObject):
     doubleVar = objc.ivar('doubleVar', objc._C_DBL)
 
 class TestInstanceVariables(unittest.TestCase):
+    if not hasattr(unittest.TestCase, 'assertAlmostEquals'):
+        def assertAlmostEquals(self, val1, val2):
+            self.assert_(abs(val1 - val2) < 0.000001)
+
     def setUp(self):
         self.object = TestClass.alloc().init()
 
@@ -98,6 +102,9 @@ class TestInstanceVariables(unittest.TestCase):
         del self.object
         objc.recycle_autorelease_pool()
         self.assertEquals(self.deleted, 1)
+
+    def testDelete(self):
+        self.assertRaises(TypeError, delattr, self.object.idVar)
 
 if __name__ == '__main__':
     unittest.main()

@@ -25,6 +25,6 @@
 -objectAtIndex:(int)idx;
 -(void)replaceObjectAtIndex:(int)idx withObject:newValue;
 
-@end // interface OC_PythonArray
+@end /* interface OC_PythonArray */
 
 #endif /* OC_PythonArray_h */

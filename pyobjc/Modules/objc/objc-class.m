@@ -71,7 +71,6 @@ get_class_info(PyObject* class)
 	}
 
 	info = PyMem_Malloc(sizeof(PyObjC_class_info));
-	//printf("malloc(%d) == %p for %s\n", (int)sizeof(PyObjC_class_info), info, ((PyTypeObject*)class)->tp_name);
 	if (info == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -316,7 +315,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 	Py_DECREF(args);
-	//Py_DECREF(real_bases);
+	Py_DECREF(real_bases); 
 	args = NULL;
 	real_bases = NULL;
 
@@ -333,10 +332,12 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		}
 
 		if (PyObjCInformalProtocol_Check(p)) {
-			// This doesn't work: Cannot dealloc 'res'!
+			/* This doesn't work: Cannot dealloc 'res'! */
 			if (!PyObjCInformalProtocol_CheckClass(p, res)) {
-				//FIXME!
-				//Py_DECREF(res);
+				/*
+				 * FIXME!
+				Py_DECREF(res);
+				 */
 				Py_DECREF(protocols);
 				PyObjCClass_UnbuildClass(objc_class);
 				return NULL;
@@ -372,7 +373,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	info->hasPythonImpl = 1;
 
 
-	// Initialize to parent version, not: this should not be necessary!
+	/* Initialize to parent version, not: this should not be necessary! */
 	info->dictoffset = PyObjCClass_DictOffset(PyTuple_GET_ITEM(bases, 0));
 
 	PyObjCClass_SetClass(objc_class, res);
@@ -398,7 +399,7 @@ class_repr(PyObject* obj)
 	if (cls) {
 		snprintf(buffer, sizeof(buffer), 
 			"<objective-c class %s at %p>", 
-			cls->name, cls);
+			cls->name, (void*)cls);
 	} else {
 		snprintf(buffer, sizeof(buffer),
 			"%s", "<objective-c class NIL>");
@@ -457,7 +458,6 @@ PyObjCClass_CheckMethodList(PyObject* cls)
 			}
 		}
 
-		//break;
 		if (info->class->super_class == NULL) break;
 		cls = PyObjCClass_New(info->class->super_class);
 		info = get_class_info(cls);
@@ -552,7 +552,7 @@ PyDoc_STRVAR(cls_get_classMethods_doc,
 "be used to force access to a class method."
 );
 static PyObject*
-cls_get_classMethods(PyObject* self, void* closure)
+cls_get_classMethods(PyObject* self, void* closure __attribute__((__unused__)))
 {
 	return ObjCMethodAccessor_New(self, 1);
 }
@@ -562,13 +562,13 @@ PyDoc_STRVAR(cls_get_instanceMethods_doc,
 "can be used to force access to an instance method."
 );
 static PyObject*
-cls_get_instanceMethods(PyObject* self, void* closure)
+cls_get_instanceMethods(PyObject* self, void* closure __attribute__((__unused__)))
 {
 	return ObjCMethodAccessor_New(self, 0);
 }
 
 static PyObject*
-cls_get__name__(PyObject* self, void* closure)
+cls_get__name__(PyObject* self, void* closure __attribute__((__unused__)))
 {
 	Class cls = PyObjCClass_GetClass(self);
 	if (cls == NULL) {
@@ -653,6 +653,15 @@ PyTypeObject PyObjCClass_Type = {
 	0,					/* tp_alloc */
 	class_new,				/* tp_new */
 	0,		        		/* tp_free */
+	0,					/* tp_is_gc */
+	0,					/* tp_bases */
+        0,                                      /* tp_mro */
+        0,                                      /* tp_cache */
+        0,                                      /* tp_subclasses */
+        0                                       /* tp_weaklist */
+#if PY_VERSION_HEX >= 0x020300A2
+        , 0                                       /* tp_del */
+#endif
 };
 
 
@@ -660,7 +669,7 @@ PyTypeObject PyObjCClass_Type = {
 char*
 PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
 {
-	size_t res = snprintf(buf, buflen, SELNAME(sel));
+	size_t res = snprintf(buf, buflen, "%s", SELNAME(sel));
 	char* cur;
 
 	if (res != strlen(SELNAME(sel))) {
@@ -689,7 +698,6 @@ static int
 add_class_fields(Class objc_class, PyObject* dict)
 {
 	Class     cls;
-	METHOD    meth;
 	struct objc_method_list* mlist;
 	void*     iterator;
 	PyObject* descr;
@@ -740,7 +748,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 					name,
 					descr) != 0) {
 
-				//Py_DECREF(descr); 
+				Py_DECREF(descr); 
 				return -1;
 			}
 			Py_DECREF(descr); 
@@ -759,6 +767,8 @@ add_class_fields(Class objc_class, PyObject* dict)
 	mlist = class_nextMethodList(cls, &iterator);
 	while (mlist != NULL) {
 		int i;
+		METHOD meth;
+
 		for (i = 0; i < mlist->method_count; i++) {
 			meth = mlist->method_list + i;
 
@@ -784,7 +794,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			if (PyDict_SetItemString(dict, 
 					selbuf,
 					descr) != 0) {
-				//Py_DECREF(descr);
+				Py_DECREF(descr);
 				return -1;
 			}
 			Py_DECREF(descr);
@@ -813,7 +823,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			}
 			if (PyDict_SetItemString(dict, 
 					var->ivar_name, descr) != 0) {
-				//Py_DECREF(descr);
+				Py_DECREF(descr);
 				return -1;
 			}
 			Py_DECREF(descr);
@@ -843,11 +853,8 @@ PyObjCClass_New(Class objc_class)
 	PyObjC_class_info* info;
 	IVAR var;
 
-	//printf("objc-class-new %p %s\n", objc_class, objc_class->name);
-
 	result = objc_class_locate(objc_class);
 	if (result != NULL) {
-		//printf("direct %s\n",  objc_class->name);
 		Py_INCREF(result);
 		return result;
 	}

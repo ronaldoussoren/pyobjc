@@ -37,10 +37,8 @@ register_proxy(PyObject* proxy_obj)
 	if (PyObjCObject_Check(proxy_obj)) {
 		objc_obj = PyObjCObject_GetObject(proxy_obj);
 	} else if (PyObjCClass_Check(proxy_obj)) {
-		abort();
 		objc_obj = PyObjCClass_GetClass(proxy_obj);
 	} else if (PyObjCUnicode_Check(proxy_obj)) {
-		abort();
 		objc_obj = PyObjCUnicode_Extract(proxy_obj);
 	} else {
 		PyErr_SetString(PyExc_TypeError, 
@@ -64,7 +62,10 @@ register_proxy(PyObject* proxy_obj)
 
 
 static PyObject*
-object_new(PyTypeObject*  type, PyObject* args, PyObject* kwds)
+object_new(
+	PyTypeObject*  type __attribute__((__unused__)),
+	PyObject* args __attribute__((__unused__)), 
+	PyObject* kwds __attribute__((__unused__)))
 {
 	PyErr_SetString(PyExc_TypeError, 
 		"Use class methods to instantiate new Objective-C objects");
@@ -82,11 +83,13 @@ object_repr(PyObjCObject* self)
 	return PyString_FromString(buffer);
 }
 
+#if PY_VERSION_HEX >= 0x020300A2
 static void
-object_del(PyObject* obj)
+object_del(PyObject* obj __attribute__((__unused__)))
 {
 	/* Dummy function, we do not want the default implementation */
 }
+#endif
 
 
 static void
@@ -161,13 +164,14 @@ static PyObject** _get_dictptr(PyObject* obj)
 }
 
 static PyObject *
-object_getattro(PyObject *obj, PyObject *name)
+object_getattro(PyObject *obj, PyObject * volatile name)
 {
 	PyTypeObject *tp = obj->ob_type;
 	PyObject *descr = NULL;
 	PyObject *res = NULL;
 	descrgetfunc f;
 	PyObject **dictptr;
+	char*      namestr;
 
 	if (!PyString_Check(name)){
 #ifdef Py_USING_UNICODE
@@ -208,7 +212,6 @@ object_getattro(PyObject *obj, PyObject *name)
 		}
 	}
 
-#if 1
 	if (strcmp(PyString_AS_STRING(name), "__del__") == 0) {
 		res = PyObjCClass_GetDelMethod((PyObject*)obj->ob_type);
 		if (res != NULL) {
@@ -216,7 +219,6 @@ object_getattro(PyObject *obj, PyObject *name)
 		}
 		goto done;
 	}
-#endif
 
 	/* First try the __dict__ */
 	dictptr = _get_dictptr(obj);
@@ -260,8 +262,9 @@ object_getattro(PyObject *obj, PyObject *name)
 		goto done;
 	}
 
+	namestr = PyString_AS_STRING(name);
 	NS_DURING
-		res = ObjCSelector_FindNative(obj, PyString_AS_STRING(name));
+		res = ObjCSelector_FindNative(obj, namestr);
 	NS_HANDLER
 		ObjCErr_FromObjC(localException);
 		res = NULL;
@@ -271,7 +274,7 @@ object_getattro(PyObject *obj, PyObject *name)
 
 	PyErr_Format(PyExc_AttributeError,
 		     "'%.50s' object has no attribute '%.400s'",
-		     tp->tp_name, PyString_AS_STRING(name));
+		     tp->tp_name, namestr);
   done:
 	Py_DECREF(name);
 	return res;
@@ -373,7 +376,7 @@ PyDoc_STRVAR(obj_get_classMethods_doc,
 "be used to force access to a class method."
 );
 static PyObject*
-obj_get_classMethods(PyObjCObject* self, void* closure)
+obj_get_classMethods(PyObjCObject* self, void* closure __attribute__((__unused__)))
 {
 	return ObjCMethodAccessor_New((PyObject*)self, 1);
 }
@@ -383,7 +386,7 @@ PyDoc_STRVAR(obj_get_instanceMethods_doc,
 "can be used to force access to a class method."
 );
 static PyObject*
-obj_get_instanceMethods(PyObjCObject* self, void* closure)
+obj_get_instanceMethods(PyObjCObject* self, void* closure __attribute__((__unused__)))
 {
 	return ObjCMethodAccessor_New((PyObject*)self, 0);
 }
@@ -407,7 +410,12 @@ static PyGetSetDef obj_getset[] = {
 };
 
 PyObjCClassObject PyObjCObject_Type = {
+#ifdef PyObjC_CLASS_INFO_IN_TYPE
    {
+     {
+#else
+   {
+#endif
 	PyObject_HEAD_INIT(&PyObjCClass_Type)
 	0,					/* ob_size */
 	"objc_object",				/* tp_name */
@@ -454,12 +462,23 @@ PyObjCClassObject PyObjCObject_Type = {
 	0,					/* tp_bases */
 	0,					/* tp_mro */
 	0,					/* tp_cache */
-	0,					/* tp_subclasses */
-	0,					/* tp_weaklist */
-	(destructor)object_del				/* tp_del */
-   }
+	0, 					/* tp_subclasses */
+	0					/* tp_weaklist */
 #ifdef PyObjC_CLASS_INFO_IN_TYPE
-   , 0
+	, (destructor)object_del,		/* tp_del */
+     }
+     ,
+     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* as_number */
+     { 0, 0, 0 },			/* as_mapping */
+     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },	/* as_sequence */
+     { 0, 0, 0, 0 },			/* as_buffer */
+     0,					/* name */
+     0,					/* slots */
+   }
+   , 0, 0, 0, 0, 0, 0
+#else
+   }
 #endif
 };
 

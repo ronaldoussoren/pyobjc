@@ -80,4 +80,4 @@
 	Py_DECREF(v);
 }
 
-@end // implementation OC_PythonArray
+@end /* implementation OC_PythonArray */

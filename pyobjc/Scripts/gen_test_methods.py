@@ -459,7 +459,7 @@ def emit_py_method_signatures(fp):
         fp.write('set_signature("PyObjC_TestClass2", "invoke%sInArg:of:", "@@:n^%s@")\n'%(nm, sign))
 
 def emit_py_to_objc(fp):
-    fp.write('class PyToObjC (unittest.TestCase):\n')
+    fp.write('class PyToObjC (TestCase):\n')
     fp.write('\t# Test calling Objective-C from Python\n')
 
     # Simple returns (Class methods)
@@ -697,7 +697,7 @@ def emit_python_subclass(fp):
         fp.write('\n\n')
 
 def emit_py_from_objc(fp):
-    fp.write('class ObjCToPy (unittest.TestCase):\n')
+    fp.write('class ObjCToPy (TestCase):\n')
     fp.write('\t# Test calling Python from Objective-C\n')
 
     # Simple returns (Instance methods)

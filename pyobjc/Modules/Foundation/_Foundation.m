@@ -44,7 +44,7 @@
 /* 'Bundles' */
 
 #define NSLocalizedString_doc 0
-static PyObject* objc_NSLocalizedString(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSLocalizedString(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "key", "comment", NULL };
 	PyObject*  result;
@@ -65,7 +65,7 @@ static	char* keywords[] = { "key", "comment", NULL };
 }
 
 #define NSLocalizedStringFromTable_doc 0
-static PyObject* objc_NSLocalizedStringFromTable(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSLocalizedStringFromTable(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "key", "tableName", "comment", NULL };
 	PyObject*  result;
@@ -90,7 +90,7 @@ static	char* keywords[] = { "key", "tableName", "comment", NULL };
 }
 
 #define NSLocalizedStringFromTableInBundle_doc 0
-static PyObject* objc_NSLocalizedStringFromTableInBundle(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSLocalizedStringFromTableInBundle(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
 	PyObject* result;
@@ -122,7 +122,7 @@ static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
 
 /* NSString *NSFileTypeForHFSTypeCode(OSType hfsTypeCode); */
 
-static PyObject* objc_NSFileTypeForHFSTypeCode(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSFileTypeForHFSTypeCode(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "hfsTypeCode", NULL };
 	PyObject*  result;
@@ -150,7 +150,7 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 
 /* OSType NSHFSTypeCodeFromFileType(NSString *fileType); */
 
-static PyObject* objc_NSHFSTypeCodeFromFileType(PyObject* self, 
+static PyObject* objc_NSHFSTypeCodeFromFileType(PyObject* self __attribute__((__unused__)), 
 		PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "hfsTypeCode", NULL };
@@ -238,6 +238,8 @@ PyDoc_STRVAR(foundation_doc,
 #include "_Fnd_Str.10.1.inc"
 #endif
 #endif  /* !GNUSTEP */
+
+void init_Foundation(void);
 
 void init_Foundation(void)
 {

@@ -89,7 +89,7 @@
   returning the method itself if it matches @var{argcount}, NULL
   otherwise. */
 static inline PyObject *
-check_argcount (PyObject *pymethod, unsigned int argcount)
+check_argcount (PyObject *pymethod, int argcount)
 {
 	PyCodeObject *func_code;
 

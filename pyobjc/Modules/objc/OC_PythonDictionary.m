@@ -22,7 +22,7 @@
 
 -(id)nextObject;
 
-@end // interface OC_PythonDictionaryEnumerator
+@end /* interface OC_PythonDictionaryEnumerator */
 
 @implementation OC_PythonDictionaryEnumerator
 

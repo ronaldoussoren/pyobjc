@@ -16,7 +16,10 @@ def rest2HTML(irrelevant, dirName, names):
     for aName in names:
         if aName.endswith('.txt'):
             anInputPath = os.path.join(dirName, aName)
+            if irrelevant is not None and anInputPath in irrelevant:
+                continue
             anOutputPath = anInputPath[:-4] + '.html'
+            print '- %s'%(anInputPath)
             os.system("docarticle.py '%s' > '%s' || rm '%s'"%(
                 escquotes(anInputPath), escquotes(anOutputPath), 
                 escquotes(anOutputPath)))
@@ -101,7 +104,7 @@ if not basedir:
 	sys.exit(1)
 
 print "Generateing HTML documentation"
-os.path.walk('Doc', rest2HTML, None)
+os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
 rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt'])
 
 print "Running: '%s' setup.py sdist -d '%s'"%(

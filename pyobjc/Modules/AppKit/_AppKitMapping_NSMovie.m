@@ -12,7 +12,7 @@
 #include "pymactoolbox.h"
 
 static PyObject* call_NSMovie_QTMovie(
-		PyObject* method, PyObject* self, PyObject* arguments)
+		PyObject* method __attribute__((__unused__)), PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -76,7 +76,7 @@ static void* imp_NSMovie_QTMovie(id self, SEL sel)
 
 
 static PyObject* call_NSMovie_initWithMovie_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+		PyObject* method __attribute__((__unused__)), PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -140,7 +140,7 @@ static id imp_NSMovie_initWithMovie_(id self, SEL sel, void* movie)
 }
 
 
-int pyobjc_install_NSMovie(void)
+int _pyobjc_install_NSMovie(void)
 {
 	if (ObjC_RegisterMethodMapping(objc_lookUpClass("NSMovie"), 
 		@selector(QTMovie),
@@ -164,4 +164,3 @@ int pyobjc_install_NSMovie(void)
 
 	return 0;
 }
-

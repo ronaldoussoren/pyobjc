@@ -25,6 +25,7 @@ PyDoc_STRVAR(addressbook_doc,
 #include "_Addr_Enum.inc"
 #include "_Addr_Str.inc"
 
+void init_AddressBook(void);
 void init_AddressBook(void)
 {
 	PyObject *m, *d;

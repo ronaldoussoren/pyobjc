@@ -19,39 +19,19 @@ There are definite plans to replace the AppKit/Foundation modules by module-like
 objects that lazily lookup class objects. This is needed to speed up application
 loading. Just importing everything negates the usefullness of this change.
 
-
-Check/Fix consistency of method calling
-.......................................
-
-There are currently 3 ways for calling from Objective-C into Python:
-
-* The methods stubs (in register.m and libffi_support.m)
-
-* forwardInvocation in class-builder.m
-
-* forwardInvocation in OC_PythonObject.m
-
-These should be consistent with each other, and the first two should be
-equivalent (but aren't as the latter doesn't support pass-by-reference 
-arguments). Hmm, might as well try to merge the two forwardInvocation
-implementations if at all possible...
-
-The 'data-flow' for calling into Python from Objective-C should be the 
-reverse of calling into Objective-C from Python (e.g. 
-``libffi_support.m:method_stub`` should be the reverse of 
-``libffi_support.m:ObjC_FFICaller``)
-
 Better documentation
 ....................
 
 There should be more developer documentation and end-user documentation is
 virtually non-existant. Related to this is the website: This should be filled.
 
-We should also merge ../BUGS and ../FIXME into one file, possibly even into
-this file.
-
 We should also add scripts to convert documentation to a format that is 
 useable on the website.
+
+Also needed: document listing the differences between Objective-C Cocoa and
+Python Cocoa: which functions/methods are not available, list differences
+in arguments (e.g. NSBeginAlertSheet has a variable number of arguments in
+Objective-C, the format-arguments are not present in Python).
 
 Multi-threading support
 .......................
@@ -75,6 +55,9 @@ we should add code that enables using python in multiple threads:
   related to depythonify_c_value. Fixing this is relatively straightforward:
   raise a python exception if the conversion fails, instead of returning an
   error-string.
+
+NOTE: If we don't mind doing this only for Python 2.3 we can use the interface
+defined by PEP 311
 
 
 Test suite
@@ -207,9 +190,6 @@ python code and only differ in the build method.
 * dictionary.py
   Should be a unittest, and should be added to the (non-existing) manual
 
-* objc-vars.py
-  Move to unittests (and documentation)
-
 * pydict-to-objcdict.py
   Move to unittests
 
@@ -222,8 +202,12 @@ python code and only differ in the build method.
 * using-nscoder.py
   Move to unittest (and expand)
 
-* using-nsscanner.py
-  Move to unitest
+Add examples that demonstrate:
+
+- how to use a lot of Cocoa features
+
+- how to integrate with MacPython
+
 
 Platform dependencies in Foundation & AppKit
 ............................................
@@ -244,3 +228,9 @@ specific definitions, like this::
 It would be nice if this could be abstracted away to something like::
 
    #include PyObjC_PLAT_FILE("_Fnd_Var", ".inc")
+
+Convenience functions
+.....................
+
+Add function to PyObjCTools that can be used to decode the values returned
+by NSNetService.address()

@@ -7,6 +7,7 @@ LIBFFI_SOURCES='libffi-src'
 
 import sys
 import os
+import glob
 
 # Some PiPy stuff
 LONG_DESCRIPTION="""
@@ -32,23 +33,24 @@ PackageManager application.
 """
 
 if sys.version >= '2.2.3':
-    # This doesn't work. (The documenation says the test should be 
-    # sys.version < 2.2.3, but that doesn't look correct to me)
-    from distutils.dist import DistributionMetadata
-    DistributionMetadata.classifiers = [ 
-        'Development Status :: 5 - Production/Stable',
-        'Environment :: Console',
-        'Environment :: MacOS X :: Cocoa',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Natural Language :: English',
-        'Operating System :: MacOS :: MacOS X',
-        'Programming Language :: Python',
-        'Programming Language :: Objective C',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Software Development :: User Interfaces',
-    ]
-    DistributionMetadata.download_url = 'http://pyobjc.sourceforge.net/software/index.php'
+    SetupExtraArguments = {
+        'classifiers': [
+            'Development Status :: 5 - Production/Stable',
+            'Environment :: Console',
+            'Environment :: MacOS X :: Cocoa',
+            'Intended Audience :: Developers',
+            'License :: OSI Approved :: MIT License',
+            'Natural Language :: English',
+            'Operating System :: MacOS :: MacOS X',
+            'Programming Language :: Python',
+            'Programming Language :: Objective C',
+            'Topic :: Software Development :: Libraries :: Python Modules',
+            'Topic :: Software Development :: User Interfaces',
+        ],
+        'download_url': 'http://pyobjc.sourceforge.net/software/index.php',
+    }
+else:
+    SetupExtraArguments = {}
 
 if sys.platform == 'darwin': 
     # Apple has used build options that don't work with a 'normal' system.
@@ -167,12 +169,18 @@ if gs_root is None:
 
         # Loads of warning flags
         "-Wall", "-Wstrict-prototypes", "-Wmissing-prototypes",
-        #"-Wformat=2", "-W", "-Wfloat-equal", "-Wshadow", 
-        #"-Wpointer-arith", "-Wwrite-strings",
-        #"-Wmissing-declarations",
-        #"-Wnested-externs", "-Wunreachable-code", "-Wno-long-long",
+        "-Wformat=2", "-W", "-Wfloat-equal", "-Wshadow", 
+        "-Wpointer-arith", #"-Wwrite-strings",
+        "-Wmissing-declarations",
+        "-Wnested-externs", 
+        "-Wno-long-long",
+    
+        # These two are fairly useless:
+        #"-Wunreachable-code", 
         #"-pedantic",
-        "-O0", "-g",
+
+        "-Wno-import", 
+        "-O2", "-g",
         #"-Werror",
         ]
 
@@ -288,12 +296,12 @@ def IfFrameWork(name, packages, extensions):
     return [], []
 
 
+
 CorePackages = [ 'objc' ]
 CoreExtensions =  [
     Extension("objc._objc", 
               sourceFiles,
               extra_compile_args=[
-                    "-DOBJC_PARANOIA_MODE",
               ] + LIBFFI_CFLAGS + CFLAGS,
               extra_link_args=LIBFFI_LDFLAGS + OBJC_LDFLAGS),
     Extension("objc.test.testbndl",
@@ -310,6 +318,41 @@ CoreExtensions =  [
               extra_link_args = ['-framework', 'CoreFoundation']),
     ]
 CocoaPackages = [ 'Foundation', 'AppKit' ]
+
+
+# Provide some dependency information on Python 2.3 and later, this
+# makes development slightly more convenient.
+if sys.version >= '2.3':
+    FoundationDepends = {
+        'depends': glob.glob('Modules/Foundation/_Fnd_*.inc'),
+    }
+    AppKitDepends = {
+        'depends': glob.glob('Modules/AppKit/_App_*.inc'),
+    }
+    AppKitMappingDepends = {
+        'depends': glob.glob('Modules/AppKit/_AppKitMapping_*.m'),
+    }
+    FoundationMappingDepends = {
+        'depends': glob.glob('Modules/Foundation/_FoundationMapping_*.m'),
+    }
+    AddressBookDepends = {
+        'depends': glob.glob('Modules/AddressBook/*.inc'),
+    }
+    PrefPanesDepends = {
+        'depends': glob.glob('Modules/PreferencePanes/*.inc'),
+    }
+    InterfaceBuilderDepends = {
+        'depends': glob.glob('Modules/InterfaceBuilder/*.inc'),
+    }
+else:
+    FoundationDepends = {}
+    AppKitDepends = {}
+    AppKitMappingDepends = {}
+    FoundationMappingDepends = {}
+    AddressBookDepends = {}
+    PrefPanesDepends = {}
+    InterfaceBuilderDepends = {}
+
 CocoaExtensions = [
           Extension("Foundation._Foundation", 
                     [
@@ -320,25 +363,33 @@ CocoaExtensions = [
                         "-IModules/objc",  
                     ] + CFLAGS,
                     extra_link_args=[
-                    ] + FND_LDFLAGS),
+                    ] + FND_LDFLAGS,
+                    **FoundationDepends
+                    ),
           Extension("AppKit._AppKit", 
                     ["Modules/AppKit/_AppKit.m"],
                     extra_compile_args=[
                         "-IModules/objc", 
                     ] + CFLAGS,
                     extra_link_args=[
-                    ] + APPKIT_LDFLAGS),
+                    ] + APPKIT_LDFLAGS,
+                    **AppKitDepends
+                    ),
           Extension("AppKit._AppKitMapping",
                     ["Modules/AppKit/_AppKitMapping.m"],
                     extra_compile_args=[ "-IModules/objc",] + CFLAGS,
-                    extra_link_args=[] + APPMAP_LDFLAGS),
+                    extra_link_args=[] + APPMAP_LDFLAGS,
+                    **AppKitMappingDepends
+                    ),
           Extension("objc._FoundationMapping", 
                     ["Modules/Foundation/_FoundationMapping.m"],
                     extra_compile_args=[
                         "-IModules/objc", 
                     ] + CFLAGS,
                     extra_link_args=[
-                    ] + FNDMAP_LDFLAGS),
+                    ] + FNDMAP_LDFLAGS,
+                    **FoundationMappingDepends
+                    ),
       ]
 
 # The AdressBook module is only installed when the user actually has the
@@ -351,7 +402,9 @@ AddressBookPackages, AddressBookExtensions = \
                         '-IModules/objc',
                       ] + CFLAGS,
                       extra_link_args=[
-                      ] + ADDRESSBOOK_LDFLAGS),
+                      ] + ADDRESSBOOK_LDFLAGS,
+                      **AddressBookDepends
+                      ),
         ])
 
 PrefPanesPackages, PrefPanesExtensions = \
@@ -362,7 +415,9 @@ PrefPanesPackages, PrefPanesExtensions = \
                         '-IModules/objc',
                       ] + CFLAGS,
                       extra_link_args=[
-                      ] + PREFPANES_LDFLAGS),
+                      ] + PREFPANES_LDFLAGS,
+                      **PrefPanesDepends
+                      ),
         ])
 
 InterfaceBuilderPackages, InterfaceBuilderExtensions = \
@@ -375,7 +430,9 @@ InterfaceBuilderPackages, InterfaceBuilderExtensions = \
                       extra_link_args=[
                         '-framework', 'InterfaceBuilder', 
                         '-framework', 'Foundation'
-                      ]),
+                      ],
+                      **InterfaceBuilderDepends
+                      ),
         ])
 
 
@@ -433,6 +490,7 @@ dist = setup(name = "pyobjc",
 	     package_dir = package_dir,
 	     scripts = [ 'Scripts/nibclassbuilder', ],
 	     extra_path = "PyObjC",
+             **SetupExtraArguments
 )
 
 if "install" in sys.argv:

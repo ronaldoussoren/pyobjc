@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+Notes on supported APIs and classes on MacOS X</title>
+</head>
+<body>
+<h2>Notes on supported APIs and classes on MacOS X</h2>
+<!-- :author: Ronald Oussoren -->
+<h2><a name="introduction">Introduction</a></h2>
+<p><i>NOTE</i>: This document is very incomplete.</p>
+<p>This document describes the restrictions w.r.t. supported APIs and classes
+on MacOS X. In general you can use classes and global functions just like
+in Objective-C (e.g. the Apple developer documentaton applies), but in some
+cases there are special considerations.</p>
+<p>We also do not provide access to global functions that are not usefull for
+Python programs, those functions are listed below.</p>
+<p>The general rules are listed in ..., this document provides the exceptions to
+those rules.</p>
+<p>This document is target at the latest supported version of MacOS X (currenlty
+MacOS X 10.2.x), unless specifically noted the same restrictions apply to 
+earlier versions of MacOS X. Earlier versions of the OS have less extensive
+APIs, PyObjC does <i>not</i> provide a compatibility layer.</p>
+<p>Frameworks not listed below are not wrapped by PyObjC, they can still be
+accessed although without access to constants and global functions defined
+by those frameworks.</p>
+<h2><a name="addressbook-framework">Addressbook framework</a></h2>
+<p>We do not provide access to the global functions in that framework, because
+the same functionality can be accessed by using the object-oriented interface.</p>
+<h2><a name="appkit-framework">AppKit framework</a></h2>
+<p>T.B.D.</p>
+<h2><a name="foundation-framework">Foundation framework</a></h2>
+<p>T.B.D.</p>
+<h2><a name="interfacebuilder-framework">InterfaceBuilder framework</a></h2>
+<p>T.B.D.</p>
+<h2><a name="preferencepanes-framework">PreferencePanes framework</a></h2>
+<p>T.B.D.</p>
+</body>
+</html>

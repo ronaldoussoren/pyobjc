@@ -31,7 +31,7 @@
 /* 'Applications' */
 
 static PyObject* 
-objc_NSApplicationMain(PyObject* self, PyObject* args, PyObject* kwds)
+objc_NSApplicationMain(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "argv", NULL };
 	char** argv = NULL;
@@ -88,14 +88,14 @@ static	char* keywords[] = { "argv", NULL };
 	  } NSProcessInfoStruct;
 	  
 	  // everything in this scope is evil and wrong.  It leaks, too.
-	  NSMutableArray *args = [[NSMutableArray alloc] init];
+	  NSMutableArray *newarglist = [[NSMutableArray alloc] init];
 	  NSProcessInfo *processInfo = [NSProcessInfo processInfo];
 	  char **anArg = argv;
 	  while(*anArg) {
-	    [args addObject: [NSString stringWithUTF8String: *anArg]];
+	    [newarglist addObject: [NSString stringWithUTF8String: *anArg]];
 	    anArg++;
 	  }
-	  ((NSProcessInfoStruct *)processInfo)->arguments = args;
+	  ((NSProcessInfoStruct *)processInfo)->arguments = newarglist;
 	}
 
 	NS_DURING
@@ -131,7 +131,7 @@ error_cleanup:
 
 
 static PyObject*
-objc_NSApp(PyObject* self, PyObject* args, PyObject* kwds)
+objc_NSApp(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { NULL };
         PyObject* result;
@@ -146,7 +146,7 @@ static  char* keywords[] = { NULL };
 }
 
 static PyObject*
-objc_NSCountWindows(PyObject* self, PyObject* args, PyObject* kwds)
+objc_NSCountWindows(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { NULL };
 	int       count;
@@ -166,7 +166,7 @@ static  char* keywords[] = { NULL };
 }
 
 static PyObject*
-objc_NSCountWindowsForContext(PyObject* self, PyObject* args, PyObject* kwds)
+objc_NSCountWindowsForContext(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { "context", NULL };
 	int       count;
@@ -187,7 +187,7 @@ static  char* keywords[] = { "context", NULL };
 }
 
 static PyObject*
-objc_NSAvailableWindowDepths(PyObject* self, PyObject* args, PyObject* kwds)
+objc_NSAvailableWindowDepths(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { NULL };
 	const NSWindowDepth*	  depths;
@@ -230,12 +230,13 @@ static  char* keywords[] = { NULL };
 
 
 static PyObject*
-objc_NSRectFillList(PyObject* self, PyObject* args, PyObject* kwds)
+objc_NSRectFillList(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
+static char* keywords[] = { "bytes", "length", "count", 0 };
   unsigned char *rectBytes;
   int rectByteLength;
   int rectCount = -1;
-  if  (PyArg_ParseTuple(args, "s#|i", &rectBytes, &rectByteLength, &rectCount) < 0) {
+  if  (PyArg_ParseTupleAndKeywords(args, kwds, "s#|i", keywords, &rectBytes, &rectByteLength, &rectCount) < 0) {
     return NULL;
   }
 
@@ -255,7 +256,7 @@ objc_NSRectFillList(PyObject* self, PyObject* args, PyObject* kwds)
   }
 
   if (rectCount >= 0 ) {
-    if (rectCount > (rectByteLength / sizeof(NSRect))) {
+    if ((size_t)rectCount > (rectByteLength / sizeof(NSRect))) {
       PyErr_SetString(PyExc_ValueError, "Rect count specified, but was longer than supplied array of rectangles.");
       return NULL;
     }
@@ -269,7 +270,7 @@ objc_NSRectFillList(PyObject* self, PyObject* args, PyObject* kwds)
 }
 
 static PyObject*
-objc_NSGetWindowServerMemory(PyObject* self, PyObject* args, PyObject* kwds)
+objc_NSGetWindowServerMemory(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static char* keywords[] = { "context", "windowDumpStream", NULL };
 	int context;
@@ -542,6 +543,8 @@ struct uchar_table {
 };
 
 
+
+void init_AppKit(void);
 
 void init_AppKit(void)
 {

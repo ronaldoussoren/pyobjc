@@ -20,6 +20,24 @@ class TestNSDictionaryInteraction(unittest.TestCase):
         except KeyError:
             pass
 
+    def testPythonIteraction(self):
+        d = NSMutableDictionary.dictionary()
+        d['a'] = "foo"
+        d['b'] = "bar"
+
+        k = list(d.keys())
+        k.sort()
+        self.assert_(k == ['a', 'b'])
+
+        k = list(d.values())
+        k.sort()
+        self.assert_(k == ['bar', 'foo'])
+
+        k = list(d.items())
+        k.sort()
+        self.assert_(k == [('a', 'foo'), ('b', 'bar') ])
+
+
     def testIn(self):
         d = NSMutableDictionary.dictionary()
         d['a'] = "foo"

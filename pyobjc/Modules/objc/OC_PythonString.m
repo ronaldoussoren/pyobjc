@@ -25,9 +25,9 @@
 
 	result = PyString_AsStringAndSize(value, &buffer, &length);
 	if(result == -1) {
-	    ObjCErr_ToObjC();
 	    [self release];
-	    return nil; // not reached
+	    ObjCErr_ToObjC();
+	    return nil; 
 	}
 	stringValue = CFStringCreateWithCStringNoCopy(NULL,
 						      buffer,

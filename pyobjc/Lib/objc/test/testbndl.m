@@ -165,7 +165,7 @@ struct complexStruct
 @implementation OC_TestClass1
 
 #define ARRAYSIZE(a) (sizeof(a)/sizeof(a[0]))
-static int g_idx = 0;
+static size_t g_idx = 0;
 static unsigned long long g_ulonglongs[] = {
 	0, 42, (1LL << 63)
 };
@@ -1453,6 +1453,8 @@ static PyMethodDef no_methods[] = {
 
 
 /* Python glue */
+void inittestbndl(void);
+
 void inittestbndl(void)
 {
 	PyObject* m;
