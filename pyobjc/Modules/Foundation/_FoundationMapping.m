@@ -7,11 +7,7 @@
 
 #include <Python.h>
 #include <Foundation/Foundation.h>
-#ifndef GNU_RUNTIME
-#include <objc/objc-runtime.h>
-#endif
 #include "pyobjc-api.h"
-#include "objc_support.h"
 
 PyDoc_STRVAR(mapping_doc,
 	"This module registers some utility functions with the PyObjC core \n"

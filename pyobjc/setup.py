@@ -6,10 +6,6 @@ USE_FFI = 1
 # It true we use libffi for normal invocations, instead of NSInvocation
 USE_FFI_SHORTCUTS = 1
 
-# If true we adjust the reference count for copy/alloc, otherwise users
-# have to do that manually. (Experimental)
-USE_ADJUST_REFCOUNTS = 1
-
 # Set this to the path to an extracted tree of libffi to automaticly build
 # a compatible version of libffi
 LIBFFI_SOURCES=None
@@ -89,11 +85,9 @@ if USE_FFI:
         LIBFFI_BASE='libffi'
     LIBFFI_CFLAGS=[ 
         "-DOC_WITH_LIBFFI", 
-        #"-I%s/include"%LIBFFI_BASE, 
         "-isystem", "%s/include"%LIBFFI_BASE, 
     ]
     LIBFFI_LDFLAGS=[ 
-        '-read_only_relocs','warning',
         '-L%s/lib'%LIBFFI_BASE, '-lffi', 
     ]
     LIBFFI_SOURCEFILES=[
@@ -244,9 +238,6 @@ else:
 
     ADDRESSBOOK_LDFLAGS=[]
     PREFPANES_LDFLAGS=[]
-
-if USE_ADJUST_REFCOUNTS:
-    CFLAGS.append('-DOC_ADJUST_REFCOUNTS')
 
 CFLAGS.append('-IInclude/')
 

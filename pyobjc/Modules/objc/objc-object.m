@@ -300,7 +300,7 @@ PyObjCClassObject PyObjCObject_Type = {{
 	PyType_GenericAlloc,			/* tp_alloc */
 	object_new,				/* tp_new */
 	0,		        		/* tp_free */
-}};
+}, 0};
 
 
 

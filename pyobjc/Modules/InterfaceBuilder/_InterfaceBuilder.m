@@ -9,8 +9,6 @@
 #import <InterfaceBuilder/InterfaceBuilder.h>
 
 #include "pyobjc-api.h"
-#include "objc_support.h"
-#include "OC_PythonObject.h"
 #include "wrapper-const-table.h"
 
 static PyMethodDef ib_methods[] = {

@@ -14,11 +14,28 @@
  * - This interface is in development, the the API will probably change in
  *   incompatible ways.
  *
- * $Id: pyobjc-api.h,v 1.10 2003/03/23 17:08:19 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.11 2003/05/05 17:16:11 ronaldoussoren Exp $
  */
 
 #include <Python.h>
 #include <objc/objc.h>
+
+#import <Foundation/NSException.h>
+
+#ifndef GNU_RUNTIME
+#include <objc/objc-runtime.h>
+
+/* On 10.1 there are no defines for the OS version. */
+#ifndef MAC_OS_X_VERSION_10_1
+#define MAC_OS_X_VERSION_10_1 1010
+#define MAC_OS_X_VERSION_MAX_ALLOWED MAC_OS_X_VERSION_10_1
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_2
+#define MAC_OS_X_VERSION_10_2 1020
+#endif
+
+#endif
 
 /* Earlier versions of Python don't define PyDoc_STRVAR */
 #ifndef PyDoc_STR
@@ -42,6 +59,7 @@ typedef int (RegisterMethodMappingFunctionType)(
 
 struct pyobjc_api {
 	int	      api_version;	/* API version */
+	int	      struct_len;	/* Length of this struct */
 	PyTypeObject* class_type;	/* PyObjCClass_Type    */
 	PyTypeObject* object_type;	/* PyObjCObject_Type   */
 	PyTypeObject* select_type;	/* ObjCSelector_Type */
@@ -102,6 +120,12 @@ struct pyobjc_api {
 
 	/* PyObjCBool_FromLong */
 	PyObject*  (*bool_init)(long i);
+
+	/* PyObjC_InitSuper */
+	void	(*fill_super)(struct objc_super*, Class, id);
+
+	/* PyObjC_InitSuperCls */
+	void	(*fill_super_cls)(struct objc_super*, Class);
 };
 
 
@@ -131,10 +155,12 @@ static struct pyobjc_api*	ObjC_API;
 #define ObjC_RegisterMethodMapping (ObjC_API->register_method_mapping)
 #define ObjC_RegisterSignatureMapping (ObjC_API->register_signature_mapping)
 #define ObjC_SizeOfType      (ObjC_API->sizeof_type)
-#define  ObjC_PythonToObjC   (ObjC_API->py_to_objc)
-#define  ObjC_ObjCToPython   (ObjC_API->objc_to_py)
-#define  PyObjCBool_Check   (ObjC_API->bool_check)
-#define  PyObjCBool_FromLong   (ObjC_API->bool_init)
+#define ObjC_PythonToObjC   (ObjC_API->py_to_objc)
+#define ObjC_ObjCToPython   (ObjC_API->objc_to_py)
+#define PyObjCBool_Check   (ObjC_API->bool_check)
+#define PyObjCBool_FromLong   (ObjC_API->bool_init)
+#define PyObjC_InitSuper	(ObjC_API->fill_super)
+#define PyObjC_InitSuperCls	(ObjC_API->fill_super_cls)
 
 #ifndef PYOBJC_METHOD_STUB_IMPL
 static int

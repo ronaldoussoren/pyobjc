@@ -633,6 +633,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	int               arglistOffset;
 	int		  itemSize;
 	int		  itemAlign;
+	void*		  arg;
 
 	if (meth->sel_oc_signature) {
 		methinfo = meth->sel_oc_signature;
@@ -863,7 +864,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 				{
 					argbuf_cur = align(argbuf_cur, 
 						objc_alignof_type(argtype));
-					void* arg = argbuf + argbuf_cur;
+					arg = argbuf + argbuf_cur;
 					argbuf_cur += objc_sizeof_type(argtype);
 					byref[i] = arg;
 	  				error = depythonify_c_value (
@@ -883,7 +884,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 				{
 					argbuf_cur = align(argbuf_cur, 
 						objc_alignof_type(argtype+1));
-					void* arg = argbuf + argbuf_cur;
+					arg = argbuf + argbuf_cur;
 					argbuf_cur += objc_sizeof_type(argtype+1);
 					byref[i] = arg;
 	  				error = depythonify_c_value (
@@ -902,8 +903,8 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 				if (argtype[1] == _C_PTR) {
 					/* Allocate space and encode */
-					argbuf_cur = align(argbuf_cur, objc_alignof_type(argtype+2));
-					void* arg = argbuf + argbuf_cur;
+					argbuf_cur = align(argbuf_cur, objc_alignof_type(argtype+2)); 
+					arg = argbuf + argbuf_cur;
 					argbuf_cur += objc_sizeof_type(argtype+2);
 					byref[i] = arg;
 	  				error = depythonify_c_value (
@@ -917,7 +918,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 				} else {
 					/* just encode */
 					argbuf_cur = align(argbuf_cur, objc_alignof_type(argtype+1));
-					void* arg = argbuf + argbuf_cur;
+					arg = argbuf + argbuf_cur;
 					argbuf_cur += objc_sizeof_type(argtype+1);
 	  				error = depythonify_c_value (
 						argtype+1, 
@@ -933,7 +934,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			default:
 				{
 				argbuf_cur = align(argbuf_cur, objc_alignof_type(argtype));
-				void* arg = argbuf + argbuf_cur;
+				arg = argbuf + argbuf_cur;
 				argbuf_cur += objc_sizeof_type(argtype);
 
 	  			error = depythonify_c_value (

@@ -13,11 +13,7 @@
  */
 #include <Python.h>
 #include <Foundation/Foundation.h>
-#ifndef GNU_RUNTIME
-#include <objc/objc-runtime.h>
-#endif
 #include "pyobjc-api.h"
-#include "objc_support.h"
 
 static PyObject* call_NSData_dataWithBytes_length_(
 		PyObject* method, PyObject* self, PyObject* arguments)
@@ -70,8 +66,7 @@ static PyObject* supercall_NSData_dataWithBytes_length_(
 	}
 
 	NS_DURING
-		RECEIVER(super) = PyObjCClass_GetClass(self);
-		super.class = GETISA(RECEIVER(super));
+		PyObjC_InitSuperCls(&super, PyObjCClass_GetClass(self));
 
 		objc_result = objc_msgSendSuper(&super,
 				@selector(dataWithBytes:length:),
@@ -192,8 +187,9 @@ static PyObject* supercall_NSData_initWithBytes_length_(
 	}
 
 	NS_DURING
-		RECEIVER(super) = PyObjCObject_GetObject(self);
-		super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
+		PyObjC_InitSuper(&super,
+			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCObject_GetObject(self));
 
 		objc_result = objc_msgSendSuper(&super,
 				@selector(initWithBytes:length:),
@@ -295,8 +291,9 @@ static PyObject* supercall_NSData_bytes(PyObject* method, PyObject* self, PyObje
   }
 
   NS_DURING
-    RECEIVER(super) = PyObjCObject_GetObject(self);
-    super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
+    PyObjC_InitSuper(&super,
+	    PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+	    PyObjCObject_GetObject(self));
 
     /* bbum: Not at all sure what to do here....   send both to super?  
      *       Just -bytes?
@@ -379,8 +376,9 @@ static PyObject* supercall_NSMutableData_mutableBytes(PyObject* method, PyObject
   }
 
   NS_DURING
-    RECEIVER(super) = PyObjCObject_GetObject(self);
-    super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
+    PyObjC_InitSuper(&super,
+    	PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+    	PyObjCObject_GetObject(self));
 
     /* bbum: Not at all sure what to do here....   
      *       send both to super?  Just -bytes?

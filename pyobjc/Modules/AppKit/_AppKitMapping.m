@@ -5,10 +5,6 @@
 #include <Python.h>
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h> // really should be Cocoa
-#ifndef GNU_RUNTIME
-#include <objc/objc-runtime.h>
-#endif
-#include "objc_support.h"
 #include "pyobjc-api.h"
 
 
@@ -169,8 +165,9 @@ supercall_NSBitmapImageRep_initWithBitmap(PyObject* method,
   colorSpaceNameString = [NSString stringWithCString: colorSpaceName];
 
   NS_DURING
-    RECEIVER(super) = PyObjCObject_GetObject(self);
-    super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
+    PyObjC_InitSuper(&super,
+	    PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+	    PyObjCObject_GetObject(self));
     
     newImageRep = objc_msgSendSuper(&super,
 			       @selector(initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:), dataPlanes, width, height, bps, spp, hasAlpha, isPlanar, colorSpaceNameString, bpr, bpp);
@@ -253,13 +250,15 @@ supercall_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
     int i;
     int bytesPerPlane;
 
-    RECEIVER(super) = PyObjCObject_GetObject(self);
-    super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
+    PyObjC_InitSuper(&super,
+    	PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+    	PyObjCObject_GetObject(self));
     
     (void)objc_msgSendSuper(&super, 
 			    @selector(getBitmapDataPlanes:),
 			    &dataPlanes);
-    bytesPerPlane = (int) objc_msgSend(RECEIVER(super), @selector(bytesPerPlane));
+    bytesPerPlane = (int) objc_msgSend(
+    	PyObjCObject_GetObject(self), @selector(bytesPerPlane));
 
     result = PyTuple_New(5);
     if (result != NULL) {
@@ -339,11 +338,13 @@ supercall_NSBitmapImageRep_bitmapData(PyObject* method,
     unsigned char *bitmapData;
     int bytesPerPlane;
 
-    RECEIVER(super) = PyObjCObject_GetObject(self);
-    super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
+    PyObjC_InitSuper(&super,
+	    PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+	    PyObjCObject_GetObject(self));
     
     bitmapData = (unsigned char *) objc_msgSendSuper(&super, @selector(bitmapData));
-    bytesPerPlane = (int) objc_msgSend(RECEIVER(super), @selector(bytesPerPlane));
+    bytesPerPlane = (int) objc_msgSend(
+    	PyObjCObject_GetObject(self), @selector(bytesPerPlane));
 
     result = PyBuffer_FromReadWriteMemory(bitmapData, bytesPerPlane);
     if (PyErr_Occurred()) {
