@@ -285,6 +285,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			continue;
 		}
 
+		// XXX: Check goes here for formal protocols
 		if (!PyObjCInformalProtocol_Check(p)) {
 			continue;
 		}
