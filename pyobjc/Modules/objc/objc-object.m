@@ -513,7 +513,7 @@ PyDoc_STRVAR(obj_get_instanceMethods_doc,
 static PyObject*
 obj_get_instanceMethods(PyObjCObject* self, void* closure __attribute__((__unused__)))
 {
-	return ObjCMethodAccessor_New((PyObject*)self, 0);
+	return PyObjCMethodAccessor_New((PyObject*)self, 0);
 }
 
 static PyGetSetDef obj_getset[] = {

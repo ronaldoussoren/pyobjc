@@ -15,7 +15,7 @@ PyObject* PyObjCExc_NoProtocol;
 PyObject* PyObjCExc_UnInitDeallocWarning;
 
 int 
-ObjCUtil_Init(PyObject* module)
+PyObjCUtil_Init(PyObject* module)
 {
 #define NEW_EXC(identifier, name, base_class) \
 	identifier = PyErr_NewException("objc."name, base_class, NULL); \
@@ -235,7 +235,7 @@ PyObjCErr_AsExc(void)
 	Py_DECREF(typerepr);
 	Py_DECREF(repr);
 
-	if (ObjC_VerboseLevel) {
+	if (PyObjC_VerboseLevel) {
 		PyErr_Restore(exc_type, exc_value , exc_traceback);
 		NSLog(@"PyObjC: Converting exception to Objective-C:");
 		PyErr_Print();
