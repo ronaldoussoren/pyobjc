@@ -75,7 +75,7 @@ def IBAction(func):
     """
     return selector(func, signature="v@:@")
 
-def accessor(func):
+def accessor(func, typeSignature='@'):
     """
     Return an Objective-C method object that is conformant with key-value coding
     and key-value observing.
@@ -106,13 +106,13 @@ def accessor(func):
         elif funcName.startswith('get') and funcName.endswith('_range_'):
             return selector(func, signature='@@:{_NSRange=ii}')
 
-        return selector(func, signature="v@:@")
+        return selector(func, signature="v@:" + typeSignature)
 
     elif argCount == 1:
-        if func.func_name.startswith('countOf'):
-            return selector(func, signature="i@:")
+        if typeSignature == '@' and func.func_name.startswith('countOf'):
+            typeSignature = 'i'
 
-        return selector(func, signature="@@:")
+        return selector(func, signature=typeSignature + "@:")
     elif argCount == 0:
         raise ValueError, "Too few arguments to function '%s'.  Cannot create selector." % foo.func_name
     else:
