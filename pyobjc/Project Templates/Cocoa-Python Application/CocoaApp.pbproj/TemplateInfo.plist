@@ -2,7 +2,7 @@
 	FilesToMacroExpand = (
 		"English.lproj/InfoPlist.strings",
 		"bin-python-main.m",
-		"Main.py",
+		"__main__.py",
 		"MyAppDelegate.py",
 	);
 }
