@@ -3,6 +3,7 @@ from PyObjCTools import NibClassBuilder, AppHelper
 import Foundation, AppKit, WebKit
 from Foundation import *
 from AppKit import *
+import objc; objc.setVerbose(1)
 
 import PyDocURLProtocol
 

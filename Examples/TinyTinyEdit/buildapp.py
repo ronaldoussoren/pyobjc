@@ -15,8 +15,8 @@ plist = Plist(
 
 
 buildapp(
-	mainprogram = "TinyTinyEdit.py",
-	resources = ["MainMenu.nib", "TinyTinyDocument.nib"],
-	nibname = "MainMenu",
+    mainprogram = "TinyTinyEdit.py",
+    resources = ["MainMenu.nib", "TinyTinyDocument.nib"],
+    nibname = "MainMenu",
     plist = plist,
 )
