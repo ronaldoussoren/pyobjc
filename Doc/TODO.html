@@ -58,6 +58,9 @@ features.  Currently, documentation doesn't refer to itself consistently
 Python and Objective-C code snippets.</li>
 </ul>
 <h3><a href="#id5" name="test-suite">Test suite</a></h3>
+<p>XXX: It might be a good idea to move the unittests to a seperate python
+package (e.g. <code><span>PyObjCTest</span></code>) that is not installed. I'd be surprised if anyone
+ever runs the unittests outside of the build tree.</p>
 <p>The test suite needs to be enhanced.</p>
 <ul>
 <li>Somehow find a way to check code-coverage of the unittests.</li>
@@ -84,7 +87,7 @@ Objective-C.</li>
 class methods in the obvious way.  This would (finally) close <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=836247&amp;group_id=14534&amp;atid=114534">836247</a>.</li>
 </ul>
 <ul>
-<li>Likewise for class-builder.m, this file is way to large.</li>
+<li>Also restructure class-builder.m, this file is way to large.</li>
 <li>Allow ivars of Objective-C classes to be introspected
 (but not directly from the __dict__?)<p>NOTE: instance-var.[hm] implements most of this, it just needs to be
 wired up correctly. I'd do this by adding <code><span>pyobjc_instancevars</span></code> to
@@ -202,6 +205,8 @@ additional methods in the NSMutableDictionary interface if those can be
 implemented efficiently. The default implementation will take care of the
 methods we cannot implement efficiently.</p>
 <p>And the same is true of OC_PythonArray</p>
+<p>In both cases we shouldn't do this unless we can measure the difference in
+performance.</p>
 <h3><a href="#id20" name="clean-up-oc-pythonobject">Clean up OC_PythonObject</a></h3>
 <p>The code is a mess.</p>
 <h3><a href="#id21" name="rewrite-scripts-find-raw-pointers-py">Rewrite scripts/find-raw-pointers.py</a></h3>
