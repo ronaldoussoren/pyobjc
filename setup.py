@@ -286,15 +286,16 @@ else:
 CFLAGS.append('-IInclude/')
 CFLAGS.append('-Ibuild/codegen/')
 
-def IfFrameWork(name, packages, extensions):
+def IfFrameWork(name, packages, extensions, headername=None):
     """
     Return the packages and extensions if the framework exists, or
     two empty lists if not.
     """
-    if os.path.exists(os.path.join('/System/Library/Frameworks/', name)):
-        return packages, extensions
-    if os.path.exists(os.path.join('/Library/Frameworks/', name)):
-        return packages, extensions
+    for pth in ('/System/Library/Frameworks', '/Library/Frameworks'):
+        basedir = os.path.join(pth, name)
+        if os.path.exists(basedir):
+            if (headername is None) or os.path.exists(os.path.join(basedir, "Headers", headername)):
+                return packages, extensions
     return [], []
 
 
@@ -459,7 +460,7 @@ WebKitPackages, WebKitExtensions = \
                       ],
                       **WebKitDepends
                       ),
-        ])
+        ], headername="WebKit.h")
 
 
 def package_version():
