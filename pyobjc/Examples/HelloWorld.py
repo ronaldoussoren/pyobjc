@@ -20,42 +20,49 @@
 #    [ obj method: arg1 withOtherArgs: arg2 ] 
 #				obj.method_withOtherArgs_( arg1, arg2 )
 
-import pyobjc
-rt = pyobjc.runtime	# shorthand -- runtime gets used a lot!
+import objc
 
-class AppDelegate:
+# We should import AppKit and Foundation, but don't do that
+# here to show we're using just the basic objective-C bindings.
+NSBundle = objc.lookup_class('NSBundle')
+NSAutoreleasePool = objc.lookup_class('NSAutoreleasePool')
+NSApplication = objc.lookup_class('NSApplication')
+NSWindow = objc.lookup_class('NSWindow')
+NSButton = objc.lookup_class('NSButton')
+NSSound = objc.lookup_class('NSSound')
+NSObject = objc.lookup_class('NSObject')
+
+class AppDelegate (NSObject):
     def applicationDidFinishLaunching_(self, aNotification):
         print "Hello, World!"
 
 def main():
 
-    pool = rt.NSAutoreleasePool()
-
     # Load Application Framework:
-    rt.NSBundle.bundleWithPath_(
+    NSBundle.bundleWithPath_(
 	'/System/Library/Frameworks/AppKit.framework').load()
 
-    NSApp = rt.NSApplication.sharedApplication()
+    NSApp = NSApplication.sharedApplication()
 
-    ##! NSApp.setDelegate_( AppDelegate() )
+    NSApp.setDelegate_( AppDelegate.alloc().init() )
 
-    win = rt.NSWindow.alloc()
+    win = NSWindow.alloc()
     frame = ((200.0, 300.0), (250.0, 100.0))
     win.initWithContentRect_styleMask_backing_defer_ (frame, 15, 2, 0)
     win.setTitle_ ('HelloWorld')
     win.setLevel_ (3)			# floating window
 
-    hel = rt.NSButton.alloc().initWithFrame_ (((10.0, 10.0), (80.0, 80.0)))
+    hel = NSButton.alloc().initWithFrame_ (((10.0, 10.0), (80.0, 80.0)))
     win.contentView().addSubview_ (hel)
     hel.setBezelStyle_( 4 )
     hel.setTitle_( 'Hello!' )
 
-    beep = rt.NSSound.alloc()
+    beep = NSSound.alloc()
     beep.initWithContentsOfFile_byReference_( 
 	'/System/Library/Sounds/tink.aiff', 1 )
     hel.setSound_( beep )
 
-    bye = rt.NSButton.alloc().initWithFrame_ (((100.0, 10.0), (80.0, 80.0)))
+    bye = NSButton.alloc().initWithFrame_ (((100.0, 10.0), (80.0, 80.0)))
     win.contentView().addSubview_ (bye)
     bye.setBezelStyle_( 4 )
     bye.setTarget_ (NSApp)
@@ -63,7 +70,7 @@ def main():
     bye.setEnabled_ ( 1 )
     bye.setTitle_( 'Goodbye!' )
 
-    adios = rt.NSSound.alloc()
+    adios = NSSound.alloc()
     adios.initWithContentsOfFile_byReference_( 
 	'/System/Library/Sounds/Basso.aiff', 1 )
     bye.setSound_( adios )

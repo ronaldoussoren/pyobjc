@@ -1,0 +1,305 @@
+#
+# List of functions. Generated from files in 
+# /System/Library/Frameworks/Foundation.framework/Headers
+# 
+# Used to check for new functions
+# 
+
+# From: Foundation.h
+
+# From: NSAppleEventDescriptor.h
+
+# From: NSAppleEventManager.h
+
+# From: NSArchiver.h
+
+# From: NSArray.h
+
+# From: NSAttributedString.h
+
+# From: NSAutoreleasePool.h
+
+# From: NSBundle.h
+
+# From: NSByteOrder.h
+
+# From: NSCalendarDate.h
+
+# From: NSCharacterSet.h
+
+# From: NSClassDescription.h
+
+# From: NSCoder.h
+NSObject *NXReadNSObjectFromCoder(NSCoder *decoder);
+
+# From: NSCompatibility.h
+
+# From: NSConnection.h
+
+# From: NSData.h
+
+# From: NSDate.h
+
+# From: NSDateFormatter.h
+
+# From: NSDebug.h
+BOOL NSIsFreedObject(id anObject);
+void *NSFrameAddress(unsigned frame);
+void *NSReturnAddress(unsigned frame);
+unsigned NSCountFrames(void);
+void _NSAutoreleaseNoPool(void *object);
+void _NSAutoreleaseFreedObject(void *freedObject);
+void _NSAutoreleaseHighWaterLog(unsigned int count);
+void NSRecordAllocationEvent(int eventType, ...);
+
+# From: NSDecimal.h
+void NSDecimalCopy(NSDecimal *destination, const NSDecimal *source);
+void NSDecimalCompact(NSDecimal *number);
+NSComparisonResult NSDecimalCompare(const NSDecimal *leftOperand, const NSDecimal *rightOperand);
+void NSDecimalRound(NSDecimal *result, const NSDecimal *number, int scale, NSRoundingMode roundingMode);
+NSCalculationError NSDecimalNormalize(NSDecimal *number1, NSDecimal *number2, NSRoundingMode roundingMode);
+NSCalculationError NSDecimalAdd(NSDecimal *result, const NSDecimal *leftOperand, const NSDecimal *rightOperand, NSRoundingMode roundingMode);
+NSCalculationError NSDecimalSubtract(NSDecimal *result, const NSDecimal *leftOperand, const NSDecimal *rightOperand, NSRoundingMode roundingMode);
+NSCalculationError NSDecimalMultiply(NSDecimal *result, const NSDecimal *leftOperand, const NSDecimal *rightOperand, NSRoundingMode roundingMode);
+NSCalculationError NSDecimalDivide(NSDecimal *result, const NSDecimal *leftOperand, const NSDecimal *rightOperand, NSRoundingMode roundingMode);
+NSCalculationError NSDecimalPower(NSDecimal *result, const NSDecimal *number, unsigned power, NSRoundingMode roundingMode);
+NSCalculationError NSDecimalMultiplyByPowerOf10(NSDecimal *result, const NSDecimal *number, short power, NSRoundingMode roundingMode);
+NSString *NSDecimalString(const NSDecimal *dcm, NSDictionary *locale);
+
+# From: NSDecimalNumber.h
+
+# From: NSDictionary.h
+
+# From: NSDistantObject.h
+
+# From: NSDistributedLock.h
+
+# From: NSDistributedNotificationCenter.h
+
+# From: NSEnumerator.h
+
+# From: NSException.h
+void _NSAddHandler2(NSHandler2 *handler);
+void _NSRemoveHandler2(NSHandler2 *handler);
+NSException *_NSExceptionObjectFromHandler2(NSHandler2 *handler);
+NSUncaughtExceptionHandler *NSGetUncaughtExceptionHandler(void);
+void NSSetUncaughtExceptionHandler(NSUncaughtExceptionHandler *);
+
+# From: NSFileHandle.h
+
+# From: NSFileManager.h
+
+# From: NSFormatter.h
+
+# From: NSGeometry.h
+BOOL NSEqualPoints(NSPoint aPoint, NSPoint bPoint);
+BOOL NSEqualSizes(NSSize aSize, NSSize bSize);
+BOOL NSEqualRects(NSRect aRect, NSRect bRect);
+BOOL NSIsEmptyRect(NSRect aRect);
+NSRect NSInsetRect(NSRect aRect, float dX, float dY);
+NSRect NSIntegralRect(NSRect aRect);
+NSRect NSUnionRect(NSRect aRect, NSRect bRect);
+NSRect NSIntersectionRect(NSRect aRect, NSRect bRect);
+NSRect NSOffsetRect(NSRect aRect, float dX, float dY);
+void NSDivideRect(NSRect inRect, NSRect *slice, NSRect *rem, float amount, NSRectEdge edge);
+BOOL NSPointInRect(NSPoint aPoint, NSRect aRect);
+BOOL NSMouseInRect(NSPoint aPoint, NSRect aRect, BOOL flipped);
+BOOL NSContainsRect(NSRect aRect, NSRect bRect);
+BOOL NSIntersectsRect(NSRect aRect, NSRect bRect);
+NSString *NSStringFromPoint(NSPoint aPoint);
+NSString *NSStringFromSize(NSSize aSize);
+NSString *NSStringFromRect(NSRect aRect);
+NSPoint NSPointFromString(NSString *aString);
+NSSize NSSizeFromString(NSString *aString);
+NSRect NSRectFromString(NSString *aString);
+
+# From: NSHashTable.h
+NSHashTable *NSCreateHashTableWithZone(NSHashTableCallBacks callBacks, unsigned capacity, NSZone *zone);
+NSHashTable *NSCreateHashTable(NSHashTableCallBacks callBacks, unsigned capacity);
+void NSFreeHashTable(NSHashTable *table);
+void NSResetHashTable(NSHashTable *table);
+BOOL NSCompareHashTables(NSHashTable *table1, NSHashTable *table2);
+NSHashTable *NSCopyHashTableWithZone(NSHashTable *table, NSZone *zone);
+void *NSHashGet(NSHashTable *table, const void *pointer);
+void NSHashInsert(NSHashTable *table, const void *pointer);
+void NSHashInsertKnownAbsent(NSHashTable *table, const void *pointer);
+void *NSHashInsertIfAbsent(NSHashTable *table, const void *pointer);
+void NSHashRemove(NSHashTable *table, const void *pointer);
+NSHashEnumerator NSEnumerateHashTable(NSHashTable *table);
+void *NSNextHashEnumeratorItem(NSHashEnumerator *enumerator);
+void NSEndHashTableEnumeration(NSHashEnumerator *enumerator);
+unsigned NSCountHashTable(NSHashTable *table);
+NSString *NSStringFromHashTable(NSHashTable *table);
+NSArray *NSAllHashTableObjects(NSHashTable *table);
+
+# From: NSHFSFileTypes.h
+
+# From: NSHost.h
+
+# From: NSInvocation.h
+
+# From: NSJavaSetup.h
+BOOL NSJavaNeedsVirtualMachine(NSDictionary *plist);
+BOOL NSJavaProvidesClasses(NSDictionary *plist);
+BOOL NSJavaNeedsToLoadClasses(NSDictionary *plist);
+id NSJavaSetup(NSDictionary *plist);
+id NSJavaSetupVirtualMachine(void);
+id NSJavaObjectNamedInPath(NSString *name, NSArray *path);
+NSArray *NSJavaClassesFromPath(NSArray *path, NSArray *wanted, BOOL usesyscl, id *vm);
+NSArray *NSJavaClassesForBundle(NSBundle *bundle, BOOL usesyscl, id *vm);
+id NSJavaBundleSetup(NSBundle *bundle, NSDictionary *plist);
+void NSJavaBundleCleanup(NSBundle *bundle, NSDictionary *plist);
+
+# From: NSKeyValueCoding.h
+
+# From: NSLock.h
+
+# From: NSMapTable.h
+NSMapTable *NSCreateMapTableWithZone(NSMapTableKeyCallBacks keyCallBacks, NSMapTableValueCallBacks valueCallBacks, unsigned capacity, NSZone *zone);
+NSMapTable *NSCreateMapTable(NSMapTableKeyCallBacks keyCallBacks, NSMapTableValueCallBacks valueCallBacks, unsigned capacity);
+void NSFreeMapTable(NSMapTable *table);
+void NSResetMapTable(NSMapTable *table);
+BOOL NSCompareMapTables(NSMapTable *table1, NSMapTable *table2);
+NSMapTable *NSCopyMapTableWithZone(NSMapTable *table, NSZone *zone);
+BOOL NSMapMember(NSMapTable *table, const void *key, void **originalKey, void **value);
+void *NSMapGet(NSMapTable *table, const void *key);
+void NSMapInsert(NSMapTable *table, const void *key, const void *value);
+void NSMapInsertKnownAbsent(NSMapTable *table, const void *key, const void *value);
+void *NSMapInsertIfAbsent(NSMapTable *table, const void *key, const void *value);
+void NSMapRemove(NSMapTable *table, const void *key);
+NSMapEnumerator NSEnumerateMapTable(NSMapTable *table);
+BOOL NSNextMapEnumeratorPair(NSMapEnumerator *enumerator, void **key, void **value);
+void NSEndMapTableEnumeration(NSMapEnumerator *enumerator);
+unsigned NSCountMapTable(NSMapTable *table);
+NSString *NSStringFromMapTable(NSMapTable *table);
+NSArray *NSAllMapTableKeys(NSMapTable *table);
+NSArray *NSAllMapTableValues(NSMapTable *table);
+
+# From: NSMethodSignature.h
+
+# From: NSNotification.h
+
+# From: NSNotificationQueue.h
+
+# From: NSNull.h
+
+# From: NSNumberFormatter.h
+
+# From: NSObjCRuntime.h
+NSString *NSStringFromSelector(SEL aSelector);
+SEL NSSelectorFromString(NSString *aSelectorName);
+Class NSClassFromString(NSString *aClassName);
+NSString *NSStringFromClass(Class aClass);
+const char *NSGetSizeAndAlignment(const char *typePtr, unsigned int *sizep, unsigned int *alignp);
+void NSLog(NSString *format, ...);
+void NSLogv(NSString *format, va_list args);
+
+# From: NSObject.h
+id <NSObject> NSAllocateObject(Class aClass, unsigned extraBytes, NSZone *zone);
+void NSDeallocateObject(id <NSObject>object);
+id <NSObject> NSCopyObject(id <NSObject>object, unsigned extraBytes, NSZone *zone);
+BOOL NSShouldRetainWithZone(id <NSObject> anObject, NSZone *requestedZone);
+void NSIncrementExtraRefCount(id object);
+BOOL NSDecrementExtraRefCountWasZero(id object);
+unsigned NSExtraRefCount(id object);
+
+# From: NSPathUtilities.h
+NSString *NSUserName(void);
+NSString *NSFullUserName(void);
+NSString *NSHomeDirectory(void);
+NSString *NSHomeDirectoryForUser(NSString *userName);
+NSString *NSTemporaryDirectory(void);
+NSString *NSOpenStepRootDirectory(void);
+NSArray *NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde);
+
+# From: NSPort.h
+
+# From: NSPortCoder.h
+
+# From: NSPortMessage.h
+
+# From: NSPortNameServer.h
+
+# From: NSProcessInfo.h
+
+# From: NSProtocolChecker.h
+
+# From: NSProxy.h
+
+# From: NSRange.h
+NSRange NSUnionRange(NSRange range1, NSRange range2);
+NSRange NSIntersectionRange(NSRange range1, NSRange range2);
+NSString *NSStringFromRange(NSRange range);
+NSRange NSRangeFromString(NSString *aString);
+
+# From: NSRunLoop.h
+
+# From: NSScanner.h
+
+# From: NSScriptClassDescription.h
+
+# From: NSScriptCoercionHandler.h
+
+# From: NSScriptCommand.h
+
+# From: NSScriptCommandDescription.h
+
+# From: NSScriptExecutionContext.h
+
+# From: NSScriptKeyValueCoding.h
+
+# From: NSScriptObjectSpecifiers.h
+
+# From: NSScriptStandardSuiteCommands.h
+
+# From: NSScriptSuiteRegistry.h
+
+# From: NSScriptWhoseTests.h
+
+# From: NSSerialization.h
+
+# From: NSSet.h
+
+# From: NSSpellServer.h
+
+# From: NSString.h
+
+# From: NSTask.h
+
+# From: NSThread.h
+
+# From: NSTimer.h
+
+# From: NSTimeZone.h
+
+# From: NSUndoManager.h
+
+# From: NSURL.h
+
+# From: NSURLHandle.h
+
+# From: NSUserDefaults.h
+
+# From: NSUtilities.h
+
+# From: NSValue.h
+
+# From: NSZone.h
+NSZone *NSDefaultMallocZone(void);
+NSZone *NSCreateZone(unsigned startSize, unsigned granularity, BOOL canFree);
+void NSRecycleZone(NSZone *zone);
+void NSSetZoneName(NSZone *zone, NSString *name);
+NSString *NSZoneName(NSZone *zone);
+NSZone *NSZoneFromPointer(void *ptr);
+void *NSZoneMalloc(NSZone *zone, unsigned size);
+void *NSZoneCalloc(NSZone *zone, unsigned numElems, unsigned byteSize);
+void *NSZoneRealloc(NSZone *zone, void *ptr, unsigned size);
+void NSZoneFree(NSZone *zone, void *ptr);
+unsigned NSPageSize(void);
+unsigned NSLogPageSize(void);
+unsigned NSRoundUpToMultipleOfPageSize(unsigned bytes);
+unsigned NSRoundDownToMultipleOfPageSize(unsigned bytes);
+void *NSAllocateMemoryPages(unsigned bytes);
+void NSDeallocateMemoryPages(void *ptr, unsigned bytes);
+void NSCopyMemoryPages(const void *source, void *dest, unsigned bytes);
+unsigned NSRealMemoryAvailable(void);

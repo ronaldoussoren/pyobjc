@@ -5,6 +5,30 @@
 
 WHAT'S NEW:
 
+Version 2002-XX-XX (Someday):
+
+- Version bumped to A.B.C
+
+- Requires Python 2.3, and on MacOS X a framework install of python
+
+- Support for the GNU runtime is even less functional than before
+
+- Subclassing Objective-C classes from Python, including the addition
+  of instance variables (like 'IBOutlet's)
+
+- Generic support for pass-by-reference arguments
+
+- More complete Cocoa package, including wrappers for a number of 
+  C functions.
+
+- More example code
+
+- Objective-C mappings and sequences can be accessed using the normal
+  python methods for accessing mappings and sequences (e.g. subscripting
+  works as expected)
+
+- Documentation: See the directory 'docs'
+
 Version 2002-01-30 (January 30, 2002):
 
 - Version bumped to 0.6.1 ( __version__ is now a PyString )

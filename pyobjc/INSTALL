@@ -12,16 +12,11 @@
 Building the Module
 ===================
 
+*** 
+*** NOTE1: On MacOS X you must build and install Python as a framework
+***	  (check Mac/OSX/README in the Python tree on how to do this).
 ***
-***  NOTE: You must build Python with Objective-C enabled by
-***        specifying --with-objc to the configure script to use this.
-***
-
-***
-*** NOTE:  This no longer seems to be true under OSX Final Candidate
-*** (and future versions, I would suspect).   A build of python
-*** configured with './configure --with-suffix=.exe --with-threads
-*** --with-dyld' worked fine!
+*** NOTE2: You'll need Python 2.3 or later, Python 2.2 is NOT good enough!
 ***
 
 The module uses the distutils package included with Python 2.0 and
@@ -42,6 +37,9 @@ The following command will build and install the pyobjc module:
 
 The setup.py system can also be used to create source and binary
 distribution archives automatically.
+
+
+XXX Ronald: Everything below this should be updated.
 
 Demos
 =====

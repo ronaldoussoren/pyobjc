@@ -1,3 +1,80 @@
+2002-09-28 Ronald Oussoren <oussoren@cistron.nl>
+	* objc-class.m: Actually implement the selector->python cache,
+	  this significantly speeds up method dispatch (iClass is now
+	  pretty snappy)
+
+2002-09-23 Ronald Oussoren <oussoren@cistron.nl>
+	* Changelog: fix my e-mail address.
+
+	* setup.py: Check for a framework install of python on MacOS X
+
+	* setup.py: Check for Python 2.3 or later
+
+	* OC_PythonObject.m: Remove debug printf statements
+
+	* class-builder.m: 
+	  - Use alloca instead of malloc for small buffers
+	  - Use signature string from the Python wrapper of a class, instead
+	    of reading it directly from the Objective-C class: The user may
+	    have specified a better signature.
+
+ 	* objc-class.m:
+	  - Add 'tp_compare' and 'tp_hash' special methods.
+	  - Fix memory leak in ObjCClass_FindSelector
+
+	* objc_support.m:
+	  - Add support for unicode strings
+	  - In depythonify_c_value: do nothing if output buffer is NULL
+	  - arguments arena support is completely disabled. As a side-effect,
+	    _C_PTR values inside structures/arrays are no longer translated
+	    to/from python.
+
+	* objc_util.m: Translate some Cocoa exceptions into Python 
+
+	* selector.m:
+	  - Remove debug printfs
+	  - Actually add implementations for ObjCSelector_Signature
+	    and ObjCSelector_Selector
+	
+	* super-call.m:
+	  - The python wrapper for an Objective-C method might know a better
+	    signature than the method itself.
+	
+	* Modules/Cocoa:
+	  - Copied later version, including some more constants.
+
+	* Lib/objc/__init__.py: 
+	  - Re-enable __setitem__ special method for objects with
+	    setObject:forKey:
+	  - IBAction is now a function
+	  - If we are a '.app' add the Resources directory to the python
+	    search-path (and at the front), and remove the '.' that is 
+	    normally at the front. 
+
+	* Lib/objc/_FoundationSignatures.py
+	  - Add better signatures for a number of methods
+
+	* Lib/objc/builder.py: Remove invalid comment
+
+	* Examples/iClass: New example (Cocoa class browser)
+	  
+
+2002-09-15 Ronald Oussoren <oussoren@cistron.nl>
+	* Fix a number of memory leaks. There are still some leaks left.
+
+	* Some minor cleanups
+
+	* Documentation about reference counts.
+
+2002-09-08 Ronald Oussoren <oussoren@cistron.nl>
+	* Redid the merge, the directory structure has been reorganised to
+	  better reflect the importance of the modules for Cocoa programming.
+
+2002-08-09 Ronald Oussoren <oussoren@cistron.nl>
+	* this is the start of the merge of an experimental and completely
+	  seperate branch. 
+
+
 2002-01-30  Steve Majewski <sdm7g@Virginia.EDU>
 	
 	* will now build for Python 2.2

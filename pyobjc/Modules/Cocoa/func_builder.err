@@ -1,0 +1,136 @@
+Converting 'NSObject *NXReadNSObjectFromCoder(NSCoder *decoder);' ...done
+Converting 'BOOL NSIsFreedObject(id anObject);' ...done
+Converting 'void *NSFrameAddress(unsigned frame);' ...failed: Complex function
+Converting 'void *NSReturnAddress(unsigned frame);' ...failed: Complex function
+Converting 'unsigned NSCountFrames(void);' ...done
+Converting 'void _NSAutoreleaseNoPool(void *object);' ...failed: Complex function
+Converting 'void _NSAutoreleaseFreedObject(void *freedObject);' ...failed: Complex function
+Converting 'void _NSAutoreleaseHighWaterLog(unsigned int count);' ...failed: Complex function
+Converting 'void NSRecordAllocationEvent(int eventType, ...);' ...failed: Complex function
+Converting 'void NSDecimalCopy(NSDecimal *destination, const NSDecimal *source);' ...failed: Complex function
+Converting 'void NSDecimalCompact(NSDecimal *number);' ...failed: Complex function
+Converting 'NSComparisonResult NSDecimalCompare(const NSDecimal *leftOperand, const NSDecimal *rightOperand);' ...failed: Complex function
+Converting 'void NSDecimalRound(NSDecimal *result, const NSDecimal *number, int scale, NSRoundingMode roundingMode);' ...failed: Complex function
+Converting 'NSCalculationError NSDecimalNormalize(NSDecimal *number1, NSDecimal *number2, NSRoundingMode roundingMode);' ...failed: Complex function
+Converting 'NSCalculationError NSDecimalAdd(NSDecimal *result, const NSDecimal *leftOperand, const NSDecimal *rightOperand, NSRoundingMode roundingMode);' ...failed: Complex function
+Converting 'NSCalculationError NSDecimalSubtract(NSDecimal *result, const NSDecimal *leftOperand, const NSDecimal *rightOperand, NSRoundingMode roundingMode);' ...failed: Complex function
+Converting 'NSCalculationError NSDecimalMultiply(NSDecimal *result, const NSDecimal *leftOperand, const NSDecimal *rightOperand, NSRoundingMode roundingMode);' ...failed: Complex function
+Converting 'NSCalculationError NSDecimalDivide(NSDecimal *result, const NSDecimal *leftOperand, const NSDecimal *rightOperand, NSRoundingMode roundingMode);' ...failed: Complex function
+Converting 'NSCalculationError NSDecimalPower(NSDecimal *result, const NSDecimal *number, unsigned power, NSRoundingMode roundingMode);' ...failed: Complex function
+Converting 'NSCalculationError NSDecimalMultiplyByPowerOf10(NSDecimal *result, const NSDecimal *number, short power, NSRoundingMode roundingMode);' ...failed: Complex function
+Converting 'NSString *NSDecimalString(const NSDecimal *dcm, NSDictionary *locale);' ...failed: Complex function
+Converting 'void _NSAddHandler2(NSHandler2 *handler);' ...failed: Complex function
+Converting 'void _NSRemoveHandler2(NSHandler2 *handler);' ...failed: Complex function
+Converting 'NSException *_NSExceptionObjectFromHandler2(NSHandler2 *handler);' ...failed: Complex function
+Converting 'NSUncaughtExceptionHandler *NSGetUncaughtExceptionHandler(void);' ...failed: Complex function
+Converting 'void NSSetUncaughtExceptionHandler(NSUncaughtExceptionHandler *);' ...failed: Complex function
+Converting 'BOOL NSEqualPoints(NSPoint aPoint, NSPoint bPoint);' ...failed: Complex function
+Converting 'BOOL NSEqualSizes(NSSize aSize, NSSize bSize);' ...failed: Complex function
+Converting 'BOOL NSEqualRects(NSRect aRect, NSRect bRect);' ...failed: Complex function
+Converting 'BOOL NSIsEmptyRect(NSRect aRect);' ...failed: Complex function
+Converting 'NSRect NSInsetRect(NSRect aRect, float dX, float dY);' ...failed: Complex function
+Converting 'NSRect NSIntegralRect(NSRect aRect);' ...failed: Complex function
+Converting 'NSRect NSUnionRect(NSRect aRect, NSRect bRect);' ...failed: Complex function
+Converting 'NSRect NSIntersectionRect(NSRect aRect, NSRect bRect);' ...failed: Complex function
+Converting 'NSRect NSOffsetRect(NSRect aRect, float dX, float dY);' ...failed: Complex function
+Converting 'void NSDivideRect(NSRect inRect, NSRect *slice, NSRect *rem, float amount, NSRectEdge edge);' ...failed: Complex function
+Converting 'BOOL NSPointInRect(NSPoint aPoint, NSRect aRect);' ...failed: Complex function
+Converting 'BOOL NSMouseInRect(NSPoint aPoint, NSRect aRect, BOOL flipped);' ...failed: Complex function
+Converting 'BOOL NSContainsRect(NSRect aRect, NSRect bRect);' ...failed: Complex function
+Converting 'BOOL NSIntersectsRect(NSRect aRect, NSRect bRect);' ...failed: Complex function
+Converting 'NSString *NSStringFromPoint(NSPoint aPoint);' ...failed: Complex function
+Converting 'NSString *NSStringFromSize(NSSize aSize);' ...failed: Complex function
+Converting 'NSString *NSStringFromRect(NSRect aRect);' ...failed: Complex function
+Converting 'NSPoint NSPointFromString(NSString *aString);' ...failed: Complex function
+Converting 'NSSize NSSizeFromString(NSString *aString);' ...failed: Complex function
+Converting 'NSRect NSRectFromString(NSString *aString);' ...failed: Complex function
+Converting 'NSHashTable *NSCreateHashTableWithZone(NSHashTableCallBacks callBacks, unsigned capacity, NSZone *zone);' ...failed: Complex function
+Converting 'NSHashTable *NSCreateHashTable(NSHashTableCallBacks callBacks, unsigned capacity);' ...failed: Complex function
+Converting 'void NSFreeHashTable(NSHashTable *table);' ...failed: Complex function
+Converting 'void NSResetHashTable(NSHashTable *table);' ...failed: Complex function
+Converting 'BOOL NSCompareHashTables(NSHashTable *table1, NSHashTable *table2);' ...failed: Complex function
+Converting 'NSHashTable *NSCopyHashTableWithZone(NSHashTable *table, NSZone *zone);' ...failed: Complex function
+Converting 'void *NSHashGet(NSHashTable *table, const void *pointer);' ...failed: Complex function
+Converting 'void NSHashInsert(NSHashTable *table, const void *pointer);' ...failed: Complex function
+Converting 'void NSHashInsertKnownAbsent(NSHashTable *table, const void *pointer);' ...failed: Complex function
+Converting 'void *NSHashInsertIfAbsent(NSHashTable *table, const void *pointer);' ...failed: Complex function
+Converting 'void NSHashRemove(NSHashTable *table, const void *pointer);' ...failed: Complex function
+Converting 'NSHashEnumerator NSEnumerateHashTable(NSHashTable *table);' ...failed: Complex function
+Converting 'void *NSNextHashEnumeratorItem(NSHashEnumerator *enumerator);' ...failed: Complex function
+Converting 'void NSEndHashTableEnumeration(NSHashEnumerator *enumerator);' ...failed: Complex function
+Converting 'unsigned NSCountHashTable(NSHashTable *table);' ...failed: Complex function
+Converting 'NSString *NSStringFromHashTable(NSHashTable *table);' ...failed: Complex function
+Converting 'NSArray *NSAllHashTableObjects(NSHashTable *table);' ...failed: Complex function
+Converting 'BOOL NSJavaNeedsVirtualMachine(NSDictionary *plist);' ...done
+Converting 'BOOL NSJavaProvidesClasses(NSDictionary *plist);' ...done
+Converting 'BOOL NSJavaNeedsToLoadClasses(NSDictionary *plist);' ...done
+Converting 'id NSJavaSetup(NSDictionary *plist);  // Setup if needed.' ...failed: Complex function
+Converting 'id NSJavaSetupVirtualMachine(void);	// Setup in any case.' ...failed: Complex function
+Converting 'id NSJavaObjectNamedInPath(NSString *name, NSArray *path);' ...done
+Converting 'NSArray *NSJavaClassesFromPath(NSArray *path, NSArray *wanted, BOOL usesyscl, id *vm);' ...failed: Complex function
+Converting 'NSArray *NSJavaClassesForBundle(NSBundle *bundle, BOOL usesyscl, id *vm);' ...failed: Complex function
+Converting 'id NSJavaBundleSetup(NSBundle *bundle, NSDictionary *plist);' ...done
+Converting 'void NSJavaBundleCleanup(NSBundle *bundle, NSDictionary *plist);' ...done
+Converting 'NSMapTable *NSCreateMapTableWithZone(NSMapTableKeyCallBacks keyCallBacks, NSMapTableValueCallBacks valueCallBacks, unsigned capacity, NSZone *zone);' ...failed: Complex function
+Converting 'NSMapTable *NSCreateMapTable(NSMapTableKeyCallBacks keyCallBacks, NSMapTableValueCallBacks valueCallBacks, unsigned capacity);' ...failed: Complex function
+Converting 'void NSFreeMapTable(NSMapTable *table);' ...failed: Complex function
+Converting 'void NSResetMapTable(NSMapTable *table);' ...failed: Complex function
+Converting 'BOOL NSCompareMapTables(NSMapTable *table1, NSMapTable *table2);' ...failed: Complex function
+Converting 'NSMapTable *NSCopyMapTableWithZone(NSMapTable *table, NSZone *zone);' ...failed: Complex function
+Converting 'BOOL NSMapMember(NSMapTable *table, const void *key, void **originalKey, void **value);' ...failed: Complex function
+Converting 'void *NSMapGet(NSMapTable *table, const void *key);' ...failed: Complex function
+Converting 'void NSMapInsert(NSMapTable *table, const void *key, const void *value);' ...failed: Complex function
+Converting 'void NSMapInsertKnownAbsent(NSMapTable *table, const void *key, const void *value);' ...failed: Complex function
+Converting 'void *NSMapInsertIfAbsent(NSMapTable *table, const void *key, const void *value);' ...failed: Complex function
+Converting 'void NSMapRemove(NSMapTable *table, const void *key);' ...failed: Complex function
+Converting 'NSMapEnumerator NSEnumerateMapTable(NSMapTable *table);' ...failed: Complex function
+Converting 'BOOL NSNextMapEnumeratorPair(NSMapEnumerator *enumerator, void **key, void **value);' ...failed: Complex function
+Converting 'void NSEndMapTableEnumeration(NSMapEnumerator *enumerator);' ...failed: Complex function
+Converting 'unsigned NSCountMapTable(NSMapTable *table);' ...failed: Complex function
+Converting 'NSString *NSStringFromMapTable(NSMapTable *table);' ...failed: Complex function
+Converting 'NSArray *NSAllMapTableKeys(NSMapTable *table);' ...failed: Complex function
+Converting 'NSArray *NSAllMapTableValues(NSMapTable *table);' ...failed: Complex function
+Converting 'NSString *NSStringFromSelector(SEL aSelector);' ...failed: Complex function
+Converting 'SEL NSSelectorFromString(NSString *aSelectorName);' ...failed: Complex function
+Converting 'Class NSClassFromString(NSString *aClassName);' ...failed: Complex function
+Converting 'NSString *NSStringFromClass(Class aClass);' ...failed: Complex function
+Converting 'const char *NSGetSizeAndAlignment(const char *typePtr, unsigned int *sizep, unsigned int *alignp);' ...failed: Complex function
+Converting 'void NSLog(NSString *format, ...);' ...failed: Complex function
+Converting 'void NSLogv(NSString *format, va_list args);' ...failed: Complex function
+Converting 'id <NSObject> NSAllocateObject(Class aClass, unsigned extraBytes, NSZone *zone);' ...failed: Complex function
+Converting 'void NSDeallocateObject(id <NSObject>object);' ...failed: Complex function
+Converting 'id <NSObject> NSCopyObject(id <NSObject>object, unsigned extraBytes, NSZone *zone);' ...failed: Complex function
+Converting 'BOOL NSShouldRetainWithZone(id <NSObject> anObject, NSZone *requestedZone);' ...failed: Complex function
+Converting 'void NSIncrementExtraRefCount(id object);' ...done
+Converting 'BOOL NSDecrementExtraRefCountWasZero(id object);' ...done
+Converting 'unsigned NSExtraRefCount(id object);' ...done
+Converting 'NSString *NSUserName(void);' ...done
+Converting 'NSString *NSFullUserName(void);' ...done
+Converting 'NSString *NSHomeDirectory(void);' ...done
+Converting 'NSString *NSHomeDirectoryForUser(NSString *userName);' ...done
+Converting 'NSString *NSTemporaryDirectory(void);' ...done
+Converting 'NSString *NSOpenStepRootDirectory(void);' ...done
+Converting 'NSArray *NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde);' ...failed: Complex function
+Converting 'NSRange NSUnionRange(NSRange range1, NSRange range2);' ...failed: Complex function
+Converting 'NSRange NSIntersectionRange(NSRange range1, NSRange range2);' ...failed: Complex function
+Converting 'NSString *NSStringFromRange(NSRange range);' ...failed: Complex function
+Converting 'NSRange NSRangeFromString(NSString *aString);' ...failed: Complex function
+Converting 'NSZone *NSDefaultMallocZone(void);' ...failed: Complex function
+Converting 'NSZone *NSCreateZone(unsigned startSize, unsigned granularity, BOOL canFree);' ...failed: Complex function
+Converting 'void NSRecycleZone(NSZone *zone);' ...failed: Complex function
+Converting 'void NSSetZoneName(NSZone *zone, NSString *name);' ...failed: Complex function
+Converting 'NSString *NSZoneName(NSZone *zone);' ...failed: Complex function
+Converting 'NSZone *NSZoneFromPointer(void *ptr);' ...failed: Complex function
+Converting 'void *NSZoneMalloc(NSZone *zone, unsigned size);' ...failed: Complex function
+Converting 'void *NSZoneCalloc(NSZone *zone, unsigned numElems, unsigned byteSize);' ...failed: Complex function
+Converting 'void *NSZoneRealloc(NSZone *zone, void *ptr, unsigned size);' ...failed: Complex function
+Converting 'void NSZoneFree(NSZone *zone, void *ptr);' ...failed: Complex function
+Converting 'unsigned NSPageSize(void);' ...done
+Converting 'unsigned NSLogPageSize(void);' ...done
+Converting 'unsigned NSRoundUpToMultipleOfPageSize(unsigned bytes);' ...done
+Converting 'unsigned NSRoundDownToMultipleOfPageSize(unsigned bytes);' ...done
+Converting 'void *NSAllocateMemoryPages(unsigned bytes);' ...failed: Complex function
+Converting 'void NSDeallocateMemoryPages(void *ptr, unsigned bytes);' ...failed: Complex function
+Converting 'void NSCopyMemoryPages(const void *source, void *dest, unsigned bytes);' ...failed: Complex function
+Converting 'unsigned NSRealMemoryAvailable(void);' ...done
+Converted 23 of 135 functions
