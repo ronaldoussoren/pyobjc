@@ -443,8 +443,10 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	}
 
 	if (((PyObjCClassObject*)tp)->useKVO) {
-		obj_name = [NSString stringWithCString:PyString_AS_STRING(name)];
-		WILL_CHANGE(obj_inst, obj_name);
+		if ((PyObjCObject_GetFlags(obj) & PyObjCObject_kUNINITIALIZED) == 0) {
+			obj_name = [NSString stringWithCString:PyString_AS_STRING(name)];
+			WILL_CHANGE(obj_inst, obj_name);
+		}
 	}
 	descr = _type_lookup(tp, name);
 	f = NULL;
