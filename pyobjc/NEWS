@@ -4,8 +4,20 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version "1.1a0" (2004-02-02)
-----------------------------
+Version 1.1a1 (2004-02-15?)
+---------------------------
+
+- Fixes some regressions in 1.1 w.r.t. 1.0
+
+- Add Xcode templates for python files
+
+  You can now select a new python file in the 'add file...' dialog in Xcode
+
+- Fix installer for Panther: the 1.1a0 version didn't behave correctly
+
+Version 1.1a0 (2004-02-02)
+--------------------------
+
 - Objective-C structs can now be wrapped using struct-like types. This has
   been used to implement wrapper types for NSPoint, NSSize, NSRange and NSRect
   in Foundation and NSAffineTransformStruct in AppKit.

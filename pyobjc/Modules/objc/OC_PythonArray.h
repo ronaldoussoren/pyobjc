@@ -78,6 +78,21 @@
  */
 -(void)replaceObjectAtIndex:(int)idx withObject:newValue;
 
+/*!
+ * @method getObjects:inRange:
+ * @abstract Fetch objects in the specified range
+ * @discussion The output buffer must have enough space to contain all
+ *             requested objects, the range must be valid.
+ *
+ *             This method is not documented in the NSArray interface, but
+ *             is used by Cocoa on MacOS X 10.3 when an instance of this
+ *             class is used as the value for -setObject:forKey: in
+ *             NSUserDefaults.
+ * @param buffer  The output buffer
+ * @param range   The range of objects to fetch.
+ */
+-(void)getObjects:(id*)buffer inRange:(NSRange)range;
+
 @end
 
 #endif /* OC_PythonArray_h */

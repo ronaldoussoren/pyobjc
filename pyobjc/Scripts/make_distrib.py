@@ -121,9 +121,9 @@ if DOC_ONLY:
     sys.exit(0)
 
 print "Running: '%s' setup.py sdist -d '%s'"%(
-        		escquotes(PYTHON), escquotes(OUTPUTDIR))
+        		escquotes(PYTHON), escquotes(os.path.dirname(OUTPUTDIR)))
 fd = os.popen("'%s' setup.py sdist -d '%s'"%(
-        		escquotes(PYTHON), escquotes(OUTPUTDIR)), 'r')
+        		escquotes(PYTHON), escquotes(os.path.dirname(OUTPUTDIR))), 'r')
 for ln in fd.xreadlines():
         sys.stdout.write(ln)
 
@@ -131,7 +131,7 @@ for ln in fd.xreadlines():
 # NOTE: We first install our scripts into the python tree and later on move
 # them to /usr/local to avoid clobbering a /usr/local symlink installed by
 # the user.
-print "Running: '%s' setup.py install --prefix='%s/package%s' --install-scripts=%s/package%s/lib/python%s/site-packages/PyObjC/bin"%(
+print "Running: '%s' setup.py install --prefix='%s/package%s' --install-scripts=%s/package/%s/lib/python%s/site-packages/PyObjC/bin"%(
         escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir), escquotes(BUILDDIR), escquotes(basedir), PYTHONVER)
 fd = os.popen("'%s' setup.py install --prefix='%s/package%s' --install-scripts=%s/package%s/lib/python%s/site-packages/PyObjC/bin"%(
         escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir), escquotes(BUILDDIR), escquotes(basedir), PYTHONVER), 'r')
@@ -148,6 +148,10 @@ if osvers != '10.2':
     os.rename(
         '%s/package%s/lib/python%s/site-packages/PyObjC.pth'%(BUILDDIR, basedir, PYTHONVER),
         '%s/package/Library/Python/%s/PyObjC.pth'%(BUILDDIR, PYTHONVER))
+
+    # Trash /System/Library/Frameworks/Python.framework in the to-be-installed
+    # tree, we don't want to replace those directories!
+    shutil.rmtree('%s/package/System'%(BUILDDIR,))
 
 print "Copying readme and license"
 shutil.copyfile("Installer Package/%s/ReadMe.html"%(osvers,), os.path.join(OUTPUTDIR, "ReadMe First.html"))
@@ -206,6 +210,21 @@ elif osvers == '10.3':
         if not os.path.isdir(path): continue
         shutil.copytree(path, os.path.join(templateDestination, dname))
 
+    for dn in [ x for x in os.listdir('Xcode/File Templates') if x != 'CVS' ]:
+        makeDir(basedir, 
+                'Library', 'Application Support', 'Apple', 
+                'Developer Tools', 'File Templates', dn)
+        templateDestination = os.path.join(basedir, 
+                'Library', 'Application Support', 'Apple', 
+                'Developer Tools', 'File Templates', dn)
+        templateDir = os.path.join('Xcode', 'File Templates', dn)
+        for dname in os.listdir(templateDir):
+            if dname == 'CVS': continue
+            path = os.path.join(templateDir, dname)
+            if not os.path.isdir(path): continue
+            shutil.copytree(path, os.path.join(templateDestination, dname))
+
+
 else:
     raise ValueError, "Don't know how to build installer for %s"%(osvers,)
 
@@ -252,9 +271,9 @@ open(fn, 'w').write(data)
 # the binary PackMan installer (which is built manually)
 #
 print "Running: '%s' setup.py bdist -d '%s'"%(
-        		escquotes("python2.3"), escquotes(OUTPUTDIR))
+        		escquotes("python2.3"), escquotes(os.path.dirname(OUTPUTDIR)))
 fd = os.popen("'%s' setup.py bdist -d '%s'"%(
-        		escquotes("python2.3"), escquotes(OUTPUTDIR)), 'r')
+        		escquotes("python2.3"), escquotes(os.path.dirname(OUTPUTDIR))), 'r')
 for ln in fd.xreadlines():
         sys.stdout.write(ln)
 
@@ -274,6 +293,14 @@ os.system('cd release-dir/extra_work && tar zcf ../pyobjc_extras-%s.tar.gz Appli
         package_version(), package_version()))
 
 
-print "Done. Don't forget to test the output!"
-print "-- hdiutil create -imagekey zlib-level=9 -srcfolder PyObjC-1.1a0 pyobjc-1.1a0-panther.dmg"
+print "Creating a simple disk image"
+cmdline="hdiutil create -imagekey zlib-level=9 -srcfolder 'release-dir/PyObjC-%s' 'release-dir/pyobjc-%s-macosx%s.dmg'"%(
+        package_version(),
+        package_version(),
+        osvers,
+    )
 
+print "> ", cmdline
+os.system(cmdline)
+
+print "Done. Don't forget to test the output!"

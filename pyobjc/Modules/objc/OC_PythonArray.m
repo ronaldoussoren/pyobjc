@@ -90,4 +90,13 @@
 	PyGILState_Release(state);
 }
 
+-(void)getObjects:(id*)buffer inRange:(NSRange)range
+{
+	unsigned int i;
+
+	for (i = 0; i < range.length; i++) {
+		buffer[i] = [self objectAtIndex:i+range.location];
+	}
+}
+
 @end /* implementation OC_PythonArray */
