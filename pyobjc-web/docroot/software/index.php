@@ -33,6 +33,10 @@ archive with libFFI <a href="http://prdownloads.sourceforge.net/pyobjc/libffi-sr
 
 <p>There are no unstable releases at the moment.
 
+<p>The <a href="http://subversion.tigris.org/">subversion</a> repository 
+   can be accessed at <a href="http://svn.red-bean.com/pyobjc">http://svn.red-bean.com/pyobjc</a>.
+<p>Many thanks to the folks at <a href="http://www.red-bean.com">red-bean.com</a> for allowing us to use their server.
+
 <h2>Misc. other downloads</h2>
 
 <p>

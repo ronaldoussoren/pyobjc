@@ -71,8 +71,9 @@ provides the following resources for the project:
 <li><a
 href="http://sourceforge.net/tracker/?group_id=14534&atid=114534">Bug tracker</a></li>
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=14534">Files</a></li>
-<li>CVS (<a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/pyobjc">browse online</a>, <a href="http://sourceforge.net/cvs/?group_id=14534">access instructions</a>)<br><i>We're moving our repository to a SVN repository at red-bean.com</i></li>
 </ul>
+
+<p>Our repository is hosted by <a href="http://www.red-bean.com/">red-bean.com</a>. The subversion repository can be accessed <a href="http://svn.red-bean.com/pyobjc/">here</a>.
 
 </td></tr></table>
 

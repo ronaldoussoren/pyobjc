@@ -1,6 +1,12 @@
 <?
   $macpython23="<a href=\"http://homepages.cwi.nl/~jack/macpython/\">Mac Python 2.3</a>";
 ?>
+<span class="news_date">2004-05-30: </span><span class="news_headline">Repository moved to red-bean.com</span><?php gray_line(); ?>
+  <p>
+We have moved our repository to a <a href="http://subversion.tigris.org/">subversion</a> repository at <a href="http://www.red-bean.com/">red-bean.com</a>.
+  <p>
+The repository is at <a href="http://svn.red-bean.com/pyobjc">http://svn.red-bean.com/pyobjc</a>
+  <p>
 <span class="news_date">2004-05-30: </span><span class="news_headline">PyObjC 1.1 released</span><?php gray_line(); ?>
   <p>
 It has been a long, long process, but PyObjC 1.1 is finally there.  See the 
