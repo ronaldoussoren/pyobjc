@@ -341,9 +341,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		bundle = [NSBundle bundleWithIdentifier:strval];
 	}
 
-	if (![bundle isLoaded]) {
-		[bundle load];
-	}
+	[bundle load];
 
 	class_list = PyObjC_GetClassList();
 	if (class_list == NULL) {	

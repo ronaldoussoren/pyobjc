@@ -19,6 +19,15 @@
 #include <unistd.h>
 #include "objc/objc.h"
 
+#ifdef MACOSX
+/* OSX 10.1 doesn't define LLONG_MIN, LLONG_MAX and ULLONG_MAX */
+#ifndef LLONG_MIN
+#define LLONG_MIN (-0x7fffffffffffffffLL-1)
+#define LLONG_MAX (-0x7fffffffffffffffLL)
+#define ULLONG_MAX (-0xffffffffffffffffULL)
+#endif
+#endif
+
 #import <Foundation/NSInvocation.h>
 #import <Foundation/NSMethodSignature.h>
 #import <Foundation/NSData.h> 
