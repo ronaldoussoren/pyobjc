@@ -17,6 +17,7 @@ from distutils.core import setup, Extension
 import os
 
 
+
 # We need at least Python 2.2
 req_ver = [ 2, 2]
 
@@ -46,6 +47,33 @@ if sys.version_info[0] < req_ver[0] or (
 	sys.stderr.write('PyObjC: Need at least Python %s\n'%('.'.join(req_ver)))
 	sys.exit(1)
 
+# TODO: Autodetect libFFI, including LIBFFI_BASE
+# ... But first implement FFI support!
+if 1:
+    LIBFFI_CFLAGS=[]
+    LIBFFI_LDFLAGS=[]
+    LIBFFI_SOURCEFILES=[]
+else:
+    LIBFFI_BASE='libffi'
+    LIBFFI_CFLAGS=[ 
+        "-DOC_WITH_LIBFFI", 
+        "-I%s/include"%LIBFFI_BASE, 
+    ]
+    LIBFFI_LDFLAGS=[ 
+        '-read_only_relocs','warning',
+        '-L%s/lib'%LIBFFI_BASE, '-lffi', 
+    ]
+    LIBFFI_SOURCEFILES=[
+        'Modules/objc/libffi_support.m',
+    ]
+
+if sys.platform == 'darwin':
+    if 1:
+        LINK_OPT_STRIP=[ '-Wl,-S', '-Wl,-x' ]
+    else:
+        LINK_OPT_STRIP=[]
+else:
+    LINK_OPT_STRIP=[]
 
 sourceFiles = [
 	"Modules/objc/objc_util.m",
@@ -84,16 +112,16 @@ def IfFrameWork(name, packages, extensions):
 
 CorePackages = [ 'objc' ]
 CoreExtensions =  [
-	Extension("objc._objc", sourceFiles,
+	Extension("objc._objc", sourceFiles + LIBFFI_SOURCEFILES,
 		   extra_compile_args=[
                         # "-g", "-O0",
 			"-DOBJC_PARANOIA_MODE",
 			"-DPyOBJC_UNIQUE_PROXY",
 			"-DMACOSX",
-		   ],
+		   ] + LIBFFI_CFLAGS,
 		   extra_link_args=[
-			'-g', '-framework', 'Foundation'
-		   ])
+			'-g', '-framework', 'Foundation',
+		   ] + LINK_OPT_STRIP + LIBFFI_LDFLAGS)
 	]
 CocoaPackages = [ 'Foundation', 'AppKit' ]
 CocoaExtensions = [
@@ -105,7 +133,7 @@ CocoaExtensions = [
 		   ],
 		   extra_link_args=[
 			'-framework', 'Foundation',
-		   ]),
+		   ] + LINK_OPT_STRIP),
 	  Extension("AppKit._AppKit", 
 		   ["Modules/Cocoa/_AppKit.m"],
 		   extra_compile_args=[
@@ -113,7 +141,7 @@ CocoaExtensions = [
 		   ],
 		   extra_link_args=[
 			'-framework', 'AppKit'
-		   ]),
+		   ] + LINK_OPT_STRIP),
 	  Extension("objc._FoundationMapping", 
 		   ["Modules/Cocoa/_FoundationMapping.m"],
 		   extra_compile_args=[
@@ -121,7 +149,7 @@ CocoaExtensions = [
 		   ],
 		   extra_link_args=[
 			'-framework', 'Foundation',
-		   ]),
+		   ] + LINK_OPT_STRIP),
 	  ]
 
 # The AdressBook module is only installed when the user actually has the

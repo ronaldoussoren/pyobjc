@@ -1,6 +1,21 @@
 /*
  * WARNING: This is a generated file, do not change
  */
+#ifdef OC_WITH_LIBFFI
+
+#include <Python.h>
+#include <objc/objc.h>
+#include <objc/objc-runtime.h>
+#include <Foundation/NSException.h>
+#define PYOBJC_METHOD_STUB_IMPL
+#include "pyobjc-api.h"
+
+int ObjC_RegisterStdStubs(struct pyobjc_api* api)
+{
+	return 0;
+}
+
+#else
 
 #include <Python.h>
 #include <objc/objc.h>
@@ -10,6 +25,8 @@
 #include "pyobjc-api.h"
 static struct pyobjc_api* ObjC_API;
 typedef int (*superfunc)(int);
+
+
 /* signature: c@:@@ */
 static char 
 meth_imp_0(id self, SEL sel, id arg_2, id arg_3)
@@ -56724,3 +56741,5 @@ int ObjC_RegisterStdStubs(struct pyobjc_api* api)
 	}
 	return 0;
 }
+
+#endif

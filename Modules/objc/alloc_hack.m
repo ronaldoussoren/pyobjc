@@ -48,6 +48,7 @@ supercall_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 		return NULL;
 	}
 
+	/* XXX: Shouldn't we use method->sel_class here? */
 	super.receiver = (id)ObjCClass_GetClass(self);
 	super.class = (Class)(super.receiver)->isa;
 
