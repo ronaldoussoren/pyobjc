@@ -68,7 +68,7 @@ class TestInstanceVariables(unittest.TestCase):
         self.assertAlmostEquals(self.object.doubleVar, 42.0)
 
     def testLeak(self):
-        # Check that plain python objects are correctly released when 
+        # Check that plain python objects are correctly released when
         # they are no longer the value of an attribute
         self.deleted = 0
         self.object.idVar = Base(lambda : setattr(self, 'deleted', 1))
@@ -84,7 +84,7 @@ class TestInstanceVariables(unittest.TestCase):
         self.assertEquals(self.deleted, 1)
 
     def testOCLeak(self):
-        # Check that Objective-C objects are correctly released when 
+        # Check that Objective-C objects are correctly released when
         # they are no longer the value of an attribute
         self.deleted = 0
         self.object.idVar = OCBase.alloc().init_(lambda : setattr(self, 'deleted', 1))

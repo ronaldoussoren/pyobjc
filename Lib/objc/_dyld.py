@@ -79,8 +79,8 @@ def dyld_framework(filename, framework_name, version=None):
                 yield os.path.join(
                     path, framework_name+'.framework', framework_name
                 )
-    
-    
+
+
     for f in injectSuffixes(_search()):
         if os.path.exists(f):
             return f

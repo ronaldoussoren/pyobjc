@@ -63,7 +63,7 @@ class TestSubclassing(unittest.TestCase):
         v = obj.description()
         # this may be a bit hardwired for comfort
         self.assert_(v.find("<Level2Class") == 0)
-    
+
     def testUniqueNames(self):
         class SomeClass (NSObject): pass
 
@@ -98,7 +98,7 @@ class TestSubclassing(unittest.TestCase):
             self.assert_(x.getArgumentTypeAtIndex_(3) == 'i')
         else:
             # On GNUstep the return-value of methodReturnType and
-            # getArgumentTypeAtIndex_ includes "garbage" after the 
+            # getArgumentTypeAtIndex_ includes "garbage" after the
             # signature of the queried item. The garbage is the rest
             # of the signature string.
             self.assert_(x.methodReturnType().startswith('v'))
@@ -129,9 +129,9 @@ class TestCopying (unittest.TestCase):
                 o.foobar = 2
                 return o
             copyWithZone_ = objc.selector(
-            	copyWithZone_, 
-        	signature=objc.runtime.NSObject.copyWithZone_.signature,
-        	isClassMethod=0)
+                copyWithZone_,
+                signature=objc.runtime.NSObject.copyWithZone_.signature,
+                isClassMethod=0)
 
 
         # Make sure the runtime correctly marked our copyWithZone_
@@ -146,7 +146,7 @@ class TestCopying (unittest.TestCase):
 
         # Make a copy from ObjC (see testbundle.m)
         c = PyObjC_TestClass3.makeACopy_(o)
-       
+
         self.assert_(isinstance(c, MyCopyClass))
         self.assertEquals(c.foobar, 2)
 

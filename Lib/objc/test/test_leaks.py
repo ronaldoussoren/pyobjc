@@ -12,7 +12,7 @@ LeaksDel = 0
 
 class LeaksClass (NSObject):
     def __del__(self):
-        global LeaksDel 
+        global LeaksDel
 
         LeaksDel = 1
 

@@ -51,7 +51,7 @@ class TestNumbers (unittest.TestCase):
         self.assertEquals(CHAR_MIN, pyObjCPy(objc._C_CHR, float(CHAR_MIN)))
 
         # XXX: Is the right, chr(-1) raises an exception, and is not
-        # equivalent to '\xff'. Should (char)-1 be converted to '\xff'/255 ? 
+        # equivalent to '\xff'. Should (char)-1 be converted to '\xff'/255 ?
         self.assertEquals(-1, pyObjCPy(objc._C_CHR, '\xff'))
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_CHR, CHAR_MAX + 1)
@@ -257,7 +257,7 @@ class TestArray (unittest.TestCase):
         self.assertRaises(TypeError, pyObjCPy, signature, None)
 
 class TestCArray (unittest.TestCase):
-    # Tests for the PyObjC_PythonToCArray (C-)function, this function is 
+    # Tests for the PyObjC_PythonToCArray (C-)function, this function is
     # used to build variable-length C Arrays from Python objects.
 
     # TODO: "{_NSPoint=ff}", "{_NSRect={_NSPoint=ff}{_NSSize=ff}}"
@@ -357,18 +357,18 @@ class TestCArray (unittest.TestCase):
 
     def testPointArray(self):
         arr = array.array('f', [
-            1.0, 1.5, 
-            2.0, 2.5, 
-            3.0, 3.5, 
-            4.0, 4.5, 
+            1.0, 1.5,
+            2.0, 2.5,
+            3.0, 3.5,
+            4.0, 4.5,
             5.0, 5.5])
         lst = ((1.0, 1.5), (2.0, 2.5), (3.0, 3.5), (4.0, 4.5), (5.0, 5.5))
 
         arr2 = array.array('i', [
-            1, 1, 
-            2, 2, 
-            3, 3, 
-            4, 4, 
+            1, 1,
+            2, 2,
+            3, 3,
+            4, 4,
             5, 5])
 
         res = carrayMaker('{Point=ff}', arr, None)
@@ -398,7 +398,7 @@ class TestCArray (unittest.TestCase):
             1, 1, 1, 1,
             2, 2, 2, 2,
             3, 3, 3, 3,
-            4, 4, 4, 4, 
+            4, 4, 4, 4,
             5, 5, 5, 5])
 
         res = carrayMaker('{Rect={P=ff}{S=ff}}', arr, None)
@@ -430,9 +430,9 @@ class TestCArray (unittest.TestCase):
 
 
 class PyOCTestTypeStr(unittest.TestCase):
-    # 
-    # Check that typestrings have the expected values. 
-    # We currently depend on these values in this file as wel as in the 
+    #
+    # Check that typestrings have the expected values.
+    # We currently depend on these values in this file as wel as in the
     # modules that set method signatures to 'better' values.
     #
     def testAll(self):

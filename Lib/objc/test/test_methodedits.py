@@ -6,7 +6,7 @@ import sys
 import objc
 
 class MEClass(objc.runtime.NSObject):
-   pass
+    pass
 
 preEverythingInstance = MEClass.new()
 
@@ -59,7 +59,7 @@ class TestFromObjCSuperToObjCClass(unittest.TestCase):
         self.assert_(MEClass.instancesRespondToSelector_("newMethod"))
 
         newInstance = MEClass.new()
-        
+
         self.assertEquals(newInstance.newMethod(), "<new-method>")
         self.assertEquals(preEverythingInstance.newMethod(), "<new-method>")
 
@@ -80,7 +80,7 @@ class TestFromObjCSuperToObjCClass(unittest.TestCase):
         self.assert_(MEClass.instancesRespondToSelector_("newSubMethod"))
 
         newInstance = MEClass.new()
-        
+
         self.assertEquals(newInstance.newMethod(), "<sub-new-method>")
         self.assertEquals(preEverythingInstance.newMethod(), "<sub-new-method>")
         self.assertEquals(newInstance.newSubMethod(), "<new-method-sub>")
@@ -90,15 +90,15 @@ class TestFromObjCSuperToObjCClass(unittest.TestCase):
 class TestFromPythonClassToObjCClass(unittest.TestCase):
 
     def testPythonSourcedMethods(self):
-        # 20031227, Ronald: Assigning the methods works alright, but actually 
-        # using them won't because the new methods are actually still methods 
+        # 20031227, Ronald: Assigning the methods works alright, but actually
+        # using them won't because the new methods are actually still methods
         # of a different class and will therefore complain about the type
         # of 'self'.
         objc.classAddMethods(MEClass, [PurePython.description,
                                                   PurePython.newMethod,
                                                   PurePython.purePythonMethod])
 
-        
+
         self.assert_(MEClass.instancesRespondToSelector_("description"))
         self.assert_(MEClass.instancesRespondToSelector_("newMethod"))
         self.assert_(MEClass.instancesRespondToSelector_("purePythonMethod"))
@@ -131,7 +131,7 @@ class TestFromPythonClassToObjCClass(unittest.TestCase):
             PurePython.newMethod.im_func,
             PurePython.purePythonMethod.im_func
         ])
-        
+
         self.assert_(MEClass.instancesRespondToSelector_("description"))
         self.assert_(MEClass.instancesRespondToSelector_("newMethod"))
         self.assert_(MEClass.instancesRespondToSelector_("purePythonMethod"))
@@ -152,7 +152,7 @@ class TestClassAsignments (unittest.TestCase):
     def testAssignAMethod(self):
         MEClass.doSomethingElse = lambda self: 2*2
         MEClass.doDuplicate_ = lambda self, x: 2*x
-        
+
         self.assert_(MEClass.instancesRespondToSelector_("doSomethingElse"))
         self.assert_(MEClass.instancesRespondToSelector_("doDuplicate:"))
 

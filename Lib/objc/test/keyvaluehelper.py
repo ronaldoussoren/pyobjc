@@ -58,7 +58,7 @@ class KVPySubOverObjCBase (PyObjCTest_KVBaseClass):
     def getOverIndirectString(self):
         return self._overIndirectString
 
-    def setOverIndirectString(self, aString):
+    def setOverIndirectString_(self, aString):
         self._overIndirectString = aString
 
 class KVPySubOverObjCPath(PyObjCTest_KVPathClass):
@@ -71,7 +71,7 @@ class KVPySubOverObjCPath(PyObjCTest_KVPathClass):
     def overIndirectHead(self):
         return self._overIndirectHead
 
-    def setOverIndirectHead(self, aHead):
+    def setOverIndirectHead_(self, aHead):
         self._overIndirectHead = aHead
 
 class PyObjCTestObserver (objc.runtime.NSObject):
