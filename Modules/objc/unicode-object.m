@@ -238,7 +238,7 @@ PyObjCUnicode_New(NSString* value)
 	unichar* volatile characters = NULL;
 	NSRange range;
 
-	NS_DURING
+	PyObjC_DURING
 		length = [value length];
 		characters = PyMem_Malloc(sizeof(unichar) * length);
 		if (characters == NULL) {
@@ -250,14 +250,14 @@ PyObjCUnicode_New(NSString* value)
 
 		[value getCharacters: characters range: range];
 
-	NS_HANDLER
+	PyObjC_HANDLER
 		if (characters) {
 			PyMem_Free(characters);
 			characters = NULL;
 		}
 		PyObjCErr_FromObjC(localException);
 		NS_VALUERETURN(NULL, PyObject*);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
 	PyUnicode_AS_UNICODE(result) = PyMem_NEW(Py_UNICODE, length);

@@ -1027,14 +1027,14 @@ free_ivars(id self, PyObject* volatile cls )
 				Py_XDECREF(*(PyObject**)(((char*)self) + 
 					var->ivar_offset));
 			} else {
-				NS_DURING
+				PyObjC_DURING
 					[*(id*)(((char*)self) + var->ivar_offset) release];
 
-				NS_HANDLER
+				PyObjC_HANDLER
 					NSLog(@"ignoring exception %@ in destructor",
 						localException);
 
-				NS_ENDHANDLER
+				PyObjC_ENDHANDLER
 				*(id*)(((char*)self) + var->ivar_offset) = NULL;
 			}
 		}
@@ -1330,16 +1330,16 @@ object_method_forwardInvocation(
 	}
 
 
-	NS_DURING
+	PyObjC_DURING
 		theSelector = [invocation selector];
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyGILState_Release(state);
 		[localException raise];
 
 		/* Avoid compiler warnings */
 		theSelector = @selector(init);
 
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	pymeth = PyObjCObject_FindSelector(pyself, theSelector);
 

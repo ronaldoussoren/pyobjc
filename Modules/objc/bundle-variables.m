@@ -42,14 +42,14 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 	}
 
 
-	NS_DURING
+	PyObjC_DURING
 		cfBundle = NSBundle2CFBundle(bundle);
 	
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		NS_VALUERETURN(NULL, PyObject*);
 
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (cfBundle == NULL) {
 		PyErr_Format(PyObjCExc_Error, 
@@ -139,14 +139,14 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 	}
 
 
-	NS_DURING
+	PyObjC_DURING
 		cfBundle = NSBundle2CFBundle(bundle);
 	
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		NS_VALUERETURN(NULL, PyObject*);
 
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (cfBundle == NULL) {
 		PyErr_Format(PyObjCExc_Error, 
