@@ -4,6 +4,7 @@ from AppKit.NibClassBuilder import extractClasses, AutoBaseClass
 from objc import selector
 import sys
 
+
 extractClasses("MainMenu")
 
 
