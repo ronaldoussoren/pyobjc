@@ -32,7 +32,8 @@ def deletePath(path):
 NASTYFILEEXPR = re.compile(r'|'.join([
     r'(?:%s)' % (_exp,) for _exp in
     [
-        r'^\.svn$', r'^CVS$', r'^\.DS_Store$', r'~.*$', r'\.pbxuser$',
+        r'^\.svn$', r'^CVS$', r'^\.DS_Store$', r'~.*$',
+        r'(^|/)(?!/?default).*?\.pbxuser$',
         r'^build$', r'\.mode[0-9]$'
     ]
 ]))
@@ -70,8 +71,18 @@ def maybeutf(encoding=None):
         # anything else is undetermined, can't match
         # utf-8 against <?xm because it's the same in
         # all of the latin/romanish codecs
+        firstline = file(fn).readline()
+        if firstline.startswith('<?xml version="1.0" encoding="UTF-8"?>'):
+            return 'utf_8'
+        if firstline.startswith('// !$*UTF8*$!'):
+            return 'utf_8'
         return encoding
-    return maybeutf
+    #return maybeutf
+    def debug(fn):
+        rval = maybeutf(fn)
+        print fn, rval
+        return rval
+    return debug
 
 
 def _buildEncodingsDict():
@@ -80,7 +91,7 @@ def _buildEncodingsDict():
     d['.nib'] = maybenib(maybeutf('macroman'))
     for k in ['.pbxproj', '.xib']:
         d[k] = maybeutf('utf_8')
-    for k in ['.py', '.m', '.h', '.c', '.pch', '.rtf', '.java', '.applescript', '.dependency', '.plist']:
+    for k in ['.py', '.m', '.h', '.c', '.pch', '.rtf', '.java', '.applescript', '.dependency', '.plist', '.pbxuser']:
         d[k] = maybeutf('macroman')
     for k in ['.strings']:
         # should be utf_16, but that is always detectable
@@ -134,7 +145,7 @@ def doSubstitutions(dirName, aName, options):
 
     encoding = ENCODINGS.get(extension, lambda fn:None)(path)
     if encoding is None:
-        error("*WARN* Skipping unknown file with uknown type: %s", path)
+        error("*WARN* Skipping unknown file with unknown type: %s", path)
     else:
         info('Processing %s....', aName)
         if options.makeWorking and (extension in WORKINGCOPYFILES) and not options.doReverse and aName.split("_", 1)[0] == 'xcPROJECTNAMExc':
