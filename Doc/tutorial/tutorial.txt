@@ -85,7 +85,7 @@ Testing the user interface
    If you are using Python 2.3 the script is located in ``plat-mac`` instead
    of ``site-packages`` and the command is::
 
-       $ python2.3 $PYLIB/plat-mac/PyObjC/bundlebuilder.py --link --nib=MainMenu \
+       $ python2.3 $PYLIB/plat-mac/bundlebuilder.py --link --nib=MainMenu \
                --mainprogram=CurrencyConverter.py --resource=MainMenu.nib build
                
    There are a few things to note:

@@ -192,6 +192,17 @@ You use this method in python like this::
 
    rowCount, columnCount = matrix.getNumberOfRows_columns_()
 
+When a function or method has an array of values and the length of that array
+as arguments, you can pass ``None`` as the length. The length of the sequence
+that is used for the array of values is passed to Objective-C as the length
+argument. 
+
+XXX: Add information about ``array.array`` rules.
+
+XXX: We don't use the right functions for conversion to C-arrays throughout
+the bridge (yet), the information is therefore not entirely correct.
+
+
 When you define methods in a subclass of an Objective-C class, the bridge has
 to tell the Objective-C runtime what the signature of those methods is. The
 basic rule is that all arguments as well as the return value are objects (just
