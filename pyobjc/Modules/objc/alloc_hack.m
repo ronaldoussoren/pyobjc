@@ -104,6 +104,7 @@ imp_NSObject_alloc(
 	PyObjC_END_WITH_GIL
 }
 
+
 int
 PyObjC_InstallAllocHack(void)
 {

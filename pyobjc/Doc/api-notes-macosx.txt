@@ -292,6 +292,34 @@ Class ``NSArray``
 
   The context is an integer, not a ``void*``.
 
+Class ``NSAutoreleasePool``
+...........................
+
+The bridge automaticly manages reference counts for you, but you're still 
+required to make an autorelease pool available. 
+
+In simple, single-threaded GUI programs you don't have to do anything for this,
+because NSRunLoop does this for you and PyObjC creates an initial pool for the
+main thread.
+
+If you create lots of Cocoa objects in a loop it can be usefull to manually create
+a pool to reclaim memory as soon as possible. The proper idiom for this is::
+
+	while <test>:
+		pool = NSAutoreleasePool.alloc().init()
+
+		# ... Do work here ...
+
+		del pool
+
+That is, you *must* ensure that the previous pool is deallocated before you create
+a new one, the code below will silently leak memory::
+
+	while <test>:
+		pool = NSAutoreleasePool.alloc().init()
+
+		# ... Do work here ...
+
 Class ``NSBundle``
 ..................
 

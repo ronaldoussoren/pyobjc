@@ -88,7 +88,12 @@ class TestNSDecimal (unittest.TestCase):
 
     def testCreateFromFloat(self):
         o = NSDecimal(1.1)
-        self.assertEquals(o.as_float(), 1.1)
+        self.assertAlmostEquals(o.as_float(), 1.1)
+
+    if not hasattr(unittest.TestCase, 'assertAlmostEquals'):
+        def assertAlmostEquals(self, val1, val2, eta=0.000001):
+            self.assert_(abs(val1 - val2) < eta)
+            
 
 class TestNSDecimalNumber (unittest.TestCase):
     def testCreation1(self):

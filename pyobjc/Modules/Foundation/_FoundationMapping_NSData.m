@@ -249,6 +249,7 @@ static PyObject* call_NSData_bytes(
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
 		bytes = NULL;
+		bytes_len = 0;
 	PyObjC_ENDHANDLER
 
 	if (bytes == NULL && PyErr_Occurred()) return NULL;
@@ -350,6 +351,7 @@ call_NSMutableData_mutableBytes(
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
 		bytes = NULL;
+		bytes_len = 0;
 	PyObjC_ENDHANDLER
 
 	if (bytes == NULL && PyErr_Occurred()) return NULL;

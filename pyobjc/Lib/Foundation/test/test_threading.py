@@ -24,6 +24,28 @@ if "%02d%02d"%(sys.version_info[:2]) >= '0203':
         def tearDown(self):
             sys.setcheckinterval(self._int)
 
+        def testNSObjectString(self):
+
+            class PyObjCTestThreadRunnerString (objc.runtime.NSObject):
+                def init(self):
+                    self = super(PyObjCTestThreadRunnerString, self).init()
+                    if self is None: return None
+
+                    self.storage = []
+                    return self
+
+                def run_(self, argument):
+                    objc.runtime.NSAutoreleasePool.alloc().init()
+                    self.storage.append(argument)
+
+            myObj = PyObjCTestThreadRunnerString.alloc().init()
+
+            objc.runtime.NSThread.detachNewThreadSelector_toTarget_withObject_(
+                    'run:', myObj, "hello world")
+
+            time.sleep(2)
+            self.assertEquals(myObj.storage[0], u"hello world")
+
         def testNSObject(self):
 
             class PyObjCTestThreadRunner (objc.runtime.NSObject):

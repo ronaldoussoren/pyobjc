@@ -1102,6 +1102,9 @@ object_method_forwardInvocation(
 		PyGILState_Release(state);
 		[localException raise];
 
+		/* Avoid compiler warnings */
+		theSelector = @selector(init);
+
 	NS_ENDHANDLER
 
 	pymeth = PyObjCObject_FindSelector(pyself, theSelector);

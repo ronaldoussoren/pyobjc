@@ -41,6 +41,9 @@ def process_file(outfp, filename):
         m = DEFINE_RE.match(ln)
         if m is not None:
             name, value = m.group(1), m.group(2)
+            if name == 'nil': 
+                # Grr, the compiler on GNUstep complains about this one
+                continue
             entry(outfp, name)
             continue
 

@@ -217,11 +217,11 @@ PyTypeObject PyObjCUnicode_Type = {
 PyObject* 
 PyObjCUnicode_New(NSString* value)
 {
+#if 0 /* def PyObjC_CONVERT_TO_UTF8_FIRST */
 	const char* utf8 = [value UTF8String];
 	PyUnicodeObject* tmp = (PyUnicodeObject*)PyUnicode_DecodeUTF8(
 			utf8, strlen(utf8), "strict");
 	PyObjCUnicodeObject* result;
-
 	if (tmp == NULL) return NULL;
 
 	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
@@ -238,15 +238,79 @@ PyObjCUnicode_New(NSString* value)
 
 	result->base.hash = -1;
 
-	if (PyUnicode_GET_SIZE(tmp) == 0) {
-		result->base.hash = 0;
-	}
-
 	result->base.defenc = tmp->defenc;
 	Py_XINCREF(tmp->defenc);
 	Py_DECREF(tmp);
+#else
+	/* Conversion to PyUnicode without creating an autoreleased object.
+	 *
+	 * NOTE: A final optimization is removing the copy of 'characters', but
+	 * that can only be done when sizeof(unichar) == Py_UNICODE_SIZE.
+	 *
+	 * The reason for doing this: NSThread 
+	 *     +detachNewThreadSelector:toTarget:withObject:, with a string
+	 *     as one of the arguments.
+	 *
+	 * Another reason is that the following loop 'leaks' memory when using
+	 * -UTF8String:
+	 *  	while True:
+	 *  		NSString.alloc().init()
+	 *
+	 *  while the following doesn't:
+	 *
+	 *  	while True:
+	 *  		NSArray.alloc().init()
+	 */
+	PyObjCUnicodeObject* result;
+	int i, length;
+	unichar* volatile characters = NULL;
+	NSRange range;
 
-	result->weakrefs = 0;
+	NS_DURING
+		length = [value length];
+		characters = malloc(sizeof(unichar) * length);
+		if (characters == NULL) {
+			PyErr_NoMemory();
+			NS_VALUERETURN(NULL, PyObject*);
+		}
+
+		range = NSMakeRange(0, length);
+
+		[value getCharacters: characters range: range];
+
+	NS_HANDLER
+		if (characters) {
+			free(characters);
+			characters = NULL;
+		}
+		PyObjCErr_FromObjC(localException);
+		NS_VALUERETURN(NULL, PyObject*);
+	NS_ENDHANDLER
+
+	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
+	PyUnicode_AS_UNICODE(result) = PyMem_NEW(Py_UNICODE, length);
+	if (PyUnicode_AS_UNICODE(result) == NULL) {
+		Py_DECREF((PyObject*)result);
+		free(characters); 
+		PyErr_NoMemory();
+		return NULL;
+	}
+	PyUnicode_GET_SIZE(result) = length;
+	for (i = 0; i < length; i++) {
+		PyUnicode_AS_UNICODE(result)[i] = (Py_UNICODE)(characters[i]);
+	}
+	free(characters); 
+
+	result->base.defenc = NULL;
+#endif
+
+	result->base.hash = -1;
+
+	if (PyUnicode_GET_SIZE(result) == 0) {
+		result->base.hash = 0;
+	}
+
+	result->weakrefs = NULL;
 	result->nsstr = value;
 	[value retain];
 

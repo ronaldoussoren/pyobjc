@@ -57,7 +57,7 @@ int PyObjCIMP_GetFlags(PyObject* self)
 {
 	if (!PyObjCIMP_Check(self)) {
 		PyErr_BadInternalCall();
-		return NULL;
+		return -1;
 	}
 
 	return ((PyObjCIMPObject*)self)->flags;

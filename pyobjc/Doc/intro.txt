@@ -242,7 +242,10 @@ The `Cocoa libraries`_, and most (if not all) other class libraries for
 Objective-C use explicit reference counting to manage memory. The methods
 ``retain``, ``release`` and ``autorelease`` are used to manage these 
 reference counts. You won't have to manage reference counts in Python, the
-bridge does all that work for you.
+bridge does all that work for you (but see `Notes on supported APIs and classes 
+on MacOS X`__ for some advanced issues).
+
+.. __: api-notes-macosx.html
 
 The only reasons reference counts are mentioned at all are to tell you about
 ignoring them, and more importantly to introduce you to some issues w.r.t. 

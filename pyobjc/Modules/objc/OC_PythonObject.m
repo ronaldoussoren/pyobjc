@@ -251,7 +251,6 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	int		   retsize;
 	char*              retbuffer;
 
-
 	PyObjC_BEGIN_WITH_GIL
 
 		retsize = PyObjCRT_SizeOfType (rettype);
