@@ -65,5 +65,30 @@ class TestRegressions(unittest.TestCase):
 
         # A warning is three lines: location info, source code, empty line
         self.assertEquals(len(io.getvalue().split('\n')), 3)
+
+    def testThreadHang(self):
+        from Foundation import NSLog, NSAutoreleasePool, NSObject
+        import AppKit
+        from threading import Thread
+
+        class ThreadHangObject(NSObject):
+            def init(self):
+                self.t = MyThread()
+                self.t.start()
+                return self
+
+        aList = []
+        class MyThread(Thread):
+            def run(self):
+                pool = NSAutoreleasePool.alloc().init()
+                aList.append("before")
+                NSLog("does this print?")
+                aList.append("after")
+
+        o = ThreadHangObject.alloc().init()
+        o.t.join()
+
+        self.assertEquals(aList, ["before", "after"])
+
 if __name__ == '__main__':
     unittest.main()
