@@ -97,7 +97,7 @@ Decimal_ObjCValue(PyObject *self) {
 }
 
 static PyObject *decimal_get__pyobjc_object__(PyObject *self, void *closure __attribute__((__unused__))) {
-	PyObject *rval = PyObjC_IdToPython(Decimal_ObjCValue(self));
+	PyObject *rval = PyObjCObject_New(Decimal_ObjCValue(self));
 	return rval;
 }
 
@@ -145,7 +145,7 @@ decimal_getattro(PyObject *o, PyObject *attr_name)
 	if (res == NULL) {
 		PyObject *tmp;
 		PyErr_Clear();
-		tmp = PyObjC_IdToPython(Decimal_ObjCValue(o));
+		tmp = decimal_get__pyobjc_object__(o, NULL);
 		res = PyObject_GenericGetAttr(tmp, attr_name);
 		Py_XDECREF(tmp);
 	}

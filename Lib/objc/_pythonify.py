@@ -31,10 +31,22 @@ class OC_PythonInt(int):
 
 NSNumber = _objc.lookUpClass('NSNumber')
 NSDecimalNumber = _objc.lookUpClass('NSDecimalNumber')
+Foundation = None
+
 def numberWrapper(obj):
-    if isinstance(obj, NSDecimalNumber) or not hasattr(obj, 'objCType'):
+    if isinstance(obj, NSDecimalNumber):
+        # ensure that NSDecimal is around
+        global Foundation
+        if Foundation is None:
+            import Foundation
+        # return NSDecimal
+        return obj.decimalValue()
+    try:
+        tp = obj.objCType()
+    except AttributeError:
+        import warnings
+        warnings.warn(RuntimeWarning, "NSNumber instance doesn't implement objCType? %r" % (obj,))
         return obj
-    tp = obj.objCType()
     if tp in 'qQLfd':
         if tp == 'q':
             return OC_PythonLong(obj, obj.longLongValue())
