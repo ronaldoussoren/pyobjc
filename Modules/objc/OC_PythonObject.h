@@ -34,7 +34,7 @@
 }
 
 + (int)wrapPyObject:(PyObject *)argument toId:(id *)datum;
-+ _newWithObject:(PyObject *) obj;
++ newWithObject:(PyObject *) obj;
 + depythonifyTable;
 + pythonifyStructTable;
 + (PyObject *)__pythonifyStruct:(PyObject *) obj withType:(const char *) type length:(int) length;
