@@ -110,14 +110,16 @@ int main() {
 tempSource = "_makeTypeCodes.m"
 tempExecutable = "_makeTypeCodes"
 
-def makeTypeCodes(frameworkName, types):
+def makeTypeCodes(frameworkName, types, frameworkMain=None):
+    if frameworkMain is None:
+        frameworkMain = frameworkName
     lines = []
     keys = types.keys()
     keys.sort()
     for tp in keys:
         lines.append("m = @encode(%s);" % tp)
         lines.append(r'printf("%%s %s\n", m);' % tp)
-    source = template % (frameworkName, frameworkName, "\n    ".join(lines))
+    source = template % (frameworkName, frameworkMain, "\n    ".join(lines))
     file(tempSource, "w").write(source)
     if os.system("cc -o %s %s" % (tempExecutable, tempSource)):
         assert 0, "compile failed"
@@ -132,7 +134,7 @@ def makeTypeCodes(frameworkName, types):
     os.remove(tempExecutable)
 
 
-def genProtocols(frameworkPath, outFile=None, specials={}):
+def genProtocols(frameworkPath, outFile=None, specials={}, frameworkMain=None):
     """Generate protocol definitions for a framework. If outFile is None,
     the generated Python code will be printed to sys.stdout.
     """
@@ -153,7 +155,7 @@ def genProtocols(frameworkPath, outFile=None, specials={}):
             for sel, types, line, isClass in selectors:
                 for tp in types:
                     allTypes[tp] = 0
-    makeTypeCodes(frameworkName, allTypes)
+    makeTypeCodes(frameworkName, allTypes, frameworkMain)
     protocols = allProtocols.items()
     protocols.sort()
     print >> outFile, "# generated from %r" % frameworkPath

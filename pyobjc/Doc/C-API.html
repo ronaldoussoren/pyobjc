@@ -142,7 +142,7 @@ exception will be rethrown.</p>
 int PyObjC_PythonToObjC(const char* typespec, PyObject* value, void* buffer);
 </pre>
 <p>Convert the value to an Objective-C value of type <code><span>typespec</span></code>. The buffer must
-be at least <code><span>PyObjC_SizeOfType(typespec)</span></code> bytes long.</p>
+be at least <code><span>PyObjCRT_SizeOfType(typespec)</span></code> bytes long.</p>
 <p>NOTE: The <code><span>typespec</span></code> is a type specifier as described in the runtime 
 reference of the Objective-C manual from Apple. Use <code><span>@encode(mytype)</span></code> if to
 get code that is portable to a different Objective-C runtime.</p>
@@ -158,9 +158,13 @@ must contain the complete argument list, including self. If <code><span>isAlloc<
 <code><span>NULL</span></code> it is used to output whether this method should return a new reference
 (TRUE) or a borrowed reference (FALSE).</p>
 <pre>
-int PyObjC_SizeOfType(const char* typespec);
+int PyObjCRT_SizeOfType(const char* typespec);
 </pre>
 <p>Return the size of variables of the specified type.</p>
+<pre>
+int PyObjCRT_AlignOfType(const char* typespec);
+</pre>
+<p>Return the alignment of variables of the specified type.</p>
 <pre>
 Class PyObjCSelector_GetClass(PyObject* sel);
 </pre>

@@ -471,6 +471,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			}
 			Py_DECREF(res);
 			if (err == -1) {
+				if (res == Py_None) {
+					PyErr_Format(PyExc_ValueError,
+					   "%s: returned None, expecting "
+					   "a value", 
+					   PyObjCRT_SELName(*(SEL*)args[1]));
+				}
 				goto error;
 			}
 		}
@@ -584,7 +590,13 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			    [[(*(id*)resp) retain] autorelease];
 			}
 			if (err == -1) {
-				Py_DECREF(res);
+				if (real_res == Py_None) {
+					PyErr_Format(PyExc_ValueError,
+					   "%s: returned None, expecting "
+					   "a value",
+					   PyObjCRT_SELName(*(SEL*)args[1]));
+				}
+				Py_DECREF(res); /* XXX */
 				goto error;
 			}
 		}

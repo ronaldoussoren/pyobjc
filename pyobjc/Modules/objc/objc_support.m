@@ -911,7 +911,7 @@ pythonify_c_value (const char *type, void *datum)
 	default:
 		PyErr_Format(ObjCExc_error, 
 			"pythonify_c_value: unhandled value type (%c|%d|%s)",
-			*type, *type, *type);
+			*type, *type, type);
 		break;
 	}
 
@@ -982,10 +982,9 @@ depythonify_unsigned_int_value(PyObject* argument, char* descr,
 
 		if (PyString_Check(argument) || PyUnicode_Check(argument)) {
 			PyErr_Format(PyExc_ValueError,
-				"depythonifying '%s', got '%s' of %d",
+				"depythonifying '%s', got '%s'",
 					descr,
-					argument->ob_type->tp_name,
-					PyString_Size(argument));
+					argument->ob_type->tp_name);
 			return -1;
 		}
 
@@ -1068,10 +1067,9 @@ depythonify_signed_int_value(PyObject* argument, char* descr,
 		}
 
 		PyErr_Format(PyExc_ValueError,
-			"depythonifying '%s', got '%s' of %d",
+			"depythonifying '%s', got '%s'",
 				descr,
-				argument->ob_type->tp_name,
-				PyString_Size(argument));
+				argument->ob_type->tp_name);
 		return -1;
 	}
 }

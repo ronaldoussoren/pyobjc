@@ -75,10 +75,11 @@ def process_file(outfp, filename):
                     in_comment = 1
                     ln = ln[:m.start()]
 
-                if need_brace == 1:
+                if need_brace:
                     if not ln.strip().startswith('{'):
                         in_enum=0
                         continue
+                    need_brace = 0
 
 
                 m = IDENT_RE.search(ln)

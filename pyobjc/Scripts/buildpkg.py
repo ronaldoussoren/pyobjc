@@ -277,7 +277,7 @@ class PackageMaker:
 
         # find candidate resource files (txt html rtf rtfd/ or lproj/)
         allFiles = []
-        for pat in string.split("*.txt *.html *.rtf *.rtfd *.lproj", " "):
+        for pat in string.split("*.txt *.html *.rtf *.rtfd *.lproj *.plist", " "):
             pattern = join(self.resourceFolder, pat)
             allFiles = allFiles + glob.glob(pattern)
 
@@ -299,6 +299,8 @@ class PackageMaker:
                 if string.find(basename(f), s) == 0:
                     files.append((f, f))
             if f[-6:] == ".lproj":
+                files.append((f, f))
+            elif f[-6:] == ".plist":
                 files.append((f, f))
             elif basename(f) in ["pre_upgrade", "pre_install", "post_upgrade", "post_install"]:
                 files.append((f, packageName+"."+basename(f)))
