@@ -4,6 +4,19 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 1.2 (2004-??-??)
+------------------------
+
+- ``objc.loadBundle`` now returns bundle we just loaded.
+
+- Added ``objc.loadBundleVariables`` and ``objc.loadBundleFunctions``,
+  two functions for reading global variables and functions from a bundle.
+
+- Rewrote the code-generating scripts, they now generate Python code and
+  are exported in the ``PyObjCTools.WrapperGenerator`` module.
+  [UNFINISHED]
+
+
 Version 1.1 (2004-05-30)
 ------------------------
 

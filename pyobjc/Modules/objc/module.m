@@ -322,7 +322,7 @@ static	char* keywords[] = { "length", 0 };
 
 PyDoc_STRVAR(loadBundle_doc,
 	"loadBundle(module_name, module_globals, bundle_path=None, "
-	"bundle_identifier=None)\n"
+	"bundle_identifier=None) -> bundle\n"
 	"\n"
 	"Load the bundle identified by 'bundle_path' or 'bundle_identifier' \n"
 	"and add the classes in the bundle to the 'module_globals'.\n"
@@ -336,7 +336,7 @@ static PyObject*
 loadBundle(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bundle_identifier", NULL };
-	id        bundle;
+	NSBundle* bundle;
 	NSString* strval;
 	int err;
 	PyObject* bundle_identifier = NULL;
@@ -393,11 +393,11 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 #endif /* !MACOSX */
 	}
 
-    if (![bundle load]) {
-        PyErr_SetString(PyExc_ImportError,
-            "Bundle could not be loaded");
-        return NULL;
-    }
+	if (![bundle load]) {
+		PyErr_SetString(PyExc_ImportError,
+			"Bundle could not be loaded");
+		return NULL;
+	}
 
 	class_list = PyObjC_GetClassList();
 	if (class_list == NULL) {	
@@ -479,8 +479,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	Py_XDECREF(module_key); module_key = NULL;
 	Py_XDECREF(class_list); class_list = NULL;
 
-	Py_INCREF(Py_None);
-	return Py_None;
+	return PyObjC_IdToPython(bundle)
 }
 
 PyDoc_STRVAR(objc_splitSignature_doc,
