@@ -251,11 +251,11 @@ static  char* keywords[] = { NULL };
 static PyObject*
 compat_NSRectFillList(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = { "bytes", "length", "count", 0 };
+static char* keywords[] = { "bytes", "count", 0 };
 	unsigned char *rectBytes;
 	int rectByteLength;
 	int rectCount = -1;
-	if  (!PyArg_ParseTupleAndKeywords(args, kwds, "s#|i", keywords, &rectBytes, &rectByteLength, &rectCount)) {
+	if  (!PyArg_ParseTupleAndKeywords(args, kwds, "s#i", keywords, &rectBytes, &rectByteLength, &rectCount)) {
 		return NULL;
 	}
 
@@ -273,10 +273,11 @@ static char* keywords[] = { "bytes", "length", "count", 0 };
 		PyErr_SetString(PyExc_ValueError, "RectCount was less than zero.");
 		return NULL;
 	}
+        
 
 	if (rectCount >= 0 ) {
 		if ((size_t)rectCount > (rectByteLength / sizeof(NSRect))) {
-			PyErr_SetString(PyExc_ValueError, 
+                    PyErr_SetString(PyExc_ValueError, 
 				"Rect count specified, but was longer than supplied array of rectangles.");
 			return NULL;
 		}
@@ -307,9 +308,9 @@ static char* keywords[] = { "rects", "count", 0 };
 		 */
 		char* s1; 
 		int i1, i2;
-static		char* klist[] = { "bytes", "length", "count", 0 };
+                static char* klist[] = { "bytes", "count", 0 };
 
-		if  (PyArg_ParseTupleAndKeywords(args, kwds, "s#|i", klist, &s1, &i1, &i2)) {
+		if  (PyArg_ParseTupleAndKeywords(args, kwds, "s#i", klist, &s1, &i1, &i2)) {
 			return compat_NSRectFillList(self, args, kwds);
 		}
 		PyErr_Clear();
@@ -338,7 +339,8 @@ static		char* klist[] = { "bytes", "length", "count", 0 };
 		return NULL;
 	}
 
-	rects = malloc(rectCount * sizeof(NSRect));
+#warning The (*4) in the following is bogus.   Without it, we crash with what appears to be corrupted memory.  I don't know why but figure that not crashing is preferable to crashing until one of us has time to figure this out.  Really,  I suspect Ronald will take one look at this and, being about 10x brighter than me at this sort of thing, will know exactly what is wrong...  :-)
+	rects = malloc((rectCount * sizeof(NSRect)) * 4);
 	if (rects == NULL) {
 		PyErr_NoMemory();
 		return NULL;
