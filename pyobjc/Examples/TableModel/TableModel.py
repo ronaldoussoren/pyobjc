@@ -1,5 +1,5 @@
 from Foundation import NSObject
-from AppKit import NSApplicationMain, NSTableDataSource
+from AppKit import NSApplicationMain, NSTableDataSource, NSTableViewDelegate
 from AppKit.NibClassBuilder import AutoBaseClass
 from AppKit import NibClassBuilder
 from objc import selector
@@ -9,7 +9,7 @@ NibClassBuilder.extractClasses("MainMenu")
 
 ROWCOUNT = 200
 
-class PyModel(AutoBaseClass, NSTableDataSource):
+class PyModel(AutoBaseClass, NSTableDataSource, NSTableViewDelegate):
 
     def awakeFromNib(self):
         self.stuff = {}
@@ -39,5 +39,9 @@ class PyModel(AutoBaseClass, NSTableDataSource):
 
         col = aTableColumn.identifier()
         self.stuff[(aTableColumn, rowIndex)] = anObject
+
+    def tableView_shouldSelectRow_(self, aTableView, rowIndex):
+        print "shouldSelectRow_", rowIndex
+        return (rowIndex % 2)
 
 sys.exit(NSApplicationMain(sys.argv))

@@ -430,40 +430,60 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	return Py_None;
 }
 
-PyObject* func_setArgv0(PyObject* self, PyObject* args, PyObject* kwds)
+PyDoc_STRVAR(objc_splitSignature_doc,
+	"splitSignature(signature) -> list\n"
+	"\n"
+	"Split a signature string into a list of items."
+);
+PyObject*
+objc_splitSignature(PyObject* self, PyObject* args, PyObject* kwds)
 {
-	typedef struct {
-		@defs(NSProcessInfo)
-	} NSProcessInfoStruct;
-
-static  char* keywords[] = { "argv0", NULL };
-	char*	  argv0;
-	NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-	NSMutableArray *argv = [NSMutableArray arrayWithArray:
-		  ((NSProcessInfoStruct *)processInfo)->arguments];
-	[argv retain];
+static  char* keywords[] = { "signature", NULL };
+	const char* signature;
+	const char* end;
+	PyObject* result;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-			"s:setArgv0",
-			keywords, &argv0)) {
+			"s:splitSignature",
+			keywords, &signature)) {
 		return NULL;
 	}
 
-	  
-        //[argv replaceObjectAtIndex:0 withObject: [NSString stringWithUTF8String:argv0]];
-        [argv insertObject: [NSString stringWithUTF8String:argv0] atIndex:0];
-	((NSProcessInfoStruct *)processInfo)->arguments = argv;
+	result = PyList_New(0);
+	if (result == NULL) return NULL;
+	
+	while (*signature != 0) {
+		PyObject* str;
 
-	Py_INCREF(Py_None);
-	return Py_None;
+		end = objc_skip_typespec(signature);
+		if (end == NULL) {
+			Py_DECREF(result);
+			return NULL;
+		}
+
+		str = PyString_FromStringAndSize(signature, end - signature);
+		if (str == NULL) {
+			Py_DECREF(result);
+			return NULL;
+		}
+
+		if (PyList_Append(result, str) == -1) {
+			Py_DECREF(result);
+			return NULL;
+		}
+
+		signature = end;
+	}	
+	return result;
 }
+
 
 static PyMethodDef meta_methods[] = {
 	{
-	  "setArgv0",
-	  (PyCFunction)func_setArgv0,
+	  "splitSignature",
+	  (PyCFunction)objc_splitSignature,
 	  METH_VARARGS|METH_KEYWORDS,
-	  NULL
+	  objc_splitSignature_doc
 	},
 	{
 	  "lookUpClass",

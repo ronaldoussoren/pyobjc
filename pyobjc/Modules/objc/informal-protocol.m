@@ -4,6 +4,7 @@
  * See the module DOCSTR for more information.
  */
 #include <Python.h>
+#include "structmember.h"	/* needed for PyMemberDef */
 #include "pyobjc.h"
 #include "objc_support.h"
 
@@ -71,6 +72,11 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 		return NULL;
 	}
 
+	selectors = PySequence_Tuple(selectors);
+	if (selectors == NULL) {
+		return NULL;
+	}
+
 	result = (ObjCInformalProtocol*)PyObject_New(
 			ObjCInformalProtocol, &ObjCInformalProtocol_Type);
 
@@ -78,7 +84,6 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 	result->selectors = selectors;
 
 	Py_XINCREF(name);
-	Py_XINCREF(selectors);
 
 	return (PyObject*)result;
 }
@@ -95,6 +100,24 @@ static int proto_traverse(PyObject* self, visitproc visit, void* handle)
 	return 0;
 }
 
+static PyMemberDef proto_members[] = {
+	{
+		"__name__",
+		T_OBJECT,
+		offsetof(ObjCInformalProtocol, name),
+		READONLY,
+		NULL
+	},
+	{
+		"selectors",
+		T_OBJECT,
+		offsetof(ObjCInformalProtocol, selectors),
+		READONLY,
+		NULL
+	},
+
+	{ 0, 0, 0, 0, 0 }
+};
 
 PyTypeObject ObjCInformalProtocol_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)
@@ -127,7 +150,7 @@ PyTypeObject ObjCInformalProtocol_Type = {
 	0,					/* tp_iter */
 	0,					/* tp_iternext */
 	0,					/* tp_methods */
-	0,					/* tp_members */
+	proto_members,				/* tp_members */
 	0, /* proto_getset , */			/* tp_getset */
 	0,					/* tp_base */
 	0,					/* tp_dict */

@@ -8,15 +8,37 @@
 #include <pyobjc-api.h>
 #include <objc/objc-runtime.h>
 
+
 struct dummy
 {
 	int f1;
-	int f2;
+	short f2;
 };
 
 struct dummy2
 {
 	int array[4];
+};
+
+
+struct s1 {
+	int    i;
+	double d;
+};
+
+
+struct complexStruct
+{
+	/*  0 */ char	 	ch;
+	/*  1 */ unsigned char uch;
+	/*  4 */ int		i1;	
+	/*  8 */ unsigned int	u;
+	/* 12 */ short 		s;
+	/* 20 */ double		d;
+	/* 28 */ struct s1	sub1[2];
+	/* 60 */ int		i2;
+	/* 62 */ unsigned short us;
+	/* 64 */ char* 		str;
 };
 
 
@@ -43,6 +65,8 @@ struct dummy2
 + (unsigned char)ucharClsFunc;
 + (float)floatClsFunc;
 + (double)doubleClsFunc;
++ (char*)charpClsFunc;
++ (id)idClsFunc;
 
 - (long long)longlongFunc;
 - (unsigned long long)ulonglongFunc;
@@ -56,6 +80,8 @@ struct dummy2
 - (unsigned char)ucharFunc;
 - (float)floatFunc;
 - (double)doubleFunc;
+- (char*)charpFunc;
+- (id)idFunc;
 
 /* returns of complex values */
 - (struct dummy)dummyFunc;
@@ -75,8 +101,57 @@ struct dummy2
 - (unsigned char)ucharArg:(unsigned char)arg;
 - (float)floatArg:(float)arg;
 - (double)doubleArg:(double)arg;
+- (char*)charpArg:(char*)arg;
+- (id)idArg:(id)arg;
 
 /* argument passing for complex values */
+- (struct dummy)dummyArg:(struct dummy)arg;
+- (struct dummy2)dummy2Arg:(struct dummy2)arg;
+/* TODO: Nested structs, unions, strings */
+
+/* in, out and in-out arguments */
+- (char)passInChar:(char*)arg;
+- (void)passOutChar:(char*)arg;
+- (void)passInOutChar:(char*)arg;
+- (short)passInShort:(short*)arg;
+- (void)passOutShort:(short*)arg;
+- (void)passInOutShort:(short*)arg;
+- (int)passInInt:(int*)arg;
+- (void)passOutInt:(int*)arg;
+- (void)passInOutInt:(int*)arg;
+- (long)passInLong:(long*)arg;
+- (void)passOutLong:(long*)arg;
+- (void)passInOutLong:(long*)arg;
+- (long long)passInLongLong:(long long*)arg;
+- (void)passOutLongLong:(long long*)arg;
+- (void)passInOutLongLong:(long long*)arg;
+- (unsigned char)passInUChar:(unsigned char*)arg;
+- (void)passOutUChar:(unsigned char*)arg;
+- (void)passInOutUChar:(unsigned char*)arg;
+- (unsigned short)passInUShort:(unsigned short*)arg;
+- (void)passOutUShort:(unsigned short*)arg;
+- (void)passInOutUShort:(unsigned short*)arg;
+- (unsigned int)passInUInt:(unsigned int*)arg;
+- (void)passOutUInt:(unsigned int*)arg;
+- (void)passInOutUInt:(unsigned int*)arg;
+- (unsigned long)passInULong:(unsigned long*)arg;
+- (void)passOutULong:(unsigned long*)arg;
+- (void)passInOutULong:(unsigned long*)arg;
+- (unsigned long long)passInULongLong:(unsigned long long*)arg;
+- (void)passOutULongLong:(unsigned long long*)arg;
+- (void)passInOutULongLong:(unsigned long long*)arg;
+- (float)passInFloat:(float*)arg;
+- (void)passOutFloat:(float*)arg;
+- (void)passInOutFloat:(float*)arg;
+- (double)passInDouble:(double*)arg;
+- (void)passOutDouble:(double*)arg;
+- (void)passInOutDouble:(double*)arg;
+- (char*)passInCharp:(char**)arg;
+- (void)passOutCharp:(char**)arg;
+- (void)passInOutCharp:(char**)arg;
+- (id)passInID:(id*)arg;
+- (void)passOutID:(id*)arg;
+- (void)passInOutID:(id*)arg;
 
 @end
 
@@ -119,6 +194,12 @@ static float g_floats[] = {
 };
 static double g_doubles[] = {
 	0.128, 1.0, 42.0, 1e10
+};
+
+static char* g_charps[] = {
+	"hello",
+	"world",
+	"foobar"
 };
 
 + (void)clsReset
@@ -198,6 +279,24 @@ static double g_doubles[] = {
 	return g_doubles[g_idx++];
 }
 
++ (char*)charpClsFunc;
+{
+	if (g_idx > ARRAYSIZE(g_charps)) g_idx = 0;
+	return g_charps[g_idx++];
+}
+
++ (id)idClsFunc;
+{
+	if (g_idx > 3) g_idx = 0;
+	
+	switch (g_idx ++) {
+	case 0: return [NSArray array];
+	case 1: return [NSHost hostWithAddress:@"127.0.0.1"];
+	case 2: return [NSMutableDictionary dictionary];
+	case 3: return NULL;
+	}
+}
+
 - (void)reset
 {
 	g_idx = 0;
@@ -273,6 +372,24 @@ static double g_doubles[] = {
 {
 	if (g_idx > ARRAYSIZE(g_doubles)) g_idx = 0;
 	return g_doubles[g_idx++];
+}
+
+- (char*)charpFunc;
+{
+	if (g_idx > ARRAYSIZE(g_charps)) g_idx = 0;
+	return g_charps[g_idx++];
+}
+
+- (id)idFunc;
+{
+	if (g_idx > 3) g_idx = 0;
+	
+	switch (g_idx ++) {
+	case 0: return [NSArray array];
+	case 1: return [NSHost hostWithAddress:@"127.0.0.1"];
+	case 2: return [NSMutableDictionary dictionary];
+	case 3: return NULL;
+	}
 }
 
 - (struct dummy)dummyFunc
@@ -364,6 +481,320 @@ static double g_doubles[] = {
 	return arg / 2;
 }
 
+- (char*)charpArg:(char*)arg
+{
+static 	char buf[1024];
+	int len = strlen(arg);
+	int i;
+
+	for (i = 0; i < len; i++) {
+		buf[len - i - 1] = arg[i];
+	}
+	buf[len] = 0;
+
+	return buf;
+}
+
+- (id)idArg:(id)arg
+{
+	id temp;
+
+	if (arg == NULL) {
+		temp = [NSNull null];
+	} else {
+		temp = arg;
+	}
+	return [NSArray arrayWithObject:temp];
+}
+
+- (struct dummy)dummyArg:(struct dummy)arg
+{
+	struct dummy result;
+
+	result.f1 = arg.f1 * 2;
+	result.f2 = arg.f2 * 2;
+
+	return result;
+}
+
+- (struct dummy2) dummy2Arg:(struct dummy2)arg
+{
+	struct dummy2 result = { {-1, -1, -1, -1} };
+
+	result.array[0] = arg.array[3] * 2;
+	result.array[1] = arg.array[2] * 2;
+	result.array[2] = arg.array[1] * 2;
+	result.array[3] = arg.array[0] * 2;
+
+	return result;
+}
+
+- (char)passInChar:(char*)arg;
+{
+	return *arg + 9;
+}
+
+- (void)passOutChar:(char*)arg;
+{
+	if (g_idx > ARRAYSIZE(g_ints)) g_idx = 0;
+	*arg = g_chars[g_idx++];
+}
+
+- (void)passInOutChar:(char*)arg;
+{
+	*arg += 42;
+}
+
+- (unsigned char)passInUChar:(unsigned char*)arg;
+{
+	return *arg + 9;
+}
+
+- (void)passOutUChar:(unsigned char*)arg;
+{
+	if (g_idx > ARRAYSIZE(g_uchars)) g_idx = 0;
+	*arg = g_uchars[g_idx++];
+}
+
+- (void)passInOutUChar:(unsigned char*)arg;
+{
+	*arg += 42;
+}
+
+- (short)passInShort:(short*)arg;
+{
+	return *arg + 9;
+}
+
+- (void)passOutShort:(short*)arg;
+{
+	if (g_idx > ARRAYSIZE(g_shorts)) g_idx = 0;
+	*arg = g_shorts[g_idx++];
+}
+
+- (void)passInOutShort:(short*)arg;
+{
+	*arg += 42;
+}
+
+- (unsigned short)passInUShort:(unsigned short*)arg;
+{
+	return *arg + 9;
+}
+
+- (void)passOutUShort:(unsigned short*)arg;
+{
+	if (g_idx > ARRAYSIZE(g_ushorts)) g_idx = 0;
+	*arg = g_ushorts[g_idx++];
+}
+
+- (void)passInOutUShort:(unsigned short*)arg;
+{
+	*arg += 42;
+}
+
+- (int)passInInt:(int*)arg;
+{
+	return *arg + 9;
+}
+
+- (void)passOutInt:(int*)arg;
+{
+	if (g_idx > ARRAYSIZE(g_ints)) g_idx = 0;
+	*arg = g_ints[g_idx++];
+}
+
+- (void)passInOutInt:(int*)arg;
+{
+	*arg += 42;
+}
+
+- (unsigned int)passInUInt:(unsigned int*)arg;
+{
+	return *arg + 9;
+}
+
+- (void)passOutUInt:(unsigned int*)arg;
+{
+	if (g_idx > ARRAYSIZE(g_uints)) g_idx = 0;
+	*arg = g_uints[g_idx++];
+}
+
+- (void)passInOutUInt:(unsigned int*)arg;
+{
+	*arg += 42;
+}
+
+- (long)passInLong:(long*)arg;
+{
+	return *arg + 9;
+}
+
+- (void)passOutLong:(long*)arg;
+{
+	if (g_idx > ARRAYSIZE(g_longs)) g_idx = 0;
+	*arg = g_longs[g_idx++];
+}
+
+- (void)passInOutLong:(long*)arg;
+{
+	*arg += 42;
+}
+
+- (unsigned long)passInULong:(unsigned long*)arg;
+{
+	return *arg + 9;
+}
+
+- (void)passOutULong:(unsigned long*)arg;
+{
+	if (g_idx > ARRAYSIZE(g_ulongs)) g_idx = 0;
+	*arg = g_ulongs[g_idx++];
+}
+
+- (void)passInOutULong:(unsigned long*)arg;
+{
+	*arg += 42;
+}
+
+- (long long)passInLongLong:(long long*)arg;
+{
+	return *arg + 9;
+}
+
+- (void)passOutLongLong:(long long*)arg;
+{
+	if (g_idx > ARRAYSIZE(g_longlongs)) g_idx = 0;
+	*arg = g_longlongs[g_idx++];
+}
+
+- (void)passInOutLongLong:(long long*)arg;
+{
+	*arg += 42;
+}
+
+- (unsigned long long)passInULongLong:(unsigned long long*)arg;
+{
+	return *arg + 9;
+}
+
+- (void)passOutULongLong:(unsigned long long*)arg;
+{
+	if (g_idx > ARRAYSIZE(g_ulonglongs)) g_idx = 0;
+	*arg = g_ulonglongs[g_idx++];
+}
+
+- (void)passInOutULongLong:(unsigned long long*)arg;
+{
+	*arg += 42;
+}
+
+- (float)passInFloat:(float*)arg;
+{
+	return *arg * 9;
+}
+
+- (void)passOutFloat:(float*)arg;
+{
+	if (g_idx > ARRAYSIZE(g_floats)) g_idx = 0;
+	*arg = g_floats[g_idx++];
+}
+
+- (void)passInOutFloat:(float*)arg;
+{
+	*arg *= 42;
+}
+
+- (double)passInDouble:(double*)arg;
+{
+	return *arg * 9;
+}
+
+- (void)passOutDouble:(double*)arg;
+{
+	if (g_idx > ARRAYSIZE(g_doubles)) g_idx = 0;
+	*arg = g_doubles[g_idx++];
+}
+
+- (void)passInOutDouble:(double*)arg;
+{
+	*arg *= 42;
+}
+
+- (char*)passInCharp:(char**)arg;
+{
+	/* Yes this is leaking, but we're only testing method calling */
+	int len = strlen(*arg);
+	char* res = malloc(len * 2 + 1);
+	char* p;
+	char* q;
+
+	for (p = *arg, q = res; *p; p++) {
+		*q ++ = *p;
+		*q ++ = *p;
+	}
+	*q = 0;
+	return res;
+}
+
+- (void)passOutCharp:(char**)arg;
+{
+	if (g_idx > ARRAYSIZE(g_charps)) g_idx = 0;
+	*arg = g_charps[g_idx++];
+}
+
+- (void)passInOutCharp:(char**)arg;
+{
+	/* Yes this is leaking, but we're only testing method calling */
+	int len = strlen(*arg);
+	char* res = malloc(len * 2 + 1);
+	char* p;
+	char* q;
+
+	for (p = *arg, q = res; *p; p++) {
+		*q ++ = *p;
+		*q ++ = *p;
+	}
+	*q = 0;
+	*arg = res;
+}
+
+- (id)passInID:(id*)arg;
+{
+	id temp;
+
+	if (*arg == NULL) {
+		temp = [NSNull null];
+	} else {
+		temp = *arg;
+	}
+	return [NSArray arrayWithObject:temp];
+}
+
+- (void)passOutID:(id*)arg;
+{
+	if (g_idx > 3) g_idx = 0;
+	
+	switch (g_idx ++) {
+	case 0: *arg = [NSArray array]; break;
+	case 1: *arg = [NSHost hostWithAddress:@"127.0.0.1"]; break;
+	case 2: *arg = [NSMutableDictionary dictionary]; break;
+	case 3: *arg = NULL; break;
+	}
+}
+
+- (void)passInOutID:(id*)arg;
+{
+	id temp;
+
+	if (*arg == NULL) {
+		temp = [NSNull null];
+	} else {
+		temp = *arg;
+	}
+	*arg = [NSArray arrayWithObject:temp];
+}
+
 @end
 
 
@@ -386,11 +817,5 @@ void inittestbndl(void)
 
 	PyModule_AddObject(m, "OC_TestClass1", 
 		ObjCClass_New([OC_TestClass1 class]));
-
-
-	OC_TestClass1* obj = [OC_TestClass1 new];
-	struct objc_super super;
-	super.receiver = obj;
-	super.class =  [OC_TestClass1 class];
-	struct dummy result;
+	
 }
