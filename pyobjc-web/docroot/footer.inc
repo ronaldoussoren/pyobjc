@@ -29,6 +29,7 @@
 <tr><td>&nbsp;</td></tr>
 <tr><td width="100%">
 <div class="footer" align="center"><?
+/*
 if ($dyndate == 1) {
   print "Generated dynamically";
   $date = 0;
@@ -40,6 +41,7 @@ if ($dyndate == 1) {
 }
 if ($date)
   print gmstrftime("%a, %b %d %Y, %R GMT", $date);
+*/
 ?></div>
 </td></tr>
 <tr><td height="7" class="layout">

@@ -5,6 +5,7 @@
 $sections = array(
   "index.php", "Home", "home",
   "doc/index.php", "Documentation", "documentation",
+  "development/index.php", "Development", "development",
   "faq/index.php", "FAQ", "faq",
   "software/", "Download", "download",
   "examples/index.php", "Examples", "examples",

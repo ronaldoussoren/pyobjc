@@ -1,5 +1,5 @@
 <?
-$title = "Documentation";
+$title = "Software";
 $cvs_author = '$Author: ronaldoussoren $';
 $cvs_date = '$Date: 2004/05/30 18:56:39 $';
 
@@ -39,18 +39,6 @@ archive with libFFI <a href="http://prdownloads.sourceforge.net/pyobjc/libffi-sr
 <p>The <a href="http://subversion.tigris.org/">subversion</a> repository 
    can be accessed at <a href="http://svn.red-bean.com/pyobjc">http://svn.red-bean.com/pyobjc</a>.
 <p>Many thanks to the folks at <a href="http://www.red-bean.com">red-bean.com</a> for allowing us to use their server.
-
-<h2>Misc. other downloads</h2>
-
-<p>
-These downloads are not really related to PyObjC, but are available from
-this location until they find another home.
-
-<ul>
-<li><a href="readline-0.0.0.tar.gz">Readline support for Apple python</a>
-<li><a href="pyssl-0.0.0.tar.gz">SSL support for Apple python</a>
-<li><a href="dump-methods.py">dump-methods: Script to dump XML-RPC interfaces</a>
-</ul>
 
 <?
 include "footer.inc";
