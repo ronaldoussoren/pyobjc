@@ -30,6 +30,23 @@ del Foundation
 
 import protocols  # no need to export these, just register with PyObjC
 
+# NSView doesn't declares, but does not implement this method. This
+# additional protocol is needed to ensure that python implementations of
+# the method pick up the right signature.
+protocols.NSWindowPrinting = _objc.informal_protocol(
+    "NSWindowPrinting",
+    [
+        # - (BOOL)knowsPageRange:(NSRangePointer)range;
+        _objc.selector(
+            None,
+            selector='knowsPageRange:',
+            signature='C@:o^{_NSRange=II}',
+            isRequired=0,
+        ),
+    ]
+)
+
+
 #
 # (informal) protocols eported for b/w compatibility
 #

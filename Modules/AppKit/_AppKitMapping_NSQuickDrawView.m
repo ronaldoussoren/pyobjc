@@ -86,7 +86,7 @@ _pyobjc_install_NSQuickDrawView(void)
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSQuickDrawView,
-		@selector(initWithWindowRef:),
+		@selector(qdport),
 		call_NSQuickDrawView_qdport,
 		(IMP)imp_NSQuickDrawView_qdport) < 0) {
 
