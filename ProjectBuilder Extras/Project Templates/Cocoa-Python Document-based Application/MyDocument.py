@@ -13,7 +13,7 @@ from AppKit import *
 from PyObjCTools import NibClassBuilder
 
 NibClassBuilder.extractClasses("MyDocument")
-class MyDocument(PyObjCTools.AutoBaseClass):
+class MyDocument(NibClassBuilder.AutoBaseClass):
     def init(self):
         self = super(MyDocument, self).init()
         if self:
