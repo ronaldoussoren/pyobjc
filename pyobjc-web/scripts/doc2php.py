@@ -205,7 +205,12 @@ def copy_project_docs(srctree):
                 for title, link in developer_docs:
                     fd.write('<LI><A HREF="%s">%s</A>\n'%(link, title))
 
-    replace_examples_svn(os.path.join('docroot', 'doc', 'examples.php'))
+    EXAMPLES = os.path.join('docroot', 'doc', 'examples.php')
+    OUTEXAMPLES = os.path.join('docroot', 'examples', 'index.php')
+    replace_examples_svn(EXAMPLES)
+    if os.path.exists(OUTEXAMPLES):
+        os.unlink(OUTEXAMPLES)
+    shutil.copyfile(EXAMPLES, OUTEXAMPLES)
 
     # Copy tutorial files
     TUTORIAL_ENDINGS = ['.nib', '.py', '-src', '.h', '.m']
