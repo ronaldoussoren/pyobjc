@@ -20,6 +20,17 @@ Unicode Host
 URL
   %s"""
 
+class IDNSnitchDialog(NSObject):
+    def runDialog_(self, (res, dialog)):
+        res.append(NSRunAlertPanel(*dialog))
+        return
+
+    def startIDNSnitch_(self, sender):
+        print u'startIDNSnitch:'
+        IDNSnitch.startIDNSnitch_(sender)
+
+idnSnitchDialog = IDNSnitchDialog.alloc().init()
+
 class IDNSnitch(IDNSnitchBase):
     def checkURL_(cls, anURL):
         if anURL is None:
@@ -31,17 +42,25 @@ class IDNSnitch(IDNSnitchBase):
             uni = u'.'.join([encodings.idna.ToUnicode(part) for part in host.split(u'.')])
             shouldDeny = HOSTS.get(uni)
             if shouldDeny is None:
-                res = NSRunAlertPanel(
-                    u'IDN URL Detected',
-                    MESSAGE % (uni, uni.encode('unicode_escape'), anURL),
-                    u'Allow',
-                    u'Deny',
-                    None)
-                shouldDeny = (res != NSAlertDefaultReturn)
+                res = []
+                idnSnitchDialog.performSelectorOnMainThread_withObject_waitUntilDone_(
+                    'runDialog:',
+                    (
+                        res,
+                        (
+                            u'IDN URL Detected',
+                            MESSAGE % (uni, uni.encode('unicode_escape'), anURL),
+                            u'Allow',
+                            u'Deny',
+                            None,
+                        ),
+                    ),
+                    True,
+                )
+                shouldDeny = res.pop() != NSAlertDefaultReturn
                 HOSTS[uni] = shouldDeny
             if shouldDeny:
                 return NSURL.URLWithString_(u'about:blank')
         return anURL
 
-      
-IDNSnitch.startIDNSnitch_(None)
+idnSnitchDialog.performSelectorOnMainThread_withObject_waitUntilDone_('startIDNSnitch:', None, False)

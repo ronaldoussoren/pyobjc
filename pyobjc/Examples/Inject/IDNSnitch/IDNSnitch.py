@@ -21,7 +21,16 @@ class IDNSnitchApplicationDelegate(NibClassBuilder.AutoBaseClass):
             None)
 
     def applicationLaunched_(self, aNotification):
-        self.attachIfSafari_(aNotification.userInfo())
+        # give Safari some time to launch.. otherwise it will be unhappy
+        NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+            2.0,
+            self,
+            'delayedAttachIfSafari:',
+            aNotification.userInfo(),
+            False)
+
+    def delayedAttachIfSafari_(self, aTimer):
+        self.attachIfSafari_(aTimer.userInfo())
     
     def attachIfSafari_(self, userInfo):
         if userInfo.get(u'NSApplicationBundleIdentifier') != SAFARI:
