@@ -11,26 +11,12 @@ include "header.inc";
 <h2>Stable release</h2>
 
 <ul>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.1-macosx10.2.dmg?download">PyObjC 1.1 installer package for Apple's Python (MacOS X 10.2)</a>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.1-macosx10.3.dmg?download">PyObjC 1.1 installer package for Apple's Python (MacOS X 10.3)</a>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.1.tar.gz?download">PyObjC 1.1 source release (a compressed tar archive)</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2-macosx10.2.dmg?download">PyObjC 1.2 installer package for MacPython 2.3 (MacOS X 10.2)</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2-macosx10.3.dmg?download">PyObjC 1.2 installer package for Apple's Python (MacOS X 10.3)</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2.tar.gz?download">PyObjC 1.2 source release (a compressed tar archive)</a>
 </ul>
 
-<p>Users of MacPython can use the PyObjC PackageManager database to install 
-   PyObjC: select ``File/open URL...`` in Package Manager and select one
-   of the two URL below:
-   <UL>
-   <LI>MacOS X 10.2:"<CODE>http://pyobjc.sf.net/packman/pyobjc-stable-macosx10.2.plist</CODE>" 
-   <LI>MacOS X 10.3:"<CODE>http://pyobjc.sf.net/packman/pyobjc-stable-macosx10.3.plist</CODE>" 
-   </UL>
-<p><b>NOTE:</b> upgrading earlier versions of PyObjC using the binary package
-doesn't seem to work correctly. Please use the source installer when you
-upgrade an earlier version of PyObjC.
-
 <p>Older releases are available in the <a href="http://sourceforge.net/project/showfiles.php?group_id=14534">Files section of our SourceForge project</a>.
-
-<p>If you want to install PyObjC from SVN you'll have to download the latest 
-archive with libFFI <a href="http://prdownloads.sourceforge.net/pyobjc/libffi-src-20030921.tar.gz?download">here</a>. This is not an official libffi release, it contains a (small) number of changes to make it work correctly with PyObjC.
 
 <h2>Unstable release</h2>
 
