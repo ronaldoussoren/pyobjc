@@ -1234,18 +1234,73 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		int idx;
 		PyObject* real_res;
 
-		if (!PyTuple_Check(result) 
-				|| PyTuple_Size(result) != have_output+1) {
-			ObjCErr_Set(PyExc_TypeError,
-				"%s: Need tuple of %d arguments as result",
-				SELNAME([invocation selector]), have_output+1);
+		if (*type == _C_VOID && have_output == 1) {
+			/* One output argument, and a 'void' return value,
+			 * the python method returned just the output
+			 * argument
+			 */
+			/* This should be cleaned up, unnecessary code
+			 * duplication
+			 */
+
+			for (i = 2; i < len;i++) {
+				void* ptr;
+				type = [signature getArgumentTypeAtIndex:i];
+
+				if (arglen == -1) {
+					PyObjCErr_ToObjC();
+					return;
+				}
+
+				switch (*type) {
+				case _C_PTR:
+					type ++;
+					break;
+				case _C_INOUT: case _C_OUT:
+					if (type[1] != _C_PTR) {
+						continue;
+					}
+					type += 2;
+					break;
+				default:
+					continue;
+				}
+
+				[invocation getArgument:&ptr atIndex:i];
+				err = depythonify_c_value(type, result, ptr);
+				if (err == -1) {
+					PyObjCErr_ToObjC();
+				}
+				if (v->ob_refcnt == 1 && type[0] == _C_ID) {
+					/* make sure return value doesn't die before
+					 * the caller can get its hands on it.
+					 */
+					[[*(id*)ptr retain] autorelease];
+				}
+
+				/* We have exactly 1 output argument */
+				break;
+
+			}
+
 			Py_DECREF(result);
-			PyObjCErr_ToObjC();
 			return;
 		}
 
-		real_res = PyTuple_GET_ITEM(result, 0);
-		if (*type  != _C_VOID && *type != _C_ONEWAY) {
+		if (*type != _C_VOID) {
+			if (!PyTuple_Check(result) 
+			     || PyTuple_Size(result) != have_output+1) {
+				ObjCErr_Set(PyExc_TypeError,
+					"%s: Need tuple of %d arguments as result",
+					SELNAME([invocation selector]),
+					have_output+1);
+				Py_DECREF(result);
+				PyObjCErr_ToObjC();
+				return;
+			}
+			idx = 1;
+			real_res = PyTuple_GET_ITEM(result, 0);
+
 			arg = alloca(arglen+1);
 
 			err = depythonify_c_value(type, real_res, arg);
@@ -1254,8 +1309,21 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 				return;
 			}
 			[invocation setReturnValue:arg];
+
+		} else {
+			if (!PyTuple_Check(result) 
+			     || PyTuple_Size(result) != have_output) {
+				ObjCErr_Set(PyExc_TypeError,
+					"%s: Need tuple of %d arguments as result",
+					SELNAME([invocation selector]),
+					have_output);
+				Py_DECREF(result);
+				PyObjCErr_ToObjC();
+				return;
+			}
+			idx = 0;
 		}
-		idx = 1;
+
 
 		for (i = 2; i < len;i++) {
 			void* ptr;

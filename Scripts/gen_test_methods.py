@@ -581,17 +581,16 @@ def emit_py_to_objc(fp):
         for v in values:
             fp.write('\t\tr = o.%sOutArg_()\n'%(nm,))
 
-            fp.write('\t\tself.assertEquals(r[0], None)\n')
             if tp not in ('float', 'double'):
-                fp.write('\t\tself.assertEquals(r[1], ')
+                fp.write('\t\tself.assertEquals(r, ')
             else:
-                fp.write('\t\tself.assertAlmostEquals(r[1], ')
+                fp.write('\t\tself.assertAlmostEquals(r, ')
             write_py_item(fp, v)
             fp.write(')\n')
         fp.write('\n\n')
         
     # Pass by reference arguments (inout)
-    fp.write('\t# Pass by reference arguments (out)\n\n')
+    fp.write('\t# Pass by reference arguments (inout)\n\n')
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
         fp.write('\tdef test%sInOut(self):\n'%(nm,))
@@ -682,7 +681,7 @@ def emit_python_subclass(fp):
         fp.write('\t\tif (self.counter > %d): self.reset()\n'%(len(values),))
         fp.write('\t\tres = g_%s_values[self.counter]\n'%(nm,))
         fp.write('\t\tself.counter += 1\n')
-        fp.write('\t\treturn (None, res)\n')
+        fp.write('\t\treturn res\n')
         fp.write('\t%sOutArg_ = objc.selector(%sOutArg_, signature="v@:%s^%s")\n'%(
             nm, nm, objc._C_OUT, sign))
         fp.write('\n\n')
@@ -808,11 +807,10 @@ def emit_py_from_objc(fp):
                 fp.write('\t\tr = PyObjC_TestClass2.%s%sOutArg_of_(o)\n'%(
                     kind, nm,))
 
-                fp.write('\t\tself.assertEquals(r[0], None)\n')
                 if tp not in ('float', 'double'):
-                    fp.write('\t\tself.assertEquals(r[1], ')
+                    fp.write('\t\tself.assertEquals(r, ')
                 else:
-                    fp.write('\t\tself.assertAlmostEquals(r[1], ')
+                    fp.write('\t\tself.assertAlmostEquals(r, ')
                 write_py_item(fp, v)
                 fp.write(')\n')
             fp.write('\n\n')

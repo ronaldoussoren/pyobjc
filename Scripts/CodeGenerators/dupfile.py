@@ -35,6 +35,7 @@ class dupfile:
 
     def close(self):
         self.fp.close()
+        self.fp = None
         if self.mode == 'w':
             if os.path.exists(self.fname) and cmpfile(self.tfile, self.fname):
                 os.unlink(self.tfile)
@@ -46,6 +47,9 @@ class dupfile:
         if self.done:
             return
         if self.mode == 'w':
+            if self.fp is not None:
+                self.fp.close()
+                self.fp = None
             if os.path.exists(self.fname) and cmpfile(self.tfile, self.fname):
                 os.unlink(self.tfile)
             else:

@@ -359,13 +359,6 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 		const char* argtype = [methinfo getArgumentTypeAtIndex:i];
 
 		switch (*argtype) {
-#if 0
-/* Unannotated pointers should be handled by pointer-support.m */
-		case _C_PTR:
-			have_output ++;
-			v = pythonify_c_value(argtype+1, *(void**)args[i+argOffset]);
-			break;
-#endif
 		case _C_INOUT: 
 			if (argtype[1] == _C_PTR) {
 				have_output ++;
@@ -441,28 +434,72 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 		int idx;
 		PyObject* real_res;
 
-		if (!PyTuple_Check(res) || PyTuple_Size(res) != have_output+1) {
-			ObjCErr_Set(PyExc_TypeError,
-				"%s: Need tuple of %d arguments as result",
-				SELNAME(*(SEL*)args[1]), have_output+1);
-			Py_DECREF(res);
-			PyObjCErr_ToObjC();
+		if (*rettype == _C_VOID && have_output == 1) {
+			/* Special case: the python method returned only
+			 * the return value, not a tuple.
+			 */
+			for (i = 2; i < objc_argcount; i++) {
+				const char* argtype = [methinfo 
+					getArgumentTypeAtIndex:i];
+				int err;
+
+				switch (*argtype) {
+				case _C_INOUT: case _C_OUT:
+					if (argtype[1] != _C_PTR) {
+						continue;
+					}
+					argtype += 2;
+					break;
+				default: continue;
+				}
+
+				err = depythonify_c_value(argtype, res, *(void**)args[i]);
+				if (err == -1) {
+					PyObjCErr_ToObjC();
+				}
+				if (v->ob_refcnt == 1 && argtype[0] == _C_ID) {
+					/* make sure return value doesn't die before
+					 * the caller can get its hands on it.
+					 */
+					[[**(id**)args[i] retain] autorelease];
+				}
+
+				break;
+			}
+
+			return;
 		}
 
-		real_res = PyTuple_GET_ITEM(res, 0);
-		idx = 1;
+		if (*rettype != _C_VOID) {
+			if (!PyTuple_Check(res) || PyTuple_Size(res) != have_output+1) {
+				ObjCErr_Set(PyExc_TypeError,
+					"%s: Need tuple of %d arguments as result",
+					SELNAME(*(SEL*)args[1]), have_output+1);
+				Py_DECREF(res);
+				PyObjCErr_ToObjC();
+			}
+
+			real_res = PyTuple_GET_ITEM(res, 0);
+			idx = 1;
+		} else {
+			if (!PyTuple_Check(res) || PyTuple_Size(res) != have_output) {
+				ObjCErr_Set(PyExc_TypeError,
+					"%s: Need tuple of %d arguments as result",
+					SELNAME(*(SEL*)args[1]), have_output);
+				Py_DECREF(res);
+				PyObjCErr_ToObjC();
+			}
+			real_res = NULL;
+			idx = 0;
+		}
+
+
 		for (i = 2; i < objc_argcount; i++) {
 			const char* argtype = [methinfo 
 				getArgumentTypeAtIndex:i];
 			int err;
 
 			switch (*argtype) {
-#if 0
-/* Unannotated pointers should be handled by pointer-support.m */
-			case _C_PTR: 
-				argtype ++;
-				break;
-#endif
 			case _C_INOUT: case _C_OUT:
 				if (argtype[1] != _C_PTR) {
 					continue;
@@ -486,7 +523,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 		}
 
 		if (*rettype != _C_VOID) {
-			int err = depythonify_c_return_value(rettype, real_res, resp);
+			int err = depythonify_c_return_value(rettype, 
+				real_res, resp);
 
 			if (*rettype == _C_ID && real_res->ob_refcnt == 1) {
 				/* make sure return value doesn't die before
@@ -702,20 +740,6 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		const char *argtype = [methinfo getArgumentTypeAtIndex:i];
 
 		switch (*argtype) {
-#if 0
-/* Unannotated pointers should be handled by pointer-support.m */
-		case _C_PTR: 
-			byref_in_count ++;
-			byref_out_count ++;
-			itemSize = objc_sizeof_type(argtype+1);
-			itemAlign = objc_alignof_type(argtype+1);
-			if (itemSize == -1) {
-				return NULL;
-			}
-			argbuf_len = align(argbuf_len, itemAlign);
-			argbuf_len += itemSize;
-			break;
-#endif
 		case _C_INOUT:
 			if (argtype[1] == _C_PTR) {
 				byref_out_count ++;
@@ -920,26 +944,6 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 					values[arglistOffset + i] = arg;
 				} 
 				break;
-#if 0
-/* Unannotated pointers should be handled by pointer-support.m */
-			case _C_PTR:
-				/* Allocate space and encode */
-				{
-					argbuf_cur = align(argbuf_cur, 
-						objc_alignof_type(argtype+1));
-					arg = argbuf + argbuf_cur;
-					argbuf_cur += objc_sizeof_type(argtype+1);
-					byref[i] = arg;
-	  				error = depythonify_c_value (
-						argtype+1, 
-						argument, 
-						arg);
-
-					arglist[arglistOffset + i] = &ffi_type_pointer;
-					values[arglistOffset + i] = byref+i;
-				} 
-				break;
-#endif
 			case _C_INOUT:
 			case _C_IN:
 			case _C_CONST:
@@ -1050,43 +1054,48 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	if (byref_out_count == 0) {
 		result = objc_result;
 	} else {
-		result = PyTuple_New(byref_out_count+1);
-		if (result == 0) goto error_cleanup;
 
-		if (PyTuple_SetItem(result, 0, objc_result) < 0) {
-			goto error_cleanup;
+		if (*rettype == _C_VOID) {
+			if (byref_out_count > 1) {
+				result = PyTuple_New(byref_out_count);
+				if (result == 0) goto error_cleanup;
+			} else {
+				result = NULL;
+			}
+			Py_DECREF(objc_result);
+			py_arg = 0;
+		} else {
+			result = PyTuple_New(byref_out_count+1);
+			if (result == 0) goto error_cleanup;
+			if (PyTuple_SetItem(result, 0, objc_result) < 0) {
+				goto error_cleanup;
+			}
+			py_arg = 1;
 		}
 		objc_result = NULL;
 
-		py_arg = 1;
 		for (i = 2; i < objc_argcount; i++) {
 			const char *argtype = [methinfo 
 						getArgumentTypeAtIndex:i];
 			PyObject*   v;
 
 			switch (*argtype) {
-#if 0
-/* Unannotated pointers should be handled by pointer-support.m */
-			case _C_PTR: 
-				arg = byref[i];
-				v = pythonify_c_value(argtype+1, arg);
-				if (!v) goto error_cleanup;
-				if (PyTuple_SetItem(result, py_arg++, v) < 0) {
-					Py_DECREF(v);
-					goto error_cleanup;
-				}
-				break;
-#endif
 			case _C_INOUT:
 			case _C_OUT:
 				if (argtype[1] == _C_PTR) {
 					arg = byref[i];
 					v = pythonify_c_value(argtype+2, arg);
 					if (!v) goto error_cleanup;
-					if (PyTuple_SetItem(result, 
+
+					if (result != NULL) {
+						if (PyTuple_SetItem(result, 
 							py_arg++, v) < 0) {
-						Py_DECREF(v);
-						goto error_cleanup;
+
+							Py_DECREF(v);
+							goto error_cleanup;
+						}
+					} else {
+						result = v;
 					}
 				}
 				break;

@@ -243,7 +243,6 @@ static PyObject* call_NSCoder_decodeValueOfObjCType_at_(
 {
 	char* signature;
 	PyObject* value;
-	PyObject* result;
 	void*     buf;
 	int    size;
 	struct objc_super super;
@@ -284,17 +283,7 @@ static PyObject* call_NSCoder_decodeValueOfObjCType_at_(
 		return NULL;
 	}
 
-	result = PyTuple_New(2);
-	if (result == NULL) {
-		Py_DECREF(value);
-		return NULL;
-	}
-
-	PyTuple_SET_ITEM(result, 0, Py_None);
-	Py_INCREF(Py_None);
-	PyTuple_SET_ITEM(result, 1, value);
-
-	return result;
+	return value;
 }
 
 static void imp_NSCoder_decodeValueOfObjCType_at_(id self, SEL sel,
@@ -302,7 +291,6 @@ static void imp_NSCoder_decodeValueOfObjCType_at_(id self, SEL sel,
 {
 	PyObject* result;
 	PyObject* arglist;
-	PyObject* seq;
 	int err;
 
 	arglist = PyTuple_New(1);
@@ -326,40 +314,13 @@ static void imp_NSCoder_decodeValueOfObjCType_at_(id self, SEL sel,
 		return;
 	}
 
-	seq = PySequence_Fast(result, "Must return a sequence of length 2");
-	if (seq == NULL) {
-		Py_DECREF(result);
-		PyObjCErr_ToObjC();
-		return;
-	}
+	err = PyObjC_PythonToObjC(signature, result, buf);
 	Py_DECREF(result);
 
-	if (PySequence_Fast_GET_SIZE(seq) != 2) {
-		Py_DECREF(seq);
-		PyErr_SetString(PyExc_TypeError,
-			"Must return a sequence of length 2");
-		Py_DECREF(seq);
-		PyObjCErr_ToObjC();
-		return;
-	}
-
-	if (PySequence_Fast_GET_ITEM(seq, 0) != Py_None) {
-		PyErr_SetString(PyExc_TypeError,
-			"returnvalue[0] must be Py_None");
-		Py_DECREF(seq);
-		PyObjCErr_ToObjC();
-		return;
-	}
-
-	err = PyObjC_PythonToObjC(signature, 
-		PySequence_Fast_GET_ITEM(seq, 1), buf);
 	if (err == -1) {
-		Py_DECREF(seq);
 		PyObjCErr_ToObjC();
 		return;
 	}
-
-	Py_DECREF(seq);
 }
 
 static PyObject* call_NSCoder_decodeArrayOfObjCType_count_at_(

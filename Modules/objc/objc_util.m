@@ -13,9 +13,6 @@ PyObject* ObjCExc_error;
 PyObject* ObjCExc_noclass_error;
 PyObject* ObjCExc_internal_error;
 
-PyObject* PyObjCExc_ProtocolWarning;
-
-
 int ObjCUtil_Init(PyObject* module)
 {
 #define NEW_EXC(identifier, name, base_class) \
@@ -27,8 +24,6 @@ int ObjCUtil_Init(PyObject* module)
 	NEW_EXC(ObjCExc_error, "error", NULL);
 	NEW_EXC(ObjCExc_noclass_error, "nosuchclass_error", ObjCExc_error);
 	NEW_EXC(ObjCExc_internal_error, "internal_error", ObjCExc_error);
-
-	NEW_EXC(PyObjCExc_ProtocolWarning, "ProtocolWarning", PyExc_Warning);
 
 	return 0;
 }

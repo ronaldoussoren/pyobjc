@@ -61,16 +61,13 @@ call_NSString_getCString_maxLength_range_remainingRange_(
 		return NULL;
 	}
 	
-	res = PyTuple_New(3);
+	res = PyTuple_New(2);
 	if (res == NULL) {
 		free(buf);
 		return NULL;
 	}
 
-	PyTuple_SET_ITEM(res, 0, Py_None);
-	Py_INCREF(Py_None);
-
-	PyTuple_SET_ITEM(res, 1, PyString_FromString(buf));
+	PyTuple_SET_ITEM(res, 0, PyString_FromString(buf));
 	free(buf);
 	if (PyErr_Occurred()) {
 		Py_DECREF(res);
@@ -84,7 +81,7 @@ call_NSString_getCString_maxLength_range_remainingRange_(
 		return NULL;
 	}
 
-	PyTuple_SET_ITEM(res, 2, rangeObj);
+	PyTuple_SET_ITEM(res, 1, rangeObj);
 	return res;
 }
 
@@ -124,20 +121,9 @@ call_NSString_getCString_maxLength_(
 		return NULL;
 	}
 	
-	res = PyTuple_New(2);
-	if (res == NULL) {
-		free(buf);
-		return NULL;
-	}
-
-	PyTuple_SET_ITEM(res, 0, Py_None);
-	Py_INCREF(Py_None);
-
-	PyTuple_SET_ITEM(res, 1, PyString_FromString(buf));
+	res = PyString_FromString(buf);
 	free(buf);
-	if (PyErr_Occurred()) {
-		Py_DECREF(res);
-		free(buf);
+	if (res == NULL) {
 		return NULL;
 	}
 

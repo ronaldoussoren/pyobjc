@@ -276,7 +276,7 @@ class InfoWindowController (AutoBaseClass):
 
 
 def clearButtonMatrix(matrix):
-    _, rows, cols = matrix.getNumberOfRows_columns_()
+    rows, cols = matrix.getNumberOfRows_columns_()
 
     for i in range(rows):
     	cell = matrix.cellAtRow_column_(i, 0)

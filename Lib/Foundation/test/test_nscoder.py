@@ -24,8 +24,8 @@ class TestNSCoderUsage(unittest.TestCase):
                 # call superclass implementation:
                 #    self = super(CodeClass1, self).initWithCoder_(coder)
                 self = self.init()
-                self.intVal = coder.decodeValueOfObjCType_at_(objc._C_INT)[1]
-                self.dblVal = coder.decodeValueOfObjCType_at_(objc._C_DBL)[1]
+                self.intVal = coder.decodeValueOfObjCType_at_(objc._C_INT)
+                self.dblVal = coder.decodeValueOfObjCType_at_(objc._C_DBL)
                 self.dblArray = coder.decodeArrayOfObjCType_count_at_(objc._C_DBL, 4)
                 return self
 
