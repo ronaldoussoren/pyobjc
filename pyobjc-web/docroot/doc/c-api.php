@@ -1,7 +1,7 @@
 <?
     $title = "Documentation for the PyObjC C-API (Preliminary)";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/02/02 15:23:01 $';
+    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
 
     include "header.inc";
 ?>
@@ -20,12 +20,12 @@ work with Objective-C objects, using (static) methods in a class is much
 more convenient.</p>
 <p>The C API is defined in <tt class="literal"><span class="pre">pyobjc-api.h</span></tt>. This file is currently not installed
 because the API is not entirely stable. This is the only file that can
-be included from outside of the 'Modules/objc' directory, future versions of
+be included from outside of the 'Modules/objc' directory; future versions of
 the bridge may use additional linker flags to make sure that the module doesn't
 export symbols other than the module init function.</p>
 <p>The easiest way to wrap global functions and constants is by using the scripts
-in Scripts/CodeGenerators. This script is unsupported and might not work on
-anything but the Apple headers, but if it works it will save you a lot of work.</p>
+in Scripts/CodeGenerators. These scripts are unsupported and might not work on
+anything but the Apple headers, but if they work it will save you a lot of work.</p>
 </div>
 <div class="section" id="limititations">
 <h1><a name="limititations">Limititations</a></h1>
@@ -40,7 +40,7 @@ rest of the API:</p>
 <pre class="literal-block">
 static int PyObjC_ImportAPI(PyObject* calling_module)
 </pre>
-<p>This module will return 0 if loading the module was successfull, and -1
+<p>This module will return 0 if loading the module was successful, and -1
 otherwise. Reasons for failure include: not being able to locate the module
 and API version conflicts.</p>
 <p>Loading the API will make it impossible to unload the <tt class="literal"><span class="pre">calling_module</span></tt>.</p>

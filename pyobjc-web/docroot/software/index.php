@@ -1,7 +1,7 @@
 <?
 $title = "Documentation";
 $cvs_author = '$Author: ronaldoussoren $';
-$cvs_date = '$Date: 2004/02/02 15:23:02 $';
+$cvs_date = '$Date: 2004/04/12 09:22:47 $';
 
 include "header.inc";
 ?>
@@ -10,14 +10,14 @@ include "header.inc";
 
 <h2>Unstable release</h2>
 
-<p>The 1.1a0 is the first prerelease for the upcoming 1.1 release of PyObjC.
+<p>The 1.1b2 is the third prerelease for the upcoming 1.1 release of PyObjC.
 
 <ul>
-<li><a href="<? print $root; ?>prerelease/pyobjc-1.1a0.tar.gz">PyObjC 1.1a0 source release (a compressed tar archive)</a>
-<li><a href="<? print $root; ?>prerelease/pyobjc-1.1a0-Panther">PyObjC 1.1a0 installer for Mac OS X 10.3</a>
+<li><a href="<? print $root; ?>prerelease/pyobjc-1.1b2.tar.gz">PyObjC 1.1b2 source release (a compressed tar archive)</a>
+<li><a href="<? print $root; ?>prerelease/pyobjc-1.1b1-macosx10.3.dmg">PyObjC 1.1b2 installer for Mac OS X 10.3</a>
 </ul>
 
-<p>There is also a <a href="<? print $root; ?>packman/pyobjc-unstable-7.0-Power_Macintosh.plist">packman database for Mac OS X 10.3</a>.
+<p>There is also a <a href="<? print $root; ?>packman/pyobjc-unstable-7.0-Power_Macintosh.plist">packman database for Mac OS X 10.3</a> and <a href="<? print $root; ?>packman/pyobjc-unstable-6.6-Power_Macintosh.plist">one for Mac OS X 10.2</a> as well.
 
 
 <h2>Stable release</h2>

@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Experimental Package Manager Database for PyObjC (Jaguar)</string>
 	<key>Maintainer</key>
-	<string>oussoren@cistron.nl</string>
+	<string>ronaldoussoren@mac.com</string>
 	<key>Version</key>
 	<string>0.3</string>
 	<key>Packages</key>
@@ -26,14 +26,14 @@ such.
 <!--
 			<string>http://heanet.dl.sourceforge.net/sourceforge/pyobjc/pyobjc-1.0.tar.gz</string>
 -->
-			<string>http://pyobjc.sf.net/prerelease/pyobjc-1.1b1.tar.gz</string>
+			<string>http://pyobjc.sourceforge.net/prerelease/pyobjc-1.1b2.tar.gz</string>
 			<key>Flavor</key>
 			<string>source</string>
 			<key>Install-test</key>
 			<string>
 import objc
 ver = objc.__version__
-if ver &lt; "1.1b1" and not ver.startswith("1.1"):
+if ver &lt; "1.1b2" and not ver.startswith("1.1"):
 	raise OldInstalled, "Version %s installed"%objc.__version__
 if ver.startswith("1.1") and not ver.startswith("1.1.") and ver != "1.1":
 	raise OldInstalled, "Version %s installed"%objc.__version__
@@ -52,10 +52,11 @@ if ver.startswith("1.1") and not ver.startswith("1.1.") and ver != "1.1":
 			</array>
 			-->
 			<key>Version</key>
-			<string>1.1b1</string>
+			<string>1.1b2</string>
 			<key>MD5Sum</key>
-			<string>f59133bcd7bdd1880d30634505906508</string>
+			<string>883545e9cf76cf8b8f2cad14972f5f52</string>
 		</dict>
+<!--
 		<dict>
 			<key>Description</key>
 			<string>
@@ -69,7 +70,7 @@ incorporating Python in your Objective-C program for rapid prototyping and
 such.
 			</string>
 			<key>Download-URL</key>
-			<string>http://pyobjc.sf.net/prerelease/pyobjc-1.1b1.darwin-6.8-Power_Macintosh.tar.gz</string>
+			<string>http://pyobjc.sourceforge.net/prerelease/pyobjc-1.1b1.darwin-6.8-Power_Macintosh.tar.gz</string>
 			<key>Flavor</key>
 			<string>binary</string>
 			<key>Install-test</key>
@@ -93,6 +94,7 @@ if ver.startswith("1.1") and not ver.startswith("1.1.") and ver != "1.1":
 			<key>MD5Sum</key>
 			<string>454b91eae799c545904c6df79727cce0</string>
 		</dict>
+-->
 		<dict>
 			<key>Description</key>
 			<string>
@@ -103,12 +105,12 @@ in the source distribution. This package installs those, into your
 /Applications/MacPython-2.3/Extras folder.
 			</string>
 			<key>Download-URL</key>
-			<string>http://pyobjc.sf.net/prerelease/pyobjc_extras-1.1b1.tar.gz</string>
+			<string>http://pyobjc.sourceforge.net/prerelease/pyobjc_extras-1.1b2.tar.gz</string>
 			<key>Flavor</key>
 			<string>binary</string>
 			<key>Install-test</key>
 			<string>
-if not os.access("/Applications/MacPython-2.3/Extras/pyobjc-1.1b1", 0): 
+if not os.access("/Applications/MacPython-2.3/Extras/pyobjc-1.1b2", 0): 
 	raise NotInstalled
 			</string>
 			<key>Home-page</key>
@@ -119,9 +121,9 @@ if not os.access("/Applications/MacPython-2.3/Extras/pyobjc-1.1b1", 0):
 			<array>
 			</array>
 			<key>Version</key>
-			<string>1.0</string>
+			<string>1.1b2</string>
 			<key>MD5Sum</key>
-			<string>94c932e27057a25356e8dda4692a3efa</string>
+			<string>3428ded695e10f53ca960eb39cd156c3</string>
 			<key>Systemwide-only</key>
 			<true/>
 		</dict>

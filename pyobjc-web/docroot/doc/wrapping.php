@@ -1,7 +1,7 @@
 <?
     $title = "How to wrap an Objective-C class library";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/02/02 15:23:02 $';
+    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
 
     include "header.inc";
 ?>

@@ -1,15 +1,15 @@
 <?
     $title = "PyObjCTools: The PyObjC Toolbox";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/02/02 15:23:02 $';
+    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
 
     include "header.inc";
 ?>
 <div class="document" id="pyobjctools-the-pyobjc-toolbox">
 <h1 class="title">PyObjCTools: The PyObjC Toolbox</h1>
 <h2 class="subtitle" id="introduction">Introduction</h2>
-<p>The package <tt class="literal"><span class="pre">PyObjCTools</span></tt> contains a number of (basicly unrelated) modules
-with usefull functionality. These have been placed inside a module to avoid
+<p>The package <tt class="literal"><span class="pre">PyObjCTools</span></tt> contains a number of (basically unrelated) modules
+with useful functionality. These have been placed inside a module to avoid
 cluttering the global namespace.</p>
 <p>The rest of this document provides documentation for these modules, but lets
 start with a short overview.</p>
@@ -39,7 +39,7 @@ screen savers.</p>
 <ul class="simple">
 <li><tt class="literal"><span class="pre">PyObjCTools.Signals.py</span></tt></li>
 </ul>
-<p>Module that tries to print usefull information when the program gets a fatal
+<p>Module that tries to print useful information when the program gets a fatal
 exception. This module should only be used during development.</p>
 <div class="section" id="pyobjctools-apphelper">
 <h1><a name="pyobjctools-apphelper"><tt class="literal"><span class="pre">PyObjCTools.AppHelper</span></tt></a></h1>
@@ -123,7 +123,7 @@ final value.</p>
 <li><p class="first"><tt class="literal"><span class="pre">setKeyPath(object,</span> <span class="pre">keypath,</span> <span class="pre">value)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>
 <p>The same as <tt class="literal"><span class="pre">setKey</span></tt>, but now using a key path. A key path is a sequence
 of keys seperated by dots. The <tt class="literal"><span class="pre">getKey</span></tt> function is used to traverse 
-the path upto the last item, and then <tt class="literal"><span class="pre">setKey</span></tt> is used to change the value.</p>
+the path up to the last item, and then <tt class="literal"><span class="pre">setKey</span></tt> is used to change the value.</p>
 </li>
 </ul>
 </div>
@@ -168,14 +168,14 @@ have special needs.</p>
 <h2><a name="the-command-line-tool">The command line tool</a></h2>
 <p>When run from the command line, this module invokes a simple command
 line program, which you feed paths to nibs. This will print a Python
-template for all classes defined in the nib(s). For more doco, see
-the commandline_doc variable, or simply run the program wothout
+template for all classes defined in the nib(s). For more documentation,
+see the commandline_doc variable, or simply run the program without
 arguments. It also contains a simple test program.</p>
 </div>
 </div>
 <div class="section" id="pyobjctools-signals">
 <h1><a name="pyobjctools-signals">PyObjCTools.Signals</a></h1>
-<p>This module provides two functions that can be usefull while investigating
+<p>This module provides two functions that can be useful while investigating
 random crashes of a PyObjC program. These crashes are often caused by 
 Objective-C style weak references or incorrectly implemented protocols.</p>
 <ul>
@@ -189,7 +189,7 @@ dumpStackOnFatalSignal.</p>
 </li>
 </ul>
 <p>This module is not designed to provide fine grained control over signal 
-handling. Nor is it intended to be terribly robust. It may give usefull
+handling. Nor is it intended to be terribly robust. It may give useful
 information when your program gets unexpected signals, but it might just
 as easily cause a crash when such a signal gets in.</p>
 </div>
@@ -198,8 +198,8 @@ as easily cause a crash when such a signal gets in.</p>
 <p>This module defines one class to build python based plugin bundles for MacOS X.
 Examples of plugin bundles include PreferencePanes and InterfaceBuilder 
 palletes.</p>
-<p>The PluginBuilder class is instantated with a number of keyword arguments and
-have a <tt class="literal"><span class="pre">build()</span></tt> method that will do all the work.</p>
+<p>The PluginBuilder class is instantiated with a number of keyword arguments and
+has a <tt class="literal"><span class="pre">build()</span></tt> method that will do all the work.</p>
 <p>XXX: Add documentation about the constructor arguments</p>
 <p>The module contains a main program that can be used in two ways:</p>
 <pre class="literal-block">

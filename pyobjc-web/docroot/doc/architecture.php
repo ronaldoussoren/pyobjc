@@ -1,7 +1,7 @@
 <?
     $title = "PyObjC Architecture";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2004/02/02 15:23:01 $';
+    $cvs_date = '$Date: 2004/04/12 09:22:46 $';
 
     include "header.inc";
 ?>
@@ -15,8 +15,8 @@
 </table>
 <div class="section" id="introduction">
 <h1><a name="introduction">Introduction</a></h1>
-<p>XXX: This documented is outdated and incomplete.</p>
-<p>This document gives a (brief) description of how the PyObjc package is 
+<p>XXX: This documentent is outdated and incomplete.</p>
+<p>This document gives a (brief) description of how the PyObjC package is 
 structured.</p>
 </div>
 <div class="section" id="objective-c-classes-and-objects">
@@ -30,7 +30,7 @@ subclasses of PyType_Type cannot add instance variables. We solve this by
 storing the additional information in a dictionary indexed by the PyTypeObjects
 that represent Objective-C classes.</p>
 <p>Objective-C objects are represented by proxy objects that are instances of
-the classes descriped above.</p>
+the classes described above.</p>
 <p>TODO: work out how we'll implement subclasses objects and describe here.</p>
 </div>
 <div class="section" id="methods-and-instance-variables">
