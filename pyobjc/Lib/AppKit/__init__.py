@@ -567,6 +567,51 @@ NSServicesRequests = _objc.informal_protocol(
     ]
 )
 
+NSTableViewDelegate = _objc.informal_protocol(
+    'NSTableViewDelegate',
+    [
+    # - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(int)row;
+    _objc.selector(
+    None,
+    selector='tableView:willDisplayCell:forTableColumn:row:',
+    signature='c@:@@@i',
+    required=0
+    ),
+    
+# - (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(int)row;
+    _objc.selector(
+    None,
+    selector='tableView:shouldEditTableColumn:row:',
+    signature='c@:@@i',
+    required=0
+    ),
+    
+# - (BOOL)selectionShouldChangeInTableView:(NSTableView *)aTableView;
+    _objc.selector(
+    None,
+    selector='selectionShouldChangeInTableView:',
+    signature='c@:@',
+    required=0
+    ),
+    
+# - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(int)row;
+    _objc.selector(
+    None,
+    selector='tableView:shouldSelectRow:',
+    signature='c@:@i',
+    required=0
+    ),
+    
+# - (BOOL)tableView:(NSTableView *)tableView shouldSelectTableColumn:(NSTableColumn *)tableColumn;
+    _objc.selector(
+    None,
+    selector='tableView:shouldSelectTableColumn:',
+    signature='c@:@@',
+    required=0
+    )
+    ]
+    )
+
 NSTableDataSource = _objc.informal_protocol(
     'NSTableDataSource',
     [
