@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.21 2003/10/19 16:53:35 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.22 2003/11/23 19:23:40 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -91,6 +91,8 @@ static inline void PyGILState_Release(
  *         (PyObjC_SizeOfType is now deprecated)
  * - Version 4.2 adds PyObjCRT_SELName
  * - Version 4.3 adds PyObjCRT_SimplifySignature
+ * - Version 4.4 adds PyObjC_FreeCArray, PyObjC_PythonToCArray and
+ *   		PyObjC_CArrayToPython
  */
 #define PYOBJC_API_VERSION 4
 
@@ -196,6 +198,15 @@ struct pyobjc_api {
 	/* PyObjCRT_SimplifySignature */
 	void (*simplify_sig)(char* signature, char* buf, size_t buflen);
 
+	/* PyObjC_FreeCArray */
+	void    (*free_c_array)(int,void*);
+
+	/* PyObjC_PythonToCArray */
+	int     (*py_to_c_array)(const char*, PyObject*, PyObject*, void**, int*);
+	
+	/* PyObjC_CArrayToPython */
+	PyObject* (*c_array_to_py)(const char*, void*, int);
+
 };
 
 
@@ -238,6 +249,9 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCRT_AlignOfType	(PyObjC_API->alignof_type)
 #define PyObjCRT_SELName	(PyObjC_API->selname)
 #define PyObjCRT_SimplifySignature	(PyObjC_API->simplify_sig)
+#define PyObjC_FreeCArray	(PyObjC_API->free_c_array)
+#define PyObjC_PythonToCArray	(PyObjC_API->py_to_c_array)
+#define PyObjC_CArrayToPython	(PyObjC_API->c_array_to_py)
 
 
 /* XXX: Check if we can use the following function in the bridge itself,

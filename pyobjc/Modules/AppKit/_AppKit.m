@@ -244,113 +244,27 @@ static  char* keywords[] = { NULL };
 
 
 static PyObject*
-compat_NSRectFillList(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static char* keywords[] = { "bytes", "count", 0 };
-	unsigned char *rectBytes;
-	int rectByteLength;
-	int rectCount = -1;
-	if  (!PyArg_ParseTupleAndKeywords(args, kwds, "s#i", keywords, &rectBytes, &rectByteLength, &rectCount)) {
-		return NULL;
-	}
-
-	if ( (rectByteLength == 0) || (rectCount == 0) ) {
-		Py_INCREF(Py_None);
-		return Py_None; 
-	}
-
-	if ( rectByteLength % sizeof(NSRect) ) {
-		PyErr_SetString(PyExc_ValueError, "length of array of packed floats is not a multiple of a length of array of NSRect (float * 4).");
-		return NULL;
-	}
-
-	if (rectCount < -1 ) {
-		PyErr_SetString(PyExc_ValueError, "RectCount was less than zero.");
-		return NULL;
-	}
-        
-
-	if (rectCount >= 0 ) {
-		if ((size_t)rectCount > (rectByteLength / sizeof(NSRect))) {
-                    PyErr_SetString(PyExc_ValueError, 
-				"Rect count specified, but was longer than supplied array of rectangles.");
-			return NULL;
-		}
-	} else {
-		rectCount = rectByteLength / sizeof(NSRect);
-	}
-
-	NSRectFillList((NSRect *) rectBytes, rectCount);
-
-	Py_INCREF(Py_None);
-	return Py_None; 
-}
-
-static PyObject*
 objc_NSRectFillList(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static char* keywords[] = { "rects", "count", 0 };
+	PyObject* pyList;
+	PyObject* pyCount = NULL;
 	NSRect* rects;
-	PyObject* rectList;
-	PyObject* seq;
-	int i;
 	int rectCount;
+	int arrayToken;
 
-	{
-		/* Upto PyObjC 1.0b2 compat_NSRectFillList was the wrapper for NSRectFillList
-		 * this implementation is not consistant w.r.t. the rest of the bridge and
-		 * therefore depricated.
-		 */
-		char* s1; 
-		int i1, i2;
-                static char* klist[] = { "bytes", "count", 0 };
-
-		if  (PyArg_ParseTupleAndKeywords(args, kwds, "s#i", klist, &s1, &i1, &i2)) {
-			return compat_NSRectFillList(self, args, kwds);
-		}
-		PyErr_Clear();
-	}
-
-	if  (!PyArg_ParseTupleAndKeywords(args, kwds, "Oi", keywords, &rectList, &rectCount)) {
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O|O", keywords, &pyList, &pyCount)) {
 		return NULL;
 	}
 
-	seq = PySequence_Fast(rectList, "expecting a list of NSRect objects");
-	if (seq == NULL) {
-		return NULL;
-	}
+	arrayToken = PyObjC_PythonToCArray(
+		@encode(NSRect), pyList, pyCount, (void**)&rects, &rectCount);
 
-	if (PySequence_Fast_GET_SIZE(seq) < rectCount) {
-		Py_DECREF(seq);
-		PyErr_SetString(PyExc_ValueError, "too few rects");
-		return NULL;
-	}
+	if (arrayToken == -1) return NULL;
 
-
-	if (rectCount < 0) {
-		Py_DECREF(seq);
-		PyErr_SetString(PyExc_ValueError, "RectCount was less than zero.");
-		return NULL;
-	}
-
-	rects = malloc((rectCount * sizeof(NSRect)));
-	if (rects == NULL) {
-		PyErr_NoMemory();
-		return NULL;
-	}
-
-	for (i = 0; i < rectCount; i++) {
-		PyObject* v = PySequence_Fast_GET_ITEM(seq, i);
-		int r  = PyObjC_PythonToObjC(@encode(NSRect), v, rects + i);
-		if (r == -1) {
-			Py_DECREF(seq);
-			return NULL;
-		}
-	}
-	Py_DECREF(seq);
 	NSRectFillList(rects, rectCount);
 
-	free(rects);
+	PyObjC_FreeCArray(arrayToken, rects);
 
 	Py_INCREF(Py_None);
 	return Py_None; 

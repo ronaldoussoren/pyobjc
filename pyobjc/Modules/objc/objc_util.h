@@ -29,6 +29,10 @@ extern NSMapTableValueCallBacks ObjC_PointerValueCallBacks;
 
 //extern NSMapTableKeyCallBacks ObjC_PyObjectKeyCallBacks;
 //extern NSMapTableValueCallBacks ObjC_PyObjectValueCallBacks;
+//
 
+void    PyObjC_FreeCArray(int, void*);
+int     PyObjC_PythonToCArray(const char*, PyObject*, PyObject*, void**, int*);
+PyObject* PyObjC_CArrayToPython(const char*, void*, int);
 
 #endif /* OBJC_UTIL */

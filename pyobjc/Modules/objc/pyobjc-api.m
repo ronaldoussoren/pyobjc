@@ -143,7 +143,10 @@ struct pyobjc_api objc_api = {
 	PyObjCErr_ToObjCWithGILState,	/* objc_err_to_objc_gil */
 	PyObjCRT_AlignOfType,		/* alignof_type */
 	PyObjCRT_SELName,		/* selname */
-	PyObjCRT_SimplifySignature	/* simplify_sig */
+	PyObjCRT_SimplifySignature,	/* simplify_sig */
+	PyObjC_FreeCArray,		/* free_c_array */
+	PyObjC_PythonToCArray,		/* py_to_c_array */
+	PyObjC_CArrayToPython		/* c_array_to_py */
 };
 
 int ObjCAPI_Register(PyObject* module_dict)

@@ -1622,6 +1622,31 @@ static PyObject* pyobjcpy(PyObject* self __attribute__((__unused__)), PyObject* 
 
 }
 
+static PyObject* carraymaker(PyObject* self __attribute__((__unused__)), PyObject* args)
+{
+	char* signature;
+	PyObject* o1;
+	PyObject* o2;
+	char* buf;
+	int r;
+	int buflen;
+	PyObject* res;
+
+	if (!PyArg_ParseTuple(args, "sOO", &signature, &o1, &o2)) {
+		return NULL;
+	}
+
+	r = PyObjC_PythonToCArray(signature, o1,  o2, (void**)&buf, &buflen);
+	if (r == -1) {
+		return NULL;
+	}
+
+	res = PyObjC_CArrayToPython(signature, buf, buflen);
+	PyObjC_FreeCArray(r, buf);
+
+	return res;
+}
+
 
 
 static PyMethodDef no_methods[] = {
@@ -1634,6 +1659,19 @@ static PyMethodDef no_methods[] = {
 		"\n"
 		"convert object to ObjC and back."
 	},
+
+	{
+		"carrayMaker",
+		(PyCFunction)carraymaker,
+		METH_VARARGS,
+
+		"carrayMaker(signature, seq, count) -> str\n"
+		"\n"
+		"Convert a sequence of 'count' 'signature' objects to\n"
+		"a C buffer, and rebuild a python tuple from it.\n"
+		"count can be None."
+	},
+
 
 	{ 0, 0, 0, 0 }
 };

@@ -940,7 +940,18 @@ depythonify_unsigned_int_value(PyObject* argument, char* descr,
 		return 0;
 
 	} else {
-		PyObject* tmp = PyNumber_Long(argument);
+		PyObject* tmp;
+
+		if (PyString_Check(argument) || PyUnicode_Check(argument)) {
+			ObjCErr_Set(PyExc_ValueError,
+				"depythonifying '%s', got '%s' of %d",
+					descr,
+					argument->ob_type->tp_name,
+					PyString_Size(argument));
+			return -1;
+		}
+
+		tmp = PyNumber_Long(argument);
 		if (tmp != NULL) {
 			*out = PyLong_AsUnsignedLongLong(tmp);
 			Py_DECREF(tmp);
@@ -996,7 +1007,19 @@ depythonify_signed_int_value(PyObject* argument, char* descr,
 		return 0;
 
 	} else {
-		PyObject* tmp = PyNumber_Long(argument);
+		PyObject* tmp;
+
+		if (PyString_Check(argument) || PyUnicode_Check(argument)) {
+			ObjCErr_Set(PyExc_ValueError,
+				"depythonifying '%s', got '%s' of %d",
+					descr,
+					argument->ob_type->tp_name,
+					PyString_Size(argument));
+			return -1;
+		}
+
+		
+		tmp = PyNumber_Long(argument);
 		if (tmp != NULL) {
 			*out = PyLong_AsLongLong(tmp);
 			Py_DECREF(tmp);
@@ -1394,6 +1417,11 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			*(float *) datum = (float)PyFloat_AsDouble (argument);
 		} else if (PyInt_Check (argument)) {
 			*(float *) datum = (float) PyInt_AsLong (argument);
+		} else if (PyString_Check(argument) || PyUnicode_Check(argument)) {
+			ObjCErr_Set(PyExc_ValueError,
+				"depythonifying 'float', got '%s'",
+					argument->ob_type->tp_name);
+			return -1;
 		} else {
 			PyObject* tmp = PyNumber_Float(argument);
 			if (tmp != NULL) {
@@ -1415,6 +1443,11 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			*(double *) datum = PyFloat_AsDouble (argument);
 		} else if (PyInt_Check (argument)) {
 			*(double *) datum = (double) PyInt_AsLong (argument);
+		} else if (PyString_Check(argument) || PyUnicode_Check(argument)) {
+			ObjCErr_Set(PyExc_ValueError,
+				"depythonifying 'float', got '%s'",
+					argument->ob_type->tp_name);
+			return -1;
 		} else {
 			PyObject* tmp = PyNumber_Float(argument);
 			if (tmp != NULL) {
