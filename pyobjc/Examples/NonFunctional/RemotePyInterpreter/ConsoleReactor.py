@@ -70,9 +70,10 @@ class ConsoleReactor(NSObject):
         code = '__result__[%r] = %s' % (seq, nr.netrepr(rval))
         self.writeCode_(code)
 
-    def sendException_(self, e):
+    def sendException_sequence_(self, e):
         nr = self.netReprCenter
         code = 'raise ' + nr.netrepr_exception(e)
+        print "forwarding:", code
         self.writeCode_(code)
     
     def doCallback_sequence_args_(self, callback, seq, args):
@@ -80,7 +81,7 @@ class ConsoleReactor(NSObject):
         try:
             rval = callback(*args)
         except Exception, e:
-            self.sendException_(e)
+            self.sendException_sequence_(e, seq)
         else:
             self.sendResult_sequence_(rval, seq)
     
