@@ -1448,6 +1448,7 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 			PyErr_Clear();
 			continue;
 		}
+		// XXX: Check goes here for formal protocols
 		if (!PyObjCInformalProtocol_Check(proto)) continue;
 
 		info = PyObjCInformalProtocol_FindSelector(proto, selector);
