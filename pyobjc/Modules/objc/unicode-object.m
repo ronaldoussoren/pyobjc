@@ -43,6 +43,7 @@ meth_nsstring(PyObject* self)
 	return PyObjCObject_New(((PyObjCUnicodeObject*)self)->nsstr);
 }
 
+/* TODO: Remove this method after the 1.1 release */
 static PyObject* 
 meth_syncNSString(PyObjCUnicodeObject* self)
 {
