@@ -1,0 +1,46 @@
+==========================
+PyObjC documentation index
+==========================
+
+The documentation for PyObjC is lacking at the moment, and is high on our
+TODO list. 
+
+* `An introduction to PyObjC`_
+
+* `Creating your first PyObjC application (tutorial)`_
+
+* `Userguide for PyObjC`_
+
+* `Python classes and Objective-C code`_
+
+* `Coding style for PyObjC`_
+
+* `Using LibFFI with PyObjC`_
+
+* `PyObjC Architecture`_
+
+* `Structure of the PyObjC package`_
+
+* `How to wrap an Objective-C class library`_
+
+* `Odd features`_
+
+.. _`An introduction to PyObjC`: intro.html
+
+..   _`Userguide for PyObjC`: users.html
+
+..   _`Python classes and Objective-C code`: classes.html
+
+..   _`Coding style for PyObjC`: coding-style.html
+
+..   _`Using LibFFI with PyObjC`: libffi.html
+
+..   _`PyObjC Architecture`: architecture.html
+
+..   _`Structure of the PyObjC package`: structure.html
+
+..   _`How to wrap an Objective-C class library`: wrapping.html
+
+..   _`Odd features`: warts.html
+
+..   _`Creating your first PyObjC application (tutorial)`: tutorial/tutorial.html
