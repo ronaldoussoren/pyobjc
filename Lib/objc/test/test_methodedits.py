@@ -88,6 +88,19 @@ class TestFromObjCSuperToObjCClass(unittest.TestCase):
         self.assertEquals(newInstance.newSubMethod(), u"<new-method-sub>")
         self.assertEquals(preEverythingInstance.newSubMethod(), u"<new-method-sub>")
 
+    def testNewClassMethod(self):
+
+        def aNewClassMethod(cls):
+            return "Foo cls"
+        aNewClassMethod = classmethod(aNewClassMethod)
+
+        self.assert_(not MEClass.pyobjc_classMethods.respondsToSelector_("aNewClassMethod"))
+        objc.classAddMethods(MEClass, [aNewClassMethod])
+        self.assert_(MEClass.pyobjc_classMethods.respondsToSelector_("aNewClassMethod"))
+
+        self.assert_(MEClass.aNewClassMethod.isClassMethod)
+        self.assertEquals(MEClass.aNewClassMethod(), 'Foo cls')
+
 
 class TestFromPythonClassToObjCClass(unittest.TestCase):
 
@@ -198,8 +211,13 @@ class TestCategory (unittest.TestCase):
             def categoryMethod2(self):
                 return False
 
+            def anotherClassMethod(self):
+                return "hello"
+            anotherClassMethod = classmethod(anotherClassMethod)
+
         self.assert_(o.categoryMethod())
         self.assert_(not o.categoryMethod2())
+        self.assertEquals(Methods.anotherClassMethod(), "hello")
 
     def testObjCClassCategory(self):
 
