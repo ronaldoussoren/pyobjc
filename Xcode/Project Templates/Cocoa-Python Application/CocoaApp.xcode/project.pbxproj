@@ -103,7 +103,6 @@
 			buildSettings = {
 			};
 			buildStyles = (
-				4A9504CCFFE6A4B311CA0CBA,
 				4A9504CDFFE6A4B311CA0CBA,
 			);
 			hasScannedForEncodings = 1;
@@ -131,6 +130,7 @@
 		29B97315FDCFA39411CA2CEA = {
 			children = (
 				E24A798F060CFDC300E71E78,
+				E27DD37A0645685000237D46,
 				E2D80597060D41BA00B63C81,
 				29B97316FDCFA39411CA2CEA,
 			);
@@ -217,22 +217,6 @@
 //4A2
 //4A3
 //4A4
-		4A9504CCFFE6A4B311CA0CBA = {
-			buildRules = (
-			);
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				DEBUGGING_SYMBOLS = YES;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				OPTIMIZATION_CFLAGS = "-O0";
-				ZERO_LINK = YES;
-			};
-			isa = PBXBuildStyle;
-			name = Development;
-		};
 		4A9504CDFFE6A4B311CA0CBA = {
 			buildRules = (
 			);
@@ -307,6 +291,7 @@
 				E24A7990060CFDC300E71E78,
 				E24A799E060CFE2300E71E78,
 				E2D80598060D41BA00B63C81,
+				E27DD37B0645685000237D46,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,6 +388,20 @@
 		};
 		E24A799E060CFE2300E71E78 = {
 			fileRef = E24A799D060CFE2300E71E78;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E27DD37A0645685000237D46 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.script.sh;
+			path = __error__.sh;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E27DD37B0645685000237D46 = {
+			fileRef = E27DD37A0645685000237D46;
 			isa = PBXBuildFile;
 			settings = {
 			};
