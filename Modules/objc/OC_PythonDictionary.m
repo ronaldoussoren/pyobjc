@@ -129,7 +129,6 @@
 	}
 
 	err = depythonify_c_value("@", v, &result);
-	Py_DECREF(v);
 	Py_DECREF(k);
 	if (err != NULL) {
 		ObjCErr_Set(PyExc_TypeError, "Cannot convert result: %s",
