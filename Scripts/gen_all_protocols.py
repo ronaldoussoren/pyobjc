@@ -11,6 +11,15 @@ from gen_protocols import genProtocols
 script = os.path.abspath(sys.argv[0])
 libdir = os.path.join(os.path.dirname(os.path.dirname(script)), "Lib")
 
+SPECIALS={}
+SPECIALS['AppKit'] = {
+    'control:textView:completions:forPartialWordRange:indexOfSelectedItem:':
+        '@@:@@@{_NSRange=II}N^i',
+    'textView:completions:forPartialWordRange:indexOfSelectedItem:':
+        '@@:@@{_NSRange=II}N^i',
+
+}
+
 for framework in [
         "AppKit", 
         "Foundation", 
@@ -21,7 +30,7 @@ for framework in [
     path = "/System/Library/Frameworks/%s.framework" % framework
     protfile = file(os.path.join(libdir, framework, "protocols.py"), "w")
     print "generating protocols for", framework
-    genProtocols(path, protfile)
+    genProtocols(path, protfile, SPECIALS.get(framework, {}))
 
 # Optional frameworks
 for framework in ["WebKit", ]:

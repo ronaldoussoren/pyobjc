@@ -261,6 +261,7 @@ NSDelayedPerforming = _objc.informal_protocol(
             None,
             selector='cancelPreviousPerformRequestsWithTarget:',
             signature='v@:@',
+            isClassMethod=1,
             isRequired=0,
         ),
 # (void)cancelPreviousPerformRequestsWithTarget:(id)aTarget selector:(SEL)aSelector object:(id)anArgument
@@ -268,6 +269,7 @@ NSDelayedPerforming = _objc.informal_protocol(
             None,
             selector='cancelPreviousPerformRequestsWithTarget:selector:object:',
             signature='v@:@:@',
+            isClassMethod=1,
             isRequired=0,
         ),
 # (void)performSelector:(SEL)aSelector withObject:(id)anArgument afterDelay:(NSTimeInterval)delay
@@ -383,6 +385,7 @@ NSKeyValueCoding = _objc.informal_protocol(
             None,
             selector='accessInstanceVariablesDirectly',
             signature='c@:',
+            isClassMethod=1,
             isRequired=0,
         ),
 # (NSMutableArray *)mutableArrayValueForKey:(NSString *)key
@@ -453,6 +456,7 @@ NSKeyValueCoding = _objc.informal_protocol(
             None,
             selector='useStoredAccessor',
             signature='c@:',
+            isClassMethod=1,
             isRequired=0,
         ),
 # (BOOL)validateValue:(id *)ioValue forKey:(NSString *)inKey error:(NSError **)outError
@@ -568,6 +572,7 @@ NSKeyValueObservingCustomization = _objc.informal_protocol(
             None,
             selector='automaticallyNotifiesObserversForKey:',
             signature='c@:@',
+            isClassMethod=1,
             isRequired=0,
         ),
 # (void *)observationInfo
@@ -582,6 +587,7 @@ NSKeyValueObservingCustomization = _objc.informal_protocol(
             None,
             selector='setKeys:triggerChangeNotificationsForDependentKey:',
             signature='v@:@@',
+            isClassMethod=1,
             isRequired=0,
         ),
 # (void)setObservationInfo:(void *)observationInfo
@@ -704,6 +710,7 @@ NSKeyedUnarchiverObjectSubstitution = _objc.informal_protocol(
             None,
             selector='classForKeyedUnarchiver',
             signature='#@:',
+            isClassMethod=1,
             isRequired=0,
         ),
     ]

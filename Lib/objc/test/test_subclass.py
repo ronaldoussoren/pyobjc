@@ -70,24 +70,24 @@ class TestSubclassing(unittest.TestCase):
         x = v.methodSignatureForSelector_('test:x:')
         self.assert_(x is not None)
 
-	if sys.platform == 'darwin':
-	    self.assert_(x.methodReturnType() == 'v')
-	    self.assert_(x.numberOfArguments() == 4)
-	    self.assert_(x.getArgumentTypeAtIndex_(0) == '@')
-	    self.assert_(x.getArgumentTypeAtIndex_(1) == ':')
-	    self.assert_(x.getArgumentTypeAtIndex_(2) == '@')
-	    self.assert_(x.getArgumentTypeAtIndex_(3) == 'i')
-	else:
-	    # On GNUstep the return-value of methodReturnType and
-	    # getArgumentTypeAtIndex_ includes "garbage" after the 
-	    # signature of the queried item. The garbage is the rest
-	    # of the signature string.
-	    self.assert_(x.methodReturnType().startswith('v'))
-	    self.assert_(x.numberOfArguments() == 4)
-	    self.assert_(x.getArgumentTypeAtIndex_(0).startswith('@'))
-	    self.assert_(x.getArgumentTypeAtIndex_(1).startswith(':'))
-	    self.assert_(x.getArgumentTypeAtIndex_(2).startswith('@'))
-	    self.assert_(x.getArgumentTypeAtIndex_(3).startswith('i'))
+        if sys.platform == 'darwin':
+            self.assert_(x.methodReturnType() == 'v')
+            self.assert_(x.numberOfArguments() == 4)
+            self.assert_(x.getArgumentTypeAtIndex_(0) == '@')
+            self.assert_(x.getArgumentTypeAtIndex_(1) == ':')
+            self.assert_(x.getArgumentTypeAtIndex_(2) == '@')
+            self.assert_(x.getArgumentTypeAtIndex_(3) == 'i')
+        else:
+            # On GNUstep the return-value of methodReturnType and
+            # getArgumentTypeAtIndex_ includes "garbage" after the 
+            # signature of the queried item. The garbage is the rest
+            # of the signature string.
+            self.assert_(x.methodReturnType().startswith('v'))
+            self.assert_(x.numberOfArguments() == 4)
+            self.assert_(x.getArgumentTypeAtIndex_(0).startswith('@'))
+            self.assert_(x.getArgumentTypeAtIndex_(1).startswith(':'))
+            self.assert_(x.getArgumentTypeAtIndex_(2).startswith('@'))
+            self.assert_(x.getArgumentTypeAtIndex_(3).startswith('i'))
 
 
 class TestSelectors(unittest.TestCase):
@@ -109,10 +109,10 @@ class TestCopying (unittest.TestCase):
                 o = self.__class__.alloc().init()
                 o.foobar = 2
                 return o
-	    copyWithZone_ = objc.selector(
-	    	copyWithZone_, 
-		signature=objc.runtime.NSObject.copyWithZone_.signature,
-		isClassMethod=0)
+            copyWithZone_ = objc.selector(
+            	copyWithZone_, 
+        	signature=objc.runtime.NSObject.copyWithZone_.signature,
+        	isClassMethod=0)
 
 
         # Make sure the runtime correctly marked our copyWithZone_

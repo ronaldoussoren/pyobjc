@@ -20,7 +20,11 @@ BLOCK_S_RE=re.compile('/\*')
 BLOCK_E_RE=re.compile('\*/')
 
 def entry(fp, val):
-    fp.write('\t { "%s", %s },\n'%(val, val))
+    if val.endswith('Mask'):
+        unsigned = 1
+    else:
+        unsigned = 0
+    fp.write('\t { "%s", %d, %s },\n'%(val, unsigned, val))
 
 def process_file(outfp, filename):
     fp = open(filename, 'r')
@@ -93,7 +97,7 @@ def generate(dirname, fn = None, filter = lambda x: 1):
         fnames.sort()
         for f in fnames:
             process_file(fp, f)
-        fp.write("\t{0, 0} /* Sentinel */\n")
+        fp.write("\t{0, 0, 0} /* Sentinel */\n")
         fp.write("};\n")
         fp.close()
 

@@ -497,47 +497,8 @@ PyDoc_STRVAR(appkit_doc,
 "AppKit"
 );
 
-
-/* TODO:
- * actual variables: 
- * - NSApp
- *
- * floats:
- NSColor-Grayscale Values
-
- const float NSWhite;
- const float NSLightGray;
- const float NSDarkGray;
- const float NSBlack;
-
- NSFont-PostScript Transformation Matrix
-
- const float *NSFontIdentityMatrix;
-
- Discussion
-
- NSFontIdentityMatrix is a transformation matrix useful as a parameter to the NSFont method fontWithName:matrix: .
-
- NSWindow-Sizes
-
- NSSize NSIconSize;
- NSSize NSTokenSize;
-
-
- */
-
-
-#ifdef GNUSTEP
-
-#include "_App_Enum.GNUstep.inc"
-#include "_App_Str.GNUstep.inc"
-
-#else /* !GNUSTEP */
-
 #include "_App_Enum.inc"
 #include "_App_Str.inc"
-
-#endif /* !GNUSTEP */
 
 /*
  * Manually added, will be automatic in next version of generator script
@@ -733,85 +694,6 @@ void init_AppKit(void)
 	add_int(d, "NSModalPanelWindowLevel", NSModalPanelWindowLevel);
 	add_int(d, "NSPopUpMenuWindowLevel", NSPopUpMenuWindowLevel);
 	add_int(d, "NSScreenSaverWindowLevel", NSScreenSaverWindowLevel);
-
-
-	add_unsigned(d, "NSNoCellMask", NSNoCellMask);
-	add_unsigned(d, "NSContentsCellMask", NSContentsCellMask);
-	add_unsigned(d, "NSPushInCellMask", NSPushInCellMask);
-	add_unsigned(d, "NSChangeGrayCellMask", NSChangeGrayCellMask);
-	add_unsigned(d, "NSChangeBackgroundCellMask", NSChangeBackgroundCellMask);
-	add_unsigned(d, "NSColorPanelGrayModeMask", NSColorPanelGrayModeMask);
-	add_unsigned(d, "NSColorPanelRGBModeMask", NSColorPanelRGBModeMask);
-	add_unsigned(d, "NSColorPanelCMYKModeMask", NSColorPanelCMYKModeMask);
-	add_unsigned(d, "NSColorPanelHSBModeMask", NSColorPanelHSBModeMask);
-	add_unsigned(d, "NSColorPanelCustomPaletteModeMask", NSColorPanelCustomPaletteModeMask);
-	add_unsigned(d, "NSColorPanelColorListModeMask", NSColorPanelColorListModeMask);
-	add_unsigned(d, "NSColorPanelWheelModeMask", NSColorPanelWheelModeMask);
-#ifndef GNUSTEP
-#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
-	add_unsigned(d, "NSColorPanelCrayonModeMask", NSColorPanelCrayonModeMask);
-#endif
-#endif
-	add_unsigned(d, "NSColorPanelAllModesMask", NSColorPanelAllModesMask);
-	add_unsigned(d, "NSLeftMouseDownMask", NSLeftMouseDownMask);
-	add_unsigned(d, "NSLeftMouseUpMask", NSLeftMouseUpMask);
-	add_unsigned(d, "NSRightMouseDownMask", NSRightMouseDownMask);
-	add_unsigned(d, "NSRightMouseUpMask", NSRightMouseUpMask);
-	add_unsigned(d, "NSMouseMovedMask", NSMouseMovedMask);
-	add_unsigned(d, "NSLeftMouseDraggedMask", NSLeftMouseDraggedMask);
-	add_unsigned(d, "NSRightMouseDraggedMask", NSRightMouseDraggedMask);
-	add_unsigned(d, "NSMouseEnteredMask", NSMouseEnteredMask);
-	add_unsigned(d, "NSMouseExitedMask", NSMouseExitedMask);
-	add_unsigned(d, "NSKeyDownMask", NSKeyDownMask);
-	add_unsigned(d, "NSKeyUpMask", NSKeyUpMask);
-	add_unsigned(d, "NSFlagsChangedMask", NSFlagsChangedMask);
-	add_unsigned(d, "NSAppKitDefinedMask", NSAppKitDefinedMask);
-	add_unsigned(d, "NSSystemDefinedMask", NSSystemDefinedMask);
-	add_unsigned(d, "NSApplicationDefinedMask", NSApplicationDefinedMask);
-	add_unsigned(d, "NSPeriodicMask", NSPeriodicMask);
-	add_unsigned(d, "NSCursorUpdateMask", NSCursorUpdateMask);
-	add_unsigned(d, "NSScrollWheelMask", NSScrollWheelMask);
-	add_unsigned(d, "NSOtherMouseDownMask", NSOtherMouseDownMask);
-	add_unsigned(d, "NSOtherMouseUpMask", NSOtherMouseUpMask);
-	add_unsigned(d, "NSOtherMouseDraggedMask", NSOtherMouseDraggedMask);
-	add_unsigned(d, "NSAnyEventMask", NSAnyEventMask);
-	add_unsigned(d, "NSAlphaShiftKeyMask", NSAlphaShiftKeyMask);
-	add_unsigned(d, "NSShiftKeyMask", NSShiftKeyMask);
-	add_unsigned(d, "NSControlKeyMask", NSControlKeyMask);
-	add_unsigned(d, "NSAlternateKeyMask", NSAlternateKeyMask);
-	add_unsigned(d, "NSCommandKeyMask", NSCommandKeyMask);
-	add_unsigned(d, "NSNumericPadKeyMask", NSNumericPadKeyMask);
-	add_unsigned(d, "NSHelpKeyMask", NSHelpKeyMask);
-	add_unsigned(d, "NSFunctionKeyMask", NSFunctionKeyMask);
-	add_unsigned(d, "NSItalicFontMask", NSItalicFontMask);
-	add_unsigned(d, "NSBoldFontMask", NSBoldFontMask);
-	add_unsigned(d, "NSUnboldFontMask", NSUnboldFontMask);
-	add_unsigned(d, "NSNonStandardCharacterSetFontMask", NSNonStandardCharacterSetFontMask);
-	add_unsigned(d, "NSNarrowFontMask", NSNarrowFontMask);
-	add_unsigned(d, "NSExpandedFontMask", NSExpandedFontMask);
-	add_unsigned(d, "NSCondensedFontMask", NSCondensedFontMask);
-	add_unsigned(d, "NSSmallCapsFontMask", NSSmallCapsFontMask);
-	add_unsigned(d, "NSPosterFontMask", NSPosterFontMask);
-	add_unsigned(d, "NSCompressedFontMask", NSCompressedFontMask);
-	add_unsigned(d, "NSFixedPitchFontMask", NSFixedPitchFontMask);
-	add_unsigned(d, "NSUnitalicFontMask", NSUnitalicFontMask);
-	add_unsigned(d, "NSUtilityWindowMask", NSUtilityWindowMask);
-	add_unsigned(d, "NSDocModalWindowMask", NSDocModalWindowMask);
-#ifndef GNUSTEP
-#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
-	add_unsigned(d, "NSNonactivatingPanelMask", NSNonactivatingPanelMask);
-#endif
-#endif
-	add_unsigned(d, "NSBorderlessWindowMask", NSBorderlessWindowMask);
-	add_unsigned(d, "NSTitledWindowMask", NSTitledWindowMask);
-	add_unsigned(d, "NSClosableWindowMask", NSClosableWindowMask);
-	add_unsigned(d, "NSMiniaturizableWindowMask", NSMiniaturizableWindowMask);
-	add_unsigned(d, "NSResizableWindowMask", NSResizableWindowMask);
-#ifndef GNUSTEP
-#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
-	add_unsigned(d, "NSTexturedBackgroundWindowMask", NSTexturedBackgroundWindowMask);
-#endif
-#endif
 
 	{
 	  struct uchar_table*  cur = g_unicode_characters;

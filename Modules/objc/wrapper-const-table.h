@@ -21,6 +21,7 @@ struct vartable {
 
 struct inttable {
 	char* 	name;
+	int     is_unsigned;
 	int	value;
 };
 
@@ -34,7 +35,7 @@ static inline int add_double(PyObject*d, char* name, double value)
 	int res;
 	PyObject* v;
 
-	v = PyFloat_FromDouble(value);
+	v = PyObjC_ObjCToPython(@encode(double), &value);
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);
@@ -48,7 +49,7 @@ static inline int add_float(PyObject*d, char* name, float value)
 	int res;
 	PyObject* v;
 
-	v = PyFloat_FromDouble(value);
+	v = PyObjC_ObjCToPython(@encode(float), &value);
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);
@@ -62,11 +63,7 @@ static inline int add_unsigned(PyObject*d, char* name, unsigned value)
 	int res;
 	PyObject* v;
 
-	if (value > LONG_MAX) {
-		v = PyLong_FromUnsignedLong(value);
-	} else {
-		v = PyInt_FromLong((long)value);
-	}
+	v = PyObjC_ObjCToPython(@encode(unsigned), &value);
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);
@@ -94,7 +91,7 @@ static inline int add_int(PyObject*d, char* name, int value)
 	int res;
 	PyObject* v;
 
-	v = PyInt_FromLong(value);
+	v = PyObjC_ObjCToPython(@encode(int), &value);
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);
@@ -106,7 +103,15 @@ static inline int add_int(PyObject*d, char* name, int value)
 static inline int register_ints(PyObject* d, struct inttable* table)
 {
 	while (table->name != NULL) {
-		if (add_int(d, table->name, table->value) < 0) return -1;	
+		if (table->is_unsigned) {
+			int res = add_unsigned(d, table->name, 
+					(unsigned)table->value);
+			if (res == -1) return -1;
+		} else {
+			int res = add_int(d, table->name, table->value);
+			if (res == -1) return -1;
+		}
+
 		table++;
 	}
 	return 0;

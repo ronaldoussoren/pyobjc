@@ -1275,6 +1275,7 @@ NSKeyValueBindingCreation = _objc.informal_protocol(
             None,
             selector='exposeBinding:',
             signature='v@:@',
+            isClassMethod=1,
             isRequired=0,
         ),
 # (NSArray *)exposedBindings
@@ -1489,6 +1490,7 @@ NSMenuItem = _objc.informal_protocol(
             None,
             selector='separatorItem',
             signature='@@:',
+            isClassMethod=1,
             isRequired=0,
         ),
 # (void)setAction:(SEL)aSelector
@@ -1643,6 +1645,7 @@ NSMenuItem = _objc.informal_protocol(
             None,
             selector='setUsesUserKeyEquivalents:',
             signature='v@:c',
+            isClassMethod=1,
             isRequired=0,
         ),
 # (int)state
@@ -1706,6 +1709,7 @@ NSMenuItem = _objc.informal_protocol(
             None,
             selector='usesUserKeyEquivalents',
             signature='c@:',
+            isClassMethod=1,
             isRequired=0,
         ),
     ]
@@ -1993,6 +1997,7 @@ NSPlaceholders = _objc.informal_protocol(
             None,
             selector='defaultPlaceholderForMarker:withBinding:',
             signature='@@:@@',
+            isClassMethod=1,
             isRequired=0,
         ),
 # (void)setDefaultPlaceholder:(id)placeholder forMarker:(id)marker withBinding:(NSString *)binding
@@ -2000,6 +2005,7 @@ NSPlaceholders = _objc.informal_protocol(
             None,
             selector='setDefaultPlaceholder:forMarker:withBinding:',
             signature='v@:@@@',
+            isClassMethod=1,
             isRequired=0,
         ),
     ]

@@ -17,25 +17,25 @@ import unittest
 import objc
 
 if sys.platform == 'darwin':
-	import AppKit
+        import AppKit
 
-	class TestWeirdness(unittest.TestCase):
+        class TestWeirdness(unittest.TestCase):
 
-	    def doWeirdness(self, className, methodToTest):
-		c = objc.lookUpClass(className)
-		before = getattr(c, methodToTest)
-		b = c.alloc().init()
-		after = getattr(c, methodToTest)
+            def doWeirdness(self, className, methodToTest):
+                c = objc.lookUpClass(className)
+                before = getattr(c, methodToTest)
+                b = c.alloc().init()
+                after = getattr(c, methodToTest)
 
-		self.assert_(before != after, "No weirdness present on %s.%s"%(
-		    className, methodToTest))
-		
+                self.assert_(before != after, "No weirdness present on %s.%s"%(
+                    className, methodToTest))
+                
 
-	    def testWeirdness1(self):
-		self.doWeirdness("NSButtonCell", "setEnabled_")
+            def testWeirdness1(self):
+                self.doWeirdness("NSButtonCell", "setEnabled_")
 
-	    def testWeirdness2(self):
-		self.doWeirdness("NSTextView", "setEditable_")
+            def testWeirdness2(self):
+                self.doWeirdness("NSTextView", "setEditable_")
 
 
 if __name__ == '__main__':
