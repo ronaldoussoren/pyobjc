@@ -5,7 +5,7 @@
 #  PyObjC2Test
 #
 #
-# This is a variation on the ITunesCommuncation that uses a the 'appscript' 
+# This is a variation on the ITunesCommuncation that uses a the 'appscript'
 # module for the inter-application communication.
 
 from objc import YES, NO
@@ -36,7 +36,7 @@ class ITunesCommunication(NibClassBuilder.AutoBaseClass):
             return '', '', ''
         else:
             return track.album.get(), track.artist.get(), track.genre.get()
-           def askITunes_(self, obj):
+        def askITunes_(self, obj):
         # obj is the button the user pressed. We can go from here
         # to the document (an instance of CDInfoDocument)
         document = obj.window().windowController().document()
