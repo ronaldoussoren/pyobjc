@@ -7,15 +7,13 @@ import glob
 import site
 
 # Add our utility library to the path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 'setup-lib')))
+sys.path.insert(1, os.path.abspath(os.path.join(os.path.dirname(__file__), 'setup-lib')))
 site.addsitedir(os.path.abspath('source-deps'))
 
 extra_cmdclass = {}
-try:
+if os.path.exists('/usr/bin/sw_vers'):
     import pyobjc_mpkg
     extra_cmdclass.update(pyobjc_mpkg.cmdclass)
-except ImportError:
-    pass
 
 # Some PiPy stuff
 LONG_DESCRIPTION="""

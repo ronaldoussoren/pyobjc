@@ -3,7 +3,7 @@ import sys
 from distutils.version import LooseVersion
 from distutils import log
 from bdist_mpkg.command import bdist_mpkg as _bdist_mpkg
-from py2app.util import copy_tree, skipscm
+from py2app.util import skipscm
 
 from altgraph.compat import *
 from bdist_mpkg import tools
@@ -110,8 +110,8 @@ class bdist_mpkg(_bdist_mpkg):
         scheme = 'pbx'
         schemedir = os.path.join(self.pkg_base, scheme)
         self.scheme_map[scheme] = '/Developer/ProjectBuilder Extras'
-        copy_tree('ProjectBuilder Extras', schemedir,
-            condition=skipjunk, dry_run=self.dry_run, verbose=self.verbose)
+        self.copy_tree('ProjectBuilder Extras', schemedir,
+            condition=skipjunk)
         # skip clean.py
         cleanpath = os.path.join(schemedir, 'ProjectBuilder Extras', 'Project Templates', 'clean.py')
         if os.path.exists(cleanpath):
@@ -135,10 +135,10 @@ class bdist_mpkg(_bdist_mpkg):
                     'File Templates/Cocoa',
                     'File Templates/Pure Python',
                 ]:
-            copy_tree(
+            self.copy_tree(
                 os.path.join('Xcode', path),
                 os.path.join(schemedir, path),
-                condition=skipjunk, dry_run=self.dry_run, verbose=self.verbose)
+                condition=skipjunk)
             files.extend([
                 os.path.join(path, fn)
                 for fn in os.listdir(os.path.join(schemedir, path))])
@@ -153,16 +153,16 @@ class bdist_mpkg(_bdist_mpkg):
         scheme = 'docs'
         schemedir = os.path.join(self.pkg_base, scheme)
         self.scheme_map[scheme] = '/Developer/Python/PyObjC/Documentation'
-        copy_tree('Doc', schemedir,
-            condition=skipjunk, dry_run=self.dry_run, verbose=self.verbose)
+        self.copy_tree('Doc', schemedir,
+            condition=skipjunk)
         self.preflight_rm[scheme] = ['.']
 
     def pyobjc_examples(self):
         scheme = 'examples'
         schemedir = os.path.join(self.pkg_base, scheme)
         self.scheme_map[scheme] = '/Developer/Python/PyObjC/Examples'
-        copy_tree('Examples', schemedir,
-            condition=skipjunk, dry_run=self.dry_run, verbose=self.verbose)
+        self.copy_tree('Examples', schemedir,
+            condition=skipjunk)
         self.preflight_rm[scheme] = ['.']
 
 cmdclass = {'bdist_mpkg': bdist_mpkg}
