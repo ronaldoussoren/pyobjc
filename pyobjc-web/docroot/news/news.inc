@@ -8,7 +8,7 @@ The tutorial included in the 0.9 release was not entirely up-to-date, please use
  <p>
  The PyObjC installer package installes a number of examples and project builder
  templates as wel as documentation into /Developer. Users of 
- <a href="view-source:http://homepages.cwi.nl/~jack/macpython.html#beta">MacPython 2.3b1</a> can install this release using the 
+ <a href="http://homepages.cwi.nl/~jack/macpython.html#beta">MacPython 2.3b1</a> can install this release using the 
  PackageManager application.
  <p>
 

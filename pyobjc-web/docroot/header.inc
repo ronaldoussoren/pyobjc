@@ -1,5 +1,5 @@
 <?
-/* $Id: header.inc,v 1.4 2003/05/04 12:56:38 ronaldoussoren Exp $ */
+/* $Id: header.inc,v 1.5 2003/05/29 15:42:57 ronaldoussoren Exp $ */
 
 // section navigation (always visible)
 $sections = array(
@@ -195,6 +195,8 @@ alt=""></td></tr>
 <tr><td>&nbsp;</td></tr>
 
 </table>
+<P>We're hosted on:<BR>
+<A href="http://sourceforge.net"> <IMG src="http://sourceforge.net/sflogo.php?group_id=14534&type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></A>
 <? /* end navigation column */ ?>
 
 </td><td align="left" width="100%">
