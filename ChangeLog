@@ -1,3 +1,13 @@
+2003-01-31  Just van Rossum <just@letterror.com>
+    * Added autoGIL extension module.  It's a top-level module as it's not
+      Cocoa- or PyObjC-specific. In fact it may end up in the Python
+      distribution at some point.  autoGIL.installAutoGIL() is called at
+      the end of Foundation/__init__.py. This installs a callback in the
+      CFRunLoop for the main thread, that releases the Global Interpreter
+      Lock when the event loop goes to sleep, and acquires it again when it
+      wakes up.  This allows other Python threads to run while an app is
+      inside the event loop.
+
 2003-01-25  Bill Bumgarner  <bbum@codefab.com>
     * Modules/objc/libffi_support.m: Modified such that a Python based
       implementation can be stuck onto an objc class through the user of a
