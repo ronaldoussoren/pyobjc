@@ -1,6 +1,9 @@
 2002-10-09 Ronald Oussoren <oussoren@cistron.nl>
 	* Move Cocoa.AppKit and Cocoa.Foundation packages to AppKit
 	  and Foundation
+	* Some backward compatibility code for Python 2.2.0. This
+	  includes disabling the GC module for now: This module interacts
+	  badly with us.
 
 2002-09-28 Ronald Oussoren <oussoren@cistron.nl>
 	* objc-class.m: Actually implement the selector->python cache,
