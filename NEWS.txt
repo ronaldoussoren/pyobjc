@@ -7,6 +7,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3 (2005-??-??)
 ------------------------
 
+- ``PyObjCTools.AppHelper.runEventLoop()`` will now bring your
+  application to the front at startup when using pdb
+  mode for convenience.
+
 - ``objc.loadBundle()`` no longer filters the class list.  This
   solves a few potential issues and shaves off about 1/3rd of
   the overhead of ``python -c "import AppKit"``.
