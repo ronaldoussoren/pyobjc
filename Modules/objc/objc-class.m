@@ -246,6 +246,9 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			return NULL;
 		} else if (PyObjCInformalProtocol_Check(v)) {
 			PyList_Append(protocols, v);
+		} else if (PyObjCObject_Check(v)) {
+			// XXX: Check to see if it is *actually* a Protocol?
+			PyList_Append(protocols, v);
 		} else {
 			PyList_Append(real_bases, v);
 		}

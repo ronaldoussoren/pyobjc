@@ -12,7 +12,8 @@ int PyObjCRT_SetupClass(
 	Class superCls,
 	Class rootCls,
 	int ivarSize,
-	struct objc_ivar_list* 	ivarList
+	struct objc_ivar_list* ivarList,
+	struct objc_protocol_list* protocolList
 )
 
 {
@@ -62,18 +63,18 @@ int PyObjCRT_SetupClass(
 	}
 	memset(metaCls->methodLists, 0, sizeof(*(metaCls->methodLists)));
 
-        /*
-         * This is MacOS X specific, and an undocumented feature (long live
-         * Open Source!).
-         *
-         * The code in the objc runtime assumes that the method lists are
-         * terminated by '-1', and will happily overwite existing data if
-         * they aren't.
-         *
-         * Ronald filed a bugreport for this: Radar #3317376
-         */
-        cls->methodLists[0] = (struct objc_method_list*)-1;
-        metaCls->methodLists[0] = (struct objc_method_list*)-1;
+	/*
+	 * This is MacOS X specific, and an undocumented feature (long live
+	 * Open Source!).
+	 *
+	 * The code in the objc runtime assumes that the method lists are
+	 * terminated by '-1', and will happily overwite existing data if
+	 * they aren't.
+	 *
+	 * Ronald filed a bugreport for this: Radar #3317376
+	 */
+	cls->methodLists[0] = (struct objc_method_list*)-1;
+	metaCls->methodLists[0] = (struct objc_method_list*)-1;
 
 	cls->super_class = superCls;
 	metaCls->super_class = superCls->isa;
@@ -85,7 +86,7 @@ int PyObjCRT_SetupClass(
 	metaCls->instance_size = metaCls->super_class->instance_size;
 	metaCls->ivars = NULL;
 
-	cls->protocols = metaCls->protocols = NULL;
+	metaCls->protocols = cls->protocols = protocolList;
 
 	return 0;
 }
@@ -117,19 +118,36 @@ void PyObjCRT_ClearClass(Class cls)
 
 struct objc_method_list *PyObjCRT_AllocMethodList(int numMethods)
 {
-        struct objc_method_list *mlist;
+	struct objc_method_list *mlist;
 
-        mlist = malloc(sizeof(struct objc_method_list)
-                 + ((numMethods+1) * sizeof(struct objc_method)));
+	mlist = malloc(sizeof(struct objc_method_list)
+			 + ((numMethods+1) * sizeof(struct objc_method)));
 
-        if (mlist == NULL) {
-                return NULL;
-        }
+	if (mlist == NULL) {
+			return NULL;
+	}
 
-        mlist->method_count = 0;
-        mlist->obsolete = NULL;
+	mlist->method_count = 0;
+	mlist->obsolete = NULL;
 
-        return mlist;
+	return mlist;
+}
+
+struct objc_protocol_list* PyObjCRT_AllocProtocolList(int numProtocols)
+{
+	struct objc_protocol_list *plist;
+
+	plist = malloc(sizeof(struct objc_protocol_list)
+			 + ((numProtocols+1) * sizeof(Protocol *)));
+
+	if (plist == NULL) {
+			return NULL;
+	}
+
+	plist->count = 0;
+	plist->next = NULL;
+
+	return plist;
 }
 
 #else /* !APPLE_RUNTIME */

@@ -8,6 +8,23 @@
 
 #if defined(GNU_RUNTIME)
 
+struct objc_protocol_list* PyObjCRT_AllocProtocolList(int numProtocols)
+{   
+	struct objc_protocol_list *plist;
+	
+	plist = malloc(sizeof(struct objc_protocol_list)
+			 + ((numProtocols+1) * sizeof(Protocol *)));
+
+	if (plist == NULL) {
+			return NULL;
+	}
+	
+	plist->count = 0;
+	plist->next = NULL;
+
+	return plist;
+}
+
 int PyObjCRT_SetupClass(
 	Class cls, 
 	Class metaCls, 
@@ -15,7 +32,8 @@ int PyObjCRT_SetupClass(
 	Class superCls,
 	Class rootCls,
 	int ivarSize,
-	struct objc_ivar_list* 	ivarList
+	struct objc_ivar_list* 	ivarList,
+	struct objc_protocol_list* protocolList
 )
 
 {
@@ -34,8 +52,6 @@ int PyObjCRT_SetupClass(
 	metaCls->subclass_list = NULL;
 	cls->sibling_class = NULL;
 	metaCls->sibling_class = NULL;
-	cls->protocols = NULL;
-	metaCls->protocols = NULL;
 
 	cls->methods = NULL;
 	metaCls->methods = NULL;
@@ -70,7 +86,7 @@ int PyObjCRT_SetupClass(
 	metaCls->instance_size = metaCls->super_class->instance_size;
 	metaCls->ivars = NULL;
 
-	cls->protocols = metaCls->protocols = NULL;
+	metaCls->protocols = cls->protocols = protocolList;
 
 	metaCls->dtable = objc_get_uninstalled_dtable();
 	cls->dtable = objc_get_uninstalled_dtable();
