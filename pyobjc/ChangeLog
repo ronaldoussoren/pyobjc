@@ -1,3 +1,7 @@
+2003-01-20  Bill Bumgarner  <bbum@codefab.com>
+    * Lib/Foundation/Conversion.py: Fixed tests to ensure that "" and 0 are
+      not counted as None.
+
 2003-01-18  Just van Rossum <just@letterror.com>
     * Make AppKit.NSApplicationMain() propagate exceptions back to Python.
     * Include the entire exception info (type, value and traceback) when
@@ -32,7 +36,6 @@
       -objectForKey:]): Fixed -objectForKey: to return nil if key did not
       exist (previously, it would segfault).   This mimics NSDictionary
       behavior.
-
     * Lib/Foundation: moved conversion functions to their own module;
       Conversion.   collections unit test now tests conversion and conversion
       helpers.

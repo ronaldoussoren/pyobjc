@@ -18,14 +18,14 @@ def propertyListFromPythonCollection(aPyCollection, conversionHelper=None):
         collection = NSMutableDictionary.dictionary()
         for aKey in aPyCollection:
             convertedValue = propertyListFromPythonCollection( aPyCollection[aKey], conversionHelper=conversionHelper )
-            if convertedValue:
+            if convertedValue is not None:
                 collection.setObject_forKey_( convertedValue , aKey )
         return collection
     elif containerType in [TupleType, ListType]:
         collection = NSMutableArray.array()
         for aValue in aPyCollection:
             convertedValue = propertyListFromPythonCollection( aValue, conversionHelper=conversionHelper )
-            if convertedValue:
+            if convertedValue is not None:
                 collection.addObject_( convertedValue  )
         return collection
     elif containerType in StringTypes:
@@ -51,12 +51,14 @@ def pythonCollectionFromPropertyList(aCollection, conversionHelper=None):
     if isinstance(aCollection, NSDictionary):
         pyCollection = {}
         for k in aCollection:
-            pyCollection[k] = pythonCollectionFromPropertyList(aCollection[k], conversionHelper)
+            convertedValue = pythonCollectionFromPropertyList(aCollection[k], conversionHelper)
+            pyCollection[k] = convertedValue
         return pyCollection
     elif isinstance(aCollection, NSArray):
-        pyCollection = [None] * len(aCollection)
+        pyCollection = [] * len(aCollection)
         for i in range(len(aCollection)):
-            pyCollection[i] = pythonCollectionFromPropertyList(aCollection[i], conversionHelper)
+            convertedValue = pythonCollectionFromPropertyList(aCollection[i], conversionHelper)
+            pyCollection.append(convertedValue)
         return pyCollection
     elif type(aCollection) in StringTypes:
         return aCollection
