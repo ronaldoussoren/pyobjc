@@ -9,7 +9,7 @@
 #define PYOBJC_METHOD_STUB_IMPL
 #include "pyobjc-api.h"
 static struct pyobjc_api* ObjC_API;
-typedef int (*superfunc)();
+typedef int (*superfunc)(int);
 /* signature: c@:@@ */
 static char 
 meth_imp_0(id self, SEL sel, id arg_2, id arg_3)

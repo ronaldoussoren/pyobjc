@@ -726,7 +726,7 @@ def main():
 	print "#define PYOBJC_METHOD_STUB_IMPL"
 	print "#include \"pyobjc-api.h\""
 	print "static struct pyobjc_api* ObjC_API;"
-	print "typedef int (*superfunc)();"
+	print "typedef int (*superfunc)(int);"
 
 	nr =  0
 	for ln in fp:
