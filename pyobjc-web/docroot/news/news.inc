@@ -1,6 +1,14 @@
 <?
   $macpython23="<a href=\"http://homepages.cwi.nl/~jack/macpython/\">Mac Python 2.3</a>";
 ?>
+<span class="news_date">2004-12-29: </span><span class="news_headline">PyObjC 1.2 released</span><?php gray_line(); ?>
+  <p>
+PyObjC 1.2 is finally here!  See the
+<a href="<? print $root; ?>NEWS-1.2.txt">NEWS file</a> for details.
+  <p>
+Click <a href="/software/">here</a> to go to the download page.
+  <p>
+
 <span class="news_date">2004-05-30: </span><span class="news_headline">Repository moved to red-bean.com</span><?php gray_line(); ?>
   <p>
 We have moved our repository to a <a href="http://subversion.tigris.org/">subversion</a> repository at <a href="http://www.red-bean.com/">red-bean.com</a>.
@@ -29,8 +37,10 @@ Please report any problem with this release at <a href="mailto:pyobjc-dev@lists.
     <li><a href="<? print $root; ?>prerelease/pyobjc-1.1b1-macosx10.2.dmg">binary installer for Mac OS X 10.2 (Python 2.2)</a></li>
 -->
     <li><a href="<? print $root; ?>prerelease/pyobjc-1.1b2-macosx10.3.dmg">binary installer for Mac OS X 10.3 (Python 2.3)</a></li>
+<!--
     <li><a href="<? print $root; ?>packman/pyobjc-unstable-macosx10.2.plist">PackMan Database for MacOS X 10.2 (MacPython 2.3)</a><br><b>NOTE: </b>currently does not contain a binary release.</li>
     <li><a href="<? print $root; ?>packman/pyobjc-unstable-macosx10.3.plist">PackMan Database for MacOS X 10.3 (Python 2.3)</a></li>
+-->
   </ul>
   <p>
 <b>NOTE: </b>Python 2.2 support is tested less than Python 2.3 support, because
