@@ -15,7 +15,7 @@ sourceFiles = ["OC_PythonBundle.m",
 
 try:
     setup (name = "pyobjc",
-           version = "0.9",
+           version = "0.6",
            description = "Python<->ObjC Interoperability Module",
            author = "bbum, SteveM, many others stretching back through the reaches of time...",
            author_email = "bbum@codefab.com",

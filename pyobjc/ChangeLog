@@ -1,3 +1,11 @@
+2001-04-05  Steve Majewski <sdm7g@Virginia.EDU>
+
+	* ObjC.h,objc_support.m,ObjCMethod.m:  Changed conditional code 
+	for Mac OSX. ObjC.h conditionally defines MACOSX and other
+	modules use that #ifdef.
+
+	* ObjC.h (PyObjC_VERSION): Version 0.6.
+	
 2001-03-17  Bill Bumgarner  <bbum@localhost>
 
 	* changed name of imported module to pyobjc to be more consistent
