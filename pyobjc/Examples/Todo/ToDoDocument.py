@@ -4,11 +4,11 @@ from objc import IBOutlet
 from ToDoCell import *
 from ToDoItem import *
 from SelectionNotifyMatrix import *
-from nibwrapper import ToDoDocumentBase
+from AppKit.NibClassBuilder import AutoBaseClass
 
 ToDoItemChangedNotification = "ToDoItemChangedNotification"
 
-class  ToDoDocument (ToDoDocumentBase):
+class  ToDoDocument (AutoBaseClass):
 
 	__slots__ = ('_dataFromFile', '_activeDays', '_currentItems', '_selectedItem', '_selectedItemEdited')
 
@@ -16,7 +16,7 @@ class  ToDoDocument (ToDoDocumentBase):
 		row = notification.object().selectedRow()
 
 		if row == -1:
-			print 'No rowSelected?'
+			#print 'No rowSelected?'
 			return 
 
 		self._selectedItem = self._currentItems.objectAtIndex_(row)
@@ -99,7 +99,7 @@ class  ToDoDocument (ToDoDocumentBase):
 						if elapsed > 0:
 							self.setTimerForItem_(anItem)
 						else:
-							print "Past due"
+							#print "Past due"
 							NSBeep()
 							NSRunAlertPanel("To Do", "%s on %s is past due!"%(
 									anItem.itemName(),
@@ -158,7 +158,7 @@ class  ToDoDocument (ToDoDocumentBase):
 				thisItem = self._currentItems.objectAtIndex_(i)
 			else:
 				thisItem = None
-			print ">>> object %d is %s %s"%(i, thisItem, isinstance(thisItem, ToDoItem))
+			#print ">>> object %d is %s %s"%(i, thisItem, isinstance(thisItem, ToDoItem))
 
 			if isinstance(thisItem, ToDoItem):
 				if thisItem.secsUntilDue():
@@ -228,7 +228,9 @@ class  ToDoDocument (ToDoDocumentBase):
 		if self._activeDays:
 			self.setCurrentItems_(self._activeDays.objectForKey_(date))
 		else:
-			print "calenderMatrix:didChangeToDate: -> no _activeDays"
+			#print "calenderMatrix:didChangeToDate: -> no _activeDays"
+                        pass
+
 		self.dayLabel.setStringValue_(
 			date.descriptionWithCalendarFormat_timeZone_locale_(
 			"To Do on %a %B %d %Y", NSTimeZone.defaultTimeZone(),
@@ -286,7 +288,7 @@ class  ToDoDocument (ToDoDocumentBase):
 			anItem.setTimer_(None)
 
 	def itemTimerFired_(self, timer):
-		print "Timer fired for ", timer
+		#print "Timer fired for ", timer
 		anItem = timer.userInfo()
 		dueDate = anItem.day().addTimeInterval_(anItem.secsUntilDue())
 

@@ -1,7 +1,7 @@
 from AppKit import *
 from objc import selector, IBOutlet
 from ToDoDocument import *
-from nibwrapper import InfoWindowControllerBase
+from AppKit.NibClassBuilder import AutoBaseClass
 
 NOTIFY_TAG     = 0
 RESCHEDULE_TAG = 1
@@ -15,7 +15,7 @@ NotifyLengthOther   = 4
 
 _sharedInfoWindowController = None
 
-class InfoWindowController (InfoWindowControllerBase):
+class InfoWindowController (AutoBaseClass):
 
 	__slots__ = ('_inspectingDocument', )
 
@@ -76,7 +76,7 @@ class InfoWindowController (InfoWindowControllerBase):
 
 
 	def controlTextDidEndEditing_(self, notification):
-		print "controlTextDidEndEditing:", notification.description()
+		#print "controlTextDidEndEditing:", notification.description()
 		dueSecs = 0
 		theItem = self._inspectingDocument.selectedItem()
 		if theItem is None:
@@ -89,7 +89,7 @@ class InfoWindowController (InfoWindowControllerBase):
 			 	self.infoNotifyHour.intValue(),
 				self.infoNotifyMinute.intValue(),
 				self.infoNotifyAMPM.cellAtRow_column_(1,0).state())
-			print "New dueSecs: ", dueSecs
+			#print "New dueSecs: ", dueSecs
 			#theItem.setSecsUntilDue_(dueSecs)
 		elif notification.object() is self.infoNotifyOtherHours:
 			if self.infoNotifySwitchMatrix.selectedRow() == NotifyLengthOther:

@@ -1,7 +1,7 @@
 from Foundation import NSObject, NSBundle
-from AppKit import NSOutlineViewDataSource, NSTableDataSource
+from AppKit import NSOutlineViewDataSource, NSTableDataSource, NibClassBuilder
+from AppKit.NibClassBuilder import AutoBaseClass
 from objc import selector, getClassList, objc_object, IBOutlet
-from nibwrapper import  ClassesDataSourceBase
 
 WRAPPED={}
 class Wrapper (NSObject):
@@ -42,7 +42,7 @@ def classBundle(cls):
 			framework = framework[:-len('.framework')]
 	return framework
 
-class ClassesDataSource (ClassesDataSourceBase, NSOutlineViewDataSource, NSTableDataSource):
+class ClassesDataSource (AutoBaseClass, NSOutlineViewDataSource, NSTableDataSource):
 	__slots__ = ('_classList', '_classTree', '_methodInfo')
 
 	def clearClassInfo(self):

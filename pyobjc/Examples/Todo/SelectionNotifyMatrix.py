@@ -1,15 +1,15 @@
 from AppKit import *
 from Foundation import *
-from nibwrapper import SelectionNotifyMatrixBase
+from AppKit.NibClassBuilder import AutoBaseClass
 
 RowSelectedNotification = "RowSelectedNotification"
 
-class  SelectionNotifyMatrix (SelectionNotifyMatrixBase):
+class  SelectionNotifyMatrix (AutoBaseClass):
 	def mouseDown_(self, theEvent):
 		super(SelectionNotifyMatrix, self).mouseDown_(theEvent)
 
 		row = self.selectedRow()
-		print "mouseDown_", theEvent, row
+		#print "mouseDown_", theEvent, row
 		if row != -1:
 			NSNotificationCenter.defaultCenter(
 				).postNotificationName_object_userInfo_(

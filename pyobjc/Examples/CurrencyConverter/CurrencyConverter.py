@@ -1,14 +1,15 @@
 import sys
 from Foundation import NSObject
-from AppKit import NSApplicationMain
+from AppKit import NSApplicationMain, NibClassBuilder
 from objc import *
-from nibwrapper import ConverterBase, ConverterControllerBase
 
-class Converter (ConverterBase):
+NibClassBuilder.extractClasses('MainMenu.nib')
+
+class Converter (NibClassBuilder.AutoBaseClass):
 	def convertAmount(self, amt, rate):
 		return amt*rate
 		
-class ConverterController (ConverterControllerBase):
+class ConverterController (NibClassBuilder.AutoBaseClass):
 
 	# First define the IB Outlets, the 'ivar' calls below define new
 	# instance variables in the objective-C class (e.g. visible

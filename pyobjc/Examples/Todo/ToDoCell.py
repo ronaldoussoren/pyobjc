@@ -58,25 +58,25 @@ class ToDoCell (NSButtonCell):
 	def updateImage(self):
 
 		if self._triState == NOT_DONE:
-			print "NO IMAGE"
+			#print "NO IMAGE"
 			self.setImage_(None)
 		elif self._triState == DONE:
-			print "DONE IMAGE"
+			#print "DONE IMAGE"
 			self.setImage_(self._doneImage)
 		elif self._triState == DEFERRED:
-			print "DEFERRED IMAGE"
+			#print "DEFERRED IMAGE"
 			self.setImage_(self._deferredImage)
 
 		self.controlView().updateCell_(self)
 	
 	def startTrackingAt_inView_(self, startPoint, controlView):
-		print "startTracking:", startPoint, controlView
+		#print "startTracking:", startPoint, controlView
 		return 1
 	startTrackingAt_inView_ = selector(
 		startTrackingAt_inView_, signature="c@:{NSPoint=ff}@")
 
 	def stopTracking_at_inView_mouseIsUp_(self, lastPoint, stopPoint, controlView, flag):
-		print "stopTracking:", lastPoint, stopPoint, controlView, flag, self.triState()
+		#print "stopTracking:", lastPoint, stopPoint, controlView, flag, self.triState()
 		if flag:
 			self.setTriState_(self.triState() + 1)
 	stopTracking_at_inView_mouseIsUp_ = selector(
@@ -84,10 +84,10 @@ class ToDoCell (NSButtonCell):
 		signature="v@:{NSPoint=ff}{NSPoint=ff}@c")
 
 	def setTimeDue_(self, newTime):
-		if newTime:
-			print "setTimeDue", newTime.description()
-		else:
-			print "setTimeDue None" 
+		#if newTime:
+			#print "setTimeDue", newTime.description()
+		#else:
+			#print "setTimeDue None" 
 
 		if self._timeDue:
 			self._timeDue.autorelease()

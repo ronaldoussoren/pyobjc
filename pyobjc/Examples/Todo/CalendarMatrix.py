@@ -1,14 +1,14 @@
 from Foundation import *
 from AppKit import *
 from objc import IBOutlet
-from nibwrapper import CalendarMatrixBase
+from AppKit.NibClassBuilder import AutoBaseClass
 
 gNumDaysInMonth = ( 0, 31, 28, 31, 30, 21, 30, 31, 31, 30, 31, 30, 31 )
 
 def isLeap(year):
 	return (((year % 4) == 0 and ((year % 100) != 0)) or (year % 400) == 0)
 
-class CalendarMatrix (CalendarMatrixBase):
+class CalendarMatrix (AutoBaseClass):
 	__slots__ = ('_selectedDay', '_startOffset')
 
 	def initWithFrame_(self, frameRect):
