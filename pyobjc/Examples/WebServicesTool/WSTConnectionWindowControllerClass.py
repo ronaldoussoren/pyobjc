@@ -115,9 +115,7 @@ class WorkerThread(Thread):
 from PyObjCTools import NibClassBuilder
 NibClassBuilder.extractClasses( "WSTConnection" )
 
-class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass, 
-                                    NSTableDataSource, NSTableViewDelegate,
-                                    NSToolbarDelegate):
+class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
     """
     As per the definition in the NIB file,
     WSTConnectionWindowController is a subclass of

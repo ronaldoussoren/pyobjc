@@ -8,7 +8,7 @@ NibClassBuilder.extractClasses("MainMenu")
 
 ROWCOUNT = 200
 
-class PyModel(NibClassBuilder.AutoBaseClass, NSTableDataSource, NSTableViewDelegate):
+class PyModel(NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
         self.stuff = {}
@@ -27,6 +27,7 @@ class PyModel(NibClassBuilder.AutoBaseClass, NSTableDataSource, NSTableViewDeleg
         # double-clicking a column header causes clickedRow() to return -1
         print "doubleClick!", sender.clickedColumn(), sender.clickedRow()
 
+    # data source methods
     def numberOfRowsInTableView_(self, aTableView):
         return self.rowcount
 
@@ -41,6 +42,7 @@ class PyModel(NibClassBuilder.AutoBaseClass, NSTableDataSource, NSTableViewDeleg
         col = aTableColumn.identifier()
         self.stuff[(aTableColumn, rowIndex)] = anObject
 
+    # delegate methods
     def tableView_shouldSelectRow_(self, aTableView, rowIndex):
         print "shouldSelectRow_", rowIndex
         # only allow odd rows to be selected
