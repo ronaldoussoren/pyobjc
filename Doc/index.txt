@@ -2,7 +2,7 @@
 PyObjC documentation index
 ==========================
 
-PyObjC is a bridge between Python and Objective-C. It allows you to write
+PyObjC is a bridge between Python and Objective-C.  It allows you to write
 Python scripts that use and extend existing Objective-C class libraries,
 most importantly the `Cocoa libraries`_ by `Apple`_.
 
@@ -22,7 +22,7 @@ Cocoa applications in Python.
 
 * `An introduction to PyObjC`_
 
-  An overview of the PyObjC package and how to use it. Read this before
+  An overview of the PyObjC package and how to use it.  Read this before
   you start using the package, it will help you to avoid some surprises.
 
 * `Python classes and Objective-C code`_

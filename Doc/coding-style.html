@@ -40,24 +40,22 @@ Contents</title>
 </li>
 </ul>
 <h2><a href="#id1" name="introduction">Introduction</a></h2>
-<p>This document describes the coding style for PyObjC. Please use this style for
+<p>This document describes the coding style for PyObjC.  Please use this style for
 new code and try apply this style to existing code while working on it.</p>
 <p>The management summary: 4-space indents in Python code, 1-TAB indents in C
 code.</p>
 <h2><a href="#id2" name="python-code">Python code</a></h2>
-<p>The coding style for core Python is used (see <a href="http://www.python.org/peps/pep-0008.txt">PEP 8</a>). For consistency with
+<p>The coding style for core Python is used (see <a href="http://www.python.org/peps/pep-0008.txt">PEP 8</a>).  For consistency with
 Cocoa we use mixed-case identifiers (like <code><span>lookUpClass</span></code>).</p>
 <p>PyObjC extensions to Apple frameworks should be clearly marked as such, 
-preferably by prefixing names with <code><span>PyObjC</span></code> or <code><span>pyobjc</span></code>. This should make it
-clear to users where they should look for documentation of an item: The Apple
-documentation or ours.</p>
-<p>The entire <code><span>objc</span></code> module is an &quot;extension&quot; and all items exported from that
-module should be documented in our documentation.</p>
+preferably by prefixing names with <code><span>PyObjC</span></code> or <code><span>pyobjc</span></code>.  This should make
+it clear to users where they should look for documentation of an item: The
+Apple documentation or ours.</p>
 <h2><a href="#id3" name="c-code">C code</a></h2>
-<p>The coding style for core Python is used (see <a href="http://www.python.org/peps/pep-0007.txt">PEP 7</a>). We use <code><span>PyObjC</span></code> 
+<p>The coding style for core Python is used (see <a href="http://www.python.org/peps/pep-0007.txt">PEP 7</a>).  We use <code><span>PyObjC</span></code> 
 instead of <code><span>Py</span></code> as the prefix for globally visible symbols.</p>
 <p>All (Objective-)C files in <code><span>Modules/objc/</span></code> should include <code><span>&quot;pyobjc.h&quot;</span></code> as
-their first include. The (Objective-)C files in the wrappers for frameworks
+their first include.  The (Objective-)C files in the wrappers for frameworks
 should include <code><span>&quot;pyobjc-api.h&quot;</span></code> and should not use other include-files in
 <code><span>Modules/objc</span></code> other than <code><span>pyobjc-api.h</span></code> and <code><span>wrapper-const-table.h</span></code>.</p>
 <h2><a href="#id4" name="documentation">Documentation</a></h2>

@@ -88,6 +88,9 @@ class methods in the obvious way.  This would (finally) close <a href="http://so
 </ul>
 <ul>
 <li>Also restructure class-builder.m, this file is way to large.</li>
+<li>Rewrite selectors to work as regular functions with some attributes,
+rather than descriptors, so that they can be used more easily with tools
+such as PyProtocols dispatch.</li>
 </ul>
 <h3><a href="#id8" name="support-for-gnustep">Support for GNUstep</a></h3>
 <p>The current SVN version contains some support for GNUstep, this needs to
@@ -95,11 +98,7 @@ be enhanced.</p>
 <p>Unless somebody actually starts working on this GNUstep support will slowly
 fade away.</p>
 <h3><a href="#id9" name="project-templates">Project templates</a></h3>
-<p>Nobody seems to care enough about the templates to actually maintain them, this
-is a shame.</p>
 <ul>
-<li>Integrate Xcode template with py2app, somehow<p>(some work to this end exists in the svn sandbox)</p>
-</li>
 <li>Update or remove the Project Builder templates<p>I prefer updating them, by rebuilding the Xcode templates in Project Builder.</p>
 <p>This would require Python 2.3 on Jaguar.</p>
 </li>

@@ -14,7 +14,7 @@ Contents</title>
 <h2>Contents</h2>
 <ul>
 <li><a href="#introduction" id="id2" name="id2">Introduction</a></li>
-<li><a href="#core-objective-c-runtime" id="id3" name="id3">Core objective-C runtime</a><ul>
+<li><a href="#core-objective-c-runtime" id="id3" name="id3">Core Objective-C runtime</a><ul>
 <li><a href="#class-protocol" id="id4" name="id4">Class Protocol</a></li>
 </ul>
 </li>
@@ -93,8 +93,9 @@ APIs, PyObjC does <i>not</i> provide a compatibility layer.</p>
 <p>Frameworks not listed below are not wrapped by PyObjC, they can still be
 accessed although without access to constants and global functions defined
 by those frameworks.</p>
-<p>This document is not entirely complete, but does cover the most used APIs.</p>
-<h2><a href="#id3" name="core-objective-c-runtime">Core objective-C runtime</a></h2>
+<p>This document is not entirely complete, but does cover the most used APIs.
+Classes not mentioned in this document may very well work properly.</p>
+<h2><a href="#id3" name="core-objective-c-runtime">Core Objective-C runtime</a></h2>
 <h3><a href="#id4" name="class-protocol">Class Protocol</a></h3>
 <ul>
 <li><code><span>descriptionForClassMethod:</span></code>, <code><span>descriptionForInstanceMethod</span></code><p>These methods are not supported. Protocols are hardly ever used explicitly
@@ -234,9 +235,8 @@ is not. The <code><span>context</span></code> can be an arbitrary python object.
 <p>NOTE: The list below is mostly based on scripts that find methods that can
 not be automatically handled by the bridge. We have not yet performed a manual
 search for such methods in the Cocoa documentation.</p>
-<p>The <code><span>-forward::</span></code> method is not supported. It's functionality can be accessed
-using the python function <code><span>apply</span></code>. The <code><span>performv::</span></code> method is also not
-supported, with a similar work-around.</p>
+<p>The <code><span>-forward::</span></code> and <code><span>performv::</span></code> methods are not supported.  You can
+work-around this using normal Python function invocation.</p>
 <p>Structs are wrapped using a struct-like type. They can be accessed using the
 field-names from Objective-C, or you can access them as sequences. Accessing
 them as sequences is necessary for backward compatibility and is deprecated.</p>
@@ -296,6 +296,9 @@ that won't work if your trying to read back data that was written using
 <code><span>decodeBytesWithReturnedLength:</span></code> instead. It is not possible to safely
 represent the return value of this method in Python.</p>
 <h3><a href="#id25" name="class-nsdata">Class <code><span>NSData</span></code></a></h3>
+<p>NSData subclasses support the Python buffer protocol, and any Python
+object that implements the Python buffer protocol (except str and unicode)
+are wrapped as an NSData subclass.</p>
 <ul>
 <li><code><span>initWithBytesNoCopy:length:</span></code><p>This method is not supported, use <code><span>initWithBytes:length:</span></code> instead.</p>
 </li>
@@ -322,9 +325,7 @@ Use <code><span>bytes</span></code> instead, and then use subscripting to get th
 desired range.</li>
 </ul>
 <h3><a href="#id26" name="class-nsdecimalnumber-and-the-nsdecimal-type">Class <code><span>NSDecimalNumber</span></code> and the <code><span>NSDecimal</span></code> type</a></h3>
-<p>NSDecimal is wrapped by a Python type. This type does not (yet) support
-mathematical operators, but does support explicit conversion to and from
-Python numbers.</p>
+<p>NSDecimal is wrapped by a Python type.</p>
 <p>Creating an <code><span>NSDecimal</span></code> instance: <code><span>NSDecimal(value)</span></code> or 
 <code><span>NSDecimal(mantisssa,</span> <span>exponent,</span> <span>isNegative)</span></code>.  <code><span>Value</span></code> can be a string,
 int or long (not a float because of the representation issues for floats).</p>
@@ -407,10 +408,10 @@ internal data-structure.</p>
 </ul>
 <h3><a href="#id38" name="class-nsstring">Class <code><span>NSString</span></code></a></h3>
 <p>Objective-C strings are usually represented as instances of a subclass of
-the Python type <code><span>unicode</span></code>. It is possible to access the &quot;real&quot; Objective-C
-string by using the method <code><span>NSString</span></code>. This should only be necessary when
-dealing with mutable strings, or when you want to access methods that don't
-have a Python equivalent.</p>
+the Python type <code><span>unicode</span></code>.  Since Python <code><span>unicode</span></code> objects are immutable,
+working with <code><span>NSMutableString</span></code> can be tricky.  If you need to update the
+Python representation of the string, use <code><span>aString.self()</span></code>, which will be a
+new string.</p>
 <ul>
 <li><code><span>initWithCharactersNoCopy:length:freeWhenDone:</span></code><p>This method is unsupported because we cannot guarantee that the buffer will
 be available as long as the string is. Use <code><span>initWithCharacters:</span></code> instead.</p>

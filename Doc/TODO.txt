@@ -78,6 +78,10 @@ From the top of my head:
 
 * Also restructure class-builder.m, this file is way to large.
 
+* Rewrite selectors to work as regular functions with some attributes,
+  rather than descriptors, so that they can be used more easily with tools
+  such as PyProtocols dispatch.
+
 Support for GNUstep
 ...................
 
@@ -89,13 +93,6 @@ fade away.
 
 Project templates
 .................
-
-Nobody seems to care enough about the templates to actually maintain them, this
-is a shame. 
-
-* Integrate Xcode template with py2app, somehow
-
-  (some work to this end exists in the svn sandbox)
 
 * Update or remove the Project Builder templates
 
