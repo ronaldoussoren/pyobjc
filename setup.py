@@ -71,6 +71,7 @@ from distutils.command.build_ext import build_ext
 import os
 
 from di_test import cmd_test
+from di_sdist import cmd_sdist
 
 
 class pyobjc_build_ext (build_ext):
@@ -714,6 +715,7 @@ dist = setup(name = "pyobjc",
              cmdclass = {
                 'build_ext': pyobjc_build_ext,
                 'test':      cmd_test,
+                'sdist':     cmd_sdist,
              },
              **SetupExtraArguments
 )
