@@ -110,15 +110,23 @@ def doSubstitutions(dirName, aName, options):
         translator = FORWARDTRANSLATOR
     
     path = os.path.join(dirName, aName)
+    basename, extension = os.path.splitext(path)
+
+    path = os.path.join(dirName, aName)
     if os.path.isdir(path):
+        if options.rewriteNibFiles and (extension == '.nib'):
+            if options.verbose:
+                import process
+                print "Rewriting NIB %s" % path
+                ret = process.callv('/usr/bin/nibtool', '-r', '--format', '4', path)
+                if ret:
+                    error("nibtool barfed back %d." % ret)
         return
 
     specialCommand = SPECIALFILES.get(aName)
     if specialCommand is not None:
         specialCommand(path, options, translator)
         return
-
-    basename, extension = os.path.splitext(path)
 
     encoding = ENCODINGS.get(extension, lambda fn:None)(path)
     if encoding is None:
@@ -221,6 +229,8 @@ def build_parser():
         dest='doReverse', help='reverse transformation (template -> editable project)')
     store_true('-w', '--working',
         dest='makeWorking', help='try to make destination into a working project')
+    store_true('-n', '--nib',
+        dest='rewriteNibFiles', help='rewrite NIB files to 10.2 text-only format')
     return parser
 
 def simplePathWalker(walkdir, fn, arg=None):
