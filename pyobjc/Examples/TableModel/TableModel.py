@@ -47,7 +47,7 @@ class PyModel(NibClassBuilder.AutoBaseClass, NSTableDataSource, NSTableViewDeleg
 
     def tableView_shouldEditTableColumn_row_(self, aTableView, aTableColumn, rowIndex):
         # only allow cells in the second column in odd rows to be edited
-        return (rowIndex % 2) and aTableColumn == aTableView.tableColumns()[1]
+        return (rowIndex % 2) and aTableColumn.identifier() == "col_2"
 
 
 AppHelper.runEventLoop()
