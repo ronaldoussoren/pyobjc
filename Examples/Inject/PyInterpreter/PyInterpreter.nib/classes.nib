@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {historyDown = id; historyUp = id; }; 
+            CLASS = PyInterpreter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {textView = NSTextView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = PyInterpreterTextViewDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {interpreter = id; scrollView = id; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
