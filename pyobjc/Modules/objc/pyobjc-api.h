@@ -19,61 +19,6 @@
 
 #import <Foundation/NSException.h>
 
-#if PY_VERSION_HEX < 0x020300b0 
-
-#ifndef PyGILState_Ensure
-
-typedef int PyGILState_STATE;
-
-#define PyGILState_Ensure(void)  (0)
-static inline void PyGILState_Release(
-		PyGILState_STATE state __attribute__((__unused__))) 
-{
-	/* EMPTY */
-}
-
-#endif
-
-/* threading support */
-#define PyObjC_DURING \
-		NS_DURING
-
-#define PyObjC_HANDLER NS_HANDLER
-
-#define PyObjC_ENDHANDLER \
-		NS_ENDHANDLER \
-
-#define PyObjC_BEGIN_WITH_GIL \
-	{ \
-		PyGILState_STATE _GILState; \
-		_GILState = PyGILState_Ensure(); 
-
-#define PyObjC_GIL_FORWARD_EXC() \
-		do { \
-            PyObjCErr_ToObjCWithGILState(&_GILState); \
-		} while (0)
-
-
-#define PyObjC_GIL_RETURN(val) \
-		do { \
-			PyGILState_Release(_GILState); \
-			return (val); \
-		} while (0)
-
-#define PyObjC_GIL_RETURNVOID \
-		do { \
-			PyGILState_Release(_GILState); \
-			return; \
-		} while (0)
-
-
-#define PyObjC_END_WITH_GIL \
-		PyGILState_Release(_GILState); \
-	}
-
-
-#else /* Python 2.3 and later */
-
 /* threading support */
 #define PyObjC_DURING \
 		Py_BEGIN_ALLOW_THREADS \
@@ -112,9 +57,6 @@ static inline void PyGILState_Release(
 #define PyObjC_END_WITH_GIL \
 		PyGILState_Release(_GILState); \
 	}
-
-#endif
-
 
 
 

@@ -28,83 +28,6 @@ static int add_convenience_methods(Class cls, PyObject* type_dict);
 static int update_convenience_methods(PyObject* cls);
 
 /*
- * Due to the way dynamicly created PyTypeObject's are processed it is not 
- * possible to add new fields to a type struct in Python 2.2. We therefore
- * store the additional information in a separate data-structure. 
- *
- * The struct class_info contains the additional information for a class object,
- * and class_to_objc stores a mapping from a class object to its additional
- * information.
- *
- * In Python 2.3 we can, and do, store the additional information directly in
- * the type struct.
- */
-
-#ifndef PyObjC_CLASS_INFO_IN_TYPE
-
-typedef struct {
-	Class	  class;
-	PyObject* sel_to_py;
-	int	  method_magic;
-	int	  dictoffset;
-	PyObject* delmethod;
-	int       hasPythonImpl;
-	int       generation;
-} PyObjC_class_info;
-
-static NSMapTable* 	class_to_objc = NULL;
-
-/*
- * Fetch the additional information for a class. If the information is
- * not yet available add it to the dictionary.
- */
-static inline PyObjC_class_info*
-get_class_info(PyObject* class)
-{	
-	PyObject*          item;
-	PyObjC_class_info* info;
-
-	if (class_to_objc == NULL) {
-		class_to_objc = NSCreateMapTable(
-			PyObjCUtil_PointerKeyCallBacks,
-			PyObjCUtil_PointerValueCallBacks, 
-			500);
-	}
-
-	item = NSMapGet(class_to_objc, class);
-	if (item != NULL) {
-		return (PyObjC_class_info*)item;
-	}
-
-	info = PyMem_Malloc(sizeof(PyObjC_class_info));
-	if (info == NULL) {
-		PyErr_NoMemory();
-		return NULL;
-	}
-
-	info->class     = nil;
-	info->sel_to_py = NULL;
-	info->method_magic = 0;
-	info->dictoffset = 0;
-	info->delmethod = NULL ;
-	info->hasPythonImpl = 0;
-
-	Py_INCREF(class); 
-	NSMapInsert(class_to_objc, class, info);
-	return info;
-}
-
-#else /* defined PyObjC_CLASS_INFO_IN_TYPE */
-
-/* NOTE: This requires a Python version that more recent that 2.3a2 */
-
-#define get_class_info(tp) ((PyObjCClassObject*)(tp))
-#define PyObjC_class_info PyObjCClassObject
-
-#endif /* defined PyObjC_CLASS_INFO_IN_TYPE */
-
-
-/*
  *
  *  Class Registry
  *
@@ -150,6 +73,7 @@ objc_class_register(Class objc_class, PyObject* py_class)
 	return 0;
 }
 
+#if 0 /* Not used at the moment */
 /*!
  * @function objc_class_unregister
  * @abstract Remove a class from the class registry
@@ -167,6 +91,7 @@ objc_class_unregister(Class objc_class)
 	NSMapRemove(class_registry, objc_class);
 	return 0;
 }
+#endif
 
 
 /*!
@@ -214,7 +139,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	Class      objc_class = NULL;
 	Class	   super_class = NULL;
 	PyObject*  py_super_class = NULL;
-	PyObjC_class_info* info;
+	PyObjCClassObject* info;
 	PyObject* protocols;
 	PyObject* real_bases;
 	PyObject* delmethod;
@@ -435,17 +360,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
-	info = get_class_info(res);
-	if (info == NULL) {
-		if (objc_class_unregister(objc_class) < 0) {
-			/* Oops, cannot unregister */
-			Py_FatalError(
-				"PyObjC: Cannot unregister unbuild class");
-		}
-		Py_DECREF(res);
-		PyObjCClass_UnbuildClass(objc_class);
-		return NULL;
-	}
+	info = (PyObjCClassObject*)res;
 	info->class = objc_class;
 	info->sel_to_py = NULL; 
 	info->method_magic = objc_methodlist_magic(objc_class);
@@ -500,10 +415,10 @@ class_dealloc(PyObject* cls)
 void 
 PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 {
-	PyObjC_class_info* info;
+	PyObjCClassObject* info;
 	int		   magic;
 
-	info = get_class_info(cls);
+	info = (PyObjCClassObject*)cls;
 
 	if (info->class == NULL) return;
 
@@ -541,7 +456,7 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 		if (info->class->super_class == NULL) break;
 		cls = PyObjCClass_New(info->class->super_class);
 		Py_DECREF(cls);
-		info = get_class_info(cls);
+		info = (PyObjCClassObject*)cls;
 	}
 }
 
@@ -817,11 +732,7 @@ PyTypeObject PyObjCClass_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)
 	0,					/* ob_size */
 	"objc_class",				/* tp_name */
-#if PY_VERSION_HEX >= 0x020300A2
 	sizeof (PyObjCClassObject),		/* tp_basicsize */
-#else /* Python 2.2 */
-	0,					/* tp_basicsize */
-#endif /* Python 2.2 */
 	0,					/* tp_itemsize */
 	/* methods */
 	class_dealloc,	 			/* tp_dealloc */
@@ -865,10 +776,8 @@ PyTypeObject PyObjCClass_Type = {
         0,                                      /* tp_mro */
         0,                                      /* tp_cache */
         0,                                      /* tp_subclasses */
-        0                                       /* tp_weaklist */
-#if PY_VERSION_HEX >= 0x020300A2
-        , 0                                       /* tp_del */
-#endif
+        0,                                      /* tp_weaklist */
+        0                                       /* tp_del */
 };
 
 /* FIXME: objc_support.[hm] also has version of this function! */
@@ -1061,7 +970,7 @@ PyObjCClass_New(Class objc_class)
 	PyObject* dict;
 	PyObject* result;
 	PyObject* bases;
-	PyObjC_class_info* info;
+	PyObjCClassObject* info;
 	PyObjCRT_Ivar_t var;
 
 	result = objc_class_locate(objc_class);
@@ -1104,14 +1013,7 @@ PyObjCClass_New(Class objc_class)
 	Py_DECREF(args);
 	if (result == NULL) return NULL;
 
-	info = get_class_info(result);
-	if (info == NULL) {
-		Py_DECREF(result);
-		PyErr_SetString(PyExc_RuntimeError,
-			"PyObjC: Cannot build class information");
-		return NULL;
-	}
-
+	info = (PyObjCClassObject*)result;
 	info->class = objc_class;
 	info->sel_to_py = NULL;
 	info->method_magic = 0;
@@ -1139,8 +1041,6 @@ PyObjCClass_New(Class objc_class)
 Class 
 PyObjCClass_GetClass(PyObject* cls)
 {
-	PyObjC_class_info* info;
-
 	if (!PyObjCClass_Check(cls)) {
 		PyErr_Format(PyObjCExc_InternalError,
 			"PyObjCClass_GetClass called for non-class (%s)",
@@ -1148,14 +1048,13 @@ PyObjCClass_GetClass(PyObject* cls)
 		return nil;
 	}
 	
-	info = get_class_info(cls);
-	return info->class;
+	return ((PyObjCClassObject*)cls)->class;
 }
 
 PyObject* 
 PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 {
-	PyObjC_class_info* info;
+	PyObjCClassObject* info;
 	PyObject*          result;
 	PyObject*          attributes;
 	PyObject*          key;
@@ -1173,7 +1072,7 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 
 	PyObjCClass_CheckMethodList(cls, 1);
 	
-	info = get_class_info(cls);
+	info = (PyObjCClassObject*)cls;
 	if (info->sel_to_py == NULL) {
 		info->sel_to_py = PyDict_New();
 		if (info->sel_to_py == NULL) {
@@ -1288,16 +1187,14 @@ PyObjCClass_IsSubClass(Class child, Class parent)
 int
 PyObjCClass_DictOffset(PyObject* cls)
 {
-	PyObjC_class_info* info;
-	info = get_class_info(cls);
-	return info->dictoffset;
+	return ((PyObjCClassObject*)cls)->dictoffset;
 }
 
 PyObject*
 PyObjCClass_GetDelMethod(PyObject* cls)
 {
-	PyObjC_class_info* info;
-	info = get_class_info(cls);
+	PyObjCClassObject* info;
+	info = (PyObjCClassObject*)cls;
 	Py_XINCREF(info->delmethod);
 	return info->delmethod;
 }
@@ -1305,8 +1202,8 @@ PyObjCClass_GetDelMethod(PyObject* cls)
 void
 PyObjCClass_SetDelMethod(PyObject* cls, PyObject* m)
 {
-	PyObjC_class_info* info;
-	info = get_class_info(cls);
+	PyObjCClassObject* info;
+	info = (PyObjCClassObject*)cls;
 	Py_XINCREF(m);
 	Py_XDECREF(info->delmethod);
 	info->delmethod = m;
@@ -1315,8 +1212,8 @@ PyObjCClass_SetDelMethod(PyObject* cls, PyObject* m)
 int
 PyObjCClass_HasPythonImplementation(PyObject* cls)
 {
-	PyObjC_class_info* info;
-	info = get_class_info(cls);
+	PyObjCClassObject* info;
+	info = (PyObjCClassObject*)cls;
 	return info->hasPythonImpl;
 }
 

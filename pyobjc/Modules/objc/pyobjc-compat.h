@@ -5,30 +5,6 @@
  * Compatibilty definitions 
  */
 
-/* Earlier versions of Python don't define PyDoc_STRVAR */
-#ifndef PyDoc_STR
-#define PyDoc_VAR(name)	        static char name[]
-#define PyDoc_STR(str)	        (str)
-#define PyDoc_STRVAR(name, str) PyDoc_VAR(name) = PyDoc_STR(str)
-#endif
-
-
-#if PY_VERSION_HEX < 0x020300b0 
-
-#ifndef PyObjC_API_H
-
-typedef int PyGILState_STATE;
-
-#define PyGILState_Ensure(void)  (0)
-static inline void PyGILState_Release(
-	PyGILState_STATE state __attribute__((__unused__))) 
-{
-	/* EMPTY */
-}
-
-#endif 
-
-#endif
 
 #ifdef MACOSX
 #import <AvailabilityMacros.h>

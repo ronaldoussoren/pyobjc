@@ -105,13 +105,11 @@ object_repr(PyObjCObject* self)
 	return PyString_FromString(buffer);
 }
 
-#if PY_VERSION_HEX >= 0x020300A2
 static void
 object_del(PyObject* obj __attribute__((__unused__)))
 {
 	/* Dummy function, we do not want the default implementation */
 }
-#endif
 
 
 static void
