@@ -25,6 +25,15 @@ class TestNSBezierPath(unittest.TestCase):
         self.assert_(p is not None)
         self.assertEquals(p.elementCount(), 5)
 
+    def test_appendPoints(self):
+        p = NSBezierPath.bezierPath()
+        self.assert_(p is not None)
+        self.assertEquals(p.elementCount(), 0)
+
+        points = [ (0, 0), (100, 0), (100, 100), (0, 0) ]
+        p.appendBezierPathWithPoints_count_(points, 3)
+        self.assertEquals(p.elementCount(), 3)
+
     def test_setLineDash(self):
         # We can barely test this, as we don't support the reverse call.
         p = NSBezierPath.bezierPath()

@@ -3,6 +3,9 @@ import objc
 
 import AppKit
 
+import os
+ON_JAGUAR=((os.uname()[0] == 'Darwin') and (os.uname()[2][0] == '6'))
+
 class TestNSFont(unittest.TestCase):
     def matrixEquals(self, value1, value2):
         self.assertEquals(len(value1), len(value2))
@@ -22,14 +25,17 @@ class TestNSFont(unittest.TestCase):
 
         nm = o.fontName()
 
-        o = AppKit.NSFont.fontWithName_matrix_(nm, AppKit.NSFontIdentityMatrix)
-        self.assert_(o is not None)
+        if not ON_JAGUAR:
+            # Don't test this on Jaguar, see Radar #3421569.
+            o = AppKit.NSFont.fontWithName_matrix_(
+                    nm, AppKit.NSFontIdentityMatrix)
+            self.assert_(o is not None)
 
-        m = o.matrix()
-        self.assert_(isinstance(m, tuple))
-        self.assertEquals(len(m), 6)
+            m = o.matrix()
+            self.assert_(isinstance(m, tuple))
+            self.assertEquals(len(m), 6)
 
-        self.matrixEquals(m, (1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
+            self.matrixEquals(m, (1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
 
         o = AppKit.NSFont.fontWithName_matrix_(nm, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
         self.assert_(o is not None)
