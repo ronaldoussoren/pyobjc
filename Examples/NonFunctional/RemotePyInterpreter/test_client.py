@@ -17,6 +17,11 @@ for fn in IMPORT_MODULES:
     source.write('\n\n')
 SOURCE = repr(source.getvalue()) + '\n'
 
+def ensure_utf8(s):
+    if isinstance(s, unicode):
+        s = s.encode('utf-8')
+    return s
+
 def bind_and_listen(hostport):
     if isinstance(hostport, str):
         host, port = hostport.split(':')
@@ -77,7 +82,7 @@ def client_loop(f):
                     except EOFError:
                         code = 'raise EOFError'
                 elif name == 'RemoteConsole.write':
-                    sys.stdout.write(args[0])
+                    sys.stdout.write(ensure_utf8(args[0]))
                 elif name == 'RemoteConsole.displayhook':
                     pass
                     obj = args[0]
@@ -90,7 +95,7 @@ def client_loop(f):
                 elif name.startswith('RemoteFileLike.'):
                     fh = getattr(sys, args[0])
                     meth = getattr(fh, name[len('RemoteFileLike.'):])
-                    rval = meth(*args[1:])
+                    rval = meth(*map(ensure_utf8, args[1:]))
                 else:
                     print name, args
                 if code is None:

@@ -49,6 +49,7 @@ class RemotePipe(object):
 class RemoteFileLike(object):
     softspace = 0
     closed = False
+    encoding = 'utf-8'
     def __init__(self, pipe, ident):
         self.pipe = pipe
         self.ident = ident
