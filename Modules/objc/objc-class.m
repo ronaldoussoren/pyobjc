@@ -633,9 +633,17 @@ add_class_fields(Class objc_class, PyObject* dict)
 		for (i = 0; i < mlist->method_count; i++) {
 			meth = mlist->method_list + i;
 
-			if (PyDict_GetItemString(dict, 
-					(char*)SELNAME(meth->method_name))) {
-				continue;
+			pythonify_selector(
+				meth->method_name, 
+				selbuf, 
+				sizeof(selbuf));
+
+			if ((descr = PyDict_GetItemString(dict, selbuf))) {
+				if (!ObjCSelector_Check(descr)) {
+					continue;
+				} else if (!((ObjCSelector*)descr)->sel_class_method) {
+					continue;
+				}
 			}
 
 			descr = ObjCSelector_NewNative(
@@ -645,10 +653,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 				1);
 
 			if (PyDict_SetItemString(dict, 
-					pythonify_selector(
-						meth->method_name, 
-						selbuf, 
-						sizeof(selbuf)), 
+					selbuf,
 					descr) != 0) {
 				return -1;
 			}

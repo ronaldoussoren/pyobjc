@@ -11,6 +11,8 @@
 
 	/* From: NSAppleEventManager.h */
 
+	/* From: NSAppleScript.h */
+
 	/* From: NSArchiver.h */
 
 	/* From: NSArray.h */
@@ -45,7 +47,6 @@
 	if (add_BOOL(d, "NSDebugEnabled", NSDebugEnabled) < 0) return;
 	if (add_BOOL(d, "NSZombieEnabled", NSZombieEnabled) < 0) return;
 	if (add_BOOL(d, "NSDeallocateZombies", NSDeallocateZombies) < 0) return;
-	//if (add_BOOL(d, "NSHangOnMallocError", NSHangOnMallocError) < 0) return;
 	if (add_BOOL(d, "NSHangOnUncaughtException", NSHangOnUncaughtException) < 0) return;
 	if (add_BOOL(d, "NSKeepAllocationStatistics", NSKeepAllocationStatistics) < 0) return;
 
@@ -83,6 +84,8 @@
 
 	/* From: NSJavaSetup.h */
 
+	/* From: NSKeyedArchiver.h */
+
 	/* From: NSKeyValueCoding.h */
 
 	/* From: NSLock.h */
@@ -90,6 +93,8 @@
 	/* From: NSMapTable.h */
 
 	/* From: NSMethodSignature.h */
+
+	/* From: NSNetServices.h */
 
 	/* From: NSNotification.h */
 
@@ -104,6 +109,8 @@
 
 	/* From: NSObject.h */
 
+	/* From: NSObjectScripting.h */
+
 	/* From: NSPathUtilities.h */
 
 	/* From: NSPort.h */
@@ -115,6 +122,8 @@
 	/* From: NSPortNameServer.h */
 
 	/* From: NSProcessInfo.h */
+
+	/* From: NSPropertyList.h */
 
 	/* From: NSProtocolChecker.h */
 

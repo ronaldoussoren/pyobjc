@@ -928,6 +928,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	*(id *) datum = [OC_PythonDictionary newWithPythonObject:argument];
       else
         *(id *) datum = [OC_PythonObject newWithObject:argument];
+
       break;
 
     case _C_CLASS:
@@ -1237,10 +1238,14 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	}
 
 	[inv setTarget:self_obj];
+#if 0
 	[inv setArgument:&self_obj atIndex:0];
+#endif
 
 	[inv setSelector:meth->sel_selector];
+#if 0
 	[inv setArgument:&(meth->sel_selector) atIndex:1];
+#endif
 
 	py_arg = 0;
 	for (i = 2; i < objc_argcount; i++) {

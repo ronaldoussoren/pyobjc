@@ -9,12 +9,22 @@
 
 # From: AppKitDefines.h
 
+# From: NSAccessibility.h
+id NSAccessibilityUnignoredAncestor(id element);
+id NSAccessibilityUnignoredDescendant(id element);
+NSArray *NSAccessibilityUnignoredChildren(NSArray *originalChildren);
+NSArray *NSAccessibilityUnignoredChildrenForOnlyChild(id originalChild);
+void NSAccessibilityPostNotification(id element, NSString *notification);
+
 # From: NSActionCell.h
 
 # From: NSAffineTransform.h
 
+# From: NSAppleScriptExtensions.h
+
 # From: NSApplication.h
 int NSApplicationMain(int argc, const char *argv[]);
+BOOL NSApplicationLoad(void);
 BOOL NSShowsServicesMenuItem(NSString * itemName);
 int NSSetShowsServicesMenuItem(NSString * itemName, BOOL enabled);
 void NSUpdateDynamicServices(void);
@@ -98,6 +108,8 @@ void NSUnregisterServicesProvider(NSString *name);
 
 # From: NSFormCell.h
 
+# From: NSGlyphInfo.h
+
 # From: NSGraphics.h
 NSWindowDepth NSBestDepth (NSString *colorSpace, int bps, int bpp, BOOL planar, BOOL *exactMatch);
 BOOL NSPlanarFromDepth (NSWindowDepth depth);
@@ -126,7 +138,6 @@ void NSDrawButton(NSRect aRect, NSRect clipRect);
 void NSEraseRect(NSRect aRect);
 NSColor *NSReadPixel(NSPoint passedPoint);
 void NSDrawBitmap(NSRect rect, int width, int height, int bps, int spp, int bpp, int bpr, BOOL isPlanar, BOOL hasAlpha, NSString *colorSpaceName, const unsigned char *const data[5]);
-void NSCopyBitmapFromGState(int srcGState, NSRect srcRect, NSRect destRect);
 void NSCopyBits(int srcGState, NSRect srcRect, NSPoint destPoint);
 void NSHighlightRect(NSRect aRect);
 void NSBeep(void);

@@ -20,6 +20,17 @@ static inline int convert_NSRect(PyObject* object, void* pvar)
 	}
 	return 1;
 }
+static inline int convert_NSPoint(PyObject* object, void* pvar)
+{
+	const char* errstr;
+
+	errstr = ObjC_PythonToObjC(@encode(NSPoint), object, pvar);
+	if (errstr) {
+		PyErr_SetString(PyExc_TypeError, errstr);
+		return 0;
+	}
+	return 1;
+}
 /*
  * This is a generated file.
  */
@@ -74,6 +85,121 @@ static inline int convert_Class(PyObject* object, void* pvar)
 	return 1;
 }
 
+/* id NSAccessibilityUnignoredAncestor(id element); */
+PyObject* objc_NSAccessibilityUnignoredAncestor(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static	char* keywords[] = { "element", NULL };
+	PyObject* result;
+	id objc_result;
+	id objc_element;
+
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSAccessibilityUnignoredAncestor", keywords, convert_id, &objc_element) < 0) return NULL;
+	NS_DURING
+		objc_result = NSAccessibilityUnignoredAncestor(
+objc_element);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+		return NULL;
+	NS_ENDHANDLER
+		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+	return result;
+}
+/* id NSAccessibilityUnignoredDescendant(id element); */
+PyObject* objc_NSAccessibilityUnignoredDescendant(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static	char* keywords[] = { "element", NULL };
+	PyObject* result;
+	id objc_result;
+	id objc_element;
+
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSAccessibilityUnignoredDescendant", keywords, convert_id, &objc_element) < 0) return NULL;
+	NS_DURING
+		objc_result = NSAccessibilityUnignoredDescendant(
+objc_element);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+		return NULL;
+	NS_ENDHANDLER
+		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+	return result;
+}
+/* NSArray *NSAccessibilityUnignoredChildren(NSArray *originalChildren); */
+PyObject* objc_NSAccessibilityUnignoredChildren(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static	char* keywords[] = { "originalChildren", NULL };
+	PyObject* result;
+	NSArray* objc_result;
+	id objc_originalChildren;
+
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSAccessibilityUnignoredChildren", keywords, convert_id, &objc_originalChildren) < 0) return NULL;
+	NS_DURING
+		objc_result = NSAccessibilityUnignoredChildren(
+objc_originalChildren);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+		return NULL;
+	NS_ENDHANDLER
+		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+	return result;
+}
+/* NSArray *NSAccessibilityUnignoredChildrenForOnlyChild(id originalChild); */
+PyObject* objc_NSAccessibilityUnignoredChildrenForOnlyChild(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static	char* keywords[] = { "originalChild", NULL };
+	PyObject* result;
+	NSArray* objc_result;
+	id objc_originalChild;
+
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSAccessibilityUnignoredChildrenForOnlyChild", keywords, convert_id, &objc_originalChild) < 0) return NULL;
+	NS_DURING
+		objc_result = NSAccessibilityUnignoredChildrenForOnlyChild(
+objc_originalChild);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+		return NULL;
+	NS_ENDHANDLER
+		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+	return result;
+}
+/* void NSAccessibilityPostNotification(id element, NSString *notification); */
+PyObject* objc_NSAccessibilityPostNotification(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static	char* keywords[] = { "element", "notification", NULL };
+	PyObject* result;
+	id objc_element;
+	id objc_notification;
+
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSAccessibilityPostNotification", keywords, convert_id, &objc_element, convert_id, &objc_notification) < 0) return NULL;
+	NS_DURING
+		NSAccessibilityPostNotification(
+objc_element, objc_notification);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+		return NULL;
+	NS_ENDHANDLER
+	result = Py_None;
+	Py_INCREF(Py_None);
+	return result;
+}
+/* BOOL NSApplicationLoad(void); */
+PyObject* objc_NSApplicationLoad(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static	char* keywords[] = { NULL };
+	PyObject* result;
+	BOOL objc_result;
+
+	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSApplicationLoad", keywords) < 0) return NULL;
+	NS_DURING
+		objc_result = NSApplicationLoad(
+);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+		return NULL;
+	NS_ENDHANDLER
+		result = PyBool_FromLong(objc_result);
+	if (result == NULL) return NULL;
+	return result;
+}
 /* BOOL NSShowsServicesMenuItem(NSString * itemName); */
 PyObject* objc_NSShowsServicesMenuItem(PyObject* self, PyObject* args, PyObject* kwds)
 {
@@ -103,7 +229,7 @@ static	char* keywords[] = { "itemName", "enabled", NULL };
 	id objc_itemName;
 	BOOL objc_enabled;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&i:NSSetShowsServicesMenuItem", keywords, convert_id, &objc_itemName, objc_enabled) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&i:NSSetShowsServicesMenuItem", keywords, convert_id, &objc_itemName, &objc_enabled) < 0) return NULL;
 	NS_DURING
 		objc_result = NSSetShowsServicesMenuItem(
 objc_itemName, objc_enabled);
@@ -201,7 +327,7 @@ static	char* keywords[] = { "depth", NULL };
 	BOOL objc_result;
 	NSWindowDepth objc_depth;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSPlanarFromDepth", keywords, objc_depth) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSPlanarFromDepth", keywords, &objc_depth) < 0) return NULL;
 	NS_DURING
 		objc_result = NSPlanarFromDepth(
 objc_depth);
@@ -221,7 +347,7 @@ static	char* keywords[] = { "depth", NULL };
 	NSString* objc_result;
 	NSWindowDepth objc_depth;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSColorSpaceFromDepth", keywords, objc_depth) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSColorSpaceFromDepth", keywords, &objc_depth) < 0) return NULL;
 	NS_DURING
 		objc_result = NSColorSpaceFromDepth(
 objc_depth);
@@ -240,7 +366,7 @@ static	char* keywords[] = { "depth", NULL };
 	int objc_result;
 	NSWindowDepth objc_depth;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSBitsPerSampleFromDepth", keywords, objc_depth) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSBitsPerSampleFromDepth", keywords, &objc_depth) < 0) return NULL;
 	NS_DURING
 		objc_result = NSBitsPerSampleFromDepth(
 objc_depth);
@@ -260,7 +386,7 @@ static	char* keywords[] = { "depth", NULL };
 	int objc_result;
 	NSWindowDepth objc_depth;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSBitsPerPixelFromDepth", keywords, objc_depth) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSBitsPerPixelFromDepth", keywords, &objc_depth) < 0) return NULL;
 	NS_DURING
 		objc_result = NSBitsPerPixelFromDepth(
 objc_depth);
@@ -319,7 +445,7 @@ static	char* keywords[] = { "aRect", "op", NULL };
 	NSRect objc_aRect;
 	NSCompositingOperation objc_op;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&i:NSRectFillUsingOperation", keywords, convert_NSRect, &objc_aRect, objc_op) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&i:NSRectFillUsingOperation", keywords, convert_NSRect, &objc_aRect, &objc_op) < 0) return NULL;
 	NS_DURING
 		NSRectFillUsingOperation(
 objc_aRect, objc_op);
@@ -358,7 +484,7 @@ static	char* keywords[] = { "aRect", "frameWidth", NULL };
 	NSRect objc_aRect;
 	float objc_frameWidth;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&f:NSFrameRectWithWidth", keywords, convert_NSRect, &objc_aRect, objc_frameWidth) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&f:NSFrameRectWithWidth", keywords, convert_NSRect, &objc_aRect, &objc_frameWidth) < 0) return NULL;
 	NS_DURING
 		NSFrameRectWithWidth(
 objc_aRect, objc_frameWidth);
@@ -379,7 +505,7 @@ static	char* keywords[] = { "aRect", "frameWidth", "op", NULL };
 	float objc_frameWidth;
 	NSCompositingOperation objc_op;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&fi:NSFrameRectWithWidthUsingOperation", keywords, convert_NSRect, &objc_aRect, objc_frameWidth, objc_op) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&fi:NSFrameRectWithWidthUsingOperation", keywords, convert_NSRect, &objc_aRect, &objc_frameWidth, &objc_op) < 0) return NULL;
 	NS_DURING
 		NSFrameRectWithWidthUsingOperation(
 objc_aRect, objc_frameWidth, objc_op);
@@ -509,21 +635,38 @@ objc_aRect);
 	Py_INCREF(Py_None);
 	return result;
 }
-
-#if 0 /* Link errors when this is in?? */
-/* void NSCopyBitmapFromGState(int srcGState, NSRect srcRect, NSRect destRect); */
-PyObject* objc_NSCopyBitmapFromGState(PyObject* self, PyObject* args, PyObject* kwds)
+/* NSColor *NSReadPixel(NSPoint passedPoint); */
+PyObject* objc_NSReadPixel(PyObject* self, PyObject* args, PyObject* kwds)
 {
-static	char* keywords[] = { "srcGState", "srcRect", "destRect", NULL };
+static	char* keywords[] = { "passedPoint", NULL };
+	PyObject* result;
+	NSColor* objc_result;
+	NSPoint objc_passedPoint;
+
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSReadPixel", keywords, convert_NSPoint, &objc_passedPoint) < 0) return NULL;
+	NS_DURING
+		objc_result = NSReadPixel(
+objc_passedPoint);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+		return NULL;
+	NS_ENDHANDLER
+		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+	return result;
+}
+/* void NSCopyBits(int srcGState, NSRect srcRect, NSPoint destPoint); */
+PyObject* objc_NSCopyBits(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static	char* keywords[] = { "srcGState", "srcRect", "destPoint", NULL };
 	PyObject* result;
 	int objc_srcGState;
 	NSRect objc_srcRect;
-	NSRect objc_destRect;
+	NSPoint objc_destPoint;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "iO&O&:NSCopyBitmapFromGState", keywords, objc_srcGState, convert_NSRect, &objc_srcRect, convert_NSRect, &objc_destRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "iO&O&:NSCopyBits", keywords, &objc_srcGState, convert_NSRect, &objc_srcRect, convert_NSPoint, &objc_destPoint) < 0) return NULL;
 	NS_DURING
-		NSCopyBitmapFromGState(
-objc_srcGState, objc_srcRect, objc_destRect);
+		NSCopyBits(
+objc_srcGState, objc_srcRect, objc_destPoint);
 	NS_HANDLER
 		ObjCErr_FromObjC(localException);
 		return NULL;
@@ -532,8 +675,6 @@ objc_srcGState, objc_srcRect, objc_destRect);
 	Py_INCREF(Py_None);
 	return result;
 }
-#endif
-
 /* void NSHighlightRect(NSRect aRect); */
 PyObject* objc_NSHighlightRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
@@ -656,7 +797,7 @@ static	char* keywords[] = { "placement", NULL };
 	PyObject* result;
 	NSFocusRingPlacement objc_placement;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSSetFocusRingStyle", keywords, objc_placement) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSSetFocusRingStyle", keywords, &objc_placement) < 0) return NULL;
 	NS_DURING
 		NSSetFocusRingStyle(
 objc_placement);
@@ -786,6 +927,12 @@ objc_pboardTypes);
 }
 
 #define METHOD_TABLE_ENTRIES \
+	{ "NSAccessibilityUnignoredAncestor", (PyCFunction)objc_NSAccessibilityUnignoredAncestor, METH_VARARGS|METH_KEYWORDS, "id NSAccessibilityUnignoredAncestor(id element);" }, \
+	{ "NSAccessibilityUnignoredDescendant", (PyCFunction)objc_NSAccessibilityUnignoredDescendant, METH_VARARGS|METH_KEYWORDS, "id NSAccessibilityUnignoredDescendant(id element);" }, \
+	{ "NSAccessibilityUnignoredChildren", (PyCFunction)objc_NSAccessibilityUnignoredChildren, METH_VARARGS|METH_KEYWORDS, "NSArray *NSAccessibilityUnignoredChildren(NSArray *originalChildren);" }, \
+	{ "NSAccessibilityUnignoredChildrenForOnlyChild", (PyCFunction)objc_NSAccessibilityUnignoredChildrenForOnlyChild, METH_VARARGS|METH_KEYWORDS, "NSArray *NSAccessibilityUnignoredChildrenForOnlyChild(id originalChild);" }, \
+	{ "NSAccessibilityPostNotification", (PyCFunction)objc_NSAccessibilityPostNotification, METH_VARARGS|METH_KEYWORDS, "void NSAccessibilityPostNotification(id element, NSString *notification);" }, \
+	{ "NSApplicationLoad", (PyCFunction)objc_NSApplicationLoad, METH_VARARGS|METH_KEYWORDS, "BOOL NSApplicationLoad(void);" }, \
 	{ "NSShowsServicesMenuItem", (PyCFunction)objc_NSShowsServicesMenuItem, METH_VARARGS|METH_KEYWORDS, "BOOL NSShowsServicesMenuItem(NSString * itemName);" }, \
 	{ "NSSetShowsServicesMenuItem", (PyCFunction)objc_NSSetShowsServicesMenuItem, METH_VARARGS|METH_KEYWORDS, "int NSSetShowsServicesMenuItem(NSString * itemName, BOOL enabled);" }, \
 	{ "NSUpdateDynamicServices", (PyCFunction)objc_NSUpdateDynamicServices, METH_VARARGS|METH_KEYWORDS, "void NSUpdateDynamicServices(void);" }, \
@@ -808,6 +955,8 @@ objc_pboardTypes);
 	{ "NSDrawWhiteBezel", (PyCFunction)objc_NSDrawWhiteBezel, METH_VARARGS|METH_KEYWORDS, "void NSDrawWhiteBezel(NSRect aRect, NSRect clipRect);" }, \
 	{ "NSDrawButton", (PyCFunction)objc_NSDrawButton, METH_VARARGS|METH_KEYWORDS, "void NSDrawButton(NSRect aRect, NSRect clipRect);" }, \
 	{ "NSEraseRect", (PyCFunction)objc_NSEraseRect, METH_VARARGS|METH_KEYWORDS, "void NSEraseRect(NSRect aRect);" }, \
+	{ "NSReadPixel", (PyCFunction)objc_NSReadPixel, METH_VARARGS|METH_KEYWORDS, "NSColor *NSReadPixel(NSPoint passedPoint);" }, \
+	{ "NSCopyBits", (PyCFunction)objc_NSCopyBits, METH_VARARGS|METH_KEYWORDS, "void NSCopyBits(int srcGState, NSRect srcRect, NSPoint destPoint);" }, \
 	{ "NSHighlightRect", (PyCFunction)objc_NSHighlightRect, METH_VARARGS|METH_KEYWORDS, "void NSHighlightRect(NSRect aRect);" }, \
 	{ "NSBeep", (PyCFunction)objc_NSBeep, METH_VARARGS|METH_KEYWORDS, "void NSBeep(void);" }, \
 	{ "NSDrawDarkBezel", (PyCFunction)objc_NSDrawDarkBezel, METH_VARARGS|METH_KEYWORDS, "void NSDrawDarkBezel(NSRect aRect, NSRect clipRect);" }, \

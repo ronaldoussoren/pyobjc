@@ -55917,6 +55917,107 @@ static PyObject* super_678(PyObject* meth, PyObject* self, PyObject* args)
 }
 
 
+/* signature: v@:@@o^@ */
+static void 
+meth_imp_679(id self, SEL sel, id arg_2, id arg_3, id  *arg_4)
+{
+	PyObject* arglist;
+	PyObject* retval;
+	PyObject* tmp;
+
+	arglist = PyTuple_New(3);
+	if (arglist == NULL) ObjCErr_ToObjC();
+
+	tmp = ObjC_ObjCToPython("@", &self);
+	if (tmp == NULL) ObjCErr_ToObjC();
+	PyTuple_SET_ITEM(arglist, 0, tmp);
+	tmp = ObjC_ObjCToPython("@", &arg_2);
+	if (tmp == NULL) ObjCErr_ToObjC();
+	PyTuple_SET_ITEM(arglist, 1, tmp);
+	tmp = ObjC_ObjCToPython("@", &arg_3);
+	if (tmp == NULL) ObjCErr_ToObjC();
+	PyTuple_SET_ITEM(arglist, 2, tmp);
+
+	retval = ObjC_CallPython(self, sel, arglist);
+	Py_DECREF(arglist);
+	if (retval == NULL) ObjCErr_ToObjC();
+	if (!PySequence_Check(retval)) {
+		PyErr_SetString(PyExc_ValueError, "result is not a tuple");
+
+		ObjCErr_ToObjC();
+	}
+	if (PySequence_Length(retval) != 2) {
+		PyErr_SetString(PyExc_ValueError, "Wrong number of results");
+
+		ObjCErr_ToObjC();
+	}
+	{
+		PyObject* v;
+		v = PySequence_GetItem(retval, 1);
+		const char* errstr = ObjC_PythonToObjC("@", v, arg_4);
+		Py_DECREF(v);
+		if (errstr != NULL) {
+			PyErr_SetString(PyExc_ValueError, "Cannot convert to ObjC");
+			ObjCErr_ToObjC();
+		}
+		Py_DECREF(retval);
+	}
+}
+static PyObject* super_679(PyObject* meth, PyObject* self, PyObject* args)
+{
+	id objc_self;
+	const char* errstr;
+	PyObject* v;
+	id objc_arg2;
+	id objc_arg3;
+	id objc_arg4;
+	struct objc_super super;
+
+	if (PyTuple_Size(args) != 2) {
+		PyErr_SetString(PyExc_TypeError, "Wrong argcount");
+		return NULL;
+	}
+	errstr = ObjC_PythonToObjC("@", self, &objc_self);
+	if (errstr != NULL) {
+		PyErr_SetString(PyExc_TypeError, "Cannot convert self");
+		return NULL;
+	} 	super.receiver = objc_self;
+	super.class = ObjCSelector_GetClass(meth);
+	v = PyTuple_GET_ITEM(args, 0);
+	errstr = ObjC_PythonToObjC("@", v, &objc_arg2);
+	if (errstr) {
+		PyErr_SetString(PyExc_TypeError, "Cannot convert argument");
+	return NULL;
+	}
+	v = PyTuple_GET_ITEM(args, 1);
+	errstr = ObjC_PythonToObjC("@", v, &objc_arg3);
+	if (errstr) {
+		PyErr_SetString(PyExc_TypeError, "Cannot convert argument");
+	return NULL;
+	}
+	NS_DURING
+		(void)objc_msgSendSuper(&super, ObjCSelector_GetSelector(meth), objc_arg2, objc_arg3, objc_arg4);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+	NS_ENDHANDLER
+	if (PyErr_Occurred()) return NULL;
+	{
+		PyObject* result_list;
+
+		result_list = PyTuple_New(2);
+		if (result_list == NULL) return NULL;
+
+		Py_INCREF(Py_None);
+		PyTuple_SET_ITEM(result_list, 0, Py_None);
+		v = ObjC_ObjCToPython("@", &objc_arg4);
+		if (v == NULL) { Py_DECREF(result_list); return NULL; }
+
+		PyTuple_SET_ITEM(result_list, 1, v);
+		return result_list;
+	}
+}
+
+
 static struct method_table {
 	char* signature;
 	superfunc call_super;
@@ -56601,6 +56702,7 @@ static struct method_table {
 	{ "v@:@@@@@@", (superfunc)super_676, (IMP)meth_imp_676 },
 	{ "v@:@@@@@@@", (superfunc)super_677, (IMP)meth_imp_677 },
 	{ "c@:o^@@o^@", (superfunc)super_678, (IMP)meth_imp_678 },
+	{ "v@:@@o^@", (superfunc)super_679, (IMP)meth_imp_679 },
 	{0, 0}
 };
 

@@ -119,43 +119,43 @@ SIMPLE_TYPES={
 	'int': (
 		"\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
 		'i',
-		'%(varname)s',
+		'&%(varname)s',
 		None
 	),
 	'BOOL': (
 		"\tresult = PyBool_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
 		'i',
-		'%(varname)s',
+		'&%(varname)s',
 		None
 	),
 	'unsigned': (
 		"\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
 		'i',
-		'%(varname)s',
+		'&%(varname)s',
 		None
 	),
 	'short': (
 		"\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
 		'h',
-		'%(varname)s',
+		'&%(varname)s',
 		None
 	),
 	'long': (
 		"\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
 		'l',
-		'%(varname)s',
+		'&%(varname)s',
 		None
 	),
 	'float': (
 		"\tresult = PyFloat_FromDouble(%(varname)s);\n\tif (result == NULL) return NULL;",
 		'f',
-		'%(varname)s',
+		'&%(varname)s',
 		None
 	),
 	'double': (
 		"\tresult = PyFloat_FromDouble(%(varname)s);\n\tif (result == NULL) return NULL;",
 		'd',
-		'%(varname)s',
+		'&%(varname)s',
 		None
 	),
 }
@@ -351,7 +351,7 @@ def process_list(fp, lst):
 	else:
 		fp.write("#define METHOD_TABLE_ENTRIES \\\n")
 		for f in funcs:
-			fp.write('\t{ "%(funcname)s", (PyCFunction)objc_%(funcname)s, METH_VARARGS, "%(funcproto)s" }, \\\n'%{'funcname':f[0], 'funcproto':f[1]})
+			fp.write('\t{ "%(funcname)s", (PyCFunction)objc_%(funcname)s, METH_VARARGS|METH_KEYWORDS, "%(funcproto)s" }, \\\n'%{'funcname':f[0], 'funcproto':f[1]})
 		fp.write("\t/* END */\n")
 
 
