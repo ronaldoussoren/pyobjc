@@ -83,7 +83,7 @@ def dyld_override_search(name, env=None):
     
     if framework is not None:
         for path in dyld_framework_path():
-            yield os.path.join(path, framework['fullname'])
+            yield os.path.join(path, framework['name'])
 
     # If DYLD_LIBRARY_PATH is set then use the first file that exists
     # in the path.  If none use the original name.    

@@ -503,8 +503,12 @@ class py2app(Command):
                 changemap[fn] = os.path.join(rdst, os.path.basename(fn))
                 self.copy_file(fobj.filename, outfile)
             machfiles.append((outfile, fobj))
+
+        def changefunc(path):
+            return changemap.get(mm.locate(path))
+                
         for outfile, fobj in machfiles:
-            if fobj.rewriteLoadCommands(changemap):
+            if fobj.rewriteLoadCommands(changefunc):
                 f = writablefile(outfile, 'rb+')
                 fobj.write(f)
                 f.seek(0, 2)

@@ -152,17 +152,17 @@ class MachO(object):
         if (self.total_size + self.sizediff) > self.low_offset:
             print "WARNING: Mach-O header may be too large to relocate"
         
-    def rewriteLoadCommands(self, changedict):
+    def rewriteLoadCommands(self, changefunc):
         """
         Rewrite the load commands based upon a change dictionary
         """
-        data = changedict.get(self.filename)
+        data = changefunc(self.filename)
         changed = False
         if data is not None:
             if self.rewriteInstallNameCommand(data):
                 changed = True
         for idx, name, filename in self.walkRelocatables():
-            data = changedict.get(filename)
+            data = changefunc(filename)
             if data is not None:
                 if self.rewriteDataForCommand(idx, data):
                     changed = True

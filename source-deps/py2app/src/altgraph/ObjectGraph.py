@@ -121,6 +121,7 @@ class ObjectGraph(object):
         fromident, toident = self.getIdent(fromnode), self.getIdent(tonode)
         if fromident is None or toident is None:
             return
+        self.msg(4, "createReference", fromnode, tonode, edge_data)
         self.graph.add_edge(fromident, toident, edge_data=edge_data)
     
     def createNode(self, cls, name, *args, **kw):
