@@ -52,10 +52,7 @@ PyObjC_GetClassList(void)
 		if (pyclass == NULL) {
 			goto error_cleanup;
 		}
-		if (PyTuple_SET_ITEM(result, i, pyclass) < 0) {
-			Py_DECREF(pyclass);
-			goto error_cleanup;
-		}
+		PyTuple_SET_ITEM(result, i, pyclass);
 	}
 
 	if (buffer != initialBuffer) {

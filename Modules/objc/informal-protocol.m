@@ -62,12 +62,13 @@ proto_repr(PyObject* object)
 
 	snprintf(buf, sizeof(buf), "<%s %s at %p>",
 		self->ob_type->tp_name, PyString_AsString(self->name),
-		self);
+		(void*)self);
 	return PyString_FromString(buf);
 }
 
 static PyObject*
-proto_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
+proto_new(PyTypeObject* type __attribute__((__unused__)), 
+	PyObject* args, PyObject* kwds)
 {
 static	char*	keywords[] = { "name", "selectors", "warnIfUndeclared", NULL };
 	PyObjCInformalProtocol* result;
@@ -129,7 +130,7 @@ static	char*	keywords[] = { "name", "selectors", "warnIfUndeclared", NULL };
 				(ObjCSelector*)PyTuple_GET_ITEM(selectors, i);
 			
 			PyDict_SetItemString(selToProtocolMapping,
-				SELNAME(tmp->sel_selector),
+				(char*)SELNAME(tmp->sel_selector),
 				name);
 		}
 	}
@@ -214,6 +215,15 @@ PyTypeObject PyObjCInformalProtocol_Type = {
 	0,					/* tp_alloc */
 	proto_new,				/* tp_new */
 	0,		        		/* tp_free */
+	0,					/* tp_is_gc */
+        0,                                      /* tp_bases */
+        0,                                      /* tp_mro */
+        0,                                      /* tp_cache */
+        0,                                      /* tp_subclasses */
+        0                                       /* tp_weaklist */
+#if PY_VERSION_HEX >= 0x020300A2
+        , 0                                     /* tp_del */
+#endif
 };
 
 
@@ -421,7 +431,7 @@ PyObjCInformalProtocol_Warnings(char* name, PyObject* clsDict, PyObject* protoco
 		}
 
 		p = PyDict_GetItemString(selToProtocolMapping,
-			SELNAME(((ObjCSelector*)q)->sel_selector));
+			(char*)SELNAME(((ObjCSelector*)q)->sel_selector));
 		if (p == NULL) {
 			PyErr_Clear();
 			continue;

@@ -33,6 +33,6 @@
 -(void)removeObjectForKey:k;
 -objectForKey:k;
 
-@end // interface OC_PythonDictionary
+@end /* interface OC_PythonDictionary */
 
 #endif /* OC_PythonDictionary_h */

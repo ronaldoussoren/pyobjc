@@ -31,7 +31,7 @@ ivar_repr(PyObjCInstanceVariable* self)
 }
 
 static PyObject*
-ivar_descr_get(PyObjCInstanceVariable* self, PyObject* obj, PyObject* type)
+ivar_descr_get(PyObjCInstanceVariable* self, PyObject* obj, PyObject* type __attribute__((__unused__)))
 {
 	IVAR var;
 	id   objc;
@@ -149,7 +149,7 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 		}
 
 		*(id*)(((char*)objc)+var->ivar_offset) = new_value;
-		//XXX Crashme: NSLog(@"New value is %@", new_value);
+		/* XXX Crashme: NSLog(@"New value is %@", new_value); */
 
 		return 0;
 	}
@@ -244,6 +244,15 @@ PyTypeObject PyObjCInstanceVariable_Type = {
 	PyType_GenericAlloc,                    /* tp_alloc */
 	PyType_GenericNew,                      /* tp_new */
 	0,                           		/* tp_free */
+	0,					/* tp_is_gc */
+        0,                                      /* tp_bases */
+        0,                                      /* tp_mro */
+        0,                                      /* tp_cache */
+        0,                                      /* tp_subclasses */
+        0                                       /* tp_weaklist */
+#if PY_VERSION_HEX >= 0x020300A2
+        , 0                                     /* tp_del */
+#endif
 };
 
 PyObject* 

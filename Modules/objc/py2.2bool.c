@@ -34,7 +34,7 @@ PyIntObject _PyObjC_TrueStruct = {
 
 /* We need to define bool_print to override int_print */
 static int
-bool_print(PyObjCBoolObject *self, FILE *fp, int flags)
+bool_print(PyObjCBoolObject *self, FILE *fp, int flags __attribute__((__unused__)))
 {
 	fputs(self->ob_ival == 0 ? "False" : "True", fp);
 	return 0;
@@ -77,7 +77,7 @@ PyObject *PyObjCBool_FromLong(long ok)
 /* We define bool_new to always return either PyObjC_True or PyObjC_False */
 
 static PyObject *
-bool_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+bool_new(PyTypeObject *type __attribute__((__unused__)), PyObject *args, PyObject *kwds)
 {
 	static char *kwlist[] = {"x", 0};
 	PyObject *x;
@@ -221,6 +221,14 @@ PyTypeObject PyObjCBool_Type = {
 	0,					/* tp_init */
 	0,					/* tp_alloc */
 	bool_new,				/* tp_new */
+	0,                                      /* tp_free */
+	0,                                      /* tp_is_gc */
+	0,                                      /* tp_bases */
+	0,                                      /* tp_mro */
+	0,                                      /* tp_cache */
+	0,                                      /* tp_subclasses */
+	0,                                      /* tp_weaklist */
+	0                                       /* tp_del */
 };
 
 

@@ -95,7 +95,10 @@ static PyMethodDef class_methods[] = {
 };
 
 static PyObject* 
-class_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
+class_new(
+	PyTypeObject* type __attribute__((__unused__)), 
+	PyObject* args __attribute__((__unused__)), 
+	PyObject* kwds __attribute__((__unused__)))
 {
 	PyErr_SetString(PyExc_TypeError, "Cannot create objc.unicode from Python");
 	return NULL;
@@ -143,6 +146,15 @@ PyTypeObject PyObjCUnicode_Type = {
 	0,					/* tp_alloc */
 	class_new,				/* tp_new */
 	0,		        		/* tp_free */
+	0,					/* tp_is_gc */
+        0,                                      /* tp_bases */
+        0,                                      /* tp_mro */
+        0,                                      /* tp_cache */
+        0,                                      /* tp_subclasses */
+        0                                       /* tp_weaklist */
+#if PY_VERSION_HEX >= 0x020300A2
+        , 0                                     /* tp_del */
+#endif
 };
 
 PyObject* 

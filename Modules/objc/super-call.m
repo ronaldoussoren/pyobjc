@@ -182,7 +182,7 @@ int ObjC_RegisterSignatureMapping(
 
 
 static struct registry*
-search_special(Class class, SEL sel)
+search_special(Class class __attribute__((__unused__)), SEL sel)
 {
 	PyObject* 	 result = NULL;
 	PyObject*        special_class = NULL;

@@ -13,6 +13,8 @@ TODO list.
 
 * `Python classes and Objective-C code`_
 
+* `Notes on supported APIs and classes on MacOS X`_
+
 * `Coding style for PyObjC`_
 
 * `Using LibFFI with PyObjC`_
@@ -25,7 +27,7 @@ TODO list.
 
 * `Odd features`_
 
-.. _`An introduction to PyObjC`: intro.html
+..   _`An introduction to PyObjC`: intro.html
 
 ..   _`Userguide for PyObjC`: users.html
 
@@ -44,3 +46,6 @@ TODO list.
 ..   _`Odd features`: warts.html
 
 ..   _`Creating your first PyObjC application (tutorial)`: tutorial/tutorial.html
+
+..   _`Notes on supported APIs and classes on MacOS X`: api-notes-macosx.txt
+

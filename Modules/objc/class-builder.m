@@ -40,7 +40,7 @@ struct class_wrapper {
 	struct objc_class  class;
 	struct objc_class  meta_class;
 	PyObject*          python_class;
-	unsigned int magic; // For debugging
+	unsigned int magic; 
 };
 
 #define IDENT_CHARS "ABCDEFGHIJKLMNOPQSRTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789"
@@ -466,7 +466,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		} else if (PyMethod_Check(value) || PyFunction_Check(value)) {
 			PyObject* pyname;
-			char*     name;
+			char*     ocname;
 			SEL	  selector;
 			METHOD    meth;
 			int       is_class_method = 0;
@@ -474,13 +474,13 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			pyname = key;
 			if (pyname == NULL) continue;
 
-			name = PyString_AS_STRING(pyname);
-			if (name[0] == '_' && name[1] == '_') {
+			ocname = PyString_AS_STRING(pyname);
+			if (ocname[0] == '_' && ocname[1] == '_') {
 				/* Skip special methods */
 				continue;
 			}
 
-			selector = ObjCSelector_DefaultSelector(name);
+			selector = ObjCSelector_DefaultSelector(ocname);
 
 			meth = class_getInstanceMethod(super_class, selector);
 			if (!meth) {
@@ -864,7 +864,6 @@ free_ivars(id self, PyObject* cls)
 		/* Check type */
 		for (i = 0; i < len; i++) {
 			PyObjCInstanceVariable* iv;
-			IVAR var;
 
 			o = PyList_GET_ITEM(clsValues, i);
 
@@ -910,25 +909,20 @@ free_ivars(id self, PyObject* cls)
 }
 
 /* -dealloc */
-static void object_method_dealloc(id self, SEL sel)
+static void object_method_dealloc(id self, SEL sel __attribute__((__unused__)))
 {
 	struct objc_super super;
 	PyObject* obj;
 	PyObject* delmethod;
-	//PyObject* cls = ((struct class_wrapper*)self->isa)->python_class;
-
+	PyObject* cls;
 
 	CHECK_MAGIC(self->isa);
 
-	PyObject* cls = PyObjCClass_New(self->isa);
+	cls = PyObjCClass_New(self->isa);
 	if (!PyObjCClass_HasPythonImplementation(cls)) {
 		printf("-dealloc substitute called for pure ObjC class\n");
 		abort();
 	}
-
-
-
-	//printf("dealloc!\n");
 
 	delmethod = PyObjCClass_GetDelMethod(cls);
 	if (delmethod != NULL) {
@@ -950,7 +944,6 @@ static void object_method_dealloc(id self, SEL sel)
 		(IMP)object_method_dealloc);
 	RECEIVER(super) = self;
 	
-	//printf("Won't dealloc\n");
 	objc_msgSendSuper(&super, @selector(dealloc)); 
 }
 
@@ -962,8 +955,6 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 	BOOL              res;
         PyObject*         pyself;
 	PyObject*         pymeth;
-
-	//printf("respondsToSelector %p of %s %s\n", self, self->isa->name, aSelector);
 
 	/* First check if we respond */
 	pyself = PyObjCObject_New(self);
@@ -997,8 +988,6 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
         PyObject*          pyself;
 	PyObject*          pymeth;
 
-	//printf("methdSigfor %p of %s %s\n", self, self->isa->name, aSelector);
-
 	super.class = find_real_superclass(
 			GETISA(self), 
 			selector, class_getInstanceMethod, 
@@ -1030,7 +1019,6 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 
 	result =  [NSMethodSignature signatureWithObjCTypes:(
 		  	(ObjCSelector*)pymeth)->sel_signature];
-	//[result autorelease];
 	Py_DECREF(pymeth);
 	Py_DECREF(pyself);
 	return result;
@@ -1215,7 +1203,6 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 		for (i = 2; i < len;i++) {
 			type = [signature getArgumentTypeAtIndex:i];
-			int err;
 			void* ptr;
 
 			if (arglen == -1) {
@@ -1243,6 +1230,13 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 			if (err == -1) {
 				ObjCErr_ToObjC();
 			}
+			if (v->ob_refcnt == 1 && type[0] == _C_ID) {
+				/* make sure return value doesn't die before
+				 * the caller can get its hands on it.
+			   	 */
+				[[*(id*)ptr retain] autorelease];
+			}
+
 		}
 		Py_DECREF(result);
 	}

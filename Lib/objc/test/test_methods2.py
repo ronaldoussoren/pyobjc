@@ -181,7 +181,7 @@ else:
         def assertAlmostEquals(self, val1, val2, message=None):
             self.assert_ (abs (val1 - val2) < 0.00001, message)
 
-class PyToObjC (unittest.TestCase):
+class PyToObjC (TestCase):
 	# Test calling Objective-C from Python
 	# Simple returns from class methods
 
@@ -14320,7 +14320,7 @@ class Python_TestClass (objc.runtime.NSObject):
 	NSRectInOutArg_ = objc.selector(NSRectInOutArg_, signature="@@:N^{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
 
 
-class ObjCToPy (unittest.TestCase):
+class ObjCToPy (TestCase):
 	# Test calling Python from Objective-C
 	# Simple returns from instance methods
 

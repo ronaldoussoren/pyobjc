@@ -6,7 +6,8 @@
 #include "objc_support.h"
 
 static PyObject*
-call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSObject_alloc(PyObject* method __attribute__((__unused__)), 
+	PyObject* self, PyObject* arguments)
 {
 	id result = nil;
 	struct objc_super super;
@@ -23,7 +24,6 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 	/* XXX: Shouldn't we use method->sel_class here? */
 	RECEIVER(super) = (id)PyObjCClass_GetClass(self);
 	super.class = GETISA((Class)(RECEIVER(super)));
-	//super.class = GETISA(((ObjCSelector*)method)->sel_class);
 
 	NS_DURING
 		result = objc_msgSendSuper(&super, @selector(alloc));

@@ -74,7 +74,9 @@
 -(PyObject*)__pyobjc_PythonObject__
 {
 	const char* typestr = [self objCType];
-	char        buf[objc_sizeof_type(typestr)];
+	char*        buf;
+	
+	buf = alloca(objc_sizeof_type(typestr));
 
 	[self getValue:buf];
 
@@ -110,9 +112,14 @@
 
 
 #ifndef MAX
-#define MAX(x,y) ({ unsigned int __x=(x), __y=(y); (__x > __y ? __x : __y); })
+static inline int
+MAX(int x, int y)
+{
+	return x > y ? x : y;
+}
 #endif
-static inline const int
+
+static inline int
 ROUND(int v, int a)
 {
 	return a * ((v+a-1)/a);
@@ -202,7 +209,6 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	default:
 		ObjCErr_Set(ObjCExc_internal_error,
 			"PyObjCRT_SkipTypeSpec: Unhandled type '%#x'", *type); 
-		abort();
 		return NULL;
 	}
 
@@ -289,7 +295,6 @@ objc_alignof_type (const char *type)
 	default:
 		ObjCErr_Set(ObjCExc_internal_error, 
 			"objc_align_type: Unhandled type '%#x'", *type);
-		abort();
 		return -1;
 	}
 }
@@ -392,7 +397,6 @@ objc_sizeof_type (const char *type)
 	default:
 		ObjCErr_Set(ObjCExc_internal_error, 
 			"objc_sizeof_type: Unhandled type '%#x", *type);
-		abort();
 		return -1;
 	}
 }
@@ -405,7 +409,7 @@ static PyObject *
 pythonify_c_array (const char *type, void *datum)
 {
 	PyObject *ret;
-	unsigned int nitems, itemidx, sizeofitem;
+	int nitems, itemidx, sizeofitem;
 	unsigned char* curdatum;
   
 	nitems = atoi (type+1);
@@ -460,7 +464,7 @@ pythonify_c_struct (const char *type, void *datum)
 			item = PyObjCRT_SkipTypeSpec (item)){
 		PyObject *pyitem;
 
-		pyitem = pythonify_c_value (item, datum+offset);
+		pyitem = pythonify_c_value (item, ((char*)datum)+offset);
 
 		if (pyitem) {
 			PyTuple_SET_ITEM (ret, itemidx, pyitem);
@@ -482,7 +486,7 @@ pythonify_c_struct (const char *type, void *datum)
 static int
 depythonify_c_array (const char *type, PyObject *arg, void *datum)
 {
-	unsigned int nitems, itemidx, sizeofitem;
+	int nitems, itemidx, sizeofitem;
 	unsigned char* curdatum;
 
 	nitems = atoi (type+1);
@@ -522,7 +526,7 @@ depythonify_c_array (const char *type, PyObject *arg, void *datum)
 static int
 depythonify_c_struct (const char *types, PyObject *arg, void *datum)
 {
-	unsigned int nitems, offset, itemidx;
+	int nitems, offset, itemidx;
 	const char *type;
 
 	while (*types != _C_STRUCT_E && *types++ != '='); /* skip "<name>=" */
@@ -545,7 +549,7 @@ depythonify_c_struct (const char *types, PyObject *arg, void *datum)
 		PyObject *argument = PyTuple_GetItem (arg, itemidx);
 		int error;
 
-		error = depythonify_c_value (type, argument, datum+offset);
+		error = depythonify_c_value (type, argument, ((char*)datum)+offset);
 		if (error == -1) return error;
       
 		itemidx++;
@@ -563,8 +567,10 @@ pythonify_c_value (const char *type, void *datum)
 
 	switch (*type) {
 	case _C_CHR:
-		// We don't return a string because BOOL is an alias for
-		// char (at least on MacOS X)
+		/* 
+		 * We don't return a string because BOOL is an alias for
+		 * char (at least on MacOS X)
+		 */
 		retobject = (PyObject*)PyInt_FromLong ((int)(*(char*)datum));
 		break;
 
@@ -741,7 +747,7 @@ depythonify_unsigned_int_value(PyObject* argument, char* descr,
 					argument->ob_type->tp_name);
 			return -1;
 
-		} else if (temp > max) {
+		} else if ((unsigned long long)temp > max) {
 			ObjCErr_Set(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of "
 				"wrong magnitude", descr,
@@ -1051,12 +1057,12 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			/* NSString values are Unicode strings, convert 
 			 * the string to Unicode, assuming the default encoding.
 			 */
-			unsigned char* strval;
+			char* strval;
 			int   len;
 			PyObject* as_unicode;
 			PyObject* as_utf8;
 
-			strval = (unsigned char*)PyString_AS_STRING(argument);
+			strval = PyString_AS_STRING(argument);
 			len = PyString_GET_SIZE(argument);
 
 			as_unicode = PyUnicode_Decode(
@@ -1199,7 +1205,6 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			ObjCErr_Set(PyExc_ValueError,
 				"depythonifying 'pointer', got '%s'",
 					argument->ob_type->tp_name);
-			abort();
 			return -1;
 		}
 		break;
@@ -1212,9 +1217,9 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		} else {
 			PyObject* tmp = PyNumber_Float(argument);
 			if (tmp != NULL) {
-				double temp = PyFloat_AsDouble(tmp);
+				double dblval = PyFloat_AsDouble(tmp);
 				Py_DECREF(tmp);
-				*(float*) datum = temp;
+				*(float*) datum = dblval;
 				return 0;
 			}
 
@@ -1233,9 +1238,9 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		} else {
 			PyObject* tmp = PyNumber_Float(argument);
 			if (tmp != NULL) {
-				double temp = PyFloat_AsDouble(tmp);
+				double dblval = PyFloat_AsDouble(tmp);
 				Py_DECREF(tmp);
-				*(double*) datum = temp;
+				*(double*) datum = dblval;
 				return 0;
 			}
 
@@ -1248,9 +1253,9 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 	case _C_UNION_B:
 		if (PyString_Check (argument)) {
-			unsigned int expected_size = objc_sizeof_type (type);
+			int expected_size = objc_sizeof_type (type);
 
-			if (expected_size == (unsigned int)-1) {
+			if (expected_size == -1) {
 				ObjCErr_Set(PyExc_ValueError,
 					"depythonifying 'union' of "
 					"unknown size");

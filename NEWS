@@ -26,7 +26,8 @@ Version 0.10CVS (Work in progress):
   * NSMovie.initWithMovie_ and NSMovie.QTMovie now use QT.Movie objects instead
     of generic pointer wrappers.
 
-- Improved unittests
+- Improved unittests, greatly increasing the confidence in the correctness
+  of the bridge.
 
 - Object state is completely stored in the Objective-C object.  This has no
   user-visible effects, but makes the implementation a lot easier to 
@@ -48,9 +49,8 @@ Version 0.10CVS (Work in progress):
 - We now generate warnings if a class implements an informal protocol, but
   doesn't declare that in its definition.
 
-Version 0.9.1 (May-??-2003):
-
-- Fixed some glitches in the documentation
+  TODO: Use the protocol-list to automaticly deduce the protocols implemented
+  by a class.
 
 Version 0.9 (May-02-2003):
 - This version includes numerous bugfixes and improvements.

@@ -125,6 +125,7 @@ class TestNSArrayInteraction(unittest.TestCase):
         self.assertSlicesEqual(x, y, z)
 
     def test_mixSliceNDice(self):
+        # This test failes on Python 2.2, that is expected.
         x = range(0, 10)
         y = NSMutableArray.arrayWithArray_( range(0, 10) )
 

@@ -232,8 +232,17 @@ def enumeratorGenerator(anEnumerator):
         yield nextObject
         nextObject = anEnumerator.nextObject()
 
+def dictItems(aDict):
+    """
+    NSDictionary.items()
+    """
+    keys = aDict.allKeys()
+    values = aDict.objectsForKeys_notFoundMarker_(keys, runtime.NSNull.null())
+    return zip(keys, values)
+
 CONVENIENCE_METHODS['allKeys'] = (
     ('keys', lambda self: self.allKeys()),
+    ('items', lambda self: dictItems(self)),
 )
 
 CONVENIENCE_METHODS['allValues'] = (

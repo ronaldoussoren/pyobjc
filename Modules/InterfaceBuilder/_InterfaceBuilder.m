@@ -25,6 +25,8 @@ PyDoc_STRVAR(ib_doc,
 #include "_InterfaceBuilder_Enum.inc"
 #include "_InterfaceBuilder_Str.inc"
 
+void init_InterfaceBuilder(void);
+
 void init_InterfaceBuilder(void)
 {
 	PyObject *m, *d;

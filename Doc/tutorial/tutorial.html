@@ -28,7 +28,7 @@ after registering (for free).</p>
 <h2><a name="getting-started">Getting Started</a></h2>
 <ol type="1">
 <li>Create a work directory <code><span>src</span></code>. Check which Python you have installed PyObjC
-for, by running <code><span>python</span></code> and checking that <code><span>import</span> <span>PyObjC</span></code> works. If it
+for, by running <code><span>python</span></code> and checking that <code><span>import</span> <span>Foundation</span></code> works. If it
 does not work it could be that you have installed PyObjC for <code><span>/usr/local/python</span></code>
 but Apple's <code><span>/usr/bin/python</span></code> comes first in your <code><span>$PATH</span></code>. Make sure you
 use the right python whereever it says <code><span>python</span></code> in this tutorial.<p>For convenience, set a shell variable PYLIB
@@ -46,10 +46,11 @@ $ export PYLIB=/Library/Frameworks/Python.framework/Versions/Current/lib/python2
 in the new file dialog, save this file as <code><span>src/MainMenu.nib</span></code>.</li>
 <li>Proceed with the instructions as lined out in Apple's
 <a href="http://developer.apple.com/techpubs/macosx/Cocoa/ObjCTutorial/index.html">Developing Cocoa Objective-C Applications: a Tutorial</a>, <a href="http://developer.apple.com/techpubs/macosx/Cocoa/ObjCTutorial/chapter03/index.html">chapter 3</a>,
-just after the section &quot;<i>Creating the Currency Converter Interface</i>&quot;. Stop when you get
-to the section &quot;<i>Implementing the Classes of Currency Converter</i>&quot;,
-as we are going to do this in Python, not Objective-C. Your nib file
-should now be the same as <a href="step3-MainMenu.nib">step3-MainMenu.nib</a>.</li>
+just after the section &quot;<i>Creating the Currency Converter Interface</i>&quot;.
+Work through &quot;Defining the Classes of Currency Converter&quot;, &quot;Connecting
+ConverterController to the Interface&quot;, and stop at &quot;<i>Implementing the Classes
+of Currency Converter</i>&quot;, as we are going to do this in Python, not Objective-C.
+Your nib file should now be the same as <a href="step3-MainMenu.nib">step3-MainMenu.nib</a>.</li>
 </ol>
 <ol start="4" type="1">
 <li>Create the skeleton Python script by running <code><span>NibClassBuilder</span></code> as a tool.
@@ -63,15 +64,8 @@ $ python $PYLIB/site-packages/PyObjC/PyObjCTools/NibClassBuilder.py \
 </li>
 </ol>
 <ol start="5" type="1">
-<li>Next we need to add a little more boilerplate code to <code><span>CurrencyConverter.py</span></code>. At some point
-in the future this will become simpler, but for now we need to add a main program
-that jumps through various hoops to get the application started.
-The results of this can be seen in <a href="step5-CurrencyConverter.py">step5-CurrencyConverter.py</a>.</li>
+<li>There is no step 5.</li>
 </ol>
-<blockquote>
-<p><i>XXXX Implementation Note:</i> NibClassBuilder should do this for you, at least
-optionally.</p>
-</blockquote>
 <h2><a name="testing-the-user-interface">Testing the user interface</a></h2>
 <ol start="6" type="1">
 <li>Now we need to create an application framework around our program. Again,
@@ -125,7 +119,7 @@ other words, if an ObjC call would be:<pre>
 <pre>
 object.modifyArg_andAnother_(arg1, arg2)
 </pre>
-<p>Note that we don't do this mangling for <code><span>Converter.ConvertAmount()</span></code>: this method is
+<p>Note that we don't do this mangling for <code><span>Converter.convertAmount()</span></code>: this method is
 only called by other Python code, so there is no need to go through the name mangling.
 Also, if we would want to make this method callable from ObjC code we would have
 to tell the PyObjC runtime system about the types of the arguments, so it could

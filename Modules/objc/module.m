@@ -23,7 +23,8 @@ PyDoc_STRVAR(lookUpClass_doc,
   "Raises noclass_error when the class doesn't exist.");
 
 static PyObject* 
-lookUpClass(PyObject* self, PyObject* args, PyObject* kwds)
+lookUpClass(PyObject* self __attribute__((__unused__)), 
+	PyObject* args, PyObject* kwds)
 {
 static 	char* keywords[] = { "class_name", NULL };
 	char* class_name = NULL;
@@ -49,7 +50,8 @@ PyDoc_STRVAR(classAddMethods_doc,
 	     "Adds methods in methodsArray to class.   The effect is similar to how categories work.   If class already implements a method as defined in methodsArray, the original implementation will be replaced by the implementation from methodsArray.");
 
 static PyObject*
-classAddMethods(PyObject* self, PyObject* args, PyObject* keywds)
+classAddMethods(PyObject* self __attribute__((__unused__)), 
+	PyObject* args, PyObject* keywds)
 {
 	static 	char* kwlist[] = { "targetClass", "methodsArray", NULL };
 	PyObject* classObject = NULL;
@@ -124,7 +126,8 @@ PyDoc_STRVAR(recycle_autorelease_pool_doc,
   "This 'releases' the global autorelease pool and creates a new one.\n"
   "This method is for system use only\n");
 static PyObject*
-recycle_autorelease_pool(PyObject* self, PyObject* args, PyObject* kwds)
+recycle_autorelease_pool(PyObject* self __attribute__((__unused__)), 
+	PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 
@@ -158,7 +161,8 @@ PyDoc_STRVAR(set_class_extender_doc,
 	"  this dictionary.\n"
 	"");
 static PyObject*
-set_class_extender(PyObject* self, PyObject* args, PyObject* kwds)
+set_class_extender(PyObject* self __attribute__((__unused__)), 
+	PyObject* args, PyObject* kwds)
 {
 static 	char* keywords[] = { "callback", NULL };
 	PyObject* callback;
@@ -188,7 +192,7 @@ PyDoc_STRVAR(getClassList_doc,
   "Return a list with all Objective-C classes known to the runtime.\n"
 );
 static PyObject* 
-getClassList(PyObject* self)
+getClassList(PyObject* self __attribute__((__unused__)))
 {
 	return PyObjC_GetClassList();
 }
@@ -200,7 +204,7 @@ PyDoc_STRVAR(set_signature_for_selector_doc,
 	"can be used to provide a more exact signature for a method.\n"
 	"");
 static PyObject* 
-set_signature_for_selector(PyObject* self, PyObject* args, PyObject* kwds)
+set_signature_for_selector(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static 	char* keywords[] = { "class_name", "selector", "signature", NULL };
 	char* class_name;
@@ -229,7 +233,7 @@ PyDoc_STRVAR(setVerbose_doc,
 	"Set verbosity to the new value."
 );
 static PyObject* 
-setVerbose(PyObject* self, PyObject* args, PyObject* kwds)
+setVerbose(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static 	char* keywords[] = { "level", NULL };
 	PyObject* o;
@@ -251,7 +255,7 @@ PyDoc_STRVAR(getVerbose_doc,
 	"Return the verbosity value."
 );
 static PyObject* 
-getVerbose(PyObject* self, PyObject* args, PyObject* kwds)
+getVerbose(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static 	char* keywords[] = { NULL };
 
@@ -271,11 +275,12 @@ PyDoc_STRVAR(allocateBuffer_doc,
 	     "read/write."
 	     );
 static PyObject*
-allocateBuffer(PyObject* self, PyObject* args, PyObject* kwds)
+allocateBuffer(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
+static	char* keywords[] = { "length", 0 };
 	int length;
 
-	if (!PyArg_ParseTuple(args, "i", &length)) {
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "i", keywords, &length)) {
 		return NULL;
 	}
 
@@ -296,7 +301,7 @@ PyDoc_STRVAR(loadBundle_doc,
 	"'module_name' and load them into 'module_globals'"
 );
 static PyObject*
-loadBundle(PyObject* self, PyObject* args, PyObject* kwds)
+loadBundle(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bundle_identifier", NULL };
 	id        bundle;
@@ -435,7 +440,7 @@ PyDoc_STRVAR(objc_splitSignature_doc,
 	"Split a signature string into a list of items."
 );
 static PyObject*
-objc_splitSignature(PyObject* self, PyObject* args, PyObject* kwds)
+objc_splitSignature(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { "signature", NULL };
 	const char* signature;
@@ -485,13 +490,14 @@ PyDoc_STRVAR(objc_CFToObject_doc,
 	"Raises an exception if the conversion fails"
 );
 static PyObject*
-objc_CFToObject(PyObject* self, PyObject* args, PyObject* kwds)
+objc_CFToObject(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
+static  char* keywords[] = { "value", 0 };
 	PyObject* argument;
 	id	  res;
 
-	if (!PyArg_ParseTuple(args, 
-			"O:CFToObject",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds,
+			"O:CFToObject", keywords,
 			&argument)) {
 		return NULL;
 	}
@@ -512,12 +518,14 @@ PyDoc_STRVAR(objc_ObjectToCF_doc,
 	"Raises an exception if the conversion fails"
 );
 static PyObject*
-objc_ObjectToCF(PyObject* self, PyObject* args, PyObject* kwds)
+objc_ObjectToCF(PyObject* self __attribute__((__unused__)), 
+	PyObject* args, PyObject* kwds)
 {
+static char* keywords[] = { "value", 0 };
 	PyObject* argument;
 
-	if (!PyArg_ParseTuple(args, 
-			"O:ObjectToCF",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds,
+			"O:ObjectToCF", keywords,
 			&argument)) {
 		return NULL;
 	}
@@ -613,6 +621,8 @@ struct objc_typestr_values {
 	{ NULL, 0 }
 };
 
+
+void init_objc(void);
 
 void init_objc(void)
 {

@@ -17,7 +17,7 @@
 
 
 static PyObject* call_NSData_dataWithBytes_length_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+		PyObject* method __attribute__((__unused__)), PyObject* self, PyObject* arguments)
 {
 	char*     bytes;
 	int       bytes_len;
@@ -93,7 +93,7 @@ static id imp_NSData_dataWithBytes_length_(id self, SEL sel,
 
 
 static PyObject* call_NSData_initWithBytes_length_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+		PyObject* method __attribute__((__unused__)), PyObject* self, PyObject* arguments)
 {
 	char*     bytes;
 	int       bytes_len;
@@ -179,7 +179,7 @@ static id imp_NSData_initWithBytes_length_(id self, SEL sel,
 }
 
 
-static PyObject* call_NSData_bytes(PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* call_NSData_bytes(PyObject* method __attribute__((__unused__)), PyObject* self, PyObject* arguments)
 {
   const void* bytes;
   unsigned    bytes_len;
@@ -239,7 +239,7 @@ static void *imp_NSData_bytes(id self, SEL sel)
 }
 
 
-static PyObject* call_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* call_NSMutableData_mutableBytes(PyObject* method __attribute__((__unused__)), PyObject* self, PyObject* arguments)
 {
   void*     bytes;
   unsigned  bytes_len;
