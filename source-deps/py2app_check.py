@@ -14,6 +14,7 @@ try:
     import bdist_mpkg
 except (ImportError, ValueError):
     # shuffle to the beginning, there may be an old version installed
+    print '** using pyobjc source-deps py2app for building'
     pathlen = len(sys.path)
     site.addsitedir(path)
     newentries = sys.path[pathlen:]
