@@ -28,8 +28,8 @@ static NSString *_threadPoolIdentifier = @"PyObjC:  NSThread AutoreleasePool Ide
 + (void) pyobjcPopPool
 {
   NSMutableArray *poolStack = [self pyobjcPoolStackForCurrentThread];
-  NSAutoreleasePool *p = [poolStack lastObject];
-  [p release];
+  NSValue *pValue = [poolStack lastObject];
+  [[pValue nonretainedObjectValue] release];
   [poolStack removeLastObject];
 }
 @end

@@ -12,6 +12,7 @@
 #include "OC_PythonObject.h"
 #include "OC_PythonArray.h"
 #include "OC_PythonDictionary.h"
+#include "OC_PythonString.h"
 #include "super-call.h"
 
 /*
