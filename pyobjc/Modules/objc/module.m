@@ -36,6 +36,30 @@ int PyObjC_StrBridgeEnabled = 1;
 
 static NSAutoreleasePool* global_release_pool = nil;
 
+PyDoc_STRVAR(pyobjc_id_doc,
+  "pyobjc_id(obj) -> int\n"
+  "\n"
+  "Return the id of the underlying NSObject as an int."
+);
+
+static PyObject*
+pyobjc_id(PyObject* self __attribute__((__unused__)), PyObject* args,
+PyObject *kwds)
+{
+	static char* keywords[] = { "obj", NULL };
+	PyObject *o;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:pyobjc_id",
+		keywords, &o)) {
+		return NULL;
+	}
+	if (!PyObjCObject_Check(o)) {
+		PyErr_SetString(PyExc_TypeError, "not an Objective-C object");
+		return NULL;
+	}
+	return PyInt_FromLong((long)PyObjCObject_GetObject(o));
+}
+
+
 PyDoc_STRVAR(repythonify_doc,
   "repythonify(obj, type='@') -> object\n"
   "\n"
@@ -990,6 +1014,7 @@ static PyMethodDef mod_methods[] = {
 	{ "getNSNumberWrapper", (PyCFunction)getNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, getNSNumberWrapper_doc },
 	{ "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
 	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
+	{ "pyobjc_id", (PyCFunction)pyobjc_id, METH_VARARGS|METH_KEYWORDS, pyobjc_id_doc },
 	{ "repythonify", (PyCFunction)repythonify, METH_VARARGS|METH_KEYWORDS, repythonify_doc },
 	{ "setStrBridgeEnabled", (PyCFunction)setStrBridgeEnabled, METH_VARARGS|METH_KEYWORDS, setStrBridgeEnabled_doc },
 	{ "getStrBridgeEnabled", (PyCFunction)getStrBridgeEnabled, METH_VARARGS|METH_KEYWORDS, getStrBridgeEnabled_doc },
