@@ -92,7 +92,7 @@ CoreExtensions =  [
 			"-DMACOSX",
 		   ],
 		   extra_link_args=[
-			'-g', '-framework', 'AppKit'
+			'-g', '-framework', 'Foundation'
 		   ])
 	]
 CocoaPackages = [ 'Foundation', 'AppKit' ]
