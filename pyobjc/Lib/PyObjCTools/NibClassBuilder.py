@@ -230,7 +230,6 @@ class NibInfo(object):
 		classes = self.classes.values()
 		classes.sort()  # see ClassInfo.__cmp__
 		for clsInfo in classes:
-			classExists = 1
 			if _classExists(clsInfo.super):
 				self._printClass(writer, clsInfo)
 			else:
