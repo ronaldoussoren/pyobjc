@@ -227,6 +227,11 @@ search_special(Class class __attribute__((__unused__)), SEL sel)
 
 ObjC_CallFunc_t ObjC_FindCallFunc(Class class, SEL sel)
 {
+/*
+ * TODO: Should add special case code for NSUndoManager: If this
+ * is a selector that is forwarded to the 'target' we should get
+ * the caller for the target instead of for this object!
+ */
 	struct registry* special;
 
 	if (special_registry == NULL) return ObjC_FFICaller;

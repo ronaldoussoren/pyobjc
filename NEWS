@@ -33,14 +33,18 @@ Version 0.10CVS (Work in progress):
   * NSMovie.initWithMovie_ and NSMovie.QTMovie now use QT.Movie objects instead
     of generic pointer wrappers.
 
+  * Methods returning CoreFoundation objects will return MacPython objects,
+    and likewise, methods with CoreFoundation arguments will accept MacPython
+    objects.
+
 - Improved unittests, greatly increasing the confidence in the correctness
   of the bridge.
 
 - Object state is completely stored in the Objective-C object.  This has no
   user-visible effects, but makes the implementation a lot easier to 
-  comprehend.
+  comprehend and maintain.
 
-- As part of the previous we also fixed a bug that allowed addition of 
+- As part of the previous item we also fixed a bug that allowed addition of 
   attributes to Objective-C objects. This was never the intention and had 
   very odd semantics. Pure Objective-C objects not longer have a __dict__.
 
@@ -51,7 +55,8 @@ Version 0.10CVS (Work in progress):
 
   NOTE: You could create weakrefs in previous versions, but those would
   expire as soon as the last reference from Python died, *not* when the 
-  Objective-C object died.
+  Objective-C object died, therefore code that uses weakrefs to Objective-C
+  objects is almost certainly incorrect.
 
 - It is no longer necessary to specify which protocols are implemented by
   a class, this information is automaticly deduced from the list of implemented
@@ -64,6 +69,10 @@ Version 0.10CVS (Work in progress):
 - It is now possible to write plugin bundles, such as preference panes for 
   use in System Preferences, in Python. See Examples/PrefPanes for an example
   of this feature.
+ 
+- The methods ``pyobjcPopPool`` and ``pyobjcPushPool`` of ``NSAutoreleasePool``
+  are deprecated. These were introduced when PyObjC did not yet support the
+  usual method for creating autorelease pools and are no longer necessary.
 
 Version 0.9 (May-02-2003):
 - This version includes numerous bugfixes and improvements.

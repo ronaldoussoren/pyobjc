@@ -180,7 +180,7 @@ if gs_root is None:
         #"-pedantic",
 
         "-Wno-import", 
-        #"-O0", "-g",
+        "-O0", "-g",
         #"-Werror",
         ]
 
@@ -420,6 +420,9 @@ PrefPanesPackages, PrefPanesExtensions = \
                       ),
         ])
 
+ScreenSaverPackages, ScreenSaverExtensions = \
+        IfFrameWork('ScreenSaver.framework', [ 'ScreenSaver' ], [])
+
 InterfaceBuilderPackages, InterfaceBuilderExtensions = \
         IfFrameWork('InterfaceBuilder.framework', [ 'InterfaceBuilder' ], [
             Extension('InterfaceBuilder._InterfaceBuilder',
@@ -446,7 +449,7 @@ def package_version():
     raise ValueError, "Version not found"
 
 
-packages = CorePackages + CocoaPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + [ 'PyObjCTools' ] 
+packages = CorePackages + CocoaPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + ScreenSaverPackages + [ 'PyObjCTools' ] 
 # The following line is needed to allow separate flat modules
 # to be installed from a different folder (needed for the 
 # bundlebuilder test below).
@@ -485,6 +488,7 @@ dist = setup(name = "pyobjc",
 			   + AddressBookExtensions 
                            + PrefPanesExtensions
                            + InterfaceBuilderExtensions
+                           + ScreenSaverExtensions
 			   ),
 	     packages = packages,
 	     package_dir = package_dir,

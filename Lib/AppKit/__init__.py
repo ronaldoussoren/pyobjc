@@ -27,6 +27,14 @@ del Foundation
 # Define usefull utility methods here
 NSClassForName = _objc.lookUpClass
 
+
+def NSEndSheetMethod(meth):
+    """
+    Return a selector that can be used as the delegate callback for
+    sheet methods
+    """
+    return _objc.selector(meth, signature='v@:@@i')
+
 def NSMakePoint(p1, p2):
     return (float(p1), float(p2))
 

@@ -10,6 +10,8 @@
  * - decodeBytesWithReturnedLength:
  * - encodeValuesOfObjCType: 
  * - decodeValuesOfObjCType:
+ * - decodeBytesForKey:returnedLength:
+ * - decodeBytesWithoutReturnedLength:
  */
 #include <Python.h>
 #include <Foundation/Foundation.h>

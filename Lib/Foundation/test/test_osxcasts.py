@@ -14,7 +14,11 @@ try:
             self.assert_(isinstance(o, NSArray))
 
             c = ObjectToCF(o)
-            self.assert_(isinstance(c, CFArrayRef))
+
+            # On MacOS X 'o' will actually be an instance of NSCFArray,
+            # which is a subclass of NSMutableArray! Depending on how you
+            # test for the type of 'o' you'll get a different CF type...
+            self.assert_(isinstance(c, (CFArrayRef, CFMutableArrayRef)))
 
         def testExplictFromCF(self):
             c = CFArrayCreateMutable(0)
