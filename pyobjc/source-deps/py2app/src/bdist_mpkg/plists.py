@@ -42,6 +42,9 @@ def path_requirement(SpecArgument, Level=u'requires', **kw):
         Level=Level,
         SpecType=u'file',
         SpecArgument=tools.unicode_path(SpecArgument),
+	SpecProperty=u'NSFileType',
+	TestOperator=u'eq',
+	TestObject=u'NSFileTypeDirectory',
         **kw
     )
 
