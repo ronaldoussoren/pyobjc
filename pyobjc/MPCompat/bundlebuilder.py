@@ -24,88 +24,109 @@ this model:
 
 """
 
-#
-# XXX Todo:
-# - modulefinder support to build standalone apps
-# - consider turning this into a distutils extension
-#
 
-__all__ = ["BundleBuilder", "AppBuilder", "buildapp"]
+__all__ = ["BundleBuilder", "BundleBuilderError", "AppBuilder", "buildapp"]
 
 
 import sys
 import os, errno, shutil
+import imp, marshal
+import re
+from copy import deepcopy
 import getopt
 from plistlib import Plist
+from types import FunctionType as function
 
 
-plistDefaults = Plist(
-	CFBundleDevelopmentRegion = "English",
-	CFBundleInfoDictionaryVersion = "6.0",
-)
+class BundleBuilderError(Exception): pass
 
 
-class BundleBuilder:
+class Defaults:
+
+	"""Class attributes that don't start with an underscore and are
+	not functions or classmethods are (deep)copied to self.__dict__.
+	This allows for mutable default values.
+	"""
+
+	def __init__(self, **kwargs):
+		defaults = self._getDefaults()
+		defaults.update(kwargs)
+		self.__dict__.update(defaults)
+
+	def _getDefaults(cls):
+		defaults = {}
+		for name, value in cls.__dict__.items():
+			if name[0] != "_" and not isinstance(value,
+					(function, classmethod)):
+				defaults[name] = deepcopy(value)
+		for base in cls.__bases__:
+			if hasattr(base, "_getDefaults"):
+				defaults.update(base._getDefaults())
+		return defaults
+	_getDefaults = classmethod(_getDefaults)
+
+
+class BundleBuilder(Defaults):
 
 	"""BundleBuilder is a barebones class for assembling bundles. It
 	knows nothing about executables or icons, it only copies files
 	and creates the PkgInfo and Info.plist files.
-
-	Constructor arguments:
-
-		name: Name of the bundle, with or without extension.
-		plist: A plistlib.Plist object.
-		type: The type of the bundle. Defaults to "APPL".
-		creator: The creator code of the bundle. Defaults to "????".
-		resources: List of files that have to be copied to
-			<bundle>/Contents/Resources. Defaults to an empty list.
-		files: List of (src, dest) tuples; dest should be a path relative
-			to the bundle (eg. "Contents/Resources/MyStuff/SomeFile.ext.
-			Defaults to an empty list.
-		builddir: Directory where the bundle will be assembled. Defaults
-			to "build" (in the current directory).
-		symlink: Make symlinks instead copying files. This is handy during
-			debugging, but makes the bundle non-distributable. Defaults to
-			False.
-		verbosity: verbosity level, defaults to 1
 	"""
 
-	def __init__(self, name=None, plist=None, type="APPL", creator="????",
-			resources=None, files=None, builddir="build", platform="MacOS",
-			symlink=0, verbosity=1):
-		"""See the class doc string for a description of the arguments."""
-		if plist is None:
-			plist = Plist()
-		if resources is None:
-			resources = []
-		if files is None:
-			files = []
-		self.name = name
-		self.plist = plist
-		self.type = type
-		self.creator = creator
-		self.resources = resources
-		self.files = files
-		self.builddir = builddir
-		self.platform = platform
-		self.symlink = symlink
-		self.verbosity = verbosity
+	# (Note that Defaults.__init__ (deep)copies these values to
+	# instance variables. Mutable defaults are therefore safe.)
+
+	# Name of the bundle, with or without extension.
+	name = None
+
+	# The property list ("plist")
+	plist = Plist(CFBundleDevelopmentRegion = "English",
+	              CFBundleInfoDictionaryVersion = "6.0")
+
+	# The type of the bundle.
+	type = "APPL"
+	# The creator code of the bundle.
+	creator = None
+
+	# List of files that have to be copied to <bundle>/Contents/Resources.
+	resources = []
+
+	# List of (src, dest) tuples; dest should be a path relative to the bundle
+	# (eg. "Contents/Resources/MyStuff/SomeFile.ext).
+	files = []
+
+	# Directory where the bundle will be assembled.
+	builddir = "build"
+
+	# platform, name of the subfolder of Contents that contains the executable.
+	platform = "MacOS"
+
+	# Make symlinks instead copying files. This is handy during debugging, but
+	# makes the bundle non-distributable.
+	symlink = 0
+
+	# Verbosity level.
+	verbosity = 1
 
 	def setup(self):
+		# XXX rethink self.name munging, this is brittle.
 		self.name, ext = os.path.splitext(self.name)
 		if not ext:
 			ext = ".bundle"
-		self.bundleextension = ext
+		bundleextension = ext
 		# misc (derived) attributes
-		self.bundlepath = pathjoin(self.builddir, self.name + self.bundleextension)
+		self.bundlepath = pathjoin(self.builddir, self.name + bundleextension)
 		self.execdir = pathjoin("Contents", self.platform)
 
-		plist = plistDefaults.copy()
+		plist = self.plist
 		plist.CFBundleName = self.name
 		plist.CFBundlePackageType = self.type
+		if self.creator is None:
+			if hasattr(plist, "CFBundleSignature"):
+				self.creator = plist.CFBundleSignature
+			else:
+				self.creator = "????"
 		plist.CFBundleSignature = self.creator
-		plist.update(self.plist)
-		self.plist = plist
 
 	def build(self):
 		"""Build the bundle."""
@@ -120,6 +141,7 @@ class BundleBuilder:
 		self._copyFiles()
 		self._addMetaFiles()
 		self.postProcess()
+		self.message("Done.", 1)
 
 	def preProcess(self):
 		"""Hook for subclasses."""
@@ -155,6 +177,7 @@ class BundleBuilder:
 		else:
 			self.message("Copying files", 1)
 			msg = "Copying"
+		files.sort()
 		for src, dst in files:
 			if os.path.isdir(src):
 				self.message("%s %s/ to %s/" % (msg, src, dst), 2)
@@ -175,58 +198,123 @@ class BundleBuilder:
 
 	def report(self):
 		# XXX something decent
-		import pprint
-		pprint.pprint(self.__dict__)
+		pass
 
 
-mainWrapperTemplate = """\
-#!/usr/bin/env python
+if __debug__:
+	PYC_EXT = ".pyc"
+else:
+	PYC_EXT = ".pyo"
 
-import os
-from sys import argv, executable
-resources = os.path.join(os.path.dirname(os.path.dirname(argv[0])),
-		"Resources")
-mainprogram = os.path.join(resources, "%(mainprogram)s")
-assert os.path.exists(mainprogram)
-argv.insert(1, mainprogram)
-os.environ["PYTHONPATH"] = resources
-%(setpythonhome)s
-%(setexecutable)s
-os.execve(executable, argv, os.environ)
+MAGIC = imp.get_magic()
+USE_ZIPIMPORT = "zipimport" in sys.builtin_module_names
+
+# For standalone apps, we have our own minimal site.py. We don't need
+# all the cruft of the real site.py.
+SITE_PY = """\
+import sys
+del sys.path[1:]  # sys.path[0] is Contents/Resources/
 """
 
-setExecutableTemplate = """executable = os.path.join(resources, "%s")"""
-pythonhomeSnippet = """os.environ["home"] = resources"""
+if USE_ZIPIMPORT:
+	ZIP_ARCHIVE = "Modules.zip"
+	SITE_PY += "sys.path.append(sys.path[0] + '/%s')\n" % ZIP_ARCHIVE
+	def getPycData(fullname, code, ispkg):
+		if ispkg:
+			fullname += ".__init__"
+		path = fullname.replace(".", os.sep) + PYC_EXT
+		return path, MAGIC + '\0\0\0\0' + marshal.dumps(code)
+
+SITE_CO = compile(SITE_PY, "<-bundlebuilder.py->", "exec")
+
+EXT_LOADER = """\
+def __load():
+	import imp, sys, os
+	for p in sys.path:
+		path = os.path.join(p, "%(filename)s")
+		if os.path.exists(path):
+			break
+	else:
+		assert 0, "file not found: %(filename)s"
+	mod = imp.load_dynamic("%(name)s", path)
+
+__load()
+del __load
+"""
+
+MAYMISS_MODULES = ['mac', 'os2', 'nt', 'ntpath', 'dos', 'dospath',
+	'win32api', 'ce', '_winreg', 'nturl2path', 'sitecustomize',
+	'org.python.core', 'riscos', 'riscosenviron', 'riscospath'
+]
+
+STRIP_EXEC = "/usr/bin/strip"
+
+BOOTSTRAP_SCRIPT = """\
+#!/bin/sh
+
+execdir=$(dirname ${0})
+executable=${execdir}/%(executable)s
+resdir=$(dirname ${execdir})/Resources
+main=${resdir}/%(mainprogram)s
+PYTHONPATH=$resdir
+export PYTHONPATH
+exec ${executable} ${main} ${1}
+"""
+
 
 class AppBuilder(BundleBuilder):
 
-	"""This class extends the BundleBuilder constructor with these
-	arguments:
+	# A Python main program. If this argument is given, the main
+	# executable in the bundle will be a small wrapper that invokes
+	# the main program. (XXX Discuss why.)
+	mainprogram = None
 
-		mainprogram: A Python main program. If this argument is given,
-			the main executable in the bundle will be a small wrapper
-			that invokes the main program. (XXX Discuss why.)
-		executable: The main executable. If a Python main program is
-			specified the executable will be copied to Resources and
-			be invoked by the wrapper program mentioned above. Else
-			it will simply be used as the main executable.
-		nibname: The name of the main nib, for Cocoa apps. Defaults
-			to None, but must be specified when building a Cocoa app.
+	# The main executable. If a Python main program is specified
+	# the executable will be copied to Resources and be invoked
+	# by the wrapper program mentioned above. Otherwise it will
+	# simply be used as the main executable.
+	executable = None
 
-	For the other keyword arguments see the BundleBuilder doc string.
-	"""
+	# The name of the main nib, for Cocoa apps. *Must* be specified
+	# when building a Cocoa app.
+	nibname = None
 
-	def __init__(self, name=None, mainprogram=None, executable=None,
-			nibname=None, **kwargs):
-		"""See the class doc string for a description of the arguments."""
-		self.mainprogram = mainprogram
-		self.executable = executable
-		self.nibname = nibname
-		BundleBuilder.__init__(self, name=name, **kwargs)
+	# Symlink the executable instead of copying it.
+	symlink_exec = 0
+
+	# If True, build standalone app.
+	standalone = 0
+
+	# The following attributes are only used when building a standalone app.
+
+	# Exclude these modules.
+	excludeModules = []
+
+	# Include these modules.
+	includeModules = []
+
+	# Include these packages.
+	includePackages = []
+
+	# Strip binaries.
+	strip = 0
+
+	# Found Python modules: [(name, codeobject, ispkg), ...]
+	pymodules = []
+
+	# Modules that modulefinder couldn't find:
+	missingModules = []
+	maybeMissingModules = []
+
+	# List of all binaries (executables or shared libs), for stripping purposes
+	binaries = []
 
 	def setup(self):
+		if self.standalone and self.mainprogram is None:
+			raise BundleBuilderError, ("must specify 'mainprogram' when "
+					"building a standalone application.")
 		if self.mainprogram is None and self.executable is None:
-			raise TypeError, ("must specify either or both of "
+			raise BundleBuilderError, ("must specify either or both of "
 					"'executable' and 'mainprogram'")
 
 		if self.name is not None:
@@ -238,6 +326,11 @@ class AppBuilder(BundleBuilder):
 		if self.name[-4:] != ".app":
 			self.name += ".app"
 
+		if self.executable is None:
+			if not self.standalone:
+				self.symlink_exec = 1
+			self.executable = sys.executable
+
 		if self.nibname:
 			self.plist.NSMainNibFile = self.nibname
 			if not hasattr(self.plist, "NSPrincipalClass"):
@@ -247,31 +340,216 @@ class AppBuilder(BundleBuilder):
 
 		self.plist.CFBundleExecutable = self.name
 
+		if self.standalone:
+			self.findDependencies()
+
 	def preProcess(self):
-		resdir = pathjoin("Contents", "Resources")
+		resdir = "Contents/Resources"
 		if self.executable is not None:
 			if self.mainprogram is None:
-				execpath = pathjoin(self.execdir, self.name)
+				execname = self.name
 			else:
-				execpath = pathjoin(resdir, os.path.basename(self.executable))
-			self.files.append((self.executable, execpath))
-			# For execve wrapper
-			setexecutable = setExecutableTemplate % os.path.basename(self.executable)
-		else:
-			setexecutable = ""  # XXX for locals() call
+				execname = os.path.basename(self.executable)
+			execpath = pathjoin(self.execdir, execname)
+			if not self.symlink_exec:
+				self.files.append((self.executable, execpath))
+				self.binaries.append(execpath)
+			self.execpath = execpath
 
 		if self.mainprogram is not None:
-			setpythonhome = ""  # pythonhomeSnippet if we're making a standalone app
-			mainname = os.path.basename(self.mainprogram)
-			self.files.append((self.mainprogram, pathjoin(resdir, mainname)))
-			# Create execve wrapper
-			mainprogram = self.mainprogram  # XXX for locals() call
+			mainprogram = os.path.basename(self.mainprogram)
+			self.files.append((self.mainprogram, pathjoin(resdir, mainprogram)))
+			# Write bootstrap script
+			executable = os.path.basename(self.executable)
 			execdir = pathjoin(self.bundlepath, self.execdir)
-			mainwrapperpath = pathjoin(execdir, self.name)
+			bootstrappath = pathjoin(execdir, self.name)
 			makedirs(execdir)
-			open(mainwrapperpath, "w").write(mainWrapperTemplate % locals())
-			os.chmod(mainwrapperpath, 0777)
+			open(bootstrappath, "w").write(BOOTSTRAP_SCRIPT % locals())
+			os.chmod(bootstrappath, 0775)
 
+	def postProcess(self):
+		if self.standalone:
+			self.addPythonModules()
+		if self.strip and not self.symlink:
+			self.stripBinaries()
+
+		if self.symlink_exec and self.executable:
+			self.message("Symlinking executable %s to %s" % (self.executable,
+					self.execpath), 2)
+			dst = pathjoin(self.bundlepath, self.execpath)
+			makedirs(os.path.dirname(dst))
+			os.symlink(os.path.abspath(self.executable), dst)
+
+		if self.missingModules or self.maybeMissingModules:
+			self.reportMissing()
+
+	def addPythonModules(self):
+		self.message("Adding Python modules", 1)
+
+		if USE_ZIPIMPORT:
+			# Create a zip file containing all modules as pyc.
+			import zipfile
+			relpath = pathjoin("Contents", "Resources", ZIP_ARCHIVE)
+			abspath = pathjoin(self.bundlepath, relpath)
+			zf = zipfile.ZipFile(abspath, "w", zipfile.ZIP_DEFLATED)
+			for name, code, ispkg in self.pymodules:
+				self.message("Adding Python module %s" % name, 2)
+				path, pyc = getPycData(name, code, ispkg)
+				zf.writestr(path, pyc)
+			zf.close()
+			# add site.pyc
+			sitepath = pathjoin(self.bundlepath, "Contents", "Resources",
+					"site" + PYC_EXT)
+			writePyc(SITE_CO, sitepath)
+		else:
+			# Create individual .pyc files.
+			for name, code, ispkg in self.pymodules:
+				if ispkg:
+					name += ".__init__"
+				path = name.split(".")
+				path = pathjoin("Contents", "Resources", *path) + PYC_EXT
+
+				if ispkg:
+					self.message("Adding Python package %s" % path, 2)
+				else:
+					self.message("Adding Python module %s" % path, 2)
+
+				abspath = pathjoin(self.bundlepath, path)
+				makedirs(os.path.dirname(abspath))
+				writePyc(code, abspath)
+
+	def stripBinaries(self):
+		if not os.path.exists(STRIP_EXEC):
+			self.message("Error: can't strip binaries: no strip program at "
+				"%s" % STRIP_EXEC, 0)
+		else:
+			self.message("Stripping binaries", 1)
+			for relpath in self.binaries:
+				self.message("Stripping %s" % relpath, 2)
+				abspath = pathjoin(self.bundlepath, relpath)
+				assert not os.path.islink(abspath)
+				rv = os.system("%s -S \"%s\"" % (STRIP_EXEC, abspath))
+
+	def findDependencies(self):
+		self.message("Finding module dependencies", 1)
+		import modulefinder
+		mf = modulefinder.ModuleFinder(excludes=self.excludeModules)
+		if USE_ZIPIMPORT:
+			# zipimport imports zlib, must add it manually
+			mf.import_hook("zlib")
+		# manually add our own site.py
+		site = mf.add_module("site")
+		site.__code__ = SITE_CO
+		mf.scan_code(SITE_CO, site)
+
+		includeModules = self.includeModules[:]
+		for name in self.includePackages:
+			includeModules.extend(findPackageContents(name).keys())
+		for name in includeModules:
+			try:
+				mf.import_hook(name)
+			except ImportError:
+				self.missingModules.append(name)
+
+		mf.run_script(self.mainprogram)
+		modules = mf.modules.items()
+		modules.sort()
+		for name, mod in modules:
+			if mod.__file__ and mod.__code__ is None:
+				# C extension
+				path = mod.__file__
+				filename = os.path.basename(path)
+				if USE_ZIPIMPORT:
+					# Python modules are stored in a Zip archive, but put
+					# extensions in Contents/Resources/.a and add a tiny "loader"
+					# program in the Zip archive. Due to Thomas Heller.
+					dstpath = pathjoin("Contents", "Resources", filename)
+					source = EXT_LOADER % {"name": name, "filename": filename}
+					code = compile(source, "<dynloader for %s>" % name, "exec")
+					mod.__code__ = code
+				else:
+					# just copy the file
+					dstpath = name.split(".")[:-1] + [filename]
+					dstpath = pathjoin("Contents", "Resources", *dstpath)
+				self.files.append((path, dstpath))
+				self.binaries.append(dstpath)
+			if mod.__code__ is not None:
+				ispkg = mod.__path__ is not None
+				if not USE_ZIPIMPORT or name != "site":
+					# Our site.py is doing the bootstrapping, so we must
+					# include a real .pyc file if USE_ZIPIMPORT is True.
+					self.pymodules.append((name, mod.__code__, ispkg))
+
+		if hasattr(mf, "any_missing_maybe"):
+			missing, maybe = mf.any_missing_maybe()
+		else:
+			missing = mf.any_missing()
+			maybe = []
+		self.missingModules.extend(missing)
+		self.maybeMissingModules.extend(maybe)
+
+	def reportMissing(self):
+		missing = [name for name in self.missingModules
+				if name not in MAYMISS_MODULES]
+		if self.maybeMissingModules:
+			maybe = self.maybeMissingModules
+		else:
+			maybe = [name for name in missing if "." in name]
+			missing = [name for name in missing if "." not in name]
+		missing.sort()
+		maybe.sort()
+		if maybe:
+			self.message("Warning: couldn't find the following submodules:", 1)
+			self.message("    (Note that these could be false alarms -- "
+			             "it's not always", 1)
+			self.message("    possible to distinguish between \"from package "
+			             "import submodule\" ", 1)
+			self.message("    and \"from package import name\")", 1)
+			for name in maybe:
+				self.message("  ? " + name, 1)
+		if missing:
+			self.message("Warning: couldn't find the following modules:", 1)
+			for name in missing:
+				self.message("  ? " + name, 1)
+
+	def report(self):
+		# XXX something decent
+		import pprint
+		pprint.pprint(self.__dict__)
+		if self.standalone:
+			self.reportMissing()
+
+#
+# Utilities.
+#
+
+SUFFIXES = [_suf for _suf, _mode, _tp in imp.get_suffixes()]
+identifierRE = re.compile(r"[_a-zA-z][_a-zA-Z0-9]*$")
+
+def findPackageContents(name, searchpath=None):
+	head = name.split(".")[-1]
+	if identifierRE.match(head) is None:
+		return {}
+	try:
+		fp, path, (ext, mode, tp) = imp.find_module(head, searchpath)
+	except ImportError:
+		return {}
+	modules = {name: None}
+	if tp == imp.PKG_DIRECTORY and path:
+		files = os.listdir(path)
+		for sub in files:
+			sub, ext = os.path.splitext(sub)
+			fullname = name + "." + sub
+			if sub != "__init__" and fullname not in modules:
+				modules.update(findPackageContents(fullname, [path]))
+	return modules
+
+def writePyc(code, path):
+	f = open(path, "wb")
+	f.write(MAGIC)
+	f.write("\0" * 4)  # don't bother about a time stamp
+	marshal.dump(code, f)
+	f.close()
 
 def copy(src, dst, mkdirs=0):
 	"""Copy a file or a directory."""
@@ -329,6 +607,13 @@ Options:
       --nib=NAME         main nib name
   -c, --creator=CCCC     4-char creator code (default: '????')
   -l, --link             symlink files/folder instead of copying them
+      --link-exec        symlink the executable instead of copying it
+      --standalone       build a standalone application, which is fully
+                         independent of a Python installation
+  -x, --exclude=MODULE   exclude module (with --standalone)
+  -i, --include=MODULE   include module (with --standalone)
+      --package=PACKAGE  include a whole package (with --standalone)
+      --strip            strip binaries (remove debug info)
   -v, --verbose          increase verbosity level
   -q, --quiet            decrease verbosity level
   -h, --help             print this message
@@ -344,10 +629,11 @@ def main(builder=None):
 	if builder is None:
 		builder = AppBuilder(verbosity=1)
 
-	shortopts = "b:n:r:e:m:c:plhvq"
+	shortopts = "b:n:r:e:m:c:p:lx:i:hvq"
 	longopts = ("builddir=", "name=", "resource=", "executable=",
-		"mainprogram=", "creator=", "nib=", "plist=", "link", "help",
-		"verbose", "quiet")
+		"mainprogram=", "creator=", "nib=", "plist=", "link",
+		"link-exec", "help", "verbose", "quiet", "standalone",
+		"exclude=", "include=", "package=", "strip")
 
 	try:
 		options, args = getopt.getopt(sys.argv[1:], shortopts, longopts)
@@ -373,12 +659,24 @@ def main(builder=None):
 			builder.plist = Plist.fromFile(arg)
 		elif opt in ('-l', '--link'):
 			builder.symlink = 1
+		elif opt == '--link-exec':
+			builder.symlink_exec = 1
 		elif opt in ('-h', '--help'):
 			usage()
 		elif opt in ('-v', '--verbose'):
 			builder.verbosity += 1
 		elif opt in ('-q', '--quiet'):
 			builder.verbosity -= 1
+		elif opt == '--standalone':
+			builder.standalone = 1
+		elif opt in ('-x', '--exclude'):
+			builder.excludeModules.append(arg)
+		elif opt in ('-i', '--include'):
+			builder.includeModules.append(arg)
+		elif opt == '--package':
+			builder.includePackages.append(arg)
+		elif opt == '--strip':
+			builder.strip = 1
 
 	if len(args) != 1:
 		usage("Must specify one command ('build', 'report' or 'help')")
