@@ -142,7 +142,7 @@ def runConsoleEventLoop(argv=None, installInterrupt=False, mode=NSDefaultRunLoop
 RAISETHESE = (SystemExit, MemoryError, KeyboardInterrupt)
 
 
-def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=False, pdb=None):
+def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pdb=None):
     """Run the event loop, ask the user if we should continue if an
     exception is caught. Use this function instead of NSApplicationMain().
     """
@@ -151,6 +151,15 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=False, p
 
     if pdb is None:
         pdb = 'USE_PDB' in os.environ
+
+    if pdb:
+        from PyObjCTools import Debugging
+        Debugging.installVerboseExceptionHandler()
+    else:
+        Debugging = None
+    
+    if installInterrupt is None and pdb:
+        installInterrupt = True
     
     if unexpectedErrorAlert is None:
         if pdb:
@@ -178,14 +187,20 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=False, p
                 traceback.print_exc()
                 break
             except:
-                if not unexpectedErrorAlert():
-                    NSLog("An exception has occured:")
+                exctype, e, tb = sys.exc_info()
+                objc_exception = False
+                if isinstance(e, objc.error):
+                    NSLog(unicode(str(e), 'utf-8', 'replace'))
+                elif not unexpectedErrorAlert():
+                    NSLog(u"An exception has occured:")
                     raise
                 else:
-                    NSLog("An exception has occured:")
+                    NSLog(u"An exception has occured:")
                     traceback.print_exc()
             else:
                 break
 
     finally:
+        if Debugging is not None:
+            Debugging.removeExceptionHandler()
         PyObjCAppHelperRunLoopStopper.removeRunLoopStopperFromRunLoop_(runLoop)
