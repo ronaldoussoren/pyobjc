@@ -152,6 +152,7 @@ object_dealloc(PyObject* obj)
 		 */
 		if (PyObjCObject_IsClassic(obj)) {
 			/* pass */
+
 		} else if (((PyObjCObject*)obj)->flags 
 				& PyObjCObject_kUNINITIALIZED) {
 			/* Freeing of an unitialized object, just leak because 
@@ -299,6 +300,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 		assert(dict && PyDict_Check(dict));
 		descr = PyDict_GetItem(dict, name);
 	}
+	Py_DECREF(tp);
 
 	tp = obj->ob_type;
 	if (tp->tp_dict == NULL) {
@@ -316,7 +318,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	    PyType_HasFeature(descr->ob_type, Py_TPFLAGS_HAVE_CLASS)) {
 		f = descr->ob_type->tp_descr_get;
 		if (f != NULL && PyDescr_IsData(descr)) {
-			res = f(descr, obj, (PyObject *)obj->ob_type);
+			res = f(descr, obj, (PyObject*)obj->ob_type);
 			goto done;
 		}
 	}
@@ -361,7 +363,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	}
 
 	if (f != NULL) {
-		res = f(descr, obj, (PyObject *)obj->ob_type);
+		res = f(descr, obj, (PyObject*)obj->ob_type);
 		goto done;
 	}
 

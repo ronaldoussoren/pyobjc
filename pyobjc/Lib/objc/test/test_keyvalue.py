@@ -450,6 +450,7 @@ if PyObjCTest_KeyValueObserver is not None:
             observer = PyObjCTestObserver.alloc().init()
 
             o = PyObjCTestObserved1.alloc().init()
+
             self.assertEquals(o.bar(), None)
             o.setBar_("hello")
             self.assertEquals(o.bar(), "hello")
@@ -463,6 +464,8 @@ if PyObjCTest_KeyValueObserver is not None:
                 PyObjCTestObserved1.FOOBASE = "base"
 
 
+            # XXX: To be debugged, when flags == 0 everything is fine,
+            # otherwise we leak a reference
             o.addObserver_forKeyPath_options_context_(observer, u'bar',  
                 (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld), 
                 0)
@@ -473,7 +476,6 @@ if PyObjCTest_KeyValueObserver is not None:
             try:
                 o.setBar_("world")
                 self.assertEquals(o.bar(), "world")
-
 
                 o.setFoo_("xxx")
                 self.assertEquals(o.foo(), "basexxx")
@@ -500,6 +502,8 @@ if PyObjCTest_KeyValueObserver is not None:
             self.assertEquals(observer.observed[2], 
                 (u'foo', o, { 'kind': 1, 'new':'base2yyy', 'old':'basexxx' }, 0))
             self.assertEquals(o.bar(), "world")
+
+            del observer
 
             before = DEALLOCS
             del o
