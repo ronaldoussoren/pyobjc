@@ -1,0 +1,327 @@
+#
+# List of functions. Generated from files in 
+# /System/Library/Frameworks/AppKit.framework/Headers
+# 
+# Used to check for new functions
+# 
+
+# From: AppKit.h
+
+# From: AppKitDefines.h
+
+# From: NSActionCell.h
+
+# From: NSAffineTransform.h
+
+# From: NSApplication.h
+int NSApplicationMain(int argc, const char *argv[]);
+BOOL NSShowsServicesMenuItem(NSString * itemName);
+int NSSetShowsServicesMenuItem(NSString * itemName, BOOL enabled);
+void NSUpdateDynamicServices(void);
+BOOL NSPerformService(NSString *itemName, NSPasteboard *pboard);
+void NSRegisterServicesProvider(id provider, NSString *name);
+void NSUnregisterServicesProvider(NSString *name);
+
+# From: NSApplicationScripting.h
+
+# From: NSAttributedString.h
+
+# From: NSBezierPath.h
+
+# From: NSBitmapImageRep.h
+
+# From: NSBox.h
+
+# From: NSBrowser.h
+
+# From: NSBrowserCell.h
+
+# From: NSButton.h
+
+# From: NSButtonCell.h
+
+# From: NSCachedImageRep.h
+
+# From: NSCell.h
+
+# From: NSClipView.h
+
+# From: NSColor.h
+
+# From: NSColorList.h
+
+# From: NSColorPanel.h
+
+# From: NSColorPicker.h
+
+# From: NSColorPicking.h
+
+# From: NSColorWell.h
+
+# From: NSComboBox.h
+
+# From: NSComboBoxCell.h
+
+# From: NSControl.h
+
+# From: NSCursor.h
+
+# From: NSCustomImageRep.h
+
+# From: NSDocument.h
+
+# From: NSDocumentController.h
+
+# From: NSDocumentScripting.h
+
+# From: NSDragging.h
+
+# From: NSDrawer.h
+
+# From: NSEPSImageRep.h
+
+# From: NSErrors.h
+
+# From: NSEvent.h
+
+# From: NSExtendedUndoManager.h
+
+# From: NSFileWrapper.h
+
+# From: NSFont.h
+
+# From: NSFontManager.h
+
+# From: NSFontPanel.h
+
+# From: NSForm.h
+
+# From: NSFormCell.h
+
+# From: NSGraphics.h
+NSWindowDepth NSBestDepth (NSString *colorSpace, int bps, int bpp, BOOL planar, BOOL *exactMatch);
+BOOL NSPlanarFromDepth (NSWindowDepth depth);
+NSString *NSColorSpaceFromDepth (NSWindowDepth depth);
+int NSBitsPerSampleFromDepth (NSWindowDepth depth);
+int NSBitsPerPixelFromDepth (NSWindowDepth depth);
+int NSNumberOfColorComponents (NSString *colorSpaceName);
+const NSWindowDepth *NSAvailableWindowDepths (void);
+void NSRectFill(NSRect aRect);
+void NSRectFillList(const NSRect *rects, int count);
+void NSRectFillListWithGrays(const NSRect *rects, const float *grays, int num);
+void NSRectFillListWithColors(const NSRect *rects, NSColor **colors, int num);
+void NSRectFillUsingOperation(NSRect aRect, NSCompositingOperation op);
+void NSRectFillListUsingOperation(const NSRect *rects, int count, NSCompositingOperation op);
+void NSRectFillListWithColorsUsingOperation(const NSRect *rects, NSColor **colors, int num, NSCompositingOperation op);
+void NSFrameRect(NSRect aRect);
+void NSFrameRectWithWidth(NSRect aRect, float frameWidth);
+void NSFrameRectWithWidthUsingOperation(NSRect aRect, float frameWidth, NSCompositingOperation op);
+void NSRectClip(NSRect aRect);
+void NSRectClipList(const NSRect *rects, int count);
+NSRect NSDrawTiledRects(NSRect boundsRect, NSRect clipRect, const NSRectEdge *sides, const float *grays, int count);
+void NSDrawGrayBezel(NSRect aRect, NSRect clipRect);
+void NSDrawGroove(NSRect aRect, NSRect clipRect);
+void NSDrawWhiteBezel(NSRect aRect, NSRect clipRect);
+void NSDrawButton(NSRect aRect, NSRect clipRect);
+void NSEraseRect(NSRect aRect);
+NSColor *NSReadPixel(NSPoint passedPoint);
+void NSDrawBitmap(NSRect rect, int width, int height, int bps, int spp, int bpp, int bpr, BOOL isPlanar, BOOL hasAlpha, NSString *colorSpaceName, const unsigned char *const data[5]);
+void NSCopyBitmapFromGState(int srcGState, NSRect srcRect, NSRect destRect);
+void NSCopyBits(int srcGState, NSRect srcRect, NSPoint destPoint);
+void NSHighlightRect(NSRect aRect);
+void NSBeep(void);
+void NSCountWindows(int *count);
+void NSWindowList(int size, int list[]);
+void NSCountWindowsForContext(int context, int *count);
+void NSWindowListForContext(int context, int size, int list[]);
+int NSGetWindowServerMemory(int context, int *virtualMemory, int *windowBackingMemory, NSString **windowDumpString);
+NSRect NSDrawColorTiledRects(NSRect boundsRect, NSRect clipRect, const NSRectEdge *sides, NSColor **colors, int count);
+void NSDrawDarkBezel(NSRect aRect, NSRect clipRect);
+void NSDrawLightBezel(NSRect aRect, NSRect clipRect);
+void NSDottedFrameRect(NSRect aRect);
+void NSDrawWindowBackground(NSRect aRect);
+void NSSetFocusRingStyle(NSFocusRingPlacement placement);
+
+# From: NSGraphicsContext.h
+
+# From: NSHelpManager.h
+
+# From: NSImage.h
+
+# From: NSImageCell.h
+
+# From: NSImageRep.h
+
+# From: NSImageView.h
+
+# From: NSInputManager.h
+
+# From: NSInputServer.h
+
+# From: NSInterfaceStyle.h
+NSInterfaceStyle NSInterfaceStyleForKey(NSString *key, NSResponder *responder);
+
+# From: NSLayoutManager.h
+
+# From: NSMatrix.h
+
+# From: NSMenu.h
+
+# From: NSMenuItem.h
+
+# From: NSMenuItemCell.h
+
+# From: NSMenuView.h
+
+# From: NSMovie.h
+
+# From: NSMovieView.h
+
+# From: NSNibConnector.h
+
+# From: NSNibControlConnector.h
+
+# From: NSNibDeclarations.h
+
+# From: NSNibLoading.h
+
+# From: NSNibOutletConnector.h
+
+# From: NSOpenGL.h
+
+# From: NSOpenGLView.h
+
+# From: NSOpenPanel.h
+
+# From: NSOutlineView.h
+
+# From: NSPageLayout.h
+
+# From: NSPanel.h
+int NSRunAlertPanel(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);
+int NSRunInformationalAlertPanel(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);
+int NSRunCriticalAlertPanel(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);
+int NSRunAlertPanelRelativeToWindow(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, ...);
+int NSRunInformationalAlertPanelRelativeToWindow(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, ...);
+int NSRunCriticalAlertPanelRelativeToWindow(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, ...);
+void NSBeginAlertSheet(NSString *title, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, id modalDelegate, SEL didEndSelector, SEL didDismissSelector, void *contextInfo, NSString *msg, ...);
+void NSBeginInformationalAlertSheet(NSString *title, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, id modalDelegate, SEL didEndSelector, SEL didDismissSelector, void *contextInfo, NSString *msg, ...);
+void NSBeginCriticalAlertSheet(NSString *title, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, id modalDelegate, SEL didEndSelector, SEL didDismissSelector, void *contextInfo, NSString *msg, ...);
+id NSGetAlertPanel(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);
+id NSGetInformationalAlertPanel(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);
+id NSGetCriticalAlertPanel(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);
+void NSReleaseAlertPanel(id panel);
+
+# From: NSParagraphStyle.h
+
+# From: NSPasteboard.h
+NSString *NSCreateFilenamePboardType(NSString *fileType);
+NSString *NSCreateFileContentsPboardType(NSString *fileType);
+NSString *NSGetFileType(NSString *pboardType);
+NSArray *NSGetFileTypes(NSArray *pboardTypes);
+
+# From: NSPDFImageRep.h
+
+# From: NSPICTImageRep.h
+
+# From: NSPopUpButton.h
+
+# From: NSPopUpButtonCell.h
+
+# From: NSPrinter.h
+
+# From: NSPrintInfo.h
+
+# From: NSPrintOperation.h
+
+# From: NSPrintPanel.h
+
+# From: NSProgressIndicator.h
+
+# From: NSQuickDrawView.h
+
+# From: NSResponder.h
+
+# From: NSRulerMarker.h
+
+# From: NSRulerView.h
+
+# From: NSSavePanel.h
+
+# From: NSScreen.h
+
+# From: NSScroller.h
+
+# From: NSScrollView.h
+
+# From: NSSecureTextField.h
+
+# From: NSSlider.h
+
+# From: NSSliderCell.h
+
+# From: NSSound.h
+
+# From: NSSpellChecker.h
+
+# From: NSSpellProtocol.h
+
+# From: NSSpellServer.h
+
+# From: NSSplitView.h
+
+# From: NSStatusBar.h
+
+# From: NSStatusItem.h
+
+# From: NSStepper.h
+
+# From: NSStepperCell.h
+
+# From: NSStringDrawing.h
+
+# From: NSTableColumn.h
+
+# From: NSTableHeaderCell.h
+
+# From: NSTableHeaderView.h
+
+# From: NSTableView.h
+
+# From: NSTabView.h
+
+# From: NSTabViewItem.h
+
+# From: NSText.h
+
+# From: NSTextAttachment.h
+
+# From: NSTextContainer.h
+
+# From: NSTextField.h
+
+# From: NSTextFieldCell.h
+
+# From: NSTextStorage.h
+
+# From: NSTextStorageScripting.h
+
+# From: NSTextView.h
+
+# From: NSToolbar.h
+
+# From: NSToolbarItem.h
+
+# From: NSTypesetter.h
+
+# From: NSUserInterfaceValidation.h
+
+# From: NSView.h
+
+# From: NSWindow.h
+
+# From: NSWindowController.h
+
+# From: NSWindowScripting.h
+
+# From: NSWorkspace.h

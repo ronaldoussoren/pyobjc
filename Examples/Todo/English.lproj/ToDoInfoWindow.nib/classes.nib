@@ -1,0 +1,31 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {swapInfoWindowView = id; switchClicked = id; }; 
+            CLASS = InfoWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                dummyView = id; 
+                infoDate = id; 
+                infoItem = id; 
+                infoNotes = id; 
+                infoNotifyAMPM = id; 
+                infoNotifyHour = id; 
+                infoNotifyMinute = id; 
+                infoNotifyOtherHours = id; 
+                infoNotifySwitchMatrix = id; 
+                infoPopUp = id; 
+                infoSchedComplete = id; 
+                infoSchedDate = id; 
+                infoSchedMatrix = id; 
+                infoWindowViews = id; 
+                notesView = id; 
+                notifyView = id; 
+                reschedView = id; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

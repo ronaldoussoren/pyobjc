@@ -1,0 +1,83 @@
+Userguide for PyObjC
+====================
+
+.. This file is formatted using the rules for StructuredText
+
+Introduction
+------------
+
+This is the user guide for PyObjC. It describes how to use this package to
+implement Python scripts that use Objective-C classes and objects. It also
+describes the limitations of this Package. 
+
+The last section describes the C API of this package and why you may want to
+use it.
+
+Overview
+--------
+
+TODO
+
+
+Variables and Constants
+-----------------------
+
+TODO
+
+
+Functions
+---------
+
+TODO
+
+
+
+Limitations
+-----------
+
+The objc module automaticly wraps classes and objects. This works correctly in
+the easy case where there are no methods with variable arguments or 
+pass-by-reference arguments. If there are, the core module needs some help.
+
+For this reason it is best to not use just the core API when your working with
+this module, but to use packages like 'Cocoa' that provide the help needed and
+might also wrap other functionality (constants, functions) in a framework.
+
+
+C API
+-----
+
+Introduction
+~~~~~~~~~~~~
+
+The PyObjC package provides a C API that can be used when you're wrapping 
+functions that deal with Objective-C objects or classes. It can also be used
+to provide functions that help to wrap problematic objective-C methods (like 
+those that take a variable number of arguments).
+
+This API is used by the 'Cocoa' package (part of the PyObjC distribution) to
+wrap the entire Cocoa API.
+
+How to use it
+~~~~~~~~~~~~~
+
+You ``#include`` "pyobjc-api.h" in your module implementation. In the module
+initialisation function you then call ``ObjC_ImportModule(mymodule)``. After
+this you can use the functions and constants defined in the API.
+
+Constants
+~~~~~~~~~
+
+TODO
+
+Functions
+~~~~~~~~~
+
+TODO
+
+
+Limitations
+~~~~~~~~~~~
+
+We currently assume that extension module contain at most 1 file that uses
+the PyObjC API.

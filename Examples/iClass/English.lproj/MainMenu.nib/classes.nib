@@ -1,0 +1,20 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {searchClass = id; selectClass = id; }; 
+            CLASS = ClassesDataSource; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                classLabel = id; 
+                classTable = id; 
+                frameworkLabel = id; 
+                methodTable = id; 
+                searchBox = id; 
+                window = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

@@ -18,12 +18,15 @@ everything necessary to deal with +stringWithFormat: or
 sizeof (void *).  (This is also hard to fix;  to do so requires either
 creating a bunch of methods with the various possible return types or
 doing some very serious hardcore pointer magic. [bbum])
+  Ronald: Seems to be solved, NSInvocation happily works with large
+  return values.
 
 (-) It's impossible to send messages containing '$' in the name: ObjC
 allows it, Python does not.
 
 (-) Fix issues with API that requires pointers;  NSScanner, for
 example.  See Mssh.
+   Ronald: Infrastructure for this is present, but not optimal.
 
 Known portability problems
 --------------------------
@@ -51,12 +54,16 @@ Others
 
 (-) Sending ObjC messages from multiple threads does not currently work.
 The ``argument arena'' in objc_support.c should be rewritten thread-safe.
+  Ronald: The ``argument arena'' should be removed completely, we're mostly 
+  there.
 
 (-) The ``forward'' mechanism should be revised: the current
 implementation assumes the arguments passed are ALL Objective-C
 objects, since no check is possible...  (Not sure this can be fixed,
 but it should be revisited given that the Mac OS X/XS APIs for
 forwarding are a bit different than the old forward:: APIs. [bbum])
+  Ronald: Fixed. It is now possible to specify the signature of a 
+  python method.
 
 (-) [OC_MemoryStream close] should deallocate the stream's buffer with
 vm_deallocate(). See NXCloseMemory() documentation. (NXStream APIs are
@@ -70,3 +77,7 @@ Missing
 
 (*) With Foundation, pythonify_c_value and its counterpart should convert
 to/from NSString and PyStringObject. (What about Unicode???? [bbum])
+  Ronald: Should we? It might be more usefull to provide a function/method
+  to convert NSString values to Python string/unicode objects: NSString
+  seems to have a number of methods without a Python equivalent. I've no
+  problems with automaticly translating Python strings to NSString objects.

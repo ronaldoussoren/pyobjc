@@ -1,0 +1,83 @@
+Important:
+- reference counting cleanup (add Py_INC/DECREF and retain/release at 
+  correct places)
+- [EASY]implement missing functions needed to instantiate python-objc hybrids
+  (from objcective-C) [+alloc, -retain, ...]
+- [EASY]implement script to generate 'proxy-methods' needed to override 
+  objective-C methods in python.
+- [?] error-checking
+- [?] forwarding of exceptions (both from objc->python and python->objc)
+- Methods & multiple inheritance: selectors inherited from non-primary
+  superclasses will not be registered with runtime. (Is that necessary?)
+
+Less important
+- [HARD] implement calling of superclass implementation of methods
+- [?] make objc_support thread-safe
+- [MEDIUM] design and implement mechanism to use custom mapping for
+   selectors (needed to properly support NSScanner)
+- [EASY] use above to map troublesome methods in AppKit and Foundation
+- [EASY] implement python module that maps static functions, types and
+   constants in AppKit and Foundation
+- Write example application (adapt CurrencyConverter and implement a
+  document-based application)
+- Add tools/skeletons/... needed to implement specific Cocoa projects:
+  * Application
+  * Configuration panel
+  * (Standalone) service
+  * Screensaver
+  * ...
+
+Housekeeping
+- code cleanup
+- documentation
+
+===============
+
+- Merge code to call to objective-C methods from pyobjc
+  But: we probably need to use low-level code from runtime instead of 
+  NSInvocation, for now that seems the best way to transparently support
+  super(...) calls in the python code.
+- Merge/implement code to proxy objective-C objects
+- implement subclassing
+- test-code
+- documentation
+- Foundation and AppKit helper modules
+
+The structure for the 'new' pyobjc:
+
+package pyobjc
+  module _pyobjc              # The 'core' native code
+  module _FoundationMapping   # Special mapping code for Foundation classes
+  module __init__	      # Package init
+     # Basically does:
+     from _pyobjc import *
+     import _FoundationMapping
+     _pyobjc.init()
+     del init
+     del _pyobjc
+
+
+package Cocoa:
+  package Foundation:
+    module _Foundation
+      # Global functions and C-types in Foundation kit
+    module __init__
+      # Does:
+      import pyobjc
+      from _Foundation import *
+      clslist = (
+      	'NSObject', ....
+      )
+      for cls in clslist:
+      	tmp = pyobjc.lookup_class(cls)
+	set_global(cls, tmp)
+      # NSBundle.bundleForClass: may be usefull here!
+
+  package AppKit:
+    module _AppKitMapping
+      # Helper code to fully support mapping AppKit classes
+    module _AppKit
+      # Mapping of global function and types in AppKit
+    module __init__
+      # Like Foundation.__init__
+

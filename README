@@ -3,6 +3,31 @@
 # This file is part of the PyObjC package.
 #
 
+The ObjC package provides the glue needed to interface the Python
+interpreter with the Objective-C language. The 'objc' module makes Objective-C
+objects and classes available as first-class Python citizens, it is not only
+possible to use Objective-C objects but you can also subclass Objective-C 
+classes.
+
+The package maintainers currently only work on supporting MacOS X, the GNU
+runtime and GnuStep are not supported at the moment (patches to change that 
+are welcome).
+
+The python situation on MacOS X is a bit vague at the moment, PyObjC is known
+to work using the following versions of python:
+- Fink's python 2.2 
+  Building GUI applications requires some manual work, mostly because I
+  (ronald) primary use a private build of a development snapshot of Python 2.3
+- Python 2.3 (from CVS)
+  If you use a framework build it is easy to build python based standalone 
+  GUI applications (see Examples/iClass).
+- Apple's python 2.2 on 10.2
+  Same issues as Finks's python 2.2. 
+  At the moment this doesn't seem to work correctly.
+
+----
+Older README:
+
 Steve Majewski <sdm7g@minsky.med.virginia.edu> picked up Lele's work
 in early November, 2000 and revived an otherwise stagnant project.
 
