@@ -18,4 +18,5 @@ things should be kept in mind:
 
 - Some Cocoa classes store references to objects while not increasing the 
   reference count. One of those is NSOutlineView. A side-effect of this is that
-  you *must* use subclasses of NSObject in your NSOutlineView model.
+  you *must* use subclasses of NSObject in your NSOutlineView model, and you
+  *must* keep a reference to the objects you pass to NSOutlineView.
