@@ -61,13 +61,21 @@ find_selector(PyObject* self, char* name, int class_method)
 		return NULL;
 	}
 
-	if (class_method && strcmp(((Class)objc_object)->name, "NSProxy") == 0){
+
+	if (strcmp(GETISA(objc_object)->name, "_NSZombie") == 0) {
+		ObjCErr_Set(PyExc_AttributeError,
+			"Cannot access NSProxy.%s", name);
+		return NULL;
+	}
+
+	if (class_method && strcmp(((Class)objc_object)->name, "NSProxy") == 0 ){
 		if (sel == @selector(methodSignatureForSelector:)) {
 			ObjCErr_Set(PyExc_AttributeError,
 				"Cannot access NSProxy.%s", name);
 			return NULL;
 		}
 	}
+
 
 	NS_DURING
 		if (unbound_instance_method) {
@@ -237,6 +245,7 @@ obj_getattro(ObjCMethodAccessor* self, PyObject* name)
 	}
 
 	if (strcmp(PyString_AS_STRING(name), "__dict__") == 0) {
+
 		PyObject* dict;
 		dict = make_dict(self->base, self->class_method);
 		return dict;
@@ -264,6 +273,7 @@ obj_getattro(ObjCMethodAccessor* self, PyObject* name)
 			"No such attribute: __members__");
 		return NULL;
 	}
+
 
 	result = PyObject_GenericGetAttr((PyObject*)self, name);
 	if (result == NULL) {
