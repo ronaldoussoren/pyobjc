@@ -1,3 +1,19 @@
+2003-01-01  Bill Bumgarner  <bbum@codefab.com>
+
+    * Project Templates/Cocoa-Python Application/bin-python-main.m: Added
+    Cocoa/Cocoa.h in hopes that it'll fix indexing.
+
+    * Project Templates/Cocoa-Python
+    Application/CocoaApp.pbproj/TemplateInfo.plist: Added __main__.py,
+    removed Main.py
+
+    * Examples/CurrencyConverter/00README.txt: Created a simple README
+    describing how to build the CurrencyConverter example.s a
+
+    * Examples/addressbook.py (me): Checked to make sure there is really a
+    'me' card in the address book.  If the user hadn't marked a card as 'This
+    is my card', the script tossed an exception.
+
 2002-12-23 Ronald Oussoren <oussoren@cistron.nl>
     * Automaticly convert 'self' argument to Objective-C if it is a Python
       string, or int (just like for other arguments). This allows calls like

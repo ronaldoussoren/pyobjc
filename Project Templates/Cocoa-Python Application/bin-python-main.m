@@ -15,6 +15,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h> // for indexing in PB, not otherwise used.
 #import <sys/param.h>
 #import <unistd.h>
 
