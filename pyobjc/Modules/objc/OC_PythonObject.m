@@ -190,7 +190,7 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 					fn = PyTuple_GET_ITEM(tpl, 1);
 					res = PyObject_CallFunctionObjArgs(fn, obj, NULL);
 					if (res == NULL) {
-						PyObjC_GIL_RETURN(nil);
+						PyObjC_GIL_FORWARD_EXC();
 					}
 					if (PyObject_IsInstance(res, cls)) {
 						Py_DECREF(res);
@@ -199,7 +199,7 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 					err = depythonify_c_value (@encode(id), res, &instance);
 					Py_DECREF(res);
 					if (err == -1) {
-						PyObjC_GIL_RETURN(nil);
+						PyObjC_GIL_FORWARD_EXC();
 					} else {
 						PyObjC_GIL_RETURN(instance);
 					}
