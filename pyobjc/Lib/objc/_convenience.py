@@ -32,20 +32,20 @@ def add_convenience_methods(super_class, name, type_dict):
             continue
 
         
-        if sel.selector.startswith('init') and not sel.class_method:
+        if sel.selector.startswith('init') and not sel.isClassMethod:
             # Instance methods that start with 'init*' are constructors. These
             # return 'self'. If they don't they reallocated the previous 
             # value, don't use that afterwards.
-            sel.returns_reallocated_self = 1
-            sel.is_initializer = 1
+            sel.returnsSelf = 1
+            sel.isInitializer = 1
         elif sel.selector == "alloc" or sel.selector == "allocWithZone:":
-            sel.is_alloc = 1
+            sel.isAlloc = 1
 
         if sel.selector in ( 'copy', 'copyWithZone:', 
                       'mutableCopy', 'mutableCopyWithZone:'):
             # These methods transfer ownership to the caller, the runtime uses
             # this information to adjust the reference count.
-            sel.donates_ref = 1
+            sel.doesDonateReference = 1
 
         sel = sel.selector
 
@@ -58,10 +58,18 @@ def add_convenience_methods(super_class, name, type_dict):
 
                     t = type_dict[name]
                     v = selector(value, selector=t.selector, 
-                        signature=t.signature, class_method=t.class_method)
-                    v.is_initializer = t.is_initializer
-                    v.returns_reallocated_self = t.returns_reallocated_self
-                    v.is_alloc = t.is_alloc
+                        signature=t.signature, isClassMethod=t.isClassMethod)
+                    v.isInitializer = t.isInitializer
+                    v.returnsSelf = t.returnsSelf
+                    v.isAlloc = t.isAlloc
+
+                    #if t.selector.startswith('init'):
+                    #    v.isInitializer = 1
+                    #    v.returnsSelf = 1
+                    #elif sel.selector == "alloc" \
+                    #        or sel.selector == "allocWithZone:":
+                    #    sel.isAlloc = 1
+
                     type_dict[name] = v
                 else:
                     type_dict[name] = value
@@ -430,14 +438,14 @@ def arrayWithObjects_(self, *args):
     return self.arrayWithArray_(args[:-1])
 
 CONVENIENCE_METHODS['arrayWithObjects:'] = (
-    ('arrayWithObjects_', selector(arrayWithObjects_, signature='@@:@', class_method=1)),
+    ('arrayWithObjects_', selector(arrayWithObjects_, signature='@@:@', isClassMethod=1)),
 )
 
 def arrayWithObjects_count_(self, args, count):
     return self.arrayWithArray_(args[:count])
 
 CONVENIENCE_METHODS['arrayWithObjects:count:'] = (
-    ('arrayWithObjects_count_', selector(arrayWithObjects_count_, signature='@@:^@i', class_method=1)),
+    ('arrayWithObjects_count_', selector(arrayWithObjects_count_, signature='@@:^@i', isClassMethod=1)),
 )
 
 def initWithObjects_count_(self, args, count):
@@ -453,14 +461,14 @@ def setWithObjects_(self, *args):
     return self.setWithArray_(args[:-1])
 
 CONVENIENCE_METHODS['setWithObjects:'] = (
-    ('setWithObjects_', selector(setWithObjects_, signature='@@:@', class_method=1)),
+    ('setWithObjects_', selector(setWithObjects_, signature='@@:@', isClassMethod=1)),
 )
 
 def setWithObjects_count_(self, args, count):
     return self.setWithArray_(args[:count])
 
 CONVENIENCE_METHODS['setWithObjects:count:'] = (
-    ('setWithObjects_count_', selector(setWithObjects_count_, signature='@@:^@i', class_method=1)),
+    ('setWithObjects_count_', selector(setWithObjects_count_, signature='@@:^@i', isClassMethod=1)),
 )
 
 def splitObjectsAndKeys(values):
@@ -483,7 +491,7 @@ def dictionaryWithObjectsAndKeys_(self, *values):
 
 CONVENIENCE_METHODS['dictionaryWithObjectsAndKeys:'] = (
     ('dictionaryWithObjectsAndKeys_', 
-      selector(dictionaryWithObjectsAndKeys_, signature='@@:@',class_method=1)),
+      selector(dictionaryWithObjectsAndKeys_, signature='@@:@',isClassMethod=1)),
 )
 
 def initWithObjectsAndKeys_(self, *values):
@@ -502,7 +510,7 @@ def dictionaryWithObjects_forKeys_count_(self, objects, keys, count):
 
 CONVENIENCE_METHODS['dictionaryWithObjects:forKeys:count:'] = (
     ('dictionaryWithObjects_forKeys_count_', 
-      selector(dictionaryWithObjects_forKeys_count_, signature='@@:^@^@i', class_method=1)),
+      selector(dictionaryWithObjects_forKeys_count_, signature='@@:^@^@i', isClassMethod=1)),
 )
 
 def initWithObjects_forKeys_count_(self, objects, keys, count):

@@ -109,7 +109,7 @@ static Class find_real_superclass(Class startAt, SEL selector,
 /*
  * Return wether the object is (partially) implemented in python
  */
-int ObjC_HasPythonImplementation(id obj)
+int PyObjC_HasPythonImplementation(id obj)
 {
 	if (obj == nil) return 0;
 	
@@ -121,21 +121,21 @@ int ObjC_HasPythonImplementation(id obj)
  *
  * Returns a borrowed reference.
  */
-PyObject* ObjC_GetPythonImplementation(id obj)
+PyObject* PyObjC_GetPythonImplementation(id obj)
 {
 	PyObject* pyobj = NULL;
 	IVAR      var   = NULL;
 
 	if (obj == nil) {
 		ObjCErr_Set(ObjCExc_internal_error,
-			"ObjC_GetPythonImplementation called for <nil>");
+			"PyObjC_GetPythonImplementation called for <nil>");
 		return NULL;
 	}
 
 	var = object_getInstanceVariable(obj, pyobj_ivar, (void**)&pyobj);
 	if (var == NULL) {
 		ObjCErr_Set(ObjCExc_internal_error,
-			"ObjC_GetPythonImplementation called for "
+			"PyObjC_GetPythonImplementation called for "
 			"normal object of class %s",
 			    GETISA(obj)->name);
 		return NULL;
@@ -148,20 +148,20 @@ PyObject* ObjC_GetPythonImplementation(id obj)
 }
 
 static int
-ObjC_SetPythonImplementation(id obj, PyObject* newval)
+PyObjC_SetPythonImplementation(id obj, PyObject* newval)
 {
 	IVAR      var   = NULL;
 
 	if (obj == nil) {
 		ObjCErr_Set(ObjCExc_internal_error,
-			"ObjC_GetPythonImplementation called for <nil>");
+			"PyObjC_SetPythonImplementation called for <nil>");
 		return -1;
 	}
 
 	var = class_getInstanceVariable(GETISA(obj), pyobj_ivar);
 	if (var == NULL) {
 		ObjCErr_Set(ObjCExc_internal_error,
-			"ObjC_SetPythonImplementation called for "
+			"PyObjC_SetPythonImplementation called for "
 			"normal object of class %s",
 			    GETISA(obj)->name);
 		return -1;
@@ -177,7 +177,7 @@ ObjC_SetPythonImplementation(id obj, PyObject* newval)
  *
  * Return 0 on success, -1 on failure.
  */
-int ObjCClass_SetClass(Class objc_class, PyObject* py_class)
+int PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
 {
 	if (objc_class == nil) {
 		ObjCErr_Set(ObjCExc_internal_error, 
@@ -190,12 +190,12 @@ int ObjCClass_SetClass(Class objc_class, PyObject* py_class)
 			objc_class->name);
 		return -1;
 	}
-	if (py_class == NULL || !ObjCClass_Check(py_class)) {
+	if (py_class == NULL || !PyObjCClass_Check(py_class)) {
 		ObjCErr_Set(ObjCExc_internal_error,
 			"Trying to set class to of %s to invalid value "
 			"(type %s instead of %s)",
 			objc_class->name, py_class->ob_type->tp_name,
-			ObjCClass_Type.tp_name);
+			PyObjCClass_Type.tp_name);
 		return -1;
 	}
 	if (((struct class_wrapper*)objc_class)->python_class != NULL) {
@@ -219,7 +219,7 @@ int ObjCClass_SetClass(Class objc_class, PyObject* py_class)
  * Due to technical restrictions it is not allowed to unbuild a class that
  * is already registered with the Objective-C runtime.
  */
-void ObjCClass_UnbuildClass(Class objc_class)
+void PyObjCClass_UnbuildClass(Class objc_class)
 {
 	struct class_wrapper* wrapper = (struct class_wrapper*)objc_class;
 
@@ -299,7 +299,7 @@ find_protocol_signature(PyObject* protocols, SEL selector)
  * - It is a problem when the user tries to use mixins to define common
  *   methods (like a NSTableViewDataSource mixin).
  */
-Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
+Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				char* name, PyObject* class_dict)
 {
 	PyObject*                key_list = NULL;
@@ -322,7 +322,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 
 	/* XXX: May as well directly pass this in... */
-	py_superclass = ObjCClass_New(super_class);
+	py_superclass = PyObjCClass_New(super_class);
 	if (py_superclass == NULL) return NULL;
 
 
@@ -479,7 +479,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				 * the user may have specified a more exact
 				 * signature!
 				 */
-				PyObject* super_sel = ObjCClass_FindSelector(
+				PyObject* super_sel = PyObjCClass_FindSelector(
 					py_superclass, selector);
 				if (!super_sel) goto error_cleanup;
 
@@ -797,12 +797,12 @@ error_cleanup:
  * Below here are implementations of various methods needed to correctly
  * subclass Objective-C classes from Python. 
  *
- * These are added to the new Objective-C class by  ObjCClass_BuildClass (but
+ * These are added to the new Objective-C class by  PyObjCClass_BuildClass (but
  * only if the super_class is a 'pure' objective-C klass)
  *
  * The protocol for objc-python object-clusters is:
  * - +alloc calls [super alloc], then creates a new Python 'wrapper' for it
- *   (ObjCObject_New) and sets a pointer to that wrapper object in the 
+ *   (PyObjCObject_New) and sets a pointer to that wrapper object in the 
  *   correct instance variable of the new object
  * - +allocWithZone: is implemented in a simular manner.
  * - the references from the python-side to the objective-c side and back
@@ -829,7 +829,7 @@ static id class_method_alloc(id self, SEL sel)
 static id class_method_allocWithZone(id self, SEL sel, NSZone* zone)
 {
    PyObject* pyclass;
-   ObjCObject* pyobject;
+   PyObjCObject* pyobject;
    id          obj;
    struct objc_super super;
 
@@ -846,14 +846,14 @@ static id class_method_allocWithZone(id self, SEL sel, NSZone* zone)
 	   return nil;	
    }
 
-   pyobject = (ObjCObject*)ObjCObject_New(obj);
+   pyobject = (PyObjCObject*)PyObjCObject_New(obj);
    if (pyobject == NULL) {
        ObjCErr_ToObjC();
        return nil;
    }
 
    /* obj->__pyobjc_obj__ = pyobjct */ 
-   if (ObjC_SetPythonImplementation(obj, (PyObject*)pyobject) == -1) {
+   if (PyObjC_SetPythonImplementation(obj, (PyObject*)pyobject) == -1) {
        Py_DECREF(pyobject);
        ObjCErr_ToObjC();
        return nil;
@@ -865,7 +865,7 @@ static id class_method_allocWithZone(id self, SEL sel, NSZone* zone)
 static PyObject* object_method__pyobjc_PythonObject__(id self, SEL sel)
 {
 	PyObject* pyself;
-	pyself = ObjC_GetPythonImplementation(self);
+	pyself = PyObjC_GetPythonImplementation(self);
 	Py_XINCREF(pyself);
 	return pyself;
 }
@@ -875,7 +875,7 @@ static id object_method_retain(id self, SEL sel)
 {
 	PyObject* pyself;
 
-	pyself = ObjC_GetPythonImplementation(self);
+	pyself = PyObjC_GetPythonImplementation(self);
 
 	if (pyself == Py_None) {
 		struct objc_super super;
@@ -902,7 +902,7 @@ static void object_method_release(id self, SEL sel)
 	PyObject* obj;
 
 	
-	obj = ObjC_GetPythonImplementation(self);
+	obj = PyObjC_GetPythonImplementation(self);
 
 	if (obj == NULL) {
 		PyErr_Clear();
@@ -920,12 +920,12 @@ static void object_method_release(id self, SEL sel)
 	if (obj->ob_refcnt <= 0) {
 		
 		/* Remove reference to the Python object. We don't need it
-		 * any more (because the ObjCObject code will remove it 
+		 * any more (because the PyObjCObject code will remove it 
 		 * when this function returns) and [super release] may 
 		 * call back to us some time later on ([NSWindow release] in
 		 * a seperator thread).
 		 */
-		if (ObjC_SetPythonImplementation(self, 0) == -1) {
+		if (PyObjC_SetPythonImplementation(self, 0) == -1) {
 		       ObjCErr_ToObjC();
 		       return;
 		}
@@ -954,7 +954,7 @@ static void object_method_release(id self, SEL sel)
 /* -retainCount */
 static unsigned object_method_retainCount(id self, SEL sel)
 {
-	PyObject* obj = ObjC_GetPythonImplementation(self);
+	PyObject* obj = PyObjC_GetPythonImplementation(self);
 
 	if (obj == Py_None) {
 		struct objc_super super;
@@ -980,11 +980,11 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 
 
 	/* First check if we respond */
-	pyself = ObjC_GetPythonImplementation(self);
+	pyself = PyObjC_GetPythonImplementation(self);
 	if (pyself == NULL) {
 		return NO;
 	}
-	pymeth = ObjCObject_FindSelector(pyself, aSelector);
+	pymeth = PyObjCObject_FindSelector(pyself, aSelector);
 	if (pymeth) {
 		Py_DECREF(pymeth);
 		return YES;
@@ -1028,13 +1028,13 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 		return result;
 	}
 
-	pyself = ObjC_GetPythonImplementation(self);
+	pyself = PyObjC_GetPythonImplementation(self);
 	if (pyself == NULL) {
 		PyErr_Clear();
 		return nil;
 	}
 
-	pymeth = ObjCObject_FindSelector(pyself, aSelector);
+	pymeth = PyObjCObject_FindSelector(pyself, aSelector);
 	if (!pymeth) {
 		PyErr_Clear();
 		return nil;
@@ -1065,12 +1065,12 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	PyObject* pymeth;
 	PyObject* pyself;
 
-	pyself = ObjC_GetPythonImplementation(self);
+	pyself = PyObjC_GetPythonImplementation(self);
 	if (pyself == NULL) {
 		ObjCErr_ToObjC();
 		return;
 	}
-	pymeth = ObjCObject_FindSelector(pyself, [invocation selector]);
+	pymeth = PyObjCObject_FindSelector(pyself, [invocation selector]);
 	if ((pymeth == NULL) || ObjCNativeSelector_Check(pymeth)) {
 		struct objc_super super;
 
@@ -1132,7 +1132,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		}
 	}
 
-	result = ObjC_call_to_python(self, [invocation selector], args);
+	result = PyObjC_CallPython(self, [invocation selector], args);
 	Py_DECREF(args);
 	if (result == NULL) {
 		ObjCErr_ToObjC();
@@ -1158,23 +1158,23 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 }
 
 /*
- * XXX: Function ObjC_call_to_python should be moved
+ * XXX: Function PyObjC_CallPython should be moved
  */
 
 PyObject*
-ObjC_call_to_python(id self, SEL selector, PyObject* arglist)
+PyObjC_CallPython(id self, SEL selector, PyObject* arglist)
 {
 	PyObject* pyself = NULL;
 	PyObject* pymeth = NULL;
 	PyObject* result;
 
 
-	pyself = ObjC_GetPythonImplementation(self);
+	pyself = PyObjC_GetPythonImplementation(self);
 	if (pyself == NULL) {
 		ObjCErr_ToObjC();
 		return NULL;
 	}
-	pymeth = ObjCObject_FindSelector(pyself, selector);
+	pymeth = PyObjCObject_FindSelector(pyself, selector);
 	if (pymeth == NULL) {
 		ObjCErr_ToObjC();
 		return NULL;

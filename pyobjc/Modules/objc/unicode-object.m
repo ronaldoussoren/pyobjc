@@ -40,15 +40,52 @@ class_dealloc(PyObject* obj)
 
 static PyObject* ObjCUnicode_pyobjc_NSString(PyObject* self)
 {
-	return ObjCObject_New(((ObjCUnicodeObject*)self)->nsstr);
+	return PyObjCObject_New(((ObjCUnicodeObject*)self)->nsstr);
+}
+
+static PyObject* ObjCUnicode_syncNSString(ObjCUnicodeObject* self)
+{
+	PyUnicodeObject  dummy;
+	const char* utf8 = [self->nsstr UTF8String];
+	PyUnicodeObject* tmp = (PyUnicodeObject*)PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
+
+	if (tmp == NULL) return NULL;
+
+	
+	PyUnicode_AS_UNICODE(&dummy) = PyMem_NEW(Py_UNICODE,
+		PyUnicode_GET_SIZE(tmp));
+	if (PyUnicode_AS_UNICODE(&dummy) == NULL) {
+		PyErr_NoMemory();
+		return NULL;
+	}
+	PyMem_Free(PyUnicode_AS_UNICODE(self));
+	PyUnicode_AS_UNICODE(self) = PyUnicode_AS_UNICODE(&dummy);
+	PyUnicode_GET_SIZE(self) = PyUnicode_GET_SIZE(tmp);
+	memcpy((char*)PyUnicode_AS_DATA(self), PyUnicode_AS_DATA(tmp),
+		PyUnicode_GET_DATA_SIZE(tmp));
+
+	self->base.hash = -1;
+	Py_XDECREF(self->base.defenc);
+	self->base.defenc = tmp->defenc;
+	Py_XINCREF(tmp->defenc);
+	Py_DECREF(tmp);
+
+	Py_INCREF(Py_None);
+	return Py_None;
 }
 
 static PyMethodDef class_methods[] = {
 	{
-	  "pyobjc_NSString",
+	  "nsstring",
 	  (PyCFunction)ObjCUnicode_pyobjc_NSString,
 	  METH_NOARGS,
 	  "directly access NSString instance"
+	},
+	{
+	  "syncFromNSString",
+	  (PyCFunction)ObjCUnicode_syncNSString,
+	  METH_NOARGS,
+	  "Copy contents of the NSString to the unicode object"
 	},
         { 0, 0, 0, 0 } /* sentinel */
 };

@@ -65,7 +65,7 @@ int ObjC_RegisterMethodMapping(Class class, SEL sel,
 		return NULL;
 	}
 
-	pyclass = ObjCClass_New(class);
+	pyclass = PyObjCClass_New(class);
 	if (pyclass == NULL) return -1;
 
 	v = PyMem_Malloc(sizeof(*v));
@@ -336,10 +336,10 @@ IMP ObjC_FindIMP(Class class, SEL sel)
 	 * a more specific method signature.
 	 */
 
-	objc_class = ObjCClass_New(class);
+	objc_class = PyObjCClass_New(class);
 	if (objc_class == NULL) return NULL;
 	
-	objc_sel = ObjCClass_FindSelector(objc_class, sel);
+	objc_sel = PyObjCClass_FindSelector(objc_class, sel);
 	if (objc_sel == NULL) return NULL;
 
 	special = search_special(class, sel);

@@ -12,7 +12,7 @@ class TestNSLocalizedString(unittest.TestCase):
         s = NSLocalizedString("hello world", "")
         objc.recycle_autorelease_pool()
         self.assertEquals (s, "hello world")
-        self.assertEquals (s.pyobjc_NSString().description(), "hello world")
+        self.assertEquals (s.nsstring().description(), "hello world")
 
         
 def suite():

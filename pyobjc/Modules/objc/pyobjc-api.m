@@ -9,14 +9,26 @@
  * - To generic support for additional method signatures
  */
 #include "pyobjc.h"
+#include "py2.2bool.h"
 #include "objc_support.h"
 
 #define PYOBJC_BUILD
 #include "pyobjc-api.h"
 
-#ifdef ObjCObject_GetObject
-#undef ObjCObject_GetObject
+#ifdef PyObjCObject_GetObject
+#undef PyObjCObject_GetObject
 #endif
+
+static int bool_check(PyObject* obj)
+{
+	return PyObjCBool_Check(obj);
+}
+
+static PyObject* bool_init(long l)
+{
+	return PyObjCBool_FromLong(l);
+}
+
 
 static id python_to_id(PyObject* object)
 {
@@ -59,25 +71,27 @@ static SEL      sel_get_sel(PyObject* sel)
 
 struct pyobjc_api objc_api = {
 	PYOBJC_API_VERSION,		/* api_version */
-	&ObjCClass_Type,		/* class_type */
-	&ObjCObject_Type,		/* object_type */
+	&PyObjCClass_Type,		/* class_type */
+	(PyTypeObject*)&PyObjCObject_Type, /* object_type */
 	&ObjCSelector_Type,		/* select_type */
 	ObjC_RegisterMethodMapping,	/* register_method_mapping */
 	ObjC_RegisterSignatureMapping,	/* register_signature_mapping */
-	ObjCObject_GetObject,		/* obj_get_object */
-	ObjCObject_ClearObject,		/* obj_clear_object */
-	ObjCClass_GetClass,		/* cls_get_class */
-	ObjCClass_New,			/* cls_to_python */
+	PyObjCObject_GetObject,		/* obj_get_object */
+	PyObjCObject_ClearObject,		/* obj_clear_object */
+	PyObjCClass_GetClass,		/* cls_get_class */
+	PyObjCClass_New,			/* cls_to_python */
 	python_to_id,			/* python_to_id */
 	id_to_python,			/* id_to_python */
 	ObjCErr_FromObjC,		/* err_objc_to_python */
 	ObjCErr_ToObjC,			/* err_python_to_objc */
 	depythonify_c_value,		/* py_to_objc */
 	pythonify_c_value,		/* objc_to_python */
-	ObjC_call_to_python,		/* call_to_python */
+	PyObjC_CallPython,		/* call_to_python */
 	objc_sizeof_type,		/* sizeof_type */
 	sel_get_class,			/* sel_get_class */
 	sel_get_sel,			/* sel_get_sel */
+	bool_check,			/* bool_check */
+	bool_init			/* bool_init */
 };
 
 int ObjCAPI_Register(PyObject* module_dict)

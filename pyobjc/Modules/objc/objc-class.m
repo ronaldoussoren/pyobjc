@@ -1,5 +1,5 @@
 /*
- * Implementation of the class ObjCClass_Type, that is the class representing
+ * Implementation of the class PyObjCClass_Type, that is the class representing
  * Objective-C classes.
  *
  */
@@ -32,11 +32,14 @@ static int add_class_fields(Class objc_class, PyObject* dict);
  * and class_to_objc stores a mapping from a class object to its additional
  * information.
  */
-struct class_info {
+
+#if PY_VERSION_HEX < 0x020300A2 /* Python 2.2 and early 2.3 alpha's */
+
+struct {
 	Class	  class;
 	PyObject* sel_to_py;
 	int	  method_magic;
-};
+} PyObjC_class_info;
 
 static NSMapTable* 	class_to_objc = NULL;
 
@@ -45,7 +48,7 @@ static NSMapTable* 	class_to_objc = NULL;
  * Fetch the additional information for a class. If the information is
  * not yet available add it to the dictionary.
  */
-static inline struct class_info*
+static inline PyObjC_class_info*
 get_class_info(PyObject* class)
 {	
 	PyObject*          item;
@@ -58,7 +61,7 @@ get_class_info(PyObject* class)
 
 	item = NSMapGet(class_to_objc, class);
 	if (item != NULL) {
-		return (struct class_info*)item;
+		return (PyObjC_class_info*)item;
 	}
 
 	info = PyMem_Malloc(sizeof(*item));
@@ -74,6 +77,16 @@ get_class_info(PyObject* class)
 	NSMapInsert(class_to_objc, class, info);
 	return info;
 }
+
+#else /* Python >= 2.3 */
+
+/* NOTE: This requires a version that more recent that 2.3a2 */
+
+#define get_class_info(tp) ((PyObjCClassObject*)(tp))
+#define PyObjC_class_info PyObjCClassObject
+
+
+#endif /* Python >= 2.3 */
 
 
 /* 
@@ -131,7 +144,7 @@ objc_class_locate(Class objc_class)
 
 /*
  * Create a new objective-C class, as a subclass of 'type'. This is
- * ObjCClass_Type.tp_new.
+ * PyObjCClass_Type.tp_new.
  *
  * Note: This function creates new _classes_
  *
@@ -151,7 +164,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	int       len;
 	Class      objc_class = NULL;
 	Class	   super_class = NULL;
-	struct class_info* info;
+	PyObjC_class_info* info;
 	PyObject* protocols;
 	PyObject* real_bases;
 
@@ -182,15 +195,15 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
-	if (!ObjCClass_Check(v)) {
+	if (!PyObjCClass_Check(v)) {
 		PyErr_SetString(PyExc_TypeError, 
 				"first base class must "
 				"be objective-C based");
 		return NULL;
 	}
-	super_class = ObjCClass_GetClass(v);
+	super_class = PyObjCClass_GetClass(v);
 	if (super_class) {
-		ObjCClass_CheckMethodList(v);
+		PyObjCClass_CheckMethodList(v);
 	}
 
 	protocols = PyList_New(0);
@@ -212,7 +225,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		if (v == NULL) {
 			return NULL;
 		}
-		if (ObjCClass_Check(v)) {
+		if (PyObjCClass_Check(v)) {
 			Py_DECREF(protocols);
 			Py_DECREF(real_bases);
 			PyErr_SetString(PyExc_TypeError, 
@@ -237,7 +250,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	/* First generate the objective-C klass. This may change the
 	 * class dict.
 	 */
-	objc_class = ObjCClass_BuildClass(super_class, protocols, name, dict);
+	objc_class = PyObjCClass_BuildClass(super_class, protocols, name, dict);
 	if (objc_class == NULL) {
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
@@ -252,7 +265,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	 * are treated specially there.
 	 */
 	if (ObjC_AddConvenienceMethods(objc_class, dict) < 0) {
-		ObjCClass_UnbuildClass(objc_class);
+		PyObjCClass_UnbuildClass(objc_class);
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
 		return NULL;
@@ -264,7 +277,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	if (res == NULL) {
 		Py_DECREF(args);
 		Py_DECREF(real_bases);
-		ObjCClass_UnbuildClass(objc_class);
+		PyObjCClass_UnbuildClass(objc_class);
 		return NULL;
 	}
 	Py_DECREF(args);
@@ -288,7 +301,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			if (!ObjCIPVerify(p, res)) {
 				Py_DECREF(res);
 				Py_DECREF(protocols);
-				ObjCClass_UnbuildClass(objc_class);
+				PyObjCClass_UnbuildClass(objc_class);
 				return NULL;
 			}
 		}
@@ -299,7 +312,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 
 	if (objc_class_register(objc_class, res) < 0) {
 		Py_DECREF(res);
-		ObjCClass_UnbuildClass(objc_class);
+		PyObjCClass_UnbuildClass(objc_class);
 		return NULL;
 	}
 
@@ -311,14 +324,14 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 				"PyObjC: Cannot unregister unbuild class");
 		}
 		Py_DECREF(res);
-		ObjCClass_UnbuildClass(objc_class);
+		PyObjCClass_UnbuildClass(objc_class);
 		return NULL;
 	}
 	info->class = objc_class;
 	info->sel_to_py = PyDict_New(); 
 	info->method_magic = objc_methodlist_magic(objc_class);
 
-	ObjCClass_SetClass(objc_class, res);
+	PyObjCClass_SetClass(objc_class, res);
 
 	Py_INCREF(res);
 	return res;
@@ -331,7 +344,7 @@ class_repr(PyObject* obj)
 	char buffer[256];
 	Class cls;
 
-	cls = ObjCClass_GetClass(obj);
+	cls = PyObjCClass_GetClass(obj);
 
 	if (cls) {
 		snprintf(buffer, sizeof(buffer), 
@@ -354,42 +367,47 @@ class_dealloc(PyObject* cls)
 }
 
 void 
-ObjCClass_CheckMethodList(PyObject* cls)
+PyObjCClass_CheckMethodList(PyObject* cls)
 {
-	struct class_info* info;
+	PyObjC_class_info* info;
 	int		   magic;
 
 	info = get_class_info(cls);
 
 	if (info->class == NULL) return;
 
-	if (/*info->method_magic == 0 && */ info->class->super_class != 0) {
-		ObjCClass_CheckMethodList(ObjCClass_New(info->class->super_class));
-	}
+	while (info->class != 0) {
 
-	if (info->method_magic != (magic = objc_methodlist_magic(info->class))){
-		int r;
+		if (info->method_magic != 
+				(magic = objc_methodlist_magic(info->class))) {
 
-		r = add_class_fields(
-			info->class,
-			((PyTypeObject*)cls)->tp_dict);
-		if (r < 0) {
-			PyErr_SetString(PyExc_RuntimeError,
-				"Cannot rescan method table");
-			return;
-		}
-		r =  ObjC_UpdateConvenienceMethods(cls);
-		if (r < 0) {
-			PyErr_SetString(PyExc_RuntimeError,
-				"Cannot rescan method table");
-			return;
+			int r;
+
+			r = add_class_fields(
+				info->class,
+				((PyTypeObject*)cls)->tp_dict);
+			if (r < 0) {
+				PyErr_SetString(PyExc_RuntimeError,
+					"Cannot rescan method table");
+				return;
+			}
+			r =  ObjC_UpdateConvenienceMethods(cls);
+			if (r < 0) {
+				PyErr_SetString(PyExc_RuntimeError,
+					"Cannot rescan method table");
+				return;
+			}
+			info->method_magic = magic;
+			if (info->sel_to_py) {
+				Py_DECREF(info->sel_to_py);
+				info->sel_to_py = PyDict_New();
+			}
 		}
 
-		info->method_magic = magic;
-		if (info->sel_to_py) {
-			Py_DECREF(info->sel_to_py);
-			info->sel_to_py = PyDict_New();
-		}
+		if (info->class->super_class == NULL) break;
+		cls = PyObjCClass_New(info->class->super_class);
+		info = get_class_info(cls);
+
 	}
 }
 
@@ -398,7 +416,7 @@ class_getattro(PyObject* self, PyObject* name)
 {
 	PyObject* result;
 
-	ObjCClass_CheckMethodList(self);
+	PyObjCClass_CheckMethodList(self);
 	
 	result = PyType_Type.tp_getattro(self, name);
 	if (result != NULL) {
@@ -442,7 +460,7 @@ class_compare(PyObject* self, PyObject* other)
 	Class other_class;
 	int   v;
 
-	if (!ObjCClass_Check(other)) {
+	if (!PyObjCClass_Check(other)) {
 		PyErr_SetString(PyExc_NotImplementedError, "Cmp with other");
 		return -1;
 	}
@@ -450,8 +468,8 @@ class_compare(PyObject* self, PyObject* other)
 	/* This is as arbitrary as the default tp_compare, but nicer for
 	 * the user
 	 */
-	self_class = ObjCClass_GetClass(self);
-	other_class = ObjCClass_GetClass(other);
+	self_class = PyObjCClass_GetClass(self);
+	other_class = PyObjCClass_GetClass(other);
 
 	if (self_class == other_class) return 0;
 	if (!self_class) return -1;
@@ -498,7 +516,7 @@ cls_get_instanceMethods(PyObject* self, void* closure)
 static PyObject*
 cls_get__name__(PyObject* self, void* closure)
 {
-	Class cls = ObjCClass_GetClass(self);
+	Class cls = PyObjCClass_GetClass(self);
 	if (cls == NULL) {
 		return NULL;
 	} else {
@@ -535,11 +553,15 @@ static PyGetSetDef cls_getset[] = {
 };
 
 
-PyTypeObject ObjCClass_Type = {
+PyTypeObject PyObjCClass_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)
 	0,					/* ob_size */
 	"objc_class",				/* tp_name */
+#if PY_VERSION_HEX >= 0x020300A2
+	sizeof (PyObjCClassObject),		/* tp_basicsize */
+#else /* Python 2.2 */
 	0,					/* tp_basicsize */
+#endif /* Python 2.2 */
 	0,					/* tp_itemsize */
 	/* methods */
 	class_dealloc,	 			/* tp_dealloc */
@@ -749,18 +771,18 @@ add_class_fields(Class objc_class, PyObject* dict)
  * Create a new objective-C class  proxy.
  *
  * NOTES:
- * - proxies are subclasses of ObjCClass_Type
+ * - proxies are subclasses of PyObjCClass_Type
  * - subclass relations in objetive-C are retained in python
- * - this looks a lot like ObjCClass_Type.tp_new, but it is _not_ the
+ * - this looks a lot like PyObjCClass_Type.tp_new, but it is _not_ the
  *   same!
  */
-PyObject* ObjCClass_New(Class objc_class)
+PyObject* PyObjCClass_New(Class objc_class)
 {
 	PyObject* args;
 	PyObject* dict;
 	PyObject* result;
 	PyObject* bases;
-	struct class_info* info;
+	PyObjC_class_info* info;
 
 	result = objc_class_locate(objc_class);
 	if (result != NULL) {
@@ -775,18 +797,18 @@ PyObject* ObjCClass_New(Class objc_class)
 	bases = PyTuple_New(1);
 
 	if (objc_class->super_class == NULL) {
-		PyTuple_SetItem(bases, 0, (PyObject*)&ObjCObject_Type);
-		Py_INCREF((&ObjCObject_Type));
+		PyTuple_SetItem(bases, 0, (PyObject*)&PyObjCObject_Type);
+		Py_INCREF(((PyObject*)&PyObjCObject_Type));
 	} else {
 		PyTuple_SetItem(bases, 0, 
-			ObjCClass_New(objc_class->super_class));
+			PyObjCClass_New(objc_class->super_class));
 	} 
 	args = PyTuple_New(3);
 	PyTuple_SetItem(args, 0, PyString_FromString(objc_class->name));
 	PyTuple_SetItem(args, 1, bases);
 	PyTuple_SetItem(args, 2, dict);
 
-	result = PyType_Type.tp_new(&ObjCClass_Type, args, NULL);
+	result = PyType_Type.tp_new(&PyObjCClass_Type, args, NULL);
 	if (result == NULL) {
 		Py_DECREF(args);
 		return NULL;
@@ -806,7 +828,7 @@ PyObject* ObjCClass_New(Class objc_class)
 	info->method_magic = 0;
 
 	if (PyObject_SetAttrString(result, 
-			"__module__", ObjCClass_DefaultModule) < 0) {
+			"__module__", PyObjCClass_DefaultModule) < 0) {
 		PyErr_Clear();
 	}
 
@@ -817,13 +839,13 @@ PyObject* ObjCClass_New(Class objc_class)
 }
 
 
-Class ObjCClass_GetClass(PyObject* cls)
+Class PyObjCClass_GetClass(PyObject* cls)
 {
-	struct class_info* info;
+	PyObjC_class_info* info;
 
-	if (!ObjCClass_Check(cls)) {
+	if (!PyObjCClass_Check(cls)) {
 		ObjCErr_Set(ObjCExc_internal_error,
-			"ObjCClass_GetClass called for non-class");
+			"PyObjCClass_GetClass called for non-class");
 		return nil;
 	}
 	
@@ -831,9 +853,9 @@ Class ObjCClass_GetClass(PyObject* cls)
 	return info->class;
 }
 
-PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector)
+PyObject* PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 {
-	struct class_info* info;
+	PyObjC_class_info* info;
 	PyObject*          result;
 	PyObject*          attributes;
 	PyObject*          key;
@@ -841,13 +863,13 @@ PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector)
 	int                i;
 	int                len;
 
-	if (!ObjCClass_Check(cls)) {
+	if (!PyObjCClass_Check(cls)) {
 		ObjCErr_Set(ObjCExc_internal_error,
-			"ObjCClass_GetClass called for non-class");
+			"PyObjCClass_GetClass called for non-class");
 		return NULL;
 	}
 
-	ObjCClass_CheckMethodList(cls);
+	PyObjCClass_CheckMethodList(cls);
 	
 	info = get_class_info(cls);
 	if (info->sel_to_py == NULL) {
@@ -915,7 +937,7 @@ PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector)
 }
 
 int 
-ObjCClass_IsSubClass(Class child, Class parent)
+PyObjCClass_IsSubClass(Class child, Class parent)
 {
 	if (parent == nil) return 1;
 

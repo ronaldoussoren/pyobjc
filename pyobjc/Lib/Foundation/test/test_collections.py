@@ -31,10 +31,10 @@ class TestCollections( unittest.TestCase ):
 
         for k in d1:
             self.assertEqual(d1[k], d2[k],
-                             "assertSameDictionary() failed for key '%s'." % k)
+                             "assertSameDictionary() failed for key '%s'. [%s != %s]" % (k, d1[k], d2[k]))
         for k in d2:
             self.assertEqual(d1[k], d2[k],
-                             "assertSameDictionary() failed for key '%s'." % k)
+                             "assertSameDictionary() failed for key '%s'. [%s != %s]" % (k, d1[k], d2[k]))
                              
     def testConversion(self):
         originalNSDictionary = NSString.propertyList(samplePropertyList)

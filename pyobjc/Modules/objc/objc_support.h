@@ -270,7 +270,7 @@ depythonify_objc_message (register const char *from, register char *to)
 }
 
 /*#F Converts an ObjC message in the form 'thisIsObjC:message:with:' to
-  the Python form 'thisIsObjC__message__with__'. You are responsible on
+  the Python form 'thisIsObjC_message_with_'. You are responsible on
   the size of @var{to}. */
 static inline void
 pythonify_objc_message (register const char *from, register char *to)

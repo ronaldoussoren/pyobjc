@@ -91,12 +91,12 @@ static inline int convert_SEL(PyObject* object, void* pvar)
 
 static inline int convert_Class(PyObject* object, void* pvar)
 {
-	if (!ObjCClass_Check(object)) {
+	if (!PyObjCClass_Check(object)) {
 		PyErr_SetString(PyExc_TypeError, "Excpected objective-C class");
 		return 0;
 	}
 
-	*(Class*)pvar = ObjCClass_GetClass(object);
+	*(Class*)pvar = PyObjCClass_GetClass(object);
 	if (*(Class*)pvar == NULL) return 0;
 	return 1;
 }
@@ -212,7 +212,7 @@ static	char* keywords[] = { NULL };
 		ObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = PyBool_FromLong(objc_result);
+		result = PyObjCBool_FromLong(objc_result);
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -232,7 +232,7 @@ objc_itemName);
 		ObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = PyBool_FromLong(objc_result);
+		result = PyObjCBool_FromLong(objc_result);
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -292,7 +292,7 @@ objc_itemName, objc_pboard);
 		ObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = PyBool_FromLong(objc_result);
+		result = PyObjCBool_FromLong(objc_result);
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -351,7 +351,7 @@ objc_depth);
 		ObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = PyBool_FromLong(objc_result);
+		result = PyObjCBool_FromLong(objc_result);
 	if (result == NULL) return NULL;
 	return result;
 }

@@ -7,7 +7,7 @@
  *
  * This file is part of the PyObjC package.
  *
- * RCSfile: ObjCPointer.m,v
+ * RCSfile: PyObjCPointer.m,v
  * Revision: 1.6
  * Date: 1998/01/04 17:59:28
  *
@@ -20,17 +20,17 @@
 #include "objc_support.h"
 
 static void
-ObjCPointer_dealloc (ObjCPointer *self)
+PyObjCPointer_dealloc (PyObjCPointer *self)
 {
   Py_DECREF (self->type);
   PyMem_DEL (self);
 }
 
-PyDoc_STRVAR(ObjCPointer_unpack_doc,
+PyDoc_STRVAR(PyObjCPointer_unpack_doc,
 	"Unpack the pointed value accordingly to its type.\n"
         "obj.unpack() -> value");
 static PyObject *
-ObjCPointer_unpack (ObjCPointer *self, PyObject *args)
+PyObjCPointer_unpack (PyObjCPointer *self, PyObject *args)
 {
   if (PyArg_ParseTuple (args, ""))
     {
@@ -57,18 +57,18 @@ ObjCPointer_unpack (ObjCPointer *self, PyObject *args)
   return NULL;
 }
 
-static PyMethodDef ObjCPointer_methods[] =
+static PyMethodDef PyObjCPointer_methods[] =
 {
-  { "unpack",   (PyCFunction) ObjCPointer_unpack,       METH_VARARGS,   ObjCPointer_unpack_doc },
+  { "unpack",   (PyCFunction) PyObjCPointer_unpack,       METH_VARARGS,   PyObjCPointer_unpack_doc },
   { 0, 0, 0, 0 }
 };
 
 static PyObject *
-ObjCPointer_getattr (ObjCPointer *self, char *name)
+PyObjCPointer_getattr (PyObjCPointer *self, char *name)
 {
   PyObject *method;
 
-  method = Py_FindMethod (ObjCPointer_methods, (PyObject *) self, name);
+  method = Py_FindMethod (PyObjCPointer_methods, (PyObject *) self, name);
   if (method)
     return method;
   else
@@ -100,18 +100,18 @@ ObjCPointer_getattr (ObjCPointer *self, char *name)
   return method;
 }
     
-PyTypeObject ObjCPointer_Type =
+PyTypeObject PyObjCPointer_Type =
 {
   PyObject_HEAD_INIT(&PyType_Type)
   0,                                          /*ob_size*/
-  "ObjCPointer",                              /*tp_name*/
-  sizeof (ObjCPointer),                       /*tp_basicsize*/
+  "PyObjCPointer",                              /*tp_name*/
+  sizeof (PyObjCPointer),                       /*tp_basicsize*/
   sizeof (char),                              /*tp_itemsize*/
   
   /* methods */
-  (destructor) ObjCPointer_dealloc,           /*tp_dealloc*/
+  (destructor) PyObjCPointer_dealloc,           /*tp_dealloc*/
   (printfunc) 0,                              /*tp_print*/
-  (getattrfunc) ObjCPointer_getattr,          /*tp_getattr*/
+  (getattrfunc) PyObjCPointer_getattr,          /*tp_getattr*/
   (setattrfunc) 0,                            /*tp_setattr*/
   (cmpfunc) 0,                                /*tp_compare*/
   (reprfunc) 0,                               /*tp_repr*/
@@ -130,12 +130,12 @@ PyTypeObject ObjCPointer_Type =
   "Wrapper around a Objective-C Pointer"      /* Documentation string */
 };
 
-ObjCPointer *
-ObjCPointer_new (void *p, const char *t)
+PyObjCPointer *
+PyObjCPointer_new (void *p, const char *t)
 {
   unsigned int size = objc_sizeof_type (t);
   const char *typeend = objc_skip_typespec (t);
-  ObjCPointer *self;
+  PyObjCPointer *self;
 
   if (size == (unsigned int)-1) {
 	  return NULL;
@@ -144,9 +144,9 @@ ObjCPointer_new (void *p, const char *t)
 	  return NULL;
   }
   
-  self = PyObject_NEW_VAR (ObjCPointer, &ObjCPointer_Type, size);
+  self = PyObject_NEW_VAR (PyObjCPointer, &PyObjCPointer_Type, size);
 
-  NSLog(@"ObjCPointer created: at %p of type %s", p, t);
+  NSLog(@"PyObjCPointer created: at %p of type %s", p, t);
 
   if (self == NULL)
     return NULL;

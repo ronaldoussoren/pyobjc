@@ -59,35 +59,35 @@ NSConnectionDelegateMethods = _objc.informal_protocol(
             None, 
             selector='makeNewConnection:sender:',
             signature='c@:@@',
-            required=0
+            isRequired=0
         ),
 # - (BOOL)connection:(NSConnection *)ancestor shouldMakeNewConnection:(NSConnection *)conn;
         _objc.selector(
             None, 
             selector='connection:shouldMakeNewConnection:',
             signature='c@:@@',
-            required=0
+            isRequired=0
         ),
 # - (NSData *)authenticationDataForComponents:(NSArray *)components;
         _objc.selector(
             None, 
             selector='authenticationDataForComponents:',
             signature='@@:@',
-            required=0
+            isRequired=0
         ),
 # - (BOOL)authenticateComponents:(NSArray *)components withData:(NSData *)signature;
         _objc.selector(
             None, 
             selector='authenticateComponents:withData:',
             signature='@@:@@',
-            required=0
+            isRequired=0
         ),
 # - (id)createConversationForConnection:(NSConnection *)conn;
         _objc.selector(
             None, 
             selector='createConversationForConnection:',
             signature='@@:@',
-            required=0
+            isRequired=0
         ),
         ]
     )
@@ -100,7 +100,7 @@ NSDistantObjectRequestMethods = _objc.informal_protocol(
             None, 
             selector='connection:handleRequest:',
             signature='c@:@@',
-            required=0
+            isRequired=0
         ),
         ]
     )
@@ -113,14 +113,14 @@ NSCopyLinkMoveHandler = _objc.informal_protocol(
             None, 
             selector='fileManager:shouldProceedAfterError:',
             signature='c@:@@',
-            required=0
+            isRequired=0
         ),
 # - (void)fileManager:(NSFileManager *)fm willProcessPath:(NSString *)path;
         _objc.selector(
             None, 
             selector='replacementObjectForArchiver:',
             signature='v@:@@',
-            required=0
+            isRequired=0
         ),
         ]
     )
@@ -133,35 +133,35 @@ NSKeyedArchiverDelegate = _objc.informal_protocol(
             None, 
             selector='archiver:willEncodeObject:',
             signature='@@:@@',
-            required=0
+            isRequired=0
         ),
 # - (void)archiver:(NSKeyedArchiver *)archiver didEncodeObject:(id)object;
         _objc.selector(
             None, 
             selector='archiver:didEncodeObject:',
             signature='v@:@@',
-            required=0
+            isRequired=0
         ),
 # - (void)archiver:(NSKeyedArchiver *)archiver willReplaceObject:(id)object withObject:(id)newObject;
         _objc.selector(
             None, 
             selector='archiver:willReplaceObject:willReplaceObject:',
             signature='v@:@@@',
-            required=0
+            isRequired=0
         ),
 # - (void)archiverWillFinish:(NSKeyedArchiver *)archiver;
         _objc.selector(
             None, 
             selector='archiverWillFinish:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
 # - (void)archiverDidFinish:(NSKeyedArchiver *)archiver;
         _objc.selector(
             None, 
             selector='archiverDidFinish:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
         ]
     )
@@ -174,35 +174,35 @@ NSKeyedUnarchiverDelegate = _objc.informal_protocol(
             None, 
             selector='unarchiver:cannotDecodeObjectOfClassName:originalClasses:',
             signature='#@:@@@',
-            required=0
+            isRequired=0
         ),
 # - (id)unarchiver:(NSKeyedUnarchiver *)unarchiver didDecodeObject:(id)object;
         _objc.selector(
             None, 
             selector='unarchiver:didDecodeObject:',
             signature='@@:@@',
-            required=0
+            isRequired=0
         ),
 # - (void)unarchiver:(NSKeyedUnarchiver *)unarchiver willReplaceObject:(id)object withObject:(id)newObject;
         _objc.selector(
             None, 
             selector='unarchiver:willReplaceObject:withObject:',
             signature='v@:@@@',
-            required=0
+            isRequired=0
         ),
 # - (void)unarchiverWillFinish:(NSKeyedUnarchiver *)unarchiver;
         _objc.selector(
             None, 
             selector='unarchiverWillFinish:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
 # - (void)unarchiverDidFinish:(NSKeyedUnarchiver *)unarchiver;
         _objc.selector(
             None, 
             selector='unarchiverDidFinish:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
         ]
     )
@@ -215,42 +215,42 @@ NSNetServiceDelegateMethods = _objc.informal_protocol(
             None, 
             selector='netServiceWillPublish:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
 # - (void)netServiceWillResolve:(NSNetService *)sender;
         _objc.selector(
             None, 
             selector='netServiceWillResolve:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
 # - (void)netService:(NSNetService *)sender didNotPublish:(NSDictionary *)errorDict;
         _objc.selector(
             None, 
             selector='netService:didNotPublish:',
             signature='v@:@@',
-            required=0
+            isRequired=0
         ),
 # - (void)netServiceDidResolveAddress:(NSNetService *)sender;
         _objc.selector(
             None, 
             selector='netServiceDidResolveAddress:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
 # - (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict;
         _objc.selector(
             None, 
             selector='netService:didNotResolve:',
             signature='v@:@@',
-            required=0
+            isRequired=0
         ),
 # - (void)netServiceDidStop:(NSNetService *)sender;
         _objc.selector(
             None, 
             selector='netServiceDidStop:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
         ]
     )
@@ -263,49 +263,49 @@ NSNetServiceBrowserDelegateMethods = _objc.informal_protocol(
             None, 
             selector='netServiceBrowserWillSearch:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
 # - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindDomain:(NSString *)domainString moreComing:(BOOL)moreComing;
         _objc.selector(
             None, 
             selector='netServiceBrowser:didFindDomain:moreComing:',
             signature='v@:@@@',
-            required=0
+            isRequired=0
         ),
 # - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing;
         _objc.selector(
             None, 
             selector='netServiceBrowser:didFindService:moreComing:',
             signature='v@:@@@',
-            required=0
+            isRequired=0
         ),
 # - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didNotSearch:(NSDictionary *)errorDict;
         _objc.selector(
             None, 
             selector='netServiceBrowser:didNotSearch:',
             signature='v@:@@',
-            required=0
+            isRequired=0
         ),
 # - (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)aNetServiceBrowser;
         _objc.selector(
             None, 
             selector='netServiceBrowserDidStopSearch:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
 # - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didRemoveDomain:(NSString *)domainString moreComing:(BOOL)moreComing;
         _objc.selector(
             None, 
             selector='netServiceBrowser:didRemoveDomain:moreComing:',
             signature='v@:@@@',
-            required=0
+            isRequired=0
         ),
 # - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didRemoveService:(NSNetService *)aNetService moreComing:(BOOL)moreComing;
         _objc.selector(
             None, 
             selector='netServiceBrowser:didRemoveService:moreComing:',
             signature='v@:@@@',
-            required=0
+            isRequired=0
         ),
         ]
     )
@@ -318,7 +318,7 @@ NSPortDelegateMethods = _objc.informal_protocol(
             None, 
             selector='handlePortMessage:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
         ]
     )

@@ -93,12 +93,12 @@ static inline int convert_SEL(PyObject* object, void* pvar)
 
 static inline int convert_Class(PyObject* object, void* pvar)
 {
-	if (!ObjCClass_Check(object)) {
+	if (!PyObjCClass_Check(object)) {
 		PyErr_SetString(PyExc_TypeError, "Excpected objective-C class");
 		return 0;
 	}
 
-	*(Class*)pvar = ObjCClass_GetClass(object);
+	*(Class*)pvar = PyObjCClass_GetClass(object);
 	if (*(Class*)pvar == NULL) return 0;
 	return 1;
 }
@@ -150,7 +150,7 @@ SIMPLE_TYPES={
 		'convert_SEL, &%(varname)s', 
 	),
 	'Class': (
-		'\tresult = ObjCClass_New(%(varname)s);\n\tif (result == NULL) return NULL;',
+		'\tresult = PyObjCClass_New(%(varname)s);\n\tif (result == NULL) return NULL;',
 		'O&', 		
 		'convert_Class, &%(varname)s', 
 	),
@@ -167,7 +167,7 @@ SIMPLE_TYPES={
 		None
 	),
 	'BOOL': (
-		"\tresult = PyBool_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+		"\tresult = PyObjCBool_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
 		'O&', 		
 		'convert_BOOL, &%(varname)s', 
 		None

@@ -52,14 +52,14 @@ find_selector(PyObject* self, char* name, int class_method)
 	int   unbound_instance_method = 0;
 	char* flattened;
 
-	if (ObjCClass_Check(self)) {
-		objc_object = (id)ObjCClass_GetClass(self);
+	if (PyObjCClass_Check(self)) {
+		objc_object = (id)PyObjCClass_GetClass(self);
 	
 		if (!class_method) {
 			unbound_instance_method = 1;
 		}
-	} else if (ObjCObject_Check(self)) {
-		objc_object = ObjCObject_GetObject(self);
+	} else if (PyObjCObject_Check(self)) {
+		objc_object = PyObjCObject_GetObject(self);
 		if (objc_object == NULL) {
 			PyErr_SetString(PyExc_AttributeError, 
 				"nil has no methods");
@@ -120,8 +120,8 @@ make_dict(PyObject* self, int class_method)
 	id    objc_class;
 	PyObject* bound_self;
 
-	if (ObjCObject_Check(self)) {
-		id obj = ObjCObject_GetObject(self);
+	if (PyObjCObject_Check(self)) {
+		id obj = PyObjCObject_GetObject(self);
 		if (obj == NULL) {
 			return PyDict_New();
 		}
@@ -136,8 +136,8 @@ make_dict(PyObject* self, int class_method)
 			bound_self = self;
 		}
 
-	} else if (ObjCClass_Check(self)) {
-		cls = ObjCClass_GetClass(self);
+	} else if (PyObjCClass_Check(self)) {
+		cls = PyObjCClass_GetClass(self);
 		objc_class = cls;
 		if (class_method) {
 			cls = GETISA(cls);
@@ -271,10 +271,10 @@ obj_getattro(ObjCMethodAccessor* self, PyObject* name)
 		PyString_AS_STRING(name), self->class_method);
 	if (result == NULL) return result;
 
-	if (self->class_method && ObjCObject_Check(self->base)) {
+	if (self->class_method && PyObjCObject_Check(self->base)) {
 		/* Class method */
 		((ObjCSelector*)result)->sel_self = (PyObject*)(self->base->ob_type);
-	} else if (!self->class_method && ObjCClass_Check(self->base)) {
+	} else if (!self->class_method && PyObjCClass_Check(self->base)) {
 		/* Unbound instance method */
 		((ObjCSelector*)result)->sel_self = NULL;
 	} else {

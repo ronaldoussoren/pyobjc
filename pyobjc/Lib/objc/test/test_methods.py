@@ -21,6 +21,7 @@ Todo:
 Also Todo: Passing from Objective-C to python
 - Using NSInvocation '[obj forwardInvocation:inv]'
 - Using normal calls
+- Done: Return simple values, return structs, pass in basic types (c part)
 
 NOTES:
 - Always use makeCFloat when testing the value of a C float against a 
@@ -756,6 +757,7 @@ FLOAT_NUMBERS = [ makeCFloat(0.1), makeCFloat(100.0) ]
 DOUBLE_NUMBERS = [ 1.5, 3.5, 1e10, 1.99e10 ]
 OBJECTS = [ "hello", 1.0, range(4), lambda x: 10 ]
 DUMMY_OBJECTS = [ (1, 1), (-10, -10), (-4, -5), (0, 0), (10, 20) ]
+DUMMY2_OBJECTS = [ ((1, 2, 3, 4),), ((-9, -8, -7, -6),)]
 POINTS=[ (1.0, 2.0), (1e10, 2e10), (-0.5, 0.5) ]
 
 class MyPyClass:
@@ -860,11 +862,65 @@ class MyOCClass (objc.lookUpClass('NSObject')):
         return DUMMY_OBJECTS[i]
     dummyFunc = objc.selector(dummyFunc, signature=OC_TestClass1.dummyFunc.signature)
 
+    def dummy2Func(self):
+        i = self.idx
+        self.idx += 1
+        return DUMMY2_OBJECTS[i]
+    dummy2Func = objc.selector(dummy2Func, signature=OC_TestClass1.dummy2Func.signature)
+
     def nspointFunc(self):
         i = self.idx
         self.idx += 1
         return POINTS[i]
     nspointFunc = objc.selector(nspointFunc, signature=OC_TestClass1.nspointFunc.signature)
+
+    def charArg_(self, arg):
+        return arg * 2
+    charArg_ = objc.selector(charArg_, signature=OC_TestClass1.charArg_.signature)
+    def ucharArg_(self, arg):
+        return arg * 2
+    ucharArg_ = objc.selector(ucharArg_, signature=OC_TestClass1.ucharArg_.signature)
+
+    def shortArg_(self, arg):
+        return arg * 2
+    shortArg_ = objc.selector(shortArg_, signature=OC_TestClass1.shortArg_.signature)
+
+    def ushortArg_(self, arg):
+        return arg * 2
+    ushortArg_ = objc.selector(ushortArg_, signature=OC_TestClass1.ushortArg_.signature)
+
+    def intArg_(self, arg):
+        return arg * 2
+    intArg_ = objc.selector(intArg_, signature=OC_TestClass1.intArg_.signature)
+
+    def uintArg_(self, arg):
+        return arg * 2
+    uintArg_ = objc.selector(uintArg_, signature=OC_TestClass1.uintArg_.signature)
+
+    def longArg_(self, arg):
+        return arg * 2
+    longArg_ = objc.selector(longArg_, signature=OC_TestClass1.longArg_.signature)
+
+    def ulongArg_(self, arg):
+        return arg * 2
+    ulongArg_ = objc.selector(ulongArg_, signature=OC_TestClass1.ulongArg_.signature)
+
+    def longlongArg_(self, arg):
+        return arg * 2
+    longlongArg_ = objc.selector(longlongArg_, signature=OC_TestClass1.longlongArg_.signature)
+
+    def ulonglongArg_(self, arg):
+        return arg * 2
+    ulonglongArg_ = objc.selector(ulonglongArg_, signature=OC_TestClass1.ulonglongArg_.signature)
+
+    def floatArg_(self, arg):
+        return arg * 2
+    floatArg_ = objc.selector(floatArg_, signature=OC_TestClass1.floatArg_.signature)
+
+    def doubleArg_(self, arg):
+        return arg * 2
+    doubleArg_ = objc.selector(doubleArg_, signature=OC_TestClass1.doubleArg_.signature)
+
 
 class OCPyTestSimpleCalls(unittest.TestCase):
     #
@@ -1173,6 +1229,20 @@ class OCPyTestSimpleCalls(unittest.TestCase):
         for o in DUMMY_OBJECTS:
             self.assertEquals(self.obj.invokeInstanceDummyFuncOf_(self.ocobj), o)
 
+    def testCStruct2(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in DUMMY2_OBJECTS:
+            self.assertEquals(self.obj.callInstanceDummy2FuncOf_(self.ocobj), o)
+
+    def testIStruct2(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in DUMMY2_OBJECTS:
+            self.assertEquals(self.obj.invokeInstanceDummy2FuncOf_(self.ocobj), o)
+
     def testCNSPoint(self):
         self.pyobj.reset()
         self.ocobj.reset()
@@ -1187,13 +1257,42 @@ class OCPyTestSimpleCalls(unittest.TestCase):
         for o in POINTS:
             self.assertEquals(self.obj.invokeInstanceNSPointFuncOf_(self.ocobj), o)
 
+class OCPyTestSimpleArguments(unittest.TestCase):
+    #
+    # Test argument passing of single basic values.
+    #
+    # TODO: Copy and adapt rest of OCPyTestSimpleArguments
+    #
 
-def suite():
+    def setUp(self):
+        self.ocobj = MyOCClass.new()
+        self.obj = OC_TestClass2.new()
+
+    def testCLongLong(self):
+        self.assertEquals(self.obj.callInstanceLongLongArg_on_(0, self.ocobj), 0)
+        self.assertEquals(self.obj.callInstanceLongLongArg_on_(10, self.ocobj), 20)
+        self.assertEquals(self.obj.callInstanceLongLongArg_on_(1L << 60, self.ocobj), 1L << 61)
+        self.assertEquals(self.obj.callInstanceLongLongArg_on_(-10, self.ocobj), -20)
+        self.assertEquals(self.obj.callInstanceLongLongArg_on_(-(1L << 60), self.ocobj), -(1L << 61))
+
+    def testILongLong(self):
+        self.assertEquals(self.obj.invokeInstanceLongLongArg_on_(0, self.ocobj), 0)
+        self.assertEquals(self.obj.invokeInstanceLongLongArg_on_(10, self.ocobj), 20)
+        self.assertEquals(self.obj.invokeInstanceLongLongArg_on_(1L << 60, self.ocobj), 1L << 61)
+        self.assertEquals(self.obj.invokeInstanceLongLongArg_on_(-10, self.ocobj), -20)
+        self.assertEquals(self.obj.invokeInstanceLongLongArg_on_(-(1L << 60), self.ocobj), -(1L << 61))
+
+def suite(self):
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestTypeStr))
-    suite.addTest(unittest.makeSuite(TestSimpleCalls))
-    suite.addTest(unittest.makeSuite(TestSimpleArguments))
-    suite.addTest(unittest.makeSuite(TestByReferenceArguments))
+
+    suite.addTest(unittest.makeSuite(PyOCTestTypeStr))
+    suite.addTest(unittest.makeSuite(PyOCTestSimpleReturns))
+    suite.addTest(unittest.makeSuite(PyOCTestSimpleArguments))
+    suite.addTest(unittest.makeSuite(PyOCTestByReferenceArguments))
+
+    suite.addTest(unittest.makeSuite(OCPyTestSimpleCalls))
+    suite.addTest(unittest.makeSuite(OCPyTestSimpleArguments))
+
     return suite
 
 if __name__ == '__main__':

@@ -95,13 +95,13 @@ static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
 			keywords, convert_id, &oc_tableName, convert_id, &oc_key, convert_id, &oc_comment, &bundle)) {
 		return NULL;
 	}
-	if (!ObjCObject_Check(bundle)) {
+	if (!PyObjCObject_Check(bundle)) {
 		PyErr_SetString(PyExc_TypeError,
 			"expecting NSBundle for bundle");
 		return NULL;
 	}
 
-	oc_bundle = ObjCObject_GetObject(bundle);
+	oc_bundle = PyObjCObject_GetObject(bundle);
 	oc_result = NSLocalizedStringFromTableInBundle(
 			oc_key, oc_tableName, oc_bundle, oc_comment);
 

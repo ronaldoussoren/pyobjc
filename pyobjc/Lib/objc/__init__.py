@@ -16,18 +16,13 @@ if sys.version_info[:3] == (2,2,0):
     gc.disable()
 
 # Aliases for some common Objective-C constants
-import __builtin__
-if hasattr(__builtin__, 'True'):
-    YES=True
-    NO=False
-else:
-    YES=1
-    NO=0
 nil=None
 
 from _objc import *
 from _objc import __version__
 import _FoundationSignatures
+
+_objc_bool = type(YES)
 
 # Import values used to define signatures
 import _objc
@@ -90,4 +85,4 @@ try:
 except ImportError:
     pass
 
-del sys, __builtin__
+del sys

@@ -46,12 +46,12 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-        return (PyObject *) ObjCObject_New(self);
+        return (PyObject *) PyObjCObject_New(self);
 }
 
 +(PyObject*)__pyobjc_PythonObject__
 {
-	return ObjCClass_New(self);
+	return PyObjCClass_New(self);
 }
 
 @end /* PyObjCSupport */
@@ -82,9 +82,9 @@
 	 * for boolean True and False values.
 	 */
 	if (kCFBooleanTrue == (CFBooleanRef)self) {
-		return PyBool_FromLong(1);
+		return PyObjCBool_FromLong(1);
 	} else if (kCFBooleanFalse == (CFBooleanRef)self) {
-		return PyBool_FromLong(0);
+		return PyObjCBool_FromLong(0);
 	}
 #endif
 	return pythonify_c_value(typestr, buf);
@@ -689,13 +689,13 @@ pythonify_c_value (const char *type, void *datum)
 			retobject = Py_None;
 			Py_INCREF (retobject);
 		} else {
-			retobject = (PyObject *) ObjCClass_New(c);
+			retobject = (PyObject *) PyObjCClass_New(c);
 		}
 		break;
 	}
 
 	case _C_PTR:
-		retobject = (PyObject*)ObjCPointer_new(*(void**) datum, type+1);
+		retobject = (PyObject*)PyObjCPointer_new(*(void**) datum, type+1);
 		break;
       
 	case _C_UNION_B:
@@ -1068,10 +1068,10 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	case _C_ID:
 		if (argument == Py_None) {
 			*(id *) datum = nil;
-		} else if (ObjCClass_Check (argument)) {
-			*(id *) datum = (id)ObjCClass_GetClass(argument);
-		} else if (ObjCObject_Check (argument)) {
-			*(id *) datum = ObjCObject_GetObject(argument);
+		} else if (PyObjCClass_Check (argument)) {
+			*(id *) datum = (id)PyObjCClass_GetClass(argument);
+		} else if (PyObjCObject_Check (argument)) {
+			*(id *) datum = PyObjCObject_GetObject(argument);
 		} else if (PyString_Check (argument)) {
 			/* NSString values are Unicode strings, convert 
 			 * the string to Unicode, assuming the default encoding.
@@ -1128,11 +1128,9 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				return -1;
 			}
 
-#ifdef PyObjC_HAVE_PYTHON_BOOL
-		} else if (PyBool_Check(argument)) {
+		} else if (PyObjCBool_Check(argument)) {
 			*(id *) datum = [NSNumber 
 				numberWithBool:PyInt_AS_LONG (argument)];
-#endif			
 		} else if (PyInt_Check (argument)) {
 			*(id *) datum = [NSNumber 
 				numberWithLong:PyInt_AS_LONG (argument)];
@@ -1162,8 +1160,8 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		break;
 
 	case _C_CLASS:
-		if (ObjCClass_Check(argument))  {
-			*(Class*) datum = ObjCClass_GetClass(argument);
+		if (PyObjCClass_Check(argument))  {
+			*(Class*) datum = PyObjCClass_GetClass(argument);
 		} else if (argument == Py_None) {
 			*(Class*) datum = nil;
 		} else {
@@ -1209,8 +1207,8 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		 *      structures]
 		 */
 
-		if (ObjCPointer_Check (argument)) {
-			*(void **) datum = ((ObjCPointer *) argument)->ptr;
+		if (PyObjCPointer_Check (argument)) {
+			*(void **) datum = ((PyObjCPointer *) argument)->ptr;
 		} else {
 			ObjCErr_Set(ObjCExc_error,
 				"depythonifying 'pointer', got '%s'",
@@ -1483,10 +1481,10 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 
 	/* Set 'self' argument, for class methods we use the class */ 
 	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
-		if (ObjCObject_Check(self)) {
-			self_obj = GETISA(ObjCObject_GetObject(self));
-		} else if (ObjCClass_Check(self)) {
-			self_obj = ObjCClass_GetClass(self);
+		if (PyObjCObject_Check(self)) {
+			self_obj = GETISA(PyObjCObject_GetObject(self));
+		} else if (PyObjCClass_Check(self)) {
+			self_obj = PyObjCClass_GetClass(self);
 		} else {
 			PyErr_SetString(PyExc_TypeError, 
 				"Need objective-C object or class as self");
@@ -1495,8 +1493,8 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	} else {
 		int err;
 
-		if (ObjCObject_Check(self)) {
-			self_obj = ObjCObject_GetObject(self);
+		if (PyObjCObject_Check(self)) {
+			self_obj = PyObjCObject_GetObject(self);
 
 		} else {
 			err = depythonify_c_value("@", self, &self_obj);
@@ -1644,7 +1642,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 		 * version of self and self != return-value, the current
 		 * value of self is assumed to be no longer valid
 		 */
-		ObjCObject_ClearObject(self);
+		PyObjCObject_ClearObject(self);
 	}
 
 

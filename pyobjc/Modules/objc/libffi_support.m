@@ -371,7 +371,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 	arglist = v;
 
 	if (!callable)
-	  res = ObjC_call_to_python(*(id*)args[0+argOffset], *(SEL*)args[1+argOffset], arglist);
+	  res = PyObjC_CallPython(*(id*)args[0+argOffset], *(SEL*)args[1+argOffset], arglist);
 	else
 	  res = PyObject_Call(callable, arglist, NULL);
 	Py_DECREF(arglist);
@@ -753,13 +753,13 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 	/* Set 'self' argument, for class methods we use the class */ 
 	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
-		if (ObjCObject_Check(self)) {
-			self_obj = ObjCObject_GetObject(self);
+		if (PyObjCObject_Check(self)) {
+			self_obj = PyObjCObject_GetObject(self);
 			if (self_obj != NULL) {
 				self_obj = GETISA(self_obj);
 			}
-		} else if (ObjCClass_Check(self)) {
-			self_obj = ObjCClass_GetClass(self);
+		} else if (PyObjCClass_Check(self)) {
+			self_obj = PyObjCClass_GetClass(self);
 		} else {
 			PyErr_SetString(PyExc_TypeError, 
 				"Need objective-C object or class as self");
@@ -767,8 +767,8 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		}
 	} else {
 		int err;
-		if (ObjCObject_Check(self)) {
-			self_obj = ObjCObject_GetObject(self);
+		if (PyObjCObject_Check(self)) {
+			self_obj = PyObjCObject_GetObject(self);
 		} else {
 			err = depythonify_c_value("@", self, &self_obj);
 			if (err == -1) {
@@ -971,7 +971,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		 * version of self and self != return-value, the current
 		 * value of self is assumed to be no longer valid
 		 */
-		ObjCObject_ClearObject(self);
+		PyObjCObject_ClearObject(self);
 	}
 
 	if (byref_out_count == 0) {

@@ -45,6 +45,24 @@ class TestNSStringBridging(unittest.TestCase):
         self.assert_(isinstance(self.pyUniString, u"".__class__))
         self.assert_(isinstance(self.ns7String, unicode))
         self.assert_(isinstance(self.pyUniString, unicode))
+
+class TestMutable(unittest.TestCase):
+    def testSync(self):
+        """
+        Test that python and ObjC string representation are not
+        automaticly synchronized.
+        """
+        pyStr = NSMutableString.stringWithString_("hello")
+        ocStr= pyStr.nsstring()
+        self.assertEquals(pyStr, "hello")
+        self.assert_(isinstance(ocStr, NSMutableString))
+        ocStr.appendString_(" world")
+        self.assertEquals(pyStr, "hello")
+
+        pyStr.syncFromNSString()
+
+        self.assertEquals(pyStr, "hello world")
+
         
 def suite():
     suite = unittest.TestSuite()

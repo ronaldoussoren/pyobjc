@@ -9,21 +9,21 @@
  * 1) Collect the necessary information (name, bases, class_dict)
  * 2) Call ObjC_BuildClass
  * 3) Create the python class
- * 4) Call ObjCClass_SetClass
+ * 4) Call PyObjCClass_SetClass
  *
- * If step 3 fails, call ObjCClass_UnbuildClass.
+ * If step 3 fails, call PyObjCClass_UnbuildClass.
  *
  * NOTE:
  *   It is _not_ possible to remove classes from the objective-C runtime,
- *   and it is therefore not possible to call 'ObjCClass_UnbuildClass' after
- *   you have called 'ObjCClass_SetClass'
+ *   and it is therefore not possible to call 'PyObjCClass_UnbuildClass' after
+ *   you have called 'PyObjCClass_SetClass'
  */
-Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
+Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				char* name, PyObject* class_dict);
-void ObjCClass_UnbuildClass(Class new_class);
-int ObjCClass_SetClass(Class objc_class, PyObject* py_class);
+void PyObjCClass_UnbuildClass(Class new_class);
+int PyObjCClass_SetClass(Class objc_class, PyObject* py_class);
 
-int ObjC_HasPythonImplementation(id obj);
-PyObject* ObjC_GetPythonImplementation(id obj);
+int PyObjC_HasPythonImplementation(id obj);
+PyObject* PyObjC_GetPythonImplementation(id obj);
 
 #endif /* OBJC_CLASS_BUILDER */

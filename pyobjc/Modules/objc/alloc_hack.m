@@ -14,13 +14,13 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 		return NULL;
 	}
 
-	if (!ObjCClass_Check(self)) {
+	if (!PyObjCClass_Check(self)) {
 		PyErr_SetString(PyExc_TypeError, "Expecting class");
 		return NULL;
 	}
 
 	NS_DURING
-		result = [ObjCClass_GetClass(self) alloc];
+		result = [PyObjCClass_GetClass(self) alloc];
 	NS_HANDLER
 		ObjCErr_FromObjC(localException);
 		result = nil;
@@ -43,13 +43,13 @@ supercall_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 		return NULL;
 	}
 
-	if (!ObjCClass_Check(self)) {
+	if (!PyObjCClass_Check(self)) {
 		PyErr_SetString(PyExc_TypeError, "Expecting class");
 		return NULL;
 	}
 
 	/* XXX: Shouldn't we use method->sel_class here? */
-	RECEIVER(super) = (id)ObjCClass_GetClass(self);
+	RECEIVER(super) = (id)PyObjCClass_GetClass(self);
 	super.class = GETISA((Class)(RECEIVER(super)));
 
 	NS_DURING
@@ -80,7 +80,7 @@ imp_NSObject_alloc(id self, SEL sel)
 		return nil;
 	}
 
-	result = ObjC_call_to_python(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist);
 	if (result == NULL) {
 		ObjCErr_ToObjC();
 		return nil;
@@ -96,7 +96,7 @@ imp_NSObject_alloc(id self, SEL sel)
 }
 
 int
-ObjC_InstallAllocHack(void)
+PyObjC_InstallAllocHack(void)
 {
 	return ObjC_RegisterMethodMapping(
 		objc_lookUpClass("NSObject"),
