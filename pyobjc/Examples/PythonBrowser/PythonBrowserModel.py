@@ -103,6 +103,15 @@ class NiceError:
 
 class PythonItem(NSObject):
 
+    """Wrapper class for items to be displayed in the outline view."""
+    
+    # We keep references to all child items (once created). This is
+    # neccesary because NSOutlineView holds on to PythonItem instances
+    # without retaining them. If we don't make sure they don't get
+    # garbage collected, the app will crash. For the same reason this
+    # class _must_ derive from NSObject, since otherwise autoreleased
+    # proxies will be fed to NSOutlineView, which will go away too soon.
+
     def __new__(cls, *args, **kwargs):
         # "Pythonic" constructor
         return cls.alloc().init()
