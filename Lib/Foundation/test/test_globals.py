@@ -9,7 +9,7 @@ class GlobalFunctionTest (unittest.TestCase):
         def testNSFileTypeForHFSTypeCode(self):
             self.assertEquals("'rtfx'",
                     Foundation.NSFileTypeForHFSTypeCode('rtfx'))
-    
+
             # The cannonical representation for four-character-codes in python
             # is a string of 4 characters, but at least some ObjC API's return
             # longs (because these methods haven't been wrapped correctly yet).
@@ -27,11 +27,11 @@ class GlobalFunctionTest (unittest.TestCase):
         self.assert_(hasattr(Foundation, 'NSMakeRect'))
 
         self.assertEquals(
-                Foundation.NSMakeRect(1.5, 2.5, 3.5, 4.5), 
+                Foundation.NSMakeRect(1.5, 2.5, 3.5, 4.5),
                 ((1.5, 2.5), (3.5, 4.5))
         )
         self.assertEquals(
-                Foundation.NSMakeRect(1, 2, 3, 4), 
+                Foundation.NSMakeRect(1, 2, 3, 4),
                 ((1.0, 2.0), (3.0, 4.0))
         )
 
@@ -39,7 +39,7 @@ class GlobalFunctionTest (unittest.TestCase):
 
     def test_NSDivideRect(self):
         rect1 = Foundation.NSMakeRect(1.0, 2.0, 3.0, 4.0)
-        
+
         slice, rem = Foundation.NSDivideRect(rect1, 0.5, Foundation.NSMinXEdge)
         self.assertEquals(slice, ((1.0, 2.0), (0.5, 4.0)))
         self.assertEquals(rem,   ((1.5, 2.0), (2.5, 4.0)))
@@ -68,4 +68,3 @@ class GlobalVariablesTest (unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

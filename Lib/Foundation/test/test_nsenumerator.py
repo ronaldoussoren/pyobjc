@@ -14,7 +14,7 @@ class TestNSEnumeratorInteraction(unittest.TestCase):
 
         self.assertEquals(len(y), len(self.arrayContainer))
         for i in range(len(y)):
-            self.assertEquals(y[i], self.arrayContainer[i])        
+            self.assertEquals(y[i], self.arrayContainer[i])
 
 if __name__ == '__main__':
     unittest.main( )

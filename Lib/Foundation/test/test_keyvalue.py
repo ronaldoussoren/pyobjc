@@ -35,7 +35,6 @@ class KeyValueClass1 (objc.runtime.NSObject):
     def get_key2(self):
         return 2
 
-
     def setKey4(self, value):
         self._key4 = value * 4
 
@@ -96,7 +95,7 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(STUB.keyValue_forObject_key_(0, o, "key3"), 3)
         self.assertEquals(STUB.keyValue_forObject_key_(0, o, "key4"), "4")
         self.assertEquals(STUB.keyValue_forObject_key_(0, o, "multiple"), o.multiple)
-       
+
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o, "nokey")
 
     def testValueForKey2(self):
@@ -116,7 +115,7 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(STUB.keyValue_forObject_key_(2, o, "key3"), 3)
         self.assertEquals(STUB.keyValue_forObject_key_(2, o, "key4"), "4")
         self.assertEquals(STUB.keyValue_forObject_key_(2, o, "multiple"), o.multiple)
-       
+
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 2, o, "nokey")
 
     def testStoredValueForKey2(self):
@@ -132,9 +131,9 @@ class PyKeyValueCoding (unittest.TestCase):
 
         self.assertEquals(STUB.keyValue_forObject_key_(1, o, "multiple"), o.multiple)
         self.assertEquals(STUB.keyValue_forObject_key_(1, o, "multiple.level2"), o.multiple.level2)
-        self.assertEquals(STUB.keyValue_forObject_key_(1, o, "multiple.level2.level3.keyA"), 
+        self.assertEquals(STUB.keyValue_forObject_key_(1, o, "multiple.level2.level3.keyA"),
             o.multiple.level2.level3.keyA)
-        self.assertEquals(STUB.keyValue_forObject_key_(1, o, "multiple.level2.level3.keyB"), 
+        self.assertEquals(STUB.keyValue_forObject_key_(1, o, "multiple.level2.level3.keyB"),
             o.multiple.level2.level3.keyB)
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 1, o, "multiple.level2.nokey")
@@ -183,7 +182,7 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(o.key3, 3)
         STUB.setKeyValue_forObject_key_value_(2, o, 'key3', 'drie')
         self.assertEquals(o.key3, "drie")
-        
+
         self.assertEquals(o._key4, "4")
         STUB.setKeyValue_forObject_key_value_(2, o, 'key4', 'vier')
         self.assertEquals(o._key4, "viervierviervier")
@@ -279,7 +278,7 @@ class PyKeyValueCoding (unittest.TestCase):
                 self.assertEquals(keyPath, "key3")
                 self.assert_(object is o)
                 self.assertEquals(change, {NSKeyValueChangeKindKey: 1 })
-            
+
             finally:
                 o.removeObserver_forKeyPath_(observer, 'key3')
 
@@ -293,8 +292,8 @@ class PyKeyValueCoding (unittest.TestCase):
             o = KeyValueClass1.alloc().init()
             STUB.setKeyValue_forObject_key_value_(2, o, 'key3', 'three')
 
-            o.addObserver_forKeyPath_options_context_(observer, "key3", 
-                    NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld, 
+            o.addObserver_forKeyPath_options_context_(observer, "key3",
+                    NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld,
                     0)
             try:
                 STUB.setKeyValue_forObject_key_value_(2, o, 'key3', 'drie')
@@ -305,19 +304,19 @@ class PyKeyValueCoding (unittest.TestCase):
                 keyPath, object, change = observer.observed[0]
                 self.assertEquals(keyPath, "key3")
                 self.assert_(object is o)
-                self.assertEquals(change, 
+                self.assertEquals(change,
                     {
-                        NSKeyValueChangeKindKey:1, 
-                        NSKeyValueChangeNewKey:'drie', 
-                        NSKeyValueChangeOldKey:'three' 
+                        NSKeyValueChangeKindKey:1,
+                        NSKeyValueChangeNewKey:'drie',
+                        NSKeyValueChangeOldKey:'three'
                     })
-            
+
             finally:
                 o.removeObserver_forKeyPath_(observer, 'key3')
 
 class TestBaseExceptions (unittest.TestCase):
     """
-    Check that NSObject implementation of Key-Value coding raises the 
+    Check that NSObject implementation of Key-Value coding raises the
     exception that we expect it to raise.
     """
     def testValueForKey(self):
@@ -333,7 +332,7 @@ class TestBaseExceptions (unittest.TestCase):
     def testTakeStoredValue(self):
         o = objc.runtime.NSObject.alloc().init()
 
-        self.assertRaises(KeyError, 
+        self.assertRaises(KeyError,
             o.takeStoredValue_forKey_, "value", "unknownKey")
 
 

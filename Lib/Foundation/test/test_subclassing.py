@@ -23,6 +23,6 @@ class TestSubclassing(unittest.TestCase):
 
         self.assert_( subclassInstance is subclassInstance, "Identity check failed." )
         self.assert_( subclassInstance is subclassInstance.self(), "Identity check failed." )
-    
+
 if __name__ == '__main__':
     unittest.main( )
