@@ -1,9 +1,9 @@
 #
 #  MyDocument.py
-#  Â«PROJECTNAMEÂ»
+#  ÇPROJECTNAMEÈ
 #
-#  Created by Â«FULLUSERNAMEÂ» on Â«DATEÂ».
-#  Copyright (c) Â«YEARÂ» Â«ORGANIZATIONNAMEÂ». All rights reserved.
+#  Created by ÇFULLUSERNAMEÈ on ÇDATEÈ.
+#  Copyright (c) ÇYEARÈ ÇORGANIZATIONNAMEÈ. All rights reserved.
 #
 
 from objc import YES, NO
