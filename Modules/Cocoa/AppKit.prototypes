@@ -118,7 +118,6 @@ int NSBitsPerPixelFromDepth (NSWindowDepth depth);
 int NSNumberOfColorComponents (NSString *colorSpaceName);
 const NSWindowDepth *NSAvailableWindowDepths (void);
 void NSRectFill(NSRect aRect);
-void NSRectFillList(const NSRect *rects, int count);
 void NSRectFillListWithGrays(const NSRect *rects, const float *grays, int num);
 void NSRectFillListWithColors(const NSRect *rects, NSColor **colors, int num);
 void NSRectFillUsingOperation(NSRect aRect, NSCompositingOperation op);
