@@ -1,5 +1,5 @@
 """
-ExceptionHandling doesn't add 'interesting' behaviour, just check that the 
+ExceptionHandling doesn't add 'interesting' behaviour, just check that the
 module loaded correctly.
 """
 

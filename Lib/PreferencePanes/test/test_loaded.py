@@ -1,5 +1,5 @@
 """
-PreferencePanes doesn't add 'interesting' behaviour, just check that the 
+PreferencePanes doesn't add 'interesting' behaviour, just check that the
 module loaded correctly.
 """
 

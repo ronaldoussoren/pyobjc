@@ -7,7 +7,7 @@ NibClassBuilder.extractClasses("MainMenu")
 # class defined in MainMenu.nib
 class Converter(NibClassBuilder.AutoBaseClass):
     # the actual base class is NSObject
-    
+
     def convertAmount(self, amt, rate):
         return amt*rate
 
@@ -31,7 +31,7 @@ class ConverterController(NibClassBuilder.AutoBaseClass):
     def awakeFromNib(self):
         self.rateField.window().makeKeyAndOrderFront_(self)
         self.rateField.selectText_(self)
-        
+
     def invertRate_(self, sender):
         rate = self.rateField.floatValue()
         if rate != 0:
@@ -39,4 +39,4 @@ class ConverterController(NibClassBuilder.AutoBaseClass):
         self.rateField.setFloatValue_(rate)
 
 if __name__ == "__main__":
-        AppHelper.runEventLoop()
+    AppHelper.runEventLoop()

@@ -1,5 +1,5 @@
 """
-AddressBook doesn't add 'interesting' behaviour, just check that the 
+AddressBook doesn't add 'interesting' behaviour, just check that the
 module loaded correctly.
 """
 

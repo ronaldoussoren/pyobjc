@@ -1,5 +1,5 @@
 """
-ScreenSaver doesn't add 'interesting' behaviour, just check that the 
+ScreenSaver doesn't add 'interesting' behaviour, just check that the
 module loaded correctly.
 """
 
