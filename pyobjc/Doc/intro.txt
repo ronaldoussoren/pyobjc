@@ -104,7 +104,7 @@ For more information about Objective-C see:
 
 * `The Objective-C Programming Language`_ at `Apple`_.
 
-.. _`The Objective-C Programming Language`: http://developer.apple.com/techpubs/macosx/Cocoa/ObjectiveC/index.html
+.. _`The Objective-C Programming Language`: http://developer.apple.com/documentation/Cocoa/Conceptual/ObjectiveC/index.html
 
 
 Overview of the bridge
@@ -157,10 +157,10 @@ the only Python keywords that are actually used in Cocoa.
 
 Wrapped/bridged methods (and functions) have the same number of arguments
 as the corresponding Objective-C method or function, unless otherwise noted
-in the documentation (`Notes on supported APIs and classes on MacOS X`_ for
-Cocoa on MacOS X).
+in the documentation (`Notes on supported APIs and classes on Mac OS X`_ for
+Cocoa on Mac OS X).
 
-.. _`Notes on supported APIs and classes on MacOS X`: api-notes-macosx.html
+.. _`Notes on supported APIs and classes on Mac OS X`: api-notes-macosx.html
 
 One group of exceptions to this rule can be described in a global way. Some
 methods and functions have pointers as arguments, specifically pointers to
@@ -239,7 +239,7 @@ Objective-C use explicit reference counting to manage memory. The methods
 ``retain``, ``release`` and ``autorelease`` are used to manage these 
 reference counts. You won't have to manage reference counts in Python, the
 bridge does all that work for you (but see `Notes on supported APIs and classes 
-on MacOS X`__ for some advanced issues).
+on Mac OS X`__ for some advanced issues).
 
 .. __: api-notes-macosx.html
 
@@ -264,7 +264,7 @@ object stays alive, but the proxy object as seen by the Objective-C code is
 actually an autoreleased object that will be cleaned up unless the Objective-C
 code increases its reference count.
 
-The document `Notes on supported APIs and classes on MacOS X`_ contains 
+The document `Notes on supported APIs and classes on Mac OS X`_ contains 
 information about classes that work with weak references. The most important
 are notification centers and ``NSOutlineView``, to be exact: the outline view
 stores weak references to the objects return by the method 
@@ -378,11 +378,11 @@ More information on Cocoa programming can be found at:
 
 .. _`PyObjC Example index`: ../Examples/00ReadMe.html
 
-..  _`Cocoa libraries`: http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html
+..  _`Cocoa libraries`: http://developer.apple.com/referencelibrary/API_Fundamentals/Cocoa-api-date.html
 
-..  _`Cocoa documentation at the Apple developer website`: http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html
+..  _`Cocoa documentation at the Apple developer website`: http://developer.apple.com/documentation/Cocoa/Cocoa.html
 
-.. _`Cocoa examples at the Apple developer website`: http://developer.apple.com/samplecode/Sample_Code/Cocoa.htm
+.. _`Cocoa examples at the Apple developer website`: http://developer.apple.com/samplecode/Cocoa/index.html
 
 .. _`stepwise.com`: http://www.stepwise.com/
 
@@ -398,19 +398,6 @@ you're done. The easiest way to that is to create an instance of that class
 bound to a local variable. If the thread is long-lived you may want to arrange
 for recycling the pool once in a while.
 
-Threading limitiations when using Python 2.2
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-There are some limitation w.r.t. threading when using Python 2.2. The
-combination of Python 2.3 and PyObjC is fully thread-safe.
-
-You cannot use ``NSThread`` to create new threads, but must use the python 
-primitives instead.  
-
-You must also make sure that Objective-C only makes calls to Python from a 
-thread that owns the Python GIL (that's also the reason for not being able 
-to use ``NSThread`` to create new threads).  
-
 Finalizers
 ..........
 
@@ -425,48 +412,48 @@ this method.
 Building applications
 ---------------------
 
-There are two different ways to build applications with PyObjC. There are no
-major advantages to using either one of them, use the one that is most 
-convenient to you.
+There are two different ways to build applications with PyObjC. py2app
+should be the preferred method, however using the Xcode template can
+be convenient for development.
 
-"Pure Python" :  buildapp.py
-............................
+"py2app" :  setup.py
+....................
 
-PyObjC includes a copy of the ``bundlebuilder`` module. This module is
-part of the Python 2.3 MacPython release and offers a way to build
-distutils-style scripts for building (standalone) applications.
+The PyObjC installer includes a copy of the ``py2app`` package. This package
+offers a way to build distutils scripts for building (standalone)
+applications and plugin bundles.
 
-An example ``buildapp.py`` script::
+An example ``setup.py`` script::
 
-	from bundlebuilder import buildapp
-	buildapp(
-		name = 'iClass',
-		mainprogram = "main.py",
-		resources = ["English.lproj", "datasource.py" ],
-		nibname = "MainMenu",
-	)   
+    from distutils.core import setup
+    import py2app
 
+    setup(
+        app = ["iClass.py"],
+        data_files = ["English.lproj"],
+    )
+	
 During development you typically invoke it from the command line like this::
 
-	python buildapp.py --link build
+	python setup.py py2app -A
 
-This will build an application bundle in a folder named ``build`` in the
-current folder. The ``--link`` option tells ``bundlebuilder`` to add symbolic
-links to the application bundle instead of copies of your source and resource
-files, allowing you to edit them without having to rebuild the application. To
-build a standalone application, either use ``--standalone`` or
-``--semi-standalone``. The latter will put all used modules that are not in
-Python's standard library into the application bundle. The result will still
-depend on an installed Python, but yields a relatively compact application.
-``--standalone`` will cause ``bundlebuilder`` to include *everything* needed
-into the app bundle, including the entire Python runtime. This is useful if
-you're using a different version of Python that the one that comes with MacOSX
-10.2, or if you fear that a future version of OSX may come with an
-incompatible Python version.
+This will build an application bundle in a folder named ``dist`` in the
+current folder. The ``-A`` option tells ``py2app`` to add symbolic
+links for data folders and files and an Alias to your main script,
+allowing you quickly rebuild the application without doing a full dependency
+scan, with the additional bonus that you can edit them without rebuild. To
+build a standalone application, simply do not use the ``-A`` option.
+Note that if you are using a version of Python shipped with your operating
+system, it will not be included in the application.  Otherwise, your
+application will include stripped down version of the Python runtime that
+you ran setup.py with.
 
-The online documentation for ``bundlebuilder`` contains more information on 
-building ``buildapp.py`` scripts and how to invoke them. There are plenty of
-example ``buildapp.py`` scripts in the various `Examples`__ subfolders.
+For more information about ``py2app`` usage, read through some of the
+``setup.py`` scripts used by the examples in the `Examples`__ folder.
+On any ``setup.py`` script that imports ``py2app``, you can use the
+following command to see the list of options::
+
+    python setup.py py2app --help
 
 .. __: ../Examples/00ReadMe.txt
 
@@ -475,22 +462,19 @@ example ``buildapp.py`` scripts in the various `Examples`__ subfolders.
 ................................
 
 PyObjC includes a number of Xcode templates that can be used to 
-build (standalone) applications. Those templates are used like any other
+develop applications. Those templates are used like any other
 Xcode template. The only non-obvious detail is that you have to
 add your sources as resources, but Project Builder usually does the right
 thing when you add a new file.
 
 The templates will build an application that makes use of the installed copy
-``/usr/bin/python`` (e.g. the one shipped by Apple in MacOS X 10.2) and will 
-copy the PyObjC modules into the application bundle. This means that this 
-application bundle should be useable on any MacOS X 10.2 system.
+``/System/Library/Frameworks/Python.framework`` (e.g. the one shipped by
+Apple in Mac OS X 10.3) and will copy the PyObjC modules into the application
+bundle. This means that this application bundle *should* be useable on any
+Mac OS X 10.3 system, if you do not have any additional dependencies.  Using
+py2app to deploy your application is a more reliable method, and builds more
+compact bundles.
 
 See `the documentation for the templates`__ for more details.
 
-.. __: ProjectBuilder-Templates.html
-
-MacOS X 10.3 seems to ship with Python 2.3 as /usr/bin/python. This means that
-standalone applications build using the Project Builder templates will start
-to complain about Python ABI versions in the ``Console`` when you run them
-on MacOS X 10.3. These are harmless messages caused by the extension modules
-in PyObjC.
+.. __: Xcode-Templates.html

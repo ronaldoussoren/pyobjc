@@ -79,7 +79,7 @@ Release-date
 
 * update the information at a number of software databases:
 
-  - versiontracker.com (billb knows how)
+  - versiontracker.com (bbum knows how)
 
   - macupdate.com
 

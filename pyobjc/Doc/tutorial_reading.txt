@@ -157,7 +157,7 @@ for the actual conversion window are in here too: ``Converter``, ``Window`` and
 Let us have a look at the ``ConverterController`` object by double clicking it.
 The "MainMenu.nib" window goes to the "Classes" tab, and an info window shows up.
 In the "MainMenu.nib" window the ``ConverterController`` class is selected, and
-you can see it is a subclass of ``NSobject``. Having the same name for the class
+you can see it is a subclass of ``NSObject``. Having the same name for the class
 and the instance is common in Cocoa programs, the main exception being the File
 Owner object.
 

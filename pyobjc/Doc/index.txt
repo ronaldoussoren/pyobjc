@@ -29,7 +29,7 @@ Cocoa applications in Python.
 
   Another older overview of PyObjC. 
 
-* `Notes on supported APIs and classes on MacOS X`_
+* `Notes on supported APIs and classes on Mac OS X`_
 
   This document lists the methods and classes that are not fully supported,
   or supported in an 'unexpected' way.
@@ -106,4 +106,4 @@ you want to write Cocoa programs in Python.
 
 .. _`Adding Python code to an existing ObjC application`: tutorial_embed/extending_objc_with_python.html
 
-.. _`Notes on supported APIs and classes on MacOS X`: api-notes-macosx.html
+.. _`Notes on supported APIs and classes on Mac OS X`: api-notes-macosx.html
