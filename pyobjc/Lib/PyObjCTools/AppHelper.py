@@ -78,7 +78,7 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=False, p
         else:
             unexpectedErrorAlert = unexpectedErrorAlertPanel
 
-    firstRun = True
+    firstRun = NSApp() is None
     while True:
         try:
             if firstRun:
