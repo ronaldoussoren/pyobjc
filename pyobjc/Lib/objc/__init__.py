@@ -9,17 +9,17 @@ This module defines the core interfaces of the Python<->Objective-C bridge.
 ##
 import sys
 if sys.version_info[:3] == (2,2,0):
-	import gc
-	gc.disable()
+    import gc
+    gc.disable()
 
 # Aliases for some common Objective-C constants
 import __builtin__
 if hasattr(__builtin__, 'True'):
-	YES=True
-	NO=False
+    YES=True
+    NO=False
 else:
-	YES=1
-	NO=0
+    YES=1
+    NO=0
 nil=None
 
 from _objc import *
@@ -29,7 +29,7 @@ from _objc import __version__
 import _objc
 gl = globals()
 for nm in [ x for x in dir(_objc) if x.startswith('_C_') ]:
-	gl[nm] = getattr(_objc, nm)
+    gl[nm] = getattr(_objc, nm)
 del gl, nm, _objc, x
 
 
@@ -44,15 +44,15 @@ del gl, nm, _objc, x
 # are the only methods that transfer ownership.
 #
 def register_allocator_selector(selector):
-	"""
-	register 'selector' as a method that transfers ownership of the 
-	returned object to the caller. 
-	
-	This information is used by the proxy code to correctly maintain 
-	reference counts. It is highly unlikely that this function should
-	be called outside of the 'objc' module.
-	"""
-	ALLOCATOR_METHODS[selector] = 1
+    """
+    register 'selector' as a method that transfers ownership of the 
+    returned object to the caller. 
+    
+    This information is used by the proxy code to correctly maintain 
+    reference counts. It is highly unlikely that this function should
+    be called outside of the 'objc' module.
+    """
+    ALLOCATOR_METHODS[selector] = 1
 
 register_allocator_selector('alloc')
 register_allocator_selector('allocWithZone:')
@@ -66,25 +66,25 @@ register_allocator_selector('mutableCopyWithZone:')
 
 
 class _runtime:
-	"""
-	Backward compatibility interface.
+    """
+    Backward compatibility interface.
 
-	This class provides (partial) support for the interface of 
-	older versions of PyObjC.
-	"""
-	def __getattr__(self, name):
-		if name == '__objc_classes__':
-			return class_list()
-		elif name == '__kind__':
-			return 'python'
+    This class provides (partial) support for the interface of 
+    older versions of PyObjC.
+    """
+    def __getattr__(self, name):
+        if name == '__objc_classes__':
+            return class_list()
+        elif name == '__kind__':
+            return 'python'
 
-		return lookup_class(name)
+        return lookup_class(name)
 
-	def __eq__(self, other):
-		return self is other
+    def __eq__(self, other):
+        return self is other
 
-	def __repr__(self):
-		return "objc.runtime"
+    def __repr__(self):
+        return "objc.runtime"
 runtime = _runtime()
 del _runtime
 
@@ -94,11 +94,11 @@ del _runtime
 IBOutlet = ivar
 
 def IBAction(func):
-	"""
-	Return an Objective-C method object that can be used as an action
-	in Interface Builder.
-	"""
-	return selector(func, signature="v@:@")
+    """
+    Return an Objective-C method object that can be used as an action
+    in Interface Builder.
+    """
+    return selector(func, signature="v@:@")
 
 
 
@@ -109,24 +109,24 @@ from _convenience import CONVENIENCE_METHODS, CLASS_METHODS
 # is ugly, but it is also something that would be very
 # hard to avoid...
 try:
-	import _FoundationSignatures
-	del _FoundationSignatures
+    import _FoundationSignatures
+    del _FoundationSignatures
 except ImportError:
-	pass
+    pass
 
 try:
-	import _FoundationMapping
-	del _FoundationMapping
+    import _FoundationMapping
+    del _FoundationMapping
 except ImportError:
-	pass
+    pass
 
 # This is a hack, should probably patch python:
 # - We want the resources directory to be on the python search-path
 # - It must be at the start of the path
 # - The CWD must not be on the path
 if 1 :
-	b = lookup_class('NSBundle').mainBundle()
-	if b:
-		sys.path.insert(0, '%s/Contents/Resources'%str(b.bundlePath()))
-	del b
+    b = lookup_class('NSBundle').mainBundle()
+    if b:
+        sys.path.insert(0, '%s/Contents/Resources'%str(b.bundlePath()))
+    del b
 del sys, __builtin__
