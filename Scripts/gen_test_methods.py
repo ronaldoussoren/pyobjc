@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Script to generate Lib/objc/test/testbnd2.m and Lib/objc/test/test_methods2.py.
+Script to generate Modules/objc/test/testbnd2.m and Lib/objc/test/test_methods2.py.
 
 These files test method passing from Objective-C to Python subclasses of
 Objective-C classes, and method passing from Python to Objective-C.
@@ -1093,7 +1093,7 @@ def emit_py_from_objc(fp):
 
 
 print "------------- testbndl.m -----------"
-fp = open('Lib/objc/test/testbndl2.m', 'w')
+fp = open('Modules/objc/test/testbndl2.m', 'w')
 fp.write(OBJC_HEADER)
 emit_objc_interfaces(fp)
 emit_objc_implementations(fp)
