@@ -33,7 +33,6 @@ extern PyObject* PyObjCIMP_New(
 		PyObjCMethodSignature* signature,
 		int flags);
 extern IMP PyObjCIMP_GetIMP(PyObject* self);
-extern int PyObjCIMP_GetFlags(PyObject* self);
 extern PyObjC_CallFunc PyObjCIMP_GetCallFunc(PyObject* self);
 extern PyObjCMethodSignature* PyObjCIMP_GetSignature(PyObject* self);
 extern int PyObjCIMP_GetFlags(PyObject* self);

@@ -109,14 +109,15 @@ imp_call(PyObjCIMPObject* self, PyObject* args)
 
 	execute = self->callfunc;
 
+#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 	if (PyObjCObject_Check(pyself) 
-		&& (PyObjCObject_Flags(pyself) & PyObjCObject_kUNINITIALIZED) 
+		&& (PyObjCObject_GetFlags(pyself) & PyObjCObject_kUNINITIALIZED) 
 		&& !(self->flags & PyObjCSelector_kINITIALIZER)) {
 
 		char buf[1024];
 
 		snprintf(buf, sizeof(buf), 
-			"Calling IMP %s on unitialized object %p of class %s\n",
+			"Calling IMP %s on uninitialized object %p of class %s\n",
 			PyObjCRT_SELName(self->selector),
 			(void*)PyObjCObject_GetObject(pyself),
 			GETISA(PyObjCObject_GetObject(pyself))->name);
@@ -125,6 +126,7 @@ imp_call(PyObjCIMPObject* self, PyObject* args)
 			return NULL;
 		}
 	}
+#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 
 
 	arglist = PyTuple_New(argslen - 1);
@@ -146,6 +148,15 @@ imp_call(PyObjCIMPObject* self, PyObject* args)
 		if (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
 			((PyObjCObject*)res)->flags |= PyObjCObject_kUNINITIALIZED;
 		}
+#if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
+		else if (((PyObjCObject*)res)->flags & PyObjCObject_kUNINITIALIZED) {
+			((PyObjCObject*)res)->flags &=
+				~PyObjCObject_kUNINITIALIZED;
+			if (pyself && pyself != res && PyObjCObject_Check(pyself) && !PyErr_Occurred()) {
+				PyObjCObject_ClearObject(pyself);
+			}
+		}
+#else
 		if (self->flags & PyObjCSelector_kINITIALIZER) {
 			if (((PyObjCObject*)res)->flags & PyObjCObject_kUNINITIALIZED)
 			{
@@ -153,7 +164,8 @@ imp_call(PyObjCIMPObject* self, PyObject* args)
 					~PyObjCObject_kUNINITIALIZED;
 			}
 		}
-				
+#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
+
 		if (self->flags & PyObjCSelector_kDONATE_REF) {
 			/* Ownership transfered to us, but 'execute' method has
 			 * increased retainCount, the retainCount is now one 
@@ -222,6 +234,18 @@ imp_donates_ref(PyObjCIMPObject* self, void* closure __attribute__((__unused__))
 	return PyObjCBool_FromLong(0 != (self->flags & PyObjCSelector_kDONATE_REF));
 }
 
+PyDoc_STRVAR(imp_is_alloc_doc, 
+"True if this is method returns a a freshly allocated object (uninitialized)\n"
+"\n"
+"NOTE: This field is used by the implementation."
+);
+static PyObject*
+imp_is_alloc(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
+{
+	return PyObjCBool_FromLong(0 != (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED));
+}
+
+#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 PyDoc_STRVAR(imp_returns_self_doc, 
 "True if this is method returns a reallocated 'self', False otherwise\n"
 "\n"
@@ -233,16 +257,6 @@ imp_returns_self(PyObjCIMPObject* self, void* closure __attribute__((__unused__)
 	return PyObjCBool_FromLong(0 != (self->flags & PyObjCSelector_kRETURNS_SELF));
 }
 
-PyDoc_STRVAR(imp_is_alloc_doc, 
-"True if this is method returns a a freshly allocated object (uninitialized)\n"
-"\n"
-"NOTE: This field is used by the implementation."
-);
-static PyObject*
-imp_is_alloc(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
-{
-	return PyObjCBool_FromLong(0 != (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED));
-}
 PyDoc_STRVAR(imp_is_initializer_doc, 
 "True if this is method is an object initializer\n"
 "\n"
@@ -253,8 +267,10 @@ imp_is_initializer(PyObjCIMPObject* self, void* closure __attribute__((__unused_
 {
 	return PyObjCBool_FromLong(0 != (self->flags & PyObjCSelector_kINITIALIZER));
 }
+#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 
 static PyGetSetDef imp_getset[] = {
+#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 	{
 		"isInitializer",
 		(getter)imp_is_initializer,
@@ -262,6 +278,7 @@ static PyGetSetDef imp_getset[] = {
 		imp_is_initializer_doc,
 		0
 	},
+#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 	{
 		"isAlloc",
 		(getter)imp_is_alloc,
@@ -299,6 +316,7 @@ static PyGetSetDef imp_getset[] = {
 		imp_selector_doc,
 		0
 	},
+#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 	{
 		"returnsSelf",
 		(getter)imp_returns_self,
@@ -306,6 +324,7 @@ static PyGetSetDef imp_getset[] = {
 		imp_returns_self_doc,
 		0
 	},
+#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
 	{ 
 		"__name__",  
 		(getter)imp_selector, 
@@ -360,13 +379,13 @@ PyTypeObject PyObjCIMP_Type = {
 	0,					/* tp_new */
 	0,		        		/* tp_free */
 	0,					/* tp_is_gc */
-        0,                                      /* tp_bases */
-        0,                                      /* tp_mro */
-        0,                                      /* tp_cache */
-        0,                                      /* tp_subclasses */
-        0                                       /* tp_weaklist */
+	0,                                      /* tp_bases */
+	0,                                      /* tp_mro */
+	0,                                      /* tp_cache */
+	0,                                      /* tp_subclasses */
+	0                                       /* tp_weaklist */
 #if PY_VERSION_HEX >= 0x020300A2
-        , 0                                     /* tp_del */
+	, 0                                     /* tp_del */
 #endif
 };
 
