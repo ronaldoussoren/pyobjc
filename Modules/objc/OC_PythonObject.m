@@ -27,9 +27,17 @@
 #import  <Foundation/NSDictionary.h>
 #import  <Foundation/NSEnumerator.h>
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
+#import  <Foundation/NSKeyValueObserving.h>
+#endif
+
 extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 
 @implementation OC_PythonObject
++ (void) initialize
+{
+    NSLog(@"%d spew bar %d", MAC_OS_X_VERSION_10_3, MAC_OS_X_VERSION_MAX_ALLOWED);
+}
 
 + newWithObject:(PyObject *) obj
 {
@@ -592,5 +600,15 @@ static  PyObject* setKeyFunc = NULL;
 		format: @"setting unknown key: %@ to <%@>", key, value];
 }
 
-
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
+- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
+{
+    NSLog(@"*** Ignoring *** %@ for '%@'.\n", NSStringFromSelector(_cmd), keyPath);
+    return;
+}
+- (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath;
+{
+    NSLog(@"*** Ignoring *** %@ for '%@'.", NSStringFromSelector(_cmd), keyPath);
+}
+#endif
 @end /* OC_PythonObject class implementation */
