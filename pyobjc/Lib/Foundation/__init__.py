@@ -33,12 +33,14 @@ if 'PYOBJCFRAMEWORKS' in os.environ:
 # to run while we're inside the event loop.
 #
 # The autoGIL module is only present when using Python 2.2 on MacOS X
-try:
-    import autoGIL
-except ImportError:
-    pass
-else:
-    autoGIL.installAutoGIL()
+import sys
+if sys.version_info[:2] == (2, 2):
+    try:
+        import autoGIL
+    except ImportError:
+        pass
+    else:
+        autoGIL.installAutoGIL()
 
 import protocols  # no need to export these, just register with PyObjC
 

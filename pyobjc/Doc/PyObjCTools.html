@@ -9,8 +9,8 @@ PyObjCTools: The PyObjC Toolbox</title>
 <body>
 <h2>PyObjCTools: The PyObjC Toolbox</h2>
 <h3 id="introduction">Introduction</h3>
-<p>The package <code><span>PyObjCTools</span></code> contains a number of (basicly unrelated) modules
-with usefull functionality. These have been placed inside a module to avoid
+<p>The package <code><span>PyObjCTools</span></code> contains a number of (basically unrelated) modules
+with useful functionality. These have been placed inside a module to avoid
 cluttering the global namespace.</p>
 <p>The rest of this document provides documentation for these modules, but lets
 start with a short overview.</p>
@@ -40,7 +40,7 @@ screen savers.</p>
 <ul>
 <li><code><span>PyObjCTools.Signals.py</span></code></li>
 </ul>
-<p>Module that tries to print usefull information when the program gets a fatal
+<p>Module that tries to print useful information when the program gets a fatal
 exception. This module should only be used during development.</p>
 <h2><a name="pyobjctools-apphelper"><code><span>PyObjCTools.AppHelper</span></code></a></h2>
 <p>This module exports two functions that are usefull when working with the
@@ -111,7 +111,7 @@ final value.</p>
 </li>
 <li><code><span>setKeyPath(object,</span> <span>keypath,</span> <span>value)</span> <span>-&gt;</span> <span>None</span></code><p>The same as <code><span>setKey</span></code>, but now using a key path. A key path is a sequence
 of keys seperated by dots. The <code><span>getKey</span></code> function is used to traverse 
-the path upto the last item, and then <code><span>setKey</span></code> is used to change the value.</p>
+the path up to the last item, and then <code><span>setKey</span></code> is used to change the value.</p>
 </li>
 </ul>
 <h2><a name="pyobjctools-nibclassbuilder">PyObjCTools.NibClassBuilder</a></h2>
@@ -145,11 +145,11 @@ have special needs.</p>
 <h3><a name="the-command-line-tool">The command line tool</a></h3>
 <p>When run from the command line, this module invokes a simple command
 line program, which you feed paths to nibs. This will print a Python
-template for all classes defined in the nib(s). For more doco, see
-the commandline_doc variable, or simply run the program wothout
+template for all classes defined in the nib(s). For more documentation,
+see the commandline_doc variable, or simply run the program without
 arguments. It also contains a simple test program.</p>
 <h2><a name="pyobjctools-signals">PyObjCTools.Signals</a></h2>
-<p>This module provides two functions that can be usefull while investigating
+<p>This module provides two functions that can be useful while investigating
 random crashes of a PyObjC program. These crashes are often caused by 
 Objective-C style weak references or incorrectly implemented protocols.</p>
 <ul>
@@ -161,15 +161,15 @@ dumpStackOnFatalSignal.</p>
 </li>
 </ul>
 <p>This module is not designed to provide fine grained control over signal 
-handling. Nor is it intended to be terribly robust. It may give usefull
+handling. Nor is it intended to be terribly robust. It may give useful
 information when your program gets unexpected signals, but it might just
 as easily cause a crash when such a signal gets in.</p>
 <h2><a name="pyobjctools-pluginbuilder">PyObjCTools.pluginbuilder</a></h2>
 <p>This module defines one class to build python based plugin bundles for MacOS X.
 Examples of plugin bundles include PreferencePanes and InterfaceBuilder 
 palletes.</p>
-<p>The PluginBuilder class is instantated with a number of keyword arguments and
-have a <code><span>build()</span></code> method that will do all the work.</p>
+<p>The PluginBuilder class is instantiated with a number of keyword arguments and
+has a <code><span>build()</span></code> method that will do all the work.</p>
 <p>XXX: Add documentation about the constructor arguments</p>
 <p>The module contains a main program that can be used in two ways:</p>
 <pre>
