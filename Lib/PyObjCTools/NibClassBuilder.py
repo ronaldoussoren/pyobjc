@@ -251,10 +251,10 @@ class NibInfo(object):
 			framework = _frameworkForClass(super)
 			if not framework:
 				continue  # don't know what to do
-			try:
-				frameworks[framework].append(super)
-			except KeyError:
+			if framework not in frameworks:
 				frameworks[framework] = [super]
+			elif super not in frameworks[framework]:
+				frameworks[framework].append(super)
 
 		items = frameworks.items()
 		if items:
