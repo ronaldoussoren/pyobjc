@@ -74,9 +74,11 @@ def __getitem__objectForKey(self, key):
     if res is None:
         raise KeyError, key
     return res
+
 def has_key_objectForKey(self, key):
     res = self.objectForKey_(key)
     return res is not None
+
 def get_objectForKey(self, key, dflt=None):
     res = self.objectForKey_(key)
     if res is None:
@@ -87,7 +89,7 @@ CONVENIENCE_METHODS['objectForKey:'] = (
     ('__getitem__', __getitem__objectForKey),
     ('has_key', has_key_objectForKey),
     ('get', get_objectForKey),
-    ('__contains__', lambda self, elem: (self.objectForKey_(elem) is not None)),
+    ('__contains__', has_key_objectForKey),
 )
 
 CONVENIENCE_METHODS['removeObjectForKey:'] = (
@@ -211,13 +213,14 @@ def index_indexOfObject(self, item):
     res = self.indexOfObject_(item)
     if res == Foundation.NSNotFound:
         raise ValueError, "NSArray.index(x): x not in list"
+    return res
 
 CONVENIENCE_METHODS['indexOfObject:'] = (
     ('index', index_indexOfObject),
 )
 
 CONVENIENCE_METHODS['insertObject:atIndex:'] = (
-    ( 'insert', lambda self, idx, item: self.insertObject_atIndex(item,idx)),
+    ( 'insert', lambda self, idx, item: self.insertObject_atIndex_(item,idx)),
 )
 
 CONVENIENCE_METHODS['objectAtIndex:'] = (

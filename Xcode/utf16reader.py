@@ -42,6 +42,15 @@ def readline(self, size=None):
     return rval
 
 def install():
+    from StringIO import StringIO
+    import codecs
+    # this will pass on Python 2.4
+    try:
+        rdr = codecs.getreader('utf16')
+        rdr(StringIO(u'test\nline\n'.encode('utf16'))).next()
+        return
+    except:
+        pass
     import encodings.utf_16 as utf_16
     import encodings.utf_16_be as utf_16_be
     import encodings.utf_16_le as utf_16_le

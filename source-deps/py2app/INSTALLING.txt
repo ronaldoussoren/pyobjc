@@ -1,0 +1,5 @@
+= Installing = 
+
+From the py2app source directory, type::
+
+    python setup.py install

@@ -1,10 +1,6 @@
-from Foundation import NSObject
 from PyObjCTools import NibClassBuilder
-from objc import *
-
-from Foundation import NSData
-from AppKit import NSBezierPath, NSColor, NSRectFill, NSAffineTransform
-from AppKit import NSImage, NSCompositeSourceOver, NSCursor
+from Foundation import *
+from AppKit import *
 from math import pi, sin, cos
 from fieldMath import *
 

@@ -95,26 +95,24 @@ typedef Ivar PyObjCRT_Ivar_t;
 static inline int
 objc_methodlist_magic(Class cls)
 {
-	int res = 0; 
-	int cnt = 0;
+  int res = 0; 
+  int cnt = 0;
+    
+  /* This is the documented way of enumerating the method list.  It
+   * is slower than the obvious way, but does not explode under
+   * esoteric situations.
+   */ 
+  void *iterator = NULL;
+  struct objc_method_list *mlist;
 
-	/* The documented way of walking over the method-list is by using
-	 * class_nextMethodList. Handcoding it is noticeable faster (probably
-	 * because this exposes more information to the optimizer).
-	 */
-	struct objc_method_list** p;
+  if (cls == NULL) return -1;
 
-	if (cls == NULL) return -1;
+  while ( (mlist = class_nextMethodList( cls, &iterator )) != NULL ) {
+    res += mlist->method_count;
+    cnt++;
+  }
 
-	for (p = cls->methodLists; 
-	     (*p != (struct objc_method_list*)-1) && (*p != NULL);
-	     p++) {
-
-		res += (*p)->method_count;
-		cnt++;
-	}
-
-	return (cnt << 16) | (res & 0xFFFF);
+  return (cnt << 16) | (res & 0xFFFF);
 }
 
 static inline const char *

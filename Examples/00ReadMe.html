@@ -9,6 +9,18 @@ PyObjC Examples</title>
 <body>
 <h2>PyObjC Examples</h2>
 <h2><a name="simple-scripts-that-demo-the-core-modules">Simple scripts that demo the core modules</a></h2>
+<p>The directory <a href="Scripts">Scripts</a> contains a number of simple command-line scripts that make use
+of Cocoa features.</p>
+<ul>
+<li><a href="Scripts/exportBook.py">exportBook.py</a><p>An example of using the AddressBook framework, this script exports some of the information
+about people in your addressbook to a CSV file.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/autoreadme.py">autoreadme.py</a><p>This script implements an autorun feature for Mac OS X: it will open the ReadMe file in
+the root of every removable medium that is inserted when this script is running.</p>
+</li>
+</ul>
 <ul>
 <li>subclassing-objective-c.py<p>Create a subclass of an objective-C class</p>
 </li>
@@ -28,6 +40,16 @@ simply double-click it and choose <code><span>Build</span> <span>and</span> <spa
 <li><a href="ClassBrowser">ClassBrowser</a><p>A simple class browser, demonstrating the use of NSBrowser (a &quot;column view&quot;
 hierarchical widget) and NSTableView.</p>
 </li>
+<li>CocoaBindings<p>This directory contains a number of examples that make use of Key-Value Coding and
+Cocoa Bindings. These scripts require Mac OS X 10.3 or later.</p>
+<ul>
+<li>TableModel<p>Shows how to fill an NSTableView using Key-Value Coding.</p>
+</li>
+<li>TableModelWithSearch<p>A more advanced example of Key-Value Coding. This uses a custom 
+<code><span>NSArrayController</span></code>.</p>
+</li>
+</ul>
+</li>
 <li><a href="CurrencyConverter">CurrencyConverter</a><p>A simple NIB based application. Start with this one. Also see the PyObjC
 tutorial.</p>
 </li>
@@ -35,17 +57,45 @@ tutorial.</p>
 NSView. Additionally shows how easy it is to embed a view in an
 NSScrollView, as well as how to use an NSColorWell.</p>
 </li>
+<li><a href="EnvironmentPrefs">EnvironmentPrefs</a><p>Another NSPreferencePane. This one can be used to edit the default environment
+for the current user. It also is a simple example of a localized application.</p>
+</li>
+<li><a href="FieldGraph">FieldGraph</a><p>Another Project Builder Cocoa project, it also includes a <code><span>buildapp.py</span></code> 
+script. This shows an simple example of an MVC based application, that also
+makes use of NSBezierPaths.</p>
+<p>The application calculates the field pattern and RMS field of an antenna 
+array with up to three elements.</p>
+</li>
 <li><a href="iClass">iClass</a><p>A more elaborate class browser; demonstrates NSOutlineView and NSTableView.</p>
 </li>
 <li><a href="PrefPane">PrefPane</a><p>Demonstrates how to write an NSPreferencePane, for use in the
 System Preferences application. Requires a framework build of Python.</p>
 </li>
-<li><a href="EnvironmentPrefs">EnvironmentPrefs</a><p>Another NSPreferencePane. This one can be used to edit the default environment
-for the current user. It also is a simple example of a localized application.</p>
+<li><a href="OpenGLDemo">OpenGLDemo</a><p>A simple program that shows how to use OpenGL in a Cocoa program.  It is a 
+port of Apple's &quot;CocoaGL&quot; example.  Note that this requires <a href="http://pyopengl.sourceforge.net/">PyOpenGL</a> to 
+be installed.</p>
+</li>
+<li><a href="PackageManager">PackageManager</a><p>An implementation of the MacPython PackageManager application using
+Cocoa.</p>
+</li>
+<li><a href="PyDocURLProtocol">PyDocURLProtocol</a><p>This example implements a subclass of <code><span>NSURLProtocol</span></code> that can be used
+to load the pydoc documentation of a module.</p>
+<p>It also includes a simple documentation browser using <code><span>WebKit</span></code> and the 
+<code><span>PyDocURLProtocol</span></code> class.</p>
+</li>
+<li><a href="PyInterpreter">PyInterpreter</a><p>A full featured embedded Python interpreter.  This demonstrates
+more complicated uses of NSTextView, manual event dispatching,
+and the new text completion feature of OS X 10.3.</p>
 </li>
 <li><a href="PythonBrowser">PythonBrowser</a><p>A reusable Python object browser, demonstrating the use of NSOutlineView
 as well as how to use an NSWindowController subclass to create a window
 from a menu action.</p>
+</li>
+<li><a href="SillyBallsSaver">SillyBallsSaver</a><p>A simple screensaver written in Python. This example requires a framework
+install of Python, that is either MacOS X 10.3 or a MacPython 2.3 
+installation.</p>
+</li>
+<li><a href="SimpleService">SimpleService</a><p>Shows how to implement entries for the Services menu.</p>
 </li>
 <li><a href="TableModel">TableModel</a><p>Basic demo that shows how to use a NSTableView.</p>
 </li>
@@ -55,58 +105,37 @@ from a menu action.</p>
 The code is a translation into Python of an example project in 
 'Learning Cocoa' from O'Reilly</p>
 </li>
+<li><a href="Twisted">Twisted</a><p>This directory contains a number of examples that use <a href="http://www.twistedmatrix.com">Twisted (1.1 or later)</a> with
+Cocoa.</p>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li>WebServicesTool<p>This is a refactor of the WebServicesTool example that is made much simpler
+by using Twisted.</p>
+</li>
+<li>WebServicesTool-ControllerLayer<p>This is a refactor of the WebServicesTool example that is made much simpler
+by using Twisted as it does not need threads. This version also uses
+NSController and therefore requires MacOS X 10.3.</p>
+</li>
+</ul>
+</blockquote>
+<ul>
 <li><a href="WebServicesTool">WebServicesTool</a><p>Another Project Builder Cocoa project.  Queries an XML-RPC enabled web
 server for the methods that it implements.  Demonstrates a more advanced
 use of an NSTableView, how to make a toolbar as well as how to use
 multi-threading.</p>
 </li>
-<li><a href="FieldGraph">FieldGraph</a><p>Another Project Builder Cocoa project, it also includes a <code><span>buildapp.py</span></code> 
-script. This shows an simple example of an MVC based application, that also
-makes use of NSBezierPaths.</p>
-<p>The application calculates the field pattern and RMS field of an antenna 
-array with up to three elements.</p>
-</li>
-<li><a href="PyInterpreter">PyInterpreter</a><p>A full featured embedded Python interpreter.  This demonstrates
-more complicated uses of NSTextView, manual event dispatching,
-and the new text completion feature of OS X 10.3.</p>
-</li>
-<li><a href="OpenGLDemo">OpenGLDemo</a><p>A simple program that shows how to use OpenGL in a Cocoa program.  It is a 
-port of Apple's &quot;CocoaGL&quot; example.  Note that this requires <a href="http://pyopengl.sourceforge.net/">PyOpenGL</a> to 
-be installed.</p>
-</li>
-<li><a href="SillyBallsSaver">SillyBallsSaver</a><p>A simple screensaver written in Python. This example requires a framework
-install of Python, that is either MacOS X 10.3 or a MacPython 2.3 
-installation.</p>
-</li>
-<li>Twisted/WebServicesTool<p>Shows how to integrate Twisted (1.1 or later) with Cocoa, it is a
-refactor of the WebServicesTool example that is made much simpler
-by using Twisted.</p>
-</li>
-<li>Twisted/WebServicesTool-ControllerLayer<p>Shows how to integrate Twisted (1.1 or later) with Cocoa, it is a
-refactor of the WebServicesTool example that is made much simpler
-by using Twisted as it does not need threads. This one also uses
-NSController and therefore requires MacOS X 10.3.</p>
-</li>
-<li>CocoaBindings/TableModel<p>Shows how to fill an NSTableView using Key-Value Coding.</p>
-<p>This example requires MacOS X 10.3 or later.</p>
-</li>
-<li>CocoaBindings/TableModelWithSearch<p>A more advanced example of Key-Value Coding. This uses a custom 
-<code><span>NSArrayController</span></code>.</p>
-<p>This example requires MacOS X 10.3 or later.</p>
-</li>
-<li>PackageManager<p>An implementation of the MacPython PackageManager application using
-Cocoa.</p>
-</li>
-<li>ProgressViewPalette<p>A, currently non-functional, example of a palette for Interface Builder.</p>
+</ul>
+<h2><a name="some-work-in-progress-examples">Some work-in-progress examples</a></h2>
+<p>The directory <code><span>NonFunctional</span></code> contains a number of examples that are not working
+for one reason or another. The most likely reason is that example relies on features
+that have not yet been implemented.</p>
+<ul>
+<li><a href="NonFunctional/ProgressViewPalette">ProgressViewPalette</a><p>An example of a palette for Interface Builder. It is a straight port of an Apple
+example with the same name.</p>
 <p>This example does not work at the moment, due to an incompatibility between
 PyObjC and the way IB looks for classes.</p>
-</li>
-<li>PyDocURLProtocol<p>This example implements a subclass of <code><span>NSURLProtocol</span></code> that can be used
-to load the pydoc documentation of a module.</p>
-<p>It also includes a simple documentation browser using <code><span>WebKit</span></code> and the 
-<code><span>PyDocURLProtocol</span></code> class.</p>
-</li>
-<li>SimpleService<p>Shows how to implement entries for the Services menu.</p>
 </li>
 </ul>
 </body>

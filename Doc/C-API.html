@@ -174,16 +174,6 @@ SEL PyObjCSelector_GetSelector(PyObject* sel);
 </pre>
 <p>Return the Objective-C method name for <code><span>sel</span></code>.</p>
 <pre>
-int PyObjCBool_Check(PyObject* obj);
-</pre>
-<p>Check if <code><span>obj</span></code> is a boolean object (either the python bool type in Python
-2.3 or the PyObjC bool type in Python 2.2)</p>
-<pre>
-PyObject* PyObjCBool_FromLong(long i);
-</pre>
-<p>Create a new bool object. This will return a Python bool object in Python 2.3
-(and later) and the PyObjC bool type in Python 2.2.</p>
-<pre>
 void PyObjC_InitSuper(struct objc_super*, Class, id);
 </pre>
 <p>Initialize the <code><span>struct</span> <span>objc_super</span></code> for use with <code><span>objc_sendMsgSuper</span></code>. Use 
