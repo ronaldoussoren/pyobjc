@@ -1,6 +1,6 @@
 <span class="news_date">2003-05-07: </span><span class="news_headline">Updated tutorial</span><?php gray_line(); ?>
   <p>
-The tutorial included in the 0.9 release was not entirely up-to-date, please use <a href="<? print $root; ?> doc/tutorial">the tutorial on this website</a>.
+The tutorial included in the 0.9 release was not entirely up-to-date, please use <a href="<? print $root; ?> doc/tutorial.php">the tutorial on this website</a>.
 <p>
 <span class="news_date">2003-05-02: </span><span class="news_headline">PyObjC 0.9 released</span><?php gray_line(); ?>
  <p>
