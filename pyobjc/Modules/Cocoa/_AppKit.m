@@ -82,6 +82,22 @@ static	char* keywords[] = { "argv", NULL };
 
 	argv[argc] = NULL;
 
+	{
+	  typedef struct {
+	    @defs(NSProcessInfo)
+	  } NSProcessInfoStruct;
+	  
+	  // everything in this scope is evil and wrong.  It leaks, too.
+	  NSMutableArray *args = [[NSMutableArray alloc] init];
+	  NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+	  char **anArg = argv;
+	  while(*anArg) {
+	    [args addObject: [NSString stringWithUTF8String: *anArg]];
+	    anArg++;
+	  }
+	  ((NSProcessInfoStruct *)processInfo)->arguments = args;
+	}
+
 	res = NSApplicationMain(argc, argv);
 
 	for (i = 0; i < argc; i++) {
