@@ -13,6 +13,10 @@
  * Date: 1998/08/18 15:35:57
  *
  * Created Tue Sep 10 14:11:38 1996.
+ *
+ * TODO: the functions exported by this file should be changed, the names
+ * should start with 'PyObjC' and should be the same as the names used in
+ * pyobjc-api.h (where appropriate).
  */
 
 #ifndef _objc_support_H
@@ -27,7 +31,6 @@
 #  include "objc-runtime-apple.h"
 
 #endif 
-
 
 /*#F Takes a C value pointed by @var{datum} with its type encoded in
   @var{type}, that should be coming from an ObjC @encode directive,
@@ -72,6 +75,30 @@ extern int PyObjCRT_SizeOfReturnType(const char* type);
 extern int PyObjCRT_SizeOfType(const char *type);
 extern int PyObjCRT_AlignOfType(const char *type);
 extern const char *PyObjCRT_SkipTypeSpec (const char *type);
+
+/*
+ * Compatibility with pyobjc-api.h
+ */
+static inline id PyObjC_PythonToId(PyObject* value)
+{
+	id res;
+	int r;
+
+	r = depythonify_c_value(@encode(id), value, &res);
+	if (r == -1) {
+		return NULL;
+	} else {
+		return res;
+	}
+}
+
+static inline PyObject* PyObjC_IdToPython(id value)
+{
+	PyObject* res;
+
+	res = pythonify_c_value(@encode(id), value);
+	return res;
+}
 
 
 extern int PyObjCRT_SetupClass(

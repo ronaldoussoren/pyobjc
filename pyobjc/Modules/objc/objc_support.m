@@ -33,6 +33,7 @@
 #import <Foundation/NSInvocation.h>
 #import <Foundation/NSData.h> 
 #import <Foundation/NSValue.h> 
+#import <Foundation/NSDecimalNumber.h> 
 
 #ifdef MACOSX
 #include <CoreFoundation/CFNumber.h>
@@ -62,7 +63,6 @@
 
 @end /* PyObjCSupport */
 
-
 @interface NSNumber (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
 @end /* NSNumber (PyObjCSupport) */
@@ -90,6 +90,23 @@
 	}
 #endif
 	return pythonify_c_value(typestr, buf);
+}
+
+@end /* NSNumber (PyObjCSupport) */
+
+
+@interface NSDecimalNumber (PyObjCSupport)
+-(PyObject*)__pyobjc_PythonObject__;
+@end /* NSDecimalNumber (PyObjCSupport) */
+
+@implementation NSDecimalNumber (PyObjCSupport)
+
+-(PyObject*)__pyobjc_PythonObject__
+{
+	/* NSDecimalNumbers don't have a Python counterpart, don't convert
+	 * these to Python but use a proxy. (Bug #831774)
+	 */
+        return (PyObject *) PyObjCObject_New(self);
 }
 
 @end /* NSNumber (PyObjCSupport) */

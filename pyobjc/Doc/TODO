@@ -155,7 +155,8 @@ for input/output arguments.
 We also don't support all "difficult" methods yet, implementing these is
 not too hard but it is a lot of work.
 
-NSDecimal (the C-type) is not yet supported.
+NSDecimal (the C-type) is not yet supported. We also need more support code
+for NSDecimalNumber.
 
 Pickle support
 ..............
@@ -269,7 +270,24 @@ also `Performance tuning/testing`.
 Key-Value Encoding
 ..................
 
-Implement the 10.3 changes for Key-Value coding (observation).
+The takeValue:forKey: implementation correctly emits notifications (on MacOS X
+10.3). MacOS X 10.3 is currently detected at compile-time, this should probably
+be done dynamicly.
+
+The right notifications are not yet emitted for:
+
+* setattr() on Objective-C objects
+
+  There is preliminary (sp?) support in objc-object.m, but I'm not sure if this
+  we really should do this at all. 
+
+* setattr() on pure Python objects
+
+  It is impossible to detect such changes, even finding the right ObjC wrapper
+  is not possible at the moment (but that is fixable).
+
+  The documentation should mention that observations don't work for pure
+  Python objects.
 
 Formal Protocols, Distributed Objects
 .....................................

@@ -93,7 +93,7 @@ object_repr(PyObjCObject* self)
 	char buffer[256];
 	PyObject* res;
 
-	if (self->flags & PyObjCObject_kUNINITIALIZED) {
+	if ((self->flags & PyObjCObject_kUNINITIALIZED) == 0) {
 		/* Try to call the method 'description', which is the ObjC
 		 * equivalent of __repr__. If that fails we'll fall back to
 		 * the default repr.
@@ -413,6 +413,31 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 		     "'%.50s' object attribute '%.400s' is read-only",
 		     tp->tp_name, PyString_AS_STRING(name));
   done:
+
+#if 0
+	/* XXX: This would introduce some form of support for KeyValueObserving
+	 * but, I'm not sure if this is the right approach. If this is, this 
+	 * code needs more work: the name must be transformed to 
+	 * a KeyValueCoding key (e.g. '_name' -> 'name')
+	 */
+
+#if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
+	/* KeyValueObserving support. If an attribute is changed by assignment,
+	 * send out the notification.
+	 */
+	if (!PyErr_Occurred()) {
+		id key = PyObjC_PythonToId(name);
+		if (key == NULL && PyErr_Occurred()) {
+			/* Cannot convert the name, ignore this */
+			PyErr_Clear();
+		} else {
+			[PyObjCObject_GetObject(obj) didChangeValueForKey:key];
+		}
+	}
+#endif
+
+#endif
+
 	Py_DECREF(name);
 	return res;
 }
