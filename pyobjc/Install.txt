@@ -109,7 +109,7 @@ work with Python and PyObjC when using `Xcode`__.
 
 .. __: http://www.apple.com/xcode
 
-Copy the templates in ``Xcode/File templates`` to ``/Library/Application Support/Apple/Developer Tools/File Templates``. Copy the templates in ``Xcode/Project Templates`` to ``/Library/Application Support/Apple/Development Tools/Project Templates``.
+Copy the templates in ``Xcode/File templates`` to ``/Library/Application Support/Apple/Developer Tools/File Templates``. Copy the templates in ``Xcode/Project Templates`` to ``/Library/Application Support/Apple/Developer Tools/Project Templates``.
 
 There are two project templates:
 
@@ -120,7 +120,7 @@ There are two project templates:
   well as all other builds of python that support PyObjC.
 
   When building the 'install' target, the resulting application wrapper will
-  included the PyObjC package and can be launched on any stock OS X 10.3 system
+  include the PyObjC package and can be launched on any stock OS X 10.3 system
   without requiring PyObjC to be preinstalled.
 
   Note that the optional 'BSD Subsystem' component of MacOS X is required,
@@ -158,7 +158,7 @@ There are three templates available:
   well as all other builds of python that support PyObjC.
 
   When building the 'install' target, the resulting application wrapper will
-  included the PyObjC module and can be launched on any stock OS X 10.2 system
+  include the PyObjC module and can be launched on any stock OS X 10.2 system
   without requiring PyObjC to be preinstalled.
 
 * Cocoa-Python-ObjC Application
