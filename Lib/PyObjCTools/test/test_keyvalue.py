@@ -12,6 +12,7 @@ from PyObjCTools.KeyValueCoding import *
 from objc.test.keyvaluehelper import *
 import objc
 import unittest
+from  objc.test import ctests
 
 
 class KeyValueClass5 (object):
@@ -216,7 +217,19 @@ class OcKeyValueCoding (unittest.TestCase):
         a.addObject_({"keyM": "5"})
         a.addObject_(objc.runtime.NSDictionary.dictionaryWithObject_forKey_("foo", "keyM"))
         b = objc.runtime.NSMutableArray.arrayWithObjects_("m","5", "foo", None)
-        self.assertEquals(a.valueForKey_("keyM"), b)
+
+
+	# See Modules/objc/unittest.m for an explantion of this test
+	try:
+		ctests.TestArrayCoding()
+		arrayObservingWorks = True
+	except AssertionError:
+		arrayObservingWorks = False
+
+	if arrayObservingWorks:
+		self.assertEquals(a.valueForKey_("keyM"), b)
+	else:
+		self.assertRaises(KeyError, a.valueForKey_, "keyM")
        
         self.assertRaises(KeyError, getKey, o, "nokey")
 
