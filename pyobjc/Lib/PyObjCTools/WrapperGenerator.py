@@ -110,35 +110,38 @@ def generateWrappersForFramework(outfp, frameworkPath, frameworkIdentifier=None,
         frameworkName = os.path.splitext(os.path.basename(frameworkPath))[0]
 
 
-    vars = {
+    fvars = {
         'frameworkPath': frameworkPath,
         'frameworkIdentifier': frameworkIdentifier,
         'frameworkName': frameworkName
     }
-    outfp.write(HEADER%vars)
+
+    outfp.write(HEADER % fvars)
     if frameworkIdentifier is None:
-        outfp.write(WITHOUT_IDENTIFIER%vars)
+        outfp.write(WITHOUT_IDENTIFIER % fvars)
     else:
-        outfp.write(WITH_IDENTIFIER%vars)
+        outfp.write(WITH_IDENTIFIER % fvars)
 
     outfp.write('# Definitions for global variables\n')
     outfp.write('_VARIABLES=(\n')
     for item in p.global_variables:
-        outfp.write('    (%s),\n'%(', '.join(map(repr, item))))
+        outfp.write('    (%s),\n' % (', '.join(map(repr, item)),))
     outfp.write(')\n\n')
 
     outfp.write('# Definitions for simple global functions\n')
     outfp.write('_FUNCTIONS=(\n')
     for item in p.simple_functions:
-        outfp.write('    (%s),\n'%(', '.join(map(repr, item))))
+        outfp.write('    (%s),\n' % (', '.join(map(repr, item)),))
     outfp.write(')\n\n')
 
     outfp.write("# Special type signatures\n")
     outfp.write('TYPE_SIGNATURES={\n')
     for k,v in p.type_signatures.iteritems():
-        if v.endswith('*'): continue
-        if v == 'va_list': continue
-        outfp.write('    %s: %s,\n'%(repr(k), repr(v)))
+        if v.endswith('*'):
+            continue
+        if v == 'va_list':
+            continue
+        outfp.write('    %s: %s,\n' % (repr(k), repr(v)))
     outfp.write('}\n\n')
 
     outfp.write('# Global constants/enums\n')
@@ -155,9 +158,9 @@ def generateWrappersForFramework(outfp, frameworkPath, frameworkIdentifier=None,
 
         for k, v in entries:
             if isinstance(v, tuple):
-                outfp.write('%s=%s+%s\n'%(k, v[0], v[1]))
+                outfp.write('%s=%s+%s\n' % (k, v[0], v[1]))
             else:
-                outfp.write('%s=%s\n'%(k, v))
+                outfp.write('%s=%s\n' % (k, v))
 
         outfp.write('\n\n')
 
@@ -170,27 +173,27 @@ def generateWrappersForFramework(outfp, frameworkPath, frameworkIdentifier=None,
         pass
 
     if protos:
-        outfp.write('import new\n')
-        outfp.write('protocols = new.module("%s.protocols")\n'%(frameworkName))
+        outfp.write('from types import ModuleType as module\n')
+        outfp.write('protocols = module("%s.protocols")\n' % (frameworkName,))
         for p in protos:
-            if p.has_key('category'):
+            if 'category' in p:
                 nm = p['category']
             else:
                 nm = p['name']
-            outfp.write('protocols.%s = _objc.informal_protocol(\n'%(nm,))
-            outfp.write('    "%s",\n'%(nm,))
-            outfp.write('    [\n',)
+            outfp.write('protocols.%s = _objc.informal_protocol(\n' % (nm,))
+            outfp.write('    "%s",\n' % (nm,))
+            outfp.write('    [\n')
             for isClassMethod, selector, signature in p['methods']:
                 outfp.write('        _objc.selector(\n')
                 outfp.write('            None,\n')
-                outfp.write('            selector="%s",\n'%(selector,))
-                outfp.write('            signature="%s",\n'%(signature,))
+                outfp.write('            selector="%s",\n' % (selector,))
+                outfp.write('            signature="%s",\n' % (signature,))
                 outfp.write('            isRequired=False,\n')
                 outfp.write('        ),\n')
             outfp.write('    ]\n')
             outfp.write(')\n')
 
-    outfp.write(FOOTER%vars)
+    outfp.write(FOOTER % fvars)
 
 
 #
@@ -237,7 +240,7 @@ PROTOCOL_START_RE=re.compile(
         r'@protocol\s+(?P<name>' + IDENTIFIER + ')' +
         r'(\s*<(?P<super>' + IDENTIFIER + '))?')
 
-GLOBAL_STRING_RE=re.compile(r'NSString\s*\*\s*(const\s+)?(' + 
+GLOBAL_STRING_RE=re.compile(r'NSString\s*\*\s*(const\s+)?(' +
     IDENTIFIER + '(\s*,\s*\*\s*' + IDENTIFIER + ')*)(\s+AVAILABLE_\w+)?;')
 
 GLOBAL_VARIABLE_RE=r'%(PFX)s\s+(const\s+)?(' + IDENTIFIER + r')\s+(' + IDENTIFIER + r'\s*(,\s*' + IDENTIFIER + r')*)\s*;'
