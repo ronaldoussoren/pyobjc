@@ -1,16 +1,8 @@
-from distutils.command.build_ext import build_ext
-from subprocess import Popen
 import sys
 import os
 import shutil
-
-def subprocess(taskName, *commands, **kw):
-    print "Performing task: %s" % (taskName,)
-    for cmd in commands:
-        process = Popen(cmd, stdout=sys.stdout, stderr=sys.stderr, **kw)
-        res = process.wait()
-        if res:
-            raise OSError("Task %r failed [%d]" % (taskName, res))
+from pyobjc_setup_utils import runtasks
+from distutils.command.build_ext import build_ext
 
 class pyobjc_build_ext (build_ext):
     # Custom build_ext implementation. This differs in two ways from the
@@ -68,7 +60,7 @@ class pyobjc_build_ext (build_ext):
         # the extensions.
         compiler_saved = self.compiler
 
-        subprocess("Generating wrappers & stubs",
+        runtasks("Generating wrappers & stubs",
             [sys.executable, "Scripts/CodeGenerators/cocoa_generator.py"])
 
         if not os.path.exists('build/codegen/_Fnd_Classes.inc'):

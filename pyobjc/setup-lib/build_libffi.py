@@ -1,21 +1,9 @@
 import os
 import sys
 import shutil
-from subprocess import Popen, PIPE
 from distutils.cmd import Command
 from distutils.errors import *
-
-def subprocess(taskName, *commands, **kw):
-    print "Performing task: %s" % (taskName,)
-    for cmd in commands:
-        print ' '.join(cmd)
-        process = Popen(cmd, stdout=PIPE, stderr=PIPE, **kw)
-        stdout, stderr = process.communicate()
-        res = process.wait()
-        if res:
-            for err in stderr:
-                sys.stderr.write(err)
-            raise DistutilsExecError("Task %r failed [%d]" % (taskName, res))
+from pyobjc_setup_utils import runtasks
 
 class build_libffi(Command):
     description = "build libffi"
@@ -63,7 +51,7 @@ class build_libffi(Command):
                 # Do not use a relative path for the build-tree, libtool on
                 # MacOS X doesn't like that.
 
-                subprocess('Building FFI',
+                runtasks('Building FFI',
                     [os.path.join(self.libffi_sources, 'configure'),
                         '--prefix=' + inst_dir, '--disable-shared', '--enable-static'],
                     ['make', 'install'],
