@@ -1,7 +1,7 @@
 """
 Tests for PyObjCTools.KeyValueCoding
 
-TODO: 
+TODO:
     - Accessing properties in superclass of ObjC hybrids (see also Foundation.test.test_keyvalue)
 
 NOTE: Testcases here should be synchronized with the Key-Value Coding tests
@@ -128,7 +128,7 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(getKey(o, "key3"), 3)
         self.assertEquals(getKey(o, "key4"), "4")
         self.assertEquals(getKey(o, "multiple"), o.multiple)
-       
+
         self.assertRaises(KeyError, getKey, o, "nokey")
 
     def testValueForKey2(self):
@@ -155,7 +155,7 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(o.key3, 3)
         setKey(o, 'key3', 'drie')
         self.assertEquals(o.key3, "drie")
-        
+
         self.assertEquals(o._key4, "4")
         setKey(o, 'key4', 'vier')
         self.assertEquals(o._key4, "viervierviervier")
@@ -219,18 +219,18 @@ class OcKeyValueCoding (unittest.TestCase):
         b = objc.runtime.NSMutableArray.arrayWithObjects_("m","5", "foo", None)
 
 
-	# See Modules/objc/unittest.m for an explantion of this test
-	try:
-		ctests.TestArrayCoding()
-		arrayObservingWorks = True
-	except AssertionError:
-		arrayObservingWorks = False
+        # See Modules/objc/unittest.m for an explantion of this test
+        try:
+            ctests.TestArrayCoding()
+            arrayObservingWorks = True
+        except AssertionError:
+            arrayObservingWorks = False
 
-	if arrayObservingWorks:
-		self.assertEquals(a.valueForKey_("keyM"), b)
-	else:
-		self.assertRaises(KeyError, a.valueForKey_, "keyM")
-       
+        if arrayObservingWorks:
+            self.assertEquals(a.valueForKey_("keyM"), b)
+        else:
+            self.assertRaises(KeyError, a.valueForKey_, "keyM")
+
         self.assertRaises(KeyError, getKey, o, "nokey")
 
     def testValueForKey2(self):
@@ -257,7 +257,7 @@ class OcKeyValueCoding (unittest.TestCase):
         self.assertEquals(o.key3, 3)
         setKey(o, 'key3', 'drie')
         self.assertEquals(o.key3, "drie")
-        
+
         self.assertEquals(o._key4, "4")
         setKey(o, 'key4', 'vier')
         self.assertEquals(o._key4, "viervierviervier")
@@ -303,31 +303,31 @@ class MethodsAsKeys (unittest.TestCase):
 
 class AbstractKVCodingTest:
     def testBaseValueForKey(self):
-        self.assertEquals(DirectString, 
+        self.assertEquals(DirectString,
             getKey( self.base, "directString"))
-        self.assertEquals(IndirectString, 
+        self.assertEquals(IndirectString,
             getKey( self.base, "indirectString"))
-        self.assertEquals(DirectNumber, 
+        self.assertEquals(DirectNumber,
             getKey( self.base, "directNumber"))
-        self.assertEquals(IndirectNumber, 
+        self.assertEquals(IndirectNumber,
             getKey( self.base, "indirectNumber"))
-               
+
     def testPathValueForKey(self):
-        self.assertEquals(DirectString, 
+        self.assertEquals(DirectString,
             getKeyPath( self.path, "directHead.directString"))
-        self.assertEquals(DirectString, 
+        self.assertEquals(DirectString,
             getKeyPath( self.path, "indirectHead.directString"))
-        self.assertEquals(IndirectString, 
+        self.assertEquals(IndirectString,
             getKeyPath( self.path, "directHead.indirectString"))
-        self.assertEquals(IndirectString, 
+        self.assertEquals(IndirectString,
             getKeyPath( self.path, "indirectHead.indirectString"))
-        self.assertEquals(DirectNumber, 
+        self.assertEquals(DirectNumber,
             getKeyPath( self.path, "directHead.directNumber"))
-        self.assertEquals(DirectNumber, 
+        self.assertEquals(DirectNumber,
             getKeyPath( self.path, "indirectHead.directNumber"))
-        self.assertEquals(IndirectNumber, 
+        self.assertEquals(IndirectNumber,
             getKeyPath( self.path, "directHead.indirectNumber"))
-        self.assertEquals(IndirectNumber, 
+        self.assertEquals(IndirectNumber,
             getKeyPath( self.path, "indirectHead.indirectNumber"))
 
 class TestObjCKVCoding(AbstractKVCodingTest, unittest.TestCase):
@@ -351,19 +351,19 @@ class TestPythonSubOverObjC(AbstractKVCodingTest, unittest.TestCase):
         self.path = KVPySubOverObjCPath.new()
 
     def testOverValueKey(self):
-        self.assertEquals(DirectString, 
+        self.assertEquals(DirectString,
             getKey( self.base, "overDirectString"))
-        self.assertEquals(IndirectString, 
+        self.assertEquals(IndirectString,
             getKey( self.base, "overIndirectString"))
 
     def testOverValueKeyPath(self):
-        self.assertEquals(DirectString, 
+        self.assertEquals(DirectString,
             getKeyPath( self.path, "overDirectHead.directString"))
-        self.assertEquals(DirectString, 
+        self.assertEquals(DirectString,
             getKeyPath( self.path, "overIndirectHead.directString"))
-        self.assertEquals(IndirectString, 
+        self.assertEquals(IndirectString,
             getKeyPath( self.path, "overDirectHead.indirectString"))
-        self.assertEquals(IndirectString, 
+        self.assertEquals(IndirectString,
             getKeyPath( self.path, "overIndirectHead.indirectString"))
 
 if __name__ == "__main__":

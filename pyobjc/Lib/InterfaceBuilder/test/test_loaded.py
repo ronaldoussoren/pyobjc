@@ -1,5 +1,5 @@
 """
-InterfaceBuilder doesn't add 'interesting' behaviour, just check that the 
+InterfaceBuilder doesn't add 'interesting' behaviour, just check that the
 module loaded correctly.
 """
 

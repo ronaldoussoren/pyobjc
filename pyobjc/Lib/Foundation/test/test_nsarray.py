@@ -63,7 +63,7 @@ class TestNSArrayInteraction(unittest.TestCase):
         self.assertEquals( x, x[:] )
         self.assertEquals( y, y[:] )
         self.assertEquals( z, z[:] )
-    
+
         self.assertEquals( x[25:75], y[25:75] )
         self.assertEquals( x[25:75], z[25:75] )
         self.assertEquals( y[25:75], z[25:75] )
@@ -188,9 +188,9 @@ class TestNSArraySpecialMethods(unittest.TestCase):
         self.assertEquals(a, ['a','b','c'])
 
         import warnings
-        warnings.filterwarnings('ignore', 
+        warnings.filterwarnings('ignore',
                 category=objc.UninitializedDeallocWarning)
-    
+
         try:
             self.assertRaises(ValueError, NSArray.alloc().initWithObjects_count_, ('a','b'), 3)
 
@@ -201,7 +201,7 @@ class TestNSArraySpecialMethods(unittest.TestCase):
     def test_arrayWithObjects_count_(self):
         a = NSArray.arrayWithObjects_count_(('a','b','c','d'), 3)
         self.assertEquals(a, ['a','b','c'])
-        
+
         self.assertRaises(ValueError, NSArray.arrayWithObjects_count_, ('a','b'), 3)
 
     def test_arrayByAddingObjects_count_(self):
@@ -279,7 +279,7 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
     def testSort2(self):
         a = NSMutableArray.arrayWithArray_(range(10))
         self.assertEquals(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
-        
+
         if objc.platform == 'MACOSX' or hasattr(a, 'sortUsingFunction_context_range_'):
             def cmpfunc(l, r, c):
                 return -cmp(l,r)
@@ -293,21 +293,21 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
 
         a = NSMutableArray.arrayWithArray_(range(4))
         self.assertEquals(a, (0, 1, 2, 3))
-    
+
         def cmpfunc(l, r):
             return -cmp(l,r)
 
         a.sort(cmpfunc)
 
         self.assertEquals(a, (3, 2, 1, 0))
-        
+
         a.sort()
         self.assertEquals(a, (0, 1, 2, 3))
 
     def testSort1(self):
         a = NSMutableArray.arrayWithArray_(range(4))
         self.assertEquals(a, (0, 1, 2, 3))
-    
+
         def cmpfunc(l, r, c):
             return -cmp(l,r)
 
@@ -332,14 +332,14 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
 
         a = NSMutableArray.arrayWithArray_(range(4))
         self.assertEquals(a, (0, 1, 2, 3))
-    
+
         def cmpfunc(l, r):
             return -cmp(l,r)
 
         a.sort(cmpfunc)
 
         self.assertEquals(a, (3, 2, 1, 0))
-        
+
         a.sort()
 
         self.assertEquals(a, (0, 1, 2, 3))

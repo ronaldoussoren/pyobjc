@@ -23,7 +23,7 @@ class TestCollections(unittest.TestCase):
         else:
             for o in a2:
                 a1.index(o)
-    
+
     def assertSameDictionaryContents(self, d1, d2):
         self.assertEqual(len(d1), len(d2))
 
@@ -39,7 +39,7 @@ class TestCollections(unittest.TestCase):
             self.assert_(d2.has_key(k), "Missing key %s in %s"%(`k`, `d2`))
             self.assertEqual(d1[k], d2[k],
                              "assertSameDictionary() failed for key '%s'. [%s != %s]" % (k, d1[k], d2[k]))
-                             
+
     def testConversion(self):
         originalNSDictionary = NSString.propertyList(samplePropertyList)
         aPythonDictionary = pythonCollectionFromPropertyList(originalNSDictionary)
@@ -67,8 +67,8 @@ class TestCollections(unittest.TestCase):
         self.assertRaises(TypeError, propertyListFromPythonCollection, { '1' : type([]) })
         propertyListFromPythonCollection({'1' : type([])}, conversionHelper)
 
-        d = NSDictionary.dictionaryWithDictionary_( {'1' : NSObject.alloc().init() }) 
-        # was: NSBundle.bundleForClass_(NSObject)} ) 
+        d = NSDictionary.dictionaryWithDictionary_( {'1' : NSObject.alloc().init() })
+        # was: NSBundle.bundleForClass_(NSObject)} )
         # XXX: using NSBundle doesn't work on GNUstep
 
         self.assertRaises(TypeError, pythonCollectionFromPropertyList, d)
