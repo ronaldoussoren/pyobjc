@@ -31,16 +31,13 @@ except AssertionError:
     nsinvoke_ok = 0
 
 NSArray = objc.lookUpClass('NSArray')
-NSObject = objc.lookUpClass('NSObject')
-
-
 
 # First make sure that the pass-by-reference methods have the correct signature
 setSignature = objc.setSignatureForSelector
 
 # FIXME
 import sys
-HAVE_BOOL=sys.platform == 'darwin'
+HAVE_BOOL = (objc.platform == 'MACOSX')
 if HAVE_BOOL: setSignature("PyObjC_TestClass1", "boolInOutArg:", "@@:N^B")
 if HAVE_BOOL: setSignature("PyObjC_TestClass1", "boolOutArg:", "v@:o^B")
 if HAVE_BOOL: setSignature("PyObjC_TestClass1", "boolInArg:", "@@:n^B")
@@ -18355,7 +18352,7 @@ g_structTestStruct4_values = ((1, 1L<<60), (2, 4))
 g_structTestStruct5_values = ((1, 2.5), (2, 4.5))
 
 
-class Python_TestClass (NSObject):
+class Python_TestClass (objc.lookUpClass("NSObject")):
 	def init(self):
 		self = super(Python_TestClass, self).init()
 		self.reset()

@@ -166,7 +166,7 @@ setSignature = objc.setSignatureForSelector
 
 # FIXME
 import sys
-HAVE_BOOL=sys.platform == 'darwin'
+HAVE_BOOL = (objc.platform == 'MACOSX')
 """
 
 PY_MIDTEXT="""
@@ -1096,7 +1096,7 @@ def emit_py_from_objc(fp):
             fp.write('\n\n')
 
 
-print "------------- testbndl.m -----------"
+print "------------- testbndl2.m -----------"
 fp = open('Modules/objc/test/testbndl2.m', 'w')
 fp.write(OBJC_HEADER)
 emit_objc_interfaces(fp)
@@ -1121,7 +1121,7 @@ for tp, sign, values in TYPES:
 fp.write('}\n')
 fp.close()
 
-print "------------- test_methods.py -----------"
+print "------------- test_methods2.py -----------"
 fp = open('Lib/objc/test/test_methods2.py', 'w')
 fp.write(PY_HEADER)
 emit_py_method_signatures(fp)
