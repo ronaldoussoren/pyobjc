@@ -39,6 +39,7 @@ if ver.startswith("1.0") and not ver.startswith("1.0.") and ver != "1.0":
 			<string>http://pyobjc.sourceforge.net/</string>
 			<key>Name</key>
 			<string>PyObjC</string>
+			<!--
 			<key>Prerequisites</key>
 			<array>
 				<dict>
@@ -46,6 +47,7 @@ if ver.startswith("1.0") and not ver.startswith("1.0.") and ver != "1.0":
 					<string>AppleDevTools</string>
 				</dict>
 			</array>
+			-->
 			<key>Version</key>
 			<string>1.0</string>
 			<key>MD5Sum</key>
@@ -64,7 +66,7 @@ incorporating Python in your Objective-C program for rapid prototyping and
 such.
 			</string>
 			<key>Download-URL</key>
-			<string>http://heanet.dl.sourceforge.net/sourceforge/pyobjc/pyobjc-1.0-darwin-7.0-Power_Macintosh.tar.gz</string>
+			<string>http://heanet.dl.sourceforge.net/sourceforge/pyobjc/pyobjc-1.0.darwin-7.0.0-Power_Macintosh.tar.gz</string>
 			<key>Flavor</key>
 			<string>binary</string>
 			<key>Install-test</key>

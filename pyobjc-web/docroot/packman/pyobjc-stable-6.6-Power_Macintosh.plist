@@ -8,6 +8,10 @@
 	<string>oussoren@cistron.nl</string>
 	<key>Version</key>
 	<string>0.3</string>
+	<key>Include</key>
+	<array>
+		<string>http://www.python.org/packman/version-0.3/darwin-6.6-Power_Macintosh.plist</string>
+	</array>
 	<key>Packages</key>
 	<array>
 		<dict>
@@ -64,7 +68,7 @@ incorporating Python in your Objective-C program for rapid prototyping and
 such.
 			</string>
 			<key>Download-URL</key>
-			<string>http://heanet.dl.sourceforge.net/sourceforge/pyobjc/pyobjc-1.0-darwin-6.6-Power_Macintosh.tar.gz</string>
+			<string>http://heanet.dl.sourceforge.net/sourceforge/pyobjc/pyobjc-1.0.darwin-6.6-Power_Macintosh.tar.gz</string>
 			<key>Flavor</key>
 			<string>binary</string>
 			<key>Install-test</key>

@@ -1,7 +1,7 @@
 <?
 $title = "Home";
 $cvs_author = '$Author: ronaldoussoren $';
-$cvs_date = '$Date: 2003/10/08 17:30:40 $';
+$cvs_date = '$Date: 2003/10/09 05:51:09 $';
 $is_home = 1;
 
 $metatags = '<meta name="description" content="PyObjC, a universal bridge between the Objective-C and Python languages.">
@@ -38,7 +38,7 @@ include $fsroot."news/news.inc";
 <h1>Status</h1>
 
 <p>
-<a href="software/index.php">PyObjC 1.0</a> was released on 21 September 2003.  See the <a href="NEWS-1.0.txt">NEWS</a> for details.
+<a href="software/index.php">PyObjC 1.0</a> was released on 8 October 2003.  See the <a href="NEWS-1.0.txt">NEWS</a> for details.
 </p>
 
 <h1>Platform support</h1>

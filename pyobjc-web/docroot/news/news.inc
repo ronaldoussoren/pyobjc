@@ -4,7 +4,7 @@ We're happy to announce the release of PyObjC 1.0. This version fixes the bugs
 found in the last beta and adds support for Key-Value Coding, see the 
 <a href="<? print $root; ?>NEWS-1.0.txt">NEWS file</a> for details.
   <p>
-A disk image and the sources are <a href="http://sourceforget.net/project/showfiles.php?group_id=14534">available</a>.  Users of MacPython 2.3 can install 
+A disk image and the sources are <a href="http://sourceforge.net/project/showfiles.php?group_id=14534">available</a>.  Users of MacPython 2.3 can install 
 PyObjC using the Package Manager.
   <p>
 <span class="news_date">2003-07-05: </span><span class="news_headline">PyObjC 1.0b1 released</span><?php gray_line(); ?>
