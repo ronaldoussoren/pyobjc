@@ -26,7 +26,6 @@ class PyModel(AutoBaseClass, NSTableDataSource):
 	def numberOfRowsInTableView_(self, aTableView):
 		return self.rowcount
 
-
 	def tableView_objectValueForTableColumn_row_(self, aTableView,
 			aTableColumn, rowIndex):
 		col = aTableColumn.identifier()
