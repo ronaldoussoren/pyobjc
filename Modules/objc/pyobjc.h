@@ -29,7 +29,7 @@
 
 #endif /* Python < 2.3.0a */
 
-#define OBJC_VERSION "0.8"
+#define OBJC_VERSION "0.8CVS"
 
 #ifdef MACOSX
 
