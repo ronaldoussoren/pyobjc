@@ -33,8 +33,6 @@ reverse of calling into Objective-C from Python (e.g.
 ``libffi_support.m:method_stub`` should be the reverse of 
 ``libffi_support.m:ObjC_FFICaller``)
 
-BTW. The unittests don't cover calling Python from Objective-C at all!
-
 Better documentation
 ....................
 
@@ -80,6 +78,20 @@ The test suite needs to be enhanced.
 Less important items
 --------------------
 
+Refactor some parts of the bridge
+.................................
+
+From the top of my head:
+
+* Conversion of numeric types to basic C types contains lots of duplicate code
+
+* Should write a function for calculating the signature for a function/method
+  object that is to be added to a class (check informal_protocols and methods
+  in the superclass for signature and "class-methodness"). Use this when 
+  defining python subclasses of ObjC classes (currently has this hardcoded) 
+  and in the implementation of objc.classAddMethod (currently doesn't support
+  raw functions).
+
 Support for GNUstep
 ...................
 
@@ -90,24 +102,12 @@ applicable.
 Support beyond that requires someone that actually tries to perform the 
 port to GNUstep. 
 
-Mirko Viviani <mirko@objectlab.org> seems to be working on this.
-
 Support for libFFI
 ..................
 
-LibFFI_ is a library for dynamicly contructing stack-frames and calling 
-functions. It can also be used to build closures.
-
-The primary use for libFFI_ would be to remove the need for the generated,
-and huge, file Modules/objc/register.m. It could also be used to replace
-methods in 'pure' Objective-C classes, or replace existing methods in those
-classes.
-
-The primary disadvantage of libFFI_ is that there is no current release of
-the library, the current version is part of GCC and can only be fetched from
-its source tree.
-
-Ronald is working on this. 
+LibFFI_ is now fully supported and the default. Need to remove non-FFI 
+support code as it is no longer needed. Check if we can use FFI to simplify
+other code (most likely in class-builder.m)
 
 Some PPC assembly magic is necessary in libFFI to remove a link-time warning (
 see the mailing-list archives for details).

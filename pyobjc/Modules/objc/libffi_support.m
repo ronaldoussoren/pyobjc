@@ -283,16 +283,31 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 		((_method_stub_userdata*)userdata)->methinfo;
 	PyObject* callable = ((_method_stub_userdata*)userdata)->callable;
 	int                objc_argcount;
+	int                argOffset;
 	int                i;
 	PyObject*          arglist;
 	PyObject*          res;
 	PyObject*          v;
 	int                have_output = 0;
+	const char*        rettype;
 
 	objc_argcount = [methinfo numberOfArguments];
+	rettype = [methinfo methodReturnType];
+
+	if ((objc_sizeof_type(rettype) > sizeof(id))
+		 	&& *rettype != _C_DBL && *rettype != _C_FLT
+		 	&& *rettype != _C_LNGLNG && *rettype != _C_ULNGLNG) {
+		/* the prototype is objc_msgSend_stret(void* retbuf, ... */
+		resp = *(void**)args[0];
+		argOffset = 1;
+	} else {
+		argOffset = 0;
+	}
+
+
 
 	arglist = PyList_New(0);
-	v = pythonify_c_value("@", args[0]);
+	v = pythonify_c_value("@", args[0+argOffset]);
 	if (v == NULL) {
 		ObjCErr_ToObjC();
 		return;
@@ -310,7 +325,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 		switch (*argtype) {
 		case _C_PTR:
 			have_output ++;
-			v = pythonify_c_value(argtype+1, *(void**)args[i]);
+			v = pythonify_c_value(argtype+1, *(void**)args[i+argOffset]);
 			break;
 		case _C_INOUT: 
 			if (argtype[1] == _C_PTR) {
@@ -319,9 +334,9 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			/* FALL THROUGH */
 		case _C_IN: case _C_CONST:
 			if (argtype[1] == _C_PTR) {
-				v = pythonify_c_value(argtype+2, *(void**)args[i]);
+				v = pythonify_c_value(argtype+2, *(void**)args[i+argOffset]);
 			} else {
-				v = pythonify_c_value(argtype+2, args[i]);
+				v = pythonify_c_value(argtype+2, args[i+argOffset]);
 			}
 			break;
 		case _C_OUT:
@@ -331,7 +346,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			}
 			continue;
 		default:
-			v = pythonify_c_value(argtype, args[i]);
+			v = pythonify_c_value(argtype, args[i+argOffset]);
 		}
 		if (v == NULL) {
 			Py_DECREF(arglist);
@@ -356,14 +371,13 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 	arglist = v;
 
 	if (!callable)
-	  res = ObjC_call_to_python(*(id*)args[0], *(SEL*)args[1], arglist);
+	  res = ObjC_call_to_python(*(id*)args[0+argOffset], *(SEL*)args[1+argOffset], arglist);
 	else
 	  res = PyObject_Call(callable, arglist, NULL);
 	Py_DECREF(arglist);
 
 	if (!have_output) {
 		int err;
-		const char* rettype = [methinfo methodReturnType];
 
 		if (*rettype != _C_VOID) {
 			const char* rettype = [methinfo methodReturnType];
@@ -437,31 +451,45 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 	ffi_status        rv;
 	int               i;
 	const char*		  rettype;
+	int argOffset;
 
 	methinfo = [NSMethodSignature signatureWithObjCTypes:signature];
 
 	/* Build FFI returntype description */
 	rettype = [methinfo methodReturnType];
-	cl_ret_type = signature_to_ffi_return_type(rettype);
-	if (cl_ret_type == NULL) {
-		[methinfo release];
-		return NULL;
+
+	if ((objc_sizeof_type(rettype) > sizeof(id))
+		 	&& *rettype != _C_DBL && *rettype != _C_FLT
+		 	&& *rettype != _C_LNGLNG && *rettype != _C_ULNGLNG) {
+		/* the prototype is objc_msgSend_stret(void* retbuf, ... */
+		argOffset = 1;
+		cl_ret_type = &ffi_type_void;
+	} else {
+		argOffset = 0;
+		cl_ret_type = signature_to_ffi_return_type(rettype);
+		if (cl_ret_type == NULL) {
+			[methinfo release];
+			return NULL;
+		}
 	}
 
 	/* Build FFI argumentlist description */
 	objc_argcount = [methinfo numberOfArguments];
 
-	cl_arg_types = malloc(sizeof(ffi_type*) * objc_argcount);
+	cl_arg_types = malloc(sizeof(ffi_type*) * (argOffset + objc_argcount));
 	if (cl_arg_types == NULL) {
 		free(cl_ret_type);
 		PyErr_NoMemory();
 		return NULL;
 	}
+	if (argOffset) {
+		cl_arg_types[0] = &ffi_type_pointer;
+	}
 
 	for (i = 0; i < objc_argcount; i++) {
-		cl_arg_types[i] = signature_to_ffi_type(
+		cl_arg_types[i+argOffset] = signature_to_ffi_type(
 				[methinfo getArgumentTypeAtIndex:i]);
-		if (cl_arg_types[i] == NULL) {
+		if (cl_arg_types[i+argOffset] == NULL) {
 			[methinfo release];
 			free(cl_arg_types);
 			return NULL;
@@ -481,7 +509,7 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 	 * use objc_msgSendSuper_stret, should the method stub have a return
 	 * buffer argument in those cases? Hmm, maybe libffi knows about this.
 	 */
-	rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, objc_argcount, 
+	rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, objc_argcount+argOffset, 
 		cl_ret_type, cl_arg_types);
 	if (rv != FFI_OK) {
 		free(cl_arg_types);
@@ -757,9 +785,9 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	}
 
 	if (*rettype == _C_DBL || *rettype == _C_FLT ||
-		*rettype == _C_LNGLNG || *rettype == _C_ULNGLNG) {
+		 *rettype == _C_LNGLNG || *rettype == _C_ULNGLNG) {
 
-		/* Libffi knows how to pass these, and ..._stret doesn't work
+		/* Libffi knows how to pass them, and ..._stret doesn't work
 		 * with these...
 		 */
 

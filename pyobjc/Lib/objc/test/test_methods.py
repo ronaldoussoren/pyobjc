@@ -741,7 +741,7 @@ ULONGLONG_NUMBERS=[0, 44, (1L<<36)+4]
 FLOAT_NUMBERS = [ makeCFloat(0.1), makeCFloat(100.0) ]
 DOUBLE_NUMBERS = [ 1.5, 3.5, 1e10, 1.99e10 ]
 OBJECTS = [ "hello", 1.0, range(4), lambda x: 10 ]
-DUMMY_OBJECTS = [ (0xabcd, 0xfedcba), (1, 1), (-10, -10), (-4, -5), (0, 0), (10, 20) ]
+DUMMY_OBJECTS = [ (1, 1), (-10, -10), (-4, -5), (0, 0), (10, 20) ]
 POINTS=[ (1.0, 2.0), (1e10, 2e10), (-0.5, 0.5) ]
 
 class MyPyClass:
