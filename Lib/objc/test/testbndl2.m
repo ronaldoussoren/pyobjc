@@ -424,757 +424,757 @@
 {
 }
 
--(BOOL)callBOOLMethodOf:(PyObjC_TestClass1*)obj;
--(BOOL)invokeBOOLMethodOf:(PyObjC_TestClass1*)obj;
--(char)callcharMethodOf:(PyObjC_TestClass1*)obj;
--(char)invokecharMethodOf:(PyObjC_TestClass1*)obj;
--(signed short)callsignedshortMethodOf:(PyObjC_TestClass1*)obj;
--(signed short)invokesignedshortMethodOf:(PyObjC_TestClass1*)obj;
--(signed int)callsignedintMethodOf:(PyObjC_TestClass1*)obj;
--(signed int)invokesignedintMethodOf:(PyObjC_TestClass1*)obj;
--(signed long)callsignedlongMethodOf:(PyObjC_TestClass1*)obj;
--(signed long)invokesignedlongMethodOf:(PyObjC_TestClass1*)obj;
--(signed long long)callsignedlonglongMethodOf:(PyObjC_TestClass1*)obj;
--(signed long long)invokesignedlonglongMethodOf:(PyObjC_TestClass1*)obj;
--(unsigned char)callunsignedcharMethodOf:(PyObjC_TestClass1*)obj;
--(unsigned char)invokeunsignedcharMethodOf:(PyObjC_TestClass1*)obj;
--(unsigned short)callunsignedshortMethodOf:(PyObjC_TestClass1*)obj;
--(unsigned short)invokeunsignedshortMethodOf:(PyObjC_TestClass1*)obj;
--(unsigned int)callunsignedintMethodOf:(PyObjC_TestClass1*)obj;
--(unsigned int)invokeunsignedintMethodOf:(PyObjC_TestClass1*)obj;
--(unsigned long)callunsignedlongMethodOf:(PyObjC_TestClass1*)obj;
--(unsigned long)invokeunsignedlongMethodOf:(PyObjC_TestClass1*)obj;
--(unsigned long long)callunsignedlonglongMethodOf:(PyObjC_TestClass1*)obj;
--(unsigned long long)invokeunsignedlonglongMethodOf:(PyObjC_TestClass1*)obj;
--(float)callfloatMethodOf:(PyObjC_TestClass1*)obj;
--(float)invokefloatMethodOf:(PyObjC_TestClass1*)obj;
--(double)calldoubleMethodOf:(PyObjC_TestClass1*)obj;
--(double)invokedoubleMethodOf:(PyObjC_TestClass1*)obj;
--(id)callidMethodOf:(PyObjC_TestClass1*)obj;
--(id)invokeidMethodOf:(PyObjC_TestClass1*)obj;
--(char*)callcharPtrMethodOf:(PyObjC_TestClass1*)obj;
--(char*)invokecharPtrMethodOf:(PyObjC_TestClass1*)obj;
--(NSPoint)callNSPointMethodOf:(PyObjC_TestClass1*)obj;
--(NSPoint)invokeNSPointMethodOf:(PyObjC_TestClass1*)obj;
--(NSRect)callNSRectMethodOf:(PyObjC_TestClass1*)obj;
--(NSRect)invokeNSRectMethodOf:(PyObjC_TestClass1*)obj;
++(BOOL)callBOOLMethodOf:(PyObjC_TestClass1*)obj;
++(BOOL)invokeBOOLMethodOf:(PyObjC_TestClass1*)obj;
++(char)callcharMethodOf:(PyObjC_TestClass1*)obj;
++(char)invokecharMethodOf:(PyObjC_TestClass1*)obj;
++(signed short)callsignedshortMethodOf:(PyObjC_TestClass1*)obj;
++(signed short)invokesignedshortMethodOf:(PyObjC_TestClass1*)obj;
++(signed int)callsignedintMethodOf:(PyObjC_TestClass1*)obj;
++(signed int)invokesignedintMethodOf:(PyObjC_TestClass1*)obj;
++(signed long)callsignedlongMethodOf:(PyObjC_TestClass1*)obj;
++(signed long)invokesignedlongMethodOf:(PyObjC_TestClass1*)obj;
++(signed long long)callsignedlonglongMethodOf:(PyObjC_TestClass1*)obj;
++(signed long long)invokesignedlonglongMethodOf:(PyObjC_TestClass1*)obj;
++(unsigned char)callunsignedcharMethodOf:(PyObjC_TestClass1*)obj;
++(unsigned char)invokeunsignedcharMethodOf:(PyObjC_TestClass1*)obj;
++(unsigned short)callunsignedshortMethodOf:(PyObjC_TestClass1*)obj;
++(unsigned short)invokeunsignedshortMethodOf:(PyObjC_TestClass1*)obj;
++(unsigned int)callunsignedintMethodOf:(PyObjC_TestClass1*)obj;
++(unsigned int)invokeunsignedintMethodOf:(PyObjC_TestClass1*)obj;
++(unsigned long)callunsignedlongMethodOf:(PyObjC_TestClass1*)obj;
++(unsigned long)invokeunsignedlongMethodOf:(PyObjC_TestClass1*)obj;
++(unsigned long long)callunsignedlonglongMethodOf:(PyObjC_TestClass1*)obj;
++(unsigned long long)invokeunsignedlonglongMethodOf:(PyObjC_TestClass1*)obj;
++(float)callfloatMethodOf:(PyObjC_TestClass1*)obj;
++(float)invokefloatMethodOf:(PyObjC_TestClass1*)obj;
++(double)calldoubleMethodOf:(PyObjC_TestClass1*)obj;
++(double)invokedoubleMethodOf:(PyObjC_TestClass1*)obj;
++(id)callidMethodOf:(PyObjC_TestClass1*)obj;
++(id)invokeidMethodOf:(PyObjC_TestClass1*)obj;
++(char*)callcharPtrMethodOf:(PyObjC_TestClass1*)obj;
++(char*)invokecharPtrMethodOf:(PyObjC_TestClass1*)obj;
++(NSPoint)callNSPointMethodOf:(PyObjC_TestClass1*)obj;
++(NSPoint)invokeNSPointMethodOf:(PyObjC_TestClass1*)obj;
++(NSRect)callNSRectMethodOf:(PyObjC_TestClass1*)obj;
++(NSRect)invokeNSRectMethodOf:(PyObjC_TestClass1*)obj;
 /* Single argument passing */
--(id)callBOOLArg:(BOOL)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg of:(PyObjC_TestClass1*)obj;
 /* Multiple arguments */
--(id)callBOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callBOOLArg:(BOOL)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLArg:(BOOL)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharArg:(char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharArg:(char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortArg:(signed short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortArg:(signed short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedintArg:(signed int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintArg:(signed int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongArg:(signed long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongArg:(signed long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongArg:(signed long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongArg:(signed long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharArg:(unsigned char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharArg:(unsigned char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortArg:(unsigned short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortArg:(unsigned short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintArg:(unsigned int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintArg:(unsigned int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongArg:(unsigned long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongArg:(unsigned long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callfloatArg:(float)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokefloatArg:(float)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)calldoubleArg:(double)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleArg:(double)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callidArg:(id)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeidArg:(id)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrArg:(char*)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrArg:(char*)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSPointArg:(NSPoint)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointArg:(NSPoint)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
--(id)callNSRectArg:(NSRect)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectArg:(NSRect)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callBOOLArg:(BOOL)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLArg:(BOOL)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharArg:(char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharArg:(char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortArg:(signed short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortArg:(signed short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedintArg:(signed int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintArg:(signed int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongArg:(signed long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongArg:(signed long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongArg:(signed long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongArg:(signed long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharArg:(unsigned char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharArg:(unsigned char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortArg:(unsigned short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortArg:(unsigned short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintArg:(unsigned int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintArg:(unsigned int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongArg:(unsigned long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongArg:(unsigned long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callfloatArg:(float)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokefloatArg:(float)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)calldoubleArg:(double)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleArg:(double)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callidArg:(id)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeidArg:(id)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrArg:(char*)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrArg:(char*)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSPointArg:(NSPoint)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointArg:(NSPoint)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj;
++(id)callNSRectArg:(NSRect)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectArg:(NSRect)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj;
 /* in, out and in-out arguments */
--(id)invokeBOOLInArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
--(id)callBOOLInArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokeBOOLOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
--(void)callBOOLOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeBOOLInOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
--(id)callBOOLInOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokecharInArg:(char*)arg of:(PyObjC_TestClass1*)obj;
--(id)callcharInArg:(char*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokecharOutArg:(char*)arg of:(PyObjC_TestClass1*)obj;
--(void)callcharOutArg:(char*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokecharInOutArg:(char*)arg of:(PyObjC_TestClass1*)obj;
--(id)callcharInOutArg:(char*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortInArg:(signed short*)arg of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortInArg:(signed short*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokesignedshortOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj;
--(void)callsignedshortOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokesignedshortInOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj;
--(id)callsignedshortInOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintInArg:(signed int*)arg of:(PyObjC_TestClass1*)obj;
--(id)callsignedintInArg:(signed int*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokesignedintOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj;
--(void)callsignedintOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokesignedintInOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj;
--(id)callsignedintInOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongInArg:(signed long*)arg of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongInArg:(signed long*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokesignedlongOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj;
--(void)callsignedlongOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlongInOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj;
--(id)callsignedlongInOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongInArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongInArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokesignedlonglongOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj;
--(void)callsignedlonglongOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokesignedlonglongInOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj;
--(id)callsignedlonglongInOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharInArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharInArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokeunsignedcharOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj;
--(void)callunsignedcharOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedcharInOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedcharInOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortInArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortInArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokeunsignedshortOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj;
--(void)callunsignedshortOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedshortInOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedshortInOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintInArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintInArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokeunsignedintOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj;
--(void)callunsignedintOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedintInOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedintInOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongInArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongInArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokeunsignedlongOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj;
--(void)callunsignedlongOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlongInOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlongInOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongInArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongInArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokeunsignedlonglongOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj;
--(void)callunsignedlonglongOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeunsignedlonglongInOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj;
--(id)callunsignedlonglongInOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokefloatInArg:(float*)arg of:(PyObjC_TestClass1*)obj;
--(id)callfloatInArg:(float*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokefloatOutArg:(float*)arg of:(PyObjC_TestClass1*)obj;
--(void)callfloatOutArg:(float*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokefloatInOutArg:(float*)arg of:(PyObjC_TestClass1*)obj;
--(id)callfloatInOutArg:(float*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleInArg:(double*)arg of:(PyObjC_TestClass1*)obj;
--(id)calldoubleInArg:(double*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokedoubleOutArg:(double*)arg of:(PyObjC_TestClass1*)obj;
--(void)calldoubleOutArg:(double*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokedoubleInOutArg:(double*)arg of:(PyObjC_TestClass1*)obj;
--(id)calldoubleInOutArg:(double*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeidInArg:(id*)arg of:(PyObjC_TestClass1*)obj;
--(id)callidInArg:(id*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokeidOutArg:(id*)arg of:(PyObjC_TestClass1*)obj;
--(void)callidOutArg:(id*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeidInOutArg:(id*)arg of:(PyObjC_TestClass1*)obj;
--(id)callidInOutArg:(id*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrInArg:(char**)arg of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrInArg:(char**)arg of:(PyObjC_TestClass1*)obj;
--(void)invokecharPtrOutArg:(char**)arg of:(PyObjC_TestClass1*)obj;
--(void)callcharPtrOutArg:(char**)arg of:(PyObjC_TestClass1*)obj;
--(id)invokecharPtrInOutArg:(char**)arg of:(PyObjC_TestClass1*)obj;
--(id)callcharPtrInOutArg:(char**)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointInArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj;
--(id)callNSPointInArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokeNSPointOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj;
--(void)callNSPointOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeNSPointInOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj;
--(id)callNSPointInOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectInArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
--(id)callNSRectInArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
--(void)invokeNSRectOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
--(void)callNSRectOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
--(id)invokeNSRectInOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
--(id)callNSRectInOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLInArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
++(id)callBOOLInArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokeBOOLOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
++(void)callBOOLOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeBOOLInOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
++(id)callBOOLInOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokecharInArg:(char*)arg of:(PyObjC_TestClass1*)obj;
++(id)callcharInArg:(char*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokecharOutArg:(char*)arg of:(PyObjC_TestClass1*)obj;
++(void)callcharOutArg:(char*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokecharInOutArg:(char*)arg of:(PyObjC_TestClass1*)obj;
++(id)callcharInOutArg:(char*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortInArg:(signed short*)arg of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortInArg:(signed short*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokesignedshortOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj;
++(void)callsignedshortOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokesignedshortInOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj;
++(id)callsignedshortInOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintInArg:(signed int*)arg of:(PyObjC_TestClass1*)obj;
++(id)callsignedintInArg:(signed int*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokesignedintOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj;
++(void)callsignedintOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokesignedintInOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj;
++(id)callsignedintInOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongInArg:(signed long*)arg of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongInArg:(signed long*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokesignedlongOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj;
++(void)callsignedlongOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlongInOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj;
++(id)callsignedlongInOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongInArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongInArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokesignedlonglongOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj;
++(void)callsignedlonglongOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokesignedlonglongInOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj;
++(id)callsignedlonglongInOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharInArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharInArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokeunsignedcharOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj;
++(void)callunsignedcharOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedcharInOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedcharInOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortInArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortInArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokeunsignedshortOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj;
++(void)callunsignedshortOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedshortInOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedshortInOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintInArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintInArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokeunsignedintOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj;
++(void)callunsignedintOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedintInOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedintInOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongInArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongInArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokeunsignedlongOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj;
++(void)callunsignedlongOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlongInOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlongInOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongInArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongInArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokeunsignedlonglongOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj;
++(void)callunsignedlonglongOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeunsignedlonglongInOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj;
++(id)callunsignedlonglongInOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokefloatInArg:(float*)arg of:(PyObjC_TestClass1*)obj;
++(id)callfloatInArg:(float*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokefloatOutArg:(float*)arg of:(PyObjC_TestClass1*)obj;
++(void)callfloatOutArg:(float*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokefloatInOutArg:(float*)arg of:(PyObjC_TestClass1*)obj;
++(id)callfloatInOutArg:(float*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleInArg:(double*)arg of:(PyObjC_TestClass1*)obj;
++(id)calldoubleInArg:(double*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokedoubleOutArg:(double*)arg of:(PyObjC_TestClass1*)obj;
++(void)calldoubleOutArg:(double*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokedoubleInOutArg:(double*)arg of:(PyObjC_TestClass1*)obj;
++(id)calldoubleInOutArg:(double*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeidInArg:(id*)arg of:(PyObjC_TestClass1*)obj;
++(id)callidInArg:(id*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokeidOutArg:(id*)arg of:(PyObjC_TestClass1*)obj;
++(void)callidOutArg:(id*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeidInOutArg:(id*)arg of:(PyObjC_TestClass1*)obj;
++(id)callidInOutArg:(id*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrInArg:(char**)arg of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrInArg:(char**)arg of:(PyObjC_TestClass1*)obj;
++(void)invokecharPtrOutArg:(char**)arg of:(PyObjC_TestClass1*)obj;
++(void)callcharPtrOutArg:(char**)arg of:(PyObjC_TestClass1*)obj;
++(id)invokecharPtrInOutArg:(char**)arg of:(PyObjC_TestClass1*)obj;
++(id)callcharPtrInOutArg:(char**)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointInArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj;
++(id)callNSPointInArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokeNSPointOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj;
++(void)callNSPointOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeNSPointInOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj;
++(id)callNSPointInOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectInArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
++(id)callNSRectInArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
++(void)invokeNSRectOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
++(void)callNSRectOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
++(id)invokeNSRectInOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
++(id)callNSRectInOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj;
 
 @end // interface PyObjC_TestClass2
 
@@ -1267,10 +1267,7 @@ static double g_double_values[] = {
 	1e10
 };
 
-static id g_id_values[] = {
-	nil
-};
-
+static id g_id_values[1];
 static char* g_charPtr_values[] = {
 	"hello",
 	"world",
@@ -4534,18 +4531,25 @@ static id arg2id(const char* argtype, void* argptr)
 @implementation PyObjC_TestClass2 : NSObject
 
 #define SETUP_INVOCATION(inv, target, selector)\
-	inv = [NSInvocation invocationWithMethodSignature:\
-		[target methodSignatureForSelector:selector]];\
-	[inv setTarget:target];\
-	[inv setSelector:selector];
+	{\
+		id sign = [target methodSignatureForSelector:selector];\
+		if (sign == NULL) {\
+			PyErr_SetString(PyExc_AttributeError, SELNAME(selector));\
+			ObjCErr_ToObjC();\
+		}\
+		inv = [NSInvocation invocationWithMethodSignature:\
+			[target methodSignatureForSelector:selector]];\
+		[inv setTarget:target];\
+		[inv setSelector:selector];\
+	}
 
 
--(BOOL)callBOOLMethodOf:(PyObjC_TestClass1*)obj
++(BOOL)callBOOLMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLMethod];
 }
 
--(BOOL)invokeBOOLMethodOf:(PyObjC_TestClass1*)obj
++(BOOL)invokeBOOLMethodOf:(PyObjC_TestClass1*)obj
 {
 	BOOL res;
 	NSInvocation* inv;
@@ -4556,12 +4560,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(char)callcharMethodOf:(PyObjC_TestClass1*)obj
++(char)callcharMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj charMethod];
 }
 
--(char)invokecharMethodOf:(PyObjC_TestClass1*)obj
++(char)invokecharMethodOf:(PyObjC_TestClass1*)obj
 {
 	char res;
 	NSInvocation* inv;
@@ -4572,12 +4576,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(signed short)callsignedshortMethodOf:(PyObjC_TestClass1*)obj
++(signed short)callsignedshortMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortMethod];
 }
 
--(signed short)invokesignedshortMethodOf:(PyObjC_TestClass1*)obj
++(signed short)invokesignedshortMethodOf:(PyObjC_TestClass1*)obj
 {
 	signed short res;
 	NSInvocation* inv;
@@ -4588,12 +4592,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(signed int)callsignedintMethodOf:(PyObjC_TestClass1*)obj
++(signed int)callsignedintMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintMethod];
 }
 
--(signed int)invokesignedintMethodOf:(PyObjC_TestClass1*)obj
++(signed int)invokesignedintMethodOf:(PyObjC_TestClass1*)obj
 {
 	signed int res;
 	NSInvocation* inv;
@@ -4604,12 +4608,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(signed long)callsignedlongMethodOf:(PyObjC_TestClass1*)obj
++(signed long)callsignedlongMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongMethod];
 }
 
--(signed long)invokesignedlongMethodOf:(PyObjC_TestClass1*)obj
++(signed long)invokesignedlongMethodOf:(PyObjC_TestClass1*)obj
 {
 	signed long res;
 	NSInvocation* inv;
@@ -4620,12 +4624,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(signed long long)callsignedlonglongMethodOf:(PyObjC_TestClass1*)obj
++(signed long long)callsignedlonglongMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongMethod];
 }
 
--(signed long long)invokesignedlonglongMethodOf:(PyObjC_TestClass1*)obj
++(signed long long)invokesignedlonglongMethodOf:(PyObjC_TestClass1*)obj
 {
 	signed long long res;
 	NSInvocation* inv;
@@ -4636,12 +4640,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(unsigned char)callunsignedcharMethodOf:(PyObjC_TestClass1*)obj
++(unsigned char)callunsignedcharMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharMethod];
 }
 
--(unsigned char)invokeunsignedcharMethodOf:(PyObjC_TestClass1*)obj
++(unsigned char)invokeunsignedcharMethodOf:(PyObjC_TestClass1*)obj
 {
 	unsigned char res;
 	NSInvocation* inv;
@@ -4652,12 +4656,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(unsigned short)callunsignedshortMethodOf:(PyObjC_TestClass1*)obj
++(unsigned short)callunsignedshortMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortMethod];
 }
 
--(unsigned short)invokeunsignedshortMethodOf:(PyObjC_TestClass1*)obj
++(unsigned short)invokeunsignedshortMethodOf:(PyObjC_TestClass1*)obj
 {
 	unsigned short res;
 	NSInvocation* inv;
@@ -4668,12 +4672,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(unsigned int)callunsignedintMethodOf:(PyObjC_TestClass1*)obj
++(unsigned int)callunsignedintMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintMethod];
 }
 
--(unsigned int)invokeunsignedintMethodOf:(PyObjC_TestClass1*)obj
++(unsigned int)invokeunsignedintMethodOf:(PyObjC_TestClass1*)obj
 {
 	unsigned int res;
 	NSInvocation* inv;
@@ -4684,12 +4688,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(unsigned long)callunsignedlongMethodOf:(PyObjC_TestClass1*)obj
++(unsigned long)callunsignedlongMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongMethod];
 }
 
--(unsigned long)invokeunsignedlongMethodOf:(PyObjC_TestClass1*)obj
++(unsigned long)invokeunsignedlongMethodOf:(PyObjC_TestClass1*)obj
 {
 	unsigned long res;
 	NSInvocation* inv;
@@ -4700,12 +4704,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(unsigned long long)callunsignedlonglongMethodOf:(PyObjC_TestClass1*)obj
++(unsigned long long)callunsignedlonglongMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongMethod];
 }
 
--(unsigned long long)invokeunsignedlonglongMethodOf:(PyObjC_TestClass1*)obj
++(unsigned long long)invokeunsignedlonglongMethodOf:(PyObjC_TestClass1*)obj
 {
 	unsigned long long res;
 	NSInvocation* inv;
@@ -4716,12 +4720,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(float)callfloatMethodOf:(PyObjC_TestClass1*)obj
++(float)callfloatMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj floatMethod];
 }
 
--(float)invokefloatMethodOf:(PyObjC_TestClass1*)obj
++(float)invokefloatMethodOf:(PyObjC_TestClass1*)obj
 {
 	float res;
 	NSInvocation* inv;
@@ -4732,12 +4736,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(double)calldoubleMethodOf:(PyObjC_TestClass1*)obj
++(double)calldoubleMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleMethod];
 }
 
--(double)invokedoubleMethodOf:(PyObjC_TestClass1*)obj
++(double)invokedoubleMethodOf:(PyObjC_TestClass1*)obj
 {
 	double res;
 	NSInvocation* inv;
@@ -4748,12 +4752,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidMethodOf:(PyObjC_TestClass1*)obj
++(id)callidMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj idMethod];
 }
 
--(id)invokeidMethodOf:(PyObjC_TestClass1*)obj
++(id)invokeidMethodOf:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -4764,12 +4768,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(char*)callcharPtrMethodOf:(PyObjC_TestClass1*)obj
++(char*)callcharPtrMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrMethod];
 }
 
--(char*)invokecharPtrMethodOf:(PyObjC_TestClass1*)obj
++(char*)invokecharPtrMethodOf:(PyObjC_TestClass1*)obj
 {
 	char* res;
 	NSInvocation* inv;
@@ -4780,12 +4784,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(NSPoint)callNSPointMethodOf:(PyObjC_TestClass1*)obj
++(NSPoint)callNSPointMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointMethod];
 }
 
--(NSPoint)invokeNSPointMethodOf:(PyObjC_TestClass1*)obj
++(NSPoint)invokeNSPointMethodOf:(PyObjC_TestClass1*)obj
 {
 	NSPoint res;
 	NSInvocation* inv;
@@ -4796,12 +4800,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(NSRect)callNSRectMethodOf:(PyObjC_TestClass1*)obj
++(NSRect)callNSRectMethodOf:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectMethod];
 }
 
--(NSRect)invokeNSRectMethodOf:(PyObjC_TestClass1*)obj
++(NSRect)invokeNSRectMethodOf:(PyObjC_TestClass1*)obj
 {
 	NSRect res;
 	NSInvocation* inv;
@@ -4812,12 +4816,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg];
 }
 
--(id)invokeBOOLArg:(BOOL)arg of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -4829,12 +4833,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg];
 }
 
--(id)invokecharArg:(char)arg of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -4846,12 +4850,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg];
 }
 
--(id)invokesignedshortArg:(signed short)arg of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -4863,12 +4867,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg];
 }
 
--(id)invokesignedintArg:(signed int)arg of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -4880,12 +4884,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg];
 }
 
--(id)invokesignedlongArg:(signed long)arg of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -4897,12 +4901,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -4914,12 +4918,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -4931,12 +4935,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -4948,12 +4952,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -4965,12 +4969,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -4982,12 +4986,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -4999,12 +5003,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg];
 }
 
--(id)invokefloatArg:(float)arg of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5016,12 +5020,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg];
 }
 
--(id)invokedoubleArg:(double)arg of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5033,12 +5037,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg];
 }
 
--(id)invokeidArg:(id)arg of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5050,12 +5054,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg];
 }
 
--(id)invokecharPtrArg:(char*)arg of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5067,12 +5071,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5084,12 +5088,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg];
 }
 
--(id)invokeNSRectArg:(NSRect)arg of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5101,12 +5105,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5119,12 +5123,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andcharArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5137,12 +5141,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5155,12 +5159,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5173,12 +5177,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5191,12 +5195,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5209,12 +5213,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5227,12 +5231,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5245,12 +5249,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5263,12 +5267,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5281,12 +5285,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5299,12 +5303,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5317,12 +5321,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5335,12 +5339,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andidArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5353,12 +5357,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5371,12 +5375,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5389,12 +5393,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLArg:(BOOL)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callBOOLArg:(BOOL)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokeBOOLArg:(BOOL)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLArg:(BOOL)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5407,12 +5411,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5425,12 +5429,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andcharArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5443,12 +5447,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5461,12 +5465,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5479,12 +5483,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5497,12 +5501,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5515,12 +5519,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5533,12 +5537,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5551,12 +5555,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5569,12 +5573,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5587,12 +5591,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5605,12 +5609,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5623,12 +5627,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5641,12 +5645,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andidArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5659,12 +5663,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5677,12 +5681,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5695,12 +5699,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharArg:(char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharArg:(char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokecharArg:(char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharArg:(char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5713,12 +5717,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5731,12 +5735,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andcharArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5749,12 +5753,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5767,12 +5771,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5785,12 +5789,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5803,12 +5807,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5821,12 +5825,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5839,12 +5843,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5857,12 +5861,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5875,12 +5879,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5893,12 +5897,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5911,12 +5915,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5929,12 +5933,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5947,12 +5951,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andidArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5965,12 +5969,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -5983,12 +5987,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6001,12 +6005,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortArg:(signed short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedshortArg:(signed short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokesignedshortArg:(signed short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortArg:(signed short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6019,12 +6023,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6037,12 +6041,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andcharArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6055,12 +6059,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6073,12 +6077,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6091,12 +6095,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6109,12 +6113,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6127,12 +6131,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6145,12 +6149,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6163,12 +6167,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6181,12 +6185,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6199,12 +6203,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6217,12 +6221,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6235,12 +6239,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6253,12 +6257,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andidArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6271,12 +6275,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6289,12 +6293,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6307,12 +6311,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintArg:(signed int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedintArg:(signed int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokesignedintArg:(signed int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedintArg:(signed int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6325,12 +6329,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6343,12 +6347,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andcharArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6361,12 +6365,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6379,12 +6383,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6397,12 +6401,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6415,12 +6419,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6433,12 +6437,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6451,12 +6455,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6469,12 +6473,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6487,12 +6491,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6505,12 +6509,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6523,12 +6527,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6541,12 +6545,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6559,12 +6563,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andidArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6577,12 +6581,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6595,12 +6599,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6613,12 +6617,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongArg:(signed long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlongArg:(signed long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokesignedlongArg:(signed long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongArg:(signed long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6631,12 +6635,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6649,12 +6653,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andcharArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6667,12 +6671,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6685,12 +6689,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6703,12 +6707,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6721,12 +6725,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6739,12 +6743,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6757,12 +6761,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6775,12 +6779,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6793,12 +6797,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6811,12 +6815,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6829,12 +6833,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6847,12 +6851,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6865,12 +6869,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andidArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6883,12 +6887,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6901,12 +6905,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6919,12 +6923,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongArg:(signed long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongArg:(signed long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokesignedlonglongArg:(signed long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongArg:(signed long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6937,12 +6941,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6955,12 +6959,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andcharArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6973,12 +6977,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -6991,12 +6995,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7009,12 +7013,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7027,12 +7031,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7045,12 +7049,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7063,12 +7067,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7081,12 +7085,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7099,12 +7103,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7117,12 +7121,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7135,12 +7139,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7153,12 +7157,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7171,12 +7175,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andidArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7189,12 +7193,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7207,12 +7211,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7225,12 +7229,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharArg:(unsigned char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharArg:(unsigned char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokeunsignedcharArg:(unsigned char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharArg:(unsigned char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7243,12 +7247,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7261,12 +7265,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andcharArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7279,12 +7283,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7297,12 +7301,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7315,12 +7319,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7333,12 +7337,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7351,12 +7355,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7369,12 +7373,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7387,12 +7391,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7405,12 +7409,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7423,12 +7427,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7441,12 +7445,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7459,12 +7463,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7477,12 +7481,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andidArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7495,12 +7499,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7513,12 +7517,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7531,12 +7535,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortArg:(unsigned short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortArg:(unsigned short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokeunsignedshortArg:(unsigned short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortArg:(unsigned short)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7549,12 +7553,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7567,12 +7571,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andcharArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7585,12 +7589,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7603,12 +7607,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7621,12 +7625,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7639,12 +7643,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7657,12 +7661,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7675,12 +7679,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7693,12 +7697,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7711,12 +7715,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7729,12 +7733,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7747,12 +7751,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7765,12 +7769,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7783,12 +7787,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andidArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7801,12 +7805,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7819,12 +7823,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7837,12 +7841,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintArg:(unsigned int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedintArg:(unsigned int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokeunsignedintArg:(unsigned int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintArg:(unsigned int)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7855,12 +7859,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7873,12 +7877,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andcharArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7891,12 +7895,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7909,12 +7913,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7927,12 +7931,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7945,12 +7949,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7963,12 +7967,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7981,12 +7985,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -7999,12 +8003,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8017,12 +8021,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8035,12 +8039,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8053,12 +8057,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8071,12 +8075,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8089,12 +8093,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andidArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8107,12 +8111,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8125,12 +8129,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8143,12 +8147,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongArg:(unsigned long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongArg:(unsigned long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokeunsignedlongArg:(unsigned long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongArg:(unsigned long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8161,12 +8165,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8179,12 +8183,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andcharArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8197,12 +8201,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8215,12 +8219,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8233,12 +8237,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8251,12 +8255,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8269,12 +8273,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8287,12 +8291,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8305,12 +8309,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8323,12 +8327,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8341,12 +8345,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8359,12 +8363,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8377,12 +8381,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8395,12 +8399,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andidArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8413,12 +8417,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8431,12 +8435,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8449,12 +8453,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongArg:(unsigned long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongArg:(unsigned long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongArg:(unsigned long long)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8467,12 +8471,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8485,12 +8489,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andcharArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8503,12 +8507,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8521,12 +8525,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8539,12 +8543,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8557,12 +8561,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8575,12 +8579,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8593,12 +8597,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8611,12 +8615,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8629,12 +8633,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8647,12 +8651,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8665,12 +8669,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8683,12 +8687,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8701,12 +8705,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andidArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8719,12 +8723,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8737,12 +8741,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8755,12 +8759,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatArg:(float)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callfloatArg:(float)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokefloatArg:(float)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokefloatArg:(float)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8773,12 +8777,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8791,12 +8795,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andcharArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8809,12 +8813,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8827,12 +8831,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8845,12 +8849,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8863,12 +8867,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8881,12 +8885,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8899,12 +8903,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8917,12 +8921,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8935,12 +8939,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8953,12 +8957,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8971,12 +8975,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -8989,12 +8993,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9007,12 +9011,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andidArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9025,12 +9029,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9043,12 +9047,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9061,12 +9065,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleArg:(double)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)calldoubleArg:(double)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokedoubleArg:(double)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokedoubleArg:(double)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9079,12 +9083,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9097,12 +9101,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andcharArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9115,12 +9119,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9133,12 +9137,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9151,12 +9155,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9169,12 +9173,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9187,12 +9191,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9205,12 +9209,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9223,12 +9227,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9241,12 +9245,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9259,12 +9263,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9277,12 +9281,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9295,12 +9299,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9313,12 +9317,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andidArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9331,12 +9335,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9349,12 +9353,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9367,12 +9371,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidArg:(id)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callidArg:(id)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj idArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokeidArg:(id)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeidArg:(id)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9385,12 +9389,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9403,12 +9407,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andcharArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9421,12 +9425,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9439,12 +9443,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9457,12 +9461,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9475,12 +9479,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9493,12 +9497,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9511,12 +9515,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9529,12 +9533,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9547,12 +9551,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9565,12 +9569,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9583,12 +9587,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9601,12 +9605,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9619,12 +9623,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andidArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9637,12 +9641,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9655,12 +9659,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9673,12 +9677,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrArg:(char*)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callcharPtrArg:(char*)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokecharPtrArg:(char*)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrArg:(char*)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9691,12 +9695,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9709,12 +9713,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andcharArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9727,12 +9731,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9745,12 +9749,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9763,12 +9767,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9781,12 +9785,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9799,12 +9803,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9817,12 +9821,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9835,12 +9839,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9853,12 +9857,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9871,12 +9875,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9889,12 +9893,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9907,12 +9911,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9925,12 +9929,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andidArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9943,12 +9947,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9961,12 +9965,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9979,12 +9983,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointArg:(NSPoint)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSPointArg:(NSPoint)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokeNSPointArg:(NSPoint)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointArg:(NSPoint)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -9997,12 +10001,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andBOOLArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10015,12 +10019,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andcharArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10033,12 +10037,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andsignedshortArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10051,12 +10055,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andsignedintArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10069,12 +10073,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andsignedlongArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10087,12 +10091,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andsignedlonglongArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andsignedlonglongArg:(signed long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10105,12 +10109,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andunsignedcharArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andunsignedcharArg:(unsigned char)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10123,12 +10127,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andunsignedshortArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andunsignedshortArg:(unsigned short)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10141,12 +10145,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andunsignedintArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10159,12 +10163,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andunsignedlongArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andunsignedlongArg:(unsigned long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10177,12 +10181,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andunsignedlonglongArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andunsignedlonglongArg:(unsigned long long)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10195,12 +10199,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andfloatArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10213,12 +10217,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 anddoubleArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10231,12 +10235,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andidArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10249,12 +10253,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andcharPtrArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10267,12 +10271,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andNSPointArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10285,12 +10289,12 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectArg:(NSRect)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)callNSRectArg:(NSRect)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectArg:arg1 andNSRectArg:arg2];
 }
 
--(id)invokeNSRectArg:(NSRect)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectArg:(NSRect)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10303,22 +10307,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callBOOLInArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
++(id)callBOOLInArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLInArg:arg];
 }
 
--(void)callBOOLOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
++(void)callBOOLOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj BOOLOutArg:arg];
 }
 
--(id)callBOOLInOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
++(id)callBOOLInOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj BOOLInOutArg:arg];
 }
 
--(id)invokeBOOLInArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLInArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10330,7 +10334,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokeBOOLOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
++(void)invokeBOOLOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10339,7 +10343,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokeBOOLInOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeBOOLInOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10351,22 +10355,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharInArg:(char*)arg of:(PyObjC_TestClass1*)obj
++(id)callcharInArg:(char*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj charInArg:arg];
 }
 
--(void)callcharOutArg:(char*)arg of:(PyObjC_TestClass1*)obj
++(void)callcharOutArg:(char*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj charOutArg:arg];
 }
 
--(id)callcharInOutArg:(char*)arg of:(PyObjC_TestClass1*)obj
++(id)callcharInOutArg:(char*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj charInOutArg:arg];
 }
 
--(id)invokecharInArg:(char*)arg of:(PyObjC_TestClass1*)obj
++(id)invokecharInArg:(char*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10378,7 +10382,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokecharOutArg:(char*)arg of:(PyObjC_TestClass1*)obj
++(void)invokecharOutArg:(char*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10387,7 +10391,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokecharInOutArg:(char*)arg of:(PyObjC_TestClass1*)obj
++(id)invokecharInOutArg:(char*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10399,22 +10403,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedshortInArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
++(id)callsignedshortInArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortInArg:arg];
 }
 
--(void)callsignedshortOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
++(void)callsignedshortOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj signedshortOutArg:arg];
 }
 
--(id)callsignedshortInOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
++(id)callsignedshortInOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedshortInOutArg:arg];
 }
 
--(id)invokesignedshortInArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortInArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10426,7 +10430,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokesignedshortOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
++(void)invokesignedshortOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10435,7 +10439,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokesignedshortInOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
++(id)invokesignedshortInOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10447,22 +10451,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedintInArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
++(id)callsignedintInArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintInArg:arg];
 }
 
--(void)callsignedintOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
++(void)callsignedintOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj signedintOutArg:arg];
 }
 
--(id)callsignedintInOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
++(id)callsignedintInOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedintInOutArg:arg];
 }
 
--(id)invokesignedintInArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
++(id)invokesignedintInArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10474,7 +10478,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokesignedintOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
++(void)invokesignedintOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10483,7 +10487,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokesignedintInOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
++(id)invokesignedintInOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10495,22 +10499,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlongInArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
++(id)callsignedlongInArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongInArg:arg];
 }
 
--(void)callsignedlongOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
++(void)callsignedlongOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj signedlongOutArg:arg];
 }
 
--(id)callsignedlongInOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
++(id)callsignedlongInOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlongInOutArg:arg];
 }
 
--(id)invokesignedlongInArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongInArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10522,7 +10526,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokesignedlongOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
++(void)invokesignedlongOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10531,7 +10535,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokesignedlongInOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
++(id)invokesignedlongInOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10543,22 +10547,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callsignedlonglongInArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongInArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongInArg:arg];
 }
 
--(void)callsignedlonglongOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
++(void)callsignedlonglongOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj signedlonglongOutArg:arg];
 }
 
--(id)callsignedlonglongInOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
++(id)callsignedlonglongInOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj signedlonglongInOutArg:arg];
 }
 
--(id)invokesignedlonglongInArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongInArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10570,7 +10574,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokesignedlonglongOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
++(void)invokesignedlonglongOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10579,7 +10583,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokesignedlonglongInOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
++(id)invokesignedlonglongInOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10591,22 +10595,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedcharInArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharInArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharInArg:arg];
 }
 
--(void)callunsignedcharOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
++(void)callunsignedcharOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj unsignedcharOutArg:arg];
 }
 
--(id)callunsignedcharInOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedcharInOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedcharInOutArg:arg];
 }
 
--(id)invokeunsignedcharInArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharInArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10618,7 +10622,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokeunsignedcharOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
++(void)invokeunsignedcharOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10627,7 +10631,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokeunsignedcharInOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedcharInOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10639,22 +10643,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedshortInArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortInArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortInArg:arg];
 }
 
--(void)callunsignedshortOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
++(void)callunsignedshortOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj unsignedshortOutArg:arg];
 }
 
--(id)callunsignedshortInOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedshortInOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedshortInOutArg:arg];
 }
 
--(id)invokeunsignedshortInArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortInArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10666,7 +10670,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokeunsignedshortOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
++(void)invokeunsignedshortOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10675,7 +10679,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokeunsignedshortInOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedshortInOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10687,22 +10691,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedintInArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedintInArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintInArg:arg];
 }
 
--(void)callunsignedintOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
++(void)callunsignedintOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj unsignedintOutArg:arg];
 }
 
--(id)callunsignedintInOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedintInOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedintInOutArg:arg];
 }
 
--(id)invokeunsignedintInArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintInArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10714,7 +10718,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokeunsignedintOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
++(void)invokeunsignedintOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10723,7 +10727,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokeunsignedintInOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedintInOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10735,22 +10739,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlongInArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongInArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongInArg:arg];
 }
 
--(void)callunsignedlongOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
++(void)callunsignedlongOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj unsignedlongOutArg:arg];
 }
 
--(id)callunsignedlongInOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedlongInOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlongInOutArg:arg];
 }
 
--(id)invokeunsignedlongInArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongInArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10762,7 +10766,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokeunsignedlongOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
++(void)invokeunsignedlongOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10771,7 +10775,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokeunsignedlongInOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlongInOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10783,22 +10787,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callunsignedlonglongInArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongInArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongInArg:arg];
 }
 
--(void)callunsignedlonglongOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
++(void)callunsignedlonglongOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj unsignedlonglongOutArg:arg];
 }
 
--(id)callunsignedlonglongInOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
++(id)callunsignedlonglongInOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj unsignedlonglongInOutArg:arg];
 }
 
--(id)invokeunsignedlonglongInArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongInArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10810,7 +10814,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokeunsignedlonglongOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
++(void)invokeunsignedlonglongOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10819,7 +10823,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokeunsignedlonglongInOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeunsignedlonglongInOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10831,22 +10835,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callfloatInArg:(float*)arg of:(PyObjC_TestClass1*)obj
++(id)callfloatInArg:(float*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatInArg:arg];
 }
 
--(void)callfloatOutArg:(float*)arg of:(PyObjC_TestClass1*)obj
++(void)callfloatOutArg:(float*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj floatOutArg:arg];
 }
 
--(id)callfloatInOutArg:(float*)arg of:(PyObjC_TestClass1*)obj
++(id)callfloatInOutArg:(float*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj floatInOutArg:arg];
 }
 
--(id)invokefloatInArg:(float*)arg of:(PyObjC_TestClass1*)obj
++(id)invokefloatInArg:(float*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10858,7 +10862,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokefloatOutArg:(float*)arg of:(PyObjC_TestClass1*)obj
++(void)invokefloatOutArg:(float*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10867,7 +10871,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokefloatInOutArg:(float*)arg of:(PyObjC_TestClass1*)obj
++(id)invokefloatInOutArg:(float*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10879,22 +10883,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)calldoubleInArg:(double*)arg of:(PyObjC_TestClass1*)obj
++(id)calldoubleInArg:(double*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleInArg:arg];
 }
 
--(void)calldoubleOutArg:(double*)arg of:(PyObjC_TestClass1*)obj
++(void)calldoubleOutArg:(double*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj doubleOutArg:arg];
 }
 
--(id)calldoubleInOutArg:(double*)arg of:(PyObjC_TestClass1*)obj
++(id)calldoubleInOutArg:(double*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj doubleInOutArg:arg];
 }
 
--(id)invokedoubleInArg:(double*)arg of:(PyObjC_TestClass1*)obj
++(id)invokedoubleInArg:(double*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10906,7 +10910,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokedoubleOutArg:(double*)arg of:(PyObjC_TestClass1*)obj
++(void)invokedoubleOutArg:(double*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10915,7 +10919,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokedoubleInOutArg:(double*)arg of:(PyObjC_TestClass1*)obj
++(id)invokedoubleInOutArg:(double*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10927,22 +10931,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callidInArg:(id*)arg of:(PyObjC_TestClass1*)obj
++(id)callidInArg:(id*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj idInArg:arg];
 }
 
--(void)callidOutArg:(id*)arg of:(PyObjC_TestClass1*)obj
++(void)callidOutArg:(id*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj idOutArg:arg];
 }
 
--(id)callidInOutArg:(id*)arg of:(PyObjC_TestClass1*)obj
++(id)callidInOutArg:(id*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj idInOutArg:arg];
 }
 
--(id)invokeidInArg:(id*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeidInArg:(id*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10954,7 +10958,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokeidOutArg:(id*)arg of:(PyObjC_TestClass1*)obj
++(void)invokeidOutArg:(id*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -10963,7 +10967,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokeidInOutArg:(id*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeidInOutArg:(id*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -10975,22 +10979,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callcharPtrInArg:(char**)arg of:(PyObjC_TestClass1*)obj
++(id)callcharPtrInArg:(char**)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrInArg:arg];
 }
 
--(void)callcharPtrOutArg:(char**)arg of:(PyObjC_TestClass1*)obj
++(void)callcharPtrOutArg:(char**)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj charPtrOutArg:arg];
 }
 
--(id)callcharPtrInOutArg:(char**)arg of:(PyObjC_TestClass1*)obj
++(id)callcharPtrInOutArg:(char**)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj charPtrInOutArg:arg];
 }
 
--(id)invokecharPtrInArg:(char**)arg of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrInArg:(char**)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -11002,7 +11006,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokecharPtrOutArg:(char**)arg of:(PyObjC_TestClass1*)obj
++(void)invokecharPtrOutArg:(char**)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -11011,7 +11015,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokecharPtrInOutArg:(char**)arg of:(PyObjC_TestClass1*)obj
++(id)invokecharPtrInOutArg:(char**)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -11023,22 +11027,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSPointInArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
++(id)callNSPointInArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointInArg:arg];
 }
 
--(void)callNSPointOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
++(void)callNSPointOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj NSPointOutArg:arg];
 }
 
--(id)callNSPointInOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
++(id)callNSPointInOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSPointInOutArg:arg];
 }
 
--(id)invokeNSPointInArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointInArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -11050,7 +11054,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokeNSPointOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
++(void)invokeNSPointOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -11059,7 +11063,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokeNSPointInOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeNSPointInOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -11071,22 +11075,22 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(id)callNSRectInArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
++(id)callNSRectInArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectInArg:arg];
 }
 
--(void)callNSRectOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
++(void)callNSRectOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
 {
 	[obj NSRectOutArg:arg];
 }
 
--(id)callNSRectInOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
++(id)callNSRectInOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
 {
 	return [obj NSRectInOutArg:arg];
 }
 
--(id)invokeNSRectInArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectInArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -11098,7 +11102,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
--(void)invokeNSRectOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
++(void)invokeNSRectOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
 {
 	NSInvocation* inv;
 
@@ -11107,7 +11111,7 @@ static id arg2id(const char* argtype, void* argptr)
 	[obj forwardInvocation:inv];
 }
 
--(id)invokeNSRectInOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
++(id)invokeNSRectInOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -11146,4 +11150,7 @@ void inittestbndl2(void)
             PyObjCClass_New([PyObjC_TestClass1 class]));
         PyModule_AddObject(m, "PyObjC_TestClass2",
             PyObjCClass_New([PyObjC_TestClass2 class]));
+
+	/* Initialize g_id_values */
+	g_id_values[0] = NSFTPPropertyFileOffsetKey;
 }

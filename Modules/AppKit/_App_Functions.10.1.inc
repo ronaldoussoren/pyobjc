@@ -80,6 +80,10 @@ static inline int convert_id(PyObject* object, void* pvar)
 
 static inline int convert_SEL(PyObject* object, void* pvar)
 {
+	if (object == Py_None) {
+		*(SEL*)pvar = NULL;
+		return 1;
+	}
 	if (!PyString_Check(object)) {
 		PyErr_SetString(PyExc_TypeError, "Excpected string");
 		return 0;
@@ -109,7 +113,7 @@ static	char* keywords[] = { "itemName", NULL };
 	BOOL objc_result;
 	id objc_itemName;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSShowsServicesMenuItem", keywords, convert_id, &objc_itemName) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSShowsServicesMenuItem", keywords, convert_id, &objc_itemName) == 0) return NULL;
 	NS_DURING
 		objc_result = NSShowsServicesMenuItem(
 objc_itemName);
@@ -130,7 +134,7 @@ static	char* keywords[] = { "itemName", "enabled", NULL };
 	id objc_itemName;
 	BOOL objc_enabled;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSSetShowsServicesMenuItem", keywords, convert_id, &objc_itemName, convert_BOOL, &objc_enabled) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSSetShowsServicesMenuItem", keywords, convert_id, &objc_itemName, convert_BOOL, &objc_enabled) == 0) return NULL;
 	NS_DURING
 		objc_result = NSSetShowsServicesMenuItem(
 objc_itemName, objc_enabled);
@@ -148,7 +152,7 @@ static PyObject* objc_NSUpdateDynamicServices(PyObject* self, PyObject* args, Py
 static	char* keywords[] = { NULL };
 	PyObject* result;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSUpdateDynamicServices", keywords) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSUpdateDynamicServices", keywords) == 0) return NULL;
 	NS_DURING
 		NSUpdateDynamicServices(
 );
@@ -169,7 +173,7 @@ static	char* keywords[] = { "itemName", "pboard", NULL };
 	id objc_itemName;
 	id objc_pboard;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSPerformService", keywords, convert_id, &objc_itemName, convert_id, &objc_pboard) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSPerformService", keywords, convert_id, &objc_itemName, convert_id, &objc_pboard) == 0) return NULL;
 	NS_DURING
 		objc_result = NSPerformService(
 objc_itemName, objc_pboard);
@@ -189,7 +193,7 @@ static	char* keywords[] = { "provider", "name", NULL };
 	id objc_provider;
 	id objc_name;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSRegisterServicesProvider", keywords, convert_id, &objc_provider, convert_id, &objc_name) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSRegisterServicesProvider", keywords, convert_id, &objc_provider, convert_id, &objc_name) == 0) return NULL;
 	NS_DURING
 		NSRegisterServicesProvider(
 objc_provider, objc_name);
@@ -208,7 +212,7 @@ static	char* keywords[] = { "name", NULL };
 	PyObject* result;
 	id objc_name;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSUnregisterServicesProvider", keywords, convert_id, &objc_name) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSUnregisterServicesProvider", keywords, convert_id, &objc_name) == 0) return NULL;
 	NS_DURING
 		NSUnregisterServicesProvider(
 objc_name);
@@ -228,7 +232,7 @@ static	char* keywords[] = { "depth", NULL };
 	BOOL objc_result;
 	NSWindowDepth objc_depth;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSPlanarFromDepth", keywords, &objc_depth) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSPlanarFromDepth", keywords, &objc_depth) == 0) return NULL;
 	NS_DURING
 		objc_result = NSPlanarFromDepth(
 objc_depth);
@@ -248,7 +252,7 @@ static	char* keywords[] = { "depth", NULL };
 	NSString* objc_result;
 	NSWindowDepth objc_depth;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSColorSpaceFromDepth", keywords, &objc_depth) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSColorSpaceFromDepth", keywords, &objc_depth) == 0) return NULL;
 	NS_DURING
 		objc_result = NSColorSpaceFromDepth(
 objc_depth);
@@ -267,7 +271,7 @@ static	char* keywords[] = { "depth", NULL };
 	int objc_result;
 	NSWindowDepth objc_depth;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSBitsPerSampleFromDepth", keywords, &objc_depth) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSBitsPerSampleFromDepth", keywords, &objc_depth) == 0) return NULL;
 	NS_DURING
 		objc_result = NSBitsPerSampleFromDepth(
 objc_depth);
@@ -287,7 +291,7 @@ static	char* keywords[] = { "depth", NULL };
 	int objc_result;
 	NSWindowDepth objc_depth;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSBitsPerPixelFromDepth", keywords, &objc_depth) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSBitsPerPixelFromDepth", keywords, &objc_depth) == 0) return NULL;
 	NS_DURING
 		objc_result = NSBitsPerPixelFromDepth(
 objc_depth);
@@ -307,7 +311,7 @@ static	char* keywords[] = { "colorSpaceName", NULL };
 	int objc_result;
 	id objc_colorSpaceName;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSNumberOfColorComponents", keywords, convert_id, &objc_colorSpaceName) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSNumberOfColorComponents", keywords, convert_id, &objc_colorSpaceName) == 0) return NULL;
 	NS_DURING
 		objc_result = NSNumberOfColorComponents(
 objc_colorSpaceName);
@@ -326,7 +330,7 @@ static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
 	NSRect objc_aRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSRectFill", keywords, convert_NSRect, &objc_aRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSRectFill", keywords, convert_NSRect, &objc_aRect) == 0) return NULL;
 	NS_DURING
 		NSRectFill(
 objc_aRect);
@@ -346,7 +350,7 @@ static	char* keywords[] = { "aRect", "op", NULL };
 	NSRect objc_aRect;
 	NSCompositingOperation objc_op;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&i:NSRectFillUsingOperation", keywords, convert_NSRect, &objc_aRect, &objc_op) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&i:NSRectFillUsingOperation", keywords, convert_NSRect, &objc_aRect, &objc_op) == 0) return NULL;
 	NS_DURING
 		NSRectFillUsingOperation(
 objc_aRect, objc_op);
@@ -365,7 +369,7 @@ static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
 	NSRect objc_aRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSFrameRect", keywords, convert_NSRect, &objc_aRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSFrameRect", keywords, convert_NSRect, &objc_aRect) == 0) return NULL;
 	NS_DURING
 		NSFrameRect(
 objc_aRect);
@@ -385,7 +389,7 @@ static	char* keywords[] = { "aRect", "frameWidth", NULL };
 	NSRect objc_aRect;
 	float objc_frameWidth;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&f:NSFrameRectWithWidth", keywords, convert_NSRect, &objc_aRect, &objc_frameWidth) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&f:NSFrameRectWithWidth", keywords, convert_NSRect, &objc_aRect, &objc_frameWidth) == 0) return NULL;
 	NS_DURING
 		NSFrameRectWithWidth(
 objc_aRect, objc_frameWidth);
@@ -406,7 +410,7 @@ static	char* keywords[] = { "aRect", "frameWidth", "op", NULL };
 	float objc_frameWidth;
 	NSCompositingOperation objc_op;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&fi:NSFrameRectWithWidthUsingOperation", keywords, convert_NSRect, &objc_aRect, &objc_frameWidth, &objc_op) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&fi:NSFrameRectWithWidthUsingOperation", keywords, convert_NSRect, &objc_aRect, &objc_frameWidth, &objc_op) == 0) return NULL;
 	NS_DURING
 		NSFrameRectWithWidthUsingOperation(
 objc_aRect, objc_frameWidth, objc_op);
@@ -425,7 +429,7 @@ static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
 	NSRect objc_aRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSRectClip", keywords, convert_NSRect, &objc_aRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSRectClip", keywords, convert_NSRect, &objc_aRect) == 0) return NULL;
 	NS_DURING
 		NSRectClip(
 objc_aRect);
@@ -445,7 +449,7 @@ static	char* keywords[] = { "aRect", "clipRect", NULL };
 	NSRect objc_aRect;
 	NSRect objc_clipRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSDrawGrayBezel", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_clipRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSDrawGrayBezel", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_clipRect) == 0) return NULL;
 	NS_DURING
 		NSDrawGrayBezel(
 objc_aRect, objc_clipRect);
@@ -465,7 +469,7 @@ static	char* keywords[] = { "aRect", "clipRect", NULL };
 	NSRect objc_aRect;
 	NSRect objc_clipRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSDrawGroove", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_clipRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSDrawGroove", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_clipRect) == 0) return NULL;
 	NS_DURING
 		NSDrawGroove(
 objc_aRect, objc_clipRect);
@@ -485,7 +489,7 @@ static	char* keywords[] = { "aRect", "clipRect", NULL };
 	NSRect objc_aRect;
 	NSRect objc_clipRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSDrawWhiteBezel", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_clipRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSDrawWhiteBezel", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_clipRect) == 0) return NULL;
 	NS_DURING
 		NSDrawWhiteBezel(
 objc_aRect, objc_clipRect);
@@ -505,7 +509,7 @@ static	char* keywords[] = { "aRect", "clipRect", NULL };
 	NSRect objc_aRect;
 	NSRect objc_clipRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSDrawButton", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_clipRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSDrawButton", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_clipRect) == 0) return NULL;
 	NS_DURING
 		NSDrawButton(
 objc_aRect, objc_clipRect);
@@ -524,7 +528,7 @@ static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
 	NSRect objc_aRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSEraseRect", keywords, convert_NSRect, &objc_aRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSEraseRect", keywords, convert_NSRect, &objc_aRect) == 0) return NULL;
 	NS_DURING
 		NSEraseRect(
 objc_aRect);
@@ -544,7 +548,7 @@ static	char* keywords[] = { "passedPoint", NULL };
 	NSColor* objc_result;
 	NSPoint objc_passedPoint;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSReadPixel", keywords, convert_NSPoint, &objc_passedPoint) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSReadPixel", keywords, convert_NSPoint, &objc_passedPoint) == 0) return NULL;
 	NS_DURING
 		objc_result = NSReadPixel(
 objc_passedPoint);
@@ -566,7 +570,7 @@ static	char* keywords[] = { "srcGState", "srcRect", "destRect", NULL };
 	NSRect objc_srcRect;
 	NSRect objc_destRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "iO&O&:NSCopyBitmapFromGState", keywords, &objc_srcGState, convert_NSRect, &objc_srcRect, convert_NSRect, &objc_destRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "iO&O&:NSCopyBitmapFromGState", keywords, &objc_srcGState, convert_NSRect, &objc_srcRect, convert_NSRect, &objc_destRect) == 0) return NULL;
 	NS_DURING
 		NSCopyBitmapFromGState(
 objc_srcGState, objc_srcRect, objc_destRect);
@@ -588,7 +592,7 @@ static	char* keywords[] = { "srcGState", "srcRect", "destPoint", NULL };
 	NSRect objc_srcRect;
 	NSPoint objc_destPoint;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "iO&O&:NSCopyBits", keywords, &objc_srcGState, convert_NSRect, &objc_srcRect, convert_NSPoint, &objc_destPoint) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "iO&O&:NSCopyBits", keywords, &objc_srcGState, convert_NSRect, &objc_srcRect, convert_NSPoint, &objc_destPoint) == 0) return NULL;
 	NS_DURING
 		NSCopyBits(
 objc_srcGState, objc_srcRect, objc_destPoint);
@@ -607,7 +611,7 @@ static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
 	NSRect objc_aRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSHighlightRect", keywords, convert_NSRect, &objc_aRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSHighlightRect", keywords, convert_NSRect, &objc_aRect) == 0) return NULL;
 	NS_DURING
 		NSHighlightRect(
 objc_aRect);
@@ -625,7 +629,7 @@ static PyObject* objc_NSBeep(PyObject* self, PyObject* args, PyObject* kwds)
 static	char* keywords[] = { NULL };
 	PyObject* result;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSBeep", keywords) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSBeep", keywords) == 0) return NULL;
 	NS_DURING
 		NSBeep(
 );
@@ -645,7 +649,7 @@ static	char* keywords[] = { "aRect", "clipRect", NULL };
 	NSRect objc_aRect;
 	NSRect objc_clipRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSDrawDarkBezel", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_clipRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSDrawDarkBezel", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_clipRect) == 0) return NULL;
 	NS_DURING
 		NSDrawDarkBezel(
 objc_aRect, objc_clipRect);
@@ -665,7 +669,7 @@ static	char* keywords[] = { "aRect", "clipRect", NULL };
 	NSRect objc_aRect;
 	NSRect objc_clipRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSDrawLightBezel", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_clipRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSDrawLightBezel", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_clipRect) == 0) return NULL;
 	NS_DURING
 		NSDrawLightBezel(
 objc_aRect, objc_clipRect);
@@ -684,7 +688,7 @@ static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
 	NSRect objc_aRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSDottedFrameRect", keywords, convert_NSRect, &objc_aRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSDottedFrameRect", keywords, convert_NSRect, &objc_aRect) == 0) return NULL;
 	NS_DURING
 		NSDottedFrameRect(
 objc_aRect);
@@ -703,7 +707,7 @@ static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
 	NSRect objc_aRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSDrawWindowBackground", keywords, convert_NSRect, &objc_aRect) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSDrawWindowBackground", keywords, convert_NSRect, &objc_aRect) == 0) return NULL;
 	NS_DURING
 		NSDrawWindowBackground(
 objc_aRect);
@@ -722,7 +726,7 @@ static	char* keywords[] = { "placement", NULL };
 	PyObject* result;
 	NSFocusRingPlacement objc_placement;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSSetFocusRingStyle", keywords, &objc_placement) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSSetFocusRingStyle", keywords, &objc_placement) == 0) return NULL;
 	NS_DURING
 		NSSetFocusRingStyle(
 objc_placement);
@@ -743,7 +747,7 @@ static	char* keywords[] = { "key", "responder", NULL };
 	id objc_key;
 	id objc_responder;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSInterfaceStyleForKey", keywords, convert_id, &objc_key, convert_id, &objc_responder) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSInterfaceStyleForKey", keywords, convert_id, &objc_key, convert_id, &objc_responder) == 0) return NULL;
 	NS_DURING
 		objc_result = NSInterfaceStyleForKey(
 objc_key, objc_responder);
@@ -767,7 +771,7 @@ static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", 
 	id objc_alternateButton;
 	id objc_otherButton;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&:NSRunAlertPanel", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&:NSRunAlertPanel", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton) == 0) return NULL;
 	NS_DURING
 		objc_result = NSRunAlertPanel(
 objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton);
@@ -791,7 +795,7 @@ static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", 
 	id objc_alternateButton;
 	id objc_otherButton;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&:NSRunInformationalAlertPanel", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&:NSRunInformationalAlertPanel", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton) == 0) return NULL;
 	NS_DURING
 		objc_result = NSRunInformationalAlertPanel(
 objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton);
@@ -815,7 +819,7 @@ static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", 
 	id objc_alternateButton;
 	id objc_otherButton;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&:NSRunCriticalAlertPanel", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&:NSRunCriticalAlertPanel", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton) == 0) return NULL;
 	NS_DURING
 		objc_result = NSRunCriticalAlertPanel(
 objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton);
@@ -840,7 +844,7 @@ static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", 
 	id objc_otherButton;
 	id objc_docWindow;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&:NSRunAlertPanelRelativeToWindow", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&:NSRunAlertPanelRelativeToWindow", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow) == 0) return NULL;
 	NS_DURING
 		objc_result = NSRunAlertPanelRelativeToWindow(
 objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton, objc_docWindow);
@@ -865,7 +869,7 @@ static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", 
 	id objc_otherButton;
 	id objc_docWindow;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&:NSRunInformationalAlertPanelRelativeToWindow", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&:NSRunInformationalAlertPanelRelativeToWindow", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow) == 0) return NULL;
 	NS_DURING
 		objc_result = NSRunInformationalAlertPanelRelativeToWindow(
 objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton, objc_docWindow);
@@ -890,7 +894,7 @@ static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", 
 	id objc_otherButton;
 	id objc_docWindow;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&:NSRunCriticalAlertPanelRelativeToWindow", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&:NSRunCriticalAlertPanelRelativeToWindow", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow) == 0) return NULL;
 	NS_DURING
 		objc_result = NSRunCriticalAlertPanelRelativeToWindow(
 objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton, objc_docWindow);
@@ -918,7 +922,7 @@ static	char* keywords[] = { "title", "defaultButton", "alternateButton", "otherB
 	PYOBJC_VOIDPTR objc_contextInfo;
 	id objc_msg;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&O&O&iO&:NSBeginAlertSheet", keywords, convert_id, &objc_title, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow, convert_id, &objc_modalDelegate, convert_SEL, &objc_didEndSelector, convert_SEL, &objc_didDismissSelector, &objc_contextInfo, convert_id, &objc_msg) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&O&O&iO&:NSBeginAlertSheet", keywords, convert_id, &objc_title, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow, convert_id, &objc_modalDelegate, convert_SEL, &objc_didEndSelector, convert_SEL, &objc_didDismissSelector, &objc_contextInfo, convert_id, &objc_msg) == 0) return NULL;
 	NS_DURING
 		NSBeginAlertSheet(
 objc_title, objc_defaultButton, objc_alternateButton, objc_otherButton, objc_docWindow, objc_modalDelegate, objc_didEndSelector, objc_didDismissSelector, objc_contextInfo, objc_msg);
@@ -946,7 +950,7 @@ static	char* keywords[] = { "title", "defaultButton", "alternateButton", "otherB
 	PYOBJC_VOIDPTR objc_contextInfo;
 	id objc_msg;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&O&O&iO&:NSBeginInformationalAlertSheet", keywords, convert_id, &objc_title, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow, convert_id, &objc_modalDelegate, convert_SEL, &objc_didEndSelector, convert_SEL, &objc_didDismissSelector, &objc_contextInfo, convert_id, &objc_msg) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&O&O&iO&:NSBeginInformationalAlertSheet", keywords, convert_id, &objc_title, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow, convert_id, &objc_modalDelegate, convert_SEL, &objc_didEndSelector, convert_SEL, &objc_didDismissSelector, &objc_contextInfo, convert_id, &objc_msg) == 0) return NULL;
 	NS_DURING
 		NSBeginInformationalAlertSheet(
 objc_title, objc_defaultButton, objc_alternateButton, objc_otherButton, objc_docWindow, objc_modalDelegate, objc_didEndSelector, objc_didDismissSelector, objc_contextInfo, objc_msg);
@@ -974,7 +978,7 @@ static	char* keywords[] = { "title", "defaultButton", "alternateButton", "otherB
 	PYOBJC_VOIDPTR objc_contextInfo;
 	id objc_msg;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&O&O&iO&:NSBeginCriticalAlertSheet", keywords, convert_id, &objc_title, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow, convert_id, &objc_modalDelegate, convert_SEL, &objc_didEndSelector, convert_SEL, &objc_didDismissSelector, &objc_contextInfo, convert_id, &objc_msg) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&O&O&O&iO&:NSBeginCriticalAlertSheet", keywords, convert_id, &objc_title, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton, convert_id, &objc_docWindow, convert_id, &objc_modalDelegate, convert_SEL, &objc_didEndSelector, convert_SEL, &objc_didDismissSelector, &objc_contextInfo, convert_id, &objc_msg) == 0) return NULL;
 	NS_DURING
 		NSBeginCriticalAlertSheet(
 objc_title, objc_defaultButton, objc_alternateButton, objc_otherButton, objc_docWindow, objc_modalDelegate, objc_didEndSelector, objc_didDismissSelector, objc_contextInfo, objc_msg);
@@ -998,7 +1002,7 @@ static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", 
 	id objc_alternateButton;
 	id objc_otherButton;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&:NSGetAlertPanel", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&:NSGetAlertPanel", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton) == 0) return NULL;
 	NS_DURING
 		objc_result = NSGetAlertPanel(
 objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton);
@@ -1021,7 +1025,7 @@ static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", 
 	id objc_alternateButton;
 	id objc_otherButton;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&:NSGetInformationalAlertPanel", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&:NSGetInformationalAlertPanel", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton) == 0) return NULL;
 	NS_DURING
 		objc_result = NSGetInformationalAlertPanel(
 objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton);
@@ -1044,7 +1048,7 @@ static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", 
 	id objc_alternateButton;
 	id objc_otherButton;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&:NSGetCriticalAlertPanel", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O&O&:NSGetCriticalAlertPanel", keywords, convert_id, &objc_title, convert_id, &objc_msg, convert_id, &objc_defaultButton, convert_id, &objc_alternateButton, convert_id, &objc_otherButton) == 0) return NULL;
 	NS_DURING
 		objc_result = NSGetCriticalAlertPanel(
 objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton);
@@ -1062,7 +1066,7 @@ static	char* keywords[] = { "panel", NULL };
 	PyObject* result;
 	id objc_panel;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSReleaseAlertPanel", keywords, convert_id, &objc_panel) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSReleaseAlertPanel", keywords, convert_id, &objc_panel) == 0) return NULL;
 	NS_DURING
 		NSReleaseAlertPanel(
 objc_panel);
@@ -1082,7 +1086,7 @@ static	char* keywords[] = { "fileType", NULL };
 	NSString* objc_result;
 	id objc_fileType;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSCreateFilenamePboardType", keywords, convert_id, &objc_fileType) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSCreateFilenamePboardType", keywords, convert_id, &objc_fileType) == 0) return NULL;
 	NS_DURING
 		objc_result = NSCreateFilenamePboardType(
 objc_fileType);
@@ -1101,7 +1105,7 @@ static	char* keywords[] = { "fileType", NULL };
 	NSString* objc_result;
 	id objc_fileType;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSCreateFileContentsPboardType", keywords, convert_id, &objc_fileType) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSCreateFileContentsPboardType", keywords, convert_id, &objc_fileType) == 0) return NULL;
 	NS_DURING
 		objc_result = NSCreateFileContentsPboardType(
 objc_fileType);
@@ -1120,7 +1124,7 @@ static	char* keywords[] = { "pboardType", NULL };
 	NSString* objc_result;
 	id objc_pboardType;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSGetFileType", keywords, convert_id, &objc_pboardType) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSGetFileType", keywords, convert_id, &objc_pboardType) == 0) return NULL;
 	NS_DURING
 		objc_result = NSGetFileType(
 objc_pboardType);
@@ -1139,7 +1143,7 @@ static	char* keywords[] = { "pboardTypes", NULL };
 	NSArray* objc_result;
 	id objc_pboardTypes;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSGetFileTypes", keywords, convert_id, &objc_pboardTypes) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSGetFileTypes", keywords, convert_id, &objc_pboardTypes) == 0) return NULL;
 	NS_DURING
 		objc_result = NSGetFileTypes(
 objc_pboardTypes);
