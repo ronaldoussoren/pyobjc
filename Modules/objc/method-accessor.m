@@ -55,7 +55,7 @@ find_selector(PyObject* self, char* name, int class_method)
 	if (strcmp(name, "__class__") == 0) {
 		/* Someone does 'type(object.pybojc_instanceMethods)' */
 		Py_INCREF(self->ob_type);
-		return self->ob_type;
+		return (PyObject*)self->ob_type;
 	}
 
 	if (name[0] == '_' && name[1] == '_') {

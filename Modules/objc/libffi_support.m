@@ -382,6 +382,13 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 		if (*rettype != _C_VOID) {
 			const char* rettype = [methinfo methodReturnType];
 			err = depythonify_c_return_value(rettype, res, resp);
+
+			if (*rettype == _C_ID && res->ob_refcnt == 1) {
+				/* make sure return value doesn't die before
+				 * the caller can get its hands on it.
+				 */
+				[[(*(id*)resp) retain] autorelease];
+			}
 			Py_DECREF(res);
 			if (err == -1) {
 				ObjCErr_ToObjC();
@@ -398,6 +405,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			ObjCErr_Set(PyExc_TypeError,
 				"%s: Need tuple of %d arguments as result",
 				SELNAME(*(SEL*)args[1]), have_output+1);
+			Py_DECREF(res);
 			ObjCErr_ToObjC();
 		}
 
@@ -423,11 +431,28 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 
 			v = PyTuple_GET_ITEM(res, idx++);
 			err = depythonify_c_value(argtype, v, args[i]);
-			Py_DECREF(res);
 			if (err == -1) {
 				ObjCErr_ToObjC();
 			}
 		}
+
+		if (*rettype != _C_VOID) {
+			const char* rettype = [methinfo methodReturnType];
+			int err = depythonify_c_return_value(rettype, real_res, resp);
+
+			if (*rettype == _C_ID && real_res->ob_refcnt == 1) {
+				/* make sure return value doesn't die before
+				 * the caller can get its hands on it.
+				 */
+				[[(*(id*)resp) retain] autorelease];
+			}
+			if (err == -1) {
+				Py_DECREF(res);
+				ObjCErr_ToObjC();
+			}
+		}
+
+		Py_DECREF(res);
 
 	}
 }
