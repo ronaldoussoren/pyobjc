@@ -7,6 +7,7 @@
 #include <Python.h>
 
 #import <InterfaceBuilder/InterfaceBuilder.h>
+#import <CoreFoundation/CoreFoundation.h>
 
 #include "pyobjc-api.h"
 #include "wrapper-const-table.h"
@@ -30,6 +31,7 @@ void init_InterfaceBuilder(void);
 void init_InterfaceBuilder(void)
 {
 	PyObject *m, *d;
+	CFBundleRef bundle;
 
 	m = Py_InitModule4("_InterfaceBuilder", ib_methods, 
 		ib_doc, NULL, PYTHON_API_VERSION);
@@ -42,6 +44,11 @@ void init_InterfaceBuilder(void)
 		return;
 	}
 
+	bundle = CFBundleCreate(NULL,
+		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/InterfaceBuilder.framework"]);
+
 	if (register_ints(d, enum_table) < 0) return;
-	if (register_strings(d, string_table) < 0) return;
+	if (register_variableList(d, bundle, string_table, (sizeof(string_table)/sizeof(string_table[0]))-1) < 0) return;
+
+	//CFRelease(bundle);
 }

@@ -107,15 +107,108 @@ APPKIT_IGNORE_LIST=(
 var_generator.generate(APPKIT_HDRS, 'Modules/AppKit/_App_Var.inc', APPKIT_PREFIX, APPKIT_IGNORE_LIST)
 
 FOUNDATION_IGNORE_LIST=(
-	# Private functions in NSException.h 
-	'_NSAddHandler2',
-	'_NSRemoveHandler2',
-	'_NSExceptionObjectFromHandler2'
+	# Private functions 
+	'_NSAddHandler2(',
+	'_NSRemoveHandler2(',
+	'_NSExceptionObjectFromHandler2(',
+        '_NSAutoreleaseNoPool(',
+        '_NSAutoreleaseFreedObject(',
+        '_NSAutoreleaseHighWaterLog(',
+        'NXReadNSObjectFromCoder(',
+
 
         # List of functions that are not usefull from Python:
+        'NSFrameAddress(',
+        'NSReturnAddress(',
+        'NSRecordAllocationEvent(',
+        'NSCreateHashTableWithZone(',
+        'NSCreateHashTable(',
+        'NSFreeHashTable(',
+        'NSResetHashTable(',
+        'NSCompareHashTables(',
+        'NSCopyHashTableWithZone(',
+        'NSHashGet(',
+        'NSHashInsert(',
+        'NSHashInsertKnownAbsent(',
+        'NSHashInsertIfAbsent(',
+        'NSHashRemove(',
+        'NSEnumerateHashTable(',
+        'NSNextHashEnumeratorItem(',
+        'NSEndHashTableEnumeration(',
+        'NSCountHashTable(',
+        'NSStringFromHashTable(',
+        'NSAllHashTableObjects(',
+        'NSJavaClassesFromPath(',
+        'NSJavaClassesForBundle(',
+        'NSCreateMapTableWithZone(',
+        'NSCreateMapTable(',
+        'NSFreeMapTable(',
+        'NSResetMapTable(',
+        'NSCompareMapTables(',
+        'NSCopyMapTableWithZone(',
+        'NSMapMember(',
+        'NSMapGet(',
+        'NSMapInsert(',
+        'NSMapInsertKnownAbsent(',
+        'NSMapInsertIfAbsent(',
+        'NSMapRemove(',
+        'NSEnumerateMapTable(',
+        'NSNextMapEnumeratorPair(',
+        'NSEndMapTableEnumeration(',
+        'NSCountMapTable(',
+        'NSStringFromMapTable(',
+        'NSAllMapTableKeys(',
+        'NSAllMapTableValues(',
+        'NSGetSizeAndAlignment(', # Hmm, shouldn't we use this in the bridge?
+        'NSLogv(',
+        'NSAllocateObject(',
+        'NSCopyObject(',
+        'NSShouldRetainWithZone(',
+        'NSAllocateMemoryPages(',
+        'NSDeallocateMemoryPages(',
+        'NSCopyMemoryPages(',
+
 
         # List of manually wrapped functions:
+        'NSFileTypeForHFSTypeCode(',
+        'NSHFSTypeCodeFromFileType(',
+        'NSStringFromPoint',
+
+        # NSDecimal support, should wrap type
+        'NSDecimalCopy(',
+        'NSDecimalCompact(',
+        'NSDecimalCompare(',
+        'NSDecimalRound(',
+        'NSDecimalNormalize(',
+        'NSDecimalAdd(',
+        'NSDecimalSubtract(',
+        'NSDecimalMultiply(',
+        'NSDecimalDivide(',
+        'NSDecimalPower(',
+        'NSDecimalMultiplyByPowerOf10(',
+        'NSDecimalString(',
+
+        # Zones might be usefull someday
+        'NSCreateZone(',
+        'NSRecycleZone(',
+        'NSSetZoneName(',
+        'NSZoneName(',
+        'NSZoneFromPointer(',
+        'NSZoneMalloc(',
+        'NSZoneCalloc(',
+        'NSZoneRealloc(',
+        'NSZoneFree(',
+
+
+        # TODO
+        'NSUncaughtExceptionHandler(',
+        'NSSetUncaughtExceptionHandler(',
+        'NSGetUncaughtExceptionHandler(',
+        'NSDivideRect(',
+        'NSDefaultMallocZone(',
 )
+
+
 APPKIT_IGNORE_LIST=(
 
         # List of manually wrapped functions:
@@ -125,6 +218,21 @@ APPKIT_IGNORE_LIST=(
         'NSAvailableWindowDepths(',
         'NSRectFillList(',
         'NSGetWindowServerMemory(',
+
+
+        #TODO:
+        'NSBestDepth (',
+        'NSAvailableWindowDepths (',
+        'NSRectFillListWithGrays(',
+        'NSRectFillListWithColors(',
+        'NSRectFillListUsingOperation(',
+        'NSRectFillListWithColorsUsingOperation(',
+        'NSRectClipList(',
+        'NSDrawTiledRects(',
+        'NSDrawBitmap(',
+        'NSWindowList(',
+        'NSWindowListForContext(',
+        'NSDrawColorTiledRects(',
 )
 func_collector.generate(FOUNDATION_HDRS, 'Modules/Foundation/Foundation.prototypes', 
 	FOUNDATION_PREFIX, FOUNDATION_IGNORE_LIST)

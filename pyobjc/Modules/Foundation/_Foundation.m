@@ -10,6 +10,7 @@
 #include <Python.h>
 #import <Foundation/Foundation.h>
 #import <Foundation/NSDebug.h>
+#import <CoreFoundation/CoreFoundation.h>
 
 #ifdef MACOSX
 #include <pymactoolbox.h>
@@ -244,6 +245,7 @@ void init_Foundation(void);
 void init_Foundation(void)
 {
 	PyObject *m, *d;
+	CFBundleRef bundle;
 
 	m = Py_InitModule4("_Foundation", foundation_methods, foundation_doc, 
 			NULL, PYTHON_API_VERSION);
@@ -254,9 +256,14 @@ void init_Foundation(void)
 		return;
 	}
 
+	bundle = CFBundleCreate(NULL,
+		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/Foundation.framework"]);
+
 	/* Register information in generated tables */
 	if (register_ints(d, enum_table) < 0) return;
-	if (register_strings(d, string_table) < 0) return;
+	if (register_variableList(d, bundle, string_table, (sizeof(string_table)/sizeof(string_table[0]))-1) < 0) return;
+	
+	//CFRelease(bundle);
 
 #ifdef  GNUSTEP 
 #	include "_Fnd_Var.GNUstep.inc"

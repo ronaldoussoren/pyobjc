@@ -14,14 +14,14 @@ def entry(fp, val, ignore):
 	vals = val.split(',')
 	if len(vals) == 1:
                 if val in ignore: return
-		fp.write('\t { "%s", &%s },\n'%(val, val))
+		fp.write('\t { @"%s", @encode(NSString*) },\n'%(val, ))
 	else:
 		for  v in vals:
 			v = v.strip()
 			if v[0] == '*':
 				v = v[1:].strip()
                         if v in ignore: continue
-			fp.write('\t { "%s", &%s },\n'%(v, v))
+			fp.write('\t { @"%s", @encode(NSString*) },\n'%(v, ))
 
 def process_file(outfp, filename, ignore):
 	fp = open(filename, 'r')
@@ -64,7 +64,7 @@ def generate(dirname, fn = None, ignore=(), filter = lambda x: 1):
 	fp.write(" * String constants. This file is generated from files in\n")
 	fp.write(" * %s\n"%dirname)
 	fp.write(" */\n")
-	fp.write("static struct stringtable string_table[] = {\n")
+	fp.write("static struct vartable string_table[] = {\n")
 	fnames = [ os.path.join(dirname, fn)
 				for fn in os.listdir(dirname)
 				if fn.endswith('.h') and filter(fn) ]

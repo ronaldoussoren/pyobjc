@@ -190,27 +190,27 @@ if gs_root is None:
         ]
 
     FND_LDFLAGS=[
-        '-framework', 'Foundation',
+        '-framework CoreFoundation', '-framework', 'Foundation',
         ]
 
     APPKIT_LDFLAGS=[
-        '-framework', 'AppKit',
+        '-framework CoreFoundation', '-framework', 'AppKit',
         ]
 
     FNDMAP_LDFLAGS=[
-        '-framework', 'Foundation',
+        '-framework CoreFoundation', '-framework', 'Foundation',
         ]
 
     APPMAP_LDFLAGS=[
-        '-framework', 'AppKit',
+        '-framework CoreFoundation', '-framework', 'AppKit',
         ]
 
     ADDRESSBOOK_LDFLAGS=[
-        '-framework', 'AddressBook', '-framework', 'Foundation',
+        '-framework CoreFoundation', '-framework', 'AddressBook', '-framework', 'Foundation',
     ]
 
     PREFPANES_LDFLAGS=[
-        '-framework', 'PreferencePanes', '-framework', 'Foundation',
+        '-framework CoreFoundation', '-framework', 'PreferencePanes', '-framework', 'Foundation',
     ]
 
 else:
@@ -320,6 +320,7 @@ CoreExtensions =  [
     ]
 CocoaPackages = [ 'Foundation', 'AppKit' ]
 
+# XXX: Should not do this every time setup.py is called!
 subprocess("Generating wrappers & stubs", "%s Scripts/CodeGenerators/cocoa_generator.py" % (sys.executable,), None)
 
 # Provide some dependency information on Python 2.3 and later, this

@@ -7,6 +7,7 @@
 
 import re
 import os
+import sys
 
 START_RE=re.compile('(typedef[\w]|)enum.*{')
 END_RE=re.compile('}')
@@ -78,9 +79,7 @@ def generate(dirname, fn = None, filter = lambda x: 1):
 	if fn:
 		fp = open(fn, 'w')
 	else:
-		import sys
 		fp = sys.stdout
-		del sys
 
 	fp.write("/*\n")
 	fp.write(" * Enumeration constants. This file is generated from files in\n")
@@ -94,6 +93,7 @@ def generate(dirname, fn = None, filter = lambda x: 1):
 		process_file(fp, f)
 	fp.write("\t{0, 0} /* Sentinel */\n")
 	fp.write("};\n")
+        fp.close()
 
 if __name__ == "__main__":
 	import sys

@@ -13,3 +13,7 @@ prune Examples/*/*~.nib
 prune Examples/*/*/*~.nib
 global-exclude .DS_Store
 global-exclude *.pbxuser
+exclude Modules/*/_*_Enum.inc
+exclude Modules/*/_*_Str.inc
+exclude Modules/*/_*_Var.inc
+exclude Modules/*/_*_Functions.inc
