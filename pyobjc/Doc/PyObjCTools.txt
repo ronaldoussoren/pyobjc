@@ -5,8 +5,8 @@ PyObjCTools: The PyObjC Toolbox
 Introduction
 ------------
 
-The package ``PyObjCTools`` contains a number of (basicly unrelated) modules
-with usefull functionality. These have been placed inside a module to avoid
+The package ``PyObjCTools`` contains a number of (basically unrelated) modules
+with useful functionality. These have been placed inside a module to avoid
 cluttering the global namespace.
 
 The rest of this document provides documentation for these modules, but lets
@@ -39,7 +39,7 @@ screen savers.
 
 * ``PyObjCTools.Signals.py``
 
-Module that tries to print usefull information when the program gets a fatal
+Module that tries to print useful information when the program gets a fatal
 exception. This module should only be used during development.
 
 
@@ -149,7 +149,7 @@ interface is modelled on the ``getattr`` and ``setattr`` functions.
 
   The same as ``setKey``, but now using a key path. A key path is a sequence
   of keys seperated by dots. The ``getKey`` function is used to traverse 
-  the path upto the last item, and then ``setKey`` is used to change the value.
+  the path up to the last item, and then ``setKey`` is used to change the value.
 
 PyObjCTools.NibClassBuilder
 ...........................
@@ -198,14 +198,14 @@ The command line tool
 
 When run from the command line, this module invokes a simple command
 line program, which you feed paths to nibs. This will print a Python
-template for all classes defined in the nib(s). For more doco, see
-the commandline_doc variable, or simply run the program wothout
+template for all classes defined in the nib(s). For more documentation,
+see the commandline_doc variable, or simply run the program without
 arguments. It also contains a simple test program.
 
 PyObjCTools.Signals
 ...................
 
-This module provides two functions that can be usefull while investigating
+This module provides two functions that can be useful while investigating
 random crashes of a PyObjC program. These crashes are often caused by 
 Objective-C style weak references or incorrectly implemented protocols.
 
@@ -220,7 +220,7 @@ Objective-C style weak references or incorrectly implemented protocols.
   dumpStackOnFatalSignal.
 
 This module is not designed to provide fine grained control over signal 
-handling. Nor is it intended to be terribly robust. It may give usefull
+handling. Nor is it intended to be terribly robust. It may give useful
 information when your program gets unexpected signals, but it might just
 as easily cause a crash when such a signal gets in. 
 
@@ -232,8 +232,8 @@ This module defines one class to build python based plugin bundles for MacOS X.
 Examples of plugin bundles include PreferencePanes and InterfaceBuilder 
 palletes.
 
-The PluginBuilder class is instantated with a number of keyword arguments and
-have a ``build()`` method that will do all the work. 
+The PluginBuilder class is instantiated with a number of keyword arguments and
+has a ``build()`` method that will do all the work. 
 
 XXX: Add documentation about the constructor arguments
 

@@ -25,7 +25,7 @@ Using the class definitions.
 
 The module contains a "magic" base (super) class called AutoBaseClass.
 Subclassing AutoBaseClass will invoke some magic that will look up the
-proper base class in the class definitions extraced from the nib(s).
+proper base class in the class definitions extracted from the nib(s).
 If you use multiple inheritance to use Cocoa's "informal protocols",
 you _must_ list AutoBaseClass as the first base class. For example:
 
@@ -44,8 +44,8 @@ The command line tool.
 
 When run from the command line, this module invokes a simple command
 line program, which you feed paths to nibs. This will print a Python
-template for all classes defined in the nib(s). For more doco, see
-the commandline_doc variable, or simply run the program wothout
+template for all classes defined in the nib(s). For more documentation, see
+the commandline_doc variable, or simply run the program without
 arguments. It also contains a simple test program.
 """
 

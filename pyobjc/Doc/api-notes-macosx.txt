@@ -16,17 +16,17 @@ on MacOS X. In general you can use classes and global functions just like
 in Objective-C (e.g. the Apple developer documentaton applies), but in some
 cases there are special considerations.
 
-We also do not provide access to global functions that are not usefull for
+We also do not provide access to global functions that are not useful for
 Python programs, those functions are listed below.
 
-This document list the examples to the basic rules. If a method uses pointers
+This document lists the exceptions to the basic rules. If a method uses pointers
 to return additional values, the Python wrapper for that method returns a tuple
 containing the original return value and the additional values. You don't have
 to pass values for those arguments, unless the method uses the values you
 pass in.
 
-This document is target at the latest supported version of MacOS X (currenlty
-MacOS X 10.2.x), unless specifically noted the same restrictions apply to 
+This document is targeted at the latest supported version of MacOS X (currently
+MacOS X 10.3.x); unless specifically noted the same restrictions apply to 
 earlier versions of MacOS X. Earlier versions of the OS have less extensive
 APIs, PyObjC does *not* provide a compatibility layer.
 
@@ -44,13 +44,13 @@ Class Protocol
 
 * ``descriptionForClassMethod:``, ``descriptionForInstanceMethod``
 
-  These methods are not supported, protocols are hardly ever used explicitly
+  These methods are not supported. Protocols are hardly ever used explicitly
   in Cocoa therefore this should not be a problem.
 
 Addressbook framework
 ---------------------
 
-We do not provide access to the global functions in that framework, because
+We do not provide access to the global functions in this framework, because
 the same functionality can be accessed by using the object-oriented interface.
 
 AppKit framework
@@ -92,12 +92,12 @@ Class NSBezierPath
 
 * ``appendBezierPathWithGlyphs:count:inFont:``
 
-  The first argument is a list of integers, count should be at most the lenght
+  The first argument is a list of integers, count should be at most the length
   of the first argument.
 
 * ``appendBezierPathWithPoints:count:``
 
-  The first argument is a list of points, count should be at most the lenght
+  The first argument is a list of points, count should be at most the length
   of the first argument. 
 
 * ``setAssociatedPoints:atIndex:``
@@ -115,7 +115,7 @@ Class ``NSBitmapImageRep``
 
   This method is not supported (yet)
 
-* ``initWithBitmapDataPlanes:pixesWide:pixelsHigh:bitPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:``
+* ``initWithBitmapDataPlanes:pixesWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:``
 
   This method is not supported (yet)
 
@@ -169,7 +169,7 @@ Class ``NSLayoutManager``
 Class ``NSMatrix``
 ..................
 
-* ``sortUsingFunction:context``
+* ``sortUsingFunction:context:``
 
   Calling this method from Python is supported, overriding it in Python
   is not. The ``context`` can be an arbitrary python object.
@@ -211,7 +211,7 @@ Class ``NSQuickDrawView``
 
 * ``qdPort``
 
-  This method returns an instance from a type Carbon.QuickDraw. This 
+  This method returns an instance of type Carbon.QuickDraw. This 
   requires MacPython.
 
 Class ``NSSimpleHorizontalTypesetter``
@@ -253,16 +253,16 @@ Foundation framework
 --------------------
 
 NOTE: The list below is mostly based on scripts that find methods that can
-not be automaticly handled by the bridge. We have not yet performed a manual
+not be automatically handled by the bridge. We have not yet performed a manual
 search for such methods in the Cocoa documentation.
 
 The ``-forward::`` method is not supported. It's functionality can be accessed
 using the python function ``apply``. The ``performv::`` method is also not
-supported, with a simular work-around.
+supported, with a similar work-around.
 
 Structs are wrapped using a struct-like type. They can be accessed using the
 field-names from Objective-C, or you can access them as sequences. Accessing
-them as sequences is necessary for backward compatibility and is depericated.
+them as sequences is necessary for backward compatibility and is deprecated.
 
 Class ``NSArray``
 .................
@@ -344,27 +344,27 @@ Class ``NSData``
 
 * ``deserializeAlignedBytesLengthAtCursor:``
 
-  This is a depricated method, see Apple documentation.
+  This is a deprecated method, see Apple documentation.
 
 * ``deserializeBytes:length:atCursor:``
 
-  This is a depricated method, see Apple documentation.
+  This is a deprecated method, see Apple documentation.
 
 * ``deserializeDataAt:ofObjCType:atCursor:context:``
 
-  This is a depricated method, see Apple documentation.
+  This is a deprecated method, see Apple documentation.
 
 * ``deserializeIntAtCursor:``
 
-  This is a depricated method, see Apple documentation.
+  This is a deprecated method, see Apple documentation.
 
 * ``deserializeInts:count:atCursor:``
 
-  This is a depricated method, see Apple documentation.
+  This is a deprecated method, see Apple documentation.
 
 * ``deserializeInts:count:atIndex:``
 
-  This is a depricated method, see Apple documentation.
+  This is a deprecated method, see Apple documentation.
 
 * ``getBytes:``, ``getBytes:length:``, ``getBytes:range:``
   Use ``bytes`` instead, and then use subscripting to get the
@@ -428,7 +428,7 @@ Class ``NSNetService``
 
 * ``addresses``
 
-  When calling this from Python this methods returns a tuple of adress-info
+  When calling this from Python this methods returns a tuple of address info
   tuples, like the values returned by ``socket.getpeeraddr()``. 
 
 Class ``NSObject``
@@ -438,7 +438,7 @@ Class ``NSObject``
 
   These methods can be used from Python, but the ``observationInfo`` is 
   represented by an integer instead of ``void*``. This probably makes it
-  impossible to do anything usefull with these methods.
+  impossible to do anything useful with these methods.
 
 * ``addObserver:forKeyPath:options:context:``
 
@@ -486,31 +486,31 @@ have a Python equivalent.
 
 * ``initWithCharactersNoCopy:length:freeWhenDone:`` 
 
-  This method is unsupported because we cannot guarantee that the buffer wil
+  This method is unsupported because we cannot guarantee that the buffer will
   be available as long as the string is. Use ``initWithCharacters:`` instead.
 
 * ``getCharacters:`` and ``getCharacters:range:``
 
-  These methods are not supported at the moment. This limitation will be liften
+  These methods are not supported at the moment. This limitation will be lifted
   in a future version of the bridge.
 
 * ``getCString:maxLength:range:remainingRange:`` and ``getCString:maxLength:``
 
   Calling these methods from Python is supported, overriding them from 
-  Python is not. This limitation will be liften in a future version of the
+  Python is not. This limitation will be lifted in a future version of the
   bridge.
 
 * ``getCString:``
 
   This method is not supported. Use ``getCString:maxLength:`` instead (using
   the length of the string as the maximum length). This limitation will be
-  liften in a future version of the bridge.
+  lifted in a future version of the bridge.
  
 
 class ``NSThread``
 ..................
 
-When you're using Python 2.3 or later it is save to call from Objective-C to
+When you're using Python 2.3 or later it is safe to call from Objective-C to
 Python on any thread. Otherwise you must be sure that the current thread has
 acquired the GIL. This means you shouldn't use API's that will call back on
 an arbitrary thread unless you're using Python 2.3 or later. It is safe to 
@@ -577,11 +577,11 @@ Class ``IBSplitScrollView``
 PreferencePanes framework
 -------------------------
 
-This framework seems to define usefull classes like ``NSAuthorization`` and
-``NSKeychain``, but these are not documented and some usefull methods have
+This framework seems to define useful classes like ``NSAuthorization`` and
+``NSKeychain``, but these are not documented and some useful methods have
 a hard signature.
 
-The only documented class, ``NSPreferencePane`` is fully supported.
+The only documented class, ``NSPreferencePane``, is fully supported.
 
 ScreenSaver framework
 ---------------------
@@ -595,3 +595,4 @@ Class ``ScreenSaverView``
 .........................
 
 This class is fully supported.
+
