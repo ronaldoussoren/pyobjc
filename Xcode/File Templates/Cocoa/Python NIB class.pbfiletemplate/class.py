@@ -12,4 +12,4 @@ from AppKit import *
 from PyObjCTools import NibClassBuilder
 
 class «FILEBASENAMEASIDENTIFIER»(NibClassBuilder.AutoBaseClass):
-	pass
+    pass

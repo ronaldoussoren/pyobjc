@@ -68,8 +68,8 @@ def maybeutf(encoding=None):
             return 'utf_16_le'
         return encoding
     return maybeutf
-            
-    
+
+
 def _buildEncodingsDict():
     d = {}
     # XXX - SHOULD CHECK FOR XML ENCODINGS?
@@ -81,7 +81,7 @@ def _buildEncodingsDict():
     for k in ['.strings']:
         d[k] = maybeutf('utf16')
     return d
-    
+
 ENCODINGS = _buildEncodingsDict()
 
 WORKINGCOPYFILES = ['.pch']
@@ -97,7 +97,7 @@ SPECIALFILES = {
 }
 
 SUBSTITUTIONMESSAGE = u"""
-                
+
 // WARNING
 // This file is copied from %(name)s.  Keep the two in sync.
 // --- file resumes after here ---
@@ -108,7 +108,7 @@ def doSubstitutions(dirName, aName, options):
         translator = REVERSETRANSLATOR
     else:
         translator = FORWARDTRANSLATOR
-    
+
     path = os.path.join(dirName, aName)
     basename, extension = os.path.splitext(path)
 
@@ -139,22 +139,22 @@ def doSubstitutions(dirName, aName, options):
             doFileSubstitution(path, encoding, translator)
 
     if options.makeWorking and (extension in WORKINGCOPYFILES) and options.doReverse:
-            tail = aName.split("_", 1)[1]
-            targetFile = os.path.join(dirName, "xcPROJECTNAMExc_%s" % (tail,))
+        tail = aName.split("_", 1)[1]
+        targetFile = os.path.join(dirName, "xcPROJECTNAMExc_%s" % (tail,))
 
-            info('Making working copy of %s to %s...', path, targetFile)
+        info('Making working copy of %s to %s...', path, targetFile)
 
-            inFile = codecs.EncodedFile(file(path, "rb"), encoding)
-            outFile = codecs.EncodedFile(file(targetFile, 'wb'), encoding)
+        inFile = codecs.EncodedFile(file(path, "rb"), encoding)
+        outFile = codecs.EncodedFile(file(targetFile, 'wb'), encoding)
 
-            if extension in CTYPEFILES:
-                outFile.write(SUBSTITUTIONMESSAGE % dict(name = aName))
+        if extension in CTYPEFILES:
+            outFile.write(SUBSTITUTIONMESSAGE % dict(name = aName))
 
-            for line in inFile:
-                outFile.write(line)
+        for line in inFile:
+            outFile.write(line)
 
-            inFile.close()
-            outFile.close()
+        inFile.close()
+        outFile.close()
 
 def doFileSubstitution(aFile, encoding, translator):
     _tempFile = tempfile.TemporaryFile()
@@ -205,8 +205,8 @@ REVERSETRANSLATOR = getRegSub(REVERSE, FORWARD)
 ## process options
 def build_parser():
     USAGE = """project-tool.py [options] <source> <dest>
-        
-    Copies tree of templates or projects from <source> to <dest>.  
+
+    Copies tree of templates or projects from <source> to <dest>.
     Before copying, it cleans up <source> by removing various bits of garbage.
     After copying, it transforms <dest> by replacing strings with their Xcode
     template counterparts.
@@ -220,7 +220,7 @@ def build_parser():
         kwargs['action'] = 'store_true'
         kwargs['default'] = False
         parser.add_option(*args, **kwargs)
-    
+
     store_true('-v', '--verbose',
         dest='verbose', help='verbose')
     store_true('-k', '--kill-dest',
@@ -238,7 +238,7 @@ def simplePathWalker(walkdir, fn, arg=None):
         for name in fnames:
             fn(dirname, name, arg)
     os.path.walk(walkdir, _simplePathWalker, arg)
-    
+
 def main():
     parser = build_parser()
     options, args = parser.parse_args()
@@ -260,7 +260,7 @@ def main():
         logger.setLevel(logging.INFO)
     else:
         logging.basicConfig()
-        
+
     source, dest = map(os.path.normpath, args)
     if source == dest:
         parser.error("Source and destination may not be the same.")

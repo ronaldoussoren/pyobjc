@@ -56,7 +56,7 @@ Arguments are:
 
 args should be a sequence of program arguments. The program to execute
 is normally the first item in the args sequence, but can be explicitly
-set by using the executable argument. 
+set by using the executable argument.
 
 On UNIX: the Popen class uses os.execvp() to execute the child
 program, which operates on sequences. If args is a string, it will be
@@ -140,7 +140,7 @@ callv(*args, **kwargs):
     This is equivalent to:
 
     retcode = call(["ls", "-l"])
-    
+
 
 Exceptions
 ----------
@@ -181,7 +181,7 @@ communicate(input=None)
     terminate. The optional stdin argument should be a string to be
     sent to the child process, or None, if no data should be sent to
     the child.
-        
+
     communicate() returns a tuple (stdout, stderr).
 
     Note: The data read is buffered in memory, so do not use this
@@ -258,7 +258,7 @@ except OSError, e:
 
 Replacing os.spawn*
 -------------------
-P_NOWAIT example: 
+P_NOWAIT example:
 
 pid = os.spawnlp(os.P_NOWAIT, "/bin/mycmd", "mycmd", "myarg")
 ==>
@@ -272,24 +272,24 @@ retcode = os.spawnlp(os.P_WAIT, "/bin/mycmd", "mycmd", "myarg")
 retcode = callv("/bin/mycmd", "myarg")
 
 
-Vector example: 
+Vector example:
 
 os.spawnvp(os.P_NOWAIT, path, args)
 ==>
 Popen([path] + args[1:])
 
 
-Environment example: 
+Environment example:
 
 os.spawnlpe(os.P_NOWAIT, "/bin/mycmd", "mycmd", "myarg", env)
 ==>
 Popen(["/bin/mycmd", "myarg"], env={"PATH": "/usr/bin"})
 
-Replacing os.popen* 
+Replacing os.popen*
 -------------------
 pipe = os.popen(cmd, mode='r', bufsize)
 ==>
-pipe = Popen(["/bin/sh", "-c", cmd], bufsize=bufsize, 
+pipe = Popen(["/bin/sh", "-c", cmd], bufsize=bufsize,
              stdout=PIPE).stdout
 
 pipe = os.popen(cmd, mode='w', bufsize)
@@ -349,7 +349,7 @@ except that:
 * the capturestderr argument is replaced with the stderr argument.
 * stdin=PIPE and stdout=PIPE must be specified.
 * popen2 closes all filedescriptors by default, but you have to specify
-  close_fds=True with process.Popen. 
+  close_fds=True with process.Popen.
 
 
 """
@@ -424,7 +424,7 @@ def call(*args, **kwargs):
     """call(*args, **kwargs)
 
     Run command with arguments. Wait for command to complete, then
-    return the returncode attribute. 
+    return the returncode attribute.
 
     The arguments are the same as for the Popen constructor. Example:
 
@@ -437,7 +437,7 @@ def callv(*args, **kwargs):
     """callv(*args, **kwargs)
 
     Run command with arguments. Wait for command to complete, then
-    return the returncode attribute. 
+    return the returncode attribute.
 
     This function is identical to call(), except that each non-keyword
     argument is treated as a program argument. Example:
@@ -451,7 +451,7 @@ def callv(*args, **kwargs):
     return Popen(args, **kwargs).wait()
 
 
-# Obsolete API. 
+# Obsolete API.
 run = callv
 
 
@@ -488,7 +488,7 @@ class Popen:
             if executable == None:
                 executable = args[0]
 
-        self.stdin = None        
+        self.stdin = None
         self.stdout = None
         self.stderr = None
         self.pid = None
@@ -507,7 +507,7 @@ class Popen:
         # On POSIX, the child objects are file descriptors. On
         # Windows, these are Windows file handles. The parent objects
         # are file descriptors on both platforms. The parent objects
-        # are None when not using PIPEs. 
+        # are None when not using PIPEs.
         (p2cread, p2cwrite,
          c2pread, c2pwrite,
          errread, errwrite) = self._get_handles(stdin, stdout, stderr)
@@ -531,7 +531,7 @@ class Popen:
                 self.stderr = os.fdopen(errread, 'rU', bufsize)
             else:
                 self.stderr = os.fdopen(errread, 'rb', bufsize)
-        
+
         _active.append(self)
 
 
@@ -551,7 +551,7 @@ class Popen:
             """
             if stdin == None and stdout == None and stderr == None:
                 return (None, None, None, None, None, None)
-            
+
             p2cread, p2cwrite = None, None
             c2pread, c2pwrite = None, None
             errread, errwrite = None, None
@@ -611,7 +611,7 @@ class Popen:
                                    GetCurrentProcess(), 0, 1,
                                    DUPLICATE_SAME_ACCESS)
 
-        
+
         def _execute_child(self, args, executable, preexec_fn, close_fds,
                            cwd, env, universal_newlines,
                            startupinfo, creationflags,
@@ -624,7 +624,7 @@ class Popen:
             if startupinfo == None:
                 startupinfo = STARTUPINFO()
             if not None in (p2cread, c2pwrite, errwrite):
-                startupinfo.dwFlags |= STARTF_USESTDHANDLES 
+                startupinfo.dwFlags |= STARTF_USESTDHANDLES
                 startupinfo.hStdInput = p2cread
                 startupinfo.hStdOutput = c2pwrite
                 startupinfo.hStdError = errwrite
@@ -650,7 +650,7 @@ class Popen:
             self.pid = pid
             ht.Close()
 
-        
+
         def poll(self):
             """Check if child process has terminated. Returns returncode
             attribute."""
@@ -756,7 +756,7 @@ class Popen:
                 c2pwrite = stdout
             else:
                 # Assuming file-like object
-                c2pwrite = stdout.fileno() 
+                c2pwrite = stdout.fileno()
 
             if stderr == None:
                 pass
@@ -793,8 +793,8 @@ class Popen:
                     os.close(i)
                 except:
                     pass
-        
-        
+
+
         def _execute_child(self, args, executable, preexec_fn, close_fds,
                            cwd, env, universal_newlines,
                            startupinfo, creationflags,
@@ -893,7 +893,7 @@ class Popen:
 
             _active.remove(self)
 
-        
+
         def poll(self):
             """Check if child process has terminated. Returns returncode
             attribute."""
@@ -941,7 +941,7 @@ class Popen:
                     self.stdin.close()
             if self.stdout:
                 read_set.append(self.stdout)
-                stdout = [] 
+                stdout = []
             if self.stderr:
                 read_set.append(self.stderr)
                 stderr = []
@@ -1000,12 +1000,12 @@ class Popen:
 
         1) Arguments are delimited by white space, which is either a
            space or a tab.
-        
+
         2) A string surrounded by double quotation marks is
            interpreted as a single argument, regardless of white space
            contained within. A quoted string can be embedded in an
            argument.
-    
+
         3) A double quotation mark preceded by a backslash is
            interpreted as a literal double quotation mark.
 
@@ -1091,7 +1091,7 @@ class Popen:
         needquote = False
         for arg in seq:
             bs_buf = []
-            
+
             # Add a space to separate this argument from the others
             if result:
                 result.append(' ')
@@ -1102,10 +1102,10 @@ class Popen:
 
             for c in arg:
                 if c == '\\':
-                    # Don't know if we need to double yet. 
+                    # Don't know if we need to double yet.
                     bs_buf.append(c)
                 elif c == '"':
-                    # Double backspaces. 
+                    # Double backspaces.
                     result.append('\\' * len(bs_buf)*2)
                     bs_buf = []
                     result.append('\\"')
@@ -1116,7 +1116,7 @@ class Popen:
                         bs_buf = []
                     result.append(c)
 
-            # Add remaining backspaces, if any. 
+            # Add remaining backspaces, if any.
             if bs_buf:
                 result.extend(bs_buf)
 
