@@ -1,3 +1,9 @@
+2003-01-18  Just van Rossum <just@letterror.com>
+    * Make AppKit.NSApplicationMain() propagate exceptions back to Python.
+    * Include the entire exception info (type, value and traceback) when
+      converting a Python exception to an NSException. This is needed to
+      get a complete traceback.
+
 2003-01-18  Ronald Oussoren <oussoren@cistron.nl>
     * Remove the PyOBJC_UNIQUE_PROXY option, it is always on anyway.
     * Remove mechanism for registering methods that return a 'new'
