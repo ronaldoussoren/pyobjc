@@ -210,9 +210,6 @@ Code cleanup
   a single pointer, create a function to build such types (simular to
   ``Modules/objc/struct-wrapper.m``)
 
-* Add a 'test' action to setup.py (e.g. 'python setup.py test'), and
-  remove runPyObjCTests.
-
 * Use the ``CArray`` API whenever appropriate.
 
 Cleanup Examples

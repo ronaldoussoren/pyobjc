@@ -709,7 +709,7 @@ dist = setup(name = "pyobjc",
                            ),
              packages = packages,
              package_dir = package_dir,
-             scripts = [ 'Scripts/nibclassbuilder', 'Scripts/runPyObjCTests'],
+             scripts = [ 'Scripts/nibclassbuilder', ],
              extra_path = "PyObjC",
              cmdclass = {
                 'build_ext': pyobjc_build_ext,
