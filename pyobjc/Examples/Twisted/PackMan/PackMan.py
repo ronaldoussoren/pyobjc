@@ -5,6 +5,8 @@ from StringIO import StringIO
 import twisted.internet.cfreactor
 reactor = twisted.internet.cfreactor.install()
 
+from twisted.internet import error
+
 ## New HTTP client in Twisted/sandbox/moshez
 import newclient
 
@@ -16,6 +18,15 @@ from objc import YES, NO, selector
 ## plistlib from macpython
 import plistlib
 
+import newpimp
+
+# DEBUG
+import sys
+from twisted.python import log
+log.startLogging(sys.stdout)
+
+# the test-multidatabase
+DATABASE = 'http://undefined.org/python/pimp/panther.plist'
 
 NibClassBuilder.extractClasses("MainMenu")
 
@@ -52,33 +63,38 @@ class DatabasesController(NibClassBuilder.AutoBaseClass):
 
 
 class PackageController(NibClassBuilder.AutoBaseClass):
-    packages = []
-    _allPackages = []
+    packages = ()
+    _allPackages = ()
 
     def applicationDidFinishLaunching_(self, aNotification):
         self.databaseList.selectRowIndexes_byExtendingSelection_(
             NSIndexSet.indexSetWithIndex_(0), NO
         )
-        self.openDatabase('http://undefined.org/python/pimp/darwin-7.0.0-Power_Macintosh.plist')
+        self.openDatabase(DATABASE)
         reactor.run()
 
     def openDatabase(self, url):
-        o = newclient.opener()
-        d = o.open(
-            newclient.Request(str(url))
-        ).addCallback(
-            newclient.read
+        log.msg('Opening database: %s' % (url,))
+        return newpimp.downloadPackmanDatabase(url.encode('utf8')
         ).addCallback(
             self.gotPlist
         ).addErrback(
             self.errorOpening
         )
 
-    def gotPlist(self, pliststring):
-        fl = StringIO(pliststring)
-        plist = plistlib.Plist.fromFile(fl)
+    def gotPlist(self, plist):
+        log.msg('received plist')
         packages = plist['Packages']
-        packages.sort(lambda x, y: cmp(x['Name'].lower(), y['Name'].lower()))
+        #
+        # XXX - Flavors and Version should be condensed into one row?
+        #
+        # default sort is
+        #   Name, Version, Flavor
+        #
+        packages.sort(lambda a,b:(
+            cmp(a['Name'].lower(), b['Name'].lower()) or 
+            cmp(a.get('Version'), b.get('Version')) or 
+            cmp(a.get('Flavor'), b.get('Flavor'))))
         self._allPackagesIncludingHidden = packages
         self._allPackages = self.packages = [x for x in packages if x.get('Version', None)]
         self.table.reloadData()
