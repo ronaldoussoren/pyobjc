@@ -38,7 +38,7 @@ include $fsroot."news/news.inc";
 <h1>Status</h1>
 
 <p>
-<a href="software/index.php">PyObjC 1.2</a> was released on 29 December 2004.  See the <a href="NEWS-1.2.txt">NEWS</a> for details.
+<a href="software/index.php">PyObjC 1.2</a> was released on 29 December 2004.  See the <a href="doc/news.php">NEWS</a> for details.
 </p>
 
 <h1>Platform support</h1>
