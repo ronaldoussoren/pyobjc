@@ -68,7 +68,7 @@ class cmd_test (install_lib):
 
     def initialize_options(self):
         install_lib.initialize_options(self)
-        self.verbosity = 0
+        self.verbosity = 1
         self.include_gui_tests = None
         self.test_installed = None
 
@@ -79,6 +79,9 @@ class cmd_test (install_lib):
 
         if self.test_installed is None:
             self.test_installed = 0
+
+        if isinstance(self.verbosity, (str, unicode)):
+            self.verbosity = int(self.verbosity)
 
     def run (self):
 
