@@ -56,8 +56,4 @@ setup_options = xcode.py2app_setup_options('app')
 # in the setup_options dict
 #
 
-import pprint
-pprint.pprint(dict(os.environ))
-pprint.pprint(setup_options)
-
 setup(**setup_options)
