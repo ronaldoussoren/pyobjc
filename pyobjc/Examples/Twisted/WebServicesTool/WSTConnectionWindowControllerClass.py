@@ -248,8 +248,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         if not aMessage:
             aMessage = "Displaying information about %d methods." % len(self._methods)
         # All UI calls should be directed to the main thread
-        self.statusTextField.performSelectorOnMainThread_withObject_waitUntilDone_(
-            "setStringValue:", aMessage, 0)
+        self.statusTextField.setStringValue_(aMessage)
     
     def reloadData(self):
         """Tell the main thread to update the table view."""

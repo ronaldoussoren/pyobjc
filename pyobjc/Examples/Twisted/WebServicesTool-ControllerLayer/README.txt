@@ -26,6 +26,7 @@ bbum@codefab.com
 This application has been modified for Twisted.  It demonstrates:
 - using Twisted in a Cocoa app with the cfreactor
 - how to write responsive single-threaded network applications
+- well, it no longer demonstrates how to use multi-threading
 
 To run the demo:
 python buildapp.py build
