@@ -74,6 +74,7 @@ typedef Method PyObjCRT_Method_t;
 typedef Ivar PyObjCRT_Ivar_t;
 
 #define GETISA(c)       (c)->isa
+
 #define RECEIVER(c)     (c).receiver
 
 #define _C_CONST    'r'

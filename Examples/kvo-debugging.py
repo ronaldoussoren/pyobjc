@@ -6,8 +6,17 @@ Experimental code, attempting to work around Apple's KVO hacks.
 from Foundation import *
 import objc
 from sets import Set
+import sys
 
 _kvoclassed = {}
+
+def dumpClass(cls):
+    print "DUMP", cls
+    print cls.__bases__
+    #for k, v in cls.__dict__.items():
+    #    print k, v
+    print "-"*40
+
 
 def toKVOClass(orig, new):
     if new in _kvoclassed:
@@ -33,9 +42,9 @@ class FooClass(NSObject):
     _kvc_bar = None
     outlet = objc.IBOutlet('outlet')
 
-    def addObserver_forKeyPath_options_context_(self, observer, keyPath, options, context):
+    def XXaddObserver_forKeyPath_options_context_(self, observer, keyPath, options, context):
         print 'addObserver_forKeyPath_options_context_', observer, keyPath, options, context
-        orig = type(self)
+        orig = FooClass #type(self)
         super(orig, self).addObserver_forKeyPath_options_context_(observer, keyPath, options, context)
         new = self.class__()
         print orig, type(self), new
@@ -43,7 +52,7 @@ class FooClass(NSObject):
             print "class changed!!"
             self.__class__ = toKVOClass(orig, new)
 
-    def removeObserver_forKeyPath_(self, observer, keyPath):
+    def XXremoveObserver_forKeyPath_(self, observer, keyPath):
         print 'removeObserver_forKeyPath_', observer, keyPath
         orig = type(self)
         super(orig, self).removeObserver_forKeyPath_(observer, keyPath)
@@ -54,21 +63,22 @@ class FooClass(NSObject):
             self.__class__ = fromKVOClass(orig)
     
     def setBar_(self, bar):
-        print 'setBar_', bar
+        print 'setBar_ ->', bar
         print self, type(self), self.class__()
-        print '->', bar
+        #print '->', bar
         self._kvc_bar = bar
     setBar_ = objc.accessor(setBar_)
 
     def bar(self):
-        print 'bar'
-        print self, type(self), self.class__()
+        print 'bar', self._kvc_bar
+        #print self, type(self), self.class__()
         return self._kvc_bar
     bar = objc.accessor(bar)
 
 class FooObserver(NSObject):
     def observeValueForKeyPath_ofObject_change_context_(self, keyPath, obj, change, context):
         print '[[[[[]]]]] observeValueForKeyPath_ofObject_change_context_', keyPath, obj, change, context
+        dumpClass(type(obj))
 
     def willChangeValueForKey_(self, key):
         print '[[[[[]]]]] willChangeValueForKey_', key
@@ -86,7 +96,11 @@ print foo.bar()
 print
 print
 print "***** observing, setting three times"
+print "foo's ISA:", foo.pyobjc_ISA
+print "Adding an observer"
 foo.addObserver_forKeyPath_options_context_(fooObserver, u'bar',  (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld), 0)
+print "foo's ISA:", foo.pyobjc_ISA
+#foo.removeObserver_forKeyPath_(fooObserver, u'bar');sys.exit(1)
 print foo.bar()
 foo.setBar_(u'1w00t')
 print foo.bar()
@@ -104,3 +118,5 @@ foo.setBar_(u'4sw00t')
 print foo.bar()
 foo.setBar_(u'5w00t')
 print foo.bar()
+
+print foo.__class__

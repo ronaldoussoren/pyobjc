@@ -6,6 +6,7 @@ in PyObjCTools.test.test_keyvalue and Foundation.test.test_keyvalue.
 """
 import objc
 import unittest
+from Foundation import *
 
 # Native code is needed to access the python class from Objective-C, otherwise
 # the Key-Value support cannot be tested.
@@ -407,6 +408,128 @@ if PyObjCTest_KeyValueObserver is not None:
         def testOne(self):
             o = PyObjCTest_KeyValueObserver.alloc().initWithInstanceOfClass_withKey_(PyObjC_TestKeyValueSource, "foobar")
             self.assertEquals(o.getValue(), "Hello world")
+
+    DEALLOCS = 0
+
+    class PyObjCTestObserved1 (objc.runtime.NSObject):
+        __slots__ = ( '_kvo_bar', '_kvo_foo')
+
+        FOOBASE = "base"
+
+        def init(self):
+            self = super(PyObjCTestObserved1, self).init()
+            if self is not None:
+                self._kvo_bar = None
+                self._kvo_foo = None
+            return self
+
+        def setBar_(self, value):
+            self._kvo_bar = value
+        setBar_ = objc.accessor(setBar_)
+
+        def bar(self):
+            return self._kvo_bar
+        bar = objc.accessor(bar)
+
+        def setFoo_(self, value):
+            self._kvo_foo = self.FOOBASE + value
+        setFoo_ = objc.accessor(setFoo_)
+
+        def foo(self):
+            return self._kvo_foo
+        foo = objc.accessor(foo)
+
+        def __del__(self):
+            global DEALLOCS
+            DEALLOCS += 1
+
+    class TestKeyValueObservingFromPython (unittest.TestCase):
+        # Check for using KVO in python.
+
+        def testObserving(self):
+            observer = PyObjCTestObserver.alloc().init()
+
+            o = PyObjCTestObserved1.alloc().init()
+            self.assertEquals(o.bar(), None)
+            o.setBar_("hello")
+            self.assertEquals(o.bar(), "hello")
+
+            # See below
+            PyObjCTestObserved1.FOOBASE = "base3"
+            try:
+                o.setFoo_("yyy")
+                self.assertEquals(o.foo(), "base3yyy")
+            finally:
+                PyObjCTestObserved1.FOOBASE = "base"
+
+
+            o.addObserver_forKeyPath_options_context_(observer, u'bar',  
+                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld), 
+                0)
+            o.addObserver_forKeyPath_options_context_(observer, u'foo',  
+                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld), 
+                0)
+
+            try:
+                o.setBar_("world")
+                self.assertEquals(o.bar(), "world")
+
+
+                o.setFoo_("xxx")
+                self.assertEquals(o.foo(), "basexxx")
+
+                # Change a "class" attribute, and make sure the object sees
+                # that change (e.g. the fact that Cocoa changes the ISA pointer
+                # should be mostly invisible)
+                PyObjCTestObserved1.FOOBASE = "base2"
+
+                o.setFoo_("yyy")
+                self.assertEquals(o.foo(), "base2yyy")
+
+            finally:
+                o.removeObserver_forKeyPath_(observer, "bar")
+                o.removeObserver_forKeyPath_(observer, "foo")
+                PyObjCTestObserved1.FOOBASE = "base"
+
+            self.assertEquals(len(observer.observed), 3)
+
+            self.assertEquals(observer.observed[0], 
+                (u'bar', o,  { 'kind': 1, 'new':'world', 'old': 'hello' }, 0))
+            self.assertEquals(observer.observed[1], 
+                (u'foo', o, { 'kind': 1, 'new':'basexxx', 'old':'base3yyy' }, 0))
+            self.assertEquals(observer.observed[2], 
+                (u'foo', o, { 'kind': 1, 'new':'base2yyy', 'old':'basexxx' }, 0))
+            self.assertEquals(o.bar(), "world")
+
+            before = DEALLOCS
+            del o
+            self.assertEquals(DEALLOCS, before+1, "Leaking an observed object")
+
+        def testObserving2(self):
+            observer = PyObjCTestObserver.alloc().init()
+
+            o = PyObjCTestObserved1.alloc().init()
+
+
+            o.addObserver_forKeyPath_options_context_(observer, u'bar',  
+                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld), 
+                0)
+
+            a = objc.runtime.NSArray.arrayWithArray_([o])
+            del o
+            o = a[0]
+
+            try:
+                PyObjCTestObserved1.FOOBASE = "base2"
+
+                o.setFoo_("yyy")
+                self.assertEquals(o.foo(), "base2yyy")
+
+            finally:
+                o.removeObserver_forKeyPath_(observer, "bar")
+                PyObjCTestObserved1.FOOBASE = "base"
+
+            self.assertEquals(len(observer.observed), 0)
 
 if __name__ == "__main__":
     unittest.main()
