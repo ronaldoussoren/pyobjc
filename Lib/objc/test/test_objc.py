@@ -21,7 +21,7 @@ class TestClassLookup(unittest.TestCase):
     def testRuntimeNoSuchClassErrorRaised(self):
         try:
             objc.runtime.ThisClassReallyShouldNotExist
-        except objc.nosuchclass_error:
+        except AttributeError:
             pass
         else:
             fail("objc.runtime.ThisClassReallyShouldNotExist should have thrown a nosuchclass_error.  It didn't.")
