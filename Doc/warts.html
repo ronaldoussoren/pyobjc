@@ -22,7 +22,10 @@ this when translating from Objective-C to python.</li>
 <li>Some Cocoa classes store references to objects while not increasing the 
 reference count. One of those is NSOutlineView. A side-effect of this is that
 you <i>must</i> use subclasses of NSObject in your NSOutlineView model, and you
-<i>must</i> keep a reference to the objects you pass to NSOutlineView.</li>
+<i>must</i> keep a reference to the objects you pass to NSOutlineView.  Another
+gotcha is when you're manually allocating and assigning delegate(-like)
+objects: most of the time obj.setDelegate_() will <i>not</i> retain the delegate,
+so you must keep a reference manually.</li>
 </ul>
 </body>
 </html>
