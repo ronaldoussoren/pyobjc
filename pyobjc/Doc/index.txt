@@ -71,13 +71,9 @@ you want to write Cocoa programs in Python.
 
   Rules for formatting code and documentation.
 
-* `PyObjC Architecture`_
-
-  An overview of the PyObjC architecture. This document is out of date.
-
 * `Structure of the PyObjC package`_
 
-  Another overview of the PyObjC package.
+  An overview of the implementation of PyObjC.
 
 * Xcode Python Support
 
