@@ -16,6 +16,11 @@ import sys
 import traceback
 import objc
 
+class PyObjCAppHelperApplicationActivator(NSObject):
+    def activateNow_(self, aNotification):
+        NSApp().activateIgnoringOtherApps_(True)
+
+
 class PyObjCAppHelperRunLoopStopper(NSObject):
     singletons = {}
 
@@ -155,6 +160,15 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pd
     if pdb:
         from PyObjCTools import Debugging
         Debugging.installVerboseExceptionHandler()
+        # bring it to the front, starting from terminal
+        # often won't
+        activator = PyObjCAppHelperApplicationActivator.alloc().init()
+        NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
+            activator,
+            'activateNow:',
+            NSApplicationDidFinishLaunchingNotification,
+            None,
+        )
     else:
         Debugging = None
     
