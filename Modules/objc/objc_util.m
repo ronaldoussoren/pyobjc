@@ -8,10 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-/* TODO: Rename these */
-PyObject* ObjCExc_error;
-PyObject* ObjCExc_noclass_error;
-PyObject* ObjCExc_internal_error;
+PyObject* PyObjCExc_Error;
+PyObject* PyObjCExc_NoSuchClassError;
+PyObject* PyObjCExc_InternalError;
 PyObject* PyObjCExc_NoProtocol;
 PyObject* PyObjCExc_UnInitDeallocWarning;
 
@@ -24,10 +23,10 @@ ObjCUtil_Init(PyObject* module)
 	Py_INCREF(identifier); \
 	if (PyModule_AddObject(module, name, identifier) < 0) return -1;
 
-	NEW_EXC(ObjCExc_error, "error", NULL);
-	NEW_EXC(ObjCExc_noclass_error, "nosuchclass_error", ObjCExc_error);
-	NEW_EXC(ObjCExc_internal_error, "internal_error", ObjCExc_error);
-	NEW_EXC(PyObjCExc_NoProtocol, "ProtocolError", ObjCExc_error);
+	NEW_EXC(PyObjCExc_Error, "error", NULL);
+	NEW_EXC(PyObjCExc_NoSuchClassError, "nosuchclass_error", PyObjCExc_Error);
+	NEW_EXC(PyObjCExc_InternalError, "internal_error", PyObjCExc_Error);
+	NEW_EXC(PyObjCExc_NoProtocol, "ProtocolError", PyObjCExc_Error);
 	NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning", PyExc_Warning);
 
 	return 0;
@@ -47,7 +46,7 @@ ObjCErr_PyExcForName(const char* value)
 		return PyExc_KeyError;
 	}
 
-	return ObjCExc_error;
+	return PyObjCExc_Error;
 }
 	
 
@@ -735,6 +734,37 @@ PyObjC_IsPythonKeyword(const char* word)
 		if (strcmp(word, *cur) == 0) {
 			return 1;
 		}
+	}
+	return 0;
+}
+
+int
+PyObjCRT_SimplifySignature(char* signature, char* buf, size_t buflen)
+{
+	char* cur;
+	char* end;
+	char* next;
+
+	cur = signature;
+	*buf = '\0';
+
+	while (*cur != '\0') {
+		next = end = (char*)PyObjCRT_SkipTypeSpec(cur);
+		end -= 1;
+		while (end != cur && isdigit(*end)) {
+			end --;
+		}
+		end++;
+
+		if ((size_t)(end - cur) > buflen) {
+			return -1;
+		}
+
+		memcpy(buf, cur, end-cur);
+		buflen -= (end-cur);
+		buf += (end-cur);
+		*buf = '\0';
+		cur = next;
 	}
 	return 0;
 }

@@ -99,12 +99,12 @@ int
 PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
 {
 	if (objc_class == nil) {
-		PyErr_SetString(ObjCExc_internal_error, 
+		PyErr_SetString(PyObjCExc_InternalError, 
 			"Trying to set class of <nil>\n");
 		return -1;
 	}
 	if (py_class == NULL || !PyObjCClass_Check(py_class)) {
-		PyErr_Format(ObjCExc_internal_error,
+		PyErr_Format(PyObjCExc_InternalError,
 			"Trying to set class to of %s to invalid value "
 			"(type %s instead of %s)",
 			objc_class->name, py_class->ob_type->tp_name,
@@ -115,7 +115,7 @@ PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
 	CHECK_MAGIC(objc_class);
 
 	if (CLASS_WRAPPER(objc_class)->python_class != NULL) {
-		PyErr_Format(ObjCExc_internal_error,
+		PyErr_Format(PyObjCExc_InternalError,
 			"Trying to set update PythonClass of %s",
 			objc_class->name);
 		return -1;
@@ -141,7 +141,7 @@ PyObjCClass_UnbuildClass(Class objc_class)
 	struct class_wrapper* wrapper = CLASS_WRAPPER(objc_class); 
 
 	if (objc_class == nil) {
-		PyErr_SetString(ObjCExc_internal_error, 
+		PyErr_SetString(PyObjCExc_InternalError, 
 		"Trying to unregister class <nil>");
 		return;
 	}
@@ -149,7 +149,7 @@ PyObjCClass_UnbuildClass(Class objc_class)
 	CHECK_MAGIC(objc_class);
 
 	if (wrapper->python_class != NULL) {
-		PyErr_Format(ObjCExc_internal_error,
+		PyErr_Format(PyObjCExc_InternalError,
 			"Trying to unregister objective-C class %s, but it "
 			"is already registered with the runtime",
 			objc_class->name);
@@ -300,30 +300,30 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	int                      item_size;
 
 	if (!PyList_Check(protocols)) {
-		PyErr_Format(ObjCExc_internal_error,  
+		PyErr_Format(PyObjCExc_InternalError,  
 			"protocol list not a python 'list' but '%s'",
 			protocols->ob_type->tp_name);
 		goto error_cleanup;
 	}
 	if (!PyDict_Check(class_dict)) {
-		PyErr_Format(ObjCExc_internal_error, 
+		PyErr_Format(PyObjCExc_InternalError, 
 			"class dict not a python 'dict', but '%s'",
 			class_dict->ob_type->tp_name);
 		goto error_cleanup;
 	}
 	if (super_class == NULL) {
-		PyErr_SetString(ObjCExc_internal_error, 
+		PyErr_SetString(PyObjCExc_InternalError, 
 			"must have super_class");
 		goto error_cleanup;
 	}
 
 	if (PyObjCRT_LookUpClass(name) != NULL) {
-		PyErr_Format(ObjCExc_error, "Objective-C class '%s' already", 
+		PyErr_Format(PyObjCExc_Error, "Objective-C class '%s' already", 
 				name);
 		goto error_cleanup;
 	}
 	if (strspn(name, IDENT_CHARS) != strlen(name)) {
-		PyErr_Format(ObjCExc_error, "'%s' not a valid name", name);
+		PyErr_Format(PyObjCExc_Error, "'%s' not a valid name", name);
 		goto error_cleanup;
 	}
 
@@ -341,7 +341,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	for (curname = dont_override_methods; *curname != NULL; curname++) {
 		key = PyDict_GetItemString(class_dict, *curname);
 		if (key != NULL) {
-			PyErr_Format(ObjCExc_error,
+			PyErr_Format(PyObjCExc_Error,
 				"Cannot override method '%s' from python", 
 				*curname);
 			goto error_cleanup;
@@ -387,7 +387,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	for (i = 0; i < key_count; i++) {
 		key = PyList_GET_ITEM(key_list, i);
 		if (PyErr_Occurred()) {
-			PyErr_SetString(ObjCExc_internal_error,
+			PyErr_SetString(PyObjCExc_InternalError,
 				"PyObjCClass_BuildClass: "
 				"Cannot fetch key in keylist");
 			goto error_cleanup;
@@ -395,7 +395,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		value = PyDict_GetItem(class_dict, key);
 		if (value == NULL) {
-			PyErr_SetString(ObjCExc_internal_error,
+			PyErr_SetString(PyObjCExc_InternalError,
 				"PyObjCClass_BuildClass: "
 				"Cannot fetch item in keylist");
 			goto error_cleanup;
@@ -404,7 +404,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		if (PyObjCInstanceVariable_Check(value)) {
 			if (class_getInstanceVariable(super_class, 
 			    ((PyObjCInstanceVariable*)value)->name) != NULL) {
-				PyErr_Format(ObjCExc_error,
+				PyErr_Format(PyObjCExc_Error,
 					"a superclass already has an instance "
 					"variable with this name: %s",
 					((PyObjCInstanceVariable*)value)->name);
@@ -603,7 +603,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	for (i = 0; i < key_count; i++) {
 		key = PyList_GetItem(key_list, i);
 		if (key == NULL) {
-			PyErr_SetString(ObjCExc_internal_error,
+			PyErr_SetString(PyObjCExc_InternalError,
 				"PyObjCClass_BuildClass: "
 				"Cannot fetch key in keylist");
 			goto error_cleanup;
@@ -611,7 +611,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		value = PyDict_GetItem(class_dict, key);
 		if (value == NULL)  {
-			PyErr_SetString(ObjCExc_internal_error,
+			PyErr_SetString(PyObjCExc_InternalError,
 				"PyObjCClass_BuildClass: "
 				"Cannot fetch item in keylist");
 			goto error_cleanup;

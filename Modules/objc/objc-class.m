@@ -226,7 +226,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	}
 
 	if (PyObjCRT_LookUpClass(name) != NULL) {
-		PyErr_SetString(ObjCExc_error, 
+		PyErr_SetString(PyObjCExc_Error, 
 			"Class already exists in Objective-C runtime");
 		return NULL;
 	}
@@ -1142,7 +1142,7 @@ PyObjCClass_GetClass(PyObject* cls)
 	PyObjC_class_info* info;
 
 	if (!PyObjCClass_Check(cls)) {
-		PyErr_Format(ObjCExc_internal_error,
+		PyErr_Format(PyObjCExc_InternalError,
 			"PyObjCClass_GetClass called for non-class (%s)",
 			cls->ob_type->tp_name);
 		return nil;
@@ -1165,7 +1165,7 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 
 
 	if (!PyObjCClass_Check(cls)) {
-		PyErr_Format(ObjCExc_internal_error,
+		PyErr_Format(PyObjCExc_InternalError,
 			"PyObjCClass_GetClass called for non-class (%s)",
 			cls->ob_type->tp_name);
 		return NULL;

@@ -198,7 +198,7 @@ struct_to_ffi_type(const char* argtype)
 	 */
 	field_count = count_struct(argtype);
 	if (field_count == -1) {
-		PyErr_Format(ObjCExc_internal_error,
+		PyErr_Format(PyObjCExc_InternalError,
 			"Cannot determine layout of %s", argtype);
 		return NULL;
 	}

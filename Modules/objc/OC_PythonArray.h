@@ -97,9 +97,32 @@
  */
 -(void)getObjects:(id*)buffer inRange:(NSRange)range;
 
+/*!
+ * @method addObject:
+ * @abstract Append an object
+ * @param anObject The object that will be append
+ */
 -(void)addObject:(id)anObject;
+
+/*!
+ * @method insertObject:atIndex:
+ * @abstract Insert an object at the specified index
+ * @param anObject The object to insert
+ * @param idx  The index
+ */
 -(void)insertObject:(id)anObject atIndex:(unsigned)idx;
+
+/*!
+ * @method removeLastObject
+ * @abstract Remove the last object of the sequence
+ */
 -(void)removeLastObject;
+
+/*!
+ * @method removeObjectAtIndex:
+ * @abstract Remove a specific item
+ * @param idx Which object should be removed
+ */
 -(void)removeObjectAtIndex:(unsigned)idx;
 
 @end

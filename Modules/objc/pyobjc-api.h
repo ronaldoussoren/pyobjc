@@ -195,8 +195,9 @@ static inline void PyGILState_Release(
  * - Version 8 adds PyObjCObject_IsUninitialized,
         removes PyObjCSelector_IsInitializer
  * - Version 9 (???)
+ * - Version 10 changes the signature of PyObjCRT_SimplifySignature
  */
-#define PYOBJC_API_VERSION 9
+#define PYOBJC_API_VERSION 10
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -295,7 +296,7 @@ struct pyobjc_api {
 	const char* (*selname)(SEL sel);
 
 	/* PyObjCRT_SimplifySignature */
-	void (*simplify_sig)(char* signature, char* buf, size_t buflen);
+	int (*simplify_sig)(char* signature, char* buf, size_t buflen);
 
 	/* PyObjC_FreeCArray */
 	void    (*free_c_array)(int,void*);

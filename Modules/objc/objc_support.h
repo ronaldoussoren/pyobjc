@@ -54,9 +54,6 @@ extern int depythonify_c_return_value (const char *type,
 					PyObject *arg,
 					void *datum);
 
-/* This one is implemented in super-call.m, should be moved and renamed */
-extern void PyObjCRT_SimplifySignature(char* signature, char* buf, size_t buflen);
-
 /* From pointer-support.m */
 
 typedef PyObject* (*PyObjCPointerWrapper_ToPythonFunc)(void*);

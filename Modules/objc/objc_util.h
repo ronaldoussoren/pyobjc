@@ -4,9 +4,9 @@
 #include <Foundation/NSException.h>
 #define THREADSTATE_AUTORELEASEPOOL "__threadstate_autoreleasepool"
 
-extern PyObject* ObjCExc_error;
-extern PyObject* ObjCExc_noclass_error;
-extern PyObject* ObjCExc_internal_error;
+extern PyObject* PyObjCExc_Error;
+extern PyObject* PyObjCExc_NoSuchClassError;
+extern PyObject* PyObjCExc_InternalError;
 extern PyObject* PyObjCExc_NoProtocol;
 extern PyObject* PyObjCExc_UnInitDeallocWarning;
 
@@ -27,14 +27,12 @@ char* PyObjCUtil_Strdup(const char* value);
 extern NSMapTableKeyCallBacks PyObjCUtil_PointerKeyCallBacks;
 extern NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks;
 
-
-//extern NSMapTableKeyCallBacks ObjC_PyObjectKeyCallBacks;
-//extern NSMapTableValueCallBacks ObjC_PyObjectValueCallBacks;
-//
-
 void    PyObjC_FreeCArray(int, void*);
 int     PyObjC_PythonToCArray(const char*, PyObject*, PyObject*, void**, int*);
 PyObject* PyObjC_CArrayToPython(const char*, void*, int);
 int     PyObjC_IsPythonKeyword(const char* word);
+
+
+extern int PyObjCRT_SimplifySignature(char* signature, char* buf, size_t buflen);
 
 #endif /* OBJC_UTIL */
