@@ -103,6 +103,7 @@
 ./Lib/Foundation/__init__.py
 ./Lib/Foundation/Foundation.byref
 ./Lib/objc/__init__.py
+./Lib/objc/_convenience.py
 ./Lib/objc/_FoundationSignatures.py
 ./Lib/objc/builder.py
 ./Lib/objc/classnib.py
@@ -150,6 +151,10 @@
 ./Modules/objc/objc_util.m
 ./Modules/objc/ObjCPointer.h
 ./Modules/objc/ObjCPointer.m
+./Modules/objc/OC_PythonArray.h
+./Modules/objc/OC_PythonArray.m
+./Modules/objc/OC_PythonDictionary.h
+./Modules/objc/OC_PythonDictionary.m
 ./Modules/objc/OC_PythonInt.h
 ./Modules/objc/OC_PythonInt.m
 ./Modules/objc/OC_PythonObject.h
