@@ -1,4 +1,6 @@
 2003-01-14  Bill Bumgarner  <bbum@codefab.com>
+    * Lib/AppKit/__init__.py (NSApplicationDelegate): Added
+      NSApplicationDelegate definitions.
     * Modules/Cocoa/_AppKit.m (objc_NSApplicationMain): Evil hack to fix bug
       in NSApplicationMain()'s lack of argument processing.  Evil Evil hack,
       but it works.
