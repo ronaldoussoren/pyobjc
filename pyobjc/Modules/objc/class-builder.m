@@ -440,7 +440,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			METHOD    meth;
 			int       is_class_method = 0;
 
-			pyname = PyObject_GetAttrString(value, "__name__");
+			pyname = key;
 			if (pyname == NULL) continue;
 
 			name = PyString_AS_STRING(pyname);
