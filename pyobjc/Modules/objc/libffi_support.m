@@ -18,6 +18,51 @@
 #    error "Need FFI_CLOSURES!"
 #endif
 
+static void describe_ffitype(ffi_type* type)
+{
+	switch (type->type) {
+	case FFI_TYPE_VOID: printf("%s", "void"); break;
+	case FFI_TYPE_INT: printf("%s", "int"); break;
+	case FFI_TYPE_FLOAT: printf("%s", "float"); break;
+	case FFI_TYPE_DOUBLE: printf("%s", "double"); break;
+	case FFI_TYPE_UINT8: printf("%s", "uint8"); break;
+	case FFI_TYPE_SINT8: printf("%s", "sint8"); break;
+	case FFI_TYPE_UINT16: printf("%s", "uint16"); break;
+	case FFI_TYPE_SINT16: printf("%s", "sint16"); break;
+	case FFI_TYPE_UINT32: printf("%s", "uint32"); break;
+	case FFI_TYPE_SINT32: printf("%s", "sint32"); break;
+	case FFI_TYPE_UINT64: printf("%s", "uint64"); break;
+	case FFI_TYPE_SINT64: printf("%s", "sint64"); break;
+	case FFI_TYPE_POINTER: printf("%s", "*"); break;
+	case FFI_TYPE_STRUCT: {
+			ffi_type** elems = type->elements;
+
+			printf("%s", "struct { ");
+			if (elems) {
+				while (*elems) {
+					describe_ffitype(*(elems++));
+					printf("%s", "; ");
+				}
+			}
+			printf("%s", "}");
+		}
+	}
+}
+
+static void describe_cif(ffi_cif* cif)
+{
+	int i;
+	printf("< abi=%d nargs=%d  bytes=%d flags=%#x args=[",
+		cif->abi, cif->nargs, cif->bytes, cif->flags);
+	for  (i = 0; i < cif->nargs; i++) {
+		describe_ffitype(cif->arg_types[i]);
+		printf("%s", ", ");
+	}
+	printf("%s", "] rettype=");
+	describe_ffitype(cif->rtype);
+	printf("%s", ">\n");
+}
+
 static int align(int offset, int alignment)
 {
 	int rest = offset % alignment;
@@ -82,8 +127,8 @@ static  PyObject* array_types = NULL;
 		PyErr_NoMemory();
 		return NULL;
 	}
-	type->size = 0;
-	type->alignment = 0;
+	type->size = objc_sizeof_type(argtype);
+	type->alignment = objc_alignof_type(argtype);
 
 	/* Libffi doesn't really know about arrays as part of larger 
 	 * data-structres (e.g. struct foo { int field[3]; };). We fake it
@@ -154,10 +199,10 @@ static  PyObject* struct_types = NULL;
 		PyErr_NoMemory();
 		return NULL;
 	}
-	type->size = 0;
-	type->alignment = 0;
+	type->size = objc_sizeof_type(argtype);
+	type->alignment = objc_alignof_type(argtype);
 	type->type = FFI_TYPE_STRUCT;
-	type->elements = malloc((1+field_count) * sizeof(*type->elements));
+	type->elements = malloc((1+field_count) * sizeof(ffi_type));
 	if (type->elements == NULL) {
 		free(type);
 		PyErr_NoMemory();
@@ -492,6 +537,7 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 		PyErr_NoMemory();
 		return NULL;
 	}
+
 	if (argOffset) {
 		cl_arg_types[0] = &ffi_type_pointer;
 	}
@@ -545,6 +591,9 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 	  stubUserdata->callable = callable;
 	  Py_INCREF(stubUserdata->callable);
 	}
+
+	//printf ("make closure\n");
+	//describe_cif(cif);
 	
 	rv = ffi_prep_closure(cl, cif, method_stub, (void*)stubUserdata);
 	if (rv != FFI_OK) {
@@ -580,14 +629,6 @@ ObjC_MakeIMPForObjCSelector(ObjCSelector *aSelector) {
 	}
 }
 
-/* FIXME:
- *   This is a clone of execute_and_pythonify_objc_method in objc_support.m
- *   Need to either abstract away differences or remove one of these...
- *
- * Changes w.r.t. execute_and_...
- * - All arguments are stored in 'argbuf', not only the pass-by-reference ones.
- * - libffi support
- */
 PyObject *
 ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 {
