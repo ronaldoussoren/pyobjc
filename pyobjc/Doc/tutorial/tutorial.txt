@@ -68,16 +68,8 @@ Getting Started
    
 .. _step4-CurrencyConverter.py: step4-CurrencyConverter.py
                
-5. Next we need to add a little more boilerplate code to ``CurrencyConverter.py``. At some point
-   in the future this will become simpler, but for now we need to add a main program
-   that jumps through various hoops to get the application started.
-   The results of this can be seen in step5-CurrencyConverter.py_.
-   
-.. _step5-CurrencyConverter.py: step5-CurrencyConverter.py
-   
-   *XXXX Implementation Note:* NibClassBuilder should do this for you, at least
-   optionally.
-   
+5. There is no step 5.
+
 Testing the user interface
 --------------------------
 
