@@ -22,7 +22,7 @@ def process_file(outfp, filename, match_prefix='', ignore_list=()):
     in_class = 0
 
     for ln in fp.xreadlines():
-    	ln = attribute_unused.sub(' ', ln.strip())
+        ln = attribute_unused.sub(' ', ln.strip())
         # Skip declarations in objective-C class definitions
         if not in_class:
             if ln.startswith("@interface"):

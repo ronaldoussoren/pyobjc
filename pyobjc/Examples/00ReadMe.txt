@@ -115,6 +115,19 @@ simply double-click it and choose ``Build and Run``.
   install of Python, that is either MacOS X 10.3 or a MacPython 2.3 
   installation.
 
+* Twisted/WebServicesTool
+
+  Shows how to integrate Twisted (1.1 or later) with Cocoa, it is a
+  refactor of the WebServicesTool example that is made much simpler
+  by using Twisted.
+
+* Twisted/WebServicesTool-ControllerLayer
+
+  Shows how to integrate Twisted (1.1 or later) with Cocoa, it is a
+  refactor of the WebServicesTool example that is made much simpler
+  by using Twisted as it does not need threads. This one also uses
+  NSController and therefore requires MacOS X 10.3.
+
 .. _`PyOpenGL`:  http://pyopengl.sourceforge.net/
 .. _`ClassBrowser`: ClassBrowser
 .. _`CurrencyConverter`: CurrencyConverter

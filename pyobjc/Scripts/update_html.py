@@ -29,7 +29,7 @@ def rest2HTML(irrelevant, dirName, names):
                 escquotes(anOutputPath)))
 
 def escquotes(val):
-	return val.replace("'", "'\"'\"'")
+    return val.replace("'", "'\"'\"'")
 
 print "Generateing HTML documentation"
 os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
