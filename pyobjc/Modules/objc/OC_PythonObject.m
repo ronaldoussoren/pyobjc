@@ -192,7 +192,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	if (!pymethod) {
 		PyErr_Clear();
 		[NSException raise:NSInvalidArgumentException 
-			format:@"No such selector: %s", SELNAME(sel)];
+			format:@"%s: no such selector: %s", GETISA(self)->name, SELNAME(sel)];
 	}
 
 
@@ -330,76 +330,62 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 
 
-/* First try the accessor functions 'getKey' and 'get_key', then
- * the attribute 'key' and finally instance variable '_key' (the last one
- * only if we're allowed to access instance variables directly).
+/*
+ *  Call PyObjCTools.KeyValueCoding.getKey to get the value for a key
  */
 - valueForKey:(NSString*) key;
 {
-	NSString* tmpName;
+static  PyObject* getKeyFunc = NULL;
+
+	PyObject* keyName;
 	PyObject* val;
 	id res;
-	
 
-	tmpName = [NSString stringWithFormat:@"get%@", [key capitalizedString]];
-	val = PyObject_CallMethod(pyObject, (char*)[tmpName cString], NULL);
-	if (val == NULL) {
-		PyErr_Clear();
-	} else {
-		if ( depythonify_c_value(@encode(id), val, &res) < 0) {
-			Py_DECREF(val);
+	if (getKeyFunc == NULL) {
+		PyObject* name;
+		PyObject* mod;
+		name = PyString_FromString( "PyObjCTools.KeyValueCoding");
+		if (name == NULL) {
 			PyObjCErr_ToObjC();
 			return nil;
-		} 
-		Py_DECREF(val);
-		return res;
-	}
-
-	tmpName = [NSString stringWithFormat:@"get_%@", key];
-	val = PyObject_CallMethod(pyObject, (char*)[tmpName cString], NULL);
-	if (val == NULL) {
-		PyErr_Clear();
-	} else {
-		if ( depythonify_c_value(@encode(id), val, &res) < 0) {
-			Py_DECREF(val);
-			PyObjCErr_ToObjC();
-			return nil;
-		} 
-		Py_DECREF(val);
-		return res;
-	}
-
-	val = PyObject_GetAttrString(pyObject, (char*)[key cString]);
-	if (val == NULL) {
-		PyErr_Clear();
-	} else {
-		if ( depythonify_c_value(@encode(id), val, &res) < 0) {
-			Py_DECREF(val);
-			PyObjCErr_ToObjC();
-			return nil;
-		} 
-		Py_DECREF(val);
-		return res;
-	}
-
-	if ([[self class] accessInstanceVariablesDirectly]) {
-		tmpName = [NSString stringWithFormat:@"_%@", key];
-		val = PyObject_GetAttrString(pyObject, (char*)[tmpName cString]);
-		if (val == NULL) {
-			PyErr_Clear();
-		} else {
-			if ( depythonify_c_value(@encode(id), val, &res) < 0) {
-				Py_DECREF(val);
-				PyObjCErr_ToObjC();
-				return nil;
-			}
-			Py_DECREF(val);
-			return res;
 		}
+		mod = PyImport_Import(name);
+		if (mod == NULL) {
+			Py_DECREF(name);
+			PyObjCErr_ToObjC();
+			return nil;
+		}
+		getKeyFunc = PyObject_GetAttrString(mod, "getKey");
+		if (getKeyFunc == NULL) {
+			Py_DECREF(name);
+			Py_DECREF(mod);
+			PyObjCErr_ToObjC();
+			return nil;
+		}
+		Py_DECREF(name);
+		Py_DECREF(mod);
 	}
 
-	[self handleQueryWithUnboundKey:key];
-	return nil;
+	keyName = pythonify_c_value(@encode(id), &key);
+	if (keyName == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+
+	val = PyObject_CallFunction(getKeyFunc, "OO", pyObject, keyName);
+	Py_DECREF(keyName);
+	if (val == NULL) {
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+
+	if (depythonify_c_value(@encode(id), val, &res) < 0) {
+		Py_DECREF(val);
+		PyObjCErr_ToObjC();
+		return nil;
+	}
+	Py_DECREF(val);
+	return res;
 }
 
 - storedValueForKey: (NSString*) key;
@@ -407,84 +393,63 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	return [self valueForKey: key];
 }
 
-/* First check if there is a setter method (setKey or set_key), otherwise
- * check if '_key' exists as an attribute and try to replace that, otherwise
- * try set 'key' as an attribute.
- * 
- * NOTE: We never call setValue:forUnboundKey:
- */
+
+/* Calls PyObjCTools.KeyValueCoding.setKey to set the key */
 - (void)takeValue: value forKey: (NSString*) key;
 {
-	PyObject* meth;
-	PyObject* val;
-	NSString* tmpName;
+static  PyObject* setKeyFunc = NULL;
 
-	val = pythonify_c_value(@encode(id), &value);
+	PyObject* keyName;
+	PyObject* pyValue;
+	PyObject* val;
+	id res;
+
+	if (setKeyFunc == NULL) {
+		PyObject* name;
+		PyObject* mod;
+		name = PyString_FromString( "PyObjCTools.KeyValueCoding");
+		if (name == NULL) {
+			PyObjCErr_ToObjC();
+			return;
+		}
+		mod = PyImport_Import(name);
+		if (mod == NULL) {
+			Py_DECREF(name);
+			PyObjCErr_ToObjC();
+			return;
+		}
+		setKeyFunc = PyObject_GetAttrString(mod, "setKey");
+		if (setKeyFunc == NULL) {
+			Py_DECREF(name);
+			Py_DECREF(mod);
+			PyObjCErr_ToObjC();
+			return;
+		}
+		Py_DECREF(name);
+		Py_DECREF(mod);
+	}
+
+	keyName = pythonify_c_value(@encode(id), &key);
+	if (keyName == NULL) {
+		PyObjCErr_ToObjC();
+		return;
+	}
+
+	pyValue = pythonify_c_value(@encode(id), &value);
+	if (pyValue == NULL) {
+		Py_DECREF(keyName);
+		PyObjCErr_ToObjC();
+		return;
+	}
+
+	val = PyObject_CallFunction(setKeyFunc, "OOO", pyObject, keyName, pyValue);
+	Py_DECREF(keyName);
+	Py_DECREF(pyValue);
 	if (val == NULL) {
 		PyObjCErr_ToObjC();
 		return;
 	}
 
-	tmpName = [NSString stringWithFormat:@"set%@", [key capitalizedString]];
-	meth = PyObject_GetAttrString(pyObject, (char*)[tmpName cString]);
-	if (meth == NULL) {
-		PyErr_Clear();
-	} else if (PyFunction_Check(meth) || PyMethod_Check(meth) || PyObjCSelector_Check(meth)) {
-		PyObject* o = PyObject_CallFunction(meth, "O", val);
-		if (o == NULL) {
-			Py_DECREF(meth);
-			Py_DECREF(val);
-			PyObjCErr_ToObjC();
-			return;
-		}
-		Py_DECREF(o);
-		Py_DECREF(meth);
-		return;
-	} else {
-		Py_DECREF(meth);
-	}
-
-	tmpName = [NSString stringWithFormat:@"set_%@", key];
-	meth = PyObject_GetAttrString(pyObject, (char*)[tmpName cString]);
-	if (meth == NULL) {
-		PyErr_Clear();
-	} else if (PyMethod_Check(meth) || PyObjCSelector_Check(meth)) {
-		PyObject* o = PyObject_CallFunction(meth, "O", val);
-		if (o == NULL) {
-			Py_DECREF(meth);
-			Py_DECREF(val);
-			PyObjCErr_ToObjC();
-			return;
-		}
-		Py_DECREF(o);
-		Py_DECREF(meth);
-		return;
-	} else {
-		Py_DECREF(meth);
-	}
-
-	tmpName = [NSString stringWithFormat:@"_%@", key];
-	if (PyObject_HasAttrString(pyObject, (char*)[tmpName cString])) {
-		if (PyObject_SetAttrString(pyObject, 
-				(char*)[tmpName cString], val) < 0) {
-			Py_DECREF(val);
-			PyObjCErr_ToObjC();
-			return;
-		}
-		Py_DECREF(val);
-		return;
-	}
-
-	if (PyObject_SetAttrString(pyObject, (char*)[key cString], val) < 0) {
-		Py_DECREF(val);
-		if (PyErr_ExceptionMatches(PyExc_AttributeError)) {
-			/* Unbound key */
-			PyErr_Clear();
-			[self handleTakeValue: value forUnboundKey: key];
-		}
-		PyObjCErr_ToObjC();
-		return;
-	}
 	Py_DECREF(val);
 }
 

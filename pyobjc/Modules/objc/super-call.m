@@ -52,8 +52,6 @@ int PyObjC_RegisterMethodMapping(Class class, SEL sel,
 	PyObject*        pyclass;
 	PyObject* 	 entry;
 
-	//NSLog(@"Register mapping for %s in %s", SELNAME(sel), class->name);
-
 	if (signature_registry == NULL) {
 		if (init_registry() < 0) return -1;
 	}
@@ -192,7 +190,8 @@ search_special(Class class __attribute__((__unused__)), SEL sel)
 
 	if (special_registry == NULL) {
 		ObjCErr_Set(ObjCExc_error,
-			"No super-caller for %s\n", SELNAME(sel));
+			"PyObjC: don't know how to call method %s", 
+			SELNAME(sel));
 		return NULL;
 	}
 
@@ -221,7 +220,8 @@ search_special(Class class __attribute__((__unused__)), SEL sel)
 		return PyCObject_AsVoidPtr(result);
 	} else {
 		ObjCErr_Set(ObjCExc_error,
-			"No super-caller for %s\n", SELNAME(sel));
+			"PyObjC: don't know how to call method %s", 
+			SELNAME(sel));
 		return NULL;
 	}
 }
@@ -259,14 +259,16 @@ find_signature(char* signature)
 
 	if (signature_registry == NULL) {
 		ObjCErr_Set(ObjCExc_error,
-			"[1]No forwarder for signature %s\n", signature);
+			"PyObjC: don't know how to call a method with "
+			"signature %s", signature);
 		return NULL;
 	}
 
 	o = PyDict_GetItemString(signature_registry, signature_buf);
 	if (o == NULL) {
 		ObjCErr_Set(ObjCExc_error,
-			"[2]No forwarder for signature %s\n", signature);
+			"PyObjC: don't know how to call a method with "
+			"signature %s", signature);
 		return NULL;
 	}
 

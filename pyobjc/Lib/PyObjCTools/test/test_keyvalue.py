@@ -9,6 +9,7 @@ in objc.test.test_keyvalue and Foundation.test.test_keyvalue.
 """
 
 from PyObjCTools.KeyValueCoding import *
+from objc.test.keyvaluehelper import *
 import objc
 import unittest
 
@@ -267,6 +268,79 @@ class OcKeyValueCoding (unittest.TestCase):
 
         setKeyPath(o, "multiple.level2.level3.keyB", 9.999)
         self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
+
+class MethodsAsKeys (unittest.TestCase):
+
+    def testStrCap (self):
+        s = "hello"
+
+        self.assertEquals(getKey(s, 'capitalize'), "Hello")
+
+
+class AbstractKVCodingTest:
+    def testBaseValueForKey(self):
+        self.assertEquals(DirectString, 
+            getKey( self.base, "directString"))
+        self.assertEquals(IndirectString, 
+            getKey( self.base, "indirectString"))
+        self.assertEquals(DirectNumber, 
+            getKey( self.base, "directNumber"))
+        self.assertEquals(IndirectNumber, 
+            getKey( self.base, "indirectNumber"))
+               
+    def testPathValueForKey(self):
+        self.assertEquals(DirectString, 
+            getKeyPath( self.path, "directHead.directString"))
+        self.assertEquals(DirectString, 
+            getKeyPath( self.path, "indirectHead.directString"))
+        self.assertEquals(IndirectString, 
+            getKeyPath( self.path, "directHead.indirectString"))
+        self.assertEquals(IndirectString, 
+            getKeyPath( self.path, "indirectHead.indirectString"))
+        self.assertEquals(DirectNumber, 
+            getKeyPath( self.path, "directHead.directNumber"))
+        self.assertEquals(DirectNumber, 
+            getKeyPath( self.path, "indirectHead.directNumber"))
+        self.assertEquals(IndirectNumber, 
+            getKeyPath( self.path, "directHead.indirectNumber"))
+        self.assertEquals(IndirectNumber, 
+            getKeyPath( self.path, "indirectHead.indirectNumber"))
+
+class TestObjCKVCoding(AbstractKVCodingTest, unittest.TestCase):
+    def setUp(self):
+        self.base = PyObjCTest_KVBaseClass.new()
+        self.path = PyObjCTest_KVPathClass.new()
+
+class TestPythonKVCoding(AbstractKVCodingTest, unittest.TestCase):
+    def setUp(self):
+        self.base = KVPyBase()
+        self.path = KVPyPath()
+
+class TestPythonSubObjCContainerCoding(AbstractKVCodingTest, unittest.TestCase):
+    def setUp(self):
+        self.base = KVPySubObjCBase.new()
+        self.path = KVPySubObjCPath.new()
+
+class TestPythonSubOverObjC(AbstractKVCodingTest, unittest.TestCase):
+    def setUp(self):
+        self.base = KVPySubOverObjCBase.new()
+        self.path = KVPySubOverObjCPath.new()
+
+    def testOverValueKey(self):
+        self.assertEquals(DirectString, 
+            getKey( self.base, "overDirectString"))
+        self.assertEquals(IndirectString, 
+            getKey( self.base, "overIndirectString"))
+
+    def testOverValueKeyPath(self):
+        self.assertEquals(DirectString, 
+            getKeyPath( self.path, "overDirectHead.directString"))
+        self.assertEquals(DirectString, 
+            getKeyPath( self.path, "overIndirectHead.directString"))
+        self.assertEquals(IndirectString, 
+            getKeyPath( self.path, "overDirectHead.indirectString"))
+        self.assertEquals(IndirectString, 
+            getKeyPath( self.path, "overIndirectHead.indirectString"))
 
 if __name__ == "__main__":
     unittest.main()

@@ -69,8 +69,7 @@ struct class_wrapper {
  * one from 'self'.
  *
  * The 'right' way to do this is by building closures (if done correctly it
- * would at least be faster), but that requires an external library or low-level
- * (assembly) trickery.
+ * would at least be faster) using libffi.
  */
 static Class find_real_superclass(Class startAt, SEL selector, 
 		METHOD (*find_method)(Class, SEL), IMP currentImp)
@@ -233,7 +232,8 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 
 /*
  * Be smart about slots: Push them into Objective-C and leave an empty
- * __slots__ attribute.
+ * __slots__ attribute, that way we don't store object-state in the python
+ * proxy.
  */
 static int 
 do_slots(PyObject* super_class, PyObject* clsdict)
@@ -338,7 +338,12 @@ do_slots(PyObject* super_class, PyObject* clsdict)
  *   might override methods. Need to check the MRO documentation to check
  *   if this is a problem. 
  * - It is a problem when the user tries to use mixins to define common
- *   methods (like a NSTableViewDataSource mixin).
+ *   methods (like a NSTableViewDataSource mixin), this works but slowly
+ *   because this calls will always be resolved through forwardInvocation:
+ * - Add an 'override' flag that makes it possible to replace an existing
+ *   PyObjC class, feature request for the Python-IDE  (write class, run,
+ *   oops this doesn't work, rewrite class, reload and continue testing in
+ *   the running app)
  */
 Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				char* name, PyObject* class_dict)
@@ -372,12 +377,12 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 	if (!PyList_Check(protocols)) {
 		ObjCErr_Set(ObjCExc_internal_error, "%s", 
-			"protocol list not a PyList");
+			"protocol list not a python 'list'");
 		goto error_cleanup;
 	}
 	if (!PyDict_Check(class_dict)) {
 		ObjCErr_Set(ObjCExc_internal_error, "%s", 
-			"class dict not a PyDict");
+			"class dict not a python 'dict'");
 		goto error_cleanup;
 	}
 	if (super_class == NULL) {
@@ -387,7 +392,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	}
 
 	if (objc_lookUpClass(name) != NULL) {
-		ObjCErr_Set(ObjCExc_error, "class '%s' exists", name);
+		ObjCErr_Set(ObjCExc_error, "class already '%s' exists", name);
 		goto error_cleanup;
 	}
 	if (strspn(name, IDENT_CHARS) != strlen(name)) {
@@ -448,6 +453,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		if (PyErr_Occurred()) {
 			PyErr_Clear();
 			ObjCErr_Set(ObjCExc_internal_error,
+				"PyObjCClass_BuildClass: "
 				"Cannot fetch key in keylist");
 			goto error_cleanup;
 		}
@@ -456,6 +462,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		if (value == NULL) {
 			PyErr_Clear();
 			ObjCErr_Set(ObjCExc_internal_error,
+				"PyObjCClass_BuildClass: "
 				"Cannot fetch item in keylist");
 			goto error_cleanup;
 		}
@@ -464,7 +471,8 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (class_getInstanceVariable(super_class, 
 			    ((PyObjCInstanceVariable*)value)->name) != NULL) {
 				ObjCErr_Set(ObjCExc_error,
-					"Cannot replace instance variable %s",
+					"a superclass already has an instance "
+					"variable with this name: %s",
 					((PyObjCInstanceVariable*)value)->name);
 				goto error_cleanup;
 			}
@@ -701,6 +709,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		key = PyList_GetItem(key_list, i);
 		if (key == NULL) {
 			ObjCErr_Set(ObjCExc_internal_error,
+				"PyObjCClass_BuildClass: "
 				"Cannot fetch key in keylist");
 			goto error_cleanup;
 		}
@@ -708,6 +717,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		value = PyDict_GetItem(class_dict, key);
 		if (value == NULL)  {
 			ObjCErr_Set(ObjCExc_internal_error,
+				"PyObjCClass_BuildClass: "
 				"Cannot fetch item in keylist");
 			goto error_cleanup;
 		}
@@ -1759,6 +1769,18 @@ object_method_valueForKey_(id self, SEL _meth, NSString* key)
 		return result;
 	}
 
+	r = getAccessor(self, [NSString stringWithFormat: @"%@", key], 
+		&result);
+	if (r == 0) {
+		return result;
+	}
+
+	r = getAccessor(self, [NSString stringWithFormat: @"_%@", key], 
+		&result);
+	if (r == 0) {
+		return result;
+	}
+
 	r = getAttribute(self, [NSString stringWithFormat: @"_%@", key], 
 		&result);
 	if (r == 0) {
@@ -1773,7 +1795,8 @@ object_method_valueForKey_(id self, SEL _meth, NSString* key)
 		class_getInstanceMethod,
 		(IMP)object_method_valueForKey_);
 	super.receiver = self;
-	return objc_msgSendSuper(&super, _meth, key);
+	result = objc_msgSendSuper(&super, _meth, key);
+	return result;
 }
 
 static void

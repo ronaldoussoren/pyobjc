@@ -23,12 +23,16 @@ objc.loadBundle(&quot;MyFramework&quot;, globals(),
    bundle_path='/path/to/MyFramework.framework')
 del objc
 </pre>
+<p>In general you should not load frameworks this way, but you should write a
+package or module to do this for you (e.g. place this code in <code><span>MyFramework.py</span></code>
+or <code><span>MyFramework/__init__.py</span></code>. This makes it possible to 
+<code><span>import</span> <span>MyFramework</span></code> which is much more convenient.</p>
 <p>If your class library does not require helper functions for some methods this
 is all that is needed.</p>
-<p>Don't forget to import the frameworks that are used by your framework before
-calling <code><span>objc.loadBundle</span></code>. This is necessary to arrange for the helper code
-for these modules (if there is any) to be loaded. Not importing the those
-wrappers can lead to subtle bugs in unrelated code!</p>
+<p>It is currently necessary to import the wrapper modules for all frameworks that
+are used by your framework. Not doing this may lead to subtle bugs in other
+parts of the code. This is a limitation of PyObjC that will be 
+lifted in a future version.</p>
 <h2><a name="wrapping-global-functions-and-constants">Wrapping global functions and constants</a></h2>
 <p>The code above only provides wrappers for Objective-C classes, if the library
 also defines global functions and/or constants you'll have to write an 

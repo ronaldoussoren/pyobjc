@@ -24,13 +24,18 @@ The code for loading a framework and exporting its classes is pretty simple::
       bundle_path='/path/to/MyFramework.framework')
    del objc
 
+In general you should not load frameworks this way, but you should write a
+package or module to do this for you (e.g. place this code in ``MyFramework.py``
+or ``MyFramework/__init__.py``. This makes it possible to 
+``import MyFramework`` which is much more convenient.
+
 If your class library does not require helper functions for some methods this
 is all that is needed.
 
-Don't forget to import the frameworks that are used by your framework before
-calling ``objc.loadBundle``. This is necessary to arrange for the helper code
-for these modules (if there is any) to be loaded. Not importing the those
-wrappers can lead to subtle bugs in unrelated code!
+It is currently necessary to import the wrapper modules for all frameworks that
+are used by your framework. Not doing this may lead to subtle bugs in other
+parts of the code. This is a limitation of PyObjC that will be 
+lifted in a future version.
 
 Wrapping global functions and constants
 ---------------------------------------

@@ -65,7 +65,8 @@
 		}
 
 		if (result == nil) {
-			NSLog(@"OC_PythonDictionaryEnumerator: Python dict with None as key");
+			NSLog(@"OC_PythonDictionaryEnumerator: Python dict with None as key, skipping this key");
+			continue;
 		}
 
 	} while (result == nil);

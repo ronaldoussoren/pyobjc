@@ -31,6 +31,7 @@ TODO: Add unittests (in test/test_keyvalue.py)
 __all__ = ("getKey", "setKey", "getKeyPath", "setKeyPath")
 
 import objc
+import types
 
 def getKey(obj, key):
     """
@@ -40,7 +41,7 @@ def getKey(obj, key):
     The following attributes and accesors at tried (in this order):
     - Accessor 'getKey'
     - Accesoor 'get_key'
-    - Attribute 'key'
+    - Attribute or accessor 'key' 
     - Attribute '_key'
 
     If none of these exist, raise KeyError
@@ -69,12 +70,20 @@ def getKey(obj, key):
         return m()
 
     try:
-        return getattr(obj, key)
+        m = getattr(obj, key)
+        if isinstance(m, (types.MethodType, types.BuiltinMethodType)):
+            return m()
+        else:
+            return m
     except AttributeError:
         pass
 
     try:
-        return getattr(obj, "_" + key)
+        m = getattr(obj, "_" + key)
+        if isinstance(m, types.MethodType):
+            return m()
+        else:
+            return m
     except AttributeError:
         pass
 
@@ -156,17 +165,3 @@ def setKeyPath(obj, keypath, value):
         cur = getKey(cur, e)
 
     return setKey(cur, elements[-1], value)
-
-class KeyValueCodingMixIn:
-    def valueForKey_(self, aKey):
-        return getKey(self, aKey)
-
-    def takeValue_forKey_(self, aValue, aKey):
-        return setKey(self, aKey, aValue)
-
-    def valueForKeyPath_(self, aKey):
-        return getKeyPath(self, aKey)
-                    
-    def takeValue_forKeyPath_(self, aValue, aKey):
-        return setKeyPath(self, aKey, aValue)
-

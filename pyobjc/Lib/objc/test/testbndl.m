@@ -1504,6 +1504,74 @@ static 	char buf[1024];
 @end
 
 
+@interface PyObjCTest_KVBaseClass : NSObject
+{
+    NSString *directString;
+    NSNumber *directNumber;
+    NSString *indirectString;
+    NSNumber *indirectNumber;
+}
+@end
+
+@implementation PyObjCTest_KVBaseClass
+- init
+{
+    self = [super init];
+    if (!self) return nil;
+
+    directString = [@"Direct String" retain];
+    directNumber = [[NSNumber numberWithInt: 42] retain];
+    indirectString = [@"Indirect String" retain];
+    indirectNumber = [[NSNumber numberWithInt: 84] retain];
+
+    return self;
+}
+
+- (NSString *) indirectString; { return indirectString; }
+- (void) setIndirectString: (NSString *) aString;
+{
+    [aString retain];
+    [indirectString release];
+    indirectString = aString;
+}
+
+- (NSNumber *) indirectNumber; { return indirectNumber; }
+- (void) setIndirectNumber: (NSNumber *) aNumber;
+{
+    [aNumber retain];
+    [indirectNumber release];
+    indirectNumber = aNumber;
+}
+@end
+
+@interface PyObjCTest_KVPathClass : NSObject
+{
+    PyObjCTest_KVBaseClass *directHead;
+    PyObjCTest_KVBaseClass *indirectHead;
+}
+@end
+
+@implementation PyObjCTest_KVPathClass
+- init
+{
+    self = [super init];
+    if (!self) return nil;
+
+    directHead = [[PyObjCTest_KVBaseClass alloc] init];
+    indirectHead = [[PyObjCTest_KVBaseClass alloc] init];
+
+    return self;
+}
+
+- (PyObjCTest_KVBaseClass *) indirectHead { return indirectHead; } 
+- (void) setInidrectHead: (PyObjCTest_KVBaseClass *) aHead;
+{
+    [aHead retain];
+    [indirectHead release];
+    indirectHead = aHead;
+}
+@end
+
 
 static PyMethodDef no_methods[] = {
 	{ 0, 0, 0, 0 }
@@ -1529,6 +1597,18 @@ void inittestbndl(void)
 		PyObjCClass_New([OC_TestClass2 class]));
 	PyModule_AddObject(m, "PyObjC_TestClass3", 
 		PyObjCClass_New([PyObjC_TestClass3 class]));
-	
-	
+	PyModule_AddObject(m, "PyObjCTest_KVBaseClass", 
+		PyObjCClass_New([PyObjCTest_KVBaseClass class]));
+	PyModule_AddObject(m, "PyObjCTest_KVPathClass", 
+		PyObjCClass_New([PyObjCTest_KVPathClass class]));
+
+	PyModule_AddObject(m, "DO_VALUEFORKEY", PyInt_FromLong(0));
+	PyModule_AddObject(m, "DO_VALUEFORKEYPATH", PyInt_FromLong(1));
+	PyModule_AddObject(m, "DO_STOREDVALUEFORKEY", PyInt_FromLong(2));
+	PyModule_AddObject(m, "DO_VALUESFORKEYS", PyInt_FromLong(3));
+
+	PyModule_AddObject(m, "DO_TAKEVALUE_FORKEY", PyInt_FromLong(0));
+	PyModule_AddObject(m, "DO_TAKEVALUE_FORKEYPATH", PyInt_FromLong(1));
+	PyModule_AddObject(m, "DO_TAKESTOREDVALUE_FORKEY", PyInt_FromLong(2));
+	PyModule_AddObject(m, "DO_TAKEVALUESFROMDICT", PyInt_FromLong(3));
 }

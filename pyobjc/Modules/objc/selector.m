@@ -97,7 +97,8 @@ ObjC_FindReplacementSignature(Class cls, SEL selector)
 		return NULL;
 	}
 
-	sublist = PyDict_GetItemString(replacement_signatures, (char*)SELNAME(selector));
+	sublist = PyDict_GetItemString(replacement_signatures, 
+				(char*)SELNAME(selector));
 	if (sublist == NULL) return NULL;
 
 	len = PyList_Size(sublist);
@@ -527,7 +528,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		argslen = PyTuple_Size(args);
 		if (argslen < 1) {
 			ObjCErr_Set(PyExc_TypeError,
-				"Missing self argument\n");
+				"Missing argument: self");
 			return NULL;
 		}
 		pyself = PyTuple_GetItem(args, 0);
@@ -551,7 +552,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 	    && !(self->sel_flags & PyObjCSelector_kINITIALIZER)) {
 
 		PySys_WriteStderr(
-			"Calling non-initializer (%s) on unitialized object %p of class %s\n",
+			"Calling method (%s) on unitialized object %p of class %s\n",
 			SELNAME(self->sel_selector),
 			(void*)PyObjCObject_GetObject(self->sel_self),
 			GETISA(PyObjCObject_GetObject(self->sel_self))->name);
@@ -775,7 +776,8 @@ PyObjCSelector_FindNative(PyObject* self, char* name)
 		if (strcmp(cls->name, "NSProxy") == 0) {
 			if (sel == @selector(methodSignatureForSelector:)) {
 				ObjCErr_Set(PyExc_AttributeError,
-					"Cannot access NSProxy.%s", name);
+					"Accessing NSProxy.%s is not supported",
+					name);
 				return NULL;
 			}
 		}
@@ -817,7 +819,8 @@ PyObjCSelector_FindNative(PyObject* self, char* name)
 		}
 	} else {
 		ObjCErr_Set(PyExc_RuntimeError,
-			"PyObjCSelector_FindNative called on bad object");
+			"PyObjCSelector_FindNative called on plain "
+			"python object");
 		return NULL;
 	}
 }
@@ -968,7 +971,7 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 	     ((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
 
 		PySys_WriteStderr(
-		    "Calling non-initializer (%s) on unitialized object %p of class %s\n",
+		    "Calling method (%s) on unitialized object %p of class %s\n",
 		    SELNAME(self->sel_selector),
 		    (void*)PyObjCObject_GetObject(self->sel_self),
 		    GETISA(PyObjCObject_GetObject(self->sel_self))->name);
@@ -1027,7 +1030,7 @@ pysel_default_signature(PyObject* callable)
 		func_code = (PyCodeObject*)PyFunction_GetCode(PyMethod_Function(callable));
 	} else {
 		PyErr_SetString(PyExc_TypeError,
-			"Cannot calculate signature");
+			"Cannot calculate default method signature");
 		return NULL;
 	}
 
