@@ -305,7 +305,7 @@ PyDoc_STRVAR(loadBundle_doc,
 static PyObject*
 loadBundle(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bundle_identifier", NULL };
+static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bundle_identifier", "bundle_classes", NULL };
 	id        bundle;
 	id        strval;
 	int err;
@@ -313,14 +313,16 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	PyObject* bundle_path = NULL;
 	PyObject* module_name;
 	PyObject* module_globals;
+	PyObject* bundle_classes = NULL;
 	PyObject* class_list;
 	int       len, i;
 	PyObject* module_key = NULL;
+	PyObject* classes_temp = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-			"SO|SS:loadBundle",
+			"SO|SSO:loadBundle",
 			keywords, &module_name, &module_globals,
-			&bundle_path, &bundle_identifier)) {
+			&bundle_path, &bundle_identifier, &classes_temp)) {
 		return NULL;
 	}
 
@@ -337,6 +339,38 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		return NULL;
 	}
 
+	if (classes_temp != NULL) {
+		PyObject* v;
+		PyObject* seq = PySequence_Fast(classes_temp,
+			"bundle_classes must be a list of strings");
+		if (seq == NULL) {
+			return NULL;
+		}
+
+		bundle_classes = PyDict_New();
+		if (bundle_classes == NULL) {
+			Py_DECREF(seq);
+			return NULL;
+		}
+
+		len = PySequence_Fast_GET_SIZE(seq);
+		for (i = 0; i < len; i++) {
+			v = PySequence_Fast_GET_ITEM(seq, i);
+			if (!PyString_Check(v)) {
+				Py_DECREF(seq);
+				Py_DECREF(bundle_classes);
+				PyErr_SetString(PyExc_TypeError,
+				    "bundle_classes must be a list of strings");
+				return NULL;
+			}
+
+			PyDict_SetItem(bundle_classes, v, Py_None);
+		}
+		Py_DECREF(seq);
+	}
+
+
+
 	if (bundle_path) {
 		err = depythonify_c_value("@", bundle_path, &strval);
 		if (err == -1) {
@@ -352,6 +386,8 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	}
 
 	[bundle load];
+
+
 
 	class_list = PyObjC_GetClassList();
 	if (class_list == NULL) {	
@@ -410,25 +446,40 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 				continue;
 			}
 		}
-				
+
+		if (bundle_classes) {
+			if (!PyDict_GetItemString(bundle_classes, cls->name)) {
+				if ([NSBundle bundleForClass:cls] != bundle) {
+					continue;
+				}
+			}
+		} else if ([NSBundle bundleForClass:cls] != bundle) {
+			continue;
+		}
+
+		/*
 		if ([NSBundle bundleForClass:cls] != bundle) {
 			continue;
 		}
+		*/
 
 		/* cls is located in bundle */
 		if (PyObject_SetAttr(item, module_key, module_name) == -1) {
 			Py_DECREF(module_key);
 			Py_DECREF(class_list);
+			Py_XDECREF(bundle_classes);
 			return NULL;
 		}
 
 		if (PyDict_SetItemString(module_globals, 
 				((PyTypeObject*)item)->tp_name, item) == -1) {
+			Py_XDECREF(bundle_classes);
 			Py_DECREF(module_key);
 			Py_DECREF(class_list);
 			return NULL;
 		}
 	}
+	Py_XDECREF(bundle_classes);
 	Py_XDECREF(module_key);
 	Py_XDECREF(class_list);
 

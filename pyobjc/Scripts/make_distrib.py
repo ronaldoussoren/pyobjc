@@ -105,7 +105,9 @@ if not basedir:
 
 print "Generateing HTML documentation"
 os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
-rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt'])
+rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt'])
+
+sys.exit(0)
 
 print "Running: '%s' setup.py sdist -d '%s'"%(
 			escquotes(PYTHON), escquotes(OUTPUTDIR))

@@ -25,6 +25,9 @@ del objc
 </pre>
 <p>If your class library does not require helper functions for some methods this
 is all that is needed.</p>
+<p>Don't forget to import the frameworks that are used by your framework before
+calling <code><span>objc.loadBundle</span></code>. This is necessary to arrange for the helper code
+for these modules (if there is any) to be loaded.</p>
 <h2><a name="wrapping-global-functions-and-constants">Wrapping global functions and constants</a></h2>
 <p>The code above only provides wrappers for Objective-C classes, if the library
 also defines global functions and/or constants you'll have to write an 
@@ -79,5 +82,10 @@ of the method from Objective-C.</p>
 class library for more information. We'll add documentation for this in the
 future.</p>
 <p>NOTE: It is likely that there will be changes w.r.t. the special wrappers.</p>
+<h3><a name="protocols">protocols</a></h3>
+<p>If the framework defines any (informal) protocols you should add 
+<code><span>objc.informal_protocol</span></code> objects for those protocols to your module. These
+can be defined in a submodule, as long as you arrange for that module to be
+loaded whenever someone imports your package.</p>
 </body>
 </html>
