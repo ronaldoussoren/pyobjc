@@ -332,7 +332,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	Py_DECREF(real_bases);
 	real_bases = v;
 
-	/* First generate the objective-C klass. This may change the
+	/* First generate the objective-C class. This may change the
 	 * class dict.
 	 */
 	objc_class = PyObjCClass_BuildClass(super_class, protocols, name, dict);
@@ -580,12 +580,7 @@ class_getattro(PyObject* self, PyObject* name)
 
 	/* Try to find the method anyway */
 	PyErr_Clear();
-	NS_DURING
-		result = PyObjCSelector_FindNative(self, PyString_AsString(name));
-	NS_HANDLER
-		PyObjCErr_FromObjC(localException);
-		result = NULL;
-	NS_ENDHANDLER
+	result = PyObjCSelector_FindNative(self, PyString_AsString(name));
 
 	if (result != NULL) {
 		int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);
