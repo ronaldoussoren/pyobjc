@@ -267,7 +267,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		free(methodsToAdd);
 	}
 	if (classMethodsToAdd->method_count != 0) {
-		PyObjCRT_ClassAddMethodList(targetClass->isa, 
+		PyObjCRT_ClassAddMethodList(GETISA(targetClass),
 				classMethodsToAdd);
 	} else {
 		free(classMethodsToAdd);
