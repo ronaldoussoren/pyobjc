@@ -120,14 +120,14 @@ PyObject* ObjC_GetPythonImplementation(id obj)
 	Ivar      var   = NULL;
 
 	if (obj == nil) {
-		ObjCErr_Set(objc_internal_error,
+		ObjCErr_Set(ObjCExc_internal_error,
 			"ObjC_GetPythonImplementation called for <nil>");
 		return NULL;
 	}
 
 	var = object_getInstanceVariable(obj, pyobj_ivar, (void**)&pyobj);
 	if (var == NULL) {
-		ObjCErr_Set(objc_internal_error,
+		ObjCErr_Set(ObjCExc_internal_error,
 			"ObjC_GetPythonImplementation called for "
 			"normal object of class %s", obj->isa->name);
 		return NULL;
@@ -145,14 +145,14 @@ ObjC_SetPythonImplementation(id obj, PyObject* newval)
 	Ivar      var   = NULL;
 
 	if (obj == nil) {
-		ObjCErr_Set(objc_internal_error,
+		ObjCErr_Set(ObjCExc_internal_error,
 			"ObjC_GetPythonImplementation called for <nil>");
 		return -1;
 	}
 
 	var = class_getInstanceVariable(obj->isa, pyobj_ivar);
 	if (var == NULL) {
-		ObjCErr_Set(objc_internal_error,
+		ObjCErr_Set(ObjCExc_internal_error,
 			"ObjC_SetPythonImplementation called for "
 			"normal object of class %s", obj->isa->name);
 		return -1;
@@ -171,18 +171,18 @@ ObjC_SetPythonImplementation(id obj, PyObject* newval)
 int ObjCClass_SetClass(Class objc_class, PyObject* py_class)
 {
 	if (objc_class == nil) {
-		ObjCErr_Set(objc_internal_error, 
+		ObjCErr_Set(ObjCExc_internal_error, 
 			"Trying to set class of <nil>\n", objc_class->name);
 		return -1;
 	}
 	if (class_getInstanceVariable(objc_class, pyobj_ivar) == NULL) {
-		ObjCErr_Set(objc_internal_error, 
+		ObjCErr_Set(ObjCExc_internal_error, 
 			"Trying to set class of non-python %s", 
 			objc_class->name);
 		return -1;
 	}
 	if (py_class == NULL || !ObjCClass_Check(py_class)) {
-		ObjCErr_Set(objc_internal_error,
+		ObjCErr_Set(ObjCExc_internal_error,
 			"Trying to set class to of %s to invalid value "
 			"(type %s instead of %s)",
 			objc_class->name, py_class->ob_type->tp_name,
@@ -190,7 +190,7 @@ int ObjCClass_SetClass(Class objc_class, PyObject* py_class)
 		return -1;
 	}
 	if (((struct class_wrapper*)objc_class)->python_class != NULL) {
-		ObjCErr_Set(objc_internal_error,
+		ObjCErr_Set(ObjCExc_internal_error,
 			"Trying to set update PythonClass of %s",
 			objc_class->name);
 		return -1;
@@ -215,19 +215,19 @@ void ObjCClass_UnbuildClass(Class objc_class)
 	struct class_wrapper* wrapper = (struct class_wrapper*)objc_class;
 
 	if (objc_class == nil) {
-		ObjCErr_Set(objc_internal_error, 
+		ObjCErr_Set(ObjCExc_internal_error, 
 		"Trying to unregister class <nil>");
 		return;
 	}
 	if (class_getInstanceVariable(objc_class, pyobj_ivar) == NULL) {
-		ObjCErr_Set(objc_internal_error, 
+		ObjCErr_Set(ObjCExc_internal_error, 
 			"Trying to unregister class %s, but it is not "
 			"python based", 
 			objc_class->name);
 		return;
 	}
 	if (wrapper->python_class != NULL) {
-		ObjCErr_Set(objc_internal_error,
+		ObjCErr_Set(ObjCExc_internal_error,
 			"Trying to unregister objective-C class %s, but it "
 			"is already registered with the runtime",
 			objc_class->name);
@@ -261,7 +261,7 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 	int i;
 
 	if (!PyList_Check(protocols)) {
-		ObjCErr_Set(objc_internal_error,
+		ObjCErr_Set(ObjCExc_internal_error,
 			"Protocol-list is not a list");
 		return NULL;
 	}
@@ -327,27 +327,27 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 
 	if (!PyList_Check(protocols)) {
-		ObjCErr_Set(objc_internal_error, "%s", 
+		ObjCErr_Set(ObjCExc_internal_error, "%s", 
 			"protocol list not a PyList");
 		goto error_cleanup;
 	}
 	if (!PyDict_Check(class_dict)) {
-		ObjCErr_Set(objc_internal_error, "%s", 
+		ObjCErr_Set(ObjCExc_internal_error, "%s", 
 			"class dict not a PyDict");
 		goto error_cleanup;
 	}
 	if (super_class == NULL) {
-		ObjCErr_Set(objc_internal_error, "%s", 
+		ObjCErr_Set(ObjCExc_internal_error, "%s", 
 			"must have super_class");
 		goto error_cleanup;
 	}
 
 	if (objc_lookUpClass(name) != NULL) {
-		ObjCErr_Set(objc_error, "class '%s' exists", name);
+		ObjCErr_Set(ObjCExc_error, "class '%s' exists", name);
 		goto error_cleanup;
 	}
 	if (strspn(name, IDENT_CHARS) != strlen(name)) {
-		ObjCErr_Set(objc_error, "'%s' not a valid name", name);
+		ObjCErr_Set(ObjCExc_error, "'%s' not a valid name", name);
 		goto error_cleanup;
 	}
 
@@ -358,7 +358,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	for (curname = dont_override_methods; *curname != NULL; curname++) {
 		key = PyDict_GetItemString(class_dict, *curname);
 		if (key != NULL) {
-			ObjCErr_Set(objc_error,
+			ObjCErr_Set(ObjCExc_error,
 				"Cannot override %s from python", *curname);
 			goto error_cleanup;
 		}
@@ -398,7 +398,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		key = PyList_GetItem(key_list, i);
 		if (PyErr_Occurred()) {
 			PyErr_Clear();
-			ObjCErr_Set(objc_internal_error,
+			ObjCErr_Set(ObjCExc_internal_error,
 				"Cannot fetch key in keylist");
 			goto error_cleanup;
 		}
@@ -406,7 +406,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		value = PyDict_GetItem(class_dict, key);
 		if (value == NULL) {
 			PyErr_Clear();
-			ObjCErr_Set(objc_internal_error,
+			ObjCErr_Set(ObjCExc_internal_error,
 				"Cannot fetch item in keylist");
 			goto error_cleanup;
 		}
@@ -414,7 +414,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		if (ObjCIvar_Check(value)) {
 			if (class_getInstanceVariable(super_class, 
 					((ObjCIvar*)value)->name) != NULL) {
-				ObjCErr_Set(objc_error,
+				ObjCErr_Set(ObjCExc_error,
 					"Cannot replace instance variable %s",
 					((ObjCIvar*)value)->name);
 				goto error_cleanup;
@@ -628,14 +628,14 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	for (i = 0; i < key_count; i++) {
 		key = PyList_GetItem(key_list, i);
 		if (key == NULL) {
-			ObjCErr_Set(objc_internal_error,
+			ObjCErr_Set(ObjCExc_internal_error,
 				"Cannot fetch key in keylist");
 			goto error_cleanup;
 		}
 
 		value = PyDict_GetItem(class_dict, key);
 		if (value == NULL)  {
-			ObjCErr_Set(objc_internal_error,
+			ObjCErr_Set(ObjCExc_internal_error,
 				"Cannot fetch item in keylist");
 			goto error_cleanup;
 		}
@@ -1103,7 +1103,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 	err = depythonify_c_value(type, result, arg);
 	if (err != NULL) {
-		ObjCErr_Set(objc_error,
+		ObjCErr_Set(ObjCExc_error,
 			"Cannot depythonify result: %s", err);
 		ObjCErr_ToObjC();
 		return;

@@ -37,7 +37,7 @@ static 	char* keywords[] = { "class_name", NULL };
 
 	objc_class = objc_lookUpClass(class_name);
 	if (objc_class == NULL) {
-		PyErr_SetString(objc_noclass_error, class_name);
+		PyErr_SetString(ObjCExc_noclass_error, class_name);
 		return NULL;
 	}
 

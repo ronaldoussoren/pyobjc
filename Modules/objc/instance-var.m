@@ -112,7 +112,7 @@ ivar_descr_set(ObjCIvar* self, PyObject* obj, PyObject* value)
 
 	res = depythonify_c_value(var->ivar_type, value, buf);
 	if (res != NULL) {
-		PyErr_SetString(objc_error, res);
+		PyErr_SetString(ObjCExc_error, res);
 		return -1;
 	}
 	if (strcmp(var->ivar_type, "@") == 0) {

@@ -4,9 +4,9 @@
 #include <Python.h>
 #include <Foundation/NSException.h>
 
-extern PyObject* objc_error;
-extern PyObject* objc_noclass_error;
-extern PyObject* objc_internal_error;
+extern PyObject* ObjCExc_error;
+extern PyObject* ObjCExc_noclass_error;
+extern PyObject* ObjCExc_internal_error;
 
 int ObjCUtil_Init(PyObject* module);
 

@@ -666,7 +666,7 @@ pythonify_c_value (const char *type, void *datum)
       break;
 
     default:
-	ObjCErr_Set(objc_error, 
+	ObjCErr_Set(ObjCExc_error, 
 		"pythonify_c_value: unhandled value type (%c|%d|%s)",
 		*type, *type, *type);
         break;

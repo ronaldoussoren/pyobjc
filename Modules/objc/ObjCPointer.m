@@ -40,7 +40,7 @@ ObjCPointer_unpack (ObjCPointer *self, PyObject *args)
 
           if (!strcmp (type, @encode (void)))
             {
-              PyErr_SetString (objc_error, "Cannot dereference a pointer to void");
+              PyErr_SetString (ObjCExc_error, "Cannot dereference a pointer to void");
               return NULL;
             }
           else
