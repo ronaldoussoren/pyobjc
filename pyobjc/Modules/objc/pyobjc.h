@@ -222,6 +222,8 @@ extern PyTypeObject PyObjCInformalProtocol_Type;
 
 int     PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls);
 PyObject* PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector);
+int PyObjCInformalProtocol_Warnings(char* name, PyObject* clsdict, PyObject* protocols);
+
 
 /* See alloc_hack.m */
 int PyObjC_InstallAllocHack(void);

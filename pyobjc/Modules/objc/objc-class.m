@@ -273,6 +273,13 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
+	if (PyObjCInformalProtocol_Warnings(name, dict, protocols) < 0) {
+		PyObjCClass_UnbuildClass(objc_class);
+		Py_DECREF(protocols);
+		Py_DECREF(real_bases);
+		return NULL;
+	}
+
 	delmethod = PyDict_GetItemString(dict, "__del__");
 	if (delmethod == NULL) {
 		PyErr_Clear();
@@ -324,8 +331,10 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		}
 
 		if (PyObjCInformalProtocol_Check(p)) {
+			// This doesn't work: Cannot dealloc 'res'!
 			if (!PyObjCInformalProtocol_CheckClass(p, res)) {
-				Py_DECREF(res);
+				//FIXME!
+				//Py_DECREF(res);
 				Py_DECREF(protocols);
 				PyObjCClass_UnbuildClass(objc_class);
 				return NULL;
