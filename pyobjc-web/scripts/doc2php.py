@@ -12,6 +12,8 @@ import shutil
 import re
 import docutils.core
 
+SVN_EXAMPLES_URL = 'http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/'
+EXAMPLES_EXPECTING = re.compile(r'(<a class="reference" href=")([^"]*)(">)')
 
 PHP_HEADER='''\
 <?
@@ -57,6 +59,14 @@ def replace_tutorial_zips(fn, replacements):
             text = text.replace('"%s"' % (orig,), '"%s"' % (new,))
     open(fn, 'w').write(text)
 
+def replace_examples_svn(fn):
+    def replacer(m):
+        begin, url, end = m.groups()
+        if not (':' in url or url.startswith('..') or url.startswith('/')):
+            url = SVN_EXAMPLES_URL + url
+        return ''.join((begin, url, end))
+    text = EXAMPLES_EXPECTING.sub(replacer, open(fn, 'r').read())
+    open(fn, 'w').write(text)
 
 if len(sys.argv) == 2:
     srctree = sys.argv[1]
@@ -194,6 +204,8 @@ def copy_project_docs(srctree):
                 skip = 1
                 for title, link in developer_docs:
                     fd.write('<LI><A HREF="%s">%s</A>\n'%(link, title))
+
+    replace_examples_svn(os.path.join('docroot', 'doc', 'examples.php'))
 
     # Copy tutorial files
     TUTORIAL_ENDINGS = ['.nib', '.py', '-src', '.h', '.m']

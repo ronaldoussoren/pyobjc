@@ -1,11 +1,11 @@
 <?
-    $title = "Python Project Templates";
+    $title = "Python Xcode Templates";
     $cvs_author = '$Author: ronaldoussoren $';
     $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>
-<h1 class="title">Python Project Templates</h1>
+<h1 class="title">Python Xcode Templates</h1>
 <table class="docinfo" frame="void" rules="none">
 <col class="docinfo-name" />
 <col class="docinfo-content" />
@@ -17,7 +17,7 @@
 </tbody>
 </table>
 <p>To use the project templates, simply copy (or link) them into the Project
-Templates directory used by Project Builder.  The project templates are also
+Templates directory used by Xcode.  The Xcode templates are also
 included in the PyObjC installer package.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title first"><a name="contents">Contents</a></p>
@@ -73,8 +73,8 @@ needs.</p>
 pure-Python, applications that are compatible with Apple's build of Python as
 well as all other builds of python that support PyObjC.</p>
 <p>When building the 'install' target, the resulting application wrapper will
-included the PyObjC module and can be launched on any stock OS X 10.3 system
-without requiring PyObjC to be preinstalled.</p>
+included the PyObjC module and can be launched on any stock Mac OS X 10.3
+system without requiring PyObjC to be preinstalled.</p>
 </div>
 </div>
 <?
