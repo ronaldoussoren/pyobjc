@@ -9,9 +9,13 @@
 
 	/* From: AppKitDefines.h */
 
+	/* From: NSAccessibility.h */
+
 	/* From: NSActionCell.h */
 
 	/* From: NSAffineTransform.h */
+
+	/* From: NSAppleScriptExtensions.h */
 
 	/* From: NSApplication.h */
 	if (add_double(d, "NSAppKitVersionNumber", NSAppKitVersionNumber) < 0) return;
@@ -93,6 +97,8 @@
 	/* From: NSForm.h */
 
 	/* From: NSFormCell.h */
+
+	/* From: NSGlyphInfo.h */
 
 	/* From: NSGraphics.h */
 	if (add_float(d, "NSWhite", NSWhite) < 0) return;

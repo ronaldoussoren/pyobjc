@@ -1,6 +1,6 @@
 /*
  * String constants. This file is generated from files in
- * /System/Library/Frameworks/Foundation.framework/Headers/
+ * /System/Library/Frameworks/Foundation.framework/Headers
  */
 static struct stringtable string_table[] = {
 

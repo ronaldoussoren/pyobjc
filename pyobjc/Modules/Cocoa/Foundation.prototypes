@@ -11,6 +11,8 @@
 
 # From: NSAppleEventManager.h
 
+# From: NSAppleScript.h
+
 # From: NSArchiver.h
 
 # From: NSArray.h
@@ -133,6 +135,9 @@ NSString *NSStringFromHashTable(NSHashTable *table);
 NSArray *NSAllHashTableObjects(NSHashTable *table);
 
 # From: NSHFSFileTypes.h
+NSString *NSFileTypeForHFSTypeCode(OSType hfsFileTypeCode);
+OSType NSHFSTypeCodeFromFileType(NSString *fileTypeString);
+NSString *NSHFSTypeOfFile(NSString *fullFilePath);
 
 # From: NSHost.h
 
@@ -149,6 +154,8 @@ NSArray *NSJavaClassesFromPath(NSArray *path, NSArray *wanted, BOOL usesyscl, id
 NSArray *NSJavaClassesForBundle(NSBundle *bundle, BOOL usesyscl, id *vm);
 id NSJavaBundleSetup(NSBundle *bundle, NSDictionary *plist);
 void NSJavaBundleCleanup(NSBundle *bundle, NSDictionary *plist);
+
+# From: NSKeyedArchiver.h
 
 # From: NSKeyValueCoding.h
 
@@ -177,6 +184,8 @@ NSArray *NSAllMapTableValues(NSMapTable *table);
 
 # From: NSMethodSignature.h
 
+# From: NSNetServices.h
+
 # From: NSNotification.h
 
 # From: NSNotificationQueue.h
@@ -203,6 +212,8 @@ void NSIncrementExtraRefCount(id object);
 BOOL NSDecrementExtraRefCountWasZero(id object);
 unsigned NSExtraRefCount(id object);
 
+# From: NSObjectScripting.h
+
 # From: NSPathUtilities.h
 NSString *NSUserName(void);
 NSString *NSFullUserName(void);
@@ -221,6 +232,8 @@ NSArray *NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory directory, NS
 # From: NSPortNameServer.h
 
 # From: NSProcessInfo.h
+
+# From: NSPropertyList.h
 
 # From: NSProtocolChecker.h
 

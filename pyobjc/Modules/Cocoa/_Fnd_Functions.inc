@@ -247,7 +247,7 @@ static	char* keywords[] = { "aRect", "dX", "dY", NULL };
 	float objc_dX;
 	float objc_dY;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&ff:NSInsetRect", keywords, convert_NSRect, &objc_aRect, objc_dX, objc_dY) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&ff:NSInsetRect", keywords, convert_NSRect, &objc_aRect, &objc_dX, &objc_dY) < 0) return NULL;
 	NS_DURING
 		objc_result = NSInsetRect(
 objc_aRect, objc_dX, objc_dY);
@@ -331,7 +331,7 @@ static	char* keywords[] = { "aRect", "dX", "dY", NULL };
 	float objc_dX;
 	float objc_dY;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&ff:NSOffsetRect", keywords, convert_NSRect, &objc_aRect, objc_dX, objc_dY) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&ff:NSOffsetRect", keywords, convert_NSRect, &objc_aRect, &objc_dX, &objc_dY) < 0) return NULL;
 	NS_DURING
 		objc_result = NSOffsetRect(
 objc_aRect, objc_dX, objc_dY);
@@ -374,7 +374,7 @@ static	char* keywords[] = { "aPoint", "aRect", "flipped", NULL };
 	NSRect objc_aRect;
 	BOOL objc_flipped;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&i:NSMouseInRect", keywords, convert_NSPoint, &objc_aPoint, convert_NSRect, &objc_aRect, objc_flipped) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&i:NSMouseInRect", keywords, convert_NSPoint, &objc_aPoint, convert_NSRect, &objc_aRect, &objc_flipped) < 0) return NULL;
 	NS_DURING
 		objc_result = NSMouseInRect(
 objc_aPoint, objc_aRect, objc_flipped);
@@ -543,6 +543,25 @@ objc_aString);
 	NS_ENDHANDLER
 		result = ObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
 	if (result == NULL) return NULL;
+	return result;
+}
+/* NSString *NSHFSTypeOfFile(NSString *fullFilePath); */
+PyObject* objc_NSHFSTypeOfFile(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static	char* keywords[] = { "fullFilePath", NULL };
+	PyObject* result;
+	NSString* objc_result;
+	id objc_fullFilePath;
+
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSHFSTypeOfFile", keywords, convert_id, &objc_fullFilePath) < 0) return NULL;
+	NS_DURING
+		objc_result = NSHFSTypeOfFile(
+objc_fullFilePath);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+		return NULL;
+	NS_ENDHANDLER
+		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* BOOL NSJavaNeedsVirtualMachine(NSDictionary *plist); */
@@ -977,7 +996,7 @@ static	char* keywords[] = { "directory", "domainMask", "expandTilde", NULL };
 	NSSearchPathDomainMask objc_domainMask;
 	BOOL objc_expandTilde;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "iii:NSSearchPathForDirectoriesInDomains", keywords, objc_directory, objc_domainMask, objc_expandTilde) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "iii:NSSearchPathForDirectoriesInDomains", keywords, &objc_directory, &objc_domainMask, &objc_expandTilde) < 0) return NULL;
 	NS_DURING
 		objc_result = NSSearchPathForDirectoriesInDomains(
 objc_directory, objc_domainMask, objc_expandTilde);
@@ -1115,7 +1134,7 @@ static	char* keywords[] = { "bytes", NULL };
 	unsigned objc_result;
 	unsigned objc_bytes;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSRoundUpToMultipleOfPageSize", keywords, objc_bytes) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSRoundUpToMultipleOfPageSize", keywords, &objc_bytes) < 0) return NULL;
 	NS_DURING
 		objc_result = NSRoundUpToMultipleOfPageSize(
 objc_bytes);
@@ -1135,7 +1154,7 @@ static	char* keywords[] = { "bytes", NULL };
 	unsigned objc_result;
 	unsigned objc_bytes;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSRoundDownToMultipleOfPageSize", keywords, objc_bytes) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSRoundDownToMultipleOfPageSize", keywords, &objc_bytes) < 0) return NULL;
 	NS_DURING
 		objc_result = NSRoundDownToMultipleOfPageSize(
 objc_bytes);
@@ -1190,6 +1209,7 @@ static	char* keywords[] = { NULL };
 	{ "NSPointFromString", (PyCFunction)objc_NSPointFromString, METH_VARARGS|METH_KEYWORDS, "NSPoint NSPointFromString(NSString *aString);" }, \
 	{ "NSSizeFromString", (PyCFunction)objc_NSSizeFromString, METH_VARARGS|METH_KEYWORDS, "NSSize NSSizeFromString(NSString *aString);" }, \
 	{ "NSRectFromString", (PyCFunction)objc_NSRectFromString, METH_VARARGS|METH_KEYWORDS, "NSRect NSRectFromString(NSString *aString);" }, \
+	{ "NSHFSTypeOfFile", (PyCFunction)objc_NSHFSTypeOfFile, METH_VARARGS|METH_KEYWORDS, "NSString *NSHFSTypeOfFile(NSString *fullFilePath);" }, \
 	{ "NSJavaNeedsVirtualMachine", (PyCFunction)objc_NSJavaNeedsVirtualMachine, METH_VARARGS|METH_KEYWORDS, "BOOL NSJavaNeedsVirtualMachine(NSDictionary *plist);" }, \
 	{ "NSJavaProvidesClasses", (PyCFunction)objc_NSJavaProvidesClasses, METH_VARARGS|METH_KEYWORDS, "BOOL NSJavaProvidesClasses(NSDictionary *plist);" }, \
 	{ "NSJavaNeedsToLoadClasses", (PyCFunction)objc_NSJavaNeedsToLoadClasses, METH_VARARGS|METH_KEYWORDS, "BOOL NSJavaNeedsToLoadClasses(NSDictionary *plist);" }, \
