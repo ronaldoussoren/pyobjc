@@ -8,6 +8,7 @@
 	FilesToMacroExpand = (
 		"__main__.py",
 		"ÇPROJECTNAMEASIDENTIFIERÈAppDelegate.py",
+		"ÇPROJECTNAMEASIDENTIFIERÈDocument.py",
 		"ÇPROJECTNAMEASIDENTIFIERÈ_Prefix.pch",
 		"Info.plist",
 		"English.lproj/InfoPlist.strings",
