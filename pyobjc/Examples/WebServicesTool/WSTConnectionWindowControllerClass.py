@@ -65,7 +65,8 @@ from PyObjCTools import NibClassBuilder
 
 NibClassBuilder.extractClasses( "WSTConnection" )
 class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass, 
-                                    NSTableDataSource, NSToolbarDelegate):
+                                    NSTableDataSource, NSTableViewDelegate,
+                                    NSToolbarDelegate):
     """
     As per the definition in the NIB file,
     WSTConnectionWindowController is a subclass of
@@ -331,3 +332,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
             return self._methodSignatures[aMethod]
         else:
             return aMethod
+
+    def tableView_shouldEditTableColumn_row_(self, aTableView, aTableColumn, rowIndex):
+        # don't allow editing of any cells
+        return 0
