@@ -12,7 +12,7 @@ IDENT='[A-Za-z_][A-Za-z0-9_]*'
 
 def process_file(outfp, filename, match_prefix='', ignore_list=()):
 
-    MATCH_RE=re.compile('%(match_prefix)s[ ]+(const[ ]+)?(%(IDENT)s)[ ]+(%(IDENT)s[ ]*(,[ ]*%(IDENT)s)*)[ ]*;'%{'match_prefix':match_prefix, 'IDENT':IDENT})
+    MATCH_RE=re.compile(r'%(match_prefix)s\s+(const\s+)?(%(IDENT)s)\s+(%(IDENT)s\s*(,\s*%(IDENT)s)*)\s*;'%{'match_prefix':match_prefix, 'IDENT':IDENT})
 
     fp = open(filename, 'r')
 

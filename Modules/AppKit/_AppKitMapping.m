@@ -24,6 +24,7 @@ void init_AppKitMapping(void);
 #include "_AppKitMapping_NSApplication.m"
 #include "_AppKitMapping_NSBezierPath.m"
 #include "_AppKitMapping_NSBitmap.m"
+#include "_AppKitMapping_NSBitmapImageRep.m"
 #include "_AppKitMapping_NSFont.m"
 #include "_AppKitMapping_NSMatrix.m"
 #include "_AppKitMapping_NSLayoutManager.m"
@@ -56,6 +57,7 @@ void init_AppKitMapping(void)
 	_pyobjc_install_NSApplication();
 	_pyobjc_install_NSBezierPath();
 	_pyobjc_install_NSBitmap();
+	_pyobjc_install_NSBitmapImageRep();
 	_pyobjc_install_NSFont();
 	_pyobjc_install_NSLayoutManager();
 	_pyobjc_install_NSMatrix();

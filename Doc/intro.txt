@@ -346,6 +346,16 @@ thread that owns the Python GIL (that's also the reason for not being able
 to use ``NSThread`` to create new threads).  This restriction will be lifted
 in a future version of PyObjC (at least when using Python 2.3).
 
+Finalizers
+..........
+
+In Python you can use the method ``__del__`` to clean up resources when your
+object is garbage collected. In Objective-C/Cocoa this is done with a method 
+named ``dealloc``. 
+
+In PyObjC you should always use the ``__del__`` method, the ``dealloc`` method
+can safely be ignored and the bridge will complain when you try to override
+this method.
 
 Building applications
 ---------------------
