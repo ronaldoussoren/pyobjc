@@ -4,6 +4,7 @@ from objc import *
 
 from CGraphModel import *
 
+
 NibClassBuilder.extractClasses("MainMenu")
 
 
@@ -13,7 +14,7 @@ class CGraphController(NibClassBuilder.AutoBaseClass):
 #____________________________________________________________
 # Update GUI display and control values
 	def awakeFromNib(self):
-		self.RMSGainDisplayValue.setFloatValue_(self.graphModel.getRMSGain())
+		self.RMSGainDisplayValue.setFloatValue_(self.graphModel.getRMSGain()*100.0)
 		self.towerSpacingDisplayValue.setFloatValue_(radToDeg(self.graphModel.getSpacing()))
 		self.towerSpacingSliderValue.setFloatValue_(radToDeg(self.graphModel.getSpacing()))
 		self.towerFieldDisplayValue0.setFloatValue_(self.graphModel.getField(0))
