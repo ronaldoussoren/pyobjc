@@ -95,10 +95,10 @@ void ObjCErr_FromObjC(NSException* localException)
 		v = PyObjCObject_New(userInfo);
 		if (v != NULL) {
 			PyDict_SetItemString(dict, "userInfo", v);
+			//Py_DECREF(v);
 		} else { 
 			PyErr_Clear();
 		}
-		Py_DECREF(v);
 	} else {
 		PyDict_SetItemString(dict, "userInfo", Py_None);
 	}
@@ -440,3 +440,71 @@ NSMapTableValueCallBacks ObjC_PyObjectValueCallBacks = {
 	pyobj_release,
 	NULL,
 };
+
+static PyObject* mod = NULL;
+
+static PyObject* refs(PyObject* obj)
+{
+	PyObject* func;
+	PyObject* res;
+	PyObject* repr;
+
+	if (mod == NULL) {
+		mod = PyImport_Import(PyString_FromString("gc"));
+		if (mod == NULL) {
+			PyErr_Clear();
+			return NULL;
+		}
+	}
+
+	func = PyObject_GetAttrString(mod, "get_referrers");
+	if (func == NULL) {
+		return NULL;
+	}
+	
+	res = PyObject_CallFunction(func, "O", obj);
+
+	Py_DECREF(func);
+	return res;
+}
+
+char* get_refcnt(PyObject* obj)
+{
+static char buf[1024];
+	PyObject* reflist;
+
+	reflist =  refs(obj);
+	if (reflist == NULL) {
+		PyErr_Print();
+		return "?A?";
+	}
+
+	sprintf(buf, "%d", PySequence_Length(reflist));
+	Py_DECREF(reflist);
+	return buf;
+}
+
+char* get_refs(PyObject* obj)
+{
+static char buf[10240];
+	PyObject* reflist;
+	PyObject* repr;
+
+	reflist =  refs(obj);
+	if (reflist == NULL) {
+		PyErr_Print();
+		return "?A?";
+	}
+
+	repr = PyObject_Repr(reflist);
+	if (repr == NULL){
+		PyErr_Print();
+		Py_DECREF(reflist);
+		return "?A?";
+	}
+	Py_DECREF(reflist);
+
+	snprintf(buf, sizeof(buf), "%s", PyString_AS_STRING(repr));
+	Py_DECREF(repr);
+	return buf;
+}

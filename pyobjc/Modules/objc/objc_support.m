@@ -1293,6 +1293,8 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 #ifdef GNU_RUNTIME
 
+# error "GNU_RUNTIME not supported at the moment"
+
 Ivar_t class_getInstanceVariable(Class aClass, const char *name)
 {
   if (!aClass || !name)

@@ -283,7 +283,6 @@ class NibInfo(object):
                 outlets.sort()
                 for o in outlets:
                         writer.writeln("# %s" % o)
-                        #writer.writeln("%s = ivar('%s')" % (o, o))
                 writer.writeln()
             if not actions:
                 writer.writeln("pass")

@@ -15,7 +15,6 @@ class TestPosing(unittest.TestCase):
         
         obj = NSObject.new()
 
-        print obj.description
 
 
 def suite():

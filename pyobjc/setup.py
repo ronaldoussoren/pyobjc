@@ -163,7 +163,7 @@ if gs_root is None:
         "-no-cpp-precomp",
         "-Wno-long-double",
         "-g",
-        #"-O0", "-g",
+        "-O0", "-g",
         #"-Werror",
         ]
 

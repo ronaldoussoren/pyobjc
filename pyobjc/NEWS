@@ -28,6 +28,14 @@ Version 0.10CVS (Work in progress):
 
 - Improved unittests
 
+- Object state is completely stored in the Objective-C object.  This has no
+  user-visible effects, but makes the implementation a lot easier to 
+  comprehend.
+
+- As part of the previous we also fixed a bug that allowed addition of 
+  attributes to Objective-C objects. This was never the intention and had 
+  very odd semantics. Pure Objective-C objects not longer have a __dict__.
+
 
 Version 0.9.1 (May-??-2003):
 

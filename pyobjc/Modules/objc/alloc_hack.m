@@ -35,9 +35,6 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 		return NULL;
 	}
 
-	if (PyObjC_HasPythonImplementation(result)) {
-		return PyObjC_GetPythonImplementation(result);
-	}
 	return PyObjCObject_NewUnitialized(result);
 }
 

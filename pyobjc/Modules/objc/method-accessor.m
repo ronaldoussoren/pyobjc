@@ -212,6 +212,7 @@ make_dict(PyObject* self, int class_method)
 				}
 
 				if (PyDict_SetItemString(res, name, v) == -1) {
+					//Py_DECREF(v); // XXX
 					Py_DECREF(res);
 					return NULL;
 				}

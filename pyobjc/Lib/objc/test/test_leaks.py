@@ -11,7 +11,7 @@ NSMutableArray = objc.lookUpClass('NSMutableArray')
 Level1Del = 0
 
 class Level1Class (NSObject):
-    def __del__(self):
+    def __pyobjcdel__(self):
         global Level1Del 
 
         Level1Del = 1

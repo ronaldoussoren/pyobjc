@@ -23,7 +23,4 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 void PyObjCClass_UnbuildClass(Class new_class);
 int PyObjCClass_SetClass(Class objc_class, PyObject* py_class);
 
-int PyObjC_HasPythonImplementation(id obj);
-PyObject* PyObjC_GetPythonImplementation(id obj);
-
 #endif /* OBJC_CLASS_BUILDER */
