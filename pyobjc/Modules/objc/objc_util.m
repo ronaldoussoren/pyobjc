@@ -24,7 +24,7 @@ PyGILState_STATE PyObjCGILState_Ensure(void)
 		PyObject *tdict = PyThreadState_GetDict();
 		assert(tdict != NULL);
 		assert(pypool != NULL);
-		err = PyDict_SetItemString(tdict, "__tstate_autoreleasepool", pypool);
+		err = PyDict_SetItemString(tdict, THREADSTATE_AUTORELEASEPOOL, pypool);
 		assert(err == 0);
 		Py_DECREF(pypool);
 	}

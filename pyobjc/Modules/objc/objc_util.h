@@ -2,6 +2,7 @@
 #define OBJC_UTIL
 
 #include <Foundation/NSException.h>
+#define THREADSTATE_AUTORELEASEPOOL "__threadstate_autoreleasepool"
 
 extern PyObject* ObjCExc_error;
 extern PyObject* ObjCExc_noclass_error;
