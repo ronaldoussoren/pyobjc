@@ -168,6 +168,44 @@ def classAddMethod(cls, name, method):
 
     return classAddMethods(cls, [sel])
 
+
+#
+# Syntactic support for categories
+#
+
+class _CategoryMeta (type):
+    """
+    Meta class for categories.
+    """
+    __slots__ = ()
+    _IGNORENAMES = ('__module__', )
+    def _newSubclass(cls, name, bases, methods):
+        return type.__new__(cls, name, bases, methods)
+    _newSubclass = classmethod(_newSubclass)
+
+    def __new__(cls, name, bases, methods):
+        c = bases[0].real_class
+        m = [ x[1] for x in methods.items() if x[0] not in cls._IGNORENAMES ]
+        classAddMethods(c, m)
+        return c
+
+def Category(cls):
+    """
+    Create a category on ``cls``. 
+
+    Usage:
+        class SomeClass (Category(SomeClass)):
+            def method(self):
+                pass
+
+    ``SomeClass`` is an existing class that will be rebound to the same
+    value. The side-effect of this class definition is that the methods
+    in the class definition will be added to the existing class.
+    """
+    retval = _CategoryMeta._newSubclass('Category', (), dict(real_class=cls))
+    return retval
+
+
 ######
 # Backward compatibility stuff
 # (deprecated functionality)
