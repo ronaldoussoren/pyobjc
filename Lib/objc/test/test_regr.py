@@ -22,5 +22,11 @@ class TestRegressions(unittest.TestCase):
             sig,
             'v@:@@@@@:i')
 
+    def testFSRepr(self):
+        import Foundation
+        fm = Foundation.NSFileManager.defaultManager()
+        self.assertRaises(TypeError, fm.stringWithFileSystemRepresentation_length_, "/var")
+        self.assertEquals(u"/var", fm.stringWithFileSystemRepresentation_length_("/var/boo", 4))
+
 if __name__ == '__main__':
     unittest.main()
