@@ -14,7 +14,9 @@ menu and run this script again.
 """
     sys.exit(1)
 
-propNames = AddressBook.ABPerson.properties()
+# Ask the class which properties are supported.
+propNames = type(me).properties()
+
 d = {}
 for i in propNames:
     d[i] = me.valueForProperty_(i)

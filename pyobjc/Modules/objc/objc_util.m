@@ -234,7 +234,7 @@ PyObjCUtil_Strdup(const char* value)
 	char* result;
 
 	len = strlen(value);
-	result = malloc(len+1);
+	result = PyMem_Malloc(len+1);
 	if (result == NULL) return NULL;
 
 	memcpy(result, value, len);
@@ -264,7 +264,7 @@ NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks = {
 void    PyObjC_FreeCArray(int code, void* array)
 {
 	if (code == SHOULD_FREE) {
-		free(array);
+		PyMem_Free(array);
 	}
 }
 
@@ -651,7 +651,7 @@ int	PyObjC_PythonToCArray(
 					"least %d", seqlen, pycount);
 			return -1;
 		}
-		*array = malloc(eltsize * pycount);
+		*array = PyMem_Malloc(eltsize * pycount);
 		if (*array == NULL) {
 			Py_DECREF(seq);
 			PyErr_NoMemory();
@@ -666,7 +666,7 @@ int	PyObjC_PythonToCArray(
 					((char*)*array)+(i*eltsize));
 			if (r == -1) {
 				Py_DECREF(seq);
-				free(*array); *array = NULL;
+				PyMem_Free(*array); *array = NULL;
 				return -1;
 			}
 		}

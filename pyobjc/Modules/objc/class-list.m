@@ -39,13 +39,13 @@ PyObjC_GetClassList(void)
 			Class*    newBuffer;
 			bufferLen = neededLen;
 
-			/* realloc(NULL, ...) might not work, call malloc when
+			/* Realloc(NULL, ...) might not work, call Malloc when
 			 * the buffer is NULL.
 			 */
 			if (buffer == NULL) {
-				newBuffer = malloc(sizeof(Class) * bufferLen);
+				newBuffer = PyMem_Malloc(sizeof(Class) * bufferLen);
 			} else {
-				newBuffer = realloc(buffer, 
+				newBuffer = PyMem_Realloc(buffer, 
 						sizeof(Class) * bufferLen);
 			}
 			if (newBuffer == NULL) {
@@ -77,13 +77,13 @@ PyObjC_GetClassList(void)
 	}
 
 	if (buffer != initialBuffer) {
-		free(buffer); buffer = NULL;
+		PyMem_Free(buffer); buffer = NULL;
 	}
 	return result;
 
 error:
 	if (buffer && buffer != initialBuffer) {
-		free(buffer);
+		PyMem_Free(buffer);
 		buffer = NULL;
 	}
 	Py_XDECREF(result);
@@ -105,7 +105,7 @@ PyObjC_GetClassList(void)
 
 	while ((classid = objc_next_class(&state))) len++;
 
-	result = PyTuple_New(i);
+	result = PyTuple_New(len);
 
 	state = NULL; i = 0;
 

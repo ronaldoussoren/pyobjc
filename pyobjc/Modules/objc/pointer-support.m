@@ -50,7 +50,7 @@ int PyObjCPointerWrapper_Register(
 	struct wrapper* value;
 
 	if (items == NULL) {
-		items = malloc(sizeof(struct wrapper));
+		items = PyMem_Malloc(sizeof(struct wrapper));
 		if (items == NULL) {
 			PyErr_NoMemory();
 			return -1;
@@ -59,7 +59,7 @@ int PyObjCPointerWrapper_Register(
 	} else {
 		struct wrapper* tmp;
 
-		tmp = realloc(items, sizeof(struct wrapper) *  (item_count+1));
+		tmp = PyMem_Realloc(items, sizeof(struct wrapper) *  (item_count+1));
 		if (tmp == NULL) {
 			PyErr_NoMemory();
 			return -1;

@@ -59,7 +59,7 @@ ObjC_SignatureForSelector(char* class_name, SEL selector, char* signature)
 	value->selector = selector;
 	value->signature = PyObjCUtil_Strdup(signature);
 	if (value->signature == NULL) {
-		free(value->class_name);
+		PyMem_Free(value->class_name);
 		PyErr_NoMemory();
 		return -1;
 	}
@@ -682,7 +682,7 @@ objcsel_descr_get(ObjCNativeSelector* meth, PyObject* volatile obj, PyObject* cl
 		PyObjCMethodSignature_Retain(result->sel_oc_signature);
 	}
 
-	result->sel_self       = obj;
+	result->sel_self = obj;
 	if (result->sel_self) {
 		Py_INCREF(result->sel_self);
 	}
