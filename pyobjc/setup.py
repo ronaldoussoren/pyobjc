@@ -33,13 +33,16 @@ PackageManager application.
 """
 
 if sys.version >= '2.2.3':
+    # Add additional setup arguments, used to register with PyPI, Python 2.2.2
+    # and earlier don't support these (nor the 'register' subcommand of 
+    # setup.py)
     SetupExtraArguments = {
         'classifiers': [
             'Development Status :: 5 - Production/Stable',
             'Environment :: Console',
             'Environment :: MacOS X :: Cocoa',
             'Intended Audience :: Developers',
-            'License :: OSI Approved :: MIT License',
+            'License :: OSI Approvied:: MIT License',
             'Natural Language :: English',
             'Operating System :: MacOS :: MacOS X',
             'Programming Language :: Python',
@@ -47,6 +50,7 @@ if sys.version >= '2.2.3':
             'Topic :: Software Development :: Libraries :: Python Modules',
             'Topic :: Software Development :: User Interfaces',
         ],
+        'license': 'MIT License',
         'download_url': 'http://pyobjc.sourceforge.net/software/index.php',
     }
 else:
@@ -329,10 +333,10 @@ subprocess("Generating wrappers & stubs", "%s Scripts/CodeGenerators/cocoa_gener
 # makes development slightly more convenient.
 if sys.version >= '2.3':
     FoundationDepends = {
-        'depends': glob.glob('Modules/Foundation/_Fnd_*.inc'),
+        'depends': glob.glob('build/codegen/_Fnd_*.inc'),
     }
     AppKitDepends = {
-        'depends': glob.glob('Modules/AppKit/_App_*.inc'),
+        'depends': glob.glob('build/codegen/_App_*.inc'),
     }
     AppKitMappingDepends = {
         'depends': glob.glob('Modules/AppKit/_AppKitMapping_*.m'),
@@ -341,16 +345,16 @@ if sys.version >= '2.3':
         'depends': glob.glob('Modules/Foundation/_FoundationMapping_*.m'),
     }
     AddressBookDepends = {
-        'depends': glob.glob('Modules/AddressBook/*.inc'),
+        'depends': glob.glob('build/codegen/*.inc'),
     }
     PrefPanesDepends = {
-        'depends': glob.glob('Modules/PreferencePanes/*.inc'),
+        'depends': glob.glob('build/codegen/*.inc'),
     }
     InterfaceBuilderDepends = {
-        'depends': glob.glob('Modules/InterfaceBuilder/*.inc'),
+        'depends': glob.glob('build/codegen/*.inc'),
     }
     WebKitDepends = {
-        'depends': glob.glob('Modules/WebKit/*.inc'),
+        'depends': glob.glob('build/codegen/*.inc'),
     }
 else:
     FoundationDepends = {}

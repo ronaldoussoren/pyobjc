@@ -775,12 +775,22 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	new_class->class.METHODLISTS = 
 		calloc(1, sizeof(struct objc_method_list*));
 	if (new_class->class.METHODLISTS == NULL) goto error_cleanup;
-	new_class->class.METHODLISTS[0] = NULL;
 
 	new_class->meta_class.METHODLISTS = 
 		calloc(1, sizeof(struct objc_method_list*));
 	if (new_class->meta_class.METHODLISTS == NULL) goto error_cleanup;
-	new_class->meta_class.METHODLISTS[0] = NULL;
+
+	/* 
+	 * This is MacOS X specific, and an undocumented feature (long live
+	 * Open Source!). 
+	 *
+	 * The code in the objc runtime assumes that the method lists are 
+	 * terminated by '-1', and will happily overwite existing data if
+	 * they aren't.
+	 */
+	new_class->class.METHODLISTS[0] = (struct objc_method_list*)-1;
+	new_class->meta_class.METHODLISTS[0] = (struct objc_method_list*)-1;
+
 #endif
 
 	new_class->class.super_class = super_class;

@@ -78,6 +78,44 @@ meth_syncNSString(PyObjCUnicodeObject* self)
 	return Py_None;
 }
 
+/*
+ * Make sure objc_unicode objects don't get pickled.
+ *
+ * See meth_reduce in objc-object.m for details.
+ */
+static PyObject*
+meth_reduce(PyObject* self)
+{
+	PyObject* retVal;
+	PyObject *v, *v2;
+
+	retVal = PyTuple_New(2);
+	if (retVal == NULL) {
+		return NULL;
+	}
+
+	v = (PyObject*)&PyUnicode_Type;
+	Py_INCREF(v);
+	PyTuple_SET_ITEM(retVal, 0, v);
+
+	v = PyUnicode_FromObject(self);
+	if (v == NULL ) {
+		Py_DECREF(retVal);
+		return NULL;
+	}
+
+	v2 = PyTuple_New(1);
+	if (v2 == NULL) {
+		Py_DECREF(v);
+		Py_DECREF(retVal);
+		return NULL;
+	}
+	PyTuple_SET_ITEM(v2, 0, v);
+	PyTuple_SET_ITEM(retVal, 1, v2);
+
+	return retVal;
+}
+
 static PyMethodDef class_methods[] = {
 	{
 	  "nsstring",
@@ -90,6 +128,12 @@ static PyMethodDef class_methods[] = {
 	  (PyCFunction)meth_syncNSString,
 	  METH_NOARGS,
 	  "Copy contents of the NSString to the unicode object"
+	},
+	{
+	  "__reduce__",
+	  (PyCFunction)meth_reduce,
+	  METH_NOARGS,
+	  "Used for pickling"
 	},
         { 0, 0, 0, 0 } /* sentinel */
 };
