@@ -13,9 +13,11 @@
 
 - initWithPythonObject:(PyObject*)v;
 {
+	PyGILState_STATE state = PyGILState_Ensure();
 	Py_INCREF(v);
 	Py_XDECREF(value);
 	value = v;
+	PyGILState_Release(state);
 	return self;
 }
 
