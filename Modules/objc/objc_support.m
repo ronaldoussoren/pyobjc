@@ -1393,15 +1393,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		*/
 				
 
-		NS_DURING
-			r = [OC_PythonObject wrapPyObject:argument toId:(id *)datum];
-
-		NS_HANDLER
-			PyObjCErr_FromObjC(localException);
-			r = -1;
-
-		NS_ENDHANDLER
-		return r;
+        return [OC_PythonObject wrapPyObject:argument toId:(id *)datum];
 
 	case _C_CLASS:
 		if (PyObjCClass_Check(argument))  {

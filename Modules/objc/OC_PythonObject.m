@@ -78,12 +78,13 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 @implementation OC_PythonObject
 + (int)wrapPyObject:(PyObject *)argument toId:(id *)datum
 {
-	int r = 0;
-	id rval = nil;
+	int r;
+	id rval;
 	 
 	if (argument == Py_None) {
-		*datum = nil;
-		return 0;
+		rval = nil;
+		r = 0;
+		goto end;
 	}
 #if 0
 	if (!PyObjC_ObjectToIdTable) {
@@ -97,10 +98,13 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 	
 	if (PyObjCClass_Check (argument)) {
 		rval = (id)PyObjCClass_GetClass(argument);
+		r = 0;
 	} else if (PyObjCObject_Check (argument)) {
 		rval = PyObjCObject_GetObject(argument);
+		r = 0;
 	} else if (PyObjCUnicode_Check(argument)) {
 		rval = PyObjCUnicode_Extract(argument);
+		r = 0;
 	} else if (PyUnicode_Check(argument)) {
 		PyObject* utf8 = PyUnicode_AsUTF8String(argument);
 
@@ -109,22 +113,27 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 				stringWithUTF8String:
 					PyString_AS_STRING(utf8)];
 			Py_DECREF(utf8);
+			r = 0;
 		} else {
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'id', failed "
 				"to encode unicode string to UTF8");
-			return -1;
+			rval = nil;
+			r = -1;
 		}
 
 	} else if (PyBool_Check(argument)) {
 		rval = [NSNumber 
 			numberWithBool:PyInt_AS_LONG (argument)];
+		r = 0;
 	} else if (PyInt_Check (argument)) {
 		rval = [NSNumber 
 			numberWithLong:PyInt_AS_LONG (argument)];
+		r = 0;
 	} else if (PyFloat_Check (argument)) {
 		rval = [NSNumber 
 			numberWithDouble:PyFloat_AS_DOUBLE (argument)];
+		r = 0;
 	} else if (PyLong_Check(argument)) {
 		/* XXX: What if the value doesn't fit into a 
 		 * 'long long' 
@@ -133,25 +142,41 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 			numberWithLongLong:PyLong_AsLongLong(argument)];
 		if (PyErr_Occurred()) {
 			/* Probably overflow */
+			rval = nil;
 			r = -1;
+		} else {
+			r = 0;
 		}
 	} else if (PyList_Check(argument) || PyTuple_Check(argument)) {
 		rval = [OC_PythonArray 
 			newWithPythonObject:argument];
+		r = 0;
 	} else if (PyDict_Check(argument)) {
 		rval = [OC_PythonDictionary 
 			newWithPythonObject:argument];
+		r = 0;
 #ifdef MACOSX
 	} else if ((rval = PyObjC_CFTypeToID(argument))) {
 		// unwrapped cf
+		r = 0;
 #endif /* MACOSX */
 	} else {
-		rval = [OC_PythonObject 
-			newWithCoercedObject:argument];
+		NS_DURING
+			rval = [OC_PythonObject 
+				newWithCoercedObject:argument];
+			r = 0;
+
+		NS_HANDLER
+			PyObjCErr_FromObjC(localException);
+			rval = nil;
+			r = -1;
+
+		NS_ENDHANDLER
 	}
 #if 0
 	NSMapInsert(PyObjC_ObjectToIdTable, (const void *)argument, (const void *)rval);
 #endif
+end:
 	*datum = rval;
 	return r;
 }
