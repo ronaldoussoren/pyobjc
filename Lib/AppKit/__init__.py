@@ -483,6 +483,76 @@ NSNibAwakening = _objc.informal_protocol(
     ]
 )
 
+NSOutlineViewDelegate = _objc.informal_protocol(
+    'NSTableViewDelegate',
+    [
+# - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item;
+    _objc.selector(
+    None,
+    selector='outlineView:willDisplayCell:forTableColumn:item:',
+    signature='v@:@@@@',
+    required=0
+    ),
+
+# - (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item;
+    _objc.selector(
+    None,
+    selector='outlineView:shouldEditTableColumn:item:',
+    signature='c@:@@@',
+    required=0
+    ),
+
+# - (BOOL)selectionShouldChangeInOutlineView:(NSOutlineView *)outlineView;
+    _objc.selector(
+    None,
+    selector='selectionShouldChangeInOutlineView:',
+    signature='c@:@',
+    required=0
+    ),
+
+# - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item;
+    _objc.selector(
+    None,
+    selector='outlineView:shouldSelectItem:',
+    signature='c@:@@',
+    required=0
+    ),
+
+# - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectTableColumn:(NSTableColumn *)tableColumn;
+    _objc.selector(
+    None,
+    selector='outlineView:shouldSelectTableColumn:',
+    signature='c@:@@',
+    required=0
+    ),
+
+# // NSOutlineView specific
+# - (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(id)item;
+    _objc.selector(
+    None,
+    selector='outlineView:shouldExpandItem:',
+    signature='c@:@@',
+    required=0
+    ),
+
+# - (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item;
+    _objc.selector(
+    None,
+    selector='outlineView:shouldCollapseItem:',
+    signature='c@:@@',
+    required=0
+    ),
+
+# - (void)outlineView:(NSOutlineView *)outlineView willDisplayOutlineCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item;
+    _objc.selector(
+    None,
+    selector='outlineView:willDisplayOutlineCell:forTableColumn:item:',
+    signature='v@:@@@@',
+    required=0
+    )
+    ]
+    )
+
 NSOutlineViewDataSource = _objc.informal_protocol(
     'NSOutlineViewDataSource',
     [
@@ -607,6 +677,30 @@ NSTableViewDelegate = _objc.informal_protocol(
     None,
     selector='tableView:shouldSelectTableColumn:',
     signature='c@:@@',
+    required=0
+    ),
+
+#- (void) tableView:(NSTableView*)tableView mouseDownInHeaderOfTableColumn:(NSTableColumn *)tableColumn;
+    _objc.selector(
+    None,
+    selector='tableView:mouseDownInHeaderOfTableColumn:',
+    signature='v@:@@',
+    required=0
+    ),
+
+# - (void) tableView:(NSTableView*)tableView didClickTableColumn:(NSTableColumn *)tableColumn;
+    _objc.selector(
+    None,
+    selector='tableView:didClickTableColumn:',
+    signature='v@:@@',
+    required=0
+    ),
+
+# - (void) tableView:(NSTableView*)tableView didDragTableColumn:(NSTableColumn *)tableColumn;
+    _objc.selector(
+    None,
+    selector='tableView:didDragTableColumn:',
+    signature='v@:@@',
     required=0
     )
     ]
