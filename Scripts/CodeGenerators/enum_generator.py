@@ -20,6 +20,8 @@ BLOCK_1_RE=re.compile('/\*([^*]|(\*[^/]))*\*/')
 BLOCK_S_RE=re.compile('/\*')
 BLOCK_E_RE=re.compile('\*/')
 
+DEFINE_RE=re.compile('^#\s*define\s+([A-Za-z_][A-Za-z0-9]*)\s+(\d+)$')
+
 def entry(fp, val):
     if val.endswith('Mask'):
         unsigned = 1
@@ -36,6 +38,12 @@ def process_file(outfp, filename):
     in_comment = 0
 
     for ln in fp.xreadlines():
+        m = DEFINE_RE.match(ln)
+        if m is not None:
+            name, value = m.group(1), m.group(2)
+            entry(outfp, name)
+            continue
+
         if not in_enum:
                 m = SINGLE_LINE_RE.search(ln)
                 if m:
