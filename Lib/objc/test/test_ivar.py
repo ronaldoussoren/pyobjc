@@ -33,10 +33,6 @@ class TestInstanceVariables(unittest.TestCase):
     def setUp(self):
         self.object = TestClass.alloc().init()
 
-    def testDelete(self):
-        # Objective-C attributes cannot be removed
-        self.assertRaises(TypeError, delattr, self.object, 'intVar')
-
     def testID(self):
         # Check that we can set and query attributes of type 'id'
         self.assertEquals(self.object.idVar, None)
@@ -77,14 +73,14 @@ class TestInstanceVariables(unittest.TestCase):
         self.deleted = 0
         self.object.idVar = Base(lambda : setattr(self, 'deleted', 1))
         self.object.idVar = None
-        objc.recyleAutoreleasePool()
+        objc.recycleAutoreleasePool()
         self.assertEquals(self.deleted, 1)
 
     def testLeak2(self):
         self.deleted = 0
         self.object.idVar = Base(lambda : setattr(self, 'deleted', 1))
         del self.object
-        objc.recyleAutoreleasePool()
+        objc.recycleAutoreleasePool()
         self.assertEquals(self.deleted, 1)
 
     def testOCLeak(self):
@@ -93,14 +89,14 @@ class TestInstanceVariables(unittest.TestCase):
         self.deleted = 0
         self.object.idVar = OCBase.alloc().init_(lambda : setattr(self, 'deleted', 1))
         self.object.idVar = None
-        objc.recyleAutoreleasePool()
+        objc.recycleAutoreleasePool()
         self.assertEquals(self.deleted, 1)
 
     def testOCLeak2(self):
         self.deleted = 0
         self.object.idVar = OCBase.alloc().init_(lambda : setattr(self, 'deleted', 1))
         del self.object
-        objc.recyleAutoreleasePool()
+        objc.recycleAutoreleasePool()
         self.assertEquals(self.deleted, 1)
 
     def testDelete(self):

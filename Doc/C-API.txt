@@ -191,7 +191,7 @@ exception will be rethrown.
   int PyObjC_PythonToObjC(const char* typespec, PyObject* value, void* buffer);
 
 Convert the value to an Objective-C value of type ``typespec``. The buffer must
-be at least ``PyObjC_SizeOfType(typespec)`` bytes long.
+be at least ``PyObjCRT_SizeOfType(typespec)`` bytes long.
 
 NOTE: The ``typespec`` is a type specifier as described in the runtime 
 reference of the Objective-C manual from Apple. Use ``@encode(mytype)`` if to
@@ -214,9 +214,15 @@ must contain the complete argument list, including self. If ``isAlloc`` is not
 
 ::
 
-  int PyObjC_SizeOfType(const char* typespec);
+  int PyObjCRT_SizeOfType(const char* typespec);
 
 Return the size of variables of the specified type.
+
+::
+
+  int PyObjCRT_AlignOfType(const char* typespec);
+
+Return the alignment of variables of the specified type.
 
 ::
 

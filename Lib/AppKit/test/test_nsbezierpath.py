@@ -35,9 +35,21 @@ class TestNSBezierPath(unittest.TestCase):
         self.assertEquals(p.elementCount(), 3)
 
     def test_setLineDash(self):
-        # We can barely test this, as we don't support the reverse call.
         p = NSBezierPath.bezierPath()
         p.setLineDash_count_phase_((10, 10, 20, 5), 4, 45.0)
+
+        pattern, count, phase = p.getLineDash_count_phase_(0)
+        self.assertEquals(pattern, None)
+        self.assertEquals(count, 4)
+        self.assertAlmostEquals(phase, 45.0)
+
+        pattern, count, phase = p.getLineDash_count_phase_(4)
+        self.assertAlmostEquals(pattern[0], 10)
+        self.assertAlmostEquals(pattern[1], 10)
+        self.assertAlmostEquals(pattern[2], 20)
+        self.assertAlmostEquals(pattern[3], 5)
+        self.assertEquals(count, 4)
+        self.assertAlmostEquals(phase, 45.0)
 
     def test_elementAtIndex(self):
         p = NSBezierPath.bezierPath()

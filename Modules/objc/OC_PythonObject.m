@@ -15,8 +15,7 @@
  */
 
 #include "pyobjc.h"
-#include "objc_support.h"
-#include "compile.h"
+#include "compile.h" /* From Python */
 
 #include <stdarg.h>
 
@@ -54,7 +53,10 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 
 - (void)dealloc
 {
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	Py_XDECREF(pyObject);
+	PyGILState_Release(state);
 	[super dealloc];
 }
 
@@ -64,6 +66,7 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 
 	if (pyObject == NULL) return @"no python object";
 	
+	PyGILState_STATE state = PyGILState_Ensure();
 	repr = PyObject_Repr (pyObject);
 	if (repr) {
 		int err;
@@ -72,12 +75,14 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 		err = depythonify_c_value ("@", repr, &result);
 		Py_DECREF (repr);
 		if (err == -1) {
-			PyObjCErr_ToObjC();		
+			PyObjCErr_ToObjCWithGILState(&state);		
 			return @"a python object";
 		}
+		PyGILState_Release(state);
 		return result;
 	} else {
 		PyErr_Clear();
+		PyGILState_Release(state);
 		return [super description];
 	}
 }
@@ -86,7 +91,7 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 {
 	[NSException raise:NSInvalidArgumentException
 		     format:@"%@ does not recognize -%s",
-		     	self, SELNAME(aSelector)];
+		     	self, PyObjCRT_SELName(aSelector)];
 }
 
 
@@ -125,7 +130,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 {
 	const char*  meth_name;
 	int          len;
-	char*        pymeth_name;
+	char         pymeth_name[256];
 	unsigned int argcount;
 	PyObject*    pymethod;
 	const char*  p;
@@ -135,7 +140,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 			     format:@"nil selector"];
 	}
 
-	meth_name = SELNAME(aSelector);
+	meth_name = PyObjCRT_SELName(aSelector);
 	len = strlen(meth_name);
       
 	for (argcount=0, p=meth_name; *p; p++) {
@@ -144,28 +149,32 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		}
 	}
   
-	pymeth_name = alloca(PYTHONIFIED_LENGTH(meth_name, len, argcount));
-	pythonify_objc_message(meth_name, pymeth_name);
 
-	pymethod = PyObject_GetAttrString(obj, pymeth_name);
+	pymethod = PyObject_GetAttrString(obj, 
+			PyObjC_SELToPythonName(
+				aSelector, pymeth_name, sizeof(pymeth_name)));
 	return check_argcount(pymethod, argcount);
 }
 
 
 - (BOOL) respondsToSelector:(SEL) aSelector
 {
+	PyGILState_STATE state;
 	PyObject *m;
 
 	if ([super respondsToSelector:aSelector]) {
 		return YES;
 	} 
     
+	state = PyGILState_Ensure();
 	m = get_method_for_selector(pyObject, aSelector);
 
 	if (m) {
+		PyGILState_Release(state);
         	return YES;
 	} else {
 		PyErr_Clear();
+		PyGILState_Release(state);
 		return NO;
 	}
 }
@@ -174,13 +183,14 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 - (NSMethodSignature *) methodSignatureForSelector:(SEL) sel
 {
 	/* We can't call our superclass implementation, NSProxy just raises
-	 * and exception.
+	 * an exception.
 	 */
 
 	char*        	   encoding;
 	PyObject*          pymethod;
 	PyCodeObject*      func_code;
 	int                argcount;
+	PyGILState_STATE state;
 
 	encoding = (char*)get_selector_encoding (self, sel);
 	if (encoding) {
@@ -188,11 +198,14 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		return [NSMethodSignature signatureWithObjCTypes:encoding];
 	}
 
+	state = PyGILState_Ensure();
 	pymethod = get_method_for_selector(pyObject, sel);
 	if (!pymethod) {
 		PyErr_Clear();
+		PyGILState_Release(state);
 		[NSException raise:NSInvalidArgumentException 
-			format:@"%s: no such selector: %s", GETISA(self)->name, SELNAME(sel)];
+			format:@"Class %s: no such selector: %s", 
+			GETISA(self)->name, PyObjCRT_SELName(sel)];
 	}
 
 
@@ -210,6 +223,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	memset(encoding, '@', argcount+3);
 	encoding[argcount+3] = '\0';
 	encoding[2] = ':';
+	PyGILState_Release(state);
 	return [NSMethodSignature signatureWithObjCTypes:encoding];
 }
 
@@ -225,11 +239,13 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	PyObject*          args = NULL;
 	unsigned int       i;
 	unsigned int       argcount;      
-	int		   retsize = objc_sizeof_type (rettype);
+	int		   retsize;
 	char*              retbuffer;
+	PyGILState_STATE   state = PyGILState_Ensure();
 
+	retsize = PyObjCRT_SizeOfType (rettype);
 	if (retsize == -1) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 	}
 	
 	retbuffer = alloca(retsize);
@@ -246,8 +262,10 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		if (aSelector == @selector(description)) {
 			id res = [self description];
 			[invocation setReturnValue:&res];
+			PyGILState_Release(state);
 			return;
 		}
+		PyGILState_Release(state);
 		[self doesNotRecognizeSelector:aSelector];
 		return;
 	}
@@ -255,7 +273,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	argcount = [msign numberOfArguments];
 	args = PyTuple_New(argcount-2);
 	if (args == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 	}
 	for (i=2; i< argcount; i++) {
 		const char *argtype;
@@ -267,16 +285,16 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 		/* What if argtype is a pointer? */
 
-		argsize = objc_sizeof_type(argtype);
+		argsize = PyObjCRT_SizeOfType(argtype);
 		if (argsize == -1) {
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 		}
 		argbuffer = alloca (argsize);
 		[invocation getArgument:argbuffer atIndex:i];
 		pyarg = pythonify_c_value (argtype, argbuffer);
 		if (pyarg == NULL) {
 			Py_DECREF(args);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
 
@@ -286,15 +304,18 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	Py_DECREF(args);
 
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
+		return;
 	}
 
 	err = depythonify_c_value (rettype, result, retbuffer);
 	if (err == -1) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
+		return;
 	} else {
 		[invocation setReturnValue:retbuffer];
 	}
+	PyGILState_Release(state);
 }
 
 
@@ -340,26 +361,27 @@ static  PyObject* getKeyFunc = NULL;
 	PyObject* keyName;
 	PyObject* val;
 	id res;
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	if (getKeyFunc == NULL) {
 		PyObject* name;
 		PyObject* mod;
 		name = PyString_FromString( "PyObjCTools.KeyValueCoding");
 		if (name == NULL) {
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 		mod = PyImport_Import(name);
 		if (mod == NULL) {
 			Py_DECREF(name);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 		getKeyFunc = PyObject_GetAttrString(mod, "getKey");
 		if (getKeyFunc == NULL) {
 			Py_DECREF(name);
 			Py_DECREF(mod);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 		Py_DECREF(name);
@@ -368,23 +390,24 @@ static  PyObject* getKeyFunc = NULL;
 
 	keyName = pythonify_c_value(@encode(id), &key);
 	if (keyName == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	val = PyObject_CallFunction(getKeyFunc, "OO", pyObject, keyName);
 	Py_DECREF(keyName);
 	if (val == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	if (depythonify_c_value(@encode(id), val, &res) < 0) {
 		Py_DECREF(val);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	Py_DECREF(val);
+	PyGILState_Release(state);
 	return res;
 }
 
@@ -395,33 +418,41 @@ static  PyObject* getKeyFunc = NULL;
 
 
 /* Calls PyObjCTools.KeyValueCoding.setKey to set the key */
-- (void)takeValue: value forKey: (NSString*) key;
+
+/* This is the 10.2 flavour of this method, deprecated in 10.3 */
+- (void)takeValue: value forKey: key
+{
+	[self setValue: value forKey: key];
+}
+
+- (void)setValue: value forKey: (NSString*) key;
 {
 static  PyObject* setKeyFunc = NULL;
 
 	PyObject* keyName;
 	PyObject* pyValue;
 	PyObject* val;
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	if (setKeyFunc == NULL) {
 		PyObject* name;
 		PyObject* mod;
 		name = PyString_FromString( "PyObjCTools.KeyValueCoding");
 		if (name == NULL) {
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
 		mod = PyImport_Import(name);
 		if (mod == NULL) {
 			Py_DECREF(name);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
 		setKeyFunc = PyObject_GetAttrString(mod, "setKey");
 		if (setKeyFunc == NULL) {
 			Py_DECREF(name);
 			Py_DECREF(mod);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
 		Py_DECREF(name);
@@ -430,14 +461,14 @@ static  PyObject* setKeyFunc = NULL;
 
 	keyName = pythonify_c_value(@encode(id), &key);
 	if (keyName == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	pyValue = pythonify_c_value(@encode(id), &value);
 	if (pyValue == NULL) {
 		Py_DECREF(keyName);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -445,11 +476,12 @@ static  PyObject* setKeyFunc = NULL;
 	Py_DECREF(keyName);
 	Py_DECREF(pyValue);
 	if (val == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	Py_DECREF(val);
+	PyGILState_Release(state);
 }
 
 - (void)takeStoredValue: value forKey: (NSString*) key;
@@ -489,7 +521,13 @@ static  PyObject* setKeyFunc = NULL;
 	return target;
 }
 
-- (void)takeValue: value forKeyPath: (NSString*) keyPath;
+/* takeValue:forKeyPath: was deprecated in 10.3, and is the right way on 10.2 */
+- (void)takeValue: value forKeyPath: keyPath
+{
+	[self setValue: value forKeyPath: keyPath];
+}
+	
+- (void)setValue: value forKeyPath: (NSString*) keyPath;
 {
 	NSArray* elems = [keyPath componentsSeparatedByString:@"."];
 	id target;
@@ -505,7 +543,12 @@ static  PyObject* setKeyFunc = NULL;
 	[target takeValue: value forKey: [elems objectAtIndex: len-1]];
 }
 
-- (void)takeValuesFromDictionary: (NSDictionary*) aDictionary;
+- (void)takeValuesFromDictionary: (NSDictionary*) aDictionary
+{
+	[self setValuesForKeysWithDictionary: aDictionary];
+}
+
+- (void)setValuesForKeysWithDictionary: (NSDictionary*) aDictionary;
 {
 	NSEnumerator* enumerator = [aDictionary keyEnumerator];
 	id aKey;
@@ -526,12 +569,22 @@ static  PyObject* setKeyFunc = NULL;
 
 - (void)handleQueryWithUnboundKey: (NSString*) key;
 {
+	[self valueForUndefinedKey: key];
+}
+
+- (void)valueForUndefinedKey: (NSString*)key;
+{
 	[NSException 
 		raise: NSUnknownKeyException
 		format: @"query for unknown key: %@", key];
 }
 
 - (void)handleTakeValue: value forUnboundKey: (NSString*) key;
+{
+	[self setValue: value forUndefinedKey: key];
+}
+
+- (void)setValue: value forUndefinedKey: (NSString*) key;
 {
 	[NSException 
 		raise: NSUnknownKeyException 

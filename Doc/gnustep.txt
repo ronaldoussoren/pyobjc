@@ -1,0 +1,22 @@
+=========================
+GNUstep support in PyObjC
+=========================
+
+PyObjC has limited support for GNUstep, the 'objc' and 'Foundation' packages
+build and pass some, but by far not all, unittests. More work is needed to
+make the GNUstep port as stable as the MacOS X "port".
+
+The GNUstep port was primarily developed on Linux i86 (specifically 
+the Debian testing distribution), using python 2.2.3, gcc 3.3.2 and 
+gnustep-base 1.7.3-1. The code in setup.py works for this configuration,
+but probably not for other configurations.
+
+TODO
+----
+
+* Fix bugs found using the unittests
+
+* Port the AppKit wrappers
+
+* Extract more CFLAGS and LDFLAGS information from the GNUstep build system,
+  instead of hard-coding the information

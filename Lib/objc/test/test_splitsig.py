@@ -1,10 +1,31 @@
 import unittest
 import objc
-import Foundation
-import AppKit
-import PreferencePanes
-import ScreenSaver
-import InterfaceBuilder
+
+try:
+	import Foundation
+except ImportError:
+	pass
+
+try:
+	import AppKit
+except ImportError:
+	pass
+
+try:
+	import PreferencePanes
+except ImportError:
+	pass
+
+try:
+	import ScreenSaver
+except ImportError:
+	pass
+
+try:
+	import InterfaceBuilder
+except ImportError:
+	pass
+
 import sys
 
 

@@ -9,19 +9,12 @@ import Foundation
 import _AppKitSignatures 
 import objc as _objc
 
-# We first register special methods signatures with the runtime. The module
-# is not used for anything else.
-
+# Import contansts and global functions.
 from _AppKit import *
-
-
-# We try to import a module containing support code, the code
-# is only ever used from the C side.
-import _AppKitMapping 
 
 # Load the Cocoa bundle, and gather all classes defined there
 _objc.loadBundle("AppKit", globals(), bundle_path="/System/Library/Frameworks/AppKit.framework")
-_objc.recyleAutoreleasePool()
+_objc.recycleAutoreleasePool()
 
 
 # Define usefull utility methods here

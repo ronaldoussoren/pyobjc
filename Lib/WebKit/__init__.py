@@ -16,7 +16,7 @@ from _WebKit import *
 
 # Load the Cocoa bundle, and gather all classes defined there
 _objc.loadBundle("WebKit", globals(), bundle_path="/System/Library/Frameworks/WebKit.framework")
-_objc.recyleAutoreleasePool()
+_objc.recycleAutoreleasePool()
 
 import protocols  # no need to export these, just register with PyObjC
 del _objc

@@ -3,10 +3,8 @@
  *
  * See the module DOCSTR for more information.
  */
-#include <Python.h>
-#include "structmember.h"	/* needed for PyMemberDef */
 #include "pyobjc.h"
-#include "objc_support.h"
+#include "structmember.h"	/* needed for PyMemberDef */
 
 PyDoc_STRVAR(proto_cls_doc,
 "objc.informal_protocol(name, selector_list)\n"
@@ -45,7 +43,7 @@ proto_dealloc(PyObject* object)
 				self->selectors, i);
 		
 		PyDict_DelItemString(selToProtocolMapping,
-			SELNAME(tmp->sel_selector));
+			PyObjCRT_SELName(tmp->sel_selector));
 	}
 #endif
 
@@ -87,12 +85,6 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 		return NULL;
 	}
 
-	if (!PySequence_Check(selectors)) {
-		PyErr_SetString(PyExc_TypeError,
-			"must provide list of selectors");
-		return NULL;
-	}
-
 	selectors = PySequence_Tuple(selectors);
 	if (selectors == NULL) {
 		return NULL;
@@ -104,7 +96,7 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 	result->name = name;
 	result->selectors = selectors;
 
-	len = PyTuple_Size(result->selectors);
+	len = PyTuple_GET_SIZE(selectors);
 	for (i = 0; i < len; i++) {
 		if (!PyObjCSelector_Check(
 				PyTuple_GET_ITEM(selectors, i))) {
@@ -128,7 +120,7 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 			(PyObjCSelector*)PyTuple_GET_ITEM(selectors, i);
 		
 		PyDict_SetItemString(selToProtocolMapping,
-			(char*)SELNAME(tmp->sel_selector),
+			(char*)PyObjCRT_SELName(tmp->sel_selector),
 			(PyObject*)result);
 	}
 
@@ -242,7 +234,7 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
 			"First argument is not an objc.informal_protocol");
 		return 0;
 	}
-	/* XXX: should use PySequence_Fast */
+
 	seq = PySequence_Fast(self->selectors,"selector list not a sequence?");
 	if (seq == NULL) {
 		return 0;
@@ -256,7 +248,7 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
 		}
 
 		if (PyObjCSelector_Check(cur)) {
-			if (PyObjCSelector_Selector(cur) == selector) {
+			if (PyObjCSelector_GetSelector(cur) == selector) {
 				Py_DECREF(seq);
 				return cur;
 			}
@@ -287,7 +279,7 @@ FindSelInDict(PyObject* clsdict, SEL selector)
 	for (i = 0; i < len; i++) {
 		PyObject* v = PySequence_Fast_GET_ITEM(seq, i);
 		if (!PyObjCSelector_Check(v)) continue;
-		if (PyObjCSelector_Selector(v) == selector) {
+		if (PyObjCSelector_GetSelector(v) == selector) {
 			Py_DECREF(seq);
 			Py_DECREF(values);
 			return v;
@@ -309,8 +301,8 @@ static int signaturesEqual(char* sig1, char* sig2)
 	/* For some reason compiler-generated signatures contain numbers that
 	 * are not used by the runtime. These are irrelevant for our comparison
 	 */
-	simplify_signature(sig1, buf1, sizeof(buf1));
-	simplify_signature(sig2, buf2, sizeof(buf2));
+	PyObjCRT_SimplifySignature(sig1, buf1, sizeof(buf1));
+	PyObjCRT_SimplifySignature(sig2, buf2, sizeof(buf2));
 
 	return strcmp(buf1, buf2) == 0;
 }
@@ -362,7 +354,7 @@ PyObjCInformalProtocol_CheckClass(
 			continue;
 		}
 
-		sel = PyObjCSelector_Selector(cur);
+		sel = PyObjCSelector_GetSelector(cur);
 
 		m = FindSelInDict(clsdict, sel);
 		if (m == NULL) {
@@ -376,7 +368,7 @@ PyObjCInformalProtocol_CheckClass(
 					  "protocol %s: no implementation for %s",
 					name,
 					PyString_AsString(self->name),
-					SELNAME(sel));
+					PyObjCRT_SELName(sel));
 					Py_DECREF(seq);
 				return 0;
 			} else {
@@ -393,7 +385,7 @@ PyObjCInformalProtocol_CheckClass(
 					  "%s instead of %s",
 					name,
 					PyString_AsString(self->name),
-					SELNAME(sel),
+					PyObjCRT_SELName(sel),
 					PyObjCSelector_Signature(m),
 					PyObjCSelector_Signature(cur)
 				);
@@ -413,7 +405,7 @@ PyObjCInformalProtocol_FindProtocol(SEL selector)
 
 	if (selToProtocolMapping == NULL) return NULL;
 
-	item = PyDict_GetItemString(selToProtocolMapping, (char*)SELNAME(selector));
+	item = PyDict_GetItemString(selToProtocolMapping, (char*)PyObjCRT_SELName(selector));
 	if (item != NULL) {
 		return item;
 	}

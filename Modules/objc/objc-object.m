@@ -2,8 +2,9 @@
  * Implementation of objective-C object wrapper
  */
 #include "pyobjc.h"
-#include "objc_support.h"
+
 #include <stddef.h>
+
 #include <objc/Object.h>
 
 

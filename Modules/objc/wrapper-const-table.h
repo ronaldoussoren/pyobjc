@@ -144,6 +144,19 @@ static inline int register_strings(PyObject* d, struct stringtable* table)
 	return 0;
 }
 
+#ifdef GNU_RUNTIME
+
+#define CFBundleRef NSBundle*
+
+static inline int
+register_variableList(PyObject* d, CFBundleRef bundle, struct vartable* table, size_t count)
+{
+	/* XXX: Implement me */
+	return 0;
+}
+
+#else /* !GNU_RUNTIME */
+
 static inline int
 register_variableList(PyObject* d, CFBundleRef bundle, struct vartable* table, size_t count)
 {
@@ -194,5 +207,6 @@ cleanup:
 
 	return retVal;
 }
+#endif /* !GNU_RUNTIME */
 
 

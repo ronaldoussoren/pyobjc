@@ -2,7 +2,6 @@
  * Implements a function to fetch the list of objective-C classes known
  * in the runtime.
  */
-
 #include "pyobjc.h"
 
 #ifndef GNU_RUNTIME
@@ -115,8 +114,9 @@ PyObjC_GetClassList(void)
 	return result;
 
 error_cleanup:
-	if (result)
-	  Py_DECREF(result);
+	if (result) {
+		Py_DECREF(result);
+	}
 
 	return NULL;
 }

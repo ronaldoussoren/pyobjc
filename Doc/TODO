@@ -49,19 +49,11 @@ we should add code that enables using python in multiple threads:
   raise a python exception if the conversion fails, instead of returning an
   error-string.
 
-NOTE: If we don't mind doing this only for Python 2.3 we can use the interface
-defined by PEP 311
-
-NOTE2: The autoGIL is quite usefull, but unless our code gets called from a
-different thread, that does not yet have a Python thread context. This may 
-happen when embedding a PyObjC solution in an existing Cocoa application.
-
-NOTE3: This is not really an important item.
-
-XXX (Ronald): I'll probably add PEP311 support after we do a release  with
-Panther support. This would make it safer to use PyObjC embedded in an 
-multithreaded application. Specifically: grab the GIL when going from ObjC
-to python, and release it when going back again. This is a half-way solution.
+This version has limited multithreading safety: it is possible to call from
+Objective-C to python from arbitrary threads. This only works when using 
+Python 2.3, because this uses the interfaces defined in PEP 311. This is only
+meant to make it safer to embed a PyObjC in existing applications, and not
+a solution for finegrained threading.
 
 Test suite
 ..........
@@ -70,10 +62,18 @@ The test suite needs to be enhanced.
 
 * tests for all functions in ``Modules/*/*Mapping*.m``
 
-* tests for all non-generated function wrappers
+* tests for all non-generated function wrappers (and some for the generated
+  functions as well, just in case the generator script is buggy)
 
 * tests where Python implementation of method with output arguments returns
   the wrong value (type, number of values)
+
+* Add tests for accepting any sequence when depythonifying structs and arrays.
+
+* Add more tests for objc_support.m to unittest.c
+
+* Add tests for OC_PythonArray, OC_PythonDict to unittest.c
+
 
 The first two bullets require at least some GUI tests.
 
@@ -122,12 +122,8 @@ From the top of my head:
 Support for GNUstep
 ...................
 
-We currently don't support GNUstep. Modules/objc/objc_support.h contains 
-some definitions that help in supporting GNUstep, we should use those where
-applicable. 
-
-Support beyond that requires someone that actually tries to perform the 
-port to GNUstep (and after that maintains it). 
+The current CVS version contains some support for GNUstep, this needs to
+be enhanced.
 
 Naming convention / coding style
 ................................
@@ -297,9 +293,7 @@ also `Performance tuning/testing`.
 Key-Value Encoding
 ..................
 
-Implement the Key-Value encoding protocol for Py-ObjC hybrids, in a Pythonic
-way. Do the same in OC_PythonObject (e.g. for pure-python objects used from
-Objective-C)
+Implement the 10.3 changes for Key-Value coding (observation).
 
 Formal Protocols, Distributed Objects
 .....................................
@@ -315,3 +309,40 @@ location?
 
 But: we should also provide links to locally installed documetation, especially
 in the documentation that will be installed on the users machine.
+
+Efficient conversion of arrays of C-types
+.........................................
+
+Make it possible to represent arrays for NSPoints/NSRects/... as (numeric) 
+arrays. This should be implemented as a genericly as possible, a possible
+interface in pyobjc-api.h::
+
+	void*	PyObjC_PythonArrayToObjC(
+			char* typestr, PyObject* array, PyObject* count);
+
+	PyObject* PyObjC_ObjCArrayToPython(
+		char* typestr, void* array, int count);
+
+If the ``count`` argument for PythonArrayToObjC is NULL or Py_None, all objects
+in the array are converted. This should accept:
+
+1) a python sequence (list, array, iterator, ...) containing Python objects
+   representing the elements of the array (e.g. [ (1,2), (3,4), (4,5) ] as a 
+   list of 3 points).
+2) an array.array of suitable dimensions/types
+3) a numeric array of suitable dimensions/types
+
+Items 2 and 3 must be checked for correctness (e.g. don't blindly convert a
+array.array containing bytes to an array of NSPoints).
+
+Installer support for OSX 10.3
+..............................
+
+There should be at least two installers: one for Jaguar and one for Panther,
+they should share as much source-code as possible.
+
+Related to this: it would probably be usefull to rewrite buildpkg.py, this
+module has been hacked up to support new-style packages. It should be rewritten
+based on the Apple documentation on the layout of packages, there is no need
+to support 10.1-style packages. This new module should be donated to
+MacPython).

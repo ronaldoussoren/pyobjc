@@ -1,13 +1,12 @@
-#include "OC_PythonArray.h"
 #include "pyobjc.h"
-#include "objc_support.h"
 
 @implementation OC_PythonArray 
 
 +newWithPythonObject:(PyObject*)v;
 {
-	OC_PythonArray* res = 
-		[[OC_PythonArray alloc] initWithPythonObject:v];
+	OC_PythonArray* res;
+
+	res = [[OC_PythonArray alloc] initWithPythonObject:v];
 	[res autorelease];
 	return res;
 }
@@ -28,14 +27,21 @@
 
 -(void)dealloc
 {
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	Py_XDECREF(value);
+
+	PyGILState_Release(state);
 }
 
 -(int)count
 {
 	int result;
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	result = PySequence_Length(value);
+
+	PyGILState_Release(state);
 	return result;
 }
 
@@ -44,20 +50,22 @@
 	PyObject* v;
 	id  result;
 	int err;
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	v = PySequence_GetItem(value, idx);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	err = depythonify_c_value("@", v, &result);
 	Py_DECREF(v);
 	if (err == -1) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
+	PyGILState_Release(state);
 	return result;
 }
 
@@ -65,19 +73,21 @@
 -(void)replaceObjectAtIndex:(int)idx withObject:newValue;
 {
 	PyObject* v;
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	v = pythonify_c_value("@", &newValue);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	if (PySequence_SetItem(value, idx, v) < 0) {
 		Py_DECREF(v);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	Py_DECREF(v);
+	PyGILState_Release(state);
 }
 
 @end /* implementation OC_PythonArray */

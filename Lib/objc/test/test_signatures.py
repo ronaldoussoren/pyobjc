@@ -6,6 +6,8 @@ import objc
 
 class PyOCTestTypeStr(unittest.TestCase):
     def testAll(self):
+        if hasattr(objc, '_C_BOOL'):
+            self.assertEquals(objc._C_BOOL, "B")
         self.assertEquals(objc._C_ID, "@")
         self.assertEquals(objc._C_CLASS, "#")
         self.assertEquals(objc._C_SEL, ":")

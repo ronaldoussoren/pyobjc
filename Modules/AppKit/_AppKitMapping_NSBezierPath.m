@@ -449,15 +449,17 @@ static void imp_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(id self, S
 	PyObject* v;
 	int i;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (self == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -466,7 +468,7 @@ static void imp_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(id self, S
 	v = PyTuple_New(count);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -477,7 +479,7 @@ static void imp_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(id self, S
 	if (PyErr_Occurred()) {
 		Py_DECREF(v);
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -486,7 +488,7 @@ static void imp_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(id self, S
 	v = PyInt_FromLong(count);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -495,7 +497,7 @@ static void imp_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(id self, S
 	v = PyObjC_ObjCToPython(@encode(NSFont*), &font);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -504,11 +506,12 @@ static void imp_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(id self, S
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	Py_DECREF(result);
+	PyGILState_Release(state);
 }
 
 static void imp_NSBezierPath_appendBezierPathWithPoints_count_(id self, SEL sel, NSPoint* points, int count)
@@ -518,22 +521,24 @@ static void imp_NSBezierPath_appendBezierPathWithPoints_count_(id self, SEL sel,
 	PyObject* v;
 	int i;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (self == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	v = PyTuple_New(count);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -544,7 +549,7 @@ static void imp_NSBezierPath_appendBezierPathWithPoints_count_(id self, SEL sel,
 	if (PyErr_Occurred()) {
 		Py_DECREF(v);
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -554,7 +559,7 @@ static void imp_NSBezierPath_appendBezierPathWithPoints_count_(id self, SEL sel,
 	v = PyInt_FromLong(count);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -564,11 +569,12 @@ static void imp_NSBezierPath_appendBezierPathWithPoints_count_(id self, SEL sel,
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	Py_DECREF(result);
+	PyGILState_Release(state);
 }
 
 static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id self, SEL sel, int idx, NSPoint* points)
@@ -582,16 +588,18 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 	int pointCount;
 	int i;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return 0;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return 0;
 	}
 	PyTuple_SET_ITEM(arglist, 0, v);
@@ -600,7 +608,7 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 	v = PyInt_FromLong(idx);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return 0;
 	}
 
@@ -609,14 +617,14 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return 0;
 	}
 
 	seq = PySequence_Fast(result, "should return tuple of lenght 2");
 	Py_DECREF(result);
 	if (seq == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return 0;
 	}
 
@@ -624,7 +632,7 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 		PyErr_SetString(PyExc_ValueError, 
 			"should return tuple of lenght 2");
 		Py_DECREF(seq);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return 0;
 	}
 
@@ -633,7 +641,7 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 	err = PyObjC_PythonToObjC(@encode(NSBezierPathElement), v, &res);
 	if (err == -1) {
 		Py_DECREF(seq);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return 0;
 	}
 
@@ -641,7 +649,7 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 		"result[1] should be a sequence");
 	if (v == NULL) {
 		Py_DECREF(seq);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return 0;
 	}
 
@@ -653,14 +661,14 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 	default:
 		PyErr_SetString(PyExc_ValueError, 
 			"Return[0] should be NS{*}PathElement");
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return 0;
 	}
 
 	if (PySequence_Fast_GET_SIZE(v) != pointCount) {
 		PyErr_SetString(PyExc_ValueError,
 			"wrong number of points");
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return 0;
 	}
 
@@ -671,22 +679,24 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 		if (err == -1) {
 			Py_DECREF(v);
 			Py_DECREF(seq);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return 0;
 		}
 	}
 
 	Py_DECREF(v);
 	Py_DECREF(seq);
+	PyGILState_Release(state);
 	return res;
 }
 
 #define U(x) x __attribute__((__unused__))
 static void imp_NSBezierPath_setAssociatedPoints_atIndex_(U(id self), U(SEL sel), U(NSPoint* points), U(int idx))
 {
+	PyGILState_STATE state = PyGILState_Ensure();
 	PyErr_SetString(PyExc_RuntimeError,
 		"NSBezierPath -setAssociatedPoints:atIndex: -> Python implementation not supported");
-	PyObjCErr_ToObjC();
+	PyObjCErr_ToObjCWithGILState(&state);
 	return;
 }
 #undef U
@@ -698,16 +708,18 @@ static void imp_NSBezierPath_setLineDash_count_phase_(id self, SEL sel, float* p
 	PyObject* v;
 	int i;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -716,7 +728,7 @@ static void imp_NSBezierPath_setLineDash_count_phase_(id self, SEL sel, float* p
 	v = PyTuple_New(count);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -727,7 +739,7 @@ static void imp_NSBezierPath_setLineDash_count_phase_(id self, SEL sel, float* p
 	if (PyErr_Occurred()) {
 		Py_DECREF(v);
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -737,7 +749,7 @@ static void imp_NSBezierPath_setLineDash_count_phase_(id self, SEL sel, float* p
 	v = PyInt_FromLong(count);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -746,7 +758,7 @@ static void imp_NSBezierPath_setLineDash_count_phase_(id self, SEL sel, float* p
 	v = PyFloat_FromDouble(phase);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -755,11 +767,12 @@ static void imp_NSBezierPath_setLineDash_count_phase_(id self, SEL sel, float* p
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	Py_DECREF(result);
+	PyGILState_Release(state);
 }
 
 

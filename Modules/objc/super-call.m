@@ -12,8 +12,6 @@
  * allow for dynamicly creating these types of calls (see also: register.m)
  */
 #include "pyobjc.h"
-#include "objc_support.h"
-#include "super-call.h"
 
 struct registry
 {
@@ -48,7 +46,7 @@ int PyObjC_RegisterMethodMapping(Class class, SEL sel,
 	IMP		    call_to_python)
 {
 	struct registry* v;
-	const char*      selname = SELNAME(sel);
+	const char*      selname = PyObjCRT_SELName(sel);
 	PyObject*        pyclass;
 	PyObject* 	 entry;
 
@@ -59,7 +57,7 @@ int PyObjC_RegisterMethodMapping(Class class, SEL sel,
 	if (!call_to_python) {
 		PyErr_SetString(ObjCExc_error, 
 			"PyObjC_RegisterMethodMapping: all functions required");
-		return NULL;
+		return -1;
 	}
 
 	if (!call_to_objc) {
@@ -97,39 +95,36 @@ int PyObjC_RegisterMethodMapping(Class class, SEL sel,
 	return 0;
 }
 
-/*
- * This function removes junk numbers from 'signature' and copies it into
- * 'buf'.
- *
- * Ronald: I'd like to replace this by a function that doesn't use 
- * NSMethodSignature. I think objc_support contains enough intelligence to
- * do this. objc_support doesn't work correctly with (structs containing) 
- * bitfields, but neither does NSMethodSignature.
- */
 void
-simplify_signature(char* signature, char* buf, size_t buflen)
+PyObjCRT_SimplifySignature(char* signature, char* buf, size_t buflen)
 {
-	int                i, argcount;
-	NSMethodSignature* sig;
+	char* cur;
+	char* end;
+	char* next;
 
-	sig = [NSMethodSignature signatureWithObjCTypes:signature];
-	snprintf(buf, buflen, "%s", [sig methodReturnType]);
-	buflen -= strlen(buf);
-	buf += strlen(buf);
+	cur = signature;
+	*buf = '\0';
 
-	argcount = [sig numberOfArguments];
-	for (i = 0; i < argcount; i++) {
-		snprintf(buf, buflen, "%s", 
-			[sig getArgumentTypeAtIndex:i]);
-		buflen -= strlen(buf);
-		buf += strlen(buf);
+	while (*cur != '\0') {
+		next = end = (char*)PyObjCRT_SkipTypeSpec(cur);
+		end -= 1;
+		while (end != cur && isdigit(*end)) {
+			end --;
+		}
+		end++;
+
+		if ((size_t)(end - cur) > buflen) {
+			// XXX: should signal an error
+			abort();
+			return;
+		}
+
+		memcpy(buf, cur, end-cur);
+		buflen -= (end-cur);
+		buf += (end-cur);
+		*buf = '\0';
+		cur = next;
 	}
-
-	/* Ronald: In theory the release below is not necessary, but 
-	 * (1) it doesn't cause runtime errors later on and (2) seems to
-	 * solve a memory leak
-	 */
-	[sig release]; 
 }
 
 
@@ -148,13 +143,13 @@ int PyObjC_RegisterSignatureMapping(
 	}
 		
 
-	simplify_signature(signature, signature_buf, sizeof(signature_buf));
+	PyObjCRT_SimplifySignature(signature, signature_buf, sizeof(signature_buf));
 	if (PyErr_Occurred()) return -1;
 
 	if (!call_to_objc || !call_to_python) {
 		PyErr_SetString(ObjCExc_error, 
 		   "PyObjC_RegisterSignatureMapping: all functions required");
-		return NULL;
+		return -1;
 	}
 
 	v = PyMem_Malloc(sizeof(*v));
@@ -191,7 +186,7 @@ search_special(Class class __attribute__((__unused__)), SEL sel)
 	if (special_registry == NULL) {
 		ObjCErr_Set(ObjCExc_error,
 			"PyObjC: don't know how to call method %s", 
-			SELNAME(sel));
+			PyObjCRT_SELName(sel));
 		return NULL;
 	}
 
@@ -204,7 +199,7 @@ search_special(Class class __attribute__((__unused__)), SEL sel)
 
 		if (pyclass == NULL || pysel == NULL) continue;
 		
-		if (strcmp(PyString_AsString(pysel), SELNAME(sel)) == 0) {
+		if (strcmp(PyString_AsString(pysel), PyObjCRT_SELName(sel)) == 0) {
 			if (!special_class) {
 				special_class = pyclass;
 				result = PyTuple_GetItem(entry, 2);
@@ -221,7 +216,7 @@ search_special(Class class __attribute__((__unused__)), SEL sel)
 	} else {
 		ObjCErr_Set(ObjCExc_error,
 			"PyObjC: don't know how to call method %s", 
-			SELNAME(sel));
+			PyObjCRT_SELName(sel));
 		return NULL;
 	}
 }
@@ -255,8 +250,7 @@ find_signature(char* signature)
 	struct registry* r;
 	char   signature_buf[1024];
 
-	simplify_signature(signature, signature_buf, sizeof(signature_buf));
-
+	PyObjCRT_SimplifySignature(signature, signature_buf, sizeof(signature_buf));
 	if (signature_registry == NULL) {
 		ObjCErr_Set(ObjCExc_error,
 			"PyObjC: don't know how to call a method with "

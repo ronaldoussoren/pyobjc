@@ -10,7 +10,7 @@ class TestNSLocalizedString(unittest.TestCase):
         # this...
 
         s = NSLocalizedString("hello world", "")
-        objc.recyleAutoreleasePool()
+        objc.recycleAutoreleasePool()
         self.assertEquals (s, "hello world")
         self.assertEquals (s.nsstring().description(), "hello world")
 

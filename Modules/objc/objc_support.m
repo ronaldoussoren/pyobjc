@@ -15,13 +15,14 @@
  */
 
 #include "pyobjc.h"
-#include "objc_support.h"
+
 #include <unistd.h>
-#include "objc/objc.h"
+
 
 #ifdef MACOSX
 /* OSX 10.1 doesn't define LLONG_MIN, LLONG_MAX and ULLONG_MAX */
 #ifndef LLONG_MIN
+#error "FIX ME"
 #define LLONG_MIN (-0x7fffffffffffffffLL-1)
 #define LLONG_MAX (-0x7fffffffffffffffLL)
 #define ULLONG_MAX (-0xffffffffffffffffULL)
@@ -29,7 +30,6 @@
 #endif
 
 #import <Foundation/NSInvocation.h>
-#import <Foundation/NSMethodSignature.h>
 #import <Foundation/NSData.h> 
 #import <Foundation/NSValue.h> 
 
@@ -41,9 +41,6 @@
  * Category on NSObject to make sure that every object supports 
  * the method  __pyobjc_PythonObject__, this helps to simplify
  * pythonify_c_value.
- *
- * The class-method is a experiment to do away with the ISCLASS 
- * test in pythonify_c_value.
  */
 @interface NSObject (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
@@ -76,7 +73,7 @@
 	const char* typestr = [self objCType];
 	char*        buf;
 	
-	buf = alloca(objc_sizeof_type(typestr));
+	buf = alloca(PyObjCRT_SizeOfType(typestr));
 
 	[self getValue:buf];
 
@@ -119,11 +116,24 @@ MAX(int x, int y)
 }
 #endif
 
+#if 0
 static inline int
 ROUND(int v, int a)
 {
 	return a * ((v+a-1)/a);
 }
+#else
+static inline int 
+ROUND(int v, int a)
+{
+	if (v % a == 0) {
+		return v;
+	} else {
+		return v + a - (v % a);
+	}
+}
+#endif
+
 
 static inline const char*
 PyObjCRT_SkipTypeQualifiers (const char* type)
@@ -231,10 +241,21 @@ PyObjCRT_SkipTypeSpec (const char *type)
   Return the alignment of an object specified by type 
 */
 
-#ifndef GNU_RUNTIME
+/* XXX: Platform dependend code */
+static inline int
+PyObjC_EmbeddedAlignOfType (const char*  type)
+{
+	int align = PyObjCRT_AlignOfType(type);
+
+	if (align < 4) {
+		return align;
+	} else {
+		return 4;
+	}
+}
 
 int
-objc_alignof_type (const char *type)
+PyObjCRT_AlignOfType (const char *type)
 {
 	switch (*type) {
 	case _C_ID:    return __alignof__ (id);
@@ -263,17 +284,31 @@ objc_alignof_type (const char *type)
 
 	case _C_ARY_B:
 		while (isdigit(*++type)) /* do nothing */;
-		return objc_alignof_type (type);
+		return PyObjCRT_AlignOfType (type);
       
 	case _C_STRUCT_B:
 	{
 		/* The alignment of a struct is the alignment of it's first
 		 * member
 		 */
+
 		struct { int x; double y; } fooalign;
 		while(*type != _C_STRUCT_E && *type++ != '=') /* do nothing */;
 		if (*type != _C_STRUCT_E) {
-			return objc_alignof_type(type);
+			int have_align = 0;
+			int align = 0;
+
+			while (*type != _C_STRUCT_E) {
+				if (have_align) {
+					align = MAX(align, 
+					   PyObjC_EmbeddedAlignOfType(type));
+				} else {
+					align = PyObjCRT_AlignOfType(type);
+					have_align = 1;
+				}
+				type = PyObjCRT_SkipTypeSpec(type);
+			}
+			return align;
 		} else {
 			return __alignof__ (fooalign);
 		}
@@ -285,7 +320,7 @@ objc_alignof_type (const char *type)
 		type++;
 		while (*type != _C_UNION_E)
 		{
-			int item_align = objc_alignof_type(type);
+			int item_align = PyObjC_EmbeddedAlignOfType(type);
 			if (item_align == -1) return -1;
 			maxalign = MAX (maxalign, item_align);
 			type = PyObjCRT_SkipTypeSpec (type);
@@ -299,7 +334,7 @@ objc_alignof_type (const char *type)
 	case _C_OUT:
 	case _C_BYCOPY:
 	case _C_ONEWAY:
-		return objc_alignof_type(type+1);
+		return PyObjCRT_AlignOfType(type+1);
 
 	default:
 		ObjCErr_Set(ObjCExc_internal_error, 
@@ -313,10 +348,10 @@ objc_alignof_type (const char *type)
 */
 
 static int
-objc_aligned_size (const char *type)
+PyObjCRT_AlignedSize (const char *type)
 {
-	int size = objc_sizeof_type (type);
-	int align = objc_alignof_type (type);
+	int size = PyObjCRT_SizeOfType (type);
+	int align = PyObjCRT_AlignOfType (type);
 
 	if (size == -1 || align == -1) return -1;
 	return ROUND (size, align);
@@ -327,7 +362,7 @@ objc_aligned_size (const char *type)
 */
 
 int
-objc_sizeof_type (const char *type)
+PyObjCRT_SizeOfType (const char *type)
 {
 	int itemSize;
 	switch (*type) {
@@ -354,7 +389,7 @@ objc_sizeof_type (const char *type)
 	case _C_PTR:
 	case _C_CHARPTR:
 #ifdef _C_ATOM
-	case _C_ATOM
+	case _C_ATOM:
 #endif
 		return sizeof(char*);
       
@@ -364,8 +399,8 @@ objc_sizeof_type (const char *type)
 		int item_align;
 		while (isdigit(*++type))
 			;
-		item_align = objc_aligned_size(type);
-		if (item_align == NULL) return -1;
+		item_align = PyObjCRT_AlignedSize(type);
+		if (item_align == -1) return -1;
 		return len*item_align;
 	}
 	break; 
@@ -373,17 +408,30 @@ objc_sizeof_type (const char *type)
 	case _C_STRUCT_B:
 	{
 		int acc_size = 0;
+		int have_align =  0;
 		int align;
+		int max_align = 0;
 		while (*type != _C_STRUCT_E && *type++ != '=')
 			; /* skip "<name>=" */
 		while (*type != _C_STRUCT_E) {
-			align = objc_alignof_type (type); 
-			if (align == -1) return -1;
+			if (have_align) {
+				align = PyObjC_EmbeddedAlignOfType(type);
+				if (align == -1) return -1;
+			} else {
+				align = PyObjCRT_AlignOfType(type);
+				if (align == -1) return -1;
+				have_align = 1;
+			}
+			max_align = MAX(align, max_align);
 			acc_size = ROUND (acc_size, align);
-			itemSize = objc_sizeof_type (type); 
+
+			itemSize = PyObjCRT_SizeOfType (type); 
 			if (itemSize == -1) return -1;
 			acc_size += itemSize;
 			type = PyObjCRT_SkipTypeSpec (type);
+		}
+		if (max_align) {
+			acc_size = ROUND(acc_size, max_align);
 		}
 		return acc_size;
 	}
@@ -393,7 +441,7 @@ objc_sizeof_type (const char *type)
 		int max_size = 0;
 		type++;
 		while (*type != _C_UNION_E) {
-			itemSize = objc_sizeof_type (type);
+			itemSize = PyObjCRT_SizeOfType (type);
 			if (itemSize == -1) return -1;
 			max_size = MAX (max_size, itemSize);
 			type = PyObjCRT_SkipTypeSpec (type);
@@ -407,16 +455,16 @@ objc_sizeof_type (const char *type)
 	case _C_OUT:
 	case _C_BYCOPY:
 	case _C_ONEWAY:
-		return objc_sizeof_type(type+1);
+		return PyObjCRT_SizeOfType(type+1);
 
 	default:
 		ObjCErr_Set(ObjCExc_internal_error, 
-			"objc_sizeof_type: Unhandled type '%#x", *type);
+			"PyObjCRT_SizeOfType: Unhandled type '%#x", *type);
+		abort();
 		return -1;
 	}
 }
 
-#endif
 
 /*#F Returns a tuple of objects representing the content of a C array
   of type @var{type} pointed by @var{datum}. */
@@ -430,7 +478,7 @@ pythonify_c_array (const char *type, void *datum)
 	nitems = atoi (type+1);
 	while (isdigit (*++type))
 		;
-	sizeofitem = objc_sizeof_type (type);
+	sizeofitem = PyObjCRT_SizeOfType (type);
 	if (sizeofitem == -1) return NULL;
 
 	ret = PyTuple_New (nitems);
@@ -463,6 +511,7 @@ pythonify_c_struct (const char *type, void *datum)
 	PyObject *ret;
 	unsigned int nitems, offset, itemidx;
 	const char *item;
+	int have_align = 0, align;
 
 	while (*type != _C_STRUCT_E && *type++ != '='); /* skip "<name>=" */
 	for (item=type, nitems=0; 
@@ -476,8 +525,17 @@ pythonify_c_struct (const char *type, void *datum)
 
 	for (item=type, offset=itemidx=0; 
 			*item != _C_STRUCT_E; 
-			item = PyObjCRT_SkipTypeSpec (item)){
+			item = PyObjCRT_SkipTypeSpec (item)) {
 		PyObject *pyitem;
+
+		if (!have_align) {
+			align = PyObjCRT_AlignOfType(item);
+			have_align = 1;
+		} else {
+			align = PyObjC_EmbeddedAlignOfType(item);
+		}
+
+		offset = ROUND(offset, align);
 
 		pyitem = pythonify_c_value (item, ((char*)datum)+offset);
 
@@ -489,7 +547,7 @@ pythonify_c_struct (const char *type, void *datum)
 		}
 
 		itemidx++;
-		offset += objc_sizeof_type (item);
+		offset += PyObjCRT_SizeOfType (item);
 	}
   
 	return ret;
@@ -503,18 +561,25 @@ depythonify_c_array (const char *type, PyObject *arg, void *datum)
 {
 	int nitems, itemidx, sizeofitem;
 	unsigned char* curdatum;
+	PyObject* seq;
 
 	nitems = atoi (type+1);
 	while (isdigit (*++type))
 		;
-	sizeofitem = objc_aligned_size (type);
+	sizeofitem = PyObjCRT_AlignedSize (type);
 	if (sizeofitem == -1) {
 		ObjCErr_Set(PyExc_ValueError, 
 			"cannot depythonify array of unknown type");
 		return -1;
 	}
 
-	if (nitems != PyTuple_Size (arg)) {
+	seq = PySequence_Fast(arg, "depythonifying array, got no sequence");
+	if (seq == NULL) {
+		return -1;
+	}
+
+	if (nitems != PySequence_Fast_GET_SIZE(seq)) {
+		Py_DECREF(seq);
 		ObjCErr_Set(PyExc_ValueError,
 			"depythonifying array of %d items, got one of %d",
 			nitems, PyTuple_Size(arg));
@@ -523,15 +588,19 @@ depythonify_c_array (const char *type, PyObject *arg, void *datum)
 
 	curdatum = datum;
 	for (itemidx=0; itemidx < nitems; itemidx++) {
-		PyObject *pyarg = PyTuple_GetItem (arg, itemidx);
+		PyObject *pyarg = PySequence_Fast_GET_ITEM(seq, itemidx);
 		int err;
 
 		err = depythonify_c_value (type, pyarg, curdatum);
-		if (err == -1) return err;
+		if (err == -1) {
+			Py_DECREF(seq);
+			return err;
+		}
       
 		curdatum += sizeofitem;
 	}
 
+	Py_DECREF(seq);
 	return 0;
 }
 
@@ -539,10 +608,12 @@ depythonify_c_array (const char *type, PyObject *arg, void *datum)
   of type @var{type} pointed by @var{datum}. Returns an error message, or
   NULL on success. */
 static int
-depythonify_c_struct (const char *types, PyObject *arg, void *datum)
+depythonify_c_struct(const char *types, PyObject *arg, void *datum)
 {
 	int nitems, offset, itemidx;
+	int have_align = 0, align;
 	const char *type;
+	PyObject* seq;
 
 	while (*types != _C_STRUCT_E && *types++ != '='); /* skip "<name>=" */
 	for (type=types, nitems=0; 
@@ -551,7 +622,13 @@ depythonify_c_struct (const char *types, PyObject *arg, void *datum)
 		nitems++;
 	}
 
-	if (nitems != PyTuple_Size (arg)) {
+	seq = PySequence_Fast(arg, "depythonifying struct, got no sequence");
+	if (seq == NULL) {
+		return -1;
+	}
+
+	if (nitems != PySequence_Fast_GET_SIZE(seq)) {
+		Py_DECREF(seq);
 		ObjCErr_Set(PyExc_ValueError,
 			"depythonifying struct of %d members, got tuple of %d",
 			nitems, PyTuple_Size (arg));
@@ -561,14 +638,25 @@ depythonify_c_struct (const char *types, PyObject *arg, void *datum)
 	for (type=types, offset=itemidx=0; 
 			*type != _C_STRUCT_E; 
 			type = PyObjCRT_SkipTypeSpec (type)){
-		PyObject *argument = PyTuple_GetItem (arg, itemidx);
+		PyObject *argument = PySequence_Fast_GET_ITEM(seq, itemidx);
 		int error;
+		if (!have_align) {
+			align = PyObjCRT_AlignOfType(type);
+			have_align = 1;
+		} else {
+			align = PyObjC_EmbeddedAlignOfType(type);
+		}
+
+		offset = ROUND(offset, align);
 
 		error = depythonify_c_value (type, argument, ((char*)datum)+offset);
-		if (error == -1) return error;
+		if (error == -1) {
+			Py_DECREF(seq);
+			return error;
+		}
       
 		itemidx++;
-		offset += objc_sizeof_type (type);
+		offset += PyObjCRT_SizeOfType (type);
 	}
 	return 0;
 }
@@ -688,7 +776,7 @@ pythonify_c_value (const char *type, void *datum)
 			retobject = Py_None;
 			Py_INCREF(retobject);
 		} else {
-			retobject = PyString_FromString(SELNAME(*(SEL*)datum)); 
+			retobject = PyString_FromString(PyObjCRT_SELName(*(SEL*)datum)); 
 		}
 		break;
 
@@ -712,7 +800,7 @@ pythonify_c_value (const char *type, void *datum)
 		} else {
 			retobject = PyObjCPointerWrapper_ToPython(type, datum);
 			if (retobject == NULL && !PyErr_Occurred()) {
-				retobject = (PyObject*)PyObjCPointer_new(
+				retobject = (PyObject*)PyObjCPointer_New(
 					*(void**) datum, type+1);
 			}
 		}
@@ -720,7 +808,7 @@ pythonify_c_value (const char *type, void *datum)
       
 	case _C_UNION_B:
 	{
-		int size = objc_sizeof_type (type);
+		int size = PyObjCRT_SizeOfType (type);
 		if (size == -1) return NULL;
 		retobject = PyString_FromStringAndSize ((void*)datum, size);
 		break;
@@ -750,7 +838,7 @@ pythonify_c_value (const char *type, void *datum)
 }
 
 
-int objc_sizeof_return_type(const char* type)
+int PyObjCRT_SizeOfReturnType(const char* type)
 {
 	switch(*type) {
 	case _C_CHR:
@@ -759,7 +847,7 @@ int objc_sizeof_return_type(const char* type)
 	case _C_USHT:
 		return sizeof(int);
 	default:
-		return objc_sizeof_type(type);
+		return PyObjCRT_SizeOfType(type);
 	}
 }
 
@@ -1032,7 +1120,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		}
 		return r;
 
-#ifdef _C_BOOL:
+#ifdef _C_BOOL
 	case _C_BOOL:
 		*(bool*)datum = PyObject_IsTrue(argument);
 		return 0;
@@ -1210,7 +1298,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		if (argument == Py_None) {
 			*(SEL*)datum = NULL;
 		} else if (PyObjCSelector_Check (argument)) {
-			*(SEL *) datum = PyObjCSelector_Selector(argument); 
+			*(SEL *) datum = PyObjCSelector_GetSelector(argument); 
         	} else if (PyString_Check(argument)) {
 			char *selname = PyString_AsString (argument);
 			SEL sel;
@@ -1218,7 +1306,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			if (*selname == '\0') {
 				*(SEL*)datum = NULL;
 			} else {
-				sel = SELUID (selname);
+				sel = PyObjCRT_SELUID (selname);
 
 				if (sel)  {
 					*(SEL*) datum = sel;
@@ -1244,10 +1332,11 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			return 0;
 		} 
 		r = PyObjCPointerWrapper_FromPython(type, argument, datum);
-		if (r == -1 && !PyErr_Occurred()) {
-			if (PyObjCPointer_Check (argument)) {
-				*(void **) datum = (
-					(PyObjCPointer *) argument)->ptr;
+		if (r == -1) {
+			if (PyErr_Occurred()) {
+				return -1;
+			} else if (PyObjCPointer_Check (argument)) {
+				*(void **) datum = PyObjCPointer_Ptr(argument);
 			} else {
 				ObjCErr_Set(PyExc_ValueError,
 					"depythonifying 'pointer', got '%s'",
@@ -1301,7 +1390,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 	case _C_UNION_B:
 		if (PyString_Check (argument)) {
-			int expected_size = objc_sizeof_type (type);
+			int expected_size = PyObjCRT_SizeOfType (type);
 
 			if (expected_size == -1) {
 				ObjCErr_Set(PyExc_ValueError,
@@ -1329,26 +1418,10 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		break;
 
 	case _C_STRUCT_B:
-		if (! PyTuple_Check (argument)) {
-			ObjCErr_Set(PyExc_ValueError,
-				"depythonifying 'struct', got '%s'",
-					argument->ob_type->tp_name);
-			return -1;
-		} else {
-			return depythonify_c_struct (type, argument, datum);
-		}
-		break;
+		return depythonify_c_struct (type, argument, datum);
 
 	case _C_ARY_B:
-		if (! PyTuple_Check (argument)) {
-			ObjCErr_Set(PyExc_ValueError,
-				"depythonifying 'array', got '%s'",
-					argument->ob_type->tp_name);
-			return -1;
-		} else {
-			return depythonify_c_array (type, argument, datum);
-		}
-		break;
+		return depythonify_c_array (type, argument, datum);
 
 	default:
 		ObjCErr_Set(PyExc_ValueError,
@@ -1357,178 +1430,3 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	}
 	return 0;
 }
-
-
-#ifdef GNU_RUNTIME
-
-/* TODO: Move this code to 'gnu-runtime.m' */
-
-# error "GNU_RUNTIME not supported at the moment"
-
-Ivar_t class_getInstanceVariable(Class aClass, const char *name)
-{
-  if (!aClass || !name)
-    return NULL;
-
-  for (; aClass != Nil; aClass = aClass->super_class)
-    {
-      int i;
-
-      if (!aClass->ivars)
-	continue;
-
-      for (i = 0; i < aClass->ivars->ivar_count; i++)
-	{
-	  if (!strcmp(aClass->ivars->ivar_list[i].ivar_name, name))
-	    return &aClass->ivars->ivar_list[i];
-	}
-    }
-
-  return NULL;
-}
-
-Ivar_t object_getInstanceVariable(id obj, const char *name, void **out)
-{
-  Ivar_t var = NULL;
-
-  if (obj && name)
-    {
-      void **varIndex = NULL;
-
-      if ((var = class_getInstanceVariable(obj->class_pointer, name)))
-	varIndex = (void **)((char *)obj + var->ivar_offset);
-
-      if (out)
-	*out = *varIndex;
-    }
-
-  return var;
-}
-
-struct objc_method_list *class_nextMethodList(Class aClass, void **ptr)
-{
-  struct objc_method_list **list;
-
-  list = (struct objc_method_list **)ptr;
-
-  if (*list == NULL)
-    *list = aClass->methods;
-  else
-    *list = (*list)->method_next;
-
-  return *list;
-}
-
-Ivar_t object_setInstanceVariable(id obj, const char *name, void *value)
-{
-  Ivar_t var = NULL;
-
-  if (obj && name)
-    {
-      void **varIndex;
-
-      if ((var = class_getInstanceVariable(obj->class_pointer, name)))
-	{
-	  varIndex = (void **)((char *)obj + var->ivar_offset);
-
-	  *varIndex = value;
-	}
-    }
-
-  return var;
-}
-
-void objc_addClass(Class aClass)
-{
-#warning objc_addClass() not implemented !
-}
-
-
-/* Ronald: Eeks, this is scary code. Maybe we should call the right method
- * directory in libffi_support instead of going though objc_msgSendSuper
- */
-id objc_msgSendSuper(struct objc_super *super, SEL op, ...)
-{
-  arglist_t arg_frame;
-  Method *m_imp;
-  const char *type;
-
-  if (super->self)
-    {
-      arg_frame = __builtin_apply_args ();
-
-      m_imp = class_get_instance_method(super->class, op);
-      *((id*)method_get_first_argument (m_imp, arg_frame, &type)) = super->self;
-      *((SEL*)method_get_next_argument (arg_frame, &type)) = op;
-      return __builtin_apply((apply_t)m_imp,
-			     arg_frame,
-			     method_get_sizeof_arguments (m_imp));
-    }
-
-  return nil;
-}
-
-struct objc_method_list *objc_allocMethodList(int numMethods)
-{
-  struct objc_method_list *mlist;
-
-  mlist = malloc(sizeof(struct objc_method_list)
-		 + (numMethods+1) * sizeof(struct objc_method));
-  mlist->method_count = 0;
-  mlist->obsolete = NULL;
-
-  printf("new mlist %p\n", mlist);
-
-  return mlist;
-}
-
-void objc_freeMethodList(struct objc_method_list *list)
-{
-  struct objc_method_list *next;
-
-  while (list)
-    {
-      next = list->method_next;
-
-      free(list);
-
-      list = next;
-    }
-}
-
-#else
-
-struct objc_method_list *objc_allocMethodList(int numMethods)
-{
-	struct objc_method_list *mlist;
-
-	mlist = malloc(sizeof(struct objc_method_list)
-		 + ((numMethods+1) * sizeof(struct objc_method)));
-
-	if (mlist == NULL) {
-		return NULL;
-	}
-
-	mlist->method_count = 0;
-	mlist->obsolete = NULL; 
-
-	return mlist;
-}
-
-void objc_freeMethodList(struct objc_method_list **list)
-{
-	struct objc_method_list** cur;
-
-	if (list) {
-		cur = list;
-		while (*cur != (struct objc_method_list*) -1) {
-			if (*cur != NULL) {
-				free(*cur);
-			}
-			cur++;
-		}
-		free(list);
-	}
-}
-
-#endif

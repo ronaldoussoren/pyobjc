@@ -15,7 +15,7 @@
 static PyObject *AutoGILError;
 
 
-static void autoGILCallback(CFRunLoopObserverRef observer,
+static void autoGILCallback(CFRunLoopObserverRef observer __attribute__((__unused__)),
 			    CFRunLoopActivity activity,
 			    void *info) {
 	PyThreadState **p_tstate = (PyThreadState **)info;
@@ -48,7 +48,7 @@ static void infoRelease(const void *info) {
 }
 
 static PyObject *
-autoGIL_installAutoGIL(PyObject *self)
+autoGIL_installAutoGIL(PyObject *self __attribute__((__unused__)))
 {
 	PyObject *tstate_dict = PyThreadState_GetDict();
 	PyObject *v;
@@ -128,6 +128,8 @@ PyDoc_STRVAR(autoGIL_docs,
 automatically locks and unlocks Python's Global Interpreter Lock\n\
 when running an event loop."
 );
+
+void initautoGIL(void); /* Avoid warning about an undeclared function */
 
 PyMODINIT_FUNC
 initautoGIL(void)

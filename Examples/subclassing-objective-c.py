@@ -49,4 +49,4 @@ print "->", obj.retainCount()
 obj = None
 print "Done"
 
-objc.recyleAutoreleasePool()
+objc.recycleAutoreleasePool()

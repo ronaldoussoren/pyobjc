@@ -36,7 +36,7 @@ class TestRetains(unittest.TestCase):
         LeaksDel = 0
         self.assertEquals(LeaksDel, 0)
         c = NSMutableArray.arrayWithArray_([ LeaksClass.alloc().init() ])
-        objc.recyleAutoreleasePool()
+        objc.recycleAutoreleasePool()
 
         self.assert_(c is not None)
         self.assertEquals(LeaksDel, 0)
@@ -51,7 +51,7 @@ class TestRetains(unittest.TestCase):
         c = NSMutableArray.alloc()
         c = c.initWithArray_(
             [ LeaksClass.alloc().init() ])
-        objc.recyleAutoreleasePool()
+        objc.recycleAutoreleasePool()
 
         self.assert_(c is not None)
         self.assertEquals(LeaksDel, 0)

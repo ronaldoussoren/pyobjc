@@ -3,8 +3,8 @@
  * classes in the objective-C runtime.
  */
 #include "pyobjc.h"
-#include "objc_support.h"
-#include <Foundation/NSInvocation.h>
+
+#import <Foundation/NSInvocation.h>
 
 
 /* List of instance variables, methods and class-methods that should not
@@ -72,9 +72,9 @@ struct class_wrapper {
  * would at least be faster) using libffi.
  */
 static Class find_real_superclass(Class startAt, SEL selector, 
-		METHOD (*find_method)(Class, SEL), IMP currentImp)
+		PyObjCRT_Method_t (*find_method)(Class, SEL), IMP currentImp)
 {
-	METHOD m;
+	PyObjCRT_Method_t m;
 	Class  cur;
 
 	cur = startAt;
@@ -172,9 +172,8 @@ void PyObjCClass_UnbuildClass(Class objc_class)
 	}
 
 
-	objc_freeMethodList(wrapper->class.METHODLISTS);
-	objc_freeMethodList(wrapper->meta_class.METHODLISTS);
-	free((char*)(wrapper->class.name));
+	PyObjCRT_ClearClass(&(wrapper->class));
+	PyObjCRT_ClearClass(&(wrapper->meta_class));
 	free(objc_class);
 }
 
@@ -268,7 +267,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 
 		slot_value = PyTuple_New(0);
 		if (slot_value == NULL) {
-			return NULL;
+			return 0;
 		}
 
 		if (PyDict_SetItemString(clsdict, "__slots__", slot_value) < 0){
@@ -316,7 +315,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 
 	slot_value = PyTuple_New(0);
 	if (slot_value == NULL) {
-		return NULL;
+		return 0;
 	}
 	if (PyDict_SetItemString(clsdict, "__slots__", slot_value) < 0) {
 		Py_DECREF(slot_value);
@@ -391,7 +390,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		goto error_cleanup;
 	}
 
-	if (objc_lookUpClass(name) != NULL) {
+	if (PyObjCRT_LookUpClass(name) != NULL) {
 		ObjCErr_Set(ObjCExc_error, "class already '%s' exists", name);
 		goto error_cleanup;
 	}
@@ -482,7 +481,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (((PyObjCInstanceVariable*)value)->isSlot) {
 				item_size = sizeof(PyObject**);
 			} else {
-				item_size = objc_sizeof_type(
+				item_size = PyObjCRT_SizeOfType(
 					((PyObjCInstanceVariable*)value)->type);
 			}
 			if (item_size == -1) goto error_cleanup;
@@ -490,7 +489,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		} else if (PyObjCSelector_Check(value)) {
 			PyObjCSelector* sel = (PyObjCSelector*)value;
-			METHOD        meth;
+			PyObjCRT_Method_t        meth;
 
 			if (sel->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 				meth = class_getClassMethod(super_class,
@@ -512,7 +511,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			PyObject* pyname;
 			char*     ocname;
 			SEL	  selector;
-			METHOD    meth;
+			PyObjCRT_Method_t    meth;
 			int       is_class_method = 0;
 
 			pyname = key;
@@ -604,7 +603,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	if (method_count == 0) {
 		method_list = NULL;
 	} else {
-		method_list = objc_allocMethodList(method_count);
+		method_list = PyObjCRT_AllocMethodList(method_count);
 
 		if (method_list == NULL) {
 			PyErr_NoMemory();
@@ -616,7 +615,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		meta_method_list = NULL;
 		
 	} else {
-		meta_method_list = objc_allocMethodList(meta_method_count);
+		meta_method_list = PyObjCRT_AllocMethodList(meta_method_count);
 
 		if (meta_method_list == NULL) {
 			PyErr_NoMemory();
@@ -626,19 +625,6 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 
 	/* And fill the method_lists and ivar_list */
-
-#if 0
-	/* Create new_class here, just in case we are the first python
-	 * generation, in which case we need to use new_class (it must just
-	 * be there, it doesn't have to be initialized)
-	 */
-	new_class = calloc(1, sizeof(struct class_wrapper));
-	if (new_class == NULL) {
-		goto error_cleanup;
-	}
-#endif
-
-
 	ivar_size = super_class->instance_size;
 
 	if (first_python_gen) {
@@ -646,15 +632,13 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		 * methods and variables 
 		 */
 		 
-		METHOD meth;
+		PyObjCRT_Method_t meth;
 		PyObject* sel;
 
 #		define METH(pyname, selector, types, imp) 		\
 			meth = method_list->method_list + 		\
 				method_list->method_count++;		\
-			meth->method_name = selector;			\
-			meth->method_types = types;			\
-			meth->method_imp = (IMP)imp;			\
+			PyObjCRT_InitMethod(meth, selector, types, (IMP)imp); \
 			sel = PyObjCSelector_NewNative(&new_class->class, \
 				selector,  types, 0);			\
 			if (sel == NULL) goto error_cleanup;		\
@@ -702,6 +686,11 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			@selector(takeValue:forKey:),
 			"v@:@@",
 			object_method_takeValue_forKey_);
+		METH(
+			"setValue_forKey_",
+			@selector(setValue:forKey:),
+			"v@:@@",
+			object_method_takeValue_forKey_);
 #undef		METH
 	}
 
@@ -723,7 +712,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		}
 
 		if (PyObjCInstanceVariable_Check(value)) {
-			IVAR var;
+			PyObjCRT_Ivar_t var;
 
 			var = ivar_list->ivar_list + ivar_list->ivar_count;
 			ivar_list->ivar_count++;
@@ -739,7 +728,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				item_size = sizeof(PyObject**);
 			} else {
 				var->ivar_type = strdup(((PyObjCInstanceVariable*)value)->type);
-				item_size = objc_sizeof_type(var->ivar_type);
+				item_size = PyObjCRT_SizeOfType(var->ivar_type);
 			}
 
 			if (item_size == -1) goto error_cleanup;
@@ -747,7 +736,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 		} else if (PyObjCSelector_Check(value)) {
 			PyObjCSelector* sel = (PyObjCSelector*)value;
-			METHOD        meth;
+			PyObjCRT_Method_t        meth;
 			int           is_override = 0;
 			struct objc_method_list* lst;
 
@@ -764,18 +753,28 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			}
 
 			meth = lst->method_list + lst->method_count;
-			meth->method_name = sel->sel_selector;
-			meth->method_types = sel->sel_signature;
 		
 			if (is_override) {
-				meth->method_imp = 
+				PyObjCRT_InitMethod(
+					meth, 
+					sel->sel_selector, 
+					sel->sel_signature,
 					ObjC_FindIMP(super_class, 
-						sel->sel_selector);
+						sel->sel_selector));
 			} else {
-				meth->method_imp = 
+				PyObjCRT_InitMethod(
+					meth, 
+					sel->sel_selector, 
+					sel->sel_signature,
 					ObjC_FindIMPForSignature(
-						sel->sel_signature);
+						sel->sel_signature));
+			}
 
+			if (meth->method_imp == (IMP)PyObjCUnsupportedMethod_IMP) {
+				PyErr_Format(PyExc_TypeError,
+					"Cannot override %s from Python",
+					PyObjCRT_SELName(sel->sel_selector));
+				goto error_cleanup;
 			}
 
 			if (sel->sel_class == NULL) {
@@ -800,48 +799,18 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 	new_class->magic = MAGIC;
 	new_class->python_class = NULL;
-	new_class->class.METHODLISTS = NULL;
-	new_class->meta_class.METHODLISTS = NULL;
-	GETISA(&new_class->class) = &new_class->meta_class;
-	new_class->class.info = CLS_CLASS|CLS_METHOD_ARRAY;
-	new_class->meta_class.info = CLS_META|CLS_METHOD_ARRAY;
 
-	new_class->class.name = strdup(name);
-	new_class->meta_class.name = new_class->class.name;
-
-#ifndef GNU_RUNTIME
-	new_class->class.METHODLISTS = 
-		calloc(1, sizeof(struct objc_method_list*));
-	if (new_class->class.METHODLISTS == NULL) goto error_cleanup;
-
-	new_class->meta_class.METHODLISTS = 
-		calloc(1, sizeof(struct objc_method_list*));
-	if (new_class->meta_class.METHODLISTS == NULL) goto error_cleanup;
-
-	/* 
-	 * This is MacOS X specific, and an undocumented feature (long live
-	 * Open Source!). 
-	 *
-	 * The code in the objc runtime assumes that the method lists are 
-	 * terminated by '-1', and will happily overwite existing data if
-	 * they aren't.
-	 *
-	 * Ronald filed a bugreport for this: Radar #3317376
-	 */
-	new_class->class.METHODLISTS[0] = (struct objc_method_list*)-1;
-	new_class->meta_class.METHODLISTS[0] = (struct objc_method_list*)-1;
-
-#endif
-
-	new_class->class.super_class = super_class;
-	new_class->meta_class.super_class = GETISA(super_class);
-	GETISA(&new_class->meta_class) = GETISA(root_class);
-
-	new_class->class.instance_size = ivar_size;
-	new_class->class.ivars = ivar_list;
-
-	new_class->class.protocols = NULL;
-	new_class->meta_class.protocols = NULL;
+	i = PyObjCRT_SetupClass(
+		&new_class->class, 
+		&new_class->meta_class, 
+		name,
+		super_class,
+		root_class,
+		ivar_size, ivar_list
+		);
+	if (i < 0) {
+		goto error_cleanup;
+	}
 
 	if (method_list) {
 		class_addMethods(&(new_class->class), method_list);
@@ -882,16 +851,8 @@ error_cleanup:
 	}
 
 	if (new_class != NULL) {
-		if(new_class->class.METHODLISTS) {
-			objc_freeMethodList(new_class->class.METHODLISTS);
-		}
-		if (new_class->meta_class.METHODLISTS) {
-			objc_freeMethodList(new_class->meta_class.METHODLISTS);
-		}
-
-		if (new_class->class.name) {
-			free((char*)(new_class->class.name));
-		}
+		PyObjCRT_ClearClass(&(new_class->class));
+		PyObjCRT_ClearClass(&(new_class->meta_class));
 		free(new_class);
 	}
 
@@ -915,7 +876,7 @@ static void
 free_ivars(id self, PyObject* cls)
 {
 	/* Free all instance variables introduced through python */
-	IVAR var;
+	PyObjCRT_Ivar_t var;
 
 	var = class_getInstanceVariable(PyObjCClass_GetClass(cls), "__dict__");
 	if (var != NULL) {
@@ -1004,13 +965,13 @@ static void object_method_dealloc(id self, SEL sel __attribute__((__unused__)))
 	PyObject* obj;
 	PyObject* delmethod;
 	PyObject* cls;
-
 	PyObject* ptype, *pvalue, *ptraceback;
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
-	CHECK_MAGIC(self->isa);
-	cls = PyObjCClass_New(self->isa);
+	CHECK_MAGIC(GETISA(self));
+	cls = PyObjCClass_New(GETISA(self));
 	if (!PyObjCClass_HasPythonImplementation(cls)) {
 		printf("-dealloc substitute called for pure ObjC class\n");
 		abort();
@@ -1037,7 +998,8 @@ static void object_method_dealloc(id self, SEL sel __attribute__((__unused__)))
 		@selector(dealloc), class_getInstanceMethod, 
 		(IMP)object_method_dealloc);
 	RECEIVER(super) = self;
-	
+
+	PyGILState_Release(state);
 	objc_msgSendSuper(&super, @selector(dealloc)); 
 }
 
@@ -1049,6 +1011,7 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 	BOOL              res;
         PyObject*         pyself;
 	PyObject*         pymeth;
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	/* First check if we respond */
 	pyself = PyObjCObject_New(self);
@@ -1058,8 +1021,15 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 	pymeth = PyObjCObject_FindSelector(pyself, aSelector);
 	Py_DECREF(pyself);
 	if (pymeth) {
+		res = YES;
+
+		if (PyObjCSelector_Check(pymeth) && (((PyObjCSelector*)pymeth)->sel_flags & PyObjCSelector_kCLASS_METHOD)) {
+			res = NO;	
+		}
+			
 		Py_DECREF(pymeth);
-		return YES;
+		PyGILState_Release(state);
+		return res;
 	}
 	PyErr_Clear();
 
@@ -1069,6 +1039,7 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 			(IMP)object_method_respondsToSelector);
 	RECEIVER(super) = self;
 
+	PyGILState_Release(state);
 	res = (int)objc_msgSendSuper(&super, selector, aSelector);
 	return res;
 }
@@ -1081,6 +1052,7 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 	struct objc_super  super;
         PyObject*          pyself;
 	PyObject*          pymeth;
+	PyGILState_STATE state;
 
 	super.class = find_real_superclass(
 			GETISA(self), 
@@ -1097,6 +1069,8 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 	if (result != nil) {
 		return result;
 	}
+
+	state = PyGILState_Ensure();
 
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
@@ -1115,6 +1089,7 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 		  	(PyObjCSelector*)pymeth)->sel_signature];
 	Py_DECREF(pymeth);
 	Py_DECREF(pyself);
+	PyGILState_Release(state);
 	return result;
 }
 
@@ -1137,17 +1112,20 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	PyObject* pymeth;
 	PyObject* pyself;
 	int have_output = 0;
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	pymeth = PyObjCObject_FindSelector(pyself, [invocation selector]);
 	if ((pymeth == NULL) || ObjCNativeSelector_Check(pymeth)) {
 		struct objc_super super;
 
-		if (pymeth == NULL) PyErr_Clear();
+		if (pymeth == NULL) {
+			PyErr_Clear();
+		}
 
 		Py_XDECREF(pymeth);
 		Py_XDECREF(pyself);
@@ -1156,7 +1134,8 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 				GETISA(self), 
 				selector, class_getInstanceMethod, 
 				(IMP)object_method_forwardInvocation);
-		super.receiver = self;
+		RECEIVER(super) = self;
+		PyGILState_Release(state);
 		objc_msgSendSuper(&super, selector, invocation);
 		return;
 	}
@@ -1169,7 +1148,8 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 	args = PyList_New(1);
 	if (args == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
+		return;
 	}
 
 	i = PyList_SetItem(args, 0, pythonify_c_value(
@@ -1177,17 +1157,17 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 					(void*)&self));
 	if (i < 0) {
 		Py_DECREF(args);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	for (i = 2; i < len; i++) {
 		type = [signature getArgumentTypeAtIndex:i];
-		arglen = objc_sizeof_type(type);
+		arglen = PyObjCRT_SizeOfType(type);
 
 		if (arglen == -1) {
 			Py_DECREF(args);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
 
@@ -1196,10 +1176,6 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		[invocation getArgument:argbuf atIndex:i];
 
 		switch (*type) {
-		case _C_PTR:
-			have_output ++;
-			v = pythonify_c_value(type+1, *(void**)argbuf);
-			break;
 		case _C_INOUT:
 			if (type[1] == _C_PTR) {
 				have_output ++;
@@ -1223,13 +1199,13 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 		if (v == NULL) {
 			Py_DECREF(args);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
 
 		if (PyList_Append(args, v) < 0) {
 			Py_DECREF(args);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
 	}
@@ -1237,7 +1213,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	v = PyList_AsTuple(args);
 	if (v == NULL) {
 		Py_DECREF(args);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	Py_DECREF(args);
@@ -1246,15 +1222,15 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	result = PyObjC_CallPython(self, [invocation selector], args, &isAlloc);
 	Py_DECREF(args);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	type = [signature methodReturnType];
-	arglen = objc_sizeof_type(type);
+	arglen = PyObjCRT_SizeOfType(type);
 
 	if (arglen == -1) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -1264,7 +1240,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 			err = depythonify_c_value(type, result, arg);
 			if (err == -1) {
-				PyObjCErr_ToObjC();
+				PyObjCErr_ToObjCWithGILState(&state);
 				return;
 			}
 			if (isAlloc && *type == _C_ID) {
@@ -1273,6 +1249,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 			[invocation setReturnValue:arg];
 		}
 		Py_DECREF(result);
+
 	} else {
 		int idx;
 		PyObject* real_res;
@@ -1291,14 +1268,11 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 				type = [signature getArgumentTypeAtIndex:i];
 
 				if (arglen == -1) {
-					PyObjCErr_ToObjC();
+					PyObjCErr_ToObjCWithGILState(&state);
 					return;
 				}
 
 				switch (*type) {
-				case _C_PTR:
-					type ++;
-					break;
 				case _C_INOUT: case _C_OUT:
 					if (type[1] != _C_PTR) {
 						continue;
@@ -1312,7 +1286,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 				[invocation getArgument:&ptr atIndex:i];
 				err = depythonify_c_value(type, result, ptr);
 				if (err == -1) {
-					PyObjCErr_ToObjC();
+					PyObjCErr_ToObjCWithGILState(&state);
 				}
 				if (v->ob_refcnt == 1 && type[0] == _C_ID) {
 					/* make sure return value doesn't die before
@@ -1335,10 +1309,10 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 			     || PyTuple_Size(result) != have_output+1) {
 				ObjCErr_Set(PyExc_TypeError,
 					"%s: Need tuple of %d arguments as result",
-					SELNAME([invocation selector]),
+					PyObjCRT_SELName([invocation selector]),
 					have_output+1);
 				Py_DECREF(result);
-				PyObjCErr_ToObjC();
+				PyObjCErr_ToObjCWithGILState(&state);
 				return;
 			}
 			idx = 1;
@@ -1348,7 +1322,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 			err = depythonify_c_value(type, real_res, arg);
 			if (err == -1) {
-				PyObjCErr_ToObjC();
+				PyObjCErr_ToObjCWithGILState(&state);
 				return;
 			}
 			if (isAlloc && *type == _C_ID) {
@@ -1361,10 +1335,10 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 			     || PyTuple_Size(result) != have_output) {
 				ObjCErr_Set(PyExc_TypeError,
 					"%s: Need tuple of %d arguments as result",
-					SELNAME([invocation selector]),
+					PyObjCRT_SELName([invocation selector]),
 					have_output);
 				Py_DECREF(result);
-				PyObjCErr_ToObjC();
+				PyObjCErr_ToObjCWithGILState(&state);
 				return;
 			}
 			idx = 0;
@@ -1376,14 +1350,11 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 			type = [signature getArgumentTypeAtIndex:i];
 
 			if (arglen == -1) {
-				PyObjCErr_ToObjC();
+				PyObjCErr_ToObjCWithGILState(&state);
 				return;
 			}
 
 			switch (*type) {
-			case _C_PTR:
-				type ++;
-				break;
 			case _C_INOUT: case _C_OUT:
 				if (type[1] != _C_PTR) {
 					continue;
@@ -1398,7 +1369,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 			v = PyTuple_GET_ITEM(result, idx++);
 			err = depythonify_c_value(type, v, ptr);
 			if (err == -1) {
-				PyObjCErr_ToObjC();
+				PyObjCErr_ToObjCWithGILState(&state);
 			}
 			if (v->ob_refcnt == 1 && type[0] == _C_ID) {
 				/* make sure return value doesn't die before
@@ -1410,19 +1381,18 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		}
 		Py_DECREF(result);
 	}
+	PyGILState_Release(state);
 }
 
 /*
  * XXX: Function PyObjC_CallPython should be moved
  */
-
 PyObject*
 PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 {
 	PyObject* pyself = NULL;
 	PyObject* pymeth = NULL;
 	PyObject* result;
-
 
 	pyself = pythonify_c_value("@", &self);
 	if (pyself == NULL) {
@@ -1439,6 +1409,10 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 		Py_DECREF(pyself);
 		PyObjCErr_ToObjC();
 		return NULL;
+	}
+
+	if (NULL != ((PyObjCSelector*)pymeth)->sel_self) {
+		abort();
 	}
 
 	if (isAlloc != NULL) {
@@ -1472,7 +1446,7 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 static int
 getAttribute(id self, NSString* key, id* result)
 {
-	PyObject* cls = PyObjCClass_New(self->isa);
+	PyObject* cls = PyObjCClass_New(GETISA(self));
 	PyObject* val;
 	PyObject* att;
 	PyObject* dict;
@@ -1565,7 +1539,7 @@ getAttribute(id self, NSString* key, id* result)
 static int
 getAccessor(id self, NSString* key, id* result)
 {
-	PyObject* cls = PyObjCClass_New(self->isa);
+	PyObject* cls = PyObjCClass_New(GETISA(self));
 	PyObject* val;
 	PyObject* att;
 	int r;
@@ -1603,7 +1577,7 @@ getAccessor(id self, NSString* key, id* result)
 static int
 setAttribute(id self, NSString* key, id value)
 {
-	PyObject* cls = PyObjCClass_New(self->isa);
+	PyObject* cls = PyObjCClass_New(GETISA(self));
 	PyObject* val;
 	PyObject* att;
 	int dictoffset;
@@ -1666,7 +1640,7 @@ setAttribute(id self, NSString* key, id value)
 static int
 setAccessor(id self, NSString* key, id value)
 {
-	PyObject* cls = PyObjCClass_New(self->isa);
+	PyObject* cls = PyObjCClass_New(GETISA(self));
 	PyObject* val;
 	PyObject* att;
 
@@ -1710,14 +1684,18 @@ object_method_storedValueForKey_(id self, SEL _meth, NSString* key)
 	int r;
 	struct objc_super super;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	r = getAccessor(self, [NSString stringWithFormat: @"get_%@", key], 
 		&result);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return result;
 	}
 
 	r = getAttribute(self, key, &result);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return result;
 	}
 
@@ -1725,14 +1703,17 @@ object_method_storedValueForKey_(id self, SEL _meth, NSString* key)
 	r = getAccessor(self, [NSString stringWithFormat: @"_get_%@", key], 
 		&result);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return result;
 	}
 
 	r = getAttribute(self, [NSString stringWithFormat: @"_%@", key], 
 		&result);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return result;
 	}
+	PyGILState_Release(state);
 
 	/* Call super */
 	super.class = find_real_superclass(
@@ -1740,7 +1721,7 @@ object_method_storedValueForKey_(id self, SEL _meth, NSString* key)
 		_meth,
 		class_getInstanceMethod,
 		(IMP)object_method_storedValueForKey_);
-	super.receiver = self;
+	RECEIVER(super) = self;
 	return objc_msgSendSuper(&super, _meth, key);
 }
 
@@ -1750,15 +1731,18 @@ object_method_valueForKey_(id self, SEL _meth, NSString* key)
 	id result;
 	int r;
 	struct objc_super super;
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	r = getAccessor(self, [NSString stringWithFormat: @"get_%@", key], 
 		&result);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return result;
 	}
 
 	r = getAttribute(self, key, &result);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return result;
 	}
 
@@ -1766,35 +1750,40 @@ object_method_valueForKey_(id self, SEL _meth, NSString* key)
 	r = getAccessor(self, [NSString stringWithFormat: @"_get_%@", key], 
 		&result);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return result;
 	}
 
 	r = getAccessor(self, [NSString stringWithFormat: @"%@", key], 
 		&result);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return result;
 	}
 
 	r = getAccessor(self, [NSString stringWithFormat: @"_%@", key], 
 		&result);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return result;
 	}
 
 	r = getAttribute(self, [NSString stringWithFormat: @"_%@", key], 
 		&result);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return result;
 	}
 
 
 	/* Call super */
+	PyGILState_Release(state);
 	super.class = find_real_superclass(
 		GETISA(self),
 		_meth,
 		class_getInstanceMethod,
 		(IMP)object_method_valueForKey_);
-	super.receiver = self;
+	RECEIVER(super) = self;
 	result = objc_msgSendSuper(&super, _meth, key);
 	return result;
 }
@@ -1804,10 +1793,12 @@ object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* ke
 {
 	struct objc_super super;
 	int r;
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	r = setAccessor(self, 
 		[NSString stringWithFormat:@"set_%@", key], value);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return;
 	}
 
@@ -1815,17 +1806,20 @@ object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* ke
 		[NSString stringWithFormat:@"set%@", [key capitalizedString]], 
 		value);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return;
 	}
 
 	r = setAttribute(self, key, value);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return;
 	}
 
 	r = setAccessor(self, 
 		[NSString stringWithFormat:@"_set_%@", key], value);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return;
 	}
 
@@ -1833,11 +1827,13 @@ object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* ke
 		[NSString stringWithFormat:@"_set%@", [key capitalizedString]], 
 		value);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return;
 	}
 
 	r = setAttribute(self, [NSString stringWithFormat:@"_%@", key], value);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return;
 	}
 
@@ -1848,8 +1844,9 @@ object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* ke
 			_meth,
 			class_getInstanceMethod,
 			(IMP)object_method_takeStoredValue_forKey_);
-		super.receiver = self;
+		RECEIVER(super) = self;
 		(void)objc_msgSendSuper(&super, _meth, value, key);
+		PyGILState_Release(state);
 	NS_HANDLER
 		/* Parent doesn't know the key, try to create in the 
 		 * python side, just like for plain python objects.
@@ -1861,6 +1858,7 @@ object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* ke
 			val = pythonify_c_value(@encode(id), &value);
 			if (val == NULL) {
 				PyErr_Clear();
+				PyGILState_Release(state);
 				[localException raise];
 			}
 
@@ -1870,10 +1868,13 @@ object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* ke
 			Py_DECREF(val);
 			if (r == -1) {
 				PyErr_Clear();
+				PyGILState_Release(state);
 				[localException raise];
 			}
+			PyGILState_Release(state);
 				
 		} else {
+			PyGILState_Release(state);
 			[localException raise];
 		}
 	NS_ENDHANDLER
@@ -1884,10 +1885,12 @@ object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
 {
 	struct objc_super super;
 	int r;
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	r = setAccessor(self, 
 		[NSString stringWithFormat:@"set_%@", key], value);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return;
 	}
 
@@ -1895,17 +1898,20 @@ object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
 		[NSString stringWithFormat:@"set%@", [key capitalizedString]], 
 		value);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return;
 	}
 
 	r = setAttribute(self, key, value);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return;
 	}
 
 	r = setAccessor(self, 
 		[NSString stringWithFormat:@"_set_%@", key], value);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return;
 	}
 
@@ -1913,11 +1919,13 @@ object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
 		[NSString stringWithFormat:@"_set%@", [key capitalizedString]], 
 		value);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return;
 	}
 
 	r = setAttribute(self, [NSString stringWithFormat:@"_%@", key], value);
 	if (r == 0) {
+		PyGILState_Release(state);
 		return;
 	}
 
@@ -1929,8 +1937,9 @@ object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
 			_meth,
 			class_getInstanceMethod,
 			(IMP)object_method_takeValue_forKey_);
-		super.receiver = self;
+		RECEIVER(super) = self;
 		(void)objc_msgSendSuper(&super, _meth, value, key);
+		PyGILState_Release(state);
 	NS_HANDLER
 		/* Parent doesn't know the key, try to create in the 
 		 * python side, just like for plain python objects.
@@ -1942,6 +1951,7 @@ object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
 			val = pythonify_c_value(@encode(id), &value);
 			if (val == NULL) {
 				PyErr_Clear();
+				PyGILState_Release(state);
 				[localException raise];
 			}
 
@@ -1951,10 +1961,13 @@ object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
 			Py_DECREF(val);
 			if (r == -1) {
 				PyErr_Clear();
+				PyGILState_Release(state);
 				[localException raise];
 			}
+			PyGILState_Release(state);
 				
 		} else {
+			PyGILState_Release(state);
 			[localException raise];
 		}
 	NS_ENDHANDLER

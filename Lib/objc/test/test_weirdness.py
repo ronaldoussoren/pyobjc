@@ -11,27 +11,31 @@
 # NSActionCell.isEnabled_, which is wrong.
 #
 
+import sys
 import unittest
 
 import objc
-import AppKit
 
-class TestWeirdness(unittest.TestCase):
-    def doWeirdness(self, className, methodToTest):
-        c = objc.lookUpClass(className)
-        before = getattr(c, methodToTest)
-        b = c.alloc().init()
-        after = getattr(c, methodToTest)
+if sys.platform == 'darwin':
+	import AppKit
 
-        self.assert_(before != after, "No weirdness present on %s.%s"%(
-            className, methodToTest))
-        
+	class TestWeirdness(unittest.TestCase):
 
-    def testWeirdness1(self):
-        self.doWeirdness("NSButtonCell", "setEnabled_")
+	    def doWeirdness(self, className, methodToTest):
+		c = objc.lookUpClass(className)
+		before = getattr(c, methodToTest)
+		b = c.alloc().init()
+		after = getattr(c, methodToTest)
 
-    def testWeirdness2(self):
-        self.doWeirdness("NSTextView", "setEditable_")
+		self.assert_(before != after, "No weirdness present on %s.%s"%(
+		    className, methodToTest))
+		
+
+	    def testWeirdness1(self):
+		self.doWeirdness("NSButtonCell", "setEnabled_")
+
+	    def testWeirdness2(self):
+		self.doWeirdness("NSTextView", "setEditable_")
 
 
 if __name__ == '__main__':

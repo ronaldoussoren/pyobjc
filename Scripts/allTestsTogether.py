@@ -17,6 +17,8 @@ import unittest
 from os.path import basename, dirname, splitext, join, expanduser, walk
 from fnmatch import fnmatch
 
+INCLUDE_GUI=0
+
 def recursiveGlob(root, pathPattern):
     result = []
 
@@ -59,6 +61,12 @@ if __name__ == '__main__':
         root = args[args.index('-r') + 1]
     # import the tests
     importExternalTestCases("test_*.py", root)
+
+    if INCLUDE_GUI:
+        import AppKit
+        AppKit.NSApplication.sharedApplication().activateIgnoringOtherApps_(0)
+        importExternalTestCases('guitest_*.py', root)
+
     # please unittest
     del sys.argv[1:]
     #sys.argv.append('-v')

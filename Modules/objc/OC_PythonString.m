@@ -1,6 +1,4 @@
-#include "OC_PythonString.h"
 #include "pyobjc.h"
-#include "objc_support.h"
 
 /* 
  * FIXME: Using CFString in the implementation of this class seems unnecessary.

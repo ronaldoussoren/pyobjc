@@ -90,15 +90,17 @@ static id imp_NSSet_setWithObjects_count_(id self, SEL sel,
 	int i;
 	id  returnValue;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -106,7 +108,7 @@ static id imp_NSSet_setWithObjects_count_(id self, SEL sel,
 
 	v = PyTuple_New(count);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	for (i = 0; i < count; i++) {
@@ -114,7 +116,7 @@ static id imp_NSSet_setWithObjects_count_(id self, SEL sel,
 		if (PyTuple_GET_ITEM(v, i) == NULL) {
 			Py_DECREF(v);
 			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 	}
@@ -123,7 +125,7 @@ static id imp_NSSet_setWithObjects_count_(id self, SEL sel,
 	v = PyInt_FromLong(count);
 	if (v == NULL) {	
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	PyTuple_SET_ITEM(arglist, 2,  v);
@@ -131,16 +133,17 @@ static id imp_NSSet_setWithObjects_count_(id self, SEL sel,
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	returnValue = PyObjC_PythonToId(result);
 	Py_DECREF(result);
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
+	PyGILState_Release(state);
 	return returnValue;
 }
 
@@ -223,15 +226,17 @@ static id imp_NSSet_initWithObjects_count_(id self, SEL sel,
 	int i;
 	id  returnValue;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -239,7 +244,7 @@ static id imp_NSSet_initWithObjects_count_(id self, SEL sel,
 
 	v = PyTuple_New(count);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	for (i = 0; i < count; i++) {
@@ -247,7 +252,7 @@ static id imp_NSSet_initWithObjects_count_(id self, SEL sel,
 		if (PyTuple_GET_ITEM(v, i) == NULL) {
 			Py_DECREF(v);
 			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 	}
@@ -256,7 +261,7 @@ static id imp_NSSet_initWithObjects_count_(id self, SEL sel,
 	v = PyInt_FromLong(count);
 	if (v == NULL) {	
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	PyTuple_SET_ITEM(arglist, 2,  v);
@@ -264,16 +269,17 @@ static id imp_NSSet_initWithObjects_count_(id self, SEL sel,
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	returnValue = PyObjC_PythonToId(result);
 	Py_DECREF(result);
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
+	PyGILState_Release(state);
 	return returnValue;
 }
 
@@ -281,6 +287,7 @@ static int
 _pyobjc_install_NSSet(void)
 {
 	Class classNSSet = objc_lookUpClass("NSSet");
+	if (classNSSet == NULL) return 0;
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSSet,

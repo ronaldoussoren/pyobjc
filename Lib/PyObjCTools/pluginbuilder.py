@@ -38,6 +38,102 @@ CODE="""\
 #import <Foundation/Foundation.h>
 
 #include <Python/Python.h>
+#include <objc/objc.h>
+
+
+#if 1
+
+/* We want to override classNamed: in "our" NSBundle instance, do this
+ * by changing it's type...
+ */
+
+@interface _PyObjC_BundleHelper_%(BUNDLE)s_ : NSBundle
+{
+}
+@end
+
+@implementation _PyObjC_BundleHelper_%(BUNDLE)s_
+
+-(Class)classNamed:(NSString*)name
+{
+static Class (*getClass)(PyObject*) = NULL;
+static PyObject* myModule = NULL;
+    PyObject* m;
+    PyObject* t;
+    PyObject* n;
+    Class result = [super classNamed: name];
+    if (result) {
+        return result;
+    }
+
+    if (myModule == NULL) {
+        n = PyString_FromString("__main_%(BUNDLE)s__");
+        if (n == NULL) {
+            PyErr_Clear();
+            return nil;
+        }
+
+        myModule = PyImport_Import(n);
+        Py_DECREF(n);
+        if (myModule == NULL) {
+            PyErr_Clear();
+            return nil;
+        }
+    }
+
+    t = PyObject_GetAttrString(myModule, (char*)[name cString]);
+    if (t == NULL) {
+        PyErr_Clear();
+        return nil;
+    }
+
+    if (getClass == NULL) {
+        PyObject* n = PyString_FromString("objc._objc");
+        if (n == NULL) {
+            PyErr_Clear();
+            Py_DECREF(t);
+            return nil;
+        }
+
+        m = PyImport_Import(n);
+        Py_DECREF(n);
+        if (m == NULL) {
+            PyErr_Clear();
+            Py_DECREF(n);
+            Py_DECREF(t);
+            return nil;
+        }
+
+        n = PyObject_GetAttrString(m, "__C_GETCLASS__");
+        Py_DECREF(m);
+        if (n == NULL) {
+            Py_DECREF(t);
+            PyErr_Clear();
+            return nil;
+        } 
+       
+        getClass = PyCObject_AsVoidPtr(n);
+        Py_DECREF(n);
+
+        if (getClass == NULL) {
+            PyErr_Clear();
+            Py_DECREF(t);
+            return nil;
+        }
+    }
+
+    result = getClass(t);
+    if (result == NULL) {
+        PyErr_Clear();
+    }
+
+    Py_DECREF(t);
+    return result;
+}
+@end
+
+#endif
+
 
 @interface PyObjC_Bundle_%(BUNDLE)s
 {
@@ -47,6 +143,11 @@ CODE="""\
 
 @end
 
+static void changeClass(id obj, Class newClass)
+{
+    obj->isa = newClass;
+}
+
 @implementation PyObjC_Bundle_%(BUNDLE)s
 
 +(void)load
@@ -55,11 +156,17 @@ CODE="""\
 	NSString* mainPath;
 	FILE*     fp;
         PyObject *m, *d, *v;
+        
 
         //NSLog(@"Loading prefpane %(MAINFILE)s %(BUNDLE)s");
 
 	bundle = [NSBundle bundleForClass:self];
 	[bundle load];
+
+#if 1
+        /* This is *very* ugly */
+        changeClass(bundle, [_PyObjC_BundleHelper_%(BUNDLE)s_ class]);
+#endif
 
         mainPath = [bundle pathForResource:@"%(MAINFILE)s" ofType:@"py"];
 
@@ -73,6 +180,7 @@ CODE="""\
 	if (!Py_IsInitialized()) {
 		Py_Initialize();
 	}
+
 
 	fp = fopen([mainPath cString], "r");
 	if (fp == NULL) {

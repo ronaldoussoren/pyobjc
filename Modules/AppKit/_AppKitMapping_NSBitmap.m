@@ -17,7 +17,7 @@
 
 /* XXX: Needs looking into, argument parsing seems awfully complex */
 static PyObject*
-call_NSBitmapImageRep_initWithBitmap(PyObject* method __attribute__((__unused__)), 
+call_NSBitmapImageRep_initWithBitmap(PyObject* method, 
 		PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
@@ -83,11 +83,14 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method __attribute__((__unused__)
 
 	NS_DURING
 		PyObjC_InitSuper(&super,
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
     
 		newImageRep = objc_msgSendSuper(&super,
-				@selector(initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:), dataPlanes, width, height, bps, spp, hasAlpha, isPlanar, colorSpaceNameString, bpr, bpp);
+				PyObjCSelector_GetSelector(method),
+				dataPlanes, width, height, bps, spp, 
+				hasAlpha, isPlanar, colorSpaceNameString, 
+				bpr, bpp);
 
 		result = PyObjC_IdToPython(newImageRep);
 	NS_HANDLER
@@ -100,7 +103,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method __attribute__((__unused__)
 
 
 static PyObject*
-call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method __attribute__((__unused__)), 
+call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, 
 		PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
@@ -116,11 +119,11 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method __attribute__((__unu
 		int bytesPerPlane;
 
 		PyObjC_InitSuper(&super,
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
     
 		(void)objc_msgSendSuper(&super, 
-			@selector(getBitmapDataPlanes:),
+			PyObjCSelector_GetSelector(method),
 			&dataPlanes);
 		bytesPerPlane = (int) objc_msgSend(
 			PyObjCObject_GetObject(self), @selector(bytesPerPlane));
@@ -150,7 +153,7 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method __attribute__((__unu
 }
 
 static PyObject*
-call_NSBitmapImageRep_bitmapData(PyObject* method __attribute__((__unused__)), 
+call_NSBitmapImageRep_bitmapData(PyObject* method, 
 		PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
@@ -165,10 +168,11 @@ call_NSBitmapImageRep_bitmapData(PyObject* method __attribute__((__unused__)),
 		int bytesPerPlane;
 
 		PyObjC_InitSuper(&super,
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
     
-		bitmapData = (unsigned char *) objc_msgSendSuper(&super, @selector(bitmapData));
+		bitmapData = (unsigned char *) objc_msgSendSuper(&super, 
+				PyObjCSelector_GetSelector(method));
 		bytesPerPlane = (int) objc_msgSend(
 			PyObjCObject_GetObject(self), @selector(bytesPerPlane));
 

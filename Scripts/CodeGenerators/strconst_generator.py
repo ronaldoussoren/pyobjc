@@ -44,10 +44,10 @@ def process_file(outfp, filename, ignore):
             continue
 
         m = MATCH_RE.search(ln)
-        if not m: continue
+        if m: 
+            ident = m.group(2)
+            entry(outfp, ident, ignore)
 
-        ident = m.group(2)
-        entry(outfp, ident, ignore)
 
 def generate(dirname, fn = None, ignore=(), filter = lambda x: 1):
     if not os.path.exists(dirname): return

@@ -99,8 +99,8 @@ call_NSArray_sortedArrayUsingFunction_context_(
 
 			
 		res = objc_msgSendSuper(&super,
-				@selector(sortedArrayUsingFunction:context:),
-				 SortHelperFunc, realContext);
+				PyObjCSelector_GetSelector(method), 
+				SortHelperFunc, realContext);
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
@@ -148,7 +148,7 @@ static PyObject* call_NSArray_sortedArrayUsingFunction_context_hint_(
 			PyObjCObject_GetObject(self));
 			
 		res = objc_msgSendSuper(&super,
-			@selector(sortedArrayUsingFunction:context:hint:),
+			 PyObjCSelector_GetSelector(method),
 			 SortHelperFunc, realContext, hint);
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
@@ -184,15 +184,17 @@ imp_NSArray_sortedArrayUsingFunction_context_(id self, SEL sel,
 	int i;
 	id  returnValue;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -201,7 +203,7 @@ imp_NSArray_sortedArrayUsingFunction_context_(id self, SEL sel,
 	v = sortFuncWrapper(func);
 	if (v == NULL ){
 		 Py_DECREF(arglist);
-		 PyObjCErr_ToObjC();
+		 PyObjCErr_ToObjCWithGILState(&state);
 		 return nil;
 	}
 	PyTuple_SET_ITEM(arglist, 1, v);
@@ -209,7 +211,7 @@ imp_NSArray_sortedArrayUsingFunction_context_(id self, SEL sel,
 	v = PyCObject_New(context, NULL);
 	if (v == NULL) {
 		Py_DECRF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	PyTuple_SET_ITEM(arglist, 2, v);
@@ -217,16 +219,17 @@ imp_NSArray_sortedArrayUsingFunction_context_(id self, SEL sel,
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	returnValue = PyObjC_PythonToId(result);
 	Py_DECREF(result);
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
+	PyGILState_Release(state);
 	return returnValue;
 }
 
@@ -347,7 +350,7 @@ static PyObject* call_NSArray_arrayWithObjects_count_(
 
 			
 		res = objc_msgSendSuper(&super,
-				@selector(arrayWithObjects:count:),
+				PyObjCSelector_GetSelector(method),
 				objects, count);
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
@@ -373,16 +376,17 @@ static id imp_NSArray_arrayWithObjects_count_(id self, SEL sel,
 	PyObject* v;
 	int i;
 	id  returnValue;
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -390,7 +394,7 @@ static id imp_NSArray_arrayWithObjects_count_(id self, SEL sel,
 
 	v = PyTuple_New(count);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	for (i = 0; i < count; i++) {
@@ -398,7 +402,7 @@ static id imp_NSArray_arrayWithObjects_count_(id self, SEL sel,
 		if (PyTuple_GET_ITEM(v, i) == NULL) {
 			Py_DECREF(v);
 			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 	}
@@ -407,7 +411,7 @@ static id imp_NSArray_arrayWithObjects_count_(id self, SEL sel,
 	v = PyInt_FromLong(count);
 	if (v == NULL) {	
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	PyTuple_SET_ITEM(arglist, 2,  v);
@@ -415,16 +419,17 @@ static id imp_NSArray_arrayWithObjects_count_(id self, SEL sel,
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	returnValue = PyObjC_PythonToId(result);
 	Py_DECREF(result);
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
+	PyGILState_Release(state);
 	return returnValue;
 }
 
@@ -480,7 +485,7 @@ static PyObject* call_NSArray_arrayByAddingObjects_count_(
 
 			
 		res = objc_msgSendSuper(&super,
-				@selector(arrayByAddingObjects:count:),
+				PyObjCSelector_GetSelector(method),
 				objects, count);
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
@@ -507,15 +512,17 @@ static id imp_NSArray_arrayByAddingObjects_count_(id self, SEL sel,
 	int i;
 	id  returnValue;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -523,7 +530,7 @@ static id imp_NSArray_arrayByAddingObjects_count_(id self, SEL sel,
 
 	v = PyTuple_New(count);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	for (i = 0; i < count; i++) {
@@ -531,7 +538,7 @@ static id imp_NSArray_arrayByAddingObjects_count_(id self, SEL sel,
 		if (PyTuple_GET_ITEM(v, i) == NULL) {
 			Py_DECREF(v);
 			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 	}
@@ -540,7 +547,7 @@ static id imp_NSArray_arrayByAddingObjects_count_(id self, SEL sel,
 	v = PyInt_FromLong(count);
 	if (v == NULL) {	
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	PyTuple_SET_ITEM(arglist, 2,  v);
@@ -548,16 +555,17 @@ static id imp_NSArray_arrayByAddingObjects_count_(id self, SEL sel,
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	returnValue = PyObjC_PythonToId(result);
 	Py_DECREF(result);
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
+	PyGILState_Release(state);
 	return returnValue;
 }
 
@@ -613,7 +621,7 @@ static PyObject* call_NSArray_initWithObjects_count_(
 
 			
 		res = objc_msgSendSuper(&super,
-				@selector(initWithObjects:count:),
+				PyObjCSelector_GetSelector(method),
 				objects, count);
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
@@ -640,15 +648,17 @@ static id imp_NSArray_initWithObjects_count_(id self, SEL sel,
 	int i;
 	id  returnValue;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	v = PyObjC_IdToPython(self);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -656,7 +666,7 @@ static id imp_NSArray_initWithObjects_count_(id self, SEL sel,
 
 	v = PyTuple_New(count);
 	if (v == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	for (i = 0; i < count; i++) {
@@ -664,7 +674,7 @@ static id imp_NSArray_initWithObjects_count_(id self, SEL sel,
 		if (PyTuple_GET_ITEM(v, i) == NULL) {
 			Py_DECREF(v);
 			Py_DECREF(arglist);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 			return nil;
 		}
 	}
@@ -673,7 +683,7 @@ static id imp_NSArray_initWithObjects_count_(id self, SEL sel,
 	v = PyInt_FromLong(count);
 	if (v == NULL) {	
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	PyTuple_SET_ITEM(arglist, 2,  v);
@@ -681,16 +691,17 @@ static id imp_NSArray_initWithObjects_count_(id self, SEL sel,
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	returnValue = PyObjC_PythonToId(result);
 	Py_DECREF(result);
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
+	PyGILState_Release(state);
 	return returnValue;
 }
 
@@ -698,6 +709,7 @@ static int
 _pyobjc_install_NSArray(void)
 {
 	Class classNSArray = objc_lookUpClass("NSArray");
+	if (classNSArray == NULL) return 0;
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSArray,

@@ -39,7 +39,7 @@ call_NSCoder_encodeValueOfObjCType_at_(
 		return NULL;
 	}
 
-	size = PyObjC_SizeOfType(signature);
+	size = PyObjCRT_SizeOfType(signature);
 	if (size == -1) {
 		return NULL;
 	}
@@ -79,9 +79,11 @@ imp_NSCoder_encodeValueOfObjCType_at_(id self, SEL sel,
 	PyObject* result;
 	PyObject* arglist;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	
@@ -91,24 +93,26 @@ imp_NSCoder_encodeValueOfObjCType_at_(id self, SEL sel,
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	if (result != Py_None) {
 		PyErr_SetString(PyExc_TypeError, "Must return None");
 		Py_DECREF(result);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
+
 	Py_DECREF(result);
+	PyGILState_Release(state);
 }
 
 
@@ -135,7 +139,7 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 		return NULL;
 	}
 
-	size = PyObjC_SizeOfType(signature);
+	size = PyObjCRT_SizeOfType(signature);
 	if (size == -1) {
 		return NULL;
 	}
@@ -193,15 +197,17 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(id self, SEL sel,
 	int       size;
 	int       i;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
-	size = PyObjC_SizeOfType(signature);
+	size = PyObjCRT_SizeOfType(signature);
 	if (size == -1) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -211,7 +217,7 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(id self, SEL sel,
 
 	values = PyTuple_New(count);
 	if (values == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -222,31 +228,32 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(id self, SEL sel,
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
 		Py_DECREF(values);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	PyTuple_SetItem(arglist, 3, values);
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	if (result != Py_None) {
 		PyErr_SetString(PyExc_TypeError, "Must return None");
 		Py_DECREF(result);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	Py_DECREF(result);
+	PyGILState_Release(state);
 }
 
 static PyObject* 
@@ -263,7 +270,7 @@ call_NSCoder_decodeValueOfObjCType_at_(
 		return NULL;
 	}
 
-	size = PyObjC_SizeOfType(signature);
+	size = PyObjCRT_SizeOfType(signature);
 	if (size == -1) {
 		return NULL;
 	}
@@ -306,9 +313,11 @@ imp_NSCoder_decodeValueOfObjCType_at_(id self, SEL sel,
 	PyObject* arglist;
 	int err;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -317,14 +326,14 @@ imp_NSCoder_decodeValueOfObjCType_at_(id self, SEL sel,
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -332,9 +341,11 @@ imp_NSCoder_decodeValueOfObjCType_at_(id self, SEL sel,
 	Py_DECREF(result);
 
 	if (err == -1) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
+
+	PyGILState_Release(state);
 }
 
 static PyObject* 
@@ -358,7 +369,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 		return NULL;
 	}
 
-	size = PyObjC_SizeOfType(signature);
+	size = PyObjCRT_SizeOfType(signature);
 	if (size == -1) {
 		return NULL;
 	}
@@ -413,15 +424,17 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 	int       i;
 	int res;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
-	size = PyObjC_SizeOfType(signature);
+	size = PyObjCRT_SizeOfType(signature);
 	if (size == -1) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -431,20 +444,20 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	seq = PySequence_Fast(result, "Must return a sequence of length 2");
 	if (seq == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -453,7 +466,7 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 		PyErr_SetString(PyExc_TypeError,
 			"Must return a sequence of length 2");
 		Py_DECREF(seq);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -461,7 +474,7 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 		PyErr_SetString(PyExc_TypeError,
 			"returnvalue[0] must be Py_None");
 		Py_DECREF(seq);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -470,7 +483,7 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 		PyErr_SetString(PyExc_TypeError,
 			"returnvalue[1] must be a sequence");
 		Py_DECREF(seq);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	Py_DECREF(seq);
@@ -479,7 +492,7 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 		PyErr_SetString(PyExc_TypeError,
 			"returnvalue[1] must be a of correct size");
 		Py_DECREF(values);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -490,10 +503,11 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 			((char*)buf)+(i*size));
 		if (res == -1) {
 			Py_DECREF(values);
-			PyObjCErr_ToObjC();
+			PyObjCErr_ToObjCWithGILState(&state);
 		}
 	}
 	Py_DECREF(values);
+	PyGILState_Release(state);
 }
 
 static PyObject* 
@@ -540,9 +554,11 @@ imp_NSCoder_encodeBytes_length_(id self, SEL sel, char* bytes, int length)
 	PyObject* result;
 	PyObject* arglist;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -552,24 +568,25 @@ imp_NSCoder_encodeBytes_length_(id self, SEL sel, char* bytes, int length)
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	if (result != Py_None) {
 		PyErr_SetString(PyExc_TypeError, "Must return None");
 		Py_DECREF(result);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	Py_DECREF(result);
+	PyGILState_Release(state);
 }
 
 static PyObject* 
@@ -653,9 +670,11 @@ imp_NSCoder_decodeBytesWithReturnedLength_(id self, SEL sel, unsigned* length)
 	int buflen;
 	int len;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -663,14 +682,14 @@ imp_NSCoder_decodeBytesWithReturnedLength_(id self, SEL sel, unsigned* length)
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -678,7 +697,7 @@ imp_NSCoder_decodeBytesWithReturnedLength_(id self, SEL sel, unsigned* length)
 		Py_DECREF(result);
 		PyErr_SetString(PyExc_ValueError, 
 			"Should return (bytes, length)");
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -687,13 +706,14 @@ imp_NSCoder_decodeBytesWithReturnedLength_(id self, SEL sel, unsigned* length)
 			(const void**)&bufptr, &buflen) < 0) {
 		
 		Py_DECREF(result);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	
 	if (PyObjC_PythonToObjC(@encode(int), 
 			PyTuple_GET_ITEM(result, 1), &len) < 0) {
 		Py_DECREF(result);
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -701,7 +721,7 @@ imp_NSCoder_decodeBytesWithReturnedLength_(id self, SEL sel, unsigned* length)
 		Py_DECREF(result);
 		PyErr_SetString(PyExc_ValueError, 
 			"Should return (bytes, length)");
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -714,7 +734,7 @@ imp_NSCoder_decodeBytesWithReturnedLength_(id self, SEL sel, unsigned* length)
 		  autorelease] bytes];
 
 	Py_DECREF(result);
-
+	PyGILState_Release(state);
 	return bufptr;
 }
 
@@ -801,9 +821,11 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(id self, SEL sel, id key, unsigned
 	int buflen;
 	int len;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -812,14 +834,14 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(id self, SEL sel, id key, unsigned
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -827,7 +849,7 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(id self, SEL sel, id key, unsigned
 		Py_DECREF(result);
 		PyErr_SetString(PyExc_ValueError, 
 			"Should return (bytes, length)");
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -836,13 +858,14 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(id self, SEL sel, id key, unsigned
 			(const void**)&bufptr, &buflen) < 0) {
 		
 		Py_DECREF(result);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	
 	if (PyObjC_PythonToObjC(@encode(int), 
 			PyTuple_GET_ITEM(result, 1), &len) < 0) {
 		Py_DECREF(result);
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -850,7 +873,7 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(id self, SEL sel, id key, unsigned
 		Py_DECREF(result);
 		PyErr_SetString(PyExc_ValueError, 
 			"Should return (bytes, length)");
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -863,9 +886,10 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(id self, SEL sel, id key, unsigned
 		  autorelease] bytes];
 
 	Py_DECREF(result);
-
+	PyGILState_Release(state);
 	return bufptr;
 }
+
 static PyObject* 
 call_NSCoder_encodeBytes_length_forKey_(
 	PyObject* method, PyObject* self, PyObject* arguments)
@@ -906,9 +930,11 @@ imp_NSCoder_encodeBytes_length_forKey_(
 	PyObject* result;
 	PyObject* arglist;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
@@ -919,30 +945,32 @@ imp_NSCoder_encodeBytes_length_forKey_(
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
 	if (result != Py_None) {
 		PyErr_SetString(PyExc_TypeError, "Must return None");
 		Py_DECREF(result);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 	Py_DECREF(result);
+	PyGILState_Release(state);
 }
 
 static int 
 _pyobjc_install_NSCoder(void)
 {
 	Class classNSCoder = objc_lookUpClass("NSCoder");
+	if (classNSCoder == NULL) return 0;
   
 	if (PyObjC_RegisterMethodMapping(
 			classNSCoder,

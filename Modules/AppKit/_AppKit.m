@@ -1,11 +1,6 @@
 /*
- * Mapping of static items in the AppKit kit:
- * 
- * - constants  (mostly done)
- * - data types (TODO)
- * - enumerations
- * - exceptions 
- * - global functions (TODO)
+ * Mapping of static items in the AppKit kit and helper functions for mapping
+ * "difficult" methods.
  */
 #import <AppKit/AppKit.h>
 #import <AppKit/NSGraphics.h>
@@ -298,7 +293,7 @@ static char* keywords[] = { "rects", "count", 0 };
 	NSRect* rects;
 	PyObject* rectList;
 	PyObject* seq;
-	int i, len;
+	int i;
 	int rectCount;
 
 	{
@@ -338,7 +333,7 @@ static char* keywords[] = { "rects", "count", 0 };
 		return NULL;
 	}
 
-	rects = malloc((rectCount * sizeof(NSRect)) * 4);
+	rects = malloc((rectCount * sizeof(NSRect)));
 	if (rects == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -362,7 +357,9 @@ static char* keywords[] = { "rects", "count", 0 };
 }
 
 static PyObject*
-objc_NSGetWindowServerMemory(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+objc_NSGetWindowServerMemory(
+	PyObject* self __attribute__((__unused__)), 
+	PyObject* args, PyObject* kwds)
 {
 static char* keywords[] = { "context", "windowDumpStream", NULL };
 	int context;
@@ -388,9 +385,11 @@ static char* keywords[] = { "context", "windowDumpStream", NULL };
 				context, &virtualMemory, &windowBackingMemory,
 				NULL);
 		}
+
 	NS_HANDLER
 		res = 0;
 		PyObjCErr_FromObjC(localException);
+
 	NS_ENDHANDLER
 
 	if (PyErr_Occurred()) {
@@ -434,9 +433,6 @@ static char* keywords[] = { "context", "windowDumpStream", NULL };
 
 	return result;
 }
-
-	
-
 
 #ifdef GNUSTEP
 #include "_App_Functions.GNUstep.inc"
@@ -497,8 +493,8 @@ static PyMethodDef appkit_methods[] = {
 };
 
 PyDoc_STRVAR(appkit_doc,
-"Cocoa._Foundation defines constants, types and global functions used by "
-"Cocoa.Foundation."
+"AppKit._AppKit defines constants, types and global functions used by "
+"AppKit"
 );
 
 
@@ -657,6 +653,21 @@ fontMatrix(PyObject* d, const char* name, const float* value)
 	return 0;
 }
 
+#include "_AppKitMapping_NSApplication.m"
+#include "_AppKitMapping_NSATSTypeSetter.m"
+#include "_AppKitMapping_NSBezierPath.m"
+#include "_AppKitMapping_NSBitmap.m"
+#include "_AppKitMapping_NSBitmapImageRep.m"
+#include "_AppKitMapping_NSFont.m"
+#include "_AppKitMapping_NSMatrix.m"
+#include "_AppKitMapping_NSLayoutManager.m"
+#include "_AppKitMapping_NSMovie.m"
+#include "_AppKitMapping_NSOpenGLContext.m"
+#include "_AppKitMapping_NSOpenGLPixelFormat.m"
+#include "_AppKitMapping_NSQuickDrawView.m"
+#include "_AppKitMapping_NSSimpleHorizontalTypesetter.m"
+#include "_AppKitMapping_NSView.m"
+#include "_AppKitMapping_NSWindow.m"
 
 void init_AppKit(void);
 
@@ -819,4 +830,21 @@ void init_AppKit(void)
 
 	/* Some special constants */
 	fontMatrix(d, "NSFontIdentityMatrix", NSFontIdentityMatrix);
+
+	/* register other method mappings */
+	if (_pyobjc_install_NSApplication() < 0) return;
+	if (_pyobjc_install_NSATSTypesetter() < 0) return;
+	if (_pyobjc_install_NSBezierPath() < 0) return;
+	if (_pyobjc_install_NSBitmap() < 0) return;
+	if (_pyobjc_install_NSBitmapImageRep() < 0) return;
+	if (_pyobjc_install_NSFont() < 0) return;
+	if (_pyobjc_install_NSLayoutManager() < 0) return;
+	if (_pyobjc_install_NSMatrix() < 0) return;
+	if (_pyobjc_install_NSMovie() < 0) return;
+	if (_pyobjc_install_NSOpenGLContext() < 0) return;
+	if (_pyobjc_install_NSOpenGLPixelFormat() < 0) return;
+	if (_pyobjc_install_NSQuickDrawView() < 0) return;
+	if (_pyobjc_install_NSSimpleHorizontalTypesetter() < 0) return;
+	if (_pyobjc_install_NSView() < 0) return;
+	if (_pyobjc_install_NSWindow() < 0) return;
 }

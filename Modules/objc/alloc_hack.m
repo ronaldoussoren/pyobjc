@@ -3,10 +3,9 @@
  * we install custom handlers for these calls.
  */
 #include "pyobjc.h"
-#include "objc_support.h"
 
 static PyObject*
-call_NSObject_alloc(PyObject* method __attribute__((__unused__)), 
+call_NSObject_alloc(PyObject* method, 
 	PyObject* self, PyObject* arguments)
 {
 	id result = nil;
@@ -21,12 +20,13 @@ call_NSObject_alloc(PyObject* method __attribute__((__unused__)),
 		return NULL;
 	}
 
-	/* XXX: Shouldn't we use method->sel_class here? */
 	RECEIVER(super) = (id)PyObjCClass_GetClass(self);
-	super.class = GETISA((Class)(RECEIVER(super)));
+	super.class = PyObjCSelector_GetClass(method); //GETISA((Class)(RECEIVER(super)));
+	super.class = GETISA(super.class);
 
 	NS_DURING
-		result = objc_msgSendSuper(&super, @selector(alloc));
+		result = objc_msgSendSuper(&super, 
+				PyObjCSelector_GetSelector(method)); 
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = nil;
@@ -75,12 +75,11 @@ PyObjC_InstallAllocHack(void)
 	int r;
 
 	r = PyObjC_RegisterMethodMapping(
-		objc_lookUpClass("NSObject"),
+		PyObjCRT_LookUpClass("NSObject"),
 		@selector(alloc),
 		call_NSObject_alloc,
 		(IMP)imp_NSObject_alloc);
 	if (r != 0) return r;
 
 	return r;
-
 }

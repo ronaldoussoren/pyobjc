@@ -7,8 +7,9 @@
  *  thought.
  */
 #include "pyobjc.h"
-#include "objc_support.h"
+
 #include <unistd.h>
+
 #include "objc/objc.h"
 
 #ifdef MACOSX

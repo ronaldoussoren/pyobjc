@@ -1,5 +1,4 @@
 #include "pyobjc.h"
-#include "objc_support.h"
 
 /*
  * descriptor objc_ivar
@@ -38,7 +37,7 @@ ivar_repr(PyObjCInstanceVariable* self)
 static PyObject*
 ivar_descr_get(PyObjCInstanceVariable* self, PyObject* obj, PyObject* type __attribute__((__unused__)))
 {
-	IVAR var;
+	PyObjCRT_Ivar_t var;
 	id   objc;
 	PyObject* res;
 
@@ -86,7 +85,7 @@ ivar_descr_get(PyObjCInstanceVariable* self, PyObject* obj, PyObject* type __att
 static int
 ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 {
-	IVAR var;
+	PyObjCRT_Ivar_t var;
 	id   objc;
 	int  size;
 	int res;
@@ -113,7 +112,7 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 	if (objc == NULL) {
 		PyErr_SetString(PyExc_TypeError,
 		   "Cannot access Objective-C instance-variables of NULL");
-		return NULL;
+		return -1;
 	}
 
 	if (self->ivar == NULL) {
@@ -159,7 +158,7 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 		return 0;
 	}
 
-	size = objc_sizeof_type(var->ivar_type);
+	size = PyObjCRT_SizeOfType(var->ivar_type);
 	if (size == -1) {
 		return -1;
 	}

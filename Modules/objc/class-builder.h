@@ -1,9 +1,6 @@
 #ifndef OBJC_CLASS_BUILDER
 #define OBJC_CLASS_BUILDER
 
-#include <Python.h>
-#include <objc/objc.h>
-
 /*
  * The protocol for building a hybrid python&objective-C class
  * 1) Collect the necessary information (name, bases, class_dict)

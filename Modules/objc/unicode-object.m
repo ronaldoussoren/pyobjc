@@ -4,7 +4,7 @@
  */
 
 #include "pyobjc.h"
-#include "objc_support.h"
+
 #include <stddef.h>
 
 typedef struct {

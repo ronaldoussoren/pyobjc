@@ -12,7 +12,7 @@
 #include "pymactoolbox.h"
 
 static PyObject* call_NSMovie_QTMovie(
-		PyObject* method __attribute__((__unused__)), PyObject* self, PyObject* arguments)
+		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -24,12 +24,12 @@ static PyObject* call_NSMovie_QTMovie(
 
 	NS_DURING
 		PyObjC_InitSuper(&super, 
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
 
 		movie = objc_msgSendSuper(&super,
-				@selector(QTMovie));
+				PyObjCSelector_GetSelector(method));
 		if (movie == NULL) {
 			result = Py_None;
 			Py_INCREF(result);
@@ -50,16 +50,18 @@ static void* imp_NSMovie_QTMovie(id self, SEL sel)
 	PyObject* arglist;
 	Movie    objc_result;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(0);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
@@ -67,16 +69,17 @@ static void* imp_NSMovie_QTMovie(id self, SEL sel)
 	Py_DECREF(result);
 
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
-
+	
+	PyGILState_Release(state);
 	return objc_result;
 }
 
 
 static PyObject* call_NSMovie_initWithMovie_(
-		PyObject* method __attribute__((__unused__)), PyObject* self, PyObject* arguments)
+		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -89,11 +92,11 @@ static PyObject* call_NSMovie_initWithMovie_(
 
 	NS_DURING
 		PyObjC_InitSuper(&super, 
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
 		objc_result = objc_msgSendSuper(&super,
-				@selector(initWithMovie:), movie);
+				PyObjCSelector_GetSelector(method), movie);
 		result = PyObjC_IdToPython(objc_result);
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
@@ -109,33 +112,36 @@ static id imp_NSMovie_initWithMovie_(id self, SEL sel, void* movie)
 	PyObject* arglist;
 	id        objc_result;
 
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 	
 	PyTuple_SET_ITEM(arglist, 0, MovieObj_New(movie));
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
 	objc_result = PyObjC_PythonToId(result);
 
 	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjC();
+		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
 
+	PyGILState_Release(state);
 	return objc_result;
 }
 

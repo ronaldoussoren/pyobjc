@@ -1,37 +1,21 @@
 /*
- * Mapping of static items in the Foundation kit.
+ * Mapping of static items in the Foundation kit, and custom wrappers for
+ * "difficult" methods.
  */
+
 #include <Python.h>
 #import <Foundation/Foundation.h>
 #import <Foundation/NSDebug.h>
-#import <CoreFoundation/CoreFoundation.h>
 
 #ifdef MACOSX
+#import <CoreFoundation/CoreFoundation.h>
 #include <pymactoolbox.h>
 #endif
 
 #include "pyobjc-api.h"
 #include "wrapper-const-table.h"
 
-/** Functions */
-
-#ifdef GNUSTEP
-#include "_Fnd_Functions.GNUstep.inc"
-
-#else /* !GNUSTEP */
-
 #include "_Fnd_Functions.inc"
-
-#endif /* !GNUSTEP */
-
-/* The headings below refer to the reference pages on developer.apple.com */
-
-/* 'Assertions' */
-/*      All assertion-checking macros have not been wrapped. If needed 
- *      functions with simular functionality can be added as python code.
- */
-
-/* 'Bundles' */
 
 #define NSLocalizedString_doc 0
 static PyObject* objc_NSLocalizedString(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
@@ -110,7 +94,8 @@ static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
 #ifdef MACOSX
 
 
-/* NSString *NSFileTypeForHFSTypeCode(OSType hfsTypeCode); */
+PyDoc_STRVAR(objc_NSFileTypeForHFSTypeCode_doc,
+	"NSString *NSFileTypeForHFSTypeCode(OSType hfsTypeCode);");
 
 static PyObject* objc_NSFileTypeForHFSTypeCode(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
@@ -138,7 +123,8 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 	return result;
 }
 
-/* OSType NSHFSTypeCodeFromFileType(NSString *fileType); */
+PyDoc_STRVAR(objc_NSHFSTypeCodeFromFileType_doc,
+		"OSType NSHFSTypeCodeFromFileType(NSString *fileType);");
 
 static PyObject* objc_NSHFSTypeCodeFromFileType(PyObject* self __attribute__((__unused__)), 
 		PyObject* args, PyObject* kwds)
@@ -230,13 +216,13 @@ static PyMethodDef foundation_methods[] = {
 		"NSFileTypeForHFSTypeCode", 
 		(PyCFunction)objc_NSFileTypeForHFSTypeCode, 
 		METH_VARARGS|METH_KEYWORDS, 
-		NULL
+		objc_NSFileTypeForHFSTypeCode_doc
 	},
 	{ 
 		"NSHFSFTypeCodeFromFileType", 
 		(PyCFunction)objc_NSHFSTypeCodeFromFileType, 
 		METH_VARARGS|METH_KEYWORDS, 
-		NULL
+		objc_NSHFSTypeCodeFromFileType_doc 
 	},
 
 #endif /* MACOSX */
@@ -271,19 +257,67 @@ static PyMethodDef foundation_methods[] = {
 };
 
 PyDoc_STRVAR(foundation_doc,
-"Cocoa._Foundation defines constants, types and global functions used by "
-"Cocoa.Foundation."
+"Foundation._Foundation defines constants, types and global functions used by "
+"Foundation."
 );
-
-#ifdef  GNUSTEP 
-#include "_Fnd_Enum.GNUstep.inc"
-#include "_Fnd_Str.GNUstep.inc"
-#else  /* !GNUSTEP */
 
 #include "_Fnd_Enum.inc"
 #include "_Fnd_Str.inc"
 
-#endif  /* !GNUSTEP */
+static inline int add_NSPoint(PyObject* d, char* name, NSPoint value)
+{
+        int res;
+	PyObject* v;
+
+	v = PyObjC_ObjCToPython(@encode(NSPoint), &value);
+	if (v == NULL) return -1;
+
+	res = PyDict_SetItemString(d, name, v);
+	if (res < 0) return -1;
+	return 0;
+}
+
+static inline int add_NSSize(PyObject* d, char* name, NSSize value)
+{
+        int res;
+	PyObject* v;
+
+	v = PyObjC_ObjCToPython(@encode(NSSize), &value);
+	if (v == NULL) return -1;
+
+	res = PyDict_SetItemString(d, name, v);
+	if (res < 0) return -1;
+	return 0;
+}
+
+static inline int add_NSRect(PyObject* d, char* name, NSRect value)
+{
+        int res;
+	PyObject* v;
+
+	v = PyObjC_ObjCToPython(@encode(NSRect), &value);
+	if (v == NULL) return -1;
+
+	res = PyDict_SetItemString(d, name, v);
+	if (res < 0) return -1;
+	return 0;
+}
+
+/*
+ * Include the implementation of difficult methods.
+ */
+#include "_FoundationMapping_NSArray.m"
+#include "_FoundationMapping_NSCoder.m"
+#include "_FoundationMapping_NSData.m"
+#include "_FoundationMapping_NSDictionary.m"
+#include "_FoundationMapping_NSIndexSet.m"
+#include "_FoundationMapping_NSInputStream.m"
+#include "_FoundationMapping_NSMutableArray.m"
+#include "_FoundationMapping_NSNetService.m"
+#include "_FoundationMapping_NSScriptObjectSpecifier.m"
+#include "_FoundationMapping_NSSet.m"
+#include "_FoundationMapping_NSString.m"
+
 
 void init_Foundation(void);
 
@@ -301,22 +335,37 @@ void init_Foundation(void)
 		return;
 	}
 
+#ifdef MACOSX
 	bundle = CFBundleCreate(NULL,
 		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/Foundation.framework"]);
+#else
+	bundle = NULL;
+#endif
 
 	/* Register information in generated tables */
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_variableList(d, bundle, string_table, (sizeof(string_table)/sizeof(string_table[0]))-1) < 0) return;
-	
-	//CFRelease(bundle);
 
-#ifdef  GNUSTEP 
-#	include "_Fnd_Var.GNUstep.inc"
-#else /* !GNUSTEP */
+#ifdef MACOSX
+	CFRelease(bundle);
+#endif
+
 
 #	include "_Fnd_Var.inc"
-
-#endif /* !GNUSTEP */
     
 	/* Add manual registrations below */
+
+
+	/* Install wrappers for difficult methods */
+	if (_pyobjc_install_NSArray() != 0) return;
+	if (_pyobjc_install_NSCoder() != 0) return;
+	if (_pyobjc_install_NSData() != 0) return;
+	if (_pyobjc_install_NSDictionary() != 0) return;
+	if (_pyobjc_install_NSIndexSet() != 0) return;
+	if (_pyobjc_install_NSInputStream() != 0) return;
+	if (_pyobjc_install_NSMutableArray() != 0) return;
+	if (_pyobjc_install_NSNetService() != 0) return;
+	if (_pyobjc_install_NSScriptObjectSpecifier() != 0) return;
+	if (_pyobjc_install_NSSet() != 0) return;
+	if (_pyobjc_install_NSString() != 0) return;
 }
