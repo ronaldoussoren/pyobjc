@@ -26,6 +26,9 @@ Python Cocoa: which functions/methods are not available, list differences
 in arguments (e.g. NSBeginAlertSheet has a variable number of arguments in
 Objective-C, the format-arguments are not present in Python).
 
+Add a description of how to use PyObjC to embed Python in an existing 
+Cocoa application (bill?)
+
 Test suite
 ..........
 
@@ -103,36 +106,20 @@ Interface Builder Palettes
 IB doesn't "see" PyObjC class definitions. We need to investigate why this
 is so.
 
-Add templates for various project-types
-.......................................
+Project templates
+.................
 
-We currently have a Project Builder template for a basic PyObjC application. We
-should simular templates for other usefull projects and most importantly a 
-document-based application. 
+* Add Xcode template for building a plugin (like PyObjCTools.pluginbuilder)
 
+* Possibly: add templates based on this for building specific kinds of
+  plugins (ScreenSaver, PreferencePane)
 
-Other possibilies include:
+* Update or remove the Project Builder templates
 
-* Standalone Service
+  I prefer updating them, by rebuilding the Xcode templates in Project Builder.
 
-* IBPalette
-
-* PreferencePane
-
-* Screen Saver
-
-* Cocoa Bundle
-
-In contrast to a template for a document-based application these last four 
-require additional (Objective-C) code: There needs to be a mechanism to 
-initialize a python interpreter and load the python code in the project when 
-the plugin/bundle is loaded. Furthermore we need to make sure that exactly one 
-interpreter is created, even when more than one Python based plugin/bundle is
-loaded.
-
-NOTE: All these are supported for 'pure python' projects, we just have to 
-find a way to make it easier to maintain PB templates. The currently is too
-much manual labor involved in updating them.
+  This would require Python 2.3 on Jaguar, but that's not a problem because
+  I want to `Drop support for Python 2.2`_
 
 Complete Cocoa wrapping
 .......................

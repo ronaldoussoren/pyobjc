@@ -6,6 +6,7 @@
 typedef struct {
 	PyObject_HEAD
 	ffi_cif*  cif;
+	PyObjCMethodSignature* methinfo;
 	void*     function;
 	PyObject* doc;
 	PyObject* name;
@@ -45,10 +46,90 @@ static PyMemberDef func_members[] = {
 };
 
 static PyObject* 
-func_call(PyObject* self, PyObject* args, PyObject* kwds)
+func_call(PyObject* s, PyObject* args, PyObject* kwds)
 {
-	PyErr_SetString(PyExc_NotImplementedError, "calling objc.function objects");
-	return NULL;
+	func_object* self = (func_object*)s;
+	int byref_in_count;
+	int byref_out_count;
+	int plain_count;
+	int argbuf_len;
+	int r;
+
+	unsigned char* argbuf;
+	ffi_type* arglist[64];
+	void*     values[64];
+	void**	  byref;
+
+	PyObject* retval;	
+
+	if (self->methinfo->nargs >= 63) {
+		PyErr_Format(PyObjCExc_Error,
+			"wrapping a function with %d arguments, at most 64 "
+			"are supported", self->methinfo->nargs);
+		return NULL;
+	}
+
+	if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
+		PyErr_SetString(PyExc_TypeError,
+			"keyword arguments not supported");
+		return NULL;
+	}
+
+	argbuf_len = PyObjCRT_SizeOfReturnType(self->methinfo->rettype);
+	r = PyObjCFFI_CountArguments(
+		self->methinfo, 0,
+		&byref_in_count, &byref_out_count, &plain_count,
+		&argbuf_len);
+	if (r == -1) {
+		return NULL;
+	}
+
+	if (PyTuple_Size(args) != (plain_count + byref_in_count)) {
+		PyErr_Format(PyExc_TypeError, "Need %d arguments, got %d",
+			plain_count + byref_in_count, PyTuple_Size(args));
+		return NULL;
+	}
+
+	argbuf = PyMem_Malloc(argbuf_len);
+	if (argbuf == NULL) {
+		PyErr_NoMemory();
+		return NULL;
+	}
+
+	byref = PyMem_Malloc(sizeof(void*) * self->methinfo->nargs);
+	if (byref == NULL) {
+		PyErr_NoMemory();
+		PyMem_Free(argbuf);
+		return NULL;
+	}
+
+	argbuf_len = PyObjCRT_SizeOfReturnType(self->methinfo->rettype);
+	r = PyObjCFFI_ParseArguments(
+		self->methinfo, 0, args,
+		argbuf_len, argbuf, byref, arglist, values);
+	if (r == -1) {
+		PyMem_Free(argbuf);
+		PyMem_Free(byref);
+		return NULL;
+	}
+
+	PyObjC_DURING
+		ffi_call(self->cif, FFI_FN(self->function), argbuf, values);
+	PyObjC_HANDLER
+		PyObjCErr_FromObjC(localException);
+	PyObjC_ENDHANDLER
+
+	if (PyErr_Occurred()) {
+		PyMem_Free(argbuf);
+		PyMem_Free(byref);
+		return NULL;
+	}
+
+	retval = PyObjCFFI_BuildResult(self->methinfo, 0, argbuf, byref, 
+			byref_out_count, NULL, 0);
+	PyMem_Free(argbuf);
+	PyMem_Free(byref);
+	return retval;
 }
 
 static void 
@@ -61,6 +142,9 @@ func_dealloc(PyObject* s)
 	Py_XDECREF(self->module);
 	if (self->cif != NULL) {
 		PyObjCFFI_FreeCIF(self->cif);
+	}
+	if (self->methinfo != NULL) {
+		PyObjCMethodSignature_Free(self->methinfo);
 	}
 	PyObject_Free(s);
 }
@@ -126,17 +210,15 @@ PyObject*
 PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc)
 {
 	func_object* result;
-	PyObjCMethodSignature* sig;
 	
-	sig = PyObjCMethodSignature_FromSignature(signature);
-	if (sig == NULL) return NULL;
 
 	result = PyObject_NEW(func_object, &PyObjCFunc_Type);
 	if (result == NULL) return NULL;
+	
+	result->methinfo= PyObjCMethodSignature_FromSignature(signature);
+	if (result->methinfo == NULL) return NULL;
 
-
-	result->cif = PyObjCFFI_CIFForSignature(sig, 0);
-	PyObjCMethodSignature_Free(sig);
+	result->cif = PyObjCFFI_CIFForSignature(result->methinfo, 0);
 	if (result->cif == NULL) {
 		Py_DECREF(result);
 		return NULL;	

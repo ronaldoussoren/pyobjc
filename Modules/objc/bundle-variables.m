@@ -222,7 +222,7 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 			}
 		} else {
 			PyObject* pyVal = PyObjCFunc_New(
-					name,
+					py_name,
 					value,
 					signature,
 					doc);
@@ -231,8 +231,8 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 				return NULL;
 			}
 
-			if (PyDict_SetItemString(module_globals, 
-					[name UTF8String], pyVal) == -1) {
+			if (PyDict_SetItem(module_globals, 
+					py_name, pyVal) == -1) {
 				Py_DECREF(seq);
 				Py_DECREF(pyVal);
 				return NULL;
