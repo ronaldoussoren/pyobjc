@@ -41,8 +41,8 @@
 -objectAtIndex:(int)idx
 {
 	PyObject* v;
-	id         result;
-	const char* err;
+	id  result;
+	int err;
 
 	v = PySequence_GetItem(value, idx);
 	if (v == NULL) {
@@ -52,9 +52,7 @@
 
 	err = depythonify_c_value("@", v, &result);
 	Py_DECREF(v);
-	if (err != NULL) {
-		ObjCErr_Set(PyExc_TypeError, "Cannot convert result: %s",
-			err);
+	if (err == -1) {
 		ObjCErr_ToObjC();
 		return nil;
 	}

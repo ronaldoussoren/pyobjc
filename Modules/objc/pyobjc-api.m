@@ -20,12 +20,11 @@
 
 static id python_to_id(PyObject* object)
 {
-	id    result;
-	const char* errstr;
+	id result;
+	int err;
 
-	errstr = depythonify_c_value("@", object, &result);
-	if (errstr) {
-		ObjCErr_Set(PyExc_TypeError, "Building <id>: %s", errstr);
+	err = depythonify_c_value("@", object, &result);
+	if (err == -1) {
 		return nil;
 	}
 

@@ -281,7 +281,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 	Py_DECREF(arglist);
 
 	if (!have_output) {
-		const char* err;
+		int err;
 		const char* rettype = [methinfo methodReturnType];
 
 		if (*rettype != _C_VOID) {
@@ -289,12 +289,12 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			if (*rettype == _C_CHR || *rettype == _C_UCHR) {
 				rettype = "i";
 			}
+			if (*rettype == _C_SHT || *rettype == _C_USHT) {
+				rettype = "i";
+			}
 			err = depythonify_c_value(rettype, res, resp);
 			Py_DECREF(res);
-			if (err) {
-				ObjCErr_Set(PyExc_TypeError,
-					"%s: Cannot encode return value: %s\n",
-					SELNAME(*(SEL*)args[1]), err);
+			if (err == -1) {
 				ObjCErr_ToObjC();
 			}
 		}
@@ -317,7 +317,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 		for (i = 2; i < objc_argcount; i++) {
 			const char* argtype = [methinfo 
 				getArgumentTypeAtIndex:i];
-			const char* err;
+			int err;
 
 			switch (*argtype) {
 			case _C_PTR: 
@@ -335,12 +335,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			v = PyTuple_GET_ITEM(res, idx++);
 			err = depythonify_c_value(argtype, v, args[i]);
 			Py_DECREF(res);
-			if (err) {
-				ObjCErr_Set(PyExc_TypeError,
-					"%s: Cannot encode output argument "
-					" %d: %s",
-					SELNAME(*(SEL*)args[1]), i,
-					err);
+			if (err == -1) {
 				ObjCErr_ToObjC();
 			}
 		}
@@ -381,7 +376,15 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 		rettype = buf;
 		buf[0] = _C_UINT;
 		buf[1] = 0;
-	}
+	} else if (*rettype == _C_SHT) {
+		rettype = buf;
+		buf[0] = _C_INT;
+		buf[1] = 0;
+	} else if (*rettype == _C_USHT) {
+		rettype = buf;
+		buf[0] = _C_UINT;
+		buf[1] = 0;
+	} 
 	cl_ret_type = signature_to_ffi_type(rettype);
 	if (cl_ret_type == NULL) {
 		[methinfo release];
@@ -531,6 +534,18 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		tpBuf[0] = _C_INT;
 		tpBuf[1] = 0;
 	} else if (*rettype == _C_UCHR) {
+		rettype = tpBuf;
+		tpBuf[0] = _C_UINT;
+		tpBuf[1] = 0;
+	} else if (*rettype == _C_SHT) {
+		/* This might be ABI related: On MacOSX the return value is
+		 * bogus unless we act as if a method return a 'char' (BOOL)
+		 * returns an 'int'.
+		 */
+		rettype = tpBuf;
+		tpBuf[0] = _C_INT;
+		tpBuf[1] = 0;
+	} else if (*rettype == _C_USHT) {
 		rettype = tpBuf;
 		tpBuf[0] = _C_UINT;
 		tpBuf[1] = 0;
@@ -684,14 +699,12 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			goto error_cleanup;
 		}
 	} else {
-		const char* err;
+		int err;
 		if (ObjCObject_Check(self)) {
 			self_obj = ObjCObject_GetObject(self);
 		} else {
 			err = depythonify_c_value("@", self, &self_obj);
-			if (err) {
-				PyErr_SetString(PyExc_TypeError, 
-					"Need objective-C object as self");
+			if (err == -1) {
 				goto error_cleanup;
 			}
 		}
@@ -704,12 +717,15 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		super.class = meth->sel_class;
 	}
 
-	if (resultSize > sizeof(id) && *rettype != _C_DBL) {
-		/*XXX: I'm not sure if the test is correct, either the 
-		 * code dealing with .._stret is buggy or the test for
-		 * _C_DBL is necessary. 
-		 * This might be a calling convention issue.
+	if (*rettype == _C_DBL || *rettype == _C_FLT ||
+		*rettype == _C_LNGLNG || *rettype == _C_ULNGLNG) {
+
+		/* Libffi knows how to pass these, and ..._stret doesn't work
+		 * with these...
 		 */
+
+		arglistOffset = 0;
+	} else if (resultSize > sizeof(id)) {
 		arglistOffset = 1;
 		arglist[0] = &ffi_type_pointer;
 		values[0] = &argbuf;
@@ -727,7 +743,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 	py_arg = 0;
 	for (i = 2; i < objc_argcount; i++) {
-		const char* error;
+		int error;
 		PyObject *argument;
 		const char *argtype = [methinfo getArgumentTypeAtIndex:i];
 
@@ -838,13 +854,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 				}
 			}
 
-			if (error) {
-				const char* typeend = objc_skip_typespec(argtype);
-				if (typeend == NULL) goto error_cleanup;
-				ObjCErr_Set(PyExc_TypeError,
-					"expected %s for argument %d: its "
-					"typespec is '%.*s'",
-					error, py_arg+1, typeend-argtype, argtype);
+			if (error == -1) {
 				goto error_cleanup;
 			}
 			py_arg++;
@@ -868,9 +878,11 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	/* XXX This only works for short return values! */
 	NS_DURING
 		if (arglistOffset) {
-			ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), NULL, values);
+			ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), 
+				NULL, values);
 		} else {
-			ffi_call(&cif, FFI_FN(objc_msgSendSuper), msgResult, values);
+			ffi_call(&cif, FFI_FN(objc_msgSendSuper), 
+				msgResult, values);
 		}
 	NS_HANDLER
 		ObjCErr_FromObjC(localException);

@@ -14,7 +14,7 @@
  * - This interface is in development, the the API will probably change in
  *   incompatible ways.
  *
- * $Id: pyobjc-api.h,v 1.6 2003/01/11 15:12:22 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.7 2003/02/23 08:58:43 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -88,7 +88,7 @@ struct pyobjc_api {
 	void (*err_python_to_objc)(void);
 
 	/* ObjC_PythonToObjC */
-	const char* (*py_to_objc)(const char*, PyObject*, void*);
+	int (*py_to_objc)(const char*, PyObject*, void*);
 
 	/* ObjC_ObjCToPython */
 	PyObject* (*objc_to_py)(const char*, void*);

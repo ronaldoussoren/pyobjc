@@ -82,7 +82,8 @@ ObjC_SignatureForSelector(char* class_name, SEL selector, char* signature)
 	return 0;
 }
 
-static char* ObjC_FindReplacementSignature(Class cls, SEL selector)
+static char* 
+ObjC_FindReplacementSignature(Class cls, SEL selector)
 {
 	int i;
 	int len;
@@ -660,7 +661,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 				((ObjCObject*)res)->flags &= 
 					~ObjCObject_kUNINITIALIZED;
 
-#if 0
+#ifdef OC_ADJUST_REFCOUNTS
 				// XXX: Adjust the refcount. The allocator
 				//      (alloc/allocWithZone:) did transfer
 				//	ownership to the caller, and the 
@@ -675,7 +676,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		}
 				
 
-#if 0
+#ifdef OC_ADJUST_REFCOUNTS
 	/* There are some issues with this code, Bill doesn't like it while
 	 * Ronald does.
 	 */

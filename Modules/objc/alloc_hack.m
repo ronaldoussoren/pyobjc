@@ -70,7 +70,7 @@ static id
 imp_NSObject_alloc(id self, SEL sel)
 {
 	id objc_result;
-	const char* err;
+	int err;
 	PyObject* arglist;
 	PyObject* result;
 
@@ -88,8 +88,7 @@ imp_NSObject_alloc(id self, SEL sel)
 
 	err = depythonify_c_value("@", result, &objc_result);
 	Py_DECREF(result);
-	if (err) {
-		PyErr_SetString(PyExc_ValueError, "Conversion failed");
+	if (err == -1) {
 		return NULL;
 	}
 

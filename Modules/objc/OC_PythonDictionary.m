@@ -49,18 +49,18 @@
 
 -(id)nextObject
 {
-	PyObject*   v;
-	const char* errstr;
-	id          result;
+	PyObject* v;
+	id result;
+	int err;
 
 	do {
 		if (cur >= len) return nil;
 
 		v = PySequence_Fast_GET_ITEM(value, cur++);
-		errstr = depythonify_c_value("@", v, &result);
-		if (errstr) {
-			[NSException raise:NSInternalInconsistencyException
-			     format:@"Cannot convert result %s", errstr];
+		err = depythonify_c_value("@", v, &result);
+		if (err == -1) {
+			ObjCErr_ToObjC();
+			return NULL;
 		}
 
 		if (result == nil) {
@@ -112,8 +112,8 @@
 {
 	PyObject* v;
 	PyObject* k;
-	id         result;
-	const char* err;
+	id result;
+	int err;
 
 	k = pythonify_c_value("@", &key);
 	if (k == NULL) {
@@ -130,9 +130,7 @@
 
 	err = depythonify_c_value("@", v, &result);
 	Py_DECREF(k);
-	if (err != NULL) {
-		ObjCErr_Set(PyExc_TypeError, "Cannot convert result: %s",
-			err);
+	if (err == -1) {
 		ObjCErr_ToObjC();
 		return nil;
 	}

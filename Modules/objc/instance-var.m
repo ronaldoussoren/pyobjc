@@ -88,7 +88,7 @@ ivar_descr_set(ObjCIvar* self, PyObject* obj, PyObject* value)
 	id   objc;
 	int  size;
 	void* buf;
-	const char* res;
+	int res;
 
 	if (!obj || ObjCClass_Check(obj)) {
 		PyErr_SetString(PyExc_TypeError,
@@ -124,8 +124,7 @@ ivar_descr_set(ObjCIvar* self, PyObject* obj, PyObject* value)
 	buf = alloca(size);
 
 	res = depythonify_c_value(var->ivar_type, value, buf);
-	if (res != NULL) {
-		PyErr_SetString(ObjCExc_error, res);
+	if (res == -1) {
 		return -1;
 	}
 	if (strcmp(var->ivar_type, "@") == 0) {
