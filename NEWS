@@ -45,6 +45,9 @@ Version 0.10CVS (Work in progress):
   expire as soon as the last reference from Python died, *not* when the 
   Objective-C object died.
 
+- We now generate warnings if a class implements an informal protocol, but
+  doesn't declare that in its definition.
+
 Version 0.9.1 (May-??-2003):
 
 - Fixed some glitches in the documentation

@@ -69,14 +69,15 @@ proto_repr(PyObject* object)
 static PyObject*
 proto_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 {
-static	char*	keywords[] = { "name", "selectors", NULL };
+static	char*	keywords[] = { "name", "selectors", "warnIfUndeclared", NULL };
 	PyObjCInformalProtocol* result;
 	PyObject* name;
 	PyObject* selectors;
 	int       i, len;
+	int	  warnIfUndeclared = 1;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO:informal_protocol",
-			keywords, &name, &selectors)) { 
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO|i:informal_protocol",
+			keywords, &name, &selectors, &warnIfUndeclared)) { 
 		return NULL;
 	}
 
@@ -104,30 +105,33 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 	result->selectors = selectors;
 
 #if 1
-	len = PyTuple_Size(result->selectors);
-	for (i = 0; i < len; i++) {
-		if (!ObjCSelector_Check(PyTuple_GET_ITEM(selectors, i))) {
-			PyErr_Format(PyExc_TypeError, 
-				"Item %d is not a selector", i);
-			Py_DECREF(result);
-			return NULL;
+	if (warnIfUndeclared) {
+		len = PyTuple_Size(result->selectors);
+		for (i = 0; i < len; i++) {
+			if (!ObjCSelector_Check(
+					PyTuple_GET_ITEM(selectors, i))) {
+				PyErr_Format(PyExc_TypeError, 
+					"Item %d is not a selector", i);
+				Py_DECREF(result);
+				return NULL;
+			}
 		}
-	}
 
-	if (selToProtocolMapping == NULL) {
-		selToProtocolMapping = PyDict_New();
 		if (selToProtocolMapping == NULL) {
-			Py_DECREF(result);
-			return NULL;
+			selToProtocolMapping = PyDict_New();
+			if (selToProtocolMapping == NULL) {
+				Py_DECREF(result);
+				return NULL;
+			}
 		}
-	}
-	for (i = 0; i < len; i++) {
-		ObjCSelector* tmp =
-			(ObjCSelector*)PyTuple_GET_ITEM(selectors, i);
-		
-		PyDict_SetItemString(selToProtocolMapping,
-			SELNAME(tmp->sel_selector),
-			name);
+		for (i = 0; i < len; i++) {
+			ObjCSelector* tmp =
+				(ObjCSelector*)PyTuple_GET_ITEM(selectors, i);
+			
+			PyDict_SetItemString(selToProtocolMapping,
+				SELNAME(tmp->sel_selector),
+				name);
+		}
 	}
 #endif
 
