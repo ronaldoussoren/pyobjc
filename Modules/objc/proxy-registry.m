@@ -67,12 +67,20 @@ PyObject* PyObjC_FindPythonProxy(id original)
 {
 	PyObject* v;
 	
-	v = NSMapGet(python_proxies, original);
+    if (original == nil) {
+        v = Py_None;
+    } else {
+        v = NSMapGet(python_proxies, original);
+    }
 	Py_XINCREF(v);
 	return v;
 }
 
 id PyObjC_FindObjCProxy(PyObject* original)
 {
-	return NSMapGet(objc_proxies, original);
+    if (original == Py_None) {
+        return nil;
+    } else {
+        return NSMapGet(objc_proxies, original);
+    }
 }
