@@ -553,6 +553,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		self->sel_call_func = execute;
 	}
 
+#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 	if (self->sel_self && PyObjCObject_Check(self->sel_self) 
 	    && (((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED)
 	    && !(self->sel_flags & PyObjCSelector_kINITIALIZER)) {
@@ -568,6 +569,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			return NULL;
 		}
 	}
+#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 
 
 
@@ -575,11 +577,19 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 	if (self->sel_self != NULL) {
 		res = execute((PyObject*)self, self->sel_self, args);
 
+#if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
+		if (((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
+			if (self->sel_self != res && !PyErr_Occurred()) {
+				PyObjCObject_ClearObject(pyself);
+			}
+		}
+#else
 		if (self->sel_flags & PyObjCSelector_kINITIALIZER) {
 			if (self->sel_self != res && !PyErr_Occurred()) {
 				PyObjCObject_ClearObject(self->sel_self);
 			}
 		}
+#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
 	} else {
 		PyObject* arglist;
 		PyObject* myClass;
@@ -614,11 +624,13 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		
 
 		res = execute((PyObject*)self, pyself, arglist);
+#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 		if (self->sel_flags & PyObjCSelector_kINITIALIZER) {
 			if (pyself != res && !PyErr_Occurred()) {
 				PyObjCObject_ClearObject(pyself);
 			}
 		}
+#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 		Py_DECREF(arglist);
 	}
 
@@ -626,6 +638,15 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		if (self->sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
 			((PyObjCObject*)res)->flags |= PyObjCObject_kUNINITIALIZED;
 		}
+#if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
+		else if (((PyObjCObject*)res)->flags & PyObjCObject_kUNINITIALIZED) {
+			((PyObjCObject*)res)->flags &= 
+				~PyObjCObject_kUNINITIALIZED;
+			if (self->sel_self && self->sel_self != res && !PyErr_Occurred()) {
+				PyObjCObject_ClearObject(self->sel_self);
+			}
+		}
+#else
 		if (self->sel_flags & PyObjCSelector_kINITIALIZER) {
 			if (((PyObjCObject*)res)->flags & PyObjCObject_kUNINITIALIZED)
 			{
@@ -633,6 +654,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 					~PyObjCObject_kUNINITIALIZED;
 			}
 		}
+#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
 				
 		if (self->sel_flags & PyObjCSelector_kDONATE_REF) {
 			/* Ownership transfered to us, but 'execute' method has
@@ -1003,6 +1025,7 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 	}
 
 	/* TODO: Do same if self->sel_self is NULL */
+#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 	if ( !(self->sel_flags & PyObjCSelector_kINITIALIZER)
 	     && (self->sel_self) && (PyObjCObject_Check(self->sel_self)) &&
 	     ((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
@@ -1018,6 +1041,7 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 			return NULL;
 		}
 	}
+#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 
 	/*
 	 * Assume callable will check arguments
@@ -1046,6 +1070,13 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 		Py_DECREF(actual_args);
 	}
 
+#if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
+	if ( result && (self->sel_self) && (PyObjCObject_Check(self->sel_self)) &&
+	     ((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
+
+	     ((PyObjCObject*)self->sel_self)->flags &= ~PyObjCObject_kUNINITIALIZED;
+	}
+#else
 	/* TODO: Do same if self->sel_self is NULL */
 	if ( result && (self->sel_flags & PyObjCSelector_kINITIALIZER)
 	     && (self->sel_self) && (PyObjCObject_Check(self->sel_self)) &&
@@ -1054,6 +1085,7 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 	     ((PyObjCObject*)self->sel_self)->flags &= ~PyObjCObject_kUNINITIALIZED;
 	    
 	}
+#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
 
 	return result;
 }

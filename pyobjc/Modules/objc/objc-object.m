@@ -8,6 +8,7 @@
 #include <objc/Object.h>
 
 
+
 /*
  * Basic freelist. 
  * - to delete an object: obj_freelist[obj_freelist_top++] = OBJ
@@ -60,6 +61,7 @@ register_proxy(PyObject* proxy_obj)
 			"bad argument for register_proxy");
 		return -1;
 	}
+	assert(objc_obj != nil);
 
 	if (proxy_dict == NULL)  {
 		proxy_dict =  NSCreateMapTable(
@@ -239,11 +241,13 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 
 static PyObject** _get_dictptr(PyObject* obj)
 {
-	int dictoffset = PyObjCClass_DictOffset((PyObject*)obj->ob_type);
-	
+	int dictoffset;
+	id obj_object;
+	dictoffset = PyObjCClass_DictOffset((PyObject*)obj->ob_type);
 	if (dictoffset == 0) return NULL;
-	
-	return (PyObject**)(((char*)PyObjCObject_GetObject(obj)) + dictoffset);
+	obj_object = PyObjCObject_GetObject(obj);
+	assert(obj_object != nil);
+	return (PyObject**)(((char*)obj_object) + dictoffset);
 }
 
 
@@ -256,6 +260,8 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	descrgetfunc f;
 	PyObject **dictptr;
 	char*      namestr;
+	Class obj_class;
+	id obj_inst;
 
 	if (!PyString_Check(name)){
 #ifdef Py_USING_UNICODE
@@ -279,10 +285,15 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	else
 		Py_INCREF(name);
 
+	namestr = PyString_AS_STRING(name);
+
 	/* Special hack for KVO on MacOS X, when an object is observed it's 
 	 * ISA is changed by the runtime. We change the python type as well.
 	 */
-	tp = (PyTypeObject*)PyObjCClass_New(GETISA(PyObjCObject_GetObject(obj)));
+	obj_inst = PyObjCObject_GetObject(obj);
+	assert(obj_inst != nil);
+	obj_class = GETISA(obj_inst);
+	tp = (PyTypeObject*)PyObjCClass_New(obj_class);
 
 	descr = NULL;
 
@@ -373,8 +384,6 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 		res = descr;
 		goto done;
 	}
-
-	namestr = PyString_AS_STRING(name);
 
 	if (!PyObjCObject_IsClassic(obj)) {
 		res = PyObjCSelector_FindNative(obj, namestr);
@@ -534,8 +543,13 @@ obj_get_classMethods(PyObjCObject* self, void* closure __attribute__((__unused__
 PyDoc_STRVAR(objc_get_real_class_doc, "Return the current ISA of the object");
 static PyObject* objc_get_real_class(PyObject* self, void* closure __attribute__((__unused__)))
 {
-	PyObject* ret = PyObjCClass_New(GETISA(PyObjCObject_GetObject(self)));
+	id obj_object;
+	PyObject* ret;
+	obj_object = PyObjCObject_GetObject(self);
+	assert(obj_object != nil);
+	ret = PyObjCClass_New(GETISA(obj_object));
 	if (ret != (PyObject*)self->ob_type) {
+		/* XXX doesn't this leak a reference to the original ob_type? */
 		self->ob_type = (PyTypeObject*)ret;
 		Py_INCREF(ret);
 	}
@@ -588,7 +602,7 @@ static PyGetSetDef obj_getset[] = {
 static PyObject*
 meth_reduce(PyObject* self __attribute__((__unused__)))
 {
-        PyErr_SetString(PyExc_TypeError,
+	PyErr_SetString(PyExc_TypeError,
 		"Cannot pickle Objective-C objects");
 	return NULL;
 }
@@ -693,6 +707,7 @@ _PyObjCObject_NewDeallocHelper(id objc_object)
 	PyObject* res;
 	PyTypeObject* cls_type;
 
+	assert(objc_object != nil);
 	cls = GETISA(objc_object);
 	cls_type = (PyTypeObject*)PyObjCClass_New(cls);
 	if (cls_type == NULL) {
@@ -721,6 +736,7 @@ _PyObjCObject_NewDeallocHelper(id objc_object)
 
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
+	assert(objc_object != nil);
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = PyObjCObject_kDEALLOC_HELPER;
 	return res;
@@ -804,6 +820,7 @@ PyObjCObject_New(id objc_object)
 	 */
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
+	assert(objc_object != nil);
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = 0;
 
@@ -870,6 +887,7 @@ PyObjCObject_NewClassic(id objc_object)
 	 */
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
+	assert(objc_object != nil);
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = PyObjCObject_kCLASSIC;
 
@@ -912,6 +930,7 @@ PyObjCObject_NewUnitialized(id objc_object)
 	 */
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
+	assert(objc_object != nil);
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = 0;
 
@@ -937,7 +956,7 @@ PyObjCObject_FindSelector(PyObject* object, SEL selector)
 	}	
 }
 
-id        
+id
 (PyObjCObject_GetObject)(PyObject* object)
 {
 	if (!PyObjCObject_Check(object)) {
@@ -952,6 +971,7 @@ id
 void        
 PyObjCObject_ClearObject(PyObject* object)
 {
+    if (object == NULL) abort();
 	if (!PyObjCObject_Check(object)) {
 		PyErr_Format(PyExc_TypeError,
 			"'objc.objc_object' expected, got '%s'",

@@ -17,7 +17,7 @@ PyObject* PyObjCExc_UnInitDeallocWarning;
 PyGILState_STATE PyObjCGILState_Ensure(void)
 {
 	/* Now that PyObjCUnicode_New no longer uses autorelead objects it 
-	 * should no longer be necessaryt to create a transient release-pool
+	 * should no longer be necessary to create a transient release-pool
 	 * for calls from ObjC to python. 
 	 * The pool might also be unsafe because at least some python methods
 	 * return objects whose only reference is in the autorelease pool (

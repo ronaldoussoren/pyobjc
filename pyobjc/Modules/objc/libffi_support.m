@@ -1104,6 +1104,15 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		Py_INCREF(Py_None);
 		objc_result =  Py_None;
 	}
+#if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
+	if (objc_result != self
+		&& PyObjCObject_Check(self) && PyObjCObject_Check(objc_result)
+		&& !(flags & PyObjCSelector_kRETURNS_UNINITIALIZED)
+		&& (((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED)) {
+		[PyObjCObject_GetObject(objc_result) release];
+		PyObjCObject_ClearObject(self);
+	}
+#else
 	if ( (flags & PyObjCSelector_kRETURNS_SELF)
 		&& (objc_result != self)) {
 
@@ -1118,6 +1127,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		}
 		PyObjCObject_ClearObject(self);
 	}
+#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
 
 	if (byref_out_count == 0) {
 		result = objc_result;

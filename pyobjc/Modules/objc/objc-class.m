@@ -541,7 +541,7 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 		if (!recursive) break;
 		if (info->class->super_class == NULL) break;
 		cls = PyObjCClass_New(info->class->super_class);
-			/* ^^^ REFCNT leak!! */
+			/* XXX REFCNT leak!! */
 		info = get_class_info(cls);
 
 	}
