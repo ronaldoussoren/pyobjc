@@ -1,3 +1,8 @@
+2003-01-23  Bill Bumgarner  <bbum@codefab.com>
+
+    * setup.py (USE_FFI): Enabled FFI.  Refactored setup.py slightly to push
+      FFI configuration to top.
+
 2003-01-20  Bill Bumgarner  <bbum@codefab.com>
     * Lib/Foundation/Conversion.py: Fixed tests to ensure that "" and 0 are
       not counted as None.

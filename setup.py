@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+USE_FFI = 1
+
 import sys
 
 if sys.platform == 'darwin':
@@ -28,11 +30,7 @@ if sys.version_info[0] < req_ver[0] or (
 
 # TODO: Autodetect libFFI, including LIBFFI_BASE
 # ... But first implement FFI support!
-if 1:
-    LIBFFI_CFLAGS=[]
-    LIBFFI_LDFLAGS=[]
-    LIBFFI_SOURCEFILES=[]
-else:
+if USE_FFI:
     LIBFFI_BASE='libffi'
     LIBFFI_CFLAGS=[ 
         "-DOC_WITH_LIBFFI", 
@@ -45,6 +43,10 @@ else:
     LIBFFI_SOURCEFILES=[
         'Modules/objc/libffi_support.m',
     ]
+else:
+    LIBFFI_CFLAGS=[]
+    LIBFFI_LDFLAGS=[]
+    LIBFFI_SOURCEFILES=[]
 
 sourceFiles = [
         "Modules/objc/objc_util.m",
