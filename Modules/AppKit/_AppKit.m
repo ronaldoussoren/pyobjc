@@ -339,7 +339,8 @@ static char* keywords[] = { "rects", "count", 0 };
 		return NULL;
 	}
 
-#warning The (*4) in the following is bogus.   Without it, we crash with what appears to be corrupted memory.  I don't know why but figure that not crashing is preferable to crashing until one of us has time to figure this out.  Really,  I suspect Ronald will take one look at this and, being about 10x brighter than me at this sort of thing, will know exactly what is wrong...  :-)
+#warning The (*4) in the following is bogus.
+	/* Without it, we crash with what appears to be corrupted memory.  I don't know why but figure that not crashing is preferable to crashing until one of us has time to figure this out.  Really,  I suspect Ronald will take one look at this and, being about 10x brighter than me at this sort of thing, will know exactly what is wrong...  :-) */
 	rects = malloc((rectCount * sizeof(NSRect)) * 4);
 	if (rects == NULL) {
 		PyErr_NoMemory();
