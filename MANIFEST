@@ -158,6 +158,7 @@ Lib/PyObjCTools/__init__.py
 Lib/PyObjCTools/AppHelper.py
 Lib/PyObjCTools/Conversion.py
 Lib/PyObjCTools/NibClassBuilder.py
+Lib/PyObjCTools/Signals.py
 Lib/PyObjCTools/test/__init__.py
 Lib/PyObjCTools/test/test_collections.py
 Lib/ScreenSaver.py
