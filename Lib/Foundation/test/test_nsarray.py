@@ -226,8 +226,108 @@ class TestNSArraySpecialMethods(unittest.TestCase):
         self.assertEquals(a, ('a', 'b', 'c'))
         self.assertEquals(b, ('c', 'b', 'a'))
 
+class TestNSMutableArrayInteraction(unittest.TestCase):
+
+    def testRemoveObjects(self):
+        a = NSMutableArray.arrayWithArray_(range(10))
+
+        self.assertEquals(len(a), 10)
+        self.assertEquals(a[0], 0)
+        self.assertEquals(a[1], 1)
+        self.assertEquals(a[2], 2)
+
+        a.removeObjectsFromIndices_numIndices_([2, 4, 6, 8], 3)
+
+        self.assertEquals(len(a), 7)
+        self.assertEquals(a, (0, 1, 3, 5, 7, 8, 9))
 
 
+    def testReplaceObjects(self):
+        a = NSMutableArray.arrayWithArray_(range(4))
+        self.assertEquals(a, (0, 1, 2, 3))
+
+        a.replaceObjectsInRange_withObjects_count_(
+            (1,2), ["a", "b", "c", "d"], 3)
+
+        self.assertEquals(a, (0, "a", "b", "c", 3))
+
+    def testSortInvalid(self):
+        """
+        Invalid calls to sortUsingFunction:context:
+        """
+
+        a = NSMutableArray.arrayWithArray_(range(4))
+        self.assertEquals(a, (0, 1, 2, 3))
+
+        self.assertRaises(TypeError, a.sortUsingFunction_context_, dir)
+        self.assertRaises(TypeError, a.sortUsingFunction_context_, dir, 1, 2)
+        self.assertRaises(TypeError, a.sortUsingFunction_context_, cmp, 'a')
+
+    def testSort2(self):
+        a = NSMutableArray.arrayWithArray_(range(10))
+        self.assertEquals(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
+    
+        def cmpfunc(l, r, c):
+            return -cmp(l,r)
+
+        a.sortUsingFunction_context_range_(cmpfunc, "a", (4, 4))
+
+        self.assertEquals(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
+
+    def testSort3(self):
+        """ check the sort method, list interface compatibility """
+
+        a = NSMutableArray.arrayWithArray_(range(4))
+        self.assertEquals(a, (0, 1, 2, 3))
+    
+        def cmpfunc(l, r):
+            return -cmp(l,r)
+
+        a.sort(cmpfunc)
+
+        self.assertEquals(a, (3, 2, 1, 0))
+        
+        a.sort()
+        self.assertEquals(a, (0, 1, 2, 3))
+
+    def testSort1(self):
+        a = NSMutableArray.arrayWithArray_(range(4))
+        self.assertEquals(a, (0, 1, 2, 3))
+    
+        def cmpfunc(l, r, c):
+            return -cmp(l,r)
+
+        a.sortUsingFunction_context_(cmpfunc, "a")
+
+        self.assertEquals(a, (3, 2, 1, 0))
+
+    def testSort2(self):
+        a = NSMutableArray.arrayWithArray_(range(10))
+        self.assertEquals(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
+    
+        def cmpfunc(l, r, c):
+            return -cmp(l,r)
+
+        a.sortUsingFunction_context_range_(cmpfunc, "a", (4, 4))
+
+        self.assertEquals(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
+
+    def testSort3(self):
+        """ check the sort method, list interface compatibility """
+
+        a = NSMutableArray.arrayWithArray_(range(4))
+        self.assertEquals(a, (0, 1, 2, 3))
+    
+        def cmpfunc(l, r):
+            return -cmp(l,r)
+
+        a.sort(cmpfunc)
+
+        self.assertEquals(a, (3, 2, 1, 0))
+        
+        a.sort()
+
+        self.assertEquals(a, (0, 1, 2, 3))
 
 if __name__ == '__main__':
-    unittest.main( )
+    unittest.main()

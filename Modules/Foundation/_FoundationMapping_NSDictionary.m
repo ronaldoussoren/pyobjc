@@ -29,7 +29,7 @@ static PyObject* call_NSDictionary_initWithObjects_forKeys_count_(
 	int i;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "OOi", &objectList, &keyList, &count) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "OOi", &objectList, &keyList, &count) ) {
 		return NULL;
 	}
 
@@ -213,7 +213,7 @@ static PyObject* call_NSDictionary_dictionaryWithObjects_forKeys_count_(
 	int i;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "OOi", &objectList, &keyList, &count) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "OOi", &objectList, &keyList, &count)) {
 		return NULL;
 	}
 

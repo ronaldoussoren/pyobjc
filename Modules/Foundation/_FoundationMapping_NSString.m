@@ -30,7 +30,7 @@ call_NSString_getCString_maxLength_range_remainingRange_(
 	struct objc_super super;
 	PyObject* res;
 
-	if  (PyArg_ParseTuple(arguments, "iO", &maxLength, &rangeObj) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "iO", &maxLength, &rangeObj)) {
 		return NULL;
 	}
 
@@ -94,7 +94,7 @@ call_NSString_getCString_maxLength_(
 	struct objc_super super;
 	PyObject* res;
 
-	if  (PyArg_ParseTuple(arguments, "i", &maxLength) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "i", &maxLength)) {
 		return NULL;
 	}
 

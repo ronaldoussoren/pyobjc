@@ -1,11 +1,27 @@
-"""Signals.py -- Automatically dump a python stacktrace if something bad happens.
+"""Signals.py -- dump a python stacktrace if something bad happens.
 
-This module is not designed to provide fine grained control over signal handling.
-Nor is it intended to be terribly robust.
+          DO NOT USE THIS MODULE IN PRODUCTION CODE
+
+This module has two functions in its public API:
+
+- dumpStackOnFatalSignal()
+  This function will install signal handlers that print a stacktrace and
+  then reraise the signal.
+
+- resetFatalSignals()
+  Restores the signal handlers to the state they had before the call to
+  dumpStackOnFatalSignal.
+
+This module is not designed to provide fine grained control over signal 
+handling. Nor is it intended to be terribly robust. It may give usefull
+information when your program gets unexpected signals, but it might just
+as easily cause a crash when such a signal gets in. 
+
+          DO NOT USE THIS MODULE IN PRODUCTION CODE
 """
 
 import signal
-import traceback # go ahead an import now -- don't know what state we'll be in later
+import traceback
 import os
 
 __all__ = ["dumpStackOnFatalSignal", "resetFatalSignals"]
@@ -13,6 +29,10 @@ __all__ = ["dumpStackOnFatalSignal", "resetFatalSignals"]
 originalHandlers = None
 
 def dumpHandler(signum, frame):
+    """
+    the signal handler used in this module: print a stacktrace and
+    then re-raise the signal
+    """
     resetFatalSignals()
     print "*** Handling fatal signal '%d'." % signum
     traceback.print_stack(frame)
@@ -20,9 +40,20 @@ def dumpHandler(signum, frame):
     os.kill(os.getpid(), signum)
 
 def installHandler(sig):
+    """
+    Install our signal handler for a signal. The original handler
+    is saved in 'originalHandlers'.
+    """
     originalHandlers[sig] = signal.signal(sig, dumpHandler)
 
 def dumpStackOnFatalSignal():
+    """
+    Install signal handlers that might print a usefull stack trace when
+    this process receives a fatal signal. 
+
+    NOTE: See module docstring
+    """
+
     global originalHandlers
     if not originalHandlers:
         originalHandlers = {}
@@ -37,6 +68,9 @@ def dumpStackOnFatalSignal():
         installHandler(signal.SIGSYS)
 
 def resetFatalSignals():
+    """
+    Restore the original signal handlers
+    """
     global originalHandlers
     if originalHandlers:
         for sig in originalHandlers:

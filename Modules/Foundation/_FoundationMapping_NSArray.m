@@ -79,7 +79,7 @@ call_NSArray_sortedArrayUsingFunction_context_(
 	PyObject* realContext;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "OO", &sortFunc, &context) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "OO", &sortFunc, &context)) {
 		return NULL;
 	}
 
@@ -128,8 +128,8 @@ static PyObject* call_NSArray_sortedArrayUsingFunction_context_hint_(
 	PyObject* realContext;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "OOO&", &sortFunc, &context,
-			PyObjCObject_Convert, &hint) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "OOO&", &sortFunc, &context,
+			PyObjCObject_Convert, &hint)) {
 		return NULL;
 	}
 
@@ -309,7 +309,7 @@ static PyObject* call_NSArray_arrayWithObjects_count_(
 	int i;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "Oi", &objectList, &count) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "Oi", &objectList, &count)) {
 		return NULL;
 	}
 
@@ -442,7 +442,7 @@ static PyObject* call_NSArray_arrayByAddingObjects_count_(
 	int i;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "Oi", &objectList, &count) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "Oi", &objectList, &count)) {
 		return NULL;
 	}
 
@@ -575,7 +575,7 @@ static PyObject* call_NSArray_initWithObjects_count_(
 	int i;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "Oi", &objectList, &count) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "Oi", &objectList, &count)) {
 		return NULL;
 	}
 

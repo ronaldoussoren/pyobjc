@@ -18,7 +18,7 @@ static PyObject* call_NSMovie_QTMovie(
 	struct objc_super super;
 	void*     movie;
 
-	if  (PyArg_ParseTuple(arguments, "") < 0) {
+	if  (!PyArg_ParseTuple(arguments, "")) {
 		return NULL;
 	}
 
@@ -83,7 +83,7 @@ static PyObject* call_NSMovie_initWithMovie_(
 	void*     movie;
 	id        objc_result;
 
-	if  (PyArg_ParseTuple(arguments, "O&", MovieObj_Convert, &movie) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "O&", MovieObj_Convert, &movie)) {
 		return NULL;
 	}
 

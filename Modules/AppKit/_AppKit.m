@@ -241,7 +241,7 @@ static char* keywords[] = { "bytes", "length", "count", 0 };
   unsigned char *rectBytes;
   int rectByteLength;
   int rectCount = -1;
-  if  (PyArg_ParseTupleAndKeywords(args, kwds, "s#|i", keywords, &rectBytes, &rectByteLength, &rectCount) < 0) {
+  if  (!PyArg_ParseTupleAndKeywords(args, kwds, "s#|i", keywords, &rectBytes, &rectByteLength, &rectCount)) {
     return NULL;
   }
 

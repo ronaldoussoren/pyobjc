@@ -6,6 +6,8 @@
  *
  * -initWithWindowRef:
  * -windowRef
+ *
+ * NOTE: Requires MacPython for complete functionality.
  */
 #include <Python.h>
 #include <AppKit/AppKit.h>
@@ -14,13 +16,14 @@
 #include "pymactoolbox.h"
 
 static PyObject* call_NSWindow_windowRef(
-		PyObject* method __attribute__((__unused__)), PyObject* self, PyObject* arguments)
+		PyObject* method __attribute__((__unused__)), 
+		PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
 	void*     windowRef;
 
-	if  (PyArg_ParseTuple(arguments, "") < 0) {
+	if  (!PyArg_ParseTuple(arguments, "")) {
 		return NULL;
 	}
 
@@ -38,6 +41,7 @@ static PyObject* call_NSWindow_windowRef(
 		} else {
 			result = WinObj_New((WindowPtr)windowRef);
 		}
+
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
@@ -85,7 +89,7 @@ static PyObject* call_NSWindow_initWithWindowRef_(
 	void*     windowRef;
 	id        objc_result;
 
-	if  (PyArg_ParseTuple(arguments, "O&", WinObj_Convert, &windowRef) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "O&", WinObj_Convert, &windowRef)) {
 		return NULL;
 	}
 
@@ -97,6 +101,7 @@ static PyObject* call_NSWindow_initWithWindowRef_(
 		objc_result = objc_msgSendSuper(&super,
 				@selector(initWithWindowRef:), windowRef);
 		result = PyObjC_IdToPython(objc_result);
+
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;

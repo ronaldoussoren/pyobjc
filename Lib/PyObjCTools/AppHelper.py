@@ -5,6 +5,8 @@ Exported functions:
 * sheetEndMethod - set correct signature for NSSheet callbacks
 """
 
+__all__ = ( 'runEventLoop', 'sheetEndMethod' )
+
 from AppKit import NSApplicationMain, NSApp, NSRunAlertPanel
 from Foundation import NSLog
 import sys

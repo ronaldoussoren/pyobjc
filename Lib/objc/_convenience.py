@@ -574,3 +574,13 @@ def UnsupportedMethod(self, *args):
 CONVENIENCE_METHODS['poseAsClass:'] = (
     ('poseAsClass_', (UnsupportedMethod)),
 )
+
+def sort(self, cmpfunc=cmp):
+    def doCmp(a, b, cmpfunc):
+        return cmpfunc(a, b)
+
+    self.sortUsingFunction_context_(doCmp, cmpfunc)
+
+CONVENIENCE_METHODS['sortUsingFunction:context:'] = (
+    ('sort', sort),
+)

@@ -24,7 +24,7 @@ static PyObject* call_NSSet_setWithObjects_count_(
 	int i;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "Oi", &objectList, &count) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "Oi", &objectList, &count)) {
 		return NULL;
 	}
 
@@ -157,7 +157,7 @@ static PyObject* call_NSSet_initWithObjects_count_(
 	int i;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "Oi", &objectList, &count) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "Oi", &objectList, &count)) {
 		return NULL;
 	}
 
