@@ -231,7 +231,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			PyErr_SetString(PyExc_TypeError, 
 					"multiple objective-C bases");
 			return NULL;
-		} else if (ObjCInformalProtocol_Check(v)) {
+		} else if (PyObjCInformalProtocol_Check(v)) {
 			PyList_Append(protocols, v);
 		} else {
 			PyList_Append(real_bases, v);
@@ -297,8 +297,8 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			continue;
 		}
 
-		if (ObjCInformalProtocol_Check(p)) {
-			if (!ObjCIPVerify(p, res)) {
+		if (PyObjCInformalProtocol_Check(p)) {
+			if (!PyObjCInformalProtocol_CheckClass(p, res)) {
 				Py_DECREF(res);
 				Py_DECREF(protocols);
 				PyObjCClass_UnbuildClass(objc_class);
@@ -604,7 +604,7 @@ PyTypeObject PyObjCClass_Type = {
 
 /* FIXME: objc_support.[hm] also has version of this function! */
 char*
-pythonify_selector(SEL sel, char* buf, size_t buflen)
+PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
 {
 	size_t res = snprintf(buf, buflen, SELNAME(sel));
 	char* cur;
@@ -658,7 +658,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 
 			meth = mlist->method_list + i;
 
-			name = (char*)pythonify_selector(
+			name = (char*)PyObjC_SELToPythonName(
 						meth->method_name, 
 						selbuf, 
 						sizeof(selbuf));
@@ -707,7 +707,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 		for (i = 0; i < mlist->method_count; i++) {
 			meth = mlist->method_list + i;
 
-			pythonify_selector(
+			PyObjC_SELToPythonName(
 				meth->method_name, 
 				selbuf, 
 				sizeof(selbuf));
@@ -751,7 +751,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 				continue;
 			}
 
-			descr = ObjCInstanceVar_New(var->ivar_name);
+			descr = PyObjCInstanceVariable_New(var->ivar_name);
 			if (descr == NULL) {
 				return -1;
 			}
@@ -776,7 +776,8 @@ add_class_fields(Class objc_class, PyObject* dict)
  * - this looks a lot like PyObjCClass_Type.tp_new, but it is _not_ the
  *   same!
  */
-PyObject* PyObjCClass_New(Class objc_class)
+PyObject* 
+PyObjCClass_New(Class objc_class)
 {
 	PyObject* args;
 	PyObject* dict;
@@ -839,7 +840,8 @@ PyObject* PyObjCClass_New(Class objc_class)
 }
 
 
-Class PyObjCClass_GetClass(PyObject* cls)
+Class 
+PyObjCClass_GetClass(PyObject* cls)
 {
 	PyObjC_class_info* info;
 
@@ -853,7 +855,8 @@ Class PyObjCClass_GetClass(PyObject* cls)
 	return info->class;
 }
 
-PyObject* PyObjCClass_FindSelector(PyObject* cls, SEL selector)
+PyObject* 
+PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 {
 	PyObjC_class_info* info;
 	PyObject*          result;

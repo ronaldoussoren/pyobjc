@@ -184,7 +184,7 @@ SEL ObjCSelector_DefaultSelector(char* methname);
 #include "ObjCPointer.h"
 
 /* From 'class-list.m' */
-PyObject* ObjC_GetClassList(void);
+PyObject* PyObjC_GetClassList(void);
 
 
 int ObjC_register_methods(void);
@@ -194,11 +194,11 @@ int ObjCAPI_Register(PyObject* module_dict);
 #include "pyobjc-api.h"
 
 
-extern PyTypeObject ObjCInformalProtocol_Type;
-#define ObjCInformalProtocol_Check(obj) PyObject_TypeCheck(obj, &ObjCInformalProtocol_Type)
+extern PyTypeObject PyObjCInformalProtocol_Type;
+#define PyObjCInformalProtocol_Check(obj) PyObject_TypeCheck(obj, &PyObjCInformalProtocol_Type)
 
-int     ObjCIPVerify(PyObject* obj, PyObject* cls);
-PyObject* ObjCIPFindInfo(PyObject* obj, SEL selector);
+int     PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls);
+PyObject* PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector);
 
 /* See alloc_hack.m */
 int PyObjC_InstallAllocHack(void);
@@ -214,12 +214,12 @@ PyObject *ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args);
 extern PyObject* ObjCMethodAccessor_New(PyObject* base, int class_method);
 
 /* Needed by method-accessor, name will be changed soon */
-char* pythonify_selector(SEL, char*, size_t);
+char* PyObjC_SELToPythonName(SEL, char*, size_t);
 
 /* unicode-object.m */
-extern PyTypeObject ObjCUnicode_Type;
-#define ObjCUnicode_Check(obj) PyObject_TypeCheck(obj, &ObjCUnicode_Type)
-PyObject* ObjCUnicode_New(NSString* value);
-NSString* ObjCUnicode_Extract(PyObject* value);
+extern PyTypeObject PyObjCUnicode_Type;
+#define PyObjCUnicode_Check(obj) PyObject_TypeCheck(obj, &PyObjCUnicode_Type)
+PyObject* PyObjCUnicode_New(NSString* value);
+NSString* PyObjCUnicode_Extract(PyObject* value);
 
 #endif /* META_H */

@@ -275,9 +275,9 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 			PyErr_Clear();
 			continue;
 		}
-		if (!ObjCInformalProtocol_Check(p)) continue;
+		if (!PyObjCInformalProtocol_Check(p)) continue;
 
-		info = ObjCIPFindInfo(p, selector);
+		info = PyObjCInformalProtocol_FindSelector(p, selector);
 		if (info != NULL) {
 			return ObjCSelector_Signature(info);
 		}
@@ -411,17 +411,17 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			goto error_cleanup;
 		}
 
-		if (ObjCIvar_Check(value)) {
+		if (PyObjCInstanceVariable_Check(value)) {
 			if (class_getInstanceVariable(super_class, 
-					((ObjCIvar*)value)->name) != NULL) {
+			    ((PyObjCInstanceVariable*)value)->name) != NULL) {
 				ObjCErr_Set(ObjCExc_error,
 					"Cannot replace instance variable %s",
-					((ObjCIvar*)value)->name);
+					((PyObjCInstanceVariable*)value)->name);
 				goto error_cleanup;
 			}
 
 			ivar_count ++;
-			item_size = objc_sizeof_type(((ObjCIvar*)value)->type);
+			item_size = objc_sizeof_type(((PyObjCInstanceVariable*)value)->type);
 			if (item_size == -1) goto error_cleanup;
 			ivar_size += item_size;
 
@@ -634,14 +634,14 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			goto error_cleanup;
 		}
 
-		if (ObjCIvar_Check(value)) {
+		if (PyObjCInstanceVariable_Check(value)) {
 			IVAR var;
 
 			var = ivar_list->ivar_list + ivar_list->ivar_count;
 			ivar_list->ivar_count++;
 
-			var->ivar_name = ((ObjCIvar*)value)->name;
-			var->ivar_type = ((ObjCIvar*)value)->type;
+			var->ivar_name = ((PyObjCInstanceVariable*)value)->name;
+			var->ivar_type = ((PyObjCInstanceVariable*)value)->type;
 			var->ivar_offset = ivar_size;
 
 			item_size = objc_sizeof_type(var->ivar_type);

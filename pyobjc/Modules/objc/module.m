@@ -115,13 +115,13 @@ classAddMethods(PyObject* self, PyObject* args, PyObject* keywds)
 #endif
 
 
-PyDoc_STRVAR(objc_recycle_autorelease_pool_doc,
+PyDoc_STRVAR(recycle_autorelease_pool_doc,
   "recycle_autorelease_pool()\n"
   "\n"
   "This 'releases' the global autorelease pool and creates a new one.\n"
   "This method is for system use only\n");
 static PyObject*
-objc_recycle_autorelease_pool(PyObject* self, PyObject* args, PyObject* kwds)
+recycle_autorelease_pool(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 
@@ -137,7 +137,7 @@ static	char* keywords[] = { NULL };
 	return Py_None;
 }
 
-PyDoc_STRVAR(objc_set_class_extender_doc,
+PyDoc_STRVAR(set_class_extender_doc,
 	"set_class_extender(func) -> None\n"
 	"\n"
 	"Register a function that will be called to update the class\n"
@@ -155,7 +155,7 @@ PyDoc_STRVAR(objc_set_class_extender_doc,
 	"  this dictionary.\n"
 	"");
 static PyObject*
-objc_set_class_extender(PyObject* self, PyObject* args, PyObject* kwds)
+set_class_extender(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static 	char* keywords[] = { "callback", NULL };
 	PyObject* callback;
@@ -184,11 +184,10 @@ PyDoc_STRVAR(getClassList_doc,
   "\n"
   "Return a list with all Objective-C classes known to the runtime.\n"
 );
-
 static PyObject* 
 getClassList(PyObject* self)
 {
-	return ObjC_GetClassList();
+	return PyObjC_GetClassList();
 }
 
 PyDoc_STRVAR(set_signature_for_selector_doc,
@@ -198,7 +197,7 @@ PyDoc_STRVAR(set_signature_for_selector_doc,
 	"can be used to provide a more exact signature for a method.\n"
 	"");
 static PyObject* 
-objc_set_signature_for_selector(PyObject* self, PyObject* args, PyObject* kwds)
+set_signature_for_selector(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static 	char* keywords[] = { "class_name", "selector", "signature", NULL };
 	char* class_name;
@@ -221,13 +220,13 @@ static 	char* keywords[] = { "class_name", "selector", "signature", NULL };
 	return Py_None;
 }
 
-PyDoc_STRVAR(func_setVerbose_doc,
+PyDoc_STRVAR(setVerbose_doc,
 	"setVerbose(bool) -> None\n"
 	"\n"
 	"Set verbosity to the new value."
 );
 static PyObject* 
-func_setVerbose(PyObject* self, PyObject* args, PyObject* kwds)
+setVerbose(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static 	char* keywords[] = { "level", NULL };
 	PyObject* o;
@@ -243,13 +242,13 @@ static 	char* keywords[] = { "level", NULL };
 	return Py_None;
 }
 
-PyDoc_STRVAR(func_getVerbose_doc,
+PyDoc_STRVAR(getVerbose_doc,
 	"getVerbose() -> bool\n"
 	"\n"
 	"Return the verbosity value."
 );
 static PyObject* 
-func_getVerbose(PyObject* self, PyObject* args, PyObject* kwds)
+getVerbose(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static 	char* keywords[] = { NULL };
 
@@ -262,39 +261,39 @@ static 	char* keywords[] = { NULL };
 }
 
 
-PyDoc_STRVAR(func_allocateBuffer_doc,
+PyDoc_STRVAR(allocateBuffer_doc,
 	     "allocateBuffer(size) -> <r/w buffer>\n"
 	     "\n"
 	     "Allocate a buffer of memory of size. Buffer is \n"
 	     "read/write."
 	     );
-
 PyObject*
-func_allocateBuffer(PyObject* self, PyObject* args, PyObject* kwds)
+allocateBuffer(PyObject* self, PyObject* args, PyObject* kwds)
 {
-  int length;
+	int length;
 
-  if (!PyArg_ParseTuple(args, "i", &length)) {
-      return NULL;
-  }
+	if (!PyArg_ParseTuple(args, "i", &length)) {
+		return NULL;
+	}
 
-  if (length <= 0 ) {
-    PyErr_SetString(PyExc_ValueError, "Length must be greater than 0.");
-    return NULL;
-  }
+	if (length <= 0 ) {
+		PyErr_SetString(PyExc_ValueError, 
+			"Length must be greater than 0.");
+		return NULL;
+	}
 
-  return PyBuffer_New(length);
+	return PyBuffer_New(length);
 }
 
 
-PyDoc_STRVAR(objc_loadBundle_doc,
+PyDoc_STRVAR(loadBundle_doc,
 	"loadBundle(bundle, module_name, module_globals) -> None\n"
 	"\n"
 	"Find all classes defined in the 'bundle', set their __module__ to\n"
 	"'module_name' and load them into 'module_globals'"
 );
 PyObject*
-objc_loadBundle(PyObject* self, PyObject* args, PyObject* kwds)
+loadBundle(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bundle_identifier", NULL };
 	id        bundle;
@@ -346,7 +345,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		[bundle load];
 	}
 
-	class_list = ObjC_GetClassList();
+	class_list = PyObjC_GetClassList();
 	if (class_list == NULL) {	
 		return NULL;
 	}
@@ -500,13 +499,13 @@ static PyMethodDef meta_methods[] = {
 	},
 #endif
 	{ "getClassList", (PyCFunction)getClassList, METH_NOARGS, getClassList_doc },
-	{ "set_class_extender", (PyCFunction)objc_set_class_extender, METH_VARARGS|METH_KEYWORDS, objc_set_class_extender_doc  },
-	{ "set_signature_for_selector", (PyCFunction)objc_set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
-	{ "recycle_autorelease_pool", (PyCFunction)objc_recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, objc_recycle_autorelease_pool_doc },
-	{ "setVerbose", (PyCFunction)func_setVerbose, METH_VARARGS|METH_KEYWORDS, func_setVerbose_doc },
-	{ "getVerbose", (PyCFunction)func_getVerbose, METH_VARARGS|METH_KEYWORDS, func_getVerbose_doc },
-	{ "loadBundle", (PyCFunction)objc_loadBundle, METH_VARARGS|METH_KEYWORDS, objc_loadBundle_doc },
-	{ "allocateBuffer", (PyCFunction)func_allocateBuffer, METH_VARARGS|METH_KEYWORDS, func_allocateBuffer_doc },
+	{ "set_class_extender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
+	{ "set_signature_for_selector", (PyCFunction)set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
+	{ "recycle_autorelease_pool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
+	{ "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
+	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
+	{ "loadBundle", (PyCFunction)loadBundle, METH_VARARGS|METH_KEYWORDS, loadBundle_doc },
+	{ "allocateBuffer", (PyCFunction)allocateBuffer, METH_VARARGS|METH_KEYWORDS, allocateBuffer_doc },
 	{ 0, 0, 0, 0 } /* sentinel */
 };
 
@@ -567,9 +566,9 @@ void init_objc(void)
 	PyType_Ready(&ObjCSelector_Type); 
 	PyType_Ready(&ObjCNativeSelector_Type);
 	PyType_Ready(&ObjCPythonSelector_Type);
-	PyType_Ready(&ObjCIvar_Type);
-	PyType_Ready(&ObjCInformalProtocol_Type);
-	PyType_Ready(&ObjCUnicode_Type);
+	PyType_Ready(&PyObjCInstanceVariable_Type);
+	PyType_Ready(&PyObjCInformalProtocol_Type);
+	PyType_Ready(&PyObjCUnicode_Type);
 
 	m = Py_InitModule4("_objc", meta_methods, NULL,
 			NULL, PYTHON_API_VERSION);
@@ -578,8 +577,8 @@ void init_objc(void)
 	PyDict_SetItemString(d, "objc_class", (PyObject*)&PyObjCClass_Type);
 	PyDict_SetItemString(d, "objc_object", (PyObject*)&PyObjCObject_Type);
 	PyDict_SetItemString(d, "selector", (PyObject*)&ObjCSelector_Type);
-	PyDict_SetItemString(d, "ivar", (PyObject*)&ObjCIvar_Type);
-	PyDict_SetItemString(d, "informal_protocol", (PyObject*)&ObjCInformalProtocol_Type);
+	PyDict_SetItemString(d, "ivar", (PyObject*)&PyObjCInstanceVariable_Type);
+	PyDict_SetItemString(d, "informal_protocol", (PyObject*)&PyObjCInformalProtocol_Type);
 	PyDict_SetItemString(d, "YES", PyObjCBool_FromLong(1));
 	PyDict_SetItemString(d, "NO", PyObjCBool_FromLong(0));
 

@@ -7,8 +7,6 @@
 #include <stddef.h>
 #include <objc/Object.h>
 
-#import <Foundation/NSString.h> /*XXX*/
-
 /*
  * We use weakreferences to make sure that every objective-C object has 
  * at most one python proxy. This allows users to use the 'is' operator
@@ -39,7 +37,8 @@ struct unregister_data {
 	void* 	  key;
 };
 
-static PyObject* unregister_proxy_func(PyObject* self, PyObject* args)
+static PyObject* 
+unregister_proxy_func(PyObject* self, PyObject* args)
 {
 	PyObject* weakref = NULL;
 	struct unregister_data* data;
@@ -108,8 +107,8 @@ register_proxy(PyObject* proxy_obj)
 		objc_obj = PyObjCObject_GetObject(proxy_obj);
 	} else if (PyObjCClass_Check(proxy_obj)) {
 		objc_obj = PyObjCClass_GetClass(proxy_obj);
-	} else if (ObjCUnicode_Check(proxy_obj)) {
-		objc_obj = ObjCUnicode_Extract(proxy_obj);
+	} else if (PyObjCUnicode_Check(proxy_obj)) {
+		objc_obj = PyObjCUnicode_Extract(proxy_obj);
 	} else {
 		PyErr_SetString(PyExc_TypeError, 
 			"bad argument for register_proxy");
@@ -305,7 +304,8 @@ PyObjCClassObject PyObjCObject_Type = {
 
 
 
-PyObject* PyObjCObject_New(id objc_object)
+PyObject* 
+PyObjCObject_New(id objc_object)
 {
 	Class cls = GETISA(objc_object);
 	PyTypeObject* cls_type;
@@ -356,7 +356,8 @@ PyObject* PyObjCObject_New(id objc_object)
 	return res;
 }
 
-PyObject* PyObjCObject_FindSelector(PyObject* object, SEL selector)
+PyObject* 
+PyObjCObject_FindSelector(PyObject* object, SEL selector)
 {
 	PyObject* meth;
 	
@@ -369,7 +370,8 @@ PyObject* PyObjCObject_FindSelector(PyObject* object, SEL selector)
 	}	
 }
 
-id        (PyObjCObject_GetObject)(PyObject* object)
+id        
+(PyObjCObject_GetObject)(PyObject* object)
 {
 	if (!PyObjCObject_Check(object)) {
 		ObjCErr_Set(PyExc_TypeError,
@@ -380,7 +382,8 @@ id        (PyObjCObject_GetObject)(PyObject* object)
 	return PyObjCObject_GetObject(object);
 }
 
-void        PyObjCObject_ClearObject(PyObject* object)
+void        
+PyObjCObject_ClearObject(PyObject* object)
 {
 	if (!PyObjCObject_Check(object)) {
 		ObjCErr_Set(PyExc_TypeError,
