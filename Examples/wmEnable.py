@@ -18,10 +18,12 @@ OUTPSN = 'o^{ProcessSerialNumber=LL}'
 INPSN = 'n^{ProcessSerialNumber=LL}'
 
 FUNCTIONS=[
+    # These two are public API
     ( u'GetCurrentProcess', S(OSErr, OUTPSN) ),
+    ( u'SetFrontProcess', S(OSErr, INPSN) ),
+    # This is undocumented SPI
     ( u'CPSSetProcessName', S(OSErr, INPSN, objc._C_CHARPTR) ),
     ( u'CPSEnableForegroundOperation', S(OSErr, INPSN) ),
-    ( u'CPSSetFrontProcess', S(OSErr, INPSN) ),
 ]
 
 def WMEnable(name='Python'):
@@ -53,9 +55,9 @@ def WMEnable(name='Python'):
     if err:
         print >>sys.stderr, 'CPSEnableForegroundOperation', (err, psn)
         return False
-    err = d['CPSSetFrontProcess'](psn)
+    err = d['SetFrontProcess'](psn)
     if err:
-        print >>sys.stderr, 'CPSSetFrontProcess', (err, psn)
+        print >>sys.stderr, 'SetFrontProcess', (err, psn)
         return False
     return True
 
@@ -65,7 +67,8 @@ class AppDelegate(NSObject):
         AppKit.NSApp().terminate_(self)
 
 if __name__ == "__main__":
-    if WMEnable():
+    import sys
+    if WMEnable(os.path.basename(os.path.splitext(sys.argv[0])[0])):
         import AppKit
         app = AppKit.NSApplication.sharedApplication()
         delegate = AppDelegate.alloc().init()
