@@ -392,7 +392,7 @@ sel_dealloc(PyObject* object)
 
 /* Ronald: This is probably a bit too much documentation... */
 PyDoc_STRVAR(base_selector_type_doc,
-"selector(function, [, signature] [, selector] [, isClassMethod=0]\n"
+"selector(function, [, selector] [, signature] [, isClassMethod=0]\n"
 "    [, returnType] [, argumentTypes] [, isRequired=True]) -> selector\n"
 "\n"
 "Return an Objective-C method from a function. The other arguments \n"
@@ -1213,7 +1213,7 @@ static PyObject*
 pysel_new(PyTypeObject* type __attribute__((__unused__)), 
 	  PyObject* args, PyObject* kwds)
 {
-static	char*	keywords[] = { "method", "selector", "signature", 
+static	char*	keywords[] = { "function", "selector", "signature", 
 				"isClassMethod", "argumentTypes", 
 				"returnType", "isRequired", NULL };
 	ObjCPythonSelector* result;
