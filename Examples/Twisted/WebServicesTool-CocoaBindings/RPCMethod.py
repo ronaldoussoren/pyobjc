@@ -1,32 +1,34 @@
-from Foundation import NSObject
-from objc import selector
+from Foundation import *
+import objc
 
 class RPCMethod(NSObject):
-    def init(self, aDocument, aName):
-        super(RPCMethod, self).init()
+    def initWithDocument_name_(self, aDocument, aName):
+        self = super(RPCMethod, self).init()
         self.document = aDocument
-        self._methodName = aName
-        self._methodSignature = None
-        self._methodDescription = None
+        self.k_methodName = aName
+        self.k_methodSignature = None
+        self.k_methodDescription = None
         return self
 
     def methodName(self):
-        return self._methodName
+        return self.k_methodName
 
     def displayName(self):
-        if self._methodSignature:
-            return self._methodSignature
+        if self.k_methodSignature is None:
+            return self.k_methodName
         else:
-            return self._methodName
+            return self.k_methodSignature
+
+    def setMethodSignature_(self, aSignature):
+        self.k_methodSignature = aSignature
+    setMethodSignature_ = objc.accessor(setMethodSignature_)
 
     def methodDescription(self):
-        if not self._methodDescription:
-            self._methodDescription = "<description not yet received>"
+        if self.k_methodDescription is None:
+            self.setMethodDescription_(u"<description not yet received>")
             self.document.fetchMethodDescription_(self)
-        return self._methodDescription
+        return self.k_methodDescription
 
     def setMethodDescription_(self, aDescription):
-        NSObject.willChangeValueForKey_(self, "methodDescription")
-        self._methodDescription = aDescription
-        NSObject.didChangeValueForKey_(self, "methodDescription")
-    setMethodDescription_ = selector(setMethodDescription_, signature="v@:@")
+        self.k_methodDescription = aDescription
+    setMethodDescription_ = objc.accessor(setMethodDescription_)
