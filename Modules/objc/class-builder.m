@@ -417,12 +417,49 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	}
 
 	/* Allocate the class as soon as possible, for new selector objects */
-	if (PyDict_GetItemString(class_dict, "__bundle_hack__")) {
-		char *class_wrapper_address = getenv("PYOBJC_BUNDLE_CLASS_WRAPPER_ADDRESS");
-		if (class_wrapper_address) {
-			if (sscanf(class_wrapper_address, "%p", &new_class) == 1) {
-				unsetenv("PYOBJC_BUNDLE_CLASS_WRAPPER_ADDRESS");
-				static_class_wrapper = 1;
+	if (!PyDict_GetItemString(class_dict, "bundleForClass")) {
+		char *bundle_address = getenv("PYOBJC_BUNDLE_ADDRESS");
+		id clsBundle;
+		BOOL used_bundle_address = NO;
+		while (bundle_address) {
+			if (sscanf(bundle_address, "%p", &clsBundle) == 1) {
+				PyObject *modules_dict = PySys_GetObject("modules");
+				PyObject *objc_module = PyDict_GetItemString(modules_dict, "objc");
+				if (!objc_module) {
+					break;
+				}
+				PyObject *loadBundleFunction = PyObject_GetAttrString(objc_module, "_make_bundleForClass");
+				if (!loadBundleFunction) {
+					PyErr_Clear();
+					break;
+				}
+				PyObject *pyClsBundle = pythonify_c_value(@encode(id), &clsBundle);
+				if (!pyClsBundle) {
+					Py_DECREF(loadBundleFunction);
+					goto error_cleanup;
+				}
+				PyObject *madeFunction = PyObject_CallFunctionObjArgs(loadBundleFunction, pyClsBundle, NULL);
+				Py_DECREF(loadBundleFunction);
+				if (!madeFunction) {
+					goto error_cleanup;
+				}
+				PyObject *bString = PyString_FromString("bundleForClass");
+				PyDict_SetItem(class_dict, bString, madeFunction);
+				Py_DECREF(madeFunction);
+				PyList_Append(key_list, bString);
+				Py_DECREF(bString);
+				key_count++;
+				used_bundle_address = YES;
+			}
+			break;
+		}
+		if (!used_bundle_address && PyDict_GetItemString(class_dict, "__bundle_hack__")) {
+			char *class_wrapper_address = getenv("PYOBJC_BUNDLE_CLASS_WRAPPER_ADDRESS");
+			if (class_wrapper_address) {
+				if (sscanf(class_wrapper_address, "%p", &new_class) == 1) {
+					unsetenv("PYOBJC_BUNDLE_CLASS_WRAPPER_ADDRESS");
+					static_class_wrapper = 1;
+				}
 			}
 		}
 	}
