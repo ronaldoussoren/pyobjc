@@ -35,6 +35,47 @@ int PyObjC_StrBridgeEnabled = 1;
 
 static NSAutoreleasePool* global_release_pool = nil;
 
+PyDoc_STRVAR(repythonify_doc,
+  "repythonify(obj, type='@') -> object\n"
+  "\n"
+  "Put an object through the bridge by calling \n"
+  "depythonify_c_value then pythonify_c_value.\n"
+  "This is for internal use only."
+);
+
+static PyObject*
+repythonify(PyObject* self __attribute__((__unused__)), PyObject* args,
+PyObject *kwds)
+{
+	static char* keywords[] = { "obj", "type", NULL };
+	const char *type = "@";
+	PyObject *rval;
+	void *datum;
+	int size;
+	PyObject *o;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O|s:repythonify",
+		keywords, &o, &type)) {
+		return NULL;
+	}
+	size = PyObjCRT_SizeOfType(type);
+	if (size < 1) {
+		PyErr_SetString(PyExc_ValueError, "Can not calculate size for type");
+		return NULL;
+	}
+	datum = PyMem_Malloc(size);
+	if (datum == NULL) {
+		return PyErr_NoMemory();
+	}
+	if (depythonify_c_value(type, o, datum)) {
+		PyMem_Free(datum);
+		return NULL;
+	}
+	rval = pythonify_c_value(type, datum);
+	PyMem_Free(datum);
+	return rval;
+}
+
+
 PyDoc_STRVAR(setStrBridgeEnabled_doc,
   "setStrBridgeEnabled(bool)\n"
   "\n"
@@ -904,6 +945,7 @@ static PyMethodDef mod_methods[] = {
 	{ "recycleAutoreleasePool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
 	{ "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
 	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
+	{ "repythonify", (PyCFunction)repythonify, METH_VARARGS|METH_KEYWORDS, repythonify_doc },
 	{ "setStrBridgeEnabled", (PyCFunction)setStrBridgeEnabled, METH_VARARGS|METH_KEYWORDS, setStrBridgeEnabled_doc },
 	{ "getStrBridgeEnabled", (PyCFunction)getStrBridgeEnabled, METH_VARARGS|METH_KEYWORDS, getStrBridgeEnabled_doc },
 	{ "loadBundle", (PyCFunction)loadBundle, METH_VARARGS|METH_KEYWORDS, loadBundle_doc },

@@ -7,7 +7,7 @@ This module contains no user callable code.
 TODO:
 - Add external interface: Framework specific modules may want to add to this.
 """
-from _objc import setClassExtender, selector, lookUpClass, currentBundle, ivar
+from _objc import setClassExtender, selector, lookUpClass, currentBundle, repythonify
 from itertools import imap
 
 __all__ = ['CONVENIENCE_METHODS', 'CLASS_METHODS']
@@ -372,17 +372,7 @@ NSNull = lookUpClass('NSNull')
 NSArray = lookUpClass('NSArray')
 null = NSNull.null()
 
-class PyObjCUtilWrap(NSObject):
-    __useKVO__ = False
-    __slots__ = ()
-    tmp = ivar('tmp')
-    def wrap_(self, anObject):
-        self.tmp = anObject
-        return self.tmp
-
-def number_wrap(v):
-    # we should have a nicer way to cross the bridge
-    return PyObjCUtilWrap.alloc().init().wrap_(v)
+number_wrap = repythonify
 
 def container_wrap(v):
     if v is None:
