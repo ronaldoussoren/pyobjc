@@ -33,10 +33,10 @@ point of view of a Python programmer.
 Objective-C for PyObjC users
 ----------------------------
 
-Objective-C is an object-oriented programming language that is an extention 
+Objective-C is an object-oriented programming language that is an extension 
 of C and borrows heavily from Smalltalk. It features single inheritance with
 (in theory) multiple root classes and dynamic dispatch of methods. This is
-basicly the same as python with single inheritance.
+basicly the same as Python with single inheritance.
 
 An important difference between Python and Objective-C is that the latter is
 not a pure object-oriented language. Some values are not objects, but values
@@ -60,7 +60,7 @@ Overview of the bridge
 Objective-C classes are visible as Python classes and can be subclassed just
 like normal Python classes. The major differences between normal Python classes
 and Objective-C classes are the way you create instances and the fact that 
-Objective-C classes have *odd* names.
+Objective-C classes have odd names.
 
 As described in `Objective-C for PyObjC users`_ the creation of Objective-C 
 objects is a two-stage process. You first call the class method ``alloc``, and
@@ -68,7 +68,7 @@ then call some variation of ``init`` to initialize the objects. The newly
 created object is the result of the call to ``init``. Most classes have 
 convienence class methods that combine the calls to ``alloc`` and ``init``.
 
-Objective-C methods are bridged to python callables. Because Objective-C method 
+Objective-C methods are bridged to Python callables. Because Objective-C method 
 names can contain colons it is necessary to translate methods names. The rules
 for translation are:
 
@@ -88,7 +88,7 @@ the bridged method has has an integer argument).  Data that is passed from the
 function results in additional return values from the function.
 
 When the bridge cannot automaticly deduce the right signature for a method, or
-if you want to add a method whose name cannot be transformed into python (
+if you want to add a method whose name cannot be transformed into Python (
 for example a methodname containing ``$``), you'll have to add explicit hints
 to your code. You do this by calling the function ``objc.selector`` and using
 the result instead of your method definition::
@@ -104,24 +104,12 @@ additional information about the method to the bridge, see the online
 documentation for more information about this function. It is almost never
 necessary to use this technique.
 
-The need for additional hints to the bridge often arises from implementing an
-(informal) protocol in Python. Because the methods compromising the protocol
-are probably not implemented in the superclass the bridge often cannot deduce 
-the correct method signatures for the methods you implemented. To avoid the
-need for using ``objc.selector`` and to make it explicit that your implementing
-an (informal) protocol the bridge has explicit support for these (informal)
-protocols. 
-
-To tell the bridge that your implementing an informal protocol you use an
-``informal_protocol`` object as a mixin::
-		
-		class MyModel (NSObject, anInformalProtocol):
-			pass
-
-The ``AppKit`` and ``Foundation`` modules define ``informal_protocol`` objects 
-for most (informal) protocols and defined by these frameworks (both the 
-explicitly documented protocols and the protocols used to communicate between
-an object and its delegate).
+If you write a method for an Objecitve-C class in Python, PyObjC will try to
+deduce the method's signature. If it's overriding a method, the signature of
+the method that is overridden is taken. If it's a method that appears
+*anywhere* in an informal protocol definition in a framework that's currently
+loaded, PyObjC takes the signature from there. (Most wrapped frameworks have a
+submodule named ``protocols.py`` that contains informal protocol definitions.)
 
 
 Cocoa for Python programmers
@@ -168,12 +156,12 @@ There are two different ways to build applications with PyObjC. There are no
 major advantages to using either one of them, use the one that is most 
 convenient to you.
 
-"Pure python" :  buildapp.py
+"Pure Python" :  buildapp.py
 ............................
 
-PyObjC includes a copy of the ``bundlebuilder`` module. This module will be part
-of the Python 2.3 MacPython release and is a to build distutil-style scripts 
-for building (standalone) applications.
+PyObjC includes a copy of the ``bundlebuilder`` module. This module will be
+part of the Python 2.3 MacPython release and offers a way to build
+distutil-style scripts  for building (standalone) applications.
 
 An example ``buildapp.py`` script::
 
@@ -182,11 +170,32 @@ An example ``buildapp.py`` script::
 		name = 'iClass',
 		mainprogram = "main.py",
 		resources = ["English.lproj", "datasource.py" ],
-	        nibname = "MainMenu",
+		nibname = "MainMenu",
 	)   
 
+During development you typically invoke it from the command line like this::
+
+	python buildapp.py --link build
+
+This will build an application bundle in a folder named ``build`` in the
+current folder. The ``--link`` option tells ``bundlebuilder`` to add symbolic
+links to the application bundle instead of copies of your source and resource
+files, allowing you to edit them without having to rebuild the application. To
+build a standalone application, either use ``--standalone`` or
+``--semi-standalone``. The latter will put all used modules that are not in
+Python's standard library into the application bundle. The result will still
+depend on an installed Python, but yields a relatively compact application.
+``--standalone`` will cause ``bundlebuilder`` to include *everything* needed
+into the app bundle, including the entire Python runtime. This is useful if
+you're using a different version of Python that the one that comes with MacOSX
+10.2, or if you fear that a future version of OSX may come with an
+incompatible Python version.
+
 The online documentation for ``bundlebuilder`` contains more information on 
-building ``buildapp.py`` scripts.
+building ``buildapp.py`` scripts and how to invoke them. There are plenty of
+example ``buildapp.py`` scripts in the various `Examples`__ subfolders.
+
+.. __: ../Examples
 
 
 "IDE approach" : Project builder
