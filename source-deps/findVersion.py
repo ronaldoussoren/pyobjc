@@ -1,6 +1,5 @@
 from compiler import parseFile
 from compiler.ast import Module, Stmt, Assign, AssName, Const
-from sets import Set
 
 __version__ = '1.0'
 

@@ -78,6 +78,9 @@ From the top of my head:
 
 * Likewise for class-builder.m, this file is way to large.
 
+* Allow ivars of Objective-C classes to be introspected
+  (but not directly from the __dict__?)
+
 * We've several types that wrap pointer values, such as ``SessionWrapper`` in
   ``Modules/AppKit``. Should add a function for creating these types, 
   possibly exposed to C code.
