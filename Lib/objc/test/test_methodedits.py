@@ -5,19 +5,21 @@ import sys
 
 import objc
 
-class MEClass(objc.runtime.NSObject):
+NSObject = objc.lookUpClass('NSObject')
+
+class MEClass(NSObject):
     pass
 
 preEverythingInstance = MEClass.new()
 
-class Methods(objc.runtime.NSObject):
+class Methods(NSObject):
     def description(self):
         return u"<methods>"
 
     def newMethod(self):
         return u"<new-method>"
 
-class MethodsSub(objc.runtime.NSObject):
+class MethodsSub(NSObject):
     def description(self):
         return u"<sub-methods>"
 
@@ -175,7 +177,7 @@ class TestClassAsignments (unittest.TestCase):
         self.assertRaises(ValueError, setattr, MEClass, 'fuzzyMethod', objc.selector(None, selector='fuzzy', signature='@@:'))
 
     def testRemovingMethods(self):
-        theClass = objc.runtime.NSObject
+        theClass = NSObject
 
         self.assertRaises(AttributeError, delattr, theClass, 'alloc')
         self.assertRaises(AttributeError, delattr, theClass, 'init')
@@ -201,10 +203,12 @@ class TestCategory (unittest.TestCase):
 
     def testObjCClassCategory(self):
 
-        o = objc.runtime.NSObject.alloc().init()
+        NSObject = objc.lookUpClass('NSObject')
+
+        o = NSObject.alloc().init()
         self.assertRaises(AttributeError, getattr, o, 'myCategoryMethod')
 
-        class NSObject (objc.Category(objc.runtime.NSObject)):
+        class NSObject (objc.Category(NSObject)):
             def myCategoryMethod(self):
                 return True
 
@@ -216,9 +220,12 @@ class TestCategory (unittest.TestCase):
 
     def testCategoryMultipleInheritance(self):
 
+        NSObject = objc.lookUpClass('NSObject')
+
+
         try:
 
-            class NSObject ( objc.Category(objc.runtime.NSObject), object ):
+            class NSObject ( objc.Category(NSObject), object ):
                 pass
 
             raise AssertionError, u"Can use objc.Category with MI"
@@ -227,7 +234,7 @@ class TestCategory (unittest.TestCase):
 
     def testCategoryName(self):
         try:
-            class NSFoo (objc.Category(objc.runtime.NSObject)):
+            class NSFoo (objc.Category(NSObject)):
                     pass
 
             raise AssertionError, u"Category name != class name"
@@ -248,7 +255,7 @@ class TestCategory (unittest.TestCase):
             pass
 
     def testCategoryRedefiningPythonMethod(self):
-        class BaseClassRedef(objc.runtime.NSObject):
+        class BaseClassRedef(NSObject):
             def foo(self):
                 return 1
 

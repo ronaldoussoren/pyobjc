@@ -30,7 +30,10 @@ try:
 except AssertionError:
     nsinvoke_ok = 0
 
-NSArray = objc.runtime.NSArray
+NSArray = objc.lookUpClass('NSArray')
+NSObject = objc.lookUpClass('NSObject')
+
+
 
 # First make sure that the pass-by-reference methods have the correct signature
 setSignature = objc.setSignatureForSelector
@@ -18352,7 +18355,7 @@ g_structTestStruct4_values = ((1, 1L<<60), (2, 4))
 g_structTestStruct5_values = ((1, 2.5), (2, 4.5))
 
 
-class Python_TestClass (objc.runtime.NSObject):
+class Python_TestClass (NSObject):
 	def init(self):
 		self = super(Python_TestClass, self).init()
 		self.reset()

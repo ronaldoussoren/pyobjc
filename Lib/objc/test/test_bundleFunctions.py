@@ -2,6 +2,8 @@ import objc
 import Foundation
 import unittest
 
+NSObject = objc.lookUpClass('NSObject')
+
 def S(*args):
     return ''.join(args)
 
@@ -22,7 +24,7 @@ class TestBundleFunctions (unittest.TestCase):
         self.assert_('NSCountFrames' in d)
 
         fn = d[u'NSIsFreedObject']
-        obj = objc.runtime.NSObject.alloc().init()
+        obj = NSObject.alloc().init()
         value = fn(obj)
         self.assert_(not value)
 
