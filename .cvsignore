@@ -4,3 +4,4 @@ Setup
 config.c
 pyobjc
 sedscript
+.gdb_history
