@@ -480,7 +480,9 @@ NSNibAwakening = _objc.informal_protocol(
             signature='v@:',
             isRequired=1
         ),
-    ]
+    ],
+    warnIfUndeclared= 0 # There's little change of problems, and 
+                        # there's the issue of backward compatibility.
 )
 
 NSOutlineViewDelegate = _objc.informal_protocol(

@@ -18,6 +18,7 @@
 #    error "Need FFI_CLOSURES!"
 #endif
 
+#if 0 /* Usefull during debugging, only used in the debugger */
 static void describe_ffitype(ffi_type* type)
 {
 	switch (type->type) {
@@ -62,6 +63,8 @@ static void describe_cif(ffi_cif* cif)
 	describe_ffitype(cif->rtype);
 	printf("%s", ">\n");
 }
+
+#endif
 
 static int align(int offset, int alignment)
 {
@@ -465,7 +468,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			}
 
 			v = PyTuple_GET_ITEM(res, idx++);
-			err = depythonify_c_value(argtype, v, args[i]);
+			err = depythonify_c_value(argtype, v, *(void**)args[i]);
 			if (err == -1) {
 				ObjCErr_ToObjC();
 			}

@@ -451,12 +451,12 @@ def emit_py_method_signatures(fp):
         fp.write('set_signature("PyObjC_TestClass1", "%sOutArg:", "v@:o^%s")\n'%(nm, sign))
         fp.write('set_signature("PyObjC_TestClass1", "%sInArg:", "@@:n^%s")\n'%(nm, sign))
 
-        fp.write('set_signature("PyObjC_TestClass2", "call%sInOutArg:", "@@:N^%s")\n'%(nm, sign))
-        fp.write('set_signature("PyObjC_TestClass2", "call%sOutArg:", "v@:o^%s")\n'%(nm, sign))
-        fp.write('set_signature("PyObjC_TestClass2", "call%sInArg:", "@@:n^%s")\n'%(nm, sign))
-        fp.write('set_signature("PyObjC_TestClass2", "invoke%sInOutArg:", "@@:N^%s")\n'%(nm, sign))
-        fp.write('set_signature("PyObjC_TestClass2", "invoke%sOutArg:", "v@:o^%s")\n'%(nm, sign))
-        fp.write('set_signature("PyObjC_TestClass2", "invoke%sInArg:", "@@:n^%s")\n'%(nm, sign))
+        fp.write('set_signature("PyObjC_TestClass2", "call%sInOutArg:of:", "@@:N^%s@")\n'%(nm, sign))
+        fp.write('set_signature("PyObjC_TestClass2", "call%sOutArg:of:", "v@:o^%s@")\n'%(nm, sign))
+        fp.write('set_signature("PyObjC_TestClass2", "call%sInArg:of:", "@@:n^%s@")\n'%(nm, sign))
+        fp.write('set_signature("PyObjC_TestClass2", "invoke%sInOutArg:of:", "@@:N^%s@")\n'%(nm, sign))
+        fp.write('set_signature("PyObjC_TestClass2", "invoke%sOutArg:of:", "v@:o^%s@")\n'%(nm, sign))
+        fp.write('set_signature("PyObjC_TestClass2", "invoke%sInArg:of:", "@@:n^%s@")\n'%(nm, sign))
 
 def emit_py_to_objc(fp):
     fp.write('class PyToObjC (unittest.TestCase):\n')
