@@ -108,7 +108,9 @@ support code as it is no longer needed. Check if we can use FFI to simplify
 other code (most likely in class-builder.m)
 
 Some PPC assembly magic is necessary in libFFI to remove a link-time warning (
-see the mailing-list archives for details).
+see the mailing-list archives for details). The very latest version of libFFI
+doesn't need such magic, I (Ronald) will try to package this for use with
+the bridge.
 
 .. _LibFFI: http://sources.redhat.com/libffi
 
