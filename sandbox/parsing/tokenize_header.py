@@ -188,7 +188,16 @@ class GlobalThing(Token):
     (const\s+)?
     (?P<type>%(IDENTIFIER)s%(INDIRECTION)s*)
     \s*(const\s+)?
-    (?P<name>%(IDENTIFIER)s)(?:\s*\[\s*\]\s*|\b)
+    (?P<name>
+        %(IDENTIFIER)s
+        (
+            \s*,\s*
+            %(INDIRECTION)s*
+            \s*(const\s+)?
+            %(IDENTIFIER)s
+        )*
+    )
+    (?:\s*\[\s*\]\s*|\b)
     (
         (\s*//(?P<comment>[^\n]*)(\n|$))?
         (?:\s+%(AVAILABLE)s)
