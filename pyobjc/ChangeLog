@@ -1,7 +1,11 @@
+2003-01-11  Bill Bumgarner  <bbum@codefab.com>
+    * Modules/Cocoa/_AppKit.m: Added bridging of NSRectFillList.  API should
+    be in GNUstep??
+
 2002-01-11 Ronald Oussoren <oussoren@cistron.nl>
     * Add workaround for a feature of NSData: 
     	x = NSData.alloc()
-	y = x.initWithBytes_len_(foo, bar)
+	    y = x.initWithBytes_len_(foo, bar)
       The initWithBytes_len_ call above acts like realloc(): 'x' might no
       longer be a pointer to a valid object. 
 
