@@ -32,15 +32,19 @@ Contents</title>
 <li><a href="#cleanup-examples" id="id16" name="id16">Cleanup Examples</a></li>
 <li><a href="#performance-tuning-testing" id="id17" name="id17">Performance tuning/testing</a></li>
 <li><a href="#add-freelists" id="id18" name="id18">Add freelists</a></li>
-<li><a href="#key-value-encoding" id="id19" name="id19">Key-Value Encoding</a></li>
-<li><a href="#formal-protocols-distributed-objects" id="id20" name="id20">Formal Protocols, Distributed Objects</a></li>
-<li><a href="#links-to-apple-documentation" id="id21" name="id21">Links to Apple documentation</a></li>
-<li><a href="#implement-more-of-nsmutabledictionary-in-oc-pythondictionary" id="id22" name="id22">Implement more of NSMutableDictionary in OC_PythonDictionary</a></li>
-<li><a href="#clean-up-oc-pythonobject" id="id23" name="id23">Clean up OC_PythonObject</a></li>
-<li><a href="#rewrite-scripts-find-raw-pointers-py" id="id24" name="id24">Rewrite scripts/find-raw-pointers.py</a></li>
-<li><a href="#finish-struct-wrapper-m" id="id25" name="id25">Finish struct-wrapper.m</a></li>
-<li><a href="#finish-refactoring-of-the-code-generator-scripts" id="id26" name="id26">Finish refactoring of the code-generator scripts</a></li>
-<li><a href="#setup-py-cleanup" id="id27" name="id27">setup.py cleanup</a></li>
+<li><a href="#formal-protocols-distributed-objects" id="id19" name="id19">Formal Protocols, Distributed Objects</a></li>
+<li><a href="#links-to-apple-documentation" id="id20" name="id20">Links to Apple documentation</a></li>
+<li><a href="#implement-more-of-nsmutabledictionary-in-oc-pythondictionary" id="id21" name="id21">Implement more of NSMutableDictionary in OC_PythonDictionary</a></li>
+<li><a href="#clean-up-oc-pythonobject" id="id22" name="id22">Clean up OC_PythonObject</a></li>
+<li><a href="#rewrite-scripts-find-raw-pointers-py" id="id23" name="id23">Rewrite scripts/find-raw-pointers.py</a></li>
+<li><a href="#finish-struct-wrapper-m" id="id24" name="id24">Finish struct-wrapper.m</a></li>
+<li><a href="#finish-refactoring-of-the-code-generator-scripts" id="id25" name="id25">Finish refactoring of the code-generator scripts</a></li>
+<li><a href="#setup-py-cleanup" id="id26" name="id26">setup.py cleanup</a></li>
+<li><a href="#unique-proxies-for-python-objects" id="id27" name="id27">Unique proxies for Python objects</a></li>
+<li><a href="#nsdecimal-vs-decimal" id="id28" name="id28">NSDecimal vs decimal</a></li>
+<li><a href="#nsset-vs-set" id="id29" name="id29">NSSet vs set</a></li>
+<li><a href="#python2-4" id="id30" name="id30">Python2.4</a></li>
+<li><a href="#nslog-stringwithformat" id="id31" name="id31">NSLog, stringWithFormat, ...</a></li>
 </ul>
 </li>
 </ul>
@@ -59,6 +63,7 @@ Objective-C, the format-arguments are not present in Python).</p>
 <h3><a href="#id4" name="test-suite">Test suite</a></h3>
 <p>The test suite needs to be enhanced.</p>
 <ul>
+<li>Somehow find a way to check code-coverage of the unittests.</li>
 <li>Tests that exercise Key-Value Observing in a way that crashes older versions
 of PyObjC.</li>
 <li>tests for all functions in <code><span>Modules/*/*Mapping*.m</span></code>
@@ -99,7 +104,8 @@ stack.</p>
 <p>Nobody seems to care enough about the templates to actually maintain them, this
 is a shame.</p>
 <ul>
-<li>Integrate Xcode template with py2app, somehow</li>
+<li>Integrate Xcode template with py2app, somehow<p>(some work to this end exists in the svn sandbox)</p>
+</li>
 <li>Update or remove the Project Builder templates<p>I prefer updating them, by rebuilding the Xcode templates in Project Builder.</p>
 <p>This would require Python 2.3 on Jaguar.</p>
 </li>
@@ -110,6 +116,9 @@ the testsuite that checks if the function wrappers are working as expected.</p>
 <p>Someone needs to check if we correctly export all constants from Cocoa and if
 the generation script finds all global functions. Simularly for the annotations
 for input/output arguments.</p>
+<p>XXX: I'm pretty sure we don't wrap all constants: the newer, yet incomplete
+wrapper scripts found some enums inside interface definitions. Don't bother
+about fixing this before 1.2.</p>
 <p>We also don't support all &quot;difficult&quot; methods yet, implementing these is
 not too hard but it is a lot of work.</p>
 <h3><a href="#id11" name="pickle-support">Pickle support</a></h3>
@@ -126,7 +135,6 @@ implement these.  Note that property list types should already be serializable
 <p>There are issues with implementing <code><span>-copy</span></code> in python, these need to be fixed.</p>
 <p>Specifically, overriding an existing <code><span>-copy</span></code> implementation does not work 
 unless <code><span>__slots__</span> <span>==</span> <span>()</span></code></p>
-<p>XXX: is this still true?</p>
 <h3><a href="#id14" name="known-issues">Known issues</a></h3>
 <p>It is impossible to support methods with a variable number of arguments in the
 generic code (you have to reimplement allmost all of the logic of these 
@@ -174,64 +182,78 @@ investigate and fix any possible performance problems.</p>
 <p>PyObjCSelector objects and PyObjCObject objects are created on
 a regular basis, we should check if using freelists would speed this up. See
 also <cite>Performance tuning/testing</cite>.</p>
-<h3><a href="#id19" name="key-value-encoding">Key-Value Encoding</a></h3>
-<p>XXX: Need to check if the current implementation is correct.</p>
-<p>XXX: It has proven to work quite well, is this still a TODO item?</p>
-<p>The takeValue:forKey: implementation correctly emits notifications (on MacOS X
-10.3). MacOS X 10.3 is currently detected at compile-time, this should probably
-be done dynamicly.</p>
-<p>The right notifications are not yet emitted for:</p>
-<ul>
-<li>setattr() on Objective-C objects<p>There is preliminary (sp?) support in objc-object.m, but I'm not sure if this
-we really should do this at all.</p>
-</li>
-<li>setattr() on pure Python objects<p>It is extremely difficult to detect such changes, even finding the right ObjC
-wrapper is not possible at the moment (but that is fixable).</p>
-<p>The documentation should mention that observations don't work for pure
-Python objects.</p>
-</li>
-</ul>
-<p>Scott Anguish mentioned on one of the Cocoa lists that the right way to 
-override the key-value related methods is different from what we're doing.</p>
-<h3><a href="#id20" name="formal-protocols-distributed-objects">Formal Protocols, Distributed Objects</a></h3>
-<p><code><span>DO</span></code> seems to use formal protocols, we don't support those at all.</p>
-<p>XXX: We do support accessing protocols (e.g. an equivalent to @protocol(Foo)),
-but you cannot define new protocols in python yet.
-XXX: Is it still true that we can't define new protocols from Python?</p>
-<h3><a href="#id21" name="links-to-apple-documentation">Links to Apple documentation</a></h3>
+<h3><a href="#id19" name="formal-protocols-distributed-objects">Formal Protocols, Distributed Objects</a></h3>
+<p><code><span>DO</span></code> seems to use formal protocols, we don't fully support those. There is 
+an equivalent to <code><span>@protocol(Foo)</span></code>, but it is not yet possible to define
+new protocols in Python.</p>
+<h3><a href="#id20" name="links-to-apple-documentation">Links to Apple documentation</a></h3>
 <p>Links to Apple documentation are not stable, can we add a layer of indirection
 here, e.g. link to the PyObjC website that will redirect to the right
 location?</p>
 <p>But: we should also provide links to locally installed documetation, especially
 in the documentation that will be installed on the users machine.</p>
-<h3><a href="#id22" name="implement-more-of-nsmutabledictionary-in-oc-pythondictionary">Implement more of NSMutableDictionary in OC_PythonDictionary</a></h3>
+<h3><a href="#id21" name="implement-more-of-nsmutabledictionary-in-oc-pythondictionary">Implement more of NSMutableDictionary in OC_PythonDictionary</a></h3>
 <p>The implementation of OC_PythonDictionary is very minimal, we should add
 additional methods in the NSMutableDictionary interface if those can be 
 implemented efficiently. The default implementation will take care of the
 methods we cannot implement efficiently.</p>
 <p>And the same is true of OC_PythonArray</p>
-<h3><a href="#id23" name="clean-up-oc-pythonobject">Clean up OC_PythonObject</a></h3>
+<h3><a href="#id22" name="clean-up-oc-pythonobject">Clean up OC_PythonObject</a></h3>
 <p>The code is a mess.</p>
-<h3><a href="#id24" name="rewrite-scripts-find-raw-pointers-py">Rewrite scripts/find-raw-pointers.py</a></h3>
+<h3><a href="#id23" name="rewrite-scripts-find-raw-pointers-py">Rewrite scripts/find-raw-pointers.py</a></h3>
 <p>This is a script for finding 'difficult' methods. The script should be 
 refactored to make it easier to create readable reports.</p>
-<h3><a href="#id25" name="finish-struct-wrapper-m">Finish struct-wrapper.m</a></h3>
-<p>XXX: Is this still true?</p>
+<h3><a href="#id24" name="finish-struct-wrapper-m">Finish struct-wrapper.m</a></h3>
 <p>We need more unittests and an implementation of the extended slice interface.</p>
 <p>Why does the GC support cause an assertion failure when it is enabled?</p>
-<h3><a href="#id26" name="finish-refactoring-of-the-code-generator-scripts">Finish refactoring of the code-generator scripts</a></h3>
+<h3><a href="#id25" name="finish-refactoring-of-the-code-generator-scripts">Finish refactoring of the code-generator scripts</a></h3>
 <ol type="1">
 <li>Change code-generator scripts to use loadBundleFunctions, etc.</li>
 <li>Move the code-generator scripts to <code><span>PyObjCTools</span></code>, to make it easier
 for others to generate wrappers.</li>
 <li>Install <code><span>pyobjc-api.h</span></code>.</li>
 </ol>
-<h3><a href="#id27" name="setup-py-cleanup">setup.py cleanup</a></h3>
-<p>XXX: Why not use docarticle?</p>
+<h3><a href="#id26" name="setup-py-cleanup">setup.py cleanup</a></h3>
 <ul>
-<li>Don't use docarticle to create HTML from build_html.</li>
 <li>Use 'WrapperGenerator.py', probably need to create a custom build action
 for that.</li>
 </ul>
+<h3><a href="#id27" name="unique-proxies-for-python-objects">Unique proxies for Python objects</a></h3>
+<p>Some Cocoa/CoreFoundation API's basically require that <code><span>a[0]</span> <span>is</span> <span>a[0]</span></code>. The
+container wrappers contain support for that, but we should try to move that
+into the generic core: there should be at most one ObjC proxy object alive
+for every Python object (just like there's at most one Python proxy for every
+ObjC object).</p>
+<h3><a href="#id28" name="nsdecimal-vs-decimal">NSDecimal vs decimal</a></h3>
+<p>Check if it is possible to wrap <code><span>NSDecimal</span></code> using <code><span>decimal</span></code> (and v.v.).</p>
+<p>Only implement this when it is possible to convert without loss of information.</p>
+<h3><a href="#id29" name="nsset-vs-set">NSSet vs set</a></h3>
+<p>Check if it is possible to wrap <code><span>NSSet</span></code> using <code><span>set</span></code> (and v.v.).</p>
+<p>Only implement this when it is possible to convert without loss of information.</p>
+<h3><a href="#id30" name="python2-4">Python2.4</a></h3>
+<p>Python 2.4 introduces a decorator syntax. Add convenience functions that
+make it easier to use decorators with PyObjC.</p>
+<p>Also add example programs using decorators. Actually, first add the example(s)
+and extract usefull convenience functions from those.</p>
+<p>An example of a convenience function would be:</p>
+<pre>
+import objc
+
+def method_signature(signature):
+        def make_selector(func):
+                return objc.selector(func, signature=signature)
+        return make_selector
+</pre>
+<p>Which can be used like this:</p>
+<pre>
+class FooClass (NSObject):
+
+        @method_signature(&quot;v@:i&quot;)
+        def myIntMethod_(self, value):
+                pass
+</pre>
+<h3><a href="#id31" name="nslog-stringwithformat">NSLog, stringWithFormat, ...</a></h3>
+<p>Functions and methods that use format strings are not properly wrapped. Fix
+that.</p>
 </body>
 </html>
