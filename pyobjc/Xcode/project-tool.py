@@ -117,11 +117,11 @@ def doSubstitutions(dirName, aName, options):
     if os.path.isdir(path):
         if options.rewriteNibFiles and (extension == '.nib'):
             if options.verbose:
-                import process
                 print "Rewriting NIB %s" % path
-                ret = process.callv('/usr/bin/nibtool', '-r', '--format', '4', path)
-                if ret:
-                    error("nibtool barfed back %d." % ret)
+            import subprocess
+            ret = subprocess.callv('/usr/bin/nibtool', '-r', '--format', '4', path)
+            if ret:
+                error("nibtool barfed back %d." % ret)
         return
 
     specialCommand = SPECIALFILES.get(aName)
