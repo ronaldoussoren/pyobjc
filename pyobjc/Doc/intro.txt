@@ -107,7 +107,7 @@ A class declaration::
 
     // An instance method, the designated initializer for MyClass.
     // Similar to an implementation of __new__ on MyClass.
-    -initWithObject:(id)anObjct andInteger:(int)anInteger;
+    -initWithObject:(id)anObject andInteger:(int)anInteger;
 
     // An accessor, instance variables (attributes) are in a separate
     // namespace and are considered "private" in Objective-C.  Conventionally,
@@ -143,7 +143,7 @@ A class implementation::
 
     // Note that a type is not declared for the return value.  Undeclared types
     // are assumed to be "id", which means any kind of instance.
-    -initWithObject:(id)anObjct andInteger:(int)anInteger
+    -initWithObject:(id)anObject andInteger:(int)anInteger
     {
         // Call the designated initializer of the superclass.
         // Similar to:
