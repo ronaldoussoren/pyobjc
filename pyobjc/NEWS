@@ -4,8 +4,8 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 1.1 (2004-05-30
--------------------
+Version 1.1 (2004-05-30)
+------------------------
 
 - KVO now actually works from Python without using nasty hacks.
 
