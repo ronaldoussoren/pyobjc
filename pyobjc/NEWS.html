@@ -172,6 +172,14 @@ the functions <code><span>objc.listInstanceVariables(aClassOrInstance)</span></c
 variable is an object. If it is true the bridge will update reference counts,
 otherwise it won't.</p>
 </li>
+<li>All wrappers for opaque pointers (such as <code><span>NSZone*</span></code>) now have the same
+interface and share a single implementation. This decreases code-size and
+makes it easier to add new wrappers.  A new feature is a <code><span>__typestr__</span></code>
+attribute on the type object, this contains the encoded Objective-C type
+of the pointer.<p>A function for creating new wrappers is exposed to python, as 
+<code><span>objc.createOpaquePointerType(name,</span> <span>typestr,</span> <span>doc)</span></code>.  The same function is 
+also exposed in the C-API.</p>
+</li>
 </ul>
 <h2><a name="version-1-2-2004-12-29">Version 1.2 (2004-12-29)</a></h2>
 <ul>

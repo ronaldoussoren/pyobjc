@@ -1290,7 +1290,7 @@ void init_AppKit(void)
 	Py_DECREF(v);
 
 	/* register other method mappings */
-	if (_pyobjc_install_NSApplication() < 0) return;
+	if (_pyobjc_install_NSApplication(d) < 0) return;
 	if (_pyobjc_install_NSATSTypesetter() < 0) return;
 	if (_pyobjc_install_NSBezierPath() < 0) return;
 	if (_pyobjc_install_NSBitmap() < 0) return;

@@ -314,23 +314,112 @@ static int LOCATE_MEMBER(PyTypeObject* type, const char* name)
 	return -1;
 }
 
-
-static int
-struct_init(PyObject* self, PyObject* args, PyObject* kwds)
+static int set_defaults(PyObject* self, const char* typestr)
 {
+	int i = 0;
+	int r;
+	PyObject* v;
+
+	while(*typestr != _C_STRUCT_E && *typestr++ != '=');
+	while(typestr && *typestr != _C_STRUCT_E) {
+		const char* next;
+
+		if (*typestr == '"') {
+			/* embedded field names */
+			typestr = strchr(typestr+1, '"');
+			if (typestr) {
+				typestr++;
+			} else {
+				break;
+			}
+		}
+		next = PyObjCRT_SkipTypeSpec(typestr);
+		switch (*typestr) {
+		case _C_BOOL: 
+			v = PyBool_FromLong(0);
+			break;
+
+		case _C_CHR: case _C_UCHR:
+		case _C_SHT: case _C_USHT:
+		case _C_INT: case _C_UINT:
+		case _C_LNG: case _C_ULNG:
+			v = PyInt_FromLong(0);
+			break;
+
+		case _C_FLT: case _C_DBL:
+			v = PyFloat_FromDouble(0.0);
+			break;
+
+		case _C_STRUCT_B:
+			v = PyObjC_CreateRegisteredStruct(typestr, next-typestr);
+			if (v != NULL) {
+				/* call init */
+				r = v->ob_type->tp_init(v, NULL, NULL);
+				if (r == -1) {
+					Py_DECREF(v);
+					return -1;
+				}
+			}
+				
+
+			break;
+
+		default:
+			v = Py_None;
+			Py_INCREF(Py_None);
+		}
+
+		if (v == NULL) {
+			return -1;
+		}
+
+		r = PySequence_SetItem(self, i++, v);
+		Py_DECREF(v);
+		if (r != 0) {
+			return -1;
+		}
+
+		typestr = next;
+	}
+
+	return 0;
+}
+
+
+static void
+struct_init(
+	ffi_cif* cif __attribute__((__unused__)),
+	void* retval,
+	void** cargs,
+	void* userdata
+	   )
+{
+	PyObject* self = *(PyObject**)cargs[0];
+	PyObject* args = *(PyObject**)cargs[1];
+	PyObject* kwds = *(PyObject**)cargs[2];
+	const char* typestr = (char*)userdata;
 	int setUntil = -1;
+	int r;
 
 	if (args != NULL && !PyTuple_Check(args)) {
 		PyErr_Format(PyExc_TypeError, 
 				"%s() argument tuple is not a tuple",
 				self->ob_type->tp_name);
-		return -1;
+		*(int*)retval = -1;
+		return;
 	}
 	if (kwds != NULL && !PyDict_Check(kwds)) {
 		PyErr_Format(PyExc_TypeError, 
 				"%s() keyword dict is not a dict",
 				self->ob_type->tp_name);
-		return -1;
+		*(int*)retval = -1;
+		return;
+	}
+
+	r = set_defaults(self, typestr);
+	if (r != 0) {
+		*(int*)retval = r;
+		return;
 	}
 
 	if (args != NULL) {
@@ -343,7 +432,8 @@ struct_init(PyObject* self, PyObject* args, PyObject* kwds)
 				self->ob_type->tp_name,
 				struct_sq_length(self),
 				kwds?"non-keyword ":"", len);
-			return -1;
+			*(int*)retval = -1;
+			return;
 		}
 		for (i = 0; i < len; i++) {
 			PyObject* v = PyTuple_GET_ITEM(args, i);
@@ -366,7 +456,8 @@ struct_init(PyObject* self, PyObject* args, PyObject* kwds)
 			Py_DECREF(keys);
 			PyErr_SetString(PyExc_TypeError, 
 					"dict.keys didn't return a list");
-			return -1;
+			*(int*)retval = -1;
+			return;
 		}
 
 		len = PyList_GET_SIZE(keys);
@@ -382,7 +473,8 @@ struct_init(PyObject* self, PyObject* args, PyObject* kwds)
 				PyErr_Format(PyExc_TypeError,
 					"%s() keywords must be strings",
 					self->ob_type->tp_name);
-				return -1;
+				*(int*)retval = -1;
+				return;
 			}
 
 			off = LOCATE_MEMBER(self->ob_type, 
@@ -392,7 +484,8 @@ struct_init(PyObject* self, PyObject* args, PyObject* kwds)
 					"no keyword argument: %s",
 					PyString_AS_STRING(k));
 				Py_DECREF(keys);
-				return -1;
+				*(int*)retval = -1;
+				return;
 			}
 
 			if (off <= setUntil) {
@@ -402,7 +495,8 @@ struct_init(PyObject* self, PyObject* args, PyObject* kwds)
 					self->ob_type->tp_name,
 					PyString_AS_STRING(k));
 				Py_DECREF(keys);
-				return -1;
+				*(int*)retval = -1;
+				return;
 			}
 
 			member = self->ob_type->tp_members + off;
@@ -412,8 +506,45 @@ struct_init(PyObject* self, PyObject* args, PyObject* kwds)
 		Py_DECREF(keys);
 	}
 
-	return 0;
+	*(int*)retval = 0;
+	return;
 }
+
+static initproc
+make_init(const char* typestr)
+{
+static 	ffi_cif* init_cif = NULL;
+	ffi_closure* cl = NULL;
+	ffi_status rv;
+
+	if (init_cif == NULL) {
+		PyObjCMethodSignature* signature;
+		signature = PyObjCMethodSignature_FromSignature("i^v^v^v");
+		init_cif = PyObjCFFI_CIFForSignature(signature, NULL);
+		PyObjCMethodSignature_Free(signature);
+		if (init_cif == NULL) {
+			return NULL;
+		}
+	}
+
+	cl = malloc(sizeof(*cl));
+	if (cl == NULL) {
+		PyErr_NoMemory();
+		return NULL;
+	}
+
+	rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
+	if (rv != FFI_OK) {
+		free(cl);
+		PyErr_Format(PyExc_RuntimeError,
+			"Cannot create FFI closure: %d", rv);
+		return NULL;
+	}
+
+	return (initproc)cl;
+}
+
+
 
 static long
 struct_hash(PyObject* self)
@@ -640,7 +771,7 @@ static PyTypeObject StructTemplate_Type = {
 	0,					/* tp_descr_get */
 	0,					/* tp_descr_set */
 	0,					/* tp_dictoffset */
-	struct_init,				/* tp_init */
+	0,					/* tp_init */
 	0,					/* tp_alloc */
 	struct_new,				/* tp_new */
 	0,					/* tp_free */
@@ -659,7 +790,8 @@ PyObjC_MakeStructType(
 		const char* doc,
 		initproc tpinit,
 		int numFields,
-		const char** fieldnames)
+		const char** fieldnames,
+		const char* typestr)
 {
 	PyTypeObject* result;
 	PyMemberDef* members;
@@ -689,11 +821,24 @@ PyObjC_MakeStructType(
 	*result = StructTemplate_Type;
 	result->tp_name = (char*)name;
 	result->tp_doc = (char*)doc;
+	result->tp_dict = PyDict_New();
+	if (result->tp_dict == NULL) {
+		PyMem_Free(members);
+		PyMem_Free(result);
+		return NULL;
+	}
 	result->ob_refcnt = 1;
 	result->tp_members = members;
 	result->tp_basicsize = sizeof(PyObject) + numFields*sizeof(PyObject*);
 	if (tpinit) {
 		result->tp_init = tpinit;
+	} else {
+		result->tp_init = make_init(typestr);
+		if (result->tp_init == NULL) {
+			PyMem_Free(members);
+			PyMem_Free(result);
+			return NULL;
+		}
 	}
 
 	if (PyType_Ready(result) == -1) {
@@ -761,11 +906,25 @@ PyObjC_RegisterStructType(
 		const char** fieldnames)
 {
 	PyObject* structType;
+	PyObject* v;
 	int r;
 
 	structType = PyObjC_MakeStructType(name, doc, tpinit, 
-						numFields, fieldnames);
+				numFields, fieldnames, signature);
 	if (structType == NULL) {
+		return NULL;
+	}
+
+	v = PyString_FromString(signature);
+	if (v == NULL) {
+		Py_DECREF(structType);
+		return NULL;
+	}
+
+	r = PyDict_SetItemString(((PyTypeObject*)structType)->tp_dict, "__typestr__", v);
+	Py_DECREF(v);
+	if (r == -1) {
+		Py_DECREF(structType);
 		return NULL;
 	}
 

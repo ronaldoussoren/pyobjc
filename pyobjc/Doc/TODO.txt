@@ -56,9 +56,7 @@ The test suite needs to be enhanced.
 
 * Add more tests for objc_support.m to unittest.c
 
-
-The first two bullets require at least some GUI tests.
-
+* Tests for ``objc.createOpaquePointerType``.
 
 
 Less important items
@@ -79,10 +77,6 @@ From the top of my head:
 .. __: http://sourceforge.net/tracker/index.php?func=detail&aid=836247&group_id=14534&atid=114534
 
 * Also restructure class-builder.m, this file is way to large.
-
-* We've several types that wrap pointer values, such as ``SessionWrapper`` in
-  ``Modules/AppKit``. Should add a function for creating these types, 
-  possibly exposed to C code.
 
 Support for GNUstep
 ...................
@@ -170,10 +164,6 @@ Code cleanup
 * Check/cleanup error handling
 
 * Finish in-code documentation for the C code
-
-* SessionWrapper (in ``Modules/AppKit``) is one of several types that wrap 
-  a single pointer, create a function to build such types (similar to
-  ``Modules/objc/struct-wrapper.m``)
 
 Cleanup Examples
 ................

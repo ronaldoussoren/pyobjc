@@ -99,6 +99,10 @@ char* PyObjC_SELToPythonName(SEL, char*, size_t);
 id PyObjC_CFTypeToID(PyObject* argument);
 PyObject* PyObjC_IDToCFType(id argument);
 
+/* opaque-pointer.m */
+PyObject* PyObjCCreateOpaquePointerType(const char* name, 
+		const char* typestr, const char* docstr);
+
 #endif
 
 #define PyObjCErr_InternalError() \

@@ -2,6 +2,7 @@ import unittest
 
 import objc
 from objc.test.testbndl import PyObjC_TestClass4
+import Foundation
 
 NSObject = objc.lookUpClass('NSObject')
 NSArray = objc.lookUpClass('NSArray')
@@ -78,7 +79,7 @@ class TestMethodInvocation(unittest.TestCase):
         self.assertEquals(zone.pointer, zone2.pointer)
 
 
-        self.assertRaises(ValueError, NSObject.allocWithZone_, 10)
+        self.assertRaises(TypeError, NSObject.allocWithZone_, 10)
 
 
     def testClassInvocation(self):

@@ -4,7 +4,6 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-
 Version 1.3 (2005-03-??)
 ------------------------
 
@@ -211,6 +210,25 @@ Version 1.3 (2005-03-??)
   variable is an object. If it is true the bridge will update reference counts,
   otherwise it won't. 
 
+- All wrappers for opaque pointers (such as ``NSZone*``) now have the same
+  interface and share a single implementation. This decreases code-size and
+  makes it easier to add new wrappers.  A new feature is a ``__typestr__``
+  attribute on the type object, this contains the encoded Objective-C type
+  of the pointer.
+  
+  A function for creating new wrappers is exposed to python, as 
+  ``objc.createOpaquePointerType(name, typestr, doc)``.  The same function is 
+  also exposed in the C-API.
+
+- Wrappers for C-structs how have a ``__typestr__`` attribute on their type.
+  This attribute contains the encoded Objective-C type of the struct.
+
+  The default ``__init__`` for struct-wrappers now initializes fields with an 
+  appropriate default value, instead of ``None``. 
+
+  New wrappers can now be created from Python using the function
+  ``objc.createStructType(name, typestr, fieldnames, doc)``. The same
+  function is also exposed in the C API (and has been for a while).
 
 Version 1.2 (2004-12-29)
 ------------------------

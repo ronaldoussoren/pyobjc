@@ -44,7 +44,8 @@ PyObject* PyObjC_MakeStructType(
 	const char* doc,
 	initproc tpinit,
 	int numFields,
-	const char** fieldnames);
+	const char** fieldnames,
+	const char* typestr);
 
 
 /*!

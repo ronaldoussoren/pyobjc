@@ -554,58 +554,6 @@ static const char* NSRect_fields[] = {
 	NULL
 };
 
-/* A special init method for rects, this sets a different default value
- * for the fields, makes the type more convenient to use.
- */
-static int 
-NSRect_init(PyObject* self, PyObject* args, PyObject* kwds)
-{
-	PyObject* origin = NULL;
-	PyObject* size  = NULL;
-	int r;
-
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OO", 
-				(char**)NSRect_fields, &origin, &size)) {
-		return -1;
-	}
-
-	if (origin == NULL) {
-		NSPoint aPoint = { 0, 0 };
-		origin = PyObjC_ObjCToPython(@encode(NSPoint), &aPoint);
-		if (origin == NULL) return -1;
-	} else {
-		Py_INCREF(origin);
-	}
-
-	if (size == NULL) {
-		NSSize aSize = { 0, 0 };
-		size = PyObjC_ObjCToPython(@encode(NSSize), &aSize);
-		if (size == NULL) {
-			Py_DECREF(origin);
-			return -1;
-		}
-	} else {
-		Py_INCREF(size);
-	}
-
-	r = PyObject_SetAttrString(self, "origin", origin);
-	if (r == -1)  {
-		Py_DECREF(origin);
-		Py_DECREF(size);
-		return -1;
-	}
-	r = PyObject_SetAttrString(self, "size", size);
-	if (r == -1)  {
-		Py_DECREF(origin);
-		Py_DECREF(size);
-		return -1;
-	}
-	Py_DECREF(origin);
-	Py_DECREF(size);
-
-	return 0;
-}
-
 void init_Foundation(void);
 
 void init_Foundation(void)
@@ -613,6 +561,7 @@ void init_Foundation(void)
 	PyObject *m, *d, *v;
 	CFBundleRef bundle;
 	const char** name;
+	int r;
 
 	m = Py_InitModule4("_Foundation", foundation_methods, foundation_doc, 
 			NULL, PYTHON_API_VERSION);
@@ -628,6 +577,16 @@ void init_Foundation(void)
 #else
 	bundle = NULL;
 #endif
+
+	v = PyObjCCreateOpaquePointerType("NSZonePointer", @encode(NSZone*), NULL);
+	if (v == NULL) return;
+
+	r = PyDict_SetItemString(d, "NSZonePointer", v);
+	Py_DECREF(v);
+	if (r != 0) {
+		return;
+	}
+
 
 	/* Register information in generated tables */
 	if (register_ints(d, enum_table) < 0) return;
@@ -683,7 +642,7 @@ void init_Foundation(void)
 	Py_DECREF(v);
 
 	v = PyObjC_RegisterStructType(@encode(NSRect),
-			NSRect_name, NSRect_doc, NSRect_init, 2, NSRect_fields);
+			NSRect_name, NSRect_doc, NULL, 2, NSRect_fields);
 	if (v == NULL) return;
 	PyDict_SetItemString(d, "NSRect", v);
 	Py_DECREF(v);
