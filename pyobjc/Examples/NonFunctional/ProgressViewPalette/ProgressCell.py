@@ -18,7 +18,7 @@ class ProgressCell (NSCell):
         self._color = NSColor.redColor()
         self._percentageIncrement = 5.0
         self._percentage = 0.0
-        tag = 0
+        self._tag = 0
         return self
 
     def copyWithZone_(self, zone):
@@ -31,7 +31,7 @@ class ProgressCell (NSCell):
 
     def drawInteriorWithFrame_inView_(self, cellFrame, view):
         super(ProgressCell, self).drawInteriorWithFrame_inView_(
-                cellFrame, controlView)
+                cellFrame, view)
         self.setControlView_(view)
         NSColor.controlColor().set()
         NSRectFill(cellFrame)
