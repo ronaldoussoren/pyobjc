@@ -479,7 +479,7 @@ def __or__CFNumber(numA, numB):
     return number_wrap(_num_to_python(numA)  | _num_to_python(numB))
 
 def __pos__CFNumber(numA):
-    return +number_wrap(_num_to_python(numA))
+    return number_wrap(+_num_to_python(numA))
 
 def __pow__CFNumber(numA, numB, modulo=None):
     if modulo is None:
