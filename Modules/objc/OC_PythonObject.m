@@ -1,4 +1,5 @@
 /* Copyright (c) 1996,97 by Lele Gaifax.  All Rights Reserved
+ * Copyright 2002, 2003 Ronald Oussoren, Jack Jansen
  *
  * This software may be used and distributed freely for any purpose
  * provided that this notice is included unchanged on any and all

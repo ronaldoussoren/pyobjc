@@ -1,8 +1,6 @@
 /*
- * This module implements an extension-class with a custom meta-class.
- *
- * The idea is to use a trick like this to perform our magic tasks with
- * Python subclasses of Objective-C classes.
+ * The module entry point for ``objc._objc``. This file contains ``init_objc``
+ * and the implementation of a number of exported functions.
  */
 #include "pyobjc.h"
 
@@ -320,7 +318,7 @@ loadBundle(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject*
 {
 static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bundle_identifier", NULL };
 	id        bundle;
-	id        strval;
+	NSString* strval;
 	int err;
 	PyObject* bundle_identifier = NULL;
 	PyObject* bundle_path = NULL;

@@ -1,4 +1,5 @@
 /* Copyright (c) 1996,97,98 by Lele Gaifax.  All Rights Reserved
+ * Copyright (c) 2003 Ronald Oussoren
  *
  * This software may be used and distributed freely for any purpose
  * provided that this notice is included unchanged on any and all
@@ -59,6 +60,13 @@ PyObjCRT_InitMethod(Method m, SEL name, const char* types, IMP imp)
 	m->method_types = strdup((char*)types);
 	m->method_imp = imp;
 }
+
+static void
+PyObjCRT_ClassAddMethodList(Class cls, struct objc_method_list* lst)
+{
+	class_addMethods(cls, lst);
+}
+
 
 extern struct objc_method_list* PyObjCRT_AllocMethodList(int);
 

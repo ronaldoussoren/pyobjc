@@ -1,8 +1,5 @@
 /*
  * Mapping of static items in the PreferencePanes framework
- * 
- * - constants 
- * - enumerations
  */
 #include <Python.h>
 

@@ -1,3 +1,8 @@
+/*
+ * autoGIL - automaticly give up the GIL when the runloop is sleeping
+ *
+ * This module exports one function: installAutoGIL. 
+ */
 #include "Python.h"
 #include <CoreFoundation/CFRunLoop.h>
 

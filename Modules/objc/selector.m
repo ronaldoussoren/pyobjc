@@ -1194,6 +1194,20 @@ static	char*	keywords[] = { "method", "selector", "signature",
 		signature = python_signature_to_objc(rettype, argtypes,
 			signature_buf, sizeof(signature_buf));
 		if (signature == NULL) return NULL;
+	} else {
+		/* Check if the signature string is valid */
+		char* cur;
+
+		cur = signature;
+		while (*cur != '\0') {
+			cur = PyObjCRT_SkipTypeSpec(cur);
+			if (cur == NULL) {
+				PyErr_SetString(
+					PyExc_ValueError, 
+					"invalid signature");
+				return NULL;
+			}
+		}
 	}
 
 

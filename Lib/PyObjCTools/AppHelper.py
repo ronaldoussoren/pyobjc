@@ -2,10 +2,10 @@
 
 Exported functions:
 * runEventLoop - run NSApplicationMain in a safer way
-* sheetEndMethod - set correct signature for NSSheet callbacks
+* endSheetMethod - set correct signature for NSSheet callbacks
 """
 
-__all__ = ( 'runEventLoop', 'sheetEndMethod' )
+__all__ = ( 'runEventLoop', 'endSheetMethod' )
 
 from AppKit import NSApplicationMain, NSApp, NSRunAlertPanel
 from Foundation import NSLog

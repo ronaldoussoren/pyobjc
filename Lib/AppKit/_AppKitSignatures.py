@@ -101,7 +101,7 @@ setSignatureForSelector("NSApplication", "runModalSession:", "i8@4:8^{_NSModalSe
 setSignatureForSelector("NSView", "adjustPageHeightNew:top:bottom:limit:", "v@:o^ffff")
 setSignatureForSelector("NSView", "adjustPageWidthNew:left:right:limit:", "v@:o^ffff")
 setSignatureForSelector("NSView", "knowsPageRange:", "v@:N^{_NSRange=II}")
-setSignatureForSelector("NSNib", "instantiateNibWithOwner:topLevelObjects:", "c@:@o^@")
+setSignatureForSelector("NSNib", "instantiateNibWithOwner:topLevelObjects:", "c@:@N^@")
 setSignatureForSelector("NSWorkspace", "launchAppWithBundleIdentifier:options:additionalEventParamDescriptor:launchIdentifier:", "c24@0:4@8I12@16o^@20")
 setSignatureForSelector("NSWorkspace", "openURLs:withAppBundleIdentifier:options:additionalEventParamDescriptor:launchIdentifiers:", "c28@0:4@8@12I16@20o^@24")
 setSignatureForSelector("NSTextRulerOptions", "sheetDidEnd:returnCode:contextInfo:", "v@:@ii")

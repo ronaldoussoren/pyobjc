@@ -136,7 +136,7 @@ _pyobjc_install_NSApplication(void)
 {
 	int r = 0;
 
-	r = PyObjCPointerWrapper_Register(@encode(NSModalSession*), 
+	r = PyObjCPointerWrapper_Register(@encode(NSModalSession), 
 		NSModalSession_New, NSModalSession_Convert);
 	if (r == -1) return -1;
 

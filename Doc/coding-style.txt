@@ -35,8 +35,13 @@ module should be documented in our documentation.
 C code
 ------
 
-The coding style for core Python is used (see `PEP 7`_). We use ``PyObjC`` instead
-of ``Py`` as the prefix for globally visible symbols.
+The coding style for core Python is used (see `PEP 7`_). We use ``PyObjC`` 
+instead of ``Py`` as the prefix for globally visible symbols.
+
+All (Objective-)C files in ``Modules/objc/`` should include ``"pyobjc.h"`` as
+their first include. The (Objective-)C files in the wrappers for frameworks
+should include ``"pyobjc-api.h"`` and should not use other include-files in
+``Modules/objc`` other than ``pyobjc-api.h`` and ``wrapper-const-table.h``.
 
 .. _`PEP 7`: http://www.python.org/peps/pep-0007.txt
 

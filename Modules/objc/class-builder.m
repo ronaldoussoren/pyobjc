@@ -813,10 +813,14 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	}
 
 	if (method_list) {
-		class_addMethods(&(new_class->class), method_list);
+		PyObjCRT_ClassAddMethodList(
+			&(new_class->class), 
+			method_list);
 	}
 	if (meta_method_list) {
-		class_addMethods(&(new_class->meta_class), meta_method_list);
+		PyObjCRT_ClassAddMethodList(
+			&(new_class->meta_class), 
+			meta_method_list);
 	}
 
 	Py_XDECREF(py_superclass);
