@@ -4,8 +4,35 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 1.3 (2005-??-??)
+Version 1.3 (2005-03-??)
 ------------------------
+
+- (UNFINISHED) New RemotePyInterpreter example that demonstrates an
+  out-of-process Python interpreter (primarily for IDE uses).
+
+- Key-Value Observing support is now automatic in Python classes that
+  descend from ``NSObject``, unless they implement a custom
+  ``willChangeValueForKey:``, ``didChangeValueForKey:``, or
+  ``__useKVO__`` is not True.  This allows ``self.foo = 1`` to
+  automatically trigger notifications.  This works in all cases,
+  whether ``foo`` is a ``property``, ``ivar``, or just in the
+  ``__dict__``.
+
+- New ``Inject`` folder in Examples, with a PyInterpreter
+  example that will inject a GUI Python interpreter into any process.
+
+- New ``objc.inject()`` function for Mac OS X 10.3 and later,
+  allows an arbitrary bundle to be loaded into another process
+  using mach_inject.
+
+- ``objc.classAddMethods`` now recognizes and supports
+  classmethods.
+
+- GC is now correctly implemented for struct wrappers.
+
+- The ``NSNumber`` bridge has been removed, now you will get
+  ``NSNumber`` instances across the bridge instead of a
+  Python representation.
 
 - ``PyObjCTools.AppHelper.runEventLoop()`` will now bring your
   application to the front at startup when using pdb
@@ -51,9 +78,6 @@ Version 1.3 (2005-??-??)
 
 - ``objc.registerPlugin()`` and ``objc.pluginBundle()`` are now deprecated
   as they are no longer useful.
-
-- (UNFINISHED) New RemotePyInterpreter example that demonstrates an
-  out-of-process Python interpreter (primarily for IDE uses).
 
 Version 1.2 (2004-12-29)
 ------------------------
