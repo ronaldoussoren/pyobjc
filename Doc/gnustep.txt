@@ -19,7 +19,7 @@ classes.
 TODO
 ----
 
-* [Serious] Fix linkage problems. The objC runtime doesn't seem to be 
+* [Serious] Fix linkage problems. The ObjC runtime doesn't seem to be 
   initialized correctly and/or the classes in newly loaded frameworks are
   not correctly registered in the runtime.
 

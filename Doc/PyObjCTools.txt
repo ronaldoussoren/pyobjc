@@ -36,11 +36,10 @@ actual super-class and implemented actions and outlets from a NIB file.
 Module to make it possible to integrate signal handling into the main
 runloop.
 
-* ``PyObjCTools.pluginbuilder``
+* ``PyObjCTools.Debugging``
 
-Extension of ``bundlebuilder`` (XXX: Link) that allows you to build python-based
-plugin bundles, such as panes for the System Preferences application and
-screen savers.
+Allows logging of NSException stack traces.  This module should only be used
+during development.
 
 * ``PyObjCTools.Signals``
 
@@ -228,32 +227,3 @@ This module is not designed to provide fine grained control over signal
 handling. Nor is it intended to be terribly robust. It may give useful
 information when your program gets unexpected signals, but it might just
 as easily cause a crash when such a signal gets in. 
-
-
-PyObjCTools.pluginbuilder
-.........................
-
-This module defines one class to build python based plugin bundles for MacOS X.
-Examples of plugin bundles include PreferencePanes and InterfaceBuilder 
-palletes.
-
-The PluginBuilder class is instantiated with a number of keyword arguments and
-has a ``build()`` method that will do all the work. 
-
-XXX: Add documentation about the constructor arguments
-
-The module contains a main program that can be used in two ways::
-
-  % python pluginbuilder.py [options] build
-
-  % python buildplugin.py [options] build
-
-Where "buildplugin.py" is a user-supplied setup.py-like script following this
-model::
-
-  from PyObjCTools.pluginbuilder import buildplugin
-
-  buildplugin(<lots-of-keyword-args>)
-
-The script will tell you about the supported arguments if you run it without 
-any arguments.

@@ -195,14 +195,14 @@ Class ``NSOpenGLContext``
 
   This method is not yet supported.
 
+* ``CGLContextObj``
+
+  This method is not yet supported.
+
 Class ``NSOpenGLPixelFormat``
 .............................
 
 * ``getValues:forAttribute:forVirtualScreen:``
-
-  This method is not yet supported
-
-* ``initWithAttributes:``
 
   This method is not yet supported
 
@@ -326,9 +326,11 @@ Class ``NSBundle``
 * ``bundleForClass:``
 
   This method does not work correctly for classes defined in Python, these
-  all seem be defined in the ``mainBundle()``. As a workaround you can use
-  the function ``objc.pluginBundle(name)`` to find the NSBundle for your
-  Python based bundle. See Examples/PrefPane for an example of its usage.
+  all seem be defined in the ``mainBundle()``. As a workaround for plugin
+  bundles built with py2app, you can declare ``__bundle_hack__ = True``
+  on one class in the bundle (probably the NSPrincipalClass).  For this
+  class, ``bundleForClass:`` will return the expected value.  See
+  Examples/Plugins for examples of this.
 
 Class ``NSCoder``
 .................
@@ -565,18 +567,11 @@ have a Python equivalent.
 class ``NSThread``
 ..................
 
-When you're using Python 2.3 or later it is safe to call from Objective-C to
-Python on any thread. Otherwise you must be sure that the current thread has
-acquired the GIL. This means you shouldn't use API's that will call back on
-an arbitrary thread unless you're using Python 2.3 or later. It is safe to 
-start new threads using the Python threading API and run non-Cocoa code on 
-those threads, PyObjC contains code that acquires the GIL whenever the runloop
-in the main thread runs.
+It is safe to call from Objective-C to Python on any thread.  It is safe to
+start new threads using the Python threading API and run non-Cocoa code on
+those threads.
 
 * ``detachNewThreadSelector:toTarget:withObject:``
-
-  This method can safely be used when using Python 2.3 or later, on earlier
-  releases this will crash the interpreter.
 
   Make sure that you've either created a thread from Python using the 
   ``thread`` or ``threading`` module, or called ``objc.enableThreading`` before

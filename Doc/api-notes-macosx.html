@@ -195,12 +195,12 @@ are QT.Movie objects. Using these methods requires the use of MacPython 2.3.</p>
 </li>
 <li><code><span>setOffScreen:width:height:rowbytes:</span></code><p>This method is not yet supported.</p>
 </li>
+<li><code><span>CGLContextObj</span></code><p>This method is not yet supported.</p>
+</li>
 </ul>
 <h3><a href="#id16" name="class-nsopenglpixelformat">Class <code><span>NSOpenGLPixelFormat</span></code></a></h3>
 <ul>
 <li><code><span>getValues:forAttribute:forVirtualScreen:</span></code><p>This method is not yet supported</p>
-</li>
-<li><code><span>initWithAttributes:</span></code><p>This method is not yet supported</p>
 </li>
 </ul>
 <h3><a href="#id17" name="class-nsquickdrawview">Class <code><span>NSQuickDrawView</span></code></a></h3>
@@ -285,9 +285,11 @@ while &lt;test&gt;:
 <h3><a href="#id24" name="class-nsbundle">Class <code><span>NSBundle</span></code></a></h3>
 <ul>
 <li><code><span>bundleForClass:</span></code><p>This method does not work correctly for classes defined in Python, these
-all seem be defined in the <code><span>mainBundle()</span></code>. As a workaround you can use
-the function <code><span>objc.pluginBundle(name)</span></code> to find the NSBundle for your
-Python based bundle. See Examples/PrefPane for an example of its usage.</p>
+all seem be defined in the <code><span>mainBundle()</span></code>. As a workaround for plugin
+bundles built with py2app, you can declare <code><span>__bundle_hack__</span> <span>=</span> <span>True</span></code>
+on one class in the bundle (probably the NSPrincipalClass).  For this
+class, <code><span>bundleForClass:</span></code> will return the expected value.  See
+Examples/Plugins for examples of this.</p>
 </li>
 </ul>
 <h3><a href="#id25" name="class-nscoder">Class <code><span>NSCoder</span></code></a></h3>
@@ -443,17 +445,11 @@ arguments. Use Python's <code><span>%</span></code> operator to format strings.<
 </li>
 </ul>
 <h3><a href="#id40" name="class-nsthread">class <code><span>NSThread</span></code></a></h3>
-<p>When you're using Python 2.3 or later it is safe to call from Objective-C to
-Python on any thread. Otherwise you must be sure that the current thread has
-acquired the GIL. This means you shouldn't use API's that will call back on
-an arbitrary thread unless you're using Python 2.3 or later. It is safe to 
-start new threads using the Python threading API and run non-Cocoa code on 
-those threads, PyObjC contains code that acquires the GIL whenever the runloop
-in the main thread runs.</p>
+<p>It is safe to call from Objective-C to Python on any thread.  It is safe to
+start new threads using the Python threading API and run non-Cocoa code on
+those threads.</p>
 <ul>
-<li><code><span>detachNewThreadSelector:toTarget:withObject:</span></code><p>This method can safely be used when using Python 2.3 or later, on earlier
-releases this will crash the interpreter.</p>
-<p>Make sure that you've either created a thread from Python using the 
+<li><code><span>detachNewThreadSelector:toTarget:withObject:</span></code><p>Make sure that you've either created a thread from Python using the 
 <code><span>thread</span></code> or <code><span>threading</span></code> module, or called <code><span>objc.enableThreading</span></code> before
 using this API. This is necessary to enable threading in the Python 
 interpreter. We don't do this by default because this has a negative 

@@ -83,7 +83,10 @@ Given the following class interface::
 The compiler will generate a method signature for this method and this can 
 be accessed from Python using the property 'signature' of Objective-C methods. 
 You can also just make up the signature, which is quite easy once you get the
-hang of it. The signature for this method is 'v@:^@@'.
+hang of it. The signature for this method is 'v@:^@@'.  See `Type Encodings`_
+for the list of valid encoding characters for the Apple Objective-C runtime.
+
+.. _`Type Encodings`: http://developer.apple.com/documentation/Cocoa/Conceptual/ObjectiveC/RuntimeOverview/chapter_4_section_6.html
 
 Let's say the first argument is an output parameter. Output parameters are 
 denoted in the signature string using the character 'o' before the actual
