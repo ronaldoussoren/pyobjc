@@ -1,3 +1,8 @@
+2003-01-03  Bill Bumgarner  <bbum@codefab.com>
+    * Lib/Foundation/test/test_nsdata.py (TestNSData.testBytes): Added test
+      for NSData.
+    * Modules/Cocoa/_Fnd_NSData.inc: Added support for -bytes.
+
 2003-01-01  Bill Bumgarner  <bbum@codefab.com>
 
     * Project Templates/Cocoa-Python Application/bin-python-main.m: Added

@@ -1,6 +1,7 @@
 /*
  * NSData mappings for special methods:
  * - initWithBytes_length_
+ * - bytes
  *
  * Should add:
  * -initWithBytesNoCopy:length:
@@ -116,3 +117,103 @@ static id imp_NSData_initWithBytes_length_(id self, SEL sel,
 
 	return objc_result;
 }
+
+static PyObject* call_NSData_bytes(PyObject* method, PyObject* self, PyObject* arguments)
+{
+  NSData *dataObject;
+  const void* bytes;
+  unsigned    bytes_len;
+  PyObject* result;
+  
+  NS_DURING
+    dataObject = ObjCObject_GetObject(self);
+
+    bytes = [dataObject bytes];
+    bytes_len = [dataObject length];
+
+    result = PyBuffer_FromMemory((void *)bytes, bytes_len);
+  NS_HANDLER
+    ObjCErr_FromObjC(localException);
+    result = NULL;
+  NS_ENDHANDLER
+
+  return result;
+}
+
+static PyObject* supercall_NSData_bytes(PyObject* method, PyObject* self, PyObject* arguments)
+{
+  const void* bytes;
+  unsigned    bytes_len;
+  PyObject* result;
+  struct objc_super super;
+
+  NS_DURING
+    super.receiver = ObjCObject_GetObject(self);
+    super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+
+#warning bbum: Not at all sure what to do here....   send both to super?  Just -bytes?
+    bytes = objc_msgSendSuper(&super, @selector(bytes));
+#warning unsigned work here??
+    bytes_len = (unsigned) objc_msgSendSuper(&super, @selector(length));
+
+    result = PyBuffer_FromMemory((void*)bytes, bytes_len);
+  NS_HANDLER
+    ObjCErr_FromObjC(localException);
+    result = NULL;
+  NS_ENDHANDLER
+
+  return result;
+}
+
+static void *imp_NSData_bytes(id self, SEL sel)
+{
+  PyObject* result;
+
+  result = ObjC_CallPython(self, sel, NULL);
+  if (result == NULL) {
+    ObjCErr_ToObjC();
+    return NULL;
+  }
+
+  if (result == Py_None)
+    return NULL;
+
+  if (PyBuffer_Check(result)) {
+    void *p;
+    int len;
+    if (PyObject_AsCharBuffer(result, (const char **) &p, &len) == -1) {
+      ObjCErr_ToObjC();
+      return NULL;
+    }
+    return p;
+  }
+
+  PyErr_SetString(PyExc_ValueError, "No idea what to do with result.");
+  return NULL;
+}
+
+static int __pyobjc_install_NSData()
+{
+  if (ObjC_RegisterMethodMapping(objc_lookUpClass("NSData"), 
+				 @selector(initWithBytes:length:),
+				 call_NSData_initWithBytes_length_,
+				 supercall_NSData_initWithBytes_length_,
+				 (IMP)imp_NSData_initWithBytes_length_) < 0 ) {
+    NSLog(@"Error occurred while installing NSData method bridge (initWithBytes:length:).");
+    PyErr_Print();
+    return -1;
+  }
+
+  if (ObjC_RegisterMethodMapping(objc_lookUpClass("NSData"), 
+				 @selector(bytes),
+				 call_NSData_bytes,
+				 supercall_NSData_bytes,
+				 (IMP)imp_NSData_bytes) < 0 ) {
+    NSLog(@"Error occurred while installing NSData method bridge (bytes).");
+    PyErr_Print();
+    return -1;
+  }
+
+  return 0;
+}
+

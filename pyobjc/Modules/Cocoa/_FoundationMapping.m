@@ -10,10 +10,8 @@
 #include <objc/objc-runtime.h>
 #include "pyobjc-api.h"
 
-#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_Fnd_NSCoder.inc"
 #include "_Fnd_NSData.inc"
-#endif
 
 PyDoc_STRVAR(mapping_doc,
 	"This module registers some utility functions with the PyObjC core \n"
@@ -62,20 +60,8 @@ void init_FoundationMapping(void)
 		return;
 	}
 
+	if (__pyobjc_install_NSData()) return;
 	
-	if (ObjC_RegisterMethodMapping(
-			objc_lookUpClass("NSData"), 
-			@selector(initWithBytes:length:),
-			call_NSData_initWithBytes_length_,
-			supercall_NSData_initWithBytes_length_,
-			(IMP)imp_NSData_initWithBytes_length_) < 0 ) {
-
-		printf("Python error1\n");
-		PyErr_Print();
-		return;
-	}
-
-
 	if (PyErr_Occurred()) {
 		printf("Python error\n");
 		PyErr_Print();
