@@ -1581,6 +1581,15 @@ static 	char buf[1024];
 	}
 }
 
++(NSObject*)createObservedOfClass:(Class)class observer:(NSObject*)obj keyPath:(NSString*)path
+{
+	NSObject* o = [[class alloc] init];
+	[o addObserver:self
+	   forKeyPath:path
+	   options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
+	   context:0];
+	return o;
+}
 @end
 
 @interface PyObjC_TestClass4 : NSObject

@@ -772,7 +772,7 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 PyObject* 
 PyObjCObject_New(id objc_object)
 {
-	Class cls = GETISA(objc_object);
+	Class cls = [objc_object class];
 	PyTypeObject* cls_type;
 	PyObject*     res;
 
@@ -838,7 +838,7 @@ PyObjCObject_New(id objc_object)
 PyObject* 
 PyObjCObject_NewClassic(id objc_object)
 {
-	Class cls = GETISA(objc_object);
+	Class cls = [objc_object class];
 	PyTypeObject* cls_type;
 	PyObject*     res;
 

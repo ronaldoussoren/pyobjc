@@ -535,5 +535,22 @@ if PyObjCTest_KeyValueObserver is not None:
 
             self.assertEquals(len(observer.observed), 0)
 
+        def testReceiveObserved(self):
+            # Create an object in Objective-C, add an observer and then
+            # pass the object to Python. Unless we take special care the
+            # Python wrapper will have the wrong type (that of the
+            # internal helper class).
+
+            observer = PyObjCTestObserver.alloc().init()
+            o = STUB.createObservedOfClass_observer_keyPath_(
+                    objc.runtime.NSObject, observer, "observationInfo")
+
+            try:
+                self.assert_(isinstance(o, objc.runtime.NSObject))
+            finally:
+                o.removeObserver_forKeyPath_(observer, "observationInfo")
+
+
+
 if __name__ == "__main__":
     unittest.main()
