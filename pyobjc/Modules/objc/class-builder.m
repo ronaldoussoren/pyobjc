@@ -410,14 +410,14 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				continue;
 			}
 			if (!PyObjCObject_Check(wrapped_protocol)) {
-				PyErr_Format(PyObjCExc_Error,
+				PyErr_Format(PyExc_TypeError,
 					"protocol must be a 'Protocol', not an '%s'",
 					wrapped_protocol->ob_type->tp_name);
 				goto error_cleanup;
 			}
 			protocol = (Protocol *)PyObjCObject_GetObject(wrapped_protocol);
 			if (!PyObjCClass_IsSubClass(GETISA((id)protocol), [Protocol class])) {
-				PyErr_Format(PyObjCExc_Error,
+				PyErr_Format(PyExc_TypeError,
 					"protocol must be a 'Protocol', not an '%s'",
 					wrapped_protocol->ob_type->tp_name);
 				goto error_cleanup;

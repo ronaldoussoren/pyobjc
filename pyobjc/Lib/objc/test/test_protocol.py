@@ -10,7 +10,7 @@ MyProto = objc.informal_protocol("MyProto", (
     objc.selector(None, selector="testMethod2:", signature="v@:i", isRequired=0)
 ))
 
-class TestProtocols(unittest.TestCase):
+class TestInformalProtocols(unittest.TestCase):
 
 
     def testMissingProto(self):
@@ -33,6 +33,48 @@ class TestProtocols(unittest.TestCase):
         class ProtoClass3 (NSObject, MyProto):
             def testMethod(self):
                 pass
+
+class TestFormalProtocols (unittest.TestCase):
+    # Implement unittests for formal protocols here.
+    #
+
+    def testImplementFormalProtocol(self):
+
+        NSLocking = objc.protocolNamed('NSLocking')
+
+        class MyClassNotImplementingLocking(NSObject):
+            pass
+
+        self.assert_(not MyClassNotImplementingLocking.pyobjc_classMethods.conformsToProtocol_(NSLocking))
+
+        class MyClassImplementingLocking(NSObject, NSLocking):
+            pass
+
+        self.assert_(MyClassImplementingLocking.pyobjc_classMethods.conformsToProtocol_(NSLocking))
+
+    def testImplementAnotherObject(self):
+        anObject = NSObject.alloc().init()
+
+        try:
+            class MyClassImplementingAnotherObject(NSObject, anObject):
+                    pass
+            self.fail()
+        except TypeError: 
+            pass
+
+        try:
+            class MyClassImplementingAnotherObject(NSObject, 10):
+                    pass
+            self.fail()
+        except TypeError: 
+            pass
+
+        try:
+            class MyClassImplementingAnotherObject(NSObject, int):
+                    pass
+            self.fail()
+        except TypeError: 
+            pass
 
 
 if __name__ == '__main__':
