@@ -137,7 +137,7 @@ class pyobjc_bdist_mpkg(_bdist_mpkg):
         self.scheme_map[scheme] = '/Library/Application Support/Apple/Developer Tools'
         files = []
         for path in [
-                    'Project Templates',
+                    'Project Templates/Application',
                     'File Templates/Cocoa',
                     'File Templates/Pure Python',
                 ]:
