@@ -14,13 +14,13 @@ building and releasing a new version of PyObjC. It is meant for the project
 administrators, and not of much use for users of PyObjC.</p>
 <p>The timeframe is a guideline only and should be taken with a grain of salt.</p>
 <h2><a name="release-date-2-weeks">Release date -2 weeks</a></h2>
-<p>Full feature freeze, documentation updates and critical bug-fixes only. At this
-time:</p>
+<p>Full feature freeze, documentation updates and critical bug-fixes only. At
+this time:</p>
 <ul>
 <li>Check if the NEWS file is up-to-date</li>
 <li>Tests the tutorial(s)
-Read the tutorial(s) and follow the instructions exactly, the tutorials should
-be completely bug-free.</li>
+Read the tutorial(s) and follow the instructions exactly, the tutorials
+should be completely bug-free.</li>
 <li>Proofread the documentation</li>
 <li>Update the announcement messages.</li>
 </ul>
@@ -29,18 +29,15 @@ be completely bug-free.</li>
 <ul>
 <li>Add the correct date to the NEWS file, and set the right version in
 <code><span>Modules/objc/pyobjc.h</span></code>.</li>
-<li>Run Scripts/make_distrib.py</li>
-<li>Create an empty disk image (named <code><span>PyObjC</span> <span>X.Y</span></code>) and copy the installer
-package, License and ReadMe to this disk image. Resize the icons in this
-folder to largish icons (about 64 pixels) and resize the view to be just
-large enough to contain the icons.<p>NOTE: This should be scripted, and maybe we should add a nice background
-image to the folder.</p>
-</li>
+<li>Run <code><span>python</span> <span>setup.py</span> <span>sdist</span></code> to build the source tarball.</li>
+<li>Run <code><span>python</span> <span>setup.py</span> <span>bdist_dmg</span></code> to build a binary installer.  This should
+be done on each supported version of Mac OS X.</li>
 </ul>
 <p>Trash you existing PyObjC installation and reinstall from the new release. Test
-that the new release is working correctly. Installing and testing should be done
-both for the binary installer and for the source archive. The latter should be
-done in all supported configurations.</p>
+that the new release is working correctly. Installing and testing should be
+done for the binary installer and for the source archive. The latter should
+be done in all supported configurations.  Also test to make sure that an
+upgrade from a previous release works as expected.</p>
 <p>If the package works as expected upload to a convenient location and ask some
 other people (like the other maintainers) to test the new release.</p>
 <h2><a name="release-date">Release-date</a></h2>

@@ -13,14 +13,14 @@ The timeframe is a guideline only and should be taken with a grain of salt.
 Release date -2 weeks
 ---------------------
 
-Full feature freeze, documentation updates and critical bug-fixes only. At this
-time:
+Full feature freeze, documentation updates and critical bug-fixes only. At
+this time:
 
 * Check if the NEWS file is up-to-date
 
 * Tests the tutorial(s)
-  Read the tutorial(s) and follow the instructions exactly, the tutorials should
-  be completely bug-free.
+  Read the tutorial(s) and follow the instructions exactly, the tutorials
+  should be completely bug-free.
 
 * Proofread the documentation
 
@@ -34,20 +34,16 @@ Build the release tarball and dmg:
 * Add the correct date to the NEWS file, and set the right version in
   ``Modules/objc/pyobjc.h``.
 
-* Run Scripts/make_distrib.py
+* Run ``python setup.py sdist`` to build the source tarball.
 
-* Create an empty disk image (named ``PyObjC X.Y``) and copy the installer
-  package, License and ReadMe to this disk image. Resize the icons in this
-  folder to largish icons (about 64 pixels) and resize the view to be just
-  large enough to contain the icons.
-
-  NOTE: This should be scripted, and maybe we should add a nice background
-  image to the folder.
+* Run ``python setup.py bdist_dmg`` to build a binary installer.  This should
+  be done on each supported version of Mac OS X.
 
 Trash you existing PyObjC installation and reinstall from the new release. Test
-that the new release is working correctly. Installing and testing should be done
-both for the binary installer and for the source archive. The latter should be
-done in all supported configurations.
+that the new release is working correctly. Installing and testing should be
+done for the binary installer and for the source archive. The latter should
+be done in all supported configurations.  Also test to make sure that an
+upgrade from a previous release works as expected.
 
 If the package works as expected upload to a convenient location and ask some
 other people (like the other maintainers) to test the new release.
