@@ -66,11 +66,6 @@ class AsyncPythonInterpreter(NSObject):
         self.serverSocket = None
         return self
 
-    def bundleForClass(cls):
-        # XXX - do something intelligent here
-        return NSBundle.mainBundle()
-    bundleForClass = classmethod(bundleForClass)
-    
     def awakeFromNib(self):
         defaults = NSUserDefaults.standardUserDefaults()
         def default(k, v, typeCheck=None):

@@ -10,6 +10,9 @@ Version 1.3 (2005-03-??)
 - (UNFINISHED) New RemotePyInterpreter example that demonstrates an
   out-of-process Python interpreter (primarily for IDE uses).
 
+- New ``objc.protocolsForClass`` function that returns a list of protocols
+  that the class directly claims to conform to.
+
 - PyObjC classes can now declare that they implement formal protocols,
   for example::
 
