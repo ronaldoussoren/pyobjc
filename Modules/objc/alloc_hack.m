@@ -28,7 +28,7 @@ call_NSObject_alloc(PyObject* method __attribute__((__unused__)),
 	NS_DURING
 		result = objc_msgSendSuper(&super, @selector(alloc));
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		result = nil;
 	NS_ENDHANDLER;
 
@@ -50,13 +50,13 @@ imp_NSObject_alloc(id self, SEL sel)
 
 	arglist = PyTuple_New(0);
 	if (arglist == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist);
 	if (result == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 
@@ -74,7 +74,7 @@ PyObjC_InstallAllocHack(void)
 {
 	int r;
 
-	r = ObjC_RegisterMethodMapping(
+	r = PyObjC_RegisterMethodMapping(
 		objc_lookUpClass("NSObject"),
 		@selector(alloc),
 		call_NSObject_alloc,

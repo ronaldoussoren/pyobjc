@@ -140,14 +140,14 @@ extern char objcclass_descr_doc[];
  * implemented in Objective-C)
  */
 
-#define ObjCSelector_kCLASS_METHOD          0x000001
-#define ObjCSelector_kDONATE_REF            0x000002
-#define ObjCSelector_kREQUIRED              0x000004
-#define ObjCSelector_kRETURNS_SELF          0x000008
-#define ObjCSelector_kRETURNS_UNINITIALIZED 0x000010
-#define ObjCSelector_kINITIALIZER    	    0x000020
+#define PyObjCSelector_kCLASS_METHOD          0x000001
+#define PyObjCSelector_kDONATE_REF            0x000002
+#define PyObjCSelector_kREQUIRED              0x000004
+#define PyObjCSelector_kRETURNS_SELF          0x000008
+#define PyObjCSelector_kRETURNS_UNINITIALIZED 0x000010
+#define PyObjCSelector_kINITIALIZER    	    0x000020
 
-#define ObjCSelector_HEAD \
+#define PyObjCSelector_HEAD \
 	PyObject_HEAD 			\
 	char*		sel_signature;  \
 	SEL		sel_selector;	\
@@ -157,42 +157,42 @@ extern char objcclass_descr_doc[];
 
 
 typedef struct {
-	ObjCSelector_HEAD
-} ObjCSelector;
+	PyObjCSelector_HEAD
+} PyObjCSelector;
 
 typedef struct {
-	ObjCSelector_HEAD
+	PyObjCSelector_HEAD
 	NSMethodSignature* sel_oc_signature;
 	ObjC_CallFunc_t sel_call_func; 
 } ObjCNativeSelector;
 
 typedef struct {
-	ObjCSelector_HEAD
+	PyObjCSelector_HEAD
 	PyObject*	callable;
 } ObjCPythonSelector;
 
-extern PyTypeObject ObjCSelector_Type;
+extern PyTypeObject PyObjCSelector_Type;
 extern PyTypeObject ObjCNativeSelector_Type;
 extern PyTypeObject ObjCPythonSelector_Type;
-#define ObjCSelector_Check(obj) PyObject_TypeCheck(obj, &ObjCSelector_Type)
+#define PyObjCSelector_Check(obj) PyObject_TypeCheck(obj, &PyObjCSelector_Type)
 #define ObjCNativeSelector_Check(obj) PyObject_TypeCheck(obj, &ObjCNativeSelector_Type)
 #define ObjCPythonSelector_Check(obj) PyObject_TypeCheck(obj, &ObjCPythonSelector_Type)
 
-char* ObjCSelector_Signature(PyObject* obj);
-SEL   ObjCSelector_Selector(PyObject* obj);
-int   ObjCSelector_Required(PyObject* obj);
+char* PyObjCSelector_Signature(PyObject* obj);
+SEL   PyObjCSelector_Selector(PyObject* obj);
+int   PyObjCSelector_Required(PyObject* obj);
 int ObjC_SignatureForSelector(char* class_name, SEL selector, char* signature);
 
 PyObject* ObjCSelect_NewFromPython(char* selector, char* signature, PyObject* callable);
 PyObject* ObjCSelect_NewWithSelector(Class objc_class, SEL selector);
 
 PyObject*
-ObjCSelector_NewNative(Class class, SEL selector, char* signature, int class_method) ;
-PyObject* ObjCSelector_FindNative(PyObject* self, char* name);
+PyObjCSelector_NewNative(Class class, SEL selector, char* signature, int class_method) ;
+PyObject* PyObjCSelector_FindNative(PyObject* self, char* name);
 
 PyObject*
-ObjCSelector_New(PyObject* callable, SEL selector, char* signature, int class_method) ;
-SEL ObjCSelector_DefaultSelector(char* methname);
+PyObjCSelector_New(PyObject* callable, SEL selector, char* signature, int class_method) ;
+SEL PyObjCSelector_DefaultSelector(char* methname);
 
 
 
@@ -229,7 +229,7 @@ PyObject* PyObjCInformalProtocol_FindProtocol(SEL selector);
 int PyObjC_InstallAllocHack(void);
 
 IMP ObjC_MakeIMPForSignature(char* signature, PyObject* callable);
-IMP ObjC_MakeIMPForObjCSelector(ObjCSelector *aSelector);
+IMP ObjC_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector);
 PyObject *ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args);
 
 

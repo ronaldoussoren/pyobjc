@@ -1463,7 +1463,7 @@ void inittestbndl(void)
 		NULL, NULL, PYTHON_API_VERSION);
 	if (!m) return;
 
-	if (ObjC_ImportModule(m) < 0) return;
+	if (PyObjC_ImportAPI(m) < 0) return;
 
 	PyModule_AddObject(m, "OC_TestClass1", 
 		PyObjCClass_New([OC_TestClass1 class]));

@@ -62,7 +62,7 @@ ObjCErr_PyExcForName(const char* value)
 }
 	
 
-void ObjCErr_FromObjC(NSException* localException)
+void PyObjCErr_FromObjC(NSException* localException)
 {
 	NSDictionary* userInfo;
 	PyObject*     dict;
@@ -129,7 +129,7 @@ void ObjCErr_FromObjC(NSException* localException)
 	PyErr_Restore(exc_type, exc_value, exc_traceback);
 }
 
-void ObjCErr_ToObjC(void)
+void PyObjCErr_ToObjC(void)
 {
 	PyObject* exc_type;
 	PyObject* exc_value;

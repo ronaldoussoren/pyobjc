@@ -60,7 +60,7 @@ static	char* keywords[] = { "key", "comment", NULL };
 
 	oc_result = NSLocalizedString(oc_key, oc_comment);
 
-	result = ObjC_IdToPython(oc_result);
+	result = PyObjC_IdToPython(oc_result);
 	return result;
 }
 
@@ -85,7 +85,7 @@ static	char* keywords[] = { "key", "tableName", "comment", NULL };
 
 	oc_result = NSLocalizedStringFromTable(
 		oc_key, oc_tableName, oc_comment);
-	result = ObjC_IdToPython(oc_result);
+	result = PyObjC_IdToPython(oc_result);
 	return result;
 }
 
@@ -113,7 +113,7 @@ static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
 	oc_result = NSLocalizedStringFromTableInBundle(
 			oc_key, oc_tableName, oc_bundle, oc_comment);
 
-	result = ObjC_IdToPython(oc_result);
+	result = PyObjC_IdToPython(oc_result);
 	return result;
 }
 
@@ -138,13 +138,13 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 	NS_DURING
 		oc_result = NSFileTypeForHFSTypeCode(hfsTypeCode);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		oc_result = NULL;
 	NS_ENDHANDLER
 
 	if (PyErr_Occurred()) return NULL;
 
-	result = ObjC_IdToPython(oc_result);
+	result = PyObjC_IdToPython(oc_result);
 	return result;
 }
 
@@ -167,7 +167,7 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 		hfsTypeCode = NSHFSTypeCodeFromFileType(fileType);
 	NS_HANDLER
 		hfsTypeCode = 0;
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 
 	if (PyErr_Occurred()) return NULL;
@@ -249,7 +249,7 @@ void init_Foundation(void)
 			NULL, PYTHON_API_VERSION);
 	d = PyModule_GetDict(m);
 
-	if (ObjC_ImportModule(m) < 0) {
+	if (PyObjC_ImportAPI(m) < 0) {
 		printf("Importing objc failed\n");
 		return;
 	}

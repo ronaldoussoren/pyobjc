@@ -202,7 +202,7 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 
 		info = PyObjCInformalProtocol_FindSelector(proto, selector);
 		if (info != NULL) {
-			return ObjCSelector_Signature(info);
+			return PyObjCSelector_Signature(info);
 		}
 	}
 
@@ -219,7 +219,7 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 			return NULL;
 		}
 		Py_INCREF(proto);
-		return ObjCSelector_Signature(info);
+		return PyObjCSelector_Signature(info);
 	}
 	
 	return NULL;
@@ -468,11 +468,11 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (item_size == -1) goto error_cleanup;
 			ivar_size += item_size;
 
-		} else if (ObjCSelector_Check(value)) {
-			ObjCSelector* sel = (ObjCSelector*)value;
+		} else if (PyObjCSelector_Check(value)) {
+			PyObjCSelector* sel = (PyObjCSelector*)value;
 			METHOD        meth;
 
-			if (sel->sel_flags & ObjCSelector_kCLASS_METHOD) {
+			if (sel->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 				meth = class_getClassMethod(super_class,
 					sel->sel_selector);
 				if (meth) {
@@ -502,7 +502,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				continue;
 			}
 
-			selector = ObjCSelector_DefaultSelector(ocname);
+			selector = PyObjCSelector_DefaultSelector(ocname);
 
 			meth = class_getInstanceMethod(super_class, selector);
 			if (!meth) {
@@ -526,10 +526,10 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 					py_superclass, selector);
 				if (!super_sel) goto error_cleanup;
 
-				value = ObjCSelector_New(
+				value = PyObjCSelector_New(
 					value, 
 					selector, 
-					ObjCSelector_Signature(super_sel),
+					PyObjCSelector_Signature(super_sel),
 					is_class_method);
 				Py_DECREF(super_sel);
 			} else {
@@ -537,7 +537,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 				signature = find_protocol_signature(
 					protocols, selector);
-				value = ObjCSelector_New(
+				value = PyObjCSelector_New(
 					value, 
 					selector, 
 					signature,
@@ -551,6 +551,10 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			}
 			Py_DECREF(value); value = NULL;
 			method_count++;
+#if 0
+		} else if ((value)->ob_type == PyClassMethod_Type) {
+			/* Make a new selector object */
+#endif
 		}
 	}
 
@@ -619,7 +623,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			meth->method_name = selector;			\
 			meth->method_types = types;			\
 			meth->method_imp = (IMP)imp;			\
-			sel = ObjCSelector_NewNative(&new_class->class, \
+			sel = PyObjCSelector_NewNative(&new_class->class, \
 				selector,  types, 0);			\
 			if (sel == NULL) goto error_cleanup;		\
 			PyDict_SetItemString(class_dict, pyname, sel);	\
@@ -687,13 +691,13 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (item_size == -1) goto error_cleanup;
 			ivar_size += item_size;
 
-		} else if (ObjCSelector_Check(value)) {
-			ObjCSelector* sel = (ObjCSelector*)value;
+		} else if (PyObjCSelector_Check(value)) {
+			PyObjCSelector* sel = (PyObjCSelector*)value;
 			METHOD        meth;
 			int           is_override = 0;
 			struct objc_method_list* lst;
 
-			if (sel->sel_flags & ObjCSelector_kCLASS_METHOD) {
+			if (sel->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 				meth = class_getClassMethod(super_class,
 					sel->sel_selector);
 				if (!meth) continue;
@@ -1040,7 +1044,7 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 	}
 
 	result =  [NSMethodSignature signatureWithObjCTypes:(
-		  	(ObjCSelector*)pymeth)->sel_signature];
+		  	(PyObjCSelector*)pymeth)->sel_signature];
 	Py_DECREF(pymeth);
 	Py_DECREF(pyself);
 	return result;
@@ -1067,7 +1071,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	pymeth = PyObjCObject_FindSelector(pyself, [invocation selector]);
@@ -1095,7 +1099,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 	args = PyList_New(1);
 	if (args == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 	}
 
 	i = PyList_SetItem(args, 0, pythonify_c_value(
@@ -1103,7 +1107,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 					(void*)&self));
 	if (i < 0) {
 		Py_DECREF(args);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
@@ -1113,7 +1117,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 		if (arglen == -1) {
 			Py_DECREF(args);
-			ObjCErr_ToObjC();
+			PyObjCErr_ToObjC();
 			return;
 		}
 
@@ -1149,13 +1153,13 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 		if (v == NULL) {
 			Py_DECREF(args);
-			ObjCErr_ToObjC();
+			PyObjCErr_ToObjC();
 			return;
 		}
 
 		if (PyList_Append(args, v) < 0) {
 			Py_DECREF(args);
-			ObjCErr_ToObjC();
+			PyObjCErr_ToObjC();
 			return;
 		}
 	}
@@ -1163,7 +1167,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	v = PyList_AsTuple(args);
 	if (v == NULL) {
 		Py_DECREF(args);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	Py_DECREF(args);
@@ -1172,7 +1176,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	result = PyObjC_CallPython(self, [invocation selector], args);
 	Py_DECREF(args);
 	if (result == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
@@ -1180,7 +1184,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	arglen = objc_sizeof_type(type);
 
 	if (arglen == -1) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
@@ -1190,7 +1194,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 			err = depythonify_c_value(type, result, arg);
 			if (err == -1) {
-				ObjCErr_ToObjC();
+				PyObjCErr_ToObjC();
 				return;
 			}
 			[invocation setReturnValue:arg];
@@ -1206,7 +1210,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 				"%s: Need tuple of %d arguments as result",
 				SELNAME([invocation selector]), have_output+1);
 			Py_DECREF(result);
-			ObjCErr_ToObjC();
+			PyObjCErr_ToObjC();
 			return;
 		}
 
@@ -1216,7 +1220,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 			err = depythonify_c_value(type, real_res, arg);
 			if (err == -1) {
-				ObjCErr_ToObjC();
+				PyObjCErr_ToObjC();
 				return;
 			}
 			[invocation setReturnValue:arg];
@@ -1228,7 +1232,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 			void* ptr;
 
 			if (arglen == -1) {
-				ObjCErr_ToObjC();
+				PyObjCErr_ToObjC();
 				return;
 			}
 
@@ -1250,7 +1254,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 			v = PyTuple_GET_ITEM(result, idx++);
 			err = depythonify_c_value(type, v, ptr);
 			if (err == -1) {
-				ObjCErr_ToObjC();
+				PyObjCErr_ToObjC();
 			}
 			if (v->ob_refcnt == 1 && type[0] == _C_ID) {
 				/* make sure return value doesn't die before
@@ -1278,13 +1282,13 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist)
 
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return NULL;
 	}
 	pymeth = PyObjCObject_FindSelector(pyself, selector);
 	if (pymeth == NULL) {
 		Py_DECREF(pyself);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return NULL;
 	}
 
@@ -1293,7 +1297,7 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist)
 	Py_DECREF(pyself);
 
 	if (result == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return NULL;
 	}
 

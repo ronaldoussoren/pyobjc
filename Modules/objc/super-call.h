@@ -33,12 +33,12 @@ extern PyObject* ObjC_CallSelf(PyObject* meth,
 typedef PyObject* (*ObjC_CallFunc_t)(
 	PyObject* meth, PyObject* self, PyObject* args);
 
-extern int ObjC_RegisterMethodMapping(Class class, SEL sel, 
+extern int PyObjC_RegisterMethodMapping(Class class, SEL sel, 
 	ObjC_CallFunc_t     call_to_objc, 
 	IMP		    call_to_python
 	);
 
-extern int ObjC_RegisterSignatureMapping(
+extern int PyObjC_RegisterSignatureMapping(
 	char* signature,
 	ObjC_CallFunc_t call_to_super,
 	IMP		call_to_python);

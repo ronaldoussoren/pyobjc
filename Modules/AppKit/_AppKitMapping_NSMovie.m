@@ -37,7 +37,7 @@ static PyObject* call_NSMovie_QTMovie(
 			result = MovieObj_New((Movie)movie);
 		}
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		result = NULL;
 	NS_ENDHANDLER
 
@@ -52,14 +52,14 @@ static void* imp_NSMovie_QTMovie(id self, SEL sel)
 
 	arglist = PyTuple_New(0);
 	if (arglist == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 
@@ -67,7 +67,7 @@ static void* imp_NSMovie_QTMovie(id self, SEL sel)
 	Py_DECREF(result);
 
 	if (PyErr_Occurred()) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 
@@ -94,9 +94,9 @@ static PyObject* call_NSMovie_initWithMovie_(
 
 		objc_result = objc_msgSendSuper(&super,
 				@selector(initWithMovie:), movie);
-		result = ObjC_IdToPython(objc_result);
+		result = PyObjC_IdToPython(objc_result);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		result = NULL;
 	NS_ENDHANDLER
 
@@ -111,28 +111,28 @@ static id imp_NSMovie_initWithMovie_(id self, SEL sel, void* movie)
 
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 	
 	PyTuple_SET_ITEM(arglist, 0, MovieObj_New(movie));
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 
-	objc_result = ObjC_PythonToId(result);
+	objc_result = PyObjC_PythonToId(result);
 
 	if (PyErr_Occurred()) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 
@@ -142,7 +142,7 @@ static id imp_NSMovie_initWithMovie_(id self, SEL sel, void* movie)
 
 int _pyobjc_install_NSMovie(void)
 {
-	if (ObjC_RegisterMethodMapping(objc_lookUpClass("NSMovie"), 
+	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSMovie"), 
 		@selector(QTMovie),
 		call_NSMovie_QTMovie,
 		(IMP)imp_NSMovie_QTMovie) < 0 ) {
@@ -152,7 +152,7 @@ int _pyobjc_install_NSMovie(void)
 		return -1;
 	}
 
-	if (ObjC_RegisterMethodMapping(objc_lookUpClass("NSMovie"), 
+	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSMovie"), 
 		@selector(initWithMovie:),
 		call_NSMovie_initWithMovie_,
 		(IMP)imp_NSMovie_initWithMovie_) < 0 ) {

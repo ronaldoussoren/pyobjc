@@ -27,6 +27,15 @@ del Foundation
 # Define usefull utility methods here
 NSClassForName = _objc.lookUpClass
 
+def NSMakePoint(p1, p2):
+    return (float(p1), float(p2))
+
+def NSMakeSize(h, w):
+    return (float(h), float(w))
+
+def NSMakeRect(p1, p2, h, w):
+    return ((p1, p2), (h, w))
+
 
 #
 # (Informal) protocols

@@ -156,7 +156,7 @@ fd = file('Modules/Foundation/_Fnd_Functions.inc', 'w')
 structs = ['NSPoint', 'NSSize', 'NSRect', 'NSRange']
 for s in structs:
 	func_builder.SIMPLE_TYPES[s] = (
-		'\tresult = ObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,
+		'\tresult = PyObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,
 		'O&',
 		'convert_%s, &%%(varname)s'%s
 	)
@@ -165,7 +165,7 @@ static inline int convert_%(type)s(PyObject* object, void* pvar)
 {
 	int err;
 
-	err = ObjC_PythonToObjC(@encode(%(type)s), object, pvar);
+	err = PyObjC_PythonToObjC(@encode(%(type)s), object, pvar);
 	if (err == -1) {
 		return 0;
 	}
@@ -183,7 +183,7 @@ fd = file('Modules/AppKit/_App_Functions.inc', 'w')
 structs = ['NSAffineTransformStruct', 'NSRect', 'NSPoint']
 for s in structs:
 	func_builder.SIMPLE_TYPES[s] = (
-		'\tresult = ObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,
+		'\tresult = PyObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,
 		'O&',
 		'convert_%s, &%%(varname)s'%s
 	)
@@ -192,7 +192,7 @@ static inline int convert_%(type)s(PyObject* object, void* pvar)
 {
 	int err;
 
-	err = ObjC_PythonToObjC(@encode(%(type)s), object, pvar);
+	err = PyObjC_PythonToObjC(@encode(%(type)s), object, pvar);
 	if (err == -1) {
 		return 0;
 	}

@@ -97,9 +97,9 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method __attribute__((__unused__)
     newImageRep = objc_msgSendSuper(&super,
 			       @selector(initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:), dataPlanes, width, height, bps, spp, hasAlpha, isPlanar, colorSpaceNameString, bpr, bpp);
 
-    result = ObjC_IdToPython(newImageRep);
+    result = PyObjC_IdToPython(newImageRep);
   NS_HANDLER
-    ObjCErr_FromObjC(localException);
+    PyObjCErr_FromObjC(localException);
     PyErr_Print();
     result = NULL;
   NS_ENDHANDLER
@@ -158,7 +158,7 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method __attribute__((__unu
       }
     }
   NS_HANDLER
-    ObjCErr_FromObjC(localException);
+    PyObjCErr_FromObjC(localException);
     result = NULL;
   NS_ENDHANDLER
 
@@ -204,7 +204,7 @@ call_NSBitmapImageRep_bitmapData(PyObject* method __attribute__((__unused__)),
       result = NULL;
     }
   NS_HANDLER
-    ObjCErr_FromObjC(localException);
+    PyObjCErr_FromObjC(localException);
     result = NULL;
   NS_ENDHANDLER
 
@@ -232,8 +232,10 @@ static PyMethodDef mapping_methods[] = {
 
 void init_AppKitMapping(void);
 int _pyobjc_install_NSMovie(void);
+int _pyobjc_install_NSBezierPath(void);
 
 #include "_AppKitMapping_NSMovie.m"
+#include "_AppKitMapping_NSBezierPath.m"
 
 void init_AppKitMapping(void)
 {
@@ -247,11 +249,11 @@ void init_AppKitMapping(void)
 	if (!d) return;
 	
 
-	if (ObjC_ImportModule(m) < 0) {
+	if (PyObjC_ImportAPI(m) < 0) {
 		return;
 	}
 
-	if (ObjC_RegisterMethodMapping(
+	if (PyObjC_RegisterMethodMapping(
 			objc_lookUpClass("NSBitmapImageRep"), 
 			@selector(initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:),
 			call_NSBitmapImageRep_initWithBitmap,
@@ -261,7 +263,7 @@ void init_AppKitMapping(void)
 		return;
 	}
 
-	if (ObjC_RegisterMethodMapping(
+	if (PyObjC_RegisterMethodMapping(
 			objc_lookUpClass("NSBitmapImageRep"), 
 			@selector(getBitmapDataPlanes:),
 			call_NSBitmapImageRep_getBitmapDataPlanes_,
@@ -271,7 +273,7 @@ void init_AppKitMapping(void)
 		return;
 	}
 
-	if (ObjC_RegisterMethodMapping(
+	if (PyObjC_RegisterMethodMapping(
 			objc_lookUpClass("NSBitmapImageRep"), 
 			@selector(bitmapData),
 			call_NSBitmapImageRep_bitmapData,
@@ -283,4 +285,6 @@ void init_AppKitMapping(void)
 
 	/* register other specials */
 	_pyobjc_install_NSMovie();
+	_pyobjc_install_NSBezierPath();
+
 }

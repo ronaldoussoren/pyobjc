@@ -35,7 +35,7 @@ void init_FoundationMapping(void)
 	d = PyModule_GetDict(m);
 	if (!d) return;
 	
-	if (ObjC_ImportModule(m) < 0) {
+	if (PyObjC_ImportAPI(m) < 0) {
 		return;
 	}
 

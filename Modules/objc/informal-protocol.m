@@ -40,8 +40,8 @@ proto_dealloc(PyObject* object)
 	int i;
 
 	for (i = 0; i < len; i++) {
-		ObjCSelector* tmp =
-			(ObjCSelector*)PyTuple_GET_ITEM(
+		PyObjCSelector* tmp =
+			(PyObjCSelector*)PyTuple_GET_ITEM(
 				self->selectors, i);
 		
 		PyDict_DelItemString(selToProtocolMapping,
@@ -106,7 +106,7 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 
 	len = PyTuple_Size(result->selectors);
 	for (i = 0; i < len; i++) {
-		if (!ObjCSelector_Check(
+		if (!PyObjCSelector_Check(
 				PyTuple_GET_ITEM(selectors, i))) {
 			PyErr_Format(PyExc_TypeError, 
 				"Item %d is not a selector", i);
@@ -124,8 +124,8 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 	}
 
 	for (i = 0; i < len; i++) {
-		ObjCSelector* tmp =
-			(ObjCSelector*)PyTuple_GET_ITEM(selectors, i);
+		PyObjCSelector* tmp =
+			(PyObjCSelector*)PyTuple_GET_ITEM(selectors, i);
 		
 		PyDict_SetItemString(selToProtocolMapping,
 			(char*)SELNAME(tmp->sel_selector),
@@ -255,8 +255,8 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
 			continue;
 		}
 
-		if (ObjCSelector_Check(cur)) {
-			if (ObjCSelector_Selector(cur) == selector) {
+		if (PyObjCSelector_Check(cur)) {
+			if (PyObjCSelector_Selector(cur) == selector) {
 				Py_DECREF(seq);
 				return cur;
 			}
@@ -286,8 +286,8 @@ FindSelInDict(PyObject* clsdict, SEL selector)
 	len = PySequence_Fast_GET_SIZE(seq);
 	for (i = 0; i < len; i++) {
 		PyObject* v = PySequence_Fast_GET_ITEM(seq, i);
-		if (!ObjCSelector_Check(v)) continue;
-		if (ObjCSelector_Selector(v) == selector) {
+		if (!PyObjCSelector_Check(v)) continue;
+		if (PyObjCSelector_Selector(v) == selector) {
 			Py_DECREF(seq);
 			Py_DECREF(values);
 			return v;
@@ -358,19 +358,19 @@ PyObjCInformalProtocol_CheckClass(
 			continue;
 		}
 
-		if (!ObjCSelector_Check(cur)) {
+		if (!PyObjCSelector_Check(cur)) {
 			continue;
 		}
 
-		sel = ObjCSelector_Selector(cur);
+		sel = PyObjCSelector_Selector(cur);
 
 		m = FindSelInDict(clsdict, sel);
 		if (m == NULL) {
 			m = PyObjCClass_FindSelector(super_class, sel);
 		}
 
-		if (m == NULL || !ObjCSelector_Check(m)) {
-			if (ObjCSelector_Required(cur)) {
+		if (m == NULL || !PyObjCSelector_Check(m)) {
+			if (PyObjCSelector_Required(cur)) {
 				ObjCErr_Set(PyExc_TypeError,
 					"class %s does not fully implement "
 					  "protocol %s: no implementation for %s",
@@ -383,8 +383,8 @@ PyObjCInformalProtocol_CheckClass(
 				PyErr_Clear();
 			}
 		} else {
-			if (!signaturesEqual(ObjCSelector_Signature(m),
-				ObjCSelector_Signature(cur)) != 0) {
+			if (!signaturesEqual(PyObjCSelector_Signature(m),
+				PyObjCSelector_Signature(cur)) != 0) {
 
 				ObjCErr_Set(PyExc_TypeError,
 					"class %s does not correctly implement "
@@ -394,8 +394,8 @@ PyObjCInformalProtocol_CheckClass(
 					name,
 					PyString_AsString(self->name),
 					SELNAME(sel),
-					ObjCSelector_Signature(m),
-					ObjCSelector_Signature(cur)
+					PyObjCSelector_Signature(m),
+					PyObjCSelector_Signature(cur)
 				);
 				Py_DECREF(seq);
 				return 0;

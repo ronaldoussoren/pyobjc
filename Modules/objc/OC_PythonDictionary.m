@@ -60,7 +60,7 @@
 		v = PySequence_Fast_GET_ITEM(value, cur++);
 		err = depythonify_c_value("@", v, &result);
 		if (err == -1) {
-			ObjCErr_ToObjC();
+			PyObjCErr_ToObjC();
 			return NULL;
 		}
 
@@ -118,7 +118,7 @@
 
 	k = pythonify_c_value("@", &key);
 	if (k == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 
@@ -132,7 +132,7 @@
 	err = depythonify_c_value("@", v, &result);
 	Py_DECREF(k);
 	if (err == -1) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 	return result;
@@ -146,21 +146,21 @@
 
 	v = pythonify_c_value("@", &val);
 	if (v == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	k = pythonify_c_value("@", &key);
 	if (k == NULL) {
 		Py_DECREF(v);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	if (PyDict_SetItem(value, k, v) < 0) {
 		Py_DECREF(v);
 		Py_DECREF(k);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	Py_DECREF(v);
@@ -173,13 +173,13 @@
 
 	k = pythonify_c_value("@", &key);
 	if (k == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	if (PyDict_DelItem(value, k) < 0) {
 		Py_DECREF(k);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	Py_DECREF(k);
