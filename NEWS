@@ -5,6 +5,23 @@
 
 WHAT'S NEW:
 
+Version 0.9 (April-??-2003):
+- This version includes numerous bugfixes and improvements.
+
+- The module AppKit.NibClassBuilder has been moved to the package
+  PyObjCTools.
+
+- Usage of libFFI (http://sources.redhat.com/libffi) is now mandatory. The
+  setup.py gives the impression that it isn't, but we do *not* support 
+  non-FFI builds.
+
+- We actually have some documentation, more will be added in future releases.
+
+- There are more Project Builder templates (see 'Project Templates').
+
+- The InterfaceBuilder, PreferencePanes and ScreenSaver frameworks have been
+  wrapped.
+
 Version 0.8 (Dec-10-2002):
 
 - GNUStep support has been removed for lack of support.  Volunteers
