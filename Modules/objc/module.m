@@ -515,6 +515,7 @@ void init_objc(void)
 	PyType_Ready(&ObjCPythonSelector_Type);
 	PyType_Ready(&ObjCIvar_Type);
 	PyType_Ready(&ObjCInformalProtocol_Type);
+	PyType_Ready(&ObjCUnicode_Type);
 
 	m = Py_InitModule4("_objc", meta_methods, NULL,
 			NULL, PYTHON_API_VERSION);

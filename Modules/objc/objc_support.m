@@ -78,6 +78,12 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
+	return ObjCUnicode_New(self);
+#if 0
+	const char* utf8 = [self UTF8String];
+	return PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
+#endif
+#if 0
 	NSData* data = [self dataUsingEncoding:NSASCIIStringEncoding];
 	if (data == NULL) {
 		const char* utf8 = [self UTF8String];
@@ -85,6 +91,7 @@
 	} else {
 		return PyString_FromStringAndSize([data bytes], [data length]);
 	}
+#endif
 }
 
 @end /* NSString (PyObjCSupport) */
@@ -845,24 +852,38 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
         *(id *) datum = ObjCObject_GetObject(argument);
       } else if (PyString_Check (argument))
         {
-	/* We should probably translate to unicode using the default python
-	 * encoding (which is ASCII and may be different from the NSString
-	 * default encoding)
+	/* NSString values are Unicode strings, convert the string to 
+	 * Unicode, assuming the default encoding.
 	 */
 	unsigned char* strval = (unsigned char*)PyString_AS_STRING(argument);
 	int   len = PyString_GET_SIZE(argument);
-	int   i;
+	PyObject* as_unicode;
+	PyObject* as_utf8;
 
-	for (i = 0; i < len; i++) {
-		if (strval[i] >= 128) {
-			error = "string with ordinals in range(128)";
-			return error;
-		}
+	as_unicode = PyUnicode_Decode(strval, len, 
+		PyUnicode_GetDefaultEncoding(),
+		"strict");
+	if (as_unicode == NULL) {
+		PyErr_Print();
+		PyErr_Clear();
+		return "string in default encoding";
 	}
 
-	*(id *) datum = [NSString 
-			stringWithCString:PyString_AS_STRING(argument)
-				  length:PyString_GET_SIZE(argument)];
+	as_utf8 = PyUnicode_AsUTF8String(as_unicode);
+
+	if (as_utf8) {
+		*(id *) datum = [NSString 
+			stringWithUTF8String:PyString_AS_STRING(as_utf8)];
+		Py_DECREF(as_utf8);
+	} else {
+		PyErr_Print();
+		error = "Cannot convert Unicode string";
+	}
+
+	}
+      else if (ObjCUnicode_Check(argument))
+	{
+		*(id*) datum = ObjCUnicode_Extract(argument);
 	}
       else if (PyUnicode_Check(argument)) 
 	{
