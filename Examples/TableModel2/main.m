@@ -37,7 +37,7 @@ int pyobjc_main(int argc, char * const *argv, char *envp[])
   	if (strncmp(envp[envc], "PYTHONPATH=", sizeof("PYTHONPATH=")-1) == 0) {
 		const char* s = [[[NSBundle mainBundle] resourcePath] UTF8String];
 		childEnvp[envc] = alloca(strlen(envp[envc]) + strlen(s) + 2);
-		sprintf(childEnvp[envc], "%s:%s", envp[envc], s);
+		sprintf(childEnvp[envc], "%s:%s", s, envp[envc]);
 
 	} else {
 		childEnvp[envc] = envp[i];
