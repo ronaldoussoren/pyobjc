@@ -59,7 +59,7 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
         menuItem.setTitle_( aMenu.title() )
         toolbarItem.setMenuFormRepresentation_(menuItem)
     
-    aController._toolbarItems.setObject_forKey_(toolbarItem, anIdentifier)
+    aController._toolbarItems[anIdentifier] = toolbarItem
 
 from PyObjCTools import NibClassBuilder
 
@@ -86,7 +86,9 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         Create and return a default connection window instance.
         """
         return WSTConnectionWindowController.alloc().init()
-           
+    
+    connectionWindowController = classmethod(connectionWindowController)
+    
     def init(self):
         """
         Designated initializer.
@@ -96,10 +98,9 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         """
         self = self.initWithWindowNibName_("WSTConnection")
 
-        # assignments imply a -retain!
-        self._toolbarItems = NSMutableDictionary.dictionary()
-        self._toolbarDefaultItemIdentifiers = NSMutableArray.array()
-        self._toolbarAllowedItemIdentifiers = NSMutableArray.array()
+        self._toolbarItems = {}
+        self._toolbarDefaultItemIdentifiers = []
+        self._toolbarAllowedItemIdentifiers = []
 
         self._methods = []
                 
@@ -152,19 +153,19 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         addToolbarItem(self, kWSTPreferencesToolbarItemIdentifier, "Preferences", "Preferences", "Show Preferences", None, "orderFrontPreferences:", NSImage.imageNamed_("Preferences"), None)
         addToolbarItem(self, kWSTUrlTextFieldToolbarItemIdentifier, "URL", "URL", "Server URL", None, None, self.urlTextField, None)
         
-        self._toolbarDefaultItemIdentifiers.addObject_(kWSTReloadContentsToolbarItemIdentifier)
-        self._toolbarDefaultItemIdentifiers.addObject_(kWSTUrlTextFieldToolbarItemIdentifier)
-        self._toolbarDefaultItemIdentifiers.addObject_(NSToolbarSeparatorItemIdentifier)
-        self._toolbarDefaultItemIdentifiers.addObject_(NSToolbarCustomizeToolbarItemIdentifier)
+        self._toolbarDefaultItemIdentifiers.append(kWSTReloadContentsToolbarItemIdentifier)
+        self._toolbarDefaultItemIdentifiers.append(kWSTUrlTextFieldToolbarItemIdentifier)
+        self._toolbarDefaultItemIdentifiers.append(NSToolbarSeparatorItemIdentifier)
+        self._toolbarDefaultItemIdentifiers.append(NSToolbarCustomizeToolbarItemIdentifier)
         
-        self._toolbarAllowedItemIdentifiers.addObject_(kWSTReloadContentsToolbarItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.addObject_(kWSTUrlTextFieldToolbarItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.addObject_(NSToolbarSeparatorItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.addObject_(NSToolbarSpaceItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.addObject_(NSToolbarFlexibleSpaceItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.addObject_(NSToolbarPrintItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.addObject_(kWSTPreferencesToolbarItemIdentifier)
-        self._toolbarAllowedItemIdentifiers.addObject_(NSToolbarCustomizeToolbarItemIdentifier)
+        self._toolbarAllowedItemIdentifiers.append(kWSTReloadContentsToolbarItemIdentifier)
+        self._toolbarAllowedItemIdentifiers.append(kWSTUrlTextFieldToolbarItemIdentifier)
+        self._toolbarAllowedItemIdentifiers.append(NSToolbarSeparatorItemIdentifier)
+        self._toolbarAllowedItemIdentifiers.append(NSToolbarSpaceItemIdentifier)
+        self._toolbarAllowedItemIdentifiers.append(NSToolbarFlexibleSpaceItemIdentifier)
+        self._toolbarAllowedItemIdentifiers.append(NSToolbarPrintItemIdentifier)
+        self._toolbarAllowedItemIdentifiers.append(kWSTPreferencesToolbarItemIdentifier)
+        self._toolbarAllowedItemIdentifiers.append(NSToolbarCustomizeToolbarItemIdentifier)
         
     def toolbarDefaultItemIdentifiers_(self, anIdentifier):
         """
@@ -191,7 +192,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         the toolbar item identified by itemIdentifier.
         """
         newItem = NSToolbarItem.alloc().initWithItemIdentifier_(itemIdentifier)
-        item = self._toolbarItems.objectForKey_(itemIdentifier)
+        item = self._toolbarItems[itemIdentifier]
         
         newItem.setLabel_( item.label() )
         newItem.setPaletteLabel_( item.paletteLabel() )
@@ -232,62 +233,63 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         self._methodSignatures = {}
         self._methodDescriptions = {}
         
-        if url and len(url):
-            self._server = xmlrpclib.ServerProxy(url)
-            self.progressIndicator.startAnimation_(sender)
-            self.setStatusTextFieldMessage_("Retrieving method list...")
-            try:
-                self._methods = self._server.listMethods()
-                self._methodPrefix = ""
-            except:
-                try:
-                    self._methods = self._server.system.listMethods()
-                    self._methodPrefix = "system."
-                except:
-                    self.setStatusTextFieldMessage_("Server failed to respond to listMethods query.  See below for more information.")
-                    self.progressIndicator.stopAnimation_(sender)
-                    self._server = None
-                    self._methodPrefix = None
-                    
-                    exceptionType, exceptionValue, exceptionTraceback = sys.exc_info()
-                    self.methodDescriptionTextView.setString_("Exception information\n\nType: %s\n\nValue: %s\n\nTraceback:\n\n %s\n" % (exceptionType, exceptionValue, string.join(traceback.format_tb( exceptionTraceback ), '\n' )))
-                    
-                    return
-                    
-            self._methods.sort(lambda x, y: cmp(x, y))
-            self.methodsTable.reloadData()
-            self.methodsTable.display()
-            self.setStatusTextFieldMessage_("Retrieving information about %d methods." % len(self._methods))
-            self.window().setTitle_(url)
-            NSUserDefaults.standardUserDefaults().setObject_forKey_(url, "LastURL")
-            
-            index = 0
-            for aMethod in self._methods:
-                index = index + 1
-                if not (index % 5):
-                    self.methodsTable.reloadData()
-                    self.methodsTable.display()
-                self.setStatusTextFieldMessage_("Retrieving signature for method %s (%d of %d)." % (aMethod , index, len(self._methods)))
-                methodSignature = getattr(self._server, self._methodPrefix + "methodSignature")(aMethod)
-                signatures = None
-                if not len(methodSignature):
-                    continue
-                for aSignature in methodSignature:
-                    if (type(aSignature) == types.ListType) and (len(aSignature) > 0):
-                        signature = "%s %s(%s)" % (aSignature[0], aMethod, string.join(aSignature[1:], ", "))
-                    else:
-                        signature = aSignature
-                if signatures:
-                    signatures = signatures + ", " + signature
-                else:
-                    signatures = signature
-                self._methodSignatures[aMethod] = signatures
-            self.setStatusTextFieldMessage_(None)
-            self.progressIndicator.stopAnimation_(sender)
-            self.methodsTable.reloadData()
-        else:
+        if not url:
             self.window().setTitle_("Untitled.")
             self.setStatusTextFieldMessage_("No URL specified.")
+            return
+
+        self._server = xmlrpclib.ServerProxy(url)
+        self.progressIndicator.startAnimation_(sender)
+        self.setStatusTextFieldMessage_("Retrieving method list...")
+        try:
+            self._methods = self._server.listMethods()
+            self._methodPrefix = ""
+        except:
+            try:
+                self._methods = self._server.system.listMethods()
+                self._methodPrefix = "system."
+            except:
+                self.setStatusTextFieldMessage_("Server failed to respond to listMethods query.  See below for more information.")
+                self.progressIndicator.stopAnimation_(sender)
+                self._server = None
+                self._methodPrefix = None
+                
+                exceptionType, exceptionValue, exceptionTraceback = sys.exc_info()
+                self.methodDescriptionTextView.setString_("Exception information\n\nType: %s\n\nValue: %s\n\nTraceback:\n\n %s\n" % (exceptionType, exceptionValue, string.join(traceback.format_tb( exceptionTraceback ), '\n' )))
+                
+                return
+                
+        self._methods.sort(lambda x, y: cmp(x, y))
+        self.methodsTable.reloadData()
+        self.methodsTable.display()
+        self.setStatusTextFieldMessage_("Retrieving information about %d methods." % len(self._methods))
+        self.window().setTitle_(url)
+        NSUserDefaults.standardUserDefaults().setObject_forKey_(url, "LastURL")
+        
+        index = 0
+        for aMethod in self._methods:
+            index = index + 1
+            if not (index % 5):
+                self.methodsTable.reloadData()
+                self.methodsTable.display()
+            self.setStatusTextFieldMessage_("Retrieving signature for method %s (%d of %d)." % (aMethod , index, len(self._methods)))
+            methodSignature = getattr(self._server, self._methodPrefix + "methodSignature")(aMethod)
+            signatures = None
+            if not len(methodSignature):
+                continue
+            for aSignature in methodSignature:
+                if (type(aSignature) == types.ListType) and (len(aSignature) > 0):
+                    signature = "%s %s(%s)" % (aSignature[0], aMethod, string.join(aSignature[1:], ", "))
+                else:
+                    signature = aSignature
+            if signatures:
+                signatures = signatures + ", " + signature
+            else:
+                signatures = signature
+            self._methodSignatures[aMethod] = signatures
+        self.setStatusTextFieldMessage_(None)
+        self.progressIndicator.stopAnimation_(sender)
+        self.methodsTable.reloadData()
     
     def selectMethodAction_(self, sender):
         """
@@ -329,13 +331,3 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
             return self._methodSignatures[aMethod]
         else:
             return aMethod
-
-    ### adjust method decls to be in line with ObjC requirements
-    connectionWindowController = selector(connectionWindowController, isClassMethod=1)
-    """
-    Declares that the method connectionWindowController is actually a
-    class method.  This is the one piece of non-automatic glue
-    required to make this class work.   If we used a more pythonic
-    module level function to create instances of this class, this
-    could easily be eliminated.
-    """
