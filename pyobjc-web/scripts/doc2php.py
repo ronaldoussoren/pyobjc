@@ -125,10 +125,10 @@ def copy_project_docs(srctree):
             key = output_lines[i][:idx].strip()
             value = output_lines[i][idx+1:].strip()
             docinfo[key] = value
+
         output = '\n'.join(output_lines[i:])
         if not docinfo.has_key('title'):
             docinfo['title'] = bn
-
         alldocs[bn] = docinfo
          
         fd = open(os.path.join('docroot', 'doc', bn), 'w')
