@@ -75,16 +75,15 @@ setup(
 <p>You may also copy this file from <code><span>src/setup.py</span></code>.</p>
 </li>
 <li>Run the setup script to create a temporary plugin bundle for development:<pre>
-    $ python setup.py py2app -A
-
-Note that we use the ``-A`` argument to create an alias plugin bundle at
-``dist/ITunesCommunication.py``.  Alias bundles contain an alias to the
-main script (``ITunesCommunication.py``) and symlinks to the data files
+$ python setup.py py2app -A
+</pre>
+<p>Note that we use the <code><span>-A</span></code> argument to create an alias plugin bundle at
+<code><span>dist/ITunesCommunication.py</span></code>.  Alias bundles contain an alias to the
+main script (<code><span>ITunesCommunication.py</span></code>) and symlinks to the data files
 (none in this case).  This allows us to keep working on the source files
 without having to rebuild the application.  This alias bundle is similar
 to a ZeroLink executable in Xcode - it is for DEVELOPMENT ONLY, and will
-not work on other machines.
-</pre>
+not work on other machines.</p>
 </li>
 <li>Add <code><span>dist/ITunesCommunication.plugin</span></code> to the Resources folder in your
 Xcode project.  You can do this by ctrl-clicking the Resources folder
