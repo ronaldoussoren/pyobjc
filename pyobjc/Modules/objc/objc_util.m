@@ -64,7 +64,7 @@ void ObjCErr_FromObjC(NSException* localException)
 	PyObject*     dict;
 	PyObject*     exception;
 	PyObject*     v;
-	char          buf[128];
+	char          buf[256];
 	PyObject*     exc_type;
 	PyObject*     exc_value;
 	PyObject*     exc_traceback;
