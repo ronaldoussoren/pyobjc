@@ -9,9 +9,11 @@
 @interface OC_TestIdentity : NSObject
 {
 	NSObject* storedObject;
+	int       isClassic;
 }
 
 -(NSObject*)storedObject;
+-(void)setStoredClassicObject:(NSObject*)object;
 -(void)setStoredObject:(NSObject*)object;
 -(void)dealloc;
 
@@ -26,6 +28,7 @@
 -(int)isSameObjectAsStored:(NSObject*)value;
 -(void)setStoredObjectToAProtocol;
 -(void)setStoredObjectAnInstanceOf:(Class) cls;
+-(void)setStoredObjectAnInstanceOfClassic:(Class) cls;
 
 -(void)writeStoredObjecToFile:(NSString*)fname;
 
@@ -34,19 +37,39 @@
 @implementation OC_TestIdentity
 -(void)dealloc
 {
-	[storedObject release];
+	if (isClassic) {
+		/* pass, we could call free but why bother? */
+	} else {
+		[storedObject release];
+	}
 }
 
 -(NSObject*)storedObject
 {
-	return [[storedObject retain] autorelease];
+	if (isClassic) {
+		return storedObject;
+	} else {
+		return [[storedObject retain] autorelease];
+	}
 }
 
 -(void)setStoredObject:(NSObject*)object
 {
+	if (!isClassic) {
+		[storedObject release];
+	}
 	[object retain];
-	[storedObject release];
 	storedObject = object;
+	isClassic = 0;
+}
+
+-(void)setStoredClassicObject:(NSObject*)object;
+{
+	if (!isClassic) {
+		[storedObject release];
+	}
+	storedObject = object;
+	isClassic = 1;
 }
 
 -(void)setStoredObjectToResultOf:(SEL)aSelector on:(NSObject*)object
@@ -91,12 +114,16 @@
 
 -(void)setStoredObjectToAProtocol
 {
-	[self setStoredObject: (NSObject*)@protocol(NSObject) ];
+	[self setStoredClassicObject: (NSObject*)@protocol(NSObject) ];
 }
 
 -(void)setStoredObjectAnInstanceOf:(Class) cls
 {
 	[self setStoredObject: [[cls alloc] init]];
+}
+-(void)setStoredObjectAnInstanceOfClassic:(Class)cls
+{
+	[self setStoredClassicObject:[cls new]];
 }
 
 -(void)writeStoredObjecToFile:(NSString*)fname
