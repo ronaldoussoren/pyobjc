@@ -3,7 +3,7 @@ from ServiceTest import *
 
 if __name__ == '__main__':
     serviceProvider = ServiceTest.alloc().init()
-    NSRegisterServiceProvider(serviceProvider, u"PyObjCSimpleService")
+    NSRegisterServicesProvider(serviceProvider, u"PyObjCSimpleService")
     try:
         NSRunLoop.currentRunLoop().configureAsServer()
         NSRunLoop.currentRunLoop().run()
