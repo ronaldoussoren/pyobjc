@@ -1,0 +1,21 @@
+- Determine intraframework dependencies based on angle #import and #include
+  Start from the canonical framework header
+  Make sure to look for sub-frameworks!
+
+- Look for @interface statements
+
+- Look for @protocol statements
+
+- Look for constant NSStrings
+
+- Look for global variables based on a given prefix (FOUNDATION_EXPORT, for example)
+
+- Look for enum statements
+
+- Look for simple #define statements
+
+- Look for exported functions
+
+- Try and wrap static inline functions (i.e. FOUNDATION_STATIC_INLINE)
+
+- Try and determine which selectors and functions will need special treatment (pointer arguments)

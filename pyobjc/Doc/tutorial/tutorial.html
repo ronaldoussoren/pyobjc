@@ -25,24 +25,18 @@ create your user interface. Interface Builder is not included in Mac OS X
 by default, but it is part of Apple's free Developer Tools, which can
 be gotten from <a href="http://developer.apple.com/tools">http://developer.apple.com/tools</a> as a hefty 300 MB download
 after registering (for free).</p>
+<p>This tutorial shows a number of shell commands. It uses the syntax used by
+the <code><span>bash</span></code> shell (the default shell on Mac OS X 10.3). If you're using a 
+<code><span>csh</span></code> you'll have to adapt those commands a little. In <code><span>bash</span></code> you can
+modify shell variables using the syntax <code><span>NAME=value</span></code>, in <code><span>csh</span></code> you do
+the same using <code><span>setenv</span> <span>NAME</span> <span>value</span></code>.</p>
 <h2><a name="getting-started">Getting Started</a></h2>
 <ol type="1">
 <li>Create a work directory <code><span>src</span></code>. Check which Python you have installed PyObjC
 for, by running <code><span>python</span></code> and checking that <code><span>import</span> <span>Foundation</span></code> works. If it
 does not work it could be that you have installed PyObjC for <code><span>/usr/local/python</span></code>
 but Apple's <code><span>/usr/bin/python</span></code> comes first in your <code><span>$PATH</span></code>. Make sure you
-use the right python whereever it says <code><span>python</span></code> in this tutorial.<p>For convenience, set a shell variable PYLIB
-to the Python Lib directory. For MacPython-2.3 this will be:</p>
-<pre>
-$ setenv PYLIB /Library/Frameworks/Python.framework/Versions/Current/lib/python2.3
-</pre>
-<p>or if you use bash as your shell:</p>
-<pre>
-$ export PYLIB=/Library/Frameworks/Python.framework/Versions/Current/lib/python2.3
-</pre>
-<p>For Apple's <code><span>/usr/bin/python</span></code> set the variable to <code><span>/usr/lib/python2.2</span></code>,
-if you are running on MacOS X set it to <code><span>/System/Library/Frameworks/Python.framework/Versions/Current/lib/python2.3</span></code>.</p>
-</li>
+use the right python whereever it says <code><span>python</span></code> in this tutorial.</li>
 <li>Start Interface Builder, select <i>Cocoa Application</i>
 in the new file dialog, save this file as <code><span>src/MainMenu.nib</span></code>.</li>
 <li>Proceed with the instructions as lined out in Apple's
@@ -58,8 +52,8 @@ Your nib file should now be the same as <a href="step3-MainMenu.nib">step3-MainM
 When invoked as a main program from the command line <code><span>NibClassBuilder</span></code> will
 parse the NIB file and create a skeleton module for you. Invoke
 it as follows (from the <code><span>src</span></code> directory):<pre>
-$ python $PYLIB/site-packages/PyObjC/PyObjCTools/NibClassBuilder.py \
-        MainMenu.nib &gt; CurrencyConverter.py
+$ NCB=&quot;`python -c 'from PyObjCTools import NibClassBuilder; print NibClassBuilder.__file__'`&quot;
+$ python &quot;${NCB}&quot; MainMenu.nib &gt; CurrencyConverter.py
 </pre>
 <p>The result of this can be seen in <a href="step4-CurrencyConverter.py">step4-CurrencyConverter.py</a>.</p>
 </li>
@@ -72,13 +66,8 @@ $ python $PYLIB/site-packages/PyObjC/PyObjCTools/NibClassBuilder.py \
 <li>Now we need to create an application framework around our program. Again,
 in the future it could well be that this step is not needed during 
 development, or that it becomes simpler, but for now we do the following:<pre>
-$ python $PYLIB/site-packages/PyObjC/bundlebuilder.py --link --nib=MainMenu \
-        --mainprogram=CurrencyConverter.py --resource=MainMenu.nib build
-</pre>
-<p>If you are using Python 2.3 the script is located in <code><span>plat-mac</span></code> instead
-of <code><span>site-packages</span></code> and the command is:</p>
-<pre>
-$ python2.3 $PYLIB/plat-mac/bundlebuilder.py --link --nib=MainMenu \
+$ BB=&quot;`python -c 'import bundlebuilder; print bundlebuilder.__file__'`&quot;
+$ python &quot;${BB}&quot; --link --nib=MainMenu \
         --mainprogram=CurrencyConverter.py --resource=MainMenu.nib build
 </pre>
 <p>There are a few things to note:</p>

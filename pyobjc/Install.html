@@ -8,16 +8,20 @@ Installation Instructions</title>
 </head>
 <body>
 <h2>Installation Instructions</h2>
-<!-- :authors: Bill Bumgarner, Ronald Oussoren -->
+<!-- :authors: Bill Bumgarner, Ronald Oussoren, Bob Ippolito -->
+<h2><a name="notes-for-subversion-users">Notes for Subversion users</a></h2>
+<p>To build PyObjC from the Subversion repository, you will need an installation
+of libffi.  A snapshot of libffi modified to build inside the PyObjC source
+tree is available from the <a href="#id2" name="id3"><span id="id3">`PyObjC download site`_</span></a>.  To use this, simply move
+the extracted libffi-src folder to your PyObjC source folder.  If you would
+like to use another libffi source location, update the variable
+<code><span>LIBFFI_SOURCES</span></code> at the top of setup.py.  Release versions of PyObjC include
+a compatible libffi snapshot.</p>
 <h2><a name="building-the-package">Building the package</a></h2>
-<p>If you're using the sources from CVS you should first download a copy of 
-libffi from <a href="http://sourceforge.net/project/showfiles.php?group_id=14534">the PyObjC download site</a>.  Extract this in a convenient location
-and update the variable <code><span>LIBFF_SOURCES</span></code> at the top of setup.py.  The released
-version of PyObjC includes a compatible version of libffi.</p>
-<p>PyObjC is build and installed using the distutils package included with Python
-2.0 and beyond.  This package provides a single interface for building and
-packaging the module.   To see usage documentation for the module,
-issue the <code><span>--help</span></code> command:</p>
+<p>PyObjC is built and installed using the distutils package included with Python
+2.0 and beyond.  distutils provides a single interface for building and
+packaging the PyObjC via a <code><span>setup.py</span></code> script. To see usage documentation
+for <code><span>setup.py</span></code>, issue the <code><span>--help</span></code> command:</p>
 <pre>
 % python setup.py --help
 </pre>
@@ -26,19 +30,31 @@ command:</p>
 <pre>
 % python setup.py --help-commands
 </pre>
-<p>The following command will build and install the pyobjc module:</p>
+<p>The following command will build and install the PyObjC package:</p>
 <pre>
 % python setup.py install
 </pre>
 <p>The setup.py system can also be used to create source and binary
 distribution archives automatically.</p>
-<p>Use <code><span>sudo</span></code> to install the pyobjc module into a the Apple supplied
-python's site-packages directory on OS X 10.2 and greater:</p>
+<p>Use <code><span>sudo</span></code> to install the PyObjC package into the Apple supplied
+Python's site-packages directory on OS X 10.2 and greater:</p>
 <p>% sudo python setup.py install</p>
-<p>If you have multiple versions of python installed on your system, the
-above will only install pyobjc for whatever version of python is the
-default on the command line.   Make sure you are installing python
-against the correct version of python.</p>
+<p>If you have multiple versions of Python installed on your system, the
+above will only install PyObjC for whatever version of Python is the
+default on the command line.   Make sure you are installing PyObjC
+against the correct version of Python.</p>
+<p>Note that there is a known bug in Python 2.3.0 
+(as shipped with MacOS X 10.3.x), such that when another framework Python is 
+installed it will not link extensions (such as PyObjC) properly, rendering them
+unusable.  If you intend to build PyObjC for Python 2.3.0, ensure that no other
+framework Python is installed, such as a previous installation for MacOS X
+10.2.  For more information on this and other Python issues on MacOS X,
+please refer to the <a href="http://pythonmac.org/wiki/FAQ">pythonmac.org FAQ</a>.</p>
+<p>If you have a previous version of PyObjC installed, you may see an exception
+such as <code><span>Wrong</span> <span>version</span> <span>of</span> <span>PyObjC</span> <span>C</span> <span>API</span></code>.  If this happens, you should
+delete any previous installation of PyObjC and the build folder in your
+new sources and try again.  PyObjC will typically be installed to a folder
+of the same name in /Library/Python/2.3 or /Library/Python/2.3/site-packages.</p>
 <p>To be able to build the wrappers for the WebKit framework (included with
 Safari 1.0), you'll have to install the WebKit SDK. You can download 
 this from the <a href="http://connect.apple.com">ADC website</a>.</p>
@@ -70,8 +86,10 @@ work with Python and PyObjC when using <a href="http://www.apple.com/xcode">Xcod
 pure-Python, applications that are compatible with Apple's build of Python as
 well as all other builds of python that support PyObjC.</p>
 <p>When building the 'install' target, the resulting application wrapper will
-include the PyObjC module and can be launched on any stock OS X 10.3 system
+include the PyObjC package and can be launched on any stock OS X 10.3 system
 without requiring PyObjC to be preinstalled.</p>
+<p>Note that the optional 'BSD Subsystem' component of MacOS X is required,
+however it is installed by default and should be present on most systems.</p>
 </li>
 <li>Cocoa-Python Document-based Application<p>This template works like the Cocoa-Python Application template in that it
 is compatible with the Apple build of Python.   It creates an application 
@@ -79,6 +97,9 @@ that uses Cocoa's Multiple Document Architecture in the same fashion as the
 default Cocoa Document-based Application supplied with Project Builder.</p>
 </li>
 </ul>
+<p>Note that Python applications built on MacOS X 10.3 are not compatible with
+MacOS X 10.2.  At this time, a MacOS X 10.2 system must be used to build
+MacOS X 10.2 compatible applications.</p>
 <h3><a name="project-builder-on-macos-x-10-2">Project Builder on MacOS X 10.2</a></h3>
 <p>The <code><span>ProjectBuilder</span> <span>Extras</span></code> directory contains additional files that can
 be used with Project Builder. The directory <code><span>Specifications</span></code> contains files
@@ -110,5 +131,10 @@ default Cocoa Document-based Application supplied with Project Builder.</p>
 </ul>
 <p>More information on project templates can be found in the Project
 Builder documentation and/or release notes.</p>
+<h2><a>Docutils System Messages</a></h2>
+<div id="id2">
+<p>System Message: <a name="id2">ERROR/3</a> (<tt>./Install.txt</tt>, line 10); <em><a href="#id3">backlink</a></em></p>
+<p>Unknown target name: &quot;pyobjc download site&quot;.</p>
+</div>
 </body>
 </html>

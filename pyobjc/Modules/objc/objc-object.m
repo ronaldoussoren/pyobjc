@@ -134,11 +134,11 @@ object_dealloc(PyObject* obj)
 
 		} else if (((PyObjCObject*)obj)->flags 
 				& PyObjCObject_kUNINITIALIZED) {
-			/* Freeing of an unitialized object, just leak because 
+			/* Freeing of an uninitialized object, just leak because 
 			 * there is no reliable manner to free such objects.
 			 *
 			 * - [obj release] doesn't work because some classes 
-			 *   cause crashes for unitialized objects
+			 *   cause crashes for uninitialized objects
 			 * - [[obj init] release] also doesn't work because 
 			 *   not all classes implement -init
 			 * - [obj dealloc] also doesn't work for class 
@@ -147,7 +147,7 @@ object_dealloc(PyObject* obj)
 			char buf[256];
 
 			snprintf(buf, sizeof(buf), 
-				"leaking an unitialized object of type %s",
+				"leaking an uninitialized object of type %s",
 				obj->ob_type->tp_name);
 			PyErr_Warn(PyObjCExc_UnInitDeallocWarning, buf);
 			((PyObjCObject*)obj)->objc_object = nil;

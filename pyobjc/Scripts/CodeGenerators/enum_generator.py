@@ -10,17 +10,17 @@ import os
 import sys
 from dupfile import dupfile
 
-START_RE=re.compile('(typedef[\w]|)enum.*{')
-START_RE2=re.compile('(typedef[\w]|)enum(?:\s+[A-Za-z_][A-Za-z0-9]*)?\s*$')
-END_RE=re.compile('}')
-IDENT_RE=re.compile('(^|[^A-Za-z_0-9])(?P<identifier>[A-Za-z_][A-Za-z_0-9]*)')
-LINE_COMMENT_RE=re.compile('//.*')
-SINGLE_LINE_RE=re.compile('enum.*{([^}]*)}')
-BLOCK_1_RE=re.compile('/\*([^*]|(\*[^/]))*\*/')
-BLOCK_S_RE=re.compile('/\*')
-BLOCK_E_RE=re.compile('\*/')
+START_RE=re.compile(r'(typedef[\w]|)enum.*{')
+START_RE2=re.compile(r'(typedef[\w]|)enum(?:\s+[A-Za-z_][A-Za-z0-9_]*)?\s*$')
+END_RE=re.compile(r'}')
+IDENT_RE=re.compile(r'(^|[^A-Za-z_0-9])(?P<identifier>[A-Za-z_][A-Za-z0-9_]*)')
+LINE_COMMENT_RE=re.compile(r'//.*')
+SINGLE_LINE_RE=re.compile(r'enum.*{([^}]*)}')
+BLOCK_1_RE=re.compile(r'/\*([^*]|(\*[^/]))*\*/')
+BLOCK_S_RE=re.compile(r'/\*')
+BLOCK_E_RE=re.compile(r'\*/')
 
-DEFINE_RE=re.compile('^#\s*define\s+([A-Za-z_][A-Za-z0-9]*)\s+(\d+)$')
+DEFINE_RE=re.compile(r'^#\s*define\s+([A-Za-z_][A-Za-z0-9]*)\s+(\d+)$')
 
 def entry(fp, val):
     if val.endswith('Mask'):
@@ -111,15 +111,19 @@ def generate(dirname, fn = None, filter = lambda x: 1, ignore_files=()):
     else:
         fp = sys.stdout
 
+    fnames = [ os.path.join(dirname, fn)
+                        for fn in os.listdir(dirname)
+                        if fn.endswith('.h') and filter(fn) ]
+    fnames.sort()
+    for fname in fnames:
+        fmwkname = os.path.dirname(os.path.dirname(fname))
+        if fmwkname.endswith('.framework'):
+            fp.write("#import <%s/%s>\n" % (os.path.splitext(os.path.basename(fmwkname))[0], os.path.basename(fname)))
     fp.write("/*\n")
     fp.write(" * Enumeration constants. This file is generated from files in\n")
     fp.write(" * %s\n"%dirname)
     fp.write(" */\n")
     fp.write("static struct inttable enum_table[] = {\n")
-    fnames = [ os.path.join(dirname, fn)
-                        for fn in os.listdir(dirname)
-                        if fn.endswith('.h') and filter(fn) ]
-    fnames.sort()
     for f in fnames:
         if os.path.basename(f) in ignore_files:
             continue

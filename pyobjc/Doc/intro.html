@@ -24,17 +24,21 @@ Contents</title>
 <li><a href="#reference-counting" id="id9" name="id9">Reference counting</a></li>
 <li><a href="#informal-protocols" id="id10" name="id10">(Informal) protocols</a></li>
 <li><a href="#cocoa-bindings" id="id11" name="id11">Cocoa Bindings</a></li>
+<li><a href="#categories" id="id12" name="id12">Categories</a></li>
 </ul>
 </li>
-<li><a href="#cocoa-for-python-programmers" id="id12" name="id12">Cocoa for Python programmers</a></li>
-<li><a href="#notes-on-specific-tasks" id="id13" name="id13">Notes on specific tasks</a><ul>
-<li><a href="#working-with-threads" id="id14" name="id14">Working with threads</a></li>
-<li><a href="#finalizers" id="id15" name="id15">Finalizers</a></li>
+<li><a href="#cocoa-for-python-programmers" id="id13" name="id13">Cocoa for Python programmers</a></li>
+<li><a href="#notes-on-specific-tasks" id="id14" name="id14">Notes on specific tasks</a><ul>
+<li><a href="#working-with-threads" id="id15" name="id15">Working with threads</a><ul>
+<li><a href="#threading-limitiations-when-using-python-2-2" id="id16" name="id16">Threading limitiations when using Python 2.2</a></li>
 </ul>
 </li>
-<li><a href="#building-applications" id="id16" name="id16">Building applications</a><ul>
-<li><a href="#pure-python-buildapp-py" id="id17" name="id17">&quot;Pure Python&quot; :  buildapp.py</a></li>
-<li><a href="#ide-approach-xcode" id="id18" name="id18">&quot;IDE approach&quot; : Xcode</a></li>
+<li><a href="#finalizers" id="id17" name="id17">Finalizers</a></li>
+</ul>
+</li>
+<li><a href="#building-applications" id="id18" name="id18">Building applications</a><ul>
+<li><a href="#pure-python-buildapp-py" id="id19" name="id19">&quot;Pure Python&quot; :  buildapp.py</a></li>
+<li><a href="#ide-approach-xcode" id="id20" name="id20">&quot;IDE approach&quot; : Xcode</a></li>
 </ul>
 </li>
 </ul>
@@ -193,8 +197,6 @@ as arguments, you can pass <code><span>None</span></code> as the length. The len
 that is used for the array of values is passed to Objective-C as the length
 argument.</p>
 <p>XXX: Add information about <code><span>array.array</span></code> rules.</p>
-<p>XXX: We don't use the right functions for conversion to C-arrays throughout
-the bridge (yet), the information is therefore not entirely correct.</p>
 <p>When you define methods in a subclass of an Objective-C class, the bridge has
 to tell the Objective-C runtime what the signature of those methods is. The
 basic rule is that all arguments as well as the return value are objects (just
@@ -269,7 +271,39 @@ classes that partially implement a protocol.</p>
 to create and use <i>Controller</i> objects.</p>
 <p>Use <code><span>objc.accessor</span></code> to create accessor methods that conform to the 
 expectations of Cocoa Bindings.</p>
-<h2><a href="#id12" name="cocoa-for-python-programmers">Cocoa for Python programmers</a></h2>
+<h3><a href="#id12" name="categories">Categories</a></h3>
+<p>Objective-C has a mechanism for modularize a class definition, it is possible
+to add methods to an existing class in a seperate compilation unit and even
+a seperate library. This mechanism is named categories and is used to enhance
+existing classes, for splitting classes in several parts and to document
+informal protocols.</p>
+<p>An example of a category definition:</p>
+<pre>
+@interface NSObject (MyCategory)
+- (NSSize)objectFootprint;
+@end
+</pre>
+<p>This declares an additional category on <code><span>NSObject</span></code>. This category contains
+a single method.</p>
+<p>The function <code><span>objc.classAddMethods</span></code> can be used to get the same effect in
+Python:</p>
+<pre>
+def objectFootprint(self):
+        pass
+
+objc.classAddMethods(NSObject, [objectFootprint])
+</pre>
+<p>This is not very clear, PyObjC therefore also provides the following 
+mechanism, implemented on top of <code><span>objc.classAddMethods</span></code>:</p>
+<pre>
+class NSObject (objc.Category(NSObject)):
+        def objectFootprint(self):
+                pass
+</pre>
+<p>To make it clear that <code><span>objc.Category</span></code> performs a special task the name in
+the class definition must be the same as the <code><span>__name__</span></code> of the argument
+to <code><span>objc.Category</span></code>.</p>
+<h2><a href="#id13" name="cocoa-for-python-programmers">Cocoa for Python programmers</a></h2>
 <p>Cocoa frameworks are mapped onto Python packages with the same name; that is
 the classes, constants and functions from the AppKit framework are available
 after you import <code><span>AppKit</span></code> in your Python script.</p>
@@ -297,31 +331,33 @@ Python. The <a href="../Examples/00ReadMe.html">PyObjC Example index</a> contain
 <li><a href="http://www.stepwise.com/">stepwise.com</a></li>
 <li>Your local bookstore or library</li>
 </ul>
-<h2><a href="#id13" name="notes-on-specific-tasks">Notes on specific tasks</a></h2>
-<h3><a href="#id14" name="working-with-threads">Working with threads</a></h3>
+<h2><a href="#id14" name="notes-on-specific-tasks">Notes on specific tasks</a></h2>
+<h3><a href="#id15" name="working-with-threads">Working with threads</a></h3>
 <p>When you create a thread and want to use PyObjC from that thread you will
 have to create an <code><span>NSAutoreleasePool</span></code> in that thread and clean it up when
 you're done. The easiest way to that is to create an instance of that class
 bound to a local variable. If the thread is long-lived you may want to arrange
 for recycling the pool once in a while.</p>
-<p>There are some limitation w.r.t. threading. You cannot use <code><span>NSThread</span></code> to 
-create new threads, but must use the python primitives instead.</p>
+<h4><a href="#id16" name="threading-limitiations-when-using-python-2-2">Threading limitiations when using Python 2.2</a></h4>
+<p>There are some limitation w.r.t. threading when using Python 2.2. The
+combination of Python 2.3 and PyObjC is fully thread-safe.</p>
+<p>You cannot use <code><span>NSThread</span></code> to create new threads, but must use the python 
+primitives instead.</p>
 <p>You must also make sure that Objective-C only makes calls to Python from a 
 thread that owns the Python GIL (that's also the reason for not being able 
-to use <code><span>NSThread</span></code> to create new threads).  This restriction will be lifted
-in a future version of PyObjC (at least when using Python 2.3).</p>
-<h3><a href="#id15" name="finalizers">Finalizers</a></h3>
+to use <code><span>NSThread</span></code> to create new threads).</p>
+<h3><a href="#id17" name="finalizers">Finalizers</a></h3>
 <p>In Python you can use the method <code><span>__del__</span></code> to clean up resources when your
 object is garbage collected. In Objective-C/Cocoa this is done with a method 
 named <code><span>dealloc</span></code>.</p>
 <p>In PyObjC you should always use the <code><span>__del__</span></code> method, the <code><span>dealloc</span></code> method
 can safely be ignored and the bridge will complain when you try to override
 this method.</p>
-<h2><a href="#id16" name="building-applications">Building applications</a></h2>
+<h2><a href="#id18" name="building-applications">Building applications</a></h2>
 <p>There are two different ways to build applications with PyObjC. There are no
 major advantages to using either one of them, use the one that is most 
 convenient to you.</p>
-<h3><a href="#id17" name="pure-python-buildapp-py">&quot;Pure Python&quot; :  buildapp.py</a></h3>
+<h3><a href="#id19" name="pure-python-buildapp-py">&quot;Pure Python&quot; :  buildapp.py</a></h3>
 <p>PyObjC includes a copy of the <code><span>bundlebuilder</span></code> module. This module is
 part of the Python 2.3 MacPython release and offers a way to build
 distutils-style scripts for building (standalone) applications.</p>
@@ -355,7 +391,7 @@ incompatible Python version.</p>
 <p>The online documentation for <code><span>bundlebuilder</span></code> contains more information on 
 building <code><span>buildapp.py</span></code> scripts and how to invoke them. There are plenty of
 example <code><span>buildapp.py</span></code> scripts in the various <a href="../Examples/00ReadMe.txt">Examples</a> subfolders.</p>
-<h3><a href="#id18" name="ide-approach-xcode">&quot;IDE approach&quot; : Xcode</a></h3>
+<h3><a href="#id20" name="ide-approach-xcode">&quot;IDE approach&quot; : Xcode</a></h3>
 <p>PyObjC includes a number of Xcode templates that can be used to 
 build (standalone) applications. Those templates are used like any other
 Xcode template. The only non-obvious detail is that you have to

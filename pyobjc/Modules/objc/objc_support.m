@@ -625,12 +625,16 @@ static PyObject *
 pythonify_c_struct (const char *type, void *datum)
 {
 	PyObject *ret;
+    PyObject *converted;
 	unsigned int offset, itemidx;
 	const char *item;
 	int have_align = 0, align;
 	int haveTuple;
 	const char* type_start = type;
 	const char* type_end = PyObjCRT_SkipTypeSpec(type);
+
+    const char* type_real_start = type;
+    int type_real_length = type_end - type_start;
 
 	/* The compiler adds useless digits at the end of the signature */
 	while (type_end != type_start+1 && type_end[-1] != _C_STRUCT_E) {
@@ -694,7 +698,9 @@ pythonify_c_struct (const char *type, void *datum)
 		offset += PyObjCRT_SizeOfType (item);
 	}
   
-	return ret;
+    converted = [OC_PythonObject __pythonifyStruct:ret withType:type_real_start length:type_real_length];
+    Py_DECREF(ret);
+	return converted;
 }
 
 /*#F Extracts the elements from the tuple @var{arg} and fills a C array

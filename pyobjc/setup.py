@@ -4,9 +4,18 @@
 import sys
 import os
 import glob
+import site
 
 # Add our utility library to the path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'setup-lib'))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 'setup-lib')))
+site.addsitedir(os.path.abspath('source-deps'))
+
+extra_cmdclass = {}
+try:
+    import pyobjc_mpkg
+    extra_cmdclass.update(pyobjc_mpkg.cmdclass)
+except ImportError:
+    pass
 
 # Some PiPy stuff
 LONG_DESCRIPTION="""
@@ -301,10 +310,13 @@ if gs_root is None:
         #"-Werror",
 
         # no optimization, for debugging
-        #"-O0", "-g",
+        "-O0"
+
+        # generic optimization
+        #"-03",
 
         # g4 optimized
-        #"-O3", "-mcpu=7450", "-maltivec",
+        #"-fast", "-fPIC", "-mcpu=7450",
 
         # g5 optimized
         #"-fast", "-fPIC",
@@ -371,7 +383,7 @@ else:
         return [], []
 
     CFLAGS=[
-        #'-g',
+        '-g',
         ##'-O0',
         '-Wno-import',
 
@@ -387,7 +399,7 @@ else:
         ]
 
     OBJC_LDFLAGS=[
-        #'-g',
+        '-g',
         '-L', gs_root + '/Libraries/',
         '-L', gs_root + '/Libraries/' + gs_flib_dir,
         '-L', gs_root + '/Libraries/' + gs_lib_dir,
@@ -440,47 +452,34 @@ CoreExtensions =  [
               extra_link_args=OBJC_LDFLAGS),
     ]
 
-# Provide some dependency information on Python 2.3 and later, this
-# makes development slightly more convenient.
-if sys.version >= '2.3':
-    FoundationDepends = {
-        'depends': (glob.glob('build/codegen/_Fnd_*.inc')
-                + glob.glob('Modules/Foundation/*.m'))
-    }
-    AppKitDepends = {
-        'depends': (glob.glob('build/codegen/_App_*.inc')
-                + glob.glob('Modules/AppKit/*.m'))
-    }
-    AddressBookDepends = {
-        'depends': glob.glob('build/codegen/*.inc'),
-    }
-    CoreFoundationDepends = {
-    }
-    SecurityInterfaceDepends = {
-        'depends': glob.glob('build/codegen/*.inc'),
-    }
-    ExceptionHandlingDepends = {
-        'depends': glob.glob('build/codegen/*.inc'),
-    }
-    PrefPanesDepends = {
-        'depends': glob.glob('build/codegen/*.inc'),
-    }
-    InterfaceBuilderDepends = {
-        'depends': glob.glob('build/codegen/*.inc'),
-    }
-    WebKitDepends = {
-        'depends': glob.glob('build/codegen/*.inc'),
-    }
-else:
-    FoundationDepends = {}
-    AppKitDepends = {}
-    AddressBookDepends = {}
-    CoreFoundationDepends = {}
-    SecurityInterfaceDepends = {}
-    ExceptionHandlingDepends = {}
-    PrefPanesDepends = {}
-    InterfaceBuilderDepends = {}
-    WebKitDepends = {}
+FoundationDepends = {
+    'depends': (glob.glob('build/codegen/_Fnd_*.inc')
+            + glob.glob('Modules/Foundation/*.m'))
+}
+AppKitDepends = {
+    'depends': (glob.glob('build/codegen/_App_*.inc')
+            + glob.glob('Modules/AppKit/*.m'))
+}
+AddressBookDepends = {
+    'depends': glob.glob('build/codegen/*.inc'),
+}
+CoreFoundationDepends = {
+}
+SecurityInterfaceDepends = {
+    'depends': glob.glob('build/codegen/*.inc'),
+}
+ExceptionHandlingDepends = {
+    'depends': glob.glob('build/codegen/*.inc'),
+}
+PrefPanesDepends = {
+    'depends': glob.glob('build/codegen/*.inc'),
+}
+InterfaceBuilderDepends = {
+    'depends': glob.glob('build/codegen/*.inc'),
+}
+WebKitDepends = {
+    'depends': glob.glob('build/codegen/*.inc'),
+}
 
 FoundationPackages, FoundationExtensions = \
         IfFrameWork('Foundation.framework', [ 'Foundation' ], [
@@ -664,11 +663,12 @@ dist = setup(name = "pyobjc",
              package_dir = package_dir,
              scripts = [ 'Scripts/nibclassbuilder', ],
              extra_path = "PyObjC",
-             cmdclass = {
-                'build_ext': pyobjc_build_ext,
-                'test':      cmd_test,
-                'sdist':     cmd_sdist,
-             },
+             cmdclass = dict(
+                build_ext=pyobjc_build_ext,
+                test=cmd_test,
+                sdist=cmd_sdist,
+                **extra_cmdclass
+             ),
              classifiers = [
                 'Development Status :: 5 - Production/Stable',
                 'Environment :: Console',

@@ -34,6 +34,7 @@
 extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 
 PyObject *OC_PythonObject_DepythonifyTable = NULL;
+PyObject *OC_PythonObject_PythonifyStructTable = NULL;
 
 @implementation OC_PythonObject
 + newWithObject:(PyObject *) obj
@@ -106,6 +107,41 @@ PyObject *OC_PythonObject_DepythonifyTable = NULL;
 		PyObjC_GIL_RETURN(rval);
 	PyObjC_END_WITH_GIL
 }
+
++ pythonifyStructTable
+{
+    PyObjC_BEGIN_WITH_GIL
+        if (OC_PythonObject_PythonifyStructTable == NULL) {
+            OC_PythonObject_PythonifyStructTable = PyDict_New();
+        }
+		id rval;
+		int err = depythonify_c_value(@encode(id), OC_PythonObject_PythonifyStructTable, &rval);
+		if (err == -1) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+		PyObjC_GIL_RETURN(rval);
+    PyObjC_END_WITH_GIL
+}
+
++ (PyObject *)__pythonifyStruct:(PyObject*)obj withType:(const char *)type length:(int)length
+{
+    if (OC_PythonObject_PythonifyStructTable == NULL) {
+        Py_INCREF(obj);
+        return obj;
+    }
+    PyObject *typeString = PyString_FromStringAndSize(type, length);
+    if (type == NULL) {
+        return NULL;
+    }
+    PyObject *convert = PyDict_GetItem(OC_PythonObject_PythonifyStructTable, typeString);
+    Py_DECREF(typeString);
+    if (convert == NULL) {
+        Py_INCREF(obj);
+        return obj;
+    }
+    return PyObject_CallFunctionObjArgs(convert, obj, NULL);
+}
+
 
 - initWithObject:(PyObject *) obj
 {

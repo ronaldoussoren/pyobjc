@@ -14,6 +14,10 @@ from optparse import OptionParser, Option, OptionValueError
 import logging
 from logging import error, info, debug
 
+import site
+site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'source-deps'))
+
+import subprocess
 import utf16reader
 utf16reader.install()
 
@@ -118,7 +122,6 @@ def doSubstitutions(dirName, aName, options):
         if options.rewriteNibFiles and (extension == '.nib'):
             if options.verbose:
                 print "Rewriting NIB %s" % path
-            import subprocess
             ret = subprocess.call(['/usr/bin/nibtool', '-r', '--format', '4', path])
             if ret:
                 error("nibtool barfed back %d." % ret)
