@@ -21,11 +21,18 @@ class TestNSDictionarySubclassing(unittest.TestCase):
         # Don't use self.assertRaises here, we once had a bug that 
         # causes this to fail, while the assertRaises version would
         # (probably) have worked.
+        import warnings
+        warnings.filterwarnings('ignore', 
+            category=objc.UninitializedDeallocWarning)
+
         try:
-            d = DictTestExceptionClass.alloc().initWithDictionary_({})
-            self.fail()
-        except ValueError:
-            pass
+            try:
+                d = DictTestExceptionClass.alloc().initWithDictionary_({})
+                self.fail()
+            except ValueError:
+                pass
+        finally:
+            del warnings.filters[0]
 
     def testAnotherExceptionInInit(self):
         if sys.platform != 'darwin': return
@@ -34,11 +41,19 @@ class TestNSDictionarySubclassing(unittest.TestCase):
             def initWithObjects_forKeys_count_(self, o, k, c):
                 return super(DictTestExceptionClass2, self).initWithObjects_forKeys_count_(o, k, c)
 
+        import warnings
+        warnings.filterwarnings('ignore', 
+            category=objc.UninitializedDeallocWarning)
+
         try:
-            d = DictTestExceptionClass2.alloc().initWithDictionary_({})
-            self.fail()
-        except ValueError:
-            pass
+            try:
+                d = DictTestExceptionClass2.alloc().initWithDictionary_({})
+                self.fail()
+            except ValueError:
+                pass
+        finally:
+            del warnings.filters[0]
+
 
     def testExceptionInInitClsMeth(self):
         if sys.platform != 'darwin': return

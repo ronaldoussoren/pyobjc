@@ -187,7 +187,16 @@ class TestNSArraySpecialMethods(unittest.TestCase):
         a = NSArray.alloc().initWithObjects_count_(('a','b','c','d'), 3)
         self.assertEquals(a, ['a','b','c'])
 
-        self.assertRaises(ValueError, NSArray.alloc().initWithObjects_count_, ('a','b'), 3)
+        import warnings
+        warnings.filterwarnings('ignore', 
+                category=objc.UninitializedDeallocWarning)
+    
+        try:
+            self.assertRaises(ValueError, NSArray.alloc().initWithObjects_count_, ('a','b'), 3)
+
+        finally:
+            del warnings.filters[0]
+
 
     def test_arrayWithObjects_count_(self):
         a = NSArray.arrayWithObjects_count_(('a','b','c','d'), 3)
