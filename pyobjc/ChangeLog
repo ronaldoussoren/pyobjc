@@ -1,3 +1,7 @@
+2003-01-13  Bill Bumgarner  <bbum@codefab.com>
+    * Lib/objc/_convenience.py: Added support for NSEnumerator [for x in
+      enum:] and cleaned up other convenience methods.
+
 2003-01-11  Bill Bumgarner  <bbum@codefab.com>
     * setup.py (req_ver): Moved back to non-ffi build (I believe the move to
       ffi was an unintentional change?).
