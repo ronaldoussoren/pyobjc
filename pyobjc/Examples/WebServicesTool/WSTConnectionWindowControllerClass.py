@@ -339,7 +339,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         self.reloadData()
         self.stopWorking()
     
-    def selectMethodAction_(self, sender):
+    def tableViewSelectionDidChange_(self, sender):
         """
         When the user selects a remote method, this method displays
         the documentation for that method as returned by the XML-RPC
