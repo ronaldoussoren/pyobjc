@@ -271,8 +271,11 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 		const char* rettype = [methinfo methodReturnType];
 
 		if (*rettype != _C_VOID) {
-			err = depythonify_c_value([methinfo methodReturnType],
-				res, resp);
+			const char* rettype = [methinfo methodReturnType];
+			if (*rettype == _C_CHR || *rettype == _C_UCHR) {
+				rettype = "i";
+			}
+			err = depythonify_c_value(rettype, res, resp);
 			Py_DECREF(res);
 			if (err) {
 				ObjCErr_Set(PyExc_TypeError,
@@ -340,7 +343,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 IMP
 ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 {
-  _method_stub_userdata* stubUserdata;
+	_method_stub_userdata* stubUserdata;
 	NSMethodSignature* methinfo;
 	int               objc_argcount;
 	ffi_cif           *cif;
@@ -349,11 +352,23 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 	ffi_type*         cl_ret_type;
 	ffi_status        rv;
 	int               i;
+	const char*		  rettype;
+	char 		  buf[2];
 
 	methinfo = [NSMethodSignature signatureWithObjCTypes:signature];
 
 	/* Build FFI returntype description */
-	cl_ret_type = signature_to_ffi_type([methinfo methodReturnType]);
+	rettype = [methinfo methodReturnType];
+	if (*rettype == _C_CHR) {
+		rettype = buf;
+		buf[0] = _C_INT;
+		buf[1] = 0;
+	} else if (*rettype == _C_UCHR) {
+		rettype = buf;
+		buf[0] = _C_UINT;
+		buf[1] = 0;
+	}
+	cl_ret_type = signature_to_ffi_type(rettype);
 	if (cl_ret_type == NULL) {
 		[methinfo release];
 		return NULL;
