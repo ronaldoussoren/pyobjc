@@ -187,8 +187,9 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 		dict = ((PyTypeObject *)base)->tp_dict;
 		assert(dict && PyDict_Check(dict));
 		descr = PyDict_GetItem(dict, name);
-		if (descr != NULL)
+		if (descr != NULL) {
 			break;
+		}
 	}
 
 	return descr;
