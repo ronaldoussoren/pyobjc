@@ -41,7 +41,7 @@ def propertyListFromPythonCollection(aPyCollection, conversionHelper=None):
     else:
         if conversionHelper:
             return conversionHelper(aPyCollection)
-        raise TypeError, "Type '%s' encountered in python collection;  don't know how to convert." % containerType
+    raise TypeError, "Type '%s' encountered in python collection;  don't know how to convert." % containerType
 
 def pythonCollectionFromPropertyList(aCollection, conversionHelper=None):
     """Converts a Foundation based collection-- a property list-- into a Python collection.
@@ -60,9 +60,24 @@ def pythonCollectionFromPropertyList(aCollection, conversionHelper=None):
             convertedValue = pythonCollectionFromPropertyList(aCollection[i], conversionHelper)
             pyCollection.append(convertedValue)
         return pyCollection
+    elif isinstance(aCollection, NSNumber):
+        objCType = aCollection.objCType()
+        if objCType is 'c': return aCollection.charValue()
+        elif objCType is 'C': return aCollection.charValue()
+        elif objCType is 's': return aCollection.shortValue()
+        elif objCType is 'S': return aCollection.unsignedShortValue()
+        elif objCType is 'i': return aCollection.intValue()
+        elif objCType is 'I': return aCollection.unsignedIntValue()
+        elif objCType is 'l': return aCollection.longValue()
+        elif objCType is 'L': return aCollection.unsignedLongValue()
+        elif objCType is 'f': return aCollection.floatValue()
+        elif objCType is 'd': return aCollection.doubleValue()
+        elif objCType is 'b': return aCollection.boolValue()
+        elif objCType is 'q': return aCollection.longLongValue()
+        raise TypeError, "Type '%s' encountered within an instance of the NSValue class." % type(objCType)
     elif type(aCollection) in StringTypes:
         return aCollection
     else:
         if conversionHelper:
             return conversionHelper(aCollection)
-        raise TypeError, "Type '%s' encountered in ObjC collection;  don't know how to convert." % type(aCollection)
+    raise TypeError, "Type '%s' encountered in ObjC collection;  don't know how to convert." % type(aCollection)

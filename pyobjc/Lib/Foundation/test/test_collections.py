@@ -47,6 +47,15 @@ class TestCollections( unittest.TestCase ):
         self.assertSameDictionaryContents(originalNSDictionary, convertedNSDictionary)
         self.assertSameDictionaryContents(convertedNSDictionary, aPythonDictionary)
 
+    def testIntegerConversion(self):
+        x = NSArray.arrayWithArray_([1,2,3,4])
+        y = pythonCollectionFromPropertyList(x)
+        z = propertyListFromPythonCollection(y)
+
+        self.assertSameArrayContents(x,y)
+        self.assertSameArrayContents(x,z)
+        self.assertSameArrayContents(z,y)
+
     def testHelpers(self):
         def conversionHelper(anObject):
             return anObject
