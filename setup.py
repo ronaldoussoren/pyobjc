@@ -14,6 +14,48 @@ LIBFFI_SOURCES='libffi-src'
 import sys
 import os
 
+# Some PiPy stuff
+LONG_DESCRIPTION="""
+PyObjC is a bridge between Python and Objective-C.  It allows full
+featured Cocoa applications to be written in pure Python.  It is also
+easy to use other frameworks containing Objective-C class libraries
+from Python and to mix in Objective-C, C and C++ source.
+
+Python is a highly dynamic programming language with a shallow learning
+curve.  It combines remarkable power with very clear syntax.
+
+The installer package installs a number of Project Builder templates for
+easily creating new Cocoa-Python projects, as well as support for syntax
+coloring of Python files in Project Builder.
+
+PyObjC also supports full introspection of Objective-C classes and
+direct invocation of Objective-C APIs from the interactive interpreter.
+
+PyObjC requires MacOS X 10.2 or later.  PyObjC works both with the Apple
+provided Python installation in MacOS X 10.2 (and later) and with
+MacPython 2.3.  Users of MacPython 2.3 can install PyObjC though the
+PackageManager application.
+"""
+
+if sys.version >= '2.2.3':
+    # This doesn't work. (The documenation says the test should be 
+    # sys.version < 2.2.3, but that doesn't look correct to me)
+    from distutils.dist import DistributionMetadata
+    DistributionMetadata.classifiers = [ 
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Console',
+        'Environment :: MacOS X :: Cocoa',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Operating System :: MacOS :: MacOS X',
+        'Programming Language :: Python',
+        'Programming Language :: Objective C',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Software Development :: User Interfaces',
+    ]
+    DistributionMetadata.download_url = 'http://pyobjc.sourceforge.net/software/index.php'
+
 if sys.platform == 'darwin': 
     # Apple has used build options that don't work with a 'normal' system.
     # Remove '-arch i386' from the LDFLAGS.
@@ -122,6 +164,7 @@ sourceFiles = [
         "Modules/objc/register.m",
         "Modules/objc/pyobjc-api.m",
         "Modules/objc/alloc_hack.m",
+        "Modules/objc/toll-free-bridging.m",
         "Modules/objc/module.m",
 ]
 
@@ -378,9 +421,11 @@ except ImportError:
 dist = setup(name = "pyobjc",
 	     version = package_version(),
 	     description = "Python<->ObjC Interoperability Module",
+             long_description = LONG_DESCRIPTION,
 	     author = "bbum, RonaldO, SteveM, LeleG, many others stretching back through the reaches of time...",
 	     author_email = "pyobjc-dev@lists.sourceforge.net",
 	     url = "http://pyobjc.sourceforge.net/",
+             platforms = [ 'MacOS X' ],
 	     ext_modules = (
 			     CoreExtensions 
 			   + CocoaExtensions 

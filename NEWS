@@ -10,8 +10,26 @@ Version 0.10CVS (Work in progress):
   It is now possible to build PyObjC on MacOS X 10.1, with full access to 
   the Cocoa API's on that platform.
 
-- TODO: All suppport for non-FFI builds has been removed.
+- All suppport for non-FFI builds has been removed.
+ [ TODO, I'm getting the port to OSX 10.1 stable first. Then:
+   - Remove all code guarded by '#ifndef OC_WITH_LIBFFI'
+   - Remove all code guared by  '#ifndef OC_USE_FFI_SHORTCUTS'
+   - Remove register.m
+   - Rename 'callsuper' methods in AppKit/Foundation/... to 'call' methods,
+     remove existing 'call' methods. 
+   - ObjC_FindSuperCaller -> ObjC_FindCaller and remove ObjC_FindSelfCaller
+   - ObjC_RegisterMethodMapping looses first argument
+   - Remove support code in setup.py
+   ...
+ ] 
 
+- Support for "toll-free bridging" of Carbon.CF types to Objective-C objects.
+  It is now possible to use instances of Carbon.CF types in places where 
+  Objective-C objects are expected.
+  [Partially done, need to add 'CFToObject' and 'ObjectToCF' functions to the
+   objc module]
+
+  Note: this requires Python 2.3.
 
 Version 0.9 (May-02-2003):
 - This version includes numerous bugfixes and improvements.

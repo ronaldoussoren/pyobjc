@@ -234,4 +234,13 @@ extern PyTypeObject PyObjCUnicode_Type;
 PyObject* PyObjCUnicode_New(NSString* value);
 NSString* PyObjCUnicode_Extract(PyObject* value);
 
+
+#ifdef MACOSX
+
+/* toll-free-bridging.m */
+id PyObjC_CFTypeToID(PyObject* argument);
+PyObject* PyObjC_IDToCFType(id argument);
+
+#endif
+
 #endif /* META_H */

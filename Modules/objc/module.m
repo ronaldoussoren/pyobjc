@@ -56,64 +56,71 @@ PyDoc_STRVAR(classAddMethods_doc,
 static PyObject*
 classAddMethods(PyObject* self, PyObject* args, PyObject* keywds)
 {
-  static 	char* kwlist[] = { "targetClass", "methodsArray", NULL };
-  PyObject* classObject = NULL;
-  PyObject* methodsArray = NULL;
-  Class targetClass;
-  int methodCount;
-  int methodIndex;
-  struct objc_method_list *methodsToAdd;
+	static 	char* kwlist[] = { "targetClass", "methodsArray", NULL };
+	PyObject* classObject = NULL;
+	PyObject* methodsArray = NULL;
+	Class targetClass;
+	int methodCount;
+	int methodIndex;
+	struct objc_method_list *methodsToAdd;
 
-  if (!PyArg_ParseTupleAndKeywords(args, keywds, "OO:classAddMethods", kwlist,
-				   &classObject, &methodsArray)) {
-    return NULL;
-  }
+	if (!PyArg_ParseTupleAndKeywords(args, keywds, 
+			"OO:classAddMethods", kwlist,
+			&classObject, &methodsArray)) {
+		return NULL;
+	}
 
-  targetClass  = PyObjCClass_GetClass(classObject);
-  methodCount  = PyList_Size(methodsArray);
+	targetClass  = PyObjCClass_GetClass(classObject);
+	methodCount  = PyList_Size(methodsArray);
 
-  if (methodCount == 0) {
-    Py_INCREF(Py_None);
-    return Py_None;
-  }
-  
-  methodsToAdd = objc_allocMethodList(methodCount);
-  if (methodsToAdd == NULL) {
-    PyErr_NoMemory();
-    return NULL;
-  }
+	if (methodCount == 0) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
 
-  methodsToAdd->method_count = methodCount;
-  
-  for (methodIndex = 0; methodIndex < methodCount; methodIndex++) {
-    PyObject* aMethod = PyList_GetItem(methodsArray, methodIndex);
-    struct objc_method *objcMethod;
+	methodsToAdd = objc_allocMethodList(methodCount);
+	if (methodsToAdd == NULL) {
+		PyErr_NoMemory();
+		return NULL;
+	}
 
-    // check
-    if (!ObjCSelector_Check(aMethod)) {
-      PyErr_SetString(PyExc_TypeError ,
-		      "All objects in methodArray must be of type <objc.selector>.");
-      goto cleanup_and_return_error;
-    }
+	methodsToAdd->method_count = methodCount;
 
-    // install in methods to add
-    objcMethod = &methodsToAdd->method_list[methodIndex];
-    objcMethod->method_name = ObjCSelector_Selector(aMethod);
+	for (methodIndex = 0; methodIndex < methodCount; methodIndex++) {
+		PyObject* aMethod = PyList_GetItem(methodsArray, methodIndex);
+		struct objc_method *objcMethod;
 
-    objcMethod->method_types = strdup(ObjCSelector_Signature(aMethod));
-    objcMethod->method_imp = ObjC_MakeIMPForObjCSelector((ObjCSelector*)aMethod);
-  }
+		/* check
+		 * FIXME: We should support functions here, just like with
+		 * class definitions.
+		 */
+		if (!ObjCSelector_Check(aMethod)) {
+			PyErr_SetString(PyExc_TypeError ,
+			      "All objects in methodArray must be of type "
+			      "<objc.selector>.");
+			goto cleanup_and_return_error;
+		}
 
-  // add the methods
-  class_addMethods(targetClass, methodsToAdd);
-  
-  Py_INCREF(Py_None);
-  return Py_None;
+		/* install in methods to add */
+		objcMethod = &methodsToAdd->method_list[methodIndex];
+		objcMethod->method_name = ObjCSelector_Selector(aMethod);
 
- cleanup_and_return_error:
-  if (methodsToAdd)
-    free(methodsToAdd);
-  return NULL;
+		objcMethod->method_types = strdup(ObjCSelector_Signature(
+			aMethod));
+		objcMethod->method_imp = ObjC_MakeIMPForObjCSelector(
+			(ObjCSelector*)aMethod);
+	}
+
+	/* add the methods */
+	class_addMethods(targetClass, methodsToAdd);
+
+	Py_INCREF(Py_None);
+	return Py_None;
+
+cleanup_and_return_error:
+	if (methodsToAdd)
+	free(methodsToAdd);
+	return NULL;
 }
 #endif
 
@@ -477,6 +484,69 @@ static  char* keywords[] = { "signature", NULL };
 	return result;
 }
 
+#ifdef MACOSX
+
+PyDoc_STRVAR(objc_CFToObject_doc,
+	"CFToObject(cfObject) -> objCObject\n"
+	"\n"
+	"Convert a CoreFoundation object to an Objective-C object. \n"
+	"Raises an exception if the conversion fails"
+);
+static PyObject*
+objc_CFToObject(PyObject* self, PyObject* args, PyObject* kwds)
+{
+	PyObject* result;
+	PyObject* argument;
+	id	  res;
+
+	if (!PyArg_ParseTuple(args, 
+			"O:CFToObject",
+			&argument)) {
+		return NULL;
+	}
+
+	res = PyObjC_CFTypeToID(argument);
+	if (res == 0) {
+		PyErr_SetString(PyExc_TypeError, "not a CoreFoundation object");
+		return NULL;
+	}
+
+	return pythonify_c_value("@", &res);
+}
+
+PyDoc_STRVAR(objc_ObjectToCF_doc,
+	"ObjectToCF(objCObject) -> cfObject\n"
+	"\n"
+	"Convert an Objective-C object to a CoreFoundation object. \n"
+	"Raises an exception if the conversion fails"
+);
+static PyObject*
+objc_ObjectToCF(PyObject* self, PyObject* args, PyObject* kwds)
+{
+	PyObject* result;
+	PyObject* argument;
+	id	  obj;
+
+	if (!PyArg_ParseTuple(args, 
+			"O:ObjectToCF",
+			&argument)) {
+		return NULL;
+	}
+
+	if (!PyObjCObject_Check(argument)) {
+		PyErr_SetString(PyExc_TypeError, "not an Objective-C object");
+		return NULL;
+	}
+
+	return PyObjC_IDToCFType(PyObjCObject_GetObject(argument));
+}
+
+
+#endif /* MACOSX */
+
+	
+
+
 
 static PyMethodDef meta_methods[] = {
 	{
@@ -507,6 +577,12 @@ static PyMethodDef meta_methods[] = {
 	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
 	{ "loadBundle", (PyCFunction)loadBundle, METH_VARARGS|METH_KEYWORDS, loadBundle_doc },
 	{ "allocateBuffer", (PyCFunction)allocateBuffer, METH_VARARGS|METH_KEYWORDS, allocateBuffer_doc },
+
+#ifdef MACOSX
+	{ "CFToObject", (PyCFunction)objc_CFToObject, METH_VARARGS, objc_CFToObject_doc },
+	{ "ObjectToCF", (PyCFunction)objc_ObjectToCF, METH_VARARGS, objc_ObjectToCF_doc },
+#endif
+
 	{ 0, 0, 0, 0 } /* sentinel */
 };
 

@@ -35,8 +35,7 @@
 
 #ifdef MACOSX
 #include <CoreFoundation/CFNumber.h>
-#endif
-
+#endif /* MACOSX */
 
 /*
  * Category on NSObject to make sure that every object supports 
@@ -1163,6 +1162,13 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			*(id *) datum = [OC_PythonDictionary 
 				newWithPythonObject:argument];
 		} else {
+#ifdef MACOSX
+			*(id*) datum = PyObjC_CFTypeToID(argument);
+			if (*(id*)datum != NULL) {
+				return 0;
+			}
+#endif /* MACOSX */
+
 			*(id *) datum = [OC_PythonObject 
 				newWithObject:argument];
 		}
