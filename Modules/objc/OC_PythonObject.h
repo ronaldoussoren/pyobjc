@@ -33,6 +33,7 @@
   PyObject *pyObject;
 }
 
++ (int)wrapPyObject:(PyObject *)argument toId:(id *)datum;
 + newWithObject:(PyObject *) obj;
 + depythonifyTable;
 + pythonifyStructTable;

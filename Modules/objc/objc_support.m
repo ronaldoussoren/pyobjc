@@ -1377,66 +1377,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			container object.
 		*/
 				
-		if (argument == Py_None) {
-			*(id *) datum = nil;
-		} else if (PyObjCClass_Check (argument)) {
-			*(id *) datum = (id)PyObjCClass_GetClass(argument);
-		} else if (PyObjCObject_Check (argument)) {
-			*(id *) datum = PyObjCObject_GetObject(argument);
-		} else if (PyObjCUnicode_Check(argument)) {
-			*(id*) datum = PyObjCUnicode_Extract(argument);
-		} else if (PyUnicode_Check(argument)) {
-			PyObject* utf8 = PyUnicode_AsUTF8String(argument);
-
-			if (utf8) {
-				*(id *) datum = [NSString 
-					stringWithUTF8String:
-						PyString_AS_STRING(utf8)];
-				Py_DECREF(utf8);
-			} else {
-				PyErr_Format(PyExc_ValueError,
-					"depythonifying 'id', failed "
-					"to encode unicode string to UTF8");
-				return -1;
-			}
-
-		} else if (PyBool_Check(argument)) {
-			*(id *) datum = [NSNumber 
-				numberWithBool:PyInt_AS_LONG (argument)];
-		} else if (PyInt_Check (argument)) {
-			*(id *) datum = [NSNumber 
-				numberWithLong:PyInt_AS_LONG (argument)];
-		} else if (PyFloat_Check (argument)) {
-			*(id *) datum = [NSNumber 
-				numberWithDouble:PyFloat_AS_DOUBLE (argument)];
-		} else if (PyLong_Check(argument)) {
-			/* XXX: What if the value doesn't fit into a 
-			 * 'long long' 
-			 */
-			*(id *) datum = [NSNumber 
-				numberWithLongLong:PyLong_AsLongLong(argument)];
-			if (PyErr_Occurred()) {
-				/* Probably overflow */
-				return -1;
-			}
-		} else if (PyList_Check(argument) || PyTuple_Check(argument)) {
-			*(id *) datum = [OC_PythonArray 
-				newWithPythonObject:argument];
-		} else if (PyDict_Check(argument)) {
-			*(id *) datum = [OC_PythonDictionary 
-				newWithPythonObject:argument];
-		} else {
-#ifdef MACOSX
-			*(id*) datum = PyObjC_CFTypeToID(argument);
-			if (*(id*)datum != NULL) {
-				return 0;
-			}
-#endif /* MACOSX */
-
-			*(id *) datum = [OC_PythonObject 
-				newWithCoercedObject:argument];
-		}
-		break;
+		return [OC_PythonObject wrapPyObject:argument toId:(id *)datum];
 
 	case _C_CLASS:
 		if (PyObjCClass_Check(argument))  {
