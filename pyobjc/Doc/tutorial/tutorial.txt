@@ -51,12 +51,12 @@ Getting Started
    ``nibclassbuilder`` will parse the NIB file and create a skeleton module for you.
    Invoke it as follows (from the ``src`` directory)::
    
-       $ python -c "import PyObjCScripts.nibclassbuilder" English.lproj/MainMenu.nib > CurrencyConverter.py
+       $ python -c "import PyObjCScripts.nibclassbuilder" MainMenu.nib > CurrencyConverter.py
                
    Depending on your installation, the ``nibclassbuilder`` script may be on your ``$PATH``.
    If so, it can be invoked as such::
 
-       $ nibclassbuilder English.lproj/MainMenu.nib > CurrencyConverter.py
+       $ nibclassbuilder MainMenu.nib > CurrencyConverter.py
    
    The result of this can be seen in step4-CurrencyConverter.py_.
 
@@ -73,7 +73,7 @@ Testing the user interface
 
         setup(
             app=['CurrencyConverter.py'],
-            data_files=['English.lproj'],
+            data_files=['MainMenu.nib'],
         )
 
    The result of this can be seen in step5-setup.py_.
@@ -88,7 +88,7 @@ Testing the user interface
    Note that we use the ``-A`` argument to create an alias bundle at 
    ``dist/CurrencyConverter.app``.  Alias bundles contain an alias to the
    main script (``CurrencyConverter.py``) and symlinks to the data files
-   (``English.lproj``), rather than including them and their dependencies
+   (``MainMenu.nib``), rather than including them and their dependencies
    into a standalone application bundle.  This allows us to keep working on
    the source files without having to rebuild the application.  This alias
    bundle is similar to a ZeroLink executable for Xcode - it is for
