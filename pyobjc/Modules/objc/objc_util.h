@@ -10,7 +10,7 @@ extern PyObject* PyObjCExc_InternalError;
 extern PyObject* PyObjCExc_NoProtocol;
 extern PyObject* PyObjCExc_UnInitDeallocWarning;
 
-int ObjCUtil_Init(PyObject* module);
+int PyObjCUtil_Init(PyObject* module);
 
 void PyObjCErr_FromObjC(NSException* localException);
 void PyObjCErr_ToObjC(void);

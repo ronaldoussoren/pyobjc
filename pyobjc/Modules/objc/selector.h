@@ -20,6 +20,16 @@
 	int		sel_flags;
 
 
+/*!
+ * @typedef PyObjC_CallFunc
+ * @param meth A selector object
+ * @param self The self argument
+ * @param args The other arguments
+ * @result Returns the return value, or NULL if an exception occurred
+ */
+typedef PyObject* (*PyObjC_CallFunc)(
+	PyObject* meth, PyObject* self, PyObject* args);
+
 typedef struct {
 	PyObjCSelector_HEAD
 } PyObjCSelector;
@@ -51,18 +61,14 @@ int   PyObjCSelector_Required(PyObject* obj);
 int   PyObjCSelector_IsClassMethod(PyObject* obj);
 int ObjC_SignatureForSelector(char* class_name, SEL selector, char* signature);
 
-PyObject* ObjCSelect_NewFromPython(char* selector, char* signature, PyObject* callable);
-PyObject* ObjCSelect_NewWithSelector(Class objc_class, SEL selector);
 
-PyObject*
-PyObjCSelector_NewNative(Class class, SEL selector, const char* signature, int class_method) ;
+PyObject* PyObjCSelector_NewNative(Class class, SEL selector, const char* signature, int class_method) ;
 PyObject* PyObjCSelector_FindNative(PyObject* self, const char* name);
 
 #define PyObjCSelector_GET_CLASS(obj) (((PyObjCSelector*)(obj))->sel_class)
 #define PyObjCSelector_GET_SELECTOR(obj) (((PyObjCSelector*)(obj))->sel_selector)
 
-PyObject*
-PyObjCSelector_New(PyObject* callable, SEL selector, char* signature, int class_method, Class class) ;
+PyObject* PyObjCSelector_New(PyObject* callable, SEL selector, char* signature, int class_method, Class class) ;
 SEL PyObjCSelector_DefaultSelector(const char* methname);
 
 PyObject* 

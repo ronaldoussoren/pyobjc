@@ -23,15 +23,6 @@
  */
 extern int PyObjC_MappingCount;
 
-/*!
- * @typedef PyObjC_CallFunc
- * @param meth A selector object
- * @param self The self argument
- * @param args The other arguments
- * @result Returns the return value, or NULL if an exception occurred
- */
-typedef PyObject* (*PyObjC_CallFunc)(
-	PyObject* meth, PyObject* self, PyObject* args);
 
 /*!
  * @function PyObjC_RegisterMethodMapping
@@ -39,7 +30,7 @@ typedef PyObject* (*PyObjC_CallFunc)(
  * @param aClass         Class for which this mapping is valid (+subclasses)
  * @param sel            The selector with a custom mapping
  * @param call_to_objc   Function for calling into Objective-C (from Python),
- * 	                 the default is 'ObjC_FFICaller'.
+ * 	                 the default is 'PyObjCFFI_Caller'.
  * @param call_to_python Function for calling into Python (from Objective-C)
  * @result Returns 0 on success, -1 on error.
  */

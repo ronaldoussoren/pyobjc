@@ -589,7 +589,7 @@ class_getattro(PyObject* self, PyObject* name)
 			Py_INCREF(x->sel_self);
 		}
 		if (res < 0) {
-			if (ObjC_VerboseLevel) {
+			if (PyObjC_VerboseLevel) {
 				PySys_WriteStderr(
 					"PyObjC[class_getattro]: Cannot "
 					"add new method to dict:\n");
@@ -677,7 +677,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 			Py_DECREF(newVal);
 			return -1;
 		}
-		objcMethod->method_imp = ObjC_MakeIMPForPyObjCSelector(
+		objcMethod->method_imp = PyObjCFFI_MakeIMPForPyObjCSelector(
 				(PyObjCSelector*)newVal);
 		if (objcMethod->method_imp == NULL) {
 			free((char*)objcMethod->method_types);
@@ -760,7 +760,7 @@ PyDoc_STRVAR(cls_get_classMethods_doc,
 static PyObject*
 cls_get_classMethods(PyObject* self, void* closure __attribute__((__unused__)))
 {
-	return ObjCMethodAccessor_New(self, 1);
+	return PyObjCMethodAccessor_New(self, 1);
 }
 
 PyDoc_STRVAR(cls_get_instanceMethods_doc,
@@ -770,7 +770,7 @@ PyDoc_STRVAR(cls_get_instanceMethods_doc,
 static PyObject*
 cls_get_instanceMethods(PyObject* self, void* closure __attribute__((__unused__)))
 {
-	return ObjCMethodAccessor_New(self, 0);
+	return PyObjCMethodAccessor_New(self, 0);
 }
 
 static PyObject*
