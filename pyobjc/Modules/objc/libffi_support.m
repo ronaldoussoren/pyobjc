@@ -999,16 +999,16 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 {
 	int            argbuf_len = 0;
 	int            argbuf_cur = 0;
-	unsigned char* argbuf = NULL;
+	unsigned char* volatile argbuf = NULL;
 	int            byref_in_count = 0;
 	int            byref_out_count = 0;
 	int            plain_count = 0;
-	void** byref = NULL; /* offset for arguments in argbuf */
+	void** volatile byref = NULL; /* offset for arguments in argbuf */
 	const char* 	  rettype;
 	PyObjCMethodSignature*  volatile methinfo;
 	PyObjCNativeSelector* meth = (PyObjCNativeSelector*)aMeth;
 	PyObject* objc_result = NULL;
-	PyObject* result = NULL;
+	PyObject* volatile result = NULL;
 	id		  self_obj = nil;
 	struct objc_super super;
 	struct objc_super* superPtr;
@@ -1018,7 +1018,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	int               r;
 	void*		  msgResult;
 	int               resultSize;
-	int               arglistOffset;
+	volatile int      arglistOffset;
 	volatile int      flags;
 	SEL		  theSel;
 
