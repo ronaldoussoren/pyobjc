@@ -919,9 +919,7 @@ static 	char buf[1024];
 
 -(struct dummy)callInstanceDummyFuncOf:(OC_TestClass1*)arg
 {
-	struct dummy x = [arg dummyFunc];
-	printf("%d, %d\n", x.f1, x.f2);
-	return x;
+	return [arg dummyFunc];
 }
 
 -(NSPoint)callInstanceNSPointFuncOf:(OC_TestClass1*)arg
