@@ -100,37 +100,30 @@ if gs_root is None:
 
     OBJC_LDFLAGS=[
         '-framework', 'Foundation',
-        "-preload",
         ]
 
     FND_LDFLAGS=[
         '-framework', 'Foundation',
-        "-preload",
         ]
 
     APPKIT_LDFLAGS=[
         '-framework', 'AppKit',
-        "-preload",
         ]
 
     FNDMAP_LDFLAGS=[
         '-framework', 'Foundation',
-        "-preload",
         ]
 
     APPMAP_LDFLAGS=[
         '-framework', 'AppKit',
-        "-preload",
         ]
 
     ADDRESSBOOK_LDFLAGS=[
         '-framework', 'AddressBook', '-framework', 'Foundation',
-        "-preload",
     ]
 
     PREFPANES_LDFLAGS=[
         '-framework', 'PreferencePanes', '-framework', 'Foundation',
-        "-preload",
     ]
 
 else:

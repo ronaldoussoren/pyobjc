@@ -682,7 +682,6 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		PyErr_NoMemory();
 		goto error_cleanup;
 	}
-	//memset(byref, 0, sizeof(void*) * objc_argcount);
 
 	/* Set 'self' argument, for class methods we use the class */ 
 	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
@@ -728,7 +727,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	} else if (resultSize > sizeof(id)) {
 		arglistOffset = 1;
 		arglist[0] = &ffi_type_pointer;
-		values[0] = &argbuf;
+		values[0] = &msgResult;
 	} else {
 		arglistOffset = 0;
 	}
@@ -863,7 +862,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 	PyErr_Clear();
 	if (arglistOffset) {
-		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, objc_argcount,
+		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, objc_argcount+1,
 			&ffi_type_void, arglist);
 	} else {
 		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, objc_argcount,
@@ -883,6 +882,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		} else {
 			ffi_call(&cif, FFI_FN(objc_msgSendSuper), 
 				msgResult, values);
+
 		}
 	NS_HANDLER
 		ObjCErr_FromObjC(localException);

@@ -6,6 +6,7 @@
 
 #include <Python.h>
 #include <pyobjc-api.h>
+#include <objc/objc-runtime.h>
 
 struct dummy
 {
@@ -15,7 +16,7 @@ struct dummy
 
 struct dummy2
 {
-	int array[100];
+	int array[4];
 };
 
 
@@ -301,4 +302,11 @@ void inittestbndl(void)
 
 	PyModule_AddObject(m, "OC_TestClass1", 
 		ObjCClass_New([OC_TestClass1 class]));
+
+
+	OC_TestClass1* obj = [OC_TestClass1 new];
+	struct objc_super super;
+	super.receiver = obj;
+	super.class =  [OC_TestClass1 class];
+	struct dummy result;
 }
