@@ -1,5 +1,6 @@
 /*
- * Wrapper for "simple" global functions
+ * Wrapper for simple global functions. Simple functions are those without
+ * arguments that require additional effort.
  */
 #include "pyobjc.h"
 
