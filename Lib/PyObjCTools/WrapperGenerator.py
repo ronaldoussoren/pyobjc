@@ -8,6 +8,8 @@ NOTE:
 TODO
 - Finish the implementation
   * Functions
+    | Need to specify input/output arguments (no usecase yet)
+    | Need to specify that some pointers are not "bad" (e.g. NSZone*)
   * Method definitions
   * Emit a protocols "module" (instead of Scripts/gen_protocols.py)
   * Properly encode C types
@@ -81,7 +83,7 @@ _objc.bundleVariables(_bundle, globals(), _FUNCTIONS)
 del _objc, _bundle, _VARIABLES, _FUNCTIONS
 """
 
-def generateWrappersForFramework(outfp, frameworkPath, frameworkIdentifier=None, frameworkName=None, globalVariablePrefix=None, functionPrefix=None, ignoreHeaders=(), ignoreFunctions=()):
+def generateWrappersForFramework(outfp, frameworkPath, frameworkIdentifier=None, frameworkName=None, globalVariablePrefix=None, functionPrefix=None, ignoreHeaders=(), ignoreFunctions=(), frameworkInclude=None, frameworkLink=None):
 
     # Try to load the framework, this helps the parser to find classes
     # in method/variable signatures
@@ -91,6 +93,8 @@ def generateWrappersForFramework(outfp, frameworkPath, frameworkIdentifier=None,
             global_variable_prefix=globalVariablePrefix,
             function_prefix=functionPrefix,
             ignore_functions=ignoreFunctions,
+            framework_include=frameworkInclude,
+            framework_link=frameworkLink,
     )
     for fn in os.listdir(os.path.join(frameworkPath, 'Headers')):
         if not fn.endswith('.h'):
@@ -134,7 +138,9 @@ def generateWrappersForFramework(outfp, frameworkPath, frameworkIdentifier=None,
 
     outfp.write("# Special type signatures\n")
     outfp.write('TYPE_SIGNATURES=(\n')
-    for k,v in p.type_signatures:
+    for k,v in p.type_signatures.iteritems():
+        if v.endswith('*'): continue
+        if v == 'va_list': continue
         outfp.write('    %s: %s,\n'%(repr(k), repr(v)))
     outfp.write(')\n\n')
 
@@ -174,7 +180,10 @@ SIMPLE_TYPES={
     'short':            objc._C_SHT,
     'unsigned short':   objc._C_USHT,
     'int':              objc._C_INT,
+    'signed int':       objc._C_INT,
+    'signed':           objc._C_INT,
     'unsigned int':     objc._C_UINT,
+    'unsigned':         objc._C_UINT,
     'long':             objc._C_LNG,
     'unsigned long':    objc._C_ULNG,
     'float':            objc._C_FLT,
@@ -218,6 +227,18 @@ START_ENUM_RE2=re.compile(r'(?P<typedef>typedef\s+)?enum(\s+(?P<name>' + IDENTIF
 FUNCTION_PROTOTYPE=(
     r'%(PFX)s(.+\s+.+\([^);{]+\)\s*(?:[;{]|$))'
 )
+
+CALCULATE_SIGNATURE_SOURCE="""
+#import %(framework)s
+#include <stdio.h>
+
+int main(void)
+{
+    printf("%%s\\n", @encode(%(typename)s));
+    return 0;
+}
+"""
+
     
 
 def stripcomment(fp):
@@ -247,12 +268,14 @@ def stripcomment(fp):
             yield ln.strip()
 
 class DumbHeaderParser (object):
-    def __init__(self, global_variable_prefix=None, function_prefix=None, ignore_functions = ()):
+    def __init__(self, global_variable_prefix=None, function_prefix=None, ignore_functions = (), framework_include=None, framework_link=None):
         self.in_interface = False
         self.in_protocol = False
         self.in_enum = False
 
         self.ignore_functions = ignore_functions
+        self.framework_include = framework_include
+        self.framework_link = framework_link
 
         self.global_variables = []
         self.protocols = []
@@ -471,22 +494,36 @@ class DumbHeaderParser (object):
 
         m = self.function_prefix_re.match(ln)
         if m:
-            prototype = m.group(1)
+            prototype = m.group(1).strip()
+            if prototype[-1] != ')':
+                prototype = prototype[:-1].strip() + ';'
 
-            # TODO: 
-            # - Extract function information
-            # - Skip names in self.ignore_functions
-            # - Skip, and warn about, functions that don't have a simple
-            #   interface.
-            # - append function_name, signature_string, prototype to
-            #   self.simple_functions
-            self.simple_functions.append((prototype,))
+            rettype, funcname, arguments = self.parse_prototype(prototype)
+            if funcname is None:
+                return
+
+            if funcname in self.ignore_functions:
+                return
+
+            signature = self.make_func_signature(rettype, arguments)
+            if signature is None:
+                print >>sys.stderr, "WARN: Ignore function:\n%s"%(prototype,)
+                return
+
+            self.simple_functions.append(
+                    (funcname, signature, prototype)
+            )
         
 
     def encode(self, tp):
         # This needs to be fixed, see the gen_protocols script for details
         tp = tp.replace('\t', ' ')
         tp = tp.replace(' *', '*')
+
+        idx = tp.find('<') 
+        if idx != -1:
+            tp = tp[:idx].strip()
+
         if tp in SIMPLE_TYPES:
             return SIMPLE_TYPES[tp]
 
@@ -496,11 +533,100 @@ class DumbHeaderParser (object):
         if tp.endswith('*'):
             try:
                 getattr(objc.runtime, tp[:-1])
-                return _C_ID
+                return objc._C_ID
             except AttributeError:
                 pass
 
-        return '@encode(%s)'%(tp,)
+        # XXX: it might be useful to insert a parser for C-types here
+
+        # Use a little C program to calculate the signature
+        src = CALCULATE_SIGNATURE_SOURCE % {
+                'framework': self.framework_include,
+                'typename': tp,
+            }
+
+        prgname = "/tmp/wg.%s"%(os.getpid(),)
+        srcname = prgname + ".m"
+
+        fd = open(srcname, 'w')
+        fd.write(src)
+        fd.close()
+
+        fd = os.popen("cc -o %s %s %s"%(prgname, srcname, self.framework_link))
+        lines = fd.read()
+        sys.stdout.write(lines)
+        xit = fd.close()
+        os.unlink(srcname)
+        if xit is not None:
+            raise ValueError, "1Cannot encode %s"%(tp,)
+
+        fd = os.popen(prgname)
+        lines = fd.read()
+        xit = fd.close()
+        os.unlink(prgname)
+        if xit is not None:
+            raise ValueError, "2Cannot encode %s"%(tp,)
+
+        typestr = lines.strip()
+        self.type_signatures[tp] = typestr
+        return typestr
+
+    def make_func_signature(self, rettype, arguments):
+        result = []
+
+        rettype = self.encode(rettype)
+        if not rettype:
+            return None
+
+        if rettype[0] == objc._C_PTR:
+            return None
+
+        result.append(rettype)
+
+        for a, t in arguments:
+            a = self.encode(a)
+            if not a:
+                return None
+
+            if a[0] == objc._C_PTR:
+                return None
+
+            result.append(a)
+
+        return ''.join(result)
+
+    def parse_prototype(self, protostr):
+        """
+        Parse a C prototype. It is unlikely that this function will correctly 
+        parse all valid prototypes.
+        """
+        protostr = protostr.strip()
+        if protostr[-1] != ')':
+            protostr = protostr.strip()[:-1].strip()
+        idx = protostr.index('(')
+
+        arguments = [ x.strip() for x in protostr[idx+1:-1].split(',') ]
+        before = protostr[:idx].strip()
+        idx=len(before)-1
+        while before[idx].isalnum() or before[idx] == '_':
+            idx -= 1
+
+        funcname = before[idx+1:].strip()
+        retval = before[:idx+1].strip()
+
+        new_arguments = []
+        if len(arguments)  != 1 or arguments[0] != 'void' and arguments[0] != '':
+            for a in arguments:
+                if a == '...':
+                    return None, None, None
+
+                idx = len(a)-1
+                while idx > 0 and (a[idx].isalnum() or a[idx] == '_'):
+                    idx -= 1
+                new_arguments.append((a[:idx+1].strip(), a[idx+1:].strip()))
+        arguments = tuple(new_arguments)
+
+        return retval, funcname, arguments
         
 
 if __name__ == "__main__":
@@ -511,4 +637,6 @@ if __name__ == "__main__":
             'com.apple.Foundation',
             globalVariablePrefix='FOUNDATION_EXPORT',
             functionPrefix=['FOUNDATION_STATIC_INLINE', 'FOUNDATION_EXPORT'],
+            frameworkInclude="<Foundation/Foundation.h>",
+            frameworkLink="-framework Foundation",
     )
