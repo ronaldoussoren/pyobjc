@@ -93,6 +93,13 @@ that make use of Cocoa features.
 
 .. __: Scripts/signal-demo.py
 
+* `stdinreader.py`__
+
+  Demonstrates how to write a console runloop based application that uses
+  ``NSFileHandle`` to read stdin asynchronously.
+
+.. __: Scripts/stdinreader.py
+
 * `subclassing-objective-c.py`__
 
   A doctest that demonstrates the subclassing of an Objective-C class from
@@ -306,6 +313,18 @@ later.
 
 .. _`FilteringController`: CocoaBindings/FilteringController
 
+* `GraphicsBindings`_
+
+   Shows the use of a custom controller, a value transformer, and two custom
+   bindings-enabled views. One view is a control that allows you to set the
+   angle and offset of a shadow; the other view observes and displays a
+   collection of graphic objects.
+
+  Originally from `Cocoa Bindings Examples and Hints`_,
+  converted to PyObjC by u.fiedler.
+
+.. _`GraphicsBindings`: CocoaBindings/GraphicsBindings
+
 * `ManualBindings`_
 
   A simple example that illustrates establishing bindings
@@ -356,6 +375,19 @@ later.
 
 .. _`ToDos`: CocoaBindings/ToDos
 
+Foundation
+----------
+
+The directory `Foundation`_ contains a number of examples
+that use only Foundation facilities.
+
+* `simple-kvo.py`__
+
+  Demonstrates the use of Key-Value Observing from a simple
+  script, without a runloop.  Requires Mac OS X 10.3 or later.
+
+.. __: Foundation/simple-kvo.py
+
 Inject
 ------
 
@@ -385,6 +417,14 @@ examples require Mac OS X 10.3 or later.
   process.  Based on the AppKit PyInterpreter example.
 
 .. _`InjectInterpreter`: Inject/InjectInterpreter
+
+* `ClassBrowser`_:
+
+  Shows how to inject an in-process Python class browser into another
+  process.  Based on the AppKit ClassBrowser example.
+
+.. _`ClassBrowser`: Inject/ClassBrowser
+
 
 OpenGL
 ------
