@@ -23,42 +23,11 @@ PyObjC_CFTypeToID(PyObject* argument)
 	int r;
 	id  val;
 
-#if PY_VERSION_HEX >= 0x020300B2
 
 	r = CFObj_Convert(argument, (CFTypeRef*)&val);
 	if (r) return val;
 	PyErr_Clear();
 	return NULL;
-
-#else
-	r = CFTypeRefObj_Convert(argument, (CFTypeRef*)&val);
-	if (r) return val;
-
-	r = CFStringRefObj_Convert(argument, (CFStringRef*)&val);
-	if (r) return val;
-
-	r = CFMutableStringRefObj_Convert(argument, (CFMutableStringRef*)&val);
-	if (r) return val;
-
-	r = CFArrayRefObj_Convert(argument, (CFArrayRef*)&val);
-	if (r) return val;
-
-	r = CFMutableArrayRefObj_Convert(argument, (CFMutableArrayRef*)&val);
-	if (r) return val;
-		
-	r = CFDictionaryRefObj_Convert(argument, (CFDictionaryRef*)&val);
-	if (r) return val;
-
-	r = CFMutableDictionaryRefObj_Convert(argument, 
-		(CFMutableDictionaryRef*)&val);
-	if (r) return val;
-
-	r = CFURLRefObj_Convert(argument, (CFURLRef*)&val);
-	if (r) return val;
-
-	PyErr_Clear();
-	return NULL;
-#endif
 }
 
 /* 
@@ -106,11 +75,7 @@ PyObjC_IDToCFType(id argument)
 	 * type.  As is is not document which type this is, we use the most
 	 * generic one.
 	 */
-#if PY_VERSION_HEX >= 0x020300B2
 	return CFObj_New((CFTypeRef)argument);
-#else
-	return CFTypeRefObj_New((CFTypeRef)argument);
-#endif 
 }
 
 

@@ -247,10 +247,8 @@ PyTypeObject ZoneWrapper_Type = {
         0,                                      /* tp_mro */
         0,                                      /* tp_cache */
         0,                                      /* tp_subclasses */
-        0                                       /* tp_weaklist */
-#if PY_VERSION_HEX >= 0x020300A2
-        , 0                                     /* tp_del */
-#endif
+        0,                                      /* tp_weaklist */
+        0                                       /* tp_del */
 };
 
 #define ZoneWrapper_Check(obj) PyObject_TypeCheck((obj), &ZoneWrapper_Type)

@@ -47,9 +47,6 @@ extern PyTypeObject PyObjCClass_Type;
  */
 extern PyObject* PyObjC_ClassExtender;
 
-#if PY_VERSION_HEX >= 0x020300A2 
-
-#define PyObjC_CLASS_INFO_IN_TYPE 1
 
 /*!
  * @struct PyObjCClassObject
@@ -97,20 +94,6 @@ typedef struct {
 	int hasPythonImpl;
 	int generation;
 } PyObjCClassObject;
-
-#else
-
-/* On Python 2.2 we cannot store additional information in the type-struct,
- * see the .m file for the definition of a struct that contains the additional
- * information and the data-structure used to locate the information.
- */
-
-typedef struct {
-	PyTypeObject base;
-} PyObjCClassObject;
-
-#endif
-
 
 extern PyObject* PyObjCClass_DefaultModule;
 PyObject* PyObjCClass_New(Class objc_class);
