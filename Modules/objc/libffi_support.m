@@ -387,7 +387,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 				/* make sure return value doesn't die before
 				 * the caller can get its hands on it.
 				 */
-			    ; // [[(*(id*)resp) retain] autorelease];
+			    [[(*(id*)resp) retain] autorelease];
 			}
 			Py_DECREF(res);
 			if (err == -1) {
@@ -444,7 +444,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 				/* make sure return value doesn't die before
 				 * the caller can get its hands on it.
 				 */
-			    ; // [[(*(id*)resp) retain] autorelease];
+			    [[(*(id*)resp) retain] autorelease];
 			}
 			if (err == -1) {
 				Py_DECREF(res);
