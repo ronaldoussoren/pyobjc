@@ -368,3 +368,18 @@ Refactors the code-generator scripts
    for others to generate wrappers.
 
 5. Install ``pyobjc-api.h``.
+
+setup.py cleanup
+................
+
+* Split more code into seperate modules in setup-lib
+
+* Add an action to build the binary installer to setup.py
+
+* update action 'sdist' to recreate the HTML files, and remove those from
+  the repository. Also: don't use docarticle to create HTML.
+
+* Add action to install Xcode extras and/or PB extras
+
+* Use 'WrapperGenerator.py', probably need to create a custom build action
+  for that.

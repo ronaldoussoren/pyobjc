@@ -19,6 +19,14 @@ Version 1.2 (2004-??-??)
 - objc.runtime will now raise AttributeError instead of objc.nosuchclass_error
   when a class is not found.
 
+- objc.Category can be used to define categories on existing classes::
+
+ 	class NSObject (objc.Category(NSObject)):
+		def myMethod(self):
+			pass
+
+  This adds method ``myMethod`` to class NSObject.
+
 
 Version 1.1 (2004-05-30)
 ------------------------

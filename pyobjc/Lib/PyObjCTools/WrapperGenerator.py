@@ -492,27 +492,28 @@ class DumbHeaderParser (object):
             self.need_brace = True
             return
 
-        m = self.function_prefix_re.match(ln)
-        if m:
-            prototype = m.group(1).strip()
-            if prototype[-1] != ')':
-                prototype = prototype[:-1].strip() + ';'
+        if self.function_prefix_re is not None:
+            m = self.function_prefix_re.match(ln)
+            if m:
+                prototype = m.group(1).strip()
+                if prototype[-1] != ')':
+                    prototype = prototype[:-1].strip() + ';'
 
-            rettype, funcname, arguments = self.parse_prototype(prototype)
-            if funcname is None:
+                rettype, funcname, arguments = self.parse_prototype(prototype)
+                if funcname is None:
+                    return
+
+                if funcname in self.ignore_functions:
+                    return
+
+                signature = self.make_func_signature(rettype, arguments)
+                if signature is None:
+                    print >>sys.stderr, "WARN: Ignore function:\n%s"%(prototype,)
                 return
 
-            if funcname in self.ignore_functions:
-                return
-
-            signature = self.make_func_signature(rettype, arguments)
-            if signature is None:
-                print >>sys.stderr, "WARN: Ignore function:\n%s"%(prototype,)
-                return
-
-            self.simple_functions.append(
-                    (funcname, signature, prototype)
-            )
+                self.simple_functions.append(
+                        (funcname, signature, prototype)
+                )
         
 
     def encode(self, tp):
