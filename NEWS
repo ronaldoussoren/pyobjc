@@ -4,8 +4,8 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version "Panther" (Off-CVS)
----------------------------
+Version "1.1a0" (2004-02-02)
+----------------------------
 - Objective-C structs can now be wrapped using struct-like types. This has
   been used to implement wrapper types for NSPoint, NSSize, NSRange and NSRect
   in Foundation and NSAffineTransformStruct in AppKit.

@@ -9,6 +9,15 @@ Introduction
 
 This document contains an (incomplete) list of work items. 
 
+TODO for 1.1
+------------
+
+* Sync with latest libffi (optional)
+
+* Test on OSX 10.2 and create installer
+
+* Test on OSX 10.1
+
 Important items
 ---------------
 
