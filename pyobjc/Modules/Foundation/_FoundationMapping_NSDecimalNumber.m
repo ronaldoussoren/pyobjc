@@ -210,19 +210,19 @@ _pyobjc_install_NSDecimalNumber(void)
 	}
 
 #if defined(MACOSX) 
-      {
-        Class classNSDecimalNumberPlaceholder = objc_lookUpClass("NSDecimalNumberPlaceholder");
-	if (classNSDecimalNumberPlaceholder != nil) {
-		if (PyObjC_RegisterMethodMapping(
-			classNSDecimalNumberPlaceholder,
-			@selector(initWithDecimal:),
-			call_NSDecimalNumber_initWithDecimal_,
-			imp_NSDecimalNumber_initWithDecimal_) < 0) {
+	{
+		Class classNSDecimalNumberPlaceholder = objc_lookUpClass("NSDecimalNumberPlaceholder");
+		if (classNSDecimalNumberPlaceholder != nil) {
+			if (PyObjC_RegisterMethodMapping(
+				classNSDecimalNumberPlaceholder,
+				@selector(initWithDecimal:),
+				call_NSDecimalNumber_initWithDecimal_,
+				imp_NSDecimalNumber_initWithDecimal_) < 0) {
 
-			return -1;
+				return -1;
+			}
 		}
 	}
-     }
 #endif
 
 	if (PyObjC_RegisterMethodMapping(
