@@ -206,8 +206,8 @@ class NibInfo(object):
 					writer.writeln("# The following outlets are added to the class:")
 					outlets.sort()
 					for o in outlets:
-						#writer.writeln("# %s" % o)
-						writer.writeln("%s = ivar('%s')" % (o, o))
+						writer.writeln("# %s" % o)
+						#writer.writeln("%s = ivar('%s')" % (o, o))
 					writer.writeln()
 				if actions:
 					actions.sort()
