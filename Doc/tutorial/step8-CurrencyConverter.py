@@ -1,4 +1,6 @@
-from Foundation import NSObject, NSObject
+import objc
+from Foundation import *
+from AppKit import *
 from PyObjCTools import NibClassBuilder, AppHelper
 
 NibClassBuilder.extractClasses("MainMenu")
@@ -9,7 +11,7 @@ class Converter(NibClassBuilder.AutoBaseClass):
     # the actual base class is NSObject
 
     def convertAmount(self, amt, rate):
-        return amt*rate
+        return amt * rate
 
 # class defined in MainMenu.nib
 class ConverterController(NibClassBuilder.AutoBaseClass):

@@ -9,9 +9,10 @@ __all__ = ( 'runEventLoop', 'runConsoleEventLoop', 'endSheetMethod' )
 
 from AppKit import NSApplicationMain, NSApp, NSRunAlertPanel
 from Foundation import NSLog, NSRunLoop
+import os
 import sys
 import traceback
-import objc as _objc
+import objc
 
 
 def endSheetMethod(meth):
@@ -19,17 +20,22 @@ def endSheetMethod(meth):
     Return a selector that can be used as the delegate callback for
     sheet methods
     """
-    return _objc.selector(meth, signature='v@:@ii')
+    return objc.selector(meth, signature='v@:@ii')
 
 
 
-def unexpectedErrorAlert():
+def unexpectedErrorAlertPanel():
     exceptionInfo = traceback.format_exception_only(
         *sys.exc_info()[:2])[0].strip()
     return NSRunAlertPanel("An unexpected error has occurred",
             "(%s)" % exceptionInfo,
             "Continue", "Quit", None)
 
+def unexpectedErrorAlertPdb():
+    import pdb
+    traceback.print_exc()
+    pdb.post_mortem(sys.exc_info()[2])
+    return True
 
 def machInterrupt(signum):
     app = NSApp()
@@ -54,23 +60,37 @@ def runConsoleEventLoop(argv=None, installInterrupt=False):
         installMachInterrupt()
     NSRunLoop.currentRunLoop().run()
 
-def runEventLoop(argv=None, unexpectedErrorAlert=unexpectedErrorAlert, installInterrupt=False):
+RAISETHESE = (SystemExit, MemoryError, KeyboardInterrupt)
+
+def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=False, pdb=None):
     """Run the event loop, ask the user if we should continue if an
     exception is caught. Use this function instead of NSApplicationMain().
     """
     if argv is None:
         argv = sys.argv
 
-    firstRun = 1
-    while 1:
+    if pdb is None:
+        pdb = 'USE_PDB' in os.environ
+    
+    if unexpectedErrorAlert is None:
+        if pdb:
+            unexpectedErrorAlert = unexpectedErrorAlertPdb
+        else:
+            unexpectedErrorAlert = unexpectedErrorAlertPanel
+
+    firstRun = True
+    while True:
         try:
             if firstRun:
-                firstRun = 0
+                firstRun = False
                 if installInterrupt:
                     installMachInterrupt()
                 NSApplicationMain(argv)
             else:
                 NSApp().run()
+        except RAISETHESE:
+            traceback.print_exc()
+            break
         except:
             if not unexpectedErrorAlert():
                 NSLog("An exception has occured:")

@@ -2,5 +2,4 @@
 """
 This file is part of PyObjC <http://pyobjc.sourceforge.net>
 """
-from PyObjCTools import NibClassBuilder
-NibClassBuilder.commandline()
+import PyObjCScripts.nibclassbuilder
