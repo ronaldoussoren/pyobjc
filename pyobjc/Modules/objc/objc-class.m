@@ -251,7 +251,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 				PySequence_Fast_GET_ITEM(seq, i));
 			Py_INCREF(PySequence_Fast_GET_ITEM(seq, i));
 		}
-        Py_DECREF(seq);
+		Py_DECREF(seq);
 	}
 
 	real_bases = PyList_New(0);

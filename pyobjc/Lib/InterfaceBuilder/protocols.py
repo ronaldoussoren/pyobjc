@@ -606,6 +606,7 @@ IBObjectProtocol = _objc.informal_protocol(
             None,
             selector='canSubstituteForClass:',
             signature='c@:#',
+            isClassMethod=1,
             isRequired=0,
         ),
 # (NSString *)classInspectorClassName

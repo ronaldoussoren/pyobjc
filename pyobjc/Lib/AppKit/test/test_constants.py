@@ -9,5 +9,8 @@ class ContantTest (unittest.TestCase):
         self.assert_(hasattr(AppKit, 'NSFloatingWindowLevel'))
         self.assert_(isinstance(AppKit.NSFloatingWindowLevel, int))
 
+    def testNSAnyEventMask(self):
+        self.assert_(AppKit.NSAnyEventMask > 0)
+
 if __name__ == "__main__":
     unittest.main()

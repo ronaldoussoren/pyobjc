@@ -132,7 +132,7 @@ def makeTypeCodes(frameworkName, types):
     os.remove(tempExecutable)
 
 
-def genProtocols(frameworkPath, outFile=None):
+def genProtocols(frameworkPath, outFile=None, specials={}):
     """Generate protocol definitions for a framework. If outFile is None,
     the generated Python code will be printed to sys.stdout.
     """
@@ -168,8 +168,13 @@ def genProtocols(frameworkPath, outFile=None):
             print >> outFile, "        _objc.selector("
             print >> outFile, "            None,"
             print >> outFile, "            selector='%s'," % selector
-            print >> outFile, "            signature='%s'," % (types[0] + "@:" + "".join(types[1:]))
-            print >> outFile, "            isClassMethod=%s," % isClass
+
+            if selector in specials:
+                print >> outFile, "            signature='%s'," % (specials[selector],)
+            else:
+                print >> outFile, "            signature='%s'," % (types[0] + "@:" + "".join(types[1:]))
+            if isClass:
+                print >> outFile, "            isClassMethod=1,"
             print >> outFile, "            isRequired=0,"
             print >> outFile, "        ),"
         print >> outFile, "    ]"

@@ -468,7 +468,7 @@ class PyOCTestSimpleArguments(unittest.TestCase):
     def testIDOC(self):
         # Test an Objective-C object as the argument
         c = objc.lookUpClass("NSHost")
-	o = c.hostWithAddress_('127.0.0.1')
+        o = c.hostWithAddress_('127.0.0.1')
         s = self.obj.idArg_(o)
         self.assertEquals(len(s), 1)
         self.assert_(s[0] is o)
