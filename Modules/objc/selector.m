@@ -738,6 +738,7 @@ PyObject*
 PyObjCSelector_FindNative(PyObject* self, const char* name)
 {
 	SEL   sel = PyObjCSelector_DefaultSelector(name);
+	PyObject* retval;
 
 	NSMethodSignature* methsig;
 	char  buf[1024];
@@ -761,6 +762,11 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 				"No attribute %s", name);
 			return NULL;
 		}
+		if (strcmp(cls->name, "_NSZombie") == 0) {
+			ObjCErr_Set(PyExc_AttributeError,
+				"No attribute %s", name);
+			return NULL;
+		}
 
 		if (strcmp(cls->name, "NSProxy") == 0) {
 			if (sel == @selector(methodSignatureForSelector:)) {
@@ -771,19 +777,29 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 			}
 		}
 
-		if ([cls instancesRespondToSelector:sel]) {
-			methsig = [cls instanceMethodSignatureForSelector:sel];
-			return PyObjCSelector_NewNative(cls, sel, 
-				PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf)), 0);
-		} else if ((cls != Object_class) && nil != (methsig = [(NSObject*)cls methodSignatureForSelector:sel])) {
-			return PyObjCSelector_NewNative(cls, sel, 
-				PyObjC_NSMethodSignatureToTypeString(
-					methsig, buf, sizeof(buf)), 1);
-		} else {
+		NS_DURING
+			if ([cls instancesRespondToSelector:sel]) {
+				methsig = [cls instanceMethodSignatureForSelector:sel];
+				retval = PyObjCSelector_NewNative(cls, sel, 
+					PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf)), 0);
+			} else if ((cls != Object_class) && nil != (methsig = [(NSObject*)cls methodSignatureForSelector:sel])) {
+				retval = PyObjCSelector_NewNative(cls, sel, 
+					PyObjC_NSMethodSignatureToTypeString(
+						methsig, buf, sizeof(buf)), 1);
+			} else {
+				ObjCErr_Set(PyExc_AttributeError,
+					"No attribute %s", name);
+				retval = NULL;
+			}
+		NS_HANDLER
 			ObjCErr_Set(PyExc_AttributeError,
 				"No attribute %s", name);
-			return NULL;
-		}
+			retval = NULL;
+
+		NS_ENDHANDLER
+
+		return retval;
+
 	} else if (PyObjCObject_Check(self)) {
 		id object;
 
