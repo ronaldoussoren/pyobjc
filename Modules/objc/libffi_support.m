@@ -409,10 +409,13 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	ffi_type*	  arglist[64]; /* XX: Magic constant */
 	void*             values[64];
 	int               r;
-	id		  msgResult;
+	void*		  msgResult;
+	int               resultSize;
+	int               arglistOffset;
 
 	methinfo = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
 	objc_argcount = [methinfo numberOfArguments];
+	resultSize = objc_sizeof_type([methinfo methodReturnType]);
 
 	/* First count the number of by reference parameters, and the number
 	 * of bytes of storage needed for them. Note that arguments 0 and 1
@@ -478,22 +481,19 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		goto error_cleanup;
 	}
 
-	if (argbuf_len) {
-		argbuf = PyMem_Malloc(argbuf_len);
-		if (argbuf == 0) {
-			PyErr_NoMemory();
-			goto error_cleanup;
-		}
-		byref = PyMem_Malloc(sizeof(int) * objc_argcount);
-		if (byref == NULL) {
-			PyErr_NoMemory();
-			goto error_cleanup;
-		}
-		memset(byref, 0, sizeof(int) * objc_argcount);
-	} else {
-		argbuf = NULL;
-		byref = NULL;
+	argbuf_len += resultSize;
+
+	argbuf = PyMem_Malloc(argbuf_len);
+	if (argbuf == 0) {
+		PyErr_NoMemory();
+		goto error_cleanup;
 	}
+	byref = PyMem_Malloc(sizeof(int) * objc_argcount);
+	if (byref == NULL) {
+		PyErr_NoMemory();
+		goto error_cleanup;
+	}
+	memset(byref, 0, sizeof(int) * objc_argcount);
 
 	/* Set 'self' argument, for class methods we use the class */ 
 	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
@@ -523,10 +523,20 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	super.receiver = self_obj;
 	super.class = meth->sel_class;
 
-	arglist[0] = &ffi_type_pointer;
-	values[0] = &super;
-	arglist[1] = &ffi_type_pointer;
-	values[1] = meth->sel_selector;
+	if (sizeof(id) >= resultSize) {
+		arglistOffset = 0;
+	} else {
+		arglistOffset = 1;
+		arglist[0] = &ffi_type_pointer;
+		values[0] = argbuf;
+	}
+
+	arglist[arglistOffset + 0] = &ffi_type_pointer;
+	values[arglistOffset + 0] = &super;
+	arglist[arglistOffset + 1] = &ffi_type_pointer;
+	values[arglistOffset + 1] = meth->sel_selector;
+	argbuf_cur = resultSize;
+	msgResult = argbuf;
 
 	py_arg = 0;
 	for (i = 2; i < objc_argcount; i++) {
@@ -540,8 +550,8 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			byref[i] = argbuf_cur;
 			arg = argbuf + argbuf_cur;
 
-			arglist[i] = &ffi_type_pointer;
-			values[i] = arg;
+			arglist[arglistOffset + i] = &ffi_type_pointer;
+			values[arglistOffset + i] = arg;
 
 			argbuf_cur += objc_sizeof_type(argtype+2);
 		} else {
@@ -563,9 +573,9 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 						arg);
 
 
-					arglist[i] = signature_to_ffi_type(
+					arglist[arglistOffset + i] = signature_to_ffi_type(
 					 	argtype);
-					values[i] = arg;
+					values[arglistOffset + i] = arg;
 				} 
 				break;
 
@@ -580,8 +590,8 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 						argument, 
 						arg);
 
-					arglist[i] = &ffi_type_pointer;
-					values[i] = arg;
+					arglist[arglistOffset + i] = &ffi_type_pointer;
+					values[arglistOffset + i] = arg;
 				} 
 				break;
 
@@ -599,8 +609,8 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 						argument, 
 						arg);
 
-					arglist[i] = &ffi_type_pointer;
-					values[i] = arg;
+					arglist[arglistOffset + i] = &ffi_type_pointer;
+					values[arglistOffset + i] = arg;
 
 				} else {
 					/* just encode */
@@ -611,9 +621,9 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 						argument, 
 						arg);
 
-					arglist[i] = signature_to_ffi_type(
+					arglist[arglistOffset + i] = signature_to_ffi_type(
 						argtype+2);
-					values[i] = arg;
+					values[arglistOffset + i] = arg;
 
 				}
 				break;
@@ -627,8 +637,8 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 					argument, 
 					arg);
 
-				arglist[i] = signature_to_ffi_type(argtype);
-				values[i] = arg;
+				arglist[arglistOffset + i] = signature_to_ffi_type(argtype);
+				values[arglistOffset + i] = arg;
 				}
 			}
 
@@ -645,8 +655,13 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	}
 
 	PyErr_Clear();
-	r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, objc_argcount,
-		&ffi_type_pointer, arglist);
+	if (arglistOffset) {
+		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, objc_argcount,
+			&ffi_type_pointer, arglist);
+	} else {
+		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, objc_argcount,
+			&ffi_type_void, arglist);
+	}
 	if (r != FFI_OK) {
 		ObjCErr_Set(PyExc_RuntimeError,
 			"Cannot setup FFI CIF [%d]", r);
@@ -655,7 +670,11 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 	/* XXX This only works for short return values! */
 	NS_DURING
-		ffi_call(&cif, FFI_FN(objc_msgSendSuper), &msgResult, values);
+		if (arglistOffset) {
+			ffi_call(&cif, FFI_FN(objc_msgSendSuper), NULL, values);
+		} else {
+			ffi_call(&cif, FFI_FN(objc_msgSendSuper), msgResult, values);
+		}
 	NS_HANDLER
 		ObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
@@ -665,7 +684,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	if ( (*rettype != _C_VOID) && ([methinfo isOneway] == NO) )
 	{
 		objc_result = pythonify_c_value (
-			[methinfo methodReturnType], &msgResult);
+			[methinfo methodReturnType], msgResult);
 	} else {
 		Py_INCREF(Py_None);
 		objc_result =  Py_None;
