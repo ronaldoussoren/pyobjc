@@ -45,9 +45,10 @@
 
 -(void)dealloc
 {
-	PyGILState_STATE state = PyGILState_Ensure();
-	Py_XDECREF(value);
-	PyGILState_Release(state);
+	PyObjC_BEGIN_WITH_GIL
+		Py_XDECREF(value);
+
+	PyObjC_END_WITH_GIL
 }
 
 -(id)nextObject
@@ -56,29 +57,27 @@
 	id result;
 	int err;
 
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyObjC_BEGIN_WITH_GIL
 
-	do {
-		if (cur >= len) {
-			PyGILState_Release(state);
-			return nil;
-		}
+		do {
+			if (cur >= len) {
+				PyObjC_GIL_RETURN(nil);
+			}
 
-		v = PySequence_Fast_GET_ITEM(value, cur++);
-		err = depythonify_c_value("@", v, &result);
-		if (err == -1) {
-			PyObjCErr_ToObjCWithGILState(&state);
-			return nil;
-		}
+			v = PySequence_Fast_GET_ITEM(value, cur++);
+			err = depythonify_c_value("@", v, &result);
+			if (err == -1) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
 
-		if (result == nil) {
-			NSLog(@"OC_PythonDictionaryEnumerator: Python dict with None as key, skipping this key");
-			continue;
-		}
+			if (result == nil) {
+				NSLog(@"OC_PythonDictionaryEnumerator: Python dict with None as key, skipping this key");
+				continue;
+			}
 
-	} while (result == nil);
+		} while (result == nil);
 
-	PyGILState_Release(state);
+	PyObjC_END_WITH_GIL
 
 	return result;
 }
@@ -105,10 +104,12 @@
 
 -(void)dealloc
 {
-	PyGILState_STATE state = PyGILState_Ensure();
-	Py_XDECREF(value);
-	value = NULL;
-	PyGILState_Release(state);
+
+	PyObjC_BEGIN_WITH_GIL
+		Py_XDECREF(value);
+		value = NULL;
+	
+	PyObjC_END_WITH_GIL
 
 	[super dealloc];
 }
@@ -121,9 +122,13 @@
 
 -(int)count
 {
-	PyGILState_STATE state = PyGILState_Ensure();
-	int result = PyDict_Size(value);
-	PyGILState_Release(state);
+	int result;
+
+	PyObjC_BEGIN_WITH_GIL
+		result = PyDict_Size(value);
+
+	PyObjC_END_WITH_GIL
+
 	return result;
 }
 
@@ -133,30 +138,30 @@
 	PyObject* k;
 	id result;
 	int err;
-	PyGILState_STATE state = PyGILState_Ensure();
 
-	k = pythonify_c_value("@", &key);
-	if (k == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	PyObjC_BEGIN_WITH_GIL
 
-	v = PyDict_GetItem(value, k);
+		k = pythonify_c_value("@", &key);
+		if (k == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	if (!v) {
+		v = PyDict_GetItem(value, k);
+
+		if (!v) {
+			Py_DECREF(k);
+			PyErr_Clear();
+			PyObjC_GIL_RETURN(nil);
+		}
+
+		err = depythonify_c_value("@", v, &result);
 		Py_DECREF(k);
-		PyErr_Clear();
-		PyGILState_Release(state);
-		return nil;
-	}
+		if (err == -1) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+	
+	PyObjC_END_WITH_GIL
 
-	err = depythonify_c_value("@", v, &result);
-	Py_DECREF(k);
-	if (err == -1) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
-	PyGILState_Release(state);
 	return result;
 }
 
@@ -165,58 +170,64 @@
 {
 	PyObject* v = NULL;
 	PyObject* k = NULL;
-	PyGILState_STATE state = PyGILState_Ensure();
 
-	v = pythonify_c_value("@", &val);
-	if (v == NULL) goto error;
+	PyObjC_BEGIN_WITH_GIL
+		v = pythonify_c_value("@", &val);
+		if (v == NULL) {
+			Py_XDECREF(k);
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	k = pythonify_c_value("@", &key);
-	if (k == NULL) goto error;
+		k = pythonify_c_value("@", &key);
+		if (k == NULL) {
+			Py_XDECREF(v);
+			Py_XDECREF(k);
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	if (PyDict_SetItem(value, k, v) < 0) goto error;
+		if (PyDict_SetItem(value, k, v) < 0) {
+			Py_XDECREF(v);
+			Py_XDECREF(k);
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	Py_DECREF(v);
-	Py_DECREF(k);
-	PyGILState_Release(state);
-	return;
+		Py_DECREF(v);
+		Py_DECREF(k);
 
-error:
-	Py_XDECREF(v);
-	Py_XDECREF(k);
-	PyObjCErr_ToObjCWithGILState(&state);
+	PyObjC_END_WITH_GIL
 }
 
 -(void)removeObjectForKey:key
 {
 	PyObject* k;
-	PyGILState_STATE state = PyGILState_Ensure();
 
-	k = pythonify_c_value("@", &key);
-	if (k == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	PyObjC_BEGIN_WITH_GIL
+		k = pythonify_c_value("@", &key);
+		if (k == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	if (PyDict_DelItem(value, k) < 0) {
+		if (PyDict_DelItem(value, k) < 0) {
+			Py_DECREF(k);
+			PyObjC_GIL_FORWARD_EXC();
+		}
 		Py_DECREF(k);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-	Py_DECREF(k);
-	PyGILState_Release(state);
+	
+	PyObjC_END_WITH_GIL
 }
 
 -keyEnumerator
 {
 	PyObject* keys;
 	id result;
-	PyGILState_STATE state = PyGILState_Ensure();
 
-	keys = PyDict_Keys(value);
-	result = [OC_PythonDictionaryEnumerator newWithPythonObject:keys];
-	Py_DECREF(keys);
+	PyObjC_BEGIN_WITH_GIL
+		keys = PyDict_Keys(value);
+		result = [OC_PythonDictionaryEnumerator 
+				newWithPythonObject:keys];
+		Py_DECREF(keys);
 
-	PyGILState_Release(state);
+	PyObjC_END_WITH_GIL
 
 	return result;
 }

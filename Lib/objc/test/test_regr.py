@@ -45,5 +45,13 @@ class TestRegressions(unittest.TestCase):
         r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(plist, Foundation.NSPropertyListXMLFormat_v1_0)
         self.assertEquals(r[1], None)
 
+
+    def testDeallocUninit(self):
+        import objc
+
+        for clsName in [ 'NSURL', 'NSObject', 'NSArray' ]:
+            d = getattr(objc.runtime, clsName).alloc()
+            del d
+
 if __name__ == '__main__':
     unittest.main()

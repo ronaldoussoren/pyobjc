@@ -1646,6 +1646,11 @@ static 	char buf[1024];
 			nil];
 }
 
++ (NSString*) fetchObjectDescription: (NSObject*) value
+{
+	return [value description];
+}
+
 @end
 
 

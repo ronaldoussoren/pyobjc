@@ -76,21 +76,20 @@
 -(void)replaceObjectAtIndex:(int)idx withObject:newValue;
 {
 	PyObject* v;
-	PyGILState_STATE state = PyGILState_Ensure();
 
-	v = pythonify_c_value("@", &newValue);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	PyObjC_BEGIN_WITH_GIL
+		v = pythonify_c_value("@", &newValue);
+		if (v == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	if (PySequence_SetItem(value, idx, v) < 0) {
+		if (PySequence_SetItem(value, idx, v) < 0) {
+			Py_DECREF(v);
+			PyObjC_GIL_FORWARD_EXC();
+		}
 		Py_DECREF(v);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
-	Py_DECREF(v);
-	PyGILState_Release(state);
+
+	PyObjC_END_WITH_GIL;
 }
 
 -(void)getObjects:(id*)buffer inRange:(NSRange)range
