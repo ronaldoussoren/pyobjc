@@ -563,12 +563,8 @@ static PyMethodDef obj_methods[] = {
 
 
 PyObjCClassObject PyObjCObject_Type = {
-#ifdef PyObjC_CLASS_INFO_IN_TYPE
    {
      {
-#else
-   {
-#endif
 	PyObject_HEAD_INIT(&PyObjCClass_Type)
 	0,					/* ob_size */
 	"objc_object",				/* tp_name */
@@ -616,11 +612,9 @@ PyObjCClassObject PyObjCObject_Type = {
 	0,					/* tp_mro */
 	0,					/* tp_cache */
 	0, 					/* tp_subclasses */
-	0					/* tp_weaklist */
-#ifdef PyObjC_CLASS_INFO_IN_TYPE
-	, (destructor)object_del,		/* tp_del */
-     }
-     ,
+	0,					/* tp_weaklist */
+	(destructor)object_del			/* tp_del */
+     },
      { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* as_number */
      { 0, 0, 0 },			/* as_mapping */
@@ -628,11 +622,7 @@ PyObjCClassObject PyObjCObject_Type = {
      { 0, 0, 0, 0 },			/* as_buffer */
      0,					/* name */
      0,					/* slots */
-   }
-   , 0, 0, 0, 0, 0, 0, 0
-#else
-   }
-#endif
+   }, 0, 0, 0, 0, 0, 0, 0
 };
 
 /*

@@ -150,11 +150,14 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
+#if 0
+	/* Use test in class-builder.m, that one is more useful */
 	if (PyObjCRT_LookUpClass(name) != NULL) {
 		PyErr_SetString(PyObjCExc_Error, 
 			"Class already exists in Objective-C runtime");
 		return NULL;
 	}
+#endif
 
 	if (!PyTuple_Check(bases)) {
 		PyErr_SetString(PyExc_TypeError, "'bases' must be tuple");

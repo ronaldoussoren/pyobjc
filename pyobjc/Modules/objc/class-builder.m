@@ -295,6 +295,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	struct objc_method_list* meta_method_list = NULL;
 	struct class_wrapper*    new_class = NULL;
 	Class                    root_class;
+	Class			 cur_class;
 	char**                   curname;
 	PyObject*                py_superclass;
 	int                      item_size;
@@ -317,10 +318,50 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		goto error_cleanup;
 	}
 
-	if (PyObjCRT_LookUpClass(name) != NULL) {
-		PyErr_Format(PyObjCExc_Error, "Objective-C class '%s' already", 
+	if ((cur_class = PyObjCRT_LookUpClass(name)) != NULL) {
+		/*
+		 * Only allow redefinition of classes that are defined in
+		 * python and are in the same module.
+		 * This allows using reload() without hiding erroneous
+		 * redefinition (e.g. someone forgetting that classnames
+		 * must be globally unique.
+		 */
+
+		PyObject* tmp = PyObjCClass_New(cur_class);
+		PyObject* m1;
+		PyObject* m2;
+
+		if (!PyObjCClass_HasPythonImplementation(tmp)) {
+			PyErr_Format(PyObjCExc_Error, 
+				"%s is overriding existing Objective-C class", 
 				name);
-		goto error_cleanup;
+			goto error_cleanup;
+		} 
+
+		m1 = PyObject_GetAttrString(tmp, "__module__");
+		if (m1 == NULL) {
+			PyErr_Clear();
+		}
+
+		m2 = PyDict_GetItemString(class_dict, "__module__");
+		if (m2 == NULL) {
+			PyErr_Clear();
+		}
+
+		if (m1 == NULL || m2 == NULL || 
+				PyObject_RichCompareBool(m1, m2, Py_EQ) != 1) {
+			Py_XDECREF(m1);
+			Py_XDECREF(m2);
+			if (PyErr_Occurred()) {
+				goto error_cleanup;
+			}
+			PyErr_Format(PyObjCExc_Error, 
+				"%s is overriding existing Objective-C class", 
+				name);
+			goto error_cleanup;
+		}
+		Py_DECREF(m1);
+		Py_DECREF(m2);
 	}
 	if (strspn(name, IDENT_CHARS) != strlen(name)) {
 		PyErr_Format(PyObjCExc_Error, "'%s' not a valid name", name);
