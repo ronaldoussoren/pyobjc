@@ -291,21 +291,21 @@ class TestSerializingDataStructures (unittest.TestCase):
     def testMakePlist(self):
         container = OC_TestIdentity.alloc().init()
 
-        value = [ 1, 2, 3, [ "hello", ["world", ("in", 9 ) ], True, { "aap":3}]]
+        value = [ 1, 2, 3, [ u"hello", [u"world", (u"in", 9 ) ], True, {u"aap":3}]]
         value.append(value[3])
 
         container.setStoredObject_(value)
-        container.writeStoredObjecToFile_("/tmp/pyobjc.test.identity")
+        container.writeStoredObjectToFile_(u"/tmp/pyobjc.test.identity")
 
         value = {
-            "hello": [ 1, 2, 3],
-            "world": {
-                "nl": "wereld",
-                "de": "Welt",
+            u"hello": [ 1, 2, 3],
+            u"world": {
+                u"nl": u"wereld",
+                u"de": u"Welt",
             }
         }
         container.setStoredObject_(value)
-        container.writeStoredObjecToFile_("/tmp/pyobjc.test.identity")
+        container.writeStoredObjectToFile_(u"/tmp/pyobjc.test.identity")
 
         
 

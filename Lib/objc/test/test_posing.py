@@ -14,7 +14,7 @@ class TestPosing(unittest.TestCase):
         class PoseClass(BaseClass):
             __slots__ = ()  # Don't add instance variables, not even __dict__
             def testPosingMethod(self):
-                return "<PoseClass instance>"
+                return u"<PoseClass instance>"
 
 
         PoseClass.poseAsClass_(BaseClass)
@@ -22,7 +22,7 @@ class TestPosing(unittest.TestCase):
         # BaseClass still refers to the old class, if we look it up again
         # we get to see the new value. There's not much we can do about that.
         obj = objc.lookUpClass(BaseName).new()
-        self.assertEquals(obj.testPosingMethod(), "<PoseClass instance>")
+        self.assertEquals(obj.testPosingMethod(), u"<PoseClass instance>")
 
         # XXX: next assertion fails because the runtime seems to copy the
         # original class.
