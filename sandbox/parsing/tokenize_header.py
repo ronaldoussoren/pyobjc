@@ -307,9 +307,13 @@ class NamedStruct(Token):
     \s+struct
     \s*(?P<structname>%(IDENTIFIER)s)?
     \s*{
-        (?P<content>[^}]*)
-    \s*}
-    \s*(?P<name>%(IDENTIFIER)s)
+    (?P<body>
+        (
+            [^}][^\n]*\n
+        )*
+    )
+    }
+    \s*%(IDENTIFIER)s
     \s*%(SEMI)s
     ''')
     example = example(r'''
@@ -319,6 +323,13 @@ class NamedStruct(Token):
     } FooBarStruct;
     typedef struct _FooBarStruct {
         signed foo name;
+        int bar;
+    } FooBarStruct;
+    typedef struct _FooBarStruct {
+        signed foo name;
+        union {
+            int stuff;
+        } foo;
         int bar;
     } FooBarStruct;
     ''')
