@@ -45,15 +45,13 @@ into the <code><span>SimpleComboBoxPlus</span></code> folder:<pre>
 % cp -R src/PythonGlue.* SimpleComboBoxPlus
 </pre>
 </li>
-<li>Add <code><span>PythonGlue.h</span></code> and <code><span>PythonGlue.m</span></code> to the &quot;Classes&quot; group.<blockquote>
-<p>These files contain a class <code><span>PythonGlue</span></code> that does nothing
+<li>Add <code><span>PythonGlue.h</span></code> and <code><span>PythonGlue.m</span></code> to the &quot;Classes&quot; group.<p>These files contain a class <code><span>PythonGlue</span></code> that does nothing
 visibly useful, but it has interesting side effects: when the first
 class instance is initialized it will initialize the Python interpreter,
 add the Resource folder of your application to the Python search path
 and import any modules from that Resources folder. The first bit of
 this is done by the ObjC code, the latter two by the Python code
 in <code><span>PythonGlue.py</span></code>.</p>
-</blockquote>
 </li>
 <li>Add <code><span>PythonGlue.py</span></code> to the &quot;Resources&quot; group.</li>
 <li>Select the &quot;Frameworks&quot; group, &quot;Add Framework...&quot;, 
@@ -61,13 +59,17 @@ select <code><span>/Library/Frameworks/Python.framework</span></code>.</li>
 <li>Now we need to arrange to have a <code><span>PythonGlue</span></code> object be instantiated
 being called early during startup. A good place to do this for the
 current application is when <code><span>MainMenu.nib</span></code> is loaded, as it does not
-contain any Python dependencies itself. Subclass <code><span>NSObject</span></code> and call
-the new class PythonGlue. Instantiate it. Use this instance as the
-application delegate for the File Owner.<blockquote>
-<p>I think this method will not work if you want to use Python-based
+contain any Python dependencies itself.<p>Open the MainMenu.nib in Interface Builder and define a subclas of 
+<code><span>NSObject</span></code> and call the new class PythonGlue. Instantiate it. Use this 
+instance as the application delegate for the File Owner.</p>
+<blockquote>
+<p>Jack: I think this method will not work if you want to use Python-based
 classes in your main NIB file. Suggestions for how to make sure
 a PythonGlue object is instantiated before our main NIB file is read are
 hereby requested.</p>
+<p>Ronald: You might add <code><span>[[PythonGlue</span> <span>alloc]</span> <span>init]</span></code> to <code><span>main.m</span></code>, 
+before the call to <code><span>NSApplicationMain</span></code>. You'd also have to create an 
+autorelease pool before creating the <code><span>PythonGlue</span></code> instance.</p>
 </blockquote>
 </li>
 <li>Now compile, build and run. You will get a message printed to

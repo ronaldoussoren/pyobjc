@@ -7,6 +7,8 @@ import errno
 import buildpkg
 import shutil
 
+DOC_ONLY=0
+
 USAGE='Usage: %s [-p python | --with-python=%s] [-h|--help] [-o release-dir|--output-directory=release-dir]\n'%(
 	sys.argv[0], sys.executable)
 
@@ -107,7 +109,8 @@ print "Generateing HTML documentation"
 os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
 rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt'])
 
-sys.exit(0)
+if DOC_ONLY:
+    sys.exit(0)
 
 print "Running: '%s' setup.py sdist -d '%s'"%(
 			escquotes(PYTHON), escquotes(OUTPUTDIR))

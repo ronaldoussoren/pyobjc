@@ -111,7 +111,8 @@ class MYClass (NSObject):
                 &quot;&quot;&quot; Actual implementation goes here &quot;&quot;&quot;
                 pass
 
-        mysheetDidEnd = AppKit.endSheetMethod(mysheetDidEnd)
+        mysheetDidEnd = PyObjCTools.AppHelper.endSheetMethod(
+                mysheetDidEnd)
 </pre>
 <h3><a href="#id7" name="class-nsapplication">Class NSApplication</a></h3>
 <p><code><span>NSModalSession</span></code> objects are wrapped as opaque values. You can check if

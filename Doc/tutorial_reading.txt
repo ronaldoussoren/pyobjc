@@ -1,3 +1,4 @@
+======================================
 Understanding existing PyObjC examples
 ======================================
 
@@ -22,10 +23,12 @@ you understand that Cocoa is different. For this once this isn't marketing-speak
 Cocoa is inherently different from common toolkits such as Tk, wxWindows,
 Carbon, win32 and all the other popular ones. Apple's documentation explains this,
 but in the introductory sections that are often quickly glanced over. It is a
-good idea to refer back to XXXX after reading this section. If you really
+good idea to refer back to `Application Architecture`__ after reading this section. If you really
 want you can break out of the architecture sketched in this section, but
 then you are on your own, really: Cocoa and Interface Builder really
 expect you to follow this model.
+
+.. __: http://developer.apple.com/documentation/Cocoa/Conceptual/AppArchitecture/index.html
 
 Cocoa is built on the Model-View-Controller paradigm (MVC). What this means
 is that the application code is going to be split into three parts:
@@ -36,8 +39,10 @@ is that the application code is going to be split into three parts:
   number (an amount of money in currency A) by another (the conversion
   rate from currency A to currency B), as in the currency converter
   application you built in the first tutorial.
+
 - The *View* is what the user sees on-screen, plus his or her interaction
   with it.
+
 - The *Controller* is the glue that binds these two together. In the
   currency converter example, it is the code that gets called when the user
   presses the "Convert" button, whereupon it gets the data from the "amount"
@@ -92,9 +97,9 @@ to how unpickling works.
 
 	The section above explains a lot of the strangeness in PyObjC
 	programs: why you don't create windows and other dialogs (they
-	already exist); why you shouldn't do initialization in `__init__`
+	already exist); why you shouldn't do initialization in ``__init__``
 	(because it will be called at some undefined point in time, while
-	reading the NIB) but in `AwakeFromNIB` in stead; why you don't
+	reading the NIB) but in ``awakeFromNIB`` in stead; why you don't
 	have to create and initialize the attributes that tie your
 	objects together (they are already tied together).
 	
@@ -112,7 +117,7 @@ But in addition the NIB also contains a large proportion of your Model
 functionality: creating the View and Controller objects and tieing the
 lot together.
 
-XXXX Explain about delegates in stead of subclassing.
+XXXX Explain about delegates instead of subclassing.
 
 Examining a NIB file
 --------------------
@@ -124,10 +129,10 @@ have a greyed-out name ("File's Owner" and "First Responder"): these have
 been created for you by Apple. The other four are created by you. Actually:
 "Main Menu" was created by Apple as a convenience, but you are free to modify
 it. The "File's Owner" is either the Controller or the combined Model-Controller
-object, in this case it is the application itself, an instance of `NSApplication`.
+object, in this case it is the application itself, an instance of ``NSApplication``.
 Because this application is not a document-based application the MVC trio
-for the actual conversion window are in here too: `Converter`, `Window` and
-`ConverterController` respectively.
+for the actual conversion window are in here too: ``Converter``, ``Window`` and
+``ConverterController`` respectively.
 
 XXXX Examine ConverterController, show how to see class and methods
 
