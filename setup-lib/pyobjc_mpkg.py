@@ -13,7 +13,7 @@ from altgraph.compat import *
 from bdist_mpkg import tools
 
 JUNK = set(['.DS_Store', '.gdb_history', 'build', 'dist', 'NonFunctional'])
-JUNK_EXTS = set(['.pbxuser', '.pyc', '.pyo'])
+JUNK_EXTS = set(['.pbxuser', '.pyc', '.pyo', '.swp'])
 def skipjunk(fn, junk=JUNK, junk_exts=JUNK_EXTS):
     if not skipscm(fn):
         return False
