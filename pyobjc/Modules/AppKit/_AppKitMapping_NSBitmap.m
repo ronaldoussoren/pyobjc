@@ -81,7 +81,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 
 	colorSpaceNameString = [NSString stringWithCString: colorSpaceName];
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -92,11 +92,17 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 				hasAlpha, isPlanar, colorSpaceNameString, 
 				bpr, bpp);
 
-		result = PyObjC_IdToPython(newImageRep);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+		newImageRep = nil;
+	PyObjC_ENDHANDLER
+
+	if (newImageRep == nil && PyErr_Occurred()) {
+		return NULL;
+	}
+
+	result = PyObjC_IdToPython(newImageRep);
 
 	return result;
 }
@@ -108,15 +114,15 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
 {
 	PyObject* result;
 	struct objc_super super;
+	unsigned char *dataPlanes[5];
+	int i;
+	int bytesPerPlane;
   
 	if (!PyArg_ParseTuple(arguments, "")) {
 		return NULL;
 	}
 
-	NS_DURING
-		unsigned char *dataPlanes[5];
-		int i;
-		int bytesPerPlane;
+	PyObjC_DURING
 
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
@@ -128,26 +134,30 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
 		bytesPerPlane = (int) objc_msgSend(
 			PyObjCObject_GetObject(self), @selector(bytesPerPlane));
 
-		result = PyTuple_New(5);
-		if (result != NULL) {
-			for(i=0; i<5; i++) {
-				if (dataPlanes[i]) {
-					PyObject* buffer = PyBuffer_FromReadWriteMemory(dataPlanes[i], bytesPerPlane);
-					if ( (!buffer) || PyErr_Occurred()) {
-						Py_DECREF(result);
-						result = NULL;
-					}
-					PyTuple_SET_ITEM(result, i, buffer);
-				} else {
-					Py_INCREF(Py_None);
-					PyTuple_SET_ITEM(result, i, Py_None);
-				}
-			}
-		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+		bytesPerPlane = -1;
+	PyObjC_ENDHANDLER
+
+	if (bytesPerPlane == -1) return NULL;
+
+	result = PyTuple_New(5);
+	if (result != NULL) {
+		for(i=0; i<5; i++) {
+			if (dataPlanes[i]) {
+				PyObject* buffer = PyBuffer_FromReadWriteMemory(dataPlanes[i], bytesPerPlane);
+				if ( (!buffer) || PyErr_Occurred()) {
+					Py_DECREF(result);
+					result = NULL;
+				}
+				PyTuple_SET_ITEM(result, i, buffer);
+			} else {
+				Py_INCREF(Py_None);
+				PyTuple_SET_ITEM(result, i, Py_None);
+			}
+		}
+	}
 
 	return result;
 }
@@ -158,14 +168,14 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 {
 	PyObject* result;
 	struct objc_super super;
+	unsigned char *bitmapData;
+	int bytesPerPlane;
   
 	if (!PyArg_ParseTuple(arguments, "")) {
 		return NULL;
 	}
 
-	NS_DURING
-		unsigned char *bitmapData;
-		int bytesPerPlane;
+	PyObjC_DURING
 
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
@@ -176,17 +186,23 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 		bytesPerPlane = (int) objc_msgSend(
 			PyObjCObject_GetObject(self), @selector(bytesPerPlane));
 
-		result = PyBuffer_FromReadWriteMemory(bitmapData, bytesPerPlane);
-		if (PyErr_Occurred()) {
-			if (result) {
-				Py_DECREF(result);
-			}
-			result = NULL;
-		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+		bytesPerPlane = -1;
+	PyObjC_ENDHANDLER
+
+	if (bytesPerPlane == -1 && PyErr_Occurred()) {
+		return NULL;
+	}
+
+	result = PyBuffer_FromReadWriteMemory(bitmapData, bytesPerPlane);
+	if (PyErr_Occurred()) {
+		if (result) {
+			Py_DECREF(result);
+		}
+		result = NULL;
+	}
 
 	return result;
 }

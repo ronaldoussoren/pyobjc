@@ -49,12 +49,12 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 		}
 	}
 	
-	NS_DURING
+	PyObjC_DURING
 		oc_result = NSFileTypeForHFSTypeCode(hfsTypeCode);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		oc_result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) return NULL;
 
@@ -81,12 +81,12 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 		return NULL;
 	}
 	
-	NS_DURING
+	PyObjC_DURING
 		hfsTypeCode = NSHFSTypeCodeFromFileType(fileType);
-	NS_HANDLER
+	PyObjC_HANDLER
 		hfsTypeCode = 0;
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) return NULL;
 
@@ -271,7 +271,7 @@ static PyObject* call_objWithObjects_count_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			res = ((id(*)(id,SEL,id*,int))
 				(PyObjCIMP_GetIMP(method)))(
@@ -287,10 +287,10 @@ static PyObject* call_objWithObjects_count_(
 				PyObjCSelector_GetSelector(method),
 				objects, count);
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	PyObjC_FreeCArray(arrayToken, objects);
 
@@ -299,6 +299,12 @@ static PyObject* call_objWithObjects_count_(
 	}
 	
 	result = PyObjC_IdToPython(res);
+
+	if (PyObjCSelector_IsInitializer(method)) {
+		if (result != self) {
+			PyObjCObject_ClearObject(self);
+		}
+	}
 
 	return result;
 }
@@ -378,7 +384,7 @@ static PyObject* call_clsWithObjects_count_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			res = ((id(*)(id,SEL,id*,int))
 				(PyObjCIMP_GetIMP(method)))(
@@ -394,10 +400,10 @@ static PyObject* call_clsWithObjects_count_(
 					PyObjCSelector_GetSelector(method),
 					objects, count);
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	PyObjC_FreeCArray(arrayToken, objects);
 

@@ -28,7 +28,7 @@ call_NSWindow_windowRef(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -36,17 +36,20 @@ call_NSWindow_windowRef(
 
 		windowRef = objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method));
-		if (windowRef == NULL) {
-			result = Py_None;
-			Py_INCREF(result);
-		} else {
-			result = WinObj_New((WindowPtr)windowRef);
-		}
 
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+		windowRef = NULL;
+	PyObjC_ENDHANDLER
+
+	if (windowRef == NULL) {
+		if (PyErr_Occurred()) return NULL;
+		result = Py_None;
+		Py_INCREF(result);
+	} else {
+		result = WinObj_New((WindowPtr)windowRef);
+	}
 
 	return result;
 }
@@ -106,19 +109,23 @@ call_NSWindow_initWithWindowRef_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
 		objc_result = objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method), windowRef);
-		result = PyObjC_IdToPython(objc_result);
 
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-		result = NULL;
-	NS_ENDHANDLER
+		objc_result = nil;
+		
+	PyObjC_ENDHANDLER
+
+	if (objc_result == nil && PyErr_Occurred()) return nil;
+
+	result = PyObjC_IdToPython(objc_result);
 
 	return result;
 }

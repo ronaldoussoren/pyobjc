@@ -393,7 +393,7 @@ def process_function(fp, protostr, funclist):
 
     fp.write('\tif (!PyArg_ParseTupleAndKeywords(args, kwds, "%s:%s", keywords%s)) return NULL;\n'%(fmt, funcname, arglist))
 
-    fp.write("\tNS_DURING\n")
+    fp.write("\tPyObjC_DURING\n")
     if retval != 'void':
         fp.write("\t\t_objc__result_ = %s(\n"%funcname,)
     else:
@@ -406,10 +406,10 @@ def process_function(fp, protostr, funclist):
             fp.write("%sobjc_%s"%(sep, name))
         sep = ",\n\t\t\t\t"
     fp.write(");\n")
-    fp.write("\tNS_HANDLER\n")
+    fp.write("\tPyObjC_HANDLER\n")
     fp.write("\t\tPyObjCErr_FromObjC(localException);\n")
     fp.write("\t\treturn NULL;\n")
-    fp.write("\tNS_ENDHANDLER\n")
+    fp.write("\tPyObjC_ENDHANDLER\n")
 
     if retval != 'void':
         fp.write("\t%s\n"%simple_to_python("_objc__result_", retval))

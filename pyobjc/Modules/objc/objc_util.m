@@ -12,6 +12,7 @@ PyObject* ObjCExc_error;
 PyObject* ObjCExc_noclass_error;
 PyObject* ObjCExc_internal_error;
 PyObject* PyObjCExc_NoProtocol;
+PyObject* PyObjCExc_UnInitDeallocWarning;
 
 PyGILState_STATE PyObjCGILState_Ensure(void)
 {
@@ -43,6 +44,7 @@ int ObjCUtil_Init(PyObject* module)
 	NEW_EXC(ObjCExc_noclass_error, "nosuchclass_error", ObjCExc_error);
 	NEW_EXC(ObjCExc_internal_error, "internal_error", ObjCExc_error);
 	NEW_EXC(PyObjCExc_NoProtocol, "ProtocolError", ObjCExc_error);
+	NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning", PyExc_Warning);
 
 	return 0;
 }

@@ -137,53 +137,51 @@ object_dealloc(PyObject* obj)
 	PyObject* ptype, *pvalue, *ptraceback;
 	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
-	unregister_proxy(PyObjCObject_GetObject(obj));
-
-
-	/* If the object is not yet initialized we try to initialize it before
-	 * releasing the reference. This is necessary because of a misfeature
-	 * of MacOS X: [[NSTextView alloc] release] crashes (at least upto 10.2)
-	 * and this is not a bug according to Apple.
-	 */
-	if (PyObjCObject_IsClassic(obj)) {
-		/* pass */
-	} else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
-		/* Freeing of an unitialized object, just leak because there is
-		 * no reliable manner to free such objects.
-		 *
-		 * - [obj release] doesn't work because some classes cause
-		 *      crashes for unitialized objects
-		 * - [[obj init] release] also doesn't work because not all
-		 *      classes implement -init
-		 * - [obj dealloc] also doesn't work for class clusters like
-		 *      NSArray.
+	if (PyObjCObject_GetObject(obj) != nil) {
+		/* Release the proxied object, we don't have to do this when
+		 * there is no proxied object!
 		 */
-		NSLog(@"PyObjC: leaking unitialized object");
-#if 0
-		/* Lets hope 'dealloc' works
-		 * 'init' is not always a valid initializer
+		unregister_proxy(PyObjCObject_GetObject(obj));
+
+
+		/* If the object is not yet initialized we try to initialize 
+		 * it before releasing the reference. This is necessary 
+		 * because of a misfeature of MacOS X: 
+		 * [[NSTextView alloc] release] crashes (at least upto 10.2)
+		 * and this is not a bug according to Apple.
 		 */
-		PyObjC_DURING
-			[((PyObjCObject*)obj)->objc_object dealloc];
+		if (PyObjCObject_IsClassic(obj)) {
+			/* pass */
+		} else if (((PyObjCObject*)obj)->flags 
+				& PyObjCObject_kUNINITIALIZED) {
+			/* Freeing of an unitialized object, just leak because 
+			 * there is no reliable manner to free such objects.
+			 *
+			 * - [obj release] doesn't work because some classes 
+			 *   cause crashes for unitialized objects
+			 * - [[obj init] release] also doesn't work because 
+			 *   not all classes implement -init
+			 * - [obj dealloc] also doesn't work for class 
+			 *   clusters like NSArray.
+			 */
+			char buf[256];
 
-		PyObjC_HANDLER
-			NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
-				localException);
+			snprintf(buf, sizeof(buf), 
+				"leaking an unitialized object of type %s",
+				obj->ob_type->tp_name);
+			PyErr_Warn(PyObjCExc_UnInitDeallocWarning, buf);
+			((PyObjCObject*)obj)->objc_object = nil;
+		} else {
+			PyObjC_DURING
+				[((PyObjCObject*)obj)->objc_object release];
 
-		PyObjC_ENDHANDLER
-#endif
+			PyObjC_HANDLER
+				NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
+					localException);
 
-		((PyObjCObject*)obj)->objc_object = nil;
-	} else {
-		PyObjC_DURING
-			[((PyObjCObject*)obj)->objc_object release];
-
-		PyObjC_HANDLER
-			NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
-				localException);
-
-		PyObjC_ENDHANDLER
-		((PyObjCObject*)obj)->objc_object = nil;
+			PyObjC_ENDHANDLER
+			((PyObjCObject*)obj)->objc_object = nil;
+		}
 	}
 
 #ifdef FREELIST_SIZE

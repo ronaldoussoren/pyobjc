@@ -149,17 +149,17 @@ static PyObject* call_NSNetService_addresses(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
 			
 		res = objc_msgSendSuper(&super, @selector(addresses));
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (res == nil && PyErr_Occurred()) {
 		return NULL;

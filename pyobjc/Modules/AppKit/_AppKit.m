@@ -118,10 +118,8 @@ static	char* keywords[] = { "argv", NULL };
 	PyObjC_DURING
 		res = NSApplicationMain(argc, (const char**)argv);
 	PyObjC_HANDLER
-		PyObjC_BEGIN_WITH_GIL
-			PyObjCErr_FromObjC(localException);
-			res = -1;
-		PyObjC_END_WITH_GIL
+		PyObjCErr_FromObjC(localException);
+		res = -1;
 	PyObjC_ENDHANDLER
 
 	for (i = 0; i < argc; i++) {
@@ -180,11 +178,11 @@ static  char* keywords[] = { NULL };
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		NSCountWindows(&count);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 	if (PyErr_Occurred()) return NULL;
 
 	return PyInt_FromLong(count);
@@ -204,11 +202,11 @@ static  char* keywords[] = { "context", NULL };
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		NSCountWindowsForContext(context, &count);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 	if (PyErr_Occurred()) return NULL;
 
 	return PyInt_FromLong(count);
@@ -236,11 +234,11 @@ static char* keywords[] = { "rects", "count", 0 };
 
 	if (arrayToken == -1) return NULL;
 
-	NS_DURING
+	PyObjC_DURING
 		NSRectFillList(rects, rectCount);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	PyObjC_FreeCArray(arrayToken, rects);
 
@@ -287,11 +285,11 @@ static char* keywords[] = { "rects", "count", "operation", 0 };
 
 	if (arrayToken == -1) return NULL;
 
-	NS_DURING
+	PyObjC_DURING
 		NSRectFillListUsingOperation(rects, rectCount, operation);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	PyObjC_FreeCArray(arrayToken, rects);
 
@@ -347,11 +345,11 @@ static char* keywords[] = { "rects", "colors", "count", 0 };
 	}
 		
 
-	NS_DURING
+	PyObjC_DURING
 		NSRectFillListWithColors(rects, colors, rectCount);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	PyObjC_FreeCArray(rectToken, rects);
 	PyObjC_FreeCArray(colorToken, colors);
@@ -409,11 +407,11 @@ static char* keywords[] = { "rects", "colors", "count", "operation", 0 };
 	}
 		
 
-	NS_DURING
+	PyObjC_DURING
 		NSRectFillListWithColorsUsingOperation(rects, colors, rectCount, operation);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	PyObjC_FreeCArray(rectToken, rects);
 	PyObjC_FreeCArray(colorToken, colors);
@@ -470,11 +468,11 @@ static char* keywords[] = { "rects", "grays", "count", 0 };
 	}
 		
 
-	NS_DURING
+	PyObjC_DURING
 		NSRectFillListWithGrays(rects, grays, rectCount);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	PyObjC_FreeCArray(rectToken, rects);
 	PyObjC_FreeCArray(grayToken, grays);
@@ -542,11 +540,11 @@ static char* keywords[] = { "boundsRect", "clipRect", "sides", "grays", "count",
 	}
 		
 
-	NS_DURING
+	PyObjC_DURING
 		NSDrawTiledRects(boundsRect, clipRect, sides, grays, sidesCount);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	PyObjC_FreeCArray(sidesToken, sides);
 	PyObjC_FreeCArray(graysToken, grays);
@@ -614,11 +612,11 @@ static char* keywords[] = { "boundsRect", "clipRect", "sides", "grays", "count",
 	}
 		
 
-	NS_DURING
+	PyObjC_DURING
 		NSDrawColorTiledRects(boundsRect, clipRect, sides, colors, sidesCount);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	PyObjC_FreeCArray(sidesToken, sides);
 	PyObjC_FreeCArray(colorsToken, colors);
@@ -654,11 +652,11 @@ objc_NSWindowListForContext(
 	}
 	memset(list, 0, sizeof(int)*size);
 
-	NS_DURING
+	PyObjC_DURING
 		NSWindowListForContext(context, size, list);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
 		free(list);
@@ -692,11 +690,11 @@ objc_NSWindowList(
 	}
 	memset(list, 0, sizeof(int)*size);
 
-	NS_DURING
+	PyObjC_DURING
 		NSWindowList(size, list);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
 		free(list);
@@ -723,12 +721,12 @@ objc_NSAvailableWindowDepths(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		list = NSAvailableWindowDepths();
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		list = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (list == NULL && PyErr_Occurred()) {
 		return NULL;
@@ -768,11 +766,11 @@ objc_NSBestDepth(
 	colorSpace = PyObjC_PythonToId(pyColorSpace);
 	planarVal = PyObject_IsTrue(pyPlanar);
 
-	NS_DURING
+	PyObjC_DURING
 		bestDepth = NSBestDepth(colorSpace, bps, bpp, planarVal, &exactMatch);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
 		return NULL;
@@ -821,11 +819,11 @@ objc_NSRectClipList(
 		@encode(NSRect), pyList, pyCount, (void**)&rects, &count);
 	if (arrayToken == -1) return NULL;
 
-	NS_DURING
+	PyObjC_DURING
 		NSRectClipList(rects, count);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	PyObjC_FreeCArray(arrayToken, rects);
 
@@ -855,7 +853,7 @@ static char* keywords[] = { "context", "windowDumpStream", NULL };
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (doDumpStream) {
 			res = NSGetWindowServerMemory(
 				context, &virtualMemory, &windowBackingMemory,
@@ -866,11 +864,11 @@ static char* keywords[] = { "context", "windowDumpStream", NULL };
 				NULL);
 		}
 
-	NS_HANDLER
+	PyObjC_HANDLER
 		res = 0;
 		PyObjCErr_FromObjC(localException);
 
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
 		return NULL;

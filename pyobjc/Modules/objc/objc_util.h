@@ -8,6 +8,7 @@ extern PyObject* ObjCExc_error;
 extern PyObject* ObjCExc_noclass_error;
 extern PyObject* ObjCExc_internal_error;
 extern PyObject* PyObjCExc_NoProtocol;
+extern PyObject* PyObjCExc_UnInitDeallocWarning;
 
 int ObjCUtil_Init(PyObject* module);
 

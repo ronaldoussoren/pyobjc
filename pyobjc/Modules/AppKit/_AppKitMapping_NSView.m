@@ -32,7 +32,7 @@ call_NSView_sortSubviewsUsingFunction_context_(
 	PyTuple_SET_ITEM(realContext, 1, context);
 	Py_INCREF(context);
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -41,10 +41,10 @@ call_NSView_sortSubviewsUsingFunction_context_(
 		res = objc_msgSendSuper(&super,
 				@selector(sortSubviewsUsingFunction:context:),
 				 SortHelperFunc, realContext);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	Py_DECREF(realContext);
 

@@ -298,11 +298,11 @@ static char* keywords2[] = { "string", NULL };
 			stringVal = PyObjC_PythonToId(strVal);
 			Py_DECREF(strVal);
 
-			NS_DURING
+			PyObjC_DURING
 				DecimalFromString(&Decimal_Value(self), stringVal, NULL);
-			NS_HANDLER
+			PyObjC_HANDLER
 				PyObjCErr_FromObjC(localException);
-			NS_ENDHANDLER
+			PyObjC_ENDHANDLER
 
 			if (PyErr_Occurred()) return -1;
 			return 0;
@@ -314,11 +314,11 @@ static char* keywords2[] = { "string", NULL };
 		}
 
 		stringVal = PyObjC_PythonToId(pyValue);
-		NS_DURING
+		PyObjC_DURING
 			DecimalFromString(&Decimal_Value(self), stringVal, NULL);
-		NS_HANDLER
+		PyObjC_HANDLER
 			PyObjCErr_FromObjC(localException);
-		NS_ENDHANDLER
+		PyObjC_ENDHANDLER
 
 		if (PyErr_Occurred()) return -1;
 		return 0;

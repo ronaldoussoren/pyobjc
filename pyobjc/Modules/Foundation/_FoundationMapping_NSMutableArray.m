@@ -34,7 +34,7 @@ call_NSMutableArray_sortUsingFunction_context_(
 	PyTuple_SET_ITEM(realContext, 1, context);
 	Py_INCREF(context);
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -44,10 +44,10 @@ call_NSMutableArray_sortUsingFunction_context_(
 				@selector(sortUsingFunction:context:),
 				 SortHelperFunc, realContext);
 		res = nil;
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	Py_DECREF(realContext);
 
@@ -91,7 +91,7 @@ call_NSMutableArray_sortUsingFunction_context_range_(
 	PyTuple_SET_ITEM(realContext, 1, context);
 	Py_INCREF(context);
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -101,10 +101,10 @@ call_NSMutableArray_sortUsingFunction_context_range_(
 			@selector(sortUsingFunction:context:range:),
 			 SortHelperFunc, realContext, range);
 		res = nil;
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	Py_DECREF(realContext);
 
@@ -291,7 +291,7 @@ call_NSMutableArray_removeObjectsFromIndices_numIndices_(
 		}
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -299,9 +299,9 @@ call_NSMutableArray_removeObjectsFromIndices_numIndices_(
 		objc_msgSendSuper(&super,
 				@selector(removeObjectsFromIndices:numIndices:),
 				indices, count);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	Py_DECREF(indicesSeq);
 
@@ -416,7 +416,7 @@ call_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 		}
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -425,9 +425,9 @@ call_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 		(void)objc_msgSendSuper(&super,
 			@selector(replaceObjectsInRange:withObjects:count:),
 			range, objects, count);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	Py_DECREF(objectSeq);
 

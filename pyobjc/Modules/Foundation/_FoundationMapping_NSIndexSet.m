@@ -36,17 +36,17 @@ call_NSIndexSet_getIndexes_maxCount_inIndexRange_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super,
 			 PyObjCSelector_GetClass(method), 
 			 PyObjCObject_GetObject(self));
 		retval = (unsigned)objc_msgSendSuper(&super, 
 				PyObjCSelector_GetSelector(method), 
 				buffer, maxCount, range);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		retval = 0;
-										        NS_ENDHANDLER
+										        PyObjC_ENDHANDLER
 
 	if (retval == 0 && PyErr_Occurred()) {
 		free(buffer);

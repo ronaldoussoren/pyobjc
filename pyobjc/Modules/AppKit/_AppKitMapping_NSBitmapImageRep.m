@@ -24,7 +24,7 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuperCls(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCClass_GetClass(self));
@@ -32,10 +32,10 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
 		(void)objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method),
 				&list, &numTypes);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		list = NULL; numTypes = -1;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (list == NULL && PyErr_Occurred()) {
 		return NULL;
