@@ -14,10 +14,13 @@ PyObjC NEWS</title>
 <li>(UNFINISHED) New RemotePyInterpreter example that demonstrates an
 out-of-process Python interpreter (primarily for IDE uses).</li>
 <li>New IDNSnitch example in Inject that demonstrates how to write an
-application that detects the launch of another application,
-uses <code><span>objc.inject</span></code> to load code into it, and how to override the
-implementation of an existing method but still call back into the
-original implementation (method swizzling).</li>
+monitor for the launch of another application,
+use <code><span>objc.inject</span></code> to load code into a target process,
+and override the implementation of an existing method but still
+call back into the original implementation (method swizzling).</li>
+<li><code><span>objc.IMP</span></code> should do the right thing now.  This type is returned
+by <code><span>+[NSObject</span> <span>methodForSelector:]</span></code> and
+<code><span>+[NSObject</span> <span>instanceMethodForSelector:]</span></code></li>
 <li>New ToDos example in CocoaBindings that demonstrates how to use
 two array controllers for the same data, and how to use value
 transformers to alter the color of text.  Originally from
