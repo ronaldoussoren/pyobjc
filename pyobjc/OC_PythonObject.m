@@ -286,7 +286,7 @@ get_method_for_selector (PyObject *obj, SEL aSelector)
 	      NS_HANDLER
 		Py_DECREF(args);
 	        fprintf (stderr, "error getting type of arg %d\n", i);
-		//! [super forwardInvocation:invocation];
+		[super forwardInvocation:invocation];
 		return;
 	      NS_ENDHANDLER
 		
@@ -314,11 +314,10 @@ get_method_for_selector (PyObject *obj, SEL aSelector)
 	      else
 		[invocation setReturnValue:retbuffer];
 	    }
-	  return;
         }
     }
 
-  //! [super forwardInvocation:invocation];    
+  [super forwardInvocation:invocation];    
 }    
 
 
