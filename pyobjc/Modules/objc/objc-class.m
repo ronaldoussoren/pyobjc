@@ -392,7 +392,6 @@ class_getattro(PyObject* self, PyObject* name)
 	struct class_info* info;
 	int                magic;
 
-	/* Try to get rid of MaybeRescan... */
 	info = get_class_info(self);
 	if (info->method_magic != (magic = objc_methodlist_magic(info->class))){
 		int r;
@@ -407,6 +406,7 @@ class_getattro(PyObject* self, PyObject* name)
 		r = ObjC_AddConvenienceMethods(info->class, 
 			((PyTypeObject*)self)->tp_dict);
 		if (r < 0) {
+			PyErr_Print();
 			PyErr_SetString(PyExc_RuntimeError,
 				"Cannot rescan method table");
 			return NULL;

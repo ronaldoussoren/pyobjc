@@ -61,6 +61,29 @@ static	char* keywords[] = { NULL };
 	return Py_None;
 }
 
+static PyObject*
+objc_set_class_extender(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static 	char* keywords[] = { "callback", NULL };
+	PyObject* callback;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:set_class_extender",
+			keywords, &callback)) {
+		return NULL;
+	}
+
+	if (!PyCallable_Check(callback)) {
+		PyErr_SetString(PyExc_TypeError, "Expecting callable");
+		return NULL;
+	}
+	
+	Py_XDECREF(ObjC_class_extender);
+	ObjC_class_extender = callback;
+	Py_INCREF(ObjC_class_extender);
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 
 
 static PyObject* 
@@ -97,6 +120,7 @@ static 	char* keywords[] = { "class_name", "selector", "signature", NULL };
 static PyMethodDef meta_methods[] = {
 	{ "lookup_class", (PyCFunction)objc_lookup_class, METH_VARARGS|METH_KEYWORDS, objc_lookup_class_doc },
 	{ "class_list", (PyCFunction)objc_class_list, METH_NOARGS, ""},
+	{ "set_class_extender", (PyCFunction)objc_set_class_extender, METH_VARARGS|METH_KEYWORDS, ""},
 	{ "set_signature_for_selector", (PyCFunction)objc_set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, "" },
 	{ "recycle_autorelease_pool", (PyCFunction)objc_recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, objc_recycle_autorelease_pool_doc },
 	{ 0, 0, 0, 0 } /* sentinel */
@@ -169,12 +193,6 @@ void init_objc(void)
 	PyDict_SetItemString(d, "ivar", (PyObject*)&ObjCIvar_Type);
 	PyDict_SetItemString(d, "informal_protocol", (PyObject*)&ObjCInformalProtocol_Type);
 
-	convenience_dict = PyDict_New();
-	if (convenience_dict == NULL) return;
-
-	Py_INCREF(convenience_dict);
-	PyDict_SetItemString(d, "CONVENIENCE_METHODS", convenience_dict);
-
 	allocator_dict = PyDict_New();
 	if (allocator_dict == NULL) return;
 
@@ -195,6 +213,6 @@ void init_objc(void)
 	}
 
 	PyDict_SetItemString(d, "__version__", 
-		PyString_FromString(PYOBJC_VERSION));
+		PyString_FromString(OBJC_VERSION));
 
 }

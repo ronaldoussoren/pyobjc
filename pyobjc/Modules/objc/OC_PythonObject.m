@@ -929,5 +929,4 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	return PyObject_DelItem([self pyObject], [key pyObject]);
 }
 
-
 @end /* OC_PythonObject class implementation */

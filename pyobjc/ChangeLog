@@ -8,6 +8,9 @@
 	  contains a reference to the class that defined this method.
 	* Added type objc.informal_protocol, which can be used to eliminate
 	  most existing cases of explicit calls to 'objc.selector'
+	* Adding methods like __getitem__ to Objective-C class proxies is
+	  now done using python code. This should make it easier to change
+	  the implementation (and: less C code ==> good)
 
 2002-10-17  Bill Bumgarner  <bbum@codefab.com>
 	* Fixed a situation where ObjCErr_ToObjC() would crash if the

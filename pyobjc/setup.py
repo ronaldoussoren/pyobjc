@@ -62,6 +62,8 @@ sourceFiles = [
 	"Modules/objc/OC_PythonInt.m",
 	"Modules/objc/OC_PythonObject.m",
 	"Modules/objc/OC_PythonString.m",
+	"Modules/objc/OC_PythonArray.m",
+	"Modules/objc/OC_PythonDictionary.m",
 	"Modules/objc/register.m",
 	"Modules/objc/pyobjc-api.m",
 	"Modules/objc/module.m",
@@ -125,11 +127,23 @@ CocoaExtensions = [
 AddressBookPackages, AddressBookExtensions = \
 	IfFrameWork('AddressBook.framework', [ 'AddressBook' ], [])
 
+
+def package_version():
+	fp = open('Modules/objc/pyobjc.h', 'r')
+	for ln in fp.readlines():
+		if ln.startswith('#define OBJC_VERSION'):
+			fp.close()
+			return ln.split()[-1][1:-1]
+	
+	raise ValueError, "Version not found"
+
+
 try:
+
     setup (name = "pyobjc",
-           version = "0.7.0",
+           version = package_version(),
            description = "Python<->ObjC Interoperability Module",
-           author = "bbum, SteveM, many others stretching back through the reachtes of time...",
+           author = "bbum, RonaldO, SteveM, many others stretching back through the reachtes of time...",
            author_email = "pyobjc-dev@lists.sourceforge.net",
 	   url = "http://pyobjc.sourceforge.net/",
            ext_modules = (

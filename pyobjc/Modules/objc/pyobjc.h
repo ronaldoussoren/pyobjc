@@ -6,9 +6,11 @@
 #include <Python.h>
 #include <objc/objc-runtime.h>
 #include "OC_PythonObject.h"
+#include "OC_PythonArray.h"
+#include "OC_PythonDictionary.h"
 #include "super-call.h"
 
-#define PYOBJC_VERSION "0.7.1"
+#define OBJC_VERSION "0.7.1"
 
 #ifdef MACOSX
 

@@ -16,21 +16,32 @@ use it.
 Overview
 --------
 
-TODO
+Using PyObjC is pretty simple, as it strives to make the bridge completely
+transparent. On the lowest level you can import the 'objc' module and use that
+to locate classes (objc.lookup_class). For most users it is more usefull to
+just import 'Foundation' and 'AppKit' and use the familiar Cocoa classes
+and functions.
 
+Objective-C classes are make available as new-style classes, and can be queried
+using the normal introspection techniques. 
 
-Variables and Constants
------------------------
+Methodnames for Objective-C classes are constructed as follows: Concatenate all 
+elements of the selector and replace colons by underscores. 
 
-TODO
+The order of arguments is the same as in Objective-C, with one exception: If
+a method as output-only arguments those arguments are not present in the python
+version of the method. If a method has output parameters (either input-output
+or output-only) the values of these parameters are passed back in the return
+value of the python version. The return value of methods with output parameters
+is a tuple where the first element is the return-value of the Objective-C 
+method (or None if it is a method returning 'void') and the other elements are
+the values of output arguments.
 
-
-Functions
----------
-
-TODO
-
-
+The type objc.informal_protocol can be used to specify the selectors used by
+(informal) protocols in Objective-C. Instances of objc.informal_protocol are
+used when defineing subclasses of Objective-C classes and signal that the class
+implements the given protocol. The AppKit and Foundation modules export a 
+number of usefull protocols.
 
 Limitations
 -----------
@@ -40,9 +51,14 @@ the easy case where there are no methods with variable arguments or
 pass-by-reference arguments. If there are, the core module needs some help.
 
 For this reason it is best to not use just the core API when your working with
-this module, but to use packages like 'Cocoa' that provide the help needed and
-might also wrap other functionality (constants, functions) in a framework.
+this module, but to use packages like 'Foundation' that provide the help 
+needed and might also wrap other functionality (constants, functions) in a framework.
 
+The current version of the module does not provide support for threading. It
+might be possible to create threads using the 'thread' module if you manually
+create an NSAutoreleasePool for the thread. This has not been tested. The
+Cocoa threading classes should not be used because they don't update the 
+state of the Python interpreter when creating a new thread.
 
 C API
 -----
