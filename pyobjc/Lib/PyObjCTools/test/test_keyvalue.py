@@ -12,7 +12,8 @@ from PyObjCTools.KeyValueCoding import *
 from objc.test.keyvaluehelper import *
 import objc
 import unittest
-from  objc.test import ctests
+from objc.test import ctests
+from Foundation import *
 
 
 class KeyValueClass5 (object):
@@ -59,7 +60,7 @@ class KeyValueClass6 (object):
 
     roprop = property(lambda self: u"read-only")
 
-class KeyValueClass7 (objc.runtime.NSObject):
+class KeyValueClass7 (NSObject):
     def init(self):
         self = super(KeyValueClass7, self).init()
         self.key3 = 3
@@ -89,7 +90,7 @@ class KeyValueClass7 (objc.runtime.NSObject):
     def keyM(self):
         return u"m"
 
-class KeyValueClass8 (objc.runtime.NSObject):
+class KeyValueClass8 (NSObject):
     __slots__ = ('foo', )
 
     def init(self):
@@ -212,11 +213,11 @@ class OcKeyValueCoding (unittest.TestCase):
 
         self.assertEquals(o.valueForKey_(u"keyM"), u"m")
 
-        a = objc.runtime.NSMutableArray.array()
+        a = NSMutableArray.array()
         a.addObject_(o)
         a.addObject_({u"keyM": u"5"})
-        a.addObject_(objc.runtime.NSDictionary.dictionaryWithObject_forKey_(u"foo", u"keyM"))
-        b = objc.runtime.NSMutableArray.arrayWithObjects_(u"m", u"5", u"foo", None)
+        a.addObject_(NSDictionary.dictionaryWithObject_forKey_(u"foo", u"keyM"))
+        b = NSMutableArray.arrayWithObjects_(u"m", u"5", u"foo", None)
 
 
         # See Modules/objc/unittest.m for an explantion of this test

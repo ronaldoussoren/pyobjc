@@ -2,9 +2,10 @@ import unittest
 
 import objc
 
+NSObject = objc.lookUpClass('NSObject')
+
 class TestRegressions(unittest.TestCase):
     def testNSObjectRespondsToCommonMethods(self):
-        NSObject=objc.runtime.NSObject
         self.assert_(NSObject.pyobjc_classMethods.respondsToSelector_('alloc'))
         self.assert_(NSObject.instancesRespondToSelector_('init'))
         self.assert_(not NSObject.instancesRespondToSelector_('frodel'))
@@ -41,7 +42,7 @@ class TestRegressions(unittest.TestCase):
 
         try:
             for clsName in [ 'NSURL', 'NSObject', 'NSArray' ]:
-                d = getattr(objc.runtime, clsName).alloc()
+                d = objc.lookUpClass(clsName).alloc()
                 del d
 
         finally:
@@ -55,7 +56,7 @@ class TestRegressions(unittest.TestCase):
             category=objc.UninitializedDeallocWarning)
         sys.stderr = io = StringIO.StringIO()
         try:
-            d = objc.runtime.NSObject.alloc()
+            d = NSObject.alloc()
             del d
 
         finally:

@@ -6,35 +6,21 @@ documentation for details on how to use these functions and classes.
 """
 
 
-import objc as _objc
+def _initialize():
+    from Foundation import NSBundle
+    import objc
+    p = objc.pathForFramework(u"/System/Library/Frameworks/Message.framework")
+    objc.loadBundle("Message", globals(), bundle_path=p)
 
-if _objc.platform == 'MACOSX':
-    _objc.loadBundle(
-        "Message",
-        globals(),
-        bundle_path=_objc.pathForFramework(
-            u"/System/Library/Frameworks/Message.framework")
-    )
-else:
-    _objc.loadBundle(
-        "Message",
-        globals(),
-        bundle_path=_objc.pathForFramework(
-            u"/System/Library/Frameworks/Message.framework")
-    )
-
-b =  _objc.runtime.NSBundle.bundleWithPath_(_objc.pathForFramework(
-        u'/System/Library/Frameworks/Message.framework'))
-b.load()
-
-# XXX: Need to generate this part
-_objc.loadBundleVariables(b, globals(), [ 
-        (u'NSMIMEMailFormat', _objc._C_ID),
-        (u'NSASCIIMailFormat', _objc._C_ID),
-        (u'NSSMTPDeliveryProtocol', _objc._C_ID),
-        (u'NSSendmailDeliveryProtocol', _objc._C_ID),
-])
-del b
+    b = NSBundle.bundleWithPath_(p)
+    # XXX: Need to generate this part
+    objc.loadBundleVariables(b, globals(), [
+            (u'NSMIMEMailFormat', objc._C_ID),
+            (u'NSASCIIMailFormat', objc._C_ID),
+            (u'NSSMTPDeliveryProtocol', objc._C_ID),
+            (u'NSSendmailDeliveryProtocol', objc._C_ID),
+    ])
+_initialize()
 
 # Define useful utility methods here
 
