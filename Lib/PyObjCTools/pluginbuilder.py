@@ -54,8 +54,9 @@ CODE="""\
 	NSBundle* bundle;
 	NSString* mainPath;
 	FILE*     fp;
+        PyObject *m, *d, *v;
 
-        NSLog(@"Loading prefpane %(MAINFILE)s %(BUNDLE)s");
+        //NSLog(@"Loading prefpane %(MAINFILE)s %(BUNDLE)s");
 
 	bundle = [NSBundle bundleForClass:self];
 	[bundle load];
@@ -75,10 +76,69 @@ CODE="""\
 
 	fp = fopen([mainPath cString], "r");
 	if (fp == NULL) {
-		abort();
+		[NSException raise:NSInternalInconsistencyException 
+			format:@"Cannot open %(MAINFILE)s in bundle %%@",
+			bundle];
 	}
 
-	PyRun_SimpleFile(fp, [mainPath cString]);
+        /*
+         * We cannot use 'PyRun_SimpleFile' because that would make it 
+         * too easy to cause interference between two Python based plugins.
+         *
+         * This code works like PyRun_SimpleFile, but runs the code in
+         * a unique module (we hope), that has a __path__ attribute. This way
+         * we don't have to update sys.path, and that will hopefully avoid
+         * most interference between plugins.
+         *
+	 * PyRun_SimpleFile(fp, [mainPath cString]);
+         */
+        m = PyImport_AddModule("__main_%(BUNDLE)s__");
+        if (m == NULL) {
+                PyErr_Print();
+		[NSException raise:NSInternalInconsistencyException 
+			format:@"Cannot create main module for bundle %%@",
+			bundle];
+	}
+
+        PyModule_AddStringConstant(m, "__file__", (char*)[mainPath cString]);
+        PyModule_AddStringConstant(m, "__path__", 
+                    (char*)[[bundle resourcePath] cString]);
+        d = PyModule_GetDict(m);
+        if (d == NULL) {
+                PyErr_Print();
+		[NSException raise:NSInternalInconsistencyException 
+			format:@"Failed to initialize bundle %%@",
+			bundle];
+        }
+
+        if (PyDict_GetItemString(d, "__builtins__") == NULL) {
+            PyObject* bimod = PyImport_ImportModule("__builtin__");
+            if (bimod == NULL || PyDict_SetItemString(d, "__builtins__", bimod) != 0) {
+                PyErr_Print();
+		[NSException raise:NSInternalInconsistencyException 
+			format:@"Failed to initialize bundle %%@",
+			bundle];
+            }
+            Py_XDECREF(bimod);
+        }
+
+        if (PyErr_Occurred()) {
+                PyErr_Print();
+		[NSException raise:NSInternalInconsistencyException 
+			format:@"Failed to initialize bundle %%@",
+			bundle];
+        }
+        v = PyRun_File(fp, [mainPath cString], Py_file_input, d, d);
+        if (v == NULL) {
+            PyErr_Print();
+	    [NSException raise:NSInternalInconsistencyException 
+		format:@"Failed to initialize bundle %%@",
+		bundle];
+        }
+        Py_DECREF(v);
+        if (Py_FlushLine()) {
+            PyErr_Clear();
+        }
 }
 
 @end
