@@ -702,104 +702,104 @@ void init_AppKit(void)
 
 #ifndef GNUSTEP
 	/* NSOpenGL.h */
-	INT_VAR(NSOPENGL_CURRENT_VERSION);
+	add_int(d, "NSOPENGL_CURRENT_VERSION", NSOPENGL_CURRENT_VERSION);
 
 	/* NSStatusBar.h */
-	INT_VAR(NSVariableStatusItemLength);
-	INT_VAR(NSSquareStatusItemLength);
+	add_int(d, "NSVariableStatusItemLength", NSVariableStatusItemLength);
+	add_int(d, "NSSquareStatusItemLength", NSSquareStatusItemLength);
 
 	/* NSTypesetter.h */
-	INT_VAR(NSBaselineNotSet);
-	INT_VAR(NumGlyphsToGetEachTime);
+	add_int(d, "NSBaselineNotSet", NSBaselineNotSet);
+	add_int(d, "NumGlyphsToGetEachTime", NumGlyphsToGetEachTime);
 #endif
 
 	/* NSWindow.h */
-	INT_VAR(NSNormalWindowLevel);
-	INT_VAR(NSFloatingWindowLevel);
-	INT_VAR(NSSubmenuWindowLevel);
-	INT_VAR(NSTornOffMenuWindowLevel);
-	INT_VAR(NSMainMenuWindowLevel);
-	INT_VAR(NSStatusWindowLevel);
-	INT_VAR(NSModalPanelWindowLevel);
-	INT_VAR(NSPopUpMenuWindowLevel);
-	INT_VAR(NSScreenSaverWindowLevel);
+	add_int(d, "NSNormalWindowLevel", NSNormalWindowLevel);
+	add_int(d, "NSFloatingWindowLevel", NSFloatingWindowLevel);
+	add_int(d, "NSSubmenuWindowLevel", NSSubmenuWindowLevel);
+	add_int(d, "NSTornOffMenuWindowLevel", NSTornOffMenuWindowLevel);
+	add_int(d, "NSMainMenuWindowLevel", NSMainMenuWindowLevel);
+	add_int(d, "NSStatusWindowLevel", NSStatusWindowLevel);
+	add_int(d, "NSModalPanelWindowLevel", NSModalPanelWindowLevel);
+	add_int(d, "NSPopUpMenuWindowLevel", NSPopUpMenuWindowLevel);
+	add_int(d, "NSScreenSaverWindowLevel", NSScreenSaverWindowLevel);
 
 
-	INT_VAR(NSNoCellMask);
-	INT_VAR(NSContentsCellMask);
-	INT_VAR(NSPushInCellMask);
-	INT_VAR(NSChangeGrayCellMask);
-	INT_VAR(NSChangeBackgroundCellMask);
-	INT_VAR(NSColorPanelGrayModeMask);
-	INT_VAR(NSColorPanelRGBModeMask);
-	INT_VAR(NSColorPanelCMYKModeMask);
-	INT_VAR(NSColorPanelHSBModeMask);
-	INT_VAR(NSColorPanelCustomPaletteModeMask);
-	INT_VAR(NSColorPanelColorListModeMask);
-	INT_VAR(NSColorPanelWheelModeMask);
+	add_int(d, "NSNoCellMask", NSNoCellMask);
+	add_int(d, "NSContentsCellMask", NSContentsCellMask);
+	add_int(d, "NSPushInCellMask", NSPushInCellMask);
+	add_int(d, "NSChangeGrayCellMask", NSChangeGrayCellMask);
+	add_int(d, "NSChangeBackgroundCellMask", NSChangeBackgroundCellMask);
+	add_int(d, "NSColorPanelGrayModeMask", NSColorPanelGrayModeMask);
+	add_int(d, "NSColorPanelRGBModeMask", NSColorPanelRGBModeMask);
+	add_int(d, "NSColorPanelCMYKModeMask", NSColorPanelCMYKModeMask);
+	add_int(d, "NSColorPanelHSBModeMask", NSColorPanelHSBModeMask);
+	add_int(d, "NSColorPanelCustomPaletteModeMask", NSColorPanelCustomPaletteModeMask);
+	add_int(d, "NSColorPanelColorListModeMask", NSColorPanelColorListModeMask);
+	add_int(d, "NSColorPanelWheelModeMask", NSColorPanelWheelModeMask);
 #ifndef GNUSTEP
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
-	INT_VAR(NSColorPanelCrayonModeMask);
+	add_int(d, "NSColorPanelCrayonModeMask", NSColorPanelCrayonModeMask);
 #endif
 #endif
-	INT_VAR(NSColorPanelAllModesMask);
-	INT_VAR(NSLeftMouseDownMask);
-	INT_VAR(NSLeftMouseUpMask);
-	INT_VAR(NSRightMouseDownMask);
-	INT_VAR(NSRightMouseUpMask);
-	INT_VAR(NSMouseMovedMask);
-	INT_VAR(NSLeftMouseDraggedMask);
-	INT_VAR(NSRightMouseDraggedMask);
-	INT_VAR(NSMouseEnteredMask);
-	INT_VAR(NSMouseExitedMask);
-	INT_VAR(NSKeyDownMask);
-	INT_VAR(NSKeyUpMask);
-	INT_VAR(NSFlagsChangedMask);
-	INT_VAR(NSAppKitDefinedMask);
-	INT_VAR(NSSystemDefinedMask);
-	INT_VAR(NSApplicationDefinedMask);
-	INT_VAR(NSPeriodicMask);
-	INT_VAR(NSCursorUpdateMask);
-	INT_VAR(NSScrollWheelMask);
-	INT_VAR(NSOtherMouseDownMask);
-	INT_VAR(NSOtherMouseUpMask);
-	INT_VAR(NSOtherMouseDraggedMask);
-	INT_VAR(NSAnyEventMask);
-	INT_VAR(NSAlphaShiftKeyMask);
-	INT_VAR(NSShiftKeyMask);
-	INT_VAR(NSControlKeyMask);
-	INT_VAR(NSAlternateKeyMask);
-	INT_VAR(NSCommandKeyMask);
-	INT_VAR(NSNumericPadKeyMask);
-	INT_VAR(NSHelpKeyMask);
-	INT_VAR(NSFunctionKeyMask);
-	INT_VAR(NSItalicFontMask);
-	INT_VAR(NSBoldFontMask);
-	INT_VAR(NSUnboldFontMask);
-	INT_VAR(NSNonStandardCharacterSetFontMask);
-	INT_VAR(NSNarrowFontMask);
-	INT_VAR(NSExpandedFontMask);
-	INT_VAR(NSCondensedFontMask);
-	INT_VAR(NSSmallCapsFontMask);
-	INT_VAR(NSPosterFontMask);
-	INT_VAR(NSCompressedFontMask);
-	INT_VAR(NSFixedPitchFontMask);
-	INT_VAR(NSUnitalicFontMask);
-	INT_VAR(NSUtilityWindowMask);
-	INT_VAR(NSDocModalWindowMask);
+	add_int(d, "NSColorPanelAllModesMask", NSColorPanelAllModesMask);
+	add_int(d, "NSLeftMouseDownMask", NSLeftMouseDownMask);
+	add_int(d, "NSLeftMouseUpMask", NSLeftMouseUpMask);
+	add_int(d, "NSRightMouseDownMask", NSRightMouseDownMask);
+	add_int(d, "NSRightMouseUpMask", NSRightMouseUpMask);
+	add_int(d, "NSMouseMovedMask", NSMouseMovedMask);
+	add_int(d, "NSLeftMouseDraggedMask", NSLeftMouseDraggedMask);
+	add_int(d, "NSRightMouseDraggedMask", NSRightMouseDraggedMask);
+	add_int(d, "NSMouseEnteredMask", NSMouseEnteredMask);
+	add_int(d, "NSMouseExitedMask", NSMouseExitedMask);
+	add_int(d, "NSKeyDownMask", NSKeyDownMask);
+	add_int(d, "NSKeyUpMask", NSKeyUpMask);
+	add_int(d, "NSFlagsChangedMask", NSFlagsChangedMask);
+	add_int(d, "NSAppKitDefinedMask", NSAppKitDefinedMask);
+	add_int(d, "NSSystemDefinedMask", NSSystemDefinedMask);
+	add_int(d, "NSApplicationDefinedMask", NSApplicationDefinedMask);
+	add_int(d, "NSPeriodicMask", NSPeriodicMask);
+	add_int(d, "NSCursorUpdateMask", NSCursorUpdateMask);
+	add_int(d, "NSScrollWheelMask", NSScrollWheelMask);
+	add_int(d, "NSOtherMouseDownMask", NSOtherMouseDownMask);
+	add_int(d, "NSOtherMouseUpMask", NSOtherMouseUpMask);
+	add_int(d, "NSOtherMouseDraggedMask", NSOtherMouseDraggedMask);
+	add_int(d, "NSAnyEventMask", NSAnyEventMask);
+	add_int(d, "NSAlphaShiftKeyMask", NSAlphaShiftKeyMask);
+	add_int(d, "NSShiftKeyMask", NSShiftKeyMask);
+	add_int(d, "NSControlKeyMask", NSControlKeyMask);
+	add_int(d, "NSAlternateKeyMask", NSAlternateKeyMask);
+	add_int(d, "NSCommandKeyMask", NSCommandKeyMask);
+	add_int(d, "NSNumericPadKeyMask", NSNumericPadKeyMask);
+	add_int(d, "NSHelpKeyMask", NSHelpKeyMask);
+	add_int(d, "NSFunctionKeyMask", NSFunctionKeyMask);
+	add_int(d, "NSItalicFontMask", NSItalicFontMask);
+	add_int(d, "NSBoldFontMask", NSBoldFontMask);
+	add_int(d, "NSUnboldFontMask", NSUnboldFontMask);
+	add_int(d, "NSNonStandardCharacterSetFontMask", NSNonStandardCharacterSetFontMask);
+	add_int(d, "NSNarrowFontMask", NSNarrowFontMask);
+	add_int(d, "NSExpandedFontMask", NSExpandedFontMask);
+	add_int(d, "NSCondensedFontMask", NSCondensedFontMask);
+	add_int(d, "NSSmallCapsFontMask", NSSmallCapsFontMask);
+	add_int(d, "NSPosterFontMask", NSPosterFontMask);
+	add_int(d, "NSCompressedFontMask", NSCompressedFontMask);
+	add_int(d, "NSFixedPitchFontMask", NSFixedPitchFontMask);
+	add_int(d, "NSUnitalicFontMask", NSUnitalicFontMask);
+	add_int(d, "NSUtilityWindowMask", NSUtilityWindowMask);
+	add_int(d, "NSDocModalWindowMask", NSDocModalWindowMask);
 #ifndef GNUSTEP
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
-	INT_VAR(NSNonactivatingPanelMask);
+	add_int(d, "NSNonactivatingPanelMask", NSNonactivatingPanelMask);
 #endif
 #endif
-	INT_VAR(NSBorderlessWindowMask);
-	INT_VAR(NSTitledWindowMask);
-	INT_VAR(NSClosableWindowMask);
-	INT_VAR(NSMiniaturizableWindowMask);
-	INT_VAR(NSResizableWindowMask);
+	add_int(d, "NSBorderlessWindowMask", NSBorderlessWindowMask);
+	add_int(d, "NSTitledWindowMask", NSTitledWindowMask);
+	add_int(d, "NSClosableWindowMask", NSClosableWindowMask);
+	add_int(d, "NSMiniaturizableWindowMask", NSMiniaturizableWindowMask);
+	add_int(d, "NSResizableWindowMask", NSResizableWindowMask);
 #ifndef GNUSTEP
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
-	INT_VAR(NSTexturedBackgroundWindowMask);
+	add_int(d, "NSTexturedBackgroundWindowMask", NSTexturedBackgroundWindowMask);
 #endif
 #endif
 

@@ -29,14 +29,6 @@ struct stringtable {
 	NSString* const* value;
 };
 
-#define xSTR(x) #x
-#define STR(x) xSTR(x)
-
-#define CONST_ENTRY(var) { STR(var), var }
-#define STR_ENTRY(var) { STR(var), &var }
-#define STR_VAR(var) if (add_string(d, STR(var), var) < 0) return
-#define INT_VAR(var) if (add_int(d, STR(var), var) < 0) return
-
 static inline int add_double(PyObject*d, char* name, double value)
 {
 	int res;
