@@ -216,3 +216,114 @@ CONVENIENCE_METHODS['removeAllObjects'] = (
 CONVENIENCE_METHODS['dictionaryWithDictionary:'] = (
     ('copy', lambda self: type(self).dictionaryWithDictionary_(self)),
 ) 
+
+
+#
+# NSNumber seems to be and abstract base-class that is implemented using
+# NSCFNumber, a CoreFoundation 'proxy'.
+#
+def _num_to_python(v):
+    """
+    Magic method that converts NSNumber values to Python, see 
+    <Foundation/CFNumber.h> for the magic numbers
+    """
+    print '_num_to_python %s %s'%(type(v), `v`)
+    if hasattr(v, '_cfNumberType'):
+        tp = v._cfNumberType()
+        if tp in [ 1, 2, 3, 7, 8, 9, 10 ]:
+            v = v.longValue()
+        elif tp in [ 4, 11 ]:
+            v = v.longlongValue()
+        elif tp in [ 5, 6, 12, 13 ]:
+            v = v.doubleValue()
+        else:
+            print "Unhandled numeric type: %s"%tp
+
+    return v
+
+def __abs__CFNumber(numA):
+    return abs(_num_to_python(numA))
+
+def __add__CFNumber(numA, numB):
+    return _num_to_python(numA) + _num_to_python(numB)
+
+def __and__CFNumber(numA, numB):
+    return _num_to_python(numA) & _num_to_python(numB)
+
+def __div__CFNumber(numA, numB):
+    return _num_to_python(numA) / _num_to_python(numB)
+
+def __float__CFNumber(numA):
+    return float(_num_to_python(numA))
+
+def __floordiv__CFNumber(numA, numB):
+    return _num_to_python(numA) // _num_to_python(numB)
+
+def __hex__CFNumber(numA):
+    return hex(_num_to_python(numA))
+
+def __int__CFNumber(numA):
+    return int(_num_to_python(numA))
+
+def __invert__CFNumber(numA):
+    return ~_num_to_python(numA)
+
+def __long__CFNumber(numA):
+    return long(_num_to_python(numA))
+
+def __lshift__CFNumber(numA, numB):
+    return _num_to_python(numA) << _num_to_python(numB)
+
+def __rshift__CFNumber(numA, numB):
+    return _num_to_python(numA) >> _num_to_python(numB)
+
+def __mod__CFNumber(numA, numB):
+    return _num_to_python(numA) % _num_to_python(numB)
+
+def __mul__CFNumber(numA, numB):
+    return _num_to_python(numA) * _num_to_python(numB)
+
+def __neg__CFNumber(numA):
+    return -_num_to_python(numA)
+
+def __oct__CFNumber(numA):
+    return oct(_num_to_python(numA))
+
+def __or__CFNumber(numA, numB):
+    return _num_to_python(numA)  | _num_to_python(numB)
+
+def __pos__CFNumber(numA):
+    return +_num_to_python(numA)
+
+def __sub__CFNumber(numA, numB):
+    return _num_to_python(numA)  - _num_to_python(numB)
+
+def __truediv__CFNumber(numA, numB):
+    return _num_to_python(numA) / _num_to_python(numB)
+
+def __xor__CFNumber(numA, numB):
+    return _num_to_python(numA)  ^ _num_to_python(numB)
+
+CONVENIENCE_METHODS['_cfNumberType'] = (
+    ('__abs__', __abs__CFNumber),
+    ('__add__', __add__CFNumber),
+    ('__and__', __and__CFNumber),
+    ('__div__', __div__CFNumber),
+    ('__float__', __float__CFNumber),
+    ('__floordiv__', __floordiv__CFNumber),
+    ('__hex__', __hex__CFNumber),
+    ('__int__', __int__CFNumber),
+    ('__invert__', __invert__CFNumber),
+    ('__long__', __long__CFNumber),
+    ('__lshift__', __lshift__CFNumber),
+    ('__rshift__', __rshift__CFNumber),
+    ('__mod__', __mod__CFNumber),
+    ('__mul__', __mul__CFNumber),
+    ('__neg__', __neg__CFNumber),
+    ('__oct__', __oct__CFNumber),
+    ('__or__', __or__CFNumber),
+    ('__pos__', __pos__CFNumber),
+    ('__sub__', __sub__CFNumber),
+    ('__truediv__', __truediv__CFNumber),
+    ('__xor__', __xor__CFNumber)
+)

@@ -915,6 +915,10 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	}
       else if (PyInt_Check (argument))
 	*(id *) datum = [NSNumber numberWithLong:PyInt_AS_LONG (argument)];
+      else if (PyFloat_Check (argument))
+	*(id *) datum = [NSNumber numberWithDouble:PyFloat_AS_DOUBLE (argument)];
+      else if (PyLong_Check(argument)) 
+	*(id *) datum = [NSNumber numberWithLongLong:PyLong_AsLongLong(argument) ];
       else if (PySequence_Check(argument))  
 	*(id *) datum = [OC_PythonArray newWithPythonObject:argument];
       else if (PyDict_Check(argument))  
