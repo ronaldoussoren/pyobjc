@@ -8,7 +8,7 @@ from plistlib import Plist, Dict
     
 images = [ os.path.join('Images', fn) for fn in os.listdir('Images') if fn.lower().endswith('.tiff') ]
 icons = [ os.path.join('Icons', fn) for fn in os.listdir('Icons') if fn.lower().endswith('.icns') ]
-src = [ fn for fn in os.listdir('.') if fn.endswith('.py') and fn not in ('main.py', 'setup-app.py') ]
+src = [ fn for fn in os.listdir('.') if fn.endswith('.py') and fn not in ('main.py', 'buildapp.py') ]
 
 infoPlist = Plist(
     NSHelpFile='',
