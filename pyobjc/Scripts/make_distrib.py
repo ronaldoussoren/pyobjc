@@ -107,7 +107,8 @@ if not basedir:
 
 print "Generateing HTML documentation"
 os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
-rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt', 'Installer Package/ReadMe.txt'])
+rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt', 'Installer Package/ReadMe.txt', 'ProjectBuilder Extras/Project Templates/00README.txt'])
+os.rename('NEWS', ProjectBuilder Extras/Project Templates/00README.html', 'Doc/ProjectBuilder-Templates.html')
 
 if DOC_ONLY:
     sys.exit(0)
