@@ -10,10 +10,10 @@
 #include <objc/objc-runtime.h>
 #include "pyobjc-api.h"
 
-
+#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_Fnd_NSCoder.inc"
 #include "_Fnd_NSData.inc"
-
+#endif
 
 PyDoc_STRVAR(mapping_doc,
 	"This module registers some utility functions with the PyObjC core \n"

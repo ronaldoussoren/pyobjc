@@ -138,8 +138,9 @@ static	char* keywords[] = { "value", NULL };
 	return Py_None;
 }
 
-
+#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_Fnd_Functions.inc"
+#endif
 
 static PyMethodDef foundation_methods[] = {
 	{ 
@@ -177,8 +178,10 @@ PyDoc_STRVAR(foundation_doc,
 "Cocoa.Foundation."
 );
 
+#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_Fnd_Enum.inc"
 #include "_Fnd_Str.inc"
+#endif
 
 void init_Foundation(void)
 {
@@ -198,7 +201,9 @@ void init_Foundation(void)
 	/* Register information in generated tables */
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_strings(d, string_table) < 0) return;
+#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #	include "_Fnd_Var.inc"
-
+#endif
+    
 	/* Add manual registrations below */
 }
