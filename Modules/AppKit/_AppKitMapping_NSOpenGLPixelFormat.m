@@ -41,7 +41,6 @@ call_NSOpenGLPixelFormat_initWithAttributes_(
 	}
     
 	for (i=0; i<count; ++i) {
-		int r;
 		PyObjC_PythonToObjC(
 			@encode(GLuint), 
 			PySequence_Fast_GET_ITEM(seq, i),

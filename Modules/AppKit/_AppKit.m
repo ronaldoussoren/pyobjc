@@ -620,8 +620,9 @@ fontMatrix(PyObject* d, const char* name, const float* value)
 #include "_AppKitMapping_NSBitmap.m"
 #include "_AppKitMapping_NSBitmapImageRep.m"
 #include "_AppKitMapping_NSFont.m"
-#include "_AppKitMapping_NSMatrix.m"
+#include "_AppKitMapping_NSGraphicsContext.m"
 #include "_AppKitMapping_NSLayoutManager.m"
+#include "_AppKitMapping_NSMatrix.m"
 #include "_AppKitMapping_NSMovie.m"
 #include "_AppKitMapping_NSOpenGLContext.m"
 #include "_AppKitMapping_NSOpenGLPixelFormat.m"
@@ -720,6 +721,7 @@ void init_AppKit(void)
 	if (_pyobjc_install_NSBitmap() < 0) return;
 	if (_pyobjc_install_NSBitmapImageRep() < 0) return;
 	if (_pyobjc_install_NSFont() < 0) return;
+    if (_pyobjc_install_NSGraphicsContext() < 0) return;
 	if (_pyobjc_install_NSLayoutManager() < 0) return;
 	if (_pyobjc_install_NSMatrix() < 0) return;
 	if (_pyobjc_install_NSMovie() < 0) return;
