@@ -282,7 +282,6 @@
 				F60DD8BE0358A22201C8ED3C,
 				F60DD8BF0358A22201C8ED3C,
 				77B645D803D453C7004531D0,
-				77AD475903ECA8A1004B557F,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,18 +350,18 @@
 //772
 //773
 //774
+		7747BB0A03EEAEB40066FBB1 = {
+			fileRef = 77AD459403ECA7A6004B557F;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		77AD459403ECA7A6004B557F = {
 			includeInIndex = 1;
 			isa = PBXFolderReference;
 			name = PyObjC;
 			path = "/usr/lib/python2.2/site-packages/PyObjC";
 			refType = 0;
-		};
-		77AD475903ECA8A1004B557F = {
-			fileRef = 77AD459403ECA7A6004B557F;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		77B645D703D453C7004531D0 = {
 			fileEncoding = 4;
@@ -469,6 +468,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				7747BB0A03EEAEB40066FBB1,
 			);
 			isa = PBXCopyFilesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 1;

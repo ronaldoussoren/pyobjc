@@ -89,7 +89,7 @@ CONVENIENCE_METHODS['count'] = (
 )
 
 CONVENIENCE_METHODS['description'] = (
-    ('__repr__', lambda self: self.description()),
+#    ('__repr__', lambda self: self.description()),
     ('__str__', lambda self: self.description()),
 )
 
