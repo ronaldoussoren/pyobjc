@@ -1,7 +1,7 @@
 <?
     $title = "Odd features";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:46 $';
 
     include "header.inc";
 ?>
@@ -21,7 +21,10 @@ this when translating from Objective-C to python.</li>
 <li>Some Cocoa classes store references to objects while not increasing the 
 reference count. One of those is NSOutlineView. A side-effect of this is that
 you <em>must</em> use subclasses of NSObject in your NSOutlineView model, and you
-<em>must</em> keep a reference to the objects you pass to NSOutlineView.</li>
+<em>must</em> keep a reference to the objects you pass to NSOutlineView.  Another
+gotcha is when you're manually allocating and assigning delegate(-like)
+objects: most of the time obj.setDelegate_() will <em>not</em> retain the delegate,
+so you must keep a reference manually.</li>
 </ul>
 </div>
 <?

@@ -1,7 +1,7 @@
 <?
     $title = "Structure of the PyObjC package";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:46 $';
 
     include "header.inc";
 ?>
@@ -13,6 +13,7 @@ HTML. -->
 <h1><a name="introduction">Introduction</a></h1>
 <p>This document gives an overview of the PyObjC for developers (of the package).</p>
 <p>One of the sections describes how all of it works, and some of the limitation.</p>
+<p>This document is a little dated, it should be updated.</p>
 </div>
 <div class="section" id="methods">
 <h1><a name="methods">Methods</a></h1>

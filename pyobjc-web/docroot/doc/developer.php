@@ -1,7 +1,7 @@
 <?
 $title = "Developer Documentation";
 $cvs_author = '$Author: ronaldoussoren $';
-$cvs_date = '$Date: 2003/05/04 12:56:38 $';
+$cvs_date = '$Date: 2003/07/05 14:59:46 $';
 
 include "header.inc";
 ?>
@@ -22,7 +22,6 @@ There is actually a good chunk of developer documentation in the source tree (th
 <LI><A HREF="structure.php">Structure of the PyObjC package</A>
 <LI><A HREF="architecture.php">PyObjC Architecture</A>
 <LI><A HREF="classes.php">Python classes and Objective-C code</A>
-<LI><A HREF="libffi.php">Using LibFFI with PyObjC</A>
 <!-- /DEVDOC -->
 </ul>
 

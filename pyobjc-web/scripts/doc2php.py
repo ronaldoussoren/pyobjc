@@ -17,7 +17,7 @@ PHP_HEADER='''\
 <?
     $title = "%(title)s";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/05/07 17:47:07 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:47 $';
 
     include "header.inc";
 ?>'''
@@ -56,14 +56,16 @@ def copy_project_docs(srctree):
                     for fn in os.listdir(docdir) if fn.endswith('.txt') ]
     docs.append(os.path.join(srctree, 'Install.txt'))
     docs.append(os.path.join(docdir, 'tutorial', 'tutorial.txt'))
+    docs.append(os.path.join(docdir, 'tutorial_embed', 'extending_objc_with_python.txt'))
 
     alldocs = {}
 
     for fname in docs:
+        print "-", fname
         docinfo = {}
 
         bn = os.path.split(fname)[-1]
-        if bn == 'index.txt':
+        if bn in ('index.txt', 'announcement.txt'):
             continue
         if extra_info.has_key(bn):
             docinfo.update(extra_info[bn])
@@ -160,6 +162,23 @@ def copy_project_docs(srctree):
     for fn in files:
         if fn.endswith('.nib') or fn.endswith('.py'):
             dstname = os.path.join('docroot', 'doc', fn)
+            if os.path.exists(dstname):
+                if os.path.isdir(dstname):
+                    shutil.rmtree(dstname)
+                else:
+                    os.unlink(dstname)
+            if os.path.isdir(os.path.join(tutdir, fn)):
+                shutil.copytree(os.path.join(tutdir, fn), dstname)
+            else:
+                shutil.copy(os.path.join(tutdir, fn), dstname)
+
+    tutdir = os.path.join(docdir, 'tutorial_embed', 'src')
+    files = os.listdir(tutdir)
+    if not os.path.exists(os.path.join('docroot', 'doc', 'src')):
+        os.mkdir(os.path.join('docroot', 'doc', 'src'))
+    for fn in files:
+        if fn.endswith('.nib') or fn.endswith('.py') or fn.endswith('.h') or fn.endswith('.m'):
+            dstname = os.path.join('docroot', 'doc', 'src', fn)
             if os.path.exists(dstname):
                 if os.path.isdir(dstname):
                     shutil.rmtree(dstname)

@@ -1,7 +1,7 @@
 <?
     $title = "Python classes and Objective-C code";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:46 $';
 
     include "header.inc";
 ?>
@@ -24,14 +24,13 @@ proxy object will forward all method calls from Objective-C to python, and
 will return the results back to Objective-C.</p>
 <p>See the section 'Method protocol' for a description of how PyObjC translates 
 between Python and Objective-C method calls.</p>
-<p>Other than being a plain proxy the OC_PythonObject class also provides an
-Objective-C flavored version of the Python C-API.</p>
-<!-- Is anyone actually using the Objective-C version of the Python C-API? -->
-<p>A number of Python types/classes are treated specially:
-- Python numbers are translated into NSNumber instances
-- Python strings and unicode objects are translated into NSString instances
-- Python dictionaries are proxied using OC_PythonDictionary, a subclass of NSMutableDictionary. This allows you to use a Python dictionary everywhere where an NSDictionary is expected.
-- Python lists or tuples are proxied using OC_PythonArray, a subclas of NSMutableArray. This allows you to use a Python list or tuple everywhere where an NSArray is expected.</p>
+<p>A number of Python types/classes are treated specially:</p>
+<ul class="simple">
+<li>Python numbers are translated into NSNumber instances</li>
+<li>Python strings and unicode objects are translated into NSString instances</li>
+<li>Python dictionaries are proxied using OC_PythonDictionary, a subclass of NSMutableDictionary. This allows you to use a Python dictionary everywhere where an NSDictionary is expected.</li>
+<li>Python lists or tuples are proxied using OC_PythonArray, a subclas of NSMutableArray. This allows you to use a Python list or tuple everywhere where an NSArray is expected.</li>
+</ul>
 <p>The special cases allow for more transparent bridging between Python and
 Objective-C.</p>
 </div>

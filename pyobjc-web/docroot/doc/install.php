@@ -1,7 +1,7 @@
 <?
     $title = "Installation Instructions";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:46 $';
 
     include "header.inc";
 ?>
@@ -42,9 +42,9 @@ against the correct version of python.</p>
 </div>
 <div class="section" id="examples">
 <h1><a name="examples">Examples</a></h1>
-<p>The examples directory contains a number of projects that demonstrate
+<p>The <a class="reference" href="Examples/00ReadMe.html">examples directory</a> contains a number of projects that demonstrate
 various features of the PyObjC bridge. The scripts at the top level of
-the examples directory were mostly written to test a particular
+the <a class="reference" href="Examples/00ReadMe.html">examples directory</a> were mostly written to test a particular
 feature of the bridge (or document a bug until a fix could be found).</p>
 <p>CurrencyConverter and TableModel are both examples of standalone
 Cocoa-Python applications.  To build and execute:</p>
@@ -52,15 +52,18 @@ Cocoa-Python applications.  To build and execute:</p>
 % cd TableModel
 % python buildapp.py build
 </pre>
-<p>The WebServicesTool and TableModel2 are both examples of Cocoa-Python
-applications created via the Cocoa-Python project template found in
-the <tt class="literal"><span class="pre">Project</span> <span class="pre">Templates</span></tt> directory.  Use Project Builder to build the
-applications.</p>
+<p>The WebServicesTool is an example of Cocoa-Python applications created via 
+the Cocoa-Python project template found in the 
+<tt class="literal"><span class="pre">ProjectBuilder</span> <span class="pre">Extras/Project</span> <span class="pre">Templates</span></tt> directory.  Use Project Builder 
+to build the applications.</p>
 </div>
 <div class="section" id="project-templates">
 <h1><a name="project-templates">Project Templates</a></h1>
+<p>The <tt class="literal"><span class="pre">ProjectBuilder</span> <span class="pre">Extras</span></tt> directory contains additional files that can
+be used with Project Builder. The directory <tt class="literal"><span class="pre">Specifications</span></tt> contains files
+that enable syntax coloring for Python files in Project Builder.</p>
 <p>The <tt class="literal"><span class="pre">Project</span> <span class="pre">Templates</span></tt> directory contains project templates for
-project builder.  These have to be copied to
+Project Builder.  These have to be copied to
 <tt class="literal"><span class="pre">/Developer/ProjectBuilder</span> <span class="pre">Extras/Project</span> <span class="pre">Templates/Application</span></tt> before
 they are useable from Project Builder.</p>
 <p>There are three templates available:</p>

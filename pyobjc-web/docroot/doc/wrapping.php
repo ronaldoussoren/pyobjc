@@ -1,7 +1,7 @@
 <?
     $title = "How to wrap an Objective-C class library";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:46 $';
 
     include "header.inc";
 ?>
@@ -27,13 +27,21 @@ del objc
 </pre>
 <p>If your class library does not require helper functions for some methods this
 is all that is needed.</p>
+<p>Don't forget to import the frameworks that are used by your framework before
+calling <tt class="literal"><span class="pre">objc.loadBundle</span></tt>. This is necessary to arrange for the helper code
+for these modules (if there is any) to be loaded.</p>
 </div>
 <div class="section" id="wrapping-global-functions-and-constants">
 <h1><a name="wrapping-global-functions-and-constants">Wrapping global functions and constants</a></h1>
 <p>The code above only provides wrappers for Objective-C classes, if the library
 also defines global functions and/or constants you'll have to write an 
 extension module to make these available to Python.</p>
-<p>You can use the PyObjC C-API (to be documented) when writing this module.</p>
+<p>You can use the PyObjC C-API (to be documented) when writing this module. With
+some luck you can adapt the scripts in <tt class="literal"><span class="pre">Scripts/CodeGenerators</span></tt> to generate
+this module for you. These scripts are both very rough and tuned for the Apple
+headers, so YMMV.</p>
+<p>Note that we currently do not install the <tt class="literal"><span class="pre">pyobjc-api.h</span></tt> header, you'll have
+to copy it from the source-tree until we do.</p>
 </div>
 <div class="section" id="pointer-arguments">
 <h1><a name="pointer-arguments">Pointer arguments</a></h1>
@@ -42,6 +50,7 @@ an 'id') require more work. If the pointer arguments are used to pass a single
 value to/from a function ('pass-by-reference arguments') you'll just have to 
 provide more specific method signatures. In other cases you'll have to write
 custom wrappers for these methods.</p>
+<p>Check <tt class="literal"><span class="pre">Modules/Foundation</span></tt> for examples of these custom wrappers.</p>
 <div class="section" id="pass-by-reference-arguments">
 <h2><a name="pass-by-reference-arguments">Pass-by-reference arguments</a></h2>
 <p>Pass-by-reference arguments can be 'in' (data passed into the function), 
@@ -72,8 +81,8 @@ objc.set_signature_for_selector(&quot;ClassName&quot;, &quot;selector:withArgume
 '^' characters in the signature of a method. The characters are:</p>
 <ul class="simple">
 <li>output parameter: o</li>
-<li>input parameter: i</li>
-<li>input-output parameter: O</li>
+<li>input parameter: n</li>
+<li>input-output parameter: N</li>
 </ul>
 </div>
 <div class="section" id="special-wrappers">
@@ -87,7 +96,14 @@ of the method from Objective-C.</p>
 <p>For now it is best to check the source code for the wrappers for the Cocoa 
 class library for more information. We'll add documentation for this in the
 future.</p>
-<p>NOTE: It is likely that there will be changes w.r.t. the special wrappers.</p>
+</div>
+<div class="section" id="protocols">
+<h2><a name="protocols">protocols</a></h2>
+<p>If the framework defines any (informal) protocols you should add 
+<tt class="literal"><span class="pre">objc.informal_protocol</span></tt> objects for those protocols to your module. These
+can be defined in a submodule, as long as you arrange for that module to be
+loaded whenever someone imports your package.</p>
+<p>See <tt class="literal"><span class="pre">Lib/Foundation/protocols.py</span></tt> for examples of protocol definitions.</p>
 </div>
 </div>
 </div>

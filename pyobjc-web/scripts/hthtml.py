@@ -1,7 +1,7 @@
 # Author: Ollie Rutherfurd
 # Contact: oliver@rutherfurd.net
-# Revision: $Revision: 1.1 $
-# Date: $Date: 2003/02/12 20:43:05 $
+# Revision: $Revision: 1.2 $
+# Date: $Date: 2003/07/05 14:59:47 $
 # Copyright: This module has been placed in the public domain.
 
 """
@@ -86,6 +86,7 @@ class HTTranslator(HTMLTranslator):
         # the header, so always link to the stylesheet.
         document.settings.embed_stylesheet = 0
         document.settings.base_section = int(document.settings.base_section)
+        document.settings.xml_declaration = None
 
         HTMLTranslator.__init__(self, document)
 

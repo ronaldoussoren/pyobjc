@@ -1,7 +1,7 @@
 <?
     $title = "Creating your first PyObjC application.";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/05/07 17:47:06 $';
+    $cvs_date = '$Date: 2003/07/05 14:59:46 $';
 
     include "header.inc";
 ?>
@@ -133,7 +133,7 @@ other words, if an ObjC call would be:</p>
 <pre class="literal-block">
 object.modifyArg_andAnother_(arg1, arg2)
 </pre>
-<p>Note that we don't do this mangling for <tt class="literal"><span class="pre">Converter.ConvertAmount()</span></tt>: this method is
+<p>Note that we don't do this mangling for <tt class="literal"><span class="pre">Converter.convertAmount()</span></tt>: this method is
 only called by other Python code, so there is no need to go through the name mangling.
 Also, if we would want to make this method callable from ObjC code we would have
 to tell the PyObjC runtime system about the types of the arguments, so it could

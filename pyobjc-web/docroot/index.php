@@ -1,7 +1,7 @@
 <?
 $title = "Home";
 $cvs_author = '$Author: ronaldoussoren $';
-$cvs_date = '$Date: 2003/05/04 12:56:38 $';
+$cvs_date = '$Date: 2003/07/05 14:59:46 $';
 $is_home = 1;
 
 $metatags = '<meta name="description" content="PyObjC, a universal bridge between the Objective-C and Python languages.">
@@ -37,14 +37,15 @@ include $fsroot."news/news.inc";
 <h1>Status</h1>
 
 <p>
-<a href="software/index.php">PyObjC 0.9</a> was released on 2 May 2003.  See the <a href="NEWS.txt">NEWS</a> for details.
+<a href="software/index.php">PyObjC 1.0b1</a> was released on 5 July 2003.  See the <a href="NEWS-1.0b1.txt">NEWS</a> for details.
 </p>
 
 <h1>Platform support</h1>
 
 The development of the bridge is currently focused on 
-<a href="http://www.apple.com/macosx/">Mac OS X</a> 10.2. The current version
-does not suppport MacOS X 10.1 (and earlier).
+<a href="http://www.apple.com/macosx/">Mac OS X</a> 10.2 and later. The 
+current version has minimal support for MacOS X 10.1, earlier versions are not 
+(and will never be) supported.
 <p>
 We want to offer the same level support for 
 <a href="http://www.gnustep.org/">GNUstep</a>, but need volunteers with GnuStep
@@ -70,6 +71,7 @@ href="http://sourceforge.net/tracker/?group_id=14534&amp;atid=114534">Bug tracke
 <li>CVS (<a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/pyobjc">browse online</a>, <a href="http://sourceforge.net/cvs/?group_id=14534">access instructions</a>)</li>
 
 </ul>
+<p>We have daily <a href="/cvs-snapshots">CVS snapshots</a>. The contents are a work in progress and may be instable, or not even compile.
 
 </td></tr></table>
 
