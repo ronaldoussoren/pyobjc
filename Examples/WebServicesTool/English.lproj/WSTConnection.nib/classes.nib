@@ -2,7 +2,7 @@
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {printDocument = id; reloadVisibleData = id; selectMethodAction = id; }; 
+            ACTIONS = {printDocument = id; reloadVisibleData = id; }; 
             CLASS = WSTConnectionWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
