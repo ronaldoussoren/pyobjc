@@ -53,7 +53,50 @@ struct class_wrapper {
 	PyObject*          python_class;
 };
 
-#define IDENT_CHARS "ABCDEFGHIJKLMNOPQSRTUVWXYZabcdefghijklmnopqrstuvwxyz_"
+#define IDENT_CHARS "ABCDEFGHIJKLMNOPQSRTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789"
+
+/*
+ * This function finds the superclass of the class where 'selector' is
+ * overridden using 'currentImp'.
+ *
+ * This is needed to call the correct superclass implementation in case 
+ * of multiple layers of subclassing in Python. If we don't find the 'real'
+ * superclass, a call to 
+ *   'objc_msgSendSuper({ self->isa->super_class, self }, ...)' will just 
+ * transfer back to 'currentImp' if the method was called from a subclass (e.g.
+ * if 'currentImp' is the IMP for the superclass of 'self->isa' instead of the
+ * one from 'self'.
+ *
+ * The 'right' way to do this is by building closures (if done correctly it
+ * would at least be faster), but that requires an external library or low-level
+ * (assembly) trickery.
+ */
+static Class find_real_superclass(Class startAt, SEL selector, 
+		Method (*find_method)(Class, SEL), IMP currentImp)
+{
+	Method m;
+	Class  cur;
+
+	cur = startAt;
+	m = find_method(cur, selector);
+
+	/* Skip to class containing this function */
+	while (m == NULL || m->method_imp != currentImp) {
+		cur = cur->super_class;
+		if (!cur) abort();
+		m = find_method(cur, selector);
+	}
+
+	/* Skip all classes containing this function */
+	while (m != NULL && m->method_imp == currentImp) {
+		cur = cur->super_class;
+		if (!cur) abort();
+		m = find_method(cur, selector);
+	}
+
+	/* We found the 'real' superclass */
+	return cur;
+}
 
 
 /*
@@ -763,7 +806,8 @@ static id class_method_allocWithZone(id self, SEL sel, NSZone* zone)
 
    pyclass = ((struct class_wrapper*)self)->python_class;
 
-   super.class = ((Class)self)->super_class->isa; 
+   super.class = find_real_superclass((Class)self, @selector(allocWithZone:),
+   	class_getClassMethod, (IMP)class_method_allocWithZone)->isa;
    super.receiver = self;
 
    obj = objc_msgSendSuper(&super, @selector(allocWithZone:), zone); 
@@ -822,8 +866,11 @@ static void object_method_release(id self, SEL sel)
 
 	if (obj->ob_refcnt == 0) {
 		/* [super release] */
-		super.class = self->isa->super_class;
+   		super.class = find_real_superclass(self->isa, 
+			@selector(release), class_getInstanceMethod, 
+			(IMP)object_method_release);
 		super.receiver = self;
+
 		self = objc_msgSendSuper(&super, @selector(release)); 
 		return;
 
@@ -867,9 +914,12 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 	}
 	PyErr_Clear();
 
+
 	/* Check superclass */
+	super.class = find_real_superclass(self->isa, 
+			selector, class_getInstanceMethod, 
+			(IMP)object_method_respondsToSelector);
 	super.receiver = self;
-	super.class = self->isa->super_class;
 
 	res = (int)objc_msgSendSuper(&super, selector, aSelector);
 
@@ -886,8 +936,10 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 	PyObject*          pymeth;
 
 
+	super.class = find_real_superclass(self->isa, 
+			selector, class_getInstanceMethod, 
+			(IMP)object_method_methodSignatureForSelector);
 	super.receiver = self;
-	super.class    = self->isa->super_class;
 
 	NS_DURING
 		result = objc_msgSendSuper(&super, selector, aSelector);

@@ -9,4 +9,5 @@ objc.builder.build_applet(
 	app_name= 'TableModelPY',
 	main_py = 'TableModel.py',
 	raw = 1,
-	extra_files = ['English.lproj'])
+	extra_files = ['English.lproj'],
+	extra_src = ['nibwrapper.py'])
