@@ -1,6 +1,6 @@
 from Foundation import NSObject
 from AppKit import NSApplicationMain, NSTableDataSource, NSTableViewDelegate
-from PyObjCTools import NibClassBuilder
+from PyObjCTools import NibClassBuilder, AppHelper
 from objc import selector
 import sys
 
@@ -43,4 +43,4 @@ class PyModel(NibClassBuilder.AutoBaseClass, NSTableDataSource, NSTableViewDeleg
         print "shouldSelectRow_", rowIndex
         return (rowIndex % 2)
 
-sys.exit(NSApplicationMain(sys.argv))
+AppHelper.runEventLoop()

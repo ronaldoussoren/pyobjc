@@ -1,7 +1,7 @@
 import sys
 import os.path
 import AppKit
-from PyObjCTools import NibClassBuilder
+from PyObjCTools import NibClassBuilder, AppHelper
 
 sys.path.insert(0, os.path.join(sys.path[0], "pyobjc"))
 
@@ -32,4 +32,4 @@ class PyModel (NibClassBuilder.AutoBaseClass, AppKit.NSTableDataSource, AppKit.N
         print "tableView:shouldSelectRow:", aRow
         return 1
 
-sys.exit(AppKit.NSApplicationMain(sys.argv))
+AppHelper.runEventLoop()

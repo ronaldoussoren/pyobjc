@@ -3,6 +3,7 @@ import os
 import objc
 from AppKit import *
 from PyObjCTools.NibClassBuilder import extractClasses
+from PyObjCTools import AppHelper
 
 extractClasses('MainMenu')
 extractClasses('ToDoDocument')
@@ -18,4 +19,4 @@ import ToDoDocument
 import ToDoItem
 import TodoAppDelegate
 
-NSApplicationMain(sys.argv)
+AppHelper.runEventLoop()
