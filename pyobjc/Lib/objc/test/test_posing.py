@@ -6,12 +6,12 @@ NSObject = objc.lookUpClass('NSObject')
 
 class TestPosing(unittest.TestCase):
     def testPosing(self):
-        class Level1Class(NSObject):
+        class PoseClass(NSObject):
             __slots__ = ()  # Don't add instance variables, not even __dict__
             def description(self):
                 return "<<subdescrip>> " + super.description()
 
-        Level1Class.poseAsClass_(NSObject)
+        PoseClass.poseAsClass_(NSObject)
         
         obj = NSObject.new()
 
