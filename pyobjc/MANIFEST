@@ -23,3 +23,6 @@ FIXME
 INSTALL
 NEWS
 Examples/HelloWorld.py
+Examples/Cocoa/AppKit.py
+Examples/Cocoa/Foundation.py
+Examples/Cocoa/__init__.py
