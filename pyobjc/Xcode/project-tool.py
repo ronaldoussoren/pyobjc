@@ -208,7 +208,7 @@ REVERSETRANSLATOR = getRegSub(REVERSE, FORWARD)
 
 ## process options
 def build_parser():
-    USAGE = """clean.py [options] <source> <dest>
+    USAGE = """project-tool.py [options] <source> <dest>
         
     Copies tree of templates or projects from <source> to <dest>.  
     Before copying, it cleans up <source> by removing various bits of garbage.
