@@ -85,6 +85,28 @@ static PyNumberMethods decimal_asnumber = {
 	NULL				/* nb_inplace_true_divide */
 };
 
+static PyObject *decimal_get__pyobjc_object__(PyObject *self, void *closure __attribute__((__unused__))) {
+	id num = [[NSDecimalNumber alloc] initWithDecimal:Decimal_Value(self)];
+	PyObject *rval = PyObjC_IdToPython(num);
+	[num release];
+	return rval;
+}
+
+static PyGetSetDef decimal_getseters[] = {
+	{
+		"__pyobjc_object__",
+		(getter)decimal_get__pyobjc_object__, NULL,
+		"NSDecimalNumber instance",
+		NULL
+	},
+	{
+		NULL,
+		NULL, NULL,
+		NULL,
+		NULL
+	}
+};
+
 static PyMethodDef decimal_methods[] = {
 	{
 		"as_int",
@@ -113,7 +135,6 @@ static PyTypeObject Decimal_Type = {
 	"Foundation.NSDecimal",			/* tp_name */
 	sizeof (DecimalObject),			/* tp_basicsize */
 	0,					/* tp_itemsize */
-  
 	/* methods */
 	decimal_dealloc,			/* tp_dealloc */
 	0,					/* tp_print */
@@ -140,7 +161,7 @@ static PyTypeObject Decimal_Type = {
 	0,					/* tp_iternext */
 	decimal_methods,			/* tp_methods */
 	0,					/* tp_members */
-	0,					/* tp_getset */
+	decimal_getseters,			/* tp_getset */
 	0,					/* tp_base */
 	0,					/* tp_dict */
 	0,					/* tp_descr_get */
@@ -292,17 +313,17 @@ static char* keywords2[] = { "string", NULL };
 			 * float.
 			 */
 			PyObject* strVal = PyObject_Repr(pyValue);
-            PyObject* uniVal = NULL;
+			PyObject* uniVal = NULL;
 
 			if (strVal == NULL) return -1;
 			
-            uniVal = PyUnicode_FromEncodedObject(strVal, "ascii", "strict");
-            Py_DECREF(strVal);
+			uniVal = PyUnicode_FromEncodedObject(strVal, "ascii", "strict");
+			Py_DECREF(strVal);
 
-            if (uniVal == NULL) return -1;
-            
+			if (uniVal == NULL) return -1;
+			
 			stringVal = PyObjC_PythonToId(uniVal);
-            Py_DECREF(uniVal);
+			Py_DECREF(uniVal);
 
 			PyObjC_DURING
 				DecimalFromString(&Decimal_Value(self), stringVal, NULL);

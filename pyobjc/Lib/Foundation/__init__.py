@@ -35,15 +35,6 @@ def _initialize():
             if initPath:
                 execfile(initPath, globals(), locals())
 
-    try:
-        NSDecimal
-    except NameError:
-        pass
-    else:
-        NSClassFromString('OC_PythonObject').depythonifyTable().append(
-            (NSDecimal, NSDecimalNumber.decimalNumberWithDecimal_)
-        )
-
 _initialize()
 
 import protocols  # no need to export these, just register with PyObjC
