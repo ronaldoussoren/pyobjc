@@ -741,20 +741,20 @@ pyject_pthread_entry_point(void *param) {
 		}
 	}
 	if (errString) {
-		printf(errString);
+		printf("%s\n", errString);
 	}
 	return NULL;
 }
 
 static void
-pyject_mach_entry_point(ptrdiff_t codeOffset, void *paramBlock, size_t paramSize) {
+pyject_mach_entry_point(ptrdiff_t codeOffset, void *paramBlock, size_t paramSize __attribute__((__unused__))) {
 	pthread_attr_t attr;
 	pthread_t tid;
 	pthread_attr_init(&attr);
 	pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
 	pthread_attr_setstacksize(&attr, PYJECT_PTHREAD_STACK_SIZE);
-	pthread_create(&tid, &attr, codeOffset + &pyject_pthread_entry_point, (void *)paramBlock);
+	pthread_create(&tid, &attr, codeOffset + (void *)&pyject_pthread_entry_point, (void *)paramBlock);
 	pthread_attr_destroy(&attr);
 	while (1) {
 		sleep(3600);
