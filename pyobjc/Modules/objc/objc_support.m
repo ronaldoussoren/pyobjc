@@ -63,6 +63,25 @@
 
 @end /* PyObjCSupport */
 
+@interface NSProxy (PyObjCSupport)
+-(PyObject*)__pyobjc_PythonObject__;
++(PyObject*)__pyobjc_PythonObject__;
+@end /* PyObjCSupport */
+
+@implementation NSProxy (PyObjCSupport)
+
+-(PyObject*)__pyobjc_PythonObject__
+{
+        return (PyObject *) PyObjCObject_New(self);
+}
+
++(PyObject*)__pyobjc_PythonObject__
+{
+	return PyObjCClass_New(self);
+}
+
+@end /* PyObjCSupport */
+
 @interface NSNumber (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
 @end /* NSNumber (PyObjCSupport) */
