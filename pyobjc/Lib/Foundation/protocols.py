@@ -1068,6 +1068,33 @@ NSSpellServerDelegate = _objc.informal_protocol(
     ]
 )
 
+NSURLAuthenticationChallengeSender = _objc.informal_protocol(
+    "NSURLAuthenticationChallengeSender",
+    [
+# (void)cancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+        _objc.selector(
+            None,
+            selector='cancelAuthenticationChallenge:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)continueWithoutCredentialForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+        _objc.selector(
+            None,
+            selector='continueWithoutCredentialForAuthenticationChallenge:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)useCredential:(NSURLCredential *)credential forAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+        _objc.selector(
+            None,
+            selector='useCredential:forAuthenticationChallenge:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+    ]
+)
+
 NSURLClient = _objc.informal_protocol(
     "NSURLClient",
     [
@@ -1096,6 +1123,151 @@ NSURLClient = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='URLResourceDidFinishLoading:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSURLConnectionDelegate = _objc.informal_protocol(
+    "NSURLConnectionDelegate",
+    [
+# (void)connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+        _objc.selector(
+            None,
+            selector='connection:didCancelAuthenticationChallenge:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+        _objc.selector(
+            None,
+            selector='connection:didFailWithError:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+        _objc.selector(
+            None,
+            selector='connection:didReceiveAuthenticationChallenge:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+        _objc.selector(
+            None,
+            selector='connection:didReceiveData:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+        _objc.selector(
+            None,
+            selector='connection:didReceiveResponse:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
+        _objc.selector(
+            None,
+            selector='connection:willCacheResponse:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
+        _objc.selector(
+            None,
+            selector='connection:willSendRequest:redirectResponse:',
+            signature='@@:@@@',
+            isRequired=0,
+        ),
+# (void)connectionDidFinishLoading:(NSURLConnection *)connection
+        _objc.selector(
+            None,
+            selector='connectionDidFinishLoading:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSURLDownloadDelegate = _objc.informal_protocol(
+    "NSURLDownloadDelegate",
+    [
+# (void)download:(NSURLDownload *)download decideDestinationWithSuggestedFilename:(NSString *)filename
+        _objc.selector(
+            None,
+            selector='download:decideDestinationWithSuggestedFilename:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)download:(NSURLDownload *)download didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+        _objc.selector(
+            None,
+            selector='download:didCancelAuthenticationChallenge:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)download:(NSURLDownload *)download didCreateDestination:(NSString *)path
+        _objc.selector(
+            None,
+            selector='download:didCreateDestination:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)download:(NSURLDownload *)download didFailWithError:(NSError *)error
+        _objc.selector(
+            None,
+            selector='download:didFailWithError:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)download:(NSURLDownload *)download didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+        _objc.selector(
+            None,
+            selector='download:didReceiveAuthenticationChallenge:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)download:(NSURLDownload *)download didReceiveDataOfLength:(unsigned)length
+        _objc.selector(
+            None,
+            selector='download:didReceiveDataOfLength:',
+            signature='v@:@I',
+            isRequired=0,
+        ),
+# (void)download:(NSURLDownload *)download didReceiveResponse:(NSURLResponse *)response
+        _objc.selector(
+            None,
+            selector='download:didReceiveResponse:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (BOOL)download:(NSURLDownload *)download shouldDecodeSourceDataOfMIMEType:(NSString *)encodingType
+        _objc.selector(
+            None,
+            selector='download:shouldDecodeSourceDataOfMIMEType:',
+            signature='c@:@@',
+            isRequired=0,
+        ),
+# (NSURLRequest *)download:(NSURLDownload *)download willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
+        _objc.selector(
+            None,
+            selector='download:willSendRequest:redirectResponse:',
+            signature='@@:@@@',
+            isRequired=0,
+        ),
+# (void)downloadDidBegin:(NSURLDownload *)download
+        _objc.selector(
+            None,
+            selector='downloadDidBegin:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)downloadDidFinish:(NSURLDownload *)download
+        _objc.selector(
+            None,
+            selector='downloadDidFinish:',
             signature='v@:@',
             isRequired=0,
         ),
@@ -1137,6 +1309,68 @@ NSURLHandleClient = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='URLHandleResourceDidFinishLoading:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSURLProtocolClient = _objc.informal_protocol(
+    "NSURLProtocolClient",
+    [
+# (void)URLProtocol:(NSURLProtocol *)protocol cachedResponseIsValid:(NSCachedURLResponse *)cachedResponse
+        _objc.selector(
+            None,
+            selector='URLProtocol:cachedResponseIsValid:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)URLProtocol:(NSURLProtocol *)protocol didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+        _objc.selector(
+            None,
+            selector='URLProtocol:didCancelAuthenticationChallenge:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)URLProtocol:(NSURLProtocol *)protocol didFailWithError:(NSError *)error
+        _objc.selector(
+            None,
+            selector='URLProtocol:didFailWithError:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)URLProtocol:(NSURLProtocol *)protocol didLoadData:(NSData *)data
+        _objc.selector(
+            None,
+            selector='URLProtocol:didLoadData:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)URLProtocol:(NSURLProtocol *)protocol didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+        _objc.selector(
+            None,
+            selector='URLProtocol:didReceiveAuthenticationChallenge:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)URLProtocol:(NSURLProtocol *)protocol didReceiveResponse:(NSURLResponse *)response cacheStoragePolicy:(NSURLCacheStoragePolicy)policy
+        _objc.selector(
+            None,
+            selector='URLProtocol:didReceiveResponse:cacheStoragePolicy:',
+            signature='v@:@@i',
+            isRequired=0,
+        ),
+# (void)URLProtocol:(NSURLProtocol *)protocol wasRedirectedToRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
+        _objc.selector(
+            None,
+            selector='URLProtocol:wasRedirectedToRequest:redirectResponse:',
+            signature='v@:@@@',
+            isRequired=0,
+        ),
+# (void)URLProtocolDidFinishLoading:(NSURLProtocol *)protocol
+        _objc.selector(
+            None,
+            selector='URLProtocolDidFinishLoading:',
             signature='v@:@',
             isRequired=0,
         ),
