@@ -10,6 +10,9 @@
 #include <Python.h>
 #import <Foundation/Foundation.h>
 #import <Foundation/NSDebug.h>
+#ifdef MACOSX
+#include <pymactoolbox.h>
+#endif
 #include "pyobjc-api.h"
 #include "objc_support.h"
 #include "wrapper-const-table.h"
@@ -106,8 +109,82 @@ static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
 	return result;
 }
 
+#ifdef MACOSX
+
+
+/* NSString *NSFileTypeForHFSTypeCode(OSType hfsTypeCode); */
+
+PyObject* objc_NSFileTypeForHFSTypeCode(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static	char* keywords[] = { "hfsTypeCode", NULL };
+	PyObject* bundle;
+	PyObject*  result;
+	NSString*  oc_result;
+	OSType hfsTypeCode;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSFileTypeForHFSTypeCode",
+			keywords, PyMac_GetOSType, &hfsTypeCode)) {
+		return NULL;
+	}
+	
+	NS_DURING
+		oc_result = NSFileTypeForHFSTypeCode(hfsTypeCode);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+	NS_ENDHANDLER
+
+	if (PyErr_Occurred()) return NULL;
+
+	result = ObjC_IdToPython(oc_result);
+	return result;
+}
+
+/* OSType NSHFSTypeCodeFromFileType(NSString *fileType); */
+
+PyObject* objc_NSHFSTypeCodeFromFileType(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static	char* keywords[] = { "hfsTypeCode", NULL };
+	PyObject* bundle;
+	PyObject*  result;
+	NSString*  fileType;
+	OSType hfsTypeCode;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSHFSTypeCodeFromFileType",
+			keywords, convert_id, &fileType)) {
+		return NULL;
+	}
+	
+	NS_DURING
+		hfsTypeCode = NSHFSTypeCodeFromFileType(fileType);
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+	NS_ENDHANDLER
+
+	if (PyErr_Occurred()) return NULL;
+
+	return PyMac_BuildOSType(hfsTypeCode);
+}
+
+
+#endif /* MACOSX */
+
 
 static PyMethodDef foundation_methods[] = {
+#ifdef MACOSX
+	{ 
+		"NSFileTypeForHFSTypeCode", 
+		(PyCFunction)objc_NSFileTypeForHFSTypeCode, 
+		METH_VARARGS|METH_KEYWORDS, 
+		NULL
+	},
+	{ 
+		"NSHFSFTypeCodeFromFileType", 
+		(PyCFunction)objc_NSHFSTypeCodeFromFileType, 
+		METH_VARARGS|METH_KEYWORDS, 
+		NULL
+	},
+
+#endif /* MACOSX */
 	{ 
 		"NSLocalizedString", 
 		(PyCFunction)objc_NSLocalizedString, 
