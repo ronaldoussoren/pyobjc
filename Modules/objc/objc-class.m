@@ -819,6 +819,12 @@ PyObject* ObjCClass_New(Class objc_class)
 	info->sel_to_py = PyDict_New(); 
 	info->method_magic = 0;
 
+	if (PyObject_SetAttrString(result, 
+			"__module__", ObjCClass_DefaultModule) < 0) {
+		PyErr_Clear();
+	}
+
+
 	objc_class_register(objc_class, result);
 
 	return result;

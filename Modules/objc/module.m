@@ -16,6 +16,7 @@ int ObjC_RegisterStdStubs(struct pyobjc_api* api);
 
 int ObjC_VerboseLevel = 0;
 NSAutoreleasePool* ObjC_global_release_pool = nil;
+PyObject* ObjCClass_DefaultModule = NULL;
 
 PyDoc_STRVAR(lookUpClass_doc,
   "lookUpClass(class_name) -> class\n"
@@ -237,7 +238,6 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	PyObject* class_list;
 	int       len, i;
 	PyObject* module_key = NULL;
-	PyObject* defModule;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
 			"SO|SS:loadBundle",
@@ -292,8 +292,6 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		}
 	}
 
-	defModule = PyString_FromString("objc");
-
 	len = PyTuple_Size(class_list);
 	for (i = 0; i < len; i++) {
 		PyObject* item;
@@ -325,12 +323,11 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 						((PyTypeObject*)item)->tp_name, item) == -1) {
 					Py_DECREF(module_key);
 					Py_DECREF(class_list);
-					Py_DECREF(defModule);
 					return NULL;
 				}
 				continue;
 			}
-			r = PyObject_Cmp(mod, defModule, &c);
+			r = PyObject_Cmp(mod, ObjCClass_DefaultModule, &c);
 			if (r == -1) {
 				PyErr_Clear();
 			} else if (c != 0) {
@@ -346,11 +343,9 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		}
 
 		/* cls is located in bundle */
-
 		if (PyObject_SetAttr(item, module_key, module_name) == -1) {
 			Py_DECREF(module_key);
 			Py_DECREF(class_list);
-			Py_DECREF(defModule);
 			return NULL;
 		}
 
@@ -358,13 +353,11 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 				((PyTypeObject*)item)->tp_name, item) == -1) {
 			Py_DECREF(module_key);
 			Py_DECREF(class_list);
-			Py_DECREF(defModule);
 			return NULL;
 		}
 	}
 	Py_XDECREF(module_key);
 	Py_XDECREF(class_list);
-	Py_XDECREF(defModule);
 
 	Py_INCREF(Py_None);
 	return Py_None;
@@ -423,6 +416,7 @@ struct objc_typestr_values {
 	{ NULL, 0 }
 };
 
+
 void init_objc(void)
 {
 	PyObject *m, *d;
@@ -431,6 +425,8 @@ void init_objc(void)
 	 * warnings during startup of a python script.
 	 */
 	ObjC_global_release_pool = [[NSAutoreleasePool alloc] init];
+
+	ObjCClass_DefaultModule = PyString_FromString("objc");
 
 	PyType_Ready(&ObjCClass_Type); 
 	PyType_Ready(&ObjCObject_Type);

@@ -65,6 +65,7 @@ typedef struct {
 extern PyTypeObject ObjCObject_Type;
 #define ObjCObject_Check(obj) PyObject_TypeCheck(obj, &ObjCObject_Type)
 
+extern PyObject* ObjCClass_DefaultModule;
 PyObject* ObjCClass_New(Class objc_class);
 Class     ObjCClass_GetClass(PyObject* object);
 PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector);
