@@ -7,8 +7,16 @@ NibClassBuilder.extractClasses("CurrencyConvBindingDocument")
 
 
 class Converter(NibClassBuilder.AutoBaseClass):
-	exchangeRate = ivar('exchangeRate', 'd')
-	dollarsToConvert = ivar('dollarsToConvert', 'd')
+
+        # The input fields have formatters that convert the text
+        # value to a number. If we wouldn't do that, exchangeRate
+        # and dollarsToConvert would be set to strings.
+        #
+        # The alternative is using objc instance variables of the
+        # right type (in this case doubles) and let the Cocoa 
+        # implementation worry about the conversion:
+	#   exchangeRate = ivar('exchangeRate', 'd')
+	#   dollarsToConvert = ivar('dollarsToConvert', 'd')
 	
 	def init(self):
 		self = super(Converter, self).init()
