@@ -132,8 +132,17 @@ def __getitem__objectAtIndexWithSlice(self, x, y):
         r = l - x
     return self.subarrayWithRange_( (x, r) )
 
+def __getitem__objectAtIndex(self, idx):
+    if idx < 0:
+        idx = len(self) + idx
+        if idx < 0:
+            raise IndexError, "index out of range"
+    elif idx >= len(self):
+            raise IndexError, "index out of range"
+    return self.objectAtIndex_(idx)
+
 CONVENIENCE_METHODS['objectAtIndex:'] = (
-    ('__getitem__', lambda self, index: self.objectAtIndex_(index)),
+    ('__getitem__', __getitem__objectAtIndex),
     ('__getslice__', __getitem__objectAtIndexWithSlice),
 )
 
