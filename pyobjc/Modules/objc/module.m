@@ -897,51 +897,45 @@ enableThreading(PyObject* self __attribute__((__unused__)))
 	return Py_None;
 }
 
-PyDoc_STRVAR(protocolNamed_doc,
-	"protocolNamed(name) -> Protocol\n"
+PyDoc_STRVAR(protocolsForClass_doc,
+	"protocolsForClass(cls) -> [Protocols]\n"
 	"\n"
-	"Returns a Protocol object for the named protocol. This is the \n"
-	"equivalent of @protocol(name) in Objective-C.\n"
-	"Raises objc.ProtocolError when the protocol does not exist."
+	"Returns a list of Protocol objects that the class claims\n"
+	"to implement directly."
 );
 static PyObject*
-protocolNamed(   PyObject* self __attribute__((__unused__)),
+protocolsForClass(PyObject* self __attribute__((__unused__)),
 		PyObject* args,
 		PyObject* kwds)
 {
-static char* keywords[] = { "name", NULL };
-
-	const char* name;
-	PyObject* classes;
-	int i, len;
-
-	if  (!PyArg_ParseTupleAndKeywords(args, kwds, "s", keywords, &name)) {
+	static char* keywords[] = { "cls", NULL };
+	struct objc_protocol_list *protocol_list;
+	PyObject *protocols;
+	Class cls;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:protocolsForClass", keywords, 
+			PyObjCClass_Convert, &cls)) {
 		return NULL;
 	}
-
-	classes = PyObjC_GetClassList();
-	if (classes == NULL) {
+	protocols = PyList_New(0);
+	if (protocols == NULL) {
 		return NULL;
 	}
-
-	len = PyTuple_GET_SIZE(classes);
-	for (i = 0; i < len; i++) {
-		Class cls = PyObjCClass_GetClass(PyTuple_GET_ITEM(classes, i));
-		int j;
-
-		if (cls->protocols == NULL) continue;
-
-		for (j = 0; j < cls->protocols->count; j++) {
-			Protocol* p = cls->protocols->list[j];
-			if (strcmp([p name], name) == 0) {
-				return PyObjCObject_NewClassic(p);
+	protocol_list = cls->protocols;
+	while (protocol_list != NULL) {
+		int i;
+		for (i = 0; i < protocol_list->count; i++) {
+			PyObject *protocol = PyObjCObject_NewClassic(protocol_list->list[i]);
+			if (protocol == NULL) {
+				Py_DECREF(protocols);
+				return NULL;
 			}
+			PyList_Append(protocols, protocol);
 		}
+		protocol_list = protocol_list->next;
 	}
-
-	PyErr_Format(PyObjCExc_NoProtocol, "protocol '%s' does not exist", name);
-	return NULL;
+	return protocols;
 }
+
 
 PyDoc_STRVAR(PyObjC_loadBundleVariables_doc, 
 	"loadBundleVariables(bundle, module_globals, variableInfo, "
@@ -1010,7 +1004,7 @@ static PyMethodDef mod_methods[] = {
 #endif /* MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_3 */
 #endif /* MACOSX */
 	{ "enableThreading", (PyCFunction)enableThreading, METH_NOARGS, enableThreading_doc },
-	{ "protocolNamed", (PyCFunction)protocolNamed, METH_VARARGS|METH_KEYWORDS, protocolNamed_doc },
+	{ "protocolsForClass", (PyCFunction)protocolsForClass, METH_VARARGS|METH_KEYWORDS, protocolsForClass_doc },
 	{ "loadBundleVariables", (PyCFunction)PyObjC_loadBundleVariables,
 		METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleVariables_doc },
 	{ "loadBundleFunctions", (PyCFunction)PyObjC_loadBundleFunctions,
