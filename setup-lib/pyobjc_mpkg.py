@@ -80,12 +80,12 @@ class pyobjc_bdist_mpkg(_bdist_mpkg):
 
     def scheme_hook(self, scheme, pkgname, version, files, common, prefix, pkgdir):
         _bdist_mpkg.scheme_hook(self, scheme, pkgname, version, files, common, prefix, pkgdir)
-        rmfiles = self.preflight_rm.get(scheme)
-        if rmfiles is None:
-            return
-        rmfiles = [os.path.normpath(os.path.join(prefix, fn)) for fn in rmfiles]
-        preflight = os.path.join(pkgdir, 'Contents', 'Resources', 'preflight')
-        write_preflight_rm(preflight, rmfiles)
+        #rmfiles = self.preflight_rm.get(scheme)
+        #if rmfiles is None:
+        #    return
+        #rmfiles = [os.path.normpath(os.path.join(prefix, fn)) for fn in rmfiles]
+        #preflight = os.path.join(pkgdir, 'Contents', 'Resources', 'preflight')
+        #write_preflight_rm(preflight, rmfiles)
 
     def pyobjc_py2app(self):
         build_base = os.path.abspath(os.path.join(self.build_base, 'py2app'))
