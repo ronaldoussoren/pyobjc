@@ -109,6 +109,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 	int methodIndex;
 	int r;
 	struct objc_method_list *methodsToAdd;
+	struct objc_method_list *classMethodsToAdd;
 	PyObject* extraDict = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, keywds, 
@@ -145,7 +146,15 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		return NULL;
 	}
 
-	methodsToAdd->method_count = methodCount;
+	classMethodsToAdd = PyObjCRT_AllocMethodList(methodCount);
+	if (classMethodsToAdd == NULL) {
+		free(methodsToAdd);
+		PyErr_NoMemory();
+		return NULL;
+	}
+
+	methodsToAdd->method_count = 0;
+	classMethodsToAdd->method_count = 0;
 
 
 	for (methodIndex = 0; methodIndex < methodCount; methodIndex++) {
@@ -168,7 +177,14 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		}
 
 		/* install in methods to add */
-		objcMethod = &methodsToAdd->method_list[methodIndex];
+		if (PyObjCSelector_IsClassMethod(aMethod)) {
+			objcMethod = &classMethodsToAdd->method_list[
+				classMethodsToAdd->method_count++];
+		} else {
+			objcMethod = &methodsToAdd->method_list[
+				methodsToAdd->method_count++];
+		}
+		
 		objcMethod->method_name = PyObjCSelector_GetSelector(aMethod);
 		objcMethod->method_types = strdup(
 				PyObjCSelector_Signature(aMethod));
@@ -188,7 +204,18 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 	}
 
 	/* add the methods */
-	PyObjCRT_ClassAddMethodList(targetClass, methodsToAdd);
+	if (methodsToAdd->method_count != 0) {
+		PyObjCRT_ClassAddMethodList(targetClass, methodsToAdd);
+	} else {
+		free(methodsToAdd);
+	}
+	if (classMethodsToAdd->method_count != 0) {
+		PyObjCRT_ClassAddMethodList(targetClass->isa, 
+				classMethodsToAdd);
+	} else {
+		free(classMethodsToAdd);
+	}
+
 
 	r = PyDict_Merge(((PyTypeObject*)classObject)->tp_dict, extraDict, 1);
 	if (r == -1) goto cleanup_and_return_error;
@@ -203,6 +230,7 @@ cleanup_and_return_error:
 		Py_DECREF(extraDict);
 	}
 	if (methodsToAdd) free(methodsToAdd);
+	if (classMethodsToAdd) free(classMethodsToAdd);
 	return NULL;
 }
 
