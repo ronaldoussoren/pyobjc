@@ -43,9 +43,9 @@ kWSTUrlTextFieldToolbarItemIdentifier = "WST: URL Textfield Toolbar Identifier"
 def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
                    aToolTip, aTarget, anAction, anItemContent, aMenu):
     """
-    Adds an freshly created item to the toolber defined by
+    Adds an freshly created item to the toolbar defined by
     aController.  Makes a number of assumptions about the
-    implementation of aController.   It should be refactored into a
+    implementation of aController.  It should be refactored into a
     generically useful toolbar management untility.
     """
     toolbarItem = NSToolbarItem.alloc().initWithItemIdentifier_(anIdentifier)
