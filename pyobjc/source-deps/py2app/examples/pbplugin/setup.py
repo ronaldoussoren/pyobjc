@@ -7,7 +7,7 @@ import py2app
 # It will just print a bunch of debugging garbage when you start up.
 
 setup(
-    plugin = ["hello.py"],
+    plugin = ["PyTestPlugin.py"],
     options = dict(py2app=dict(
         extension='.pbplugin',
     )),
