@@ -351,7 +351,7 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
 	NSAutoreleasePool *pythonPool = [[NSAutoreleasePool alloc] init];
 
 	[mainPyPath retain];
-	FILE *mainPy = fopen([mainPyPath retain fileSystemRepresentation], "r");
+	FILE *mainPy = fopen([mainPyPath fileSystemRepresentation], "r");
 	int rval = PyRun_SimpleFile(mainPy, [mainPyPath fileSystemRepresentation]);
 	fclose(mainPy);
 	[mainPyPath release];
