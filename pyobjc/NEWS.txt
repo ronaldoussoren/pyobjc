@@ -29,6 +29,9 @@ Version 1.3.1 (2005-04-??)
   ``array.array`` (but not ``str`` or ``unicode``) are now bridged as
   ``NSData`` subclasses.
 
+Version 1.3 (2005-03-31)
+------------------------
+
 - New ``objc.pyobjc_id`` function that returns a the id of the underlying
   NSObject as an integer.  (Python wrapper objects are often made on the
   fly, meaning ``id(obj)`` is not constant during the lifetime of the
