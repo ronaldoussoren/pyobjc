@@ -92,8 +92,6 @@ def accessor(func):
     if argCount == 3:
         if funcName.startswith('insertObject_in') and funcName.endswith('AtIndex_'):
             return selector(func, signature='v@:@i')
-        elif funcName.startswith('removeObjectFrom') and funcName.endswith('AtIndex_'):
-            return selector(func, signature='v@:i')
         elif funcName.startswith('replaceObjectIn') and funcName.endswith('AtIndex_withObject_'):
             return selector(func, signature='v@:i@')
         elif funcName.startswith('validate') and funcName.endswith('_error_'):
@@ -105,6 +103,8 @@ def accessor(func):
     elif argCount == 2:
         if funcName.startswith('objectIn') and funcName.endswith('AtIndex_'):
             return selector(func, signature='@@:i')
+        elif funcName.startswith('removeObjectFrom') and funcName.endswith('AtIndex_'):
+            return selector(func, signature='v@:i')
         elif funcName.startswith('get') and funcName.endswith('_range_'):
             return selector(func, signature='@@:{_NSRange=ii}')
 
