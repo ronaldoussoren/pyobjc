@@ -50,7 +50,7 @@ class build_html(Command):
 
     def run(self):
         if TOOL is None:
-            print "*** Can't generate HTML, docarticle.py is missing"
+            print "*** Can't generate HTML, docutils is not installed"
             return
         os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
         rest2HTML(None, '.', [
