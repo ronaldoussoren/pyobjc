@@ -1,7 +1,7 @@
 <?
 $title = "F.A.Q.";
-$cvs_author = 'Author: htodd';
-$cvs_date = 'Date: 2002/11/09 06:37:47';
+$cvs_author = '$Author: bbum $';
+$cvs_date = '$Date: 2002/11/12 16:26:30 $';
 
 include "header.inc";
 ?>
