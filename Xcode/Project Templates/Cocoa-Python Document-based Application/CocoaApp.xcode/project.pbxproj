@@ -122,7 +122,7 @@
 				19C28FACFE9D520D11CA2CBB,
 			);
 			isa = PBXGroup;
-			name = «PROJECTNAMEASIDENTIFIER»;
+			name = "«PROJECTNAMEASIDENTIFIER»";
 			path = "";
 			refType = 4;
 			sourceTree = "<group>";
@@ -245,7 +245,7 @@
 				52399A30064C273900B40791,
 			);
 			isa = PBXVariantGroup;
-			name =  «PROJECTNAMEASIDENTIFIER»Document.nib;
+			name =  "«PROJECTNAMEASIDENTIFIER»Document.nib";
 			path = "";
 			refType = 4;
 			sourceTree = "<group>";
@@ -312,7 +312,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = «PROJECTNAMEASIDENTIFIER»;
+				PRODUCT_NAME = "«PROJECTNAMEASIDENTIFIER»";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
 				WRAPPER_EXTENSION = app;
@@ -320,9 +320,9 @@
 			dependencies = (
 			);
 			isa = PBXNativeTarget;
-			name = «PROJECTNAMEASIDENTIFIER»;
+			name = "«PROJECTNAMEASIDENTIFIER»";
 			productInstallPath = "$(HOME)/Applications";
-			productName = «PROJECTNAMEASIDENTIFIER»;
+			productName = "«PROJECTNAMEASIDENTIFIER»";
 			productReference = 8D1107320486CEB800E47090;
 			productType = "com.apple.product-type.application";
 		};
