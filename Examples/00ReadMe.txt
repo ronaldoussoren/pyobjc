@@ -261,6 +261,30 @@ later.
 
 .. __: CocoaBindings
 
+* `CurrencyConvBinding`_
+
+  A rewrite of `CurrencyConverter`_ using Cocoa Bindings.
+    
+  Originally from
+  `Introduction to Developing Cocoa Applications Using Bindings`_,
+  converted to PyObjC by ufiedler.
+
+.. _`CurrencyConvBinding`: CocoaBindings/CurrencyConvBinding
+.. _`Introduction to Developing Cocoa Applications Using Bindings`: http://developer.apple.com/documentation/Cocoa/Conceptual/CurrencyConverterBindings/index.html
+
+* `ManualBindings`_
+
+  A simple example that illustrates establishing bindings
+  programmatically, including a number of options such as validation
+  and an array operator, and indexed accessor methods. A custom model
+  object implements custom validation method.
+  
+  Originally from `Cocoa Bindings Examples and Hints`_,
+  converted to PyObjC by ufiedler.
+
+.. _`ManualBindings`: CocoaBindings/ManualBindings
+.. _`Cocoa Bindings Examples and Hints`: http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
+
 * `TableModel`__
 
   Shows how to fill an ``NSTableView`` using Key-Value Coding.  Contains
@@ -276,18 +300,6 @@ later.
 
 .. __: CocoaBindings/TableModelWithSearch
 
-* `ManualBindings`_
-
-  A simple example that illustrates establishing bindings
-  programmatically, including a number of options such as validation
-  and an array operator, and indexed accessor methods. A custom model
-  object implements custom validation method.
-  
-  Originally from `Cocoa Bindings Examples and Hints`_,
-  converted to PyObjC by ufiedler.
-
-.. _`ManualBindings`: CocoaBindings/ManualBindings
-.. _`Cocoa Bindings Examples and Hints`: http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 OpenGL
 ------
