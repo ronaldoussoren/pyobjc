@@ -3,6 +3,8 @@ import objc
 import sys
 import time
 
+from objc.test import testbndl
+
 
 if "%02d%02d"%(sys.version_info[:2]) >= '0203':
     # On Python 2.3 and later we use the API from PEP311 to make it possible
@@ -87,6 +89,23 @@ if "%02d%02d"%(sys.version_info[:2]) >= '0203':
             time.sleep(2)
             self.assertEquals(lst, range(100))
 
+        def testCalling(self):
+            class Dummy:
+                pass
+            class PyObjCTestCalling (objc.runtime.NSObject) :
+                def call(self):
+                    return Dummy()
+
+            my = testbndl.PyObjC_TestClass4.alloc().init()
+            cb = PyObjCTestCalling.alloc().init()
+
+            objc.runtime.NSThread.detachNewThreadSelector_toTarget_withObject_(
+                    'runThread:', my,  cb)
+
+            time.sleep(2)
+            
+            retval = my.returnObject()
+            self.assert_(isinstance(retval, Dummy))
 
 if __name__ == "__main__":
     unittest.main()

@@ -1585,8 +1585,11 @@ static 	char buf[1024];
 
 @interface PyObjC_TestClass4 : NSObject
 {
+	id returnObject;
 }
 - (void)encodeWithCoder:(NSCoder*)coder;
+- (void)runThread:(id)object;
+- (id)returnObject;
 
 + (int)fetchInt:(NSCoder*)coder;
 + (double)fetchDouble:(NSCoder*)coder;
@@ -1595,6 +1598,19 @@ static 	char buf[1024];
 @end
 
 @implementation PyObjC_TestClass4
+- (void)runThread:(id)object
+{
+	NSObject* pool = [[NSAutoreleasePool alloc] init];
+	returnObject = (id)[object call];
+	[returnObject retain];
+	[pool release];
+}
+
+- (id)returnObject;
+{
+	return returnObject;
+}
+
 - (void)encodeWithCoder:(NSCoder*)coder
 {
 	double d = 1.5;

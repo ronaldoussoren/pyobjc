@@ -3,7 +3,7 @@ Currency Converter
 ==================
 
 :author: Ronald Oussoren
-:contact: oussoren@cistron.nl
+:contact: ronaldoussoren@mac.com
 
 .. contents:
 

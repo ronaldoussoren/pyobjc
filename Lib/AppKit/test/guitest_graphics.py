@@ -60,7 +60,7 @@ class RectTest (unittest.TestCase):
 
     def makeArray(self, points):
 
-        a = array.array('f', len(points) * (0, 0, 0, 0))
+        a = array.array('f', len(points) * [0, 0, 0, 0])
         for i in range(len(points)):
             p = points[i]
             a[(i*4) + 0] = p[0][0]

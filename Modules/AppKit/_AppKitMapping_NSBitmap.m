@@ -168,7 +168,7 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 {
 	PyObject* result;
 	struct objc_super super;
-	unsigned char *bitmapData;
+	unsigned char * volatile bitmapData;
 	int bytesPerPlane;
   
 	if (!PyArg_ParseTuple(arguments, "")) {
@@ -189,6 +189,7 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
+		bitmapData = NULL;
 		bytesPerPlane = -1;
 	PyObjC_ENDHANDLER
 

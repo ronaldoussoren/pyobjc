@@ -158,10 +158,14 @@ recycle_autorelease_pool(PyObject* self __attribute__((__unused__)),
 		return NULL;
 	}
 
-	Py_BEGIN_ALLOW_THREADS
-	[global_release_pool release];
-	global_release_pool = [[NSAutoreleasePool alloc] init];
-	Py_END_ALLOW_THREADS
+	PyObjC_DURING
+		[global_release_pool release];
+		global_release_pool = [[NSAutoreleasePool alloc] init];
+	PyObjC_HANDLER
+		PyObjCErr_FromObjC(localException);
+	PyObjC_ENDHANDLER
+
+	if (PyErr_Occurred()) return NULL;
 
 	Py_INCREF(Py_None);
 	return Py_None;

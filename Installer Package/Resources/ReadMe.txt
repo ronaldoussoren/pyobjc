@@ -10,5 +10,5 @@ The latest information can always be found at:
 
     http://pyobjc.sourceforge.net/
 
-Ronald Oussoren <oussoren@cistron.nl>, b.bum <bbum@codefab.com>
+Ronald Oussoren <ronaldoussoren@mac.com>, b.bum <bbum@codefab.com>
 
