@@ -479,6 +479,15 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 				}
 				goto error;
 			}
+		} else {
+			if (res != Py_None) {
+				PyErr_Format(PyExc_ValueError,
+					"%s: did not return None, expecting "
+					"void return value",
+					PyObjCRT_SELName(*(SEL*)args[1]));
+				goto error;
+			}
+			*((int*)resp) = 0;
 		}
 	} else {
 		/* We have some output parameters, locate them and encode
@@ -599,7 +608,17 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 				Py_DECREF(res); 
 				goto error;
 			}
+		} else {
+			if (res != Py_None) {
+				PyErr_Format(PyExc_ValueError,
+					"%s: did not return None, expecting "
+					"void return value",
+					PyObjCRT_SELName(*(SEL*)args[1]));
+				goto error;
+			}
+			*((int*)resp) = 0;
 		}
+
 
 		Py_DECREF(res);
 
