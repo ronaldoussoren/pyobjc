@@ -1,13 +1,8 @@
-# -*- indented-text -*-
-# This file was written by Bill Bumgarner. I updated it to fit
-# packaging needs, and I'm still maintaining it as part of the kit.
-# 
-# This file is part of PyObjC package.
-#
-# INSTALL,v
-# 1.8
-# 1998/03/24 18:55:42
-#
+=========================
+Installation Instructions
+=========================
+
+.. :author: Bill Bumgarner
  
 Building the Module
 ===================
@@ -15,23 +10,23 @@ Building the Module
 The module uses the distutils package included with Python 2.0 and
 beyond.   This package provides a single interface for building and
 packaging the module.   To see usage documentation for the module,
-issue the '--help' command:
+issue the ``--help`` command::
 
-% python setup.py --help
+  % python setup.py --help
 
 To see an inventory of building and packaging commands, issue the
-command:
+command::
 
-% python setup.py --help-commands
+  % python setup.py --help-commands
 
-The following command will build and install the pyobjc module:
+The following command will build and install the pyobjc module::
 
-% python setup.py install
+  % python setup.py install
 
 The setup.py system can also be used to create source and binary
 distribution archives automatically.
 
-Use 'sudo' to install the pyobjc module into a the Apple supplied
+Use ``sudo`` to install the pyobjc module into a the Apple supplied
 python's site-packages directory on OS X 10.2 and greater:
 
 % sudo python setup.py install
@@ -50,20 +45,20 @@ the examples directory were mostly written to test a particular
 feature of the bridge (or document a bug until a fix could be found).
 
 CurrencyConverter and TableModel are both examples of standalone
-Cocoa-Python applications.  To build and execute 
+Cocoa-Python applications.  To build and execute::
 
-% cd TableModel
-% python buildapp.py build
+  % cd TableModel
+  % python buildapp.py build
 
 The WebServicesTool and TableModel2 are both examples of Cocoa-Python
 applications created via the Cocoa-Python project template found in
-the "Project Templattes" directory.  Use Project Builder to build the
+the ``Project Templates`` directory.  Use Project Builder to build the
 applications.
 
 Project Templates
 =================
 
-The "Project Templates" directory contains project templates for
+The ``Project Templates`` directory contains project templates for
 project builder.  Currently, there is one project builder template;  a
 Cocoa-Python Application project template.   When installed, this adds
 a project to Project Builder's project menu that allows new Cocoa

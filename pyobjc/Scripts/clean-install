@@ -8,6 +8,8 @@ import shutil
 import sys
 import os
 
+#os.environ['MACOSX_DEPLOYMENT_TARGET'] = '1'
+
 site=None
 for e in sys.path:
     if e.endswith('/site-packages'):
@@ -24,11 +26,15 @@ if os.path.exists('build'):
     print "- Removing build"
     shutil.rmtree('build', ignore_errors=1)
 
-for package in ['AddressBook', 'AppKit', 'Foundation', 'objc' ]:
-    p = os.path.join(site, package)
-    if os.path.exists(p):
-        print "- Removing %s"%p
-        shutil.rmtree(p, ignore_errors=1)
+p = os.path.join(site, "PyObjC")
+if os.path.exists(p):
+    print "- Removing %s"%p
+    shutil.rmtree(p, ignore_errors=1)
+
+p = os.path.join(site, "PyObjC.pth")
+if os.path.exists(p):
+    print "- Removing %s"%p
+    os.unlink(p)
 
 os.system("LIBFFI_BASE='%s/libffi' '%s' setup.py install"%(
     os.getcwd(), sys.executable))

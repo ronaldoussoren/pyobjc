@@ -221,7 +221,7 @@ class TestSimpleReturns(unittest.TestCase):
     def testStruct2(self):
         obj = OC_TestClass1.new()
 
-        self.assertEquals(obj.dummy2Func(), ((1,2,3,4)))
+        self.assertEquals(obj.dummy2Func(), ((1,2,3,4),))
 
 def suite():
     suite = unittest.TestSuite()
