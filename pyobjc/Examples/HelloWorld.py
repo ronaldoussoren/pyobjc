@@ -1,3 +1,5 @@
+#!/usr/bin/env pythonw
+
 # HelloWorld.py
 #
 # The original PyObjC interface example by Steve Majewski.
