@@ -3,7 +3,7 @@ import py2app
 
 plist = dict(NSMainNibFile='PyInterpreter')
 setup(
-    plugin = ["PyInterpreter.py"],
+    plugin = ["InjectInterpreterPlugin.py"],
     data_files = ["PyInterpreter.nib"],
     options = dict(py2app=dict(plist=plist)),
 )
