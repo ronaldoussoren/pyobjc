@@ -31,6 +31,9 @@ Release-date -3 days
 
 Build the release tarball and dmg:
 
+* Add the correct date to the NEWS file, and set the right version in
+  ``Modules/objc/pyobjc.h``.
+
 * Run Scripts/make_distrib.py
 
 * Create an empty disk image (named ``PyObjC X.Y``) and copy the installer

@@ -12,10 +12,12 @@
  * - to delete an object: obj_freelist[obj_freelist_top++] = OBJ
  * - to create an object: OBJ = obj_freelist[--obj_freelist_top];
  */
+#if 0
 #define FREELIST_SIZE 1024
 
 static PyObject* obj_freelist[FREELIST_SIZE];
 static int obj_freelist_top = 0;
+#endif
 
 
 static NSMapTable* proxy_dict = NULL;
@@ -148,12 +150,17 @@ object_dealloc(PyObject* obj)
 		((PyObjCObject*)obj)->objc_object = nil;
 	}
 
+#ifdef FREELIST_SIZE
 	/* Push self onto the freelist */
 	if (obj_freelist_top == FREELIST_SIZE) {
 		obj->ob_type->tp_free(obj);
 	} else {
 		obj_freelist[obj_freelist_top++] = obj;
+		obj->ob_refcnt = 0xDEADBEEF;
 	}
+#else
+	obj->ob_type->tp_free(obj);
+#endif
 }
 
 
@@ -545,6 +552,92 @@ PyObjCClassObject PyObjCObject_Type = {
 #endif
 };
 
+/*
+ *  Allocate a proxy object for use during the call of __del__,
+ *  this isn't a full-featured proxy object.
+ */
+PyObject* 
+_PyObjCObject_NewDeallocHelper(id objc_object)
+{
+	Class cls; 
+	PyObject* res;
+	PyTypeObject* cls_type;
+
+	cls = GETISA(objc_object);
+	cls_type = (PyTypeObject*)PyObjCClass_New(cls);
+	if (cls_type == NULL) {
+		return NULL;
+	}
+
+#ifdef FREELIST_SIZE
+	if (obj_freelist_top == 0) {
+		res = cls_type->tp_alloc(cls_type, 0);
+		if (res == NULL) {
+			return NULL;
+		}
+	} else {
+		res = obj_freelist[obj_freelist_top-1];
+		obj_freelist_top -= 1;
+		if (res->ob_refcnt != 0xDEADBEEF) abort();
+		res->ob_refcnt = 1;
+		res->ob_type = cls_type;
+	}
+#else
+	res = cls_type->tp_alloc(cls_type, 0);
+	if (res == NULL) {
+		return NULL;
+	}
+#endif
+
+	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
+	
+	((PyObjCObject*)res)->objc_object = objc_object;
+	((PyObjCObject*)res)->flags = 0;
+	return res;
+}
+
+/*
+ * Free the object allocated using '_PyObCObject_NewDeallocHelper'. If the
+ * object has a refcnt > 1 when calling this function, the object is 
+ * promoted to a full proxy object. This should only happen when someone
+ * revives the object, it is unclear whether the ObjC runtime will accept
+ * reviveing.
+ */
+void
+_PyObjCObject_FreeDeallocHelper(PyObject* obj)
+{
+	if (obj->ob_refcnt != 1) {
+		/* Someone revived this object, hopefully 
+		 * Objective-C can deal with this.
+		 */
+		id objc_object = PyObjCObject_GetObject(obj);
+
+		Py_DECREF(obj);
+
+		if (strcmp(GETISA(objc_object)->name, 
+						"NSAutoreleasePool") != 0) {
+			/* NSAutoreleasePool doesn't like retain */
+			[objc_object retain];
+		}
+
+		if (register_proxy(obj) < 0) {
+			NSLog(@"Couldn't register revived proxy object!");
+		}
+		return;
+	}
+
+#ifdef FREELIST_SIZE
+	if (obj_freelist_top == FREELIST_SIZE) {
+		obj->ob_type->tp_free(obj);
+	} else {
+		obj_freelist[obj_freelist_top++] = obj;
+		obj->ob_refcnt = 0xDEADBEEF;
+	}
+#else
+	obj->ob_type->tp_free(obj);
+#endif
+
+}
 
 
 PyObject* 
@@ -567,6 +660,7 @@ PyObjCObject_New(id objc_object)
 		return NULL;
 	}
 
+#ifdef FREELIST_SIZE
 	if (obj_freelist_top == 0) {
 		res = cls_type->tp_alloc(cls_type, 0);
 		if (res == NULL) {
@@ -575,9 +669,16 @@ PyObjCObject_New(id objc_object)
 	} else {
 		res = obj_freelist[obj_freelist_top-1];
 		obj_freelist_top -= 1;
+		if (res->ob_refcnt != 0xDEADBEEF) abort();
 		res->ob_refcnt = 1;
 		res->ob_type = cls_type;
 	}
+#else
+	res = cls_type->tp_alloc(cls_type, 0);
+	if (res == NULL) {
+		return NULL;
+	}
+#endif
 
 	/* This should be in the tp_alloc for the new class, but 
 	 * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
