@@ -26,6 +26,11 @@ try:
 except ImportError:
 	pass
 
+try:
+	import WebKit
+except ImportError:
+	pass
+
 import sys
 
 
