@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+Python Project Templates</title>
+<meta name="Author" content="Bill Bumgarner" />
+<meta name="Contact" content="bbum@mac.com" />
+<title>
+Contents</title>
+</head>
+<body>
+<h2>Python Project Templates</h2>
+<table>
+<tbody valign="top">
+<tr><th >Author:</th>
+<td>Bill Bumgarner</td></tr>
+<tr><th >Contact:</th>
+<td><a href="mailto:bbum@mac.com">bbum@mac.com</a></td></tr>
+</tbody>
+</table>
+<p>To use the project templates, simply copy (or link) them into the Project
+Templates directory used by Project Builder.  The project templates are also
+included in the PyObjC installer package.</p>
+<h2>Contents</h2>
+<ul>
+<li><a href="#notes" id="id1" name="id1">Notes</a></li>
+<li><a href="#cocoa-python-templates" id="id2" name="id2">Cocoa-Python Templates</a></li>
+<li><a href="#cocoa-python-application" id="id3" name="id3">Cocoa-Python Application</a></li>
+</ul>
+<h2><a href="#id1" name="notes">Notes</a></h2>
+<ul>
+<li>In all cases that involve loading frameworks or bundles, all of the classes
+in that framework or bundle can be made available by using the
+<code><span>loadBundle()</span></code> function in the <code><span>objc</span></code> module:<pre>
+objc.loadBundle(&quot;MyFramework&quot;, globals(), bundle_path=&quot;/path/to/MyFramework.framework&quot;)
+</pre>
+<p>This has the effect of importing all of the classes in the bundle or
+framework into the current python scope's globals.  For all intents and
+purposes, it is similar to:</p>
+<pre>
+from Foundation import *
+</pre>
+</li>
+<li>There is risk that the pyobjc modules compiled for one version of python
+will not work with another.  Where this may be a problem is if the a
+standalone application is packaged with the pyobjc modules compiled
+against, say, the Fink or Framework builds of Python, but is then executed
+using the Apple supplied python binary.</li>
+</ul>
+<blockquote>
+<ul>
+<li>The <i>Project Templates</i> directory includes a <strong>clean.py</strong> script that
+removes noise files from the project templates.   When working on project
+templates, it is recommended that this script be invoked before creating a
+test project from one of the templates.   For example, the presence of
+user specific project builder settings will cause any projects created
+from a template to be incorrect.</li>
+</ul>
+</blockquote>
+<h2><a href="#id2" name="cocoa-python-templates">Cocoa-Python Templates</a></h2>
+<p>The Cocoa-Python templates all create various different kinds of Cocoa
+application projects.  Be sure and pick the correct project type for your
+needs.</p>
+<h2><a href="#id3" name="cocoa-python-application">Cocoa-Python Application</a></h2>
+<p>A project created from this template is designed to implement standalone,
+pure-Python, applications that are compatible with Apple's build of Python as
+well as all other builds of python that support PyObjC.</p>
+<p>When building the 'install' target, the resulting application wrapper will
+included the PyObjC module and can be launched on any stock OS X 10.3 system
+without requiring PyObjC to be preinstalled.</p>
+</body>
+</html>

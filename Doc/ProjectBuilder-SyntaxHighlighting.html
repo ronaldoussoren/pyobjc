@@ -35,14 +35,13 @@ support and don't blame me if something breaks.  A lot could break as
 both the user defaults and within project files.</p>
 </td></tr></tbody></table></td></tr></tbody></table><h2>Contents</h2>
 <ul>
-<li><a href="#installation" id="id2" name="id2">Installation</a></li>
-<li><a href="#documentation" id="id3" name="id3">Documentation</a></li>
-<li><a href="#to-do" id="id4" name="id4">To Do</a></li>
-<li><a href="#misc" id="id5" name="id5">Misc.</a></li>
+<li><a href="#installation" id="id1" name="id1">Installation</a></li>
+<li><a href="#documentation" id="id2" name="id2">Documentation</a></li>
+<li><a href="#to-do" id="id3" name="id3">To Do</a></li>
 </ul>
 <p>Triple-quoted strings are not always treated correctly by Project Builder. This
 seems to be a Project Builder bug.</p>
-<h2><a href="#id2" name="installation">Installation</a></h2>
+<h2><a href="#id1" name="installation">Installation</a></h2>
 <p>Create the directory 'Specifications' within
 <i>~/Developer/ProjectBuilder Extras/</i> or <i>/Developer/ProjectBuilder
 Extras/</i>:</p>
@@ -54,7 +53,7 @@ mkdir -p ~/Developer/ProjectBuilder\ Extras/Specifications/
 cp Python.pb*spec ~/Developer/ProjectBuilder\ Extras/Specifications/
 </pre>
 <p>The binary installer will install the specifications for you.</p>
-<h2><a href="#id3" name="documentation">Documentation</a></h2>
+<h2><a href="#id2" name="documentation">Documentation</a></h2>
 <p>The version of Project Builder that ships with the December Developer Tools
 modularizes the support for file types and syntax based colorizing of
 source files.  The base mechanisms and definitions are found in:</p>
@@ -105,8 +104,10 @@ Out[2]:
  'while',
  'yield']
 </pre>
-<h2><a href="#id4" name="to-do">To Do</a></h2>
+<h2><a href="#id3" name="to-do">To Do</a></h2>
 <ul>
+<li>NOTE: PyObjC's Project Builder support is unmaintained.  It is unlikely that
+any of these items will ever be completed.</li>
 <li>There are a number of other specification files found within the PBXCore.  Of
 particular relevance to Python would be the Compiler Specifications.  It
 would be extremely handy to be able to check syntax and compile Python code
@@ -129,8 +130,5 @@ the compiler front, support would focus on feeding through to the mechanism
 that turns Python source into .class files.   All of this assumes that
 Python and Jython source can (and should?) be differentiated.</li>
 </ul>
-<h2><a href="#id5" name="misc">Misc.</a></h2>
-<p>This README is formatted as <a href="http://docutils.sourceforge.net/docs/rst/quickstart.html">reStructuredText</a> input.  From it, the HTML and other
-formats can be automatically generated with the <a href="http://docutils.sourceforge.net/">docutils tools</a>.</p>
 </body>
 </html>

@@ -75,17 +75,23 @@ you want to write Cocoa programs in Python.
 
   An overview of the implementation of PyObjC.
 
-* Xcode Python Support
+* `Xcode Python templates`_
 
-  XXX - TODO
+  Describes the PyObjC Xcode templates.
 
-* `Project Builder Python Support`_
+* `Project Builder Python templates`_
 
-  Describes the Python support for Project Builder, including a TODO list for
-  future versions.
+  Describes the PyObjC Project Builder templates.
 
+* `Project Builder Python syntax highlighting`_
 
-.. _`Project Builder Python Support`: ProjectBuilder-SyntaxHighlighting.html
+  Describes the Project Builder syntax highlighting for Python.
+
+.. _`Xcode Python templates`: Xcode-Templates.html
+
+.. _`Project Builder Python syntax highlighting`: ProjectBuilder-SyntaxHighlighting.html
+
+.. _`Project Builder Python templates`: ProjectBuilder-Templates.html
 
 .. _`An introduction to PyObjC`: intro.html
 
