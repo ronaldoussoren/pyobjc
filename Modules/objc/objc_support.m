@@ -1181,9 +1181,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	 * loosing it prematurely when this happens to be a call to the 
 	 * dealloc function of an NSAutoreleasePool
 	 */
-	inv = [NSInvocation invocationWithMethodSignature:methinfo];
-	[inv retain]; 
-
+	inv = [[NSInvocation alloc] initWithMethodSignature:methinfo];
 
 	/* Set 'self' argument, for class methods we use the class */ 
 	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
