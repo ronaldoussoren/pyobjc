@@ -571,8 +571,15 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 
 
 
+
 	if (self->sel_self != NULL) {
 		res = execute((PyObject*)self, self->sel_self, args);
+
+		if (self->sel_flags & PyObjCSelector_kINITIALIZER) {
+			if (self->sel_self != res && !PyErr_Occurred()) {
+				PyObjCObject_ClearObject(self->sel_self);
+			}
+		}
 	} else {
 		PyObject* arglist;
 		PyObject* myClass;
@@ -607,6 +614,11 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		
 
 		res = execute((PyObject*)self, pyself, arglist);
+		if (self->sel_flags & PyObjCSelector_kINITIALIZER) {
+			if (pyself != res && !PyErr_Occurred()) {
+				PyObjCObject_ClearObject(pyself);
+			}
+		}
 		Py_DECREF(arglist);
 	}
 

@@ -16,6 +16,10 @@ PyObject* PyObjCExc_UnInitDeallocWarning;
 
 PyGILState_STATE PyObjCGILState_Ensure(void)
 {
+#if 1
+	return PyGILState_Ensure();
+
+#else
 	int shouldCreateThreadPool = (PyGILState_GetThisThreadState() == NULL) ? 1 : 0;
 	PyGILState_STATE state = PyGILState_Ensure();
 	if (shouldCreateThreadPool) {
@@ -30,6 +34,7 @@ PyGILState_STATE PyObjCGILState_Ensure(void)
 		Py_DECREF(pypool);
 	}
 	return state;
+#endif
 }
 
 int ObjCUtil_Init(PyObject* module)

@@ -23,12 +23,15 @@ class TestRegressions(unittest.TestCase):
         import warnings
         import Foundation
 
+        warnings.filterwarnings('ignore', 
+            category=objc.UninitializedDeallocWarning)
         o = Foundation.NSObject.alloc() # Not yet initialized
         warnings.filterwarnings('error', category=RuntimeWarning)
         try:
             self.assertRaises(RuntimeWarning, o.description)
+            del o
         finally:
-            del warnings.filters[0]
+            del warnings.filters[0:2]
 
     def testMemoryInit(self):
         """
@@ -49,9 +52,34 @@ class TestRegressions(unittest.TestCase):
     def testDeallocUninit(self):
         import objc
 
-        for clsName in [ 'NSURL', 'NSObject', 'NSArray' ]:
-            d = getattr(objc.runtime, clsName).alloc()
+        import warnings
+        warnings.filterwarnings('ignore', 
+            category=objc.UninitializedDeallocWarning)
+
+        try:
+            for clsName in [ 'NSURL', 'NSObject', 'NSArray' ]:
+                d = getattr(objc.runtime, clsName).alloc()
+                del d
+
+        finally:
+            del warnings.filters[0]
+
+        # Check that we generate a warning for unitialized objects that
+        # get deallocated
+        import sys
+        import StringIO
+        warnings.filterwarnings('always', 
+            category=objc.UninitializedDeallocWarning)
+        sys.stderr = io = StringIO.StringIO()
+        try:
+            d = objc.runtime.NSObject.alloc()
             del d
 
+        finally:
+            del warnings.filters[0]
+            sys.stderr = sys.__stderr__
+
+        # A warning is three lines: location info, source code, empty line
+        self.assertEquals(len(io.getvalue().split('\n')), 3)
 if __name__ == '__main__':
     unittest.main()
