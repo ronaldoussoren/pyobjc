@@ -113,5 +113,38 @@ class TestCopying (unittest.TestCase):
         self.assert_(isinstance(c, MyCopyClass))
         self.assertEquals(c.foobar, 2)
 
+
+    def testMultipleInheritance1(self):
+        # New-style class mixin
+        class MixinClass1 (object):
+            def mixinMethod(self):
+                return "foo"
+
+        class MITestClass1 (objc.runtime.NSObject, MixinClass1):
+            def init(self):
+                return NSObject.init(self)
+
+        self.assert_(hasattr(MITestClass1, 'mixinMethod'))
+
+        o = MITestClass1.alloc().init()
+        self.assertEquals(o.mixinMethod(), "foo")
+
+    def testMultipleInheritance2(self):
+        # old-style class mixin
+        class MixinClass2:
+            def mixinMethod(self):
+                return "foo"
+
+        class MITestClass2 (objc.runtime.NSObject, MixinClass2):
+            def init(self):
+                return NSObject.init(self)
+
+        self.assert_(hasattr(MITestClass2, 'mixinMethod'))
+
+        o = MITestClass2.alloc().init()
+        self.assertEquals(o.mixinMethod(), "foo")
+
+
+
 if __name__ == '__main__':
     unittest.main()
