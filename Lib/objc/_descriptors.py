@@ -7,7 +7,6 @@ This module defines the core interfaces of the Python<->Objective-C bridge.
 __all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor']
 
 from _objc import ivar, selector
-import inspect
 
 #
 # Interface builder support.
@@ -32,7 +31,8 @@ def accessor(func, typeSignature='@'):
     and key-value observing.
     """
 
-    args, varargs, varkw, defaults = inspect.getargspec(func)
+    from inspect import getargspec
+    args, varargs, varkw, defaults = getargspec(func)
     funcName = func.__name__
     maxArgs = len(args)
     minArgs = maxArgs - len(defaults or ())

@@ -7,8 +7,7 @@ This module contains no user callable code.
 TODO:
 - Add external interface: Framework specific modules may want to add to this.
 """
-from objc import setClassExtender, selector, lookUpClass
-import warnings
+from _objc import setClassExtender, selector, lookUpClass
 
 __all__ = ['CONVENIENCE_METHODS', 'CLASS_METHODS']
 
@@ -43,7 +42,7 @@ def add_convenience_methods(super_class, name, type_dict):
 
         sel = sel.selector
 
-        if CONVENIENCE_METHODS.has_key(sel):
+        if sel in CONVENIENCE_METHODS:
             v = CONVENIENCE_METHODS[sel]
             for name, value in v:
                 if name in type_dict and isinstance(type_dict[name], selector):
@@ -59,7 +58,7 @@ def add_convenience_methods(super_class, name, type_dict):
                 else:
                     type_dict[name] = value
 
-    if CLASS_METHODS.has_key(name):
+    if name in CLASS_METHODS:
         for name, value in CLASS_METHODS[name]:
             type_dict[name] = value
 
@@ -208,10 +207,9 @@ CONVENIENCE_METHODS['addObjectsFromArray:'] = (
 )
 
 def index_indexOfObject(self, item):
-    import Foundation
-
+    from Foundation import NSNotFound
     res = self.indexOfObject_(item)
-    if res == Foundation.NSNotFound:
+    if res == NSNotFound:
         raise ValueError, "NSArray.index(x): x not in list"
     return res
 
@@ -359,6 +357,7 @@ def _num_to_python(v):
         elif tp in [ 5, 6, 12, 13 ]:
             v = v.doubleValue()
         else:
+            import warnings
             warnings.warn(RuntimeWarning, "Unhandled numeric type: %r" % (tp,))
 
     return v
