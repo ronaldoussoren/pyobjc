@@ -871,6 +871,8 @@ add_class_fields(Class objc_class, PyObject* dict)
 	 * semantics.
 	 */
 	if (objc_class->ivars) {
+	    int i;
+	    struct objc_ivar *var;
 		for (i = 0; i < objc_class->ivars->ivar_count; i++) {
 			var = objc_class->ivars->ivar_list + i;
 

@@ -40,7 +40,6 @@
 - (BOOL) respondsToSelector:(SEL) aSelector;
 - (NSMethodSignature *) methodSignatureForSelector:(SEL) selector;
 - (void) doesNotRecognizeSelector:(SEL) aSelector;
-
 @end /* OC_PythonObject class interface */
 
 #endif /* _OC_PythonObject_H */
