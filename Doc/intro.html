@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+An introduction to PyObjC</title>
+<title>
+Contents</title>
+</head>
+<body>
+<h2>An introduction to PyObjC</h2>
+<!-- :authors: Ronald Oussoren
+:contact: pyobjc-dev@lists.sourceforge.net
+:URL: http://pyobjc.sourceforge.net/
+:copyright: 2003 The PyObjC Project -->
+<h2>Contents</h2>
+<ul>
+<li><a href="#work-in-progress" id="id1" name="id1">WORK IN PROGRESS</a></li>
+<li><a href="#preface" id="id2" name="id2">Preface</a></li>
+<li><a href="#objective-c-for-pyobjc-users" id="id3" name="id3">Objective-C for PyObjC users</a></li>
+<li><a href="#overview-of-the-bridge" id="id4" name="id4">Overview of the bridge</a></li>
+<li><a href="#cocoa-for-python-programmers" id="id5" name="id5">Cocoa for Python programmers</a></li>
+<li><a href="#building-applications" id="id6" name="id6">Building applications</a><ul>
+<li><a href="#pure-python-buildapp-py" id="id7" name="id7">&quot;Pure python&quot; :  buildapp.py</a></li>
+<li><a href="#ide-approach-project-builder" id="id8" name="id8">&quot;IDE approach&quot; : Project builder</a></li>
+</ul>
+</li>
+</ul>
+<h2><a href="#id1" name="work-in-progress">WORK IN PROGRESS</a></h2>
+<p>This document is work in progress and thin on details.</p>
+<h2><a href="#id2" name="preface">Preface</a></h2>
+<p>PyObjC is a bridge between Python and Objective-C. It allows you to write 
+Python scripts that reuse and extend existing Objective-C class libraries, 
+most importantly the <a href="http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html">Cocoa library</a> by <a href="http://www.apple.com/">Apple</a>.</p>
+<p>This document describes how to use Objective-C class libraries from Python
+scripts and how to interpret the documentation of those libraries, from the 
+point of view of a Python programmer.</p>
+<h2><a href="#id3" name="objective-c-for-pyobjc-users">Objective-C for PyObjC users</a></h2>
+<p>Objective-C is an object-oriented programming language that is an extention 
+of C and borrows heavily from Smalltalk. It features single inheritance with
+(in theory) multiple root classes and dynamic dispatch of methods. This is
+basicly the same as python with single inheritance.</p>
+<p>An important difference between Python and Objective-C is that the latter is
+not a pure object-oriented language. Some values are not objects, but values
+of plain C types, such as <code><span>int</span></code> and <code><span>double</span></code>. These basic C types can also
+be used as the types of arguments and the return value of methods.</p>
+<p>Object allocation and initialization are explicit and seperate actions in 
+Objective-C. The former is done by the class-method <code><span>alloc</span></code>, while the
+latter is done by instance-methods whose name customarily starts with <code><span>init</span></code>.</p>
+<p>For more information about Objective-C see:</p>
+<ul>
+<li><a href="http://developer.apple.com/techpubs/macosx/Cocoa/ObjectiveC/index.html">The Objective-C Programming Language</a> at <a href="http://www.apple.com/">Apple</a>.</li>
+</ul>
+<h2><a href="#id4" name="overview-of-the-bridge">Overview of the bridge</a></h2>
+<p>Objective-C classes are visible as Python classes and can be subclassed just
+like normal Python classes. The major differences between normal Python classes
+and Objective-C classes are the way you create instances and the fact that 
+Objective-C classes have <i>odd</i> names.</p>
+<p>As described in <a href="#objective-c-for-pyobjc-users">Objective-C for PyObjC users</a> the creation of Objective-C 
+objects is a two-stage process. You first call the class method <code><span>alloc</span></code>, and
+then call some variation of <code><span>init</span></code> to initialize the objects. The newly
+created object is the result of the call to <code><span>init</span></code>. Most classes have 
+convienence class methods that combine the calls to <code><span>alloc</span></code> and <code><span>init</span></code>.</p>
+<p>Objective-C methods are bridged to python callables. Because Objective-C method 
+names can contain colons it is necessary to translate methods names. The rules
+for translation are:</p>
+<ul>
+<li>Concatenate all elements of the method name: <code><span>someMethod:withFoo:andBar:</span></code></li>
+<li>Then convert all colons to underscores: <code><span>someMethod_withFoo_andBar_</span></code></li>
+</ul>
+<p>The bridged method usually has the same number of arguments as the orginal 
+method and also returns the same as the original method. In special 
+circumstances the method interface may be different from the Objective-C 
+interface, those methods are document in 'some other document'. Furthermore,
+some methods have pass-by-reference arguments (that is a pointer to a single
+value that is used to transfer data to (in), from (out) or to-and-from (inout)
+the method. The arguments that are passed to methods is present as normal 
+arguments in the bridged method (e.g. if the method has an <code><span>int*</span></code> argument
+the bridged method has has an integer argument).  Data that is passed from the
+function results in additional return values from the function.</p>
+<p>When the bridge cannot automaticly deduce the right signature for a method, or
+if you want to add a method whose name cannot be transformed into python (
+for example a methodname containing <code><span>$</span></code>), you'll have to add explicit hints
+to your code. You do this by calling the function <code><span>objc.selector</span></code> and using
+the result instead of your method definition:</p>
+<pre>
+class MyObject (NSObject):
+        def someMethod_(self, arg):
+                pass
+
+        someMethod_ = objc.selector(someMethod_, ...)
+</pre>
+<p>The other arguments of <code><span>objc.selector</span></code> (not shown in the example) provide
+additional information about the method to the bridge, see the online 
+documentation for more information about this function. It is almost never
+necessary to use this technique.</p>
+<p>The need for additional hints to the bridge often arises from implementing an
+(informal) protocol in Python. Because the methods compromising the protocol
+are probably not implemented in the superclass the bridge often cannot deduce 
+the correct method signatures for the methods you implemented. To avoid the
+need for using <code><span>objc.selector</span></code> and to make it explicit that your implementing
+an (informal) protocol the bridge has explicit support for these (informal)
+protocols.</p>
+<p>To tell the bridge that your implementing an informal protocol you use an
+<code><span>informal_protocol</span></code> object as a mixin:</p>
+<pre>
+class MyModel (NSObject, anInformalProtocol):
+        pass
+</pre>
+<p>The <code><span>AppKit</span></code> and <code><span>Foundation</span></code> modules define <code><span>informal_protocol</span></code> objects 
+for most (informal) protocols and defined by these frameworks (both the 
+explicitly documented protocols and the protocols used to communicate between
+an object and its delegate).</p>
+<h2><a href="#id5" name="cocoa-for-python-programmers">Cocoa for Python programmers</a></h2>
+<p>Cocoa frameworks are mapped onto Python packages with the same name, that is
+the classes, constants and functioins from the AppKit framework are available
+after you import <code><span>AppKit</span></code> in your Python script.</p>
+<p>The module <code><span>PyObjCTools.NibClassBuilder</span></code> can be used to make working with 
+NIB files more convenient. This module can be used to extract information 
+about classes from NIB files, both as a standalone tool generating source code 
+and during runtime. See the online documentation for this module for more
+information.</p>
+<p><strong>TODO</strong>:</p>
+<ul>
+<li>Links to example PyObjC scripts.</li>
+</ul>
+<p>More information on Cocoa programming can be found at:</p>
+<ul>
+<li><a href="http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html">Cocoa documentation at the Apple developer website</a></li>
+<li><a href="http://developer.apple.com/samplecode/Sample_Code/Cocoa.htm">Cocoa examples at the Apple developer website</a></li>
+<li><a href="http://www.stepwise.com/">stepwise.com</a></li>
+<li>Your local bookstore or library</li>
+</ul>
+<h2><a href="#id6" name="building-applications">Building applications</a></h2>
+<p>There are two different ways to build applications with PyObjC. There are no
+major advantages to using either one of them, use the one that is most 
+convenient to you.</p>
+<h3><a href="#id7" name="pure-python-buildapp-py">&quot;Pure python&quot; :  buildapp.py</a></h3>
+<p>PyObjC includes a copy of the <code><span>bundlebuilder</span></code> module. This module will be part
+of the Python 2.3 MacPython release and is a to build distutil-style scripts 
+for building (standalone) applications.</p>
+<p>An example <code><span>buildapp.py</span></code> script:</p>
+<pre>
+from bundlebuilder import buildapp
+buildapp(
+        name = 'iClass',
+        mainprogram = &quot;main.py&quot;,
+        resources = [&quot;English.lproj&quot;, &quot;datasource.py&quot; ],
+        nibname = &quot;MainMenu&quot;,
+)   
+</pre>
+<p>The online documentation for <code><span>bundlebuilder</span></code> contains more information on 
+building <code><span>buildapp.py</span></code> scripts.</p>
+<h3><a href="#id8" name="ide-approach-project-builder">&quot;IDE approach&quot; : Project builder</a></h3>
+<p>PyObjC includes a number of Project Builder templates that can be used to 
+build (standalone) applications.</p>
+<p><strong>TODO</strong>:</p>
+<ul>
+<li>Expand this section, input needed as I don't use Project Builder</li>
+<li>Add link to documentation about our templates</li>
+<li>Add link to documentation for Project Builder</li>
+</ul>
+</body>
+</html>

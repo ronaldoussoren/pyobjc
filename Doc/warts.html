@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+Odd features</title>
+</head>
+<body>
+<h2>Odd features</h2>
+<!-- :author: Ronald Oussoren -->
+<p>The mapping from Objective-C onto Python is almost complete, but the following
+things should be kept in mind:</p>
+<ul>
+<li>Objective-C only has single inheritance. You can use multiple inheritance in
+the python code, but only to mix in 'fully python' classes. Do <i>not</i> use 
+multiple inheritance, this feature may not survive beyond 0.9.</li>
+<li>In objective-C it is valid to call methods on nil, these calls will be
+ignored. The nil 'object' is mapped to None and None will not ignore method
+calls, but will most likely raise an AttributeError. You'll have to remember
+this when translating from Objective-C to python.</li>
+<li>Some Cocoa classes store references to objects while not increasing the 
+reference count. One of those is NSOutlineView. A side-effect of this is that
+you <i>must</i> use subclasses of NSObject in your NSOutlineView model.</li>
+</ul>
+</body>
+</html>
