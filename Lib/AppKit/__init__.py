@@ -258,7 +258,7 @@ NSComboBoxDataSource = _objc.informal_protocol(
 		),
 		_objc.selector(
 			None, 
-			selector='comboxBox:objectValueForItemAtIndex:',
+			selector='comboBox:objectValueForItemAtIndex:',
 			signature='@@:@i',
 			required=1
 		),
