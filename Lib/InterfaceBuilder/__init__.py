@@ -14,4 +14,6 @@ del objc
 from _InterfaceBuilder import *
 del _InterfaceBuilder
 
-# Define usefull utility methods here
+import protocols  # no need to export these, just register with PyObjC
+
+# Define useful utility methods here

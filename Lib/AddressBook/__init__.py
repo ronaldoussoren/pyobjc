@@ -13,4 +13,6 @@ objc.loadBundle("AddressBook", globals(), bundle_path="/System/Library/Framework
 from _AddressBook import *
 del _AddressBook, objc
 
-# Define usefull utility methods here
+import protocols  # no need to export these, just register with PyObjC
+
+# Define useful utility methods here
