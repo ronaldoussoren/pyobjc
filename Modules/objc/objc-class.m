@@ -672,7 +672,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 		methodsToAdd->method_count = 1;
 		objcMethod = methodsToAdd->method_list;
 		objcMethod->method_name = PyObjCSelector_GetSelector(newVal);
-		objcMethod->method_types = PyObjCUtil_Strdup(
+		objcMethod->method_types = strdup(
 				PyObjCSelector_Signature(newVal));
 
 		if (objcMethod->method_types == NULL) {

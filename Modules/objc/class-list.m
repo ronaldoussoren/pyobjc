@@ -16,7 +16,6 @@ PyObjC_GetClassList(void)
 	int		bufferLen = 0;
 	int		neededLen = 0;
 	int             i;
-	Class		initialBuffer[1024];
 
 	/*
 	 * objc_getClassList returns the number of classes known in the runtime,
@@ -33,33 +32,32 @@ PyObjC_GetClassList(void)
 	 * fairly large static buffer, this way we need only one call unless
 	 * there is a very large number of classes.
 	 */
-	neededLen = objc_getClassList(initialBuffer, 1024);
-	if (neededLen >= 1024) {
-		while (bufferLen < neededLen) {
-			Class*    newBuffer;
-			bufferLen = neededLen;
+	neededLen = objc_getClassList(NULL, 0);
+	bufferLen = 0;
+	buffer = NULL;
 
-			/* Realloc(NULL, ...) might not work, call Malloc when
-			 * the buffer is NULL.
-			 */
-			if (buffer == NULL) {
-				newBuffer = malloc(sizeof(Class) * bufferLen);
-			} else {
-				newBuffer = realloc(buffer, 
-						sizeof(Class) * bufferLen);
-			}
-			if (newBuffer == NULL) {
-				PyErr_NoMemory();
-				goto error;
-			}
-			buffer = newBuffer; newBuffer = NULL;
-			neededLen = objc_getClassList(buffer, bufferLen);
+	while (bufferLen < neededLen) {
+		Class*    newBuffer;
+		bufferLen = neededLen;
+
+		/* Realloc(NULL, ...) might not work, call Malloc when
+		 * the buffer is NULL.
+		 */
+		if (buffer == NULL) {
+			newBuffer = PyMem_Malloc(
+				sizeof(Class) * bufferLen);
+		} else {
+			newBuffer = PyMem_Realloc(buffer, 
+				sizeof(Class) * bufferLen);
 		}
-		bufferLen = neededLen;
-	} else {
-		bufferLen = neededLen;
-		buffer = initialBuffer;
+		if (newBuffer == NULL) {
+			PyErr_NoMemory();
+			goto error;
+		}
+		buffer = newBuffer; newBuffer = NULL;
+		neededLen = objc_getClassList(buffer, bufferLen);
 	}
+	bufferLen = neededLen;
 
 	result = PyTuple_New(bufferLen);
 	if (result == NULL) {
@@ -76,14 +74,13 @@ PyObjC_GetClassList(void)
 		PyTuple_SET_ITEM(result, i, pyclass);
 	}
 
-	if (buffer != initialBuffer) {
-		free(buffer); buffer = NULL;
-	}
+	PyMem_Free(buffer); buffer = NULL;
+
 	return result;
 
 error:
-	if (buffer && buffer != initialBuffer) {
-		free(buffer);
+	if (buffer != NULL) {
+		PyMem_Free(buffer);
 		buffer = NULL;
 	}
 	Py_XDECREF(result);

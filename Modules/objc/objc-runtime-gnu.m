@@ -44,13 +44,14 @@ int PyObjCRT_SetupClass(
 	cls->info = CLS_CLASS;
 	metaCls->info = CLS_META;
 
-	cls->name = PyObjCUtil_Strdup(name);
+	cls->name = strdup(name);
 	if (cls->name == NULL) {
 		return -1;
 	}
-	metaCls->name = PyObjCUtil_Strdup(name);
+	metaCls->name = strdup(name);
 	if (metaCls->name == NULL) {
 		free((char*)(cls->name));
+		cls->name = NULL;
 		return -1;
 	}
 
@@ -105,6 +106,7 @@ void PyObjCRT_ClearClass(Class cls)
 
 	if (cls->name) {
 		free((char*)(cls->name));
+		cls->name = NULL;
 	}
 }
 

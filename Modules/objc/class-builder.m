@@ -65,20 +65,6 @@ static void object_method_takeValue_forKey_(
 		void** args,
 		void* userarg);
 
-#if 0
-static void object_method_copyWithZone_(
-		ffi_cif* cif,
-		void* retval,
-		void** args,
-		void* userarg);
-
-struct copyWithZoneData {
-	Class 	  class;
-	PyObject* callable;
-};
-#endif
-
-
 /*
  * When we create a 'Class' we actually create the struct below. This allows
  * us to add some extra information to the class defintion.
@@ -370,7 +356,6 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		Py_DECREF(key_list);
 		goto error_cleanup;
 	}
-
 
 	if (!PyObjCClass_HasPythonImplementation(py_superclass)) {
 		/* 
@@ -734,11 +719,13 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		PyObjCRT_ClassAddMethodList(
 			&(new_class->class), 
 			method_list);
+		method_list = NULL;
 	}
 	if (meta_method_list) {
 		PyObjCRT_ClassAddMethodList(
 			&(new_class->meta_class), 
 			meta_method_list);
+		meta_method_list = NULL;
 	}
 
 	Py_XDECREF(py_superclass);
@@ -1079,9 +1066,9 @@ object_method_forwardInvocation(
 	int             i;
 	int 		len;
 	PyObjCMethodSignature* signature;
-	char		   argbuf[1024];
+	/*char		   argbuf[1024]; */
 	const char* 		type;
-	void* arg = NULL;
+	void* argbuf = NULL;
 	int  err;
 	int   arglen;
 	PyObject* pymeth;
@@ -1162,7 +1149,7 @@ object_method_forwardInvocation(
 			return;
 		}
 
-		arg = alloca(arglen);
+		argbuf = PyMem_Malloc(arglen);
 		
 		[invocation getArgument:argbuf atIndex:i];
 
@@ -1183,10 +1170,12 @@ object_method_forwardInvocation(
 			if (type[1] == _C_PTR) {
 				have_output ++;
 			}
+			PyMem_Free(argbuf); argbuf = NULL;
 			continue;
 		default:
 			v = pythonify_c_value(type, argbuf);
 		}
+		PyMem_Free(argbuf); argbuf = NULL;
 
 		if (v == NULL) {
 			Py_DECREF(arglist);
@@ -1232,18 +1221,20 @@ object_method_forwardInvocation(
 
 	if (!have_output) {
 		if (*type  != _C_VOID && *type != _C_ONEWAY) {
-			arg = alloca(arglen+1);
+			argbuf = PyMem_Malloc(arglen+1);
 
-			err = depythonify_c_value(type, result, arg);
+			err = depythonify_c_value(type, result, argbuf);
 			if (err == -1) {
+				PyMem_Free(argbuf);
 				PyObjCMethodSignature_Free(signature);
 				PyObjCErr_ToObjCWithGILState(&state);
 				return;
 			}
 			if (isAlloc && *type == _C_ID) {
-				[(*(id*)arg) retain];
+				[(*(id*)argbuf) retain];
 			}
-			[invocation setReturnValue:arg];
+			[invocation setReturnValue:argbuf];
+			PyMem_Free(argbuf);
 		}
 		Py_DECREF(result);
 
@@ -1321,18 +1312,20 @@ object_method_forwardInvocation(
 			idx = 1;
 			real_res = PyTuple_GET_ITEM(result, 0);
 
-			arg = alloca(arglen+1);
+			argbuf = PyMem_Malloc(arglen+1);
 
-			err = depythonify_c_value(type, real_res, arg);
+			err = depythonify_c_value(type, real_res, argbuf);
 			if (err == -1) {
 				PyObjCMethodSignature_Free(signature);
 				PyObjCErr_ToObjCWithGILState(&state);
+				PyMem_Free(argbuf);
 				return;
 			}
 			if (isAlloc && *type == _C_ID) {
-				[(*(id*)arg) retain];
+				[(*(id*)argbuf) retain];
 			}
-			[invocation setReturnValue:arg];
+			[invocation setReturnValue:argbuf];
+			PyMem_Free(argbuf);
 
 		} else {
 			if (!PyTuple_Check(result) 

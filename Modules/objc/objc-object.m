@@ -305,7 +305,6 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	tp = (PyTypeObject*)PyObjCClass_New(obj_class);
 
 	descr = NULL;
-
 	if (tp != obj->ob_type) {
 		/* Workaround for KVO implementation feature */
 		PyObject* dict;

@@ -308,7 +308,7 @@ if gs_root is None:
         sys.exit(1)
 
     CFLAGS=[
-        #"-DPYOBJC_NEW_INITIALIZER_PATTERN",
+        "-DPYOBJC_NEW_INITIALIZER_PATTERN",
         "-DMACOSX",
         "-DAPPLE_RUNTIME",
         "-no-cpp-precomp",
@@ -342,7 +342,7 @@ if gs_root is None:
         ]
 
     OBJC_LDFLAGS=[
-        '-framework', 'Foundation',
+        '-framework', 'Foundation', 
         ]
 
     CF_LDFLAGS=[
