@@ -156,7 +156,8 @@ This method is not supported.</li>
 <li><code><span>setFocusStack</span></code>
 This method is not supported.</li>
 <li><code><span>graphicsPort</span></code>
-This method is not yet supported.</li>
+This method is not yet supported, MacPython doesn't wrap <code><span>CGContextRef</span></code>
+at the moment.</li>
 </ul>
 <h3><a href="#id12" name="class-nslayoutmanager">Class <code><span>NSLayoutManager</span></code></a></h3>
 <ul>
@@ -258,8 +259,6 @@ Python based bundle. See Examples/PrefPane for an example of its usage.</li>
 <p>The following methods are not supported in the current version of PyObjC.
 This limitation will be lifted in a future version of the bridge.</p>
 <ul>
-<li><code><span>decodeBytesWithReturnedLength:</span></code></li>
-<li><code><span>decodeBytesForKey:returnedLength:</span></code></li>
 <li><code><span>encodeValuesOfObjCType:</span></code><p>Use multiple calls to <code><span>encodeValueOfObjCType:at:</span></code> instead.</p>
 </li>
 <li><code><span>decodeValuesOfObjCType:</span></code><p>Use multiple calls to <code><span>decodeValueOfObjCType:at:</span></code> instead. Note that
@@ -292,6 +291,9 @@ This is a depricated method, see Apple documentation.</li>
 This is a depricated method, see Apple documentation.</li>
 <li><code><span>deserializeInts:count:atIndex:</span></code>
 This is a depricated method, see Apple documentation.</li>
+<li><code><span>getBytes:</span></code>, <code><span>getBytes:length:</span></code>, <code><span>getBytes:range:</span></code>
+Use <code><span>bytes</span></code> instead, and then use subscripting to get the
+desired range.</li>
 </ul>
 <h3><a href="#id26" name="class-nsdictionary">Class <code><span>NSDictionary</span></code></a></h3>
 <p>The (undocumented) methods <code><span>getKeys:</span></code>, <code><span>getObjects:</span></code> and 
