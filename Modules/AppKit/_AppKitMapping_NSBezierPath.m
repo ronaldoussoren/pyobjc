@@ -409,7 +409,7 @@ static void imp_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(id self, S
 
 	PyTuple_SET_ITEM(arglist, 3, v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -469,7 +469,7 @@ static void imp_NSBezierPath_appendBezierPathWithPoints_count_(id self, SEL sel,
 	PyTuple_SET_ITEM(arglist, 2, v);
 
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -514,7 +514,7 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 
 	PyTuple_SET_ITEM(arglist, 1, v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -661,7 +661,7 @@ static void imp_NSBezierPath_setLineDash_count_phase_(id self, SEL sel, float* p
 
 	PyTuple_SET_ITEM(arglist, 3, v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();

@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.18 2003/07/03 05:59:45 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.19 2003/07/16 19:36:51 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -53,8 +53,9 @@
  *       and PyObjCUnsupportedMethod_Caller 
  * - Version 2.1 adds PyObjCPointerWrapper_Register 
  * - Version 2 adds an argument to PyObjC_InitSuper
+ * - Version 3 adds another argument to PyObjC_CallPython
  */
-#define PYOBJC_API_VERSION 2
+#define PYOBJC_API_VERSION 3
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -114,7 +115,7 @@ struct pyobjc_api {
 	PyObject* (*objc_to_py)(const char*, void*);
 
 	/* PyObjC_CallPython */
-	PyObject* (*call_to_python)(id, SEL, PyObject*);
+	PyObject* (*call_to_python)(id, SEL, PyObject*, int*);
 
 	/* PyObjC_SizeOfType */
 	int 	   (*sizeof_type)(const char*);

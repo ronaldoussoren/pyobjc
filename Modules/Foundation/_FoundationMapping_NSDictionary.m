@@ -181,7 +181,7 @@ static id imp_NSDictionary_initWithObjects_forKeys_count_(id self, SEL sel,
 		return nil;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -364,7 +364,7 @@ static id imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
 		return nil;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();

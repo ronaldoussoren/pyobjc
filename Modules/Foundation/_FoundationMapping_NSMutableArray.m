@@ -163,7 +163,7 @@ imp_NSMutableArray_sortUsingFunction_context_(id self, SEL sel,
 	}
 	PyTuple_SET_ITEM(arglist, 2, v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -227,7 +227,7 @@ imp_NSMutableArray_sortUsingFunction_context_range(id self, SEL sel,
 	}
 	PyTuple_SET_ITEM(arglist, 3, v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -358,7 +358,7 @@ static void imp_NSMutableArray_removeObjectsFromIndices_numIndices_(id self,
 	}
 	PyTuple_SET_ITEM(arglist, 2,  v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -496,7 +496,7 @@ static void imp_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 	}
 	PyTuple_SET_ITEM(arglist, 3,  v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();

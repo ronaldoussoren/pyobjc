@@ -166,7 +166,7 @@ objc_methodlist_magic(Class cls)
 	 * class_nextMethodList. Handcoding it is noticeable faster (probably
 	 * because this exposes more information to the optimizer).
 	 */
-#if 1
+#if 0
 	struct objc_method_list* mlist;
 	void* iterator = 0;
 
@@ -185,9 +185,6 @@ objc_methodlist_magic(Class cls)
 	for (p = cls->methodLists; 
 	     (*p != (struct objc_method_list*)-1) && (*p != NULL);
 	     p++) {
-		if (*p == NULL) continue;
-		if (*p == (struct objc_method_list*)1) continue;
-		if (*p == (struct objc_method_list*)-11) continue;
 		res += (*p)->method_count;
 		cnt++;
 	}

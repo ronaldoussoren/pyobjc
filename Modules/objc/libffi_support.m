@@ -320,6 +320,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	NSMethodSignature* methinfo = 
 		((_method_stub_userdata*)userdata)->methinfo;
 	PyObject* callable = ((_method_stub_userdata*)userdata)->callable;
+	int isAlloc = 0;
 	int                objc_argcount;
 	int                argOffset;
 	int                i;
@@ -404,9 +405,10 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	arglist = v;
 
 	if (!callable) {
-		res = PyObjC_CallPython(*(id*)args[0+argOffset], *(SEL*)args[1+argOffset], arglist);
+		res = PyObjC_CallPython(*(id*)args[0+argOffset], *(SEL*)args[1+argOffset], arglist, &isAlloc);
 	} else {
 		res = PyObject_Call(callable, arglist, NULL);
+		isAlloc = 0;
 	}
 	Py_DECREF(arglist);
 
@@ -416,7 +418,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 		if (*rettype != _C_VOID) {
 			err = depythonify_c_return_value(rettype, res, resp);
 
-			if (*rettype == _C_ID && res->ob_refcnt == 1) {
+			if (isAlloc && *rettype == _C_ID) {
+			   /* Must return a 'new' instead of a borrowed 
+			    * reference.
+			    */
+			   [(*(id*)resp) retain];
+			} else if (*rettype == _C_ID && res->ob_refcnt == 1) {
 				/* make sure return value doesn't die before
 				 * the caller can get its hands on it.
 				 */
@@ -526,7 +533,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			int err = depythonify_c_return_value(rettype, 
 				real_res, resp);
 
-			if (*rettype == _C_ID && real_res->ob_refcnt == 1) {
+			if (isAlloc && *rettype == _C_ID) {
+			   /* Must return a 'new' instead of a borrowed 
+			    * reference.
+			    */
+			   [(*(id*)resp) retain];
+			} else if (*rettype == _C_ID && real_res->ob_refcnt == 1) {
 				/* make sure return value doesn't die before
 				 * the caller can get its hands on it.
 				 */

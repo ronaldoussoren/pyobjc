@@ -164,7 +164,7 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 
 	PyTuple_SET_ITEM(args, 2, v);
 
-	result = PyObjC_CallPython(self, sel, args);
+	result = PyObjC_CallPython(self, sel, args, NULL);
 	Py_DECREF(args);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();

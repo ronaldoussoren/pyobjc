@@ -152,7 +152,7 @@ imp_NSMatrix_sortUsingFunction_context_(id self, SEL sel,
 	}
 	PyTuple_SET_ITEM(arglist, 2, v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();

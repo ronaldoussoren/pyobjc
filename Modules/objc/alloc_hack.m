@@ -53,7 +53,7 @@ imp_NSObject_alloc(id self, SEL sel)
 		return nil;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
 		return nil;
@@ -67,6 +67,7 @@ imp_NSObject_alloc(id self, SEL sel)
 
 	return objc_result;
 }
+
 
 int
 PyObjC_InstallAllocHack(void)

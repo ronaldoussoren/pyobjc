@@ -481,9 +481,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (sel->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 				meth = class_getClassMethod(super_class,
 					sel->sel_selector);
-				if (meth) {
-					meta_method_count ++;
-				}
+				meta_method_count ++;
 
 
 			} else {
@@ -563,7 +561,11 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				goto error_cleanup;
 			}
 			Py_DECREF(value); value = NULL;
-			method_count++;
+			if (is_class_method) {
+				meta_method_count++;
+			} else {
+				method_count++;
+			}
 #if 0
 		} else if ((value)->ob_type == PyClassMethod_Type) {
 			/* Make a new selector object */
@@ -598,6 +600,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 	if (meta_method_count == 0) {
 		meta_method_list = NULL;
+		
 	} else {
 		meta_method_list = objc_allocMethodList(meta_method_count);
 
@@ -715,7 +718,6 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (sel->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 				meth = class_getClassMethod(super_class,
 					sel->sel_selector);
-				if (!meth) continue;
 				is_override = 1;
 				lst = meta_method_list;
 			} else {
@@ -1087,6 +1089,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	PyObject*	args;
 	PyObject* 	result;
 	PyObject*       v;
+	int		isAlloc;
 	int             i;
 	int 		len;
 	NSMethodSignature* signature;
@@ -1121,6 +1124,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		objc_msgSendSuper(&super, selector, invocation);
 		return;
 	}
+
 	Py_XDECREF(pymeth);
 	Py_XDECREF(pyself);
 
@@ -1203,7 +1207,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	Py_DECREF(args);
 	args = v;
 
-	result = PyObjC_CallPython(self, [invocation selector], args);
+	result = PyObjC_CallPython(self, [invocation selector], args, &isAlloc);
 	Py_DECREF(args);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -1226,6 +1230,9 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 			if (err == -1) {
 				PyObjCErr_ToObjC();
 				return;
+			}
+			if (isAlloc && *type == _C_ID) {
+				[(*(id*)arg) retain];
 			}
 			[invocation setReturnValue:arg];
 		}
@@ -1308,6 +1315,9 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 				PyObjCErr_ToObjC();
 				return;
 			}
+			if (isAlloc && *type == _C_ID) {
+				[(*(id*)arg) retain];
+			}
 			[invocation setReturnValue:arg];
 
 		} else {
@@ -1371,7 +1381,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
  */
 
 PyObject*
-PyObjC_CallPython(id self, SEL selector, PyObject* arglist)
+PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 {
 	PyObject* pyself = NULL;
 	PyObject* pymeth = NULL;
@@ -1393,6 +1403,11 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist)
 		Py_DECREF(pyself);
 		PyObjCErr_ToObjC();
 		return NULL;
+	}
+
+	if (isAlloc != NULL) {
+		*isAlloc = ((PyObjCSelector*)pymeth)->sel_flags;
+		*isAlloc = (*isAlloc & PyObjCSelector_kDONATE_REF) != 0;
 	}
 
 	result = PyObject_Call(pymeth, arglist, NULL);
