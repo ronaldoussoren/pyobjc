@@ -6,6 +6,7 @@
 #include "pyobjc.h"
 
 #include <stddef.h>
+#include <Foundation/NSString.h>
 
 typedef struct {
 	PyUnicodeObject	base;
@@ -197,6 +198,19 @@ PyObjCUnicode_New(NSString* value)
 	 *  		NSArray.alloc().init()
 	 */
 	PyObjCUnicodeObject* result;
+// XXX - I don't know how to get gcc to let me use sizeof(unichar)
+#ifdef PyObjC_UNICODE_FAST_PATH
+	int length = [value length];
+	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
+	PyUnicode_AS_UNICODE(result) = PyMem_NEW(Py_UNICODE, length);
+	if (PyUnicode_AS_UNICODE(result) == NULL) {
+		Py_DECREF((PyObject*)result);
+		PyErr_NoMemory();
+		return NULL;
+	}
+	[value getCharacters:(unichar *)PyUnicode_AS_UNICODE(result)];
+	PyUnicode_GET_SIZE(result) = length;
+#else
 	int i, length;
 	unichar* volatile characters = NULL;
 	NSRange range;
@@ -235,6 +249,7 @@ PyObjCUnicode_New(NSString* value)
 		PyUnicode_AS_UNICODE(result)[i] = (Py_UNICODE)(characters[i]);
 	}
 	PyMem_Free(characters); characters = NULL;
+#endif
 
 	result->base.defenc = NULL;
 
