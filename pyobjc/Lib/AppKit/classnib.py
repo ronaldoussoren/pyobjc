@@ -76,8 +76,8 @@ def generate_wrapper_module(outfp, classinfolist):
 
 import objc
 
-NSBundle = objc.lookup_class('NSBundle')
-NSDictionary = objc.lookup_class('NSDictionary')
+NSBundle = objc.lookUpClass('NSBundle')
+NSDictionary = objc.lookUpClass('NSDictionary')
 
 def _mergelists(l1, l2):
 	r = {}
@@ -124,7 +124,7 @@ class ClassNibGenerator:
 		"""
 		Return framework containing the class, as a python package.
 		"""
-		cls = objc.lookup_class(clsname)
+		cls = objc.lookUpClass(clsname)
 
 		path = NSBundle.bundleForClass_(cls).bundlePath()
 		if path == '/System/Library/Frameworks/Foundation.framework':

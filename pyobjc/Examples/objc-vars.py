@@ -4,7 +4,7 @@ Using and accessing instance variables.
 """
 import objc
 
-NSObject = objc.lookup_class('NSObject')
+NSObject = objc.lookUpClass('NSObject')
 
 class MyClass (NSObject):
 	test = objc.ivar('test', '@')

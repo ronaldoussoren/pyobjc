@@ -24,13 +24,13 @@ import objc
 
 # We should import AppKit and Foundation, but don't do that
 # here to show we're using just the basic objective-C bindings.
-NSBundle = objc.lookup_class('NSBundle')
-NSAutoreleasePool = objc.lookup_class('NSAutoreleasePool')
-NSApplication = objc.lookup_class('NSApplication')
-NSWindow = objc.lookup_class('NSWindow')
-NSButton = objc.lookup_class('NSButton')
-NSSound = objc.lookup_class('NSSound')
-NSObject = objc.lookup_class('NSObject')
+NSBundle = objc.lookUpClass('NSBundle')
+NSAutoreleasePool = objc.lookUpClass('NSAutoreleasePool')
+NSApplication = objc.lookUpClass('NSApplication')
+NSWindow = objc.lookUpClass('NSWindow')
+NSButton = objc.lookUpClass('NSButton')
+NSSound = objc.lookUpClass('NSSound')
+NSObject = objc.lookUpClass('NSObject')
 
 class AppDelegate (NSObject):
     def applicationDidFinishLaunching_(self, aNotification):

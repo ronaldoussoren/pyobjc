@@ -2,7 +2,7 @@ import unittest
 import objc
 
 # Most usefull systems will at least have 'NSObject'.
-NSObject = objc.lookup_class('NSObject')
+NSObject = objc.lookUpClass('NSObject')
 
 class TestSubclassing(unittest.TestCase):
     def testSubclassOfSubclass(self):

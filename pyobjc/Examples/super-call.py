@@ -8,7 +8,7 @@
 # around a feature of Cocoa on MacOS X)
 import objc
 
-NSObject = objc.lookup_class('NSObject')
+NSObject = objc.lookUpClass('NSObject')
 
 N = 1
 

@@ -1,6 +1,6 @@
 from Foundation import NSObject, NSBundle
 from AppKit import NSOutlineViewDataSource, NSTableDataSource
-from objc import selector, class_list, objc_object, IBOutlet
+from objc import selector, getClassList, objc_object, IBOutlet
 from nibwrapper import  ClassesDataSourceBase
 
 WRAPPED={}
@@ -128,7 +128,7 @@ class ClassesDataSource (ClassesDataSourceBase, NSOutlineViewDataSource, NSTable
 
 	def refreshClasses(self):
 		print "refreshClasses"
-		self._classList = class_list()
+		self._classList = getClassList()
 		self._classTree = {}
 		self._methodInfo = []
 		
@@ -153,13 +153,13 @@ class ClassesDataSource (ClassesDataSourceBase, NSOutlineViewDataSource, NSTable
 
 	def init(self):
 		print "Init", self
-		self._classInfo = class_list()
+		self._classInfo = getClassList()
 		self.refreshClasses()
 		return self
 
 	def awakeFromNib(self):
 		print "Awaking", self
-		self._classInfo = class_list()
+		self._classInfo = getClassList()
 		self.refreshClasses()
 	
 

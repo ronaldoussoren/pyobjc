@@ -88,7 +88,7 @@ def is_id(typestr):
 	
 
 	try:
-		objc.lookup_class(typestr[:-1])
+		objc.lookUpClass(typestr[:-1])
 		return 1
 	except:
 		return 0

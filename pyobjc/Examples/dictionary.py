@@ -7,7 +7,7 @@
 import sys
 import objc
 
-NSMutableDictionary = objc.lookup_class('NSMutableDictionary')
+NSMutableDictionary = objc.lookUpClass('NSMutableDictionary')
 
 obj = NSMutableDictionary.dictionary()
 print "An empty NSMutableDictionary:", obj

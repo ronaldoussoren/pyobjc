@@ -2,11 +2,11 @@ import objc as _objc
 
 from _Foundation import *
 
-NSClassFromString = _objc.lookup_class
+NSClassFromString = _objc.lookUpClass
 
 # Do something smart to collect Foundation classes...
 
-NSBundle = _objc.lookup_class('NSBundle')
+NSBundle = _objc.lookUpClass('NSBundle')
 
 # We use strings to represent selectors, therefore 
 # NSSelectorFromString and NSStringFromSelector are no-ops (for now)
@@ -28,14 +28,14 @@ def load_bundle(path):
 	Load the specified bundle/framework and return a list of classes 
 	defined in that bundle/framework
 	"""
-	bundle_class = _objc.lookup_class('NSBundle')
+	bundle_class = _objc.lookUpClass('NSBundle')
 
 	bndl = bundle_class.bundleWithPath_(path)
 
 	bndl.load()
 
 	classes = [ cls 
-		for cls in _objc.class_list() 
+		for cls in _objc.getClassList() 
 		if path == bundle_class.bundleForClass_(cls).bundlePath() ]
 	return classes
 

@@ -13,9 +13,9 @@ class TestConstants(unittest.TestCase):
     
 class TestClassLookup(unittest.TestCase):
     def testLookupClassNoSuchClassErrorRaised(self):
-        self.assertRaises(objc.nosuchclass_error, objc.lookup_class, "")
-        self.assertRaises(objc.nosuchclass_error, objc.lookup_class, "ThisClassReallyShouldNotExist")
-        self.assertRaises(TypeError, objc.lookup_class, 1)
+        self.assertRaises(objc.nosuchclass_error, objc.lookUpClass, "")
+        self.assertRaises(objc.nosuchclass_error, objc.lookUpClass, "ThisClassReallyShouldNotExist")
+        self.assertRaises(TypeError, objc.lookUpClass, 1)
 
     def testRuntimeNoSuchClassErrorRaised(self):
         try:
@@ -26,15 +26,15 @@ class TestClassLookup(unittest.TestCase):
             fail("objc.runtime.ThisClassReallyShouldNotExist should have thrown a nosuchclass_error.  It didn't.")
 
     def testRuntimeConsistency(self):
-        self.assert_(objc.lookup_class("NSObject"), "Failed to find NSObject class.")
-        self.assertEqual(objc.lookup_class( "NSObject" ), objc.runtime.NSObject,
-                          "objc.runtime.NSObject and objc.lookup_class('NSObject') were different.")
+        self.assert_(objc.lookUpClass("NSObject"), "Failed to find NSObject class.")
+        self.assertEqual(objc.lookUpClass( "NSObject" ), objc.runtime.NSObject,
+                          "objc.runtime.NSObject and objc.lookUpClass('NSObject') were different.")
 
     def testClassList(self):
         ###! This test should probably be moved down to the Foundation test suite... 
-        self.assert_(objc.runtime.NSObject in objc.class_list(), "class_list() does not appear to contain NSObject class")
-        self.assert_(objc.runtime.NSException in objc.class_list(), "class_list() does not appear to contain NSException class")
-        self.assert_(objc.runtime.NSMutableArray in objc.class_list(), "class_list() does not appear to contain NSMutableArray class")
+        self.assert_(objc.runtime.NSObject in objc.getClassList(), "getClassList() does not appear to contain NSObject class")
+        self.assert_(objc.runtime.NSException in objc.getClassList(), "getClassList() does not appear to contain NSException class")
+        self.assert_(objc.runtime.NSMutableArray in objc.getClassList(), "getClassList() does not appear to contain NSMutableArray class")
 
 class TestMethodInvocation(unittest.TestCase):
     def setUp(self):
