@@ -119,7 +119,7 @@ def doSubstitutions(dirName, aName, options):
             if options.verbose:
                 print "Rewriting NIB %s" % path
             import subprocess
-            ret = subprocess.callv('/usr/bin/nibtool', '-r', '--format', '4', path)
+            ret = subprocess.call(['/usr/bin/nibtool', '-r', '--format', '4', path])
             if ret:
                 error("nibtool barfed back %d." % ret)
         return
