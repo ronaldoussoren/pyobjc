@@ -31,6 +31,17 @@ static void
 proto_dealloc(PyObject* object)
 {
 	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)object;	
+	int len = PyTuple_Size(self->selectors);
+	int i;
+
+	for (i = 0; i < len; i++) {
+		ObjCSelector* tmp =
+			(ObjCSelector*)PyTuple_GET_ITEM(
+				self->selectors, i);
+		
+		PyDict_DelItemString(selToProtocolMapping,
+			SELNAME(tmp->sel_selector));
+	}
 
 	Py_XDECREF(self->selectors);
 	object->ob_type->tp_free(object);
@@ -86,21 +97,31 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 	result->name = name;
 	result->selectors = selectors;
 
-#if 0
-	len = PyTuple_Length(result->selectors);
+	len = PyTuple_Size(result->selectors);
 	for (i = 0; i < len; i++) {
-		if (!PyObjCInformalProtocol_Check(PyTuple_GET_ITEM(selectors, i))) {
-			PyErr_Set(PyExc_TypeError, "msg");
+		if (!ObjCSelector_Check(PyTuple_GET_ITEM(selectors, i))) {
+			PyErr_Format(PyExc_TypeError, 
+				"Item %d is not a selector", i);
+			Py_DECREF(result);
+			return NULL;
 		}
 	}
 
-	/* TODO: Add to selToProtocolMapping */
-	for (i = 0; i < len; i++) {
-		if (!PyObjCInformalProtocol_Check(PyTuple_GET_ITEM(selectors, i))) {
-			PyErr_Set(PyExc_TypeError, "msg");
+	if (selToProtocolMapping == NULL) {
+		selToProtocolMapping = PyDict_New();
+		if (selToProtocolMapping == NULL) {
+			Py_DECREF(result);
+			return NULL;
 		}
 	}
-#endif
+	for (i = 0; i < len; i++) {
+		ObjCSelector* tmp =
+			(ObjCSelector*)PyTuple_GET_ITEM(selectors, i);
+		
+		PyDict_SetItemString(selToProtocolMapping,
+			SELNAME(tmp->sel_selector),
+			name);
+	}
 
 	Py_XINCREF(name);
 
@@ -289,4 +310,122 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls)
 		Py_DECREF(cur);
 	}
 	return 1;
+}
+
+
+
+/*
+ * Given the failure mode of most protocol problems it might be better to
+ * just generate an exception.
+ */
+int	
+PyObjCInformalProtocol_Warnings(char* name, PyObject* clsDict, PyObject* protocols)
+{
+	PyObject* seq;
+	int len, i;
+	PyObject* keys;
+	int  haveWarnings = 0;
+	PyObject* protoMap;
+
+	if (selToProtocolMapping == NULL) return 0;
+	
+	protoMap = PyDict_New();
+	if (protoMap == NULL) {
+		return -1;
+	}
+
+	if (!PyDict_Check(clsDict)) {
+		PyErr_SetString(PyExc_TypeError, 
+			"class dict is not a dictionary");
+		return -1;
+	}
+		
+
+	/*
+	 * protoMap will contain the protocol names as keys, this makes 
+	 * checking protocols easier.
+	 */
+	seq = PySequence_Fast(protocols, "protocol list is not a sequence");
+	if (seq == NULL) {
+		Py_DECREF(protoMap);
+		return -1;
+	}
+
+	len = PySequence_Fast_GET_SIZE(seq);
+	for (i = 0;i < len; i++) {
+		PyObjCInformalProtocol* obj =
+			(PyObjCInformalProtocol*)PySequence_Fast_GET_ITEM(
+				seq, i);
+		if (PyDict_SetItem(protoMap,  obj->name, (PyObject*)obj) < 0) {
+			Py_DECREF(seq);
+			Py_DECREF(protoMap);
+			return -1;
+		}
+	}
+	Py_DECREF(seq);
+
+	/*
+	 * Actually perform the check.
+	 */
+	keys = PyDict_Keys(clsDict);
+	if (keys == NULL) {
+		Py_DECREF(protoMap);
+		return -1;
+	}
+
+	seq = PySequence_Fast(keys, "Dict keys not a sequence!?");
+	Py_DECREF(keys);
+	if (seq == NULL) {
+		Py_DECREF(protoMap);
+		return -1;
+	}
+
+	len = PySequence_Fast_GET_SIZE(seq);
+	for (i = 0;i < len; i++) {
+		PyObject* o = PySequence_Fast_GET_ITEM(seq, i);
+		PyObject* p;
+		PyObject* q;
+
+		q = PyDict_GetItem(clsDict, o);
+		if (q == NULL) {
+			PyErr_Clear();
+			continue;
+		}
+
+		if (!ObjCSelector_Check(q)) {
+			Py_DECREF(q);
+			continue;
+		}
+
+		p = PyDict_GetItemString(selToProtocolMapping,
+			SELNAME(((ObjCSelector*)q)->sel_selector));
+		if (p == NULL) {
+			PyErr_Clear();
+			continue;
+		}
+
+		if ((q = PyDict_GetItem(protoMap, p)) == NULL) {
+			/* Oops, we seem to be implementing a protocol
+			 * without saying it.
+			 */
+			 char buf[1024];
+
+			 snprintf(buf, sizeof(buf),
+			 	"Class %s is implementing part of protocol %s "
+				"without declaring this (method %s)",
+				name, PyString_AS_STRING(p),
+				PyString_AS_STRING(o));
+			 haveWarnings = 1;
+			 PyErr_Warn(PyObjCExc_ProtocolWarning, buf);
+			 if (PyErr_Occurred()) {
+				Py_DECREF(seq);
+			 	Py_DECREF(protoMap);
+				return -1;
+			 }
+		}
+	}
+	Py_DECREF(seq);
+
+	Py_DECREF(protoMap);
+	return 0;
 }
