@@ -269,19 +269,34 @@ except ImportError:
     packages.append('')
     package_dir[''] = 'MPCompat'
 
-setup(name = "pyobjc",
-      version = package_version(),
-      description = "Python<->ObjC Interoperability Module",
-      author = "bbum, RonaldO, SteveM, LeleG, many others stretching back through the reaches of time...",
-      author_email = "pyobjc-dev@lists.sourceforge.net",
-      url = "http://pyobjc.sourceforge.net/",
-      ext_modules = (
-                      CoreExtensions 
-                    + CocoaExtensions 
-                    + AddressBookExtensions 
-                    ),
-      packages = packages,
-      package_dir = package_dir,
-      scripts = [ 'Scripts/nibclassbuilder', ],
-      extra_path = "PyObjC",
+dist = setup(name = "pyobjc",
+	     version = package_version(),
+	     description = "Python<->ObjC Interoperability Module",
+	     author = "bbum, RonaldO, SteveM, LeleG, many others stretching back through the reaches of time...",
+	     author_email = "pyobjc-dev@lists.sourceforge.net",
+	     url = "http://pyobjc.sourceforge.net/",
+	     ext_modules = (
+			     CoreExtensions 
+			   + CocoaExtensions 
+			   + AddressBookExtensions 
+			   ),
+	     packages = packages,
+	     package_dir = package_dir,
+	     scripts = [ 'Scripts/nibclassbuilder', ],
+	     extra_path = "PyObjC",
 )
+
+if "install" in sys.argv:
+    # Hack to remove a previous version that may have been installed
+    # directly into site-packages (pre 0.9) as opposed to a new subdir.
+    import shutil
+    inst = dist.get_command_obj("install")
+    install_dir = inst.install_platlib
+    for name in ("objc", "Foundation", "AppKit", "autoGIL"):
+        path = os.path.join(install_dir, name)
+        if os.path.isdir(path):
+            print "(removing old version: %s)" % path
+            shutil.rmtree(path)
+        elif os.path.isfile(path):
+            print "(removing old version: %s)" % path
+            os.remove(path)
