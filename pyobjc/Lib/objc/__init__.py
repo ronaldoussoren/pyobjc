@@ -124,13 +124,9 @@ except ImportError:
 # - We want the resources directory to be on the python search-path
 # - It must be at the start of the path
 # - The CWD must not be on the path
-if 1:
+if 1 :
 	b = lookup_class('NSBundle').mainBundle()
 	if b:
 		sys.path.insert(0, '%s/Contents/Resources'%str(b.bundlePath()))
-		try:
-			del sys.path[sys.path.index('')]
-		except ValueError:
-			pass
 	del b
 del sys, __builtin__
