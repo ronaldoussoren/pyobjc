@@ -1149,7 +1149,7 @@ object_method_forwardInvocation(
 			return;
 		}
 
-		argbuf = PyMem_Malloc(arglen);
+		argbuf = PyMem_Malloc(arglen+64);
 		
 		[invocation getArgument:argbuf atIndex:i];
 
@@ -1221,7 +1221,7 @@ object_method_forwardInvocation(
 
 	if (!have_output) {
 		if (*type  != _C_VOID && *type != _C_ONEWAY) {
-			argbuf = PyMem_Malloc(arglen+1);
+			argbuf = PyMem_Malloc(arglen+64);
 
 			err = depythonify_c_value(type, result, argbuf);
 			if (err == -1) {
@@ -1312,7 +1312,7 @@ object_method_forwardInvocation(
 			idx = 1;
 			real_res = PyTuple_GET_ITEM(result, 0);
 
-			argbuf = PyMem_Malloc(arglen+1);
+			argbuf = PyMem_Malloc(arglen+64);
 
 			err = depythonify_c_value(type, real_res, argbuf);
 			if (err == -1) {
@@ -1415,7 +1415,7 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 		/* The selector is a bound selector, we didn't expect that...*/
 		PyObject* arg_self;
 
-		arg_self = PyTuple_GetItem(arglist, 0);
+		arg_self = PyTuple_GET_ITEM(arglist, 0);
 		if (arg_self == NULL) {
 			return NULL;
 		}
