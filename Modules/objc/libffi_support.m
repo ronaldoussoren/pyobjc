@@ -205,7 +205,7 @@ static  PyObject* struct_types = NULL; /* XXX: Use NSMap  */
 	type->size = objc_sizeof_type(argtype);
 	type->alignment = objc_alignof_type(argtype);
 	type->type = FFI_TYPE_STRUCT;
-	type->elements = malloc((1+field_count) * sizeof(ffi_type));
+	type->elements = malloc((1+field_count) * sizeof(ffi_type*));
 	if (type->elements == NULL) {
 		free(type);
 		PyErr_NoMemory();
@@ -257,6 +257,9 @@ signature_to_ffi_return_type(const char* argtype)
 		return &ffi_type_sint;
 	case _C_UCHR: case _C_USHT:
 		return &ffi_type_uint;
+#ifdef _C_BOOL
+	case _C_BOOL: return &ffi_type_sint;
+#endif	
 	default:
 		return signature_to_ffi_type(argtype);
 	}
@@ -271,6 +274,9 @@ signature_to_ffi_type(const char* argtype)
 	case _C_CLASS: return &ffi_type_pointer;
 	case _C_SEL: return &ffi_type_pointer;
 	case _C_CHR: return &ffi_type_schar;
+#ifdef _C_BOOL
+	case _C_BOOL: return &ffi_type_schar;
+#endif	
 	case _C_UCHR: return &ffi_type_uchar;
 	case _C_SHT: return &ffi_type_sshort;
 	case _C_USHT: return &ffi_type_ushort;

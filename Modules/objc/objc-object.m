@@ -178,11 +178,11 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 	n = PyTuple_GET_SIZE(mro);
 	for (i = 0; i < n; i++) {
 		base = PyTuple_GET_ITEM(mro, i);
-		assert(PyType_Check(base));
 
 		if (PyClass_Check(base)) {
 			dict = ((PyClassObject*)base)->cl_dict;
 		} else {
+			assert(PyType_Check(base));
 			if (PyObjCClass_Check(base)) {
 				PyObjCClass_CheckMethodList(base, 0);
 			}

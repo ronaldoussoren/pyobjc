@@ -385,7 +385,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	Py_DECREF(real_bases); 
 	args = NULL;
 	real_bases = NULL;
-
 	
 	Py_DECREF(protocols);
 	protocols = NULL;
