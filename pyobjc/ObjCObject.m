@@ -254,7 +254,7 @@ ObjCObject_getattr (ObjCObject *self, char *name)
                 {
                   char faster_name[200];
                   
-                  fprintf (stderr, "PyObjC Warning: method `%s' matches `%s',\n\t", name, meth_name);
+                  fprintf (stderr, "pyobjc Warning: method `%s' matches `%s',\n\t", name, meth_name);
                   
                   pythonify_objc_message (meth_name, faster_name, PYTHONIFICATION_FIRST_TRY);
                   

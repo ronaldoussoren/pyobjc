@@ -1,3 +1,12 @@
+2001-03-17  Bill Bumgarner  <bbum@localhost>
+
+	* changed name of imported module to pyobjc to be more consistent
+	with other modules (that typically have an all lower case name).
+
+	* removed all old style Makefile and configuration stuff and moved
+	to using setup.py.   Setup.py proves to be much easier to handle
+	in a cross platform fashion and requires fewer steps to build the moudle.
+
 1998-08-18  Lele Gaifax  <lele@paci.nautilus>
 
 	* objc_support.h (ISCLASS): Check against META flag, an object is
