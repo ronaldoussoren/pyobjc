@@ -82,7 +82,10 @@ static inline int convert_id(PyObject* object, void* pvar)
 
 	*pid = ObjC_PythonToId(object);
 
-	return (*pid != nil);
+        if (PyErr_Occurred()) {
+            return 0;
+        } 
+        return 1;
 }
 
 static inline int convert_SEL(PyObject* object, void* pvar)
