@@ -6,6 +6,9 @@
     intiailizer and can invoke -getBitmapDataPlanes.   Unit test included.
     array instances returned by -getBitmapDataPlanes are mutable and, as
     such, it is now possible to edit/manipulate NSIBR directly in Python.
+    * _AppKitMapping.m: Improved error messages for not-yet-supported methods
+    and fixed calls to super.   Fixed up unit test.  Added initial support
+    for -bitmapData.
 
 2003-01-03  Bill Bumgarner  <bbum@codefab.com>
     * Modules/objc/objc_support.m: Augmented error message for Unhandled type.
