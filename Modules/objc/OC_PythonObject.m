@@ -100,15 +100,15 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 	if (PyObjCClass_Check (argument)) {
 		rval = (id)PyObjCClass_GetClass(argument);
 		r = 0;
-        goto end;
+		goto end;
 	} else if (PyObjCObject_Check (argument)) {
 		rval = PyObjCObject_GetObject(argument);
 		r = 0;
-        goto end;
+		goto end;
 	} else if (PyObjCUnicode_Check(argument)) {
 		rval = PyObjCUnicode_Extract(argument);
 		r = 0;
-        goto end;
+		goto end;
 	}
     
 	anObject = PyObject_GetAttrString(argument, "__pyobjc_object__");
