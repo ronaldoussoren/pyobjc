@@ -30,7 +30,7 @@
     return self;
 }
 
--isInitialized
+-(BOOL)isInitialized
 {
     return _priv;
 }
