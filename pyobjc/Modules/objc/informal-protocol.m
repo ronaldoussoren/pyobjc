@@ -412,7 +412,7 @@ PyObjCInformalProtocol_FindProtocol(SEL selector)
 	if (selToProtocolMapping == NULL) return NULL;
 	PyObject* item;
 
-	item = PyDict_GetItemString(selToProtocolMapping, SELNAME(selector));
+	item = PyDict_GetItemString(selToProtocolMapping, (char*)SELNAME(selector));
 	if (item != NULL) {
 		return item;
 	}

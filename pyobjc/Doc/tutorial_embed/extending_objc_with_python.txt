@@ -43,16 +43,16 @@ Follow these steps:
    into the ``SimpleComboBoxPlus`` folder::
 
 	% cp -R src/PythonGlue.* SimpleComboBoxPlus
-   
+
 4. Add ``PythonGlue.h`` and ``PythonGlue.m`` to the "Classes" group.
 
-	These files contain a class ``PythonGlue`` that does nothing
-	visibly useful, but it has interesting side effects: when the first
-	class instance is initialized it will initialize the Python interpreter,
-	add the Resource folder of your application to the Python search path
-	and import any modules from that Resources folder. The first bit of
-	this is done by the ObjC code, the latter two by the Python code
-	in ``PythonGlue.py``.
+   These files contain a class ``PythonGlue`` that does nothing
+   visibly useful, but it has interesting side effects: when the first
+   class instance is initialized it will initialize the Python interpreter,
+   add the Resource folder of your application to the Python search path
+   and import any modules from that Resources folder. The first bit of
+   this is done by the ObjC code, the latter two by the Python code
+   in ``PythonGlue.py``.
 
 5. Add ``PythonGlue.py`` to the "Resources" group.
 
@@ -62,14 +62,21 @@ Follow these steps:
 7. Now we need to arrange to have a ``PythonGlue`` object be instantiated
    being called early during startup. A good place to do this for the
    current application is when ``MainMenu.nib`` is loaded, as it does not
-   contain any Python dependencies itself. Subclass ``NSObject`` and call
-   the new class PythonGlue. Instantiate it. Use this instance as the
-   application delegate for the File Owner.
+   contain any Python dependencies itself. 
    
-	I think this method will not work if you want to use Python-based
+   Open the MainMenu.nib in Interface Builder and define a subclas of 
+   ``NSObject`` and call the new class PythonGlue. Instantiate it. Use this 
+   instance as the application delegate for the File Owner.
+   
+	Jack: I think this method will not work if you want to use Python-based
 	classes in your main NIB file. Suggestions for how to make sure
 	a PythonGlue object is instantiated before our main NIB file is read are
 	hereby requested.
+
+	Ronald: You might add ``[[PythonGlue alloc] init]`` to ``main.m``, 
+	before the call to ``NSApplicationMain``. You'd also have to create an 
+	autorelease pool before creating the ``PythonGlue`` instance.
+
    
 8. Now compile, build and run. You will get a message printed to
    standard output ("PythonGlue: Warning: no Python modules found")
