@@ -49,8 +49,8 @@ supercall_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 	}
 
 	/* XXX: Shouldn't we use method->sel_class here? */
-	super.receiver = (id)ObjCClass_GetClass(self);
-	super.class = (Class)(super.receiver)->isa;
+	RECEIVER(super) = (id)ObjCClass_GetClass(self);
+	super.class = GETISA((Class)(RECEIVER(super)));
 
 	NS_DURING
 		result = objc_msgSendSuper(&super, @selector(alloc));

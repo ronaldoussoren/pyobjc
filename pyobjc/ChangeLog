@@ -1,3 +1,9 @@
+2002-01-05  Ronald Oussoren <oussoren@cistron.nl>
+    * Merged initial version of GNUstep support by Mirko Viviani 
+      <mirko@objectlab.org>
+    * This patches only Modules/objc and setup.py. Mirko also sent
+      a patch for Modules/Cocoa, I'll merge that later.
+
 2003-01-04  Bill Bumgarner  <bbum@codefab.com>
     * CocoaApp.pbproj/TemplateInfo.plist: Added description text.
     * Modules/Cocoa/_AppKitMapping.m: Added AppKitMapping as new module in

@@ -69,6 +69,105 @@ sourceFiles = [
         "Modules/objc/module.m",
 ]
 
+# On GNUstep we can read some configuration from the environment.
+gs_root = os.environ.get('GNUSTEP_SYSTEM_ROOT')
+
+if gs_root is None:
+    #
+    # MacOS X 
+    #
+    CFLAGS=[
+        "-DMACOSX"
+        ]
+
+    OBJC_LDFLAGS=[
+        '-framework', 'Foundation',
+        ]
+
+    FND_LDFLAGS=[
+        '-framework', 'Foundation',
+        ]
+
+    APPKIT_LDFLAGS=[
+        '-framework', 'AppKit'
+        ]
+
+    FNDMAP_LDFLAGS=[
+        '-framework', 'Foundation',
+        ]
+
+    APPMAP_LDFLAGS=[
+        '-framework', 'AppKit'
+        ]
+
+else:
+    #
+    # GNUstep
+    #
+    # NOTE: We add '-g' to the compile flags to make development easier
+    # on systems where the installed python hasn't been build with debugging
+    # support.
+
+    gs_cpu = os.environ.get('GNUSTEP_HOST_CPU')
+    gs_os = os.environ.get('GNUSTEP_HOST_OS')
+    gs_combo = os.environ.get('LIBRARY_COMBO')
+
+    gs_lib_dir = gs_cpu + '/' + gs_os
+    gs_flib_dir = gs_cpu + '/' + gs_os + '/' + gs_combo
+
+    CFLAGS=[
+        '-g',
+        '-Wno-import',
+        '-DGNU_RUNTIME',
+        '-DGNUSTEP',
+        '-I' + gs_root + '/Headers',
+        '-I' + gs_root + '/Headers/gnustep',
+        '-I' + gs_root + '/Headers/' + gs_lib_dir
+        ]
+
+    OBJC_LDFLAGS=[
+        '-g',
+        '-L', gs_root + '/Libraries/' + gs_flib_dir,
+        '-l', 'gnustep-base',
+        '-L', gs_root + '/Libraries/' + gs_lib_dir,
+        '-l', 'objc'
+        ]
+
+    FND_LDFLAGS=[
+        '-g',
+        '-L', gs_root + '/Libraries/' + gs_flib_dir,
+        '-l', 'gnustep-base',
+        '-L', gs_root + '/Libraries/' + gs_lib_dir,
+        '-l', 'objc'
+        ]
+
+    APPKIT_LDFLAGS=[
+        '-g',
+        '-L', gs_root + '/Libraries/' + gs_flib_dir,
+        '-l', 'gnustep-base',
+        '-l', 'gnustep-gui',
+        '-L', gs_root + '/Libraries/' + gs_lib_dir,
+        '-l', 'objc'
+        ]
+
+    FNDMAP_LDFLAGS=[
+        '-g',
+        '-L', gs_root + '/Libraries/' + gs_flib_dir,
+        '-l', 'gnustep-base',
+        '-L', gs_root + '/Libraries/' + gs_lib_dir,
+        '-l', 'objc'
+        ]
+
+    APPMAP_LDFLAGS=[
+        '-g',
+        '-L', gs_root + '/Libraries/' + gs_flib_dir,
+        '-l', 'gnustep-base',
+        '-l', 'gnustep-gui',
+        '-L', gs_root + '/Libraries/' + gs_lib_dir,
+        '-l', 'objc'
+        ]
+
+
 def IfFrameWork(name, packages, extensions):
     """
     Return the packages and extensions if the framework exists, or
@@ -86,14 +185,10 @@ CoreExtensions =  [
     Extension("objc._objc", 
               sourceFiles + LIBFFI_SOURCEFILES,
               extra_compile_args=[
-                    # "-g", "-O0",
                     "-DOBJC_PARANOIA_MODE",
                     "-DPyOBJC_UNIQUE_PROXY",
-                    "-DMACOSX",
-              ] + LIBFFI_CFLAGS,
-              extra_link_args=[
-                    '-g', '-framework', 'Foundation',
-              ] + LIBFFI_LDFLAGS)
+              ] + LIBFFI_CFLAGS + CFLAGS,
+              extra_link_args=LIBFFI_LDFLAGS + OBJC_LDFLAGS)
     ]
 CocoaPackages = [ 'Foundation', 'AppKit' ]
 CocoaExtensions = [
@@ -103,32 +198,28 @@ CocoaExtensions = [
                         "Modules/Cocoa/NSAutoreleasePoolSupport.m"
                     ],
                     extra_compile_args=[
-                        "-g", "-IModules/objc",  
-                    ],
+                        "-IModules/objc",  
+                    ] + CFLAGS,
                     extra_link_args=[
-                        '-framework', 'Foundation',
-                    ]),
+                    ] + FND_LDFLAGS),
           Extension("AppKit._AppKit", 
                     ["Modules/Cocoa/_AppKit.m"],
                     extra_compile_args=[
-                        "-g", "-IModules/objc", 
-                    ],
+                        "-IModules/objc", 
+                    ] + CFLAGS,
                     extra_link_args=[
-                        '-framework', 'AppKit'
-                    ]),
+                    ] + APPKIT_LDFLAGS),
           Extension("AppKit._AppKitMapping",
                     ["Modules/Cocoa/_AppKitMapping.m"],
-                    extra_compile_args=[ "-g", "-IModules/objc",],
-                    extra_link_args=['-framework', 'AppKit'
-                                     ]),
+                    extra_compile_args=[ "-IModules/objc",] + CFLAGS,
+                    extra_link_args=[] + APPMAP_LDFLAGS),
           Extension("objc._FoundationMapping", 
                     ["Modules/Cocoa/_FoundationMapping.m"],
                     extra_compile_args=[
-                        "-g", "-IModules/objc", 
-                    ],
+                        "-IModules/objc", 
+                    ] + CFLAGS,
                     extra_link_args=[
-                        '-framework', 'Foundation',
-                    ]),
+                    ] + FNDMAP_LDFLAGS),
       ]
 
 # The AdressBook module is only installed when the user actually has the

@@ -4,7 +4,11 @@
 #include "objc_util.h"
 
 #include <Python.h>
+#ifdef GNU_RUNTIME
+#include <objc/runtime.h>
+#else
 #include <objc/objc-runtime.h>
+#endif
 #include "OC_PythonObject.h"
 #include "OC_PythonArray.h"
 #include "OC_PythonDictionary.h"

@@ -14,14 +14,16 @@
  * Created Tue Sep 10 14:16:02 1996.
  */
 
-#include "objc_support.h"
 #include "pyobjc.h"
+#include "objc_support.h"
 #include <unistd.h>
+#include "objc/objc.h"
 // #include "myctype.h"
 
 #import <Foundation/NSInvocation.h>      /* sdm7g - changed #include to #import */
 #import <Foundation/NSMethodSignature.h> /* sdm7g */
 #import <Foundation/NSData.h> 
+#import <Foundation/NSValue.h> 
 
 #ifndef GNU_RUNTIME
 
@@ -1217,7 +1219,11 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	/* Set 'self' argument, for class methods we use the class */ 
 	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
 		if (ObjCObject_Check(self)) {
+#ifdef GNU_RUNTIME
+			self_obj = ObjCObject_GetObject(self)->class_pointer;
+#else
 			self_obj = ObjCObject_GetObject(self)->isa;
+#endif
 		} else if (ObjCClass_Check(self)) {
 			self_obj = ObjCClass_GetClass(self);
 		} else {
@@ -1472,3 +1478,162 @@ error_cleanup:
 	}
 	return NULL;
 }
+
+#ifdef GNU_RUNTIME
+
+Ivar_t class_getInstanceVariable(Class aClass, const char *name)
+{
+  if (!aClass || !name)
+    return NULL;
+
+  for (; aClass != Nil; aClass = aClass->super_class)
+    {
+      int i;
+
+      if (!aClass->ivars)
+	continue;
+
+      for (i = 0; i < aClass->ivars->ivar_count; i++)
+	{
+	  if (!strcmp(aClass->ivars->ivar_list[i].ivar_name, name))
+	    return &aClass->ivars->ivar_list[i];
+	}
+    }
+
+  return NULL;
+}
+
+Ivar_t object_getInstanceVariable(id obj, const char *name, void **out)
+{
+  Ivar_t var = NULL;
+
+  if (obj && name)
+    {
+      void **varIndex = NULL;
+
+      if ((var = class_getInstanceVariable(obj->class_pointer, name)))
+	varIndex = (void **)((char *)obj + var->ivar_offset);
+
+      if (out)
+	*out = *varIndex;
+    }
+
+  return var;
+}
+
+struct objc_method_list *class_nextMethodList(Class aClass, void **ptr)
+{
+  struct objc_method_list **list;
+
+  list = (struct objc_method_list **)ptr;
+
+  if (*list == NULL)
+    *list = aClass->methods;
+  else
+    *list = (*list)->method_next;
+
+  return *list;
+}
+
+Ivar_t object_setInstanceVariable(id obj, const char *name, void *value)
+{
+  Ivar_t var = NULL;
+
+  if (obj && name)
+    {
+      void **varIndex;
+
+      if ((var = class_getInstanceVariable(obj->class_pointer, name)))
+	{
+	  varIndex = (void **)((char *)obj + var->ivar_offset);
+
+	  *varIndex = value;
+	}
+    }
+
+  return var;
+}
+
+void objc_addClass(Class aClass)
+{
+#warning objc_addClass() not implemented !
+}
+
+id objc_msgSendSuper(struct objc_super *super, SEL op, ...)
+{
+  arglist_t arg_frame;
+  Method *m_imp;
+  const char *type;
+
+  if (super->self)
+    {
+      arg_frame = __builtin_apply_args ();
+
+      m_imp = class_get_instance_method(super->class, op);
+      *((id*)method_get_first_argument (m_imp, arg_frame, &type)) = super->self;
+      *((SEL*)method_get_next_argument (arg_frame, &type)) = op;
+      return __builtin_apply((apply_t)m_imp,
+			     arg_frame,
+			     method_get_sizeof_arguments (m_imp));
+    }
+
+  return nil;
+}
+
+struct objc_method_list *objc_allocMethodList(int numMethods)
+{
+  struct objc_method_list *mlist;
+
+  mlist = calloc(1, sizeof(struct objc_method_list)
+		 + (numMethods) * sizeof(struct objc_method));
+
+  return mlist;
+}
+
+void objc_freeMethodList(struct objc_method_list *list)
+{
+  struct objc_method_list *next;
+
+  while (list)
+    {
+      next = list->method_next;
+
+      free(list);
+
+      list = next;
+    }
+}
+
+#else
+
+struct objc_method_list *objc_allocMethodList(int numMethods)
+{
+  struct objc_method_list *mlist;
+
+  mlist = malloc(sizeof(struct objc_method_list)
+		 + (numMethods) * sizeof(struct objc_method));
+
+  if (mlist == NULL)
+    return NULL;
+
+  memset(mlist, 0, sizeof(struct objc_method_list)
+	 + (numMethods) * sizeof(struct objc_method));
+
+  mlist->method_count = 0;
+  mlist->obsolete = NULL; /* DEBUG */
+
+  return mlist;
+}
+
+void objc_freeMethodList(struct objc_method_list **list)
+{
+  if (list)
+    {
+      if (list[0])
+	free(list[0]);
+
+      free(list);
+    }
+}
+
+#endif

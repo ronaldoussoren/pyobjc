@@ -7,6 +7,7 @@
  */
 #include <Python.h>
 #include "compile.h" /* from Python */
+#include "pyobjc.h"
 #include "objc_support.h"
 
 /*
@@ -499,8 +500,8 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 
 
 	if (pyself_class != NULL && pyself_class != self->sel_class) {
-		Method self_m;
-		Method pyself_m;
+		METHOD self_m;
+		METHOD pyself_m;
 
 		if (self->sel_flags & ObjCSelector_kCLASS_METHOD) {
 			self_m = class_getClassMethod(
@@ -722,7 +723,7 @@ ObjCSelector_FindNative(PyObject* self, char* name)
 		if (nil != (methsig = [object methodSignatureForSelector:sel])){
 			ObjCNativeSelector* res;
 			res =  (ObjCNativeSelector*)ObjCSelector_NewNative(
-				object->isa, sel, 
+				GETISA(object), sel, 
 				typestr_from_NSMethodSignature(methsig, 
 					buf, sizeof(buf)), 0);
 			if (res != NULL) {
@@ -962,10 +963,11 @@ pysel_default_selector(PyObject* callable)
 	char buf[1024]; 
 	char* cur;
 	PyObject* name = PyObject_GetAttrString(callable, "__name__");
-	if (name == NULL) return nil;
+
+	if (name == NULL) return NULL;
 
 	if (!PyString_Check(name)) {
-		return nil;
+		return NULL;
 	}
 
 	snprintf(buf, sizeof(buf), PyString_AS_STRING(name));	
