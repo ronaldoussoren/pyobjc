@@ -523,7 +523,8 @@ if __name__ == '__main__':
     #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSAccessibility.h'
     #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSEvent.h'
     #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSProgressIndicator.h'
-    fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSWorkspace.h'
+    #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSWorkspace.h'
+    fn = '/System/Library/Frameworks/AddressBook.framework/Headers/ABActionsC.h'
     files = sys.argv[1:] or [fn]
     def deadraise(string, i, j):
         print string[i:j]
