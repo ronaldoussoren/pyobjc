@@ -323,6 +323,10 @@ CoreExtensions =  [
               ["Lib/objc/test/testbndl2.m"],
               extra_compile_args=["-IModules/objc" ] + CFLAGS,
               extra_link_args=OBJC_LDFLAGS),
+    Extension("objc.test.testclassandinst",
+              ["Lib/objc/test/testclassandinst.m"],
+              extra_compile_args=["-IModules/objc" ] + CFLAGS,
+              extra_link_args=OBJC_LDFLAGS),
     ]
 
 if gs_root is None:
