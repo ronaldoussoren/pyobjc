@@ -10,11 +10,10 @@ from objc import YES, NO
 from Foundation import *
 from AppKit import *
 
-from AppKit import NibClassBuilder
-from AppKit.NibClassBuilder import AutoBaseClass
+from PyObjCTools import NibClassBuilder
 
 NibClassBuilder.extractClasses("MyDocument")
-class MyDocument(AutoBaseClass):
+class MyDocument(PyObjCTools.AutoBaseClass):
     def init(self):
         self = super(MyDocument, self).init()
         if self:

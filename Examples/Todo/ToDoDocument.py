@@ -4,7 +4,7 @@ from objc import IBOutlet
 from ToDoCell import *
 from ToDoItem import *
 from SelectionNotifyMatrix import *
-from AppKit.NibClassBuilder import AutoBaseClass
+from PyObjCTools.NibClassBuilder import AutoBaseClass
 
 ToDoItemChangedNotification = "ToDoItemChangedNotification"
 

@@ -30,7 +30,10 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 		return NULL;
 	}
 
-	return pythonify_c_value("@", &result);
+	if (PyObjC_HasPythonImplementation(result)) {
+		return PyObjC_GetPythonImplementation(result);
+	}
+	return PyObjCObject_NewUnitialized(result);
 }
 
 static PyObject*
@@ -63,7 +66,10 @@ supercall_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 		return NULL;
 	}
 
-	return pythonify_c_value("@", &result);
+	if (PyObjC_HasPythonImplementation(result)) {
+		return PyObjC_GetPythonImplementation(result);
+	}
+	return PyObjCObject_NewUnitialized(result);
 }
 
 static id 

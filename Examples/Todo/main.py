@@ -2,7 +2,7 @@ import sys
 import os
 import objc
 from AppKit import *
-from AppKit.NibClassBuilder import extractClasses
+from PyObjCTools.NibClassBuilder import extractClasses
 
 extractClasses('MainMenu')
 extractClasses('ToDoDocument')

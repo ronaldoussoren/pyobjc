@@ -5,7 +5,8 @@
 Conversion offers API to convert between Python and Objective-C instances of various classes.   Currently, the focus is on Python and Objective-C collections.
 """
 
-from Foundation import *
+from Foundation import NSArray, NSDictionary, NSMutableArray
+from Foundation import NSMutableDictionary, NSNull, NSNumber
 from types import *
 import sys
 

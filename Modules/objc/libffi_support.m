@@ -942,7 +942,6 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		goto error_cleanup;
 	}
 
-	/* XXX This only works for short return values! */
 	NS_DURING
 		if (arglistOffset) {
 			ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), 
@@ -971,6 +970,11 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		 * version of self and self != return-value, the current
 		 * value of self is assumed to be no longer valid
 		 */
+		if (PyObjCObject_Check(self) && PyObjCObject_Check(objc_result)
+			&& (meth->sel_flags & ObjCSelector_kINITIALIZER) &&
+			(((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED)) {
+			[PyObjCObject_GetObject(objc_result) release];
+		}
 		PyObjCObject_ClearObject(self);
 	}
 

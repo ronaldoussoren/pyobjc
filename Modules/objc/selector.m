@@ -663,18 +663,6 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			{
 				((PyObjCObject*)res)->flags &= 
 					~PyObjCObject_kUNINITIALIZED;
-
-#ifdef OC_ADJUST_REFCOUNTS
-				// XXX: Adjust the refcount. The allocator
-				//      (alloc/allocWithZone:) did transfer
-				//	ownership to the caller, and the 
-				//	bridge called retain, now undo the
-				//	retain.
-				// TODO: Don't retain the value returned by
-				//	the allocator, the call to retain
-				//	could itself cause a crash.
-				[PyObjCObject_GetObject(res) release];
-#endif
 			}
 		}
 				
@@ -1070,11 +1058,6 @@ pysel_call(ObjCPythonSelector* self, PyObject* args)
 
 	     ((PyObjCObject*)self->sel_self)->flags &= ~PyObjCObject_kUNINITIALIZED;
 	    
-#if 0
-	     // See simular code in objcsel_call
-	     [PyObjCObject_GetObject(self->sel_self) release];
-#endif
-
 	}
 
 	return result;

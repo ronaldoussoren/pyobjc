@@ -1,7 +1,7 @@
 from Foundation import *
 from AppKit import *
 from objc import IBOutlet
-from AppKit.NibClassBuilder import AutoBaseClass
+from PyObjCTools.NibClassBuilder import AutoBaseClass
 
 gNumDaysInMonth = ( 0, 31, 28, 31, 30, 21, 30, 31, 31, 30, 31, 30, 31 )
 

@@ -48,7 +48,7 @@ for key, value in opts:
 	elif key in [ '-p', '--with-python' ]:
 		PYTHON=value
 	elif key in [ '-o', '--output-directory' ]:
-		OUTPUTDIR=value
+		BUILDDIR=value
 	else:
 		raise ValueError, "Unsupported option: %s=%s"%(key, value)
 
@@ -138,8 +138,14 @@ makeDir(basedir, 'Developer', 'Examples')
 examplesDestination = os.path.join(basedir, 'Developer', 'Examples', 'PyObjC')
 shutil.copytree('Examples', examplesDestination)
 
+print "Setting up some documentation"
+makeDir(basedir, 'Developer', 'Documentation')
+docsDestination = os.path.join(basedir, 'Developer', 'Documentation', 'PyObjC')
+shutil.copytree('Doc', docsDestination)
+
 os.path.walk(templateDestination, killNasties, None)
 os.path.walk(examplesDestination, killNasties, None)
+os.path.walk(docsDestination, killNasties, None)
 
 print 'Building package'
 pm = buildpkg.PackageMaker('PyObjC-%s' % package_version(), package_version(), 

@@ -8,11 +8,12 @@ USE_FFI_SHORTCUTS = 1
 
 # If true we adjust the reference count for copy/alloc, otherwise users
 # have to do that manually. (Experimental)
-USE_ADJUST_REFCOUNTS = 0
+USE_ADJUST_REFCOUNTS = 1
 
 # Set this to the path to an extracted tree of libffi to automaticly build
 # a compatible version of libffi
 LIBFFI_SOURCES=None
+LIBFFI_SOURCES='/Volumes/Data/Users/ronald/Projects/research/sourceforge/libffi/libffi'
 
 import sys
 import os
@@ -357,7 +358,7 @@ def package_version():
     raise ValueError, "Version not found"
 
 
-packages = CorePackages + CocoaPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages
+packages = CorePackages + CocoaPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + [ 'PyObjCTools' ] 
 # The following line is needed to allow separate flat modules
 # to be installed from a different folder (needed for the 
 # bundlebuilder test below).

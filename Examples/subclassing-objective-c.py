@@ -27,6 +27,11 @@ class Demo (NSEnumerator):
         print "Bye from Demo instance"
 
 print Demo.alloc
+
+x = Demo.alloc().init()
+print x.retainCount()
+del x
+
 obj = Demo.alloc()
 print "->", obj.retainCount();
 
@@ -40,6 +45,7 @@ print '->', obj.retainCount()
 print "all->", x.description()
 x=None
 
+print "->", obj.retainCount()
 obj = None
 print "Done"
 

@@ -1,7 +1,6 @@
 from Foundation import NSObject
 from AppKit import NSApplicationMain, NSTableDataSource, NSTableViewDelegate
-from AppKit.NibClassBuilder import AutoBaseClass
-from AppKit import NibClassBuilder
+from PyObjCTools import NibClassBuilder
 from objc import selector
 import sys
 
@@ -9,7 +8,7 @@ NibClassBuilder.extractClasses("MainMenu")
 
 ROWCOUNT = 200
 
-class PyModel(AutoBaseClass, NSTableDataSource, NSTableViewDelegate):
+class PyModel(NibClassBuilder.AutoBaseClass, NSTableDataSource, NSTableViewDelegate):
 
     def awakeFromNib(self):
         self.stuff = {}

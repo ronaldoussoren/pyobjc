@@ -1,7 +1,7 @@
 from AppKit import *
 from objc import selector, IBOutlet
 from ToDoDocument import *
-from AppKit.NibClassBuilder import AutoBaseClass
+from PyObjCTools.NibClassBuilder import AutoBaseClass
 
 NOTIFY_TAG     = 0
 RESCHEDULE_TAG = 1
