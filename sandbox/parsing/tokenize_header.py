@@ -59,7 +59,7 @@ class UninterestingTypedef(Token):
 class CompilerDirective(Token):
     pattern = pattern(r'''
     \#\s*(?P<name>undef|if|ifdef|ifndef|endif|else|elif|pragma|error|warn|define)
-    \s*(?P<body>([^\\\n]|\\(\n|$))*)
+    [ \t]*(?P<body>([^\\\n]|\\(\n|$))*)
     ''')
     example = example(r'''
     #if defined(foo)
@@ -144,6 +144,9 @@ class SimpleDefine(Token):
                 )
             )
         \)?
+        (?!
+            [ \t]*[^/\n \t]
+        )
     ''')
     example = example(r'''
     #define foo 'foo!'
@@ -469,7 +472,8 @@ if __name__ == '__main__':
     import re
     import sys
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSDecimal.h'
-    fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSBundle.h'
+    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSBundle.h'
+    fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSException.h'
     files = sys.argv[1:] or [fn]
     def deadraise(string, i, j):
         print string[i:j]
