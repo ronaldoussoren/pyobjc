@@ -3,7 +3,7 @@ import objc
 import array
 
 from objc import YES, NO
-from AppKit import NSBitmapImageRep, NSDeviceRGBColorSpace
+from AppKit import NSBitmapImageRep, NSDeviceRGBColorSpace, NSCalibratedWhiteColorSpace
 
 class TestNSBitmapImageRep(unittest.TestCase):
     def testInstantiation(self):
@@ -49,6 +49,12 @@ class TestNSBitmapImageRep(unittest.TestCase):
         dataPlanes = (singlePlane, None, None, None, None)
         # test non-planar, premade buffer
         i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
+
+        # test grey scale
+        greyPlane = array.array('B')
+        greyPlane.fromlist( [x%256 for x in range(0,height) for x in range(0,width)] )
+        greyPlanes = (greyPlane, None, None, None, None)
+        greyImage = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(greyPlanes, width, height, 8, 1, NO, YES, NSCalibratedWhiteColorSpace, width, 8)
 
         # test planar, NSBIR allocated buffer
         i3 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(None, width, height, 8, 3, NO, YES, NSDeviceRGBColorSpace, 0, 0)
