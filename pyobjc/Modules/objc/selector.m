@@ -550,12 +550,17 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 	if (self->sel_self && PyObjCObject_Check(self->sel_self) 
 	    && (((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED)
 	    && !(self->sel_flags & PyObjCSelector_kINITIALIZER)) {
+		char buf[1024];
 
-		PySys_WriteStderr(
+		snprintf(buf, sizeof(buf), 
 			"Calling method (%s) on unitialized object %p of class %s\n",
 			SELNAME(self->sel_selector),
 			(void*)PyObjCObject_GetObject(self->sel_self),
 			GETISA(PyObjCObject_GetObject(self->sel_self))->name);
+
+		if (PyErr_Warn(PyExc_RuntimeWarning, buf) < 0) {
+			return NULL;
+		}
 	}
 
 
@@ -969,13 +974,17 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 	if ( !(self->sel_flags & PyObjCSelector_kINITIALIZER)
 	     && (self->sel_self) && (PyObjCObject_Check(self->sel_self)) &&
 	     ((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
+		char buf[1024];
 
-		PySys_WriteStderr(
-		    "Calling method (%s) on unitialized object %p of class %s\n",
-		    SELNAME(self->sel_selector),
-		    (void*)PyObjCObject_GetObject(self->sel_self),
-		    GETISA(PyObjCObject_GetObject(self->sel_self))->name);
+		snprintf(buf, sizeof(buf), 
+		   "Calling method (%s) on unitialized object %p of class %s\n",
+		   SELNAME(self->sel_selector),
+		   (void*)PyObjCObject_GetObject(self->sel_self),
+		   GETISA(PyObjCObject_GetObject(self->sel_self))->name);
 
+		if (PyErr_Warn(PyExc_RuntimeWarning, buf) < 0) {
+			return NULL;
+		}
 	}
 
 	/*
