@@ -386,8 +386,10 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
             del pool
             methodSignature = getattr(self._server, self._methodPrefix + "methodSignature")(aMethod)
             signatures = None
+            if isinstance(methodSignature, str): continue
             if not len(methodSignature):
                 continue
+
             for aSignature in methodSignature:
                 if (type(aSignature) == types.ListType) and (len(aSignature) > 0):
                     signature = "%s %s(%s)" % (aSignature[0], aMethod, string.join(aSignature[1:], ", "))
