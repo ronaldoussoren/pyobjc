@@ -9,26 +9,12 @@ import socket
 from StringIO import StringIO
 from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
 
-IMPORT_MODULES = ['netrepr', 'remote_console', 'remote_pipe']
-RUN_CODE = """
-__file__ = "<test-client>"
-import sys
-pool = ObjectPool()
-netrepr = NetRepr(pool).netrepr
-namespace = globals()
-namespace.update(pool.namespace)
-__main__ = sys.modules['__main__']
-assert namespace is not __main__.__dict__
-pipe = RemotePipe(__runsocketcode__, __clientfile__, netrepr, namespace, pool)
-interp = RemoteConsole(pipe, locals=__main__.__dict__)
-interp.interact()
-"""
+IMPORT_MODULES = ['netrepr', 'remote_console', 'remote_pipe', 'remote_bootstrap']
 source = StringIO()
 for fn in IMPORT_MODULES:
     for line in file(fn+'.py', 'rU'):
         source.write(line)
     source.write('\n\n')
-source.write(RUN_CODE)
 SOURCE = repr(source.getvalue()) + '\n'
 
 def bind_and_listen(hostport):

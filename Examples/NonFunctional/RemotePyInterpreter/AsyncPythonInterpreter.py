@@ -9,26 +9,12 @@ from StringIO import StringIO
 from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
 from Foundation import *
 
-IMPORT_MODULES = ['netrepr', 'remote_console', 'remote_pipe']
-RUN_CODE = """
-__file__ = "<test-client>"
-import sys
-pool = ObjectPool()
-netrepr = NetRepr(pool).netrepr
-namespace = globals()
-namespace.update(pool.namespace)
-__main__ = sys.modules['__main__']
-assert namespace is not __main__.__dict__
-pipe = RemotePipe(__runsocketcode__, __clientfile__, netrepr, namespace, pool)
-interp = RemoteConsole(pipe, locals=__main__.__dict__)
-interp.interact()
-"""
+IMPORT_MODULES = ['netrepr', 'remote_console', 'remote_pipe', 'remote_bootstrap']
 source = StringIO()
 for fn in IMPORT_MODULES:
     for line in file(fn+'.py', 'rU'):
         source.write(line)
     source.write('\n\n')
-source.write(RUN_CODE)
 SOURCE = repr(source.getvalue()) + '\n'
 
 def bind_and_listen(hostport):
@@ -50,13 +36,13 @@ def bind_and_listen(hostport):
 
 class AsyncPythonInterpreter(NSObject):
 
-    def initWithHost_port_interpreterPath_scriptPath_commandReactor_(self, host, port, interpreterPath, scriptPath, commandReactor):
+    def init(self):
         self = super(AsyncPythonInterpreter, self).init()
-        self.host = host
-        self.port = port
-        self.interpreterPath = interpreterPath
-        self.scriptPath = scriptPath
-        self.commandReactor = commandReactor
+        self.host = None
+        self.port = None
+        self.interpreterPath = None
+        self.scriptPath = None
+        self.commandReactor = None
         self.serverSocket = None
         self.serverFileHandle = None
         self.buffer = ''
@@ -65,6 +51,39 @@ class AsyncPythonInterpreter(NSObject):
         self.childTask = None
         return self
 
+    def initWithHost_port_interpreterPath_scriptPath_commandReactor_(self, host, port, interpreterPath, scriptPath, commandReactor):
+        self = self.init()
+        self.host = host
+        self.port = port
+        self.interpreterPath = interpreterPath
+        self.scriptPath = scriptPath
+        self.commandReactor = commandReactor
+        self.serverSocket = None
+        return self
+
+    def bundleForClass(cls):
+        # XXX - do something intelligent here
+        return NSBundle.mainBundle()
+    bundleForClass = classmethod(bundleForClass)
+    
+    def awakeFromNib(self):
+        defaults = NSUserDefaults.standardUserDefaults()
+        def default(k, v, typeCheck=None):
+            rval = defaults.objectForKey_(k)
+            if typeCheck is not None and rval is not None:
+                if not isinstance(rval, typeCheck):
+                    NSLog(u'%s failed type check %s with value %r' % (k, typeCheck.__name__, rval))
+                    rval = None
+            if rval is None:
+                defaults.setObject_forKey_(v, k)
+                rval = v
+            return rval
+        self.host = default(u'AsyncPythonInterpreterInterpreterHost', u'127.0.0.1', str)
+        self.port = default(u'AsyncPythonInterpreterInterpreterPort', 0, int)
+        self.interpreterPath = default(u'AsyncPythonInterpreterInterpreterPath', u'/usr/bin/python', unicode)
+        self.scriptPath = type(self).bundleForClass().pathForResource_(u'tcpinterpreter.py')
+        self.connect()
+    
     def connect(self):
         #NSLog(u'connect')
         self.serverSocket = bind_and_listen((self.host, self.port))
@@ -100,6 +119,7 @@ class AsyncPythonInterpreter(NSObject):
         self.writeBytes_(SOURCE)
         self.remoteFileHandle.readInBackgroundAndNotify()
         self.commandReactor.connectionEstablished_(self)
+        NSNotificationCenter.defaultCenter().postNotificationName_object_(u'AsyncPythonInterpreterOpened', self)
 
     def remoteFileHandleReadCompleted_(self, notification):
         #NSLog(u'remoteFileHandleReadCompleted_')
@@ -150,6 +170,12 @@ class AsyncPythonInterpreter(NSObject):
         if self.remoteFileHandle is not None:
             self.remoteFileHandle.closeFile()
             self.remoteFileHandle = None
+    
+    def terminateChildTask(self):
+        #NSLog(u'terminateChildTask')
+        if self.childTask is not None:
+            self.childTask.terminate()
+            self.childTask = None
 
     def close(self):
         #NSLog(u'close')
@@ -158,10 +184,8 @@ class AsyncPythonInterpreter(NSObject):
         NSNotificationCenter.defaultCenter().removeObserver_(self)
         self.closeServerFileHandle()
         self.closeRemoteFileHandle()
-        self.childTask.terminate()
-        # XXX
-        from PyObjCTools import AppHelper
-        AppHelper.stopEventLoop()
+        self.terminateChildTask()
+        NSNotificationCenter.defaultCenter().postNotificationName_object_(u'AsyncPythonInterpreterClosed', self)
     
     def __del__(self):
         self.close()
@@ -173,6 +197,7 @@ class ConsoleReactor(NSObject):
         self.pool = None
         self.netReprCenter = None
         self.connection = None
+        self.commands = {}
         return self
     
     def connectionEstablished_(self, connection):
@@ -217,6 +242,27 @@ class ConsoleReactor(NSObject):
             # self.performSelector_withObject_(sel, cmd)
             getattr(self, sel.replace(':', '_'))(cmd)
 
+    def handleRespondCommand_(self, command):
+        self.doCallback_sequence_args_(
+            self.callbacks.pop(command[0]),
+            command[0],
+            command[1:],
+        )
+
+    def doCallback_sequence_args_(self, callback, seq, args):
+        nr = self.netReprCenter
+        try:
+            rval = callback(*args)
+        except Exception, e:
+            code = 'raise ' + nr.netrepr_exception(e)
+        else:
+            code = '__result__[%r] = %s' % (seq, nr.netrepr(rval))
+        self.writeCode_(code)
+    
+    def deferCallback_sequence_value_(self, callback, seq, value):
+        self.commands[seq] = callback
+        self.writeCode_('pipe.respond(%r, netrepr(%s))' % (seq, value))
+    
     def handleExpectCommand_(self, command):
         #NSLog(u'handleExpectCommand_')
         seq = command[0]
@@ -226,30 +272,26 @@ class ConsoleReactor(NSObject):
         rval = None
         code = None
         if name == 'RemoteConsole.raw_input':
-            try:
-                rval = raw_input(*args)
-            except EOFError:
-                code = 'raise EOFError'
+            self.doCallback_sequence_args_(raw_input, seq, args)
         elif name == 'RemoteConsole.write':
-            sys.stdout.write(*args)
+            self.doCallback_sequence_args_(sys.stdout.write, seq, args)
         elif name == 'RemoteConsole.displayhook':
             obj = args[0]
-            if obj is None:
-                pass
-            elif isinstance(obj, RemoteObjectReference):
-                # XXX - this should be fetched async?
-                self.writeCode_('interp.write(repr(%s) + "\\n")' % (netrepr(obj),))
+            def displayhook_respond(reprobject):
+                print reprobject
+            def displayhook_local(obj):
+                if obj is not None:
+                    displayhook_respond(repr(obj))
+            if isinstance(obj, RemoteObjectReference):
+                self.deferCallback_sequence_value_(displayhook_respond, seq, 'repr(%s)' % (netrepr(obj),))
             else:
-                print repr(obj)
+                self.doCallback_sequence_args_(displayhook_local, seq, args)
         elif name.startswith('RemoteFileLike.'):
             fh = getattr(sys, args[0])
             meth = getattr(fh, name[len('RemoteFileLike.'):])
-            rval = meth(*args[1:])
+            self.doCallback_sequence_args_(meth, seq, args[1:])
         else:
-            NSLog(u'%r does not respond to expect %r' % (self, command,))
-        if code is None:
-            code = '__result__[%r] = %s' % (seq, netrepr(rval))
-        self.writeCode_(code)
+            self.doCallback_sequence_args_(NSLog, seq, [u'%r does not respond to expect %r' % (self, command,)])
 
 def test_console():
     from PyObjCTools import AppHelper
@@ -260,6 +302,11 @@ def test_console():
     commandReactor = ConsoleReactor.alloc().init()
     interp = AsyncPythonInterpreter.alloc().initWithHost_port_interpreterPath_scriptPath_commandReactor_(host, port, interpreterPath, scriptPath, commandReactor)
     interp.connect()
+    class ThisEventLoopStopper(NSObject):
+        def interpFinished_(self, notification):
+            AppHelper.stopEventLoop()
+    stopper = ThisEventLoopStopper.alloc().init()
+    NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(stopper, 'interpFinished:', u'AsyncPythonInterpreterClosed', interp)
     AppHelper.runConsoleEventLoop(installInterrupt=True)
 
 def main():
