@@ -495,7 +495,7 @@ NSNibAwakening = _objc.informal_protocol(
 )
 
 NSOutlineViewDelegate = _objc.informal_protocol(
-    'NSTableViewDelegate',
+    'NSOutlineViewDelegate',
     [
 # - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item;
     _objc.selector(
