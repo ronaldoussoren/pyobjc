@@ -117,6 +117,44 @@ imp_NSView_sortSubviewsUsingFunction_context_(id self, SEL sel,
 
 #endif
 
+static PyObject* 
+call_NSView_getRectsBeingDrawn_count_(
+	PyObject* method, PyObject* self, PyObject* arguments)
+{
+	PyObject* result;
+	struct objc_super super;
+	PyObject* v;
+	NSRect* rects;
+	int count;
+
+	if  (!PyArg_ParseTuple(arguments, "")) {
+		return NULL;
+	}
+
+	PyObjC_DURING
+		PyObjC_InitSuper(&super, 
+			PyObjCSelector_GetClass(method),
+			PyObjCObject_GetObject(self));
+
+			
+		objc_msgSendSuper(&super,
+				PyObjCSelector_GetSelector(method),
+				&rects, &count);
+	PyObjC_HANDLER
+		PyObjCErr_FromObjC(localException);
+	PyObjC_ENDHANDLER
+
+	if (PyErr_Occurred()) return NULL;
+
+	v = PyObjC_CArrayToPython(@encode(NSRect), rects, count);
+	if (v == NULL) return NULL;
+
+	result = Py_BuildValue("Oi", v, count);
+	Py_XDECREF(v);
+
+	return result;
+}
+
 
 static int 
 _pyobjc_install_NSView(void)
@@ -127,6 +165,15 @@ _pyobjc_install_NSView(void)
 		classNSView,
 		@selector(sortSubviewsUsingFunction:context:),
 		call_NSView_sortSubviewsUsingFunction_context_,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(
+		classNSView,
+		@selector(getRectsBeingDrawn:count:),
+		call_NSView_getRectsBeingDrawn_count_,
 		PyObjCUnsupportedMethod_IMP) < 0) {
 
 		return -1;
