@@ -203,7 +203,7 @@ Debugging
     
     To debug this application with pdb, start the application with the following command line::
 
-        $ env USE_PDB=1 ./dist/CurrencyConverter.app/Contents/MacOS
+        $ env USE_PDB=1 ./dist/CurrencyConverter.app/Contents/MacOS/CurrencyConverter
 
     When running in this mode, we will get a ``pdb.post_mortem(...)`` console in the terminal
     instead of the alert panel.  You can see this in action if you try and invert an exchange
