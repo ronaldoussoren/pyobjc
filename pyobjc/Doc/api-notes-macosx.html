@@ -188,16 +188,16 @@ This method is not yet supported.</li>
 </ul>
 <h3><a href="#id16" name="class-nsopenglpixelformat">Class <code><span>NSOpenGLPixelFormat</span></code></a></h3>
 <ul>
-<li><code><span>getValues:forAttribute:forVirtualScreen:</span></code>
-This method is not yet supported</li>
-<li><code><span>initWithAttributes:</span></code>
-This method is not yet supported</li>
+<li><code><span>getValues:forAttribute:forVirtualScreen:</span></code><p>This method is not yet supported</p>
+</li>
+<li><code><span>initWithAttributes:</span></code><p>This method is not yet supported</p>
+</li>
 </ul>
 <h3><a href="#id17" name="class-nsquickdrawview">Class <code><span>NSQuickDrawView</span></code></a></h3>
 <ul>
-<li><code><span>qdPort</span></code>
-This method is not yet supported and will return a MacPython wrapper for
-a QuickDraw port in the future.</li>
+<li><code><span>qdPort</span></code><p>This method returns an instance from a type Carbon.QuickDraw. This 
+requires MacPython.</p>
+</li>
 </ul>
 <h3><a href="#id18" name="class-nssimplehorizontaltypesetter">Class <code><span>NSSimpleHorizontalTypesetter</span></code></a></h3>
 <ul>
@@ -255,13 +255,18 @@ Python based bundle. See Examples/PrefPane for an example of its usage.</li>
 <p>The following methods are not supported in the current version of PyObjC.
 This limitation will be lifted in a future version of the bridge.</p>
 <ul>
-<li><code><span>encodeBytes:length:</span></code></li>
 <li><code><span>decodeBytesWithReturnedLength:</span></code></li>
-<li><code><span>encodeValuesOfObjCType:</span></code></li>
-<li><code><span>decodeValuesOfObjCType:</span></code></li>
 <li><code><span>decodeBytesForKey:returnedLength:</span></code></li>
-<li><code><span>decodeBytesWithoutReturnedLength:</span></code></li>
+<li><code><span>encodeValuesOfObjCType:</span></code><p>Use multiple calls to <code><span>encodeValueOfObjCType:at:</span></code> instead.</p>
+</li>
+<li><code><span>decodeValuesOfObjCType:</span></code><p>Use multiple calls to <code><span>decodeValueOfObjCType:at:</span></code> instead. Note that
+that won't work if your trying to read back data that was written using
+<code><span>encodeValuesOfObjCType:</span></code>.</p>
+</li>
 </ul>
+<p>The method <code><span>decodeBytesWithoutReturnedLength:</span></code> is not supported, use 
+<code><span>decodeBytesWithReturnedLength:</span></code> instead. It is not possible to safely
+represent the return value of this method in Python.</p>
 <h3><a href="#id25" name="class-nsdata">Class <code><span>NSData</span></code></a></h3>
 <ul>
 <li><code><span>initWithBytesNoCopy:length:</span></code>

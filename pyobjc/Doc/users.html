@@ -69,24 +69,5 @@ might be possible to create threads using the 'thread' module if you manually
 create an NSAutoreleasePool for the thread. This has not been tested. The
 Cocoa threading classes should not be used because they don't update the 
 state of the Python interpreter when creating a new thread.</p>
-<h2><a name="c-api">C API</a></h2>
-<h3><a name="id1">Introduction</a></h3>
-<p>The PyObjC package provides a C API that can be used when you're wrapping 
-functions that deal with Objective-C objects or classes. It can also be used
-to provide functions that help to wrap problematic objective-C methods (like 
-those that take a variable number of arguments).</p>
-<p>This API is used by the 'Cocoa' package (part of the PyObjC distribution) to
-wrap the entire Cocoa API.</p>
-<h3><a name="how-to-use-it">How to use it</a></h3>
-<p>You <code><span>#include</span></code> &quot;pyobjc-api.h&quot; in your module implementation. In the module
-initialisation function you then call <code><span>ObjC_ImportModule(mymodule)</span></code>. After
-this you can use the functions and constants defined in the API.</p>
-<h3><a name="constants">Constants</a></h3>
-<p>TODO</p>
-<h3><a name="functions">Functions</a></h3>
-<p>TODO</p>
-<h3><a name="id2">Limitations</a></h3>
-<p>We currently assume that extension module contain at most 1 file that uses
-the PyObjC API.</p>
 </body>
 </html>
