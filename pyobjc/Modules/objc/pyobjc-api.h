@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.27 2004/04/01 03:53:45 etrepum Exp $
+ * $Id: pyobjc-api.h,v 1.28 2004/04/01 17:18:02 etrepum Exp $
  */
 
 #include <Python.h>
@@ -137,8 +137,9 @@ static inline void PyGILState_Release(
  *	PyObjC_RegisterSignatureMapping and PyObjCUnsupportedMethod_IMP,
  *      adds PyObjC_RegisterStructType and removes PyObjC_CallPython
  * - Version 6 adds PyObjCIMP_Type, PyObjCIMP_GetIMP and PyObjCIMP_GetSelector
+ * - Version 7 adds PyObjCErr_AsExc
  */
-#define PYOBJC_API_VERSION 6
+#define PYOBJC_API_VERSION 7
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -259,6 +260,10 @@ struct pyobjc_api {
 
 	/* PyObjCIMP_GetSelector */
 	SEL  (*imp_get_sel)(PyObject*);
+
+    /* PyObjCErr_AsExc */
+    NSException* (*err_python_to_nsexception)(void);
+
 };
 
 
@@ -283,6 +288,7 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCErr_FromObjC     (PyObjC_API->err_objc_to_python)
 #define PyObjCErr_ToObjC       (PyObjC_API->err_python_to_objc)
 #define PyObjCErr_ToObjCWithGILState       (PyObjC_API->err_python_to_objc_gil)
+#define PyObjCErr_AsExc        (PyObjC_API->err_python_to_nsexception)
 #define PyObjC_PythonToObjC    (PyObjC_API->py_to_objc)
 #define PyObjC_ObjCToPython    (PyObjC_API->objc_to_py)
 #define PyObjC_RegisterMethodMapping (PyObjC_API->register_method_mapping)
