@@ -368,38 +368,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		goto error_cleanup;
 	}
 
-	// call into objc._subclass_extender(...)
-	PyObject *modules_dict = PySys_GetObject("modules");
-	PyObject *objc_module = PyDict_GetItemString(modules_dict, "objc");
-	PyObject *objc_module_dict;
-	while (objc_module) {
-		PyObject *objc_class_extender;
-		PyObject *class_name;
-		PyObject *superclass_object;
-		PyObject *extender_result;
-		objc_module_dict = PyModule_GetDict(objc_module);
-		objc_class_extender = PyDict_GetItemString(objc_module_dict, "_subclass_extender");
-		if (!objc_class_extender) {
-			break;
-		}
-		superclass_object = pythonify_c_value(@encode(Class), &super_class);
-		if (!superclass_object) {
-			goto error_cleanup;
-		}
-		class_name = PyString_FromString(name);
-		if (!class_name) {
-			Py_DECREF(superclass_object);
-			goto error_cleanup;
-		}
-		extender_result = PyObject_CallFunctionObjArgs(objc_class_extender, class_name, superclass_object, protocols, class_dict, NULL);
-		Py_DECREF(class_name);
-		Py_DECREF(superclass_object);
-		if (!extender_result) {
-			goto error_cleanup;
-		}
-		Py_DECREF(extender_result);
-		break;
-	}
+    PyDict_SetItemString(class_dict, "__objc_python_subclass__", Py_True);
 
 	py_superclass = PyObjCClass_New(super_class);
 	if (py_superclass == NULL) return NULL;
