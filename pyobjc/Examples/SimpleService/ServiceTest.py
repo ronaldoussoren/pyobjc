@@ -1,6 +1,7 @@
 import objc
 from Foundation import *
 from AppKit import *
+import objc
 
 def serviceSelector(fn):
     return objc.selector(fn, signature="v@:@@o^@")
