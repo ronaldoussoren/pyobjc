@@ -35,7 +35,6 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
     generically useful toolbar management untility.
     """
     toolbarItem = NSToolbarItem.alloc().initWithItemIdentifier_(anIdentifier)
-    toolbarItem.autorelease()
     
     toolbarItem.setLabel_(aLabel)
     toolbarItem.setPaletteLabel_(aPaletteLabel)
@@ -55,7 +54,7 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
         toolbarItem.setMaxSize_( maxSize )
         
     if aMenu:
-        menuItem = NSMenuItem.alloc().init().autorelease()
+        menuItem = NSMenuItem.alloc().init()
         menuItem.setSubmenu_(aMenu)
         menuItem.setTitle_( aMenu.title() )
         toolbarItem.setMenuFormRepresentation_(menuItem)
@@ -86,7 +85,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         """
         Create and return a default connection window instance.
         """
-        return WSTConnectionWindowController.alloc().init().autorelease()
+        return WSTConnectionWindowController.alloc().init()
            
     def init(self):
         """
@@ -130,7 +129,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         """
         Creates and configures the toolbar to be used by the window.
         """
-        toolbar = NSToolbar.alloc().initWithIdentifier_("WST Connection Window").autorelease()
+        toolbar = NSToolbar.alloc().initWithIdentifier_("WST Connection Window")
         toolbar.setDelegate_(self)
         toolbar.setAllowsUserCustomization_(YES)
         toolbar.setAutosavesConfiguration_(YES)
@@ -193,8 +192,6 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         """
         newItem = NSToolbarItem.alloc().initWithItemIdentifier_(itemIdentifier)
         item = self._toolbarItems.objectForKey_(itemIdentifier)
-        
-        newItem.autorelease()
         
         newItem.setLabel_( item.label() )
         newItem.setPaletteLabel_( item.paletteLabel() )
@@ -334,7 +331,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
             return aMethod
 
     ### adjust method decls to be in line with ObjC requirements
-    connectionWindowController = selector(connectionWindowController, class_method=1)
+    connectionWindowController = selector(connectionWindowController, isClassMethod=1)
     """
     Declares that the method connectionWindowController is actually a
     class method.  This is the one piece of non-automatic glue

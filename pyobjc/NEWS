@@ -22,6 +22,29 @@ Version 0.9 (April-??-2003):
 - The InterfaceBuilder, PreferencePanes and ScreenSaver frameworks have been
   wrapped.
 
+- Management of reference counts is now completely automatic, it is no longer
+  necessary to manually compensate for the higher reference count of objects 
+  returned by the alloc, copy and copyWithZone: class methods.
+
+- Various function and keyword arguments have been renamed for a better 
+  integration with Cocoa. A partial list is of the changed names is:
+  	objc.lookup_class -> objc.lookUpClass
+	objc.selector arguments/attributes:
+		is_initializer -> isInitializer
+		is_allocator -> isAlloc
+		donates_ref -> doesDonateReference
+		is_required -> isRequired
+		class_method -> isClassMethod
+		defining_class -> definingClass
+		returns_self -> returnsSelf
+		argument_types -> argumentTypes
+		return_type -> returnType
+	objc.get_class_list -> objc.getClassList
+
+- On Python 2.2, objc.YES and objc.NO are instances of a private boolean type,
+  on Python 2.3 these are instances of the builtin type bool.
+
+
 Version 0.8 (Dec-10-2002):
 
 - GNUStep support has been removed for lack of support.  Volunteers

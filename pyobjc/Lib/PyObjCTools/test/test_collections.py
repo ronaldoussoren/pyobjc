@@ -30,9 +30,13 @@ class TestCollections( unittest.TestCase ):
         self.assertSameArrayContents(d1.keys(), d2.keys())
 
         for k in d1:
+            self.assert_(d1.has_key(k), "Missing key %s in %s"%(`k`, `d1`))
+            self.assert_(d2.has_key(k), "Missing key %s in %s"%(`k`, `d2`))
             self.assertEqual(d1[k], d2[k],
                              "assertSameDictionary() failed for key '%s'. [%s != %s]" % (k, d1[k], d2[k]))
         for k in d2:
+            self.assert_(d1.has_key(k), "Missing key %s in %s"%(`k`, `d1`))
+            self.assert_(d2.has_key(k), "Missing key %s in %s"%(`k`, `d2`))
             self.assertEqual(d1[k], d2[k],
                              "assertSameDictionary() failed for key '%s'. [%s != %s]" % (k, d1[k], d2[k]))
                              
