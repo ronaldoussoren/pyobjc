@@ -4,6 +4,10 @@ from objc import *
 from Foundation import *
 
 try:
+    import sys
+    if sys.version_info[:2] == (2,4):
+        raise ImportError, "py2.4 hangs when a CFArray is created, bug was filed"
+
     # These tests are only useful on MacOS X when using MacPython
     from Carbon.CF import *
 
