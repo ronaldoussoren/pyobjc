@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 38;
+	objectVersion = 39;
 	objects = {
 		080E96DCFE201CFB7F000001 = {
 			fileRef = 29B97318FDCFA39411CA2CEA;
@@ -21,6 +21,7 @@
 			isa = PBXGroup;
 			name = Classes;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		089C165CFE840E0CC02AAC07 = {
 			children = (
@@ -29,13 +30,16 @@
 			isa = PBXVariantGroup;
 			name = InfoPlist.strings;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		089C165DFE840E0CC02AAC07 = {
 			fileEncoding = 10;
 			isa = PBXFileReference;
+			lastKnownFileType = text.plist.strings;
 			name = English;
 			path = English.lproj/InfoPlist.strings;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		089C165EFE840E0CC02AAC07 = {
 			fileRef = 089C165CFE840E0CC02AAC07;
@@ -54,10 +58,13 @@
 //103
 //104
 		1058C7A1FEA54F0111CA2CBB = {
+			fallbackIsa = PBXFileReference;
 			isa = PBXFrameworkReference;
+			lastKnownFileType = wrapper.framework;
 			name = Cocoa.framework;
 			path = /System/Library/Frameworks/Cocoa.framework;
 			refType = 0;
+			sourceTree = "<absolute>";
 		};
 //100
 //101
@@ -70,9 +77,12 @@
 //173
 //174
 		17587328FF379C6511CA2CBB = {
+			explicitFileType = wrapper.application;
+			fallbackIsa = PBXFileReference;
 			isa = PBXApplicationReference;
 			path = FieldGraph.app;
 			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 //170
 //171
@@ -91,6 +101,7 @@
 			isa = PBXGroup;
 			name = Products;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 //190
 //191
@@ -103,6 +114,8 @@
 //293
 //294
 		29B97313FDCFA39411CA2CEA = {
+			buildSettings = {
+			};
 			buildStyles = (
 				4A9504CCFFE6A4B311CA0CBA,
 				4A9504CDFFE6A4B311CA0CBA,
@@ -127,6 +140,7 @@
 			name = CurrencyConverter;
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97315FDCFA39411CA2CEA = {
 			children = (
@@ -137,15 +151,20 @@
 			name = "Other Sources";
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97316FDCFA39411CA2CEA = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = "bin-python-main.m";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA = {
 			children = (
+				B7BC45D1061E4C5900A96856,
+				B7BC45D2061E4C5900A96856,
 				29B97318FDCFA39411CA2CEA,
 				089C165CFE840E0CC02AAC07,
 			);
@@ -153,6 +172,7 @@
 			name = Resources;
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97318FDCFA39411CA2CEA = {
 			children = (
@@ -162,12 +182,15 @@
 			name = MainMenu.nib;
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97319FDCFA39411CA2CEA = {
 			isa = PBXFileReference;
+			lastKnownFileType = wrapper.nib;
 			name = English;
 			path = English.lproj/MainMenu.nib;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97323FDCFA39411CA2CEA = {
 			children = (
@@ -180,18 +203,25 @@
 			name = "Frameworks & Modules";
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97324FDCFA39411CA2CEA = {
+			fallbackIsa = PBXFileReference;
 			isa = PBXFrameworkReference;
+			lastKnownFileType = wrapper.framework;
 			name = AppKit.framework;
 			path = /System/Library/Frameworks/AppKit.framework;
 			refType = 0;
+			sourceTree = "<absolute>";
 		};
 		29B97325FDCFA39411CA2CEA = {
+			fallbackIsa = PBXFileReference;
 			isa = PBXFrameworkReference;
+			lastKnownFileType = wrapper.framework;
 			name = Foundation.framework;
 			path = /System/Library/Frameworks/Foundation.framework;
 			refType = 0;
+			sourceTree = "<absolute>";
 		};
 		29B97326FDCFA39411CA2CEA = {
 			buildPhases = (
@@ -263,6 +293,8 @@
 				803B3AA0049F59ED0000008F,
 				803B3AA1049F5B620000008F,
 				80A1BFB904A2ACF800A8020C,
+				B7BC45D3061E4C5900A96856,
+				B7BC45D4061E4C5900A96856,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,7 +338,12 @@
 			);
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				OPTIMIZATION_CFLAGS = "-O0";
+				ZERO_LINK = YES;
 			};
 			isa = PBXBuildStyle;
 			name = Development;
@@ -316,6 +353,8 @@
 			);
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				ZERO_LINK = NO;
 			};
 			isa = PBXBuildStyle;
 			name = Deployment;
@@ -331,11 +370,14 @@
 //773
 //774
 		77AD46F403ECA7E2004B557F = {
+			fallbackIsa = PBXFileReference;
 			includeInIndex = 1;
 			isa = PBXFolderReference;
+			lastKnownFileType = file;
 			name = PyObjC;
 			path = "/usr/lib/python2.2/site-packages/PyObjC";
 			refType = 0;
+			sourceTree = "<absolute>";
 		};
 		77AD475703ECA800004B557F = {
 			fileRef = 77AD46F403ECA7E2004B557F;
@@ -356,8 +398,10 @@
 		803B3A9B049F58DF0000008F = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = text.script.python;
 			path = CGraphView.py;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		803B3A9C049F58DF0000008F = {
 			fileRef = 803B3A9B049F58DF0000008F;
@@ -368,14 +412,18 @@
 		803B3A9D049F59870000008F = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = text.script.python;
 			path = CGraphController.py;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		803B3A9F049F59ED0000008F = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = text.script.python;
 			path = fieldMath.py;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		803B3AA0049F59ED0000008F = {
 			fileRef = 803B3A9F049F59ED0000008F;
@@ -392,8 +440,10 @@
 		8053195804A095AA0039F02A = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = text.script.python;
 			path = CGraphModel.py;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		80A1BFB904A2ACF800A8020C = {
 			fileRef = 8053195804A095AA0039F02A;
@@ -404,8 +454,10 @@
 		80B4682A049EAB060000008F = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = text.script.python;
 			path = Main.py;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		80B4682B049EAB060000008F = {
 			fileRef = 80B4682A049EAB060000008F;
@@ -418,6 +470,42 @@
 //802
 //803
 //804
+//B70
+//B71
+//B72
+//B73
+//B74
+		B7BC45D1061E4C5900A96856 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.tiff;
+			path = CrossCursor.tiff;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		B7BC45D2061E4C5900A96856 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			path = Map.png;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		B7BC45D3061E4C5900A96856 = {
+			fileRef = B7BC45D1061E4C5900A96856;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		B7BC45D4061E4C5900A96856 = {
+			fileRef = B7BC45D2061E4C5900A96856;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//B70
+//B71
+//B72
+//B73
+//B74
 //F60
 //F61
 //F62
