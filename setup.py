@@ -465,6 +465,10 @@ CoreExtensions =  [
               ["Lib/objc/test/testclassandinst.m"],
               extra_compile_args=["-IModules/objc" ] + CFLAGS,
               extra_link_args=OBJC_LDFLAGS),
+    Extension("objc.test.testoutputinitializer",
+              ["Lib/objc/test/testoutputinitializer.m"],
+              extra_compile_args=["-IModules/objc" ] + CFLAGS,
+              extra_link_args=OBJC_LDFLAGS),
     ]
 
 if sys.version == '2.2' or sys.version.startswith('2.2.'):
