@@ -1,3 +1,6 @@
+2002-11-05  Bill Bumgarner  <bbum@codefab.com>
+	* added an NSNumber test
+
 2002-11-02  Bill Bumgarner  <bbum@codefab.com>
 	* Change addressbook example to be in line with updated
 	convenience methods.
