@@ -5,7 +5,7 @@
 
 WHAT'S NEW:
 
-Version 2001-03-17 (March 17, 2001:
+Version 2001-03-17 (March 17, 2001):
 
 - moved to using distutils setup.py (requires small patch to distutils
   that has been submitted against python 2.1b1)

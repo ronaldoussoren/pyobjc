@@ -23,15 +23,18 @@
 import pyobjc
 rt = pyobjc.runtime	# shorthand -- runtime gets used a lot!
 
+class AppDelegate:
+    def applicationDidFinishLaunching_(self, aNotification):
+        print "Hello, World!"
+
 def main():
 
     pool = rt.NSAutoreleasePool()
 
     # Load Application Framework:
-    rt.NSBundle.bundleWithPath_( 
-	'/System/Library/Frameworks/AppKit.framework').load()
+    rt.NSBundle.bundleWithPath_('/System/Library/Frameworks/AppKit.framework').load()
 
-    NSApp = rt.NSApplication.sharedApplication()
+    ##! NSApp.setDelegate_( AppDelegate() )
 
     win = rt.NSWindow.alloc()
     frame = ((200.0, 300.0), (250.0, 100.0))
