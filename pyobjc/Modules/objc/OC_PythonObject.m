@@ -31,7 +31,7 @@
 #import  <Foundation/NSKeyValueObserving.h>
 #endif
 
-extern NSString* NSUnknownKeyException; /* Radar #3336042 */
+extern NSString * const NSUnknownKeyException; /* Radar #3336042 */
 
 PyObject *OC_PythonObject_DepythonifyTable = NULL;
 PyObject *OC_PythonObject_PythonifyStructTable = NULL;
