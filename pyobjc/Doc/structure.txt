@@ -27,7 +27,9 @@ some additional code that rescans the method tables on several occasions.
 Subclassing
 -----------
 
-It is possible to subclass objective-C classes in python and this results in a hybrid Python/Objective-C class. Instances of these classes consist of a cluster of 2 objects, a Python object and an Objective-C object.
+It is possible to subclass objective-C classes in python and this results in a
+hybrid Python/Objective-C class. Instances of these classes consist of a
+cluster of 2 objects, a Python object and an Objective-C object.
 
 The reference count (or retainCount in objective-C speak) is stored in the 
 Python object, mostly because that is the only way to maintain a single 
@@ -59,7 +61,8 @@ Examples/
 
 Lib/
   Python modules that will be installed in the library. Currently contains
-  the packages 'objc', 'Cocoa' and 'AddressBook'
+  the modules/packages 'objc', 'AddressBook', 'AppKit', 'Foundation',
+  'InterfaceBuilder', 'PreferencePanes', 'PyObjCTools' and 'ScreenSaver.py'.
 
 Modules/
   Extension modules related to the packages in 'Lib'. This directory contains
