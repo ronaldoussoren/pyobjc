@@ -1,149 +1,178 @@
 #!/usr/bin/env python
 
+__version__ = '0.1'
+
 import sys
 import os
 import re
 import shutil
+import codecs
+import tempfile
 
-import getopt
+from optparse import OptionParser, Option, OptionValueError
 
-## usage
-def usage(msg=None, exitCode=1):
-    if msg:
-        print "Error:", msg
-    print """
-clean.py [-hvkrw] <source> <dest>
-    
-Copies tree of templates or projects from <source> to <dest>.  Before copying,
-cleans up <source> by removing various bits of garbage.   After copying,
-transforms <dest> by replacing strings with their Xcode template counterparts.
-
-The -r flag can be used to reverse the project;  turning an Xcode template into
-a working project.
-
-Options:
-    -h/--help              show usage
-    -v/--verbose           verbose
-    -k/--kill-destination  erase <dest> (no warning)
-    -r/--reverse           reverse transformation (template -> editable project)
-    -w/--working           try to make destination into a working project
-    """
-    sys.exit(exitCode)
-
-## settings
-verbose = False
-killDest = False
-doReverse = False
-makeWorking = False
-
-## process options
-try:
-    opts, args = getopt.getopt(sys.argv[1:], "hvkrw", ["help", "verbose", "kill-destination", "reverse", "working"])
-except getopt.GetoptError, details:
-    usage(details, 2)
-
-if len(args) != 2:
-    usage(None, 2)
-
-for opt, value in opts:
-    if opt in ['-h', '--help']:
-        usage(None, 1)
-    if opt in ['-v', '--verbose']:
-        verbose = True
-        continue
-    if opt in ['-k', '--kill-destination']:
-        killDest = True
-        continue
-    if opt in ['-r', '--reverse']:
-        doReverse = True
-        continue
-    if opt in ['-w', '--working']:
-        makeWorking = True
-        continue
+import logging
+from logging import error, info, debug
 
 ## define functions used in script
-def killNasties(irrelevant, dirName, names):
-    for aName in names:
-        if len(filter(lambda expr, aName=aName: expr.match(aName), nastyFileExprs)):
-            path = os.path.join(dirName, aName)
-            if verbose:
-                print "Removing '%s'..." % path
-            if os.path.isdir(path):
-		shutil.rmtree(path)
-            else:
-                os.remove(path)
+NASTYFILEEXPRS = map(re.compile, ['^.DS_Store$', '.*~.*$', '.*.pbxuser$', 'build'])
+def killNasties(dirName, aName, options):
+    for expr in NASTYFILEEXPRS:
+        if expr.match(aName):
+            break
+    else:
+        return
 
-def doSubstitutions(irrelevant, dirName, names):
-    for aName in names:
-        didPch = False
-        path = os.path.join(dirName, aName)
-        if os.path.isdir(path): continue
-        if aName in specialFiles:
-            specialFiles[aName](path)
-            continue
-        extension = os.path.splitext(path)[1]
-        if extension in utf16Extensions:
-            doFileSubstitution(path, utf16Substitutions)
-        elif extension in utf8Extensions:
-            doFileSubstitution(path, utf8Substitutions)
-        elif extension in asciiExtensions:
-            doFileSubstitution(path, asciiSubstitutions)
-        else:
-            sys.stderr.write("*WARN* Skipping unknown file with uknown type: %s\n" % path)
-        if makeWorking and (extension in [".pch"]):
-            if verbose:
-                print 'Making working copy of %s...' % path
-            tail = aName.split("_", 1)[1]
-            targetFile = os.path.join(dirName, "xcPROJECTNAMExc_%s" % tail)
-            inFile = file(path, "r")
-            data = inFile.read()
-            inFile.close()
-            if extension in [".pch"]: # C type file
-                message = "\n\n// WARNING\n// This file is copied from %s.  Keep the two in sync.\n// --- file resumes after here ---\n" % aName
-            outFile = file(targetFile, "w")
-            outFile.write(message)
-            outFile.write(data)
-            outFile.flush()
-            outFile.close()
-
-def doFileSubstitution(aFile, subs):
-    if verbose:
-        print 'Processing %s....' % aFile
-    inFile = file(aFile, "r")
-    data = inFile.read()
-    inFile.close()
-    for originalString, targetString in subs:
-        data = data.replace(originalString, targetString)
-    outFile = file(aFile, "w")
-    outFile.write(data)
-    outFile.flush()
-    outFile.close()
-
-def doTemplateInfo(aFile):
-    if not doReverse:
-        doFileSubstitution(aFile, utf8Substitutions)
+    path = os.path.join(dirName, aName)
+    info("Removing '%s'...", path)
+    if os.path.isdir(path):
+        shutil.rmtree(path)
+    else:
+        os.remove(path)
 
 ## define per-file behaviors
-specialFiles = {
-    "TemplateInfo.plist" : doTemplateInfo
-    }
+def maybenib(encoding):
+    def maybenib(fn):
+        if file(fn).read(11) == 'typedstream':
+            info("Convert %s to a text nib file if you need substitution", fn)
+            return None
+        return encoding(fn)
+    return maybenib
 
-utf8Extensions = ['.plist', '.pbxproj', '.nib', '.xib']
-asciiExtensions = ['.m', '.h', '.c', '.pch', '.rtf', '.java', '.applescript', '.dependency']
-utf16Extensions = ['.strings']
+def maybeutf(encoding=None):
+    def maybeutf(fn):
+        header = file(fn).read(4)
+        if header == '\x00\x00\xFE\xFF':
+            return 'ucs4_be'
+        elif header == '\xFF\xFE\x00\x00':
+            return 'ucs4_le'
+        elif header == '\x00\x3C\x00\x3F':
+            return 'utf_16_be'
+        elif header == '\x3C\x00\x3F\x00':
+            return 'utf_16_le'
+        elif header == '\x3C\x3F\x78\x6D':
+            return 'utf_8'
+        elif header.startswith('\xFE\xFF'):
+            return 'utf_16_be'
+        elif header.startswith('\xFF\xFE'):
+            return 'utf_16_le'
+        return encoding
+    return maybeutf
+            
+    
+def _buildEncodingsDict():
+    d = {}
+    # XXX - SHOULD CHECK FOR XML ENCODINGS?
+    d['.nib'] = maybenib(maybeutf('macroman'))
+    for k in ['.pbxproj', '.xib']:
+        d[k] = maybeutf('utf_8')
+    for k in ['.py', '.m', '.h', '.c', '.pch', '.rtf', '.java', '.applescript', '.dependency', '.plist']:
+        d[k] = maybeutf('macroman')
+    for k in ['.strings']:
+        d[k] = maybeutf('utf16')
+    return d
+    
+ENCODINGS = _buildEncodingsDict()
 
-## define character mappings
-asciiSimpleSurrounds = [('xc', 'xc')]
-asciiSurrounds = [('\xc7', '\xc8')]
+WORKINGCOPYFILES = ['.pch']
+CTYPEFILES = ['.pch']
 
-utf8SimpleSurrounds = asciiSimpleSurrounds
-utf8Surrounds = [('\xc2\xab', '\xc2\xbb')]
+def doTemplateInfo(aFile, options):
+    if not options.doReverse:
+        basename, extension = os.path.splitext(aFile)
+        encoding = ENCODINGS.get(extension, lambda fn:None)(aFile)
+        doFileSubstitution(aFile, encoding, FORWARDTRANSLATOR)
 
-utf16SimpleSurrounds = [('\x00x\x00c', '\x00x\x00c')]
-utf16Surrounds = [('\x00\xab', '\x00\xbb')]
+SPECIALFILES = {
+    "TemplateInfo.plist" : doTemplateInfo,
+}
+
+SUBSTITUTIONMESSAGE = u"""
+                
+// WARNING
+// This file is copied from %(name)s.  Keep the two in sync.
+// --- file resumes after here ---
+"""
+
+def doSubstitutions(dirName, aName, options):
+    if options.doReverse:
+        translator = REVERSETRANSLATOR
+    else:
+        translator = FORWARDTRANSLATOR
+    
+    path = os.path.join(dirName, aName)
+    if os.path.isdir(path):
+        return
+
+    specialCommand = SPECIALFILES.get(aName)
+    if specialCommand is not None:
+        specialCommand(path, options)
+        return
+
+    basename, extension = os.path.splitext(path)
+
+    encoding = ENCODINGS.get(extension, lambda fn:None)(path)
+    if encoding is None:
+        error("*WARN* Skipping unknown file with uknown type: %s", path)
+    else:
+        info('Processing %s....', aName)
+        doFileSubstitution(path, encoding, translator)
+
+    if options.makeWorking and (extension in WORKINGCOPYFILES):
+        info('Making working copy of %s...', path)
+        tail = aName.split("_", 1)[1]
+        targetFile = os.path.join(dirName, "xcPROJECTNAMExc_%s" % (tail,))
+
+        inFile = codecs.EncodedFile(file(path, "rb"), encoding)
+        outFile = codecs.EncodedFile(file(targetFile, 'wb'), encoding)
+
+        if extension in CTYPEFILES:
+            outFile.write(SUBSTITUTIONMESSAGE % dict(name = aName))
+            
+        for line in inFile:
+            outFile.write(line)
+
+        inFile.close()
+        outFile.close()
+
+def doFileSubstitution(aFile, encoding, translator):
+    _tempFile = tempfile.TemporaryFile()
+
+    # do the translation
+    debug('encoding is: %s', encoding)
+    inFile = codecs.getreader(encoding)(file(aFile, "rb"))
+    outFile = codecs.getwriter(encoding)(_tempFile)
+    try:
+        for line in inFile:
+            tline = translator(line)
+            outFile.write(tline)
+    except NotImplementedError:
+        BUFFER = 16384
+        bytes = inFile.read(BUFFER)
+        while bytes:
+            lines = bytes.split(u'\n')
+            bytes = lines.pop()
+            for line in lines:
+                tline = translator(line)
+                outFile.write(tline)
+            newbytes = inFile.read(BUFFER)
+            bytes += newbytes
+            if not newbytes and bytes:
+                bytes += u'\n'
+    inFile.close()
+
+    # do the copy
+    _tempFile.seek(0)
+    copyFile = file(aFile, "wb")
+    shutil.copyfileobj(_tempFile, copyFile)
+    copyFile.close()
+    _tempFile.close()
 
 ## substitution strings
-substitutionStrings = [
+FORWARD = u'xc', u'xc'
+REVERSE = u'\N{LEFT-POINTING DOUBLE ANGLE QUOTATION MARK}', u'\N{RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK}'
+
+SUBSTITUTIONSTRINGS = [
     'PROJECTNAME',
     'FULLUSERNAME',
     'DATE',
@@ -151,75 +180,96 @@ substitutionStrings = [
     'PROJECTNAMEASIDENTIFIER',
     'PROJECTNAMEASXML',
     'ORGANIZATIONNAME'
-    ]
+]
 
-utf16SubstitutionStrings = ["".join(['\x00%s' % c for c in aString]) for aString in substitutionStrings]
+BASEREGEX = '(%s)' % ('|'.join(SUBSTITUTIONSTRINGS),)
 
-utf16Substitutions = None
-utf8Substitutions = None
-asciiSubstitutions = None
+def getRegSub(forward, reverse, regex=BASEREGEX):
+    left, right = forward
+    reg = re.compile(left + regex + right)
+    sub = r'%s\1%s' % reverse
+    def getRegSub(s):
+        return reg.sub(sub, s)
+    return getRegSub
 
-## build substitution tables based on options
-if doReverse:
-    asciiSubstitutions = [("%s%s%s" % (surround[0], aString, surround[1]),
-                            "%s%s%s" % (simpleSurround[0], aString, simpleSurround[1]))
-                         for aString in substitutionStrings
-                         for surround in asciiSurrounds
-                         for simpleSurround in asciiSimpleSurrounds]
-    utf8Substitutions = [("%s%s%s" % (surround[0], aString, surround[1]),
-                          "%s%s%s" % (simpleSurround[0], aString, simpleSurround[1]))
-                         for aString in substitutionStrings
-                         for surround in utf8Surrounds
-                         for simpleSurround in utf8SimpleSurrounds]
-    utf16Substitutions = [("%s%s%s" % (surround[0], aString, surround[1]),
-                          "%s%s%s" % (simpleSurround[0], aString, simpleSurround[1]))
-                         for aString in utf16SubstitutionStrings
-                         for surround in utf16Surrounds
-                         for simpleSurround in utf16SimpleSurrounds]
-else:
-    asciiSubstitutions = [("%s%s%s" % (simpleSurround[0], aString, simpleSurround[1]),
-                            "%s%s%s" % (surround[0], aString, surround[1]))
-                         for aString in substitutionStrings
-                         for surround in asciiSurrounds
-                         for simpleSurround in asciiSimpleSurrounds]
-    utf8Substitutions = [("%s%s%s" % (simpleSurround[0], aString, simpleSurround[1]),
-                          "%s%s%s" % (surround[0], aString, surround[1]))
-                         for aString in substitutionStrings
-                         for surround in utf8Surrounds
-                         for simpleSurround in utf8SimpleSurrounds]
-    utf16Substitutions = [("%s%s%s" % (simpleSurround[0], aString, simpleSurround[1]),
-                          "%s%s%s" % (surround[0], aString, surround[1]))
-                         for aString in utf16SubstitutionStrings
-                         for surround in utf16Surrounds
-                         for simpleSurround in utf16SimpleSurrounds]
+FORWARDTRANSLATOR = getRegSub(FORWARD, REVERSE)
+REVERSETRANSLATOR = getRegSub(REVERSE, FORWARD)
 
-## processing starts here
-source = os.path.normpath(args[0])
-dest = os.path.normpath(args[1])
+## process options
+def build_parser():
+    USAGE = """clean.py [options] <source> <dest>
+        
+    Copies tree of templates or projects from <source> to <dest>.  
+    Before copying, it cleans up <source> by removing various bits of garbage.
+    After copying, it transforms <dest> by replacing strings with their Xcode
+    template counterparts.
 
-if os.path.exists(dest):
-    if killDest:
-        if verbose:
-            print "Removing '%s'..." % dest
-        shutil.rmtree(dest)
+    The reverse flag can be used to reverse this process; turning an Xcode
+    template into a working project."""
+
+    parser = OptionParser(USAGE, version=__version__)
+
+    def store_true(*args, **kwargs):
+        kwargs['action'] = 'store_true'
+        kwargs['default'] = False
+        parser.add_option(*args, **kwargs)
+    
+    store_true('-v', '--verbose',
+        dest='verbose', help='verbose')
+    store_true('-k', '--kill-dest',
+        dest='killDest', help='erase <dest> (no warning)')
+    store_true('-r', '--reverse',
+        dest='doReverse', help='reverse transformation (template -> editable project)')
+    store_true('-w', '--working',
+        dest='makeWorking', help='try to make destination into a working project')
+    return parser
+
+def simplePathWalker(walkdir, fn, arg=None):
+    def _simplePathWalker(arg, dirname, fnames):
+        for name in fnames:
+            fn(dirname, name, arg)
+    os.path.walk(walkdir, _simplePathWalker, arg)
+    
+def main():
+    parser = build_parser()
+    options, args = parser.parse_args()
+
+    if not args:
+        parser.print_help()
+        return
+
+    if len(args) != 2:
+        parser.error("Must specify both a source and destination")
+        return
+
+    if options.verbose:
+        hdlr = logging.StreamHandler()
+        fmt = logging.Formatter('%(message)s')
+        hdlr.setFormatter(fmt)
+        logger = logging.getLogger()
+        logger.addHandler(hdlr)
+        logger.setLevel(logging.INFO)
     else:
-        usage("Destination already exists.  -k to destroy or use different destination.")
+        logging.basicConfig()
+        
+    source, dest = map(os.path.normpath, args)
+    if source == dest:
+        parser.error("Source and destination may not be the same.")
+        return
 
-if verbose:
-    print "Creating destination '%s'...." % dest
-try:
-    head, tail = os.path.split(dest)
-    if not os.path.isdir(head):
-        os.makedirs(dest)
-except OSError, errno:
-    usage(errno)
+    if os.path.exists(dest):
+        if options.killDest:
+            info("Removing '%s'...", dest)
+            shutil.rmtree(dest)
+        else:
+            parser.error("Destination already exists.  -k to destroy or use different destination.")
+            return
 
-nastyFileExprs = [re.compile(expr) for expr in ['^.DS_Store$', '.*~.*$', '.*.pbxuser$']]
+    info("Copying from '%s' to '%s'....", source, dest)
+    shutil.copytree(source, dest)
 
-os.path.walk(source, killNasties, None)
+    simplePathWalker(dest, killNasties, options)
+    simplePathWalker(dest, doSubstitutions, options)
 
-if verbose:
-    print "Copying from '%s' to '%s'...." % (source, dest)
-shutil.copytree(source, dest)
-
-os.path.walk(dest, doSubstitutions, None)
+if __name__ == '__main__':
+    main()
