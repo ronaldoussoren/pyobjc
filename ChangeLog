@@ -1,3 +1,6 @@
+2002-11-08  Bill Bumgarner  <bbum@codefab.com>
+	* Cleaned up the Cocoa-Python project template.
+
 2002-11-05  Bill Bumgarner  <bbum@codefab.com>
 	* added an NSNumber test
 

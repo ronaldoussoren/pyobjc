@@ -13,7 +13,6 @@
 		};
 		080E96DDFE201D6D7F000001 = {
 			children = (
-				F60DD8BC0358A22201C8ED3C,
 				F60DD8BD0358A22201C8ED3C,
 			);
 			isa = PBXGroup;
@@ -127,6 +126,7 @@
 		};
 		29B97315FDCFA39411CA2CEA = {
 			children = (
+				F60DD8BC0358A22201C8ED3C,
 				29B97316FDCFA39411CA2CEA,
 			);
 			isa = PBXGroup;
@@ -326,7 +326,7 @@
 //F64
 		F60DD8BC0358A22201C8ED3C = {
 			isa = PBXExecutableFileReference;
-			path = Main.py;
+			path = __main__.py;
 			refType = 2;
 		};
 		F60DD8BD0358A22201C8ED3C = {
