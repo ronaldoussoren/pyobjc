@@ -13,6 +13,10 @@
 #include "pyobjc-unittest.h"
 
 #import <Foundation/NSInvocation.h>
+#import <Foundation/NSArray.h>
+#import <Foundation/NSDictionary.h>
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSString.h>
 
 struct Struct1 {
 	int f1;
@@ -394,6 +398,44 @@ BEGIN_UNITTEST(TestSimplifySignature)
 	ASSERT_STREQUALS("@@:{_NSPoint=ff}i", b);
 END_UNITTEST
 
+BEGIN_UNITTEST(TestArrayCoding)
+	/*
+  	 * According to the docs on Panther, valueForKey: on an array should
+	 * return [ o.valueForKey_(key) for o in anArray ]. 
+	 * On MacOS X 10.2 it doesn't.
+	 *
+         * This test was added to make sure PyObjC is not at fault :-), the
+	 * test is also used to avoid giving false positives in the unittests
+ 	 * for key-value coding.
+         */
+
+	NSMutableDictionary* d;
+	NSMutableArray* a;
+	NSObject* v;
+	int haveException;
+
+	NSAutoreleasePool* p;
+
+	p = [[NSAutoreleasePool alloc] init];
+
+	d = [NSMutableDictionary dictionary];
+
+	[d setObject:@"foo" forKey:@"keyM"];
+
+	a = [NSMutableArray arrayWithObjects: d, nil];
+
+	NS_DURING
+		v = [a valueForKey:@"keyM"];	
+		haveException = 0;
+	NS_HANDLER
+		v = nil;
+		haveException = 1;
+	NS_ENDHANDLER
+
+	[p release];
+
+	ASSERT(!haveException);
+END_UNITTEST
 
 static PyMethodDef unittest_methods[] = {
 	TESTDEF(CheckNSInvoke),
@@ -413,6 +455,7 @@ static PyMethodDef unittest_methods[] = {
 #endif
 	TESTDEF(TestTypeCode),	
 	TESTDEF(TestSimplifySignature),	
+	TESTDEF(TestArrayCoding),
 	{ 0, 0, 0, 0 }
 };
 
