@@ -19,8 +19,8 @@ def protocolNamed(name):
         pass
     for cls in _objc.getClassList():
         for p in _objc.protocolsForClass(cls):
-            PROTOCOL_CACHE.setdefault(p.name(), p)
-    try:
-        return PROTOCOL_CACHE[name]
-    except KeyError:
-        raise ProtocolError("protocol %r does not exist" % (name,), name)
+            pname = p.name()
+            PROTOCOL_CACHE.setdefault(pname, p)
+            if pname == name:
+                return p
+    raise ProtocolError("protocol %r does not exist" % (name,), name)
