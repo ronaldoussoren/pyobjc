@@ -149,7 +149,7 @@ void ObjCErr_ToObjC(void)
 
 	if (!exc_type) return;
 
-	if (!PyObject_IsInstance(exc_value, exc_type)) {
+	if (exc_value == NULL || !PyObject_IsInstance(exc_value, exc_type)) {
 		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 	}
 
@@ -196,12 +196,9 @@ void ObjCErr_ToObjC(void)
 				     reason:oc_reason
 				     userInfo:userInfo];
 			Py_DECREF(args);
-			Py_DECREF(exc_type);
-			if (exc_value)
-			  Py_DECREF(exc_value);
-			if (exc_traceback)
-			  Py_DECREF(exc_traceback);
-
+			Py_XDECREF(exc_type);
+			Py_XDECREF(exc_value);
+			Py_XDECREF(exc_traceback);
 			[val raise];
 		}
 	}
@@ -220,10 +217,8 @@ void ObjCErr_ToObjC(void)
 
 	Py_DECREF(repr);
 	Py_DECREF(exc_type);
-	if (exc_value)
-	  Py_DECREF(exc_value);
-	if (exc_traceback)
-	  Py_DECREF(exc_traceback);
+	Py_XDECREF(exc_value);
+	Py_XDECREF(exc_traceback);
 
 	[val raise];
 }
@@ -317,4 +312,3 @@ char* ObjC_strdup(const char* value)
 	result[len] = 0;
 	return result;
 }
-

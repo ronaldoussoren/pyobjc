@@ -20,7 +20,6 @@
 #ifndef _OC_PythonObject_H
 #define _OC_PythonObject_H
 
-//#include "pyobjc.h"
 #include <Python.h>
 #import <Foundation/NSProxy.h>
 #import <Foundation/NSMethodSignature.h>
@@ -442,9 +441,6 @@
 {
   PyObject *pyObject;
 }
-
-//#M Initialize the version number of this class.
-//+ (void) initialize;
 
 //#M Returns a new autoreleased instance of this class.
 + (id <PythonObject>) newWithObject:(PyObject *) obj;

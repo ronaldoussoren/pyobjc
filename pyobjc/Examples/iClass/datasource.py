@@ -1,4 +1,5 @@
 from Foundation import NSObject, NSBundle
+from AppKit import NSOutlineViewDataSource, NSTableDataSource
 from objc import selector, class_list, objc_object, IBOutlet
 
 WRAPPED={}
@@ -40,7 +41,7 @@ def classBundle(cls):
 			framework = framework[:-len('.framework')]
 	return framework
 
-class ClassesDataSource (NSObject):
+class ClassesDataSource (NSObject, NSOutlineViewDataSource, NSTableDataSource):
 	__slots__ = ('_classList', '_classTree', '_methodInfo')
 
 	_window = IBOutlet('window')
@@ -179,28 +180,18 @@ class ClassesDataSource (NSObject):
 			WRAPPED[v] = Wrapper.alloc().init_(v)
 		return WRAPPED[v]
 
-	outlineView_child_ofItem_ = selector(outlineView_child_ofItem_,
-		signature='@@:@i@')
-
 	def outlineView_isItemExpandable_(self, outlineview, item):
 		print "isItemExpandable:", item
 		if not (item is None):
 			item = item.value
 		return len(self._classTree[item]) != 0
 
-	outlineView_isItemExpandable_ = selector(outlineView_isItemExpandable_,
-		signature='c@:@@')
-	
 
 	def outlineView_numberOfChildrenOfItem_(self, outlineview, item):
 		print "numChildren:", item
 		if not (item is None):
 			item = item.value
 		return len(self._classTree[item])
-
-	outlineView_numberOfChildrenOfItem_ = selector(
-		outlineView_numberOfChildrenOfItem_,
-		signature='i@:@@')
 
 	def outlineView_objectValueForTableColumn_byItem_(self, outlineview, column, item):
 		print "objectValue:", item
@@ -216,15 +207,7 @@ class ClassesDataSource (NSObject):
 		print "numberOfRows", aTableView
 		return len(self._methodInfo)
 
-	numberOfRowsInTableView_ = selector(numberOfRowsInTableView_, 
-		signature="i@:@")
-
-
 	def tableView_objectValueForTableColumn_row_(self,    
 	                         aTableView, aTableColumn, rowIndex):  
 		print "objectValue", aTableView, aTableColumn, rowIndex
 		return self._methodInfo[rowIndex][methodIdentifier[aTableColumn.identifier()]]
-
-	tableView_objectValueForTableColumn_row_ = selector(  
-		tableView_objectValueForTableColumn_row_,     
-		signature='@@:@@i')                           

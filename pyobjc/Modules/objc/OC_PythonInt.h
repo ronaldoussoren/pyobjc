@@ -25,9 +25,6 @@
 {
 }
 
-//#M Initialize the version number of this class.
-+ (void) initialize;
-
 //#M Returns a new autoreleased PyInt object with @var{i} as contents.
 + (id <PythonObject>) fromLong:(long) i;
 

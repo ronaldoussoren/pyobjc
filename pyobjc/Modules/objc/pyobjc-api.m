@@ -90,5 +90,6 @@ int ObjCAPI_Register(PyObject* module_dict)
 		Py_DECREF(API);
 		return -1;
 	}
+	Py_DECREF(API); 
 	return 0;
 }

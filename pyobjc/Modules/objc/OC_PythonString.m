@@ -16,46 +16,34 @@
 
 #include "OC_PythonString.h"
 
-#define CLASS_VERSION 0
-
 @implementation OC_PythonString
-
-+ (void) initialize
-{
-/*
-  if (self == [OC_PythonString class])
-    {
-      [OC_PythonString setVersion:CLASS_VERSION];
-    }
-*/
-}
 
 + (id <PythonObject>) fromString:(char *) str andSize:(int) size
 {
-  PyObject *pystr = PyString_FromStringAndSize (str, size);
-  id <PythonObject> result = [self newWithObject:pystr];
+	PyObject *pystr = PyString_FromStringAndSize (str, size);
+	id <PythonObject> result = [self newWithObject:pystr];
 
-  Py_DECREF(pystr);
-  return result;
+	Py_DECREF(pystr);
+	return result;
 }
 
 + (id <PythonObject>) fromString:(char *) str
 {
-  PyObject *pystr = PyString_FromString (str);
-  id <PythonObject> result = [self newWithObject:pystr];
+	PyObject *pystr = PyString_FromString(str);
+	id <PythonObject> result = [self newWithObject:pystr];
 
-  Py_DECREF(pystr);
-  return result;
+	Py_DECREF(pystr);
+	return result;
 }
 
 - (int) size
 {
-  return PyString_Size ([self pyObject]);
+	return PyString_Size([self pyObject]);
 }
 
 - (char *) asString
 {
-  return PyString_AsString ([self pyObject]);
+	return PyString_AsString([self pyObject]);
 }
 
 @end /* OC_PythonString class implementation */

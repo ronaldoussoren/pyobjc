@@ -175,18 +175,7 @@ base_signature(ObjCSelector* self, void* closure)
 }
 
 PyDoc_STRVAR(base_selector_doc, 
-"Objective-C selector for a method\n"
-"\n"
-"selector(function, [, signature] [, selector] [, class_method=0] "
-"[, return_type] [, argument_types]) -> selector\n"
-"\n"
-"signature is an objective-C style signature string. return_type and \n"
-"argument_types specify the same information using a PyArg_ParseTuple style \n"
-"format\n\n"
-"The default for selector: function.__name__.replace('_', ':')\n"
-"The default for signature is that for a function that returns an object and \n"
-"takes objects as argument (one for every argument of 'function'."
-);
+"Objective-C selector for a method\n");
 static PyObject*
 base_selector(ObjCSelector* self, void* closure)
 {
@@ -234,6 +223,19 @@ sel_dealloc(PyObject* object)
 	object->ob_type->tp_free(object);
 }
 
+
+PyDoc_STRVAR(base_selector_type_doc,
+"selector(function, [, signature] [, selector] [, class_method=0] "
+"[, return_type] [, argument_types] [, required=True]) -> selector\n"
+"\n"
+"signature is an objective-C style signature string. return_type and \n"
+"argument_types specify the same information using a PyArg_ParseTuple style \n"
+"format\n\n"
+"The default for selector: function.__name__.replace('_', ':')\n"
+"The default for signature is that for a function that returns an object and \n"
+"takes objects as argument (one for every argument of 'function'.\n"
+"The 'required' argument is only used with informal protocols."
+);
 PyTypeObject ObjCSelector_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)
 	0,					/* ob_size */
@@ -257,7 +259,7 @@ PyTypeObject ObjCSelector_Type = {
 	0,					/* tp_setattro */
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT,			/* tp_flags */
- 	0,					/* tp_doc */
+ 	base_selector_type_doc,			/* tp_doc */
  	0,					/* tp_traverse */
  	0,					/* tp_clear */
 	0,					/* tp_richcompare */
@@ -419,11 +421,6 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		Py_DECREF(arglist);
 	}
 
-	if (ObjCClass_Check(pyself)) {
-		/* See objc-class:add_class_fields */
-		ObjCClass_MaybeRescan(pyself);
-	}
-
 	if (res && ObjCObject_Check(res) && self->sel_allocator) {
 		/* Ownership transfered to us, but 'execute' method has
 		 * increased retainCount, the retainCount is now one to high
@@ -469,6 +466,31 @@ objcsel_descr_get(ObjCNativeSelector* meth, PyObject* obj, PyObject* class)
 	return (PyObject*)result;
 }
 
+PyDoc_STRVAR(native_class_doc, 
+"Objective-C Class that defines a method\n");
+static PyObject*
+native_class(ObjCNativeSelector* self, void* closure)
+{
+	return ObjCClass_New(self->class);
+}
+
+
+static PyGetSetDef native_getset[] = {
+	{ 
+		"defining_class", 
+		(getter)native_class, 
+		0,
+		native_class_doc, 
+		0
+	},
+	{
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL
+	}
+};
 
 PyTypeObject ObjCNativeSelector_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)
@@ -502,7 +524,7 @@ PyTypeObject ObjCNativeSelector_Type = {
 	0,					/* tp_iternext */
 	0,					/* tp_methods */
 	0,					/* tp_members */
-	0,					/* tp_getset */
+	&native_getset,				/* tp_getset */
 	&ObjCSelector_Type,			/* tp_base */
 	0,					/* tp_dict */
 	(descrgetfunc)objcsel_descr_get,	/* tp_descr_get */
@@ -646,9 +668,6 @@ ObjCSelector_New(PyObject* callable,
 		}
 	}
 	result->sel_self = NULL;
-#if 0
-	result->sel_class = NULL;
-#endif
 	result->sel_class_method = class_method;
 	result->callable = callable;
 	result->sel_allocator = is_allocator_method(result->sel_selector);
@@ -696,6 +715,13 @@ pysel_repr(ObjCPythonSelector* sel)
 static PyObject*
 pysel_call(ObjCPythonSelector* self, PyObject* args)
 {
+	if (self->callable == NULL) {
+		ObjCErr_Set(PyExc_TypeError, 
+			"Calling abstract methods with selector %s",
+			self->sel_selector);
+		return NULL;
+	}
+
 	if (!PyMethod_Check(self->callable)) {
 		if (self->sel_self == NULL) {
 			PyObject* self_arg;
@@ -899,7 +925,7 @@ pysel_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 {
 static	char*	keywords[] = { "method", "selector", "signature", 
 				"class_method", "argument_types", 
-				"return_type", NULL };
+				"return_type", "required", NULL };
 	ObjCPythonSelector* result;
 	PyObject* callable;
 	char*     signature = NULL;
@@ -908,10 +934,11 @@ static	char*	keywords[] = { "method", "selector", "signature",
 	char*	  selector = NULL;
 	int	  class_method=0;
 	char      signature_buf[1024];
+	int       required=1;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O|ssiss:selector",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O|ssissi:selector",
 			keywords, &callable, &selector, &signature,
-			&class_method, &argtypes, &rettype)) {
+			&class_method, &argtypes, &rettype, &required)) {
 		return NULL;
 	}
 
@@ -929,7 +956,7 @@ static	char*	keywords[] = { "method", "selector", "signature",
 	}
 
 
-	if (!PyCallable_Check(callable)) {
+	if (callable != Py_None && !PyCallable_Check(callable)) {
 		PyErr_SetString(PyExc_TypeError,
 			"argument 'method' must be callable");
 		return NULL;
@@ -956,11 +983,9 @@ static	char*	keywords[] = { "method", "selector", "signature",
 	}
 	result->sel_class_method = class_method;
 	result->callable = callable;
-#if 0
-	result->sel_class = NULL;
-#endif
 	result->sel_self = NULL;
 	result->sel_allocator = 0;
+	result->is_required = required;
 	Py_INCREF(callable);
 
 	return (PyObject*)result;
@@ -1059,4 +1084,9 @@ char* ObjCSelector_Signature(PyObject* obj)
 SEL   ObjCSelector_Selector(PyObject* obj)
 {
 	return ((ObjCSelector*)obj)->sel_selector;
+}
+
+int   ObjCSelector_Required(PyObject* obj)
+{
+	return ((ObjCPythonSelector*)obj)->is_required;
 }

@@ -17,8 +17,6 @@
 #ifndef _objc_support_H
 #define _objc_support_H
 
-#ifndef TEST_PYTHONIFICATION
-
 #include "pyobjc.h"
 
 /* These macros hides as much as possible the differences between the
@@ -49,9 +47,8 @@ get_selector_encoding (id self, SEL sel)
   return sel->sel_types;
 }
 
-#else /* NeXTSTEP */
+#else /* NeXTSTEP / Mac OS X */
 
-//#import <Foundation/Foundation.h>
 #import <Foundation/NSObject.h>
 #import <Foundation/NSString.h>
 
@@ -89,6 +86,28 @@ objc_skip_type_qualifiers (const char *type)
   return type;
 }
 
+
+/* Return a number that is likely to change when the method list changes,
+ * and is cheap to compute.
+ */
+static inline int
+objc_methodlist_magic(Class cls)
+{
+	struct objc_method_list* mlist;
+	int res, cnt;
+	void* iterator = 0;
+	res = cnt = 0;
+
+	if (cls == NULL) return -1;
+
+	while ((mlist = class_nextMethodList(cls, &iterator))) {
+		res += mlist->method_count;
+		cnt ++;
+	}
+
+	return (cnt << 16) | (res & 0xFFFF);
+}
+
 extern int objc_sizeof_type (const char *type);
 extern const char *objc_skip_typespec (const char *type);
 
@@ -105,55 +124,6 @@ get_selector_encoding (id self, SEL sel)
 
 #endif /* GNUSTEP */
 
-#endif /* TEST_PYTHONIFICATION */
-
-#define WITH_SINGLE_UNDERSCORE 0
-#define WITH_DOUBLE_UNDERSCORE 1
-#define WITH_BOTH 2
-
-/* By setting this to 0 or 1 you select a different translation from
-   ObjC selector names to Python method names. If it is set to 0, or
-   not set at all, you get:
-     __privately:setName:forObject::
-     	-> __privately_setName_forObject__
-     thisIs:a:Method:with:some:arguments:
-     	-> thisIs_a_Method_with_some_arguments_
-     andThisIsNot
-     	-> andThisIsNot
-     __this_A_Mixed_Style_Method:withArguments::several:of_them:
-     	-> __this___A___Mixed___Style___Method_withArguments__several_of___them_
-   that is: underscore characters, not at beginning of the name, gets tripled;
-   colon characters, denoting an argument in ObjC, are replaced with a single
-   underscore.
-
-   If set to 1, you get the currently default behaviour:
-     __privately:setName:forObject::
-     	-> __privately__setName__forObject____
-     thisIs:a:Method:with:some:arguments:
-	-> thisIs__a__Method__with__some__arguments__
-     andThisIsNot
-	-> andThisIsNot
-     __this_A_Mixed_Style_Method:withArguments::several:of_them:
-       -> __this_A_Mixed_Style_Method__withArguments____several__of_them__
-   where only colon characters are replaced with a double underscore.
-
-   If set to 2, the module will check with both methods. See
-   PYTHONIFY_FIRST_TRY. This latter mode is obviously SLOWER. */
-#define PYTHONIFICATION_METHOD WITH_BOTH
-
-#if PYTHONIFICATION_METHOD == WITH_BOTH
-
-/* By setting this to 0 or 1 you select the order that will be used to
-   do the pythonification of ObjC selector's names: when set to 0 the
-   code will try "single underscore" substition first, then "double
-   underscore"; when set to 1, the other way around. */
-#define PYTHONIFICATION_FIRST_TRY WITH_SINGLE_UNDERSCORE
-
-#endif
-
-#if PYTHONIFICATION_METHOD == WITH_DOUBLE_UNDERSCORE
-#define PYTHONIFIED_LENGTH(selnam,sellen,argc) (sellen+argc+1)
-#else
 static inline unsigned int
 _count_underscores (const char *s)
 {
@@ -165,57 +135,18 @@ _count_underscores (const char *s)
   return c;
 }
 
-#if PYTHONIFICATION_METHOD == WITH_SINGLE_UNDERSCORE
-
 #define PYTHONIFIED_LENGTH(selnam,sellen,argc) (sellen+_count_underscores(selnam)*2+1)
-
-#else /* WITH_BOTH */
-
-#define PYTHONIFIED_LENGTH(selnam,sellen,argc) MAX((sellen+argc+1),\
-						   (sellen+_count_underscores(selnam)*2+1))
-
-#endif
-
-#endif
 
 /*#F Converts the Python form 'thisIsObjC__message__with__' to the ObjC
   equivalent 'thisIsObjC:message:with:'. You are responsible on
   the size of @var{to}. */
 static inline void
-#if PYTHONIFICATION_METHOD == WITH_BOTH
-depythonify_objc_message (register const char *from, register char *to, int method)
-#else
 depythonify_objc_message (register const char *from, register char *to)
-#endif
 {
   /* Copy initial underscores */
   while (*from == '_')
     *to++ = *from++;
   
-#if PYTHONIFICATION_METHOD == WITH_BOTH
-  if (method == WITH_DOUBLE_UNDERSCORE)
-#endif
-
-#if PYTHONIFICATION_METHOD != WITH_SINGLE_UNDERSCORE
-  while (*from)
-    {
-      if (*from == '_' && *(from+1) == '_')
-	{
-	  *to++ = ':';
-	  from++;
-	}
-      else
-	*to++ = *from;
-
-      from++;
-    }
-#endif
-
-#if PYTHONIFICATION_METHOD == WITH_BOTH
-  else 
-#endif
-
-#if PYTHONIFICATION_METHOD != WITH_DOUBLE_UNDERSCORE
   while (*from)
     {
       if (*from == '_' && *(from+1) == '_' && *(from+2) == '_')
@@ -232,7 +163,6 @@ depythonify_objc_message (register const char *from, register char *to)
 
       from++;
     }
-#endif
 
   *to = 0;
 }
@@ -241,40 +171,12 @@ depythonify_objc_message (register const char *from, register char *to)
   the Python form 'thisIsObjC__message__with__'. You are responsible on
   the size of @var{to}. */
 static inline void
-#if PYTHONIFICATION_METHOD == WITH_BOTH
-pythonify_objc_message (register const char *from, register char *to, int method)
-#else
 pythonify_objc_message (register const char *from, register char *to)
-#endif
 {
   /* Copy initial underscores */
   while (*from == '_')
     *to++ = *from++;
   
-#if PYTHONIFICATION_METHOD == WITH_BOTH
-  if (method == WITH_DOUBLE_UNDERSCORE)
-#endif
-
-#if PYTHONIFICATION_METHOD != WITH_SINGLE_UNDERSCORE
-  while (*from)
-    {
-      if (*from == ':')
-	{
-	  *to++ = '_';
-	  *to++ = '_';
-	}
-      else
-	*to++ = *from;
-
-      from++;
-    }
-#endif
-
-#if PYTHONIFICATION_METHOD == WITH_BOTH
-  else
-#endif
-
-#if PYTHONIFICATION_METHOD != WITH_DOUBLE_UNDERSCORE
   while (*from)
     {
       if (*from == '_')
@@ -290,12 +192,9 @@ pythonify_objc_message (register const char *from, register char *to)
 
       from++;
     }
-#endif
   
   *to = '\0';
 }
-
-#ifndef TEST_PYTHONIFICATION
 
 /*#F Takes a C value pointed by @var{datum} with its type encoded in
   @var{type}, that should be coming from an ObjC @encode directive,
@@ -319,65 +218,5 @@ extern const char *depythonify_c_value (const char *type,
   result. */
 extern PyObject *execute_and_pythonify_objc_method (PyObject *meth,
 				PyObject* self, PyObject *args);
-
-#else /* we are testing the pythonification */
-
-#if PYTHONIFICATION_METHOD == WITH_BOTH
-
-main()
-{
-  const char *sel1 = "__privately:setName:forObject::";
-  const char *sel2 = "thisIs:a:Method:with:some:arguments:";
-  const char *sel3 = "andThisIsNot";
-  const char *sel4 = "__this_A_Mixed_Style_Method:withArguments::several:of_them:";
-  char pythonified_ss[1000], pythonified_ds[1000];
-  char depythonified_ss[1000], depythonified_ds[1000];
-
-#define P(sel) \
-  pythonify_objc_message (sel,pythonified_ss,WITH_SINGLE_UNDERSCORE); \
-  pythonify_objc_message (sel,pythonified_ds,WITH_DOUBLE_UNDERSCORE); 
-#define T(sel) \
-  P(sel)									       \
-  printf ("%s\n\t->%s\n", sel, pythonified_ss);					       \
-  depythonify_objc_message (pythonified_ss, depythonified_ss, WITH_SINGLE_UNDERSCORE); \
-  depythonify_objc_message (pythonified_ss, depythonified_ds, WITH_DOUBLE_UNDERSCORE); \
-  printf ("\t\t->%s\n\t\t->%s\n", depythonified_ss, depythonified_ds);		       \
-  printf ("\t->%s\n", pythonified_ds);						       \
-  depythonify_objc_message (pythonified_ds, depythonified_ss, WITH_SINGLE_UNDERSCORE); \
-  depythonify_objc_message (pythonified_ds, depythonified_ds, WITH_DOUBLE_UNDERSCORE); \
-  printf ("\t\t->%s\n\t\t->%s\n\t%s\n", depythonified_ss, depythonified_ds,	       \
-	  (!strcmp (sel, depythonified_ss) ||					       \
-	   !strcmp (sel, depythonified_ds)) ? "Ok" : "WRONG!")
-
-  T(sel1);
-  T(sel2);
-  T(sel3);
-  T(sel4);
-}
-
-#else
-
-main()
-{
-  const char *sel1 = "__privately:setName:forObject::";
-  const char *sel2 = "thisIs:a:Method:with:some:arguments:";
-  const char *sel3 = "andThisIsNot";
-  const char *sel4 = "__this_A_Mixed_Style_Method:withArguments::several:of_them:";
-  char pythonified[1000], depythonified[1000];
-
-#define P(sel) pythonify_objc_message (sel,pythonified); \
-               depythonify_objc_message (pythonified, depythonified);
-#define T(sel) P(sel) printf ("%s\n\t-> %s\n\t-> %s\n\t%s\n", sel, pythonified, depythonified, \
-			      (strcmp (sel, depythonified) == 0 ? "Ok" : "WRONG!"))
-
-  T(sel1);
-  T(sel2);
-  T(sel3);
-  T(sel4);
-}
-
-#endif
-
-#endif /* TEST_PYTHONIFICATION */
 
 #endif /* _objc_support_H */

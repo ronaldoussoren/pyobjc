@@ -9,10 +9,12 @@
  * the objective-C module.
  *
  * NOTES:
+ * - I (ronald) access the core pyobj in such a 'strange' way to avoid
+ *   linking with that module. 
  * - This interface is in development, the the API will probably change in
  *   incompatible ways.
  *
- * $Id: pyobjc-api.h,v 1.2 2002/10/09 19:33:00 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.3 2002/10/18 10:03:15 ronaldoussoren Exp $
  */
 
 #include <Python.h>

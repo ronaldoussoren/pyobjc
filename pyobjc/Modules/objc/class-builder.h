@@ -14,9 +14,11 @@
  * If step 3 fails, call ObjCClass_UnbuildClass.
  *
  * NOTE:
- *   It is _not_ possible to remove classes from the objective-C runtime.
+ *   It is _not_ possible to remove classes from the objective-C runtime,
+ *   and it is therefore not possible to call 'ObjCClass_UnbuildClass' after
+ *   you have called 'ObjCClass_SetClass'
  */
-Class ObjCClass_BuildClass(Class super_class, 
+Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				char* name, PyObject* class_dict);
 void ObjCClass_UnbuildClass(Class new_class);
 int ObjCClass_SetClass(Class objc_class, PyObject* py_class);
