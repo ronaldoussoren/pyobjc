@@ -5,6 +5,7 @@
  * - elementAtIndex:associatedPoints:	       [call, imp]
  * - setAssociatedPoints:atIndex:	       [call]
  * - setLineDash:count:phase:		       [call, imp]
+ * - getLineDash:count:phase:		       [call]
  *
  * Not supported:
  * - getLineDash:count:phase:
@@ -15,9 +16,10 @@
 #include <Foundation/Foundation.h>
 #include "pyobjc-api.h"
 
-static PyObject* call_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
-		PyObject* method __attribute__((__unused__)), 
-		PyObject* self, PyObject* arguments)
+
+static PyObject* 
+call_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -62,12 +64,12 @@ static PyObject* call_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
 
 	NS_DURING
 		PyObjC_InitSuper(&super, 
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
 
 		(void)objc_msgSendSuper(&super,
-			@selector(appendBezierPathWithGlyphs:count:inFont:),
+			PyObjCSelector_GetSelector(method),
 			glyphs,
 			count,
 			fontObj);
@@ -85,7 +87,7 @@ static PyObject* call_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
 }
 
 static PyObject* call_NSBezierPath_appendBezierPathWithPoints_count_(
-		PyObject* method __attribute__((__unused__)), 
+		PyObject* method, 
 		PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
@@ -129,12 +131,12 @@ static PyObject* call_NSBezierPath_appendBezierPathWithPoints_count_(
 
 	NS_DURING
 		PyObjC_InitSuper(&super, 
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
 
 		(void)objc_msgSendSuper(&super,
-			@selector(appendBezierPathWithPoints:count:inFont:),
+			PyObjCSelector_GetSelector(method),
 			points,
 			count);
 
@@ -151,7 +153,7 @@ static PyObject* call_NSBezierPath_appendBezierPathWithPoints_count_(
 }
 
 static PyObject* call_NSBezierPath_elementAtIndex_associatedPoints_(
-		PyObject* method __attribute__((__unused__)), 
+		PyObject* method, 
 		PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
@@ -168,12 +170,12 @@ static PyObject* call_NSBezierPath_elementAtIndex_associatedPoints_(
 
 	NS_DURING
 		PyObjC_InitSuper(&super, 
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method), 
 			PyObjCObject_GetObject(self));
 
 
 		res = (NSBezierPathElement)objc_msgSendSuper(&super,
-			@selector(elementAtIndex:associatedPoints:),
+			PyObjCSelector_GetSelector(method), 
 			idx,
 			points);
 
@@ -225,7 +227,7 @@ static PyObject* call_NSBezierPath_elementAtIndex_associatedPoints_(
 }
 
 static PyObject* call_NSBezierPath_setAssociatedPoints_atIndex_(
-		PyObject* method __attribute__((__unused__)), 
+		PyObject* method, 
 		PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
@@ -264,12 +266,12 @@ static PyObject* call_NSBezierPath_setAssociatedPoints_atIndex_(
 
 	NS_DURING
 		PyObjC_InitSuper(&super, 
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
 
 		(void)objc_msgSendSuper(&super,
-			@selector(setAssociatedPoints:atIndex:),
+			PyObjCSelector_GetSelector(method),
 			points,
 			idx);
 
@@ -284,7 +286,7 @@ static PyObject* call_NSBezierPath_setAssociatedPoints_atIndex_(
 }
 
 static PyObject* call_NSBezierPath_setLineDash_count_phase_(
-		PyObject* method __attribute__((__unused__)), 
+		PyObject* method, 
 		PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
@@ -329,12 +331,12 @@ static PyObject* call_NSBezierPath_setLineDash_count_phase_(
 
 	NS_DURING
 		PyObjC_InitSuper(&super, 
-			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
 
 		objc_msgSendSuper(&super,
-			@selector(setLineDash:count:phase:),
+			PyObjCSelector_GetSelector(method),
 			pattern, count, phase);
 
 		result = Py_None;
@@ -343,6 +345,96 @@ static PyObject* call_NSBezierPath_setLineDash_count_phase_(
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
 	NS_ENDHANDLER
+
+	return result;
+}
+
+static PyObject* call_NSBezierPath_getLineDash_count_phase_(
+		PyObject* method, 
+		PyObject* self, PyObject* arguments)
+{
+	PyObject* result;
+	struct objc_super super;
+	PyObject* v;
+	float* volatile pattern;
+	int countIn, countOut, i;
+	float phase;
+
+	
+	if  (!PyArg_ParseTuple(arguments, "i", &countIn)) {
+		return NULL;
+	}
+
+	if (countIn) {
+		pattern = malloc(countIn * sizeof(float));
+		if (pattern == NULL) {
+			PyErr_NoMemory();
+			return NULL;
+		}
+	} else {
+		pattern = NULL;
+	}
+
+	NS_DURING
+		PyObjC_InitSuper(&super, 
+			PyObjCSelector_GetClass(method),
+			PyObjCObject_GetObject(self));
+
+		countOut = countIn;
+		objc_msgSendSuper(&super,
+			PyObjCSelector_GetSelector(method),
+			pattern, &countOut, &phase);
+
+		result = Py_None; // Dummy
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+		result = NULL;
+	NS_ENDHANDLER
+
+	if (result == NULL) {
+		return NULL;
+	}
+
+	result = PyTuple_New(3);
+	if (result == NULL) {
+		return NULL;
+	}
+
+	if (countIn == 0) {
+		PyTuple_SET_ITEM(result, 0, Py_None);
+		Py_INCREF(Py_None);
+	} else {
+		v = PyTuple_New(countOut);
+		if (v == NULL) {
+			Py_DECREF(result);
+			return NULL;
+		}
+
+		PyTuple_SET_ITEM(result, 0, v);
+
+		for (i = 0; i < countOut; i++) {
+			PyObject* p = PyFloat_FromDouble(pattern[i]);
+			if (p == NULL) {
+				Py_DECREF(result);
+				return NULL;
+			}
+			PyTuple_SET_ITEM(v, i, p);
+		}
+	}
+
+	v = PyInt_FromLong(countOut);
+	if (v == NULL) {
+		Py_DECREF(result);
+		return NULL;
+	}
+	PyTuple_SET_ITEM(result, 1, v);
+
+	v = PyFloat_FromDouble(phase);
+	if (v == NULL) {
+		Py_DECREF(result);
+		return NULL;
+	}
+	PyTuple_SET_ITEM(result, 2, v);
 
 	return result;
 }
@@ -586,7 +678,6 @@ static NSBezierPathElement imp_NSBezierPath_elementAtIndex_associatedPoints_(id 
 
 	Py_DECREF(v);
 	Py_DECREF(seq);
-
 	return res;
 }
 
@@ -717,7 +808,7 @@ _pyobjc_install_NSBezierPath(void)
 
 	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSBezierPath"), 
 		@selector(getLineDash:count:phase:),
-		PyObjCUnsupportedMethod_Caller,
+		call_NSBezierPath_getLineDash_count_phase_,
 		PyObjCUnsupportedMethod_IMP) < 0 ) {
 
 		return -1;
