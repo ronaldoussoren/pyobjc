@@ -140,8 +140,8 @@ def killNasties(irrelevant, dirName, names):
 
 basedir = '%s/package'%(BUILDDIR)
 
-makeDir(basedir, 'Library', 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application')
-templateDestination = os.path.join(basedir, 'Library', 'Developer', 'ProjectBuilder Extras',
+makeDir(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application')
+templateDestination = os.path.join(basedir, 'Developer', 'ProjectBuilder Extras',
                                    'Project Templates', 'Application')
 
 templateDir = os.path.join('ProjectBuilder Extras', 'Project Templates')
@@ -152,8 +152,8 @@ for dname in os.listdir(templateDir):
     shutil.copytree(path, os.path.join(templateDestination, dname))
 
 print "Setting up project builder Python language specifications"
-makeDir(basedir, 'Library', 'Developer', 'ProjectBuilder Extras')
-pbxSpecificationsDestination = os.path.join(basedir, 'Library', 'Developer', 'ProjectBuilder Extras', 'Specifications')
+makeDir(basedir, 'Developer', 'ProjectBuilder Extras')
+pbxSpecificationsDestination = os.path.join(basedir, 'Developer', 'ProjectBuilder Extras', 'Specifications')
 shutil.copytree(os.path.join('ProjectBuilder Extras','Specifications'), pbxSpecificationsDestination)
 
 print "Setting up developer examples"
