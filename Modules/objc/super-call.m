@@ -264,7 +264,7 @@ find_signature(char* signature)
 			sizeof(signature_buf));
 	if (res == -1) {
 		PyErr_SetString(PyObjCExc_Error, "cannot simplify signature");
-		return -1;
+		return NULL;
 	}	
 
 	if (signature_registry == NULL) goto error;
