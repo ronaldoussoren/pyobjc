@@ -21,7 +21,7 @@ NibClassBuilder.extractClasses("CDInfoDocument")
 
 class ITunesCommunication(NibClassBuilder.AutoBaseClass):
     def init(self):
-        self = super(MyDocument, self).init()
+        self = super(ITunesCommunication, self).init()
         if self:
             # subclass specific initialization here
             # nib not loaded yet

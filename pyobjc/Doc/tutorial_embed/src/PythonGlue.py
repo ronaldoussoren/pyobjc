@@ -1,4 +1,10 @@
 # Skeleton Python source for embedding Python into ObjC programs.
+# This source file expects to be run by the ObjC code in PythonGlue.m
+# and it expects to live in Contents/Resources of some .app bundle.
+# It will add the Resources folder and its PyObjC subfolder to
+# sys.path and import any modules found in Resources (which in
+# turn makes any PyObjC classes in these modules available to the
+# ObjC runtime system).
 import os
 import sys
 
