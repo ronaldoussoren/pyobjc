@@ -10,7 +10,7 @@ More information can be found on `our website <http://pyobjc.sf.net>`_
 
 .. _`Apple`: http://www.apple.com/
 
-.. _`Cocoa libraries`:  http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html 
+.. _`Cocoa libraries`: http://developer.apple.com/documentation/Cocoa/Cocoa.html
 
 .. _`our website <http://pyobjc.sf.net>`: http://pyobjc.sf.net/
 
@@ -79,11 +79,14 @@ you want to write Cocoa programs in Python.
 
   Another overview of the PyObjC package.
 
+* Xcode Python Support
+
+  XXX - TODO
+
 * `Project Builder Python Support`_
 
   Describes the Python support for Project Builder, including a TODO list for
   future versions.
-
 
 
 .. _`Project Builder Python Support`: ProjectBuilder-SyntaxHighlighting.html

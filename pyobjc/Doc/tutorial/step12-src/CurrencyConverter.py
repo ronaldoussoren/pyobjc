@@ -9,7 +9,7 @@ class Converter(NibClassBuilder.AutoBaseClass):
     # the actual base class is NSObject
 
     def convertAmount(self, amt, rate):
-        return amt*rate
+        return amt * rate
 
 # class defined in MainMenu.nib
 class ConverterController(NibClassBuilder.AutoBaseClass):
@@ -34,8 +34,8 @@ class ConverterController(NibClassBuilder.AutoBaseClass):
 
     def invertRate_(self, sender):
         rate = self.rateField.floatValue()
-        if rate != 0:
-            rate = 1/rate
+        if rate != 0.0:
+            rate = 1.0 / rate
         self.rateField.setFloatValue_(rate)
 
 if __name__ == "__main__":

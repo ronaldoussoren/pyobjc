@@ -247,6 +247,9 @@ class NibInfo(object):
             for nib in clsInfo.nibs:
                 nibs[nib] = 1
 
+        writer.writeln("import objc")
+        writer.writeln("from Foundation import *")
+        writer.writeln("from AppKit import *")
         writer.writeln("from PyObjCTools import NibClassBuilder, AppHelper")
         writer.writeln()
         writer.writeln()
@@ -410,7 +413,7 @@ def usage(msg, code):
     print commandline_doc
     sys.exit(code)
 
-def test(nibFiles):
+def test(*nibFiles):
     for path in nibFiles:
         print "Loading", path
         extractClasses(path=path)
@@ -430,7 +433,7 @@ def test(nibFiles):
             print "Created class: %s, superclass: %s" % (cls.__name__,
                     cls.__bases__[0].__name__)
 
-def printTemplate(nibFiles):
+def printTemplate(*nibFiles):
     for path in nibFiles:
         extractClasses(path=path)
     _nibInfo.printTemplate()
@@ -454,9 +457,9 @@ def commandline():
         usage("No nib file specified.", 1)
 
     if doTest:
-        test(nibFiles)
+        test(*nibFiles)
     else:
-        printTemplate(nibFiles)
+        printTemplate(*nibFiles)
 
 
 if __name__ == "__main__":

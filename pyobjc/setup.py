@@ -387,7 +387,7 @@ packages = (
     + MessagePackages
     + SecurityInterfacePackages
     + ExceptionHandlingPackages
-    + [ 'PyObjCTools' ]
+    + [ 'PyObjCTools' , 'PyObjCScripts' ]
 )
 
 # The following line is needed to allow separate flat modules

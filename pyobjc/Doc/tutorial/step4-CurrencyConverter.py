@@ -1,3 +1,6 @@
+import objc
+from Foundation import *
+from AppKit import *
 from PyObjCTools import NibClassBuilder, AppHelper
 
 
