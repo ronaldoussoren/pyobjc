@@ -104,7 +104,6 @@
 
 -(void)dealloc
 {
-
 	PyObjC_BEGIN_WITH_GIL
 		Py_XDECREF(value);
 		value = NULL;

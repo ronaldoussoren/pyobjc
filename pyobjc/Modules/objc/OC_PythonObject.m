@@ -89,7 +89,7 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 
 	PyObjC_END_WITH_GIL
 	
-	// not reached
+	/* not reached */
 	return @"a python object";
 }
   
@@ -155,7 +155,6 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		}
 	}
   
-
 	pymethod = PyObject_GetAttrString(obj, 
 			PyObjC_SELToPythonName(
 				aSelector, pymeth_name, sizeof(pymeth_name)));
@@ -171,7 +170,6 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		return YES;
 	} 
 
-	
 	PyObjC_BEGIN_WITH_GIL
 		m = get_method_for_selector(pyObject, aSelector);
 
@@ -220,6 +218,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 			func_code = (PyCodeObject *) PyFunction_GetCode(
 				PyMethod_Function (pymethod));
 			argcount = func_code->co_argcount-1;
+
 		} else {
 			func_code = (PyCodeObject *) PyFunction_GetCode(
 				pymethod);
@@ -629,4 +628,5 @@ static  PyObject* setKeyFunc = NULL;
     NSLog(@"*** Ignoring *** %@ for '%@' (of %@).", NSStringFromSelector(_cmd), keyPath, observer);
 }
 #endif
+
 @end /* OC_PythonObject class implementation */
