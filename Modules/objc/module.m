@@ -28,7 +28,7 @@ static PyObject*
 lookUpClass(PyObject* self __attribute__((__unused__)), 
 	PyObject* args, PyObject* kwds)
 {
-static 	char* keywords[] = { "class_name", NULL };
+	static 	char* keywords[] = { "class_name", NULL };
 	char* class_name = NULL;
 	Class objc_class;
 
@@ -152,14 +152,16 @@ static PyObject*
 recycle_autorelease_pool(PyObject* self __attribute__((__unused__)), 
 	PyObject* args, PyObject* kwds)
 {
-static	char* keywords[] = { NULL };
+	static	char* keywords[] = { NULL };
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "", keywords)) {
 		return NULL;
 	}
 
+	Py_BEGIN_ALLOW_THREADS
 	[global_release_pool release];
 	global_release_pool = [[NSAutoreleasePool alloc] init];
+	Py_END_ALLOW_THREADS
 
 	Py_INCREF(Py_None);
 	return Py_None;
@@ -649,7 +651,9 @@ static char* keywords[] = { "name", NULL };
 		for (j = 0; j < cls->protocols->count; j++) {
 			Protocol* p = cls->protocols->list[j];
 			if (strcmp([p name], name) == 0) {
+#if 0
 				printf("Found it in %s\n", cls->name);
+#endif
 				return PyObjCObject_NewClassic(p);
 			}
 		}
