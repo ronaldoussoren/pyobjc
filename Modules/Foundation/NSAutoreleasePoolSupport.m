@@ -2,8 +2,6 @@
  * A category for working with NSAutoreleasePools. This was needed when 
  * PyObjC couldn't be used to create autoreleasepools in the regular way,
  * that is no longer a problem.
- *
- * Should we post a deprication warning?
  */
 #import <Foundation/Foundation.h>
 #include <Python.h>
