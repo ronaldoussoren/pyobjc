@@ -146,7 +146,6 @@ static PyObject* call_NSArray_sortedArrayUsingFunction_context_hint_(
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
-
 			
 		res = objc_msgSendSuper(&super,
 			@selector(sortedArrayUsingFunction:context:hint:),

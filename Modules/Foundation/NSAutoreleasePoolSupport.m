@@ -12,41 +12,43 @@ static NSString *_threadPoolIdentifier = @"PyObjC:  NSThread AutoreleasePool Ide
 
 @interface NSAutoreleasePool(PyObjCPushPopSupport)
 @end
+
 @implementation NSAutoreleasePool (PyObjCPushPopSupport)
 + (NSMutableArray *) pyobjcPoolStackForCurrentThread
 {
-  NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
-  NSMutableArray *poolStack;
+	NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
+	NSMutableArray *poolStack;
 
 
-  poolStack = [threadDictionary objectForKey: _threadPoolIdentifier];
-  if (!poolStack) {
-    poolStack = [NSMutableArray array];
-    [threadDictionary setObject: poolStack forKey: _threadPoolIdentifier];
-  }
+	poolStack = [threadDictionary objectForKey: _threadPoolIdentifier];
+	if (!poolStack) {
+		poolStack = [NSMutableArray array];
+		[threadDictionary setObject: poolStack forKey: _threadPoolIdentifier];
+	}
 
-  return poolStack;
+	return poolStack;
 }
 
 + (void) pyobjcPushPool
 {
-  NSAutoreleasePool *p;
+	NSAutoreleasePool *p;
 
-  PyErr_Warn(PyExc_DeprecationWarning, "NSAutoreleasePool.pyobjcPushPool() is deprecated: Use NSAutoreleasePool.alloc().new() instead");
-  if (PyErr_Occurred()) {
-  	PyErr_Print();
-  }
+	PyErr_Warn(PyExc_DeprecationWarning, 
+		"NSAutoreleasePool.pyobjcPushPool() is deprecated: Use NSAutoreleasePool.alloc().new() instead");
+	if (PyErr_Occurred()) {
+		PyErr_Print();
+	}
 
-  p = [[NSAutoreleasePool alloc] init];
+	p = [[NSAutoreleasePool alloc] init];
 
-  [[self pyobjcPoolStackForCurrentThread] addObject: [NSValue valueWithNonretainedObject: p]];
+	[[self pyobjcPoolStackForCurrentThread] addObject: [NSValue valueWithNonretainedObject: p]];
 }
 
 + (void) pyobjcPopPool
 {
-  NSMutableArray *poolStack = [self pyobjcPoolStackForCurrentThread];
-  NSValue *pValue = [poolStack lastObject];
-  [[pValue nonretainedObjectValue] release];
-  [poolStack removeLastObject];
+	NSMutableArray *poolStack = [self pyobjcPoolStackForCurrentThread];
+	NSValue *pValue = [poolStack lastObject];
+	[[pValue nonretainedObjectValue] release];
+	[poolStack removeLastObject];
 }
 @end

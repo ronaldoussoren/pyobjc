@@ -38,6 +38,5 @@ _pyobjc_install_NSValue(void)
 		return -1;
 	}
 
-
 	return 0;
 }

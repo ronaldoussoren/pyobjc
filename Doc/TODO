@@ -66,8 +66,12 @@ The test suite needs to be enhanced.
 
 * tests for all functions in ``Modules/*/*Mapping*.m``
 
+* tests for all non-generated function wrappers
+
 * tests where Python implementation of method with output arguments returns
   the wrong value (type, number of values)
+
+The first two bullets require at least some GUI tests.
 
 
 Less important items
