@@ -14,7 +14,7 @@ import shutil
 DOC_ONLY=0
 
 USAGE='Usage: %s [-p python | --with-python=%s] [-h|--help] [-o release-dir|--output-directory=release-dir]\n'%(
-	sys.argv[0], sys.executable)
+        sys.argv[0], sys.executable)
 
 PYTHON=sys.executable
 
@@ -31,14 +31,14 @@ def rest2HTML(irrelevant, dirName, names):
                 escquotes(anOutputPath)))
 
 def package_version():
-	fp = open('Modules/objc/pyobjc.h', 'r')  
-	for ln in fp.readlines():
-		if ln.startswith('#define OBJC_VERSION'):
-			fp.close()
+        fp = open('Modules/objc/pyobjc.h', 'r')  
+        for ln in fp.readlines():
+                if ln.startswith('#define OBJC_VERSION'):
+                	fp.close()
                         break
-	return ln.split()[-1][1:-1]
+        return ln.split()[-1][1:-1]
 
-	raise ValueError, "Version not found"
+        raise ValueError, "Version not found"
 
 packageVersion = package_version()
 if (len(packageVersion) < 3) or (len(packageVersion) > 7):
@@ -48,27 +48,27 @@ BUILDDIR='release-dir'
 OUTPUTDIR='release-dir/PyObjC-%s' % package_version()
 
 def escquotes(val):
-	return val.replace("'", "'\"'\"'")
+        return val.replace("'", "'\"'\"'")
 
 try:
-	opts, args = getopt.getopt(
-		sys.argv[1:],
-		'p:h?o:', ['with-python=', 'help', 'output-directory='])
+        opts, args = getopt.getopt(
+        	sys.argv[1:],
+        	'p:h?o:', ['with-python=', 'help', 'output-directory='])
 except getopt.error, msg:
-	sys.stderr.write('%s: %s\n'%(sys.argv[0], msg))
-	sys.stderr.write(USAGE)
-	sys.exit(1)
+        sys.stderr.write('%s: %s\n'%(sys.argv[0], msg))
+        sys.stderr.write(USAGE)
+        sys.exit(1)
 
 for key, value in opts:
-	if key in [ '-h', '-?', '--help' ]:
-		sys.stdout.write(USAGE)
-		sys.exit(0)
-	elif key in [ '-p', '--with-python' ]:
-		PYTHON=value
-	elif key in [ '-o', '--output-directory' ]:
-		BUILDDIR=value
-	else:
-		raise ValueError, "Unsupported option: %s=%s"%(key, value)
+        if key in [ '-h', '-?', '--help' ]:
+        	sys.stdout.write(USAGE)
+        	sys.exit(0)
+        elif key in [ '-p', '--with-python' ]:
+        	PYTHON=value
+        elif key in [ '-o', '--output-directory' ]:
+        	BUILDDIR=value
+        else:
+        	raise ValueError, "Unsupported option: %s=%s"%(key, value)
 
 def makeDir(basedir, *path):
         base = basedir
@@ -88,26 +88,26 @@ if not os.path.exists(OUTPUTDIR):
 
 
 if PYTHON==sys.executable:
-	PYTHONVER='.'.join(map(str, sys.version_info[:2]))
-	PYTHONPATH=sys.path
+        PYTHONVER='.'.join(map(str, sys.version_info[:2]))
+        PYTHONPATH=sys.path
 else:
-	fd = os.popen("'%s' -c 'import sys;print \".\".join(map(str, sys.version_info[:2]))'"%(
-		escquotes(PYTHON)))
-	PYTHONVER=fd.readline().strip()
-	fd = os.popen("'%s' -c 'import sys;print \"\\n\".join(sys.path)'"%(
-		escquotes(PYTHON)))
-	PYTHONPATH=map(lambda x:x[:-1], fd.readlines())
+        fd = os.popen("'%s' -c 'import sys;print \".\".join(map(str, sys.version_info[:2]))'"%(
+        	escquotes(PYTHON)))
+        PYTHONVER=fd.readline().strip()
+        fd = os.popen("'%s' -c 'import sys;print \"\\n\".join(sys.path)'"%(
+        	escquotes(PYTHON)))
+        PYTHONPATH=map(lambda x:x[:-1], fd.readlines())
 
 
 basedir = ''
 for p in PYTHONPATH:
-	if p.endswith('lib/python%s'%PYTHONVER):
-		basedir = os.path.split(os.path.split(p)[0])[0]
-		break
+        if p.endswith('lib/python%s'%PYTHONVER):
+        	basedir = os.path.split(os.path.split(p)[0])[0]
+        	break
 
 if not basedir:
-	sys.stderr.write("%s: Cannot determine basedir\n"%(sys.argv[0]))
-	sys.exit(1)
+        sys.stderr.write("%s: Cannot determine basedir\n"%(sys.argv[0]))
+        sys.exit(1)
 
 print "Generating HTML documentation"
 os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
@@ -118,19 +118,19 @@ if DOC_ONLY:
     sys.exit(0)
 
 print "Running: '%s' setup.py sdist -d '%s'"%(
-			escquotes(PYTHON), escquotes(OUTPUTDIR))
+        		escquotes(PYTHON), escquotes(OUTPUTDIR))
 fd = os.popen("'%s' setup.py sdist -d '%s'"%(
-			escquotes(PYTHON), escquotes(OUTPUTDIR)), 'r')
+        		escquotes(PYTHON), escquotes(OUTPUTDIR)), 'r')
 for ln in fd.xreadlines():
-	sys.stdout.write(ln)
+        sys.stdout.write(ln)
 
 
 print "Running: '%s' setup.py install --prefix='%s/package%s' --install-scripts=%s/package%s/lib/python%s/site-packages/PyObjC/bin"%(
-	escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir), escquotes(BUILDDIR), escquotes(basedir), PYTHONVER)
+        escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir), escquotes(BUILDDIR), escquotes(basedir), PYTHONVER)
 fd = os.popen("'%s' setup.py install --prefix='%s/package%s' --install-scripts=%s/package%s/lib/python%s/site-packages/PyObjC/bin"%(
-	escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir), escquotes(BUILDDIR), escquotes(basedir), PYTHONVER), 'r')
+        escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir), escquotes(BUILDDIR), escquotes(basedir), PYTHONVER), 'r')
 for ln in fd.xreadlines():
-	sys.stdout.write(ln)
+        sys.stdout.write(ln)
 
 print "Copying readme and license"
 shutil.copyfile("Installer Package/ReadMe.html", os.path.join(OUTPUTDIR, "ReadMe First.html"))
@@ -148,9 +148,9 @@ def killNasties(irrelevant, dirName, names):
                 for aName in names:
                         if aName.find(".pbxuser") > 0:
                                 os.remove( os.path.join(dirName, aName) )
-	if dirName[-3:] == 'CVS':
-		while len(names): del names[0]
-		shutil.rmtree(dirName)
+        if dirName[-3:] == 'CVS':
+        	while len(names): del names[0]
+        	shutil.rmtree(dirName)
 
 basedir = '%s/package'%(BUILDDIR)
 
@@ -193,11 +193,11 @@ Python <-> Objective-C bridge that supports building full featured Cocoa
 applications.
 """)
 pm.build(os.path.join(basedir), 
-	resources=os.path.join(os.getcwd(), 'Installer Package', 'Resources'),
-	OutputDir=os.path.join(os.getcwd(), OUTPUTDIR),
-	Version=package_version(),
-	NeedsAuthorization="YES",
-	Relocatable="NO",
+        resources=os.path.join(os.getcwd(), 'Installer Package', 'Resources'),
+        OutputDir=os.path.join(os.getcwd(), OUTPUTDIR),
+        Version=package_version(),
+        NeedsAuthorization="YES",
+        Relocatable="NO",
         RootVolumeOnly="YES")
 
 #
@@ -205,11 +205,11 @@ pm.build(os.path.join(basedir),
 # the binary PackMan installer (which is built manually)
 #
 print "Running: '%s' setup.py bdist -d '%s'"%(
-			escquotes("python2.3"), escquotes(OUTPUTDIR))
+        		escquotes("python2.3"), escquotes(OUTPUTDIR))
 fd = os.popen("'%s' setup.py bdist -d '%s'"%(
-			escquotes("python2.3"), escquotes(OUTPUTDIR)), 'r')
+        		escquotes("python2.3"), escquotes(OUTPUTDIR)), 'r')
 for ln in fd.xreadlines():
-	sys.stdout.write(ln)
+        sys.stdout.write(ln)
 
 print 'building "pyobjc_extras-%s.tar.gz"'%(package_version(),)
 OUTPUTDIR='release-dir/extra_work/Applications/MacPython-2.3/Extras/pyobjc-%s'%(

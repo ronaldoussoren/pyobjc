@@ -17,14 +17,14 @@ tests = {}
 test_sum = { 'OK': 0, 'FAIL':0, 'CRASH': 0 }
 
 def perform_some_tests(dummy, dirname, fnames):
-	if os.path.split(dirname)[-1] != 'test': return
+        if os.path.split(dirname)[-1] != 'test': return
 
-	for nm in fnames:
+        for nm in fnames:
                 if not nm.startswith('test_'): continue
                 if not nm.endswith('.py'): continue
-		path = os.path.join(dirname, nm)
-		print "-- Running '%s'"%path
-		fd = os.popen("'%s' '%s' 2>&1"%(sys.executable, path), 'r')
+        	path = os.path.join(dirname, nm)
+        	print "-- Running '%s'"%path
+        	fd = os.popen("'%s' '%s' 2>&1"%(sys.executable, path), 'r')
                 ln = ''
                 for ln in fd.xreadlines():
                     sys.stdout.write(ln)
@@ -46,7 +46,7 @@ def perform_some_tests(dummy, dirname, fnames):
                     tests[path] = 'CRASHED'
                     test_sum['CRASH'] += 1
 
-		print "-- Done"
+        	print "-- Done"
 
 os.path.walk('Lib', perform_some_tests, None)
 

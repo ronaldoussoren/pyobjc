@@ -10,8 +10,8 @@
 import sys
 
 if len(sys.argv) != 3:
-	print 'Usage: create_byref_module.py module.byref module.py'
-	sys.exit(1)
+    print 'Usage: create_byref_module.py module.byref module.py'
+    sys.exit(1)
 
 fp_in = file(sys.argv[1])
 fp_out = file(sys.argv[2], 'w')

@@ -512,7 +512,7 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 static PyObject*
 class_getattro(PyObject* self, PyObject* name)
 {
-	PyObject* result;
+	PyObject* result = NULL;
 
 	/* Python will look for a number of "private" attributes during 
 	 * normal operations, such as when building subclasses. Avoid a
@@ -529,6 +529,7 @@ class_getattro(PyObject* self, PyObject* name)
 		if (result != NULL) {
 			return result;
 		}
+		PyErr_Clear();
 	}
 
 	PyObjCClass_CheckMethodList(self, 1);
@@ -547,7 +548,7 @@ class_getattro(PyObject* self, PyObject* name)
 		result = NULL;
 	NS_ENDHANDLER
 
-	if (result != 0) {
+	if (result != NULL) {
 		int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);
 		ObjCNativeSelector* x = (ObjCNativeSelector*)result;
 

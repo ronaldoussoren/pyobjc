@@ -924,13 +924,13 @@ for tp, sign, values in TYPES:
     
     fp.write('\t/* Initialize g_id_values */\n')
     def counted(lst):
-    	""" 'enumurate' for dummies """
-    	i = 0
-	result = []
-	for item in lst:
-		result.append((i, item))
-		i = i+1
-	return result
+        """ 'enumurate' for dummies """
+        i = 0
+        result = []
+        for item in lst:
+                result.append((i, item))
+                i = i+1
+        return result
 
     for idx, v in counted(values):
         fp.write('\tg_id_values[%d] = %s;\n'%(idx, v))

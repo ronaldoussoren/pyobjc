@@ -28,8 +28,8 @@ VER=None
 if sys.platform == "darwin":
     fd = os.popen('/usr/bin/sw_vers', 'r')
     for ln in fd.readlines():
-            if ln.startswith('ProductVersion:'):
-		VER=ln.split()[-1]
+        if ln.startswith('ProductVersion:'):
+            VER=ln.split()[-1]
     fd.close()
     fd = None
     VER = 'MacOS X ' + '.'.join(VER.split('.')[:2])
@@ -61,33 +61,33 @@ else:
 
     ADDRESSBOOK_HDRS=os.path.join(HDR_BASE, "AddressBook")
     if not os.path.exists(ADDRESSBOOK_HDRS):
-    	ADDRESSBOOK_HDRS=None
+        ADDRESSBOOK_HDRS=None
 
     APPKIT_HDRS=os.path.join(HDR_BASE, "AppKit")
     if not os.path.exists(APPKIT_HDRS):
-    	APPKIT_HDRS=None
+        APPKIT_HDRS=None
 
     FOUNDATION_HDRS=os.path.join(HDR_BASE, "Foundation")
     FOUNDATION_FUNCTION_PREFIX="static"
     FOUNDATION_VAR_PREFIX="static"
     if not os.path.exists(FOUNDATION_HDRS):
-    	FOUNDATION_HDRS=None
+        FOUNDATION_HDRS=None
 
     IB_HDRS=os.path.join(HDR_BASE, "InterfaceBuilder")
     if not os.path.exists(IB_HDRS):
-    	IB_HDRS=None
+        IB_HDRS=None
 
     PREFPANES_HDRS=os.path.join(HDR_BASE, "PreferencePanes")
     if not os.path.exists(PREFPANES_HDRS):
-    	PREFPANES_HDRS=None
+        PREFPANES_HDRS=None
 
     WEBKIT_HDRS=os.path.join(HDR_BASE, "WebKit")
     if not os.path.exists(WEBKIT_HDRS):
-    	WEBKIT_HDRS=None
+        WEBKIT_HDRS=None
 
     SECINT_HDRS=os.path.join(HDR_BASE, "SecurityInterface")
     if not os.path.exists(SECINT_HDRS):
-    	SECINT_HDRS=None
+            SECINT_HDRS=None
 
 
 if not os.path.isdir('Modules'):
@@ -112,12 +112,12 @@ def filterAddressBookHeaders(fn):
     return 1
 
 if FOUNDATION_HDRS is not None:
-	enum_generator.generate(
-		FOUNDATION_HDRS, 
-		'build/codegen/_Fnd_Enum.inc')
-	strconst_generator.generate(
-		FOUNDATION_HDRS, 
-		'build/codegen/_Fnd_Str.inc',
+        enum_generator.generate(
+                FOUNDATION_HDRS, 
+                'build/codegen/_Fnd_Enum.inc')
+        strconst_generator.generate(
+                FOUNDATION_HDRS, 
+                'build/codegen/_Fnd_Str.inc',
                 ignore=(
                     # Declared on GNUstep, but not actually inside the
                     # shared lib?
@@ -125,381 +125,381 @@ if FOUNDATION_HDRS is not None:
                 )
         )
 
-	FOUNDATION_IGNORE_LIST=(
-	    # All have types that are not (yet) mapped to python
-	    "NSNonOwnedPointerHashCallBacks",
-	    "NSNonRetainedObjectHashCallBacks",
-	    "NSObjectHashCallBacks",
-	    "NSOwnedObjectIdentityHashCallBacks",
-	    "NSOwnedPointerHashCallBacks",
-	    "NSPointerToStructHashCallBacks",
-	    "NSIntMapKeyCallBacks",
-	    "NSNonOwnedPointerMapKeyCallBacks",
-	    "NSNonOwnedPointerOrNullMapKeyCallBacks",
-	    "NSNonRetainedObjectMapKeyCallBacks",
-	    "NSObjectMapKeyCallBacks",
-	    "NSOwnedPointerMapKeyCallBacks",
-	    "NSIntMapValueCallBacks", 
-	    "NSNonOwnedPointerMapValueCallBacks",
-	    "NSObjectMapValueCallBacks",
-	    "NSNonRetainedObjectMapValueCallBacks",
-	    "NSOwnedPointerMapValueCallBacks",
-	    "NSIntHashCallBacks",
-	    "NSHangOnMallocError",
-	)
+        FOUNDATION_IGNORE_LIST=(
+            # All have types that are not (yet) mapped to python
+            "NSNonOwnedPointerHashCallBacks",
+            "NSNonRetainedObjectHashCallBacks",
+            "NSObjectHashCallBacks",
+            "NSOwnedObjectIdentityHashCallBacks",
+            "NSOwnedPointerHashCallBacks",
+            "NSPointerToStructHashCallBacks",
+            "NSIntMapKeyCallBacks",
+            "NSNonOwnedPointerMapKeyCallBacks",
+            "NSNonOwnedPointerOrNullMapKeyCallBacks",
+            "NSNonRetainedObjectMapKeyCallBacks",
+            "NSObjectMapKeyCallBacks",
+            "NSOwnedPointerMapKeyCallBacks",
+            "NSIntMapValueCallBacks", 
+            "NSNonOwnedPointerMapValueCallBacks",
+            "NSObjectMapValueCallBacks",
+            "NSNonRetainedObjectMapValueCallBacks",
+            "NSOwnedPointerMapValueCallBacks",
+            "NSIntHashCallBacks",
+            "NSHangOnMallocError",
+        )
 
-	var_generator.generate(
-		FOUNDATION_HDRS, 
-		'build/codegen/_Fnd_Var.inc', 
-		FOUNDATION_VAR_PREFIX, 
-		FOUNDATION_IGNORE_LIST)
+        var_generator.generate(
+                FOUNDATION_HDRS, 
+                'build/codegen/_Fnd_Var.inc', 
+                FOUNDATION_VAR_PREFIX, 
+                FOUNDATION_IGNORE_LIST)
 
-	FOUNDATION_IGNORE_LIST=(
-	    # Private functions 
-	    '_NSAddHandler2(',
-	    '_NSRemoveHandler2(',
-	    '_NSExceptionObjectFromHandler2(',
-	    '_NSAutoreleaseNoPool(',
-	    '_NSAutoreleaseFreedObject(',
-	    '_NSAutoreleaseHighWaterLog(',
-	    'NXReadNSObjectFromCoder(',
-
-
-	    # List of functions that are not usefull from Python:
-	    'NSFrameAddress(',
-	    'NSReturnAddress(',
-	    'NSRecordAllocationEvent(',
-	    'NSCreateHashTableWithZone(',
-	    'NSCreateHashTable(',
-	    'NSFreeHashTable(',
-	    'NSResetHashTable(',
-	    'NSCompareHashTables(',
-	    'NSCopyHashTableWithZone(',
-	    'NSHashGet(',
-	    'NSHashInsert(',
-	    'NSHashInsertKnownAbsent(',
-	    'NSHashInsertIfAbsent(',
-	    'NSHashRemove(',
-	    'NSEnumerateHashTable(',
-	    'NSNextHashEnumeratorItem(',
-	    'NSEndHashTableEnumeration(',
-	    'NSCountHashTable(',
-	    'NSStringFromHashTable(',
-	    'NSAllHashTableObjects(',
-	    'NSJavaClassesFromPath(',
-	    'NSJavaClassesForBundle(',
-	    'NSCreateMapTableWithZone(',
-	    'NSCreateMapTable(',
-	    'NSFreeMapTable(',
-	    'NSResetMapTable(',
-	    'NSCompareMapTables(',
-	    'NSCopyMapTableWithZone(',
-	    'NSMapMember(',
-	    'NSMapGet(',
-	    'NSMapInsert(',
-	    'NSMapInsertKnownAbsent(',
-	    'NSMapInsertIfAbsent(',
-	    'NSMapRemove(',
-	    'NSEnumerateMapTable(',
-	    'NSNextMapEnumeratorPair(',
-	    'NSEndMapTableEnumeration(',
-	    'NSCountMapTable(',
-	    'NSStringFromMapTable(',
-	    'NSAllMapTableKeys(',
-	    'NSAllMapTableValues(',
-	    'NSGetSizeAndAlignment(', # Hmm, shouldn't we use this in the bridge?
-	    'NSLogv(',
-	    'NSAllocateObject(',
-	    'NSCopyObject(',
-	    'NSShouldRetainWithZone(',
-	    'NSAllocateMemoryPages(',
-	    'NSDeallocateMemoryPages(',
-	    'NSCopyMemoryPages(',
+        FOUNDATION_IGNORE_LIST=(
+            # Private functions 
+            '_NSAddHandler2(',
+            '_NSRemoveHandler2(',
+            '_NSExceptionObjectFromHandler2(',
+            '_NSAutoreleaseNoPool(',
+            '_NSAutoreleaseFreedObject(',
+            '_NSAutoreleaseHighWaterLog(',
+            'NXReadNSObjectFromCoder(',
 
 
-	    # List of manually wrapped functions:
-	    'NSFileTypeForHFSTypeCode(',
-	    'NSHFSTypeCodeFromFileType(',
-	    'NSStringFromPoint',
-	    'NSDivideRect(',
+            # List of functions that are not usefull from Python:
+            'NSFrameAddress(',
+            'NSReturnAddress(',
+            'NSRecordAllocationEvent(',
+            'NSCreateHashTableWithZone(',
+            'NSCreateHashTable(',
+            'NSFreeHashTable(',
+            'NSResetHashTable(',
+            'NSCompareHashTables(',
+            'NSCopyHashTableWithZone(',
+            'NSHashGet(',
+            'NSHashInsert(',
+            'NSHashInsertKnownAbsent(',
+            'NSHashInsertIfAbsent(',
+            'NSHashRemove(',
+            'NSEnumerateHashTable(',
+            'NSNextHashEnumeratorItem(',
+            'NSEndHashTableEnumeration(',
+            'NSCountHashTable(',
+            'NSStringFromHashTable(',
+            'NSAllHashTableObjects(',
+            'NSJavaClassesFromPath(',
+            'NSJavaClassesForBundle(',
+            'NSCreateMapTableWithZone(',
+            'NSCreateMapTable(',
+            'NSFreeMapTable(',
+            'NSResetMapTable(',
+            'NSCompareMapTables(',
+            'NSCopyMapTableWithZone(',
+            'NSMapMember(',
+            'NSMapGet(',
+            'NSMapInsert(',
+            'NSMapInsertKnownAbsent(',
+            'NSMapInsertIfAbsent(',
+            'NSMapRemove(',
+            'NSEnumerateMapTable(',
+            'NSNextMapEnumeratorPair(',
+            'NSEndMapTableEnumeration(',
+            'NSCountMapTable(',
+            'NSStringFromMapTable(',
+            'NSAllMapTableKeys(',
+            'NSAllMapTableValues(',
+            'NSGetSizeAndAlignment(', # Hmm, shouldn't we use this in the bridge?
+            'NSLogv(',
+            'NSAllocateObject(',
+            'NSCopyObject(',
+            'NSShouldRetainWithZone(',
+            'NSAllocateMemoryPages(',
+            'NSDeallocateMemoryPages(',
+            'NSCopyMemoryPages(',
 
-	    # NSDecimal support, should wrap type
-	    'NSDecimalCopy(',
-	    'NSDecimalCompact(',
-	    'NSDecimalCompare(',
-	    'NSDecimalRound(',
-	    'NSDecimalNormalize(',
-	    'NSDecimalAdd(',
-	    'NSDecimalSubtract(',
-	    'NSDecimalMultiply(',
-	    'NSDecimalDivide(',
-	    'NSDecimalPower(',
-	    'NSDecimalMultiplyByPowerOf10(',
-	    'NSDecimalString(',
 
-	    # Zones might be usefull someday
-	    'NSCreateZone(',
-	    'NSRecycleZone(',
-	    'NSSetZoneName(',
-	    'NSZoneName(',
-	    'NSZoneFromPointer(',
-	    'NSZoneMalloc(',
-	    'NSZoneCalloc(',
-	    'NSZoneRealloc(',
-	    'NSZoneFree(',
+            # List of manually wrapped functions:
+            'NSFileTypeForHFSTypeCode(',
+            'NSHFSTypeCodeFromFileType(',
+            'NSStringFromPoint',
+            'NSDivideRect(',
+
+            # NSDecimal support, should wrap type
+            'NSDecimalCopy(',
+            'NSDecimalCompact(',
+            'NSDecimalCompare(',
+            'NSDecimalRound(',
+            'NSDecimalNormalize(',
+            'NSDecimalAdd(',
+            'NSDecimalSubtract(',
+            'NSDecimalMultiply(',
+            'NSDecimalDivide(',
+            'NSDecimalPower(',
+            'NSDecimalMultiplyByPowerOf10(',
+            'NSDecimalString(',
+
+            # Zones might be usefull someday
+            'NSCreateZone(',
+            'NSRecycleZone(',
+            'NSSetZoneName(',
+            'NSZoneName(',
+            'NSZoneFromPointer(',
+            'NSZoneMalloc(',
+            'NSZoneCalloc(',
+            'NSZoneRealloc(',
+            'NSZoneFree(',
 
 
-	    # TODO
-	    'NSUncaughtExceptionHandler(',
-	    'NSSetUncaughtExceptionHandler(',
-	    'NSGetUncaughtExceptionHandler(',
-	    'NSDefaultMallocZone(',
-	)
+            # TODO
+            'NSUncaughtExceptionHandler(',
+            'NSSetUncaughtExceptionHandler(',
+            'NSGetUncaughtExceptionHandler(',
+            'NSDefaultMallocZone(',
+        )
 
-	func_collector.generate(
-		FOUNDATION_HDRS, 
-		'build/codegen/Foundation.prototypes', 
-		FOUNDATION_FUNCTION_PREFIX, 
-		FOUNDATION_IGNORE_LIST)
+        func_collector.generate(
+                FOUNDATION_HDRS, 
+                'build/codegen/Foundation.prototypes', 
+                FOUNDATION_FUNCTION_PREFIX, 
+                FOUNDATION_IGNORE_LIST)
 
-	func_collector.generate(
-		FOUNDATION_HDRS, 
-		'build/codegen/Foundation.prototype2', 
-		'FOUNDATION_STATIC_INLINE', 
-		FOUNDATION_IGNORE_LIST)
+        func_collector.generate(
+                FOUNDATION_HDRS, 
+                'build/codegen/Foundation.prototype2', 
+                'FOUNDATION_STATIC_INLINE', 
+                FOUNDATION_IGNORE_LIST)
 
-	func_builder.INT_ALIASES.extend([
-	    'NSSearchPathDomainMask', 'NSCalculationError',
-	    'NSComparisonResult', 'NSInsertionPosition',
-	    'NSNotificationCoalescing', 'NSNotificationCoalescing',
-	    'NSRectEdge', 'NSRelativePosition',
-	    'NSRoundingMode', 'NSSaveOptions', 'NSSearchPathDirectory',
-	    'NSSearchPathDomainMask', 'NSTestComparisonOperation',
-	    'NSURLHandleStatus', 'NSWhoseSubelementIdentifier']
-	)
-	func_builder.IGNORE_VARARGS.extend([
-	    # Some of these are Foundation some are AppKit
-	    'NSGetInformationalAlertPanel',
-	    'NSLog',
-	    'NSRunAlertPanel',
-	    'NSRunInformationalAlertPanel',
-	    'NSRunCriticalAlertPanel',
-	    'NSRunAlertPanelRelativeToWindow',
-	    'NSRunInformationalAlertPanelRelativeToWindow',
-	    'NSRunCriticalAlertPanelRelativeToWindow',
-	    'NSBeginAlertSheet',
-	    'NSBeginInformationalAlertSheet',
-	    'NSBeginCriticalAlertSheet',
-	    'NSGetAlertPanel',
-	    'NSGetCriticalAlertPanel',
-	])
+        func_builder.INT_ALIASES.extend([
+            'NSSearchPathDomainMask', 'NSCalculationError',
+            'NSComparisonResult', 'NSInsertionPosition',
+            'NSNotificationCoalescing', 'NSNotificationCoalescing',
+            'NSRectEdge', 'NSRelativePosition',
+            'NSRoundingMode', 'NSSaveOptions', 'NSSearchPathDirectory',
+            'NSSearchPathDomainMask', 'NSTestComparisonOperation',
+            'NSURLHandleStatus', 'NSWhoseSubelementIdentifier']
+        )
+        func_builder.IGNORE_VARARGS.extend([
+            # Some of these are Foundation some are AppKit
+            'NSGetInformationalAlertPanel',
+            'NSLog',
+            'NSRunAlertPanel',
+            'NSRunInformationalAlertPanel',
+            'NSRunCriticalAlertPanel',
+            'NSRunAlertPanelRelativeToWindow',
+            'NSRunInformationalAlertPanelRelativeToWindow',
+            'NSRunCriticalAlertPanelRelativeToWindow',
+            'NSBeginAlertSheet',
+            'NSBeginInformationalAlertSheet',
+            'NSBeginCriticalAlertSheet',
+            'NSGetAlertPanel',
+            'NSGetCriticalAlertPanel',
+        ])
 
-	def BeginSheetMapper(funcname, args):
-	    new_args = []
-	    for tp, name in args:
-		if name == 'contextInfo':
-		    tp = 'PYOBJC_VOIDPTR'
-		new_args.append((tp, name))
-	    return tuple(new_args)
+        def BeginSheetMapper(funcname, args):
+            new_args = []
+            for tp, name in args:
+                if name == 'contextInfo':
+                    tp = 'PYOBJC_VOIDPTR'
+                new_args.append((tp, name))
+            return tuple(new_args)
 
-	func_builder.FUNC_MAP['NSBeginAlertSheet'] = BeginSheetMapper
-	func_builder.FUNC_MAP['NSBeginInformationalAlertSheet'] = BeginSheetMapper
-	func_builder.FUNC_MAP['NSBeginCriticalAlertSheet'] = BeginSheetMapper
+        func_builder.FUNC_MAP['NSBeginAlertSheet'] = BeginSheetMapper
+        func_builder.FUNC_MAP['NSBeginInformationalAlertSheet'] = BeginSheetMapper
+        func_builder.FUNC_MAP['NSBeginCriticalAlertSheet'] = BeginSheetMapper
 
-	fd = dupfile('build/codegen/_Fnd_Functions.inc', 'w')
-	structs = ['NSPoint', 'NSSize', 'NSRect', 'NSRange', 'NSSwappedDouble', 'NSSwappedFloat']
-	for s in structs:
-	    func_builder.SIMPLE_TYPES[s] = (
-		'\tresult = PyObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,
-		'O&',
-		'convert_%s, &%%(varname)s'%s
-	    )
-	    fd.write('''\
+        fd = dupfile('build/codegen/_Fnd_Functions.inc', 'w')
+        structs = ['NSPoint', 'NSSize', 'NSRect', 'NSRange', 'NSSwappedDouble', 'NSSwappedFloat']
+        for s in structs:
+            func_builder.SIMPLE_TYPES[s] = (
+                '\tresult = PyObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,
+                'O&',
+                'convert_%s, &%%(varname)s'%s
+            )
+            fd.write('''\
 
-	static inline int convert_%(type)s(PyObject* object, void* pvar)
-	{
-		int err;
+        static inline int convert_%(type)s(PyObject* object, void* pvar)
+        {
+                int err;
 
-		err = PyObjC_PythonToObjC(@encode(%(type)s), object, pvar);
-		if (err == -1) {
-			return 0;
-		}
-		return 1;
-	}
-	'''%{'type': s })
+                err = PyObjC_PythonToObjC(@encode(%(type)s), object, pvar);
+                if (err == -1) {
+                        return 0;
+                }
+                return 1;
+        }
+        '''%{'type': s })
 
-	fd.write('typedef void* PYOBJC_VOIDPTR;\n')
+        fd.write('typedef void* PYOBJC_VOIDPTR;\n')
 
-	funcs = func_builder.process_list(fd , file('build/codegen/Foundation.prototypes'))
-	funcs2 = func_builder.process_list(fd , file('build/codegen/Foundation.prototype2'))
-	func_builder.gen_method_table_entries(fd, funcs + funcs2)
-	fd = None
-	for s in structs:
-	    del func_builder.SIMPLE_TYPES[s]
+        funcs = func_builder.process_list(fd , file('build/codegen/Foundation.prototypes'))
+        funcs2 = func_builder.process_list(fd , file('build/codegen/Foundation.prototype2'))
+        func_builder.gen_method_table_entries(fd, funcs + funcs2)
+        fd = None
+        for s in structs:
+            del func_builder.SIMPLE_TYPES[s]
 
 
 if APPKIT_HDRS is not None:
-	enum_generator.generate(
-		APPKIT_HDRS, 
-		'build/codegen/_App_Enum.inc')
+        enum_generator.generate(
+                APPKIT_HDRS, 
+                'build/codegen/_App_Enum.inc')
 
-	strconst_generator.generate(
-		APPKIT_HDRS, 
-		'build/codegen/_App_Str.inc')
+        strconst_generator.generate(
+                APPKIT_HDRS, 
+                'build/codegen/_App_Str.inc')
 
-	APPKIT_PREFIX="APPKIT_EXTERN"
-	APPKIT_IGNORE_LIST=(
-	    # First two have types that are not yet mapped
-	    'NSIconSize', 
-	    'NSTokenSize', 
+        APPKIT_PREFIX="APPKIT_EXTERN"
+        APPKIT_IGNORE_LIST=(
+            # First two have types that are not yet mapped
+            'NSIconSize', 
+            'NSTokenSize', 
 
-	    # NSApp is a 'real' variable, will probably add get/set functions
-	    'NSApp')
+            # NSApp is a 'real' variable, will probably add get/set functions
+            'NSApp')
 
-	var_generator.generate(
-		APPKIT_HDRS, 
-		'build/codegen/_App_Var.inc', 
-		APPKIT_PREFIX, 
-		APPKIT_IGNORE_LIST)
+        var_generator.generate(
+                APPKIT_HDRS, 
+                'build/codegen/_App_Var.inc', 
+                APPKIT_PREFIX, 
+                APPKIT_IGNORE_LIST)
 
-	APPKIT_IGNORE_LIST=(
-	    # List of manually wrapped functions:
-	    'NSApplicationMain(',
-	    'NSCountWindows(',
-	    'NSCountWindowsForContext(',
-	    'NSAvailableWindowDepths(',
-	    'NSRectFillList(',
-	    'NSGetWindowServerMemory(',
-
-
-	    #TODO:
-	    'NSBestDepth (',
-	    'NSAvailableWindowDepths (',
-	    'NSRectFillListWithGrays(',
-	    'NSRectFillListWithColors(',
-	    'NSRectFillListUsingOperation(',
-	    'NSRectFillListWithColorsUsingOperation(',
-	    'NSRectClipList(',
-	    'NSDrawTiledRects(',
-	    'NSDrawBitmap(',
-	    'NSWindowList(',
-	    'NSWindowListForContext(',
-	    'NSDrawColorTiledRects(',
-	)
-
-	if VER == "MacOS X 10.1":
-		APPKIT_IGNORE_LIST = APPKIT_IGNORE_LIST + ('NSCopyBitmapFromGState',)
-
-	func_collector.generate(
-		APPKIT_HDRS, 
-		'build/codegen/AppKit.prototypes', 
-		APPKIT_PREFIX, 
-		APPKIT_IGNORE_LIST)
-
-	fd = dupfile('build/codegen/_App_Functions.inc', 'w')
-	structs = ['NSAffineTransformStruct', 'NSRect', 'NSPoint']
-	for s in structs:
-	    func_builder.SIMPLE_TYPES[s] = (
-		'\tresult = PyObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,
-		'O&',
-		'convert_%s, &%%(varname)s'%s
-	    )
-	    fd.write('''\
-	static inline int convert_%(type)s(PyObject* object, void* pvar)
-	{
-		int err;
-
-		err = PyObjC_PythonToObjC(@encode(%(type)s), object, pvar);
-		if (err == -1) {
-			return 0;
-		}
-		return 1;
-	}
-	'''%{'type': s })
-
-	func_builder.INT_ALIASES.extend([
-	    'NSApplicationTerminateReply', 'NSBackingStoreType',
-	    'NSBezelStyle', 'NSBezierPathElement',
-	    'NSBitmapImageFileType', 'NSBorderType', 'NSBoxType',
-	    'NSButtonType', 'NSCellAttribute', 'NSCellImagePosition',
-	    'NSCellStateValue', 'NSCellType', 'NSCompositingOperation',
-	    'NSControlSize', 'NSControlTint', 'NSDocumentChangeType',
-	    'NSDragOperation', 'NSDrawerState', 'NSEventType',
-	    'NSFocusRingPlacement', 'NSFontAction', 'NSFontTraitMask',
-	    'NSGlyph', 'NSGlyphInscription', 'NSGlyphLayoutMode',
-	    'NSGlyphRelation', 'NSGradientType', 'NSImageAlignment',
-	    'NSImageFrameStyle', 'NSImageInterpolation', 'NSImageScaling',
-	    'NSInterfaceStyle', 'NSLayoutDirection', 'NSLayoutStatus',
-	    'NSLineBreakMode', 'NSLineCapStyle', 'NSLineJoinStyle',
-	    'NSLineMovementDirection', 'NSLineSweepDirection',
-	    'NSMatrixMode', 'NSMultibyteGlyphPacking', 'NSOpenGLContextParameter',
-	    'NSOpenGLGlobalOption', 'NSOpenGLPixelFormatAttribute',
-	    'NSPopUpArrowPosition', 'NSPrinterTableStatus',
-	    'NSPrintingOrientation', 'NSPrintingPageOrder', 
-	    'NSPrintingPaginationMode', 'NSProgressIndicatorThickness',
-	    'NSQTMovieLoopMode', 'NSRequestUserAttentionType',
-	    'NSRulerOrientation', 'NSSaveOperationType',
-	    'NSScrollArrowPosition', 'NSScrollerArrow',
-	    'NSScrollerPart', 'NSSelectionAffinity',
-	    'NSSelectionDirection', 'NSSelectionGranularity',
-	    'NSTabState', 'NSTabViewState', 'NSTableViewDropOperation',
-	    'NSTextAlignment', 'NSTextTabType', 'NSTickMarkPosition',
-	    'NSTIFFCompression', 'NSTitlePosition', 'NSToolbarDisplayMode',
-	    'NSToolTipTag', 'NSTrackingRectTag', 'NSUsableScrollerParts',
-	    'NSWindingRule', 'NSWindowDepth', 'NSWindowOrderingMode',
-	])
+        APPKIT_IGNORE_LIST=(
+            # List of manually wrapped functions:
+            'NSApplicationMain(',
+            'NSCountWindows(',
+            'NSCountWindowsForContext(',
+            'NSAvailableWindowDepths(',
+            'NSRectFillList(',
+            'NSGetWindowServerMemory(',
 
 
-	fd.write('typedef void* PYOBJC_VOIDPTR;\n')
-	funcs = func_builder.process_list(fd, file('build/codegen/AppKit.prototypes'))
-	func_builder.gen_method_table_entries(fd, funcs)
-	for s in structs:
-	    del func_builder.SIMPLE_TYPES[s]
+            #TODO:
+            'NSBestDepth (',
+            'NSAvailableWindowDepths (',
+            'NSRectFillListWithGrays(',
+            'NSRectFillListWithColors(',
+            'NSRectFillListUsingOperation(',
+            'NSRectFillListWithColorsUsingOperation(',
+            'NSRectClipList(',
+            'NSDrawTiledRects(',
+            'NSDrawBitmap(',
+            'NSWindowList(',
+            'NSWindowListForContext(',
+            'NSDrawColorTiledRects(',
+        )
+
+        if VER == "MacOS X 10.1":
+                APPKIT_IGNORE_LIST = APPKIT_IGNORE_LIST + ('NSCopyBitmapFromGState',)
+
+        func_collector.generate(
+                APPKIT_HDRS, 
+                'build/codegen/AppKit.prototypes', 
+                APPKIT_PREFIX, 
+                APPKIT_IGNORE_LIST)
+
+        fd = dupfile('build/codegen/_App_Functions.inc', 'w')
+        structs = ['NSAffineTransformStruct', 'NSRect', 'NSPoint']
+        for s in structs:
+            func_builder.SIMPLE_TYPES[s] = (
+                '\tresult = PyObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,
+                'O&',
+                'convert_%s, &%%(varname)s'%s
+            )
+            fd.write('''\
+        static inline int convert_%(type)s(PyObject* object, void* pvar)
+        {
+                int err;
+
+                err = PyObjC_PythonToObjC(@encode(%(type)s), object, pvar);
+                if (err == -1) {
+                        return 0;
+                }
+                return 1;
+        }
+        '''%{'type': s })
+
+        func_builder.INT_ALIASES.extend([
+            'NSApplicationTerminateReply', 'NSBackingStoreType',
+            'NSBezelStyle', 'NSBezierPathElement',
+            'NSBitmapImageFileType', 'NSBorderType', 'NSBoxType',
+            'NSButtonType', 'NSCellAttribute', 'NSCellImagePosition',
+            'NSCellStateValue', 'NSCellType', 'NSCompositingOperation',
+            'NSControlSize', 'NSControlTint', 'NSDocumentChangeType',
+            'NSDragOperation', 'NSDrawerState', 'NSEventType',
+            'NSFocusRingPlacement', 'NSFontAction', 'NSFontTraitMask',
+            'NSGlyph', 'NSGlyphInscription', 'NSGlyphLayoutMode',
+            'NSGlyphRelation', 'NSGradientType', 'NSImageAlignment',
+            'NSImageFrameStyle', 'NSImageInterpolation', 'NSImageScaling',
+            'NSInterfaceStyle', 'NSLayoutDirection', 'NSLayoutStatus',
+            'NSLineBreakMode', 'NSLineCapStyle', 'NSLineJoinStyle',
+            'NSLineMovementDirection', 'NSLineSweepDirection',
+            'NSMatrixMode', 'NSMultibyteGlyphPacking', 'NSOpenGLContextParameter',
+            'NSOpenGLGlobalOption', 'NSOpenGLPixelFormatAttribute',
+            'NSPopUpArrowPosition', 'NSPrinterTableStatus',
+            'NSPrintingOrientation', 'NSPrintingPageOrder', 
+            'NSPrintingPaginationMode', 'NSProgressIndicatorThickness',
+            'NSQTMovieLoopMode', 'NSRequestUserAttentionType',
+            'NSRulerOrientation', 'NSSaveOperationType',
+            'NSScrollArrowPosition', 'NSScrollerArrow',
+            'NSScrollerPart', 'NSSelectionAffinity',
+            'NSSelectionDirection', 'NSSelectionGranularity',
+            'NSTabState', 'NSTabViewState', 'NSTableViewDropOperation',
+            'NSTextAlignment', 'NSTextTabType', 'NSTickMarkPosition',
+            'NSTIFFCompression', 'NSTitlePosition', 'NSToolbarDisplayMode',
+            'NSToolTipTag', 'NSTrackingRectTag', 'NSUsableScrollerParts',
+            'NSWindingRule', 'NSWindowDepth', 'NSWindowOrderingMode',
+        ])
+
+
+        fd.write('typedef void* PYOBJC_VOIDPTR;\n')
+        funcs = func_builder.process_list(fd, file('build/codegen/AppKit.prototypes'))
+        func_builder.gen_method_table_entries(fd, funcs)
+        for s in structs:
+            del func_builder.SIMPLE_TYPES[s]
 
 
 if ADDRESSBOOK_HDRS is not None:
-	enum_generator.generate(
-		ADDRESSBOOK_HDRS,
-		'build/codegen/_Addr_Enum.inc',
-		filter=filterAddressBookHeaders)
-	strconst_generator.generate(
-		ADDRESSBOOK_HDRS,
-	    	'build/codegen/_Addr_Str.inc',
-	    	filter=filterAddressBookHeaders)
+        enum_generator.generate(
+                ADDRESSBOOK_HDRS,
+                'build/codegen/_Addr_Enum.inc',
+                filter=filterAddressBookHeaders)
+        strconst_generator.generate(
+                ADDRESSBOOK_HDRS,
+                    'build/codegen/_Addr_Str.inc',
+                    filter=filterAddressBookHeaders)
 
 if PREFPANES_HDRS is not None:
-	enum_generator.generate(
-		PREFPANES_HDRS, 
-		'build/codegen/_PreferencePanes_Enum.inc')
-	strconst_generator.generate(
-		PREFPANES_HDRS, 
-		'build/codegen/_PreferencePanes_Str.inc')
+        enum_generator.generate(
+                PREFPANES_HDRS, 
+                'build/codegen/_PreferencePanes_Enum.inc')
+        strconst_generator.generate(
+                PREFPANES_HDRS, 
+                'build/codegen/_PreferencePanes_Str.inc')
 
 if IB_HDRS is not None:
-	enum_generator.generate(
-		IB_HDRS, 
-		'build/codegen/_InterfaceBuilder_Enum.inc')
-	strconst_generator.generate(
-		IB_HDRS, 
-		'build/codegen/_InterfaceBuilder_Str.inc')
+        enum_generator.generate(
+                IB_HDRS, 
+                'build/codegen/_InterfaceBuilder_Enum.inc')
+        strconst_generator.generate(
+                IB_HDRS, 
+                'build/codegen/_InterfaceBuilder_Str.inc')
 
 if WEBKIT_HDRS is not None:
-	enum_generator.generate(
-		WEBKIT_HDRS, 
-		'build/codegen/_WebKit_Enum.inc')
+        enum_generator.generate(
+                WEBKIT_HDRS, 
+                'build/codegen/_WebKit_Enum.inc')
 
-	# The two items on the ignore-list cause link errors, 
-	# to-be-investigated.
-	strconst_generator.generate(WEBKIT_HDRS,
-				    'build/codegen/_WebKit_Str.inc',
-				    ignore=('WebElementImageAltStringKey', 
-					    'WebPreferencesChangedNotification')
-	)
+        # The two items on the ignore-list cause link errors, 
+        # to-be-investigated.
+        strconst_generator.generate(WEBKIT_HDRS,
+                                    'build/codegen/_WebKit_Str.inc',
+                                    ignore=('WebElementImageAltStringKey', 
+                                            'WebPreferencesChangedNotification')
+        )
 
 if SECINT_HDRS is not None:
-	enum_generator.generate(
-		SECINT_HDRS, 
-		'build/codegen/_SecInt_Enum.inc')
-	strconst_generator.generate(
-		SECINT_HDRS, 
-		'build/codegen/_SecInt_Str.inc')
+        enum_generator.generate(
+                SECINT_HDRS, 
+                'build/codegen/_SecInt_Enum.inc')
+        strconst_generator.generate(
+                SECINT_HDRS, 
+                'build/codegen/_SecInt_Str.inc')
