@@ -1,28 +1,325 @@
-OC_PythonBundle.m
-OC_PythonInt.m
-OC_PythonObject.m
-OC_PythonString.m
-ObjC.m
-ObjCMethod.m
-ObjCObject.m
-ObjCPointer.m
-ObjCRuntime.m
-OC_PythonBundle.h
-OC_PythonInt.h
-OC_PythonObject.h
-OC_PythonString.h
-ObjC.h
-objc_support.h
-objc_support.m
-README
-setup.py
-.cvsignore
-BUGS
-ChangeLog
-FIXME
-INSTALL
-NEWS
-Examples/HelloWorld.py
-Examples/Cocoa/AppKit.py
-Examples/Cocoa/Foundation.py
-Examples/Cocoa/__init__.py
+./.#BUGS.1.1.1.1
+./.#ChangeLog.1.4
+./.#FIXME.1.1.1.1
+./.#INSTALL.1.2
+./.#NEWS.1.4
+./.#README.1.1.1.1
+./.#setup.py.1.4
+./.cvsignore
+./.gdb_history
+./BUGS
+./build/lib.darwin-6.1-Power Macintosh-2.2/AddressBook/__init__.py
+./build/lib.darwin-6.1-Power Macintosh-2.2/AppKit/__init__.py
+./build/lib.darwin-6.1-Power Macintosh-2.2/AppKit/_AppKit.so
+./build/lib.darwin-6.1-Power Macintosh-2.2/AppKit/_AppKitSignatures.py
+./build/lib.darwin-6.1-Power Macintosh-2.2/Foundation/__init__.py
+./build/lib.darwin-6.1-Power Macintosh-2.2/Foundation/_Foundation.so
+./build/lib.darwin-6.1-Power Macintosh-2.2/objc/__init__.py
+./build/lib.darwin-6.1-Power Macintosh-2.2/objc/_FoundationMapping.so
+./build/lib.darwin-6.1-Power Macintosh-2.2/objc/_FoundationSignatures.py
+./build/lib.darwin-6.1-Power Macintosh-2.2/objc/_objc.so
+./build/lib.darwin-6.1-Power Macintosh-2.2/objc/builder.py
+./build/lib.darwin-6.1-Power Macintosh-2.2/objc/classnib.py
+./build/temp.darwin-6.1-Power Macintosh-2.2/_AppKit.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/_Foundation.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/_FoundationMapping.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/class-builder.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/class-list.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/instance-var.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/module.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/objc-class.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/objc-object.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/objc_support.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/objc_util.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/ObjCPointer.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/OC_PythonInt.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/OC_PythonObject.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/OC_PythonString.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/pyobjc-api.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/register.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/selector.o
+./build/temp.darwin-6.1-Power Macintosh-2.2/super-call.o
+./ChangeLog
+./CVS/Entries
+./CVS/Repository
+./CVS/Root
+./Doc/architecture.txt
+./Doc/CVS/Entries
+./Doc/CVS/Repository
+./Doc/CVS/Root
+./Doc/structure.txt
+./Doc/TODO
+./Doc/users.txt
+./Doc/warts.txt
+./Examples/.#HelloWorld.py.1.3
+./Examples/.gdb_history
+./Examples/00ReadMe.txt
+./Examples/addressbook.py
+./Examples/Cocoa/CVS/Entries
+./Examples/Cocoa/CVS/Repository
+./Examples/Cocoa/CVS/Root
+./Examples/CurrencyConverter/CurrencyConverter.py
+./Examples/CurrencyConverter/CVS/Entries
+./Examples/CurrencyConverter/CVS/Repository
+./Examples/CurrencyConverter/CVS/Root
+./Examples/CurrencyConverter/English.lproj/CVS/Entries
+./Examples/CurrencyConverter/English.lproj/CVS/Repository
+./Examples/CurrencyConverter/English.lproj/CVS/Root
+./Examples/CurrencyConverter/English.lproj/InfoPlist.strings
+./Examples/CurrencyConverter/English.lproj/MainMenu.nib/classes.nib
+./Examples/CurrencyConverter/English.lproj/MainMenu.nib/CVS/Entries
+./Examples/CurrencyConverter/English.lproj/MainMenu.nib/CVS/Repository
+./Examples/CurrencyConverter/English.lproj/MainMenu.nib/CVS/Root
+./Examples/CurrencyConverter/English.lproj/MainMenu.nib/info.nib
+./Examples/CurrencyConverter/English.lproj/MainMenu.nib/objects.nib
+./Examples/CurrencyConverter/setup-app.py
+./Examples/CVS/Entries
+./Examples/CVS/Repository
+./Examples/CVS/Root
+./Examples/dictionary.py
+./Examples/HelloWorld.py
+./Examples/iClass/CVS/Entries
+./Examples/iClass/CVS/Repository
+./Examples/iClass/CVS/Root
+./Examples/iClass/datasource.py
+./Examples/iClass/English.lproj/CVS/Entries
+./Examples/iClass/English.lproj/CVS/Repository
+./Examples/iClass/English.lproj/CVS/Root
+./Examples/iClass/English.lproj/MainMenu.nib/classes.nib
+./Examples/iClass/English.lproj/MainMenu.nib/CVS/Entries
+./Examples/iClass/English.lproj/MainMenu.nib/CVS/Repository
+./Examples/iClass/English.lproj/MainMenu.nib/CVS/Root
+./Examples/iClass/English.lproj/MainMenu.nib/info.nib
+./Examples/iClass/English.lproj/MainMenu.nib/objects.nib
+./Examples/iClass/main.py
+./Examples/iClass/setup-app.py
+./Examples/method-weirdness.py
+./Examples/objc-vars.py
+./Examples/subclassing-objective-c.py
+./Examples/super-call.py
+./Examples/TableModel/00ReadMe.txt
+./Examples/TableModel/CVS/Entries
+./Examples/TableModel/CVS/Repository
+./Examples/TableModel/CVS/Root
+./Examples/TableModel/English.lproj/CVS/Entries
+./Examples/TableModel/English.lproj/CVS/Repository
+./Examples/TableModel/English.lproj/CVS/Root
+./Examples/TableModel/English.lproj/MainMenu.nib/classes.nib
+./Examples/TableModel/English.lproj/MainMenu.nib/CVS/Entries
+./Examples/TableModel/English.lproj/MainMenu.nib/CVS/Repository
+./Examples/TableModel/English.lproj/MainMenu.nib/CVS/Root
+./Examples/TableModel/English.lproj/MainMenu.nib/info.nib
+./Examples/TableModel/English.lproj/MainMenu.nib/objects.nib
+./Examples/TableModel/setup-app.py
+./Examples/TableModel/TableModel.py
+./Examples/TableModel2/CVS/Entries
+./Examples/TableModel2/CVS/Repository
+./Examples/TableModel2/CVS/Root
+./Examples/TableModel2/English.lproj/CVS/Entries
+./Examples/TableModel2/English.lproj/CVS/Repository
+./Examples/TableModel2/English.lproj/CVS/Root
+./Examples/TableModel2/English.lproj/InfoPlist.strings
+./Examples/TableModel2/English.lproj/MainMenu.nib/classes.nib
+./Examples/TableModel2/English.lproj/MainMenu.nib/CVS/Entries
+./Examples/TableModel2/English.lproj/MainMenu.nib/CVS/Repository
+./Examples/TableModel2/English.lproj/MainMenu.nib/CVS/Root
+./Examples/TableModel2/English.lproj/MainMenu.nib/info.nib
+./Examples/TableModel2/English.lproj/MainMenu.nib/objects.nib
+./Examples/TableModel2/main.m
+./Examples/TableModel2/README.txt
+./Examples/TableModel2/TableModel.py
+./Examples/TableModel2/TableModel2.pbproj/CVS/Entries
+./Examples/TableModel2/TableModel2.pbproj/CVS/Repository
+./Examples/TableModel2/TableModel2.pbproj/CVS/Root
+./Examples/TableModel2/TableModel2.pbproj/project.pbxproj
+./Examples/Todo/00ReadMe.txt
+./Examples/Todo/buildpyapp.sh
+./Examples/Todo/CalendarMatrix.py
+./Examples/Todo/CVS/Entries
+./Examples/Todo/CVS/Repository
+./Examples/Todo/CVS/Root
+./Examples/Todo/English.lproj/Credits.rtf
+./Examples/Todo/English.lproj/CVS/Entries
+./Examples/Todo/English.lproj/CVS/Repository
+./Examples/Todo/English.lproj/CVS/Root
+./Examples/Todo/English.lproj/InfoPlist.strings
+./Examples/Todo/English.lproj/MainMenu.nib/classes.nib
+./Examples/Todo/English.lproj/MainMenu.nib/CVS/Entries
+./Examples/Todo/English.lproj/MainMenu.nib/CVS/Repository
+./Examples/Todo/English.lproj/MainMenu.nib/CVS/Root
+./Examples/Todo/English.lproj/MainMenu.nib/info.nib
+./Examples/Todo/English.lproj/MainMenu.nib/objects.nib
+./Examples/Todo/English.lproj/ToDoDocument.nib/classes.nib
+./Examples/Todo/English.lproj/ToDoDocument.nib/CVS/Entries
+./Examples/Todo/English.lproj/ToDoDocument.nib/CVS/Repository
+./Examples/Todo/English.lproj/ToDoDocument.nib/CVS/Root
+./Examples/Todo/English.lproj/ToDoDocument.nib/info.nib
+./Examples/Todo/English.lproj/ToDoDocument.nib/objects.nib
+./Examples/Todo/English.lproj/ToDoInfoWindow.nib/classes.nib
+./Examples/Todo/English.lproj/ToDoInfoWindow.nib/CVS/Entries
+./Examples/Todo/English.lproj/ToDoInfoWindow.nib/CVS/Repository
+./Examples/Todo/English.lproj/ToDoInfoWindow.nib/CVS/Root
+./Examples/Todo/English.lproj/ToDoInfoWindow.nib/info.nib
+./Examples/Todo/English.lproj/ToDoInfoWindow.nib/objects.nib
+./Examples/Todo/Icons/CVS/Entries
+./Examples/Todo/Icons/CVS/Repository
+./Examples/Todo/Icons/CVS/Root
+./Examples/Todo/Icons/ToDoApp.icns
+./Examples/Todo/Icons/ToDoDoc.icns
+./Examples/Todo/Images/CVS/Entries
+./Examples/Todo/Images/CVS/Repository
+./Examples/Todo/Images/CVS/Root
+./Examples/Todo/Images/DeferredMark.tiff
+./Examples/Todo/Images/DoneMark.tiff
+./Examples/Todo/Images/LeftArrow.tiff
+./Examples/Todo/Images/RightArrow.tiff
+./Examples/Todo/Info.plist
+./Examples/Todo/InfoWindowController.py
+./Examples/Todo/main.py
+./Examples/Todo/SelectionNotifyMatrix.py
+./Examples/Todo/setup-app.py
+./Examples/Todo/TodoAppDelegate.py
+./Examples/Todo/ToDoCell.py
+./Examples/Todo/ToDoDocument.py
+./Examples/Todo/ToDoItem.py
+./Examples/using-nscoder.py
+./Examples/using-nsscanner.py
+./Examples/WebServicesTool/CVS/Entries
+./Examples/WebServicesTool/CVS/Repository
+./Examples/WebServicesTool/CVS/Root
+./Examples/WebServicesTool/English.lproj/CVS/Entries
+./Examples/WebServicesTool/English.lproj/CVS/Repository
+./Examples/WebServicesTool/English.lproj/CVS/Root
+./Examples/WebServicesTool/English.lproj/InfoPlist.strings
+./Examples/WebServicesTool/English.lproj/MainMenu.nib/classes.nib
+./Examples/WebServicesTool/English.lproj/MainMenu.nib/CVS/Entries
+./Examples/WebServicesTool/English.lproj/MainMenu.nib/CVS/Repository
+./Examples/WebServicesTool/English.lproj/MainMenu.nib/CVS/Root
+./Examples/WebServicesTool/English.lproj/MainMenu.nib/info.nib
+./Examples/WebServicesTool/English.lproj/MainMenu.nib/keyedobjects.nib
+./Examples/WebServicesTool/English.lproj/WSTConnection.nib/classes.nib
+./Examples/WebServicesTool/English.lproj/WSTConnection.nib/CVS/Entries
+./Examples/WebServicesTool/English.lproj/WSTConnection.nib/CVS/Repository
+./Examples/WebServicesTool/English.lproj/WSTConnection.nib/CVS/Root
+./Examples/WebServicesTool/English.lproj/WSTConnection.nib/info.nib
+./Examples/WebServicesTool/English.lproj/WSTConnection.nib/keyedobjects.nib
+./Examples/WebServicesTool/main.m
+./Examples/WebServicesTool/Main.py
+./Examples/WebServicesTool/Preferences.png
+./Examples/WebServicesTool/Reload.png
+./Examples/WebServicesTool/Web Services Tool.pbproj/CVS/Entries
+./Examples/WebServicesTool/Web Services Tool.pbproj/CVS/Repository
+./Examples/WebServicesTool/Web Services Tool.pbproj/CVS/Root
+./Examples/WebServicesTool/Web Services Tool.pbproj/project.pbxproj
+./Examples/WebServicesTool/WST.icns
+./Examples/WebServicesTool/WSTApplicationDelegateClass.py
+./Examples/WebServicesTool/WSTConnectionWindowControllerClass.py
+./FIXME
+./INSTALL
+./Lib/AddressBook/__init__.py
+./Lib/AddressBook/CVS/Entries
+./Lib/AddressBook/CVS/Repository
+./Lib/AddressBook/CVS/Root
+./Lib/AppKit/__init__.py
+./Lib/AppKit/_AppKitSignatures.py
+./Lib/AppKit/AppKit.byref
+./Lib/AppKit/CVS/Entries
+./Lib/AppKit/CVS/Repository
+./Lib/AppKit/CVS/Root
+./Lib/CVS/Entries
+./Lib/CVS/Repository
+./Lib/CVS/Root
+./Lib/Foundation/__init__.py
+./Lib/Foundation/CVS/Entries
+./Lib/Foundation/CVS/Repository
+./Lib/Foundation/CVS/Root
+./Lib/Foundation/Foundation.byref
+./Lib/objc/__init__.py
+./Lib/objc/_FoundationSignatures.py
+./Lib/objc/builder.py
+./Lib/objc/classnib.py
+./Lib/objc/CVS/Entries
+./Lib/objc/CVS/Repository
+./Lib/objc/CVS/Root
+./MANIFEST
+./Modules/Cocoa/00ReadMe.txt
+./Modules/Cocoa/_App_Enum.inc
+./Modules/Cocoa/_App_Functions.inc
+./Modules/Cocoa/_App_Str.inc
+./Modules/Cocoa/_App_Var.inc
+./Modules/Cocoa/_AppKit.m
+./Modules/Cocoa/_AppKitMapping.m
+./Modules/Cocoa/_Fnd_Enum.inc
+./Modules/Cocoa/_Fnd_Functions.inc
+./Modules/Cocoa/_Fnd_NSCoder.inc
+./Modules/Cocoa/_Fnd_NSData.inc
+./Modules/Cocoa/_Fnd_Str.inc
+./Modules/Cocoa/_Fnd_Var.inc
+./Modules/Cocoa/_Foundation.m
+./Modules/Cocoa/_FoundationMapping.m
+./Modules/Cocoa/AppKit.prototypes
+./Modules/Cocoa/const-table.h
+./Modules/Cocoa/CVS/Entries
+./Modules/Cocoa/CVS/Repository
+./Modules/Cocoa/CVS/Root
+./Modules/Cocoa/Foundation.prototypes
+./Modules/Cocoa/func_builder.err
+./Modules/Cocoa/func_builder.out
+./Modules/Cocoa/scripts/cocoa_generator.py
+./Modules/Cocoa/scripts/CVS/Entries
+./Modules/Cocoa/scripts/CVS/Repository
+./Modules/Cocoa/scripts/CVS/Root
+./Modules/Cocoa/scripts/enum_generator.py
+./Modules/Cocoa/scripts/func_builder.py
+./Modules/Cocoa/scripts/func_collector.py
+./Modules/Cocoa/scripts/strconst_generator.py
+./Modules/Cocoa/scripts/var_generator.py
+./Modules/CVS/Entries
+./Modules/CVS/Repository
+./Modules/CVS/Root
+./Modules/objc/.objc_util.m.swp
+./Modules/objc/class-builder.h
+./Modules/objc/class-builder.m
+./Modules/objc/class-list.m
+./Modules/objc/CocoaSignatures.lst
+./Modules/objc/CVS/Entries
+./Modules/objc/CVS/Repository
+./Modules/objc/CVS/Root
+./Modules/objc/instance-var.h
+./Modules/objc/instance-var.m
+./Modules/objc/module.m
+./Modules/objc/objc-class.m
+./Modules/objc/objc-object.m
+./Modules/objc/objc_support.h
+./Modules/objc/objc_support.m
+./Modules/objc/objc_util.h
+./Modules/objc/objc_util.m
+./Modules/objc/ObjCPointer.h
+./Modules/objc/ObjCPointer.m
+./Modules/objc/OC_PythonInt.h
+./Modules/objc/OC_PythonInt.m
+./Modules/objc/OC_PythonObject.h
+./Modules/objc/OC_PythonObject.m
+./Modules/objc/OC_PythonString.h
+./Modules/objc/OC_PythonString.m
+./Modules/objc/pyobjc-api.h
+./Modules/objc/pyobjc-api.m
+./Modules/objc/pyobjc.h
+./Modules/objc/register.m
+./Modules/objc/selector.m
+./Modules/objc/signatures.lst
+./Modules/objc/super-call.h
+./Modules/objc/super-call.m
+./NEWS
+./README
+./Scripts/CVS/Entries
+./Scripts/CVS/Repository
+./Scripts/CVS/Root
+./Scripts/extract_byref_signatures.py
+./Scripts/generate-stubs.py
+./Scripts/README
+./setup.py
+./Tools/CVS/Entries
+./Tools/CVS/Repository
+./Tools/CVS/Root
+./Tools/README

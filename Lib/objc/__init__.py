@@ -9,9 +9,6 @@ try:
 	getattr(__builtins__, 'True')
 except AttributeError:
 	# Python 2.2.0 doesn't have 'True' and 'False'
-	# It also has a GC that interacts badly with us...
-	import gc
-	gc.disable()
 	True=1
 	False=0
 
