@@ -92,3 +92,20 @@ except ImportError:
     pass
 
 del sys
+
+
+def classAddMethod(cls, name, method):
+    """
+    Add a single method to a class. 'name' is the ObjC selector
+    """
+    import types
+
+    if isinstance(method, selector):
+        sel = selector(method.callable, 
+                    selector=name, 
+                    signature=method.signature, 
+                    isClassMethod=method.isClassMethod)
+    else:
+        sel = selector(method, selector=name)
+
+    return classAddMethods(cls, [sel])
