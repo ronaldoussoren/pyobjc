@@ -239,6 +239,8 @@ class NibInfo(object):
 				writer.writeln("# *** base class not found: %s" % clsInfo.super)
 				self._printClass(writer, clsInfo)
 				writer.dedent()
+                
+                self._printTemplateFooter(self, writer)
 
 	def _printTemplateHeader(self, writer):
 		frameworks = {}
@@ -261,8 +263,7 @@ class NibInfo(object):
 			for framework, classes in items:
 				classes.sort()
 				writer.writeln("from %s import %s" % (framework, ", ".join(classes)))
-		writer.writeln("from AppKit import NibClassBuilder")
-		writer.writeln("from AppKit.NibClassBuilder import AutoBaseClass")
+		writer.writeln("from PyObjCTools import NibClassBuilder, AppHelper")
 		writer.writeln()
 		nibs = nibs.keys()
 		nibs.sort()
@@ -273,6 +274,13 @@ class NibInfo(object):
 		writer.writeln()
 		writer.writeln()
 
+	def _printTemplateHeader(self, writer):
+            writer.writeln()
+            writer.writeln('if __name__ == "__main__":')
+            writer.indent()
+            writer.writeln('AppHelper.runEventLoop()')
+            writer.dedent()
+
 	def _printClass(self, writer, clsInfo):
 			nibs = clsInfo.nibs
 			if len(nibs) > 1:
@@ -280,7 +288,7 @@ class NibInfo(object):
 				del nibs[-1]
 			nibs = ", ".join(nibs)
 			writer.writeln("# class defined in %s" % nibs)
-			writer.writeln("class %s(AutoBaseClass):" % clsInfo.name)
+			writer.writeln("class %s(NibClassBuilder.AutoBaseClass):" % clsInfo.name)
 			writer.indent()
 			writer.writeln("# the actual base class is %s" % clsInfo.super)
 			outlets = clsInfo.outlets
