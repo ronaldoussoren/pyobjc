@@ -128,7 +128,7 @@ Writing the code
    
    	object.modifyArg_andAnother_(arg1, arg2)
    
-   Note that we don't do this mangling for ``Converter.ConvertAmount()``: this method is
+   Note that we don't do this mangling for ``Converter.convertAmount()``: this method is
    only called by other Python code, so there is no need to go through the name mangling.
    Also, if we would want to make this method callable from ObjC code we would have
    to tell the PyObjC runtime system about the types of the arguments, so it could
