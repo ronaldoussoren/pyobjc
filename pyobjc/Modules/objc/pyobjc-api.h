@@ -265,12 +265,6 @@ struct pyobjc_api {
 	/* PyObjCSelector_GetSelector */
 	SEL	   (*sel_get_sel)(PyObject* sel);
 
-	/* PyObjCBool_Check */
-	int	   (*bool_check)(PyObject* obj);
-
-	/* PyObjCBool_FromLong */
-	PyObject*  (*bool_init)(long i);
-
 	/* PyObjC_InitSuper */ 	
 	void	(*fill_super)(struct objc_super*, Class, id);
 
@@ -358,8 +352,6 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjC_SizeOfType      (PyObjC_API->sizeof_type)
 #define PyObjC_PythonToObjC   (PyObjC_API->py_to_objc)
 #define PyObjC_ObjCToPython   (PyObjC_API->objc_to_py)
-#define PyObjCBool_Check   (PyObjC_API->bool_check)
-#define PyObjCBool_FromLong   (PyObjC_API->bool_init)
 #define PyObjC_InitSuper	(PyObjC_API->fill_super)
 #define PyObjC_InitSuperCls	(PyObjC_API->fill_super_cls)
 #define PyObjCPointerWrapper_Register (PyObjC_API->register_pointer_wrapper)

@@ -22,17 +22,6 @@ static int obj_is_uninitialized(PyObject* object)
 	return (PyObjCObject_GetFlags(object) & PyObjCObject_kUNINITIALIZED) != 0;
 }
 
-static int bool_check(PyObject* obj)
-{
-	return PyObjCBool_Check(obj);
-}
-
-static PyObject* bool_init(long l)
-{
-	return PyObjCBool_FromLong(l);
-}
-
-
 static id python_to_id(PyObject* object)
 {
 	id result;
@@ -106,8 +95,6 @@ struct pyobjc_api objc_api = {
 	PyObjCRT_SizeOfType,		/* sizeof_type */
 	sel_get_class,			/* sel_get_class */
 	sel_get_sel,			/* sel_get_sel */
-	bool_check,			/* bool_check */
-	bool_init,			/* bool_init */
 	fill_super,			/* fill_super */
 	fill_super_cls,			/* fill_super_cls*/
 	PyObjCPointerWrapper_Register,	/* register_pointer_wrapper */

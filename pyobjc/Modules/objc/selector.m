@@ -193,7 +193,7 @@ PyDoc_STRVAR(base_class_method_doc,
 static PyObject*
 base_class_method(ObjCNativeSelector* self, void* closure __attribute__((__unused__)))
 {
-	return PyObjCBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kCLASS_METHOD));
+	return PyBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kCLASS_METHOD));
 }
 
 PyDoc_STRVAR(base_required_doc, 
@@ -201,7 +201,7 @@ PyDoc_STRVAR(base_required_doc,
 static PyObject*
 base_required(ObjCNativeSelector* self, void* closure __attribute__((__unused__)))
 {
-	return PyObjCBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kREQUIRED));
+	return PyBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kREQUIRED));
 }
 
 PyDoc_STRVAR(base_donates_ref_doc, 
@@ -212,7 +212,7 @@ PyDoc_STRVAR(base_donates_ref_doc,
 static PyObject*
 base_donates_ref(ObjCNativeSelector* self, void* closure __attribute__((__unused__)))
 {
-	return PyObjCBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kDONATE_REF));
+	return PyBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kDONATE_REF));
 }
 static int
 base_donates_ref_setter(ObjCNativeSelector* self, PyObject* newVal, void* closure __attribute__((__unused__)))
@@ -233,7 +233,7 @@ PyDoc_STRVAR(base_is_alloc_doc,
 static PyObject*
 base_is_alloc(ObjCNativeSelector* self, void* closure __attribute__((__unused__)))
 {
-	return PyObjCBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED));
+	return PyBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED));
 }
 static int
 base_is_alloc_setter(ObjCNativeSelector* self, PyObject* newVal, void* closure __attribute__((__unused__)))

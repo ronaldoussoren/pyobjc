@@ -350,7 +350,7 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
 
 	if (!Decimal_Check(other)) {
 		if (type == Py_EQ) {
-			return PyObjCBool_FromLong(0);
+			return PyBool_FromLong(0);
 		}
 		PyErr_Format(PyExc_TypeError,
 			"Cannot compare NSDecimal and %s", 
@@ -361,12 +361,12 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
 	res = NSDecimalCompare(&Decimal_Value(self), &Decimal_Value(other));
 
 	switch (type) {
-	case Py_LT: return PyObjCBool_FromLong(res ==  NSOrderedAscending);
-	case Py_LE: return PyObjCBool_FromLong(res != NSOrderedDescending);
-	case Py_EQ: return PyObjCBool_FromLong(res == NSOrderedSame);
-	case Py_NE: return PyObjCBool_FromLong(res != NSOrderedSame);
-	case Py_GE: return PyObjCBool_FromLong(res != NSOrderedAscending);
-	case Py_GT: return PyObjCBool_FromLong(res == NSOrderedDescending);
+	case Py_LT: return PyBool_FromLong(res ==  NSOrderedAscending);
+	case Py_LE: return PyBool_FromLong(res != NSOrderedDescending);
+	case Py_EQ: return PyBool_FromLong(res == NSOrderedSame);
+	case Py_NE: return PyBool_FromLong(res != NSOrderedSame);
+	case Py_GE: return PyBool_FromLong(res != NSOrderedAscending);
+	case Py_GT: return PyBool_FromLong(res == NSOrderedDescending);
 	default: 
 		    PyErr_SetString(PyExc_TypeError,
 				  "Bad comparison arg");

@@ -261,7 +261,6 @@ sourceFiles = [
         "Modules/objc/class-builder.m",
         "Modules/objc/class-list.m",
         "Modules/objc/ObjCPointer.m",
-        "Modules/objc/py2.2bool.c",
         "Modules/objc/objc-class.m",
         "Modules/objc/unicode-object.m",
         "Modules/objc/informal-protocol.m",

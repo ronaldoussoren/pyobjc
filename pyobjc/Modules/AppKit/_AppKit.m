@@ -797,7 +797,7 @@ objc_NSBestDepth(
 
 	PyTuple_SET_ITEM(result, 0, v);
 
-	v = PyObjCBool_FromLong(exactMatch);
+	v = PyBool_FromLong(exactMatch);
 	if (v == NULL) {
 		Py_DECREF(result);
 		return NULL;
