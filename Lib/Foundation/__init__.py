@@ -35,7 +35,7 @@ if 'PYOBJCFRAMEWORKS' in os.environ:
         bundle.principalClass()
         sys.path.insert(count, bundle.resourcePath())
         count = count + 1
-    
+
         initPath = bundle.pathForResource_ofType_( "Init", "py")
         if initPath:
             execfile(initPath, globals(), locals())

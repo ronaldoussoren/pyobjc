@@ -162,6 +162,43 @@ static  char* keywords[] = { "context", NULL };
 	return PyInt_FromLong(count);
 }
 
+static PyObject*
+objc_NSRectFillList(PyObject* self, PyObject* args, PyObject* kwds)
+{
+  unsigned char *rectBytes;
+  int rectByteLength;
+  int rectCount = -1;
+  if  (PyArg_ParseTuple(args, "s#|i", &rectBytes, &rectByteLength, &rectCount) < 0) {
+    return NULL;
+  }
+
+  if ( (rectByteLength == 0) || (rectCount == 0) )
+    return NULL;
+
+  if ( rectByteLength % sizeof(NSRect) ) {
+    PyErr_SetString(PyExc_ValueError, "length of array of packed floats is not a multiple of a length of array of NSRect (float * 4).");
+    return NULL;
+  }
+
+  if (rectCount < -1 ) {
+    PyErr_SetString(PyExc_ValueError, "RectCount was less than zero.");
+    return NULL;
+  }
+
+  if (rectCount >= 0 ) {
+    if (rectCount > (rectByteLength / sizeof(NSRect))) {
+      PyErr_SetString(PyExc_ValueError, "Rect count specified, but was longer than supplied array of rectangles.");
+      return NULL;
+    }
+  } else
+    rectCount = rectByteLength / sizeof(NSRect);
+
+  NSRectFillList((NSRect *) rectBytes, rectCount);
+
+  Py_INCREF(Py_None);
+  return Py_None; 
+}
+
 /* NSGet{Alert,Information,CriticalAlert}Panel */
 
 #define GetXPanel(PANELTYPE) \
@@ -391,6 +428,12 @@ static PyMethodDef appkit_methods[] = {
 		"NSCountWindowsForContext", 
 		(PyCFunction)objc_NSCountWindowsForContext, 
 		METH_VARARGS|METH_KEYWORDS, 
+		NULL
+	},
+	{
+	        "NSRectFillList",
+		(PyCFunction)objc_NSRectFillList,
+		METH_VARARGS,
 		NULL
 	},
 
