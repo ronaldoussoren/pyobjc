@@ -1,3 +1,8 @@
+2002-10-15 Ronald Oussoren <oussoren@cistron.nl>
+	* Exceptions are now transparently transfered to the other language.
+	  Upon transitioning back into the source language the exception
+	  regains its orginal 'identity'
+
 2002-10-11  Bill Bumgarner  <bbum@codefab.com>
 
 	* Removed various debugging/development noise from startup.

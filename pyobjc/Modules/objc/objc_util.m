@@ -63,8 +63,11 @@ void ObjCErr_FromObjC(NSException* localException)
 	NSDictionary* userInfo;
 	PyObject*     dict;
 	PyObject*     exception;
-
-	NSLog(@"OBJC EXC: %@", localException);
+	PyObject*     v;
+	char          buf[128];
+	PyObject*     exc_type;
+	PyObject*     exc_value;
+	PyObject*     exc_traceback;
 
 	exception = ObjCErr_PyExcForName([[localException name] cString]);
 
@@ -75,49 +78,148 @@ void ObjCErr_FromObjC(NSException* localException)
 		val = [userInfo objectForKey:@"__pyobjc_exc__"];
 		if (val) {
 			PyObject* exc = [val pyObject];
-			PyErr_SetObject((PyObject*)exc->ob_type, exc);
+
+			/* Create a new exception */
+			if (PyInstance_Check(exc)) {
+				PyErr_SetNone(
+					(PyObject*)
+					((PyInstanceObject*)exc)->in_class);
+			} else {
+				PyErr_SetNone((PyObject*)exc->ob_type);
+			}
+
+			/* And now replace the actual exception object by
+			 * the object in 'userInfo'
+			 */
+			Py_INCREF(exc);
+			PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
+			PyErr_Restore(exc_type, exc , exc_traceback);
+			Py_XDECREF(exc_value);
+			return;
 		}
 	}
 
 	dict = PyDict_New();
-	PyDict_SetItemString(dict, "name", PyString_FromString(
-				[[localException name] cString]));
-	PyDict_SetItemString(dict, "reason", PyString_FromString(
-				[[localException reason] cString]));
+	v = PyString_FromString([[localException name] cString]);
+	PyDict_SetItemString(dict, "name", v);
+	Py_DECREF(v);
+	PyDict_SetItemString(dict, "reason",  v);
+	Py_DECREF(v);
 	if (userInfo) {
-		PyDict_SetItemString(dict, "userInfo",
-			ObjCObject_New(userInfo));
+		v = ObjCObject_New(userInfo);
+		if (v == NULL) {
+			PyErr_Print();
+			abort();
+		}
+		PyDict_SetItemString(dict, "userInfo", v);
+		Py_DECREF(v);
 	} else {
-		Py_INCREF(Py_None);
 		PyDict_SetItemString(dict, "userInfo", Py_None);
 	}
-	PyErr_SetObject(exception, dict);
+
+	snprintf(buf, sizeof(buf), "%s - %s", 
+		[[localException name] cString],
+		[[localException reason] cString]);
+
+	PyErr_SetObject(exception, PyString_FromString(buf));
+	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
+	if (!exc_value || !PyObject_IsInstance(exc_value, exc_type)) {
+		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
+	}
+	PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict);
+	PyObject_SetAttrString(exc_value, "name", PyString_FromString(
+		[[localException name] cString]));
+#if 0	
 	Py_DECREF(dict);
-	PyErr_Print();
+#endif
+	PyErr_Restore(exc_type, exc_value, exc_traceback);
 }
 
 void ObjCErr_ToObjC(void)
 {
-	PyObject* exc = PyErr_Occurred();
+	PyObject* exc_type;
+	PyObject* exc_value;
+	PyObject* exc_traceback;
+	PyObject* args;
 	PyObject* repr;
 	NSException* val;
+	NSDictionary* userInfo;
 
-	if (exc == NULL) return;
+	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
 
-	repr = PyObject_Str(exc);
+	if (!exc_type) return;
 
+	if (!PyObject_IsInstance(exc_value, exc_type)) {
+		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
+	}
 
-	printf("--Forwarding python exception:\n");
-	PyErr_Print();
-	printf("--DONE\n");
+	args = PyObject_GetAttrString(exc_value, "_pyobjc_info_");
+	if (args == NULL) {
+		PyErr_Clear();
+	} else {
+		/* This may be an exception that started out in 
+		 * Objective-C code.
+		 */
+		PyObject* v;
+		char*     reason = NULL;
+		char*     name = NULL;
+		id        userInfo = nil;
 
-	/* TODO: save 'exc' in as userInfo */
+		v = PyDict_GetItemString(args, "reason"); 
+		if (v && PyString_Check(v)) {
+			reason = PyString_AsString(v);
+		} else {
+			PyErr_Clear();
+		}
+
+		v = PyDict_GetItemString(args, "name"); 
+		if (v && PyString_Check(v)) {
+			name = PyString_AsString(v);
+		} else {
+			PyErr_Clear();
+		}
+
+		v = PyDict_GetItemString(args, "userInfo");
+		if (v && ObjCObject_Check(v)) {
+			userInfo = ObjCObject_GetObject(v);
+		} else {
+			PyErr_Clear();
+		}
+
+		if (name && reason) {
+			id oc_name;
+			id oc_reason;
+
+			oc_name = [NSString stringWithCString:name];
+			oc_reason = [NSString stringWithCString:reason];
+			val = [NSException exceptionWithName:oc_name
+				     reason:oc_reason
+				     userInfo:userInfo];
+			Py_DECREF(args);
+			Py_DECREF(exc_type);
+			Py_DECREF(exc_value);
+			Py_DECREF(exc_traceback);
+
+			[val raise];
+		}
+	}
+	Py_XDECREF(args);
+
+	repr = PyObject_Str(exc_value);
+	userInfo = [NSDictionary 
+			dictionaryWithObject:[
+				OC_PythonObject newWithObject:exc_value]
+			forKey:@"__pyobjc_exc__"
+		   ];
 	val = [NSException 
 		exceptionWithName:@"OC_PythonException"
 		reason:[NSString stringWithCString:PyString_AS_STRING(repr)]
-		userInfo:nil];
+		userInfo:userInfo];
 
 	Py_DECREF(repr);
+	Py_DECREF(exc_type);
+	Py_DECREF(exc_value);
+	Py_DECREF(exc_traceback);
 
 	[val raise];
 }
@@ -164,7 +266,6 @@ int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict)
 			if (r < 0) return -1;
 
 			Py_INCREF(mapping);
-			Py_INCREF(value);
 		} else if (!PySequence_Check(mapping) || PySequence_Length(mapping) != 2) {
 			PyErr_SetString(PyExc_RuntimeError,
 				"objc.CONVENIENCE_METHODS must contain 2-tuples");
@@ -184,21 +285,13 @@ int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict)
 				r = PyDict_SetItem(type_dict, name, value);
 
 				if (r < 0) return -1;
-#if 0
-				Py_INCREF(name);
-				Py_INCREF(value);
-#endif
-				Py_INCREF(value);
 				Py_DECREF(imp);
 			} else {
 				r = PyDict_SetItem(type_dict, name, imp);
 
 				if (r < 0) return -1;
 
-#if 0
-				Py_INCREF(name);
-				Py_INCREF(imp);
-#endif
+				Py_DECREF(imp);
 			}
 		}
 	}
