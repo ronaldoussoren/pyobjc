@@ -199,6 +199,8 @@ else:
 if USE_ADJUST_REFCOUNTS:
     CFLAGS.append('-DOC_ADJUST_REFCOUNTS')
 
+CFLAGS.append('-IInclude/')
+
 def IfFrameWork(name, packages, extensions):
     """
     Return the packages and extensions if the framework exists, or
@@ -232,8 +234,8 @@ CocoaPackages = [ 'Foundation', 'AppKit' ]
 CocoaExtensions = [
           Extension("Foundation._Foundation", 
                     [
-                        "Modules/Cocoa/_Foundation.m",
-                        "Modules/Cocoa/NSAutoreleasePoolSupport.m"
+                        "Modules/Foundation/_Foundation.m",
+                        "Modules/Foundation/NSAutoreleasePoolSupport.m"
                     ],
                     extra_compile_args=[
                         "-IModules/objc",  
@@ -241,18 +243,18 @@ CocoaExtensions = [
                     extra_link_args=[
                     ] + FND_LDFLAGS),
           Extension("AppKit._AppKit", 
-                    ["Modules/Cocoa/_AppKit.m"],
+                    ["Modules/AppKit/_AppKit.m"],
                     extra_compile_args=[
                         "-IModules/objc", 
                     ] + CFLAGS,
                     extra_link_args=[
                     ] + APPKIT_LDFLAGS),
           Extension("AppKit._AppKitMapping",
-                    ["Modules/Cocoa/_AppKitMapping.m"],
+                    ["Modules/AppKit/_AppKitMapping.m"],
                     extra_compile_args=[ "-IModules/objc",] + CFLAGS,
                     extra_link_args=[] + APPMAP_LDFLAGS),
           Extension("objc._FoundationMapping", 
-                    ["Modules/Cocoa/_FoundationMapping.m"],
+                    ["Modules/Foundation/_FoundationMapping.m"],
                     extra_compile_args=[
                         "-IModules/objc", 
                     ] + CFLAGS,
@@ -265,7 +267,7 @@ CocoaExtensions = [
 AddressBookPackages, AddressBookExtensions = \
         IfFrameWork('AddressBook.framework', [ 'AddressBook' ], [
             Extension('AddressBook._AddressBook',
-                      [ 'Modules/Cocoa/_AddressBook.m' ],
+                      [ 'Modules/AddressBook/_AddressBook.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
                       ] + CFLAGS,
@@ -276,7 +278,7 @@ AddressBookPackages, AddressBookExtensions = \
 PrefPanesPackages, PrefPanesExtensions = \
         IfFrameWork('PreferencePanes.framework', [ 'PreferencePanes' ], [
             Extension('PreferencePanes._PreferencePanes',
-                      [ 'Modules/Cocoa/_PrefPanes.m' ],
+                      [ 'Modules/PreferencePanes/_PreferencePanes.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
                       ] + CFLAGS,
@@ -287,7 +289,7 @@ PrefPanesPackages, PrefPanesExtensions = \
 InterfaceBuilderPackages, InterfaceBuilderExtensions = \
         IfFrameWork('InterfaceBuilder.framework', [ 'InterfaceBuilder' ], [
             Extension('InterfaceBuilder._InterfaceBuilder',
-                      [ 'Modules/Cocoa/_InterfaceBuilder.m' ],
+                      [ 'Modules/InterfaceBuilder/_InterfaceBuilder.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
                       ] + CFLAGS,

@@ -24,8 +24,8 @@ PyDoc_STRVAR(prefpanes_doc,
 );
 
 
-#include "_PrefPanes_Enum.inc"
-#include "_PrefPanes_Str.inc"
+#include "_PreferencePanes_Enum.inc"
+#include "_PreferencePanes_Str.inc"
 
 void init_PreferencePanes(void)
 {

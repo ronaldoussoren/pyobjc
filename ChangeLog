@@ -1,3 +1,7 @@
+2003-02-25  Bill Bumgarner  <bbum@codefab.com>
+    * Restructured Modules/ to reflect the division between modules.  Names
+      are the same as their framework counterparts as much as possible.
+
 2003-02-24  Bill Bumgarner  <bbum@codefab.com>
     * Moved code generation scripts to Scripts/CodeGenerators.  Added a very
       basic README to CodeGenerators.
