@@ -28,6 +28,7 @@
 
 /*#M Return the wrapped Python object. */
 - (PyObject *) pyObject;
+- (PyObject *) __pyobjc_PythonObject__;
 
 
 /*#M Print the PythonObject on file @var{fp}.  Returns -1 on

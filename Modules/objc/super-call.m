@@ -231,7 +231,7 @@ ObjC_CallFunc_t ObjC_FindSelfCaller(Class class, SEL sel)
 	ObjC_CallFunc_t result;
 	struct registry* rec;
 
-#if 0 /* def OC_WITH_LIBFFI */
+#if defined(OC_WITH_LIBFFI) && defined(OC_USE_FFI_SHORTCUTS)
 	result = ObjC_FFICaller;
 #else
 	result = execute_and_pythonify_objc_method;
@@ -241,7 +241,7 @@ ObjC_CallFunc_t ObjC_FindSelfCaller(Class class, SEL sel)
 	/* Check the list of exceptions */
 	rec = search_special(class, sel);
 	if (rec) {
-#if 0 /* def OC_WITH_LIBFFI */
+#if defined(OC_WITH_LIBFFI) && defined(OC_USE_FFI_SHORTCUTS)
 		result = rec->call_to_super;
 #else
 		result = rec->call_to_self;
@@ -407,7 +407,7 @@ ObjC_CallFunc_t ObjC_FindSupercaller(Class class, SEL sel)
 
 void ObjC_FindCaller(Class class, SEL sel, ObjC_CallFunc_t* call_self, ObjC_CallFunc_t* call_super)
 {
-#if 0 /* def OC_WITH_LIBFFI */
+#if defined(OC_WITH_LIBFFI) && defined(OC_USE_FFI_SHORTCUTS)
 	*call_self = *call_super = ObjC_FindSupercaller(class, sel);
 
 #else /* OC_WITH_LIBFFI */

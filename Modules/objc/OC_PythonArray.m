@@ -19,8 +19,9 @@
 	return self;
 }
 
--(PyObject*)pyObject
+-(PyObject*)__pyobjc_PythonObject__
 {
+	Py_INCREF(value);
 	return value;
 }
 

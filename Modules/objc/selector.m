@@ -229,7 +229,61 @@ base_returns_self_setter(ObjCNativeSelector* self, PyObject* newVal, void* closu
 	}
 	return 0;
 }
+PyDoc_STRVAR(base_is_alloc_doc, 
+"True if this is method returns a a freshly allocated object (uninitialized)\n"
+"\n"
+"NOTE: This field is used by the implementation."
+);
+static PyObject*
+base_is_alloc(ObjCNativeSelector* self, void* closure)
+{
+	return PyBool_FromLong(0 != (self->sel_flags & ObjCSelector_kRETURNS_UNINITIALIZED));
+}
+static int
+base_is_alloc_setter(ObjCNativeSelector* self, PyObject* newVal, void* closure)
+{
+	if (PyObject_IsTrue(newVal)) {
+		self->sel_flags |= ObjCSelector_kRETURNS_UNINITIALIZED;
+	} else {
+		self->sel_flags &= ~ObjCSelector_kRETURNS_UNINITIALIZED;
+	}
+	return 0;
+}
+PyDoc_STRVAR(base_is_initializer_doc, 
+"True if this is method is an object initializer\n"
+"\n"
+"NOTE: This field is used by the implementation."
+);
+static PyObject*
+base_is_initializer(ObjCNativeSelector* self, void* closure)
+{
+	return PyBool_FromLong(0 != (self->sel_flags & ObjCSelector_kINITIALIZER));
+}
+static int
+base_is_initializer_setter(ObjCNativeSelector* self, PyObject* newVal, void* closure)
+{
+	if (PyObject_IsTrue(newVal)) {
+		self->sel_flags |= ObjCSelector_kINITIALIZER;
+	} else {
+		self->sel_flags &= ~ObjCSelector_kINITIALIZER;
+	}
+	return 0;
+}
 static PyGetSetDef base_getset[] = {
+	{
+		"is_initializer",
+		(getter)base_is_initializer,
+		(setter)base_is_initializer_setter,
+		base_is_initializer_doc,
+		0
+	},
+	{
+		"is_alloc",
+		(getter)base_is_alloc,
+		(setter)base_is_alloc_setter,
+		base_is_alloc_doc,
+		0
+	},
 	{
 		"donates_ref",
 		(getter)base_donates_ref,
@@ -453,7 +507,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		}
 	}
 
-#if 1 /* ndef OC_WITH_LIBFFI */
+#if !(defined(OC_WITH_LIBFFI) && defined(OC_USE_FFI_SHORTCUTS))
 	/* 
 	 * Ronald: If we use libffi we don't need this block of code, just
 	 * always using the 'super_call' code-path suffices. If it doesn't
@@ -527,9 +581,6 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			is_super_call = 1;
 		} 
 	}
-#else /* !OC_WITH_FFI */
-	is_super_call = 1;
-#endif /* !OC_WITH_FFI */
 
 	if (is_super_call) {
 		if (self->sel_call_super) {
@@ -548,6 +599,32 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			self->sel_call_self = execute;
 		}
 	}
+
+#else /* !OC_WITH_FFI */
+	if (self->sel_call_super) {
+		execute = self->sel_call_super;
+	} else {
+		execute = ObjC_FindSupercaller(
+				self->sel_class, 
+				self->sel_selector);
+		if (execute == NULL) return NULL;
+		self->sel_call_super = execute;
+	}
+
+#endif /* !OC_WITH_FFI */
+
+	if (self->sel_self && ObjCObject_Check(self->sel_self) 
+	    && (((ObjCObject*)self->sel_self)->flags & ObjCObject_kUNINITIALIZED)
+	    && !(self->sel_flags & ObjCSelector_kINITIALIZER)) {
+
+		PySys_WriteStderr(
+			"Calling non-initializer (%s) on unitialized object %p of class %s\n",
+			SELNAME(self->sel_selector),
+			ObjCObject_GetObject(self->sel_self),
+			GETISA(ObjCObject_GetObject(self->sel_self))->name);
+	}
+
+
 
 	if (self->sel_self != NULL) {
 		res = execute((PyObject*)self, self->sel_self, args);
@@ -573,19 +650,45 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		Py_DECREF(arglist);
 	}
 
+	if (res && ObjCObject_Check(res)) {
+		if (self->sel_flags & ObjCSelector_kRETURNS_UNINITIALIZED) {
+			((ObjCObject*)res)->flags |= ObjCObject_kUNINITIALIZED;
+		}
+		if (self->sel_flags & ObjCSelector_kINITIALIZER) {
+			if (((ObjCObject*)res)->flags & ObjCObject_kUNINITIALIZED)
+			{
+				((ObjCObject*)res)->flags &= 
+					~ObjCObject_kUNINITIALIZED;
+
+#if 0
+				// XXX: Adjust the refcount. The allocator
+				//      (alloc/allocWithZone:) did transfer
+				//	ownership to the caller, and the 
+				//	bridge called retain, now undo the
+				//	retain.
+				// TODO: Don't retain the value returned by
+				//	the allocator, the call to retain
+				//	could itself cause a crash.
+				[ObjCObject_GetObject(res) release];
+#endif
+			}
+		}
+				
+
 #if 0
 	/* There are some issues with this code, Bill doesn't like it while
 	 * Ronald does.
 	 */
-	if (res && ObjCObject_Check(res) && 
-			(self->sel_flags & ObjCSelector_kDONATE_REF)) {
-		/* Ownership transfered to us, but 'execute' method has
-		 * increased retainCount, the retainCount is now one too high
-		 */
-		id obj = ObjCObject_GetObject(res);
-    		[obj release];
-	}
+		if (self->sel_flags & ObjCSelector_kDONATE_REF) {
+			/* Ownership transfered to us, but 'execute' method has
+			 * increased retainCount, the retainCount is now one 
+			 * too high
+			 */
+			id obj = ObjCObject_GetObject(res);
+			[obj release];
+		}
 #endif
+	}
 	return res;
 }
 
@@ -883,6 +986,8 @@ pysel_repr(ObjCPythonSelector* sel)
 static PyObject*
 pysel_call(ObjCPythonSelector* self, PyObject* args)
 {
+	PyObject* result;
+
 	if (self->callable == NULL) {
 		ObjCErr_Set(PyExc_TypeError, 
 			"Calling abstract methods with selector %s",
@@ -907,18 +1012,29 @@ pysel_call(ObjCPythonSelector* self, PyObject* args)
 		/* normal function code will perform other checks */
 	}
 
+	// TODO: Do same if self->sel_self is NULL
+	if ( !(self->sel_flags & ObjCSelector_kINITIALIZER)
+	     && (self->sel_self) && (ObjCObject_Check(self->sel_self)) &&
+	     ((ObjCObject*)self->sel_self)->flags & ObjCObject_kUNINITIALIZED) {
+
+		PySys_WriteStderr(
+		    "Calling non-initializer (%s) on unitialized object %p of class %s\n",
+		    SELNAME(self->sel_selector),
+		    ObjCObject_GetObject(self->sel_self),
+		    GETISA(ObjCObject_GetObject(self->sel_self))->name);
+
+	}
+
 	/*
 	 * Assume callable will check arguments
 	 */
 	if (self->sel_self == NULL) { 
-		PyObject* result;
 		result  = PyObject_Call(self->callable, args, NULL);
-		return result;
+
 	} else {
 		int       argc = PyTuple_Size(args);
 		PyObject* actual_args = PyTuple_New(argc+1);
 		int       i;
-		PyObject* result;
 
 		if (actual_args == NULL) {
 			return NULL;
@@ -934,8 +1050,21 @@ pysel_call(ObjCPythonSelector* self, PyObject* args)
 		result = PyObject_Call(self->callable, 
 			actual_args, NULL);	
 		Py_DECREF(actual_args);
-		return result;
 	}
+
+	// TODO: Do same if self->sel_self is NULL
+	if ( result && (self->sel_flags & ObjCSelector_kINITIALIZER)
+	     && (self->sel_self) && (ObjCObject_Check(self->sel_self)) &&
+	     ((ObjCObject*)self->sel_self)->flags & ObjCObject_kUNINITIALIZED) {
+
+	     ((ObjCObject*)self->sel_self)->flags &= ~ObjCObject_kUNINITIALIZED;
+	     
+	     // See simular code in objcsel_call
+	     [ObjCObject_GetObject(self->sel_self) release];
+
+	}
+
+	return result;
 }
 
 static char* 

@@ -168,7 +168,13 @@ object_dealloc(PyObject* obj)
 	if (((ObjCObject*)obj)->weak_refs != NULL) {
 		 PyObject_ClearWeakRefs(obj);
  	}
-	[((ObjCObject*)obj)->objc_object release];
+	if (((ObjCObject*)obj)->flags & ObjCObject_kUNINITIALIZED) {
+		/* Lets hope 'init' is always a valid initializer */
+		[[((ObjCObject*)obj)->objc_object init] release];
+
+	} else {
+		[((ObjCObject*)obj)->objc_object release];
+	}
 	obj->ob_type->tp_free(obj);
 }
 
@@ -311,10 +317,14 @@ PyObject* ObjCObject_New(id objc_object)
 	
 	((ObjCObject*)res)->weak_refs = NULL;
 	((ObjCObject*)res)->objc_object = objc_object;
-	((ObjCObject*)res)->is_paired = 0;
+	((ObjCObject*)res)->flags = 0;
+
 
 	if (strcmp(GETISA(objc_object)->name, "NSAutoreleasePool") != 0) {
 		/* NSAutoreleasePool doesn't like retain */
+		/* XXX: Technicly we shouldn't call retain either if this
+		 * is an uninitialized object.
+		 */
 		[objc_object retain];
 	}
 

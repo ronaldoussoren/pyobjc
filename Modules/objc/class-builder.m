@@ -41,6 +41,7 @@ static NSMethodSignature*  object_method_methodSignatureForSelector(id self,
 	SEL selector, SEL aSelector);
 static void object_method_forwardInvocation(id self, SEL selector, 
 	NSInvocation* invocation);
+static PyObject* object_method__pyobjc_PythonObject__(id self, SEL selector);
 
 
 /*
@@ -387,7 +388,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		 */
 		ivar_count        += 1;
 		meta_method_count += 2; 
-		method_count      += 7;
+		method_count      += 8;
 	}
 
 	/* First round, count new instance-vars and check for overridden 
@@ -613,7 +614,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			object_method_methodSignatureForSelector);
 		METH("forwardInvocation_", @selector(forwardInvocation:), "v@:@", 
 			object_method_forwardInvocation);
-
+		METH("__pyobjc_PythonObject__", @selector(__pyobjc_PythonObject__), "^{PythonObject}@:", object_method__pyobjc_PythonObject__);
 #undef		METH
 #undef		META_METH
 	}
@@ -851,8 +852,6 @@ static id class_method_allocWithZone(id self, SEL sel, NSZone* zone)
        return nil;
    }
 
-   pyobject->is_paired = 1;
-
    /* obj->__pyobjc_obj__ = pyobjct */ 
    if (ObjC_SetPythonImplementation(obj, (PyObject*)pyobject) == -1) {
        Py_DECREF(pyobject);
@@ -860,6 +859,15 @@ static id class_method_allocWithZone(id self, SEL sel, NSZone* zone)
        return nil;
    }
    return obj;
+}
+
+/* -__pyobjc_PythonObject__ */
+static PyObject* object_method__pyobjc_PythonObject__(id self, SEL sel)
+{
+	PyObject* pyself;
+	pyself = ObjC_GetPythonImplementation(self);
+	Py_XINCREF(pyself);
+	return pyself;
 }
 
 /* -retain */

@@ -2,11 +2,13 @@
 
 USE_FFI = 1
 
+USE_FFI_SHORTCUTS = 0
+
 import sys
 
 if sys.platform == 'darwin':
     # Apple has used build options that don't work with a 'normal' system.
-    # We remove '-arch i386' from the LDFLAGS
+    # Remove '-arch i386' from the LDFLAGS.
     import distutils.sysconfig
     distutils.sysconfig.get_config_vars()
     x = distutils.sysconfig._config_vars['LDSHARED']
@@ -44,6 +46,9 @@ if USE_FFI:
     LIBFFI_SOURCEFILES=[
         'Modules/objc/libffi_support.m',
     ]
+
+    if USE_FFI_SHORTCUTS:
+        LIBFFI_CFLAGS.append("-DOC_USE_FFI_SHORTCUTS")
 else:
     LIBFFI_CFLAGS=[]
     LIBFFI_LDFLAGS=[]
@@ -84,6 +89,7 @@ if gs_root is None:
         "-DMACOSX",
         "-no-cpp-precomp",
         "-Wno-long-double",
+        #"-O0", "-g",
         ]
 
     OBJC_LDFLAGS=[

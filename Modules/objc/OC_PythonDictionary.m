@@ -97,8 +97,9 @@
 	Py_XDECREF(value);
 }
 
--(PyObject*)pyObject
+-(PyObject*)__pyobjc_PythonObject__
 {
+	Py_INCREF(value);
 	return value;
 }
 
