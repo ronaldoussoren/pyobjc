@@ -7,8 +7,13 @@ This module defines the core interfaces of the Python<->Objective-C bridge.
 ##
 ## Disable gc -- blows up w/Python 2.2.0
 ##
-import sys
-if sys.version_info[:3] == (2,2,0):
+import sys as _sys
+if _sys.version_info[:3] == (2,2,0):
+    import warnings
+    warnings.warn(
+        "Python 2.2.0's garbage collector crashes when used with PyObjC, disabling.  Python 2.3 or later is highly recommended.",
+        RuntimeWarning,
+    )
     import gc
     gc.disable()
 
@@ -34,8 +39,11 @@ for nm in [ x for x in dir(_objc) if x.startswith('_C_') ]:
 del gl, nm, _objc, x
 
 
-# Add usefull utility functions below
-
+# Add useful utility functions below
+if platform == 'MACOSX':
+    from _dyld import *
+else:
+    from _gnustep import *
 
 class _runtime:
     """
@@ -131,8 +139,8 @@ def pluginBundle(pluginName):
     Return the main bundle for the named plugin. This should be used
     in combination with ``PyObjCTools.pluginbuilder``.
     """
-    cls = 'PyObjC_Bundle_' + pluginName 
-    return runtime.NSBundle.bundleForClass_(getattr(runtime, cls))
+    cls = 'PyObjC_Bundle_' + pluginName
+    return lookUpClass('NSBundle').bundleForClass_(lookUpClass(cls))
 
 from _convenience import CONVENIENCE_METHODS, CLASS_METHODS
 
@@ -141,8 +149,6 @@ from _convenience import CONVENIENCE_METHODS, CLASS_METHODS
 # is ugly, but it is also something that would be very
 # hard to avoid...
 
-del sys
-
 def classAddMethod(cls, name, method):
     """
     Add a single method to a class. 'name' is the ObjC selector
@@ -150,9 +156,9 @@ def classAddMethod(cls, name, method):
     import types
 
     if isinstance(method, selector):
-        sel = selector(method.callable, 
-                    selector=name, 
-                    signature=method.signature, 
+        sel = selector(method.callable,
+                    selector=name,
+                    signature=method.signature,
                     isClassMethod=method.isClassMethod)
     else:
         sel = selector(method, selector=name)
@@ -161,7 +167,7 @@ def classAddMethod(cls, name, method):
 
 ######
 # Backward compatibility stuff
-# (depricated functionality)
+# (deprecated functionality)
 
 def recycle_autorelease_pool():
     """Depricated: Use recycleAutoreleasePool"""

@@ -6,12 +6,23 @@ documentation for details on how to use these functions and classes.
 """
 
 # Load the ExceptionHandling bundle, and gather all classes defined there
-import objc
-
-objc.loadBundle("ExceptionHandling", globals(), bundle_path="/System/Library/Frameworks/ExceptionHandling.framework")
+import objc as _objc
 
 from _ExceptionHandling import *
-del objc
+if _objc.platform == 'MACOSX':
+    _objc.loadBundle(
+        "ExceptionHandling",
+        globals(),
+        bundle_identifier='com.apple.AppKit',
+    )
+else:
+    _objc.loadBundle(
+        "ExceptionHandling",
+        globals(),
+        bundle_path=_objc.pathForFramework(
+            "/System/Library/Frameworks/ExceptionHandling.framework",
+        ),
+    )
 
 import protocols  # no need to export these, just register with PyObjC
 

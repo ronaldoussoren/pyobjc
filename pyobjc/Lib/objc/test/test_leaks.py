@@ -4,7 +4,7 @@ Check if we manage retainCounts correctly.
 import unittest
 import objc
 
-# Most usefull systems will at least have 'NSObject'.
+# Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass('NSObject')
 NSMutableArray = objc.lookUpClass('NSMutableArray')
 

@@ -4,7 +4,7 @@ from objc.test.testbndl import PyObjC_TestClass3
 import sys
 import types
 
-# Most usefull systems will at least have 'NSObject'.
+# Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass('NSObject')
 
 class TestSubclassing(unittest.TestCase):

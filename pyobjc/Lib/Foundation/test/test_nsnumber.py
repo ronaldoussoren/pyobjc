@@ -80,7 +80,7 @@ else:
 </plist>
 """
 
-if sys.platform == 'darwin':
+if objc.platform == 'MACOSX':
     class TestPropList (unittest.TestCase):
         #Test if numbers are stored properly in property-list. The most 
         #important part of the testcase are boolean values.
