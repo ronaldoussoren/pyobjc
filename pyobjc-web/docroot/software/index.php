@@ -23,6 +23,9 @@ include "header.inc";
    <LI>MacOS X 10.2:"<CODE>http://pyobjc.sf.net/packman/pyobjc-stable-macosx10.2.plist</CODE>" 
    <LI>MacOS X 10.3:"<CODE>http://pyobjc.sf.net/packman/pyobjc-stable-macosx10.3.plist</CODE>" 
    </UL>
+<p><b>NOTE:</b> upgrading earlier versions of PyObjC using the binary package
+doesn't seem to work correctly. Please use the source installer when you
+upgrade an earlier version of PyObjC.
 
 <p>Older releases are available in the <a href="http://sourceforge.net/project/showfiles.php?group_id=14534">Files section of our SourceForge project</a>.
 
