@@ -93,14 +93,14 @@ check_argcount (PyObject *pymethod, unsigned int argcount)
 		return NULL;
 	}
 	if (PyFunction_Check(pymethod)) {
-		func_code = (PyCodeObject *)PyFunction_GetCode(
-			PyMethod_Function (pymethod));
-		if (argcount == func_code->co_argcount - 1) {
+        	func_code = (PyCodeObject *)PyFunction_GetCode(pymethod);
+		if (argcount == func_code->co_argcount) {
 			return pymethod;
 		}
 	} else if (PyMethod_Check(pymethod)) {
-        	func_code = (PyCodeObject *)PyFunction_GetCode(pymethod);
-		if (argcount == func_code->co_argcount) {
+		func_code = (PyCodeObject *)PyFunction_GetCode(
+			PyMethod_Function (pymethod));
+		if (argcount == func_code->co_argcount - 1) {
 			return pymethod;
 		}
 	} 
@@ -194,21 +194,16 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	} else {
 		func_code = (PyCodeObject *) PyFunction_GetCode(
 			pymethod);
-		  argcount = func_code->co_argcount;
+		argcount = func_code->co_argcount;
 	}
 
-	encoding = alloca(argcount+3);
-	memset(encoding, '@', argcount+2);
-	encoding[argcount+2] = '\0';
+	encoding = alloca(argcount+4);
+	memset(encoding, '@', argcount+3);
+	encoding[argcount+3] = '\0';
 	encoding[2] = ':';
 	return [NSMethodSignature signatureWithObjCTypes:encoding];
 }
 
-/*
- * XXX: Should make sure that this is consistant with forwardInvocation for
- *      ObjCObject_Type
- * XXX: There is no testsuite for this code!
- */
 - (void) forwardInvocation:(NSInvocation *) invocation
 {
 	/* XXX: Needs cleanup */
@@ -242,7 +237,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	}
  
 	argcount = [msign numberOfArguments];
-	args = PyTuple_New(argcount);
+	args = PyTuple_New(argcount-2);
 	if (args == NULL) {
 		ObjCErr_ToObjC();
 	}
