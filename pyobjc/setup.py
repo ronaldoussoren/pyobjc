@@ -28,7 +28,7 @@ if sys.version_info[0] < req_ver[0] or (
 
 # TODO: Autodetect libFFI, including LIBFFI_BASE
 # ... But first implement FFI support!
-if 0:
+if 1:
     LIBFFI_CFLAGS=[]
     LIBFFI_LDFLAGS=[]
     LIBFFI_SOURCEFILES=[]
