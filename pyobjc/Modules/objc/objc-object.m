@@ -7,21 +7,6 @@
 
 #include <objc/Object.h>
 
-
-
-/*
- * Basic freelist. 
- * - to delete an object: obj_freelist[obj_freelist_top++] = OBJ
- * - to create an object: OBJ = obj_freelist[--obj_freelist_top];
- */
-#if 0
-#define FREELIST_SIZE 1024
-
-static PyObject* obj_freelist[FREELIST_SIZE];
-static int obj_freelist_top = 0;
-#endif
-
-
 static NSMapTable* proxy_dict = NULL;
 
 static PyObject* 
@@ -75,7 +60,6 @@ register_proxy(PyObject* proxy_obj)
 			return -1;
 		}
 	}
-
 
 	NSMapInsert(proxy_dict, objc_obj, proxy_obj);
 
@@ -133,8 +117,9 @@ object_del(PyObject* obj __attribute__((__unused__)))
 static void
 object_dealloc(PyObject* obj)
 {
-	/* XXX: This should not be necessary, but if we don't do this we
-	 * sometimes loose exception information...
+	/*
+  	 * Save exception information, needed because releasing the object
+	 * might clear or modify the exception state.
 	 */
 	PyObject* ptype, *pvalue, *ptraceback;
 	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
@@ -142,17 +127,10 @@ object_dealloc(PyObject* obj)
 	if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER 
 			&& PyObjCObject_GetObject(obj) != nil) {
 		/* Release the proxied object, we don't have to do this when
-		 * there is no proxied object!
+		 * there is no proxied object.
 		 */
 		unregister_proxy(PyObjCObject_GetObject(obj));
 
-
-		/* If the object is not yet initialized we try to initialize 
-		 * it before releasing the reference. This is necessary 
-		 * because of a misfeature of MacOS X: 
-		 * [[NSTextView alloc] release] crashes (at least upto 10.2)
-		 * and this is not a bug according to Apple.
-		 */
 		if (PyObjCObject_IsClassic(obj)) {
 			/* pass */
 
@@ -188,17 +166,7 @@ object_dealloc(PyObject* obj)
 		}
 	}
 
-#ifdef FREELIST_SIZE
-	/* Push self onto the freelist */
-	if (obj_freelist_top == FREELIST_SIZE) {
-		obj->ob_type->tp_free(obj);
-	} else {
-		obj_freelist[obj_freelist_top++] = obj;
-		obj->ob_refcnt = 0xDEADBEEF;
-	}
-#else
 	obj->ob_type->tp_free(obj);
-#endif
 
 	PyErr_Restore(ptype, pvalue, ptraceback);
 }
@@ -300,11 +268,11 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 		goto done;
 	}
 
-
 	obj_class = GETISA(obj_inst);
 	tp = (PyTypeObject*)PyObjCClass_New(obj_class);
 
 	descr = NULL;
+
 	if (tp != obj->ob_type) {
 		/* Workaround for KVO implementation feature */
 		PyObject* dict;
@@ -402,7 +370,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	     "'%.50s' object has no attribute '%.400s'",
 	     tp->tp_name, namestr);
 
-  done:
+done:
 	if (res != NULL) {
 		/* class methods cannot be accessed through instances */
 		if (PyObjCSelector_Check(res) 
@@ -429,9 +397,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	PyObject** dictptr;
 	int res = -1;
 	
-
-
-	if (!PyString_Check(name)){
+	if (!PyString_Check(name)) {
 #ifdef Py_USING_UNICODE
 		/* The Unicode to string conversion is done here because the
 		   existing tp_setattro slots expect a string object as name
@@ -449,9 +415,9 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 				name->ob_type->tp_name);
 			return -1;
 		}
-	}
-	else
+	} else {
 		Py_INCREF(name);
+	}
 
 	if (PyObjCObject_GetObject(obj) == nil) {
 		PyErr_Format(PyExc_AttributeError,
@@ -491,12 +457,14 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 			*dictptr = dict;
 		}
 		if (dict != NULL) {
-			if (value == NULL)
+			if (value == NULL) {
 				res = PyDict_DelItem(dict, name);
-			else
+			} else {
 				res = PyDict_SetItem(dict, name, value);
-			if (res < 0 && PyErr_ExceptionMatches(PyExc_KeyError))
+			}
+			if (res < 0 && PyErr_ExceptionMatches(PyExc_KeyError)) {
 				PyErr_SetObject(PyExc_AttributeError, name);
+			}
 			goto done;
 		}
 	}
@@ -517,37 +485,13 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 		     "'%.50s' object attribute '%.400s' is read-only",
 		     tp->tp_name, PyString_AS_STRING(name));
   done:
-
-#if 0
-	/* XXX: This would introduce some form of support for KeyValueObserving
-	 * but, I'm not sure if this is the right approach. If this is, this 
-	 * code needs more work: the name must be transformed to 
-	 * a KeyValueCoding key (e.g. '_name' -> 'name')
-	 */
-
-#if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-	/* KeyValueObserving support. If an attribute is changed by assignment,
-	 * send out the notification.
-	 */
-	if (!PyErr_Occurred()) {
-		id key = PyObjC_PythonToId(name);
-		if (key == NULL && PyErr_Occurred()) {
-			/* Cannot convert the name, ignore this */
-			PyErr_Clear();
-		} else {
-			[PyObjCObject_GetObject(obj) didChangeValueForKey:key];
-		}
-	}
-#endif
-
-#endif
-
 	Py_DECREF(name);
 	return res;
 }
 
 PyDoc_STRVAR(objc_get_real_class_doc, "Return the current ISA of the object");
-static PyObject* objc_get_real_class(PyObject* self, void* closure __attribute__((__unused__)))
+static PyObject* 
+objc_get_real_class(PyObject* self, void* closure __attribute__((__unused__)))
 {
 	id obj_object;
 	PyObject* ret;
@@ -555,7 +499,7 @@ static PyObject* objc_get_real_class(PyObject* self, void* closure __attribute__
 	assert(obj_object != nil);
 	ret = PyObjCClass_New(GETISA(obj_object));
 	if (ret != (PyObject*)self->ob_type) {
-		/* XXX doesn't this leak a reference to the original ob_type? */
+		Py_DECREF(self->ob_type);
 		self->ob_type = (PyTypeObject*)ret;
 		Py_INCREF(ret);
 	}
@@ -711,27 +655,11 @@ _PyObjCObject_NewDeallocHelper(id objc_object)
 		return NULL;
 	}
 
-#ifdef FREELIST_SIZE
-	if (obj_freelist_top == 0) {
-		res = cls_type->tp_alloc(cls_type, 0);
-		Py_DECREF(cls_type);
-		if (res == NULL) {
-			return NULL;
-		}
-	} else {
-		res = obj_freelist[obj_freelist_top-1];
-		obj_freelist_top -= 1;
-		if (res->ob_refcnt != 0xDEADBEEF) abort();
-		res->ob_refcnt = 1;
-		res->ob_type = cls_type;
-	}
-#else
 	res = cls_type->tp_alloc(cls_type, 0);
 	Py_DECREF(cls_type);
 	if (res == NULL) {
 		return NULL;
 	}
-#endif
 
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
@@ -794,27 +722,11 @@ PyObjCObject_New(id objc_object)
 		return NULL;
 	}
 
-#ifdef FREELIST_SIZE
-	if (obj_freelist_top == 0) {
-		res = cls_type->tp_alloc(cls_type, 0);
-		Py_DECREF(cls_type);
-		if (res == NULL) {
-			return NULL;
-		}
-	} else {
-		res = obj_freelist[obj_freelist_top-1];
-		obj_freelist_top -= 1;
-		if (res->ob_refcnt != 0xDEADBEEF) abort();
-		res->ob_refcnt = 1;
-		res->ob_type = cls_type;
-	}
-#else
 	res = cls_type->tp_alloc(cls_type, 0);
 	Py_DECREF(cls_type);
 	if (res == NULL) {
 		return NULL;
 	}
-#endif
 
 	/* This should be in the tp_alloc for the new class, but 
 	 * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
@@ -824,8 +736,6 @@ PyObjCObject_New(id objc_object)
 	assert(objc_object != nil);
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = 0;
-
-
 
 	if (strcmp(GETISA(objc_object)->name, "NSAutoreleasePool") != 0) {
 		/* NSAutoreleasePool doesn't like retain */
@@ -863,27 +773,11 @@ PyObjCObject_NewClassic(id objc_object)
 		return NULL;
 	}
 
-#ifdef FREELIST_SIZE
-	if (obj_freelist_top == 0) {
-		res = cls_type->tp_alloc(cls_type, 0);
-		Py_DECREF(cls_type);
-		if (res == NULL) {
-			return NULL;
-		}
-	} else {
-		res = obj_freelist[obj_freelist_top-1];
-		obj_freelist_top -= 1;
-		if (res->ob_refcnt != 0xDEADBEEF) abort();
-		res->ob_refcnt = 1;
-		res->ob_type = cls_type;
-	}
-#else
 	res = cls_type->tp_alloc(cls_type, 0);
 	Py_DECREF(cls_type);
 	if (res == NULL) {
 		return NULL;
 	}
-#endif
 
 	/* This should be in the tp_alloc for the new class, but 
 	 * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
@@ -908,7 +802,6 @@ PyObjCObject_NewUnitialized(id objc_object)
 	Class cls = GETISA(objc_object);
 	PyTypeObject* cls_type;
 	PyObject*     res;
-
 
 	res = find_existing_proxy(objc_object);
 	if (res) return res;
@@ -975,7 +868,6 @@ id
 void        
 PyObjCObject_ClearObject(PyObject* object)
 {
-	if (object == NULL) abort();
 	if (!PyObjCObject_Check(object)) {
 		PyErr_Format(PyExc_TypeError,
 			"'objc.objc_object' expected, got '%s'",

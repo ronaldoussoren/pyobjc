@@ -13,6 +13,9 @@
 
 - initWithPythonObject:(PyObject*)v;
 {
+	self = [super init];
+	if (!self) return nil;
+
 	Py_INCREF(v);
 	Py_XDECREF(value);
 	value = v;

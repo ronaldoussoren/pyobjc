@@ -72,6 +72,9 @@ static void object_method_takeValue_forKey_(
  * NOTE1: the meta_class field is first because poseAs: copies the class but
  *        not the meta class (on MacOS X <= 10.2)
  * NOTE2: That doesn't help, test_posing still crashes.
+ * XXX: Is this still relevant? The current code only refers to the struct
+ *      during the construction of the class, which means poseAs: probably 
+ *      works just fine (to be checked after 1.1)
  */
 #define MAGIC 0xDEADBEEF
 #define CLASS_WRAPPER(cls) ((struct class_wrapper*)(cls))
@@ -258,7 +261,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 /*
  * First step of creating a python subclass of an objective-C class
  *
- * Returns NULL or the newly created objective-C klass. 'class_dict' may
+ * Returns NULL or the newly created objective-C class. 'class_dict' may
  * be modified by this function.
  *
  * TODO:

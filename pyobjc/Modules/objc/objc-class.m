@@ -119,7 +119,7 @@ get_class_info(PyObject* class)
  *
  *    The key is the Objective-C class, the value is its wrapper.
  */
-static NSMapTable*	class_registry = NULL;
+static NSMapTable* class_registry = NULL;
 
 
 /*!
@@ -453,7 +453,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	info->delmethod = delmethod;
 	info->hasPythonImpl = 1;
 
-
 	PyObjCClass_SetClass(objc_class, res);
 
 	var = class_getInstanceVariable(objc_class, "__dict__");
@@ -533,7 +532,7 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 			}
 			info->method_magic = magic;
 			if (info->sel_to_py) {
-				Py_DECREF(info->sel_to_py);
+				Py_XDECREF(info->sel_to_py);
 				info->sel_to_py = PyDict_New();
 			}
 		}
@@ -1225,7 +1224,7 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 
 #ifdef  PyObjC_COMPILING_ON_MACOSX_10_1
 	/* On MacOSX we get hard crashes for the method signature of this
-	* method. This seems to be a problem with the Objective-C runtime 
+	 * method. This seems to be a problem with the Objective-C runtime 
 	 * and/or Cocoa because a simple ObjC program gives the same error.
 	 * 
 	 * As this method should never be forwarded to Python anyway we can
@@ -1510,9 +1509,8 @@ update_convenience_methods(PyObject* cls)
 			continue;
 		}
 	}
-
+	Py_DECREF(keys);
 	Py_DECREF(args);
 
 	return 0;
 }
-
