@@ -82,8 +82,12 @@ static inline int convert_id(PyObject* object, void* pvar)
 
 static inline int convert_SEL(PyObject* object, void* pvar)
 {
+        if (object == Py_None) {
+            *(SEL*)pvar = NULL;
+            return 1;
+        }
 	if (!PyString_Check(object)) {
-		PyErr_SetString(PyExc_TypeError, "Excpected string");
+		PyErr_SetString(PyExc_TypeError, "Expected string");
 		return 0;
 	}
 
@@ -94,7 +98,7 @@ static inline int convert_SEL(PyObject* object, void* pvar)
 static inline int convert_Class(PyObject* object, void* pvar)
 {
 	if (!PyObjCClass_Check(object)) {
-		PyErr_SetString(PyExc_TypeError, "Excpected objective-C class");
+		PyErr_SetString(PyExc_TypeError, "Expected objective-C class");
 		return 0;
 	}
 
@@ -341,7 +345,7 @@ def process_function(fp, protostr):
 
 	fp.write("\n")
 
-	fp.write('\tif (PyArg_ParseTupleAndKeywords(args, kwds, "%s:%s", keywords%s) < 0) return NULL;\n'%(fmt, funcname, arglist))
+	fp.write('\tif (!PyArg_ParseTupleAndKeywords(args, kwds, "%s:%s", keywords%s)) return NULL;\n'%(fmt, funcname, arglist))
 
 	fp.write("\tNS_DURING\n")
 	if retval != 'void':

@@ -372,7 +372,6 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 
 		cls = PyObjCClass_GetClass(item);
 		if (cls == nil) {
-			PyErr_Print();
 			PyErr_Clear();
 			continue;
 		}

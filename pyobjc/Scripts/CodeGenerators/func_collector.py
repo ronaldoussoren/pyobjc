@@ -38,7 +38,7 @@ def process_file(outfp, filename, match_prefix='', ignore_list=()):
 
                 ign = 0
                 for i in ignore_list:
-                    if i in prototype:
+                    if prototype.find(i) != -1:
                         ign=1
                         break
 
