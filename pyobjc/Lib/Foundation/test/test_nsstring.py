@@ -70,7 +70,8 @@ class TestNSStringBridging(unittest.TestCase):
         self.assert_(isinstance(self.pyUniString, unicode))
 
     def testStrConversion(self):
-        curEnabledFlag = objc.setStrBridgeEnabled(True)
+        curEnabledFlag = objc.getStrBridgeEnabled()
+        objc.setStrBridgeEnabled(True)
         try:
             v = NSString.stringWithString_("hello")
             self.assert_(isinstance(v, objc.pyobjc_unicode))
