@@ -1,3 +1,7 @@
+2003-02-15  Bill Bumgarner  <bbum@codefab.com>
+    * Modules/Cocoa/NSAutoreleasePoolSupport.m: Fixed a really stupid memory
+      leak in pop pool.
+
 2003-02-06  Bill Bumgarner  <bbum@codefab.com>
     * Lib/Foundation/test/test_nsstring.py: Added another test from David
       E. that demonstrates issues with string encoding.

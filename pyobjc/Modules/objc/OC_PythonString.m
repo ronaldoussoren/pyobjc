@@ -1,49 +1,84 @@
-/* Copyright (c) 1996,97 by Lele Gaifax.  All Rights Reserved
- *
- * This software may be used and distributed freely for any purpose
- * provided that this notice is included unchanged on any and all
- * copies. The author does not warrant or guarantee this software in
- * any way.
- *
- * This file is part of the PyObjC package.
- *
- * RCSfile: OC_PythonString.m,v
- * Revision: 1.9
- * Date: 1998/01/04 17:59:22
- *
- * Created Thu Sep  5 19:49:36 1996.
- */
-
 #include "OC_PythonString.h"
+#include "pyobjc.h"
+#include "objc_support.h"
 
 @implementation OC_PythonString
-
-+ (id <PythonObject>) fromString:(char *) str andSize:(int) size
++newWithPythonObject:(PyObject*)v;
 {
-	PyObject *pystr = PyString_FromStringAndSize (str, size);
-	id <PythonObject> result = [self newWithObject:pystr];
-
-	Py_DECREF(pystr);
-	return result;
+    OC_PythonString* res = [[OC_PythonString alloc] initWithPythonObject:v];
+    [res autorelease];
+    return res;
 }
 
-+ (id <PythonObject>) fromString:(char *) str
+-initWithPythonObject:(PyObject*)v;
 {
-	PyObject *pystr = PyString_FromString(str);
-	id <PythonObject> result = [self newWithObject:pystr];
+    value = v;
 
-	Py_DECREF(pystr);
-	return result;
+    if (PyString_Check(value)) {
+	char *buffer;
+	int length;
+	int result;
+
+	result = PyString_AsStringAndSize(value, &buffer, &length);
+	if(result == -1) {
+	    ObjCErr_ToObjC();
+	    [self release];
+	    return nil; // not reached
+	}
+	stringValue = CFStringCreateWithCStringNoCopy(NULL,
+						      buffer,
+						      kCFStringEncodingUTF8,
+						      kCFAllocatorNull);
+	_internalRep = NULL;
+    } else if (PyUnicode_Check(value)) {
+	char *buffer;
+	int length;
+	int result;
+#warning Is there a way to determine what the encoding of value is and instantiate a CFString directly?
+	_internalRep = PyUnicode_AsUTF8String(value);
+	result = PyString_AsStringAndSize(_internalRep, &buffer, &length);
+	if(result == -1) {
+	    ObjCErr_ToObjC();
+	    [self release];
+	    return nil;
+	}
+
+	stringValue = CFStringCreateWithCStringNoCopy(NULL,
+						      buffer,
+						      kCFStringEncodingUTF8,
+						      kCFAllocatorNull);
+    }
+
+    Py_INCREF(value);
+    
+    return self;
 }
 
-- (int) size
+-(PyObject*)__pyobjc_PythonObject__
 {
-	return PyString_Size([self  pyObject]);
+	Py_INCREF(value);
+	return value;
 }
 
-- (char *) asString
+-(void)dealloc
 {
-	return PyString_AsString([self  pyObject]);
+    CFRelease(stringValue);
+    Py_XDECREF(value);
+    Py_XDECREF(_internalRep);
+    [super dealloc];
 }
 
-@end /* OC_PythonString class implementation */
+- (unsigned int)length;
+{
+    int result;
+    result = CFStringGetLength(stringValue);
+    return result;
+}
+
+- (unichar)characterAtIndex:(unsigned)index;
+{
+    UniChar result;
+    result = CFStringGetCharacterAtIndex(stringValue, index);
+    return result;
+}
+@end

@@ -1,44 +1,29 @@
-/* Copyright (c) 1996,97 by Lele Gaifax.  All Rights Reserved
+#ifndef OC_PythonString_h
+#define OC_PythonString_h
+
+#import <CoreFoundation/CoreFoundation.h>
+#import <Foundation/NSString.h>
+#include "Python.h"
+
+/*
+ * OC_PythonString - Objective-C proxy class for Python strings
  *
- * This software may be used and distributed freely for any purpose
- * provided that this notice is included unchanged on any and all
- * copies. The author does not warrant or guarantee this software in
- * any way.
- *
- * This file is part of the PyObjC package.
- *
- * RCSfile: OC_PythonString.h,v
- * Revision: 1.8
- * Date: 1998/01/04 17:59:21
- *
- * Created Thu Sep  5 19:46:45 1996.
+ * Instances of this class are used as proxies for Python strings 
+ * when these are passed to Objective-C code. Because this class is
+ * a subclass of NSString Python sequences can be used everywhere
+ * where NSString is used.  Python strings are immutable.
  */
 
-#ifndef _OC_PythonString_H
-#define _OC_PythonString_H
-
-#include "OC_PythonObject.h"
-
-/*#C This class wraps a PyString object, making it easier to handle this
-  kind of objects from Objective-C.  */
-@interface OC_PythonString : OC_PythonObject
+@interface OC_PythonString:NSString
 {
+    PyObject* value;
+    PyObject* _internalRep;
+    CFStringRef stringValue;
 }
 
-/*#M Returns a new autoreleased PyString object with @var{str} of
-  length @var{size} as contents. */
-+ (id <PythonObject>) fromString:(char *) str andSize:(int) size;
-
-//#M Returns a new autoreleased PyString object with @var{str} as contents.
-+ (id <PythonObject>) fromString:(char *) str;
-
-//#M Returns the size of the string.
-- (int) size;
-
-//#M Returns the ``C'' equivalent.
-- (char *) asString;
-
-@end /* OC_PythonString class interface */
-
-
-#endif /* _OC_PythonString_H */
++newWithPythonObject:(PyObject*)value;
+-initWithPythonObject:(PyObject*)value;
+-(void)dealloc;
+-(PyObject*)__pyobjc_PythonObject__;
+@end
+#endif
