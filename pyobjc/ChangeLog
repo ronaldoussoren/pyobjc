@@ -3,6 +3,20 @@
     * I've done some updates to make ensure that there are no patches to
       generated files.
 
+2003-01-06  Bill Bumgarner  <bbum@codefab.com>
+    * Doc/coding-style.txt: Added more information about ReST.  Some cleanup.
+    * Modules/objc/module.m: Added convenience function to allocate a buffer
+    via PyBuffer API (result is a buffer with a fixed length / location --
+    useful with NSData and NSBIR).
+    * Modules/Cocoa/NSAutoreleasePoolSupport.m: Now thread safe.
+
+2003-01-05  Bill Bumgarner  <bbum@codefab.com>
+    * test_nsbitmapimagerep.py: Data test now passes.  Deeper investigation
+    revealed that there is no easy way to unify the types passed into an
+    NSBIR and what is returned by -bitmapData/-getBitmapDataPlanes.  Namely,
+    there is no way to produce a read/write buffer from an array.array()
+    without dipping directly into the C API.
+
 2002-01-05  Ronald Oussoren <oussoren@cistron.nl>
     * Merged initial version of GNUstep support by Mirko Viviani 
       <mirko@objectlab.org>
