@@ -164,6 +164,7 @@ signature_to_ffi_type(const char* argtype)
  * calls the python method and finally encodes the return value
  *
  * TODO: Check that this implements the reverse of ObjC_FFICaller
+ * TODO2: Do not use NSMethodSignature
  */
 static void 
 method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
@@ -296,6 +297,8 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 /* 
  * Return an IMP that is suitable for forwarding a method with the specified
  * signature from Objective-C to Python.
+ *
+ * TODO: Do not use NSMethodSignature
  */
 IMP
 ObjC_MakeIMPForSignature(char* signature)
@@ -384,7 +387,6 @@ ObjC_MakeIMPForSignature(char* signature)
  * Changes w.r.t. execute_and_...
  * - All arguments are stored in 'argbuf', not only the structs
  * - libffi support
- * - Accept strings as 'self' argument, and convert them to NSString
  */
 PyObject *
 ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
@@ -500,7 +502,10 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	/* Set 'self' argument, for class methods we use the class */ 
 	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
 		if (ObjCObject_Check(self)) {
-			self_obj = ObjCObject_GetObject(self)->isa;
+			self_obj = ObjCObject_GetObject(self);
+			if (self_obj != NULL) {
+				self_obj = GETISA(self_obj);
+			}
 		} else if (ObjCClass_Check(self)) {
 			self_obj = ObjCClass_GetClass(self);
 		} else {
@@ -523,7 +528,11 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	}
 
 	super.receiver = self_obj;
-	super.class = meth->sel_class;
+	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
+		super.class = GETISA(meth->sel_class);
+	} else {
+		super.class = meth->sel_class;
+	}
 
 	if (sizeof(id) >= resultSize) {
 		arglistOffset = 0;

@@ -70,9 +70,8 @@ static PyObject* supercall_NSData_dataWithBytes_length_(
 	}
 
 	NS_DURING
-#warning correct use of getclass()?
 		RECEIVER(super) = ObjCClass_GetClass(self);
-		super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+		super.class = GETISA(ObjCClass_GetClass((PyObject*)(self->ob_type)));
 
 		objc_result = objc_msgSendSuper(&super,
 				@selector(dataWithBytes:length:),
@@ -135,6 +134,7 @@ static PyObject* call_NSData_initWithBytes_length_(
 	int       len;
 	PyObject* result;
 	id        objc_result;
+	id	  self_obj;
 
 	if  (PyArg_ParseTuple(arguments, "t#i", &bytes, &bytes_len, &len) < 0) {
 		return NULL;
@@ -145,12 +145,26 @@ static PyObject* call_NSData_initWithBytes_length_(
 		return NULL;
 	}
 
+	self_obj =  ObjCObject_GetObject(self);
 	NS_DURING
-		objc_result = objc_msgSend(ObjCObject_GetObject(self),
+		[self_obj retain];
+		objc_result = objc_msgSend(self_obj,
 				@selector(initWithBytes:length:),
 				bytes, len);
+		[self_obj release];
 		result = ObjC_IdToPython(objc_result);
+
+		/* XXX Ronald: If you try to use the result of 
+		 * ObjCObject_GetObject(self) after the call to objc_msgSend 
+		 * it will crash with large enough values of len (>=32). 
+		 * Appearently the original self is recycled during the init.
+		 */
+		if (self != result) {
+			ObjCObject_ClearObject(self);
+		}
+
 	NS_HANDLER
+		[self_obj release];
 		ObjCErr_FromObjC(localException);
 		result = NULL;
 	NS_ENDHANDLER
@@ -185,6 +199,15 @@ static PyObject* supercall_NSData_initWithBytes_length_(
 				@selector(initWithBytes:length:),
 				bytes, len);
 		result = ObjC_IdToPython(objc_result);
+
+		/* XXX Ronald: If you try to use the result of 
+		 * ObjCObject_GetObject(self) after the call to objc_msgSend 
+		 * it will crash with large enough values of len (>=32). 
+		 * Appearently the original self is recycled during the init.
+		 */
+		if (self != result) {
+			ObjCObject_ClearObject(self);
+		}
 	NS_HANDLER
 		ObjCErr_FromObjC(localException);
 		result = NULL;

@@ -14,7 +14,7 @@
  * - This interface is in development, the the API will probably change in
  *   incompatible ways.
  *
- * $Id: pyobjc-api.h,v 1.5 2003/01/03 21:35:19 bbum Exp $
+ * $Id: pyobjc-api.h,v 1.6 2003/01/11 15:12:22 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -66,6 +66,9 @@ struct pyobjc_api {
 	/* ObjCObject_GetObject */
 	id (*obj_get_object)(PyObject*);
 
+	/* ObjCObject_ClearObject */
+	void (*obj_clear_object)(PyObject*);
+
 	/* ObjCClass_GetClass */
 	Class (*cls_get_class)(PyObject*);
 
@@ -116,6 +119,7 @@ static struct pyobjc_api*	ObjC_API;
 #define ObjCSelector_Check(obj)  PyObject_TypeCheck(obj, ObjC_API->class_type)
 
 #define ObjCObject_GetObject (ObjC_API->obj_get_object)
+#define ObjCObject_ClearObject (ObjC_API->obj_clear_object)
 #define ObjCClass_GetClass   (ObjC_API->cls_get_class)
 #define ObjCClass_New 	     (ObjC_API->cls_to_python)
 #define ObjCSelector_GetClass (ObjC_API->sel_get_class)

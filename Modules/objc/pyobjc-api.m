@@ -66,6 +66,7 @@ struct pyobjc_api objc_api = {
 	ObjC_RegisterMethodMapping,	/* register_method_mapping */
 	ObjC_RegisterSignatureMapping,	/* register_signature_mapping */
 	ObjCObject_GetObject,		/* obj_get_object */
+	ObjCObject_ClearObject,		/* obj_clear_object */
 	ObjCClass_GetClass,		/* cls_get_class */
 	ObjCClass_New,			/* cls_to_python */
 	python_to_id,			/* python_to_id */

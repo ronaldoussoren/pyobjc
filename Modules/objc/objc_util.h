@@ -27,18 +27,18 @@ char* ObjC_strdup(const char* value);
 void ObjC_AcquireGIL(void);
 void ObjC_ReleaseGIL(void);
 
-#define OBJC_BEGIN_OBJC_CALL { ObjC_ReleaseGIL();
-#define OBJC_END_OBJC_CALL ObjC_AcquireGIL(); }
-#define OBJC_BEGIN_PYTHON_CALL { ObjC_AcquireGIL();
-#define OBJC_END_PYTHON_CALL ObjC_ReleaseGIL(); }
+#define ObjC_BEGIN_OBJC_CALL { ObjC_ReleaseGIL();
+#define ObjC_END_OBJC_CALL ObjC_AcquireGIL(); }
+#define ObjC_BEGIN_PYTHON_CALL { ObjC_AcquireGIL();
+#define ObjC_END_PYTHON_CALL ObjC_ReleaseGIL(); }
 
 #else 
 
-#define OBJC_BEGIN_OBJC_CALL {
-#define OBJC_END_OBJC_CALL }
+#define ObjC_BEGIN_OBJC_CALL {
+#define ObjC_END_OBJC_CALL }
 
-#define OBJC_BEGIN_PYTHON_CALL {
-#define OBJC_END_PYTHON_CALL }
+#define ObjC_BEGIN_PYTHON_CALL {
+#define ObjC_END_PYTHON_CALL }
 
 #endif /* No multithread support */
 

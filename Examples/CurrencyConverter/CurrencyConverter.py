@@ -1,13 +1,34 @@
+import time
+def before(txt = None):
+    global b
+    if txt is not None:
+        print time.ctime(), txt
+    b = time.time()
+
+def after(txt):
+    global b
+    e = time.time()
+    print time.ctime(), txt, e - b
+    b = e
+
+before('import sys')
 import sys
+after('import sys')
 from Foundation import NSObject
+after('import Foundation')
 from AppKit import NSApplicationMain, NibClassBuilder
+after('import AppKit')
 from objc import *
+after('import objc')
 
 NibClassBuilder.extractClasses('MainMenu.nib')
+after('extractClasses')
 
 class Converter (NibClassBuilder.AutoBaseClass):
     def convertAmount(self, amt, rate):
         return amt*rate
+
+after('class Converter')
         
 class ConverterController (NibClassBuilder.AutoBaseClass):
 
@@ -28,4 +49,8 @@ class ConverterController (NibClassBuilder.AutoBaseClass):
         self.totalField.setFloatValue_(total)
         self.rateField.selectText_(self)
 
+after('class ConverterController')
+
 sys.exit(NSApplicationMain(sys.argv))
+
+after('NSApplicationMain')

@@ -625,7 +625,7 @@ def  make_super_forwarder(idx, types):
 	print '\t\tPyErr_SetString(PyExc_TypeError, "Cannot convert self");'
 	print '\t\treturn NULL;'
 	print '\t} ' + \
-		'\tsuper.receiver = objc_self;' # same as c version
+		'\tRECEIVER(super) = objc_self;' # same as c version
 	print '\tsuper.class = ObjCSelector_GetClass(meth);'
 
 	for i in range(3, len(types)):

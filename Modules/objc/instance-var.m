@@ -53,7 +53,12 @@ ivar_descr_get(ObjCIvar* self, PyObject* obj, PyObject* type)
 		    "objc_ivar descriptor on a non-objc object");
 		return NULL;
 	}
-	objc = ((ObjCObject*)obj)->objc_object;
+	objc = ObjCObject_GetObject(obj);
+	if (objc == NULL) {
+		PyErr_SetString(PyExc_TypeError,
+		   "Cannot access Objective-C instance-variables of NULL");
+		return NULL;
+	}
 
 	var = class_getInstanceVariable([objc class], self->name);
 	if (var == NULL) {
@@ -94,7 +99,12 @@ ivar_descr_set(ObjCIvar* self, PyObject* obj, PyObject* value)
 		    "objc_ivar descriptor on a non-objc object");
 		return -1;
 	}
-	objc = ((ObjCObject*)obj)->objc_object;
+	objc = ObjCObject_GetObject(obj); 
+	if (objc == NULL) {
+		PyErr_SetString(PyExc_TypeError,
+		   "Cannot access Objective-C instance-variables of NULL");
+		return NULL;
+	}
 
 	var = class_getInstanceVariable([objc class], self->name);
 	if (var == NULL) {

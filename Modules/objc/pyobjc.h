@@ -79,6 +79,7 @@ void ObjCClass_CheckMethodList(PyObject* cls);
 PyObject* ObjCObject_New(id objc_object);
 PyObject* ObjCObject_FindSelector(PyObject* cls, SEL selector);
 id 	  ObjCObject_GetObject(PyObject* object);
+void 	  ObjCObject_ClearObject(PyObject* object);
 #define   ObjCObject_GetObject(object) (((ObjCObject*)(object))->objc_object)
 
 

@@ -79,9 +79,9 @@ CONVENIENCE_METHODS['count'] = (
     ('__len__', lambda self: self.count()),
 )
 
-CONVENIENCE_METHODS['description'] = (
-    ('__repr__', lambda self: self.description()),
-)
+#CONVENIENCE_METHODS['description'] = (
+    #('__repr__', lambda self: self.description()),
+#)
 
 CONVENIENCE_METHODS['containsObject:'] = (
     ('__contains__', lambda self, elem: (self.containsObject_(elem) != 0)),
