@@ -7,7 +7,7 @@ This module contains no user callable code.
 TODO:
 - Add external interface: Framework specific modules may want to add to this.
 """
-from _objc import setClassExtender, selector, lookUpClass, currentBundle
+from _objc import setClassExtender, selector, lookUpClass, currentBundle, ivar
 from itertools import imap
 
 __all__ = ['CONVENIENCE_METHODS', 'CLASS_METHODS']
@@ -372,6 +372,18 @@ NSNull = lookUpClass('NSNull')
 NSArray = lookUpClass('NSArray')
 null = NSNull.null()
 
+class PyObjCUtilWrap(NSObject):
+    __useKVO__ = False
+    __slots__ = ()
+    tmp = ivar('tmp')
+    def wrap_(self, anObject):
+        self.tmp = anObject
+        return self.tmp
+
+def number_wrap(v):
+    # we should have a nicer way to cross the bridge
+    return PyObjCUtilWrap.alloc().init().wrap_(v)
+
 def container_wrap(v):
     if v is None:
         return null
@@ -413,25 +425,25 @@ def _num_to_python(v):
     return v
 
 def __abs__CFNumber(numA):
-    return abs(_num_to_python(numA))
+    return number_wrap(abs(_num_to_python(numA)))
 
 def __add__CFNumber(numA, numB):
-    return _num_to_python(numA) + _num_to_python(numB)
+    return number_wrap(_num_to_python(numA) + _num_to_python(numB))
 
 def __and__CFNumber(numA, numB):
-    return _num_to_python(numA) & _num_to_python(numB)
+    return number_wrap(_num_to_python(numA) & _num_to_python(numB))
 
 def __div__CFNumber(numA, numB):
-    return _num_to_python(numA) / _num_to_python(numB)
+    return number_wrap(_num_to_python(numA) / _num_to_python(numB))
 
 def __divmod__CFNumber(numA, numB):
-    return divmod(_num_to_python(numA), _num_to_python(numB))
+    return number_wrap(divmod(_num_to_python(numA), _num_to_python(numB)))
 
 def __float__CFNumber(numA):
     return numA.doubleValue()
 
 def __floordiv__CFNumber(numA, numB):
-    return _num_to_python(numA) // _num_to_python(numB)
+    return number_wrap(_num_to_python(numA) // _num_to_python(numB))
 
 def __hex__CFNumber(numA):
     return hex(_num_to_python(numA))
@@ -440,49 +452,49 @@ def __int__CFNumber(numA):
     return numA.longValue()
 
 def __invert__CFNumber(numA):
-    return ~_num_to_python(numA)
+    return number_wrap(~_num_to_python(numA))
 
 def __long__CFNumber(numA):
     return numA.longLongValue()
 
 def __lshift__CFNumber(numA, numB):
-    return _num_to_python(numA) << _num_to_python(numB)
+    return number_wrap(_num_to_python(numA) << _num_to_python(numB))
 
 def __rshift__CFNumber(numA, numB):
-    return _num_to_python(numA) >> _num_to_python(numB)
+    return number_wrap(_num_to_python(numA) >> _num_to_python(numB))
 
 def __mod__CFNumber(numA, numB):
-    return _num_to_python(numA) % _num_to_python(numB)
+    return number_wrap(_num_to_python(numA) % _num_to_python(numB))
 
 def __mul__CFNumber(numA, numB):
-    return _num_to_python(numA) * _num_to_python(numB)
+    return number_wrap(_num_to_python(numA) * _num_to_python(numB))
 
 def __neg__CFNumber(numA):
-    return -_num_to_python(numA)
+    return number_wrap(-_num_to_python(numA))
 
 def __oct__CFNumber(numA):
     return oct(_num_to_python(numA))
 
 def __or__CFNumber(numA, numB):
-    return _num_to_python(numA)  | _num_to_python(numB)
+    return number_wrap(_num_to_python(numA)  | _num_to_python(numB))
 
 def __pos__CFNumber(numA):
-    return +_num_to_python(numA)
+    return +number_wrap(_num_to_python(numA))
 
 def __pow__CFNumber(numA, numB, modulo=None):
     if modulo is None:
-        return _num_to_python(numA)  ** _num_to_python(numB)
+        return number_wrap(_num_to_python(numA)  ** _num_to_python(numB))
     else:
-        return pow(_num_to_python(numA), _num_to_python(numB), modulo)
+        return number_wrap(pow(_num_to_python(numA), _num_to_python(numB), modulo))
 
 def __sub__CFNumber(numA, numB):
-    return _num_to_python(numA)  - _num_to_python(numB)
+    return number_wrap(_num_to_python(numA)  - _num_to_python(numB))
 
 def __truediv__CFNumber(numA, numB):
-    return _num_to_python(numA) / _num_to_python(numB)
+    return number_wrap(_num_to_python(numA) / _num_to_python(numB))
 
 def __xor__CFNumber(numA, numB):
-    return _num_to_python(numA)  ^ _num_to_python(numB)
+    return number_wrap(_num_to_python(numA)  ^ _num_to_python(numB))
 
 def __nonzero__CFNumber(numA):
     return bool(numA.boolValue())
