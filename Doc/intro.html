@@ -148,6 +148,10 @@ for translation are:</p>
 <li>Concatenate all elements of the method name: <code><span>someMethod:withFoo:andBar:</span></code></li>
 <li>Then convert all colons to underscores: <code><span>someMethod_withFoo_andBar_</span></code></li>
 </ul>
+<p>It is possible to use Python keywords as method names in Objective-C. To access
+or define such methods append two underscores to its name (e.g. <code><span>class__</span></code>). 
+This is currently only supported for <code><span>raise</span></code> and <code><span>class</span></code> because those are
+the only Python keywords that are actually used in Cocoa.</p>
 <p>Wrapped/bridged methods (and functions) have the same number of arguments
 as the corresponding Objective-C method or function, unless otherwise noted
 in the documentation (<a href="api-notes-macosx.html">Notes on supported APIs and classes on MacOS X</a> for
@@ -183,6 +187,13 @@ named <code><span>getNumberOfRows_columns_</span></code> with the following sign
 <pre>
 rowCount, columnCount = matrix.getNumberOfRows_columns_()
 </pre>
+<p>When a function or method has an array of values and the length of that array
+as arguments, you can pass <code><span>None</span></code> as the length. The length of the sequence
+that is used for the array of values is passed to Objective-C as the length
+argument.</p>
+<p>XXX: Add information about <code><span>array.array</span></code> rules.</p>
+<p>XXX: We don't use the right functions for conversion to C-arrays throughout
+the bridge (yet), the information is therefore not entirely correct.</p>
 <p>When you define methods in a subclass of an Objective-C class, the bridge has
 to tell the Objective-C runtime what the signature of those methods is. The
 basic rule is that all arguments as well as the return value are objects (just

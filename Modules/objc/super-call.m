@@ -372,7 +372,7 @@ PyObjCUnsupportedMethod_Caller(
 	repr = PyObject_Repr(self);
 	if (repr == NULL || !PyString_Check(repr)) {
 		Py_XDECREF(repr);
-		PyErr_Format(
+		PyErr_Format(PyExc_TypeError,
 			"Cannot call '%s' on instances of '%s' from Python",
 			PyObjCRT_SELName(PyObjCSelector_GetSelector(meth)),
 			self->ob_type->tp_name);

@@ -456,6 +456,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	return res;
 }
 
+#if 0 /* No longer used */
 PyDoc_STRVAR(obj_get_classMethods_doc,
 "The attributes of this field are the class methods of this object. This can\n"
 "be used to force access to a class method."
@@ -465,6 +466,7 @@ obj_get_classMethods(PyObjCObject* self, void* closure __attribute__((__unused__
 {
 	return ObjCMethodAccessor_New((PyObject*)self, 1);
 }
+#endif
 
 PyDoc_STRVAR(obj_get_instanceMethods_doc,
 "The attributes of this field are the instance methods of this object. This\n"

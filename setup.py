@@ -321,7 +321,7 @@ if gs_root is None:
         "-Wno-import",
         #"-O0", "-g",
         #"-Werror",
-        "-O3", "-mcpu=7450", "-maltivec",
+        #"-O3", "-mcpu=7450", "-maltivec",
         ]
 
     OBJC_LDFLAGS=[
@@ -530,18 +530,18 @@ AddressBookPackages, AddressBookExtensions = \
 
 
 SecurityInterfacePackages, SecurityInterfaceExtensions = [], []
-#SecurityInterfacePackages, SecurityInterfaceExtensions = \
-#        IfFrameWork('SecurityInterface.framework', [ 'SecurityInterface' ], [
-#            Extension('SecurityInterface._SecurityInterface',
-#                      [ 'Modules/SecurityInterface/_SecurityInterface.m' ],
-#                      extra_compile_args=[
-#                        '-IModules/objc',
-#                      ] + CFLAGS,
-#                      extra_link_args=[
-#                      ] + SECURITY_INTERFACE_LDFLAGS,
-#                      **SecurityInterfaceDepends
-#                      ),
-#        ])
+SecurityInterfacePackages, SecurityInterfaceExtensions = \
+        IfFrameWork('SecurityInterface.framework', [ 'SecurityInterface' ], [
+            Extension('SecurityInterface._SecurityInterface',
+                      [ 'Modules/SecurityInterface/_SecurityInterface.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=[
+                      ] + SECURITY_INTERFACE_LDFLAGS,
+                      **SecurityInterfaceDepends
+                      ),
+        ])
 
 PrefPanesPackages, PrefPanesExtensions = \
         IfFrameWork('PreferencePanes.framework', [ 'PreferencePanes' ], [

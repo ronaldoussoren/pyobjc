@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Clean up any previous installs
+# The new release might include fewer files than the previous one.
+rm -rf /Library/Python/2.3/PyObjC
+
+# Likewise for PB templates and documentation
+rm -rf "/Library/Application Support/Apple/Developer Tools/Project Templates/Application/Cocoa-Python Application"
+rm -rf "/Library/Application Support/Apple/Developer Tools/Project Templates/Application/Cocoa-Python Documented-based Application"
+rm -rf "/Library/Application Support/Apple/Developer Tools/Project Templates/Application/Cocoa-Python-ObjC Documented-based Application"
+rm -rf "/Library/Application Support/Apple/Developer Tools/Project Templates/Application/Cocoa-Python-ObjC Application"
+
+exit 0

@@ -16,6 +16,9 @@ DOC_ONLY=0
 USAGE='Usage: %s [-p python | --with-python=%s] [-h|--help] [-o release-dir|--output-directory=release-dir]\n'%(
         sys.argv[0], sys.executable)
 
+osvers = os.popen('sw_vers | grep ProductVersion').readline().strip().split()[-1]
+osvers = '.'.join(osvers.split('.')[:2])
+
 PYTHON=sys.executable
 
 def rest2HTML(irrelevant, dirName, names):
@@ -111,7 +114,7 @@ if not basedir:
 
 print "Generating HTML documentation"
 os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
-rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt', 'Installer Package/ReadMe.txt', 'ProjectBuilder Extras/Project Templates/00README.txt'])
+rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt', 'Installer Package/10.2/ReadMe.txt', 'Installer Package/10.3/ReadMe.txt', 'ProjectBuilder Extras/Project Templates/00README.txt'])
 os.rename('ProjectBuilder Extras/Project Templates/00README.html', 'Doc/ProjectBuilder-Templates.html')
 
 if DOC_ONLY:
@@ -124,7 +127,10 @@ fd = os.popen("'%s' setup.py sdist -d '%s'"%(
 for ln in fd.xreadlines():
         sys.stdout.write(ln)
 
-
+#
+# NOTE: We first install our scripts into the python tree and later on move
+# them to /usr/local to avoid clobbering a /usr/local symlink installed by
+# the user.
 print "Running: '%s' setup.py install --prefix='%s/package%s' --install-scripts=%s/package%s/lib/python%s/site-packages/PyObjC/bin"%(
         escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir), escquotes(BUILDDIR), escquotes(basedir), PYTHONVER)
 fd = os.popen("'%s' setup.py install --prefix='%s/package%s' --install-scripts=%s/package%s/lib/python%s/site-packages/PyObjC/bin"%(
@@ -132,19 +138,30 @@ fd = os.popen("'%s' setup.py install --prefix='%s/package%s' --install-scripts=%
 for ln in fd.xreadlines():
         sys.stdout.write(ln)
 
+if osvers != '10.2':
+    # Move the python packages into the right location, 'site-packages' is a
+    # symlink on Panther and we don't want to clobber that.
+    makeDir(BUILDDIR, 'package', 'Library', 'Python', str(PYTHONVER))
+    os.rename(
+        '%s/package%s/lib/python%s/site-packages/PyObjC'%(BUILDDIR, basedir, PYTHONVER),
+        '%s/package/Library/Python/%s/PyObjC'%(BUILDDIR, PYTHONVER))
+    os.rename(
+        '%s/package%s/lib/python%s/site-packages/PyObjC.pth'%(BUILDDIR, basedir, PYTHONVER),
+        '%s/package/Library/Python/%s/PyObjC.pth'%(BUILDDIR, PYTHONVER))
+
 print "Copying readme and license"
-shutil.copyfile("Installer Package/ReadMe.html", os.path.join(OUTPUTDIR, "ReadMe First.html"))
+shutil.copyfile("Installer Package/%s/ReadMe.html"%(osvers,), os.path.join(OUTPUTDIR, "ReadMe First.html"))
 shutil.copyfile("License.txt", os.path.join(OUTPUTDIR, "License.txt"))
 
-print "Setting up developer templates"
 
+print "Building installer for %s"%(osvers,)
 nastyFiles = ['.DS_Store', '.gdb_history']
 
 def killNasties(irrelevant, dirName, names):
         for aName in names:
                 if aName in nastyFiles:
                         os.remove( os.path.join(dirName, aName) )
-        if dirName.find(".pbproj") > 0:
+        if dirName.find(".pbproj") > 0 and dirName.find('.xcode') > 0:
                 for aName in names:
                         if aName.find(".pbxuser") > 0:
                                 os.remove( os.path.join(dirName, aName) )
@@ -154,21 +171,43 @@ def killNasties(irrelevant, dirName, names):
 
 basedir = '%s/package'%(BUILDDIR)
 
-makeDir(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application')
-templateDestination = os.path.join(basedir, 'Developer', 'ProjectBuilder Extras',
-                                   'Project Templates', 'Application')
 
-templateDir = os.path.join('ProjectBuilder Extras', 'Project Templates')
-for dname in os.listdir(templateDir):
-    if dname == 'CVS': continue
-    path = os.path.join(templateDir, dname)
-    if not os.path.isdir(path): continue
-    shutil.copytree(path, os.path.join(templateDestination, dname))
+if osvers == '10.2':
+    print "Setting up Project Builder templates"
+    makeDir(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application')
+    templateDestination = os.path.join(basedir, 
+            'Developer', 'ProjectBuilder Extras', 
+            'Project Templates', 'Application')
 
-print "Setting up project builder Python language specifications"
-makeDir(basedir, 'Developer', 'ProjectBuilder Extras')
-pbxSpecificationsDestination = os.path.join(basedir, 'Developer', 'ProjectBuilder Extras', 'Specifications')
-shutil.copytree(os.path.join('ProjectBuilder Extras','Specifications'), pbxSpecificationsDestination)
+    templateDir = os.path.join('ProjectBuilder Extras', 'Project Templates')
+    for dname in os.listdir(templateDir):
+        if dname == 'CVS': continue
+        path = os.path.join(templateDir, dname)
+        if not os.path.isdir(path): continue
+        shutil.copytree(path, os.path.join(templateDestination, dname))
+
+    print "Setting up Project Builder Python language specifications"
+    makeDir(basedir, 'Developer', 'ProjectBuilder Extras')
+    pbxSpecificationsDestination = os.path.join(basedir, 'Developer', 'ProjectBuilder Extras', 'Specifications')
+    shutil.copytree(os.path.join('ProjectBuilder Extras','Specifications'), pbxSpecificationsDestination)
+
+elif osvers == '10.3':
+    print "Setting up Xcode templates"
+    makeDir(basedir, 
+            'Library', 'Application Support', 'Apple', 
+            'Developer Tools', 'Project Templates')
+    templateDestination = os.path.join(basedir, 
+            'Library', 'Application Support', 'Apple', 
+            'Developer Tools', 'Project Templates')
+    templateDir = os.path.join('Xcode', 'Project Templates')
+    for dname in os.listdir(templateDir):
+        if dname == 'CVS': continue
+        path = os.path.join(templateDir, dname)
+        if not os.path.isdir(path): continue
+        shutil.copytree(path, os.path.join(templateDestination, dname))
+
+else:
+    raise ValueError, "Don't know how to build installer for %s"%(osvers,)
 
 print "Setting up developer examples & documentation"
 
@@ -186,6 +225,8 @@ os.path.walk(examplesDestination, killNasties, None)
 os.path.walk(docsDestination, killNasties, None)
 os.path.walk(docsDestination, rest2HTML, None)
 
+
+
 print 'Building package'
 pm = buildpkg.PackageMaker('PyObjC', package_version(), 
 """\
@@ -193,12 +234,18 @@ Python <-> Objective-C bridge that supports building full featured Cocoa
 applications.
 """)
 pm.build(os.path.join(basedir), 
-        resources=os.path.join(os.getcwd(), 'Installer Package', 'Resources'),
+        resources=os.path.join(os.getcwd(), 'Installer Package', osvers, 'Resources'),
         OutputDir=os.path.join(os.getcwd(), OUTPUTDIR),
         Version=package_version(),
         NeedsAuthorization="YES",
         Relocatable="NO",
         RootVolumeOnly="YES")
+
+print "Fixing up the installer..."
+fn = os.path.join(OUTPUTDIR, 'PyObjC.pkg', 'Contents', 'Resources', 'Description.plist')
+data = open(fn, 'r').read()
+data = data.replace('@@VERSION@@', package_version())
+open(fn, 'w').write(data)
 
 #
 # build 'objc_extras.tar.gz', and archive containing stuff not included in

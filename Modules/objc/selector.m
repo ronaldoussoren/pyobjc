@@ -968,7 +968,7 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 	if (self->callable == NULL) {
 		PyErr_Format(PyExc_TypeError, 
 			"Calling abstract methods with selector %s",
-			self->sel_selector);
+			PyObjCRT_SELName(self->sel_selector));
 		return NULL;
 	}
 

@@ -25,7 +25,6 @@ for framework in [
         "Foundation", 
         "AddressBook", 
         "InterfaceBuilder", 
-        #"SecurityInterface" 
       ]:
     path = "/System/Library/Frameworks/%s.framework" % framework
     protfile = file(os.path.join(libdir, framework, "protocols.py"), "w")
@@ -41,3 +40,10 @@ for framework in ["WebKit", ]:
 
     print "generating protocols for", framework
     genProtocols(path, protfile)
+
+if os.path.isdir('/System/Library/Frameworks/SecurityInterface.framework'):
+    framework = 'SecurityInterface'
+    path = "/System/Library/Frameworks/%s.framework" % framework
+    protfile = file(os.path.join(libdir, framework, "protocols.py"), "w")
+    print "generating protocols for", framework
+    genProtocols(path, protfile, SPECIALS.get(framework, {}), 'SFAuthorizationView')
