@@ -1,4 +1,8 @@
 import os
+if not os.path.exists('/usr/bin/sw_vers'):
+    # detect Mac OS X
+    raise ImportError('Not Mac OS X')
+
 import sys
 from distutils.version import LooseVersion
 from distutils import log

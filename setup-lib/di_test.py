@@ -121,3 +121,5 @@ class cmd_test (install_lib):
         finally:
             if self.test_installed:
                 del sys.path[0]
+
+cmdclass = dict(test=cmd_test)
