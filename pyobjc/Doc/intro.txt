@@ -2,10 +2,10 @@
 An introduction to PyObjC
 =========================
 
-..	:authors: Ronald Oussoren
+..	:authors: Ronald Oussoren, Bob Ippolito
 	:contact: pyobjc-dev@lists.sourceforge.net
 	:URL: http://pyobjc.sourceforge.net/
-	:copyright: 2003 The PyObjC Project
+	:copyright: 2003-2005 The PyObjC Project
 
 
 .. contents::
@@ -13,12 +13,12 @@ An introduction to PyObjC
 Preface
 -------
 
-PyObjC is a bridge between Python and Objective-C. It allows you to write 
+PyObjC is a bridge between Python and Objective-C.  It allows you to write 
 Python scripts that use and extend existing Objective-C class libraries, 
 most importantly the `Cocoa libraries`_ by `Apple`_.
 
 This document describes how to use Objective-C class libraries from Python
-scripts and how to interpret the documentation of those libraries, from the 
+scripts and how to interpret the documentation of those libraries from the 
 point of view of a Python programmer.
 
 .. _`Apple`: http://www.apple.com/
@@ -26,79 +26,196 @@ point of view of a Python programmer.
 Objective-C for PyObjC users
 ----------------------------
 
-It is necessary to understand a little bit of Objective-C to use PyObjC,
-this helps you to better understand the class libraries and makes it easier
-to read (and translate) example code.
+It is recommended that you take the time to understand a little bit about
+Objective-C before jumping into PyObjC development.  The class libraries
+that you will be using from Cocoa are not documented in Python, and their
+documentation will be confusing without a grasp on the semantics and syntax
+of Objective-C.
 
-Objective-C is an object-oriented programming language that is an extension 
-of C and borrows heavily from Smalltalk. It features single inheritance with
-(in theory) multiple root classes and dynamic dispatch of methods. This is
-basically the same as Python with single inheritance.
+Objective-C is an object-oriented programming language implemented as a
+superset of C that borrows heavily in concept and syntax from Smalltalk.
+of C and borrows heavily from Smalltalk.  It features single inheritance with
+dynamic dispatch and (in theory) multiple root classes.  This is basically the
+same as Python with single inheritance.
 
 An important difference between Python and Objective-C is that the latter is
-not a pure object-oriented language. Some values are not objects, but values
-of plain C types, such as ``int`` and ``double``. These basic C types can also
+not a pure object-oriented language.  Some values are not objects, but values
+of plain C types, such as ``int`` and ``double``.  These basic C types can 
 be used as the types of arguments and the return value of methods. 
 
 Object allocation and initialization are explicit and separate actions in 
 Objective-C. The former is done by the class-method ``alloc``, while the
-latter is done by instance-methods whose name customarily starts with ``init``.
+latter is done by instance methods whose name customarily starts with ``init``.
 
 Objective-C code looks just like plain C code, with some easily recognizable
-extensions for the Object-Oriented parts of the language. An example class
-declaration (usually found in ``.h`` files) and implementation (usually found
-in ``.m`` files) are listed below. Class declarations are easily recognized as 
-blocks of code between ``@interface`` and ``@end``, and similarly the 
-implementation is between ``@implementation`` and ``@end``. Calling methods
-is done using expressions enclosed with brackets (name?), e.g. 
-``[foo method]``.  This is the same as ``foo.method()`` in Python.
+Smalltalk-like extensions for the Object-Oriented parts of the language.  An
+example class declaration (usually found in ``.h`` files) and implementation
+(usually found in ``.m`` files) are listed below.  Class declarations are easily
+recognized as blocks of code between ``@interface`` and ``@end``, and similarly
+the implementation is between ``@implementation`` and ``@end``.  An expression
+enclosed in brackets in Objective-C is called a message, and is the equivalent
+to an instance method invocation in Python.  For example, this Objective-C code::
+
+    [aMutableArray addObject:@"constant string"];
+
+Is equivalent in intent to the following in Python::
+
+    aList.append(u"constant string")
+
+Objective-C messages have three components: a target, a selector, and zero or
+more arguments.  The target, ``aMutableArray``, is the object or class
+receiving the message.  The selector, ``addObject:`` uniquely identifies the
+kind of message that is being sent.  Finally, the arguments,
+``@"constant string"`` are used by the implementation of the method upon
+receipt of the message.  The syntax of Objective-C message dispatch is
+deceptively similar to keyword arguments in Python, but they are actually
+quite different.  Objective-C messages can not have default arguments, and all
+arguments are passed in a specific order.  The components of a selector may not
+be reordered.  Syntactically, one argument must be interleaved at every colon in
+the selector.  The message::
+
+    [anArray indexOfObject:someObject inRange:someRange]
+    
+Target:
+    ``anArray``
+
+Selector:
+    ``indexOfObject:inRange:``
+    
+Arguments:
+    ``someObject``, ``someRange``
+
+As you'll see later, the straightforward translation of such a message to
+Python is::
+
+    anArray.indexOfObject_inRange_(someObject, someRange)
+    
+This may be awkward and "unpythonic" at first, however this syntax is necessary
+preserve the semantics of Objective-C message dispatch.
 
 A class declaration::
 
-   @interface MYClass : MySuperClass
-   {
-      id  anInstanceVariable;
-      int anotherInstanceVariable;
-   }
+    @interface MyClass : MySuperClass
+    {
+        id  anInstanceVariable;
+        int anotherInstanceVariable;
+    }
 
-   +aClassMethod;
+    // A class method that returns an initialized instance of this class.
+    // Similar to an implementation of __call__ on the metaclass.
+    +instanceWithObject:(id)anObject andInteger:(int)anInteger;
 
-   -(int)anInstanceMethodWithArg1:arg1 andArg2:(BOOL)arg2;
-   @end
+    // An instance method, the designated initializer for MyClass.
+    // Similar to an implementation of __new__ on MyClass.
+    -initWithObject:(id)anObjct andInteger:(int)anInteger;
+
+    // An accessor, instance variables (attributes) are in a separate
+    // namespace and are considered "private" in Objective-C.  Conventionally,
+    // there is nothing similar to this in Python.
+    -(int)anotherInstanceVariable;
+    @end
 
 A class implementation::
 
-   @implementation MYClass
+    @implementation MyClass
 
-   +aClassMethod
-   {
-   	id res = [[MYClass alloc] init];
-	return res;
-   }
+    // Note that a type is not declared for the return value.  Undeclared types
+    // are assumed to be "id", which means any kind of instance.
+    +instanceWithObject:(id)anObject andInteger:(int)anInteger
+    {
+        // 1. Create an instance of MyClass.
+        // 2. Initialize it with its designated initializer
+        //    "initWithObject:andInteger:".
+        // 3. Autorelease it, so that it does not leak memory.
+        // 4. Return the new instance.
+        //
+        // NOTE:
+        //   By convention,initializers (such as +new, -init, -copy)
+        //   are the only methods that should return retained objects.
+        //
+        // NOTE:
+        //   Since this is a class method, "self" refers to the class!
+        //
+        // Very roughly similar to:
+        //   return self.__new__(anObject, anInteger)
+        return [[[self alloc] initWithObject:anObject andInteger:anInteger] autorelease];
+    }
 
-   -(int)anInstanceMethodWithArg1:arg1 andArg2:(BOOL)arg2
-   {
-   	int res;
+    // Note that a type is not declared for the return value.  Undeclared types
+    // are assumed to be "id", which means any kind of instance.
+    -initWithObject:(id)anObjct andInteger:(int)anInteger
+    {
+        // Call the designated initializer of the superclass.
+        // Similar to:
+        //     self = super(MyClass, self).__new__()
+        self = [super init];
 
-	if (arg2) {
-		res = [self fooWith:arg1];
-	} else {
-		res = [arg1 bar];
-	}
-   }
+        // Bail if initialization of the superclass failed.
+        // Similar to:
+        //     if self is None:
+        //         return None
+        if (!self) {
+            return nil;
+        }
 
-   @end
+        // Set the instance variable (attribute).  The argument must be
+        // retained, since it will persist as long as the instance does.
+        // Similar to:
+        //     # Reference counting is automatic in Python
+        //     self.anInstanceVariable = anObject
+        anInstanceVariable = [anObject retain];
 
-Objective-C also features exceptions, but as they are mostly used for disaster
-recovery and not for normal error handling you won't see them very often
-in example code. Read `The Objective-C Programming Language`_ if you want to
+        // Set the other instance variable.  Note that since anInteger is
+        // a primitive "C" type, not an object, no reference counting takes
+        // place.
+        // Similar to:
+        //     # Everything is an object in Python
+        //     self.anotherInstanceVariable = anInteger
+        anotherInstanceVariable = anInteger;
+
+        // Like __new__ in Python, initializers in Objective-C must
+        // explicitly return self.  Note that this is different from
+        // __init__.
+        // Similar to:
+        //     return self
+        return self;
+    }
+        
+
+    // an accessor, instance variables (attributes) are in a separate
+    // namespace and are considered "private"
+    -(int)anotherInstanceVariable
+    {
+        return anotherInstanceVariable;
+    }
+
+    // Since objects were retained as instance variables on this object,
+    // they must be freed when the object is.  This is similar to an
+    // implementation of __del__ in Python.  Since Objective-C has no
+    // cyclic garbage collection, this isn't discouraged like it is in
+    // Python.
+    -(void)dealloc
+    {
+        // Very roughly similar to:
+        //     del self.instanceVariable
+        [instanceVariable release];
+
+        // Very roughly similar to:
+        //     super(MyClass, self).__del__()
+        [super dealloc];
+    }
+
+    @end
+
+Objective-C also features exceptions, but they are typically only used for
+disaster recovery, not error handling, so you will not encounter them very
+often.  Read `The Objective-C Programming Language`_ if you want to
 know more about exceptions in Objective-C. 
 
-One thing to keep in mind when translating Objective-C snippets to python is
-that it is valid to call methods on ``nil`` (that is the NULL pointer). Those
-method calls are ignored by the runtime. The value ``nil`` is represented in
-Python by the ``None``; this means to access a non-existing method will raise
-``AttributeError``.
+One thing to keep in mind when translating Objective-C snippets to Python is
+that any message can be sent to ``nil``, and the return value of that message
+will be ``nil``.  PyObjC translates ``nil`` to ``None`` when crossing the
+bridge, so any such attempt will raise an ``AttributeError``.
 
 For more information about Objective-C see:
 
@@ -114,46 +231,62 @@ Classes
 .......
 
 Objective-C classes are visible as (new-style) Python classes and can be 
-subclassed just like normal Python classes. All the usual introspection
-mechanisms work as well, as do __slots__ and descriptors. The major 
+subclassed just like normal Python classes.  All the usual introspection
+mechanisms work as well, as do ``__slots__`` and descriptors.  The major 
 differences between normal Python classes and Objective-C classes are the way 
-you create instances and the fact that Objective-C methods have odd names.
+that instances are created and initialized, and the fact that Objective-C
+selectors look strange when translated to Python methods.
 
-You can use multiple inheritance with Objective-C classes, as long as the
-Objective-C class is the first base-class and there is only one Objective-C 
-base-class. E.g. it is not possible to subclass from multiple Objective-C classes
-at the same time. Multiple inheritance should also not be used to mix-in
-different implementations for Objective-C methods. It will not work and
-you won't get errors about this.
+You can use multiple inheritance when subclassing an Objective-C class, so
+long as the Objective-C class is the first base class and there is only one
+Objective-C base class.  The Objective-C runtime does not support multiple
+inheritance.  These mix-in classes should not contain different
+implementations for Objective-C methods.  To achieve this behavior, Categories
+should be used instead.
 
 Another thing to keep in mind is that the names of Objective-C classes must
-be unique, including across Python modules. That is, it is *not* possible
-to have two Python modules that define a class with the same name. If you write 
-classes that will be used outside of a single project it is customary to pick a 
-(short) prefix and stick that in front of all class names, e.g. Apple ``NS`` 
-as the prefix in the `Cocoa libraries`_.
+be globally unique per process, including across Python modules.  That is,
+it is *not* possible to have two Python modules that define a class with the
+same name.  It is conventional to choose class names with a short prefix that
+uniquely identify your project or company.  For example, Apple uses ``NS``
+as the prefix for all classes in the `Cocoa libraries`_.  Note that the ``NS``
+prefix made much more sense when it was called NeXTStep, but persists to this
+day for compatibility reasons.
 
 As described in `Objective-C for PyObjC users`_ the creation of Objective-C 
-objects is a two-stage process. You first call the class method ``alloc``, and
-then call some variation of ``init`` to initialize the objects. The newly
-created object is the result of the call to ``init``. Most classes have 
-convenience class methods that combine the calls to ``alloc`` and ``init``.
+objects is a two-stage process.  To initialize objects, you first call a
+class method to allocate the memory (typically ``alloc``), and then call an
+initializer (typically starts with ``init``).  Some classes have class methods
+which perform this behind the scenes, especially classes that create cached,
+immutable, or singleton instances.
 
-Methods and functions
-.....................
+Messages and Functions
+......................
 
-Objective-C methods are bridged to Python callables. Because Objective-C method 
-names can contain colons it is necessary to translate methods names. The rules
-for translation are:
+Objective-C methods are bridged to Python methods.  Because Objective-C
+message dispatch syntax can not be translated directly to Python, a few
+simple translations must take place.  The rules for these translations are:
 
-* Concatenate all elements of the method name: ``someMethod:withFoo:andBar:``
+1. Replace all colons in the selector with underscores:
+  
+    - ``someMethod:withFoo:andBar:`` translates to ``someMethod_withFoo_andBar_``
+  
+2. If the result ``class`` or ``raise`` (Python keywords), append two underscores:
+  
+    - ``class`` translates to ``class__``
+    - ``raise`` translates to ``raise__``
 
-* Then convert all colons to underscores: ``someMethod_withFoo_andBar_``
+3. Use this translated selector as you would a normal Python method.
+   The arguments must be passed in the same order, and the number of
+   arguments passed will normally be equal to the number of underscores
+   in the method name; exceptions to this rule and the behavior of "result"
+   are mentioned below.
 
-It is possible to use Python keywords as method names in Objective-C. To access
-or define such methods append two underscores to its name (e.g. ``class__``). 
-This is currently only supported for ``raise`` and ``class`` because those are
-the only Python keywords that are actually used in Cocoa.
+    - ``result = [someObject someMethod:firstArg withFoo:foo andBar:bar];``
+      translates to
+      ``result = someObject.someMethod_withFoo_andBar_(firstArg, foo, bar)``
+
+XXX: Notes about varargs
 
 Wrapped/bridged methods (and functions) have the same number of arguments
 as the corresponding Objective-C method or function, unless otherwise noted
@@ -162,34 +295,51 @@ Cocoa on Mac OS X).
 
 .. _`Notes on supported APIs and classes on Mac OS X`: api-notes-macosx.html
 
-One group of exceptions to this rule can be described in a global way. Some
-methods and functions have pointers as arguments, specifically pointers to
-a single value that is passed in and/or out of the function. These arguments
-are sometimes called *pass by reference* arguments, and can be subdivided into
-three types of arguments: ``in`` arguments are used to pass data to the 
-function, ``out`` arguments are used to pass data from the function (e.g. and
-additional return value) and ``inout`` arguments are a combination of the two.
+Most methods or functions that take or return pointers to values will be an
+exception to this rule if it is callable from Python at all.  In Objective-C
+terminology, there are three kinds of pointers that can be used in a method:
 
-The ``in`` and ``inout`` arguments for a method are also present in the Python
-interface for that method (or function). In python the value passed to the
-function is a "normal" argument. ``Out`` arguments are not present in the 
-argument list of the Python function.
+``in``:
+    Used to pass data by reference to the function.  This is not a special
+    case from Python.
 
-If a function (or method) has one or more output arguments (``out`` or 
-``inout``) the output values are returned as part of the return value of the
-method. That is, the return value of the function is a tuple containing
-the return value of the C function (or method), followed by the values of
-the ``out`` in ``inout`` arguments in the order the are present in the argument
-list. If the C function (or method) has return type ``void``, the tuple contains
-only the output arguments. As a final complication, methods with a single output
-argument and return type ``void``, have the value of the output argument as
-the return value (e.g. not a tuple containing the return value). 
+``out``:
+    Used to pass data from the function (e.g. an additional return value).
+    From Python, these values will be missing from the argument list (there
+    will be more underscores than arguments passed).  See below for notes on
+    how ``out`` arguments change the return value.
 
+``inout``:
+    A combination of in and out (a value is passed by reference, and mutated
+    upon return).  Unlike ``out``, these arguments remain in the argument list,
+    and thus do not have an effect on the number of arguments a method expects.
+    See below for notes on how ``inout`` arguments change the return value.
+
+In order to determine what the return value of such an exceptional message will
+look like, you must "make a list" of the return values with the following rules:
+
+1. If the return type of the method or function is not ``void``, add it to the
+   list.
+
+2. For each argument in the method or function, add it to the list if it is
+   ``out`` or ``inout``.
+
+After creating this list, you will have one of three cases:
+
+Empty:
+    The return value of this call will always be ``None``.
+
+One element:
+    The return value of this call will correspond to the one element of the list.
+
+More than one element:
+    The return value of this call will be a tuple in the same order as the list.
+    
 The rules for pass by reference arguments may look quite complicated, but
 it turns out this is very straightforward when working with them.
 
-As an example of a method with two output arguments, NSMatrix has a method
-named ``getNumberOfRows_columns_`` with the following signature::
+As an example of a method with two output arguments, ``NSMatrix`` implements a
+selector named ``getNumberOfRows:columns:`` with the following signature::
 
    (void)getNumberOfRows:(int *)rowCount columns:(int *)columnCount
 
@@ -198,27 +348,29 @@ You use this method in python like this::
    rowCount, columnCount = matrix.getNumberOfRows_columns_()
 
 When a function or method has an array of values and the length of that array
-as arguments, you can pass ``None`` as the length. The length of the sequence
+as arguments, you can pass ``None`` as the length.  The length of the sequence
 that is used for the array of values is passed to Objective-C as the length
 argument. 
 
 XXX: Add information about ``array.array`` rules.
 
 When you define methods in a subclass of an Objective-C class, the bridge has
-to tell the Objective-C runtime what the signature of those methods is. The
+to tell the Objective-C runtime what the signature of those methods is.  The
 basic rule is that all arguments as well as the return value are objects (just
-like with normal Python methods). The bridge will automatically pick a better 
-signature when it has more information available. Specifically, if you 
+like with normal Python methods).  The bridge will automatically pick a better 
+signature when it has more information available.  Specifically, if you 
 override an existing method the bridge will assume you want to use the same
-method signature. And furthermore, if you implement a method in an (informal)
+method signature.  Furthermore, if you implement a method in an (informal)
 protocol known to the bridge it will use the signature from the corresponding
 method in that signature.
 
-The end result is that you almost never have to add information about the
-signature of methods. The only known case where you have to tell the bridge
-about the signature of a method is the call-back method for sheets. You can
+XXX: Add information about setters.
+
+The end result is that you rarely have to add information about the
+signature of methods.  The only known case where you have to tell the bridge
+about the signature of a method is the callback method for sheets.  You can
 use the function ``PyObjCTools.AppHelper.endSheetMethod`` to create an object
-that contains the right information. This function is used like 
+that contains the right information.  This function is used like 
 ``staticmethod`` and ``classmethod`` (as introduced in Python 2.2).
 
 For complete control of the mapping to Objective-C you can use the function
@@ -297,6 +449,8 @@ Cocoa Bindings
 
 In Mac OS X 10.3 Apple introduced *Cocoa Bindings*, a method to make it easier
 to create and use *Controller* objects. 
+
+XXX - Add more here, links, etc.
 
 Use ``objc.accessor`` to create accessor methods that conform to the 
 expectations of Cocoa Bindings.
@@ -459,7 +613,7 @@ following command to see the list of options::
 
 
 "IDE approach" : Xcode
-................................
+......................
 
 PyObjC includes a number of Xcode templates that can be used to 
 develop applications. Those templates are used like any other
