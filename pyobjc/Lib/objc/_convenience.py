@@ -30,7 +30,7 @@ def __eq__1(self, other):
 def __eq__2(self, other):
 	return self.isEqual_(other) != 0
 def __ne__(self, other):
-	return self.isNotEqual_(other) != 0
+	return not (self.isEqual_(other) != 0)
 def __gt__(self, other):
 	return self.isGreaterThan_(other) != 0
 def __ge__(self, other):

@@ -32,6 +32,7 @@ class Test_Object_Instantiation(unittest.TestCase):
         anInstance = objc.runtime.NSObject.new()
         self.assert_( anInstance, "Failed to instantiate an instance" )
         self.assert_( isinstance( anInstance, objc.runtime.NSObject ), "Instantiated object not an instance of NSObject." )
+        self.assert_( anInstance.isEqual_( anInstance ), "Instance !isEqual: to itself." )
 
 class Test_method_invocation(unittest.TestCase):
     def setUp(self):
