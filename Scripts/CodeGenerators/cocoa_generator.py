@@ -522,7 +522,8 @@ if IB_HDRS is not None:
 if WEBKIT_HDRS is not None:
     enum_generator.generate(
             WEBKIT_HDRS,
-            'build/codegen/_WebKit_Enum.inc')
+            'build/codegen/_WebKit_Enum.inc',
+                ignore_files=['npapi.h', 'npruntime.h', 'npfunctions.h'])
 
     # The two items on the ignore-list cause link errors,
     # to-be-investigated.

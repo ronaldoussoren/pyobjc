@@ -103,7 +103,7 @@ def process_file(outfp, filename):
                 entry(outfp, ident)
 
 
-def generate(dirname, fn = None, filter = lambda x: 1):
+def generate(dirname, fn = None, filter = lambda x: 1, ignore_files=()):
     if not os.path.exists(dirname): return
 
     if fn:
@@ -121,6 +121,8 @@ def generate(dirname, fn = None, filter = lambda x: 1):
                         if fn.endswith('.h') and filter(fn) ]
     fnames.sort()
     for f in fnames:
+        if os.path.basename(f) in ignore_files:
+            continue
         process_file(fp, f)
     fp.write("\t{0, 0, 0} /* Sentinel */\n")
     fp.write("};\n")
