@@ -20,6 +20,10 @@
 #include <objc/objc.h>
 #endif
 
+// how do we make this dependent on sizeof(unichar)??
+#if Py_UNICODE_SIZE == 2
+#define PyObjC_UNICODE_FAST_PATH
+#endif
 
 #include "objc_support.h"
 #include "pointer-support.h"
