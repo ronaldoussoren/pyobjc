@@ -22,14 +22,22 @@ from dupfile import dupfile
 # doesn't tell anything usefull, we use sw_vers to find the actual OS version.
 #
 import os
+import sys
 VER=None
-fd = os.popen('/usr/bin/sw_vers', 'r')
-for ln in fd.readlines():
-	if ln.startswith('ProductVersion:'):
+
+if sys.platform == "darwin":
+    fd = os.popen('/usr/bin/sw_vers', 'r')
+    for ln in fd.readlines():
+            if ln.startswith('ProductVersion:'):
 		VER=ln.split()[-1]
-fd.close()
-fd = None
-VER = '.'.join(VER.split('.')[:2])
+    fd.close()
+    fd = None
+    VER = 'MacOS X ' + '.'.join(VER.split('.')[:2])
+else:
+    # This is probably incorrect, and was added to help a future 
+    # port to GNUstep
+    x = os.uname()
+    VER = x[0] + ' ' + x[2]
 
 if not os.path.isdir('Modules'):
     print "Run me from the root of the PyObjC source tree"
@@ -261,7 +269,7 @@ APPKIT_IGNORE_LIST=(
     'NSDrawColorTiledRects(',
 )
 
-if VER == "10.1":
+if VER == "MacOS X 10.1":
 	APPKIT_IGNORE_LIST = APPKIT_IGNORE_LIST + ('NSCopyBitmapFromGState',)
 
 func_collector.generate(FOUNDATION_HDRS, 'build/codegen/Foundation.prototypes', 
