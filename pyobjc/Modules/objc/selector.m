@@ -34,9 +34,9 @@ struct replacement_signature
 static void
 free_replacement_signature(void* value)
 {
-	PyMem_Free(((struct replacement_signature*)value)->class_name);
-	PyMem_Free(((struct replacement_signature*)value)->signature);
-	PyMem_Free(value);
+	free(((struct replacement_signature*)value)->class_name);
+	free(((struct replacement_signature*)value)->signature);
+	free(value);
 }
 
 int 
@@ -45,21 +45,21 @@ ObjC_SignatureForSelector(char* class_name, SEL selector, char* signature)
 	struct replacement_signature* value;
 	PyObject*                      sublist;
 
-	value = PyMem_Malloc(sizeof(*value));
+	value = malloc(sizeof(*value));
 	if (value == NULL) {
 		PyErr_NoMemory();
 		return -1;
 	}
 	value->class_name = PyObjCUtil_Strdup(class_name);
 	if (value->class_name == NULL) {
-		PyMem_Free(value);
+		free(value);
 		return -1;
 	}
 	
 	value->selector = selector;
 	value->signature = PyObjCUtil_Strdup(signature);
 	if (value->signature == NULL) {
-		PyMem_Free(value->class_name);
+		free(value->class_name);
 		PyErr_NoMemory();
 		return -1;
 	}
@@ -381,7 +381,7 @@ sel_dealloc(PyObject* object)
 		}
 	}
 
-	PyMem_Free(self->sel_signature);
+	free(self->sel_signature);
 	self->sel_signature = NULL;
 	if (self->sel_self) { 
 		Py_DECREF(self->sel_self); 
@@ -1078,7 +1078,7 @@ pysel_default_signature(PyObject* callable)
 	arg_count = func_code->co_argcount;
 
 	/* arguments + return-type + selector */
-	result = PyMem_Malloc(arg_count+3);
+	result = malloc(arg_count+3);
 	if (result == 0) {
 		PyErr_NoMemory();
 		return NULL;

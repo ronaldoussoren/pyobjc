@@ -50,7 +50,7 @@ int PyObjCRT_SetupClass(
 	}
 	metaCls->name = PyObjCUtil_Strdup(name);
 	if (metaCls->name == NULL) {
-		PyMem_Free((char*)(cls->name));
+		free((char*)(cls->name));
 		return -1;
 	}
 
@@ -97,14 +97,14 @@ void PyObjCRT_ClearClass(Class cls)
 		while (cur != NULL) {
 			next = cur->method_next;
 
-			PyMem_Free(cur);
+			free(cur);
 			cur = next;
 		}
 		cls->methods = NULL;
 	}
 
 	if (cls->name) {
-		PyMem_Free((char*)(cls->name));
+		free((char*)(cls->name));
 	}
 }
 
@@ -112,7 +112,7 @@ struct objc_method_list *PyObjCRT_AllocMethodList(int numMethods)
 {
         struct objc_method_list *mlist;
 
-        mlist = PyMem_Malloc(sizeof(struct objc_method_list)
+        mlist = malloc(sizeof(struct objc_method_list)
                  + ((numMethods+1) * sizeof(struct objc_method)));
 
         if (mlist == NULL) {

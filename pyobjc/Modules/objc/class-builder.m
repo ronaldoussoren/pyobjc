@@ -170,7 +170,7 @@ PyObjCClass_UnbuildClass(Class objc_class)
 
 	PyObjCRT_ClearClass(&(wrapper->class));
 	PyObjCRT_ClearClass(&(wrapper->meta_class));
-	PyMem_Free(objc_class);
+	free(objc_class);
 }
 
 /*
@@ -388,7 +388,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	}
 
 	/* Allocate the class as soon as possible, for new selector objects */
-	new_class = PyMem_Malloc(sizeof(struct class_wrapper));
+	new_class = malloc(sizeof(struct class_wrapper));
 	if (new_class == NULL) {
 		goto error_cleanup;
 	}
@@ -503,7 +503,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	if (ivar_count == 0)  {
 		ivar_list = NULL;
 	} else {
-		ivar_list = PyMem_Malloc(sizeof(struct objc_ivar_list) +
+		ivar_list = malloc(sizeof(struct objc_ivar_list) +
 			(ivar_count)*sizeof(struct objc_ivar));
 		if (ivar_list == NULL) {
 			PyErr_NoMemory();
@@ -763,19 +763,19 @@ error_cleanup:
 	}
 
 	if (ivar_list) {
-		PyMem_Free(ivar_list);
+		free(ivar_list);
 	}
 	if (method_list) {
-		PyMem_Free(method_list);
+		free(method_list);
 	}
 	if (meta_method_list) {
-		PyMem_Free(meta_method_list);
+		free(meta_method_list);
 	}
 
 	if (new_class != NULL) {
 		PyObjCRT_ClearClass(&(new_class->class));
 		PyObjCRT_ClearClass(&(new_class->meta_class));
-		PyMem_Free(new_class);
+		free(new_class);
 	}
 
 	return NULL;
@@ -887,7 +887,6 @@ free_ivars(id self, PyObject* volatile cls )
 			Py_DECREF(o);
 		}
 	}
-
 }
 
 /* -dealloc */

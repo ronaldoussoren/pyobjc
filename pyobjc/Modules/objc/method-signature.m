@@ -16,7 +16,7 @@ PyObjCMethodSignature* PyObjCMethodSignature_FromSignature(
 		nargs++;
 	}
 
-	retval = PyMem_Malloc(sizeof(PyObjCMethodSignature) + sizeof(char*)*nargs);
+	retval = malloc(sizeof(PyObjCMethodSignature) + sizeof(char*)*nargs);
 	if (retval == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -26,7 +26,7 @@ PyObjCMethodSignature* PyObjCMethodSignature_FromSignature(
 	retval->retainCount = 1;
 	retval->signature = PyObjCUtil_Strdup(signature);
 	if (retval->signature == NULL) {
-		PyMem_Free(retval);
+		free(retval);
 		return NULL;
 	}
 
@@ -44,8 +44,8 @@ void PyObjCMethodSignature_Free(PyObjCMethodSignature* value)
 {
 	if (--value->retainCount != 0) return;
 
-	PyMem_Free((char*)(value->signature));
-	PyMem_Free(value);
+	free((char*)(value->signature));
+	free(value);
 }
 
 
