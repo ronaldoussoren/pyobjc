@@ -52,34 +52,11 @@
 //102
 //103
 //104
-		1058C7A0FEA54F0111CA2CBB = {
-			children = (
-				1058C7A1FEA54F0111CA2CBB,
-			);
-			isa = PBXGroup;
-			name = "Linked Frameworks";
-			refType = 4;
-		};
 		1058C7A1FEA54F0111CA2CBB = {
 			isa = PBXFrameworkReference;
 			name = Cocoa.framework;
 			path = /System/Library/Frameworks/Cocoa.framework;
 			refType = 0;
-		};
-		1058C7A2FEA54F0111CA2CBB = {
-			children = (
-				29B97325FDCFA39411CA2CEA,
-				29B97324FDCFA39411CA2CEA,
-			);
-			isa = PBXGroup;
-			name = "Other Frameworks";
-			refType = 4;
-		};
-		1058C7A3FEA54F0111CA2CBB = {
-			fileRef = 1058C7A1FEA54F0111CA2CBB;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 //100
 //101
@@ -202,9 +179,9 @@
 		};
 		29B97323FDCFA39411CA2CEA = {
 			children = (
-				1058C7A0FEA54F0111CA2CBB,
-				1058C7A2FEA54F0111CA2CBB,
-				F6646A57034494A401F2B36F,
+				29B97325FDCFA39411CA2CEA,
+				29B97324FDCFA39411CA2CEA,
+				1058C7A1FEA54F0111CA2CBB,
 			);
 			isa = PBXGroup;
 			name = Frameworks;
@@ -233,9 +210,9 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "";
-				HEADER_SEARCH_PATHS = /sw/include/python2.2;
+				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = /sw/lib/python2.2/config;
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-undefined suppress -force_flat_namespace";
 				PREBINDING = NO;
@@ -320,7 +297,7 @@
 		29B9732DFDCFA39411CA2CEA = {
 			buildActionMask = 2147483647;
 			files = (
-				1058C7A3FEA54F0111CA2CBB,
+				F61BA28D0357963801C36587,
 			);
 			isa = PBXFrameworksBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,6 +341,12 @@
 //F62
 //F63
 //F64
+		F61BA28D0357963801C36587 = {
+			fileRef = 29B97325FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		F62CEFA50357242601718D22 = {
 			buildActionMask = 8;
 			dstPath = pyobjc;
@@ -489,7 +472,7 @@
 			dependencies = (
 			);
 			isa = PBXLegacyTarget;
-			name = "Copy Files";
+			name = "Copy Files (Install)";
 			productName = "Copy Files";
 			settingsToExpand = 6;
 			settingsToPassInEnvironment = 287;
@@ -532,12 +515,6 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
-		};
-		F6646A57034494A401F2B36F = {
-			isa = PBXFileReference;
-			name = libpython2.2.a;
-			path = /sw/lib/python2.2/config/libpython2.2.a;
-			refType = 0;
 		};
 		F6646A5C0344985501F2B36F = {
 			isa = PBXFileReference;

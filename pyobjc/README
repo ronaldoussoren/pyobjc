@@ -23,7 +23,6 @@ to work using the following versions of python:
   GUI applications (see Examples/iClass).
 - Apple's python 2.2 on 10.2
   Same issues as Finks's python 2.2. 
-  This option is hardly tested at all, but seems to work.
 
 ----
 Older README:
