@@ -2,19 +2,18 @@ import unittest
 
 import objc
 
-class Test_lookup_class(unittest.TestCase):
-    def testNoSuchClassErrorRaised(self):
+class TestBOOL(unittest.TestCase):
+    def testBooleans(self):
+        self.assert_( objc.YES, "YES was not true." )
+        self.assert_( not objc.NO, "NO was true." )
+    
+class TestClassLookup(unittest.TestCase):
+    def testLookupClassNoSuchClassErrorRaised(self):
         self.assertRaises( objc.nosuchclass_error, objc.lookup_class, "" )
         self.assertRaises( objc.nosuchclass_error, objc.lookup_class, "ThisClassReallyShouldNotExist" )
         self.assertRaises( TypeError, objc.lookup_class, 1 )
 
-    def testNSObject(self):
-        self.assert_( objc.lookup_class("NSObject"), "Failed to find NSObject class." )
-        self.assertEqual( objc.lookup_class( "NSObject" ), objc.runtime.NSObject,
-                          "objc.runtime.NSObject and objc.lookup_class('NSObject') were different." )
-
-class Test_runtime(unittest.TestCase):
-    def testNoSuchClassErrorRaised(self):
+    def testRuntimeNoSuchClassErrorRaised(self):
         try:
             objc.runtime.ThisClassReallyShouldNotExist
         except objc.nosuchclass_error:
@@ -22,19 +21,25 @@ class Test_runtime(unittest.TestCase):
         else:
             fail("objc.runtime.ThisClassReallyShouldNotExist should have thrown a nosuchclass_error.  It didn't.")
 
-    def testNSObject(self):
-        self.assert_( objc.runtime.NSObject, "Failed to find NSObject class." )
-        self.assertEqual( objc.runtime.NSObject, objc.lookup_class( "NSObject" ),
+    def testRuntimeConsistency(self):
+        self.assert_( objc.lookup_class("NSObject"), "Failed to find NSObject class." )
+        self.assertEqual( objc.lookup_class( "NSObject" ), objc.runtime.NSObject,
                           "objc.runtime.NSObject and objc.lookup_class('NSObject') were different." )
 
-class Test_Object_Instantiation(unittest.TestCase):
+    def testClassList(self):
+        ###! This test should probably be moved down to the Foundation test suite... 
+        self.assert_( objc.runtime.NSObject in objc.class_list(), "class_list() does not appear to contain NSObject class" )
+        self.assert_( objc.runtime.NSException in objc.class_list(), "class_list() does not appear to contain NSException class" )
+        self.assert_( objc.runtime.NSMutableArray in objc.class_list(), "class_list() does not appear to contain NSMutableArray class" )
+
+class TestObjectInstantiation(unittest.TestCase):
     def testInstantiation(self):
         anInstance = objc.runtime.NSObject.new()
         self.assert_( anInstance, "Failed to instantiate an instance" )
         self.assert_( isinstance( anInstance, objc.runtime.NSObject ), "Instantiated object not an instance of NSObject." )
         self.assert_( anInstance.isEqual_( anInstance ), "Instance !isEqual: to itself." )
 
-class Test_method_invocation(unittest.TestCase):
+class TestMethodInvocation(unittest.TestCase):
     def setUp(self):
         self.NSObjectInstance = objc.runtime.NSObject.alloc()
 
@@ -48,10 +53,10 @@ class Test_method_invocation(unittest.TestCase):
 
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(Test_lookup_class))
-    suite.addTest(unittest.makeSuite(Test_runtime))
-    suite.addTest(unittest.makeSuite(Test_Object_Instantiation))
-    suite.addTest(unittest.makeSuite(Test_method_invocation))
+    suite.addTest( unittest.makeSuite( TestBOOL ) )
+    suite.addTest( unittest.makeSuite( TestClassLookup ) )
+    suite.addTest( unittest.makeSuite( TestObjectInstantiation ) )
+    suite.addTest( unittest.makeSuite( TestMethodInvocation ) )
     return suite
 
 if __name__ == '__main__':
