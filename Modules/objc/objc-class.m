@@ -680,15 +680,15 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 				PyObjCSelector_Signature(newVal));
 
 		if (objcMethod->method_types == NULL) {
-			free(methodsToAdd);
+			PyMem_Free(methodsToAdd);
 			Py_DECREF(newVal);
 			return -1;
 		}
 		objcMethod->method_imp = ObjC_MakeIMPForPyObjCSelector(
 				(PyObjCSelector*)newVal);
 		if (objcMethod->method_imp == NULL) {
-			free((char*)objcMethod->method_types);
-			free(methodsToAdd);
+			PyMem_Free((char*)objcMethod->method_types);
+			PyMem_Free(methodsToAdd);
 			Py_DECREF(newVal);
 			PyErr_NoMemory();
 			return -1;
@@ -697,8 +697,8 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 		r = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, newVal);
 		Py_DECREF(newVal);
 		if (r == -1) {
-			free((char*)objcMethod->method_types);
-			free(methodsToAdd);
+			PyMem_Free((char*)objcMethod->method_types);
+			PyMem_Free(methodsToAdd);
 			PyErr_NoMemory();
 			return -1;
 		}

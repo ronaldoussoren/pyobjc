@@ -100,8 +100,8 @@ count_struct(const char* argtype)
 static void
 free_type(void *obj)
 {
-	free(((ffi_type*)obj)->elements);
-	free(obj);
+	PyMem_Free(((ffi_type*)obj)->elements);
+	PyMem_Free(obj);
 }
 
 static ffi_type* signature_to_ffi_type(const char* argtype);
@@ -131,7 +131,7 @@ static  PyObject* array_types = NULL; /* XXX: Use NSMap  */
 	 */
 	field_count = atoi(argtype+1);
 			
-	type = malloc(sizeof(*type));
+	type = PyMem_Malloc(sizeof(*type));
 	if (type == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -145,9 +145,9 @@ static  PyObject* array_types = NULL; /* XXX: Use NSMap  */
 	 * fine on MacOS X.
 	 */
 	type->type = FFI_TYPE_STRUCT;
-	type->elements = malloc((1+field_count) * sizeof(ffi_type*));
+	type->elements = PyMem_Malloc((1+field_count) * sizeof(ffi_type*));
 	if (type->elements == NULL) {
-		free(type);
+		PyMem_Free(type);
 		PyErr_NoMemory();
 		return NULL;
 	}
@@ -203,7 +203,7 @@ static  PyObject* struct_types = NULL; /* XXX: Use NSMap  */
 		return NULL;
 	}
 			
-	type = malloc(sizeof(*type));
+	type = PyMem_Malloc(sizeof(*type));
 	if (type == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -211,9 +211,9 @@ static  PyObject* struct_types = NULL; /* XXX: Use NSMap  */
 	type->size = PyObjCRT_SizeOfType(argtype);
 	type->alignment = PyObjCRT_AlignOfType(argtype);
 	type->type = FFI_TYPE_STRUCT;
-	type->elements = malloc((1+field_count) * sizeof(ffi_type*));
+	type->elements = PyMem_Malloc((1+field_count) * sizeof(ffi_type*));
 	if (type->elements == NULL) {
-		free(type);
+		PyMem_Free(type);
 		PyErr_NoMemory();
 		return NULL;
 	}
@@ -227,13 +227,13 @@ static  PyObject* struct_types = NULL; /* XXX: Use NSMap  */
 			type->elements[field_count] = 
 				signature_to_ffi_type(curtype);
 			if (type->elements[field_count] == NULL) {
-				free(type->elements);
+				PyMem_Free(type->elements);
 				return NULL;
 			}
 			field_count++;
 			curtype = PyObjCRT_SkipTypeSpec(curtype);
 			if (curtype == NULL) {
-				free(type->elements);
+				PyMem_Free(type->elements);
 				return NULL;
 			}
 		}
@@ -629,7 +629,7 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 		return NULL;
 	}
 
-	stubUserdata = malloc(sizeof(*stubUserdata));
+	stubUserdata = PyMem_Malloc(sizeof(*stubUserdata));
 	if (stubUserdata == NULL) {
 		PyObjCMethodSignature_Free(methinfo);
 		return NULL;
@@ -650,7 +650,7 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 		if (stubUserdata->callable) {
 			Py_DECREF(stubUserdata->callable);
 		}
-		free(stubUserdata);
+		PyMem_Free(stubUserdata);
 		return NULL;
 	}
 
@@ -1234,9 +1234,9 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, int* pArgOffset)
 	}
 
 	/* Build FFI argumentlist description */
-	cl_arg_types = malloc(sizeof(ffi_type*) * (argOffset+methinfo->nargs));
+	cl_arg_types = PyMem_Malloc(sizeof(ffi_type*) * (argOffset+methinfo->nargs));
 	if (cl_arg_types == NULL) {
-		free(cl_ret_type);
+		PyMem_Free(cl_ret_type);
 		PyErr_NoMemory();
 		return NULL;
 	}
@@ -1249,15 +1249,15 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, int* pArgOffset)
 		cl_arg_types[i+argOffset] = arg_signature_to_ffi_type(
 			methinfo->argtype[i]);
 		if (cl_arg_types[i+argOffset] == NULL) {
-			free(cl_arg_types);
+			PyMem_Free(cl_arg_types);
 			return NULL;
 		}
 	}
 
 	/* Create the invocation description */
-	cif = malloc(sizeof(*cif));
+	cif = PyMem_Malloc(sizeof(*cif));
 	if (cif == NULL) {
-		free(cl_arg_types);
+		PyMem_Free(cl_arg_types);
 		PyErr_NoMemory();
 		return NULL;
 	}
@@ -1265,7 +1265,7 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, int* pArgOffset)
 	rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, methinfo->nargs+argOffset, 
 		cl_ret_type, cl_arg_types);
 	if (rv != FFI_OK) {
-		free(cl_arg_types);
+		PyMem_Free(cl_arg_types);
 		PyErr_Format(PyExc_RuntimeError,
 			"Cannot create FFI CIF: %d", rv);
 		return NULL;
@@ -1281,8 +1281,8 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, int* pArgOffset)
 void
 PyObjCFFI_FreeCIF(ffi_cif* cif)
 {
-	if (cif->arg_types) free(cif->arg_types);
-	free(cif);
+	if (cif->arg_types) PyMem_Free(cif->arg_types);
+	PyMem_Free(cif);
 }
 
 /*
@@ -1308,7 +1308,7 @@ PyObjCFFI_MakeClosure(
 	}
 
 	/* And finally create the actual closure */
-	cl = malloc(sizeof(*cl));
+	cl = PyMem_Malloc(sizeof(*cl));
 	if (cl == NULL) {
 		PyObjCFFI_FreeCIF(cif);
 		PyErr_NoMemory();
@@ -1340,7 +1340,7 @@ PyObjCFFI_FreeClosure(IMP closure)
 	cl = (ffi_closure*)closure;
 	retval = cl->user_data;
 	PyObjCFFI_FreeCIF(cl->cif);
-	free(cl);
+	PyMem_Free(cl);
 
 	return retval;
 }

@@ -188,7 +188,7 @@ register_variableList(PyObject* d, CFBundleRef bundle __attribute__((__unused__)
 	size_t i;
 	int retVal = 0;
 
-	ptrs = malloc(sizeof(void*) * count);
+	ptrs = PyMem_Malloc(sizeof(void*) * count);
 	if (ptrs == NULL) {
 		PyErr_NoMemory();
 		return -1;
@@ -223,7 +223,7 @@ register_variableList(PyObject* d, CFBundleRef bundle __attribute__((__unused__)
 
 cleanup:
 	if (ptrs) {
-		free(ptrs);
+		PyMem_Free(ptrs);
 	}
 
 	[names release];
