@@ -82,12 +82,18 @@ def copy_project_docs(srctree):
                 'priority': int(fields[2].strip()),
             }
 
-    docs =  [ os.path.join(docdir, fn) 
+    docs =  [ os.path.join(docdir, fn)
                     for fn in os.listdir(docdir) if fn.endswith('.txt') ]
     docs.append(os.path.join(srctree, 'Install.txt'))
     docs.append(os.path.join(srctree, 'NEWS.txt'))
     docs.append(os.path.join(docdir, 'tutorial', 'tutorial.txt'))
     docs.append(os.path.join(docdir, 'tutorial_embed', 'extending_objc_with_python.txt'))
+    NAMES = {
+        os.path.join(srctree, 'Examples', '00ReadMe.txt') : 'Examples.txt',
+        os.path.join(srctree, 'Xcode', 'Project Templates', '00README.txt') : 'Xcode-Templates.txt',
+        os.path.join(srctree, 'ProjectBuilder Extras', 'Project Templates', '00README.txt') : 'ProjectBuilder-Templates.txt',
+    }
+    docs.extend(NAMES)
 
     alldocs = {}
 
@@ -95,9 +101,11 @@ def copy_project_docs(srctree):
         print "-", fname
         docinfo = {}
 
-        bn = os.path.split(fname)[-1]
-        if bn in ('index.txt', 'announcement.txt'):
-            continue
+        bn = NAMES.get(fname)
+        if bn is None:
+            bn = os.path.split(fname)[-1]
+            if bn in ('index.txt', 'announcement.txt'):
+                continue
         if extra_info.has_key(bn):
             docinfo.update(extra_info[bn])
 
