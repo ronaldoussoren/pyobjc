@@ -1,8 +1,10 @@
 #!/bin/sh
 
-FAIL=96
-MSG_TOO_OLD=1	# Pre-Jaguar
-MSG_TOO_NEW=2	# Post-Jaguar
+FAIL=9
+
+# Msg numbers *must* be 16 and 31.
+MSG_TOO_OLD=16	# Pre-Jaguar
+MSG_TOO_NEW=17	# Post-Jaguar
 
 if [ -d /usr/bin/sw_vers ]; then
 	VER=`/usr/bin/sw_vers | grep ProductVersion: | awk '{ print $2 }'`
