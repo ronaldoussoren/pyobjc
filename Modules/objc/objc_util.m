@@ -218,7 +218,7 @@ NSException* PyObjCErr_AsExc(void)
 			forKey:@"__pyobjc_exc_traceback__"];
 
 	val = [NSException 
-		exceptionWithName:@"OC_PythonException_%s"
+		exceptionWithName:@"OC_PythonException"
 		reason:[NSString stringWithFormat:@"%s: %s", PyString_AS_STRING(typerepr), PyString_AS_STRING(repr)]
 		userInfo:userInfo];
 
