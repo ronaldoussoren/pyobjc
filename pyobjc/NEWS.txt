@@ -4,6 +4,36 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 1.3 (2005-??-??)
+------------------------
+
+- The default selector signature will have a void return value
+  unless a "return" statement with an argument is used in the
+  bytecode.  In that case, it will default to an object return
+  value.
+
+- ``__bundle_hack__`` is no longer necessary, py2app now sets
+  a different environment variable to the current plugin during
+  execution, and a hack is installed to ``NSBundle`` so that classes
+  may respond to requests for their bundle with the ``+bundleForClass``
+  method.  The class builder adds a default implementation of this to
+  Python classes if this environment variable is set.
+
+- Added ``objc.currentBundle()``, which is equivalent to
+  ``NSBundle.mainBundle()`` except after loading a plug-in.
+  Makes it easier to load nib files.
+
+- ``PyObjCTools.NibClassBuilder.extractClasses()`` now uses
+  ``objc.currentBundle()`` instead of ``NSBundle.mainBundle()``.  This
+  makes plugins less of a hassle to develop and allows identical code
+  to be used for application or plugin development.
+
+- ``objc.registerPlugin()`` and ``objc.pluginBundle()`` are now deprecated
+  as they are no longer useful.
+
+- (UNFINISHED) New RemotePyInterpreter example that demonstrates an
+  out-of-process Python interpreter (primarily for IDE uses).
+
 Version 1.2 (2004-12-29)
 ------------------------
 

@@ -124,8 +124,8 @@ the path up to the last item, and then <code><span>setKey</span></code> is used 
 nibs. To add the classes from a nib to this set, use the <code><span>extractClasses()</span></code>
 function. It can be called in two ways:</p>
 <ul>
-<li><code><span>extractClasses(nibName,</span> <span>bundle=&lt;main-bundle&gt;)</span></code><p>This finds the nib by name from a bundle. If no bundle
-if given, the main bundle is searched.</p>
+<li><code><span>extractClasses(nibName,</span> <span>bundle=&lt;current-bundle&gt;)</span></code><p>This finds the nib by name from a bundle. If no bundle
+if given, the <code><span>objc.currentBundle()</span></code> is searched.</p>
 </li>
 <li><code><span>extractClasses(path=pathToNib)</span></code><p>This uses an explicit path to a nib.</p>
 </li>

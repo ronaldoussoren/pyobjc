@@ -91,16 +91,6 @@ be enhanced.
 Unless somebody actually starts working on this GNUstep support will slowly
 fade away.
 
-Plugin bundles
-..............
-
-Allow for more than one class to show up in the bundle via
-``+[NSBundle bundleForClass:]``.  The implementation of this would statically
-allocate some fixed large number of class wrappers in the __OBJC section of
-the py2app bundletemplate.  The class builder would have a "stack" of
-allocation spaces for classes, and the bundletemplate would push/pop this
-stack.
-
 Project templates
 .................
 
