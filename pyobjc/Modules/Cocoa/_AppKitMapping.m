@@ -5,7 +5,10 @@
 #include <Python.h>
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h> // really should be Cocoa
+#ifndef GNU_RUNTIME
 #include <objc/objc-runtime.h>
+#endif
+#include "objc_support.h"
 #include "pyobjc-api.h"
 
 /* mapping for NSMatrix.getNumberOfRows:columns: 
@@ -65,7 +68,7 @@ supercall_NSMatrix_getNumerOfRows_columns_(PyObject* method,
 	}
 
 	NS_DURING
-		super.receiver = ObjCObject_GetObject(self);
+		RECEIVER(super) = ObjCObject_GetObject(self);
 		super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
 
 		(void)objc_msgSendSuper(&super, 
@@ -323,7 +326,7 @@ supercall_NSBitmapImageRep_initWithBitmap(PyObject* method,
   colorSpaceNameString = [NSString stringWithCString: colorSpaceName];
 
   NS_DURING
-    super.receiver = ObjCObject_GetObject(self);
+    RECEIVER(super) = ObjCObject_GetObject(self);
     super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
     
     newImageRep = objc_msgSendSuper(&super,
@@ -407,7 +410,7 @@ supercall_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
     int i;
     int bytesPerPlane;
 
-    super.receiver = ObjCObject_GetObject(self);
+    RECEIVER(super) = ObjCObject_GetObject(self);
     super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
     
     (void)objc_msgSendSuper(&super, 
@@ -494,7 +497,7 @@ supercall_NSBitmapImageRep_bitmapData(PyObject* method,
     unsigned char *bitmapData;
     int bytesPerPlane;
 
-    super.receiver = ObjCObject_GetObject(self);
+    RECEIVER(super) = ObjCObject_GetObject(self);
     super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
     
     bitmapData = (unsigned char *) objc_msgSendSuper(&super, @selector(bitmapData));

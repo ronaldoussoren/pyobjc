@@ -13,8 +13,11 @@
  */
 #include <Python.h>
 #include <Foundation/Foundation.h>
+#ifndef GNU_RUNTIME
 #include <objc/objc-runtime.h>
+#endif
 #include "pyobjc-api.h"
+#include "objc_support.h"
 
 static PyObject* call_NSData_dataWithBytes_length_(
 		PyObject* method, PyObject* self, PyObject* arguments)
@@ -68,7 +71,7 @@ static PyObject* supercall_NSData_dataWithBytes_length_(
 
 	NS_DURING
 #warning correct use of getclass()?
-		super.receiver = ObjCClass_GetClass(self);
+		RECEIVER(super) = ObjCClass_GetClass(self);
 		super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
 
 		objc_result = objc_msgSendSuper(&super,
@@ -175,7 +178,7 @@ static PyObject* supercall_NSData_initWithBytes_length_(
 	}
 
 	NS_DURING
-		super.receiver = ObjCObject_GetObject(self);
+		RECEIVER(super) = ObjCObject_GetObject(self);
 		super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
 
 		objc_result = objc_msgSendSuper(&super,
@@ -269,7 +272,7 @@ static PyObject* supercall_NSData_bytes(PyObject* method, PyObject* self, PyObje
   }
 
   NS_DURING
-    super.receiver = ObjCObject_GetObject(self);
+    RECEIVER(super) = ObjCObject_GetObject(self);
     super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
 
 #warning bbum: Not at all sure what to do here....   send both to super?  Just -bytes?
@@ -350,7 +353,7 @@ static PyObject* supercall_NSMutableData_mutableBytes(PyObject* method, PyObject
   }
 
   NS_DURING
-    super.receiver = ObjCObject_GetObject(self);
+    RECEIVER(super) = ObjCObject_GetObject(self);
     super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
 
 #warning bbum: Not at all sure what to do here....   send both to super?  Just -bytes?

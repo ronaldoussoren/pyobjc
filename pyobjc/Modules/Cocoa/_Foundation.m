@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 #import <Foundation/NSDebug.h>
 #include "pyobjc-api.h"
+#include "objc_support.h"
 #include "const-table.h"
 
 /** Functions */
@@ -138,9 +139,16 @@ static	char* keywords[] = { "value", NULL };
 	return Py_None;
 }
 
+#ifdef GNUSTEP
+#include "_Fnd_Functions.GNUstep.inc"
+
+#else /* !GNUSTEP */
+
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_Fnd_Functions.inc"
 #endif
+
+#endif /* !GNUSTEP */
 
 static PyMethodDef foundation_methods[] = {
 	{ 
@@ -178,10 +186,15 @@ PyDoc_STRVAR(foundation_doc,
 "Cocoa.Foundation."
 );
 
+#ifdef  GNUSTEP 
+#include "_Fnd_Enum.GNUstep.inc"
+#include "_Fnd_Str.GNUstep.inc"
+#else  /* !GNUSTEP */
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_Fnd_Enum.inc"
 #include "_Fnd_Str.inc"
 #endif
+#endif  /* !GNUSTEP */
 
 void init_Foundation(void)
 {
@@ -201,9 +214,13 @@ void init_Foundation(void)
 	/* Register information in generated tables */
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_strings(d, string_table) < 0) return;
+#ifdef  GNUSTEP 
+#	include "_Fnd_Var.GNUstep.inc"
+#else /* !GNUSTEP */
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #	include "_Fnd_Var.inc"
 #endif
+#endif /* !GNUSTEP */
     
 	/* Add manual registrations below */
 }
