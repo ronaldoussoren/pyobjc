@@ -19,34 +19,34 @@ class TestNSString(unittest.TestCase):
 
     def testFormatting(self):
 
-        self.assertRaises(TypeError, NSString.stringWithFormat_, "foo")
+        self.assertRaises(TypeError, NSString.stringWithFormat_, u"foo")
 
         # The test on instances is slightly more verbose to avoid warnings
         try:
             obj = NSString.alloc()
-            self.assertRaises(TypeError, obj.initWithFormat_, "foo")
-            obj = obj.initWithString_("foo")
+            self.assertRaises(TypeError, obj.initWithFormat_, u"foo")
+            obj = obj.initWithString_(u"foo")
         except AssertionError, msg:
             raise
 
         try:
             obj = NSString.alloc()
-            self.assertRaises(TypeError, obj.initWithFormat_locale_, "foo", {})
-            obj = obj.initWithString_("foo")
+            self.assertRaises(TypeError, obj.initWithFormat_locale_, u"foo", {})
+            obj = obj.initWithString_(u"foo")
         except AssertionError, msg:
             raise
 
         try:
             obj = NSString.alloc()
-            self.assertRaises(TypeError, obj.initWithFormat_arguments_, "foo", [])
-            obj = obj.initWithString_("foo")
+            self.assertRaises(TypeError, obj.initWithFormat_arguments_, u"foo", [])
+            obj = obj.initWithString_(u"foo")
         except AssertionError, msg:
             raise
 
         try:
             obj = NSString.alloc()
-            self.assertRaises(TypeError, obj.initWithFormat_locale_arguments_, "foo", {}, [])
-            obj = obj.initWithString_("foo")
+            self.assertRaises(TypeError, obj.initWithFormat_locale_arguments_, u"foo", {}, [])
+            obj = obj.initWithString_(u"foo")
         except AssertionError, msg:
             raise
 
@@ -97,7 +97,7 @@ class TestNSStringBridging(unittest.TestCase):
 
             objc.setStrBridgeEnabled(False)
 
-            warnings.filterwarnings('error', category=objc.PyObjCStrBridgeWarning) 
+            warnings.filterwarnings('error', category=objc.PyObjCStrBridgeWarning)
             try:
                 #v = NSString.stringWithString_("hello")
                 self.assertRaises(objc.PyObjCStrBridgeWarning,

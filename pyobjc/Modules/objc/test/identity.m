@@ -30,7 +30,7 @@
 -(void)setStoredObjectAnInstanceOf:(Class) cls;
 -(void)setStoredObjectAnInstanceOfClassic:(Class) cls;
 
--(void)writeStoredObjecToFile:(NSString*)fname;
+-(void)writeStoredObjectToFile:(NSString*)fname;
 
 @end
 
@@ -126,7 +126,7 @@
 	[self setStoredClassicObject:[cls new]];
 }
 
--(void)writeStoredObjecToFile:(NSString*)fname
+-(void)writeStoredObjectToFile:(NSString*)fname
 {
 	[(NSArray*)storedObject writeToFile:fname atomically:YES];
 }
