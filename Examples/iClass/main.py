@@ -1,15 +1,12 @@
 """
 """
-from AppKit import NSApplicationMain
+from AppKit import NSApplicationMain, NibClassBuilder
 from Foundation import NSBundle
 import sys
 import os
 
-print sys.path	
+NibClassBuilder.extractClasses('MainMenu.nib')
+
 import datasource
 
-print datasource.ClassesDataSource
-
-print "Starting NSApplicationMain"
 NSApplicationMain(sys.argv)
-print "done"

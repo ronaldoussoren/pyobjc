@@ -1,3 +1,9 @@
+2002-11-25 Ronald Oussoren <oussoren@cistron.nl>
+	* Examples/{TableModel, CurrencyConverter, Todo}:
+	  - Use NibClassBuilder module
+	  - Use bundlebuilder module
+	* Lib/objc/builder.py: Remove, no longer used
+
 2002-11-22 Ronald Oussoren <oussoren@cistron.nl>
 	* Examples/TableModel2/main.m: Set PYTHONPATH in the environment of
 	  the child
