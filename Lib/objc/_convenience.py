@@ -1,5 +1,3 @@
-from __future__ import generators
-
 """
 This module implements a callback function that is used by the C code to
 add Python special methods to Objective-C classes with a suitable interface.
@@ -12,7 +10,7 @@ TODO:
 from objc import setClassExtender, selector, lookUpClass
 import warnings
 
-__all__ = []
+__all__ = ['CONVENIENCE_METHODS', 'CLASS_METHODS']
 
 CONVENIENCE_METHODS = {}
 CLASS_METHODS = {}
