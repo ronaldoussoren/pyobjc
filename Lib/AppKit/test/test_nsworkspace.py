@@ -20,12 +20,5 @@ class TestNSWorkspace(unittest.TestCase):
         self.assert_(res[1] == '/System/Library/CoreServices/Finder.app')
         self.assert_(res[2] == '')
 
-
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestNSWorkspace))
-    return suite
-
 if __name__ == '__main__':
     unittest.main( )
-

@@ -6,7 +6,7 @@ from PyObjCTools.Conversion import *
 
 samplePropertyList = '{ "" = 1; "x" = "2"; 1 = "one";}'
 
-class TestCollections( unittest.TestCase ):
+class TestCollections(unittest.TestCase):
     def assertSameArrayContents(self, a1, a2):
         self.assertEqual(len(a1), len(a2))
 
@@ -71,15 +71,10 @@ class TestCollections( unittest.TestCase ):
         self.assertRaises(TypeError, pythonCollectionFromPropertyList, d)
         pythonCollectionFromPropertyList(d, conversionHelper)
 
-        
-
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest( unittest.makeSuite( TestCollections ) )
-    return suite
 
 if __name__ == '__main__':
     try:
         unittest.main( )
     except SystemExit :
         pass
+    objc.recycle_autorelease_pool()

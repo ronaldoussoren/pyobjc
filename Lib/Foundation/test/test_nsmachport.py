@@ -11,11 +11,5 @@ class TestNSMachPort(unittest.TestCase):
         obj = obj.init()
         self.assert_(obj is not None)
 
-
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestNSMachPort))
-    return suite
-
 if __name__ == '__main__':
     unittest.main( )

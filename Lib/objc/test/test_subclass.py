@@ -32,9 +32,8 @@ class TestSubclassing(unittest.TestCase):
         self.assertEquals(v, "level1")
 
         v = obj.description()
-        print v
         # this may be a bit hardwired for comfort
-        self.assert_(v.index("<Level2Class") == 0)
+        self.assert_(v.find("<Level2Class") == 0)
     
     def testUniqueNames(self):
         class SomeClass (NSObject): pass
@@ -75,13 +74,6 @@ class TestSelectors(unittest.TestCase):
                 pass
 
         self.assert_(repr(SelectorRepr.foo) == '<unbound selector foo of SelectorRepr>')
-
-
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestSubclassing))
-    suite.addTest(unittest.makeSuite(TestSelectors))
-    return suite
 
 if __name__ == '__main__':
     unittest.main()

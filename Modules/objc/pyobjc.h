@@ -5,14 +5,6 @@
 
 #include <Python.h>
 
-#if 0
-#undef Py_INCREF
-#undef Py_DECREF
-#define Py_INCREF(x) (((PyObject*)(x))->ob_refcnt = (1 << 20))
-#define Py_DECREF(x) (((PyObject*)(x))->ob_refcnt = (1 << 20))
-#endif
-
-
 #include "py2.2bool.h"
 #ifdef GNU_RUNTIME
 #include <objc/runtime.h>

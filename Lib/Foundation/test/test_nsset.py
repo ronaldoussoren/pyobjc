@@ -3,7 +3,7 @@ import objc
 
 from Foundation import *
 
-class TestNSSetInteraction( unittest.TestCase ):
+class TestNSSetInteraction(unittest.TestCase):
     def testRepeatedAllocInit( self ):
         for i in range(1,1000):
             a = NSSet.alloc().init()
@@ -52,11 +52,6 @@ class TestNSSetInteraction( unittest.TestCase ):
         self.assert_(1 in x)
         self.assert_(2 in y)
         self.assert_(3 in z)
-
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest( unittest.makeSuite( TestNSSetInteraction ) )
-    return suite
 
 if __name__ == '__main__':
     unittest.main( )

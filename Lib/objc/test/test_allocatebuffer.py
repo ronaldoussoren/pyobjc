@@ -22,10 +22,6 @@ class TestAllocateBuffer(unittest.TestCase):
             if str(r).find("right operand length must match slice length") is not 0:
                 raise
 
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestAllocateBuffer))
-    return suite
-
 if __name__ == '__main__':
     unittest.main()
+    objc.recycle_autorelease_pool()

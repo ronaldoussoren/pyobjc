@@ -63,14 +63,5 @@ class TestMutable(unittest.TestCase):
 
         self.assertEquals(pyStr, "hello world")
 
-        
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestNSString))
-    suite.addTest(unittest.makeSuite(TestNSStringBridging))
-    suite.addTest(unittest.makeSuite(TestEncoding))
-    return suite
-
 if __name__ == '__main__':
     unittest.main( )
-

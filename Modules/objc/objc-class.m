@@ -70,7 +70,7 @@ get_class_info(PyObject* class)
 		return (PyObjC_class_info*)item;
 	}
 
-	info = malloc(sizeof(PyObjC_class_info));
+	info = PyMem_Malloc(sizeof(PyObjC_class_info));
 	//printf("malloc(%d) == %p for %s\n", (int)sizeof(PyObjC_class_info), info, ((PyTypeObject*)class)->tp_name);
 	if (info == NULL) {
 		PyErr_NoMemory();
@@ -273,7 +273,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
-#if 0
 	delmethod = PyDict_GetItemString(dict, "__del__");
 	if (delmethod == NULL) {
 		PyErr_Clear();
@@ -286,10 +285,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			return NULL;
 		}
 	}
-#endif
-
-
-
 
 	/* Add convenience methods like '__eq__'. Must do it before
 	 * call to super-class implementation, because '__*' methods

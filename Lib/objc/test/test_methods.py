@@ -1282,18 +1282,5 @@ class OCPyTestSimpleArguments(unittest.TestCase):
         self.assertEquals(self.obj.invokeInstanceLongLongArg_on_(-10, self.ocobj), -20)
         self.assertEquals(self.obj.invokeInstanceLongLongArg_on_(-(1L << 60), self.ocobj), -(1L << 61))
 
-def suite(self):
-    suite = unittest.TestSuite()
-
-    suite.addTest(unittest.makeSuite(PyOCTestTypeStr))
-    suite.addTest(unittest.makeSuite(PyOCTestSimpleReturns))
-    suite.addTest(unittest.makeSuite(PyOCTestSimpleArguments))
-    suite.addTest(unittest.makeSuite(PyOCTestByReferenceArguments))
-
-    suite.addTest(unittest.makeSuite(OCPyTestSimpleCalls))
-    suite.addTest(unittest.makeSuite(OCPyTestSimpleArguments))
-
-    return suite
-
 if __name__ == '__main__':
     unittest.main()

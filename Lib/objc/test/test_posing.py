@@ -15,12 +15,5 @@ class TestPosing(unittest.TestCase):
         
         obj = NSObject.new()
 
-
-
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestPosing))
-    return suite
-
 if __name__ == '__main__':
     unittest.main()

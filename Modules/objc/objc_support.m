@@ -202,6 +202,7 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	default:
 		ObjCErr_Set(ObjCExc_internal_error,
 			"PyObjCRT_SkipTypeSpec: Unhandled type '%#x'", *type); 
+		abort();
 		return NULL;
 	}
 
@@ -288,6 +289,7 @@ objc_alignof_type (const char *type)
 	default:
 		ObjCErr_Set(ObjCExc_internal_error, 
 			"objc_align_type: Unhandled type '%#x'", *type);
+		abort();
 		return -1;
 	}
 }
@@ -390,6 +392,7 @@ objc_sizeof_type (const char *type)
 	default:
 		ObjCErr_Set(ObjCExc_internal_error, 
 			"objc_sizeof_type: Unhandled type '%#x", *type);
+		abort();
 		return -1;
 	}
 }
@@ -1129,6 +1132,12 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 #ifdef MACOSX
 			*(id*) datum = PyObjC_CFTypeToID(argument);
 			if (*(id*)datum != NULL) {
+				/* BUG! for some reason the unittests fail
+				 * without this retain. This needs further
+				 * investigation, as this doesn't look
+				 * correct to me
+				 */
+				[*(id*)datum retain];
 				return 0;
 			}
 #endif /* MACOSX */
@@ -1402,8 +1411,12 @@ struct objc_method_list *objc_allocMethodList(int numMethods)
 {
   struct objc_method_list *mlist;
 
-  mlist = calloc(1, sizeof(struct objc_method_list)
+  mlist = malloc(sizeof(struct objc_method_list)
 		 + (numMethods) * sizeof(struct objc_method));
+  mlist->method_count = 0;
+  mlist->obsolete = NULL;
+
+  printf("new mlist %p\n", mlist);
 
   return mlist;
 }
@@ -1429,16 +1442,13 @@ struct objc_method_list *objc_allocMethodList(int numMethods)
   struct objc_method_list *mlist;
 
   mlist = malloc(sizeof(struct objc_method_list)
-		 + (numMethods) * sizeof(struct objc_method));
+		 + ((numMethods) * sizeof(struct objc_method)));
 
   if (mlist == NULL)
     return NULL;
 
-  memset(mlist, 0, sizeof(struct objc_method_list)
-	 + (numMethods) * sizeof(struct objc_method));
-
   mlist->method_count = 0;
-  mlist->obsolete = NULL; /* DEBUG */
+  mlist->obsolete = NULL; 
 
   return mlist;
 }

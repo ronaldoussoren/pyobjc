@@ -78,11 +78,5 @@ class TestNSData(unittest.TestCase):
 
             mutableBytes[0:len(mutableBytes)] = bytes[0:len(bytes)]
 
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestNSData))
-    return suite
-
 if __name__ == '__main__':
     unittest.main( )
-

@@ -99,6 +99,5 @@ class TestInstanceVariables(unittest.TestCase):
         objc.recycle_autorelease_pool()
         self.assertEquals(self.deleted, 1)
 
-
 if __name__ == '__main__':
     unittest.main()

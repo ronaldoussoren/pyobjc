@@ -52,12 +52,5 @@ class TestMethodInvocation(unittest.TestCase):
     def testVarargsInvocation(self):
         objc.runtime.NSArray.arrayWithObjects_("foo", "bar", None)
 
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestConstants))
-    suite.addTest(unittest.makeSuite(TestClassLookup))
-    suite.addTest(unittest.makeSuite(TestMethodInvocation))
-    return suite
-
 if __name__ == '__main__':
     unittest.main()

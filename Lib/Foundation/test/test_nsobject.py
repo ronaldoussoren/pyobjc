@@ -3,13 +3,13 @@ import objc
 
 from Foundation import *
 
-class TestNSObjectInteraction( unittest.TestCase ):
-    def testNSObjectClass( self ):
+class TestNSObjectInteraction(unittest.TestCase):
+    def testNSObjectClass(self):
         self.assert_( NSObject.instancesRespondToSelector_( "description" ), "NSObject class claims it doesn't respond to a selector that it does." )
         self.assert_( hasattr(NSObject, "description"), "NSObject class claims it doesn't respond to a selector that it does." )
         # self.assert_( NSObject.description(), "NSObject class failed to respond to +description selector." )
 
-    def testNSObjectInstance( self ):
+    def testNSObjectInstance(self):
         instance = NSObject.new()
 
         self.assert_( instance, "Failed to instantiate an instance" )
@@ -19,15 +19,9 @@ class TestNSObjectInteraction( unittest.TestCase ):
         self.assertEqual( instance, instance, "Python identity check failed." )
         self.assert_( instance.isEqual_( instance ), "Obj-C identity check failed." )
 
-    def testRepeatedAllocInit( self ):
+    def testRepeatedAllocInit(self):
         for i in range(1,1000):
             a = NSObject.alloc().init()
-        
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest( unittest.makeSuite( TestNSObjectInteraction ) )
-    return suite
 
 if __name__ == '__main__':
     unittest.main( )
-
