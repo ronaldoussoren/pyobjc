@@ -658,3 +658,7 @@ CONVENIENCE_METHODS['hasPrefix:'] = (
 CONVENIENCE_METHODS['hasSuffix:'] = (
     ('endswith', lambda self, pfx: self.hasSuffix_(pfx)),
 )
+
+CLASS_METHODS['NSNull'] = (
+        (   '__nonzero__',  lambda self: False ),
+)
