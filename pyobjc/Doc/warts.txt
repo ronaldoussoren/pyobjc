@@ -19,4 +19,7 @@ things should be kept in mind:
 - Some Cocoa classes store references to objects while not increasing the 
   reference count. One of those is NSOutlineView. A side-effect of this is that
   you *must* use subclasses of NSObject in your NSOutlineView model, and you
-  *must* keep a reference to the objects you pass to NSOutlineView.
+  *must* keep a reference to the objects you pass to NSOutlineView.  Another
+  gotcha is when you're manually allocating and assigning delegate(-like)
+  objects: most of the time obj.setDelegate_() will *not* retain the delegate,
+  so you must keep a reference manually.
