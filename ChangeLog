@@ -1,3 +1,8 @@
+2002-10-31 Ronald Oussoren <oussoren@cistron.nl>
+	* Use 'nibwrapper' technique in all GUI examples.
+	* Actually remove old version of classnib.py and add the
+	  version in the new location (as used by Tools/mknibwrapper)
+
 2002-10-31  Bill Bumgarner  <bbum@codefab.com>
 	* Fixed a typo in NSOutlineViewDataSource.
 	* Fixed the classnib.py script slightly.

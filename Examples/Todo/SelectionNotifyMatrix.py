@@ -1,9 +1,10 @@
 from AppKit import *
 from Foundation import *
+from nibwrapper import SelectionNotifyMatrixBase
 
 RowSelectedNotification = "RowSelectedNotification"
 
-class  SelectionNotifyMatrix (NSMatrix):
+class  SelectionNotifyMatrix (SelectionNotifyMatrixBase):
 	def mouseDown_(self, theEvent):
 		super(SelectionNotifyMatrix, self).mouseDown_(theEvent)
 

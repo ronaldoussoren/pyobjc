@@ -4,14 +4,11 @@ from objc import IBOutlet
 from ToDoCell import *
 from ToDoItem import *
 from SelectionNotifyMatrix import *
+from nibwrapper import ToDoDocumentBase
 
 ToDoItemChangedNotification = "ToDoItemChangedNotification"
 
-class  ToDoDocument (NSDocument):
-	_calendar   = IBOutlet("calendar")
-	_dayLabel   = IBOutlet("dayLabel")
-	_itemList   = IBOutlet("itemList")
-	_statusList = IBOutlet("statusList")
+class  ToDoDocument (ToDoDocumentBase):
 
 	__slots__ = ('_dataFromFile', '_activeDays', '_currentItems', '_selectedItem', '_selectedItemEdited')
 
@@ -58,16 +55,16 @@ class  ToDoDocument (NSDocument):
 		# NSDocument.windowControllerDidLoadNib_(self, aController)
 
 		self.setHasUndoManager_(0)
-		self._itemList.setDelegate_(self)
+		self.itemList.setDelegate_(self)
 		
-		index = self._statusList.cells().count()
+		index = self.statusList.cells().count()
 		while index:
 			index -= 1
 
 			aCell = ToDoCell.alloc().init()
 			aCell.setTarget_(self)
 			aCell.setAction_('itemStatusClicked:')
-			self._statusList.putCell_atRow_column_(aCell, index, 0)
+			self.statusList.putCell_atRow_column_(aCell, index, 0)
 			aCell.release()
 		
 		if self._dataFromFile:
@@ -77,8 +74,8 @@ class  ToDoDocument (NSDocument):
 		else:
 			self.loadDocWithData_(None)
 
-		NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'rowSelected:', RowSelectedNotification, self._itemList)
-		NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'rowSelected:', RowSelectedNotification, self._statusList)
+		NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'rowSelected:', RowSelectedNotification, self.itemList)
+		NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'rowSelected:', RowSelectedNotification, self.statusList)
 	
 	def loadDocWithData_(self, data):
 		if data:
@@ -122,8 +119,8 @@ class  ToDoDocument (NSDocument):
 		self.selectItemAtRow_(0)
 		self.updateLists()
 
-		self._dayLabel.setStringValue_(
-			self._calendar.selectedDay().descriptionWithCalendarFormat_timeZone_locale_(
+		self.dayLabel.setStringValue_(
+			self.calendar.selectedDay().descriptionWithCalendarFormat_timeZone_locale_(
 				"To Do on %a %B %d %Y", 
 				NSTimeZone.defaultTimeZone(), 
 				None))
@@ -137,7 +134,7 @@ class  ToDoDocument (NSDocument):
 		else:
 			self._activeDays = NSMutableDictionary.alloc().init()
 
-		date = self._calendar.selectedDay()
+		date = self.calendar.selectedDay()
 		self.setCurrentItems_(self._activeDays.objectForKey_(date))
 
 	def setCurrentItems_(self, newItems):
@@ -147,14 +144,14 @@ class  ToDoDocument (NSDocument):
 		if newItems:
 			self._currentItems = newItems.mutableCopy()
 		else:
-			numRows, numCols = 6,1 # self._itemList.getNumberOfRows_columns_()
+			numRows, numCols = 6,1 # self.itemList.getNumberOfRows_columns_()
 			self._currentItems = NSMutableArray.alloc().initWithCapacity_(numRows)
 
 			for d in range(numRows):
 				self._currentItems.addObject_("")
 	
 	def updateLists(self):
-		numRows = self._itemList.cells().count()
+		numRows = self.itemList.cells().count()
 
 		for i in range(numRows):
 			if self._currentItems:
@@ -169,13 +166,13 @@ class  ToDoDocument (NSDocument):
 				else:
 					due = None
 
-				self._itemList.cellAtRow_column_(i, 0).setStringValue_(thisItem.itemName())
-				self._statusList.cellAtRow_column_(i, 0).setTimeDue_(due)
-				self._statusList.cellAtRow_column_(i, 0).setTriState_(thisItem.status())
+				self.itemList.cellAtRow_column_(i, 0).setStringValue_(thisItem.itemName())
+				self.statusList.cellAtRow_column_(i, 0).setTimeDue_(due)
+				self.statusList.cellAtRow_column_(i, 0).setTriState_(thisItem.status())
 			else:
-				self._itemList.cellAtRow_column_(i, 0).setStringValue_("")
-				self._statusList.cellAtRow_column_(i, 0).setTitle_("")
-				self._statusList.cellAtRow_column_(i, 0).setImage_(None)
+				self.itemList.cellAtRow_column_(i, 0).setStringValue_("")
+				self.statusList.cellAtRow_column_(i, 0).setTitle_("")
+				self.statusList.cellAtRow_column_(i, 0).setImage_(None)
 
 	def saveDocItems(self):
 		if self._currentItems:
@@ -191,8 +188,8 @@ class  ToDoDocument (NSDocument):
 		if not self._selectedItemEdited:
 			return
 
-		row = self._itemList.selectedRow()
-		newName = self._itemList.selectedCell().stringValue()
+		row = self.itemList.selectedRow()
+		newName = self.itemList.selectedCell().stringValue()
 
 		if isinstance(self._currentItems.objectAtIndex_(row), ToDoItem):
 			prevNameAtIndex = self._currentItems.objectAtIndex_(row).itemName()
@@ -201,7 +198,7 @@ class  ToDoDocument (NSDocument):
 			elif prevNameAtIndex != newName:
 				self._currentItems.objectAtRow_(row).setItemName_(newName)
 		elif newName != "":
-			newItem = ToDoItem.alloc().initWithName_andDate_(newName, self._calendar.selectedDay())
+			newItem = ToDoItem.alloc().initWithName_andDate_(newName, self.calendar.selectedDay())
 			self._currentItems.replaceObjectAtIndex_withObject_(row, newItem)
 			newItem.release()
 
@@ -232,7 +229,7 @@ class  ToDoDocument (NSDocument):
 			self.setCurrentItems_(self._activeDays.objectForKey_(date))
 		else:
 			print "calenderMatrix:didChangeToDate: -> no _activeDays"
-		self._dayLabel.setStringValue_(
+		self.dayLabel.setStringValue_(
 			date.descriptionWithCalendarFormat_timeZone_locale_(
 			"To Do on %a %B %d %Y", NSTimeZone.defaultTimeZone(),
 			None))
@@ -240,7 +237,7 @@ class  ToDoDocument (NSDocument):
 		self.selectedItemAtRow_(0)
 
 	def selectedItemAtRow_(self, row):
-		self._itemList.selectCellAtRow_column_(row, 0)
+		self.itemList.selectCellAtRow_column_(row, 0)
 
 	def controlTextDidBeginEditing_(self, notif):
 		self._selectedItemEdited = 1
@@ -251,7 +248,7 @@ class  ToDoDocument (NSDocument):
 		return NSArchiver.archivedDataWithRootObject_(self._activeDays)
 
 	def loadRepresentation_ofType_(self, data, aType):
-		if self_calendar:
+		if selfcalendar:
 			self.loadDocWithData_(data)
 		else:
 			self._dataFromFile = data.retain()
@@ -309,7 +306,7 @@ class  ToDoDocument (NSDocument):
 			None)
 
 	def selectItemAtRow_(self, row):
-		self._itemList.selectCellAtRow_column_(row, 0)
+		self.itemList.selectCellAtRow_column_(row, 0)
 
 if __name__ == "__main__":
 	x = ToDoDocument.alloc()

@@ -8,7 +8,7 @@
             SUPERCLASS = NSMatrix; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = MySound; LANGUAGE = ObjC; SUPERCLASS = Sound; }, 
+	{CLASS = MySound; LANGUAGE = ObjC; SUPERCLASS = Sound; },
         {CLASS = SelectionNotifyMatrix; LANGUAGE = ObjC; SUPERCLASS = NSMatrix; }, 
         {
             ACTIONS = {itemStatusClicked = id; }; 

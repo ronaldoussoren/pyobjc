@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+"""
+mknibwrapper [--module=nibwrapper] [--output-directory=.] [--help] file.nib...
+
+This tool can be used to generate the classes defined in a NIB file.
+"""
+import sys
+import getopt
+import os
+
+from AppKit.classnib import parse_classes_nib, generate_wrapper_module
+
+PRG=sys.argv[0]
+MODNAME='nibwrapper'
+BASEDIR='.'
+
+def usage(fp):
+	fp.write("Usage:\n")
+	fp.write("\t%s [--module=nibwrapper] [--output-directory=.] [--help] x.nib...\n", PRG)
+
+try:
+	opts, args = getopt.getopt(sys.argv[1:],
+		'm:h?o:', [ 'help', 'module=', 'output-directory=' ])
+except getopt.error, msg:
+	sys.stderr.write("%s: %s\n"%(PRG, msg))
+	usage(sys.stderr)
+	sys.exit(1)
+
+for key, value in opts:
+	if key in [ '-h', '-?', '--help' ]:
+		usage(sys.stdout)
+		sys.exit(0)
+	elif key in [ '-m', '--module' ]:
+		MODNAME = value
+	elif key in [ '-d', '--output-directory' ]:
+		BASEDIR = value
+	else:
+		raise InternalError, "Unhandled option: %s"%key
+
+if not args:
+	sys.stderr.write("%s: No NIB file specified\n"%PRG)
+	usage(sys.stderr)
+	sys.exit(1)
+
+class_data = [ parse_classes_nib(a) for a in args ]
+
+fname = os.path.join(BASEDIR, MODNAME.replace('.', '/')) + '.py'
+generate_wrapper_module(open(fname, 'w'), class_data)

@@ -1,5 +1,6 @@
 import sys
 import os.path
+from nibwrapper import PyModelBase
 
 sys.path.insert(0, os.path.join(sys.path[0], "pyobjc"))
 
@@ -7,7 +8,7 @@ import objc
 import Foundation
 import AppKit
 
-class PyModel (Foundation.NSObject, AppKit.NSTableDataSource):
+class PyModel (PyModelBase, AppKit.NSTableDataSource):
 	__slots__  = ('rowcount')
 
 	def init(self):
