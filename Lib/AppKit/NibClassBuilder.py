@@ -152,6 +152,7 @@ class NibInfo(object):
 		self._extractClassesFromNibFromPath(path)
 
 	def _extractClassesFromNibFromPath(self, path):
+		path = os.path.normpath(path)
 		if self.parsedNibs.has_key(path):
 			return  # we've alread pared this nib
 		nibName = os.path.basename(path)
@@ -337,7 +338,7 @@ class IndentWriter:
 
 	"""Simple helper class for generating (Python) code."""
 
-	def __init__(self, file=None, indentString="\t"):
+	def __init__(self, file=None, indentString="    "):
 		if file is None:
 			file = sys.stdout
 		self.file = file
