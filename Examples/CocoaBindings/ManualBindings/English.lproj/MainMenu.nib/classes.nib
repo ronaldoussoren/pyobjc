@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {
+            CLASS = AppController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                arrayController = NSArrayController; 
+                selectedNameField = NSTextField; 
+                selectedPriceField = NSTextField; 
+                tableView = NSTableView; 
+                totalCountField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = ManualBindingsAppDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
