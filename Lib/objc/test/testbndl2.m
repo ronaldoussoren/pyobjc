@@ -11152,5 +11152,5 @@ void inittestbndl2(void)
             PyObjCClass_New([PyObjC_TestClass2 class]));
 
 	/* Initialize g_id_values */
-	g_id_values[0] = NSFTPPropertyFileOffsetKey;
+	g_id_values[0] = NSPriorDayDesignations;
 }

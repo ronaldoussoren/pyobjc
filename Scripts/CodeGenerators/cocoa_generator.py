@@ -17,6 +17,20 @@ import os
 import sys
 from dupfile import dupfile
 
+#
+# This script contains some MacOS X version dependencies. Because uname
+# doesn't tell anything usefull, we use sw_vers to find the actual OS version.
+#
+import os
+VER=None
+fd = os.popen('/usr/bin/sw_vers', 'r')
+for ln in fd.readlines():
+	if ln.startswith('ProductVersion:'):
+		VER=ln.split()[-1]
+fd.close()
+fd = None
+VER = '.'.join(VER.split('.')[:2])
+
 if not os.path.isdir('Modules'):
     print "Run me from the root of the PyObjC source tree"
     sys.exit(1)
@@ -246,6 +260,10 @@ APPKIT_IGNORE_LIST=(
     'NSWindowListForContext(',
     'NSDrawColorTiledRects(',
 )
+
+if VER == "10.1":
+	APPKIT_IGNORE_LIST = APPKIT_IGNORE_LIST + ('NSCopyBitmapFromGState',)
+
 func_collector.generate(FOUNDATION_HDRS, 'build/codegen/Foundation.prototypes', 
     FOUNDATION_PREFIX, FOUNDATION_IGNORE_LIST)
 func_collector.generate(APPKIT_HDRS, 'build/codegen/AppKit.prototypes', 

@@ -12,6 +12,7 @@
 #include <Foundation/Foundation.h>
 #include "pyobjc-api.h"
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_2
 
 /* makeipaddr and makesockaddr were stolen from socketmodule.c (Python2.3b1+) */
 
@@ -167,3 +168,9 @@ _pyobjc_install_NSNetService(void)
 
 	return 0;
 }
+
+#else
+
+#define _pyobjc_install_NSNetService() (0)
+
+#endif

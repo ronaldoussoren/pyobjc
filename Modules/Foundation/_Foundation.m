@@ -26,12 +26,7 @@
 
 #else /* !GNUSTEP */
 
-#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_Fnd_Functions.inc"
-
-#else
-#include "_Fnd_Functions.10.1.inc"
-#endif
 
 #endif /* !GNUSTEP */
 
@@ -230,14 +225,9 @@ PyDoc_STRVAR(foundation_doc,
 #include "_Fnd_Str.GNUstep.inc"
 #else  /* !GNUSTEP */
 
-#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_Fnd_Enum.inc"
 #include "_Fnd_Str.inc"
 
-#else
-#include "_Fnd_Enum.10.1.inc"
-#include "_Fnd_Str.10.1.inc"
-#endif
 #endif  /* !GNUSTEP */
 
 void init_Foundation(void);
@@ -268,11 +258,9 @@ void init_Foundation(void)
 #ifdef  GNUSTEP 
 #	include "_Fnd_Var.GNUstep.inc"
 #else /* !GNUSTEP */
-#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
+
 #	include "_Fnd_Var.inc"
-#else
-#	include "_Fnd_Var.10.1.inc"
-#endif
+
 #endif /* !GNUSTEP */
     
 	/* Add manual registrations below */

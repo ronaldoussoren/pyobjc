@@ -169,11 +169,12 @@ if gs_root is None:
 
         # Loads of warning flags
         "-Wall", "-Wstrict-prototypes", "-Wmissing-prototypes",
-        "-Wformat=2", "-W", "-Wfloat-equal", "-Wshadow", 
+        "-Wformat=2", "-W", "-Wshadow", 
         "-Wpointer-arith", #"-Wwrite-strings",
         "-Wmissing-declarations",
         "-Wnested-externs", 
         "-Wno-long-long",
+	#"-Wfloat-equal", 
     
         # These two are fairly useless:
         #"-Wunreachable-code", 

@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.17 2003/06/28 12:57:51 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.18 2003/07/03 05:59:45 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -26,6 +26,7 @@
 #ifndef MAC_OS_X_VERSION_10_1
 #define MAC_OS_X_VERSION_10_1 1010
 #define MAC_OS_X_VERSION_MAX_ALLOWED MAC_OS_X_VERSION_10_1
+#define PyObjC_COMPILING_ON_MACOSX_10_1
 #endif
 
 #ifndef MAC_OS_X_VERSION_10_2

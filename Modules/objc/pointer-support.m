@@ -323,10 +323,12 @@ int PyObjCPointerWrapper_Init(void)
 		(PyObjCPointerWrapper_FromPythonFunc)py_to_CF);
 	if (r == -1) return -1;
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_2
 	r = PyObjCPointerWrapper_Register(@encode(CFNetServiceRef), 
 		(PyObjCPointerWrapper_ToPythonFunc)CF_to_py, 
 		(PyObjCPointerWrapper_FromPythonFunc)py_to_CF);
 	if (r == -1) return -1;
+#endif
 
 	r = PyObjCPointerWrapper_Register(@encode(CFReadStreamRef), 
 		(PyObjCPointerWrapper_ToPythonFunc)CF_to_py, 
