@@ -353,6 +353,10 @@ if gs_root is None:
         '-framework', 'CoreFoundation', '-framework', 'SecurityInterface', '-framework', 'Foundation',
         ]
 
+    EXCEPTION_HANDLING_LDFLAGS=[
+        '-framework', 'CoreFoundation', '-framework', 'ExceptionHandling', '-framework', 'Foundation',
+        ]
+
     PREFPANES_LDFLAGS=[
         '-framework', 'CoreFoundation', '-framework', 'PreferencePanes', '-framework', 'Foundation',
         ]
@@ -418,6 +422,7 @@ else:
     ADDRESSBOOK_LDFLAGS=[]
     PREFPANES_LDFLAGS=[]
     SECURITY_INTERFACE_LDFLAGS=[]
+    EXCEPTION_HANDLING_LDFLAGS=[]
 
 CFLAGS.append('-Ibuild/codegen/')
 
@@ -469,6 +474,9 @@ if sys.version >= '2.3':
     SecurityInterfaceDepends = {
         'depends': glob.glob('build/codegen/*.inc'),
     }
+    ExceptionHandlingDepends = {
+        'depends': glob.glob('build/codegen/*.inc'),
+    }
     PrefPanesDepends = {
         'depends': glob.glob('build/codegen/*.inc'),
     }
@@ -484,6 +492,7 @@ else:
     AddressBookDepends = {}
     CoreFoundationDepends = {}
     SecurityInterfaceDepends = {}
+    ExceptionHandlingDepends = {}
     PrefPanesDepends = {}
     InterfaceBuilderDepends = {}
     WebKitDepends = {}
@@ -556,6 +565,19 @@ SecurityInterfacePackages, SecurityInterfaceExtensions = \
                       ),
         ])
 
+ExceptionHandlingPackages, ExceptionHandlingExtensions = \
+        IfFrameWork('ExceptionHandling.framework', [ 'ExceptionHandling' ], [
+            Extension('_ExceptionHandling',
+                      [ 'Modules/ExceptionHandling/_ExceptionHandling.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=[
+                      ] + EXCEPTION_HANDLING_LDFLAGS,
+                      **ExceptionHandlingDepends
+                      ),
+        ])
+
 PrefPanesPackages, PrefPanesExtensions = \
         IfFrameWork('PreferencePanes.framework', [ 'PreferencePanes' ], [
             Extension('_PreferencePanes',
@@ -614,7 +636,7 @@ def package_version():
 
 
 # skipping CoreFoundationPackages, it's fake!
-packages = CorePackages + AppKitPackages + FoundationPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + ScreenSaverPackages + WebKitPackages + SecurityInterfacePackages + [ 'PyObjCTools' ]
+packages = CorePackages + AppKitPackages + FoundationPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + ScreenSaverPackages + WebKitPackages + SecurityInterfacePackages + ExceptionHandlingPackages + [ 'PyObjCTools' ]
 
 # The following line is needed to allow separate flat modules
 # to be installed from a different folder (needed for the
@@ -657,6 +679,7 @@ dist = setup(name = "pyobjc",
                            + InterfaceBuilderExtensions
                            + ScreenSaverExtensions
                            + SecurityInterfaceExtensions
+                           + ExceptionHandlingExtensions
                            + CoreFoundationExtensions
                            + WebKitExtensions
                            ),
