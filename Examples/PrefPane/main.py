@@ -12,7 +12,7 @@ from PyObjCTools import NibClassBuilder
 # NibClassBuilder needs to read our Nib files to do its work,
 # we need to specify the optional second argument to extractClasses
 # because we're not in the main bundle.
-NibClassBuilder.extractClasses("SimplePreferencePane", 
+NibClassBuilder.extractClasses("SimplePreferencePane",
     objc.pluginBundle("SimplePreferencePane"))
 
 class SimplePreferencePane (NibClassBuilder.AutoBaseClass):

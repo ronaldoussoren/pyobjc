@@ -30,14 +30,14 @@ class ServiceTest(NSObject):
                     "Error: Couldn't open file %s.",
                     "Couldn't perform service operation for file %s."
                 ) % pboardString)
-            
+
             return ERROR(None)
         except:
             import traceback
             traceback.print_exc()
             return ERROR(u'Exception, see traceback')
-         
-    
+
+
     doOpenFileService_userData_error_ = serviceSelector(
         doOpenFileService_userData_error_
     )
@@ -71,8 +71,7 @@ class ServiceTest(NSObject):
             import traceback
             traceback.print_exc()
             return ERROR(u'Exception, see traceback')
-   
+
     doCapitalizeService_userData_error_ = serviceSelector(
        doCapitalizeService_userData_error_
     )
-
