@@ -72,7 +72,6 @@
       if (!mainScriptBundle)
         {
           char cwdbuf[1024];
-          extern const char *getcwd (char *, unsigned int);
           
           if (getcwd (cwdbuf, sizeof (cwdbuf)))
             {
