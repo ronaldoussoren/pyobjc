@@ -7,6 +7,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3 (2005-04-02)
 ------------------------
 
+- New InjectBrowser example in Inject that demonstrates injection of the
+  ClassBrowser example into another application using ``objc.inject``.
+
 - ``NSData`` and ``NSMutableData`` instances now support the Python buffer
   protocol.
 
