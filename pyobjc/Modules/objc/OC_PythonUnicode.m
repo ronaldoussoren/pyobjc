@@ -81,7 +81,7 @@
 				realObject = [[NSString alloc]
 					initWithBytes:PyString_AS_STRING(utf8)
 					       length:(unsigned)PyString_GET_SIZE(value)
-					     encoding:NSUTF8StringEncoding]
+					     encoding:NSUTF8StringEncoding];
 				Py_DECREF(utf8);
 			}
 		PyObjC_END_WITH_GIL
