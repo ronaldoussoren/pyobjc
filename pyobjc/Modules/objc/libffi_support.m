@@ -41,6 +41,8 @@ count_struct(const char* argtype)
 	int res = 0;
 
 	if (*argtype != _C_STRUCT_B) return -1;
+	while (*argtype != _C_STRUCT_E && *argtype != '=') argtype++;
+	if (*argtype == _C_STRUCT_E) return 0;
 	
 	argtype++;
 	while (*argtype != _C_STRUCT_E) {
@@ -101,14 +103,20 @@ static  PyObject* struct_types = NULL;
 	
 	field_count = 0;
 	curtype = argtype+1;
-	while (*curtype != _C_STRUCT_E) {
-		type->elements[field_count] = signature_to_ffi_type(curtype);
-		if (type->elements[field_count] == NULL) {
-			free(type->elements);
-			return NULL;
+	while (*curtype != _C_STRUCT_E && *curtype != '=') curtype++;
+	if (*curtype == '=') {
+		curtype ++;
+		while (*curtype != _C_STRUCT_E) {
+			type->elements[field_count] = 
+				signature_to_ffi_type(curtype);
+			if (type->elements[field_count] == NULL) {
+				abort();
+				free(type->elements);
+				return NULL;
+			}
+			field_count++;
+			curtype = objc_skip_typespec(curtype);
 		}
-		field_count++;
-		curtype = objc_skip_typespec(curtype);
 	}
 	type->elements[field_count] = NULL;
 
@@ -153,9 +161,11 @@ signature_to_ffi_type(const char* argtype)
 		return signature_to_ffi_type(argtype+1);
 	case _C_STRUCT_B: 
 		return struct_to_ffi_type(argtype);
+	case 0:
+		abort();
 	default:
 		ObjCErr_Set(PyExc_NotImplementedError,
-			"Type '%s' not supported", argtype);
+			"Type '%x' not supported", *argtype);
 		return NULL;
 	}
 }
@@ -417,7 +427,12 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	int               resultSize;
 	int               arglistOffset;
 
-	methinfo = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
+	if (meth->sel_oc_signature) {
+		methinfo = meth->sel_oc_signature;
+	} else {
+		methinfo = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
+		meth->sel_oc_signature = methinfo;
+	}
 	objc_argcount = [methinfo numberOfArguments];
 	resultSize = objc_sizeof_type([methinfo methodReturnType]);
 
@@ -595,10 +610,10 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 				/* Allocate space and encode */
 				{
 					void* arg = argbuf + argbuf_cur;
-					argbuf_cur += objc_sizeof_type(argtype+2);
+					argbuf_cur += objc_sizeof_type(argtype+1);
 					byref[i] = argbuf_cur;
 	  				error = depythonify_c_value (
-						argtype+2, 
+						argtype+1, 
 						argument, 
 						arg);
 
@@ -634,7 +649,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 						arg);
 
 					arglist[arglistOffset + i] = signature_to_ffi_type(
-						argtype+2);
+						argtype+1);
 					values[arglistOffset + i] = arg;
 
 				}
@@ -701,7 +716,15 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		Py_INCREF(Py_None);
 		objc_result =  Py_None;
 	}
+	if ( (meth->sel_flags & ObjCSelector_kRETURNS_SELF)
+		&& (objc_result != self)) {
 
+		/* meth is a method that returns a possibly reallocated
+		 * version of self and self != return-value, the current
+		 * value of self is assumed to be no longer valid
+		 */
+		ObjCObject_ClearObject(self);
+	}
 
 	if (byref_out_count == 0) {
 		result = objc_result;

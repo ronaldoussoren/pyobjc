@@ -103,11 +103,10 @@ extern char objcclass_descr_doc[];
  * implemented in Objective-C)
  */
 
-extern PyObject* allocator_dict;
-
 #define ObjCSelector_kCLASS_METHOD    0x1
 #define ObjCSelector_kDONATE_REF      0x2
 #define ObjCSelector_kREQUIRED        0x4
+#define ObjCSelector_kRETURNS_SELF    0x8
 
 #define ObjCSelector_HEAD \
 	PyObject_HEAD 			\
@@ -124,6 +123,7 @@ typedef struct {
 
 typedef struct {
 	ObjCSelector_HEAD
+	NSMethodSignature* sel_oc_signature;
 	ObjC_CallFunc_t sel_call_self; 
 	ObjC_CallFunc_t sel_call_super;
 } ObjCNativeSelector;
@@ -182,7 +182,7 @@ extern PyTypeObject ObjCInformalProtocol_Type;
 
 int     ObjCIPVerify(PyObject* obj, PyObject* cls);
 PyObject* ObjCIPFindInfo(PyObject* obj, SEL selector);
-#ifdef OBJC_PARANOIA_MODE
+#ifdef OBJC_PARANOIA_MODExxx
 
 #define OC_CheckRevive(obj)     \
         do {  \
@@ -209,5 +209,10 @@ IMP ObjC_MakeIMPForSignature(char* signature);
 PyObject *ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args);
 
 #endif /* OC_WITH_LIBFFI */
+
+extern PyObject* ObjCMethodAccessor_New(PyObject* base, int class_method);
+
+/* Needed by method-accessor, name will be changed soon */
+char* pythonify_selector(SEL, char*, size_t);
 
 #endif /* META_H */

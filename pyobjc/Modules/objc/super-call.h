@@ -54,5 +54,6 @@ extern IMP             ObjC_FindIMP(Class class, SEL sel);
 extern IMP             ObjC_FindIMPForSignature(char* signature);
 extern ObjC_CallFunc_t ObjC_FindSupercaller(Class class, SEL sel);
 extern ObjC_CallFunc_t ObjC_FindSelfCaller(Class class, SEL sel);
+extern void            ObjC_FindCaller(Class class, SEL sel, ObjC_CallFunc_t* call_self, ObjC_CallFunc_t* call_super);
 
 #endif /* OBJC_SUPER_CALL_H */

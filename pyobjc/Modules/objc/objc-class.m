@@ -31,6 +31,8 @@ static int add_class_fields(Class objc_class, PyObject* dict);
  * The struct class_info contains the additional information for a class object,
  * and class_to_objc stores a mapping from a class object to its additional
  * information.
+ *
+ * TODO: Rewrite these using NSHashTable and check if this improves performance
  */
 struct class_info {
 	Class	  class;
@@ -45,7 +47,7 @@ static PyObject* 	class_to_objc = NULL;
  * Fetch the additional information for a class. If the information is
  * not yet available add it to the dictionary.
  */
-static struct class_info*
+static inline struct class_info*
 get_class_info(PyObject* class)
 {	
 	PyObject*          item;
@@ -162,27 +164,6 @@ objc_class_locate(Class objc_class)
 
 
 /*
- * convert a python class-name to an objective-C name.
- *
- * XXX: This function may not be necessary, I've never seen it called with
- *      names that contain dots.
- */
-static char*
-normalize_classname(char* classname, char* buf, size_t buflen)
-{
-	char* cur;
-
-	snprintf(buf, buflen, "%s", classname);
-	cur = strchr(buf, '.');
-	while (cur != NULL) {
-		*cur = '_';
-		cur = strchr(cur, '.');
-	}
-	return buf;
-}
-	
-
-/*
  * Create a new objective-C class, as a subclass of 'type'. This is
  * ObjCClass_Type.tp_new.
  *
@@ -213,9 +194,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			keywords, &name, &bases, &dict)) {
 		return NULL;
 	}
-
-	name = normalize_classname(name, 
-		normalized_name, sizeof(normalized_name));
 
 	if (objc_lookUpClass(name) != NULL) {
 		PyErr_SetString(ObjCExc_error, 
@@ -424,7 +402,6 @@ ObjCClass_CheckMethodList(PyObject* cls)
 
 	if (info->class == NULL) return;
 
-
 	if (/*info->method_magic == 0 && */ info->class->super_class != 0) {
 		ObjCClass_CheckMethodList(ObjCClass_New(info->class->super_class));
 	}
@@ -442,6 +419,7 @@ ObjCClass_CheckMethodList(PyObject* cls)
 		}
 		r =  ObjC_UpdateConvenienceMethods(cls);
 		if (r < 0) {
+			PyErr_Print();
 			PyErr_SetString(PyExc_RuntimeError,
 				"Cannot rescan method table");
 			return;
@@ -537,6 +515,45 @@ class_hash(PyObject* self)
 	return (long)self;
 }
 
+PyDoc_STRVAR(cls_get_classMethods_doc,
+"The attributes of this field are the class methods of this object. This can\n"
+"be used to force access to a class method."
+);
+static PyObject*
+cls_get_classMethods(ObjCObject* self, void* closure)
+{
+	return ObjCMethodAccessor_New((PyObject*)self, 1);
+}
+
+PyDoc_STRVAR(cls_get_instanceMethods_doc,
+"The attributes of this field are the instance methods of this object. This \n"
+"can be used to force access to an instance method."
+);
+static PyObject*
+cls_get_instanceMethods(ObjCObject* self, void* closure)
+{
+	return ObjCMethodAccessor_New((PyObject*)self, 0);
+}
+
+static PyGetSetDef cls_getset[] = {
+        {
+                "pyobjc_classMethods",
+                (getter)cls_get_classMethods,
+                NULL,
+                cls_get_classMethods_doc,
+                0
+        },
+        {
+                "pyobjc_instanceMethods",
+                (getter)cls_get_instanceMethods,
+                NULL,
+                cls_get_instanceMethods_doc,
+                0
+        },
+        { 0, 0, 0, 0, 0 }
+};
+
+
 PyTypeObject ObjCClass_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)
 	0,					/* ob_size */
@@ -569,7 +586,7 @@ PyTypeObject ObjCClass_Type = {
 	0,					/* tp_iternext */
 	0,					/* tp_methods */
 	0,					/* tp_members */
-	0,					/* tp_getset */
+	cls_getset,				/* tp_getset */
 	&PyType_Type,				/* tp_base */
 	0,					/* tp_dict */
 	0,					/* tp_descr_get */
@@ -583,7 +600,7 @@ PyTypeObject ObjCClass_Type = {
 
 
 /* FIXME: objc_support.[hm] also has version of this function! */
-static char*
+char*
 pythonify_selector(SEL sel, char* buf, size_t buflen)
 {
 	size_t res = snprintf(buf, buflen, SELNAME(sel));

@@ -41,11 +41,13 @@ class TestMethodInvocation(unittest.TestCase):
         self.NSObjectInstance = objc.runtime.NSObject.alloc()
 
     def testClassInvocation(self):
-        self.assert_(objc.runtime.NSObject.description(objc.runtime.NSObject), "Failed to invoke the +description method.")
+        self.assert_(objc.runtime.NSObject.pyobjc_classMethods.description(), "Failed to invoke the +description method.")
 
     def testInstanceInvocation(self):
         self.assert_(self.NSObjectInstance.description(), "Failed to invoke the -description method.")
         self.assertEqual(self.NSObjectInstance.self(), self.NSObjectInstance, "-self did not return same self.")
+        self.assertEqual(self.NSObjectInstance.pyobjc_instanceMethods.self(), self.NSObjectInstance.self())
+        self.assertEqual(type(self.NSObjectInstance).pyobjc_instanceMethods.self(self.NSObjectInstance), self.NSObjectInstance.self())
 
     def testVarargsInvocation(self):
         objc.runtime.NSArray.arrayWithObjects_("foo", "bar", None)

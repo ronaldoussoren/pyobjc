@@ -231,7 +231,11 @@ ObjC_CallFunc_t ObjC_FindSelfCaller(Class class, SEL sel)
 	ObjC_CallFunc_t result;
 	struct registry* rec;
 
+#if 0 /* def OC_WITH_LIBFFI */
+	result = ObjC_FFICaller;
+#else
 	result = execute_and_pythonify_objc_method;
+#endif
 	if (special_registry == NULL) return result;
 
 	/* Check the list of exceptions */
@@ -367,6 +371,7 @@ ObjC_CallFunc_t ObjC_FindSupercaller(Class class, SEL sel)
 	struct registry* special;
 	METHOD           m;
 
+#ifndef OC_WITH_LIBFFI
 	m = class_getInstanceMethod(class, sel);
 	if (!m) {
 		ObjCErr_Set(ObjCExc_error,
@@ -374,6 +379,7 @@ ObjC_CallFunc_t ObjC_FindSupercaller(Class class, SEL sel)
 			class->name, SELNAME(sel));
 		return NULL;
 	}
+#endif
 
 	special = search_special(class, sel);
 	if (special) {
@@ -382,19 +388,31 @@ ObjC_CallFunc_t ObjC_FindSupercaller(Class class, SEL sel)
 		PyErr_Clear();
 	}
 
+#ifndef OC_WITH_LIBFFI 
 	generic = find_signature(m->method_types);
 	if (generic) {
 		return generic->call_to_super;
 	}
+#endif
 
-#ifdef OC_WITH_LIBFFI
+#ifdef OC_WITH_LIBFFI 
+	return ObjC_FFICaller;
 
+#if 0
 	generic = create_ffi(m->method_types);
 	if (generic) {
 		return generic->call_to_super;
 	}
+#endif
 
 #endif /* OC_WITH_LIBFFI */
 
 	return NULL;
+}
+
+void ObjC_FindCaller(Class class, SEL sel, ObjC_CallFunc_t* call_self, ObjC_CallFunc_t* call_super)
+{
+	/* TODO: Inline these */
+	*call_self = ObjC_FindSelfCaller(class, sel);
+	*call_super = ObjC_FindSupercaller(class, sel);
 }

@@ -37,35 +37,6 @@ for nm in [ x for x in dir(_objc) if x.startswith('_C_') ]:
 del gl, nm, _objc, x
 
 
-#
-# Administration of methods that transfer ownership of objects to the
-# caller. This list is used by the runtime to automaticly correct the
-# refcount to the object.
-#
-# These must be set before any proxy classes are created.
-#
-# These 5 are documented in Apple's Objective-C book, in theory these
-# are the only methods that transfer ownership.
-#
-def register_allocator_selector(selector):
-    """
-    register 'selector' as a method that transfers ownership of the 
-    returned object to the caller. 
-    
-    This information is used by the proxy code to correctly maintain 
-    reference counts. It is highly unlikely that this function should
-    be called outside of the 'objc' module.
-    """
-    ALLOCATOR_METHODS[selector] = 1
-
-register_allocator_selector('alloc')
-register_allocator_selector('allocWithZone:')
-register_allocator_selector('copy')
-register_allocator_selector('copyWithZone:')
-register_allocator_selector('mutableCopyWithZone:')
-
-
-
 # Add usefull utility functions below
 
 

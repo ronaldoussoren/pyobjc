@@ -85,7 +85,7 @@ Cocoa-Python Document-based Application (Embedded Interpreter)
 --------------------------------------------------------------
 
 This template works like the `Cocoa-Python Application (Embedded
-Interpreter)`_ template in that it is compatible with the Apple build of
+Interpreter)`_ template in that it is incompatible with the Apple build of
 Python.   It creates an application that uses Cocoa's Multiple Document
 Architecture in the same fashion as the default Cocoa Document-based
 Application supplied with Project Builder.

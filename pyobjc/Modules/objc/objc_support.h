@@ -171,31 +171,37 @@ objc_skip_type_qualifiers (const char *type)
 static inline int
 objc_methodlist_magic(Class cls)
 {
+	int res = 0; 
+	int cnt = 0;
+
+
+	/* The documented way of walking over the method-list is by using
+	 * class_nextMethodList. Handcoding it is noticeable faster (probably
+	 * because this exposes more information to the optimizer).
+	 */
+#if 0
 	struct objc_method_list* mlist;
-	int res, cnt;
 	void* iterator = 0;
-	res = cnt = 0;
 
 	if (cls == NULL) return -1;
-
+	
 	while ((mlist = class_nextMethodList(cls, &iterator))) {
 		res += mlist->method_count;
 		cnt ++;
-#if 0
-	/* add information about actuall methods, this is expensive and
-	 * shouldn't be necessary
-	 */ 
-	     {
-		int i;
-		for (i = 0; i < mlist->method_count; i++) {
-			int x = (int)(mlist->method_list[i].method_imp);
-
-			res ^= (x >> 16) ^ (x && 0xffff);
-		}
-	     }
-#endif
-
 	}
+
+#else
+	if (cls == NULL) return -1;
+
+	struct objc_method_list** p;
+
+	for (p = cls->methodLists; (*p != -1) && (*p != 0); p++) {
+		res += (*p)->method_count;
+		cnt++;
+	}
+#endif
+	
+
 
 	return (cnt << 16) | (res & 0xFFFF);
 }

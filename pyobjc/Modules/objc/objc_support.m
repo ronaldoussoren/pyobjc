@@ -61,7 +61,7 @@ objc_skip_typespec (const char *type)
     case _C_FLT:
     case _C_DBL:
     case _C_VOID:
-      return ++type;
+      ++type;
       break;
 
     case _C_ARY_B:
@@ -70,7 +70,7 @@ objc_skip_typespec (const char *type)
       while (isdigit (*++type));
       type = objc_skip_typespec (type);
       //assert (*type == _C_ARY_E);
-      return ++type;
+      ++type;
       break;
       
     case _C_STRUCT_B:
@@ -79,23 +79,28 @@ objc_skip_typespec (const char *type)
       while (*type != _C_STRUCT_E && *type++ != '=');
       while (*type != _C_STRUCT_E)
         type = objc_skip_typespec (type);
-      return ++type;
+      ++type;
+      break;
 
     case _C_UNION_B:
       /* skip name, and elements until closing ')'  */
       type++;
       while (*type != _C_UNION_E) { type = objc_skip_typespec (type); }
-      return ++type;
+      ++type;
+      break;
       
     case _C_PTR:
       /* Just skip the following typespec */
-      return objc_skip_typespec (++type);
+      type = objc_skip_typespec (type+1);
     
     default:
       PySys_WriteStderr("PyObjC: objc_skip_typespec: Unhandled type '%c' (%d)\n", 
 			*type, *type);
       abort();
     }
+
+    while (isdigit(*type)) type++;
+    return type;
 }
 
 /*
@@ -925,7 +930,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	*(id *) datum = [NSNumber numberWithDouble:PyFloat_AS_DOUBLE (argument)];
       else if (PyLong_Check(argument)) 
 	*(id *) datum = [NSNumber numberWithLongLong:PyLong_AsLongLong(argument) ];
-      else if (PySequence_Check(argument))  
+      else if (PyList_Check(argument) || PyTuple_Check(argument))  
 	*(id *) datum = [OC_PythonArray newWithPythonObject:argument];
       else if (PyDict_Check(argument))  
 	*(id *) datum = [OC_PythonDictionary newWithPythonObject:argument];
@@ -1134,16 +1139,25 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	PyObject*	  result = NULL;
 	id		  self_obj = nil;
 	id                nil_obj = nil;
+	char*		  curspec;
 
-	methinfo = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
-	objc_argcount = [methinfo numberOfArguments];
+	if (meth->sel_oc_signature) {
+		methinfo = meth->sel_oc_signature;
+	} else {
+	 	methinfo = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
+		meth->sel_oc_signature = methinfo;
+	}
 
 	/* First count the number of by reference parameters, and the number
 	 * of bytes of storage needed for them. Note that arguments 0 and 1
 	 * are self and the selector, no need to count counted or checked those.
 	 */
-	for (i = 2; i < objc_argcount; i++) {
-		const char *argtype = [methinfo getArgumentTypeAtIndex:i];
+	objc_argcount = 0;
+	for (curspec = objc_skip_typespec(meth->sel_signature), i=0; *curspec; curspec = objc_skip_typespec(curspec), i++) {
+		const char *argtype = curspec;
+		objc_argcount += 1;
+
+		if (i < 2) continue;
 
 		switch (*argtype) {
 		case _C_PTR: 
@@ -1196,17 +1210,17 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	}
 
 	if (argbuf_len) {
-		argbuf = PyMem_Malloc(argbuf_len);
+		argbuf = alloca(argbuf_len);
 		if (argbuf == 0) {
 			PyErr_NoMemory();
 			goto error_cleanup;
 		}
-		byref = PyMem_Malloc(sizeof(int) * objc_argcount);
+		byref = alloca(sizeof(int) * objc_argcount);
 		if (byref == NULL) {
 			PyErr_NoMemory();
 			goto error_cleanup;
 		}
-		memset(byref, 0, sizeof(int) * objc_argcount);
+		
 	} else {
 		argbuf = NULL;
 		byref = NULL;
@@ -1251,10 +1265,12 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	[inv setSelector:meth->sel_selector];
 
 	py_arg = 0;
-	for (i = 2; i < objc_argcount; i++) {
+	for (curspec = objc_skip_typespec(meth->sel_signature), i = 0; *curspec; curspec = objc_skip_typespec(curspec), i ++) {
 		const char* error;
 		PyObject *argument;
-		const char *argtype = [methinfo getArgumentTypeAtIndex:i];
+		const char *argtype = curspec;
+
+		if (i < 2) continue; /* Skip self, _sel */
 
 		if (argtype[0] == _C_OUT && argtype[1] == _C_PTR) {
 			/* Just allocate room in argbuf and set that*/
@@ -1363,18 +1379,27 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	NS_ENDHANDLER
 	if (PyErr_Occurred()) goto error_cleanup;
 
-	rettype = [methinfo methodReturnType];
+	rettype = meth->sel_signature; 
 	if ( (*rettype != _C_VOID) && ([methinfo isOneway] == NO) )
 	{
-		char *retbuffer = alloca ([methinfo methodReturnLength]);
+		char *retbuffer = alloca (objc_sizeof_type(rettype));
 
 		[inv getReturnValue:retbuffer];
 
-		objc_result = pythonify_c_value ([methinfo methodReturnType],
-					retbuffer);
+		objc_result = pythonify_c_value (rettype, retbuffer);
 	} else {
 		Py_INCREF(Py_None);
 		objc_result =  Py_None;
+	}
+
+	if ( (meth->sel_flags & ObjCSelector_kRETURNS_SELF)
+		&& (objc_result != self)) {
+
+		/* meth is a method that returns a possibly reallocated
+		 * version of self and self != return-value, the current
+		 * value of self is assumed to be no longer valid
+		 */
+		ObjCObject_ClearObject(self);
 	}
 
 
@@ -1390,11 +1415,12 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 		objc_result = NULL;
 
 		py_arg = 1;
-		for (i = 2; i < objc_argcount; i++) {
-			const char *argtype = [methinfo 
-						getArgumentTypeAtIndex:i];
+		for (curspec = objc_skip_typespec(meth->sel_signature), i = 0; *curspec; curspec = objc_skip_typespec(curspec), i ++) {
+			const char *argtype = curspec;
 			void*       arg;
 			PyObject*   v;
+
+			if (i < 2) continue;
 
 			switch (*argtype) {
 			case _C_PTR: 
@@ -1424,21 +1450,16 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 		}
 	}
 
-#if 1
 	self_obj = nil;
-	if (*[methinfo methodReturnType] == _C_ID) {
+	if (*rettype == _C_ID) {
 		[inv setReturnValue:&nil_obj];
 	}
 	[inv setTarget:nil];
-#endif
 	[inv release];
 	inv = nil;
 
-	PyMem_Free(argbuf);
 	argbuf = NULL;
-	PyMem_Free(byref);
 	byref = NULL;
-	[methinfo release];
 	methinfo = nil;
 	
 	return result;
@@ -1447,11 +1468,10 @@ error_cleanup:
 
 	if (inv) {
 		self_obj = nil;
-#if 1
+		// FIXME: Shouldn't use this...
 		if (*[methinfo methodReturnType] == _C_ID) {
 			[inv setReturnValue:&self_obj];
 		}
-#endif
 		[inv setTarget:nil];
 		[inv release];
 		inv = nil;
@@ -1463,18 +1483,6 @@ error_cleanup:
 	if (result) {
 		Py_DECREF(result);
 		result = NULL;
-	}
-	if (argbuf) {
-		PyMem_Free(argbuf);
-		argbuf = NULL;
-	}
-	if (byref) {
-		PyMem_Free(byref);
-		byref = NULL;
-	}
-	if (methinfo) {
-		[methinfo release];
-		methinfo = nil;
 	}
 	return NULL;
 }
