@@ -1,0 +1,10 @@
+{
+	FilesToMacroExpand = (
+		"English.lproj/InfoPlist.strings",
+		"bin-python-main.m",
+		"__main__.py",
+		"MyAppDelegate.py",
+	);
+
+	Description = "This project builds a Cocoa-based application written in a mix of Python and Objective-C.   The project contains an embedded framework into which all Objective-C code is compiled.   The framework is automatically dynamically loaded at runtime.  The framework is also linked into the main bundle executable such that prebinding should be enabled.  The project is compatible with the Python that ships with OS X 10.2.";
+}

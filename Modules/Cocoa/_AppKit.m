@@ -172,8 +172,10 @@ objc_NSRectFillList(PyObject* self, PyObject* args, PyObject* kwds)
     return NULL;
   }
 
-  if ( (rectByteLength == 0) || (rectCount == 0) )
-    return NULL;
+  if ( (rectByteLength == 0) || (rectCount == 0) ) {
+    Py_INCREF(Py_None);
+    return Py_None; 
+  }
 
   if ( rectByteLength % sizeof(NSRect) ) {
     PyErr_SetString(PyExc_ValueError, "length of array of packed floats is not a multiple of a length of array of NSRect (float * 4).");

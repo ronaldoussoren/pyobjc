@@ -1,6 +1,9 @@
 2003-01-11  Bill Bumgarner  <bbum@codefab.com>
+    * setup.py (req_ver): Moved back to non-ffi build (I believe the move to
+      ffi was an unintentional change?).
     * Modules/Cocoa/_AppKit.m: Added bridging of NSRectFillList.  API should
-    be in GNUstep??
+      be in GNUstep?
+    (objc_NSRectFillList): Fixed short-circuit where rectCount is 0.
 
 2002-01-11 Ronald Oussoren <oussoren@cistron.nl>
     * Add workaround for a feature of NSData: 
