@@ -596,7 +596,7 @@ NSTableDataSource = _objc.informal_protocol(
         ),
         _objc.selector(
             None, 
-            selector='tableView:validateDrop:proposedRow:proposedOperation:',
+            selector='tableView:validateDrop:proposedRow:proposedDropOperation:',
             signature='i@:@@ii',
             required=0
         ),
