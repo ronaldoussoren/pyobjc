@@ -538,6 +538,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 	PyObject* pyself = self->sel_self;
 	PyObjC_CallFunc execute = NULL;
 	PyObject* res;
+	PyObject* pyres;
 
 	if (pyself == NULL) {
 		int       argslen;
@@ -585,17 +586,23 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 
 
 	if (self->sel_self != NULL) {
-		res = execute((PyObject*)self, self->sel_self, args);
+		pyres = res = execute((PyObject*)self, self->sel_self, args);
+		if (pyres != NULL
+			&& PyTuple_Check(pyres)
+			&& PyTuple_GET_SIZE(pyres) > 1
+			&& PyTuple_GET_ITEM(pyres, 0) == pyself) {
+			pyres = pyself;
+		}
 
 #if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 		if (((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
-			if (self->sel_self != res && !PyErr_Occurred()) {
+			if (self->sel_self != pyres && !PyErr_Occurred()) {
 				PyObjCObject_ClearObject(pyself);
 			}
 		}
 #else
 		if (self->sel_flags & PyObjCSelector_kINITIALIZER) {
-			if (self->sel_self != res && !PyErr_Occurred()) {
+			if (self->sel_self != pyres && !PyErr_Occurred()) {
 				PyObjCObject_ClearObject(self->sel_self);
 			}
 		}
@@ -623,7 +630,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		if (!(PyObject_IsInstance(pyself, myClass)
 			|| (PyString_Check(pyself) && PyObjCClass_IsSubClass(self->sel_class, [NSString class])) 
 			|| (PyUnicode_Check(pyself) && PyObjCClass_IsSubClass(self->sel_class, [NSString class])) 
-		     )) {
+		)) {
 			Py_DECREF(arglist);
 			PyErr_Format(PyExc_TypeError,
 				"Expecting instance of %s as self, got one "
@@ -633,10 +640,17 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		}
 		
 
-		res = execute((PyObject*)self, pyself, arglist);
+		pyres = res = execute((PyObject*)self, pyself, arglist);
+		if (pyres != NULL
+			&& PyTuple_Check(pyres)
+			&& PyTuple_GET_SIZE(pyres) > 1
+			&& PyTuple_GET_ITEM(pyres, 0) == pyself) {
+			pyres = pyself;
+		}
+
 #if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 		if (self->sel_flags & PyObjCSelector_kINITIALIZER) {
-			if (pyself != res && !PyErr_Occurred()) {
+			if (pyself != pyres && !PyErr_Occurred()) {
 				PyObjCObject_ClearObject(pyself);
 			}
 		}
@@ -644,23 +658,23 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		Py_DECREF(arglist);
 	}
 
-	if (res && PyObjCObject_Check(res)) {
+	if (pyres && PyObjCObject_Check(pyres)) {
 		if (self->sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
-			((PyObjCObject*)res)->flags |= PyObjCObject_kUNINITIALIZED;
+			((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
 		}
 #if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-		else if (((PyObjCObject*)res)->flags & PyObjCObject_kUNINITIALIZED) {
-			((PyObjCObject*)res)->flags &= 
+		else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
+			((PyObjCObject*)pyres)->flags &= 
 				~PyObjCObject_kUNINITIALIZED;
-			if (self->sel_self && self->sel_self != res && !PyErr_Occurred()) {
+			if (self->sel_self && self->sel_self != pyres && !PyErr_Occurred()) {
 				PyObjCObject_ClearObject(self->sel_self);
 			}
 		}
 #else
 		if (self->sel_flags & PyObjCSelector_kINITIALIZER) {
-			if (((PyObjCObject*)res)->flags & PyObjCObject_kUNINITIALIZED)
+			if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED)
 			{
-				((PyObjCObject*)res)->flags &= 
+				((PyObjCObject*)pyres)->flags &= 
 					~PyObjCObject_kUNINITIALIZED;
 			}
 		}
@@ -671,7 +685,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			 * increased retainCount, the retainCount is now one 
 			 * too high
 			 */
-			id obj = PyObjCObject_GetObject(res);
+			id obj = PyObjCObject_GetObject(pyres);
 			[obj release];
 		}
 	}
