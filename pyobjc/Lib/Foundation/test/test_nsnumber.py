@@ -4,6 +4,19 @@ import re
 
 from Foundation import *
 
+PLIST=u"""\
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+\t<key>bool</key>
+\t<true/>
+\t<key>plain</key>
+\t<integer>1</integer>
+</dict>
+</plist>
+"""
+
 def stripDocType(val):
     """
     Strip non-significant information. This is needed because the proplists
@@ -14,7 +27,7 @@ def stripDocType(val):
     return r.replace(u'version="0.9"', u'version="1.0"')
 
 
-if 0:
+if not isinstance(NSNumber.numberWithInt_(10), int):
     # NSNumber is proxied into python
 
     class TestNSNumber( unittest.TestCase ):
@@ -67,18 +80,6 @@ else:
             self.assertEquals(NSNumber.numberWithInt_(0), 0)
             self.assertEquals(NSNumber.numberWithFloat_(0.0), 0,0)
 
-    PLIST=u"""\
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-\t<key>bool</key>
-\t<true/>
-\t<key>plain</key>
-\t<integer>1</integer>
-</dict>
-</plist>
-"""
 
 if objc.platform == 'MACOSX':
     class TestPropList (unittest.TestCase):
