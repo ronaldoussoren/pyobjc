@@ -10,6 +10,7 @@
 #include "pyobjc-api.h"
 #include <ApplicationServices/ApplicationServices.h>
 
+#ifdef MACOSX
 static PyObject*
 call_NSGraphicsContext_graphicsPort(
     PyObject* method, PyObject* self, PyObject* arguments)
@@ -59,6 +60,7 @@ call_NSGraphicsContext_graphicsPort(
     Py_DECREF(pyCGContextPtr);
     return retVal;
 }
+#endif
 
 static int 
 _pyobjc_install_NSGraphicsContext(void)
