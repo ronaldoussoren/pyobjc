@@ -11,5 +11,5 @@ from AppKit import *
 
 from PyObjCTools import NibClassBuilder
 
-class «FILEBASENAMEASIDENTIFIER»NibClassBuilder.AutoBaseClass):
+class «FILEBASENAMEASIDENTIFIER»(NibClassBuilder.AutoBaseClass):
 	pass
