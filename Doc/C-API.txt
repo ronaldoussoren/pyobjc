@@ -301,15 +301,15 @@ This is a variation on ``PyObjCClass_GetClass`` than can be used with
 
   int PyObjCSelector_Convert(PyObject* object, void* pvar);
 
-Write the ``SEL`` for a selector object into *pvar. 
+Write the ``SEL`` for a selector object into ``*pvar``. 
 For use with ``PyArg_Parse``.
 
 ::
 
   int PyObjC_ConvertBOOL(PyObject* object, void* pvar);
 
-Write ``YES`` into *pvar if ``object`` is true, write ``NO`` otherwise.
-*pvar should be of type BOOL.  For use with ``PyArg_Parse``.
+Write ``YES`` into ``*pvar`` if ``object`` is true, write ``NO`` otherwise.
+``*pvar`` should be of type BOOL.  For use with ``PyArg_Parse``.
 
 ::
 

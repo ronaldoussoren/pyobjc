@@ -18,8 +18,13 @@ objects from the wrappers for C functions.</p>
 work with Objective-C objects, using (static) methods in a class is much
 more convenient.</p>
 <p>The C API is defined in <code><span>pyobjc-api.h</span></code>. This file is currently not installed
-because the API is not entirely stable.</p>
-<p>XXX: Insert reference to the CodeGeneration scripts.</p>
+because the API is not entirely stable. This is the only file that can
+be included from outside of the 'Modules/objc' directory, future versions of
+the bridge may use additional linker flags to make sure that the module doesn't
+export symbols other than the module init function.</p>
+<p>The easiest way to wrap global functions and constants is by using the scripts
+in Scripts/CodeGenerators. This script is unsupported and might not work on
+anything but the Apple headers, but if it works it will save you a lot of work.</p>
 <h2><a name="limititations">Limititations</a></h2>
 <p>An important limitation of the current C API is that you can only use the API
 from one C file in the implementation of an extension module. This limitation
@@ -34,6 +39,8 @@ static int PyObjC_ImportAPI(PyObject* calling_module)
 otherwise. Reasons for failure include: not being able to locate the module
 and API version conflicts.</p>
 <p>Loading the API will make it impossible to unload the <code><span>calling_module</span></code>.</p>
+<p>NOTE: Using the API other than by the mechanism described in this document 
+is unsupported.</p>
 <h2><a name="compatibility-macros">Compatibility Macros</a></h2>
 <p>On MacOS X, the version guard macro <code><span>MAC_OS_X_VERSION_MAX_ALLOWED</span></code> will 
 always be available.</p>
@@ -206,5 +213,25 @@ int PyObjCObject_Convert(PyObject* object, void* pvar);
 </pre>
 <p>This is a variation on <code><span>PyObjC_PythonToId</span></code> than can be used with 
 <code><span>PyArg_Parse</span></code>.</p>
+<pre>
+int PyObjCClass_Convert(PyObject* object, void* pvar);
+</pre>
+<p>This is a variation on <code><span>PyObjCClass_GetClass</span></code> than can be used with 
+<code><span>PyArg_Parse</span></code>.</p>
+<pre>
+int PyObjCSelector_Convert(PyObject* object, void* pvar);
+</pre>
+<p>Write the <code><span>SEL</span></code> for a selector object into <code><span>*pvar</span></code>. 
+For use with <code><span>PyArg_Parse</span></code>.</p>
+<pre>
+int PyObjC_ConvertBOOL(PyObject* object, void* pvar);
+</pre>
+<p>Write <code><span>YES</span></code> into <code><span>*pvar</span></code> if <code><span>object</span></code> is true, write <code><span>NO</span></code> otherwise.
+<code><span>*pvar</span></code> should be of type BOOL.  For use with <code><span>PyArg_Parse</span></code>.</p>
+<pre>
+int PyObjC_ConvertChar(PyObject* object, void* pvar);
+</pre>
+<p>Write the value of a string of length 1 into the character (type char)
+at <code><span>*pvar</span></code>. For use with <code><span>PyArg_Parse</span></code>.</p>
 </body>
 </html>
