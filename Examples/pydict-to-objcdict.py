@@ -16,5 +16,3 @@ print
 print
 print "Converted (ObjC collection):"
 print "%s" % convertedCollection.description()
-
-

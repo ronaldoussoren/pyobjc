@@ -1,7 +1,7 @@
 """
 Cocoa GUI for the Package Manager
 
-This is a first generation of the Cocoa GUI, it inherits some of the nasty 
+This is a first generation of the Cocoa GUI, it inherits some of the nasty
 features of the current Carbon version:
 
 1. GUI blocks during some operations, such as downloading or installing
@@ -9,7 +9,7 @@ features of the current Carbon version:
 2. Checking on GUI packages may crash the application
 
 The first item can only be solved by rewriting parts of the pimp module, the
-second part will be solved by running at least some pimp related code in a 
+second part will be solved by running at least some pimp related code in a
 seperate process.
 
 TODO:
@@ -197,7 +197,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
                 self.installDependencies, 'installDependencies')
         self.setBoolFromDefaults(self.showHidden, 'showHidden')
         self.setBoolFromDefaults(self.overwrite, 'forceInstallation')
-       
+
         b = NSUserDefaults.standardUserDefaults(
                 ).boolForKey_('installSystemWide')
         if b:
@@ -226,7 +226,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
         self.saveBoolToDefaults(self.showHidden, 'showHidden')
         self.saveBoolToDefaults(self.overwrite, 'forceInstallation')
         self.saveBoolToDefaults(
-                self.installationLocation.cellAtRow_column_(0, 0), 
+                self.installationLocation.cellAtRow_column_(0, 0),
                 'installSystemWide')
 
     def packages(self):
@@ -274,7 +274,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
             self._prerequisites = package.prerequisites()
 
             # XXX: Add the closure of all dependencies
-            
+
             self.prerequisitesTable.reloadData()
 
     def addToFavorites_(self, sender):
@@ -378,15 +378,15 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
 
     def visitHome_(self, sender):
         """
-        Open the homepage of the currently selected package in the 
+        Open the homepage of the currently selected package in the
         default webbrowser.
         """
         package = self.selectedPackage()
-        if package is None: 
+        if package is None:
             return
 
         home = package.homepage()
-        if home is None: 
+        if home is None:
             return
 
         try:
@@ -437,7 +437,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
         # and install() installs them in the reverse order :-(
         # XXX: This seems to be a bug in pimp.
         self.runner = InstallerThread(
-                            self, 
+                            self,
                             pimpInstaller,
                             lst[::-1],
                             self.verbose.state() == NSOnState,
@@ -467,7 +467,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
             ts.appendAttributedString_(
                 NSAttributedString.alloc().initWithString_attributes_(
                     '\n\nCannot install packages\n\n',
-                    { 
+                    {
                         NSFontAttributeName: NSFont.boldSystemFontOfSize_(12),
                     }
                 ))
@@ -504,7 +504,7 @@ class DownloadThread (threading.Thread):
     def run(self):
         """
         Run the thread. This creates a new pimp.PimpDatabase, tells it to
-        download our database and then forwards the database to the 
+        download our database and then forwards the database to the
         master. The last step is done on the main thread because of Cocoa
         threading issues.
         """
@@ -552,7 +552,7 @@ class InstallerThread (threading.Thread):
 
     def write(self, data):
         self.textStorage.performSelectorOnMainThread_withObject_waitUntilDone_(
-                'appendAttributedString:', 
+                'appendAttributedString:',
                 NSAttributedString.alloc().initWithString_(data),
                 False)
 
@@ -820,7 +820,7 @@ NSUserDefaults.standardUserDefaults().registerDefaults_(
           'installSystemWide': True,
         })
 
-# 
+#
 # A nasty hack. For some reason sys.prefix is /usr/bin/../../System/..., while
 # it is /System/... in Jack's PackageManager.app.  At least one package
 # manager database relies on sys.prefix being /System/... (Bob's additional

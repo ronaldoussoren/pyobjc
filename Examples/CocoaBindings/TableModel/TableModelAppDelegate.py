@@ -9,7 +9,7 @@ def getPasswords():
         for line in os.popen('/usr/bin/nidump passwd .')
         if not line.startswith('#')
     ]
-    
+
 NibClassBuilder.extractClasses("MainMenu")
 class TableModelAppDelegate(NibClassBuilder.AutoBaseClass):
     def passwords(self):

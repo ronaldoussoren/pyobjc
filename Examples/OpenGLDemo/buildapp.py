@@ -8,7 +8,7 @@ except ImportError:
     sys.exit(1)
 
 buildapp(
-	mainprogram = "OpenGLDemo.py",
-	resources = ["OpenGLDemo.nib"],
-	nibname = "OpenGLDemo",
+        mainprogram = "OpenGLDemo.py",
+        resources = ["OpenGLDemo.nib"],
+        nibname = "OpenGLDemo",
 )

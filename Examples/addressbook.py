@@ -31,4 +31,3 @@ print "--------------------"
 for k in keys:
     if d[k] == None: continue
     print '%s: %s'%(k, d[k])
-

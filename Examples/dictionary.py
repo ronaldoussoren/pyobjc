@@ -1,8 +1,8 @@
 #
-# Using an NSDictionary. 
+# Using an NSDictionary.
 #
 # You can use both the Python and Objective-C interfaces to access a
-# dictionary. 
+# dictionary.
 #
 import sys
 import objc

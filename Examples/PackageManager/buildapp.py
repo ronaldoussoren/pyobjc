@@ -13,9 +13,9 @@ from plistlib import Plist, Dict
 DB_FILE_TYPE="Python Package Database"
 
 def folderContents(name):
-    data = [ 
-        os.path.join(name, fn) 
-            for fn in os.listdir(name) 
+    data = [
+        os.path.join(name, fn)
+            for fn in os.listdir(name)
     ]
     return data
 
@@ -45,7 +45,7 @@ buildapp(
 
         # We need at least Panther, it may work on Jaguar but I've not yet
         # verified if it should work.
-        LSMinimumSystemVersion='10.3.0', 
+        LSMinimumSystemVersion='10.3.0',
 
         # We're not apple-scriptable
         NSAppleScriptEnabled='No',

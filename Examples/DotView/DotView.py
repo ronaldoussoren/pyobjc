@@ -108,15 +108,15 @@ class DotView(NibClassBuilder.AutoBaseClass):
         NSColor.whiteColor().set()
         NSRectFill(self.bounds())
         origin = (self.center[0]-self.radius, self.center[1]-self.radius)
-        size = (2 * self.radius, 2 * self.radius) 
+        size = (2 * self.radius, 2 * self.radius)
         dotRect = (origin, size)
         self.color.set()
         NSBezierPath.bezierPathWithOvalInRect_(dotRect).fill()
-        
+
     def setRadius_(self, sender):
         self.radius = sender.floatValue()
         self.setNeedsDisplay_(True)
-        
+
     def setColor_(self, sender):
         self.color = sender.color()
         self.setNeedsDisplay_(True)
