@@ -1357,6 +1357,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			"depythonifying unknown typespec %#x", *type);
 		return -1;
 	}
+	return 0;
 }
 
 #ifndef OC_USE_FFI_SHORTCUTS
