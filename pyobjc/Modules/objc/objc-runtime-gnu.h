@@ -33,11 +33,6 @@
    extern void __objc_add_class_to_hash(Class);
 #endif
 
-static inline void
-PyObjCRT_ClassAddMethodList(Class cls, MethodList_t lst)
-{
-	class_add_method_list(cls, lst);
-}
 
 #ifndef nil
 #define nil NULL
@@ -71,6 +66,22 @@ static inline SEL
 PyObjCRT_SELUID(const char* str)
 {
 	return sel_get_uid(str);
+}
+
+static inline void
+PyObjCRT_ClassAddMethodList(Class cls, MethodList_t lst)
+{
+	int i;
+
+	/* First convert the method_names to strings, class_add_method_list
+	 * assumes the method_names are strings and converts these back
+	 * to selectors.
+	 */
+	for (i = 0; i < lst->method_count; i++) {
+		lst->method_list[i].method_name = (SEL)PyObjCRT_SELName(lst->method_list[i].method_name);
+	}
+
+	class_add_method_list(cls, lst);
 }
 
 static inline Class 

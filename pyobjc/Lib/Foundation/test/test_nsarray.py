@@ -196,6 +196,8 @@ class TestNSArraySpecialMethods(unittest.TestCase):
         self.assertRaises(ValueError, NSArray.arrayWithObjects_count_, ('a','b'), 3)
 
     def test_arrayByAddingObjects_count_(self):
+        if sys.platform != 'darwin' and not hasattr(NSArray, 'arrayByAddingObjects_count_'): return
+
         a = NSArray.arrayWithArray_(('a', 'b', 'c'))
         self.assertEquals(a, ('a', 'b', 'c'))
 
@@ -243,13 +245,15 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
 
 
     def testReplaceObjects(self):
-        a = NSMutableArray.arrayWithArray_(range(4))
-        self.assertEquals(a, (0, 1, 2, 3))
+        if sys.platform == 'darwin' or hasattr(NSMutableArray, 'replaceObjectsInRange_withObjects_count_'):
 
-        a.replaceObjectsInRange_withObjects_count_(
-            (1,2), ["a", "b", "c", "d"], 3)
+            a = NSMutableArray.arrayWithArray_(range(4))
+            self.assertEquals(a, (0, 1, 2, 3))
 
-        self.assertEquals(a, (0, "a", "b", "c", 3))
+            a.replaceObjectsInRange_withObjects_count_(
+                (1,2), ["a", "b", "c", "d"], 3)
+
+            self.assertEquals(a, (0, "a", "b", "c", 3))
 
     def testSortInvalid(self):
         """
@@ -266,13 +270,14 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
     def testSort2(self):
         a = NSMutableArray.arrayWithArray_(range(10))
         self.assertEquals(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
-    
-        def cmpfunc(l, r, c):
-            return -cmp(l,r)
+        
+        if sys.platform == 'darwin' or hasattr(a, 'sortUsingFunction_context_range_'):
+            def cmpfunc(l, r, c):
+                return -cmp(l,r)
 
-        a.sortUsingFunction_context_range_(cmpfunc, "a", (4, 4))
+            a.sortUsingFunction_context_range_(cmpfunc, "a", (4, 4))
 
-        self.assertEquals(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
+            self.assertEquals(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
 
     def testSort3(self):
         """ check the sort method, list interface compatibility """
@@ -304,13 +309,14 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
     def testSort2(self):
         a = NSMutableArray.arrayWithArray_(range(10))
         self.assertEquals(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
-    
-        def cmpfunc(l, r, c):
-            return -cmp(l,r)
 
-        a.sortUsingFunction_context_range_(cmpfunc, "a", (4, 4))
+        if sys.platform == 'darwin' or hasattr(a, 'sortUsingFunction_context_range_'):
+            def cmpfunc(l, r, c):
+                return -cmp(l,r)
 
-        self.assertEquals(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
+            a.sortUsingFunction_context_range_(cmpfunc, "a", (4, 4))
+
+            self.assertEquals(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
 
     def testSort3(self):
         """ check the sort method, list interface compatibility """
@@ -330,13 +336,15 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
         self.assertEquals(a, (0, 1, 2, 3))
 
     def test_unsupportedMethods(self):
-        """
-        Check that calling unsupported methods results in a TypeError
-        """
+        #
+        # Check that calling unsupported methods results in a TypeError
+        #
+        # NOTE: Some of these don't even exist on GNUstep
         o = NSArray.arrayWithArray_(range(4))
         self.assertRaises(TypeError, o.getObjects_)
         self.assertRaises(TypeError, o.getObjects_range_, (1,2))
-        self.assertRaises(TypeError, o.apply_context_, lambda x, y:None, 0)
+        if sys.platform == 'darwin' or hasattr(o, 'apply_context_'):
+            self.assertRaises(TypeError, o.apply_context_, lambda x, y:None, 0)
 
 if __name__ == '__main__':
     unittest.main()

@@ -78,7 +78,7 @@ def is_id(typestr):
         # These types are used in function definition (OSX 10.2), this
         # list is necessary for people that build without an installed
         # PyObjC.
-        if typestr[:-1] in ('NSString', 'NSArray', 'NSWindow', 'NSColor', 'NSPasteboard', 'NSBundle', 'NSDictionary', 'NSResponder'):
+        if typestr[:-1] in ('NSString', 'NSArray', 'NSWindow', 'NSColor', 'NSPasteboard', 'NSBundle', 'NSDictionary', 'NSResponder', 'NSThread', 'NSMutableDictionary', ):
             return 1
         return 0
 
@@ -95,11 +95,6 @@ SIMPLE_TYPES={
         '\tresult = PyString_FromStringAndSize(&(%(varname)s), 1);\n\tif (result == NULL) return NULL;',
         'O&',                 
         'PyObjC_ConvertChar, &%(varname)s', 
-    ),
-    'SEL': (
-        '\tresult = PyString_FromString(SELNAME(%(varname)s));\n\tif (result == NULL) return NULL;',
-        'O&',                 
-        'PyObjCSelector_Convert, &%(varname)s', 
     ),
     'Class': (
         '\tresult = PyObjCClass_New(%(varname)s);\n\tif (result == NULL) return NULL;',
@@ -161,6 +156,19 @@ SIMPLE_TYPES={
         None
     ),
 }
+
+if sys.platform == 'darwin':
+    SIMPLE_TYPES['SEL'] = (
+        '\tresult = PyString_FromString(SELNAME(%(varname)s));\n\tif (result == NULL) return NULL;',
+        'O&',                 
+        'PyObjCSelector_Convert, &%(varname)s', 
+    )
+else:
+    SIMPLE_TYPES['SEL'] = (
+        '\tresult = PyString_FromString(sel_get_name(%(varname)s));\n\tif (result == NULL) return NULL;',
+        'O&',                 
+        'PyObjCSelector_Convert, &%(varname)s', 
+    )
 
 # Python2.3 has better PyArgs_Parse format-chars for unsigned integral types,
 # use those when available and use plain ints when not.
@@ -297,7 +305,9 @@ def is_simple_type(typestr):
 
 
 def parse_prototype(protostr):
-    protostr = protostr.strip()[:-1].strip()
+    protostr = protostr.strip()
+    if protostr[-1] != ')':
+        protostr = protostr.strip()[:-1].strip()
     idx = protostr.index('(')
 
     arguments = [ x.strip() for x in protostr[idx+1:-1].split(',') ]

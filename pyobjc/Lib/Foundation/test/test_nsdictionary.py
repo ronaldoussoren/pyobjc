@@ -3,12 +3,16 @@
 import unittest
 import objc
 import types
+import sys
 
 from Foundation import *
 
 
 class TestNSDictionarySubclassing(unittest.TestCase):
+    # These tests seem to be specific for MacOSX
     def testExceptionInInit(self):
+        if sys.platform != 'darwin': return
+
         class DictTestExceptionClass (NSDictionary):
             pass
 
@@ -22,6 +26,8 @@ class TestNSDictionarySubclassing(unittest.TestCase):
             pass
 
     def testAnotherExceptionInInit(self):
+        if sys.platform != 'darwin': return
+
         class DictTestExceptionClass2 (NSDictionary):
             def initWithObjects_forKeys_count_(self, o, k, c):
                 return super(DictTestExceptionClass2, self).initWithObjects_forKeys_count_(o, k, c)
@@ -33,6 +39,8 @@ class TestNSDictionarySubclassing(unittest.TestCase):
             pass
 
     def testExceptionInInitClsMeth(self):
+        if sys.platform != 'darwin': return
+
         class DictTestExceptionClass3 (NSDictionary):
             def initWithObjects_forKeys_count_(self, o, k, c):
                 return super(DictTestExceptionClass3, self).initWithObjects_forKeys_count_(o, k, c)

@@ -18,10 +18,11 @@ class MethodAccessTest (unittest.TestCase):
         self.assertRaises(AttributeError, getattr, objc.runtime.NSProxy.pyobjc_classMethods, 'foobar')
         self.assertRaises(AttributeError, getattr, objc.runtime.NSProxy, 'foobar')
 
-    def testNSZombie(self):
-        self.assertRaises(AttributeError, getattr, objc.runtime._NSZombie.pyobjc_instanceMethods, "foobar")
-        self.assertRaises(AttributeError, getattr, objc.runtime._NSZombie.pyobjc_classMethods, "foobar")
-        self.assertRaises(AttributeError, getattr, objc.runtime._NSZombie, "foobar")
+    if sys.platform == 'darwin':
+        def testNSZombie(self):
+            self.assertRaises(AttributeError, getattr, objc.runtime._NSZombie.pyobjc_instanceMethods, "foobar")
+            self.assertRaises(AttributeError, getattr, objc.runtime._NSZombie.pyobjc_classMethods, "foobar")
+            self.assertRaises(AttributeError, getattr, objc.runtime._NSZombie, "foobar")
 
 
     def testDir(self):

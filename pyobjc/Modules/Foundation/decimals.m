@@ -42,7 +42,7 @@ static PyMethodDef decimal_methods[] = {
 	{
 		NULL,
 		NULL,
-		NULL,
+		0,
 		NULL
 	}
 };
@@ -104,32 +104,6 @@ static PyTypeObject Decimal_Type = {
 
 #define Decimal_Check(obj) PyObject_TypeCheck(obj, &Decimal_Type)
 
-static PyObject*
-decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-	DecimalObject* self;
-
-	
-	self = PyObject_New(DecimalObject, &Decimal_Type);
-	if (self != NULL) {
-		memset(&self->value, 0, sizeof(self->value));
-	}
-	if ((args == NULL || PyTuple_Size(args) == 0) && (kwds == NULL || PyDict_Size(kwds) == 0)) {
-		return (PyObject*)self;
-	}
-	if (decimal_init((PyObject*)self, args, kwds) == -1) {
-		Py_DECREF(self);
-		return NULL;
-	}
-	return (PyObject*)self;
-}
-
-static void
-decimal_dealloc(PyObject* self)
-{
-	PyObject_Free(self);
-}
-
 #ifdef MACOSX
 
 static void DecimalFromString(NSDecimal* aDecimal, NSString* aString, void* locale __attribute__((__unused__)))
@@ -160,6 +134,34 @@ static void DecimalFromComponents(NSDecimal* aDecimal, unsigned long long mantis
 #define DecimalFromComponents NSDecimalFromComponents
 
 #endif
+
+static PyObject*
+decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+	DecimalObject* self;
+
+	
+	self = PyObject_New(DecimalObject, &Decimal_Type);
+	if (self != NULL) {
+		memset(&self->value, 0, sizeof(self->value));
+	}
+	if ((args == NULL || PyTuple_Size(args) == 0) && (kwds == NULL || PyDict_Size(kwds) == 0)) {
+		DecimalFromComponents(&self->value, 0, 0, 0);
+		return (PyObject*)self;
+	}
+	if (decimal_init((PyObject*)self, args, kwds) == -1) {
+		Py_DECREF(self);
+		return NULL;
+	}
+	return (PyObject*)self;
+}
+
+static void
+decimal_dealloc(PyObject* self)
+{
+	PyObject_Free(self);
+}
+
 
 static int
 decimal_init(PyObject* self, PyObject* args, PyObject* kwds)

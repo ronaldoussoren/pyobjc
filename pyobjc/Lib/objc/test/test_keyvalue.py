@@ -398,14 +398,15 @@ class PyObjC_TestKeyValueSource (objc.runtime.NSObject):
     def getFoobar(self):
         return "Hello world"
 
-class TestKeyValueObservingFromNative (unittest.TestCase):
-    # This test makes uses of Key-Value Coding/Observing from Objective-C.
-    # Versions of PyObjC upto 2003-12-29 crashed on this test due to the way
-    # key-value observing is implemented in Cocoa.
+if PyObjCTest_KeyValueObserver is not None:
+    class TestKeyValueObservingFromNative (unittest.TestCase):
+        # This test makes uses of Key-Value Coding/Observing from Objective-C.
+        # Versions of PyObjC upto 2003-12-29 crashed on this test due to the way
+        # key-value observing is implemented in Cocoa.
 
-    def testOne(self):
-        o = PyObjCTest_KeyValueObserver.alloc().initWithInstanceOfClass_withKey_(PyObjC_TestKeyValueSource, "foobar")
-        self.assertEquals(o.getValue(), "Hello world")
+        def testOne(self):
+            o = PyObjCTest_KeyValueObserver.alloc().initWithInstanceOfClass_withKey_(PyObjC_TestKeyValueSource, "foobar")
+            self.assertEquals(o.getValue(), "Hello world")
 
 if __name__ == "__main__":
     unittest.main()

@@ -205,6 +205,20 @@ add_NSPoint(PyObject* d, char* name, NSPoint value)
 }
 
 static inline int 
+add_NSTimeInterval(PyObject* d, char* name, NSTimeInterval value)
+{
+        int res;
+	PyObject* v;
+
+	v = PyObjC_ObjCToPython(@encode(NSTimeInterval), &value);
+	if (v == NULL) return -1;
+
+	res = PyDict_SetItemString(d, name, v);
+	if (res < 0) return -1;
+	return 0;
+}
+
+static inline int 
 add_NSSize(PyObject* d, char* name, NSSize value)
 {
         int res;
@@ -292,10 +306,11 @@ imp_objWithObjects_count_(void* cif __attribute__((__unused__)), void* resp, voi
 	PyObject* result = NULL;
 	PyObject* arglist = NULL;
 	PyObject* v = NULL;
+	PyGILState_STATE state;
 
 	*preturnValue = nil;
 
-	PyGILState_STATE state = PyGILState_Ensure();
+	state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
@@ -551,6 +566,29 @@ void init_Foundation(void)
 	/* Register information in generated tables */
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_variableList(d, bundle, string_table, (sizeof(string_table)/sizeof(string_table[0]))-1) < 0) return;
+
+#ifdef 	NSUserDomainMask
+	/* These are defines and not enums on GNUstep */
+	{
+	int v;
+
+	v = NSUserDomainMask;
+	PyModule_AddObject(m, "NSUserDomainMask", PyObjC_ObjCToPython(@encode(int), &v)); 
+
+	v = NSLocalDomainMask;
+	PyModule_AddObject(m, "NSLocalDomainMask", PyObjC_ObjCToPython(@encode(int), &v)); 
+
+	v = NSNetworkDomainMask;
+	PyModule_AddObject(m, "NSNetworkDomainMask", PyObjC_ObjCToPython(@encode(int), &v)); 
+
+	v = NSSystemDomainMask;
+	PyModule_AddObject(m, "NSSystemDomainMask", PyObjC_ObjCToPython(@encode(int), &v)); 
+
+	v = NSAllDomainsMask;
+	PyModule_AddObject(m, "NSAllDomainsMask", PyObjC_ObjCToPython(@encode(int), &v)); 
+	}
+#endif
+
 
 #ifdef MACOSX
 	CFRelease(bundle);

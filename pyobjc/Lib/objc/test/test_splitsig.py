@@ -43,7 +43,6 @@ class SplitSignatureTest (unittest.TestCase):
                     continue
 
                 if not isinstance(sel, objc.selector): continue
-
                 elems = objc.splitSignature(sel.signature)
             
 

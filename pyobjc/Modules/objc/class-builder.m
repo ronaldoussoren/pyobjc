@@ -1970,7 +1970,13 @@ object_method_takeStoredValue_forKey_(
 		/* Parent doesn't know the key, try to create in the 
 		 * python side, just like for plain python objects.
 		 */
-		if ([[localException name] isEqual:@"NSUnknownKeyException"]) {
+		if ([[localException name] isEqual:@"NSUnknownKeyException"]
+#ifndef MACOSX
+			/* This test is necessary on GNUstep */
+			|| [[localException name] isEqual:@"NSInvalidArgumentException"]
+#endif
+			) {
+
 			PyObject* selfObj = PyObjCObject_New(self);
 			PyObject* val;
 
@@ -2116,7 +2122,12 @@ object_method_takeValue_forKey_(
 		/* Parent doesn't know the key, try to create in the 
 		 * python side, just like for plain python objects.
 		 */
-		if ([[localException name] isEqual:@"NSUnknownKeyException"]) {
+		if ([[localException name] isEqual:@"NSUnknownKeyException"] 
+#ifndef MACOSX
+				/* This test is necessary on GNUstep */
+				|| [[localException name] isEqual:@"NSInvalidArgumentException"]
+#endif
+				) {
 			PyObject* selfObj = PyObjCObject_New(self);
 			PyObject* val;
 

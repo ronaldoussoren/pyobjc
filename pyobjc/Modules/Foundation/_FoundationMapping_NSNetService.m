@@ -17,6 +17,45 @@
  *  Python 2.3. Their license is that of Python.
  */
 
+#if defined(MACOSX) && (MAC_OS_X_VERSION_MAX_ALLOWED == MAC_OS_X_VERSION_10_1)
+ /* MacOS X 10.1 doesn't have a getnameinfo implemention, use the implementation
+  * from Python 2.3.3
+  */
+
+int
+inet_pton(int af, const char *src, void *dst)
+{
+	if (af == AF_INET) {
+		long packed_addr;
+		packed_addr = inet_addr(src);
+		if (packed_addr == INADDR_NONE)
+			return 0;
+		memcpy(dst, &packed_addr, 4);
+		return 1;
+	}
+	/* Should set errno to EAFNOSUPPORT */
+	return -1;
+}
+
+const char *
+inet_ntop(int af, const void *src, char *dst, socklen_t size)
+{
+	if (af == AF_INET) {
+		struct in_addr packed_addr;
+		if (size < 16)
+			/* Should set errno to ENOSPC. */
+			return NULL;
+		memcpy(&packed_addr, src, sizeof(packed_addr));
+		return strncpy(dst, inet_ntoa(packed_addr), size);
+	}
+	/* Should set errno to EAFNOSUPPORT */
+	return NULL;
+}
+
+# include "getnameinfo.c"
+
+#endif
+
 static PyObject *
 makeipaddr(struct sockaddr *addr, int addrlen)
 {
@@ -103,6 +142,8 @@ static PyObject* call_NSNetService_addresses(
 	NSArray*  res;
 	int len, i;
 	NSData* item;
+
+	printf("NSNetService_addresses %s %s\n", PyObject_REPR(method), PyObject_REPR(self));
 
 	if  (!PyArg_ParseTuple(arguments, "")) {
 		return NULL;

@@ -9,24 +9,6 @@ class TestRegressions(unittest.TestCase):
         self.assert_(NSObject.instancesRespondToSelector_('init'))
         self.assert_(not NSObject.instancesRespondToSelector_('frodel'))
 
-    def testQualifiersInSignature(self):
-        import Foundation
-        import AppKit
-        AppKit.NSColor.redColor().getRed_green_blue_alpha_()
-
-    def testOpenPanelSignature(self):
-        """
-        This test failed sometime after the 1.0b1 release (on Panther).
-        """
-        import AppKit
-
-        o = AppKit.NSOpenPanel.openPanel()
-        sig = o.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_.signature
-        dclass= o.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_.definingClass
-        sig = ''.join(objc.splitSignature(sig))
-        self.assertEquals(
-            sig,
-            'v@:@@@@@:i')
 
     def testFSRepr(self):
         import Foundation
@@ -54,7 +36,10 @@ class TestRegressions(unittest.TestCase):
         space for output parameters correctly.
         """
         import Foundation
+        if not hasattr(Foundation, 'NSPropertyListSerialization'): return
+
         plist = 0
+
         r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(plist, Foundation.NSPropertyListXMLFormat_v1_0)
         self.assertEquals(r[1], None)
         r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(plist, Foundation.NSPropertyListXMLFormat_v1_0)

@@ -25,6 +25,7 @@ from os.path import basename, dirname, splitext, join, expanduser, walk
 from fnmatch import fnmatch
 import getopt
 import objc
+import Foundation
 
 USAGE='Usage: runPyObjCTests [-qv] [--enable-gui-tests|--disable-gui-tests]\n'
 PYOBJC_ROOT = dirname(objc.__path__[0])

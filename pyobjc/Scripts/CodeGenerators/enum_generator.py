@@ -11,6 +11,7 @@ import sys
 from dupfile import dupfile
 
 START_RE=re.compile('(typedef[\w]|)enum.*{')
+START_RE2=re.compile('(typedef[\w]|)enum(?:\s+[A-Za-z_][A-Za-z0-9]*)?\s*$')
 END_RE=re.compile('}')
 IDENT_RE=re.compile('[A-Za-z_][A-Za-z_0-9]*')
 LINE_COMMENT_RE=re.compile('//.*')
@@ -50,6 +51,10 @@ def process_file(outfp, filename):
                         entry(outfp, ident)
                 elif START_RE.search(ln):
                     in_enum = 1
+                    need_brace=0
+                elif START_RE2.search(ln):
+                    in_enum = 1
+                    need_brace=1
         else:
                 if in_comment:
                     m = BLOCK_E_RE.search(ln)
@@ -57,6 +62,7 @@ def process_file(outfp, filename):
                         continue
                     ln = ln[m.end():]
                     in_comment = 0
+
 
                 if END_RE.match(ln):
                     in_enum = 0
@@ -68,6 +74,12 @@ def process_file(outfp, filename):
                 if m:
                     in_comment = 1
                     ln = ln[:m.start()]
+
+                if need_brace == 1:
+                    if not ln.strip().startswith('{'):
+                        in_enum=0
+                        continue
+
 
                 m = IDENT_RE.search(ln)
                 if not m:

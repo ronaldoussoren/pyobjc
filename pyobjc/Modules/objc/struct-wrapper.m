@@ -153,7 +153,7 @@ struct_sq_ass_slice(PyObject* self, int ilow, int ihigh, PyObject* v)
 	}
 
 	seq = PySequence_Fast(v, "must assign sequence to slice");
-	if (seq == NULL) return NULL;
+	if (seq == NULL) return -1;
 
 	if (PySequence_Fast_GET_SIZE(seq) != ihigh - ilow) {
 		Py_DECREF(seq);
@@ -239,7 +239,7 @@ static PyMethodDef struct_methods[] = {
 		METH_NOARGS, 
 		NULL
 	}, 
-	{ NULL, NULL, NULL, NULL }
+	{ NULL, NULL, 0, NULL }
 };
 
 
@@ -424,7 +424,7 @@ struct_hash(PyObject* self)
 static PyObject*
 struct_richcompare(PyObject* self, PyObject* other, int op)
 {
-	int self_len, other_len, i, len;
+	int self_len, other_len, i, len, cmp;
 	PyObject* self_cur;
 	PyObject* other_cur;
 
@@ -496,8 +496,6 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
 	}
 
 	/* All items are equal, compare using sizes */
-	int cmp;
-
 	switch (op) {
 	case Py_LT: cmp = self_len < other_len; break;
 	case Py_LE: cmp = self_len <= other_len; break;

@@ -654,7 +654,8 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 		} 
 		if (!PyObjCSelector_Check(newVal)) {
 			Py_DECREF(newVal);
-			PyErr_SetString(PyExc_ValueError, "cannot convert callable to selector");
+			PyErr_SetString(PyExc_ValueError, 
+					"cannot convert callable to selector");
 			return -1;
 		}
 
@@ -669,15 +670,17 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 		objcMethod = methodsToAdd->method_list;
 		objcMethod->method_name = PyObjCSelector_GetSelector(newVal);
 		objcMethod->method_types = strdup(PyObjCSelector_Signature(newVal));
+
 		if (objcMethod->method_types == NULL) {
 			free(methodsToAdd);
 			Py_DECREF(newVal);
 			PyErr_NoMemory();
 			return -1;
 		}
-		objcMethod->method_imp = ObjC_MakeIMPForPyObjCSelector((PyObjCSelector*)newVal);
+		objcMethod->method_imp = ObjC_MakeIMPForPyObjCSelector(
+				(PyObjCSelector*)newVal);
 		if (objcMethod->method_imp == NULL) {
-			free(objcMethod->method_types);
+			free((char*)objcMethod->method_types);
 			free(methodsToAdd);
 			Py_DECREF(newVal);
 			PyErr_NoMemory();
@@ -687,7 +690,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 		r = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, newVal);
 		Py_DECREF(newVal);
 		if (r == -1) {
-			free(objcMethod->method_types);
+			free((char*)objcMethod->method_types);
 			free(methodsToAdd);
 			PyErr_NoMemory();
 			return -1;
@@ -695,9 +698,13 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 
 		
 		if (PyObjCSelector_IsClassMethod(newVal)) {
-			PyObjCRT_ClassAddMethodList(GETISA(PyObjCClass_GetClass(self)), methodsToAdd);
+			PyObjCRT_ClassAddMethodList(
+					GETISA(PyObjCClass_GetClass(self)), 
+					methodsToAdd);
 		} else {
-			PyObjCRT_ClassAddMethodList(PyObjCClass_GetClass(self), methodsToAdd);
+			PyObjCRT_ClassAddMethodList(
+					PyObjCClass_GetClass(self), 
+					methodsToAdd);
 		}
 		return 0;
 
