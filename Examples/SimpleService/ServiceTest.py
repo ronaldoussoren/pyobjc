@@ -1,8 +1,9 @@
+import objc
 from Foundation import *
 from AppKit import *
 
 def serviceSelector(fn):
-    return obj.selector(fn, signature="v@:@@o^@")
+    return objc.selector(fn, signature="v@:@@o^@")
 
 def ERROR(s):
     return (s,)
@@ -56,7 +57,7 @@ class ServiceTest(NSObject):
         pboard.setString_forType_(newString, NSStringPboardType)
         return ERROR(None)
    
-   doCapitalizeService_userData_error_ = serviceSelector(
+    doCapitalizeService_userData_error_ = serviceSelector(
        doCapitalizeService_userData_error_
     )
 
