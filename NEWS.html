@@ -9,7 +9,7 @@ PyObjC NEWS</title>
 <body>
 <h2>PyObjC NEWS</h2>
 <p>An overview of the relevant changes in new, and older, releases.</p>
-<h2><a name="version-1-2-2004-12">Version 1.2 (2004-12-??)</a></h2>
+<h2><a name="version-1-2-2004-12-29">Version 1.2 (2004-12-29)</a></h2>
 <ul>
 <li><code><span>PyObjCTools.AppHelper.stopEventLoop</span></code> will attempt to stop the current
 <code><span>NSRunLoop</span></code> (if started by <code><span>runConsoleEventLoop</span></code>) or terminate the
@@ -45,28 +45,27 @@ a py2app-created plugin bundle.</li>
 <li>We now have a working Interface Builder palette example due to
 <code><span>__bundle__hack__</span></code>.</li>
 <li><code><span>bool(NSNull.null())</span></code> is now false.</li>
-<li><code><span>setup.py</span></code> supports several new commands:<pre>
-* build_libffi
-
-  builds libffi (used by build_ext)
-
-* build_html
-
-  builds html documentation from ReST source
-
-* bdist_dmg
-
-  creates a disk image with the binary installer
-
-* bdist_mpkg
-
-  creates a binary installer
-
-* test
-
-  runs unit test suite (replaces Scripts/runPyObjCTests
-  and Scripts/runalltests)
-</pre>
+<li><code><span>setup.py</span></code> supports several new commands:<blockquote>
+<p>build_libffi:</p>
+<blockquote>
+<p>builds libffi (used by build_ext)</p>
+</blockquote>
+<dl>
+<dt>build_html:</dt>
+<dd><p>builds html documentation from ReST source</p>
+</dd>
+<dt>bdist_dmg:</dt>
+<dd><p>creates a disk image with the binary installer</p>
+</dd>
+<dt>bdist_mpkg:</dt>
+<dd><p>creates a binary installer</p>
+</dd>
+<dt>test:</dt>
+<dd><p>runs unit test suite (replaces Scripts/runPyObjCTests
+and Scripts/runalltests)</p>
+</dd>
+</dl>
+</blockquote>
 </li>
 <li><code><span>PyObjCStrBridgeWarning</span></code> can now be generated when Python <code><span>str</span></code> objects
 cross the bridge by calling <code><span>objc.setStrBridgeEnabled(False)</span></code>.  It is
