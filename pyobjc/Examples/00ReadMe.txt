@@ -1,83 +1,87 @@
-This directory contains a number of examples for using the pyobjc module.
+===============
+PyObjC Examples
+===============
 
-A number of simple scripts that demo the core module.
+Simple scripts that demo the core modules
+-----------------------------------------
 
-- subclassing-objective-c.py
+* subclassing-objective-c.py
 
   Create a subclass of an objective-C class
 
-- super-call.py
+* super-call.py
 
   Likewise, but call super-class implementation of a method
 
-- dictionary.py
+* dictionary.py
 
   Use a NS*Dictionary object.
 
-- rendezvous.py
+* rendezvous.py
 
   Use an NSNetService class to look for servers using rendezvous.
 
-And a number of Cocoa applications. These use the 'AppKit' package.
+Cocoa applications
+------------------
 
-- ClassBrowser
+* `ClassBrowser`_
 
   A simple class browser, demonstrating the use of NSBrowser (a "column view"
   hierarchical widget) and NSTableView.
 
-- CurrencyConverter
+* `CurrencyConverter`_
 
   A simple NIB based application. Start with this one. Also see the PyObjC
   tutorial.
 
-- DotView
+* `DotView`_
 
   A simple one-window demo showing how to custom drawing in a custom
   NSView. Additionally shows how easy it is to embed a view in an
   NSScrollView, as well as how to use an NSColorWell.
 
-- iClass
+* `iClass`_
 
   A more elaborate class browser; demonstrates NSOutlineView and NSTableView.
 
-- PrefPane
+* `PrefPane`_
 
   Demonstrates how to write an NSPreferencePane, for use in the
   System Preferences application. Requires a framework build of Python.
  
-- EnvironmentPrefs
+* `EnvironmentPrefs`_
 
   Another NSPreferencePane. This one can be used to edit the default environment
   for the current user. It also is a simple example of a localized application.
 
-- PythonBrowser
+* `PythonBrowser`_
 
   A reusable Python object browser, demonstrating the use of NSOutlineView
   as well as how to use an NSWindowController subclass to create a window
   from a menu action.
 
-- TableModel
+* `TableModel`_
 
   Basic demo that shows how to use a NSTableView.
 
-- TinyTinyEdit
+* `TinyTinyEdit`_
 
   A minimal Document-based text editor application.
 
-- Todo
+* `Todo`_
 
   A more complex NIB based applications. This is a document-based application.
   The code is a translation into pyton of an example project in 
   'Learning Cocoa' from O'Reilly
 
-- WebServicesTool
+* `WebServicesTool`_
 
   Another Project Builder Cocoa project.  Quiries an XML-RPC enabled web
   server for the methods that it implements.  Demonstrates a more advanced
   use of an NSTableView, how to make a toolbar as well as how to use
   multi-threading.
 
-- FieldGraph
+* `FieldGraph`_
   
   Another Project Builder Cocoa project, it also includes a ``buildapp.py`` 
   script. This shows an simple example of an MVC based application, that also
@@ -85,3 +89,16 @@ And a number of Cocoa applications. These use the 'AppKit' package.
 
   The application calculates the field pattern and RMS field of an antenna 
   array with up to three elements.
+
+.. _`ClassBrowser`: ClassBrowser
+.. _`CurrencyConverter`: CurrencyConverter
+.. _`DotView`: DotView
+.. _`iClass`: iClass
+.. _`PrefPane`: PrefPane
+.. _`EnvironmentPrefs`: EnvironmentPrefs
+.. _`PythonBrowser`: PythonBrowser
+.. _`TableModel`: TableModel
+.. _`TinyTinyEdit`: TinyTinyEdit
+.. _`Todo`: Todo
+.. _`WebServicesTool`: WebServicesTool
+.. _`FieldGraph`: FieldGraph
