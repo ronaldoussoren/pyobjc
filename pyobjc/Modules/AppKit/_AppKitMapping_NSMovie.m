@@ -56,7 +56,7 @@ static void* imp_NSMovie_QTMovie(id self, SEL sel)
 		return nil;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -122,7 +122,7 @@ static id imp_NSMovie_initWithMovie_(id self, SEL sel, void* movie)
 		return nil;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();

@@ -93,7 +93,7 @@ static void imp_NSCoder_encodeValueOfObjCType_at_(id self, SEL sel,
 		return;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -228,7 +228,7 @@ static void imp_NSCoder_encodeArrayOfObjCType_count_at_(id self, SEL sel,
 		return;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -313,7 +313,7 @@ static void imp_NSCoder_decodeValueOfObjCType_at_(id self, SEL sel,
 		return;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -424,7 +424,7 @@ static void imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 		return;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -538,7 +538,7 @@ static void imp_NSCoder_encodeBytes_length_(id self, SEL sel,
 		return;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -609,7 +609,7 @@ static void imp_NSCoder_encodeBytes_length_forKey_(id self, SEL sel,
 		return;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();

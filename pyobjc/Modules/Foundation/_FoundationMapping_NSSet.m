@@ -128,7 +128,7 @@ static id imp_NSSet_setWithObjects_count_(id self, SEL sel,
 	}
 	PyTuple_SET_ITEM(arglist, 2,  v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -261,7 +261,7 @@ static id imp_NSSet_initWithObjects_count_(id self, SEL sel,
 	}
 	PyTuple_SET_ITEM(arglist, 2,  v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();

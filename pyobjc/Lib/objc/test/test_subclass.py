@@ -90,17 +90,26 @@ class TestCopying (unittest.TestCase):
     def testCopy(self):
         class MyCopyClass (NSObject):
             def copyWithZone_(self, zone):
-                o = super(MyCopyClass, self).copyWithZone_(zone)
+                # NSObject doesn't implement the copying protocol
+                #o = super(MyCopyClass, self).copyWithZone_(zone)
+                o = self.__class__.alloc().init()
                 o.foobar = 2
                 return o
+            copyWithZone_ = objc.selector(copyWithZone_, isClassMethod=0)
+
+
+        # Make sure the runtime correctly marked our copyWithZone_
+        # implementation.
+        self.assert_(MyCopyClass.copyWithZone_.doesDonateReference)
 
         o = MyCopyClass.alloc().init()
         o.foobar = 1
 
         self.assertEquals(o.foobar, 1)
 
+        # Make a copy from ObjC (see testbundle.m)
         c = PyObjC_TestClass3.makeACopy_(o)
-        
+       
         self.assert_(isinstance(c, MyCopyClass))
         self.assertEquals(c.foobar, 2)
 

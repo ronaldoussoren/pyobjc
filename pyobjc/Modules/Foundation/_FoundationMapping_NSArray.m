@@ -215,7 +215,7 @@ imp_NSArray_sortedArrayUsingFunction_context_(id self, SEL sel,
 	}
 	PyTuple_SET_ITEM(arglist, 2, v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -279,7 +279,7 @@ imp_NSArray_sortedArrayUsingFunction_context_hint_(id self, SEL sel,
 	}
 	PyTuple_SET_ITEM(arglist, 3, v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -413,7 +413,7 @@ static id imp_NSArray_arrayWithObjects_count_(id self, SEL sel,
 	}
 	PyTuple_SET_ITEM(arglist, 2,  v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -546,7 +546,7 @@ static id imp_NSArray_arrayByAddingObjects_count_(id self, SEL sel,
 	}
 	PyTuple_SET_ITEM(arglist, 2,  v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -679,7 +679,7 @@ static id imp_NSArray_initWithObjects_count_(id self, SEL sel,
 	}
 	PyTuple_SET_ITEM(arglist, 2,  v);
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();

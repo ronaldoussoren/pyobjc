@@ -57,7 +57,7 @@ static void* imp_NSQuickDrawView_qdport(id self, SEL sel)
 		return nil;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();

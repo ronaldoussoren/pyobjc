@@ -84,7 +84,7 @@ static id imp_NSData_dataWithBytes_length_(id self, SEL sel,
 		return nil;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -171,7 +171,7 @@ static id imp_NSData_initWithBytes_length_(id self, SEL sel,
 		return nil;
 	}
 
-	result = PyObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist, NULL);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCErr_ToObjC();
@@ -222,7 +222,7 @@ static void *imp_NSData_bytes(id self, SEL sel)
 {
   PyObject* result;
 
-  result = PyObjC_CallPython(self, sel, NULL);
+  result = PyObjC_CallPython(self, sel, NULL, NULL);
   if (result == NULL) {
     PyObjCErr_ToObjC();
     return NULL;
@@ -279,7 +279,7 @@ static void *imp_NSMutableData_mutableBytes(id self, SEL sel)
 {
   PyObject* result;
 
-  result = PyObjC_CallPython(self, sel, NULL);
+  result = PyObjC_CallPython(self, sel, NULL, NULL);
   if (result == NULL) {
     PyObjCErr_ToObjC();
     return NULL;

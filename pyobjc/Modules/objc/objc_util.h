@@ -18,7 +18,7 @@ void ObjCErr_Set(PyObject* exc, char* fmt, ...);
 void PyObjCErr_FromObjC(NSException* localException);
 void PyObjCErr_ToObjC(void);
 
-PyObject* PyObjC_CallPython(id self, SEL selector, PyObject* arglist);
+PyObject* PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc);
 
 char* ObjC_strdup(const char* value);
 
