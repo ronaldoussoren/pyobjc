@@ -20,7 +20,7 @@ call_NSDecimalNumber_decimalWithDecimal_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuperCls(&super,
 			  PyObjCSelector_GetClass(method),
 			  PyObjCClass_GetClass(self));
@@ -28,10 +28,10 @@ call_NSDecimalNumber_decimalWithDecimal_(
 		res = objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method),
 				*aDecimal);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (res == nil && PyErr_Occurred()) {
 		return NULL;
@@ -52,7 +52,7 @@ call_NSDecimalNumber_initWithDecimal_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -60,10 +60,10 @@ call_NSDecimalNumber_initWithDecimal_(
 		res = objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method),
 				*aDecimal);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (res == nil && PyErr_Occurred()) {
 		return NULL;
@@ -126,7 +126,7 @@ call_NSDecimalNumber_decimalValue(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -141,9 +141,9 @@ call_NSDecimalNumber_decimalValue(
 		aDecimal = [super.self decimalValue];
 
 #endif /* GNUSTEP */
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
 		return NULL;

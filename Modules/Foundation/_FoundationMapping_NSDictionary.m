@@ -94,7 +94,7 @@ call_NSDictionary_initWithObjects_forKeys_count_(
 		}
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -102,10 +102,10 @@ call_NSDictionary_initWithObjects_forKeys_count_(
 		res = objc_msgSendSuper(&super,
 				@selector(initWithObjects:forKeys:count:),
 				objects, keys, count);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	Py_DECREF(objectSeq);
 	Py_DECREF(keySeq);
@@ -266,7 +266,7 @@ call_NSDictionary_dictionaryWithObjects_forKeys_count_(
 		}
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuperCls(&super, 
 			PyObjCSelector_GetClass(method), 
 			PyObjCClass_GetClass(self));
@@ -275,10 +275,10 @@ call_NSDictionary_dictionaryWithObjects_forKeys_count_(
 		res = objc_msgSendSuper(&super,
 				@selector(dictionaryWithObjects:forKeys:count:),
 				objects, keys, count);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	Py_DECREF(objectSeq);
 	Py_DECREF(keySeq);

@@ -36,17 +36,17 @@ call_NSGraphicsContext_graphicsPort(
         return 0;
     }
 
-    NS_DURING
+    PyObjC_DURING
         PyObjC_InitSuper(&super,
             PyObjCSelector_GetClass(method),
             PyObjCObject_GetObject(self));
 
         res = (CGContextRef)objc_msgSendSuper(&super,
             @selector(graphicsPort));
-    NS_HANDLER
+    PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
         res = NULL;
-    NS_ENDHANDLER
+    PyObjC_ENDHANDLER
 
     if (res == NULL && PyErr_Occurred()) {
         Py_DECREF(pyCGContextPtr);

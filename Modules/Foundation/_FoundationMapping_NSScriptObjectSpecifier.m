@@ -25,7 +25,7 @@ call_NSScriptObjectSpecifier_indicesOfObjectsByEvaluatingWithContainer_count_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -33,11 +33,11 @@ call_NSScriptObjectSpecifier_indicesOfObjectsByEvaluatingWithContainer_count_(
 		res = (int*)objc_msgSendSuper(&super,
 		    @selector(indicesOfObjectsByEvaluatingWithContainer:count:),
 		    container, &numrefs);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = NULL;
 		numrefs = -2;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (res == NULL && PyErr_Occurred()) {
 		return NULL;

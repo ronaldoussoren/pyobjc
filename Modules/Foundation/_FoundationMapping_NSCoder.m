@@ -54,7 +54,7 @@ call_NSCoder_encodeValueOfObjCType_at_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			((void(*)(id,SEL, char*,void*))
 				(PyObjCIMP_GetIMP(method)))(
@@ -70,12 +70,15 @@ call_NSCoder_encodeValueOfObjCType_at_(
 					PyObjCSelector_GetSelector(method),
 					signature, buf);
 		}
-		result = Py_None;
-		Py_INCREF(result);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
+
+	if (!PyErr_Occurred()) {
+		result = Py_None;
+		Py_INCREF(result);
+	}
 
 	return result;
 }
@@ -186,7 +189,7 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 		}
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			((void(*)(id,SEL, char*,int, void*))
 				(PyObjCIMP_GetIMP(method)))(
@@ -202,12 +205,15 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 					PyObjCSelector_GetSelector(method),
 					signature, count, buf);
 		}
-		result = Py_None;
-		Py_INCREF(result);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
+
+	if (!PyErr_Occurred()) {
+		result = Py_None;
+		Py_INCREF(result);
+	}
 
 	return result;
 }
@@ -307,7 +313,7 @@ call_NSCoder_decodeValueOfObjCType_at_(
 	}
 
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			((void(*)(id,SEL, char*,void*))
 				(PyObjCIMP_GetIMP(method)))(
@@ -323,9 +329,9 @@ call_NSCoder_decodeValueOfObjCType_at_(
 					PyObjCSelector_GetSelector(method),
 					signature, buf);
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
 		return NULL;
@@ -417,7 +423,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			((void(*)(id,SEL, char*,int, void*))
 				(PyObjCIMP_GetIMP(method)))(
@@ -433,9 +439,9 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 				PyObjCSelector_GetSelector(method),
 				signature, count, buf);
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
 		return NULL;
@@ -552,7 +558,7 @@ call_NSCoder_encodeBytes_length_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			((void(*)(id,SEL,void*,int))
 				(PyObjCIMP_GetIMP(method)))(
@@ -568,12 +574,15 @@ call_NSCoder_encodeBytes_length_(
 				PyObjCSelector_GetSelector(method),
 				bytes, length);
 		}
-		result = Py_None;
-		Py_INCREF(result);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
+
+	if (!PyErr_Occurred()){
+		result = Py_None;
+		Py_INCREF(result);
+	}
 
 	return result;
 }
@@ -643,7 +652,7 @@ call_NSCoder_decodeBytesWithReturnedLength_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			bytes = ((void*(*)(id,SEL,int*))
 				(PyObjCIMP_GetIMP(method)))(
@@ -659,10 +668,10 @@ call_NSCoder_decodeBytesWithReturnedLength_(
 				PyObjCSelector_GetSelector(method),
 				&size);
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		bytes = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (bytes == NULL) {
 		if (PyErr_Occurred()) {
@@ -801,7 +810,7 @@ call_NSCoder_decodeBytesForKey_returnedLength_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			bytes = ((void*(*)(id,SEL,id, int*))
 				(PyObjCIMP_GetIMP(method)))(
@@ -818,10 +827,10 @@ call_NSCoder_decodeBytesForKey_returnedLength_(
 				key,
 				&size);
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		bytes = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (bytes == NULL) {
 		if (PyErr_Occurred()) {
@@ -965,7 +974,7 @@ call_NSCoder_encodeBytes_length_forKey_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			((void(*)(id,SEL,void*, int, id))
 				(PyObjCIMP_GetIMP(method)))(
@@ -981,12 +990,15 @@ call_NSCoder_encodeBytes_length_forKey_(
 				PyObjCSelector_GetSelector(method),
 				bytes, size, key);
 		}
-		result = Py_None;
-		Py_INCREF(result);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
+
+	if (!PyErr_Occurred()) {
+		result = Py_None;
+		Py_INCREF(result);
+	}
 
 	return result;
 }

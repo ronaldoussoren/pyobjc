@@ -23,7 +23,7 @@ call_NSQuickDrawView_qdport(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -31,17 +31,21 @@ call_NSQuickDrawView_qdport(
 
 		port = objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method));
-		if (port == NULL) {
-			result = Py_None;
-			Py_INCREF(result);
-		} else {
-			result = GrafObj_New((GrafPtr)port);
-		}
 
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+		port = NULL;
+	
+	PyObjC_ENDHANDLER
+
+	if (port == NULL) {
+		if (PyErr_Occurred()) return NULL;
+		result = Py_None;
+		Py_INCREF(result);
+	} else {
+		result = GrafObj_New((GrafPtr)port);
+	}
 
 	return result;
 }

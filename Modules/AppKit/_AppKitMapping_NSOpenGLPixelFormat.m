@@ -56,7 +56,7 @@ call_NSOpenGLPixelFormat_initWithAttributes_(
 		return NULL;
 	}
     
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -64,11 +64,15 @@ call_NSOpenGLPixelFormat_initWithAttributes_(
 		pixelFormat = objc_msgSendSuper(&super,
 			PyObjCSelector_GetSelector(method),
 			attribs);
-		result = PyObjC_IdToPython(pixelFormat);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+		pixelFormat = nil;
+	PyObjC_ENDHANDLER
+
+	if (pixelFormat == nil && PyErr_Occurred()) return NULL;
+
+	result = PyObjC_IdToPython(pixelFormat);
     
 	PyMem_Del(attribs);
 	return result;

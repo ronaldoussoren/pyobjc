@@ -25,24 +25,30 @@ static PyObject* call_NSOutputStream_write_maxLength_(
 	int		bytes_len;
 	PyObject* volatile	result;
 	struct objc_super super;
+	long retVal;
 
 	if (!PyArg_ParseTuple(arguments, "s#", &bytes, &bytes_len)) {
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
-		result = PyInt_FromLong((long)objc_msgSendSuper(&super, 
-				PyObjCSelector_GetSelector(method), bytes, bytes_len));
+		retVal = (long)objc_msgSendSuper(&super, 
+				PyObjCSelector_GetSelector(method), bytes, bytes_len);
 		
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		Py_DECREF(result);
 		result = NULL;
-	NS_ENDHANDLER
+		retVal = -1;
+	PyObjC_ENDHANDLER
+
+	if (retVal == -1 && PyErr_Occurred()) return NULL;
+
+	result = PyInt_FromLong(retVal);
 
 	return result;
 }
@@ -64,7 +70,7 @@ static PyObject* call_NSInputStream_read_maxLength_(
 	if (result == NULL)
 		return NULL;
 	
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -73,17 +79,21 @@ static PyObject* call_NSInputStream_read_maxLength_(
 				PyObjCSelector_GetSelector(method), 
 				PyString_AS_STRING(result), bytes_len);
 		
-		if (bytes_read != bytes_len) {
-			if (_PyString_Resize(&result, bytes_read) < 0) {
-				return NULL;
-			}
-		}
 
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		Py_XDECREF(result);
 		result = NULL;
-	NS_ENDHANDLER
+		bytes_read = -1;
+	PyObjC_ENDHANDLER
+
+	if (bytes_read == -1 && PyErr_Occurred()) return NULL;
+
+	if (bytes_read != bytes_len) {
+		if (_PyString_Resize(&result, bytes_read) < 0) {
+			return NULL;
+		}
+	}
 
 	return result;
 }
@@ -95,28 +105,35 @@ static PyObject* call_NSInputStream_getBytes_length_(
 	unsigned    bytes_len;
 	PyObject*	result;
 	struct objc_super super;
+	int retVal;
 
 	if (!PyArg_ParseTuple(arguments, "")) {
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
-		if (objc_msgSendSuper(&super, 
-				PyObjCSelector_GetSelector(method), &bytes, &bytes_len)) {
-			result = PyBuffer_FromMemory((void*)bytes, bytes_len);
-		} else {
-			Py_INCREF(Py_None);
-			result = Py_None;
-		}
+		retVal = (int)objc_msgSendSuper(&super, 
+			PyObjCSelector_GetSelector(method), &bytes, &bytes_len);
 
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+		retVal = -1;
+	PyObjC_ENDHANDLER
+
+
+	if (retVal == -1 && PyErr_Occurred()) return NULL;
+
+	if (retVal) {
+		result = PyBuffer_FromMemory((void*)bytes, bytes_len);
+	} else {
+		Py_INCREF(Py_None);
+		result = Py_None;
+	}
 
 	return result;
 }

@@ -13,47 +13,45 @@
 static int
 SortHelperFunc(id arg1, id arg2, void* opaque)
 {
-	PyObject* func = PyTuple_GetItem((PyObject*)opaque, 0);
-	PyObject* context = PyTuple_GetItem((PyObject*)opaque, 1);
-	PyObject* a1;
-	PyObject* a2;
-	PyObject* r;
-	int res;
+	PyObjC_BEGIN_WITH_GIL
+		PyObject* func = PyTuple_GetItem((PyObject*)opaque, 0);
+		PyObject* context = PyTuple_GetItem((PyObject*)opaque, 1);
+		PyObject* a1;
+		PyObject* a2;
+		PyObject* r;
+		int res;
 
-	if (func == NULL || context == NULL) {
-		PyObjCErr_ToObjC();
-		return NSOrderedSame;
-	}
+		if (func == NULL || context == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 	
-	a1 = PyObjC_IdToPython(arg1);
-	if (a1 == NULL) {
-		PyObjCErr_ToObjC();
-		return NSOrderedSame;
-	}
+		a1 = PyObjC_IdToPython(arg1);
+		if (a1 == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	a2 = PyObjC_IdToPython(arg2);
-	if (a2 == NULL) {
+		a2 = PyObjC_IdToPython(arg2);
+		if (a2 == NULL) {
+			Py_DECREF(a1);
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+		r = PyObject_CallFunction(func, "OOO", a1, a2, context);
 		Py_DECREF(a1);
-		PyObjCErr_ToObjC();
-		return NSOrderedSame;
-	}
+		Py_DECREF(a2);
+		if (r == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
-	r = PyObject_CallFunction(func, "OOO", a1, a2, context);
-	Py_DECREF(a1);
-	Py_DECREF(a2);
-	if (r == NULL) {
-		PyObjCErr_ToObjC();
-		return NSOrderedSame;
-	}
-
-	if (PyObjC_PythonToObjC(@encode(int), r, &res) < 0) {
+		if (PyObjC_PythonToObjC(@encode(int), r, &res) < 0) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 		Py_DECREF(r);
-		PyObjCErr_ToObjC();
-		return NSOrderedSame;
-	}
-	Py_DECREF(r);
 
-	return res;
+		PyObjC_GIL_RETURN(res);
+
+	PyObjC_END_WITH_GIL
+
 }
 
 static PyObject* 
@@ -80,7 +78,7 @@ call_NSMatrix_sortUsingFunction_context_(
 	PyTuple_SET_ITEM(realContext, 1, context);
 	Py_INCREF(context);
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -89,10 +87,10 @@ call_NSMatrix_sortUsingFunction_context_(
 		res = objc_msgSendSuper(&super,
 				@selector(sortUsingFunction:context:),
 				 SortHelperFunc, realContext);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	Py_DECREF(realContext);
 

@@ -44,7 +44,7 @@ call_NSString_getCString_maxLength_range_remainingRange_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -52,9 +52,9 @@ call_NSString_getCString_maxLength_range_remainingRange_(
 		(void)objc_msgSendSuper(&super,
 			@selector(getCString:maxLength:range:remainingRange:),
 			buf, maxLength, aRange, &leftoverRange);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
 		free(buf);
@@ -104,7 +104,7 @@ call_NSString_getCString_maxLength_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -112,9 +112,9 @@ call_NSString_getCString_maxLength_(
 		(void)objc_msgSendSuper(&super,
 			@selector(getCString:maxLength:),
 			buf, maxLength);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
 		free(buf);

@@ -64,7 +64,7 @@ call_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 	}
 	Py_DECREF(seq);
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			len = ((int(*)(id, SEL, NSGlyph*, int, NSPoint*))
 			 	PyObjCIMP_GetIMP(method))(
@@ -80,10 +80,10 @@ call_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 				PyObjCSelector_GetSelector(method),
 				glyphs, numGlyphs, points);
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		len = -1;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (len == -1 && PyErr_Occurred()) {
 		free(points);
@@ -266,7 +266,7 @@ call_NSFont_fontWithName_matrix_(
 		Py_DECREF(seq);
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			font = ((id(*)(id, SEL, id, float*))
 			 	PyObjCIMP_GetIMP(method))(
@@ -281,10 +281,10 @@ call_NSFont_fontWithName_matrix_(
 				PyObjCSelector_GetSelector(method),
 				typeface, matrix);
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		font = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (font == nil && PyErr_Occurred()) {
 		return NULL;
@@ -370,7 +370,7 @@ call_NSFont_matrix(
 		return 0;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			matrix = ((float*(*)(id, SEL))
 			 	PyObjCIMP_GetIMP(method))(
@@ -384,10 +384,10 @@ call_NSFont_matrix(
 			matrix = (float*)objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method));
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		matrix = nil;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (matrix == nil && PyErr_Occurred()) {
 		return NULL;

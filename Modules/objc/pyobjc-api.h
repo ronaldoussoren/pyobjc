@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.30 2004/04/06 00:34:45 etrepum Exp $
+ * $Id: pyobjc-api.h,v 1.31 2004/04/07 11:43:13 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -279,6 +279,9 @@ struct pyobjc_api {
 
     /* PyObjCGILState_Ensure */
     PyGILState_STATE (*gilstate_ensure)(void);
+
+    /* PyObjCSelector_IsInitializer */
+    int (*sel_is_init)(PyObject*);
 };
 
 
@@ -329,6 +332,7 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCIMP_GetIMP   (PyObjC_API->imp_get_imp)
 #define PyObjCIMP_GetSelector   (PyObjC_API->imp_get_sel)
 #define PyObjCGILState_Ensure (PyObjC_API->gilstate_ensure)
+#define PyObjCSelector_IsInitializer (PyObjC_API->sel_is_init)
 
 
 /* XXX: Check if we can use the following function in the bridge itself,

@@ -62,7 +62,7 @@ call_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
 		}
 	} 
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			((void(*)(id, SEL, NSGlyph*, int, id))
 			 	PyObjCIMP_GetIMP(method))(
@@ -86,13 +86,16 @@ call_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
 		}
 
 		free(glyphs);
-		result = Py_None;
-		Py_INCREF(result);
-	NS_HANDLER
+	PyObjC_HANDLER
 		free(glyphs);
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
+
+	if (PyErr_Occurred()) return NULL;
+	
+	result = Py_None;
+	Py_INCREF(result);
 
 	return result;
 }
@@ -141,7 +144,7 @@ call_NSBezierPath_appendBezierPathWithPoints_count_(
 		}
 	} 
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			((void(*)(id,SEL,NSPoint*,int))
 			   PyObjCIMP_GetIMP(method))(
@@ -161,14 +164,16 @@ call_NSBezierPath_appendBezierPathWithPoints_count_(
 				count);
 		}
 		free(points);
-		result = Py_None;
-		Py_INCREF(result);
-	NS_HANDLER
+	PyObjC_HANDLER
 		free(points);
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
+	if (PyErr_Occurred()) return NULL;
+
+	result = Py_None;
+	Py_INCREF(result);
 	return result;
 }
 
@@ -189,7 +194,7 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			res = ((NSBezierPathElement(*)(id,SEL,int,NSPoint*))
 			   PyObjCIMP_GetIMP(method))(
@@ -209,9 +214,9 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(
 				idx,
 				points);
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
 		return NULL;
@@ -295,7 +300,7 @@ call_NSBezierPath_setAssociatedPoints_atIndex_(
 		}
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			((void(*)(id,SEL,NSPoint*,int))
 			   PyObjCIMP_GetIMP(method))(
@@ -314,12 +319,15 @@ call_NSBezierPath_setAssociatedPoints_atIndex_(
 				points,
 				idx);
 		}
-		result = Py_None;
-		Py_INCREF(result);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
+
+	if (PyErr_Occurred()) return NULL;
+
+	result = Py_None;
+	Py_INCREF(result);
 
 	return result;
 }
@@ -369,7 +377,7 @@ call_NSBezierPath_setLineDash_count_phase_(
 		}
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			((void(*)(id,SEL,float*,int,float))
 			   PyObjCIMP_GetIMP(method))(
@@ -386,12 +394,15 @@ call_NSBezierPath_setLineDash_count_phase_(
 				PyObjCSelector_GetSelector(method),
 				pattern, count, phase);
 		}
-		result = Py_None;
-		Py_INCREF(result);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
+
+	if (PyErr_Occurred()) return NULL;
+
+	result = Py_None;
+	Py_INCREF(result);
 
 	return result;
 }
@@ -423,7 +434,7 @@ call_NSBezierPath_getLineDash_count_phase_(
 		pattern = NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			((void(*)(id,SEL,float*,int*,float*))
 			   PyObjCIMP_GetIMP(method))(
@@ -441,9 +452,9 @@ call_NSBezierPath_getLineDash_count_phase_(
 				pattern, &countOut, &phase);
 
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
 		return NULL;

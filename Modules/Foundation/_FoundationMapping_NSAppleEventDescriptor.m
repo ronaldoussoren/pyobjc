@@ -62,7 +62,7 @@ call_NSAppleEventDescriptor_initWithDescriptorType_bytes_length_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			objc_result = ((id(*)(id,SEL,char*,int))
 				(PyObjCIMP_GetIMP(method)))(
@@ -89,10 +89,10 @@ call_NSAppleEventDescriptor_initWithDescriptorType_bytes_length_(
 		if (self != result) {
 			PyObjCObject_ClearObject(self);
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	return result;
 }
@@ -119,7 +119,7 @@ call_NSAppleEventDescriptor_descriptorWithDescriptorType_bytes_length_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			objc_result = ((id(*)(id,SEL,char*,int))
 				(PyObjCIMP_GetIMP(method)))(
@@ -137,18 +137,19 @@ call_NSAppleEventDescriptor_descriptorWithDescriptorType_bytes_length_(
 		}
 		result = PyObjC_IdToPython(objc_result);
 
-		/* XXX Ronald: If you try to use the result of 
-		 * PyObjCObject_GetObject(self) after the call to objc_msgSend 
-		 * it will crash with large enough values of len (>=32). 
-		 * Appearently the original self is recycled during the init.
-		 */
-		if (self != result) {
-			PyObjCObject_ClearObject(self);
-		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
+
+	/* XXX Ronald: If you try to use the result of 
+	 * PyObjCObject_GetObject(self) after the call to objc_msgSend 
+	 * it will crash with large enough values of len (>=32). 
+	 * Appearently the original self is recycled during the init.
+	 */
+	if (self != result) {
+		PyObjCObject_ClearObject(self);
+	}
 
 	return result;
 }
@@ -171,7 +172,7 @@ call_NSAppleEventDescriptor_initWithAEDescNoCopy_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			res = ((id(*)(id,SEL,AEDesc*))
 				(PyObjCIMP_GetIMP(method)))(
@@ -186,10 +187,10 @@ call_NSAppleEventDescriptor_initWithAEDescNoCopy_(
 			res = (id)objc_msgSendSuper(&super,
 			    @selector(initWithAEDescNoCopy:), theEvent);
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (res == NULL && PyErr_Occurred()) {
 		return NULL;
@@ -212,7 +213,7 @@ call_NSAppleEventDescriptor_aeDesc(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
 			res = ((AppleEvent*(*)(id,SEL))
 				(PyObjCIMP_GetIMP(method)))(
@@ -226,10 +227,10 @@ call_NSAppleEventDescriptor_aeDesc(
 			res = (AppleEvent*)objc_msgSendSuper(&super,
 			    @selector(aeDesc));
 		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (res == NULL && PyErr_Occurred()) {
 		return NULL;

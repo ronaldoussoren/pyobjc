@@ -23,7 +23,7 @@ call_NSMovie_QTMovie(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -31,16 +31,19 @@ call_NSMovie_QTMovie(
 
 		movie = objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method));
-		if (movie == NULL) {
-			result = Py_None;
-			Py_INCREF(result);
-		} else {
-			result = MovieObj_New((Movie)movie);
-		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+		movie = NULL;
+	PyObjC_ENDHANDLER
+
+	if (movie == NULL) {
+		if (PyErr_Occurred()) return NULL;
+		result = Py_None;
+		Py_INCREF(result);
+	} else {
+		result = MovieObj_New((Movie)movie);
+	}
 
 	return result;
 }
@@ -102,18 +105,22 @@ call_NSMovie_initWithMovie_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
 		objc_result = objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method), movie);
-		result = PyObjC_IdToPython(objc_result);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
+		objc_result = nil;
 		result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
+	
+	if (objc_result == nil && PyErr_Occurred()) return NULL;
+
+	result = PyObjC_IdToPython(objc_result);
 
 	return result;
 }

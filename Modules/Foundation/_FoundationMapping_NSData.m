@@ -47,7 +47,7 @@ call_NSData_dataWithBytes_length_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuperCls(&super, 
 			PyObjCSelector_GetClass(method), 
 			PyObjCClass_GetClass(self));
@@ -55,11 +55,15 @@ call_NSData_dataWithBytes_length_(
 		objc_result = objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method),
 				bytes, len);
-		result = PyObjC_IdToPython(objc_result);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+		objc_result = nil;
+	PyObjC_ENDHANDLER
+	
+	if (objc_result == nil && PyErr_Occurred()) return NULL;
+
+	result = PyObjC_IdToPython(objc_result);
 
 	return result;
 }
@@ -138,7 +142,7 @@ static PyObject* call_NSData_initWithBytes_length_(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -148,18 +152,19 @@ static PyObject* call_NSData_initWithBytes_length_(
 				bytes, len);
 		result = PyObjC_IdToPython(objc_result);
 
-		/* XXX Ronald: If you try to use the result of 
-		 * PyObjCObject_GetObject(self) after the call to objc_msgSend 
-		 * it will crash with large enough values of len (>=32). 
-		 * Appearently the original self is recycled during the init.
-		 */
-		if (self != result) {
-			PyObjCObject_ClearObject(self);
-		}
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
+
+	/* XXX Ronald: If you try to use the result of 
+	 * PyObjCObject_GetObject(self) after the call to objc_msgSend 
+	 * it will crash with large enough values of len (>=32). 
+	 * Appearently the original self is recycled during the init.
+	 */
+	if (self != result) {
+		PyObjCObject_ClearObject(self);
+	}
 
 	return result;
 }
@@ -230,7 +235,7 @@ static PyObject* call_NSData_bytes(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -239,12 +244,16 @@ static PyObject* call_NSData_bytes(
 				PyObjCSelector_GetSelector(method));
 		bytes_len = (unsigned) objc_msgSendSuper(&super, @selector(length));
 
-		result = PyBuffer_FromMemory((void*)bytes, bytes_len);
 
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+		bytes = NULL;
+	PyObjC_ENDHANDLER
+
+	if (bytes == NULL && PyErr_Occurred()) return NULL;
+
+	result = PyBuffer_FromMemory((void*)bytes, bytes_len);
 
 	return result;
 }
@@ -328,7 +337,7 @@ call_NSMutableData_mutableBytes(
 		return NULL;
 	}
 
-	NS_DURING
+	PyObjC_DURING
 		PyObjC_InitSuper(&super,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
@@ -337,11 +346,15 @@ call_NSMutableData_mutableBytes(
 				PyObjCSelector_GetSelector(method));
 		bytes_len = (unsigned) objc_msgSendSuper(&super, @selector(length));
 
-		result = PyBuffer_FromReadWriteMemory((void*)bytes, bytes_len);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		result = NULL;
-	NS_ENDHANDLER
+		bytes = NULL;
+	PyObjC_ENDHANDLER
+
+	if (bytes == NULL && PyErr_Occurred()) return NULL;
+
+	result = PyBuffer_FromReadWriteMemory((void*)bytes, bytes_len);
 
 	return result;
 }
