@@ -9,7 +9,7 @@
  */
 @interface OC_PythonDictionaryEnumerator  : NSEnumerator
 {
-        PyObject* value;
+	PyObject* value;
 	int       cur;
 	int       len;
 }
@@ -36,10 +36,12 @@
 
 -initWithPythonObject:(PyObject*)v;
 {
+	PyGILState_STATE state = PyGILState_Ensure();
 	value = PySequence_Fast(v, 
 		"pyObject of OC_PythonDictionaryEnumerator must be a sequence");
 	cur   = 0;
 	len = PySequence_Fast_GET_SIZE(value);
+	PyGILState_Release(state);
 	return self;
 }
 

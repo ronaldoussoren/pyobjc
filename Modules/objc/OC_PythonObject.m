@@ -48,10 +48,13 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 
 - initWithObject:(PyObject *) obj
 {
+	PyGILState_STATE state = PyGILState_Ensure();
+
 	Py_XINCREF(obj);
 	Py_XDECREF(pyObject);
 	pyObject = obj;
 
+	PyGILState_Release(state);
 	return self;
 }
 
@@ -95,8 +98,8 @@ extern NSString* NSUnknownKeyException; /* Radar #3336042 */
 - (void) doesNotRecognizeSelector:(SEL) aSelector
 {
 	[NSException raise:NSInvalidArgumentException
-		     format:@"%@ does not recognize -%s",
-		     	self, PyObjCRT_SELName(aSelector)];
+				format:@"%@ does not recognize -%s",
+				self, PyObjCRT_SELName(aSelector)];
 }
 
 
@@ -139,6 +142,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	unsigned int argcount;
 	PyObject*    pymethod;
 	const char*  p;
+	PyGILState_STATE state;
 
 	if (!aSelector) {
 		[NSException raise:NSInvalidArgumentException
@@ -155,29 +159,29 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	}
   
 
+	state = PyGILState_Ensure();
 	pymethod = PyObject_GetAttrString(obj, 
 			PyObjC_SELToPythonName(
 				aSelector, pymeth_name, sizeof(pymeth_name)));
+	PyGILState_Release(state);
 	return check_argcount(pymethod, argcount);
 }
 
 
 - (BOOL) respondsToSelector:(SEL) aSelector
 {
-	PyGILState_STATE state;
 	PyObject *m;
 
 	if ([super respondsToSelector:aSelector]) {
 		return YES;
 	} 
     
-	state = PyGILState_Ensure();
 	m = get_method_for_selector(pyObject, aSelector);
 
 	if (m) {
-		PyGILState_Release(state);
-        	return YES;
+		return YES;
 	} else {
+		PyGILState_STATE state = PyGILState_Ensure();
 		PyErr_Clear();
 		PyGILState_Release(state);
 		return NO;
