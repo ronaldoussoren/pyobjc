@@ -37,8 +37,9 @@ class TestNSDecimal (unittest.TestCase):
         self.assertEquals(str(o), "-1234")
 
         o = NSDecimal(1L << 64 - 1)
-
-        self.assertRaises(TypeError, NSDecimal, 1.2)
+        
+        # This is wrong, explict conversion should be allowed!
+        #self.assertRaises(TypeError, NSDecimal, 1.2)
         self.assertRaises(OverflowError, NSDecimal, 1L << 128)
         self.assertRaises(OverflowError, NSDecimal, -1L << 128)
 
@@ -84,6 +85,10 @@ class TestNSDecimal (unittest.TestCase):
 
         self.assertRaises(TypeError, int, o)
         self.assertRaises(TypeError, float, o)
+
+    def testCreateFromFloat(self):
+        o = NSDecimal(1.1)
+        self.assertEquals(o.as_float(), 1.1)
 
 class TestNSDecimalNumber (unittest.TestCase):
     def testCreation1(self):
@@ -347,6 +352,9 @@ class NSDecimalNumberOperators (unittest.TestCase):
 
         self.assertRaises(TypeError, operator.add, o, 1.2)
         self.assertRaises(TypeError, operator.add, 1.2, o)
+
+        o = NSDecimalNumber.zero()
+        self.assertRaises(TypeError, operator.add, o, 1.2)
 
     def testSubtraction(self):
         r = NSDecimal()
