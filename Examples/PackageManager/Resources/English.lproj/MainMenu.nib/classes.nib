@@ -1,0 +1,28 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {addToFavorites = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                changeFavoritesTitle = id; 
+                changeFavoritesUrl = id; 
+                openStandardDatabase = id; 
+                openURL = id; 
+            }; 
+            CLASS = PackageManager; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                favoritesPanel = id; 
+                favoritesTable = id; 
+                favoritesTitle = id; 
+                favoritesURL = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

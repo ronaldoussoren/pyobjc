@@ -4,6 +4,14 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 1.1b2 (2004-?????)
+--------------------------
+
+- Add support for WebObjects 4.5 (a one-line patch!)
+
+- Add a PackageManager clone to the Examples directory
+
+
 Version 1.1b1 (2004-02-20)
 ---------------------------
 
