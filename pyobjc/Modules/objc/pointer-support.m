@@ -190,7 +190,6 @@ int
 PyObjCPointerWrapper_Init(void)
 {
 	int r = 0;
-	PyObject* v;
 
 #ifdef MACOSX
 	r = PyObjCPointerWrapper_Register(@encode(CFURLRef), 
