@@ -598,6 +598,7 @@ PyObject* ObjCClass_New(Class objc_class)
 	}
 
 	bases = PyTuple_New(1);
+	PyTuple_SET_ITEM(bases, 0, NULL);
 
 	if (objc_class->super_class == NULL) {
 		PyTuple_SetItem(bases, 0, (PyObject*)&ObjCObject_Type);
@@ -607,9 +608,9 @@ PyObject* ObjCClass_New(Class objc_class)
 			ObjCClass_New(objc_class->super_class));
 	} 
 	args = PyTuple_New(3);
-	PyTuple_SetItem(args, 0, PyString_FromString(objc_class->name));
-	PyTuple_SetItem(args, 1, bases);
-	PyTuple_SetItem(args, 2, dict);
+	PyTuple_SET_ITEM(args, 0, PyString_FromString(objc_class->name));
+	PyTuple_SET_ITEM(args, 1, bases);
+	PyTuple_SET_ITEM(args, 2, dict);
 
 	result = PyType_Type.tp_new(&ObjCClass_Type, args, NULL);
 	if (result == NULL) {
