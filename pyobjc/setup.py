@@ -66,6 +66,7 @@ sourceFiles = [
 	"Modules/objc/OC_PythonDictionary.m",
 	"Modules/objc/register.m",
 	"Modules/objc/pyobjc-api.m",
+	"Modules/objc/alloc_hack.m",
 	"Modules/objc/module.m",
 ]
 
