@@ -1,0 +1,169 @@
+# -*- indented-text -*-
+#
+# This file is part of the PyObjC package.
+#
+
+WHAT'S NEW:
+
+Version 2000-11-14 (November 14, 2000):
+
+- GNU_RUNTIME is likely completely broken
+
+- Compiles on Mac OS X Server (python 2.0)
+
+- Compiles on Mac OS X (python 2.0)
+
+- Works as either a dynamically loadable module or statically built
+  into a python executable
+
+- Requires a modified makesetup to work [patches have been sent to
+  SourceForge.net's Python project].
+
+- Supports NSAutoReleasepool.
+
+- Some pre-OSX stuff removed;  references to old APIs, etc... (but
+  nowhere near clean)
+
+Version 0.55, 18 August 1998:
+
+- Here again, supporting GNU_RUNTIME and GNUstep Base! On my new Linux
+  box I can finally test the module against them: I installed the
+  latest snapshot of gstep-core, that contains the base library
+  too. Given a sane GNUstep env (GNUSTEP_XXX env vars), you should be
+  able to build a static ObjC-ized interpreter by:
+    o Adjusting Setup, commenting out NeXT definition and enabling GNU
+      ones;
+    o make -f Makefile.pre.in boot
+    o make static
+
+Version 0.54, 24 March 1998:
+
+- OC_Pasteboard.[hm], OC_Stream.[mh] and ObjCStreams.m are definitively gone.
+- OC_PythonObject derives from NSProxy.
+
+Version 0.53, 4 January 1998:
+
+- Tons of changes, retargeting the core functionality around the
+  OpenSTEP API. This release basically matches the previous one
+  in terms of functionalities, but is should be closer to GNUstep.
+- OC_Streams and OC_Pasteboard aren't supported, I've not yet decided
+  if they are needed anymore.
+- Updated LittleButtonedWindow demo.
+
+Version 0.47, 29 October 1996:
+
+- Misc/Makefile.pre.in automatically sets TARGET to `pyobjc'.
+- ObjC.m splitted to ObjCObject.m ObjCMethod.m ObjCPointer.m
+  ObjCRuntime.m.
+- New (almost invisible) types: ObjCSequenceObject and
+  ObjCMappingObject; this to implement sequence and mapping syntax
+  (several mapping methods have stub implementation).
+- OC_Pasteboard class is gone. Its functionalities are now in a
+  category of Pasteboard/NSPasteboard.
+- Better methods doc.
+- PyArg_ParseTuple format strings contain arguments names.
+- OC_Streams are mapped to ObjCStreams by pythonify_c_value and its
+  counterpart.
+
+Version 0.46, 18 October 1996:
+
+- OC_Stream is now a subclass of NSData under Foundation.
+- New Objective-C class: OC_Pasteboard. Use it instead of Pasteboard/
+  NSPasteboard. 
+- New Objective-C class: OC_PythonBundle. Use it instead of NXBundle/NSBundle.
+  The ShellText demo has been upgraded to use it, and now you can run it
+  directly from the WorkSpace.
+- OC_Python.[hm] aren't in the package anymore.
+- Setup.in directives changed again, due to OC_Python.m dropping.
+
+Version 0.45, 14 October 1996:
+
+- Double syntax: to make it easier for us to test and choose the
+  better candidate, the only one that will be present in the final 1.0
+  release. Keeping both would result in a speed penality.
+- Revisited streams, in particular GNUstep support.
+
+Version 0.44, 9 October 1996:
+
+- Integers are now accepted too where floats or doubles are expected.
+- New method: ObjC.make_pointer (1) returns an ObjCPointer containing
+  ((void *) 1).
+
+Version 0.43, 7 October 1996:
+
+- Completed ObjCStream implementation. There is now a new module, ObjCStreams
+  which is automatically loaded by ObjC. You can access it as ObjC.streams.
+- Manual splitted in three parts: libPyObjC.tex with the chapter intro,
+  libObjC.tex describing the main module, libObjCStreams.tex explains the
+  stream facilities.
+
+Version 0.42, 4 October 1996:
+
+- You can pass initialization arguments when using the Class() syntax. You
+  select the right initializer selector with the `init' keyword parameter.
+- First cut on ObjCStream objects. Thanx to Bill Bumgarner for motivations.
+- New demo ShellText, to test above points.
+
+Version 0.41, 2 October 1996:
+
+- Revised error messages: for arguments type mismatch they show the ObjC type
+  expected.
+- When a method returns a pointer to something, it gets translated as an
+  ObjCPointer object, not the pythonified pointed value. When a method
+  expects a pointer argument, it accepts such an object as well.
+- New demo: Fred. To halt it, suspend the Python process with ^Z then kill
+  it ;-).
+- Setup.in directives changed. See the new file Modules/Setup.PyObjC.in
+- Distribuited as a standalone package. Special thanks to Bill Bumgarner.
+
+Version 0.4, 27 September 1996:
+
+- Now handles methods returning doubles or floats.
+- ObjCRuntime responds to .sel_is_mapped().
+
+Version 0.31, 26 September 1996:
+
+- It's now possible to use a different strategy to map ObjC method names to
+  Python ones. Sooner or later we should decide the one to go, and drop the
+  other. For details, see comments on PYTHONIFY_WITH_DOUBLE_UNDERSCORE in
+  objc_support.h.
+- Manual section.
+- ObjC.runtime.__dict__ added.
+- ObjC.runtime.kind added.
+
+Version 0.3, 20 September 1996:
+
+- No user visible changes, just a little effort towards GNU_RUNTIME support. 
+
+Version 0.2, 16 September 1996:
+
+- Accepts a struct.pack() string for pointer arguments, but...
+- ... New methods on ObjCMethod: .pack_argument and .unpack_argument:
+  these should be used whenever an ObjC method expects a passed-by-reference
+  argument; for example, on NeXTSTEP [View getFrame:] expects a pointer
+  to an NXRect structure, that it will fill with the current frame of the
+  view: in this case you should use something similar to
+        framep = aView.getFrame__.pack_argument (0)
+        aView.getFrame__ (framep)
+        frame = aView.getFrame__.unpack_argument (0, framep)
+
+Version 0.1, 13 September 1996:
+
+- Correctly handle pointer arguments.
+- New syntax to get a class: ObjC.runtime.NameOfClass
+- New syntax aliasing .new(): SomeClass()
+- New Demo: LittleButtonedWindow, that tests points above.
+- What follow is the recipe to get PyObjC dinamically loadable on NeXTSTEP:
+        * apply the patch in Misc/INSTALL.PyObjC to Python/importdl.c
+        * modify Python/Makefile adding the switch ``-ObjC'' to the importdl.o
+          build rule:
+          importdl.o:   importdl.c
+                $(CC) -ObjC -c $(CFLAGS) -I$(DLINCLDIR) $(srcdir)/importdl.c
+        * modify Modules/Setup moving the PyObjC entry suggested above AFTER
+          ``*shared*'', and remove ``-u libNeXT_s -lNeXT_s'' from it.
+        * run ``make'': this will update various files, in particular
+          Modules/Makefile.
+        * modify Modules/Makefile adding ``-u libNeXT_s -lNeXT_s'' to SYSLIBS:
+          SYSLIBS=      $(LIBM) $(LIBC) -u libNeXT_s -lNeXT_s
+        * run ``make'' again
+
