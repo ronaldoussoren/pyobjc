@@ -1,3 +1,9 @@
+2003-02-24  Bill Bumgarner  <bbum@codefab.com>
+    * Moved code generation scripts to Scripts/CodeGenerators.  Added a very
+      basic README to CodeGenerators.
+    * setup.py: Set USE_ADJUST_REFCOUNTS to 0 because that has been the
+      behavior in the bridge for quite some time.
+
 2003-02-15  Bill Bumgarner  <bbum@codefab.com>
     * Modules/objc/objc_support.m: Invocation now uses alloc/init instead of
       +invocationWith... class method.  This prevents spurious "no pool, just
