@@ -72,8 +72,8 @@ int PyObjCRT_SetupClass(
 
 	cls->protocols = metaCls->protocols = NULL;
 
-	__objc_install_premature_dtable (cls);
         __objc_install_premature_dtable (metaCls);
+	__objc_install_premature_dtable (cls);
 
 	return 0;
 }
@@ -98,7 +98,7 @@ void PyObjCRT_ClearClass(Class cls)
 		while (cur != NULL) {
 			next = cur->method_next;
 
-			free(cur);
+			objc_free(cur);
 			cur = next;
 		}
 		cls->methods = NULL;
@@ -114,7 +114,7 @@ struct objc_method_list *PyObjCRT_AllocMethodList(int numMethods)
 {
         struct objc_method_list *mlist;
 
-        mlist = malloc(sizeof(struct objc_method_list)
+        mlist = objc_malloc(sizeof(struct objc_method_list)
                  + ((numMethods+1) * sizeof(struct objc_method)));
 
         if (mlist == NULL) {
