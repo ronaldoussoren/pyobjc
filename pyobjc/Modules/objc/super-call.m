@@ -258,14 +258,14 @@ find_signature(char* signature)
 
 	if (signature_registry == NULL) {
 		ObjCErr_Set(ObjCExc_error,
-			"No forwarder for signature %s\n", signature);
+			"[1]No forwarder for signature %s\n", signature);
 		return NULL;
 	}
 
 	o = PyDict_GetItemString(signature_registry, signature_buf);
 	if (o == NULL) {
 		ObjCErr_Set(ObjCExc_error,
-			"No forwarder for signature %s\n", signature);
+			"[2]No forwarder for signature %s\n", signature);
 		return NULL;
 	}
 
@@ -415,4 +415,5 @@ void ObjC_FindCaller(Class class, SEL sel, ObjC_CallFunc_t* call_self, ObjC_Call
 	/* TODO: Inline these */
 	*call_self = ObjC_FindSelfCaller(class, sel);
 	*call_super = ObjC_FindSupercaller(class, sel);
+	if (*call_self == NULL || *call_super == NULL) PyErr_Clear();
 }

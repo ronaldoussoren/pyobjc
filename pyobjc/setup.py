@@ -28,10 +28,11 @@ if sys.version_info[0] < req_ver[0] or (
     sys.stderr.write('PyObjC: Need at least Python %s\n'%('.'.join(req_ver)))
     sys.exit(1)
 
-# TODO: Autodetect libFFI, including LIBFFI_BASE
-# ... But first implement FFI support!
 if USE_FFI:
-    LIBFFI_BASE='libffi'
+    if os.environ.has_key('LIBFFI_BASE'):
+        LIBFFI_BASE=os.environ['LIBFFI_BASE']
+    else:
+        LIBFFI_BASE='libffi'
     LIBFFI_CFLAGS=[ 
         "-DOC_WITH_LIBFFI", 
         "-I%s/include"%LIBFFI_BASE, 

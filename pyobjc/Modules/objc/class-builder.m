@@ -389,6 +389,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	for (i = 0; i < key_count; i++) {
 		key = PyList_GetItem(key_list, i);
 		if (PyErr_Occurred()) {
+			PyErr_Print();
 			PyErr_Clear();
 			ObjCErr_Set(ObjCExc_internal_error,
 				"Cannot fetch key in keylist");
