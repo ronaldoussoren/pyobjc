@@ -197,7 +197,7 @@
 				<integer>13</integer>
 			</dict>
 		</dict>
-		<string>{{789, 536}, {701, 408}}</string>
+		<string>{{72, 514}, {701, 408}}</string>
 		<string>PasswdViewer</string>
 		<string>NSWindow</string>
 		<dict>
