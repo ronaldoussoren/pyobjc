@@ -246,8 +246,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			return NULL;
 		} else if (PyObjCInformalProtocol_Check(v)) {
 			PyList_Append(protocols, v);
-		} else if (PyObjCObject_Check(v)) {
-			// XXX: Check to see if it is *actually* a Protocol?
+		} else if (PyObjCFormalProtocol_Check(v)) {
 			PyList_Append(protocols, v);
 		} else {
 			PyList_Append(real_bases, v);
@@ -285,17 +284,22 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			continue;
 		}
 
-		// XXX: Check goes here for formal protocols
-		if (!PyObjCInformalProtocol_Check(p)) {
-			continue;
-		}
-
-		if (!PyObjCInformalProtocol_CheckClass(
+		if (PyObjCInformalProtocol_Check(p)) {
+			if (!PyObjCInformalProtocol_CheckClass(
 					p, name, py_super_class, dict)) {
-			Py_DECREF(real_bases);
-			Py_DECREF(protocols);
-			PyObjCClass_UnbuildClass(objc_class);
-			return NULL;
+				Py_DECREF(real_bases);
+				Py_DECREF(protocols);
+				PyObjCClass_UnbuildClass(objc_class);
+				return NULL;
+			}
+		} else if (PyObjCFormalProtocol_Check(p)) {
+			if (!PyObjCFormalProtocol_CheckClass(
+					p, name, py_super_class, dict)) {
+				Py_DECREF(real_bases);
+				Py_DECREF(protocols);
+				PyObjCClass_UnbuildClass(objc_class);
+				return NULL;
+			}
 		}
 	}
 

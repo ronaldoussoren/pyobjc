@@ -214,7 +214,7 @@ PyTypeObject PyObjCInformalProtocol_Type = {
  * exception.
  */
 PyObject* 
-PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
+PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector, int isClassMethod)
 {
 	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;	
 	int i, len;
@@ -241,7 +241,15 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
 		}
 
 		if (PyObjCSelector_Check(cur)) {
-			if (PyObjCSelector_GetSelector(cur) == selector) {
+			int class_sel = (
+				PyObjCSelector_GetFlags(cur) 
+				& PyObjCSelector_kCLASS_METHOD) != 0;
+			if ((isClassMethod && !class_sel) 
+					|| (!isClassMethod && class_sel)) {
+				continue;
+			}
+
+			if (PyObjCRT_SameSEL(PyObjCSelector_GetSelector(cur), selector)) {
 				Py_DECREF(seq);
 				return cur;
 			}
@@ -251,7 +259,8 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
 	return NULL;
 }
 
-static PyObject*
+/* XXX: Make public */
+PyObject*
 findSelInDict(PyObject* clsdict, SEL selector)
 {
 	PyObject* values;
@@ -284,7 +293,7 @@ findSelInDict(PyObject* clsdict, SEL selector)
 	return NULL;
 }
 
-static int 
+int 
 signaturesEqual(char* sig1, char* sig2)
 {
 	char buf1[1024];

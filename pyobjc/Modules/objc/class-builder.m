@@ -403,26 +403,12 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			goto error_cleanup;
 		}
 		for (i=0; i < protocol_count; i++) {
-			Protocol *protocol;
 			PyObject *wrapped_protocol;
 			wrapped_protocol = PyList_GET_ITEM(protocols, i);
-			if (PyObjCInformalProtocol_Check(wrapped_protocol)) {
+			if (!PyObjCFormalProtocol_Check(wrapped_protocol)) {
 				continue;
 			}
-			if (!PyObjCObject_Check(wrapped_protocol)) {
-				PyErr_Format(PyExc_TypeError,
-					"protocol must be a 'Protocol', not an '%s'",
-					wrapped_protocol->ob_type->tp_name);
-				goto error_cleanup;
-			}
-			protocol = (Protocol *)PyObjCObject_GetObject(wrapped_protocol);
-			if (!PyObjCClass_IsSubClass(GETISA((id)protocol), [Protocol class])) {
-				PyErr_Format(PyExc_TypeError,
-					"protocol must be a 'Protocol', not an '%s'",
-					wrapped_protocol->ob_type->tp_name);
-				goto error_cleanup;
-			}
-			protocol_list->list[cur_protocol] = protocol;
+			protocol_list->list[cur_protocol] = PyObjCFormalProtocol_GetProtocol(wrapped_protocol);
 			cur_protocol++;
 		}
 		protocol_list->list[cur_protocol] = nil;

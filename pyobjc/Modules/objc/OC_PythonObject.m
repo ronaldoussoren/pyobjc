@@ -211,6 +211,10 @@ end:
 			instance = PyObjCObject_GetObject(obj);
 			PyObjC_GIL_RETURN(instance);
 		}
+		if(PyObjCFormalProtocol_Check(obj)) {
+			instance = PyObjCFormalProtocol_GetProtocol(obj);
+			PyObjC_GIL_RETURN(instance);
+		}
 		if (OC_PythonObject_DepythonifyTable != NULL &&
 			PyList_Check(OC_PythonObject_DepythonifyTable)) {
 			int i;

@@ -89,7 +89,7 @@ class ObjCRoundTrip (unittest.TestCase):
         container.setStoredObjectToAProtocol()
         v = container.storedObject()
         self.assert_(container.isSameObjectAsStored_(v), repr(v))
-        self.assert_(isinstance(v, objc.lookUpClass("Protocol")))
+        self.assert_(isinstance(v, objc.formal_protocol))
 
     def testObject(self):
         container = OC_TestIdentity.alloc().init()

@@ -19,7 +19,7 @@ def protocolNamed(name):
         pass
     for cls in _objc.getClassList():
         for p in _objc.protocolsForClass(cls):
-            pname = p.name()
+            pname = p.__name__
             PROTOCOL_CACHE.setdefault(pname, p)
             if pname == name:
                 return p

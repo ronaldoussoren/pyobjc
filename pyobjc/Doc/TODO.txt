@@ -227,15 +227,6 @@ PyObjCSelector objects and PyObjCObject objects are created on
 a regular basis, we should check if using freelists would speed this up. See
 also `Performance tuning/testing`.
 
-
-Formal Protocols, Distributed Objects
-.....................................
-
-``DO`` seems to use formal protocols, we don't fully support those. There is 
-an equivalent to ``@protocol(Foo)``, and classes can declare that they
-implement formal protocols, but it is not yet possible to define
-a new formal protocol in Python.
-
 Links to Apple documentation
 ............................
 

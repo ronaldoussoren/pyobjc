@@ -22,6 +22,7 @@
 #import <Foundation/NSString.h>
 
 #include <objc/objc-runtime.h>
+#include <objc/Protocol.h>
 
 static inline int 
 PyObjCRT_SameSEL(SEL a, SEL b)

@@ -9,6 +9,7 @@ Install.txt,user,0
 NEWS.txt,user,1
 intro.txt,user,5
 tutorial.txt,user,12
+protocols.txt,user,13
 extending_objc_with_python.txt,user,13
 tutorial_reading.txt,user,14
 PyObjCTools.txt,user,16

@@ -46,6 +46,7 @@
 #include "class-builder.h" 
 #include "ObjCPointer.h"
 #include "informal-protocol.h"
+#include "formal-protocol.h"
 #include "alloc_hack.h"
 #include "unicode-object.h"
 #include "class-descriptor.h"
