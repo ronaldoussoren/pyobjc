@@ -618,7 +618,7 @@ error:
  * signature from Objective-C to Python.
  */
 IMP
-ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
+PyObjCFFI_MakeIMPForSignature(char* signature, PyObject* callable)
 {
 	_method_stub_userdata* stubUserdata;
 	PyObjCMethodSignature* methinfo;
@@ -658,7 +658,7 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 }
 
 IMP
-ObjC_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector) 
+PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector) 
 {
 	if (ObjCNativeSelector_Check(aSelector)) {
 		ObjCNativeSelector *nativeSelector = 
@@ -673,13 +673,13 @@ ObjC_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector)
 		return aMeth->method_imp;
 	} else {
 		ObjCPythonSelector *pythonSelector = (ObjCPythonSelector *) aSelector;
-		return ObjC_MakeIMPForSignature(pythonSelector->sel_signature, pythonSelector->callable);
+		return PyObjCFFI_MakeIMPForSignature(pythonSelector->sel_signature, pythonSelector->callable);
 	}
 }
 
 
 PyObject *
-ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
+PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 {
 	size_t            argbuf_len = 0;
 	size_t            argbuf_cur = 0;

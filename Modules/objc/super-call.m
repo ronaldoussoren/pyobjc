@@ -50,7 +50,8 @@ init_registry(void)
 /*
  * Add a custom mapping for a method in a class
  */
-int PyObjC_RegisterMethodMapping(Class class, SEL sel, 
+int 
+PyObjC_RegisterMethodMapping(Class class, SEL sel, 
 	PyObjC_CallFunc call_to_objc,
 	PyObjCFFI_ClosureFunc call_to_python)
 {
@@ -70,7 +71,7 @@ int PyObjC_RegisterMethodMapping(Class class, SEL sel,
 	}
 
 	if (!call_to_objc) {
-		call_to_objc = ObjC_FFICaller;
+		call_to_objc = PyObjCFFI_Caller;
 	}
 
 	if (class == nil) {
@@ -237,7 +238,7 @@ PyObjC_FindCallFunc(Class class, SEL sel)
  */
 	struct registry* special;
 
-	if (special_registry == NULL) return ObjC_FFICaller;
+	if (special_registry == NULL) return PyObjCFFI_Caller;
 
 	special = search_special(class, sel);
 	if (special) {
@@ -246,7 +247,7 @@ PyObjC_FindCallFunc(Class class, SEL sel)
 		PyErr_Clear();
 	}
 
-	return ObjC_FFICaller;
+	return PyObjCFFI_Caller;
 }
 
 static struct registry*
@@ -326,7 +327,7 @@ PyObjC_MakeIMP(Class class, PyObject* sel, PyObject* imp)
 		/* XXX: To be replaced */
 		/* 20040713: But why??? */
 		PyErr_Clear();
-		retval = ObjC_MakeIMPForSignature(
+		retval = PyObjCFFI_MakeIMPForSignature(
 				PyObjCSelector_Signature(sel), imp);
 		return retval;
 	}

@@ -40,7 +40,8 @@ struct wrapper {
 static struct wrapper* items = 0;
 static int item_count = 0;
 
-int PyObjCPointerWrapper_Register(
+int 
+PyObjCPointerWrapper_Register(
 	const char* signature,
 	PyObjCPointerWrapper_ToPythonFunc pythonify,
 	PyObjCPointerWrapper_FromPythonFunc depythonify
@@ -59,7 +60,8 @@ int PyObjCPointerWrapper_Register(
 	} else {
 		struct wrapper* tmp;
 
-		tmp = PyMem_Realloc(items, sizeof(struct wrapper) *  (item_count+1));
+		tmp = PyMem_Realloc(
+			items, sizeof(struct wrapper) *  (item_count+1));
 		if (tmp == NULL) {
 			PyErr_NoMemory();
 			return -1;
@@ -111,7 +113,8 @@ FindWrapper(const char* signature)
 }
 
 
-PyObject* PyObjCPointerWrapper_ToPython(const char* type, void* datum)
+PyObject* 
+PyObjCPointerWrapper_ToPython(const char* type, void* datum)
 {
 	struct wrapper* item;
 
@@ -124,7 +127,8 @@ PyObject* PyObjCPointerWrapper_ToPython(const char* type, void* datum)
 }
 
 
-int PyObjCPointerWrapper_FromPython(
+int 
+PyObjCPointerWrapper_FromPython(
 	const char* type, PyObject* value, void* datum)
 {
 	struct wrapper* item;
@@ -254,7 +258,8 @@ PyTypeObject ZoneWrapper_Type = {
 
 
 /* This should do for now, although we should generate a new type for this */
-static PyObject* NSZone_New(void* zoneptr __attribute__((__unused__)))
+static PyObject* 
+NSZone_New(void* zoneptr __attribute__((__unused__)))
 {
 	ZoneWrapper* res;
 
@@ -267,7 +272,8 @@ static PyObject* NSZone_New(void* zoneptr __attribute__((__unused__)))
 	return (PyObject*)res;
 }
 
-static int NSZone_Convert(PyObject* zone, void* pZonePtr)
+static int 
+NSZone_Convert(PyObject* zone, void* pZonePtr)
 {
 	if (ZoneWrapper_Check(zone)) {
 		*(void**)pZonePtr = ((ZoneWrapper*)zone)->ptr;
@@ -309,7 +315,8 @@ py_to_CF(PyObject* obj, void* output)
 
 
 
-int PyObjCPointerWrapper_Init(void)
+int 
+PyObjCPointerWrapper_Init(void)
 {
 	int r = 0;
 

@@ -54,20 +54,6 @@ extern int depythonify_c_return_value (const char *type,
 					PyObject *arg,
 					void *datum);
 
-/* From pointer-support.m */
-
-typedef PyObject* (*PyObjCPointerWrapper_ToPythonFunc)(void*);
-typedef int (*PyObjCPointerWrapper_FromPythonFunc)(PyObject*, void*);
-
-int PyObjCPointerWrapper_Register(
-	const char*, PyObjCPointerWrapper_ToPythonFunc pythonify,
-	PyObjCPointerWrapper_FromPythonFunc depythonify);
-
-PyObject* PyObjCPointerWrapper_ToPython(const char*, void*);
-
-int PyObjCPointerWrapper_FromPython(const char*, PyObject*, void*);
-int PyObjCPointerWrapper_Init(void);
-
 extern int PyObjCRT_SizeOfReturnType(const char* type);
 extern int PyObjCRT_SizeOfType(const char *type);
 extern int PyObjCRT_AlignOfType(const char *type);

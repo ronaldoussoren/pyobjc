@@ -129,7 +129,7 @@ struct pyobjc_api objc_api = {
 	obj_is_uninitialized
 };
 
-int ObjCAPI_Register(PyObject* module_dict)
+int PyObjCAPI_Register(PyObject* module_dict)
 {
 	PyObject* API = PyCObject_FromVoidPtr(&objc_api, NULL);
 
