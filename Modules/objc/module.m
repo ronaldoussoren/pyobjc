@@ -930,7 +930,7 @@ protocolsForClass(PyObject* self __attribute__((__unused__)),
 				return NULL;
 			}
 			PyList_Append(protocols, protocol);
-            Py_DECREF(protocol);
+			Py_DECREF(protocol);
 		}
 		protocol_list = protocol_list->next;
 	}
