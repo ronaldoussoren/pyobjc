@@ -1,3 +1,8 @@
+2003-01-14  Bill Bumgarner  <bbum@codefab.com>
+    * Modules/Cocoa/_AppKit.m (objc_NSApplicationMain): Evil hack to fix bug
+      in NSApplicationMain()'s lack of argument processing.  Evil Evil hack,
+      but it works.
+
 2003-01-13  Bill Bumgarner  <bbum@codefab.com>
     * Lib/objc/_convenience.py: Added support for NSEnumerator [for x in
       enum:] and cleaned up other convenience methods.
