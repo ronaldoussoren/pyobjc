@@ -24,6 +24,10 @@
 #import <Foundation/NSData.h> 
 #import <Foundation/NSValue.h> 
 
+#ifdef MACOSX
+#include <CoreFoundation/CFNumber.h>
+#endif
+
 
 /*
  * Category on NSObject to make sure that every object supports 
@@ -71,6 +75,18 @@
 	char        buf[objc_sizeof_type(typestr)];
 
 	[self getValue:buf];
+
+#ifdef MACOSX
+	/* NSNumber seems to be toll-free bridged to CFNumber,
+	 * this check allows us to return the proper python objects
+	 * for boolean True and False values.
+	 */
+	if (kCFBooleanTrue == (CFBooleanRef)self) {
+		return PyBool_FromLong(1);
+	} else if (kCFBooleanFalse == (CFBooleanRef)self) {
+		return PyBool_FromLong(0);
+	}
+#endif
 	return pythonify_c_value(typestr, buf);
 }
 

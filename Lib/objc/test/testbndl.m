@@ -82,6 +82,7 @@ struct complexStruct
 - (double)doubleFunc;
 - (char*)charpFunc;
 - (id)idFunc;
+- (NSPoint)nspointFunc;
 
 /* returns of complex values */
 - (struct dummy)dummyFunc;
@@ -390,6 +391,12 @@ static char* g_charps[] = {
 	case 2: return [NSMutableDictionary dictionary];
 	case 3: return NULL;
 	}
+}
+
+- (NSPoint)nspointFunc
+{
+	NSPoint p = { 1.0, 2.0 };
+	return p;
 }
 
 - (struct dummy)dummyFunc
@@ -821,6 +828,10 @@ static 	char buf[1024];
 -(float)callInstanceFloatFuncOf:(OC_TestClass1*)arg;
 -(double)callInstanceDoubleFuncOf:(OC_TestClass1*)arg;
 
+-(id)callInstanceIdFuncOf:(OC_TestClass1*)arg;
+-(struct dummy)callInstanceDummyFuncOf:(OC_TestClass1*)arg;
+-(NSPoint)callInstanceNSPointFuncOf:(OC_TestClass1*)arg;
+
 /* "NSInvocation" calls */
 -(long )invokeInstanceLongFuncOf:(OC_TestClass1*)arg;
 -(unsigned long)invokeInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg;
@@ -830,6 +841,10 @@ static 	char buf[1024];
 
 -(float)invokeInstanceFloatFuncOf:(OC_TestClass1*)arg;
 -(double)invokeInstanceDoubleFuncOf:(OC_TestClass1*)arg;
+
+-(id)invokeInstanceIdFuncOf:(OC_TestClass1*)arg;
+-(struct dummy)invokeInstanceDummyFuncOf:(OC_TestClass1*)arg;
+-(NSPoint)invokeInstanceNSPointFuncOf:(OC_TestClass1*)arg;
 
 @end
 
@@ -897,6 +912,23 @@ static 	char buf[1024];
 	return [arg doubleFunc];
 }
 
+-(id)callInstanceIdFuncOf:(OC_TestClass1*)arg
+{
+	return [arg idFunc];
+}
+
+-(struct dummy)callInstanceDummyFuncOf:(OC_TestClass1*)arg
+{
+	struct dummy x = [arg dummyFunc];
+	printf("%d, %d\n", x.f1, x.f2);
+	return x;
+}
+
+-(NSPoint)callInstanceNSPointFuncOf:(OC_TestClass1*)arg
+{
+	return [arg nspointFunc];
+}
+
 
 -(long long)invokeInstanceLongLongFuncOf:(OC_TestClass1*)arg
 {
@@ -940,6 +972,42 @@ static 	char buf[1024];
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, arg, @selector(doubleFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(id)invokeInstanceIdFuncOf:(OC_TestClass1*)arg
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(idFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(struct dummy)invokeInstanceDummyFuncOf:(OC_TestClass1*)arg
+{
+	struct dummy res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(dummyFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(NSPoint)invokeInstanceNSPointFuncOf:(OC_TestClass1*)arg
+{
+	NSPoint res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(nspointFunc))
 	
 	[arg forwardInvocation:inv];
 	[inv getReturnValue:&res];
