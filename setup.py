@@ -385,7 +385,6 @@ FoundationPackages, FoundationExtensions = \
           Extension("_Foundation",
                     [
                         "Modules/Foundation/_Foundation.m",
-                        "Modules/Foundation/NSAutoreleasePoolSupport.m"
                     ],
                     extra_compile_args=[
                         "-IModules/objc",

@@ -60,9 +60,24 @@ class TestMutable(unittest.TestCase):
         ocStr.appendString_(" world")
         self.assertEquals(pyStr, "hello")
 
-        pyStr.syncFromNSString()
+        import warnings
+        warnings.filterwarnings('ignore', category=DeprecationWarning)
+        try:
+            pyStr.syncFromNSString()
+        finally:
+            del warnings.filters[0]
 
         self.assertEquals(pyStr, "hello world")
+
+    def testDeprecation(self):
+        import warnings
+
+        o = NSMutableString.stringWithString_("hello")
+        warnings.filterwarnings('error', category=DeprecationWarning)
+        try:
+            self.assertRaises(DeprecationWarning, o.syncFromNSString)
+        finally:
+            del warnings.filters[0]
 
 class TestPickle(unittest.TestCase):
     """

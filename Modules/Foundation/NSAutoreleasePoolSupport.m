@@ -5,10 +5,6 @@
  * PyObjC couldn't be used to create autoreleasepools in the regular way,
  * that is no longer a problem.
  */
-#include <Python.h>
-
-#import <Foundation/Foundation.h>
-
 static NSString *_threadPoolIdentifier = @"PyObjC:  NSThread AutoreleasePool Identifier.";
 
 @interface NSAutoreleasePool(PyObjCPushPopSupport)
@@ -19,7 +15,6 @@ static NSString *_threadPoolIdentifier = @"PyObjC:  NSThread AutoreleasePool Ide
 {
 	NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
 	NSMutableArray *poolStack;
-
 
 	poolStack = [threadDictionary objectForKey: _threadPoolIdentifier];
 	if (!poolStack) {
@@ -37,7 +32,7 @@ static NSString *_threadPoolIdentifier = @"PyObjC:  NSThread AutoreleasePool Ide
 	PyErr_Warn(PyExc_DeprecationWarning, 
 		"NSAutoreleasePool.pyobjcPushPool() is deprecated: Use NSAutoreleasePool.alloc().init() instead");
 	if (PyErr_Occurred()) {
-		PyErr_Print();
+		PyObjCErr_ToObjC();
 	}
 
 	p = [[NSAutoreleasePool alloc] init];

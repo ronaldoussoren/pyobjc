@@ -268,6 +268,7 @@ if FOUNDATION_HDRS is not None:
                 'FOUNDATION_STATIC_INLINE', 
                 FOUNDATION_IGNORE_LIST)
 
+
         func_builder.INT_ALIASES.extend([
             'NSSearchPathDomainMask', 'NSCalculationError',
             'NSComparisonResult', 'NSInsertionPosition',
@@ -332,7 +333,14 @@ if FOUNDATION_HDRS is not None:
 
         funcs = func_builder.process_list(fd , file('build/codegen/Foundation.prototypes'))
         funcs2 = func_builder.process_list(fd , file('build/codegen/Foundation.prototype2'))
-        func_builder.gen_method_table_entries(fd, funcs + funcs2)
+
+        # These are macro's
+        funcs3 = func_builder.process_list(fd, [
+            'NSString* NSLocalizedString(NSString* key, NSString* comment);',
+            'NSString* NSLocalizedStringFromTable(NSString* key, NSString* tableName, NSString* comment);',
+            'NSString* NSLocalizedStringFromTableInBundle(NSString* key, NSString* tableName, NSString* comment, NSBundle* bunlde);',
+        ])
+        func_builder.gen_method_table_entries(fd, funcs + funcs2 + funcs3)
         fd = None
         for s in structs:
             del func_builder.SIMPLE_TYPES[s]
@@ -396,6 +404,8 @@ if APPKIT_HDRS is not None:
                 APPKIT_PREFIX, 
                 APPKIT_IGNORE_LIST)
 
+        func_builder.FUNC_MAP['NSShowAnimationEffect'] = BeginSheetMapper
+
         fd = dupfile('build/codegen/_App_Functions.inc', 'w')
         structs = ['NSAffineTransformStruct', 'NSRect', 'NSPoint']
         for s in structs:
@@ -452,7 +462,15 @@ if APPKIT_HDRS is not None:
 
         fd.write('typedef void* PYOBJC_VOIDPTR;\n')
         funcs = func_builder.process_list(fd, file('build/codegen/AppKit.prototypes'))
-        func_builder.gen_method_table_entries(fd, funcs)
+
+        funcs2 = func_builder.process_list(fd, [
+
+                # This is a very ugly macro, it access 'glyphs' in the enclosing
+                # block ???
+                #'void NSGlyphInfoAtIndex(int IX);',
+            ])
+
+        func_builder.gen_method_table_entries(fd, funcs + funcs2)
         for s in structs:
             del func_builder.SIMPLE_TYPES[s]
 
