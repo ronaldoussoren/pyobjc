@@ -150,6 +150,19 @@ normalize_classname(char* classname, char* buf, size_t buflen)
 	return buf;
 }
 	
+static int
+class_traverse(PyObject* ob, visitproc proc, void* opaque)
+{
+	int res = 0;
+
+	/* If we are incomplete, don't traverse the type. */
+	/* This seems to solve a problem on Python 2.2.0 */
+	if (ObjCClass_GetClass(ob) != nil) {
+		res =  ((PyTypeObject*)ob)->tp_base->tp_traverse(ob, proc, opaque);
+	}
+
+	return res;
+}
 
 /*
  * Create a new objective-C class, as a subclass of 'type'. This is
@@ -386,7 +399,7 @@ PyTypeObject ObjCClass_Type = {
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT,			/* tp_flags */
  	0,					/* tp_doc */
- 	0,					/* tp_traverse */
+ 	class_traverse,				/* tp_traverse */
  	0,					/* tp_clear */
 	0,					/* tp_richcompare */
 	0,					/* tp_weaklistoffset */

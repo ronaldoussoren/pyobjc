@@ -1,3 +1,10 @@
+2002-10-10 Ronald Oussoren <oussoren@cistron.nl>
+	* Modules/objc/objc-class.m: Implemented a 'class_traverse' function
+	  For some reason Python 2.2.0 crashes when we inherit tp_traverse
+	  from PyTypeObject AND the ObjCClass is not fully constructed.
+	* MANIFEST: Updated to current situation
+	* README: Apple python now seems to work
+
 2002-10-09 Ronald Oussoren <oussoren@cistron.nl>
 	* Move Cocoa.AppKit and Cocoa.Foundation packages to AppKit
 	  and Foundation
