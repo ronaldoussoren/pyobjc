@@ -4,10 +4,7 @@
  *
  * The PyObjC unittest objc.test.test_ctests executes the tests in this file.
  *
- * All at least for structured types, the basic types have fairly trivial 
- * implementations.
- *
- * This currently only tests a number of problematic structs.
+ * TODO: Need more tests
  */
 #include "pyobjc-api.h"
 #include "pyobjc-unittest.h"
@@ -505,6 +502,156 @@ BEGIN_UNITTEST(TestArrayCoding)
 	ASSERT(!haveException);
 END_UNITTEST
 
+
+BEGIN_UNITTEST(PythonListAsNSArray)
+	PyObject* aList;
+	NSMutableArray* array;
+	NSArray* array2;
+	
+	aList = Py_BuildValue("[iiiii]", 0, 1, 2, 3, 4);
+	FAIL_IF(aList == NULL);
+
+	array = PyObjC_PythonToId(aList);
+	FAIL_IF(array == nil);
+
+	/* Check lenght */
+	ASSERT_EQUALS(5, [array count], "%d");	
+
+	/* Check basic element access */
+	ASSERT([[NSNumber numberWithInt:0] isEqual:[array objectAtIndex:0]]);
+	ASSERT([[NSNumber numberWithInt:1] isEqual:[array objectAtIndex:1]]);
+	ASSERT([[NSNumber numberWithInt:2] isEqual:[array objectAtIndex:2]]);
+	ASSERT([[NSNumber numberWithInt:3] isEqual:[array objectAtIndex:3]]);
+	ASSERT([[NSNumber numberWithInt:4] isEqual:[array objectAtIndex:4]]);
+
+	/* Check some other methods */
+	array2 = [array arrayByAddingObject: [NSNumber numberWithInt:5]];
+	FAIL_IF(array2 == nil);
+
+	ASSERT_EQUALS(6, [array2 count], "%d");
+	ASSERT_EQUALS(5, [array count], "%d");
+
+	ASSERT([[NSNumber numberWithInt:0] isEqual:[array2 objectAtIndex:0]]);
+	ASSERT([[NSNumber numberWithInt:1] isEqual:[array2 objectAtIndex:1]]);
+	ASSERT([[NSNumber numberWithInt:2] isEqual:[array2 objectAtIndex:2]]);
+	ASSERT([[NSNumber numberWithInt:3] isEqual:[array2 objectAtIndex:3]]);
+	ASSERT([[NSNumber numberWithInt:4] isEqual:[array2 objectAtIndex:4]]);
+	ASSERT([[NSNumber numberWithInt:5] isEqual:[array2 objectAtIndex:5]]);
+
+	ASSERT([array containsObject:[NSNumber numberWithInt:4]]);
+	ASSERT(![array containsObject:[NSNumber numberWithInt:10]]);
+
+	/* Mutating methods */
+	[array addObject: [NSNumber numberWithInt:5]];
+	ASSERT_EQUALS(6, [array count], "%d");
+	ASSERT([[NSNumber numberWithInt:5] isEqual:[array objectAtIndex:5]]);
+
+	[array removeLastObject];
+	ASSERT_EQUALS(5, [array count], "%d");
+	ASSERT([[NSNumber numberWithInt:0] isEqual:[array objectAtIndex:0]]);
+	ASSERT([[NSNumber numberWithInt:4] isEqual:[array objectAtIndex:4]]);
+
+	[array insertObject: [NSNumber numberWithInt:6] atIndex: 1];
+	ASSERT_EQUALS(6, [array count], "%d");
+	ASSERT([[NSNumber numberWithInt:6] isEqual:[array objectAtIndex:1]]);
+
+	[array removeObjectAtIndex: 1];
+	ASSERT_EQUALS(5, [array count], "%d");
+	ASSERT([[NSNumber numberWithInt:1] isEqual:[array objectAtIndex:1]]);
+
+	[array replaceObjectAtIndex: 1 withObject: [NSNumber numberWithInt:7]];
+	ASSERT_EQUALS(5, [array count], "%d");
+	ASSERT([[NSNumber numberWithInt:7] isEqual:[array objectAtIndex:1]]);
+
+END_UNITTEST
+
+BEGIN_UNITTEST(PythonTupleAsNSArray)
+	PyObject* aTuple;
+	NSArray* array;
+	NSArray* array2;
+
+	aTuple = Py_BuildValue("(iiiii)", 0, 1, 2, 3, 4);
+	FAIL_IF(aTuple == NULL);
+
+	array = PyObjC_PythonToId(aTuple);
+	FAIL_IF(array == nil);
+
+	/* Check lenght */
+	ASSERT_EQUALS(5, [array count], "%d");	
+
+	/* Check basic element access */
+	ASSERT([[NSNumber numberWithInt:0] isEqual:[array objectAtIndex:0]]);
+	ASSERT([[NSNumber numberWithInt:1] isEqual:[array objectAtIndex:1]]);
+	ASSERT([[NSNumber numberWithInt:2] isEqual:[array objectAtIndex:2]]);
+	ASSERT([[NSNumber numberWithInt:3] isEqual:[array objectAtIndex:3]]);
+	ASSERT([[NSNumber numberWithInt:4] isEqual:[array objectAtIndex:4]]);
+
+	/* Check some other methods */
+	array2 = [array arrayByAddingObject: [NSNumber numberWithInt:5]];
+	ASSERT(array2 != nil);
+
+	ASSERT_EQUALS(6, [array2 count], "%d");
+	ASSERT_EQUALS(5, [array count], "%d");
+
+	ASSERT([[NSNumber numberWithInt:0] isEqual:[array2 objectAtIndex:0]]);
+	ASSERT([[NSNumber numberWithInt:1] isEqual:[array2 objectAtIndex:1]]);
+	ASSERT([[NSNumber numberWithInt:2] isEqual:[array2 objectAtIndex:2]]);
+	ASSERT([[NSNumber numberWithInt:3] isEqual:[array2 objectAtIndex:3]]);
+	ASSERT([[NSNumber numberWithInt:4] isEqual:[array2 objectAtIndex:4]]);
+	ASSERT([[NSNumber numberWithInt:5] isEqual:[array2 objectAtIndex:5]]);
+
+	ASSERT([array containsObject:[NSNumber numberWithInt:4]]);
+	ASSERT(![array containsObject:[NSNumber numberWithInt:10]]);
+
+END_UNITTEST
+
+BEGIN_UNITTEST(PythonDictAsNSDictionary)
+	// count, objectForKey:, keyEnumerator
+	// setObject:forKey: removeObjectForKey:
+	PyObject* aDictionary;
+	NSMutableDictionary* dict;
+	NSEnumerator* iter;
+	NSArray* keys;
+
+	aDictionary = Py_BuildValue(
+		"{iiiiiiii}",
+		1, 2, 
+		2, 4, 
+		3, 6,
+		4, 8
+	);
+	FAIL_IF(aDictionary == NULL);
+
+	dict = PyObjC_PythonToId(aDictionary);
+	FAIL_IF(dict == nil);
+
+	ASSERT_EQUALS(4, [dict count], "%d");
+	ASSERT([
+		[dict objectForKey:[NSNumber numberWithInt:1]] 
+			isEqual: [NSNumber numberWithInt: 2]]);
+
+	[dict setObject: [NSNumber numberWithInt:10]
+	      forKey: [NSNumber numberWithInt:5]];
+	ASSERT_EQUALS(5, [dict count], "%d");
+	ASSERT([
+		[dict objectForKey:[NSNumber numberWithInt:5]] 
+			isEqual: [NSNumber numberWithInt: 10]]);
+
+	[dict removeObjectForKey: [NSNumber numberWithInt:5]];
+	ASSERT_EQUALS(4, [dict count], "%d");
+
+	iter = [dict keyEnumerator];
+	ASSERT(iter != nil);
+
+	keys = [iter allObjects];
+	ASSERT_EQUALS(4, [keys count], "%d");
+	ASSERT([[keys objectAtIndex:0] isEqual:[NSNumber numberWithInt:1]]);
+	ASSERT([[keys objectAtIndex:1] isEqual:[NSNumber numberWithInt:2]]);
+	ASSERT([[keys objectAtIndex:2] isEqual:[NSNumber numberWithInt:3]]);
+	ASSERT([[keys objectAtIndex:3] isEqual:[NSNumber numberWithInt:4]]);
+
+END_UNITTEST
+
 static PyMethodDef unittest_methods[] = {
 	TESTDEF(CheckNSInvoke),
 
@@ -526,6 +673,9 @@ static PyMethodDef unittest_methods[] = {
 	TESTDEF(TestTypeCode),	
 	TESTDEF(TestSimplifySignature),	
 	TESTDEF(TestArrayCoding),
+	TESTDEF(PythonListAsNSArray),
+	TESTDEF(PythonTupleAsNSArray),
+	TESTDEF(PythonDictAsNSDictionary),
 	{ 0, 0, 0, 0 }
 };
 

@@ -104,4 +104,81 @@
 	}
 }
 
+-(void)addObject:(id)anObject
+{
+	PyObject* v;
+	PyObject* w;
+
+	PyObjC_BEGIN_WITH_GIL
+		v = pythonify_c_value("@", &anObject);
+		if (v == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+		w = PyObject_CallMethod(value, "append", "O", v);
+		if (w == NULL) {
+			Py_DECREF(v);
+			PyObjC_GIL_FORWARD_EXC();
+		}
+		Py_DECREF(v);
+		Py_DECREF(w);
+
+	PyObjC_END_WITH_GIL;
+}
+
+-(void)insertObject:(id)anObject atIndex:(unsigned)idx
+{
+	PyObject* v;
+	PyObject* w;
+
+	PyObjC_BEGIN_WITH_GIL
+		v = pythonify_c_value("@", &anObject);
+		if (v == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+		w = PyObject_CallMethod(value, "insert", "iO", idx, v);
+		if (w == NULL) {
+			Py_DECREF(v);
+			PyObjC_GIL_FORWARD_EXC();
+		}
+		Py_DECREF(v);
+		Py_DECREF(w);
+
+	PyObjC_END_WITH_GIL;
+}
+
+-(void)removeLastObject
+{
+	PyObject* w;
+
+	PyObjC_BEGIN_WITH_GIL
+		w = PyObject_CallMethod(value, "pop", "");
+		if (w == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+		Py_DECREF(w);
+
+	PyObjC_END_WITH_GIL;
+}
+
+-(void)removeObjectAtIndex:(unsigned)idx;
+{
+	int r;
+
+	PyObjC_BEGIN_WITH_GIL
+		if (idx > INT_MAX) {
+			PyErr_SetString(PyExc_IndexError, "No such index");
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+		r = PySequence_DelItem(value, (int)idx);
+		if (r == -1) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+	PyObjC_END_WITH_GIL;
+}
+
+
 @end /* implementation OC_PythonArray */

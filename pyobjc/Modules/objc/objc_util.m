@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+/* TODO: Rename these */
 PyObject* ObjCExc_error;
 PyObject* ObjCExc_noclass_error;
 PyObject* ObjCExc_internal_error;
 PyObject* PyObjCExc_NoProtocol;
 PyObject* PyObjCExc_UnInitDeallocWarning;
 
-int ObjCUtil_Init(PyObject* module)
+int 
+ObjCUtil_Init(PyObject* module)
 {
 #define NEW_EXC(identifier, name, base_class) \
 	identifier = PyErr_NewException("objc."name, base_class, NULL); \
@@ -49,7 +51,8 @@ ObjCErr_PyExcForName(const char* value)
 }
 	
 
-void PyObjCErr_FromObjC(NSException* localException)
+void 
+PyObjCErr_FromObjC(NSException* localException)
 {
 	NSDictionary* userInfo;
 	PyObject*     dict;
@@ -64,6 +67,7 @@ void PyObjCErr_FromObjC(NSException* localException)
 
 	PyGILState_STATE state;
 
+	/* Use -UTF8String instead, or even: create PyObjCUnicode object */
 	c_localException_name = [[localException name] cString];
 	c_localException_reason = [[localException reason] cString];
 
@@ -97,6 +101,7 @@ void PyObjCErr_FromObjC(NSException* localException)
 	dict = PyDict_New();
 	v = PyString_FromString(c_localException_name);
 	PyDict_SetItemString(dict, "name", v);
+	Py_DECREF(v);
 	v = PyString_FromString(c_localException_reason);
 	PyDict_SetItemString(dict, "reason",  v);
 	Py_DECREF(v);
@@ -122,19 +127,23 @@ void PyObjCErr_FromObjC(NSException* localException)
 		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 	}
 	PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict);
-	PyObject_SetAttrString(exc_value, "name", PyString_FromString(
-		c_localException_name));
+	Py_DECREF(dict); dict = NULL;
+	v = PyString_FromString(c_localException_name);
+	PyObject_SetAttrString(exc_value, "name", v);
+	Py_DECREF(v); v = NULL;
 	PyErr_Restore(exc_type, exc_value, exc_traceback);
 	PyGILState_Release(state);
 }
 
-void PyObjCErr_ToObjC(void)
+void 
+PyObjCErr_ToObjC(void)
 {
 	PyObjCErr_ToObjCWithGILState(NULL);
 }
 
 
-NSException* PyObjCErr_AsExc(void)
+NSException* 
+PyObjCErr_AsExc(void)
 {
 	PyObject* exc_type;
 	PyObject* exc_value;
@@ -146,8 +155,9 @@ NSException* PyObjCErr_AsExc(void)
 	NSMutableDictionary* userInfo;
 
 	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
-	if (!exc_type)
+	if (exc_type == NULL) {
 		return nil;
+	}
 
 	PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
@@ -159,8 +169,8 @@ NSException* PyObjCErr_AsExc(void)
 		 * Objective-C code.
 		 */
 		PyObject* v;
-		char*     reason = NULL;
-		char*     name = NULL;
+		char* reason = NULL;
+		char* name = NULL;
 
 		v = PyDict_GetItemString(args, "reason"); 
 		if (v && PyString_Check(v)) {
@@ -238,7 +248,8 @@ NSException* PyObjCErr_AsExc(void)
 	return val;
 }
 
-void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
+void 
+PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
 {
 	NSException* exc = PyObjCErr_AsExc();
 
@@ -283,7 +294,8 @@ NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks = {
 #define SHOULD_FREE 0
 #define SHOULD_IGNORE 1
 
-void    PyObjC_FreeCArray(int code, void* array)
+void
+PyObjC_FreeCArray(int code, void* array)
 {
 	if (code == SHOULD_FREE) {
 		PyMem_Free(array);
@@ -292,7 +304,8 @@ void    PyObjC_FreeCArray(int code, void* array)
 
 static PyTypeObject* array_type = NULL;
 
-static inline PyTypeObject* fetch_array_type(void)
+static inline PyTypeObject* 
+fetch_array_type(void)
 {
 	PyObject* mod;
 	PyObject* name;
@@ -471,9 +484,6 @@ struct_elem_code(const char* typestr)
 }
 		
 
-
-	
-
 /*
  * Convert a Python object to an array of 'elementType'. The array should
  * contain 'pythonCount' elements, Py_None or NULL is accepted and will result
@@ -485,12 +495,13 @@ struct_elem_code(const char* typestr)
  * 
  * XXX: Numeric arrays are not yet supported.
  */
-int	PyObjC_PythonToCArray(
-		const char* elementType,
-		PyObject* pythonList,
-		PyObject* pythonCount,
-		void** array,
-		int*   size)
+int	
+PyObjC_PythonToCArray(
+	const char* elementType,
+	PyObject* pythonList,
+	PyObject* pythonCount,
+	void** array,
+	int*   size)
 {
 	int eltsize = PyObjCRT_SizeOfType(elementType);
 	int eltcount;
@@ -672,10 +683,11 @@ int	PyObjC_PythonToCArray(
 	
 }
 
-PyObject* PyObjC_CArrayToPython(
-		const char* elementType,
-		void* array,
-		int   size)
+PyObject* 
+PyObjC_CArrayToPython(
+	const char* elementType,
+	void* array,
+	int   size)
 {
 	PyObject* result;
 	int i;
@@ -726,4 +738,3 @@ PyObjC_IsPythonKeyword(const char* word)
 	}
 	return 0;
 }
-
