@@ -1,0 +1,221 @@
+<?
+    $title = "PyObjCTools: The PyObjC Toolbox";
+    $cvs_author = '$Author: ronaldoussoren $';
+    $cvs_date = '$Date: 2003/10/08 17:35:32 $';
+
+    include "header.inc";
+?>
+<div class="document" id="pyobjctools-the-pyobjc-toolbox">
+<h1 class="title">PyObjCTools: The PyObjC Toolbox</h1>
+<h2 class="subtitle" id="introduction">Introduction</h2>
+<p>The package <tt class="literal"><span class="pre">PyObjCTools</span></tt> contains a number of (basicly unrelated) modules
+with usefull functionality. These have been placed inside a module to avoid
+cluttering the global namespace.</p>
+<p>The rest of this document provides documentation for these modules, but lets
+start with a short overview.</p>
+<ul class="simple">
+<li><tt class="literal"><span class="pre">PyObjCTools.AppHelper</span></tt></li>
+</ul>
+<p>Utility functions for use with the <tt class="literal"><span class="pre">AppKit</span></tt> module.</p>
+<ul class="simple">
+<li><tt class="literal"><span class="pre">PyObjCTools.Conversion.py</span></tt></li>
+</ul>
+<p>Functions for converting between Cocoa and pure Python data structures.</p>
+<ul class="simple">
+<li><tt class="literal"><span class="pre">PyObjCTools.KeyValueCoding.py</span></tt></li>
+</ul>
+<p>A python API for working with <a class="reference" href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i">Key-Value Coding</a>.</p>
+<ul class="simple">
+<li><tt class="literal"><span class="pre">PyObjCTools.NibClassBuilder.py</span></tt></li>
+</ul>
+<p>Module containing a magic super-class that can read information about the
+actual super-class and implemented actions and outlets from a NIB file.</p>
+<ul class="simple">
+<li><tt class="literal"><span class="pre">PyObjCTools.pluginbuilder.py</span></tt></li>
+</ul>
+<p>Extension of <tt class="literal"><span class="pre">bundlebuilder</span></tt> (XXX: Link) that allows you to build python-based
+plugin bundles, such as panes for the System Preferences application and
+screen savers.</p>
+<ul class="simple">
+<li><tt class="literal"><span class="pre">PyObjCTools.Signals.py</span></tt></li>
+</ul>
+<p>Module that tries to print usefull information when the program gets a fatal
+exception. This module should only be used during development.</p>
+<div class="section" id="pyobjctools-apphelper">
+<h1><a name="pyobjctools-apphelper"><tt class="literal"><span class="pre">PyObjCTools.AppHelper</span></tt></a></h1>
+<p>This module exports two functions that are usefull when working with the
+<tt class="literal"><span class="pre">AppKit</span></tt> framework.</p>
+<ul>
+<li><p class="first"><tt class="literal"><span class="pre">endSheetMethod(method)</span> <span class="pre">-&gt;</span> <span class="pre">selector</span></tt></p>
+<p>Convert a method to a form that is suitable to use as the delegate callback
+for sheet methods.</p>
+</li>
+<li><p class="first"><tt class="literal"><span class="pre">runEventLoop(argv=None,</span> <span class="pre">unexpectedErrorAlert=unexpectedErrorAlert)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>
+<p>Run the evenloop using <tt class="literal"><span class="pre">NSApplicationMain</span></tt> and ask the user if we should
+continue if an exception is caught.</p>
+<p>This function doesn't return unless it throws an exception.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="pyobjctools-conversion-py">
+<h1><a name="pyobjctools-conversion-py"><tt class="literal"><span class="pre">PyObjCTools.Conversion.py</span></tt></a></h1>
+<p>Functions for converting between Cocoa and pure Python data structures.</p>
+<ul>
+<li><p class="first"><tt class="literal"><span class="pre">propertyListFromPythonCollection(pyCol,</span> <span class="pre">conversionHelper=None)</span> <span class="pre">-&gt;</span> <span class="pre">ocCol</span></tt></p>
+<p>Convert a Python collection (dictionary, array, tuple, string) into an 
+Objective-C collection.</p>
+<p>If conversionHelper is defined, it must be a callable.  It will be called 
+for any object encountered for which <tt class="literal"><span class="pre">propertyListFromPythonCollection()</span></tt>
+cannot automatically convert the object.   The supplied helper function 
+should convert the object and return the converted form.  If the conversion 
+helper cannot convert the type, it should raise an exception or return None.</p>
+</li>
+<li><p class="first"><tt class="literal"><span class="pre">pythonCollectionFromPropertyList(ocCol,</span> <span class="pre">conversionHelper=None)</span> <span class="pre">-&gt;</span> <span class="pre">pyCol</span></tt></p>
+<p>Converts a Foundation based collection-- a property list-- into a Python 
+collection.  Like <tt class="literal"><span class="pre">propertyListFromPythonCollection()</span></tt>, <tt class="literal"><span class="pre">conversionHelper</span></tt>
+is an optional callable that will be invoked any time an encountered object 
+cannot be converted.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="pyobjctools-keyvaluecoding">
+<h1><a name="pyobjctools-keyvaluecoding"><tt class="literal"><span class="pre">PyObjCTools.KeyValueCoding</span></tt></a></h1>
+<p>A module for working with Key-Value Coding in python. Key-Value coding is
+explained <a class="reference" href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i">on the apple website</a></p>
+<p>This module provides a python interface to some of that functionality. The
+interface is modelled on the <tt class="literal"><span class="pre">getattr</span></tt> and <tt class="literal"><span class="pre">setattr</span></tt> functions.</p>
+<ul>
+<li><p class="first"><tt class="literal"><span class="pre">getKey(object,</span> <span class="pre">key)</span> <span class="pre">-&gt;</span> <span class="pre">value</span></tt></p>
+<p>Find the value for <tt class="literal"><span class="pre">key</span></tt>. Raises <tt class="literal"><span class="pre">KeyError</span></tt> if the key is not a valid
+attribute of the object.</p>
+<p>To find the value of a key the following values are tried for a key named
+<tt class="literal"><span class="pre">key</span></tt> (first match wins):</p>
+<ul class="simple">
+<li>the return value of <tt class="literal"><span class="pre">object.get_key()</span></tt></li>
+<li>the return value of <tt class="literal"><span class="pre">object.getKey()</span></tt></li>
+<li>the return value of <tt class="literal"><span class="pre">object._get_key()</span></tt></li>
+<li>the return value of <tt class="literal"><span class="pre">object._getKey()</span></tt></li>
+<li>the value of the attribute <tt class="literal"><span class="pre">key</span></tt></li>
+<li>the value of the attribue <tt class="literal"><span class="pre">_key</span></tt></li>
+</ul>
+</li>
+<li><p class="first"><tt class="literal"><span class="pre">getKeyPath(object,</span> <span class="pre">keypath)</span> <span class="pre">-&gt;</span> <span class="pre">value</span></tt></p>
+<p>Like <tt class="literal"><span class="pre">getKey</span></tt> but using a key path. The <tt class="literal"><span class="pre">keypath</span></tt> is a sequence of keys
+seperated by dots. It calls <tt class="literal"><span class="pre">getKey</span></tt> to follow the path and returns the
+final value.</p>
+</li>
+<li><p class="first"><tt class="literal"><span class="pre">setKey(object,</span> <span class="pre">key,</span> <span class="pre">value)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>
+<p>Set the value of <tt class="literal"><span class="pre">key</span></tt> to <tt class="literal"><span class="pre">value</span></tt>.</p>
+<p>The following values are used for setting the value for a key named <tt class="literal"><span class="pre">key</span></tt>
+(first match wins):</p>
+<ul class="simple">
+<li>Call <tt class="literal"><span class="pre">object.set_key(value)</span></tt></li>
+<li>Call <tt class="literal"><span class="pre">object.setKey(value)</span></tt></li>
+<li>Call <tt class="literal"><span class="pre">object._set_key(value)</span></tt></li>
+<li>Call <tt class="literal"><span class="pre">object._setKey(value)</span></tt></li>
+<li>Check if <tt class="literal"><span class="pre">_key</span></tt> is an attribute and if so, set its value</li>
+<li>Try to set the attribute <tt class="literal"><span class="pre">key</span></tt>.</li>
+</ul>
+<p>Raises <tt class="literal"><span class="pre">KeyError</span></tt> if the key cannot be changed.</p>
+</li>
+<li><p class="first"><tt class="literal"><span class="pre">setKeyPath(object,</span> <span class="pre">keypath,</span> <span class="pre">value)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>
+<p>The same as <tt class="literal"><span class="pre">setKey</span></tt>, but now using a key path. A key path is a sequence
+of keys seperated by dots. The <tt class="literal"><span class="pre">getKey</span></tt> function is used to traverse 
+the path upto the last item, and then <tt class="literal"><span class="pre">setKey</span></tt> is used to change the value.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="pyobjctools-nibclassbuilder">
+<h1><a name="pyobjctools-nibclassbuilder">PyObjCTools.NibClassBuilder</a></h1>
+<div class="section" id="extracting-class-definitions-from-nibs">
+<h2><a name="extracting-class-definitions-from-nibs">Extracting class definitions from nibs</a></h2>
+<p>The module maintains a global set of class definitions, extracted from
+nibs. To add the classes from a nib to this set, use the <tt class="literal"><span class="pre">extractClasses()</span></tt>
+function. It can be called in two ways:</p>
+<ul>
+<li><p class="first"><tt class="literal"><span class="pre">extractClasses(nibName,</span> <span class="pre">bundle=&lt;main-bundle&gt;)</span></tt></p>
+<p>This finds the nib by name from a bundle. If no bundle
+if given, the main bundle is searched.</p>
+</li>
+<li><p class="first"><tt class="literal"><span class="pre">extractClasses(path=pathToNib)</span></tt></p>
+<p>This uses an explicit path to a nib.</p>
+</li>
+</ul>
+<p><tt class="literal"><span class="pre">extractClasses()</span></tt> can be called multiple times for the same bundle: the
+results are cached so no almost extra overhead is caused.</p>
+</div>
+<div class="section" id="using-the-class-definitions">
+<h2><a name="using-the-class-definitions">Using the class definitions</a></h2>
+<p>The module contains a &quot;magic&quot; base (super) class called <tt class="literal"><span class="pre">AutoBaseClass</span></tt>.
+Subclassing <tt class="literal"><span class="pre">AutoBaseClass</span></tt> will invoke some magic that will look up the
+proper base class in the class definitions extraced from the nib(s).
+If you use multiple inheritance to use Cocoa's &quot;informal protocols&quot;,
+you <em>must</em> list <tt class="literal"><span class="pre">AutoBaseClass</span></tt> as the first base class. For example:</p>
+<pre class="literal-block">
+class PyModel(AutoBaseClass, NSTableSource):
+    ...
+</pre>
+</div>
+<div class="section" id="the-nibinfo-class">
+<h2><a name="the-nibinfo-class">The <tt class="literal"><span class="pre">NibInfo</span></tt> class</a></h2>
+<p>The parsing of nibs and collecting the class definition is done by the
+<tt class="literal"><span class="pre">NibInfo</span></tt> class. You normally don't use it directly, but it's here if you
+have special needs.</p>
+</div>
+<div class="section" id="the-command-line-tool">
+<h2><a name="the-command-line-tool">The command line tool</a></h2>
+<p>When run from the command line, this module invokes a simple command
+line program, which you feed paths to nibs. This will print a Python
+template for all classes defined in the nib(s). For more doco, see
+the commandline_doc variable, or simply run the program wothout
+arguments. It also contains a simple test program.</p>
+</div>
+</div>
+<div class="section" id="pyobjctools-signals">
+<h1><a name="pyobjctools-signals">PyObjCTools.Signals</a></h1>
+<p>This module provides two functions that can be usefull while investigating
+random crashes of a PyObjC program. These crashes are often caused by 
+Objective-C style weak references or incorrectly implemented protocols.</p>
+<ul>
+<li><p class="first"><tt class="literal"><span class="pre">dumpStackOnFatalSignal()</span></tt></p>
+<p>This function will install signal handlers that print a stacktrace and
+then reraise the signal.</p>
+</li>
+<li><p class="first"><tt class="literal"><span class="pre">resetFatalSignals()</span></tt></p>
+<p>Restores the signal handlers to the state they had before the call to
+dumpStackOnFatalSignal.</p>
+</li>
+</ul>
+<p>This module is not designed to provide fine grained control over signal 
+handling. Nor is it intended to be terribly robust. It may give usefull
+information when your program gets unexpected signals, but it might just
+as easily cause a crash when such a signal gets in.</p>
+</div>
+<div class="section" id="pyobjctools-pluginbuilder">
+<h1><a name="pyobjctools-pluginbuilder">PyObjCTools.pluginbuilder</a></h1>
+<p>This module defines one class to build python based plugin bundles for MacOS X.
+Examples of plugin bundles include PreferencePanes and InterfaceBuilder 
+palletes.</p>
+<p>The PluginBuilder class is instantated with a number of keyword arguments and
+have a <tt class="literal"><span class="pre">build()</span></tt> method that will do all the work.</p>
+<p>XXX: Add documentation about the constructor arguments</p>
+<p>The module contains a main program that can be used in two ways:</p>
+<pre class="literal-block">
+% python pluginbuilder.py [options] build
+
+% python buildplugin.py [options] build
+</pre>
+<p>Where &quot;buildplugin.py&quot; is a user-supplied setup.py-like script following this
+model:</p>
+<pre class="literal-block">
+from PyObjCTools.pluginbuilder import buildplugin
+
+buildplugin(&lt;lots-of-keyword-args&gt;)
+</pre>
+<p>The script will tell you about the supported arguments if you run it without 
+any arguments.</p>
+</div>
+</div>
+<?
+    include "footer.inc";
+?>
