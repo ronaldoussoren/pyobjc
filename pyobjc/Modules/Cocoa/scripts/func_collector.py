@@ -17,18 +17,18 @@ def process_file(outfp, filename, match_prefix='', ignore_list=()):
 
 	outfp.write("\n# From: %s\n"%os.path.basename(filename))
 
-	in_class = False
+	in_class = 0
 
 	for ln in fp.xreadlines():
 
 		# Skip declarations in objective-C class definitions
 		if not in_class:
 			if ln.startswith("@interface"):
-				in_class = True
+				in_class = 1
 				continue
 		else:
 			if ln.startswith("@end"):
-				in_class = False
+				in_class = 0
 			continue
 
 		m = MATCH_RE.match(ln)

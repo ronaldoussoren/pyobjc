@@ -25,8 +25,8 @@ def process_file(outfp, filename):
 
 	outfp.write("\n\t/* From: %s */\n"%os.path.basename(filename))
 
-	in_enum = False
-	in_comment = False
+	in_enum = 0
+	in_comment = 0
 
 	for ln in fp.xreadlines():
 		if not in_enum:
@@ -50,7 +50,7 @@ def process_file(outfp, filename):
 				if not m:
 					continue
 				ln = ln[m.end():]
-				in_comment = False
+				in_comment = 0
 
 			if END_RE.match(ln):
 				in_enum = 0
@@ -60,7 +60,7 @@ def process_file(outfp, filename):
 			ln = BLOCK_1_RE.sub('', ln)
 			m = BLOCK_S_RE.search(ln)
 			if m:
-				in_comment = True
+				in_comment = 1
 				ln = ln[:m.start()]
 
 			m = IDENT_RE.search(ln)
@@ -84,7 +84,7 @@ def generate(dirname, fn = None):
 	fp.write(" * Enumeration constants. This file is generated from files in\n")
 	fp.write(" * %s\n"%dirname)
 	fp.write(" */\n")
-	fp.write("struct inttable enum_table[] = {\n")
+	fp.write("static struct inttable enum_table[] = {\n")
 	fnames = [ os.path.join(dirname, fn)
 				for fn in os.listdir(dirname)
 				if fn.endswith('.h') ]

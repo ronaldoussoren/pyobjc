@@ -19,7 +19,6 @@ int pyobjc_main(int argc, char * const *argv, char *envp[])
   int i;
   
   NSString *pythonBinPath = [[NSUserDefaults standardUserDefaults] stringForKey: @"PythonBinPath"];
-
   pythonBinPath = pythonBinPath ? pythonBinPath : @"/usr/bin/python";
   [pythonBinPath retain];
   pythonBinPathPtr = [pythonBinPath cString];
