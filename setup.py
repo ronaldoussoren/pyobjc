@@ -1,11 +1,19 @@
 #!/usr/bin/env python
 
+# If true we use libffi instead of register.m
 USE_FFI = 1
 
+# It true we use libffi for normal invocations, instead of NSInvocation
 USE_FFI_SHORTCUTS = 1
-import sys
 
-if sys.platform == 'darwin':
+# If true we adjust the reference count for copy/alloc, otherwise users
+# have to do that manually. (Experimental)
+USE_ADJUST_REFCOUNTS = 1
+
+import sys
+import os
+
+if sys.platform == 'darwin': 
     # Apple has used build options that don't work with a 'normal' system.
     # Remove '-arch i386' from the LDFLAGS.
     import distutils.sysconfig
@@ -67,9 +75,7 @@ sourceFiles = [
         "Modules/objc/selector.m",
         "Modules/objc/method-accessor.m",
         "Modules/objc/instance-var.m",
-        "Modules/objc/OC_PythonInt.m",
         "Modules/objc/OC_PythonObject.m",
-        "Modules/objc/OC_PythonString.m",
         "Modules/objc/OC_PythonArray.m",
         "Modules/objc/OC_PythonDictionary.m",
         "Modules/objc/register.m",
@@ -94,26 +100,37 @@ if gs_root is None:
 
     OBJC_LDFLAGS=[
         '-framework', 'Foundation',
+        "-preload",
         ]
 
     FND_LDFLAGS=[
         '-framework', 'Foundation',
+        "-preload",
         ]
 
     APPKIT_LDFLAGS=[
-        '-framework', 'AppKit'
+        '-framework', 'AppKit',
+        "-preload",
         ]
 
     FNDMAP_LDFLAGS=[
         '-framework', 'Foundation',
+        "-preload",
         ]
 
     APPMAP_LDFLAGS=[
-        '-framework', 'AppKit'
+        '-framework', 'AppKit',
+        "-preload",
         ]
 
     ADDRESSBOOK_LDFLAGS=[
-        '-framework', 'AddressBook', '-framework', 'Foundation'
+        '-framework', 'AddressBook', '-framework', 'Foundation',
+        "-preload",
+    ]
+
+    PREFPANES_LDFLAGS=[
+        '-framework', 'PreferencePanes', '-framework', 'Foundation',
+        "-preload",
     ]
 
 else:
@@ -184,6 +201,10 @@ else:
         ]
 
     ADDRESSBOOK_LDFLAGS=[]
+    PREFPANES_LDFLAGS=[]
+
+if USE_ADJUST_REFCOUNTS:
+    CFLAGS.append('-DOC_ADJUST_REFCOUNTS')
 
 def IfFrameWork(name, packages, extensions):
     """
@@ -205,6 +226,10 @@ CoreExtensions =  [
                     "-DOBJC_PARANOIA_MODE",
               ] + LIBFFI_CFLAGS + CFLAGS,
               extra_link_args=LIBFFI_LDFLAGS + OBJC_LDFLAGS),
+    Extension("objc.test.testbndl",
+              ["Lib/objc/test/testbndl.m"],
+              extra_compile_args=["-IModules/objc" ] + CFLAGS,
+              extra_link_args=OBJC_LDFLAGS),
     Extension("autoGIL", 
               ["Modules/autoGIL.c"],
               extra_compile_args = CFLAGS,
@@ -255,6 +280,30 @@ AddressBookPackages, AddressBookExtensions = \
                       ] + ADDRESSBOOK_LDFLAGS),
         ])
 
+PrefPanesPackages, PrefPanesExtensions = \
+        IfFrameWork('PreferencePanes.framework', [ 'PreferencePanes' ], [
+            Extension('PreferencePanes._PreferencePanes',
+                      [ 'Modules/Cocoa/_PrefPanes.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=[
+                      ] + PREFPANES_LDFLAGS),
+        ])
+
+InterfaceBuilderPackages, InterfaceBuilderExtensions = \
+        IfFrameWork('InterfaceBuilder.framework', [ 'InterfaceBuilder' ], [
+            Extension('InterfaceBuilder._InterfaceBuilder',
+                      [ 'Modules/Cocoa/_InterfaceBuilder.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=[
+                        '-framework', 'InterfaceBuilder', 
+                        '-framework', 'Foundation'
+                      ]),
+        ])
+
 
 def package_version():
     fp = open('Modules/objc/pyobjc.h', 'r')
@@ -266,7 +315,7 @@ def package_version():
     raise ValueError, "Version not found"
 
 
-packages = CorePackages + CocoaPackages + AddressBookPackages
+packages = CorePackages + CocoaPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages
 # The following line is needed to allow separate flat modules
 # to be installed from a different folder (needed for the 
 # bundlebuilder test below).
@@ -298,6 +347,8 @@ dist = setup(name = "pyobjc",
 			     CoreExtensions 
 			   + CocoaExtensions 
 			   + AddressBookExtensions 
+                           + PrefPanesExtensions
+                           + InterfaceBuilderExtensions
 			   ),
 	     packages = packages,
 	     package_dir = package_dir,

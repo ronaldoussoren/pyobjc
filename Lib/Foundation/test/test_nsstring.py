@@ -43,8 +43,8 @@ class TestNSStringBridging(unittest.TestCase):
     def testTypesAndClasses(self):
         self.assert_(isinstance(self.py7String, "".__class__))
         self.assert_(isinstance(self.pyUniString, u"".__class__))
-        self.assert_(isinstance(self.ns7String, NSString))
-        self.assert_(isinstance(self.pyUniString, NSString))
+        self.assert_(isinstance(self.ns7String, unicode))
+        self.assert_(isinstance(self.pyUniString, unicode))
         
 def suite():
     suite = unittest.TestSuite()

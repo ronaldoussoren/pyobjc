@@ -81,9 +81,6 @@ NSString *NSDecimalString(const NSDecimal *dcm, NSDictionary *locale);
 # From: NSEnumerator.h
 
 # From: NSException.h
-void _NSAddHandler2(NSHandler2 *handler);
-void _NSRemoveHandler2(NSHandler2 *handler);
-NSException *_NSExceptionObjectFromHandler2(NSHandler2 *handler);
 NSUncaughtExceptionHandler *NSGetUncaughtExceptionHandler(void);
 void NSSetUncaughtExceptionHandler(NSUncaughtExceptionHandler *);
 

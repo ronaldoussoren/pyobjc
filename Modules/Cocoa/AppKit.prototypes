@@ -23,7 +23,6 @@ void NSAccessibilityPostNotification(id element, NSString *notification);
 # From: NSAppleScriptExtensions.h
 
 # From: NSApplication.h
-int NSApplicationMain(int argc, const char *argv[]);
 BOOL NSApplicationLoad(void);
 BOOL NSShowsServicesMenuItem(NSString * itemName);
 int NSSetShowsServicesMenuItem(NSString * itemName, BOOL enabled);
@@ -141,9 +140,7 @@ void NSDrawBitmap(NSRect rect, int width, int height, int bps, int spp, int bpp,
 void NSCopyBits(int srcGState, NSRect srcRect, NSPoint destPoint);
 void NSHighlightRect(NSRect aRect);
 void NSBeep(void);
-void NSCountWindows(int *count);
 void NSWindowList(int size, int list[]);
-void NSCountWindowsForContext(int context, int *count);
 void NSWindowListForContext(int context, int size, int list[]);
 int NSGetWindowServerMemory(int context, int *virtualMemory, int *windowBackingMemory, NSString **windowDumpString);
 NSRect NSDrawColorTiledRects(NSRect boundsRect, NSRect clipRect, const NSRectEdge *sides, NSColor **colors, int count);

@@ -22,17 +22,25 @@ FRAMEWORKS="/System/Library/Frameworks"
 FOUNDATION=os.path.join(FRAMEWORKS, "Foundation.framework")
 APPKIT=os.path.join(FRAMEWORKS, "AppKit.framework")
 ADDRESSBOOK=os.path.join(FRAMEWORKS, "AddressBook.framework")
+PREFPANES=os.path.join(FRAMEWORKS, "PreferencePanes.framework")
+IB=os.path.join(FRAMEWORKS, "InterfaceBuilder.framework")
 FOUNDATION_HDRS=os.path.join(FOUNDATION, 'Headers')
 APPKIT_HDRS=os.path.join(APPKIT, 'Headers')
 ADDRESSBOOK_HDRS=os.path.join(ADDRESSBOOK, 'Headers')
+PREFPANES_HDRS=os.path.join(PREFPANES, 'Headers')
+IB_HDRS=os.path.join(IB, 'Headers')
 
 enum_generator.generate(FOUNDATION_HDRS, '_Fnd_Enum.inc')
 enum_generator.generate(APPKIT_HDRS, '_App_Enum.inc')
 enum_generator.generate(ADDRESSBOOK_HDRS, '_Addr_Enum.inc')
+enum_generator.generate(PREFPANES_HDRS, '_PrefPanes_Enum.inc')
+enum_generator.generate(IB_HDRS, '_InterfaceBuilder_Enum.inc')
 
 strconst_generator.generate(FOUNDATION_HDRS, '_Fnd_Str.inc')
 strconst_generator.generate(APPKIT_HDRS, '_App_Str.inc')
 strconst_generator.generate(ADDRESSBOOK_HDRS, '_Addr_Str.inc')
+strconst_generator.generate(PREFPANES_HDRS, '_PrefPanes_Str.inc')
+strconst_generator.generate(IB_HDRS, '_InterfaceBuilder_Str.inc')
 
 FOUNDATION_PREFIX="FOUNDATION_EXPORT"
 FOUNDATION_IGNORE_LIST=(
@@ -80,12 +88,18 @@ FOUNDATION_IGNORE_LIST=(
 	'_NSRemoveHandler2',
 	'_NSExceptionObjectFromHandler2'
 
+        # List of functions that are not usefull from Python:
+
         # List of manually wrapped functions:
 )
 APPKIT_IGNORE_LIST=(
 
         # List of manually wrapped functions:
-        'NSApplicationMain',
+        'NSApplicationMain(',
+        'NSCountWindows(',
+        'NSCountWindowsForContext(',
+        'NSAvailableWindowDepths(',
+        'NSRectFillList(',
 )
 func_collector.generate(FOUNDATION_HDRS, 'Foundation.prototypes', 
 	FOUNDATION_PREFIX, FOUNDATION_IGNORE_LIST)
@@ -147,11 +161,10 @@ for s in structs:
 	fd.write('''\
 static inline int convert_%(type)s(PyObject* object, void* pvar)
 {
-	const char* errstr;
+	int err;
 
-	errstr = ObjC_PythonToObjC(@encode(%(type)s), object, pvar);
-	if (errstr) {
-		PyErr_SetString(PyExc_TypeError, errstr);
+	err = ObjC_PythonToObjC(@encode(%(type)s), object, pvar);
+	if (err == -1) {
 		return 0;
 	}
 	return 1;
@@ -175,11 +188,10 @@ for s in structs:
 	fd.write('''\
 static inline int convert_%(type)s(PyObject* object, void* pvar)
 {
-	const char* errstr;
+	int err;
 
-	errstr = ObjC_PythonToObjC(@encode(%(type)s), object, pvar);
-	if (errstr) {
-		PyErr_SetString(PyExc_TypeError, errstr);
+	err = ObjC_PythonToObjC(@encode(%(type)s), object, pvar);
+	if (err == -1) {
 		return 0;
 	}
 	return 1;
