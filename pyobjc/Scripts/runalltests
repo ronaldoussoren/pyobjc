@@ -22,15 +22,15 @@ def perform_some_tests(dummy, dirname, fnames):
         for nm in fnames:
                 if not nm.startswith('test_'): continue
                 if not nm.endswith('.py'): continue
-        	path = os.path.join(dirname, nm)
-        	print "-- Running '%s'"%path
+                path = os.path.join(dirname, nm)
+                print "-- Running '%s'"%path
 
                 if 0:
                     os.environ['DYLD_INSERT_LIBRARIES']='/usr/lib/libgmalloc.dylib'
                     os.environ['DYLD_FORCE_FLAT_NAMESPACE']='1'
 
 
-        	fd = os.popen("'%s' '%s' 2>&1"%(sys.executable, path), 'r')
+                fd = os.popen("'%s' '%s' 2>&1"%(sys.executable, path), 'r')
                 ln = ''
                 for _ln in fd.xreadlines():
                     sys.stdout.write(_ln)
@@ -66,7 +66,7 @@ def perform_some_tests(dummy, dirname, fnames):
                     tests[path] = 'CRASHED'
                     test_sum['CRASH'] += 1
 
-        	print "-- Done"
+                print "-- Done"
 
 #os.path.walk('Lib/objc', perform_some_tests, None)
 #os.path.walk('Lib/Foundation', perform_some_tests, None)
