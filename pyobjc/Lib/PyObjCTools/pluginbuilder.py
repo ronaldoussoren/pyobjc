@@ -63,6 +63,7 @@ static PyObject* myModule = NULL;
     PyObject* m;
     PyObject* t;
     PyObject* n;
+
     Class result = [super classNamed: name];
     if (result) {
         return result;
@@ -90,7 +91,7 @@ static PyObject* myModule = NULL;
     }
 
     if (getClass == NULL) {
-        PyObject* n = PyString_FromString("objc._objc");
+        PyObject* n = PyString_FromString("_objc");
         if (n == NULL) {
             PyErr_Clear();
             Py_DECREF(t);
@@ -145,8 +146,10 @@ static PyObject* myModule = NULL;
 
 @end
 
+
 static void changeClass(id obj, Class newClass)
 {
+    //[newClass poseAsClass:obj->isa];
     obj->isa = newClass;
 }
 
@@ -160,15 +163,11 @@ static void changeClass(id obj, Class newClass)
         PyObject *m, *d, *v;
         
 
-        //NSLog(@"Loading prefpane %(MAINFILE)s %(BUNDLE)s");
-
     bundle = [NSBundle bundleForClass:self];
     [bundle load];
 
-#if 1
         /* This is *very* ugly */
         changeClass(bundle, [_PyObjC_BundleHelper_%(BUNDLE)s_ class]);
-#endif
 
         mainPath = [bundle pathForResource:@"%(MAINFILE)s" ofType:@"py"];
 
@@ -200,7 +199,7 @@ static void changeClass(id obj, Class newClass)
          * we don't have to update sys.path, and that will hopefully avoid
          * most interference between plugins.
          *
-     * PyRun_SimpleFile(fp, [mainPath cString]);
+         * PyRun_SimpleFile(fp, [mainPath cString]);
          */
         m = PyImport_AddModule("__main_%(BUNDLE)s__");
         if (m == NULL) {
@@ -247,6 +246,7 @@ static void changeClass(id obj, Class newClass)
         }
         Py_DECREF(v);
         if (Py_FlushLine()) {
+            PyErr_Print();
             PyErr_Clear();
         }
 }

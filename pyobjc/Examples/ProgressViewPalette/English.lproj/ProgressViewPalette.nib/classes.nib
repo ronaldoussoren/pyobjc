@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {increment = id; }; 
+            CLASS = ProgressCell; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSCell; 
+        }, 
+        {
+            ACTIONS = {increment = id; }; 
+            CLASS = ProgressView; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSControl; 
+        }, 
+        {CLASS = ProgressViewPalette; LANGUAGE = ObjC; SUPERCLASS = IBPalette; }
+    ); 
+    IBVersion = 1; 
+}
