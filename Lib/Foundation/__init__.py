@@ -27,20 +27,6 @@ if 'PYOBJCFRAMEWORKS' in os.environ:
         if initPath:
             execfile(initPath, globals(), locals())
 
-
-try:
-    import autoGIL
-except ImportError:
-    # We don't have an autoGIL module on GNUstep
-    pass
-else:
-    # Install an observer callback in the current CFRunLoop that will
-    # automatically release and acquire the Global Interpreter Lock
-    # when needed. This is needed so other Python threads get a chance
-    # to run while we're inside the event loop.
-    autoGIL.installAutoGIL()
-
-
 import protocols  # no need to export these, just register with PyObjC
 
 #

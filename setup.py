@@ -445,16 +445,6 @@ CoreExtensions =  [
               extra_link_args=OBJC_LDFLAGS),
     ]
 
-if gs_root is None:
-    # autoGIL is only usefull on MacOS X
-    CoreExtensions.append(
-        Extension("autoGIL",
-            ["Modules/autoGIL.c"],
-                extra_compile_args = CFLAGS,
-                extra_link_args = ['-framework', 'CoreFoundation']),
-    )
-
-
 # Provide some dependency information on Python 2.3 and later, this
 # makes development slightly more convenient.
 if sys.version >= '2.3':
