@@ -1,7 +1,7 @@
 <?
     $title = "Installation Instructions";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/10/08 17:30:40 $';
+    $cvs_date = '$Date: 2004/02/02 15:23:01 $';
 
     include "header.inc";
 ?>

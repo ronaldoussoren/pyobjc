@@ -1,7 +1,7 @@
 <?
     $title = "Coding style for PyObjC";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/10/08 17:30:40 $';
+    $cvs_date = '$Date: 2004/02/02 15:23:01 $';
 
     include "header.inc";
 ?>
@@ -37,6 +37,8 @@
 <h1><a class="toc-backref" href="#id1" name="introduction">Introduction</a></h1>
 <p>This document describes the coding style for PyObjC. Please use this style for
 new code and try apply this style to existing code while working on it.</p>
+<p>The managment summary: 4-space indents in Python code, 1-TAB indents in C
+code.</p>
 </div>
 <div class="section" id="python-code">
 <h1><a class="toc-backref" href="#id2" name="python-code">Python code</a></h1>
@@ -51,8 +53,12 @@ module should be documented in our documentation.</p>
 </div>
 <div class="section" id="c-code">
 <h1><a class="toc-backref" href="#id3" name="c-code">C code</a></h1>
-<p>The coding style for core Python is used (see <a class="reference" href="http://www.python.org/peps/pep-0007.txt">PEP 7</a>). We use <tt class="literal"><span class="pre">PyObjC</span></tt> instead
-of <tt class="literal"><span class="pre">Py</span></tt> as the prefix for globally visible symbols.</p>
+<p>The coding style for core Python is used (see <a class="reference" href="http://www.python.org/peps/pep-0007.txt">PEP 7</a>). We use <tt class="literal"><span class="pre">PyObjC</span></tt> 
+instead of <tt class="literal"><span class="pre">Py</span></tt> as the prefix for globally visible symbols.</p>
+<p>All (Objective-)C files in <tt class="literal"><span class="pre">Modules/objc/</span></tt> should include <tt class="literal"><span class="pre">&quot;pyobjc.h&quot;</span></tt> as
+their first include. The (Objective-)C files in the wrappers for frameworks
+should include <tt class="literal"><span class="pre">&quot;pyobjc-api.h&quot;</span></tt> and should not use other include-files in
+<tt class="literal"><span class="pre">Modules/objc</span></tt> other than <tt class="literal"><span class="pre">pyobjc-api.h</span></tt> and <tt class="literal"><span class="pre">wrapper-const-table.h</span></tt>.</p>
 </div>
 <div class="section" id="documentation">
 <h1><a class="toc-backref" href="#id4" name="documentation">Documentation</a></h1>

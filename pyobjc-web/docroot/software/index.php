@@ -1,15 +1,29 @@
 <?
 $title = "Documentation";
 $cvs_author = '$Author: ronaldoussoren $';
-$cvs_date = '$Date: 2003/10/19 19:23:59 $';
+$cvs_date = '$Date: 2004/02/02 15:23:02 $';
 
 include "header.inc";
 ?>
 
 <h1>Downloads</h1>
 
+<h2>Unstable release</h2>
+
+<p>The 1.1a0 is the first prerelease for the upcoming 1.1 release of PyObjC.
+
 <ul>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.0.dmg?download">PyObjC 1.0 installer package for Apple's Python</a>
+<li><a href="<? print $root; ?>prerelease/pyobjc-1.1a0.tar.gz">PyObjC 1.1a0 source release (a compressed tar archive)</a>
+<li><a href="<? print $root; ?>prerelease/pyobjc-1.1a0-Panther">PyObjC 1.1a0 installer for Mac OS X 10.3</a>
+</ul>
+
+<p>There is also a <a href="<? print $root; ?>packman/pyobjc-unstable-7.0-Power_Macintosh.plist">packman database for Mac OS X 10.3</a>.
+
+
+<h2>Stable release</h2>
+
+<ul>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.0.dmg?download">PyObjC 1.0 installer package for Apple's Python (MacOS X 10.2)</a>
 <li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.0.tar.gz?download">PyObjC 1.0 source release (a compressed tar archive)</a>
 </ul>
 

@@ -1,7 +1,7 @@
 <?
     $title = "PyObjCTools: The PyObjC Toolbox";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/10/08 17:35:32 $';
+    $cvs_date = '$Date: 2004/02/02 15:23:02 $';
 
     include "header.inc";
 ?>
@@ -95,8 +95,10 @@ attribute of the object.</p>
 <li>the return value of <tt class="literal"><span class="pre">object.getKey()</span></tt></li>
 <li>the return value of <tt class="literal"><span class="pre">object._get_key()</span></tt></li>
 <li>the return value of <tt class="literal"><span class="pre">object._getKey()</span></tt></li>
-<li>the value of the attribute <tt class="literal"><span class="pre">key</span></tt></li>
-<li>the value of the attribue <tt class="literal"><span class="pre">_key</span></tt></li>
+<li>the value of the attribute <tt class="literal"><span class="pre">key</span></tt>, or the value of <tt class="literal"><span class="pre">object.key()</span></tt> if
+<tt class="literal"><span class="pre">object.key</span></tt> is a method.</li>
+<li>the value of the attribue <tt class="literal"><span class="pre">_key</span></tt>, or the vale of <tt class="literal"><span class="pre">object._key()</span></tt> if
+<tt class="literal"><span class="pre">object._key</span></tt> is a method.</li>
 </ul>
 </li>
 <li><p class="first"><tt class="literal"><span class="pre">getKeyPath(object,</span> <span class="pre">keypath)</span> <span class="pre">-&gt;</span> <span class="pre">value</span></tt></p>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Experimental Package Manager Database for PyObjC</string>
+	<key>Maintainer</key>
+	<string>oussoren@cistron.nl</string>
+	<key>Version</key>
+	<string>0.3</string>
+	<key>Packages</key>
+	<array>
+		<dict>
+			<key>Description</key>
+			<string>
+Python &lt;-&gt; Objective-C bridge (Cocoa for Python).
+
+PyObjC allows full interaction between Python and Objective-C objects,
+including subclassing types from the other language. The primary
+use of this is writing Python Graphical User Interfaces in Cocoa
+using Interface Builder, but much more is possible, including
+incorporating Python in your Objective-C program for rapid prototyping and
+such.
+			</string>
+			<key>Download-URL</key>
+<!--
+			<string>http://heanet.dl.sourceforge.net/sourceforge/pyobjc/pyobjc-1.0.tar.gz</string>
+-->
+			<string>http://pyobjc.sf.net/prerelease/pyobjc-1.1a0.tar.gz</string>
+			<key>Flavor</key>
+			<string>source</string>
+			<key>Install-test</key>
+			<string>
+import objc
+ver = objc.__version__
+if ver &lt; "1.1a0" and not ver.startswith("1.1"):
+	raise OldInstalled, "Version %s installed"%objc.__version__
+if ver.startswith("1.1") and not ver.startswith("1.1.") and ver != "1.1":
+	raise OldInstalled, "Version %s installed"%objc.__version__
+			</string>
+			<key>Home-page</key>
+			<string>http://pyobjc.sourceforge.net/</string>
+			<key>Name</key>
+			<string>PyObjC</string>
+			<!--
+			<key>Prerequisites</key>
+			<array>
+				<dict>
+					<key>Name</key>
+					<string>AppleDevTools</string>
+				</dict>
+			</array>
+			-->
+			<key>Version</key>
+			<string>1.1a0</string>
+			<key>MD5Sum</key>
+			<string>4cea5db6ce4b0b87958d781889c55cd2</string>
+		</dict>
+		<dict>
+			<key>Description</key>
+			<string>
+Python &lt;-&gt; Objective-C bridge (Cocoa for Python).
+
+PyObjC allows full interaction between Python and Objective-C objects,
+including subclassing types from the other language. The primary
+use of this is writing Python Graphical User Interfaces in Cocoa
+using Interface Builder, but much more is possible, including
+incorporating Python in your Objective-C program for rapid prototyping and
+such.
+			</string>
+			<key>Download-URL</key>
+			<string>http://pyobjc.sf.net/prerelease/pyobjc-1.1a0.darwin-7.2.0-Power_Macintosh.tar.gz</string>
+			<key>Flavor</key>
+			<string>binary</string>
+			<key>Install-test</key>
+			<string>
+import objc
+ver = objc.__version__
+if ver &lt; "1.1a0" and not ver.startswith("1.1"):
+	raise OldInstalled, "Version %s installed"%objc.__version__
+if ver.startswith("1.1") and not ver.startswith("1.1.") and ver != "1.1":
+	raise OldInstalled, "Version %s installed"%objc.__version__
+			</string>
+			<key>Home-page</key>
+			<string>http://pyobjc.sourceforge.net/</string>
+			<key>Name</key>
+			<string>PyObjC</string>
+			<key>Prerequisites</key>
+			<array>
+			</array>
+			<key>Version</key>
+			<string>1.1a0</string>
+			<key>MD5Sum</key>
+			<string>504e6bfaedb1b6881023300901a7aeb9</string>
+		</dict>
+		<dict>
+			<key>Description</key>
+			<string>
+PyObjC Documentation and Examples.
+
+The PyObjC binary installer misses the examples and documentation included
+in the source distribution. This package installs those, into your
+/Applications/MacPython-2.3/Extras folder.
+			</string>
+			<key>Download-URL</key>
+			<string>http://pyobjc.sf.net/prerelease/pyobjc_extras-1.1a0.tar.gz</string>
+			<key>Flavor</key>
+			<string>binary</string>
+			<key>Install-test</key>
+			<string>
+if not os.access("/Applications/MacPython-2.3/Extras/pyobjc-1.1a0", 0): 
+	raise NotInstalled
+			</string>
+			<key>Home-page</key>
+			<string>http://pyobjc.sourceforge.net/</string>
+			<key>Name</key>
+			<string>PyObjC_Extras</string>
+			<key>Prerequisites</key>
+			<array>
+			</array>
+			<key>Version</key>
+			<string>1.0</string>
+			<key>MD5Sum</key>
+			<string>12289b64ccd9657a13d55468d005b2d9</string>
+			<key>Systemwide-only</key>
+			<true/>
+		</dict>
+		
+	</array>
+</dict>
+</plist>

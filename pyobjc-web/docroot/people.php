@@ -1,10 +1,14 @@
 <?
 $title = "Contributors";
-$cvs_author = '$Author: bbum $';
-$cvs_date = '$Date: 2002/11/22 22:01:53 $';
+$cvs_author = '$Author: ronaldoussoren $';
+$cvs_date = '$Date: 2004/02/02 15:23:01 $';
 
 include "header.inc";
 ?>
+<p>This page gives a small overview of the history of PyObjC, and lists some 
+   of the people that are involved in its development. The page is incomplete
+   and chaotic.
+
 <p><b>Contributors:</b></p>
 <p>
 Many, many people have contributed to the PyObjC module in the recent months.  The mailing list should be parsed to complete this list.
@@ -16,9 +20,9 @@ Many, many people have contributed to the PyObjC module in the recent months.  T
 </ul>
 </p>
 <p><b>History:</b></p>
-<p>Ronald Oussoren &lt;oussoren@cistron.nl&gt; rewrote most of the module in 2002.  Ronald made it possible to subclass Objective-C classes from Python and added nearly complete support for the Foundation, the AppKit and the AddressBook frameworks.</p>
-<p></p>
 <p>In the fall of 2002, Bill Bumgarner &lt;bbum@codefab.com&gt; added support for non-Framework builds of python.  Ronald and Bill subsequently added support for the Apple supplied build of Python.   Bill created the Project Builder template that allows for building standalone Cocoa applications that are implemented in Project Builder.</p>
+<p></p>
+<p>Ronald Oussoren &lt;oussoren@cistron.nl&gt; rewrote most of the module in 2002.  Ronald made it possible to subclass Objective-C classes from Python and added nearly complete support for the Foundation, the AppKit and the AddressBook frameworks.</p>
 <p></p>
 <p>Steve Majewski &lt;sdm7g@minsky.med.virginia.edu&gt; and Bill Bumgarner &lt;bbum@codefab.com&gt; picked up Lele's work in early November, 2000. Steve significanlty improved compatibility with OS X.</p>
 <p></p>
@@ -39,11 +43,12 @@ History prior to 2000 is a bit fuzzy.  Jeff Sickel contributed numerous patches 
 <p>  His own ObjC module and kind comments helped me a lot.</p>
 <p></p>
 <p>Bill Bumgarner <bbum@friday.com>:</p>
-<p>        He contribuited the standalone packaging setup, good comments and his own implementation of the Streams and Pasteboards support. He  maintained also several Python-related packages for NeXTSTEP: see <ftp://ftp.thoughtport.net/pub/next/lang> [long gone;  see http://www.friday.com/software/python/]</p>
+<p>        He contributed the standalone packaging setup, good comments and his own implementation of the Streams and Pasteboards support. He  maintained also several Python-related packages for NeXTSTEP: see <ftp://ftp.thoughtport.net/pub/next/lang> [long gone;  see http://www.friday.com/software/python/]</p>
 <p></p>
 <p>...and of course to the entire ObjC-SIG community.</p></i>
 <p>
 <a href="mailto:bbum@codefab.com">My (bbum's) memory</a> is far from perfect.  Please feel free to send corrections and updates to this list!  In particular, I believe that the objc module was shipped with the core python distribution at one point, but I can't find any information about that.
+<p><b><a href="mailto:oussoren@cistron.nl">ronald</a>:</b> I did some some digging, and there has been an <TT>objc</TT> module that was part of the core python distribution. This was part of the 1.3 release of python (released in 1995) and claims to be written by Jon M. Kutemeier and maintained by Guido van Rossum. It was removed in the 1.4 release of Python.
 </p>
 <p><?
 include "footer.inc";

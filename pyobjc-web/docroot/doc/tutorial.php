@@ -1,7 +1,7 @@
 <?
     $title = "Creating your first PyObjC application.";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/10/08 17:30:40 $';
+    $cvs_date = '$Date: 2004/02/02 15:23:02 $';
 
     include "header.inc";
 ?>
@@ -41,7 +41,8 @@ $ setenv PYLIB /Library/Frameworks/Python.framework/Versions/Current/lib/python2
 <pre class="literal-block">
 $ export PYLIB=/Library/Frameworks/Python.framework/Versions/Current/lib/python2.3
 </pre>
-<p>For Apple's <tt class="literal"><span class="pre">/usr/bin/python</span></tt> set the variable to <tt class="literal"><span class="pre">/usr/lib/python2.2</span></tt>.</p>
+<p>For Apple's <tt class="literal"><span class="pre">/usr/bin/python</span></tt> set the variable to <tt class="literal"><span class="pre">/usr/lib/python2.2</span></tt>,
+if you are running on MacOS X set it to <tt class="literal"><span class="pre">/System/Library/Frameworks/Python.framework/Versions/Current/lib/python2.3</span></tt>.</p>
 </li>
 <li><p class="first">Start Interface Builder, select <em>Cocoa Application</em>
 in the new file dialog, save this file as <tt class="literal"><span class="pre">src/MainMenu.nib</span></tt>.</p>
@@ -75,10 +76,16 @@ $ python $PYLIB/site-packages/PyObjC/PyObjCTools/NibClassBuilder.py \
 <h1><a name="testing-the-user-interface">Testing the user interface</a></h1>
 <ol class="arabic" start="6">
 <li><p class="first">Now we need to create an application framework around our program. Again,
-in the future it could well be that this step is not needed during development,
-or that it becomes simpler, but for now we do the following:</p>
+in the future it could well be that this step is not needed during 
+development, or that it becomes simpler, but for now we do the following:</p>
 <pre class="literal-block">
 $ python $PYLIB/site-packages/PyObjC/bundlebuilder.py --link --nib=MainMenu \
+        --mainprogram=CurrencyConverter.py --resource=MainMenu.nib build
+</pre>
+<p>If you are using Python 2.3 the script is located in <tt class="literal"><span class="pre">plat-mac</span></tt> instead
+of <tt class="literal"><span class="pre">site-packages</span></tt> and the command is:</p>
+<pre class="literal-block">
+$ python2.3 $PYLIB/plat-mac/bundlebuilder.py --link --nib=MainMenu \
         --mainprogram=CurrencyConverter.py --resource=MainMenu.nib build
 </pre>
 <p>There are a few things to note:</p>

@@ -1,7 +1,7 @@
 <?
     $title = "How to wrap an Objective-C class library";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/10/08 17:30:40 $';
+    $cvs_date = '$Date: 2004/02/02 15:23:02 $';
 
     include "header.inc";
 ?>
@@ -25,12 +25,16 @@ objc.loadBundle(&quot;MyFramework&quot;, globals(),
    bundle_path='/path/to/MyFramework.framework')
 del objc
 </pre>
+<p>In general you should not load frameworks this way, but you should write a
+package or module to do this for you (e.g. place this code in <tt class="literal"><span class="pre">MyFramework.py</span></tt>
+or <tt class="literal"><span class="pre">MyFramework/__init__.py</span></tt>. This makes it possible to 
+<tt class="literal"><span class="pre">import</span> <span class="pre">MyFramework</span></tt> which is much more convenient.</p>
 <p>If your class library does not require helper functions for some methods this
 is all that is needed.</p>
-<p>Don't forget to import the frameworks that are used by your framework before
-calling <tt class="literal"><span class="pre">objc.loadBundle</span></tt>. This is necessary to arrange for the helper code
-for these modules (if there is any) to be loaded. Not importing the those
-wrappers can lead to subtle bugs in unrelated code!</p>
+<p>It is currently necessary to import the wrapper modules for all frameworks that
+are used by your framework. Not doing this may lead to subtle bugs in other
+parts of the code. This is a limitation of PyObjC that will be 
+lifted in a future version.</p>
 </div>
 <div class="section" id="wrapping-global-functions-and-constants">
 <h1><a name="wrapping-global-functions-and-constants">Wrapping global functions and constants</a></h1>

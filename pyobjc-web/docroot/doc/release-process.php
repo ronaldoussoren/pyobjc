@@ -1,7 +1,7 @@
 <?
     $title = "The PyObjC release process";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/10/08 17:35:32 $';
+    $cvs_date = '$Date: 2004/02/02 15:23:02 $';
 
     include "header.inc";
 ?>

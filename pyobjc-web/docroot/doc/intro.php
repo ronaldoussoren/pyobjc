@@ -1,7 +1,7 @@
 <?
     $title = "An introduction to PyObjC";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/10/08 17:30:40 $';
+    $cvs_date = '$Date: 2004/02/02 15:23:01 $';
 
     include "header.inc";
 ?>
@@ -26,11 +26,12 @@
 <li><a class="reference" href="#cocoa-for-python-programmers" id="id10" name="id10">Cocoa for Python programmers</a></li>
 <li><a class="reference" href="#notes-on-specific-tasks" id="id11" name="id11">Notes on specific tasks</a><ul>
 <li><a class="reference" href="#working-with-threads" id="id12" name="id12">Working with threads</a></li>
+<li><a class="reference" href="#finalizers" id="id13" name="id13">Finalizers</a></li>
 </ul>
 </li>
-<li><a class="reference" href="#building-applications" id="id13" name="id13">Building applications</a><ul>
-<li><a class="reference" href="#pure-python-buildapp-py" id="id14" name="id14">&quot;Pure Python&quot; :  buildapp.py</a></li>
-<li><a class="reference" href="#ide-approach-project-builder" id="id15" name="id15">&quot;IDE approach&quot; : Project builder</a></li>
+<li><a class="reference" href="#building-applications" id="id14" name="id14">Building applications</a><ul>
+<li><a class="reference" href="#pure-python-buildapp-py" id="id15" name="id15">&quot;Pure Python&quot; :  buildapp.py</a></li>
+<li><a class="reference" href="#ide-approach-project-builder" id="id16" name="id16">&quot;IDE approach&quot; : Project builder</a></li>
 </ul>
 </li>
 </ul>
@@ -154,6 +155,10 @@ for translation are:</p>
 <li>Concatenate all elements of the method name: <tt class="literal"><span class="pre">someMethod:withFoo:andBar:</span></tt></li>
 <li>Then convert all colons to underscores: <tt class="literal"><span class="pre">someMethod_withFoo_andBar_</span></tt></li>
 </ul>
+<p>It is possible to use Python keywords as method names in Objective-C. To access
+or define such methods append two underscores to its name (e.g. <tt class="literal"><span class="pre">class__</span></tt>). 
+This is currently only supported for <tt class="literal"><span class="pre">raise</span></tt> and <tt class="literal"><span class="pre">class</span></tt> because those are
+the only Python keywords that are actually used in Cocoa.</p>
 <p>Wrapped/bridged methods (and functions) have the same number of arguments
 as the corresponding Objective-C method or function, unless otherwise noted
 in the documentation (<a class="reference" href="api-notes-macosx.html">Notes on supported APIs and classes on MacOS X</a> for
@@ -189,6 +194,13 @@ named <tt class="literal"><span class="pre">getNumberOfRows_columns_</span></tt>
 <pre class="literal-block">
 rowCount, columnCount = matrix.getNumberOfRows_columns_()
 </pre>
+<p>When a function or method has an array of values and the length of that array
+as arguments, you can pass <tt class="literal"><span class="pre">None</span></tt> as the length. The length of the sequence
+that is used for the array of values is passed to Objective-C as the length
+argument.</p>
+<p>XXX: Add information about <tt class="literal"><span class="pre">array.array</span></tt> rules.</p>
+<p>XXX: We don't use the right functions for conversion to C-arrays throughout
+the bridge (yet), the information is therefore not entirely correct.</p>
 <p>When you define methods in a subclass of an Objective-C class, the bridge has
 to tell the Objective-C runtime what the signature of those methods is. The
 basic rule is that all arguments as well as the return value are objects (just
@@ -309,14 +321,23 @@ thread that owns the Python GIL (that's also the reason for not being able
 to use <tt class="literal"><span class="pre">NSThread</span></tt> to create new threads).  This restriction will be lifted
 in a future version of PyObjC (at least when using Python 2.3).</p>
 </div>
+<div class="section" id="finalizers">
+<h2><a class="toc-backref" href="#id13" name="finalizers">Finalizers</a></h2>
+<p>In Python you can use the method <tt class="literal"><span class="pre">__del__</span></tt> to clean up resources when your
+object is garbage collected. In Objective-C/Cocoa this is done with a method 
+named <tt class="literal"><span class="pre">dealloc</span></tt>.</p>
+<p>In PyObjC you should always use the <tt class="literal"><span class="pre">__del__</span></tt> method, the <tt class="literal"><span class="pre">dealloc</span></tt> method
+can safely be ignored and the bridge will complain when you try to override
+this method.</p>
+</div>
 </div>
 <div class="section" id="building-applications">
-<h1><a class="toc-backref" href="#id13" name="building-applications">Building applications</a></h1>
+<h1><a class="toc-backref" href="#id14" name="building-applications">Building applications</a></h1>
 <p>There are two different ways to build applications with PyObjC. There are no
 major advantages to using either one of them, use the one that is most 
 convenient to you.</p>
 <div class="section" id="pure-python-buildapp-py">
-<h2><a class="toc-backref" href="#id14" name="pure-python-buildapp-py">&quot;Pure Python&quot; :  buildapp.py</a></h2>
+<h2><a class="toc-backref" href="#id15" name="pure-python-buildapp-py">&quot;Pure Python&quot; :  buildapp.py</a></h2>
 <p>PyObjC includes a copy of the <tt class="literal"><span class="pre">bundlebuilder</span></tt> module. This module will be
 part of the Python 2.3 MacPython release and offers a way to build
 distutils-style scripts  for building (standalone) applications.</p>
@@ -352,7 +373,7 @@ building <tt class="literal"><span class="pre">buildapp.py</span></tt> scripts a
 example <tt class="literal"><span class="pre">buildapp.py</span></tt> scripts in the various <a class="reference" href="../Examples/00ReadMe.txt">Examples</a> subfolders.</p>
 </div>
 <div class="section" id="ide-approach-project-builder">
-<h2><a class="toc-backref" href="#id15" name="ide-approach-project-builder">&quot;IDE approach&quot; : Project builder</a></h2>
+<h2><a class="toc-backref" href="#id16" name="ide-approach-project-builder">&quot;IDE approach&quot; : Project builder</a></h2>
 <p>PyObjC includes a number of Project Builder templates that can be used to 
 build (standalone) applications. Those templates are used like any other
 Project Builder template. The only non-obvious detail is that you have to

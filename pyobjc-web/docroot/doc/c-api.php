@@ -1,7 +1,7 @@
 <?
     $title = "Documentation for the PyObjC C-API (Preliminary)";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/10/08 17:35:32 $';
+    $cvs_date = '$Date: 2004/02/02 15:23:01 $';
 
     include "header.inc";
 ?>
@@ -152,7 +152,7 @@ exception will be rethrown.</p>
 int PyObjC_PythonToObjC(const char* typespec, PyObject* value, void* buffer);
 </pre>
 <p>Convert the value to an Objective-C value of type <tt class="literal"><span class="pre">typespec</span></tt>. The buffer must
-be at least <tt class="literal"><span class="pre">PyObjC_SizeOfType(typespec)</span></tt> bytes long.</p>
+be at least <tt class="literal"><span class="pre">PyObjCRT_SizeOfType(typespec)</span></tt> bytes long.</p>
 <p>NOTE: The <tt class="literal"><span class="pre">typespec</span></tt> is a type specifier as described in the runtime 
 reference of the Objective-C manual from Apple. Use <tt class="literal"><span class="pre">&#64;encode(mytype)</span></tt> if to
 get code that is portable to a different Objective-C runtime.</p>
@@ -168,9 +168,13 @@ must contain the complete argument list, including self. If <tt class="literal">
 <tt class="literal"><span class="pre">NULL</span></tt> it is used to output whether this method should return a new reference
 (TRUE) or a borrowed reference (FALSE).</p>
 <pre class="literal-block">
-int PyObjC_SizeOfType(const char* typespec);
+int PyObjCRT_SizeOfType(const char* typespec);
 </pre>
 <p>Return the size of variables of the specified type.</p>
+<pre class="literal-block">
+int PyObjCRT_AlignOfType(const char* typespec);
+</pre>
+<p>Return the alignment of variables of the specified type.</p>
 <pre class="literal-block">
 Class PyObjCSelector_GetClass(PyObject* sel);
 </pre>
