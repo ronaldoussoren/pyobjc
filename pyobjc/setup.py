@@ -30,7 +30,7 @@ PackageManager application.
 
 if sys.version >= '2.3':
     # Add additional setup arguments, used to register with PyPI, Python 2.2.2
-    # and earlier don't support these (nor the 'register' subcommand of 
+    # and earlier don't support these (nor the 'register' subcommand of
     # setup.py)
     SetupExtraArguments = {
         'classifiers': [
@@ -52,7 +52,7 @@ if sys.version >= '2.3':
 else:
     SetupExtraArguments = {}
 
-if sys.platform == 'darwin': 
+if sys.platform == 'darwin':
     # Apple has used build options that don't work with a 'normal' system.
     # Remove '-arch i386' from the LDFLAGS.
     import distutils.sysconfig
@@ -83,12 +83,9 @@ def subprocess(taskName, cmd, validRes=None):
         sys.exit(1)
 
 # We need at least Python 2.2
-req_ver = [ 2, 2]
+req_ver = (2, 2)
 
-if sys.version_info[0] < req_ver[0] or (
-        sys.version_info[0] == req_ver[0] 
-        and sys.version_info[1] < req_ver[1]):
-
+if sys.version_info < req_ver:
     sys.stderr.write('PyObjC: Need at least Python %s\n'%('.'.join(req_ver)))
     sys.exit(1)
 
@@ -97,12 +94,6 @@ if LIBFFI_SOURCES is not None:
         sys.stderr.write(
             'LIBFFI_SOURCES is not a directory: %s\n'%LIBFFI_SOURCES)
         sys.stderr.write('\tSee Install.txt or Install.html for more information.\n')
-        sys.exit(1)
-    
-    if ' ' in os.path.realpath(LIBFFI_SOURCES):
-        print >>sys.stderr, "LIBFFI can not build correctly in a path that contains spaces."
-        print >>sys.stderr, "This limitation includes the entire path (all parents, etc.)"
-        print >>sys.stderr, "Move the PyObjC and libffi source to a path without spaces and build again."
         sys.exit(1)
 
     if not os.path.exists('build'):
@@ -121,17 +112,23 @@ if LIBFFI_SOURCES is not None:
         inst_dir = os.path.join(os.getcwd(), 'build/libffi')
         src_path = os.path.abspath(LIBFFI_SOURCES)
 
+        if ' ' in src_path+inst_dir:
+            print >>sys.stderr, "LIBFFI can not build correctly in a path that contains spaces."
+            print >>sys.stderr, "This limitation includes the entire path (all parents, etc.)"
+            print >>sys.stderr, "Move the PyObjC and libffi source to a path without spaces and build again."
+            sys.exit(1)
+
         inst_dir = inst_dir.replace("'", "'\"'\"'")
         src_path = src_path.replace("'", "'\"'\"'")
 
         subprocess('Building FFI', "cd build/libffi/BLD && '%s/configure' --prefix='%s' --disable-shared --enable-static && make install"%(src_path, inst_dir), None)
-        
+
     LIBFFI_BASE='build/libffi'
-    LIBFFI_CFLAGS=[ 
-        "-isystem", "%s/include"%LIBFFI_BASE, 
+    LIBFFI_CFLAGS=[
+        "-isystem", "%s/include"%LIBFFI_BASE,
     ]
-    LIBFFI_LDFLAGS=[ 
-        '-L%s/lib'%LIBFFI_BASE, '-lffi', 
+    LIBFFI_LDFLAGS=[
+        '-L%s/lib'%LIBFFI_BASE, '-lffi',
     ]
 
 else:
@@ -140,8 +137,8 @@ else:
 
 
 sourceFiles = [
-	"Modules/objc/objc-runtime-apple.m",
-	"Modules/objc/objc-runtime-gnu.m",
+        "Modules/objc/objc-runtime-apple.m",
+        "Modules/objc/objc-runtime-gnu.m",
         "Modules/objc/objc_util.m",
         "Modules/objc/objc_support.m",
         "Modules/objc/class-builder.m",
@@ -173,7 +170,7 @@ gs_root = os.environ.get('GNUSTEP_SYSTEM_ROOT')
 
 if gs_root is None:
     #
-    # MacOS X 
+    # MacOS X
     #
     def IfFrameWork(name, packages, extensions, headername=None):
         """
@@ -189,33 +186,33 @@ if gs_root is None:
 
     # Double-check
     if sys.platform != 'darwin':
-    	print "You're not running on MacOS X, and don't use GNUstep"
-	print "I don't know how to build PyObjC on such a platform."
-	print "Please read the ReadMe."
-	print ""
-	sys.exit(1)
+        print "You're not running on MacOS X, and don't use GNUstep"
+        print "I don't know how to build PyObjC on such a platform."
+        print "Please read the ReadMe."
+        print ""
+        sys.exit(1)
 
     CFLAGS=[
         "-DMACOSX",
-	"-DAPPLE_RUNTIME",
+        "-DAPPLE_RUNTIME",
         "-no-cpp-precomp",
         "-Wno-long-double",
         "-g",
 
         # Loads of warning flags
         "-Wall", "-Wstrict-prototypes", "-Wmissing-prototypes",
-        "-Wformat=2", "-W", "-Wshadow", 
+        "-Wformat=2", "-W", "-Wshadow",
         "-Wpointer-arith", #"-Wwrite-strings",
         "-Wmissing-declarations",
-        "-Wnested-externs", 
+        "-Wnested-externs",
         "-Wno-long-long",
-	#"-Wfloat-equal", 
-    
+        #"-Wfloat-equal",
+
         # These two are fairly useless:
-        #"-Wunreachable-code", 
+        #"-Wunreachable-code",
         #"-pedantic",
 
-        "-Wno-import", 
+        "-Wno-import",
         "-O0", "-g",
         #"-Werror",
         ]
@@ -265,24 +262,24 @@ else:
         Return the packages and extensions if the framework exists, or
         two empty lists if not.
         """
-	name = os.path.splitext(name)[0]
+        name = os.path.splitext(name)[0]
         for pth in (gs_root, ):
             basedir = os.path.join(pth, 'Headers', name)
             if os.path.exists(basedir):
-	    	return packages, extensions
+                    return packages, extensions
         return [], []
 
     CFLAGS=[
         '-g',
-	'-O0',
+        '-O0',
         '-Wno-import',
 
-	# The flags below should somehow be extracted from the GNUstep
-	# build environment (makefiles)!
-	'-DGNU_RUNTIME=1',
-	'-DGNUSTEP_BASE_LIBRARY=1',
-	'-fconstant-string-class=NSConstantString',
-	'-fgnu-runtime',
+        # The flags below should somehow be extracted from the GNUstep
+        # build environment (makefiles)!
+        '-DGNU_RUNTIME=1',
+        '-DGNUSTEP_BASE_LIBRARY=1',
+        '-fconstant-string-class=NSConstantString',
+        '-fgnu-runtime',
         '-I' + gs_root + '/Headers',
         '-I' + gs_root + '/Headers/gnustep',
         '-I' + gs_root + '/Headers/' + gs_lib_dir
@@ -312,12 +309,12 @@ CFLAGS.append('-Ibuild/codegen/')
 
 CorePackages = [ 'objc' ]
 CoreExtensions =  [
-    Extension("objc._objc", 
+    Extension("objc._objc",
               sourceFiles,
               extra_compile_args=[
               ] + LIBFFI_CFLAGS + CFLAGS,
               extra_link_args=LIBFFI_LDFLAGS + OBJC_LDFLAGS),
-    Extension("objc.test.ctests", 
+    Extension("objc.test.ctests",
               [ 'Modules/objc/unittest.m' ],
               extra_compile_args=[
               ] + LIBFFI_CFLAGS + CFLAGS,
@@ -339,7 +336,7 @@ CoreExtensions =  [
 if gs_root is None:
     # autoGIL is only usefull on MacOS X
     CoreExtensions.append(
-        Extension("autoGIL", 
+        Extension("autoGIL",
             ["Modules/autoGIL.c"],
                 extra_compile_args = CFLAGS,
                 extra_link_args = ['-framework', 'CoreFoundation']),
@@ -351,7 +348,7 @@ subprocess("Generating wrappers & stubs", "%s Scripts/CodeGenerators/cocoa_gener
 # makes development slightly more convenient.
 if sys.version >= '2.3':
     FoundationDepends = {
-        'depends': (glob.glob('build/codegen/_Fnd_*.inc') 
+        'depends': (glob.glob('build/codegen/_Fnd_*.inc')
                 + glob.glob('Modules/Foundation/_FoundationMapping_*.m'))
     }
     AppKitDepends = {
@@ -384,26 +381,26 @@ else:
 
 FoundationPackages, FoundationExtensions = \
         IfFrameWork('Foundation.framework', [ 'Foundation' ], [
-          Extension("_Foundation", 
+          Extension("_Foundation",
                     [
                         "Modules/Foundation/_Foundation.m",
                         "Modules/Foundation/NSAutoreleasePoolSupport.m"
                     ],
                     extra_compile_args=[
-                        "-IModules/objc",  
+                        "-IModules/objc",
                     ] + CFLAGS,
                     extra_link_args=[
                     ] + FND_LDFLAGS,
                     **FoundationDepends
                     ),
-	])
+        ])
 
 AppKitPackages, AppKitExtensions = \
         IfFrameWork('AppKit.framework', [ 'AppKit' ], [
-          Extension("AppKit._AppKit", 
+          Extension("AppKit._AppKit",
                     ["Modules/AppKit/_AppKit.m"],
                     extra_compile_args=[
-                        "-IModules/objc", 
+                        "-IModules/objc",
                     ] + CFLAGS,
                     extra_link_args=[
                     ] + APPKIT_LDFLAGS,
@@ -465,7 +462,7 @@ InterfaceBuilderPackages, InterfaceBuilderExtensions = \
                         '-IModules/objc',
                       ] + CFLAGS,
                       extra_link_args=[
-                        '-framework', 'InterfaceBuilder', 
+                        '-framework', 'InterfaceBuilder',
                         '-framework', 'Foundation'
                       ],
                       **InterfaceBuilderDepends
@@ -480,7 +477,7 @@ WebKitPackages, WebKitExtensions = \
                         '-IModules/objc',
                       ] + CFLAGS,
                       extra_link_args=[
-                        '-framework', 'WebKit', 
+                        '-framework', 'WebKit',
                         '-framework', 'Foundation'
                       ],
                       **WebKitDepends
@@ -498,9 +495,9 @@ def package_version():
     raise ValueError, "Version not found"
 
 
-packages = CorePackages + AppKitPackages + FoundationPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + ScreenSaverPackages + WebKitPackages + SecurityInterfacePackages + [ 'PyObjCTools' ] 
+packages = CorePackages + AppKitPackages + FoundationPackages + AddressBookPackages + PrefPanesPackages + InterfaceBuilderPackages + ScreenSaverPackages + WebKitPackages + SecurityInterfacePackages + [ 'PyObjCTools' ]
 # The following line is needed to allow separate flat modules
-# to be installed from a different folder (needed for the 
+# to be installed from a different folder (needed for the
 # bundlebuilder test below).
 package_dir = dict([(pkg, 'Lib/' + pkg) for pkg in packages])
 
@@ -524,28 +521,28 @@ except ImportError:
     package_dir[''] = 'MPCompat'
 
 dist = setup(name = "pyobjc",
-	     version = package_version(),
-	     description = "Python<->ObjC Interoperability Module",
+             version = package_version(),
+             description = "Python<->ObjC Interoperability Module",
              long_description = LONG_DESCRIPTION,
-	     author = "bbum, RonaldO, SteveM, LeleG, many others stretching back through the reaches of time...",
-	     author_email = "pyobjc-dev@lists.sourceforge.net",
-	     url = "http://pyobjc.sourceforge.net/",
+             author = "bbum, RonaldO, SteveM, LeleG, many others stretching back through the reaches of time...",
+             author_email = "pyobjc-dev@lists.sourceforge.net",
+             url = "http://pyobjc.sourceforge.net/",
              platforms = [ 'MacOS X' ],
-	     ext_modules = (
-			     CoreExtensions 
-			   + AppKitExtensions
-			   + FoundationExtensions
-			   + AddressBookExtensions 
+             ext_modules = (
+                             CoreExtensions
+                           + AppKitExtensions
+                           + FoundationExtensions
+                           + AddressBookExtensions
                            + PrefPanesExtensions
                            + InterfaceBuilderExtensions
                            + ScreenSaverExtensions
                            + SecurityInterfaceExtensions
                            + WebKitExtensions
-			   ),
-	     packages = packages,
-	     package_dir = package_dir,
-	     scripts = [ 'Scripts/nibclassbuilder', 'Scripts/runPyObjCTests'],
-	     extra_path = "PyObjC",
+                           ),
+             packages = packages,
+             package_dir = package_dir,
+             scripts = [ 'Scripts/nibclassbuilder', 'Scripts/runPyObjCTests'],
+             extra_path = "PyObjC",
              **SetupExtraArguments
 )
 
