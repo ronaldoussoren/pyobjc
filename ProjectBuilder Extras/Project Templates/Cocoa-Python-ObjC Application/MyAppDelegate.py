@@ -24,7 +24,7 @@ class MyAppDelegate(NibClassBuilder.AutoBaseClass, NSApplicationDelegate):
         """
         newHue = self.hueSlider.floatValue()
         self.hueView.setHue_(newHue)
-    
+
     def awakeFromNib(self):
         """
         awakeFromNib() is invoked when the NIB that caused this object to be instantiated is loaded (MainMenu.nib).

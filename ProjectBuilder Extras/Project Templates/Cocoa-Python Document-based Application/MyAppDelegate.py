@@ -9,7 +9,7 @@
 from objc import YES, NO
 
 from AppKit import NSApplicationDelegate
-from PyObjCTools import NibClassBuilder 
+from PyObjCTools import NibClassBuilder
 
 # create ObjC classes as defined in MainMenu.nib
 NibClassBuilder.extractClasses("MainMenu")

@@ -40,10 +40,10 @@ class MyAppDelegate(NibClassBuilder.AutoBaseClass, NSApplicationDelegate):
         userName = NSFullUserName()
         hostName = NSProcessInfo.processInfo().hostName()
         helloString = "Hello %s @ %s!" % (userName, hostName)
-    
+
         self.messageTextField.setStringValue_(helloString)
         NSLog( "Saying: %s" % helloString )
-    
+
     def applicationDidFinishLaunching_(self, aNotification):
         """
         Invoked by NSApplication once the app is done launching and
