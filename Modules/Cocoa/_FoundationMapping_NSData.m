@@ -71,7 +71,7 @@ static PyObject* supercall_NSData_dataWithBytes_length_(
 
 	NS_DURING
 		RECEIVER(super) = ObjCClass_GetClass(self);
-		super.class = GETISA(ObjCClass_GetClass((PyObject*)(self->ob_type)));
+		super.class = GETISA(RECEIVER(super));
 
 		objc_result = objc_msgSendSuper(&super,
 				@selector(dataWithBytes:length:),
@@ -298,7 +298,10 @@ static PyObject* supercall_NSData_bytes(PyObject* method, PyObject* self, PyObje
     RECEIVER(super) = ObjCObject_GetObject(self);
     super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
 
-#warning bbum: Not at all sure what to do here....   send both to super?  Just -bytes?
+    /* bbum: Not at all sure what to do here....   send both to super?  
+     *       Just -bytes?
+     * ronald: I think both is more correct, neiter one is perfect.
+     */
     bytes = objc_msgSendSuper(&super, @selector(bytes));
     bytes_len = (unsigned) objc_msgSendSuper(&super, @selector(length));
 
@@ -379,7 +382,9 @@ static PyObject* supercall_NSMutableData_mutableBytes(PyObject* method, PyObject
     RECEIVER(super) = ObjCObject_GetObject(self);
     super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
 
-#warning bbum: Not at all sure what to do here....   send both to super?  Just -bytes?
+    /* bbum: Not at all sure what to do here....   
+     *       send both to super?  Just -bytes?
+     */
     bytes = objc_msgSendSuper(&super, @selector(mutableBytes));
     bytes_len = (unsigned) objc_msgSendSuper(&super, @selector(length));
 

@@ -99,7 +99,7 @@ static	char* keywords[] = { "argv", NULL };
 	}
 
 	NS_DURING
-		res = NSApplicationMain(argc, argv);
+		res = NSApplicationMain(argc, (const char**)argv);
 	NS_HANDLER
 		ObjCErr_FromObjC(localException);
 		res = -1;

@@ -30,6 +30,9 @@ static PyObject* call_NSCoder_encodeValueOfObjCType_at_(
 	}
 
 	size = ObjC_SizeOfType(signature);
+	if (size == -1) {
+		return NULL;
+	}
 	buf = alloca(size);
 	if (buf == NULL) {
 		PyErr_NoMemory();
@@ -75,6 +78,9 @@ static PyObject* supercall_NSCoder_encodeValueOfObjCType_at_(
 	}
 
 	size = ObjC_SizeOfType(signature);
+	if (size == -1) {
+		return NULL;
+	}
 	buf = alloca(size);
 	if (buf == NULL) {
 		PyErr_NoMemory();
@@ -164,6 +170,9 @@ static PyObject* call_NSCoder_encodeArrayOfObjCType_count_at_(
 	}
 
 	size = ObjC_SizeOfType(signature);
+	if (size == -1) {
+		return NULL;
+	}
 	buf = alloca(size * (count+1));
 	if (buf == NULL) {
 		PyErr_NoMemory();
@@ -228,6 +237,9 @@ static PyObject* supercall_NSCoder_encodeArrayOfObjCType_count_at_(
 	}
 
 	size = ObjC_SizeOfType(signature);
+	if (size == -1) {
+		return NULL;
+	}
 	buf = alloca(size * (count+1));
 	if (buf == NULL) {
 		PyErr_NoMemory();
@@ -288,6 +300,10 @@ static void imp_NSCoder_encodeArrayOfObjCType_count_at_(id self, SEL sel,
 	}
 
 	size = ObjC_SizeOfType(signature);
+	if (size == -1) {
+		ObjCErr_ToObjC();
+		return;
+	}
 
 	PyTuple_SetItem(arglist, 0, PyString_FromString(signature));
 	PyTuple_SetItem(arglist, 1, PyInt_FromLong(count));
