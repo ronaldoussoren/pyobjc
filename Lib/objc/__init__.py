@@ -70,7 +70,13 @@ def IBAction(func):
     """
     return selector(func, signature="v@:@")
 
-
+def pluginBundle(pluginName):
+    """
+    Return the main bundle for the named plugin. This should be used
+    in combination with ``PyObjCTools.pluginbuilder``.
+    """
+    cls = 'PyObjC_Bundle_' + pluginName 
+    return runtime.NSBundle.bundleForClass_(getattr(runtime, cls))
 
 from _convenience import CONVENIENCE_METHODS, CLASS_METHODS
 
