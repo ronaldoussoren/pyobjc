@@ -78,6 +78,7 @@ PyObjCErr_FromObjC(NSException* localException)
 
 		val = [userInfo objectForKey:@"__pyobjc_exc_type__"];
 		if (val) {
+			state = PyGILState_Ensure();
 			exc_type = [val pyObject];
 			exc_value = [[userInfo objectForKey:@"__pyobjc_exc_value__"]  pyObject];
 			exc_traceback = [[userInfo objectForKey:@"__pyobjc_exc_traceback__"]  pyObject];
@@ -85,12 +86,11 @@ PyObjCErr_FromObjC(NSException* localException)
 			/* -pyObject returns a borrowed reference and 
 			 * PyErr_Restore steals one from us.
 			 */
-			state = PyGILState_Ensure();
 			Py_INCREF(exc_type);
 			Py_XINCREF(exc_value);
 			Py_XINCREF(exc_traceback);
 
-			PyErr_Restore(exc_type, exc_value , exc_traceback);
+			PyErr_Restore(exc_type, exc_value, exc_traceback);
 			PyGILState_Release(state);
 			return;
 		}
@@ -210,7 +210,6 @@ PyObjCErr_AsExc(void)
 			return val;
 		}
 	}
-	Py_XDECREF(args);
 
 	repr = PyObject_Str(exc_value);
 	typerepr = PyObject_Str(exc_type);
