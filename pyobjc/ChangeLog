@@ -1,4 +1,6 @@
 2002-10-31  Bill Bumgarner  <bbum@codefab.com>
+	* Fixed a typo in NSOutlineViewDataSource.
+	* Fixed the classnib.py script slightly.
 	* Added support for NSSet in the convenience methods.
 
 2002-10-30  Bill Bumgarner  <bbum@codefab.com>

@@ -61,7 +61,6 @@ def generate_wrapper_module(outfp, classinfolist):
 		generator.add_classnib(n)
 	generator.generate()
 
-
 #
 #
 # Beyond this are classes and functions used to implement the public functions,
@@ -198,14 +197,13 @@ class ClassNibGenerator:
 		outlets = classinfo.get('OUTLETS', ())
 		fw = self._frameworkForClass(supername)
 		if fw:
-			supername = '%s.%s'%(fw, supername)
+			supername = '%s'%(supername)
 	
 		self._fp.write('class %sBase (%s):\n'%(clsname, supername))
 		self._fp.write('\t"Base class for class \'%s\'"\n'%clsname)
 		if not actions and not outlets:
 			self._fp.write('\tpass\n')
 
-		print outlets
 		for o in outlets:
 			self._fp.write('\t%s = IBOutlet("%s")\n'%(o, o))
 		if outlets:
@@ -220,5 +218,6 @@ class ClassNibGenerator:
 
 if __name__ == '__main__':
 	import sys
-	classinfo = parse_classes_nib('English.lproj/MainMenu.nib')
-	generate_wrapper_module(sys.stdout, [classinfo])
+	for nibFile in sys.argv[1:]:
+		classinfo = parse_classes_nib(nibFile)
+		generate_wrapper_module(sys.stdout, [classinfo])

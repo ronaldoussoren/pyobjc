@@ -501,7 +501,7 @@ NSOutlineViewDataSource = _objc.informal_protocol(
 	[
 		_objc.selector(
 			None, 
-			selector='outlineView:accepDrop:item:childIndex:',
+			selector='outlineView:acceptDrop:item:childIndex:',
 			signature='c@@@i',
 			required=0
 		),
