@@ -10,6 +10,25 @@
 #include "OC_PythonDictionary.h"
 #include "super-call.h"
 
+/*
+ * Python compatibility definitions
+ */
+
+/* Earlier versions of Python don't define PyDoc_STRVAR */
+#ifndef PyDoc_STR
+#define PyDoc_VAR(name)	        static char name[]
+#define PyDoc_STR(str)	        (str)
+#define PyDoc_STRVAR(name, str) PyDoc_VAR(name) = PyDoc_STR(str)
+#endif
+
+#if PY_VERSION_HEX < 0x0203000A /* Python < 2.3.0a */
+
+/* PyBool_Type was introduced in Python 2.3 */
+#define PyBool_Check(_x_) (0)
+#define PyBool_FromLong(_x_) PyInt_FromLong(_x_)
+
+#endif /* Python < 2.3.0a */
+
 #define OBJC_VERSION "0.8"
 
 #ifdef MACOSX
@@ -23,9 +42,10 @@
  */
 @interface NSMethodSignature (WarningKiller)
 	+signatureWithObjCTypes:(const char*)types;
-	@end
+@end // interface NSMethodSignature
 #endif
 
+extern int ObjC_VerboseLevel;
 
 extern PyTypeObject ObjCClass_Type;
 #define ObjCClass_Check(obj) PyObject_TypeCheck(obj, &ObjCClass_Type)
@@ -174,5 +194,8 @@ PyObject* ObjCIPFindInfo(PyObject* obj, SEL selector);
 #define OC_CheckRevive(obj)
 
 #endif /* !OBJC_PARANOIA_MODE */
+
+/* See alloc_hack.m */
+int ObjC_InstallAllocHack(void);
 
 #endif /* META_H */

@@ -7,9 +7,14 @@
 #include <Python.h>
 #include "pyobjc.h"
 #include <stddef.h>
-#include <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSBundle.h>
 #include "objc_support.h"
 
+/* defined in register.m (a generated file) */
+int ObjC_RegisterStdStubs(struct pyobjc_api* api);
+
+int ObjC_VerboseLevel = 0;
 NSAutoreleasePool* ObjC_global_release_pool = nil;
 
 PyDoc_STRVAR(lookUpClass_doc,
@@ -145,6 +150,164 @@ static 	char* keywords[] = { "class_name", "selector", "signature", NULL };
 	return Py_None;
 }
 
+PyDoc_STRVAR(func_setVerbose_doc,
+	"setVerbose(bool) -> None\n"
+	"\n"
+	"Set verbosity to the new value."
+);
+static PyObject* 
+func_setVerbose(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static 	char* keywords[] = { "level", NULL };
+	PyObject* o;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:setVerbose",
+			keywords, &o)) {
+		return NULL;
+	}
+
+	ObjC_VerboseLevel = PyObject_IsTrue(o);
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
+PyDoc_STRVAR(func_getVerbose_doc,
+	"getVerbose() -> bool\n"
+	"\n"
+	"Return the verbosity value."
+);
+static PyObject* 
+func_getVerbose(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static 	char* keywords[] = { NULL };
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":getVerbose",
+			keywords)) {
+		return NULL;
+	}
+
+	return PyBool_FromLong(ObjC_VerboseLevel);
+}
+
+
+
+
+PyDoc_STRVAR(objc_loadBundle_doc,
+	"loadBundle(bundle, module_name, module_globals) -> None\n"
+	"\n"
+	"Find all classes defined in the 'bundle', set their __module__ to\n"
+	"'module_name' and load them into 'module_globals'"
+);
+PyObject*
+objc_loadBundle(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bundle_identifier", NULL };
+	id        bundle;
+	id        strval;
+	const char* errstr;
+	PyObject* bundle_identifier = NULL;
+	PyObject* bundle_path = NULL;
+	PyObject* module_name;
+	PyObject* module_globals;
+	PyObject* class_list;
+	int       len, i;
+	PyObject* module_key = NULL;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
+			"SO|SS:loadBundle",
+			keywords, &module_name, &module_globals,
+			&bundle_path, &bundle_identifier)) {
+		return NULL;
+	}
+
+	if (!bundle_path && !bundle_identifier) {
+		PyErr_SetString(PyExc_ValueError,
+			"Need to specify either bundle_path or "
+			"bundle_identifier");
+		return NULL;
+	}
+	if (bundle_path && bundle_identifier) {
+		PyErr_SetString(PyExc_ValueError,
+			"Need to specify either bundle_path or "
+			"bundle_identifier");
+		return NULL;
+	}
+
+	if (bundle_path) {
+		errstr = depythonify_c_value("@", bundle_path, &strval);
+		if (errstr != NULL) {
+			PyErr_SetString(PyExc_ValueError, errstr);
+			return NULL;
+		}
+		bundle = [NSBundle bundleWithPath:strval];
+	} else {
+		errstr = depythonify_c_value("@", bundle_identifier, &strval);
+		if (errstr != NULL) {
+			PyErr_SetString(PyExc_ValueError, errstr);
+			return NULL;
+		}
+		bundle = [NSBundle bundleWithIdentifier:strval];
+	}
+
+	if (![bundle isLoaded]) {
+		[bundle load];
+	}
+
+	class_list = ObjC_GetClassList();
+	if (class_list == NULL) {	
+		return NULL;
+	}
+
+	len = PyTuple_Size(class_list);
+	for (i = 0; i < len; i++) {
+		PyObject* item;
+		Class     cls;
+
+		item = PyTuple_GET_ITEM(class_list, i);
+		if (item == NULL) {
+			continue;
+		}
+
+		cls = ObjCClass_GetClass(item);
+		if (cls == nil) {
+			PyErr_Print();
+			PyErr_Clear();
+			continue;
+		}
+
+		if ([NSBundle bundleForClass:cls] != bundle) {
+			continue;
+		}
+
+		/* cls is located in bundle */
+		if (module_key == NULL) {
+			module_key = PyString_FromString("__module__");
+			if (module_key == NULL) {
+				Py_DECREF(class_list);
+				return NULL;
+			}
+		}
+
+		if (PyObject_SetAttr(item, module_key, module_name) == -1) {
+			Py_DECREF(module_key);
+			Py_DECREF(class_list);
+			return NULL;
+		}
+
+		if (PyDict_SetItemString(module_globals, 
+				((PyTypeObject*)item)->tp_name, item) == -1) {
+			Py_DECREF(module_key);
+			Py_DECREF(class_list);
+			return NULL;
+		}
+	}
+	Py_XDECREF(module_key);
+	Py_XDECREF(class_list);
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 
 static PyMethodDef meta_methods[] = {
 	{ "lookUpClass", (PyCFunction)lookUpClass, METH_VARARGS|METH_KEYWORDS, lookUpClass_doc },
@@ -152,6 +315,9 @@ static PyMethodDef meta_methods[] = {
 	{ "set_class_extender", (PyCFunction)objc_set_class_extender, METH_VARARGS|METH_KEYWORDS, objc_set_class_extender_doc  },
 	{ "set_signature_for_selector", (PyCFunction)objc_set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
 	{ "recycle_autorelease_pool", (PyCFunction)objc_recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, objc_recycle_autorelease_pool_doc },
+	{ "setVerbose", (PyCFunction)func_setVerbose, METH_VARARGS|METH_KEYWORDS, func_setVerbose_doc },
+	{ "getVerbose", (PyCFunction)func_getVerbose, METH_VARARGS|METH_KEYWORDS, func_getVerbose_doc },
+	{ "loadBundle", (PyCFunction)objc_loadBundle, METH_VARARGS|METH_KEYWORDS, objc_loadBundle_doc },
 	{ 0, 0, 0, 0 } /* sentinel */
 };
 
