@@ -1,5 +1,6 @@
 import unittest
 import objc
+from testbndl import PyObjC_TestClass3
 
 # Most usefull systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass('NSObject')
@@ -82,6 +83,26 @@ class TestSelectors(unittest.TestCase):
                 pass
 
         self.assert_(repr(SelectorRepr.foo).startswith('<unbound selector foo of SelectorRepr at'))
+
+
+class TestCopying (unittest.TestCase):
+
+    def testCopy(self):
+        class MyCopyClass (NSObject):
+            def copyWithZone_(self, zone):
+                o = super(MyCopyClass, self).copyWithZone_(zone)
+                o.foobar = 2
+                return o
+
+        o = MyCopyClass.alloc().init()
+        o.foobar = 1
+
+        self.assertEquals(o.foobar, 1)
+
+        c = PyObjC_TestClass3.makeACopy_(o)
+        
+        self.assert_(isinstance(c, MyCopyClass))
+        self.assertEquals(c.foobar, 2)
 
 if __name__ == '__main__':
     unittest.main()

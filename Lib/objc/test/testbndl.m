@@ -1,4 +1,8 @@
 /*
+ * XXX: TestClass3 is contains some test-code that is not replicated in 
+ *      testbndl2.m, the rest should be removed after checking that 
+ *      testbndl2.m really does contain all tests in this file!.
+ *
  * This file implements a (number of) class(es) that are used to test
  * method calling with PyObjC (both python -> ObjC and back)
  *
@@ -1446,6 +1450,37 @@ static 	char buf[1024];
 @end
 
 
+/*============================================================================*/
+
+@interface PyObjC_TestClass3 : NSObject
+{
+}
++makeACopy:source;
+@end
+
+@implementation PyObjC_TestClass3
+
++makeACopy:source
+{
+	id theCopy;
+	id pool;
+
+	/* Copy the source, bracketed by the creation and
+	 * destruction of an autorelease pool. This should
+	 * cause a core-dump if the copy is not a 'new'
+	 * object.
+	 */
+	pool = [[NSAutoreleasePool alloc] init];
+	theCopy = [source copy];
+	[pool release];
+	pool = nil;
+	
+	return theCopy;
+}
+
+@end
+
+
 
 static PyMethodDef no_methods[] = {
 	{ 0, 0, 0, 0 }
@@ -1469,5 +1504,8 @@ void inittestbndl(void)
 		PyObjCClass_New([OC_TestClass1 class]));
 	PyModule_AddObject(m, "OC_TestClass2", 
 		PyObjCClass_New([OC_TestClass2 class]));
+	PyModule_AddObject(m, "PyObjC_TestClass3", 
+		PyObjCClass_New([PyObjC_TestClass3 class]));
+	
 	
 }
