@@ -95,7 +95,6 @@ classAddMethods(PyObject* self, PyObject* args, PyObject* keywds)
     struct objc_method *objcMethod = &methodsToAdd->method_list[methodIndex];
     objcMethod->method_name = ObjCSelector_Selector(aMethod);
 
-#warning bbum: the strdup() is necessary or else the unit test fail. But is this correct???
     objcMethod->method_types = strdup(ObjCSelector_Signature(aMethod));
     objcMethod->method_imp = ObjC_MakeIMPForObjCSelector((ObjCSelector*)aMethod);
   }

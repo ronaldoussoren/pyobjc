@@ -22,24 +22,11 @@ PyObject* ObjC_call_to_python(id self, SEL selector, PyObject* arglist);
 
 char* ObjC_strdup(const char* value);
 
-#if 0 /* Multithread support */
+#include <Foundation/NSMapTable.h>
+extern NSMapTableKeyCallBacks ObjC_PointerKeyCallBacks;
+extern NSMapTableValueCallBacks ObjC_PointerValueCallBacks;
+extern NSMapTableKeyCallBacks ObjC_PyObjectKeyCallBacks;
+extern NSMapTableValueCallBacks ObjC_PyObjectValueCallBacks;
 
-void ObjC_AcquireGIL(void);
-void ObjC_ReleaseGIL(void);
-
-#define ObjC_BEGIN_OBJC_CALL { ObjC_ReleaseGIL();
-#define ObjC_END_OBJC_CALL ObjC_AcquireGIL(); }
-#define ObjC_BEGIN_PYTHON_CALL { ObjC_AcquireGIL();
-#define ObjC_END_PYTHON_CALL ObjC_ReleaseGIL(); }
-
-#else 
-
-#define ObjC_BEGIN_OBJC_CALL {
-#define ObjC_END_OBJC_CALL }
-
-#define ObjC_BEGIN_PYTHON_CALL {
-#define ObjC_END_PYTHON_CALL }
-
-#endif /* No multithread support */
 
 #endif /* OBJC_UTIL */

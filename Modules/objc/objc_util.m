@@ -93,11 +93,11 @@ void ObjCErr_FromObjC(NSException* localException)
 	Py_DECREF(v);
 	if (userInfo) {
 		v = ObjCObject_New(userInfo);
-		if (v == NULL) {
-			PyErr_Print();
-			abort();
+		if (v != NULL) {
+			PyDict_SetItemString(dict, "userInfo", v);
+		} else { 
+			PyErr_Clear();
 		}
-		PyDict_SetItemString(dict, "userInfo", v);
 		Py_DECREF(v);
 	} else {
 		PyDict_SetItemString(dict, "userInfo", Py_None);
@@ -399,59 +399,42 @@ char* ObjC_strdup(const char* value)
 	return result;
 }
 
-#if 0 /* Multithreading support */
+NSMapTableKeyCallBacks ObjC_PointerKeyCallBacks = {
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+};
 
-/*
- * Initial support for multithread access to the bridge. Code is completely
- * untested (even never compiled). Based on a hint by Jack Jansen.
- *
- * What needs to be done in the rest of the code: 
- * - ObjC_ReleaseGIL() ... ObjC_AcquireGIL() around calls to Obj-C
- * - ObjC_AcquireGIL() ... ObjC_ReleaseGIL() around calls to Python
- * These should be wrapped into macros (like 'Py_BEGIN_ALLOW_THREADS')
- * 
- * OBJC_BEGIN_OBJC_CALL
- * 	[objc doit]
- * OBJC_END_OBJC_CALL
- *
- * And:
- * OBJC_BEGIN_PYTHON_CALL
- * 	PyList_GetItem([self pyObject], 3)
- * 	...
- * OBJC_END_PYTHON_CALL
- */
-static id  threadKey = @"PyObjCInterpreterState";
-static int multiThreaded = 1;
-static PyInterpreterState* interpreterState = NULL;
+NSMapTableValueCallBacks ObjC_PointerValueCallBacks = {
+	NULL,
+	NULL,
+	NULL,
+};
 
-void  ObjC_ReleaseGIL(void)
+static void pyobj_retain(NSMapTable* table, const void* v)
 {
-	NSMutableDictionary* td = [[NSThread currentThread] threadDictionary];
-	PyThreadState* save;
-
-	if (interpreterState == NULL) {
-		interpreterState = PyThreadState_Get()->interp;
-	}
-
-	save = PyEval_SaveThread();
-
-	[td setObject:save forKey:threadKey];
+	Py_XINCREF((PyObject*)v);
 }
 
-void ObjC_AcquireGIL(void)
+static void pyobj_release(NSMapTable* table, void* v)
 {
-	PyThreadState* save;
-
-	save = [td objectForKey:threadKey];
-
-	if (save == nil) {
-		/* No thread state, make a new one */
-		PyEval_AcquireLock();
-		save = PyThreadState_New(interpreter);
-		PyThreadState_Swap(save);
-	} else {
-		PyEval_RestoreThread(save);
-	}
+	Py_XDECREF((PyObject*)v);
 }
 
-#endif /* Multithreading support */
+NSMapTableKeyCallBacks ObjC_PyObjectKeyCallBacks = {
+	NULL,
+	NULL,
+	pyobj_retain,
+	pyobj_release,
+	NULL,
+	NULL,
+};
+
+NSMapTableValueCallBacks ObjC_PyObjectValueCallBacks = {
+	pyobj_retain,
+	pyobj_release,
+	NULL,
+};

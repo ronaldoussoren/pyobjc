@@ -83,14 +83,20 @@ static Class find_real_superclass(Class startAt, SEL selector,
 	/* Skip to class containing this function */
 	while (m == NULL || m->method_imp != currentImp) {
 		cur = cur->super_class;
-		if (!cur) abort();
+		if (!cur) {
+			Py_FatalError("PyObjC: find_real_superclass "
+				"cannot find SEL in class hierarchy");
+		}
 		m = find_method(cur, selector);
 	}
 
 	/* Skip all classes containing this function */
 	while (m != NULL && m->method_imp == currentImp) {
 		cur = cur->super_class;
-		if (!cur) abort();
+		if (!cur) {
+			Py_FatalError("PyObjC: find_real_superclass "
+				"reached top of class hierarchy");
+		}
 		m = find_method(cur, selector);
 	}
 
@@ -311,6 +317,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	Class                    root_class;
 	char**                   curname;
 	PyObject*		 py_superclass;
+	int			 item_size;
 
 
 	/* XXX: May as well directly pass this in... */
@@ -389,7 +396,6 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	for (i = 0; i < key_count; i++) {
 		key = PyList_GetItem(key_list, i);
 		if (PyErr_Occurred()) {
-			PyErr_Print();
 			PyErr_Clear();
 			ObjCErr_Set(ObjCExc_internal_error,
 				"Cannot fetch key in keylist");
@@ -414,7 +420,9 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			}
 
 			ivar_count ++;
-			ivar_size += objc_sizeof_type(((ObjCIvar*)value)->type);
+			item_size = objc_sizeof_type(((ObjCIvar*)value)->type);
+			if (item_size == -1) goto error_cleanup;
+			ivar_size += item_size;
 
 		} else if (ObjCSelector_Check(value)) {
 			ObjCSelector* sel = (ObjCSelector*)value;
@@ -635,7 +643,9 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			var->ivar_type = ((ObjCIvar*)value)->type;
 			var->ivar_offset = ivar_size;
 
-			ivar_size += objc_sizeof_type(var->ivar_type);
+			item_size = objc_sizeof_type(var->ivar_type);
+			if (item_size == -1) goto error_cleanup;
+			ivar_size += item_size;
 
 		} else if (ObjCSelector_Check(value)) {
 			ObjCSelector* sel = (ObjCSelector*)value;
@@ -703,12 +713,13 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 #ifndef GNU_RUNTIME
 	new_class->class.METHODLISTS = 
 		calloc(1, sizeof(struct objc_method_list*));
-	if (new_class->class.METHODLISTS == NULL) abort();
+	if (new_class->class.METHODLISTS == NULL) goto error_cleanup;
+	
 	new_class->class.METHODLISTS[0] = NULL;
 
 	new_class->meta_class.METHODLISTS = 
 		calloc(1, sizeof(struct objc_method_list*));
-	if (new_class->meta_class.METHODLISTS == NULL) abort();
+	if (new_class->meta_class.METHODLISTS == NULL) goto error_cleanup;
 	new_class->meta_class.METHODLISTS[0] = NULL;
 #endif
 
@@ -765,8 +776,12 @@ error_cleanup:
 	}
 
 	if (new_class != NULL) {
-		objc_freeMethodList(new_class->class.METHODLISTS);
-		objc_freeMethodList(new_class->meta_class.METHODLISTS);
+		if(new_class->class.METHODLISTS) {
+			objc_freeMethodList(new_class->class.METHODLISTS);
+		}
+		if (new_class->meta_class.METHODLISTS) {
+			objc_freeMethodList(new_class->meta_class.METHODLISTS);
+		}
 
 		if (new_class->class.name) {
 			free((char*)(new_class->class.name));
@@ -819,8 +834,10 @@ static id class_method_allocWithZone(id self, SEL sel, NSZone* zone)
 
    pyclass = ((struct class_wrapper*)self)->python_class;
 
-   super.class = GETISA(find_real_superclass((Class)self, @selector(allocWithZone:),
-					     class_getClassMethod, (IMP)class_method_allocWithZone));
+   super.class = GETISA(find_real_superclass((Class)self, 
+   			@selector(allocWithZone:),
+			class_getClassMethod, 
+			(IMP)class_method_allocWithZone));
    RECEIVER(super) = self;
 
    obj = objc_msgSendSuper(&super, @selector(allocWithZone:), zone); 
@@ -862,7 +879,6 @@ static id object_method_retain(id self, SEL sel)
 
 		self = objc_msgSendSuper(&super, @selector(retain)); 
 	} else if (pyself) {
-		OC_CheckRevive(pyself);
 		Py_INCREF(pyself);
 	} else {
 		PyErr_Clear();
@@ -1060,6 +1076,13 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	for (i = 2; i < len; i++) {
 		type = [signature getArgumentTypeAtIndex:i];
 		arglen = objc_sizeof_type(type);
+
+		if (arglen == -1) {
+			Py_DECREF(args);
+			ObjCErr_ToObjC();
+			return;
+		}
+
 		arg = alloca(arglen);
 		
 		[invocation getArgument:argbuf atIndex:i];
@@ -1086,6 +1109,12 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 
 	type = [signature methodReturnType];
 	arglen = objc_sizeof_type(type);
+
+	if (arglen == -1) {
+		ObjCErr_ToObjC();
+		return;
+	}
+
 	arg = alloca(arglen+1);
 
 	err = depythonify_c_value(type, result, arg);

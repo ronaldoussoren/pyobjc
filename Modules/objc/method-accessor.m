@@ -38,7 +38,8 @@ error:
 	/* FIXME, however 1024 characters should be enough for any reasonable
 	 * signature. E.g. this can wait until we run into problems.
 	 */
-	abort();
+	PyErr_SetString(PyExc_MemoryError, "PyObC: extremely long signature");
+	return NULL;
 }
 
 static PyObject* 
@@ -49,6 +50,7 @@ find_selector(PyObject* self, char* name, int class_method)
 	NSMethodSignature* methsig;
 	char  buf[1024];
 	int   unbound_instance_method = 0;
+	char* flattened;
 
 	if (ObjCClass_Check(self)) {
 		objc_object = (id)ObjCClass_GetClass(self);
@@ -98,8 +100,13 @@ find_selector(PyObject* self, char* name, int class_method)
 		objc_object = GETISA(objc_object);
 	}
 
+	flattened = flatten_signature(methsig, buf, sizeof(buf));
+	if (flattened == NULL) {
+		return NULL;
+	}
+
 	return ObjCSelector_NewNative((Class)objc_object, sel,
-		flatten_signature(methsig, buf, sizeof(buf)), class_method);
+		flattened, class_method);
 }
 
 static PyObject*
@@ -218,7 +225,7 @@ obj_dealloc(ObjCMethodAccessor* self)
 	self->base = NULL;
 
 	if (self->ob_type->tp_free) {
-		self->ob_type->tp_free(self);
+		self->ob_type->tp_free((PyObject*)self);
 	} else {
 		PyObject_Del(self);
 	}

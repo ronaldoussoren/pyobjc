@@ -135,7 +135,16 @@ ObjCPointer_new (void *p, const char *t)
 {
   unsigned int size = objc_sizeof_type (t);
   const char *typeend = objc_skip_typespec (t);
-  ObjCPointer *self = PyObject_NEW_VAR (ObjCPointer, &ObjCPointer_Type, size);
+  ObjCPointer *self;
+
+  if (size == (unsigned int)-1) {
+	  return NULL;
+  }
+  if (typeend == NULL) {
+	  return NULL;
+  }
+  
+  self = PyObject_NEW_VAR (ObjCPointer, &ObjCPointer_Type, size);
 
   NSLog(@"ObjCPointer created: at %p of type %s", p, t);
 

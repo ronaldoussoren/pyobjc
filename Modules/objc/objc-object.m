@@ -27,14 +27,13 @@
  * object to pass the key that should be remove, that seems to be the easiest
  * (but ugly) method of creating a closure.
  *
- * TODO: Implement using NSHashTable and check if performance improves.
  */
 
-static PyObject* proxy_dict = NULL;
+static NSMapTable* proxy_dict = NULL;
 
 struct unregister_data {
 	PyObject* function;
-	PyObject* key;
+	void* 	  key;
 };
 
 static PyObject* unregister_proxy_func(PyObject* self, PyObject* args)
@@ -50,10 +49,8 @@ static PyObject* unregister_proxy_func(PyObject* self, PyObject* args)
 
 	data = PyCObject_AsVoidPtr(self);
 
-	PyDict_DelItem(proxy_dict, data->key);
-	if (PyErr_Occurred()) PyErr_Clear();
-	Py_DECREF(data->function);
-	Py_DECREF(data->key);
+	NSMapRemove(proxy_dict, data->key);
+	Py_XDECREF(data->function);
 	Py_DECREF(self);
 	free(data);
 
@@ -72,18 +69,16 @@ static PyObject*
 find_existing_proxy(id objc_obj)
 {
 	PyObject* v;
-	PyObject* key;
 
 	if (proxy_dict == NULL) return NULL;
 
-	key = PyInt_FromLong((long)objc_obj);
-	v = PyDict_GetItem(proxy_dict, key);
-	Py_DECREF(key); key = NULL;
-	if (v == NULL) return NULL;
+	v = NSMapGet(proxy_dict, objc_obj);
+	if (v == NULL) {
+		return NULL;
+	}
 
 	v = PyWeakref_GetObject(v);
 	if (v) {
-		OC_CheckRevive(v);
 		Py_INCREF(v);
 	}
 
@@ -93,17 +88,9 @@ find_existing_proxy(id objc_obj)
 static void 
 unregister_proxy(id objc_obj)
 {
-	int r;
-	PyObject* key;
-
 	if (proxy_dict == NULL) return;
 
-	key = PyInt_FromLong((long)objc_obj);
-	r = PyDict_DelItem(proxy_dict, key);
-	Py_DECREF(key); key = NULL;
-	if (r == -1) {
-		PyErr_Clear();
-	}
+	NSMapRemove(proxy_dict, objc_obj);
 }
 
 static int
@@ -126,20 +113,20 @@ register_proxy(PyObject* proxy_obj)
 		
 
 	if (proxy_dict == NULL)  {
-		proxy_dict = PyDict_New();
-		if (proxy_dict == NULL) return -1;
+		proxy_dict =  NSCreateMapTable(ObjC_PointerKeyCallBacks,
+		                        ObjC_PyObjectValueCallBacks, 500);
 
+		if (proxy_dict == NULL) return -1;
 	}
 
 	data = malloc(sizeof(*data));
-	data->key = PyInt_FromLong((long)objc_obj);
+	data->key = objc_obj;
 	data->function = NULL;
 
 
 	unregister_proxy = PyCFunction_New(
 		&unregister_proxy_method_def, PyCObject_FromVoidPtr(data, NULL));
 	if (unregister_proxy == NULL) {
-		Py_DECREF(proxy_dict);
 		return -1;
 	}
 	data->function  = unregister_proxy;
@@ -149,18 +136,12 @@ register_proxy(PyObject* proxy_obj)
 		return -1;
 	}
 
-	Py_INCREF(data->key);
-	PyDict_SetItem(proxy_dict, data->key, v);
-	if (PyErr_Occurred()) return -1;
-	Py_DECREF(v); 
+	NSMapInsert(proxy_dict, objc_obj, v);
+	Py_DECREF(v);
 
 	return 0;
 }
 
-int ObjC_RegisterClassProxy(Class cls, PyObject* classProxy)
-{
-	return register_proxy(classProxy);
-}
 
 static PyObject*
 object_new(PyTypeObject*  type, PyObject* args, PyObject* kwds)
