@@ -391,8 +391,7 @@ packages = (
 )
 
 # The following line is needed to allow separate flat modules
-# to be installed from a different folder (needed for the
-# bundlebuilder test below).
+# to be installed from a different folder
 package_dir = dict([(pkg, 'Lib/' + pkg) for pkg in packages])
 
 for aPackage in package_dir.keys():

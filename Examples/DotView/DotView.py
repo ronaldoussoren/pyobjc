@@ -2,11 +2,12 @@
 
 To build the demo program, run this line in Terminal.app:
 
-    $ python buildapp.py --link build
+    $ python setup.py py2app -A
 
-This creates a directory "build" containing DotView.app. (The --link option
-causes the files to be symlinked to the .app bundle instead of copied. This
-means you don't have to rebuild the app if you edit the sources or nibs.)
+This creates a directory "dist" containing DotView.app. (The
+-A option causes the files to be symlinked to the .app bundle instead
+of copied. This means you don't have to rebuild the app if you edit the
+sources or nibs.)
 """
 
 # Created by Etienne Posthumus on Thu Dec 26 2002, after Apple's
