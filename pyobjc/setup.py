@@ -8,7 +8,7 @@ USE_FFI_SHORTCUTS = 1
 
 # If true we adjust the reference count for copy/alloc, otherwise users
 # have to do that manually. (Experimental)
-USE_ADJUST_REFCOUNTS = 1
+USE_ADJUST_REFCOUNTS = 0
 
 import sys
 import os
