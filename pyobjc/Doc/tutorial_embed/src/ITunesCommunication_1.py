@@ -6,7 +6,7 @@
 #  Copyright (c) 2003 __MyCompanyName__. All rights reserved.
 #
 
-from objc import YES, NO
+import objc
 from Foundation import *
 from AppKit import *
 
@@ -17,21 +17,21 @@ from PyObjCTools import NibClassBuilder
 # we can subclass our ITunesCommunication from AutoBaseClass
 # later on, and its actual baseclass will be ITunesCommunication
 # from the NIB file.
-NibClassBuilder.extractClasses("CDInfoDocument")
+NibClassBuilder.extractClasses("CDInfoDocument", bundle=NSBundle.mainBundle())
 
 class ITunesCommunication(NibClassBuilder.AutoBaseClass):
     def init(self):
         self = super(ITunesCommunication, self).init()
-        if self:
-            # subclass specific initialization here
-            # nib not loaded yet
-            pass
+        if self is None:
+            return None
+        # subclass specific initialization here
+        # nib not loaded yet
         return self
 
     def askITunes_(self, obj):
         # obj is the button the user pressed. We can go from here
         # to the document (an instance of CDInfoDocument)
         document = obj.window().windowController().document()
-        document.setBandName_("Uit de Sloot")
-        document.setCDTitle_("En Snel Een Beetje")
-        document.setMusicGenre_("Punkrock")
+        document.setBandName_(u"Uit de Sloot")
+        document.setCDTitle_(u"En Snel Een Beetje")
+        document.setMusicGenre_(u"Punkrock")
