@@ -7,7 +7,7 @@ This module contains no user callable code.
 TODO:
 - Add external interface: Framework specific modules may want to add to this.
 """
-from _objc import setClassExtender, selector, lookUpClass
+from _objc import setClassExtender, selector, lookUpClass, internal_error
 
 __all__ = ['CONVENIENCE_METHODS', 'CLASS_METHODS']
 
@@ -325,27 +325,11 @@ CONVENIENCE_METHODS['nextObject'] = (
 #
 NSDecimalNumber = lookUpClass('NSDecimalNumber')
 NSNull = lookUpClass('NSNull')
-NSDecimal = None
-Decimal = None
+
 def _numberForDecimal(v):
-    global NSDecimal, Decimal
-    if NSDecimal is None and Decimal is None:
-        try:
-            from decimal import Decimal
-        except ImportError:
-            pass
-        try:
-            from Foundation import NSDecimal
-        except ImportError:
-            pass
-    if Decimal is not None:
-        return Decimal(v.stringValue())
-    elif NSDecimal is not None:
-        return v.decimalValue()
-    else:
-        import warnings
-        warnings.warn(RuntimeWarning, "Bridging NSDecimalNumber without a decimal module or NSDecimal implementation present, precision may be lost")
-        return v.doubleValue()
+    # make sure we have a NSDecimal type around
+    import Foundation
+    return v.decimalValue()
 
 def _num_to_python(v):
     """
