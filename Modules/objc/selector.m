@@ -889,7 +889,7 @@ pysel_repr(ObjCPythonSelector* sel)
 }
 
 static PyObject*
-pysel_call(ObjCPythonSelector* self, PyObject* args)
+pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 {
 	PyObject* result;
 
@@ -935,7 +935,7 @@ pysel_call(ObjCPythonSelector* self, PyObject* args)
 	 * Assume callable will check arguments
 	 */
 	if (self->sel_self == NULL) { 
-		result  = PyObject_Call(self->callable, args, NULL);
+		result  = PyObject_Call(self->callable, args, kwargs);
 
 	} else {
 		int       argc = PyTuple_Size(args);
@@ -954,7 +954,7 @@ pysel_call(ObjCPythonSelector* self, PyObject* args)
 			PyTuple_SET_ITEM(actual_args, i+1, v);
 		}
 		result = PyObject_Call(self->callable, 
-			actual_args, NULL);	
+			actual_args, kwargs);	
 		Py_DECREF(actual_args);
 	}
 
