@@ -1,3 +1,12 @@
+2002-10-18  Bill Bumgarner  <bbum@codefab.com>
+	* Fixed the -dealloc method in OC_PythonDictionary.
+	* Disabled gc in objc's __init__.py (I thought we had done this in
+	the past, but it seems to have gotten lost) only for python
+	2.2.x.
+	* Replaced all occurrences of True and False to 1 and 0 in
+	Ronald's previous changes.
+	* Changed TableModel2 example to be like TableModel example
+
 2002-10-18 Ronald Oussoren <oussoren@cistron.nl>
 	* Better fix for crash while converting exception from Python to
 	  Objective-C

@@ -7,11 +7,11 @@ import objc
 import Foundation
 import AppKit
 
-class PyModel (Foundation.NSObject):
+class PyModel (Foundation.NSObject, AppKit.NSTableDataSource):
 	__slots__  = ('rowcount')
 
 	def init(self):
-		print "init"
+		print "PyModel instance initialized"
 		self.rowcount = 10
 		return self
 
@@ -22,8 +22,5 @@ class PyModel (Foundation.NSObject):
 	def tableView_objectValueForTableColumn_row_(self, aTableView, aTableColumn, rowIndex):
 		print "tableView:objectValueForTableColumn:row: called"
 		return "{%s, %d}"%(aTableColumn.identifier(), rowIndex)
-
-	tableView_objectValueForTableColumn_row_ = objc.selector(tableView_objectValueForTableColumn_row_, signature='@@:@@i')
-	numberOfRowsInTableView_ = objc.selector(numberOfRowsInTableView_, signature="i@:@")
 
 sys.exit( AppKit.NSApplicationMain(sys.argv) )

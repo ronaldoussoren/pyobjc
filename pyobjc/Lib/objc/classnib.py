@@ -207,7 +207,7 @@ class ClassNibGenerator:
 	"""
 	def __init__(self, fp):
 		self._fp = fp
-		self._didGenerate = False
+		self._didGenerate = 0
 		self._classes = []
 	
 	def add_classnib(self, nibinfo):
