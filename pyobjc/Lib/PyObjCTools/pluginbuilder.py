@@ -170,6 +170,7 @@ static void changeClass(id obj, Class newClass)
 
 static int SetupInterpreter(NSBundle* bundle)
 {
+    PyEval_InitThreads();
     if (!Py_IsInitialized()) {
         Py_Initialize();
         return -42;
@@ -220,7 +221,6 @@ static void ReleaseInterpreter(int interpreterState)
     FILE*     fp;
     PyObject *m, *d, *v;
     int       interpreterState;
-
 
     bundle = [NSBundle bundleForClass:self];
     [bundle load];
