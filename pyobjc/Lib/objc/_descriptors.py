@@ -42,7 +42,9 @@ def accessor(func, typeSignature='@'):
         raise TypeError('%s can not be an accessor because it accepts varargs or varkw' % (funcName,))
 
     if not (minArgs <= selArgs <= maxArgs):
-        if minArgs == maxArgs:
+        if selArgs == 3 and (minArgs <= 2 <= maxArgs) and funcName.startswith('validate') and funcName.endswith('_error_'):
+            return selector(func, signature='c@:N^@o^@')
+        elif minArgs == maxArgs:
             raise TypeError('%s expected to take %d args, but must accept %d from Objective-C (implicit self plus count of underscores)' % (funcName, maxArgs, selArgs))
         else:
             raise TypeError('%s expected to take between %d and %d args, but must accept %d from Objective-C (implicit self plus count of underscores)' % (funcName, minArgs, maxArgs, selArgs))
@@ -52,8 +54,6 @@ def accessor(func, typeSignature='@'):
             return selector(func, signature='v@:@i')
         elif funcName.startswith('replaceObjectIn') and funcName.endswith('AtIndex_withObject_'):
             return selector(func, signature='v@:i@')
-        elif funcName.startswith('validate') and funcName.endswith('_error_'):
-            return selector(func, signature='c@:N^@o^@')
         
         # pass through to "too many arguments"
 
