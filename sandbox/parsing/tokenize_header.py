@@ -32,6 +32,33 @@ def pattern(s):
 def example(s):
     return dedent(s).strip()
 
+class CPPCrap(Token):
+    pattern = pattern(r'''
+    \#\s*(
+        if\s*defined\s*\(\s*__cplusplus\s*\)
+        | ifdef\s*__cplusplus
+    )
+    [^#]*
+    (
+        (?!\#\s*endif)
+        \#
+        [^#]*
+    )*
+    \#\s*endif
+    ''')
+    example = example('''
+    #if defined(__cplusplus)
+    extern "C" {
+    #endif
+    #if defined(__cplusplus)
+    }
+    #endif
+    #ifdef __cplusplus
+    sucktastic
+    #define foo
+    #endif
+    ''')
+
 class BlockComment(Token):
     pattern = pattern(r'''
     \/\*
@@ -429,7 +456,7 @@ class FunctionParameter(Token):
 class ExportFunction(Token):
     # XXX handle comments? need its own internal parser?
     pattern = pattern(r'''
-    %(EXPORT)s
+    %(EXPORT)s?
     \s*(?P<returns>
         (%(KEYWORD)s\s*)*
         %(IDENTIFIER)s
@@ -494,6 +521,7 @@ LEXICON = [
     Interface,
     Protocol,
     AngleImport,
+    StringImport,
     SimpleDefine,
     GlobalThing,
     ForwardClassReference,
@@ -506,6 +534,7 @@ LEXICON = [
     UninterestingTypedef,
     UninterestingStruct,
     MacroDefine,
+    CPPCrap,
     CompilerDirective,
 ]
 
@@ -513,25 +542,38 @@ if __name__ == '__main__':
     from pdb import pm
     import re
     import sys
-    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSDecimal.h'
-    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSBundle.h'
-    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSException.h'
-    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSInvocation.h'
-    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSByteOrder.h'
-    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSObject.h'
-    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSZone.h'
-    #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSAccessibility.h'
-    #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSEvent.h'
-    #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSProgressIndicator.h'
-    #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSWorkspace.h'
-    fn = '/System/Library/Frameworks/AddressBook.framework/Headers/ABActionsC.h'
-    files = sys.argv[1:] or [fn]
+    frameworks = """
+    AddressBook
+    AppKit
+    ExceptionHandling
+    Foundation
+    InterfaceBuilder
+    Message
+    PreferencePanes
+    ScreenSaver
+    SecurityInterface
+    WebKit
+    """.split()
+    files = sys.argv[1:]
+    if not files:
+        import glob
+        for framework in frameworks:
+            files.extend(glob.glob('/System/Library/Frameworks/%s.framework/Headers/*.h' % (framework,)))
+    fn = None
     def deadraise(string, i, j):
-        print string[i:j]
+        print '-' * len(fn)
+        print fn
+        print '-' * len(fn)
+        s = string[i:].split('\n',1)[0]
+        print s
+        print
         import pdb
         pdb.Pdb().set_trace()
     scan = Scanner(LEXICON)
     for fn in files:
+        print '-' * len(fn)
+        print fn
+        print '-' * len(fn)
         for token in scan.iterscan(file(fn).read(), dead=deadraise):
             if token is not None:
                 print token
