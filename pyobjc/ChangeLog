@@ -1,3 +1,9 @@
+2002-12-15 Ronald Oussoren <oussoren@cistron.nl>
+    * Erase reference to the Python half before doing the [super release] 
+      call that will release the Objective-C half of an instance of a
+      Python subclass of an Objective-C class. This way we can't accidently
+      call into the, already dead, python object. 
+
 2002-12-08  Bill Bumgarner  <bbum@codefab.com>
     * Examples/WebServicesTool: Added a lot of inline documentation to the
           python code.
