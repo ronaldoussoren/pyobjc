@@ -27,7 +27,7 @@ between Python and Objective-C method calls.</p>
 <li>Python numbers are translated into NSNumber instances</li>
 <li>Python strings and unicode objects are translated into NSString instances</li>
 <li>Python dictionaries are proxied using OC_PythonDictionary, a subclass of NSMutableDictionary. This allows you to use a Python dictionary everywhere where an NSDictionary is expected.</li>
-<li>Python lists or tuples are proxied using OC_PythonArray, a subclas of NSMutableArray. This allows you to use a Python list or tuple everywhere where an NSArray is expected.</li>
+<li>Python lists or tuples are proxied using OC_PythonArray, a subclass of NSMutableArray. This allows you to use a Python list or tuple everywhere where an NSArray is expected.</li>
 </ul>
 <p>The special cases allow for more transparent bridging between Python and
 Objective-C.</p>
@@ -54,9 +54,9 @@ mechanism. There are some limitations though:</p>
 <li>There can be only 1 Objective-C base class.
 It is not possible to multiple-inherit from two Objective-C classes, this
 limitation is inherited from Objective-C.</li>
-<li>It is not possible to overide or extend an Objective-C method using a mixin.
+<li>It is not possible to override or extend an Objective-C method using a mixin.
 This is limitation will be lifted in future versions of PyObjC.</li>
-<li>It is not possible to overide or extend an Objective-C method by adding a new method to the class after creating it.</li>
+<li>It is not possible to override or extend an Objective-C method by adding a new method to the class after creating it.</li>
 </ol>
 <p>PyObjC provides limited support for Objective-C protocols. The type 
 obc.informal_protocol can be used to shadow protocol definitions in Objective-C.
@@ -107,7 +107,7 @@ method:(int)x andY:y          &lt;-&gt;     def `method_andY_`(self, x, y)
 <p>As can be seen in the examples above, Objective-C allows you to specify
 the types of arguments and the return value, while this is not possible in
 Python. This is not a problem when calling existing Objective-C methods, 
-because PyObjC will automaticly read the needed information from the 
+because PyObjC will automatically read the needed information from the 
 Objective-C runtime, but it can be a problem when defining new Objective-C
 methods in Python.</p>
 <p>PyObjC therefore provides a function to define the signature of a python method

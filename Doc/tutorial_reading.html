@@ -106,7 +106,7 @@ become clear why all the boilerplate code is missing from Cocoa applications:
 you don't need it. The NIB file usually contains all of the things that need to
 be done for the Views objects, as is often the case with other gui-builders.
 But in addition the NIB also contains a large proportion of your Model
-functionality: creating the View and Controller objects and tieing the
+functionality: creating the View and Controller objects and tying the
 lot together.</p>
 <h2><a name="delegates">Delegates</a></h2>
 <p>If you are familiar with other object-oriented GUI toolkits such as MFC
@@ -159,7 +159,7 @@ action will go to the <code><span>ConverterController.convert:</span></code> met
 For instance, you will be hard put to find who, if anyone, calls 
 <code><span>ConverterController.invertRate:</span></code>. The solution: go to the &quot;MainMenu.nib&quot; window and
 look at the top of the vertical scrollbar. There are two little icons there, one with
-lines and one with squares, with the squares being higlighted. Press it. The view will change
+lines and one with squares, with the squares being highlighted. Press it. The view will change
 to a scrollable list with objects in the left column and an indication of connections
 in the right column. You can now see our ConverterController object has four
 outgoing connections (the ones we found earlier) and two incoming connections. Click

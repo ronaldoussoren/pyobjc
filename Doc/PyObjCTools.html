@@ -19,31 +19,36 @@ start with a short overview.</p>
 </ul>
 <p>Utility functions for use with the <code><span>AppKit</span></code> module.</p>
 <ul>
-<li><code><span>PyObjCTools.Conversion.py</span></code></li>
+<li><code><span>PyObjCTools.Conversion</span></code></li>
 </ul>
 <p>Functions for converting between Cocoa and pure Python data structures.</p>
 <ul>
-<li><code><span>PyObjCTools.KeyValueCoding.py</span></code></li>
+<li><code><span>PyObjCTools.KeyValueCoding</span></code></li>
 </ul>
 <p>A python API for working with <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i">Key-Value Coding</a>.</p>
 <ul>
-<li><code><span>PyObjCTools.NibClassBuilder.py</span></code></li>
+<li><code><span>PyObjCTools.NibClassBuilder</span></code></li>
 </ul>
 <p>Module containing a magic super-class that can read information about the
 actual super-class and implemented actions and outlets from a NIB file.</p>
 <ul>
-<li><code><span>PyObjCTools.pluginbuilder.py</span></code></li>
+<li><code><span>PyObjCTools.MachSignals</span></code></li>
+</ul>
+<p>Module to make it possible to integrate signal handling into the main
+runloop.</p>
+<ul>
+<li><code><span>PyObjCTools.pluginbuilder</span></code></li>
 </ul>
 <p>Extension of <code><span>bundlebuilder</span></code> (XXX: Link) that allows you to build python-based
 plugin bundles, such as panes for the System Preferences application and
 screen savers.</p>
 <ul>
-<li><code><span>PyObjCTools.Signals.py</span></code></li>
+<li><code><span>PyObjCTools.Signals</span></code></li>
 </ul>
 <p>Module that tries to print useful information when the program gets a fatal
 exception. This module should only be used during development.</p>
 <h2><a name="pyobjctools-apphelper"><code><span>PyObjCTools.AppHelper</span></code></a></h2>
-<p>This module exports two functions that are usefull when working with the
+<p>This module exports two functions that are useful when working with the
 <code><span>AppKit</span></code> framework.</p>
 <ul>
 <li><code><span>endSheetMethod(method)</span> <span>-&gt;</span> <span>selector</span></code><p>Convert a method to a form that is suitable to use as the delegate callback
@@ -54,7 +59,7 @@ continue if an exception is caught.</p>
 <p>This function doesn't return unless it throws an exception.</p>
 </li>
 </ul>
-<h2><a name="pyobjctools-conversion-py"><code><span>PyObjCTools.Conversion.py</span></code></a></h2>
+<h2><a name="pyobjctools-conversiony"><code><span>PyObjCTools.Conversiony</span></code></a></h2>
 <p>Functions for converting between Cocoa and pure Python data structures.</p>
 <ul>
 <li><code><span>propertyListFromPythonCollection(pyCol,</span> <span>conversionHelper=None)</span> <span>-&gt;</span> <span>ocCol</span></code><p>Convert a Python collection (dictionary, array, tuple, string) into an 
@@ -93,7 +98,7 @@ attribute of the object.</p>
 </ul>
 </li>
 <li><code><span>getKeyPath(object,</span> <span>keypath)</span> <span>-&gt;</span> <span>value</span></code><p>Like <code><span>getKey</span></code> but using a key path. The <code><span>keypath</span></code> is a sequence of keys
-seperated by dots. It calls <code><span>getKey</span></code> to follow the path and returns the
+separated by dots. It calls <code><span>getKey</span></code> to follow the path and returns the
 final value.</p>
 </li>
 <li><code><span>setKey(object,</span> <span>key,</span> <span>value)</span> <span>-&gt;</span> <span>None</span></code><p>Set the value of <code><span>key</span></code> to <code><span>value</span></code>.</p>
