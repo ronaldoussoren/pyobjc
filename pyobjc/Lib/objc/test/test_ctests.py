@@ -25,7 +25,15 @@ def make_test(name):
         # surpress the test failure until Apple fixes the class.
         # Don't change the C-code, the same function is used to disable
         # parts of the unittests that trigger the bug.
-        result = { 'meth': lambda : not getattr(ctests, name) }
+        def test_CheckNSInvoke(self):
+            try:
+                ctests.CheckNSInvoke()
+            except AssertionError:
+                return
+
+            raise AssertionError, "NSInvocation works!"
+
+        return test_CheckNSInvoke
 
     exec  """\
 def test_%s(self):
