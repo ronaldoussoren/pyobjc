@@ -60,8 +60,8 @@ class pyobjc_build_ext (build_ext):
         # the extensions.
         compiler_saved = self.compiler
 
-        #runtasks("Generating wrappers & stubs",
-        #    [sys.executable, "Scripts/CodeGenerators/cocoa_generator.py"])
+        runtasks("Generating wrappers & stubs",
+            [sys.executable, "Scripts/CodeGenerators/cocoa_generator.py"])
 
         if not os.path.exists('build/codegen/_Fnd_Classes.inc'):
             # Create a dummy classname list, to enable bootstrapping. Don't
