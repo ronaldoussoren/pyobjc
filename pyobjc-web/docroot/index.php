@@ -1,7 +1,7 @@
 <?
 $title = "Home";
-$cvs_author = '$Author: bbum $';
-$cvs_date = '$Date: 2002/12/19 21:05:54 $';
+$cvs_author = '$Author: ronaldoussoren $';
+$cvs_date = '$Date: 2003/05/04 12:56:38 $';
 $is_home = 1;
 
 $metatags = '<meta name="description" content="PyObjC, a universal bridge between the Objective-C and Python languages.">
@@ -12,12 +12,13 @@ include "header.inc";
 ?>
 
 <p>
-The PyObjC project aims to provide a bridge between the Python and Objective-C programming languages.  The bridge is intended to be fully bidirectional, allowing the Objective-C programmer transparent access to Python based functionality and the Python programmer to take full advantage of the power provided by various Objective-C based toolkits.</p>
+The PyObjC project aims to provide a bridge between the Python and Objective-C programming languages.  The bridge is intended to be fully bidirectional, allowing the Python programmer to take full advantage of the power provided by various Objective-C based toolkits and the Objective-C programmer transparent access to Python based functionality.</p>
 <p>
-Currently, development of the bridge is primarily focused upon the <a href="http://www.apple.com/macosx/">Mac OS X</a> and <a href="http://www.opensource.apple.com/">Darwin</a> platforms.  Within this environment, PyObjC can be used to entirely replace Objective-C in the development of Cocoa based applications and Foundation based command line tools.</p>
-<p>
-We want to offer the same level of support for <a href="http://www.gnustep.org/">GnuStep</a>, but need volunteers with GnuStep experience to make that happen!
-</p>
+The most important usage of this is writing Cocoa GUI applications on 
+<a href="http://www.apple.com/macosx/">Mac OS X</a> in pure Python. See 
+<a href="<? print $root; ?>doc/tutorial.php">our tutorial</a> for an example
+of this.
+
 
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr valign="top"><td width="50%">
@@ -28,7 +29,7 @@ We want to offer the same level of support for <a href="http://www.gnustep.org/"
 // Include news items
 include $fsroot."news/news.inc";
 ?>
-<div align="right"><a href="<? print $root; ?>news/index.php">Older News...</a></div>
+<div align="right"><a href="<? print $root; ?>news/index.php">All News...</a></div>
 
 
 </td><td>&nbsp;&nbsp;&nbsp;</td><td width="50%">
@@ -36,8 +37,18 @@ include $fsroot."news/news.inc";
 <h1>Status</h1>
 
 <p>
-<a href="http://sourceforge.net/project/showfiles.php?group_id=14534">PyObjC 0.8</a> was released on 19 December 2002.  See the <a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/pyobjc/pyobjc/ChangeLog?rev=1.58&only_with_tag=REL_20021219_0pt8&content-type=text/vnd.viewcvs-markup">ChangeLog</a> for details.
+<a href="software/index.php">PyObjC 0.9</a> was released on 2 May 2003.  See the <a href="NEWS.txt">NEWS</a> for details.
 </p>
+
+<h1>Platform support</h1>
+
+The development of the bridge is currently focused on 
+<a href="http://www.apple.com/macosx/">Mac OS X</a> 10.2. The current version
+does not suppport MacOS X 10.1 (and earlier).
+<p>
+We want to offer the same level support for 
+<a href="http://www.gnustep.org/">GNUstep</a>, but need volunteers with GnuStep
+experience to make that happen. Contact <a href="mailto:pyobjc-dev@lists.sourceforge.net">the mailinglist</a> if you want to help out.
 
 <h1>Resources</h1>
 

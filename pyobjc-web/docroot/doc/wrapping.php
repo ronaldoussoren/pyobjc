@@ -1,13 +1,13 @@
 <?
     $title = "How to wrap an Objective-C class library";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/02/12 20:43:04 $';
+    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
 
     include "header.inc";
 ?>
 <div class="document" id="how-to-wrap-an-objective-c-class-library">
 <h1 class="title">How to wrap an Objective-C class library</h1>
-<!-- This file is formatted using the rules for StructuredText -->
+<!-- :author: Ronald Oussoren -->
 <div class="section" id="introduction">
 <h1><a name="introduction">Introduction</a></h1>
 <p>This document describes how you can wrap on Objective-C class library using
@@ -20,12 +20,10 @@ C code for specific methods.</p>
 <h1><a name="the-basics">The basics</a></h1>
 <p>The code for loading a framework and exporting its classes is pretty simple:</p>
 <pre class="literal-block">
-import Foundation
-_clslist = Foundation.load_bundle('/path/to/MyFramework.framework')
-_gl = globals()
-for _cls in _clslist:
-     gl[_cls.__name__] = _cls 
-del _clslist, _cls, _gl, Foundation
+import objc
+objc.loadBundle(&quot;MyFramework&quot;, globals(), 
+   bundle_path='/path/to/MyFramework.framework')
+del objc
 </pre>
 <p>If your class library does not require helper functions for some methods this
 is all that is needed.</p>

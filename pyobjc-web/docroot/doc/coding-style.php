@@ -1,7 +1,7 @@
 <?
     $title = "Coding style for PyObjC";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/02/12 20:42:56 $';
+    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
 
     include "header.inc";
 ?>
@@ -21,10 +21,6 @@
 <td>2002 The PyObjC Project</td></tr>
 </tbody>
 </table>
-<div class="note">
-<p class="admonition-title">Note</p>
-This document is a work in progress and does <em>not</em> describe the existing
-code.</div>
 <div class="contents topic" id="contents">
 <p class="topic-title"><a name="contents">Contents</a></p>
 <ul class="simple">
@@ -78,8 +74,8 @@ in the DocUtils source tree.</p>
 <pre class="literal-block">
 # Author: David Goodger
 # Contact: goodger&#64;users.sourceforge.net
-# Revision: $Revision: 1.1 $
-# Date: $Date: 2003/02/12 20:42:56 $
+# Revision: $Revision: 1.2 $
+# Date: $Date: 2003/05/04 12:56:38 $
 # Copyright: This module has been placed in the public domain.
 </pre>
 </li>

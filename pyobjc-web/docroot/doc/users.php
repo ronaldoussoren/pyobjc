@@ -1,7 +1,7 @@
 <?
     $title = "Userguide for PyObjC";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/02/12 20:43:03 $';
+    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
 
     include "header.inc";
 ?>
@@ -35,11 +35,34 @@ value of the python version. The return value of methods with output parameters
 is a tuple where the first element is the return-value of the Objective-C 
 method (or None if it is a method returning 'void') and the other elements are
 the values of output arguments.</p>
+</div>
+<div class="section" id="informal-protocols">
+<h1><a name="informal-protocols">(Informal) Protocols</a></h1>
+<p>Cocoa defines a number of formal and informal protocols that specify the 
+methods that should be defined by a class if it wants to be used in particular
+roles (such as the data source for an NSTableView).</p>
 <p>The type objc.informal_protocol can be used to specify the selectors used by
-(informal) protocols in Objective-C. Instances of objc.informal_protocol are
-used when defineing subclasses of Objective-C classes and signal that the class
-implements the given protocol. The AppKit and Foundation modules export a 
-number of usefull protocols.</p>
+those (informal) protocols in Objective-C. Instances of objc.informal_protocol 
+are used when defineing subclasses of Objective-C classes and signal that the 
+class implements the given protocol.</p>
+<p>The AppKit and Foundation modules export a number of usefull protocols, 
+corresponding to the protocols defined in the Cocoa documentation. It is 
+essential to use these protocol definitions as mixins when defining classes that
+conform to the protocol. This not only helps catching typos when developing
+classes, but also provides information to the bridge that is essential for
+correct operation of the bridge.</p>
+</div>
+<div class="section" id="building-an-application">
+<h1><a name="building-an-application">Building an application</a></h1>
+<p>There are two different ways to build application bundles. The resulting 
+applications are functionally equivalent, although not identical.</p>
+<p>If Apple's developer tools are installed you can use one of the PyObjC 
+project templates to build your application. (TODO: Add link to documentation
+on the templates). The <tt class="literal"><span class="pre">TableModel2</span></tt> example uses Project Builder.</p>
+<p>If is also possible to build application bundles using bundlebuilder, using
+scripts that are simular to the <tt class="literal"><span class="pre">setup.py</span></tt> script used by distutils. The
+<tt class="literal"><span class="pre">TableModel</span></tt> example uses this method. For more documentation, see the
+online documentation of module <tt class="literal"><span class="pre">bundlebuilder</span></tt>.</p>
 </div>
 <div class="section" id="limitations">
 <h1><a name="limitations">Limitations</a></h1>

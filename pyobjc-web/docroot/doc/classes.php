@@ -1,7 +1,7 @@
 <?
     $title = "Python classes and Objective-C code";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/02/12 20:42:56 $';
+    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
 
     include "header.inc";
 ?>

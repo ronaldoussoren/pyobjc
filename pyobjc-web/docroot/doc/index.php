@@ -1,7 +1,7 @@
 <?
 $title = "Documentation";
 $cvs_author = '$Author: ronaldoussoren $';
-$cvs_date = '$Date: 2003/02/12 20:42:59 $';
+$cvs_date = '$Date: 2003/05/04 12:56:38 $';
 
 include "header.inc";
 ?>
@@ -24,7 +24,10 @@ This documentation should focus on the user.  Of course, the user is really a de
 <ul>
 <!-- USERDOC -->
 <LI><A HREF="install.php">Installation Instructions</A>
+<LI><A HREF="intro.php">An introduction to PyObjC</A>
 <LI><A HREF="users.php">Userguide for PyObjC</A>
+<LI><A HREF="tutorial.php">Creating your first PyObjC application.</A>
+<LI><A HREF="projectbuilder-syntaxhighlighting.php">Project Builder Python Support</A>
 <LI><A HREF="warts.php">Odd features</A>
 <LI><A HREF="wrapping.php">How to wrap an Objective-C class library</A>
 <!-- /USERDOC -->
@@ -41,7 +44,7 @@ There is actually a good chunk of developer documentation in the source tree (th
 <LI><A HREF="structure.php">Structure of the PyObjC package</A>
 <LI><A HREF="architecture.php">PyObjC Architecture</A>
 <LI><A HREF="classes.php">Python classes and Objective-C code</A>
-<LI><A HREF="libffi.php">Using LibFFI</A>
+<LI><A HREF="libffi.php">Using LibFFI with PyObjC</A>
 <!-- /DEVDOC -->
 </ul>
 

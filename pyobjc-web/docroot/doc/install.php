@@ -1,17 +1,21 @@
 <?
     $title = "Installation Instructions";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/02/12 20:43:00 $';
+    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
 
     include "header.inc";
 ?>
 <div class="document" id="installation-instructions">
 <h1 class="title">Installation Instructions</h1>
-<!-- :author: Bill Bumgarner -->
-<div class="section" id="building-the-module">
-<h1><a name="building-the-module">Building the Module</a></h1>
-<p>The module uses the distutils package included with Python 2.0 and
-beyond.   This package provides a single interface for building and
+<!-- :authors: Bill Bumgarner, Ronald Oussoren -->
+<div class="section" id="building-the-package">
+<h1><a name="building-the-package">Building the package</a></h1>
+<p>If you're using the sources from CVS you should first download a copy of 
+libffi from <a class="reference" href="http://sourceforge.net/project/showfiles.php?group_id=14534">the PyObjC download site</a>.  Extract this in a convenient location
+and update the variable <tt class="literal"><span class="pre">LIBFF_SOURCES</span></tt> at the top of setup.py.  The released
+version of PyObjC includes a compatible version of libffi.</p>
+<p>PyObjC is build and installed using the distutils package included with Python
+2.0 and beyond.  This package provides a single interface for building and
 packaging the module.   To see usage documentation for the module,
 issue the <tt class="literal"><span class="pre">--help</span></tt> command:</p>
 <pre class="literal-block">
@@ -56,13 +60,33 @@ applications.</p>
 <div class="section" id="project-templates">
 <h1><a name="project-templates">Project Templates</a></h1>
 <p>The <tt class="literal"><span class="pre">Project</span> <span class="pre">Templates</span></tt> directory contains project templates for
-project builder.  Currently, there is one project builder template;  a
-Cocoa-Python Application project template.   When installed, this adds
-a project to Project Builder's project menu that allows new Cocoa
-applications implemented entirely in Python to be created from within
-Project Builder (in the same fashion as any other project).</p>
-<p>To install, simply copy the project template into the Project Builder
-project templates directory (or create a symlink).</p>
+project builder.  These have to be copied to
+<tt class="literal"><span class="pre">/Developer/ProjectBuilder</span> <span class="pre">Extras/Project</span> <span class="pre">Templates/Application</span></tt> before
+they are useable from Project Builder.</p>
+<p>There are three templates available:</p>
+<ul>
+<li><p class="first">Cocoa-Python Application</p>
+<p>A project created from this template is designed to implement standalone,
+pure-Python, applications that are compatible with Apple's build of Python as
+well as all other builds of python that support PyObjC.</p>
+<p>When building the 'install' target, the resulting application wrapper will
+included the PyObjC module and can be launched on any stock OS X 10.2 system
+without requiring PyObjC to be preinstalled.</p>
+</li>
+<li><p class="first">Cocoa-Python-ObjC Application</p>
+<p>A project created from this template includes an embedded framework project
+into which all compiled (Objective-C) code can be placed.  Upon launch, 
+the application automatically dynamically loads the embedded framework 
+containing the compiled code.</p>
+<p>Each Framework's Resources directory is automatically added to sys.path.</p>
+</li>
+<li><p class="first">Cocoa-Python Document-based Application</p>
+<p>This template works like the Cocoa-Python Application template in that it
+is compatible with the Apple build of Python.   It creates an application 
+that uses Cocoa's Multiple Document Architecture in the same fashion as the
+default Cocoa Document-based Application supplied with Project Builder.</p>
+</li>
+</ul>
 <p>More information on project templates can be found in the Project
 Builder documentation and/or release notes.</p>
 </div>

@@ -8,6 +8,7 @@
 
 import sys
 import os
+import shutil
 
 import docutils.core
 
@@ -16,7 +17,7 @@ PHP_HEADER='''\
 <?
     $title = "%(title)s";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/02/12 20:43:05 $';
+    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
 
     include "header.inc";
 ?>'''
@@ -53,7 +54,8 @@ def copy_project_docs(srctree):
 
     docs =  [ os.path.join(docdir, fn) 
                     for fn in os.listdir(docdir) if fn.endswith('.txt') ]
-    docs.append(os.path.join(srctree, 'INSTALL'))
+    docs.append(os.path.join(srctree, 'Install.txt'))
+    docs.append(os.path.join(docdir, 'tutorial', 'tutorial.txt'))
 
     alldocs = {}
 
@@ -61,6 +63,8 @@ def copy_project_docs(srctree):
         docinfo = {}
 
         bn = os.path.split(fname)[-1]
+        if bn == 'index.txt':
+            continue
         if extra_info.has_key(bn):
             docinfo.update(extra_info[bn])
 
@@ -107,6 +111,10 @@ def copy_project_docs(srctree):
     user_docs = []
 
     for doc in alldocs:
+        if not alldocs[doc].has_key('section'):
+            print "Skipping", doc
+            continue
+
         if alldocs[doc]['section'] == 'user':
             user_docs.append([alldocs[doc]['title'], doc])
         elif alldocs[doc]['section'] == 'developer':
@@ -145,6 +153,22 @@ def copy_project_docs(srctree):
                 skip = 1
                 for title, link in developer_docs:
                     fd.write('<LI><A HREF="%s">%s</A>\n'%(link, title))
+
+    # Copy tutorial files
+    tutdir = os.path.join(docdir, 'tutorial')
+    files = os.listdir(tutdir)
+    for fn in files:
+        if fn.endswith('.nib') or fn.endswith('.py'):
+            dstname = os.path.join('docroot', 'doc', fn)
+            if os.path.exists(dstname):
+                shutil.rmtree(dstname)
+            if os.path.isdir(os.path.join(tutdir, fn)):
+                shutil.copytree(os.path.join(tutdir, fn), dstname)
+            else:
+                shutil.copy(os.path.join(tutdir, fn), dstname)
+
+    print "Don't forget to update docroot/doc/tutorial.php: it's reference to"
+    print "'step3-MainMenu.nib' should be changed to a ZIP file"
 
 if __name__ == "__main__":
     copy_project_docs(srctree)

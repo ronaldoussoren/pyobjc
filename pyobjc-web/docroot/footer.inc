@@ -1,5 +1,5 @@
 <?
-/* $Id: footer.inc,v 1.1 2002/11/12 07:41:06 bbum Exp $ */
+/* $Id: footer.inc,v 1.2 2003/05/04 12:56:38 ronaldoussoren Exp $ */
 ?>
 
 </td></tr>
@@ -19,7 +19,7 @@
 <td bgcolor="#eeeeee" align="center" width="120"
     style="background-image:url(<? print $root ?>img/stripes.gif)">
   <a href="<? print $root ?>legal.php" style="text-decoration:none;color:black;font-size:10pt;">
-    Copyright&nbsp;&copy;&nbsp;2002 The&nbsp;PyObjC&nbsp;Project
+    Copyright&nbsp;&copy;&nbsp;2003 The&nbsp;PyObjC&nbsp;Project
   </a>
 </td>
 <td class="layout">

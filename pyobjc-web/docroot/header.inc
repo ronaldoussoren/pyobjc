@@ -1,5 +1,5 @@
 <?
-/* $Id: header.inc,v 1.3 2002/11/13 15:24:22 ronaldoussoren Exp $ */
+/* $Id: header.inc,v 1.4 2003/05/04 12:56:38 ronaldoussoren Exp $ */
 
 // section navigation (always visible)
 $sections = array(
@@ -66,7 +66,7 @@ if ($metatags)
 <center><?
 if (!$is_home)
   print '<a href="'.$root.'index.php">';
-?><img src="<? print $root ?>img/dogsnake.jpg" width="125" height="86" border="0" alt="PyObjC"><?
+?><a href="<? print $root ?>"><img src="<? print $root ?>img/dogsnake.jpg" width="125" height="86" border="0" alt="PyObjC"></a><?
 if (!$is_home)
   print '</a>';
 ?></center>

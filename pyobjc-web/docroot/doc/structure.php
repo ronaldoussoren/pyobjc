@@ -1,7 +1,7 @@
 <?
     $title = "Structure of the PyObjC package";
     $cvs_author = '$Author: ronaldoussoren $';
-    $cvs_date = '$Date: 2003/02/12 20:43:02 $';
+    $cvs_date = '$Date: 2003/05/04 12:56:38 $';
 
     include "header.inc";
 ?>
@@ -25,7 +25,9 @@ some additional code that rescans the method tables on several occasions.</p>
 </div>
 <div class="section" id="subclassing">
 <h1><a name="subclassing">Subclassing</a></h1>
-<p>It is possible to subclass objective-C classes in python and this results in a hybrid Python/Objective-C class. Instances of these classes consist of a cluster of 2 objects, a Python object and an Objective-C object.</p>
+<p>It is possible to subclass objective-C classes in python and this results in a
+hybrid Python/Objective-C class. Instances of these classes consist of a
+cluster of 2 objects, a Python object and an Objective-C object.</p>
 <p>The reference count (or retainCount in objective-C speak) is stored in the 
 Python object, mostly because that is the only way to maintain a single 
 reference count for the cluster. The pointers from the python half of the 
@@ -51,7 +53,8 @@ illusion of a single object. Check class-builder.m for details.</p>
 <dd>Example scripts and applets.</dd>
 <dt>Lib/</dt>
 <dd>Python modules that will be installed in the library. Currently contains
-the packages 'objc', 'Cocoa' and 'AddressBook'</dd>
+the modules/packages 'objc', 'AddressBook', 'AppKit', 'Foundation',
+'InterfaceBuilder', 'PreferencePanes', 'PyObjCTools' and 'ScreenSaver.py'.</dd>
 <dt>Modules/</dt>
 <dd>Extension modules related to the packages in 'Lib'. This directory contains
 both the core module 'objc._objc' and a number of extension modules that
@@ -59,7 +62,7 @@ help in wrapping all of Cocoa.</dd>
 <dt>Scripts/</dt>
 <dd>Scripts used during building and/or development of PyObjC.</dd>
 <dt>Tools/</dt>
-<dd>Scripts that are usefull for users of PyObjC</dd>
+<dd>Scripts that are useful for users of PyObjC</dd>
 </dl>
 </div>
 <div class="section" id="reference-counts">
@@ -69,26 +72,29 @@ of class methods (alloc, allocWithZone:, copy, ...) transfer object ownership
 to the caller. For all other objects you have to call 'retain' if you want
 to keep a reference. This includes all factory methods (e.g. 
 [String stringWithCString:&quot;bla&quot;])!</p>
-<p>The objc module tries to make the management of reference counts completely
-transparent for the user of the module. This is mostly solved in 
-[de]pythonify_c_value. Additonal code is needed when calling methods that
-transfer ownership of their return value (as described above) and when updating
-a instance variable in an Objective-C object (retain new and release old, 
-in that order). Both are implemented.</p>
+<p>When programming Cocoa in Python, you almost never need to worry about
+reference counts: the objc module makes this completely transparent to user.
+This is mostly implemented in [de]pythonify_c_value. Additonal code is needed
+when calling methods that transfer ownership of their return value (as
+described above) and when updating a instance variable in an Objective-C
+object (retain new and release old, in that order). Both are implemented.</p>
 </div>
 <div class="section" id="strings">
 <h1><a name="strings">Strings</a></h1>
-<p>We currently automaticly convert from Python strings to NSStrings (and back). 
-This may not be the smartest thing to do because NSString has a number of 
-methods that don't have an equivalent in Python.</p>
-<p>Converting a Python string to objective-C and back currently converts the 
-string to Unicode. If may be usefull to try to convert to a normal string
+<p>We currently automatically convert from Python strings to NSStrings (and
+back). An NSString is represented in Python as a subclass of the 'unicode'
+class: objc.pyobjc_unicode. This is a conversion as well as a <em>reference</em> to
+the original NSString. The NSString is accessible in Python with the
+.nsstring() method, to allow access to NSString's methods (NSMutableString's
+methods, actually).</p>
+<p>Converting a Python string to Objective-C and back currently converts the 
+string to Unicode. If may be useful to try to convert to a normal string
 (using [NSString dataUsingEncoding:allowLossyConversion:]) and only return
 a Unicode object if that fails.</p>
 <p>When translating from NSString to a Python unicode object (and back) we first 
 translate to a UTF8 encoding. This way we don't have to worry about any
-differences in the representation of Unicode strings in Python and objective-C
-(Python has two different represenations, selection is at compile-time)</p>
+differences in the representation of Unicode strings in Python and Objective-C
+(Python has two different represenations, selection is at compile-time).</p>
 </div>
 </div>
 <?
