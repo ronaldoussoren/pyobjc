@@ -123,6 +123,22 @@ class TestNSArrayInteraction( unittest.TestCase ):
         x[2:8] = y[3:7]
         y[2:4] = y[1:8]
 
+    def test_subScripts(self):
+        x = range(0, 10)
+        y = NSMutableArray.arrayWithArray_(x)
+
+        self.assertEquals( x[0], y[0] )
+        self.assertEquals( x[2], y[2] )
+
+        self.assertEquals( x[-1], y[-1] )
+        self.assertEquals( x[-5], y[-5] )
+
+        self.assertRaises( IndexError, x.__getitem__, 100)
+        self.assertRaises( IndexError, x.__getitem__, -100)
+
+
+
+
 def suite():
     suite = unittest.TestSuite()
     suite.addTest( unittest.makeSuite( TestNSArrayInteraction ) )
