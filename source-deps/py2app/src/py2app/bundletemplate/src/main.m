@@ -47,9 +47,10 @@ NSString *ERR_TERMINATE = @"Terminate";
 //
 
 typedef int PyObject;
-typedef int PyGILState_STATE;
+typedef enum {PyGILState_LOCKED, PyGILState_UNLOCKED} PyGILState_STATE;
 typedef PyGILState_STATE (*PyGILState_EnsurePtr)(void);
 typedef void (*PyGILState_ReleasePtr)(PyGILState_STATE);
+typedef void (*PyEval_ReleaseLockPtr)(void);
 typedef void (*PyErr_ClearPtr)(void);
 typedef PyObject *(*PyString_FromStringPtr)(const char *);
 typedef int (*PyList_InsertPtr)(PyObject *, int, PyObject *);
@@ -89,14 +90,17 @@ static void __attribute__ ((__unused__)) _py2app_bundle_load(void);
 // Implementation
 //
 
-void *_py2app_bundle_exported_symbol;
-
 static
 const char *bundlePath() {
-    struct mach_header *myHeader = _dyld_get_image_header_containing_address((unsigned long)&_py2app_bundle_exported_symbol);
-    NSSymbol mySymbol = NSLookupSymbolInImage(myHeader, "__py2app_bundle_exported_symbol", NSLOOKUPSYMBOLINIMAGE_OPTION_BIND);
-    NSModule myModule = NSModuleForSymbol(mySymbol);
-    return NSNameOfModule(myModule);
+    struct mach_header *myHeader = _dyld_get_image_header_containing_address((unsigned long)&bundlePath);
+    int i, count = _dyld_image_count();
+    for (i = 0; i < count; i++) {
+        if (_dyld_get_image_header(i) == myHeader) {
+            return _dyld_get_image_name(i);
+        }
+    }
+    abort();
+    return NULL;
 }
 
 static
@@ -393,6 +397,7 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
     LOOKUP(Py_IsInitialized);
     LOOKUP(Py_Initialize);
     LOOKUP(PyErr_Clear);
+    LOOKUP(PyEval_ReleaseLock);
     LOOKUP(PyGILState_Ensure);
     LOOKUP(PyGILState_Release);
     LOOKUP(PyEval_InitThreads);
@@ -511,6 +516,9 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
 
     PyErr_Clear();
     PyGILState_Release(gilState);
+    if (gilState == PyGILState_LOCKED) {
+        PyEval_ReleaseLock();
+    }
 
     return rval;
 }
