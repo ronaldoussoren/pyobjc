@@ -92,7 +92,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self, PyObject*
   colorSpaceNameString = [NSString stringWithCString: colorSpaceName];
 
   NS_DURING
-    newImageRep = objc_msgSend(ObjCObject_GetObject(self), 
+    newImageRep = objc_msgSend(PyObjCObject_GetObject(self), 
 			       @selector(initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:), dataPlanes, width, height, bps, spp, hasAlpha, isPlanar, colorSpaceNameString, bpr, bpp);
 
     result = ObjC_IdToPython(newImageRep);
@@ -169,8 +169,8 @@ supercall_NSBitmapImageRep_initWithBitmap(PyObject* method,
   colorSpaceNameString = [NSString stringWithCString: colorSpaceName];
 
   NS_DURING
-    RECEIVER(super) = ObjCObject_GetObject(self);
-    super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+    RECEIVER(super) = PyObjCObject_GetObject(self);
+    super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
     
     newImageRep = objc_msgSendSuper(&super,
 			       @selector(initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:), dataPlanes, width, height, bps, spp, hasAlpha, isPlanar, colorSpaceNameString, bpr, bpp);
@@ -207,11 +207,11 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
     int i;
     int bytesPerPlane;
   
-    (void)objc_msgSend(ObjCObject_GetObject(self), 
+    (void)objc_msgSend(PyObjCObject_GetObject(self), 
 		       @selector(getBitmapDataPlanes:),
 		       &dataPlanes);
 
-    bytesPerPlane = (int) objc_msgSend(ObjCObject_GetObject(self), @selector(bytesPerPlane));
+    bytesPerPlane = (int) objc_msgSend(PyObjCObject_GetObject(self), @selector(bytesPerPlane));
 
     result = PyTuple_New(5);
     if (result != NULL) {
@@ -253,8 +253,8 @@ supercall_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
     int i;
     int bytesPerPlane;
 
-    RECEIVER(super) = ObjCObject_GetObject(self);
-    super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+    RECEIVER(super) = PyObjCObject_GetObject(self);
+    super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
     
     (void)objc_msgSendSuper(&super, 
 			    @selector(getBitmapDataPlanes:),
@@ -306,8 +306,8 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
     unsigned char *bitmapData;
     int bytesPerPlane;
   
-    bitmapData = (unsigned char *)objc_msgSend(ObjCObject_GetObject(self), @selector(bitmapData));
-    bytesPerPlane = (int) objc_msgSend(ObjCObject_GetObject(self), @selector(bytesPerPlane));
+    bitmapData = (unsigned char *)objc_msgSend(PyObjCObject_GetObject(self), @selector(bitmapData));
+    bytesPerPlane = (int) objc_msgSend(PyObjCObject_GetObject(self), @selector(bytesPerPlane));
 
     result = PyBuffer_FromReadWriteMemory(bitmapData, bytesPerPlane);
     if (PyErr_Occurred()) {
@@ -339,8 +339,8 @@ supercall_NSBitmapImageRep_bitmapData(PyObject* method,
     unsigned char *bitmapData;
     int bytesPerPlane;
 
-    RECEIVER(super) = ObjCObject_GetObject(self);
-    super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+    RECEIVER(super) = PyObjCObject_GetObject(self);
+    super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
     
     bitmapData = (unsigned char *) objc_msgSendSuper(&super, @selector(bitmapData));
     bytesPerPlane = (int) objc_msgSend(RECEIVER(super), @selector(bytesPerPlane));

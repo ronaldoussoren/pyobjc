@@ -92,7 +92,7 @@ void ObjCErr_FromObjC(NSException* localException)
 	PyDict_SetItemString(dict, "reason",  v);
 	Py_DECREF(v);
 	if (userInfo) {
-		v = ObjCObject_New(userInfo);
+		v = PyObjCObject_New(userInfo);
 		if (v != NULL) {
 			PyDict_SetItemString(dict, "userInfo", v);
 		} else { 
@@ -161,8 +161,8 @@ void ObjCErr_ToObjC(void)
 		}
 
 		v = PyDict_GetItemString(args, "userInfo");
-		if (v && ObjCObject_Check(v)) {
-			userInfo = ObjCObject_GetObject(v);
+		if (v && PyObjCObject_Check(v)) {
+			userInfo = PyObjCObject_GetObject(v);
 		} else {
 			PyErr_Clear();
 		}
@@ -234,7 +234,7 @@ int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict)
 		super_class = Py_None;
 		Py_INCREF(super_class);
 	} else {
-		super_class = ObjCClass_New(cls->super_class);
+		super_class = PyObjCClass_New(cls->super_class);
 		if (super_class == NULL) {
 			return -1;
 		}
@@ -287,13 +287,13 @@ int ObjC_UpdateConvenienceMethods(PyObject* cls)
 
 	if (ObjC_class_extender == NULL || cls == NULL) return 0;
 
-	objc_cls = ObjCClass_GetClass(cls);
+	objc_cls = PyObjCClass_GetClass(cls);
 
 	if (objc_cls->super_class == nil) {
 		super_class = Py_None;
 		Py_INCREF(super_class);
 	} else {
-		super_class = ObjCClass_New(objc_cls->super_class);
+		super_class = PyObjCClass_New(objc_cls->super_class);
 		if (super_class == NULL) {
 			return -1;
 		}

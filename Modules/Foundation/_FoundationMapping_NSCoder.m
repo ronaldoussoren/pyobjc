@@ -45,7 +45,7 @@ static PyObject* call_NSCoder_encodeValueOfObjCType_at_(
 	}
 
 	NS_DURING
-		(void)objc_msgSend(ObjCObject_GetObject(self),
+		(void)objc_msgSend(PyObjCObject_GetObject(self),
 				@selector(encodeValueOfObjCType:at:),
 				signature, buf);
 		result = Py_None;
@@ -89,8 +89,8 @@ static PyObject* supercall_NSCoder_encodeValueOfObjCType_at_(
 	}
 
 	NS_DURING
-		RECEIVER(super) = ObjCObject_GetObject(self);
-		super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+		RECEIVER(super) = PyObjCObject_GetObject(self);
+		super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
 
 		(void)objc_msgSendSuper(&super,
 				@selector(encodeValueOfObjCType:at:),
@@ -126,7 +126,7 @@ static void imp_NSCoder_encodeValueOfObjCType_at_(id self, SEL sel,
 		return;
 	}
 
-	result = ObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		ObjCErr_ToObjC();
@@ -195,7 +195,7 @@ static PyObject* call_NSCoder_encodeArrayOfObjCType_count_at_(
 	}
 
 	NS_DURING
-		(void)objc_msgSend(ObjCObject_GetObject(self),
+		(void)objc_msgSend(PyObjCObject_GetObject(self),
 				@selector(encodeArrayOfObjCType:count:at:),
 				signature, count, buf);
 		result = Py_None;
@@ -261,8 +261,8 @@ static PyObject* supercall_NSCoder_encodeArrayOfObjCType_count_at_(
 	}
 
 	NS_DURING
-		RECEIVER(super) = ObjCObject_GetObject(self);
-		super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+		RECEIVER(super) = PyObjCObject_GetObject(self);
+		super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
 
 		(void)objc_msgSendSuper(&super,
 				@selector(encodeArrayOfObjCType:count:at:),
@@ -325,7 +325,7 @@ static void imp_NSCoder_encodeArrayOfObjCType_count_at_(id self, SEL sel,
 		return;
 	}
 
-	result = ObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		ObjCErr_ToObjC();

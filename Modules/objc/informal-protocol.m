@@ -214,7 +214,7 @@ int	ObjCIPVerify(PyObject* obj, PyObject* cls)
 			"First argument is not an objc.informal_protocol");
 		return 0;
 	}
-	if (!ObjCClass_Check(cls)) {
+	if (!PyObjCClass_Check(cls)) {
 		ObjCErr_Set(PyExc_TypeError, 
 			"Second argument is not an objc.objc_class");
 		return 0;
@@ -232,7 +232,7 @@ int	ObjCIPVerify(PyObject* obj, PyObject* cls)
 			SEL sel = ObjCSelector_Selector(cur);
 			PyObject* m;
 
-			m = ObjCClass_FindSelector(cls, sel);
+			m = PyObjCClass_FindSelector(cls, sel);
 			if (m == NULL && ObjCSelector_Required(cur)) {
 				PyErr_Print();
 				ObjCErr_Set(PyExc_TypeError,

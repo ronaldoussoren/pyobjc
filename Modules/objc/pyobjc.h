@@ -4,6 +4,7 @@
 #include "objc_util.h"
 
 #include <Python.h>
+#include "py2.2bool.h"
 #ifdef GNU_RUNTIME
 #include <objc/runtime.h>
 #else
@@ -12,7 +13,7 @@
 #include "OC_PythonObject.h"
 #include "OC_PythonArray.h"
 #include "OC_PythonDictionary.h"
-#include "OC_PythonString.h"
+//#include "OC_PythonString.h"
 #include "super-call.h"
 
 /*
@@ -25,18 +26,6 @@
 #define PyDoc_STR(str)	        (str)
 #define PyDoc_STRVAR(name, str) PyDoc_VAR(name) = PyDoc_STR(str)
 #endif
-
-#if PY_VERSION_HEX < 0x0203000A /* Python < 2.3.0a */
-
-/* PyBool_Type was introduced in Python 2.3 */
-#define PyBool_Check(_x_) (0)
-#define PyBool_FromLong(_x_) PyInt_FromLong(_x_)
-
-#else
-
-#define PyObjC_HAVE_PYTHON_BOOL
-
-#endif /* Python < 2.3.0a */
 
 #define OBJC_VERSION "0.8CVS"
 
@@ -56,38 +45,56 @@
 
 extern int ObjC_VerboseLevel;
 
-extern PyTypeObject ObjCClass_Type;
-#define ObjCClass_Check(obj) PyObject_TypeCheck(obj, &ObjCClass_Type)
+extern PyTypeObject PyObjCClass_Type;
+#define PyObjCClass_Check(obj) PyObject_TypeCheck(obj, &PyObjCClass_Type)
+
+#if PY_VERSION_HEX >= 0x020300A2
+
+typedef struct {
+	PyHeapTypeObject        base;
+	Class     class;
+	PyObject* sel_to_py;
+	int       method_magic;
+} PyObjCClassObject;
+
+#else
+
+typedef struct {
+	PyTypeObject		base;
+} PyObjCClassObject;
+
+#endif
 
 
-#define ObjCObject_kUNINITIALIZED 	0x01
+
+#define PyObjCObject_kUNINITIALIZED 	0x01
 typedef struct {
 	PyObject_HEAD
 	PyObject* weak_refs;
 	id        objc_object;
 	int 	  flags;
-} ObjCObject;
+} PyObjCObject;
 
-extern PyTypeObject ObjCObject_Type;
-#define ObjCObject_Check(obj) PyObject_TypeCheck(obj, &ObjCObject_Type)
+extern PyObjCClassObject PyObjCObject_Type;
+#define PyObjCObject_Check(obj) PyObject_TypeCheck(obj, (PyTypeObject*)&PyObjCObject_Type)
 
-extern PyObject* ObjCClass_DefaultModule;
-PyObject* ObjCClass_New(Class objc_class);
-Class     ObjCClass_GetClass(PyObject* object);
-PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector);
-void 	  ObjCClass_MaybeRescan(PyObject* class);
-int 	  ObjCClass_IsSubClass(Class child, Class parent);
+extern PyObject* PyObjCClass_DefaultModule;
+PyObject* PyObjCClass_New(Class objc_class);
+Class     PyObjCClass_GetClass(PyObject* object);
+PyObject* PyObjCClass_FindSelector(PyObject* cls, SEL selector);
+void 	  PyObjCClass_MaybeRescan(PyObject* class);
+int 	  PyObjCClass_IsSubClass(Class child, Class parent);
 int 	  ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
-void ObjCClass_CheckMethodList(PyObject* cls);
+void PyObjCClass_CheckMethodList(PyObject* cls);
 
 
 
 
-PyObject* ObjCObject_New(id objc_object);
-PyObject* ObjCObject_FindSelector(PyObject* cls, SEL selector);
-id 	  ObjCObject_GetObject(PyObject* object);
-void 	  ObjCObject_ClearObject(PyObject* object);
-#define   ObjCObject_GetObject(object) (((ObjCObject*)(object))->objc_object)
+PyObject* PyObjCObject_New(id objc_object);
+PyObject* PyObjCObject_FindSelector(PyObject* cls, SEL selector);
+id 	  PyObjCObject_GetObject(PyObject* object);
+void 	  PyObjCObject_ClearObject(PyObject* object);
+#define   PyObjCObject_GetObject(object) (((PyObjCObject*)(object))->objc_object)
 
 
 /* in class-descriptor.m */
@@ -194,7 +201,7 @@ int     ObjCIPVerify(PyObject* obj, PyObject* cls);
 PyObject* ObjCIPFindInfo(PyObject* obj, SEL selector);
 
 /* See alloc_hack.m */
-int ObjC_InstallAllocHack(void);
+int PyObjC_InstallAllocHack(void);
 
 #ifdef OC_WITH_LIBFFI
 

@@ -41,19 +41,19 @@ ivar_descr_get(ObjCIvar* self, PyObject* obj, PyObject* type)
 	void* buf;
 	PyObject* res;
 
-	if (!obj || ObjCClass_Check(obj)) {
+	if (!obj || PyObjCClass_Check(obj)) {
 		PyErr_SetString(PyExc_TypeError,
 			"Cannot access Objective-C instance-variables "
 			"through class");
 		return NULL;
 	}
 
-	if (!ObjCObject_Check(obj)) {
+	if (!PyObjCObject_Check(obj)) {
 		PyErr_SetString(PyExc_TypeError, 
 		    "objc_ivar descriptor on a non-objc object");
 		return NULL;
 	}
-	objc = ObjCObject_GetObject(obj);
+	objc = PyObjCObject_GetObject(obj);
 	if (objc == NULL) {
 		PyErr_SetString(PyExc_TypeError,
 		   "Cannot access Objective-C instance-variables of NULL");
@@ -90,19 +90,19 @@ ivar_descr_set(ObjCIvar* self, PyObject* obj, PyObject* value)
 	void* buf;
 	int res;
 
-	if (!obj || ObjCClass_Check(obj)) {
+	if (!obj || PyObjCClass_Check(obj)) {
 		PyErr_SetString(PyExc_TypeError,
 			"Cannot access Objective-C instance-variables "
 			"through class");
 		return -1;
 	}
 
-	if (!ObjCObject_Check(obj)) {
+	if (!PyObjCObject_Check(obj)) {
 		PyErr_SetString(PyExc_TypeError, 
 		    "objc_ivar descriptor on a non-objc object");
 		return -1;
 	}
-	objc = ObjCObject_GetObject(obj); 
+	objc = PyObjCObject_GetObject(obj); 
 	if (objc == NULL) {
 		PyErr_SetString(PyExc_TypeError,
 		   "Cannot access Objective-C instance-variables of NULL");

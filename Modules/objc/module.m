@@ -18,7 +18,7 @@ int ObjC_RegisterStdStubs(struct pyobjc_api* api);
 
 int ObjC_VerboseLevel = 0;
 NSAutoreleasePool* ObjC_global_release_pool = nil;
-PyObject* ObjCClass_DefaultModule = NULL;
+PyObject* PyObjCClass_DefaultModule = NULL;
 
 PyDoc_STRVAR(lookUpClass_doc,
   "lookUpClass(class_name) -> class\n"
@@ -44,7 +44,7 @@ static 	char* keywords[] = { "class_name", NULL };
 		return NULL;
 	}
 
-	return ObjCClass_New(objc_class);
+	return PyObjCClass_New(objc_class);
 }
 
 #ifdef OC_WITH_LIBFFI
@@ -65,7 +65,7 @@ classAddMethods(PyObject* self, PyObject* args, PyObject* keywds)
     return NULL;
   }
 
-  Class targetClass = ObjCClass_GetClass(classObject);
+  Class targetClass = PyObjCClass_GetClass(classObject);
   int methodCount = PyList_Size(methodsArray);
   int methodIndex;
   struct objc_method_list *methodsToAdd;
@@ -258,7 +258,7 @@ static 	char* keywords[] = { NULL };
 		return NULL;
 	}
 
-	return PyBool_FromLong(ObjC_VerboseLevel);
+	return PyObjCBool_FromLong(ObjC_VerboseLevel);
 }
 
 
@@ -370,7 +370,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 			continue;
 		}
 
-		cls = ObjCClass_GetClass(item);
+		cls = PyObjCClass_GetClass(item);
 		if (cls == nil) {
 			PyErr_Print();
 			PyErr_Clear();
@@ -394,7 +394,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 				}
 				continue;
 			}
-			r = PyObject_Cmp(mod, ObjCClass_DefaultModule, &c);
+			r = PyObject_Cmp(mod, PyObjCClass_DefaultModule, &c);
 			if (r == -1) {
 				PyErr_Clear();
 			} else if (c != 0) {
@@ -560,10 +560,10 @@ void init_objc(void)
 	 */
 	ObjC_global_release_pool = [[NSAutoreleasePool alloc] init];
 
-	ObjCClass_DefaultModule = PyString_FromString("objc");
+	PyObjCClass_DefaultModule = PyString_FromString("objc");
 
-	PyType_Ready(&ObjCClass_Type); 
-	PyType_Ready(&ObjCObject_Type);
+	PyType_Ready(&PyObjCClass_Type); 
+	PyType_Ready((PyTypeObject*)&PyObjCObject_Type);
 	PyType_Ready(&ObjCSelector_Type); 
 	PyType_Ready(&ObjCNativeSelector_Type);
 	PyType_Ready(&ObjCPythonSelector_Type);
@@ -575,11 +575,13 @@ void init_objc(void)
 			NULL, PYTHON_API_VERSION);
 	d = PyModule_GetDict(m);
 
-	PyDict_SetItemString(d, "objc_class", (PyObject*)&ObjCClass_Type);
-	PyDict_SetItemString(d, "objc_object", (PyObject*)&ObjCObject_Type);
+	PyDict_SetItemString(d, "objc_class", (PyObject*)&PyObjCClass_Type);
+	PyDict_SetItemString(d, "objc_object", (PyObject*)&PyObjCObject_Type);
 	PyDict_SetItemString(d, "selector", (PyObject*)&ObjCSelector_Type);
 	PyDict_SetItemString(d, "ivar", (PyObject*)&ObjCIvar_Type);
 	PyDict_SetItemString(d, "informal_protocol", (PyObject*)&ObjCInformalProtocol_Type);
+	PyDict_SetItemString(d, "YES", PyObjCBool_FromLong(1));
+	PyDict_SetItemString(d, "NO", PyObjCBool_FromLong(0));
 
 	if (ObjCUtil_Init(m) < 0) return;
 	if (ObjCAPI_Register(d) < 0) return;
@@ -597,5 +599,5 @@ void init_objc(void)
 	PyDict_SetItemString(d, "__version__", 
 		PyString_FromString(OBJC_VERSION));
 
-	ObjC_InstallAllocHack();
+	PyObjC_InstallAllocHack();
 }

@@ -48,7 +48,7 @@ ObjC_GetClassList(void)
 	for (i = 0; i < bufferLen; i++) {
 		PyObject* pyclass;
 
-		pyclass = ObjCClass_New(buffer[i]);
+		pyclass = PyObjCClass_New(buffer[i]);
 		if (pyclass == NULL) {
 			goto error_cleanup;
 		}
@@ -97,7 +97,7 @@ ObjC_GetClassList(void)
 	state = NULL; i = 0;
 
 	while ((classid = objc_next_class(&state))) {
-		PyObject* pyclass = ObjCClass_New(classid);
+		PyObject* pyclass = PyObjCClass_New(classid);
 
 		if (pyclass == NULL) {
 			goto error_cleanup;

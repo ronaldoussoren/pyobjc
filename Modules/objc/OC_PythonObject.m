@@ -28,8 +28,8 @@
 
 + newWithObject:(PyObject *) obj
 {
-	if (ObjCObject_Check (obj)) {
-		id objc_obj = ObjCObject_GetObject(obj);
+	if (PyObjCObject_Check (obj)) {
+		id objc_obj = PyObjCObject_GetObject(obj);
 		return objc_obj;
 	} else {
 		id instance = [[self alloc] initWithObject:obj];

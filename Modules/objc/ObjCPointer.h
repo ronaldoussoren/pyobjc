@@ -1,5 +1,5 @@
 /*****************************/
-/*** ObjCPointer interface ***/
+/*** PyObjCPointer interface ***/
 /*****************************/
 
 /* Python wrapper around C pointer */
@@ -10,12 +10,12 @@ typedef struct
   void *ptr;
   PyStringObject *type;
   char contents[0];
-} ObjCPointer;
+} PyObjCPointer;
 
 /* Corresponding Python type object */
-extern PyTypeObject ObjCPointer_Type;
+extern PyTypeObject PyObjCPointer_Type;
 
 /* Corresponding Python type check macro */
-#define ObjCPointer_Check(o) ((o)->ob_type == &ObjCPointer_Type)
+#define PyObjCPointer_Check(o) ((o)->ob_type == &PyObjCPointer_Type)
 
-extern ObjCPointer *ObjCPointer_new (void *ptr, const char *type);
+extern PyObjCPointer *PyObjCPointer_new (void *ptr, const char *type);

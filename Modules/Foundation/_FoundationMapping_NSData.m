@@ -38,7 +38,7 @@ static PyObject* call_NSData_dataWithBytes_length_(
 	}
 
 	NS_DURING
-		objc_result = objc_msgSend(ObjCClass_GetClass(self),
+		objc_result = objc_msgSend(PyObjCClass_GetClass(self),
 				@selector(dataWithBytes:length:),
 				bytes, len);
 		result = ObjC_IdToPython(objc_result);
@@ -70,7 +70,7 @@ static PyObject* supercall_NSData_dataWithBytes_length_(
 	}
 
 	NS_DURING
-		RECEIVER(super) = ObjCClass_GetClass(self);
+		RECEIVER(super) = PyObjCClass_GetClass(self);
 		super.class = GETISA(RECEIVER(super));
 
 		objc_result = objc_msgSendSuper(&super,
@@ -108,7 +108,7 @@ static id imp_NSData_dataWithBytes_length_(id self, SEL sel,
 		return nil;
 	}
 
-	result = ObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		ObjCErr_ToObjC();
@@ -145,7 +145,7 @@ static PyObject* call_NSData_initWithBytes_length_(
 		return NULL;
 	}
 
-	self_obj =  ObjCObject_GetObject(self);
+	self_obj =  PyObjCObject_GetObject(self);
 	NS_DURING
 		[self_obj retain];
 		objc_result = objc_msgSend(self_obj,
@@ -155,12 +155,12 @@ static PyObject* call_NSData_initWithBytes_length_(
 		result = ObjC_IdToPython(objc_result);
 
 		/* XXX Ronald: If you try to use the result of 
-		 * ObjCObject_GetObject(self) after the call to objc_msgSend 
+		 * PyObjCObject_GetObject(self) after the call to objc_msgSend 
 		 * it will crash with large enough values of len (>=32). 
 		 * Appearently the original self is recycled during the init.
 		 */
 		if (self != result) {
-			ObjCObject_ClearObject(self);
+			PyObjCObject_ClearObject(self);
 		}
 
 	NS_HANDLER
@@ -192,8 +192,8 @@ static PyObject* supercall_NSData_initWithBytes_length_(
 	}
 
 	NS_DURING
-		RECEIVER(super) = ObjCObject_GetObject(self);
-		super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+		RECEIVER(super) = PyObjCObject_GetObject(self);
+		super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
 
 		objc_result = objc_msgSendSuper(&super,
 				@selector(initWithBytes:length:),
@@ -201,12 +201,12 @@ static PyObject* supercall_NSData_initWithBytes_length_(
 		result = ObjC_IdToPython(objc_result);
 
 		/* XXX Ronald: If you try to use the result of 
-		 * ObjCObject_GetObject(self) after the call to objc_msgSend 
+		 * PyObjCObject_GetObject(self) after the call to objc_msgSend 
 		 * it will crash with large enough values of len (>=32). 
 		 * Appearently the original self is recycled during the init.
 		 */
 		if (self != result) {
-			ObjCObject_ClearObject(self);
+			PyObjCObject_ClearObject(self);
 		}
 	NS_HANDLER
 		ObjCErr_FromObjC(localException);
@@ -239,7 +239,7 @@ static id imp_NSData_initWithBytes_length_(id self, SEL sel,
 		return nil;
 	}
 
-	result = ObjC_CallPython(self, sel, arglist);
+	result = PyObjC_CallPython(self, sel, arglist);
 	Py_DECREF(arglist);
 	if (result == NULL) {
 		ObjCErr_ToObjC();
@@ -269,7 +269,7 @@ static PyObject* call_NSData_bytes(PyObject* method, PyObject* self, PyObject* a
   }
 
   NS_DURING
-    dataObject = ObjCObject_GetObject(self);
+    dataObject = PyObjCObject_GetObject(self);
 
     bytes = [dataObject bytes];
     bytes_len = [dataObject length];
@@ -295,8 +295,8 @@ static PyObject* supercall_NSData_bytes(PyObject* method, PyObject* self, PyObje
   }
 
   NS_DURING
-    RECEIVER(super) = ObjCObject_GetObject(self);
-    super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+    RECEIVER(super) = PyObjCObject_GetObject(self);
+    super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
 
     /* bbum: Not at all sure what to do here....   send both to super?  
      *       Just -bytes?
@@ -318,7 +318,7 @@ static void *imp_NSData_bytes(id self, SEL sel)
 {
   PyObject* result;
 
-  result = ObjC_CallPython(self, sel, NULL);
+  result = PyObjC_CallPython(self, sel, NULL);
   if (result == NULL) {
     ObjCErr_ToObjC();
     return NULL;
@@ -353,7 +353,7 @@ static PyObject* call_NSMutableData_mutableBytes(PyObject* method, PyObject* sel
   }
 
   NS_DURING
-    dataObject = ObjCObject_GetObject(self);
+    dataObject = PyObjCObject_GetObject(self);
 
     bytes = [dataObject mutableBytes];
     bytes_len = [dataObject length];
@@ -379,8 +379,8 @@ static PyObject* supercall_NSMutableData_mutableBytes(PyObject* method, PyObject
   }
 
   NS_DURING
-    RECEIVER(super) = ObjCObject_GetObject(self);
-    super.class = ObjCClass_GetClass((PyObject*)(self->ob_type));
+    RECEIVER(super) = PyObjCObject_GetObject(self);
+    super.class = PyObjCClass_GetClass((PyObject*)(self->ob_type));
 
     /* bbum: Not at all sure what to do here....   
      *       send both to super?  Just -bytes?
@@ -401,7 +401,7 @@ static void *imp_NSMutableData_mutableBytes(id self, SEL sel)
 {
   PyObject* result;
 
-  result = ObjC_CallPython(self, sel, NULL);
+  result = PyObjC_CallPython(self, sel, NULL);
   if (result == NULL) {
     ObjCErr_ToObjC();
     return NULL;

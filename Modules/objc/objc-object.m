@@ -104,10 +104,10 @@ register_proxy(PyObject* proxy_obj)
 	PyObject* unregister_proxy;
 	struct unregister_data* data;
 
-	if (ObjCObject_Check(proxy_obj)) {
-		objc_obj = ObjCObject_GetObject(proxy_obj);
-	} else if (ObjCClass_Check(proxy_obj)) {
-		objc_obj = ObjCClass_GetClass(proxy_obj);
+	if (PyObjCObject_Check(proxy_obj)) {
+		objc_obj = PyObjCObject_GetObject(proxy_obj);
+	} else if (PyObjCClass_Check(proxy_obj)) {
+		objc_obj = PyObjCClass_GetClass(proxy_obj);
 	} else if (ObjCUnicode_Check(proxy_obj)) {
 		objc_obj = ObjCUnicode_Extract(proxy_obj);
 	} else {
@@ -157,7 +157,7 @@ object_new(PyTypeObject*  type, PyObject* args, PyObject* kwds)
 }
 
 static PyObject*
-object_repr(ObjCObject* self)
+object_repr(PyObjCObject* self)
 {
 	char buffer[256];
 
@@ -170,13 +170,19 @@ object_repr(ObjCObject* self)
 static void
 object_dealloc(PyObject* obj)
 {
-	if (((ObjCObject*)obj)->weak_refs != NULL) {
+	if (((PyObjCObject*)obj)->weak_refs != NULL) {
 		 PyObject_ClearWeakRefs(obj);
  	}
-	if (((ObjCObject*)obj)->flags & ObjCObject_kUNINITIALIZED) {
+
+	/* If the object is not yet initialized we try to initialize it before
+	 * releasing the reference. This is necessary because of a misfeature
+	 * of MacOS X: [[NSTextView alloc] release] crashes (at least upto 10.2)
+	 * and this is not a bug according to Apple.
+	 */
+	if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
 		/* Lets hope 'init' is always a valid initializer */
 		NS_DURING
-			[[((ObjCObject*)obj)->objc_object init] release];
+			[[((PyObjCObject*)obj)->objc_object init] release];
 		NS_HANDLER
 			NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
 				localException);
@@ -184,7 +190,7 @@ object_dealloc(PyObject* obj)
 
 	} else {
 		NS_DURING
-			[((ObjCObject*)obj)->objc_object release];
+			[((PyObjCObject*)obj)->objc_object release];
 		NS_HANDLER
 			NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
 				localException);
@@ -198,7 +204,7 @@ object_getattro(PyObject* obj, PyObject* name)
 {
 	PyObject* result;
 
-	ObjCClass_CheckMethodList((PyObject*)obj->ob_type);
+	PyObjCClass_CheckMethodList((PyObject*)obj->ob_type);
 
 	result = PyObject_GenericGetAttr(obj, name);
 	if (result) return result;
@@ -219,7 +225,7 @@ PyDoc_STRVAR(obj_get_classMethods_doc,
 "be used to force access to a class method."
 );
 static PyObject*
-obj_get_classMethods(ObjCObject* self, void* closure)
+obj_get_classMethods(PyObjCObject* self, void* closure)
 {
 	return ObjCMethodAccessor_New((PyObject*)self, 1);
 }
@@ -229,7 +235,7 @@ PyDoc_STRVAR(obj_get_instanceMethods_doc,
 "can be used to force access to a class method."
 );
 static PyObject*
-obj_get_instanceMethods(ObjCObject* self, void* closure)
+obj_get_instanceMethods(PyObjCObject* self, void* closure)
 {
 	return ObjCMethodAccessor_New((PyObject*)self, 0);
 }
@@ -252,12 +258,11 @@ static PyGetSetDef obj_getset[] = {
 	{ 0, 0, 0, 0, 0 }
 };
 
-
-PyTypeObject ObjCObject_Type = {
-	PyObject_HEAD_INIT(&ObjCClass_Type)
+PyObjCClassObject PyObjCObject_Type = {
+	PyObject_HEAD_INIT(&PyObjCClass_Type)
 	0,					/* ob_size */
 	"objc_object",				/* tp_name */
-	sizeof(ObjCObject),			/* tp_basicsize */
+	sizeof(PyObjCObject),			/* tp_basicsize */
 	0,					/* tp_itemsize */
 	/* methods */
 	object_dealloc,		 		/* tp_dealloc */
@@ -281,7 +286,7 @@ PyTypeObject ObjCObject_Type = {
  	0,					/* tp_traverse */
  	0,					/* tp_clear */
 	0,					/* tp_richcompare */
-	offsetof(ObjCObject, weak_refs),	/* tp_weaklistoffset */
+	offsetof(PyObjCObject, weak_refs),	/* tp_weaklistoffset */
 	0,					/* tp_iter */
 	0,					/* tp_iternext */
 	0,					/* tp_methods */
@@ -300,7 +305,7 @@ PyTypeObject ObjCObject_Type = {
 
 
 
-PyObject* ObjCObject_New(id objc_object)
+PyObject* PyObjCObject_New(id objc_object)
 {
 	Class cls = GETISA(objc_object);
 	PyTypeObject* cls_type;
@@ -315,7 +320,7 @@ PyObject* ObjCObject_New(id objc_object)
 		return Py_None;
 	}
 
-	cls_type = (PyTypeObject*)ObjCClass_New(cls);
+	cls_type = (PyTypeObject*)PyObjCClass_New(cls);
 	if (cls_type == NULL) {
 		return NULL;
 	}
@@ -326,13 +331,13 @@ PyObject* ObjCObject_New(id objc_object)
 	}
 
 	/* This should be in the tp_alloc for the new class, but 
-	 * adding a tp_alloc to ObjCClass_Type doesn't seem to help
+	 * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
 	 */
-	ObjCClass_CheckMethodList((PyObject*)res->ob_type);
+	PyObjCClass_CheckMethodList((PyObject*)res->ob_type);
 	
-	((ObjCObject*)res)->weak_refs = NULL;
-	((ObjCObject*)res)->objc_object = objc_object;
-	((ObjCObject*)res)->flags = 0;
+	((PyObjCObject*)res)->weak_refs = NULL;
+	((PyObjCObject*)res)->objc_object = objc_object;
+	((PyObjCObject*)res)->flags = 0;
 
 
 	if (strcmp(GETISA(objc_object)->name, "NSAutoreleasePool") != 0) {
@@ -351,11 +356,11 @@ PyObject* ObjCObject_New(id objc_object)
 	return res;
 }
 
-PyObject* ObjCObject_FindSelector(PyObject* object, SEL selector)
+PyObject* PyObjCObject_FindSelector(PyObject* object, SEL selector)
 {
 	PyObject* meth;
 	
-	meth = ObjCClass_FindSelector((PyObject*)object->ob_type, selector);
+	meth = PyObjCClass_FindSelector((PyObject*)object->ob_type, selector);
 
 	if (meth == NULL) {
 		return NULL; 
@@ -364,25 +369,25 @@ PyObject* ObjCObject_FindSelector(PyObject* object, SEL selector)
 	}	
 }
 
-id        (ObjCObject_GetObject)(PyObject* object)
+id        (PyObjCObject_GetObject)(PyObject* object)
 {
-	if (!ObjCObject_Check(object)) {
+	if (!PyObjCObject_Check(object)) {
 		ObjCErr_Set(PyExc_TypeError,
 			"objc.objc_object expected, got %s",
 			object->ob_type->tp_name);
 		
 	}
-	return ObjCObject_GetObject(object);
+	return PyObjCObject_GetObject(object);
 }
 
-void        ObjCObject_ClearObject(PyObject* object)
+void        PyObjCObject_ClearObject(PyObject* object)
 {
-	if (!ObjCObject_Check(object)) {
+	if (!PyObjCObject_Check(object)) {
 		ObjCErr_Set(PyExc_TypeError,
 			"objc.objc_object expected, got %s",
 			object->ob_type->tp_name);
 		
 	}
-	unregister_proxy(((ObjCObject*)object)->objc_object);
-	((ObjCObject*)object)->objc_object = nil;
+	unregister_proxy(((PyObjCObject*)object)->objc_object);
+	((PyObjCObject*)object)->objc_object = nil;
 }

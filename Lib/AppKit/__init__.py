@@ -44,61 +44,61 @@ NSAccessibility = _objc.informal_protocol(
             None, 
             selector='accessibilityActionDescription:',
             signature='@@:@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='accessibilityActionNames',
             signature='@@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='accessibilityAtributeNames',
             signature='@@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='accessibilityAttributeValue:',
             signature='@@:@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='accessibilityFocusedUIElement',
             signature='@@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='accessibilityHitTest:',
             signature='@@:{_NSPoint=ff}',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='accessibilityIsAttributeSettable',
             signature='c@:@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='accessibilityIsIgnored',
             signature='c@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='accessibilityPerformAction:',
             signature='v@:@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='accessibilitySetValue:ForAttribute:',
             signature='@@:@@',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -109,7 +109,7 @@ NSChangeSpelling = _objc.informal_protocol(
             None, 
             selector='changeSpelling:',
             signature='v@:@',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -121,25 +121,25 @@ NSColorPickingCustom = _objc.informal_protocol(
             None, 
             selector='currentMode',
             signature='i@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='provideNewView:',
             signature='@@:c',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='setColor:',
             signature='v@:@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='supportsMode:',
             signature='c@:i',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -151,49 +151,49 @@ NSColorPickingDefault = _objc.informal_protocol(
             None, 
             selector='alphaControlAddedOrRemoved:',
             signature='v@:@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='attachColorList:',
             signature='v@:@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='detachColorList:',
             signature='v@:@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='initWithPickerMask:colorPanel:',
             signature='@@:i@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='insertNewButtonImage:in:',
             signature='@@:@@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='provideNewButtonImage',
             signature='@@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='setMode:',
             signature='v@:i',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='viewSizeChanged:',
             signature='v@:@',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -205,25 +205,25 @@ NSComboBoxCellDataSource = _objc.informal_protocol(
             None, 
             selector='comboBoxCell:completedString:',
             signature='@@:@',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='comboBoxCell:indexOfItemWithStringValue:',
             signature='I@:@@',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='comboBoxCell:objectValueForItemAtIndex:',
             signature='@@:@i',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='numberOfItemsInComboBoxCell:',
             signature='i@:@',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -235,25 +235,25 @@ NSComboBoxDataSource = _objc.informal_protocol(
             None, 
             selector='comboBox:completedString:',
             signature='@@:@@',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='comboBox:indexOfItemWithStringValue:',
             signature='I@:@@',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='comboBox:objectValueForItemAtIndex:',
             signature='@@:@i',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='numberOfItemsInComboBox:',
             signature='i@:@',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -265,43 +265,43 @@ NSDraggingDestination = _objc.informal_protocol(
             None, 
             selector='concludeDragOperation:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='draggingEnded:',
             signature='v@:@',
-            required=0 # Not implemented yet (10.2)
+            isRequired=0 # Not implemented yet (10.2)
         ),
         _objc.selector(
             None, 
             selector='draggingEntered:',
             signature='i@:@',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='draggingExited:',
             signature='v@:@',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='draggingUpdated:',
             signature='i@:@',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='performDragOperation:',
             signature='c@:@',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='prepareForDragOperation:',
             signature='c@:@',
-            required=0
+            isRequired=0
         ),
     ]
 )
@@ -313,61 +313,61 @@ NSDraggingInfo = _objc.informal_protocol(
             None, 
             selector='draggedImage',
             signature='@@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='draggedImageLocation',
             signature='{_NSPoint=ff}@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='draggingDestinationWindow',
             signature='@@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='draggingLocation',
             signature='{_NSPoint=ff}@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='draggingPasteboard',
             signature='@@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='draggingSequenceNumber',
             signature='i@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='draggingSource',
             signature='@@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='draggingSourceOperationMask',
             signature='i@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='namesOfPromisedFilesDroppedAtDestination:',
             signature='@@:@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='slideDraggedImageTo:',
             signature='v@:{_NSPoint=ff}',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -379,43 +379,43 @@ NSDraggingSource = _objc.informal_protocol(
             None, 
             selector='draggedImage:beganAt:',
             signature='v@:@{_NSPoint=ff}',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='draggedImage:endedAt:deposited:',
             signature='v@:@{_NSPoint=ff}c',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='draggedImage:endedAt:operation:',
             signature='v@:@{_NSPoint=ff}i',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='draggedImage:movedTo:',
             signature='v@:@{_NSPoint=ff}',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='draggingSourceOperationMaskForLocal:',
             signature='I@:c',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='ignoreModifierKeysWhileDragging',
             signature='c@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='namesOfPromisedFilesDroppedAtDestination:',
             signature='@@:@',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -427,7 +427,7 @@ NSIgnoreMisspelledWords = _objc.informal_protocol(
             None, 
             selector='ignoreSpelling:',
             signature='v@:@',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -439,19 +439,19 @@ NSInputServerMouseTracker = _objc.informal_protocol(
             None, 
             selector='mouseDownOnCharacterIndex:atCoordinate:withModifier:client:',
             signature='c@:I{_NSPoint=ff}I@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='mouseDraggedOnCharacterIndex:atCoordinate:withModifier:client:',
             signature='c@:I{_NSPoint=ff}I@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='mouseUpOnCharacterIndex:atCoordinate:withModifier:client:',
             signature='c@:I{_NSPoint=ff}I@',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -466,7 +466,7 @@ NSMenuValidation = _objc.informal_protocol(
             None, 
             selector='validateMenuItem:',
             signature='c@:@',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -478,7 +478,7 @@ NSNibAwakening = _objc.informal_protocol(
             None, 
             selector='awakeFromNib',
             signature='v@:',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -491,7 +491,7 @@ NSOutlineViewDelegate = _objc.informal_protocol(
     None,
     selector='outlineView:willDisplayCell:forTableColumn:item:',
     signature='v@:@@@@',
-    required=0
+    isRequired=0
     ),
 
 # - (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item;
@@ -499,7 +499,7 @@ NSOutlineViewDelegate = _objc.informal_protocol(
     None,
     selector='outlineView:shouldEditTableColumn:item:',
     signature='c@:@@@',
-    required=0
+    isRequired=0
     ),
 
 # - (BOOL)selectionShouldChangeInOutlineView:(NSOutlineView *)outlineView;
@@ -507,7 +507,7 @@ NSOutlineViewDelegate = _objc.informal_protocol(
     None,
     selector='selectionShouldChangeInOutlineView:',
     signature='c@:@',
-    required=0
+    isRequired=0
     ),
 
 # - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item;
@@ -515,7 +515,7 @@ NSOutlineViewDelegate = _objc.informal_protocol(
     None,
     selector='outlineView:shouldSelectItem:',
     signature='c@:@@',
-    required=0
+    isRequired=0
     ),
 
 # - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectTableColumn:(NSTableColumn *)tableColumn;
@@ -523,7 +523,7 @@ NSOutlineViewDelegate = _objc.informal_protocol(
     None,
     selector='outlineView:shouldSelectTableColumn:',
     signature='c@:@@',
-    required=0
+    isRequired=0
     ),
 
 # // NSOutlineView specific
@@ -532,7 +532,7 @@ NSOutlineViewDelegate = _objc.informal_protocol(
     None,
     selector='outlineView:shouldExpandItem:',
     signature='c@:@@',
-    required=0
+    isRequired=0
     ),
 
 # - (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item;
@@ -540,7 +540,7 @@ NSOutlineViewDelegate = _objc.informal_protocol(
     None,
     selector='outlineView:shouldCollapseItem:',
     signature='c@:@@',
-    required=0
+    isRequired=0
     ),
 
 # - (void)outlineView:(NSOutlineView *)outlineView willDisplayOutlineCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item;
@@ -548,7 +548,7 @@ NSOutlineViewDelegate = _objc.informal_protocol(
     None,
     selector='outlineView:willDisplayOutlineCell:forTableColumn:item:',
     signature='v@:@@@@',
-    required=0
+    isRequired=0
     )
     ]
     )
@@ -560,61 +560,61 @@ NSOutlineViewDataSource = _objc.informal_protocol(
             None, 
             selector='outlineView:acceptDrop:item:childIndex:',
             signature='c@@@i',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='outlineView:child:ofItem:',
             signature='@@:@i@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='outlineView:isItemExpandable:',
             signature='c@:@@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='outlineView:itemForPersistentObject:',
             signature='@@:@@',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='outlineView:numberOfChildrenOfItem:',
             signature='i@:@@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='outlineView:objectValueForTableColumn:byItem:',
             signature='@@:@@@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='outlineView:persistentObjectForItem:',
             signature='@@:@@',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='outlineView:setObjectValue:forTableColumn:byItem:',
             signature='v@:@@@@',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='outlineView:validateDrop:proposedItem:proposedChildIndex:',
             signature='i@:@@@i',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='outlineView:writeItems:toPasteBoard:',
             signature='c@:@@@',
-            required=0
+            isRequired=0
         ),
     ]
 )
@@ -626,13 +626,13 @@ NSServicesRequests = _objc.informal_protocol(
             None, 
             selector='readSelectionFromPasteboard:',
             signature='c@:@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='writeSelectionToPasteboard:types:',
             signature='c@:@@',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -645,7 +645,7 @@ NSTableViewDelegate = _objc.informal_protocol(
     None,
     selector='tableView:willDisplayCell:forTableColumn:row:',
     signature='v@:@@@i',
-    required=0
+    isRequired=0
     ),
     
 # - (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(int)row;
@@ -653,7 +653,7 @@ NSTableViewDelegate = _objc.informal_protocol(
     None,
     selector='tableView:shouldEditTableColumn:row:',
     signature='c@:@@i',
-    required=0
+    isRequired=0
     ),
     
 # - (BOOL)selectionShouldChangeInTableView:(NSTableView *)aTableView;
@@ -661,7 +661,7 @@ NSTableViewDelegate = _objc.informal_protocol(
     None,
     selector='selectionShouldChangeInTableView:',
     signature='c@:@',
-    required=0
+    isRequired=0
     ),
     
 # - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(int)row;
@@ -669,7 +669,7 @@ NSTableViewDelegate = _objc.informal_protocol(
     None,
     selector='tableView:shouldSelectRow:',
     signature='c@:@i',
-    required=0
+    isRequired=0
     ),
     
 # - (BOOL)tableView:(NSTableView *)tableView shouldSelectTableColumn:(NSTableColumn *)tableColumn;
@@ -677,7 +677,7 @@ NSTableViewDelegate = _objc.informal_protocol(
     None,
     selector='tableView:shouldSelectTableColumn:',
     signature='c@:@@',
-    required=0
+    isRequired=0
     ),
 
 #- (void) tableView:(NSTableView*)tableView mouseDownInHeaderOfTableColumn:(NSTableColumn *)tableColumn;
@@ -685,7 +685,7 @@ NSTableViewDelegate = _objc.informal_protocol(
     None,
     selector='tableView:mouseDownInHeaderOfTableColumn:',
     signature='v@:@@',
-    required=0
+    isRequired=0
     ),
 
 # - (void) tableView:(NSTableView*)tableView didClickTableColumn:(NSTableColumn *)tableColumn;
@@ -693,7 +693,7 @@ NSTableViewDelegate = _objc.informal_protocol(
     None,
     selector='tableView:didClickTableColumn:',
     signature='v@:@@',
-    required=0
+    isRequired=0
     ),
 
 # - (void) tableView:(NSTableView*)tableView didDragTableColumn:(NSTableColumn *)tableColumn;
@@ -701,7 +701,7 @@ NSTableViewDelegate = _objc.informal_protocol(
     None,
     selector='tableView:didDragTableColumn:',
     signature='v@:@@',
-    required=0
+    isRequired=0
     )
     ]
     )
@@ -713,37 +713,37 @@ NSTableDataSource = _objc.informal_protocol(
             None, 
             selector='numberOfRowsInTableView:',
             signature='i@:@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='tableView:acceptDrop:row:dropOperation:',
             signature='c@:@@ii',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='tableView:objectValueForTableColumn:row:',
             signature='@@:@@i',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='tableView:setObjectValue:forTableColumn:row:',
             signature='@@:@@@i',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='tableView:validateDrop:proposedRow:proposedDropOperation:',
             signature='i@:@@ii',
-            required=0
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='tableView:writeRows:toPasteboard:',
             signature='c@:@@@',
-            required=0
+            isRequired=0
         ),
     ]
 )        
@@ -755,79 +755,79 @@ NSTextAttachmentCell = _objc.informal_protocol(
             None, 
             selector='attachment',
             signature='@@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='cellBaselineOffset',
             signature='{_NSPoint=ff}@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='cellFrameforTextContainer:proposedLineFragment:glyphPosition:characterIndex:',
             signature='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}{_NSPoint=ff}I',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='cellSize',
             signature='{_NSSize=ff}@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='drawWithFrame:inView:',
             signature='v@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='drawWithFrame:inView:characterIndex:',
             signature='v@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}@I',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='drawWithFrame:inView:characterIndex:layoutManager:',
             signature='v@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}@I@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='highlight:withFrame:inView:',
             signature='v@:c{_NSRect={_NSPoint=ff}{_NSSize=ff}}@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='setAttachment:',
             signature='v@:@',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='trackMouse:inRect:ofView:untilMouseUp:',
             signature='c@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}@c',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='trackMouse:inRect:ofView:atCharacterIndex:untilMouseUp:',
             signature='c@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}@Ic',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='wantsToTrackMouse',
             signature='c@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='wantsToTrackMouseForEvent:inRect:ofView:atCharacterIndex:',
             signature='c@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}@I',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -843,7 +843,7 @@ NSToolTipOwner = _objc.informal_protocol(
             None, 
             selector='view:stringForToolTip:point:userData:',
             signature='@@:@i{_NSPoint=ff}i^v',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -855,7 +855,7 @@ NSToolbarItemValidation = _objc.informal_protocol(
             None, 
             selector='validateToolbarItem:',
             signature='c@:@',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -867,19 +867,19 @@ NSToolbarDelegate = _objc.informal_protocol(
     None,
     selector='toolbar:itemForItemIdentifier:willBeInsertedIntoToolbar:',
     signature='@@:@@c',
-    required=1
+    isRequired=1
     ),
     _objc.selector(
     None,
     selector='toolbarDefaultItemIdentifiers:',
     signature='@@:@',
-    required=1
+    isRequired=1
     ),
     _objc.selector(
     None,
     selector='toolbarAllowedItemIdentifiers:',
     signature='@@:@',
-    required=1
+    isRequired=1
     ),
 
     ### The following are really notifications.  However, they are
@@ -889,13 +889,13 @@ NSToolbarDelegate = _objc.informal_protocol(
     None,
     selector='toolbarWillAddItem:',
     signature='v@:@',
-    required=0
+    isRequired=0
     ),
     _objc.selector(
     None,
     selector='toolbarDidRemoveItem:',
     signature='v@:@',
-    required=0
+    isRequired=0
     ),
     ]
     )
@@ -907,7 +907,7 @@ NSUserInterfaceValidations = _objc.informal_protocol(
             None, 
             selector='validateUserInterfaceItem:',
             signature='c@:@',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -920,13 +920,13 @@ NSValidatedUserInterfaceItem = _objc.informal_protocol(
             None, 
             selector='action',
             signature=':@:',
-            required=1
+            isRequired=1
         ),
         _objc.selector(
             None, 
             selector='tag',
             signature='i@:',
-            required=1
+            isRequired=1
         ),
     ]
 )
@@ -939,7 +939,7 @@ NSApplicationDelegate = _objc.informal_protocol(
     None,
     selector='applicationShouldTerminate:',
     signature='i@:@',
-    required=0
+    isRequired=0
     ),
 
 # - (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename;
@@ -947,7 +947,7 @@ NSApplicationDelegate = _objc.informal_protocol(
     None,
     selector='application:openFile:',
     signature='c@:@@',
-    required=0
+    isRequired=0
     ),
 
 # - (BOOL)application:(NSApplication *)sender openTempFile:(NSString *)filename;
@@ -955,7 +955,7 @@ NSApplicationDelegate = _objc.informal_protocol(
     None,
     selector='application:openTempFile:',
     signature='c@:@@',
-    required=0
+    isRequired=0
     ),
     
 # - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender;
@@ -963,7 +963,7 @@ NSApplicationDelegate = _objc.informal_protocol(
     None,
     selector='applicationShouldOpenUntitledFile:',
     signature='c@:@',
-    required=0
+    isRequired=0
     ),
     
 # - (BOOL)applicationOpenUntitledFile:(NSApplication *)sender;
@@ -971,7 +971,7 @@ NSApplicationDelegate = _objc.informal_protocol(
     None,
     selector='applicationOpenUntitledFile:',
     signature='c@:@',
-    required=0
+    isRequired=0
     ),
 
 # - (BOOL)application:(id)sender openFileWithoutUI:(NSString *)filename;
@@ -979,7 +979,7 @@ NSApplicationDelegate = _objc.informal_protocol(
     None,
     selector='application:openFileWithoutUI:',
     signature='c@:@@',
-    required=0
+    isRequired=0
     ),
 
 # - (BOOL)application:(NSApplication *)sender printFile:(NSString *)filename;
@@ -987,7 +987,7 @@ NSApplicationDelegate = _objc.informal_protocol(
     None,
     selector='application:printFile:',
     signature='c@:@@',
-    required=0
+    isRequired=0
     ),
 
 # - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
@@ -995,7 +995,7 @@ NSApplicationDelegate = _objc.informal_protocol(
     None,
     selector='applicationShouldTerminateAfterLastWindowClosed:',
     signature='c@:@',
-    required=0
+    isRequired=0
     ),
 
 # - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag;
@@ -1003,7 +1003,7 @@ NSApplicationDelegate = _objc.informal_protocol(
     None,
     selector='applicationShouldHandleReopen:hasVisibleWindows:',
     signature='c@:@c',
-    required=0
+    isRequired=0
     ),
 
 # - (NSMenu *)applicationDockMenu:(NSApplication *)sender;
@@ -1011,7 +1011,7 @@ NSApplicationDelegate = _objc.informal_protocol(
     None,
     selector='applicationDockMenu:',
     signature='@@:@',
-    required=0
+    isRequired=0
     ),
     ]
 )

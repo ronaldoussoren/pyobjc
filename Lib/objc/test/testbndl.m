@@ -1,6 +1,12 @@
 /*
  * This file implements a (number of) class(es) that are used to test
  * method calling with PyObjC (both python -> ObjC and back)
+ *
+ * NOTES
+ * - The implementation must be synchronized with test_methods.py, see that
+ *   file for more details.
+ * - When adding new methods to OC_TestClass1 *always* add invoke- and call-
+ *   variants to OC_TestClass2.
  */
 #import <Foundation/Foundation.h>
 
@@ -844,6 +850,21 @@ static 	char buf[1024];
 -(struct dummy2)callInstanceDummy2FuncOf:(OC_TestClass1*)arg;
 -(NSPoint)callInstanceNSPointFuncOf:(OC_TestClass1*)arg;
 
+- (long long)callInstanceLongLongArg:(long long)arg on:(OC_TestClass1*)obj;
+- (unsigned long long)callInstanceUnsignedLongLongArg:(unsigned long long)arg on:(OC_TestClass1*)obj;
+- (long)callInstanceLongArg:(long)arg on:(OC_TestClass1*)obj;
+- (unsigned long)callInstanceUnsignedLongArg:(unsigned long)arg on:(OC_TestClass1*)obj;
+- (int)callInstanceIntArg:(int)arg on:(OC_TestClass1*)obj;
+- (unsigned int)callInstanceUnsignedIntArg:(unsigned int)arg on:(OC_TestClass1*)obj;
+- (short)callInstanceShortArg:(short)arg on:(OC_TestClass1*)obj;
+- (unsigned short)callInstanceUnsignedShortArg:(unsigned short)arg on:(OC_TestClass1*)obj;
+- (char)callInstanceCharArg:(char)arg on:(OC_TestClass1*)obj;
+- (unsigned char)callInstanceUnsignedCharArg:(unsigned char)arg on:(OC_TestClass1*)obj;
+- (float)callInstanceFloatArg:(float)arg on:(OC_TestClass1*)obj;
+- (double)callInstanceDoubleArg:(double)arg on:(OC_TestClass1*)obj;
+- (char*)callInstanceCharpArg:(char*)arg on:(OC_TestClass1*)obj;
+- (id)callInstanceIdArg:(id)arg on:(OC_TestClass1*)obj;
+
 /* "NSInvocation" calls */
 -(char)invokeInstanceCharFuncOf:(OC_TestClass1*)arg;
 -(unsigned char)invokeInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg;
@@ -868,12 +889,27 @@ static 	char buf[1024];
 -(struct dummy2)invokeInstanceDummy2FuncOf:(OC_TestClass1*)arg;
 -(NSPoint)invokeInstanceNSPointFuncOf:(OC_TestClass1*)arg;
 
+- (long long)invokeInstanceLongLongArg:(long long)arg on:(OC_TestClass1*)obj;
+- (unsigned long long)invokeInstanceUnsignedLongLongArg:(unsigned long long)arg on:(OC_TestClass1*)obj;
+- (long)invokeInstanceLongArg:(long)arg on:(OC_TestClass1*)obj;
+- (unsigned long)invokeInstanceUnsignedLongArg:(unsigned long)arg on:(OC_TestClass1*)obj;
+- (int)invokeInstanceIntArg:(int)arg on:(OC_TestClass1*)obj;
+- (unsigned int)invokeInstanceUnsignedIntArg:(unsigned int)arg on:(OC_TestClass1*)obj;
+- (short)invokeInstanceShortArg:(short)arg on:(OC_TestClass1*)obj;
+- (unsigned short)invokeInstanceUnsignedShortArg:(unsigned short)arg on:(OC_TestClass1*)obj;
+- (char)invokeInstanceCharArg:(char)arg on:(OC_TestClass1*)obj;
+- (unsigned char)invokeInstanceUnsignedCharArg:(unsigned char)arg on:(OC_TestClass1*)obj;
+- (float)invokeInstanceFloatArg:(float)arg on:(OC_TestClass1*)obj;
+- (double)invokeInstanceDoubleArg:(double)arg on:(OC_TestClass1*)obj;
+- (char*)invokeInstanceCharpArg:(char*)arg on:(OC_TestClass1*)obj;
+- (id)invokeInstanceIdArg:(id)arg on:(OC_TestClass1*)obj;
+
 @end
 
 
 #define SETUP_INVOCATION(inv, target, selector) \
 	inv = [NSInvocation invocationWithMethodSignature: \
-		[arg methodSignatureForSelector:selector]]; \
+		[target methodSignatureForSelector:selector]]; \
 	[inv setTarget:target]; \
 	[inv setSelector:selector]; 
 
@@ -1056,6 +1092,77 @@ static 	char buf[1024];
 	return [arg nspointFunc];
 }
 
+- (long long)callInstanceLongLongArg:(long long)arg on:(OC_TestClass1*)obj;
+{
+	return [obj longlongArg:arg];
+}
+
+- (unsigned long long)callInstanceUnsignedLongLongArg:(unsigned long long)arg on:(OC_TestClass1*)obj;
+{
+	return [obj ulonglongArg:arg];
+}
+
+- (long)callInstanceLongArg:(long)arg on:(OC_TestClass1*)obj;
+{
+	return [obj longArg:arg];
+}
+
+- (unsigned long)callInstanceUnsignedLongArg:(unsigned long)arg on:(OC_TestClass1*)obj;
+{
+	return [obj ulongArg:arg];
+}
+
+- (int)callInstanceIntArg:(int)arg on:(OC_TestClass1*)obj;
+{
+	return [obj intArg:arg];
+}
+
+- (unsigned int)callInstanceUnsignedIntArg:(unsigned int)arg on:(OC_TestClass1*)obj;
+{
+	return [obj uintArg:arg];
+}
+
+- (short)callInstanceShortArg:(short)arg on:(OC_TestClass1*)obj;
+{
+	return [obj shortArg:arg];
+}
+
+- (unsigned short)callInstanceUnsignedShortArg:(unsigned short)arg on:(OC_TestClass1*)obj;
+{
+	return [obj ushortArg:arg];
+}
+
+- (char)callInstanceCharArg:(char)arg on:(OC_TestClass1*)obj;
+{
+	return [obj charArg:arg];
+}
+
+- (unsigned char)callInstanceUnsignedCharArg:(unsigned char)arg on:(OC_TestClass1*)obj;
+{
+	return [obj ucharArg:arg];
+}
+
+- (float)callInstanceFloatArg:(float)arg on:(OC_TestClass1*)obj;
+{
+	return [obj floatArg:arg];
+}
+
+- (double)callInstanceDoubleArg:(double)arg on:(OC_TestClass1*)obj;
+{
+	return [obj doubleArg:arg];
+}
+
+- (char*)callInstanceCharpArg:(char*)arg on:(OC_TestClass1*)obj;
+{
+	return [obj charpArg:arg];
+}
+
+- (id)callInstanceIdArg:(id)arg on:(OC_TestClass1*)obj;
+{
+	return [obj idArg:arg];
+}
+
+
 
 -(long long)invokeInstanceLongLongFuncOf:(OC_TestClass1*)arg
 {
@@ -1134,7 +1241,7 @@ static 	char buf[1024];
 	struct dummy2 res;
 	NSInvocation* inv;
 
-	SETUP_INVOCATION(inv, arg, @selector(dummyFunc))
+	SETUP_INVOCATION(inv, arg, @selector(dummy2Func))
 	
 	[arg forwardInvocation:inv];
 	[inv getReturnValue:&res];
@@ -1152,6 +1259,189 @@ static 	char buf[1024];
 	[inv getReturnValue:&res];
 	return res;
 }
+
+- (long long)invokeInstanceLongLongArg:(long long)arg on:(OC_TestClass1*)obj;
+{
+	long long res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(longlongArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (unsigned long long)invokeInstanceUnsignedLongLongArg:(unsigned long long)arg on:(OC_TestClass1*)obj;
+{
+	unsigned long long res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(ulonglongArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (long)invokeInstanceLongArg:(long)arg on:(OC_TestClass1*)obj;
+{
+	long res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(longArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (unsigned long)invokeInstanceUnsignedLongArg:(unsigned long)arg on:(OC_TestClass1*)obj;
+{
+	unsigned long res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(ulonglongArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (int)invokeInstanceIntArg:(int)arg on:(OC_TestClass1*)obj;
+{
+	int res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(intArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (unsigned int)invokeInstanceUnsignedIntArg:(unsigned int)arg on:(OC_TestClass1*)obj;
+{
+	unsigned int res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(uintArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (short)invokeInstanceShortArg:(short)arg on:(OC_TestClass1*)obj;
+{
+	short res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(shortArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (unsigned short)invokeInstanceUnsignedShortArg:(unsigned short)arg on:(OC_TestClass1*)obj;
+{
+	unsigned short res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(ushortArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (char)invokeInstanceCharArg:(char)arg on:(OC_TestClass1*)obj;
+{
+	char res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(charArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (unsigned char)invokeInstanceUnsignedCharArg:(unsigned char)arg on:(OC_TestClass1*)obj;
+{
+	unsigned char res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(ucharArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (float)invokeInstanceFloatArg:(float)arg on:(OC_TestClass1*)obj;
+{
+	float res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(floatArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (double)invokeInstanceDoubleArg:(double)arg on:(OC_TestClass1*)obj;
+{
+	double res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(doubleArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (char*)invokeInstanceCharpArg:(char*)arg on:(OC_TestClass1*)obj;
+{
+	char* res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(charpArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+- (id)invokeInstanceIdArg:(id)arg on:(OC_TestClass1*)obj;
+{
+	id res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, obj, @selector(idArg:))
+	[inv setArgument:&arg atIndex:2]; // First real argument
+	
+	[obj forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
 
 @end
 
@@ -1174,8 +1464,8 @@ void inittestbndl(void)
 	if (ObjC_ImportModule(m) < 0) return;
 
 	PyModule_AddObject(m, "OC_TestClass1", 
-		ObjCClass_New([OC_TestClass1 class]));
+		PyObjCClass_New([OC_TestClass1 class]));
 	PyModule_AddObject(m, "OC_TestClass2", 
-		ObjCClass_New([OC_TestClass2 class]));
+		PyObjCClass_New([OC_TestClass2 class]));
 	
 }

@@ -14,7 +14,7 @@
  * - This interface is in development, the the API will probably change in
  *   incompatible ways.
  *
- * $Id: pyobjc-api.h,v 1.9 2003/03/01 20:07:00 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.10 2003/03/23 17:08:19 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -26,19 +26,6 @@
 #define PyDoc_STR(str)          (str)
 #define PyDoc_STRVAR(name, str) PyDoc_VAR(name) = PyDoc_STR(str)
 #endif
-
-#if PY_VERSION_HEX < 0x0203000A /* Python < 2.3.0a */
-
-/* PyBool_Type was introduced in Python 2.3 */
-
-#define PyBool_Check(_x_) (0)
-#define PyBool_FromLong(_x_) PyInt_FromLong(_x_)
-
-#else
-
-#define PyObjC_HAVE_PYTHON_BOOL
-
-#endif /* Python < 2.3.0a */
 
 #define PYOBJC_API_VERSION -1
 #define PYOBJC_API_NAME "__C_API__"
@@ -55,8 +42,8 @@ typedef int (RegisterMethodMappingFunctionType)(
 
 struct pyobjc_api {
 	int	      api_version;	/* API version */
-	PyTypeObject* class_type;	/* ObjCClass_Type    */
-	PyTypeObject* object_type;	/* ObjCObject_Type   */
+	PyTypeObject* class_type;	/* PyObjCClass_Type    */
+	PyTypeObject* object_type;	/* PyObjCObject_Type   */
 	PyTypeObject* select_type;	/* ObjCSelector_Type */
 
 	/* ObjC_RegisterMethodMapping */
@@ -68,16 +55,16 @@ struct pyobjc_api {
 			PyObject *(*)(PyObject*, PyObject*, PyObject*),
 			IMP);
 
-	/* ObjCObject_GetObject */
+	/* PyObjCObject_GetObject */
 	id (*obj_get_object)(PyObject*);
 
-	/* ObjCObject_ClearObject */
+	/* PyObjCObject_ClearObject */
 	void (*obj_clear_object)(PyObject*);
 
-	/* ObjCClass_GetClass */
+	/* PyObjCClass_GetClass */
 	Class (*cls_get_class)(PyObject*);
 
-	/* ObjCClass_New */
+	/* PyObjCClass_New */
 	PyObject* (*cls_to_python)(Class cls);
 
 	/* ObjC_PythonToId */
@@ -98,7 +85,7 @@ struct pyobjc_api {
 	/* ObjC_ObjCToPython */
 	PyObject* (*objc_to_py)(const char*, void*);
 
-	/* ObjC_call_to_python */
+	/* PyObjC_CallPython */
 	PyObject* (*call_to_python)(id, SEL, PyObject*);
 
 	/* ObjC_SizeOfType */
@@ -110,6 +97,11 @@ struct pyobjc_api {
 	/* ObjCSelector_GetSelector */
 	SEL	   (*sel_get_sel)(PyObject* sel);
 
+	/* PyObjCBool_Check */
+	int	   (*bool_check)(PyObject* obj);
+
+	/* PyObjCBool_FromLong */
+	PyObject*  (*bool_init)(long i);
 };
 
 
@@ -119,14 +111,14 @@ struct pyobjc_api {
 static struct pyobjc_api*	ObjC_API;
 #endif /* PYOBJC_METHOD_STUB_IMPL */
 
-#define ObjCObject_Check(obj) PyObject_TypeCheck(obj, ObjC_API->object_type)
-#define ObjCClass_Check(obj)  PyObject_TypeCheck(obj, ObjC_API->class_type)
+#define PyObjCObject_Check(obj) PyObject_TypeCheck(obj, ObjC_API->object_type)
+#define PyObjCClass_Check(obj)  PyObject_TypeCheck(obj, ObjC_API->class_type)
 #define ObjCSelector_Check(obj)  PyObject_TypeCheck(obj, ObjC_API->class_type)
 
-#define ObjCObject_GetObject (ObjC_API->obj_get_object)
-#define ObjCObject_ClearObject (ObjC_API->obj_clear_object)
-#define ObjCClass_GetClass   (ObjC_API->cls_get_class)
-#define ObjCClass_New 	     (ObjC_API->cls_to_python)
+#define PyObjCObject_GetObject (ObjC_API->obj_get_object)
+#define PyObjCObject_ClearObject (ObjC_API->obj_clear_object)
+#define PyObjCClass_GetClass   (ObjC_API->cls_get_class)
+#define PyObjCClass_New 	     (ObjC_API->cls_to_python)
 #define ObjCSelector_GetClass (ObjC_API->sel_get_class)
 #define ObjCSelector_GetSelector (ObjC_API->sel_get_sel)
 #define ObjC_PythonToId      (ObjC_API->python_to_id)
@@ -135,12 +127,14 @@ static struct pyobjc_api*	ObjC_API;
 #define ObjCErr_ToObjC       (ObjC_API->err_python_to_objc)
 #define ObjC_PythonToObjC    (ObjC_API->py_to_objc)
 #define ObjC_ObjCToPython    (ObjC_API->objc_to_py)
-#define ObjC_CallPython	     (ObjC_API->call_to_python)
+#define PyObjC_CallPython	     (ObjC_API->call_to_python)
 #define ObjC_RegisterMethodMapping (ObjC_API->register_method_mapping)
 #define ObjC_RegisterSignatureMapping (ObjC_API->register_signature_mapping)
 #define ObjC_SizeOfType      (ObjC_API->sizeof_type)
 #define  ObjC_PythonToObjC   (ObjC_API->py_to_objc)
 #define  ObjC_ObjCToPython   (ObjC_API->objc_to_py)
+#define  PyObjCBool_Check   (ObjC_API->bool_check)
+#define  PyObjCBool_FromLong   (ObjC_API->bool_init)
 
 #ifndef PYOBJC_METHOD_STUB_IMPL
 static int
