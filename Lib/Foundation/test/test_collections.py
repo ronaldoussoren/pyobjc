@@ -2,6 +2,7 @@ import unittest
 import objc
 
 from Foundation import *
+from Foundation.Conversion import *
 
 samplePropertyList = '{ "" = 1; "x" = "2"; 1 = "one";}'
 
@@ -45,6 +46,19 @@ class TestCollections( unittest.TestCase ):
         self.assertSameDictionaryContents(originalNSDictionary, aPythonDictionary)
         self.assertSameDictionaryContents(originalNSDictionary, convertedNSDictionary)
         self.assertSameDictionaryContents(convertedNSDictionary, aPythonDictionary)
+
+    def testHelpers(self):
+        def conversionHelper(anObject):
+            return anObject
+
+        self.assertRaises(TypeError, propertyListFromPythonCollection, { '1' : type([]) })
+        propertyListFromPythonCollection({'1' : type([])}, conversionHelper)
+
+        d = NSDictionary.dictionaryWithDictionary_( {'1' : NSBundle.mainBundle()} )
+        self.assertRaises(TypeError, pythonCollectionFromPropertyList, d)
+        pythonCollectionFromPropertyList(d, conversionHelper)
+
+        
 
 def suite():
     suite = unittest.TestSuite()
