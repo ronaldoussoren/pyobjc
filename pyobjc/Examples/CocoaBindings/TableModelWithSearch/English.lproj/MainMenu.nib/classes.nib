@@ -1,7 +1,7 @@
 {
     IBClasses = (
         {
-            ACTIONS = {performSearch = id; }; 
+            ACTIONS = {changeSearchType = id; performSearch = id; }; 
             CLASS = FilteringArrayController; 
             LANGUAGE = ObjC; 
             OUTLETS = {}; 
@@ -16,7 +16,11 @@
         {
             CLASS = ToolbarCreator; 
             LANGUAGE = ObjC; 
-            OUTLETS = {searchField = NSTextField; window = NSWindow; }; 
+            OUTLETS = {
+                filteringArrayController = FilteringArrayController; 
+                searchField = NSTextField; 
+                window = NSWindow; 
+            }; 
             SUPERCLASS = NSObject; 
         }
     ); 
