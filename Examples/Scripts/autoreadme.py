@@ -13,8 +13,9 @@ import sys
 import os
 import re
 
-from AppKit import NSWorkspace, NSWorkspaceDidMountNotification
+from AppKit import *
 from Foundation import *
+from PyObjCTools import AppHelper
 
 
 readTheseFiles = re.compile('(.*read\s*me.*|.*release.*note.*|^about.*)', re.I)
@@ -54,4 +55,4 @@ notificationCenter.addObserver_selector_name_object_(
     None)
 
 NSLog("Listening for mount notifications....")
-NSRunLoop.currentRunLoop().run() # never exits
+AppHelper.runConsoleEventLoop()

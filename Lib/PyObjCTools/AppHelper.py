@@ -2,17 +2,77 @@
 
 Exported functions:
 * runEventLoop - run NSApplicationMain in a safer way
+* runConsoleEventLoop - run NSRunLoop.run() in a stoppable manner
+* stopEventLoop - stops the event loop or terminates the application
 * endSheetMethod - set correct signature for NSSheet callbacks
 """
 
-__all__ = ( 'runEventLoop', 'runConsoleEventLoop', 'endSheetMethod' )
+__all__ = ( 'runEventLoop', 'runConsoleEventLoop', 'stopEventLoop', 'endSheetMethod' )
 
-from AppKit import NSApplicationMain, NSApp, NSRunAlertPanel
-from Foundation import NSLog, NSRunLoop
+from AppKit import *
+from Foundation import *
 import os
 import sys
 import traceback
 import objc
+
+class PyObjCAppHelperRunLoopStopper(NSObject):
+    singletons = {}
+
+    def currentRunLoopStopper(cls):
+        runLoop = NSRunLoop.currentRunLoop()
+        return cls.singletons.get(runLoop)
+    currentRunLoopStopper = classmethod(currentRunLoopStopper)
+            
+    def init(self):
+        self = super(PyObjCAppHelperRunLoopStopper, self).init()
+        self.shouldStop = False
+        return self
+
+    def shouldRun(self):
+        return not self.shouldStop
+
+    def addRunLoopStopper_toRunLoop_(cls, runLoopStopper, runLoop):
+        if runLoop in cls.singletons:
+            raise ValueError, "Stopper already registered for this runLoop"
+        cls.singletons[runLoop] = runLoopStopper
+    addRunLoopStopper_toRunLoop_ = classmethod(addRunLoopStopper_toRunLoop_)
+        
+    def removeRunLoopStopperFromRunLoop_(cls, runLoop):
+        if runLoop not in cls.singletons:
+            raise ValueError, "Stopper not registered for this runLoop"
+        del cls.singletons[runLoop]
+    removeRunLoopStopperFromRunLoop_ = classmethod(removeRunLoopStopperFromRunLoop_)
+        
+    def stop(self):
+        self.shouldStop = True
+        # this should go away when/if runEventLoop uses
+        # runLoop iteration
+        if NSApp() is not None:
+            NSApp().terminate_(self)
+
+    def performStop_(self, sender):
+        self.stop()
+
+
+def stopEventLoop():
+    """
+    Stop the current event loop if possible
+    returns True if it expects that it was successful, False otherwise
+    """
+    stopper = PyObjCAppHelperRunLoopStopper.currentRunLoopStopper()
+    if stopper is None:
+        if NSApp() is not None:
+            NSApp().terminate_(None)
+            return True
+        return False
+    NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+        0.0,
+        stopper,
+        'performStop:',
+        None,
+        False)
+    return True
 
 
 def endSheetMethod(meth):
@@ -23,7 +83,6 @@ def endSheetMethod(meth):
     return objc.selector(meth, signature='v@:@ii')
 
 
-
 def unexpectedErrorAlertPanel():
     exceptionInfo = traceback.format_exception_only(
         *sys.exc_info()[:2])[0].strip()
@@ -31,19 +90,24 @@ def unexpectedErrorAlertPanel():
             "(%s)" % exceptionInfo,
             "Continue", "Quit", None)
 
+
 def unexpectedErrorAlertPdb():
     import pdb
     traceback.print_exc()
     pdb.post_mortem(sys.exc_info()[2])
     return True
 
+
 def machInterrupt(signum):
-    app = NSApp()
-    if app:
-        app.terminate_(None)
+    stopper = PyObjCAppHelperRunLoopStopper.currentRunLoopStopper()
+    if stopper is not None:
+        stopper.stop()
+    elif NSApp() is not None:
+        NSApp().terminate_(None)
     else:
         import os
         os._exit(1)
+
 
 def installMachInterrupt():
     try:
@@ -53,14 +117,30 @@ def installMachInterrupt():
         return
     MachSignals.signal(signal.SIGINT, machInterrupt)
 
-def runConsoleEventLoop(argv=None, installInterrupt=False):
+
+def runConsoleEventLoop(argv=None, installInterrupt=False, mode=NSDefaultRunLoopMode):
     if argv is None:
         argv = sys.argv
     if installInterrupt:
         installMachInterrupt()
-    NSRunLoop.currentRunLoop().run()
+    runLoop = NSRunLoop.currentRunLoop()
+    stopper = PyObjCAppHelperRunLoopStopper.alloc().init()
+    PyObjCAppHelperRunLoopStopper.addRunLoopStopper_toRunLoop_(stopper, runLoop)
+    try:
+
+        while stopper.shouldRun():
+            nextfire = runLoop.limitDateForMode_(mode)
+            if not stopper.shouldRun():
+                break
+            if not runLoop.runMode_beforeDate_(mode, nextfire):
+                stopper.stop()
+
+    finally:
+        PyObjCAppHelperRunLoopStopper.removeRunLoopStopperFromRunLoop_(runLoop)
+
 
 RAISETHESE = (SystemExit, MemoryError, KeyboardInterrupt)
+
 
 def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=False, pdb=None):
     """Run the event loop, ask the user if we should continue if an
@@ -78,25 +158,34 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=False, p
         else:
             unexpectedErrorAlert = unexpectedErrorAlertPanel
 
+    runLoop = NSRunLoop.currentRunLoop()
+    stopper = PyObjCAppHelperRunLoopStopper.alloc().init()
+    PyObjCAppHelperRunLoopStopper.addRunLoopStopper_toRunLoop_(stopper, runLoop)
+
     firstRun = NSApp() is None
-    while True:
-        try:
-            if firstRun:
-                firstRun = False
-                if installInterrupt:
-                    installMachInterrupt()
-                NSApplicationMain(argv)
-            else:
-                NSApp().run()
-        except RAISETHESE:
-            traceback.print_exc()
-            break
-        except:
-            if not unexpectedErrorAlert():
-                NSLog("An exception has occured:")
-                raise
-            else:
-                NSLog("An exception has occured:")
+    try:
+
+        while stopper.shouldRun():
+            try:
+                if firstRun:
+                    firstRun = False
+                    if installInterrupt:
+                        installMachInterrupt()
+                    NSApplicationMain(argv)
+                else:
+                    NSApp().run()
+            except RAISETHESE:
                 traceback.print_exc()
-        else:
-            break
+                break
+            except:
+                if not unexpectedErrorAlert():
+                    NSLog("An exception has occured:")
+                    raise
+                else:
+                    NSLog("An exception has occured:")
+                    traceback.print_exc()
+            else:
+                break
+
+    finally:
+        PyObjCAppHelperRunLoopStopper.removeRunLoopStopperFromRunLoop_(runLoop)

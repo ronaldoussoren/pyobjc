@@ -25,6 +25,7 @@
 import objc
 from Foundation import *
 from AppKit import *
+from PyObjCTools import AppHelper
 
 class AppDelegate (NSObject):
     def applicationDidFinishLaunching_(self, aNotification):
@@ -74,7 +75,7 @@ def main():
     win.display()
     win.orderFrontRegardless()          ## but this one does
 
-    app.run()
+    AppHelper.runEventLoop()
 
 
 if __name__ == '__main__' : main()
