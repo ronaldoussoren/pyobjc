@@ -8,6 +8,7 @@
 #include "pyobjc.h"
 
 #include "compile.h" /* from Python */
+#include "opcode.h"
 
 #include <objc/Object.h>
 
@@ -974,7 +975,11 @@ pysel_default_signature(PyObject* callable)
 {
 	PyCodeObject* func_code;
 	int           arg_count;
-	char*	      result;
+	char*         result;
+	const unsigned char *buffer;
+	int           buffer_len;
+	int           i;
+	int           was_none;
 	
 	if (PyFunction_Check(callable)) {
 		func_code = (PyCodeObject*)PyFunction_GetCode(callable);
@@ -995,10 +1000,39 @@ pysel_default_signature(PyObject* callable)
 		return NULL;
 	}
 
-	/* We want: @@:@... (final sequence of arg_count-1 @-chars) */
+	/* We want: v@:@... (final sequence of arg_count-1 @-chars) */
 	memset(result, '@', arg_count+2);
+	result[0] = 'v';
 	result[2] = ':';
 	result[arg_count+2] = '\0';
+
+	if (PyObject_AsReadBuffer(func_code->co_code, (const void **)&buffer, &buffer_len)) {
+		return NULL;
+	}
+
+	/* 
+	   Scan bytecode to find return statements.  If any non-bare return
+	   statement exists, then set the return type to @ (id).
+	*/
+	was_none = 0;
+	for (i=0; i<buffer_len; ++i) {
+		int op = buffer[i];
+		if (op == LOAD_CONST && buffer[i+1] == 0 && buffer[i+2] == 0) {
+			was_none = 1;
+		} else {
+			if (op == RETURN_VALUE) {
+				if (!was_none) {
+					result[0] = '@';
+					break;
+				}
+			}
+			was_none = 0;
+		}
+		if (op >= HAVE_ARGUMENT) {
+			i += 2;
+		}
+	}
+	
 
 	return result;
 }
