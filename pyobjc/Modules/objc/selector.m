@@ -401,7 +401,8 @@ PyDoc_STRVAR(base_selector_type_doc,
 "function:\n"
 "  A function object with at least one argument. The first argument will\n"
 "  be used to pass 'self'. This argument may be None when defining an\n"
-"  informal_protocol object.\n"
+"  informal_protocol object. The function must not be a ``staticmethod``\n"
+"  instance. \n"
 "selector:\n"
 "  The name of the Objective-C method. The default value of this\n"
 "  attribute is the name of the function, with all underscores replaced\n"
@@ -427,7 +428,8 @@ PyDoc_STRVAR(base_selector_type_doc,
 "  - O: any object (id)\n"
 "  It is not allowed to specify both 'argumentTypes' and 'signature'\n"
 "isClassMethod:\n"
-"  True if the method is a class method, false otherwise"
+"  True if the method is a class method, false otherwise. The default is \n"
+"  False, unless the function is an instance of ``classmethod``.\n"
 "isRequired:\n"
 "  True if this is a required method in an informal protocol, False\n"
 "  otherwise. The default value is 'True'. This argument is only used\n"
@@ -1196,7 +1198,7 @@ static	char*	keywords[] = { "method", "selector", "signature",
 		if (signature == NULL) return NULL;
 	} else if (signature != NULL) {
 		/* Check if the signature string is valid */
-		char* cur;
+		const char* cur;
 
 		cur = signature;
 		while (*cur != '\0') {
@@ -1217,17 +1219,45 @@ static	char*	keywords[] = { "method", "selector", "signature",
 		return NULL;
 	}
 
+	if (PyObject_TypeCheck(callable, &PyClassMethod_Type)) {
+		/* Special treatment for 'classmethod' instances */
+		PyObject* tmp = PyObject_CallMethod(callable, "__get__", "OO",
+				Py_None, &PyList_Type);
+		if (tmp == NULL) {
+			return NULL;
+		} 
+
+		if (PyFunction_Check(tmp)) {
+			/* A 'staticmethod' instance, cannot convert */
+			Py_DECREF(tmp);
+			PyErr_SetString(PyExc_TypeError,
+					"cannot use staticmethod as the "
+					"callable for a selector.");
+			return NULL;
+		}
+		
+		callable = PyObject_GetAttrString(tmp, "im_func");
+		Py_DECREF(tmp);
+		if (callable == NULL) {
+			return NULL;
+		}
+	} else {
+		Py_INCREF(callable);
+	}
+
 	result = (ObjCPythonSelector*)PyObject_New(
 			ObjCPythonSelector, &ObjCPythonSelector_Type);
 	if (signature == NULL) {
 		result->sel_signature = pysel_default_signature(callable);
 		if (result->sel_signature == NULL) {
+			Py_DECREF(callable);
 			Py_DECREF(result);
 			return NULL;
 		}
 	} else {
 		result->sel_signature = ObjC_strdup(signature);
 		if (result->sel_signature == 0) {
+			Py_DECREF(callable);
 			return PyErr_NoMemory();
 		}
 	}
@@ -1246,7 +1276,6 @@ static	char*	keywords[] = { "method", "selector", "signature",
 	if (required) {
 		result->sel_flags |= PyObjCSelector_kREQUIRED;
 	}
-	Py_INCREF(callable);
 
 	return (PyObject*)result;
 }
@@ -1404,4 +1433,197 @@ PyObjCSelector_GetSelector(PyObject* sel)
 int   PyObjCSelector_Required(PyObject* obj)
 {
 	return (((PyObjCSelector*)obj)->sel_flags & PyObjCSelector_kREQUIRED) != 0;
+}
+
+int   PyObjCSelector_IsClassMethod(PyObject* obj)
+{
+	return (((PyObjCSelector*)obj)->sel_flags & PyObjCSelector_kCLASS_METHOD) != 0;
+}
+
+
+/*
+ * Find the signature of 'selector' in the list of protocols.
+ */
+static char*
+find_protocol_signature(PyObject* protocols, SEL selector)
+{
+	int len;
+	int i;
+	PyObject* proto;
+	PyObject* info;
+
+	if (!PyList_Check(protocols)) {
+		ObjCErr_Set(ObjCExc_internal_error,
+			"Protocol-list is not a list");
+		return NULL;
+	}
+
+	/* First try the explicit protocol definitions */
+	len = PyList_GET_SIZE(protocols);
+	for (i = 0; i < len; i++) {
+		proto = PyList_GET_ITEM(protocols, i);
+		if (proto == NULL) {
+			PyErr_Clear();
+			continue;
+		}
+		if (!PyObjCInformalProtocol_Check(proto)) continue;
+
+		info = PyObjCInformalProtocol_FindSelector(proto, selector);
+		if (info != NULL) {
+			return PyObjCSelector_Signature(info);
+		}
+	}
+
+	/* Then check if another protocol users this selector */
+	proto = PyObjCInformalProtocol_FindProtocol(selector);
+	if (proto == NULL) {
+		PyErr_Clear();
+		return NULL;
+	}
+
+	info = PyObjCInformalProtocol_FindSelector(proto, selector);
+	if (info != NULL) {
+		if (PyList_Append(protocols, proto) < 0) {
+			return NULL;
+		}
+		Py_INCREF(proto);
+		return PyObjCSelector_Signature(info);
+	}
+	
+	return NULL;
+}
+
+PyObject* 
+PyObjCSelector_FromFunction(
+	PyObject* pyname,
+	PyObject* callable,
+	PyObject* template_class,
+	PyObject* protocols)
+{
+	char*     oc_name;
+	SEL	  selector;
+	PyObjCRT_Method_t    meth;
+	int       is_class_method = 0;
+	Class     oc_class = PyObjCClass_GetClass(template_class);
+	PyObject* value;
+
+	if (oc_class == NULL) {
+		return NULL;
+	}
+
+	if (!PyFunction_Check(callable) && !PyMethod_Check(callable) &&
+		(callable->ob_type != &PyClassMethod_Type)) {
+	
+		PyErr_SetString(PyExc_TypeError, 
+				"expecting function, method or classmethod");
+		return NULL;
+	}
+
+
+	if (callable->ob_type == &PyClassMethod_Type) {
+		/*
+		 * This is a 'classmethod' or 'staticmethod'. 'classmethods'
+		 * will be converted to class 'selectors', 'staticmethods' are
+		 * returned as-is.
+		 */
+		PyObject* tmp;
+		is_class_method = 1;
+		tmp = PyObject_CallMethod(callable, "__get__", "OO",
+				Py_None, template_class);
+		if (tmp == NULL) {
+			return NULL;
+		}
+
+		if (PyFunction_Check(tmp)) {
+			/* A 'staticmethod', don't convert to a selector */
+			Py_DECREF(tmp);
+			Py_INCREF(callable);
+			return callable;
+		}
+
+		callable = PyObject_GetAttrString(tmp, "im_func");
+		Py_DECREF(tmp);
+		if (callable == NULL) {
+			return NULL;
+		}
+	}
+
+	if (!PyFunction_Check(callable) && !PyMethod_Check(callable)) {
+		PyErr_SetString(PyExc_TypeError, 
+				"expecting function or method");
+		return NULL;
+	}
+
+	if (pyname == NULL) {
+		/* No name specified, use the function name */
+		pyname = PyObject_GetAttrString(callable, "__name__");
+		if (pyname == NULL) {
+			return NULL;
+		}
+		oc_name = PyString_AS_STRING(pyname);
+		selector = PyObjCSelector_DefaultSelector(oc_name);
+		Py_DECREF(pyname);
+		oc_name = NULL;
+
+	} else if (!PyString_Check(pyname)) {
+		PyErr_SetString(PyExc_TypeError, 
+			"method name must be a string");
+		return NULL;
+	} else {
+		oc_name = PyString_AS_STRING(pyname);
+		selector = PyObjCSelector_DefaultSelector(oc_name);
+	}
+
+	if (is_class_method) {
+		meth = class_getClassMethod(oc_class, selector);
+	} else {
+		meth = class_getInstanceMethod(oc_class, selector);
+		if (!meth) {
+			meth = class_getClassMethod(oc_class, selector);
+			if (meth) {
+				is_class_method = 1;
+			}
+		}
+	}
+
+	if (meth) {
+		/* The function overrides a method in the 
+		 * objective-C class.
+		 *
+		 * Get the signature through the python wrapper,
+		 * the user may have specified a more exact
+		 * signature!
+		 */
+		PyObject* super_sel = PyObjCClass_FindSelector(
+			template_class, selector);
+		if (super_sel == NULL) {
+			return NULL;
+		}
+
+		value = PyObjCSelector_New(
+			callable, 
+			selector, 
+			PyObjCSelector_Signature(super_sel),
+			is_class_method,
+			oc_class);
+		Py_DECREF(super_sel);
+	} else {
+		char* signature = NULL;
+
+		if (protocols != NULL) {
+			signature = find_protocol_signature(
+					protocols, selector);
+			if (signature == NULL && PyErr_Occurred()) {
+				return NULL;
+			}
+		} 
+
+		value = PyObjCSelector_New(
+			callable, 
+			selector, 
+			signature,
+			is_class_method,
+			oc_class);
+	}
+	return value;
 }

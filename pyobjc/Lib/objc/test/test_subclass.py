@@ -2,6 +2,7 @@ import unittest
 import objc
 from objc.test.testbndl import PyObjC_TestClass3
 import sys
+import types
 
 # Most usefull systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass('NSObject')
@@ -162,7 +163,28 @@ class TestCopying (unittest.TestCase):
         o = MITestClass2.alloc().init()
         self.assertEquals(o.mixinMethod(), "foo")
 
+class TestClassMethods (unittest.TestCase):
 
+    def testClassMethod(self):
+        """ check that classmethod()-s are converted to selectors """
+
+        class ClassMethodTest (NSObject):
+            def clsMeth(self):
+                return "hello"
+            clsMeth = classmethod(clsMeth)
+
+        self.assert_(isinstance(ClassMethodTest.clsMeth, objc.selector))
+        self.assert_(ClassMethodTest.clsMeth.isClassMethod)
+
+    def testStaticMethod(self):
+        """ check that staticmethod()-s are not converted to selectors """
+
+        class StaticMethodTest (NSObject):
+            def stMeth(self):
+                return "hello"
+            stMeth = staticmethod(stMeth)
+
+        self.assert_(isinstance(StaticMethodTest.stMeth, types.FunctionType))
 
 if __name__ == '__main__':
     unittest.main()
