@@ -29,7 +29,7 @@ class CalendarMatrix (AutoBaseClass):
                 if val:
                     val.setTag_(count)
                 count += 1
-        cell.release() # is this needed?
+        #cell.release() # is this needed?
 
         self._selectedDay = NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
                 now.yearOfCommonEra(), 
@@ -38,7 +38,7 @@ class CalendarMatrix (AutoBaseClass):
                 0, 
                 0, 
                 0, 
-                NSTimeZone.localTimeZone()).retain()
+                NSTimeZone.localTimeZone()) #.retain()
         return self
 
 

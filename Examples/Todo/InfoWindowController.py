@@ -112,7 +112,7 @@ class InfoWindowController (AutoBaseClass):
     	return _sharedInfoWindowController
 
     sharedInfoWindowController = selector(
-    	sharedInfoWindowController, class_method=1)
+    	sharedInfoWindowController, isClassMethod=1)
 
     
     def init(self):
@@ -182,9 +182,9 @@ class InfoWindowController (AutoBaseClass):
 
 
     def __del__(self): # dealloc
-    	self.notifyView.release()
-    	self.reschedView.release()
-    	self.notesView.release()
+    	#self.notifyView.release()
+    	#self.reschedView.release()
+    	#self.notesView.release()
     	
     	NSNotificationCenter.defaultCenter().removeObserver_(self)
 

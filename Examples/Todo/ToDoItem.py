@@ -66,7 +66,7 @@ class ToDoItem (NSObject):
     	self._timer = None
 
     	if not aName:
-    		self.release()
+    		#self.release()
     		return None
 
     	self.setItemName_(aName)
@@ -91,13 +91,13 @@ class ToDoItem (NSObject):
     	coder.encodeObject_(self._notes)
     	
     	tempTime = self._secsUntilDue
-    	coder.encodeValueOfObjCType_at_(objc._objc._C_LNG, tempTime)
+    	coder.encodeValueOfObjCType_at_(objc._C_LNG, tempTime)
 
     	tempTime = self._secsUntilNotify
-    	coder.encodeValueOfObjCType_at_(objc._objc._C_LNG, tempTime)
+    	coder.encodeValueOfObjCType_at_(objc._C_LNG, tempTime)
     
     	tempStatus = self._status
-    	coder.encodeValueOfObjCType_at_(objc._objc._C_INT, tempStatus)
+    	coder.encodeValueOfObjCType_at_(objc._C_INT, tempStatus)
 
     def initWithCoder_(self, coder):
     	
@@ -105,27 +105,27 @@ class ToDoItem (NSObject):
     	self.setItemName_(coder.decodeObject())
     	self.setNotes_(coder.decodeObject())
 
-    	tempTime = coder.decodeObjectOfObjCType_at_(objc._objc._C_LNG)
+    	tempTime = coder.decodeObjectOfObjCType_at_(objc._C_LNG)
     	self.setSecsUntilDue_(tempTime)
 
-    	tempTime = coder.decodeObjectOfObjCType_at_(objc._objc._C_LNG)
+    	tempTime = coder.decodeObjectOfObjCType_at_(objc._C_LNG)
     	self.setSecsUntilNotify_(tempTime)
     
-    	tempStatus = coder.decodeObjectOfObjCType_at_(objc._objc._C_INT)
+    	tempStatus = coder.decodeObjectOfObjCType_at_(objc._C_INT)
     	self.setSecsUntilNotify_(tempStatus)
 
     	return self
 
     def __del__(self): # dealloc
     	#if self._itemName: self._itemName.release()
-    	if self._day: self._day.release()
-    	if self._notes: self._notes.release()
+    	#if self._day: self._day.release()
+    	#if self._notes: self._notes.release()
     	if self._notes: 
     		self._timer.invalidate()
-    		self._timer.release()
+    		#self._timer.release()
 
     def setDay_(self, newDay):
-    	self._day = newDay.retain()
+    	self._day = newDay #.retain()
 
     def day(self):
     	return self._day
@@ -145,10 +145,10 @@ class ToDoItem (NSObject):
     def setTimer_(self, newTimer):
     	if self._timer:
     		self._timer.invalidate()
-    		self._timer.autorelease()
+    		#self._timer.autorelease()
 
     	if newTimer:
-    		self._timer = newTimer.retain()
+    		self._timer = newTimer #.retain()
     	else:
     		self._timer = None
 
