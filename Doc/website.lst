@@ -9,7 +9,6 @@ PyObjCTools.txt,user,16
 api-notes-macosx.txt,user,17
 wrapping.txt,user,30
 coding-style.txt,developer,10
-architecture.txt,developer,30
 classes.txt,developer,30
 libffi.txt,developer,30
 structure.txt,developer,20
