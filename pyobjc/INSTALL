@@ -1,0 +1,108 @@
+# -*- indented-text -*-
+# This file was written by Bill Bumgarner. I updated it to fit
+# packaging needs, and I'm still maintaining it as part of the kit.
+# 
+# This file is part of PyObjC package.
+#
+# INSTALL,v
+# 1.8
+# 1998/03/24 18:55:42
+#
+ 
+Building the Module
+===================
+
+***
+***  NOTE: You must build Python with Objective-C enabled by
+***        specifying --with-objc to the configure script to use this.
+***
+
+Statically
+==========
+
+When freshly unpacked, the first task is to build the Makefile that
+will be used for all subsequent builds.  To do this, invoke the
+following make command:
+
+        make -f Makefile.pre.in boot
+
+maybe specifying PYTHON=python1.5 if you didn't installed it at all or
+used altinstall to do it.
+
+Once the Makefile is built, a statically linked Python executable
+containing all of the modules mentioned in Setup.in can be built by
+making the target 'static'.  By default, it will build a binary named
+`pyobjc'. Alternatively, the name of the resulting statically linked
+executable can be controlled by setting the TARGET variable's value
+from the make command line:
+
+        make static
+or
+        make static TARGET=python-with-objc
+        
+Once done, try:
+
+$ ./pyobjc 
+Python 1.5 (#11, Sun Jan 04 1998, 14:41:11)  [GCC NeXT DevKit-based
+CPP 4.0] on next4
+>>> import ObjC
+>>> dir (ObjC.runtime)
+['HashTable', 'List', 'NSAllDescendantPathsEnumerator', ...]
+
+and you should get the list of known Objective-C classes.
+
+
+Shared Module
+=============
+
+An alternative way is to build a shared module: add a single line
+containing just "*shared*" at the top of Setup.in, *BEFORE* building
+the Makefile, or *YOU*HAVE*TO* run it again.
+
+To build the module in this way simply issue a "make" command, without
+the "static" argument. To test it of course you will have to load the
+normal interpreter, and import it as usual.
+
+$ python -v
+...
+Python 1.5 (#14, Thu Jan 08 1998, 22:14:25)  [GCC NeXT DevKit-based CPP 4.0] on next4
+Copyright 1991-1995 Stichting Mathematisch Centrum, Amsterdam
+>>> import ObjC
+import ObjC # dynamically loaded from ObjC.so
+
+
+Demos
+=====
+
+If it works and you are on NeXTSTEP (or just curious ;-) go in
+Demo/ObjC and try the examples: though very simple, they give the
+idea; both are based on NeXTSTEP' bundles, so you need that OS to
+enjoy them.
+
+The LittleButtonedWindow demo puts a window on the screen, with a
+button in it.
+
+XXX NOT UPDATED YET XXX
+
+AlertPanel will put an NXAlertPanel on the screen, completely piloted
+by the Python script;
+
+Forward will attach a Python instance method as the `action' of an
+ObjC object and then that object will be asked to perform an unknown
+method on the Python object... intricated to explain, easier to see ;-)
+
+ShellText is actually one of the shorter ways to build a NeXTSTEP
+application able to show in its own window its *entire* source code ;-)
+
+
+Documentation
+=============
+
+The documentation of the module is contained in three LaTeX sources in
+the `Doc/' directory: if you want include them in the Library manual,
+simply add the following lines
+
+        \input{libPyObjC}
+
+near the end of the file `Doc/lib.tex', just before the inclusion of the
+index (\input{lib.ind}).

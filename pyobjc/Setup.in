@@ -1,0 +1,35 @@
+# Objective-C Interface Module
+###############################
+
+*shared*
+
+# Compile with NeXT cc and ObjC runtime.
+CCC=cc -Wall -ObjC
+ObjC	ObjC.m \
+	ObjCMethod.m \
+	ObjCObject.m \
+	ObjCPointer.m \
+	ObjCRuntime.m \
+	objc_support.m \
+	OC_PythonBundle.m \
+	OC_PythonInt.m \
+	OC_PythonObject.m \
+	OC_PythonString.m \
+	-framework Foundation
+
+# Compile with GNU gcc, ObjC runtime and GNUstep Base.
+# If you aren't on NeXTSTEP, comment out ``-fgnu-runtime''.
+#OCC=egcs -DGNU_RUNTIME -fgnu-runtime -I$(GNUSTEP_SYSTEM_ROOT)/Headers -I$(GNUSTEP_SYSTEM_ROOT)/Headers/gnustep
+#ObjC	ObjC.m \
+#	ObjCMethod.m \
+#	ObjCObject.m \
+#	ObjCPointer.m \
+#	ObjCRuntime.m \
+#	objc_support.m \
+#	OC_PythonBundle.m \
+#	OC_PythonInt.m \
+#	OC_PythonObject.m \
+#	OC_PythonString.m \
+#	-L$(GNUSTEP_SYSTEM_ROOT)/Libraries/$(GNUSTEP_HOST_CPU)/$(GNUSTEP_HOST_OS)/$(LIBRARY_COMBO) \
+#	-lgnustep-base_d -lobjc -lpthread
+

@@ -1,0 +1,504 @@
+1998-08-18  Lele Gaifax  <lele@paci.nautilus>
+
+	* objc_support.h (ISCLASS): Check against META flag, an object is
+	a class when its class pointer points to a metaclass...
+
+	* ObjC.m (initObjC): Disabled the autorelease support: have to
+	wait to patch Python for that.
+
+	* OC_PythonObject.m ([OC_PythonObject
+	-forwardInvocation:invocation]): use argumentInfoAtIndex:
+	* ObjCMethod.m (ObjCMethod_pack_argument): likewise.
+
+	* Here and there: I give up: make gcc happy by using #include, not
+	#import...  
+
+	* Makefile.pre.in (static): Use $(OCC) to link the executable.
+
+	* objc_support.h: Removed warning on GNUstep not supported...
+
+Tue Mar 24 19:56:46 1998  Lele Gaifax  <lele@nautilus.nautilus.eclipse.it>
+
+	* ObjC.h (PyObjC_VERSION): Version 0.54.
+
+Sat Jan 17 00:49:29 1998  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* OC_PythonObject.h (@interface OC_PythonObject): Now derived from
+	NSProxy.
+
+Sat Jan 10 13:22:31 1998  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* INSTALL: Added shared module recipe.
+
+Thu Jan  8 20:20:32 1998  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* ObjC.h: Removed ObjCStream declaration.
+
+Sun Jan  4 17:28:55 1998  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* ObjC.h (PyObjC_VERSION): Version 0.53.
+
+	* Demo/LittleButtonedWindow/LittleButtonedWindow.py (run): Import
+	ObjC before AppKit, so that the '-[' option is not needed.
+
+	* ObjC.m (initObjC): Be sure the AutoreleasePool is instantiated. 
+
+	* ObjCObject.m (ObjCObject_call): use
+	instancesRespondToSelector:. 
+
+Mon Dec 29 15:34:57 1997  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* ObjC.h: Removed ObjCSequenceObject_Type and
+	ObjCMappingObject_Type. 
+
+Sun Dec 28 19:51:28 1997  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* ObjC.m (ObjC_load_object_files): Removed.
+	(ObjC_list_classes): Removed.
+
+	* ObjCRuntime.m (ObjCRuntime_methods): Likewise.
+
+	* ObjCRuntime.m (ObjCRuntime_getattro): Renamed ``kind'' to
+	``__kind__''. 
+	(ObjCRuntime_getattro): Removed ``__dict__'', added
+	``__objc_classes__''. 
+
+	* OC_PythonObject.h: Renamed from the anonymous ``object''.
+
+Fri Dec 26 20:55:39 1997  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* ObjC.h (PyObjC_VERSION): Version 0.52.
+
+Mon Dec 22 20:07:49 1997  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* objc_support.m (pythonify_c_value): If the object is an
+ 	NSString, return a corresponding PyString.
+	(depythonify_c_value): If the expected type is an ObjC object and
+ 	we have a PyString, convert it in a corresponding NSString.
+	(execute_and_pythonify_objc_method): if the method returns void,
+ 	return Py_None.
+
+	* ObjCMethod.m (ObjCMethod_new_with_selector): Trap bad
+	selectors. 
+	(ObjCMethod_pack_argument): Reenabled.
+	(ObjCMethod_unpack_argument): Likewise.
+
+Tue Dec 16 19:46:07 1997  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* ObjC.h (PyObjC_VERSION): Version 0.51. Tons of changes, dropped
+	NeXTSTEP runtime support, renewed around the new OS API.
+
+Wed Apr 16 23:53:37 1997  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* PyObjC.fproj/ObjC.h (PyObjC_VERSION): Version 0.48, first
+	running on OpenSTEP!
+
+Thu Apr 10 22:14:03 1997  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* ObjC.fproj/ObjC.h (WITH_FOUNDATION): Simplified variants
+	selection. 
+
+Wed Apr  9 19:19:30 1997  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* ObjC.fproj/OC_PythonObject.m ([OC_PythonObject
+	-forward:aSelector:argFrame]): Removed GNU_RUNTIME support.
+
+Mon Apr  7 18:19:52 1997  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Demo/ObjC/AlertPanel/AlertPanel.h: Include OC_PythonObject.h,
+	not PythonObject.h. Thanx Andrew Robinson <andy@hps1.demon.co.uk>.
+
+Sun Mar 23 22:49:12 1997  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/makesetup: Allow -f (for frameworks) as a library flag
+	within module rules.
+
+Tue Mar 18 19:50:05 1997  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/makesetup: Added an option -M to change the name of the
+	created Makefile.  
+
+Fri Nov 15 09:12:01 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/objc_support.m (depythonify_c_value): Don't check the
+	string size for arguments of type (void *).
+
+	* Modules/OC_Pasteboard.m (-setData:forType:): DATA must be a kind
+	of OC_Stream. 
+
+Sun Nov 10 09:27:45 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/ObjC.h, Include/OC_PythonObject.h,
+	Include/OC_PythonBundle.h, Include/OC_Pasteboard.h: Untabified. 
+
+Sat Nov  9 19:08:31 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/OC_Stream.m, Modules/OC_PythonObject.m,
+	Modules/OC_PythonBundle.m, Modules/OC_Pasteboard.m,
+	Modules/ObjCStreams.m, Modules/ObjCRuntime.m,
+	Modules/ObjCPointer.m, Modules/ObjCObject.m, Modules/ObjCMethod.m,
+	Modules/objc_support.m, Modules/ObjC.m: Untabified.
+
+Tue Oct 29 10:33:43 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/ObjC.h (PyObjC_VERSION): Version 0.47.
+
+Mon Oct 28 16:38:52 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/ObjC.m: Splitted.
+
+	* Modules/ObjCRuntime.m: New file.
+
+	* Modules/ObjCMethod.m: New file.
+
+	* Modules/ObjCObject.m: New file.
+
+	* Modules/ObjCPointer.m: New file.
+
+	* Demo/ObjC/ShellText/ShellText_SingleUnderscore.py (main):
+	Likewise. 
+
+	* Demo/ObjC/ShellText/ShellText.py (main): With a command line
+	argument, show that file. Accepts also a -t|--title option.
+
+	* INSTALL.PyObjC: Updated.
+
+	* Misc/Makefile.pre.in (TARGET): set to pyobjc.
+
+Sun Oct 27 11:55:53 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/ObjC.m (ObjCObject_sq_ass_item): Implemented.
+
+	* Modules/OC_PythonObject.m (+newWithObject:): If the object is an
+	ObjCObject, return the wrapped Objective-C object without creating
+	a new instance.
+
+Sat Oct 26 13:13:41 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/ObjC.m (ObjCSequenceObject_methods): New methods on
+	sequence objects.
+	(ObjCMappingObject_methods): New methods on mapping objects.
+
+	* Modules/objc_support.m (pythonify_c_value): If an obj is a kind
+	of OC_Stream, wrap it in a ObjCStream, not in a generic	ObjCObject. 
+	(depythonify_c_value): viceversa.
+
+	* Modules/ObjCStreams.m (ObjCStream_new): New function.
+
+	* Misc/Makefile.pre.in: Added $(LINKFORSHARED) to link command.
+
+Fri Oct 25 15:08:23 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/ObjC.m (ObjCSequenceObject_Type): New invisible type
+	with sequence access.
+	(ObjCMappingObject_Type): New invisible type with mapping access. 
+	(ObjCObject_new): If an object is a sequence (responds to -length
+	and -objectAt:) use ObjCSequenceObject_Type. If it is a dictionary
+	(responds to -length and -valueForKey:) use
+	ObjCMappingObject_Type. 
+
+	* Doc/libObjC.tex (subsection{ObjCObject objects}): Tell about
+	sequence and mapping access syntax.
+
+	* All sources: slightly better methods documentation, as well as
+	better error messages for PyArg_ParseTuple().
+
+Thu Oct 24 14:23:04 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/OC_Pasteboard.h: Now all methods are in a category of
+	the Pasteboard class. OC_Pasteboard is gone.
+
+	* Modules/OC_PythonObject.m (-count): New method.
+
+	* Modules/ObjC.m (ObjCObject_Type): added sequence capabilities.
+
+Sat Oct 19 11:56:40 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/Setup.PyObjC.in (ObjC): Refer to sources in Modules.
+
+Fri Oct 18 14:12:00 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/ObjC.h (PyObjC_VERSION): Version 0.46.
+
+	* Doc/libObjCStreams.tex: Tell the difference between NeXTSTEP and
+	OpenStep implementation of OC_Stream.
+
+	* Doc/libPyObjC.tex: Include libObjC and libObjCStreams.
+
+	* INSTALL.PyObjC: Updated.
+
+Thu Oct 17 18:10:46 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/OC_Stream.h (@interface OC_Stream): (WITH_FOUNDATION)
+	now is a subclass of NSData.
+
+	* Modules/OC_Stream.m (-freeWhenDone:): new method.
+	(+newFromMemory:length:withMode:): use it.
+	(+newFromFilename:withMode:): idem.
+
+	* Include/OC_Stream.h (@interface OC_Stream): openByUs renamed
+	freeWhenDone. 
+
+	* Modules/Setup.PyObjC.in (ObjC): Added OC_Pasteboard.m.
+
+	* Modules/objc_support.h (depythonify_objc_message): sped up.
+	(pythonify_objc_message): idem.
+
+Wed Oct 16 19:50:46 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/Setup.PyObjC.in (ObjC): Added OC_PythonBundle.m
+
+	* Modules/ObjC.m (initObjC): Force the load of OC_PythonBundle.
+
+Tue Oct 15 09:12:37 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/ObjC.m (ObjCMethod_unpack_argument): Was passing a
+	PyStringObject instead of the cstring itself to sprintf().
+	(ObjCObject_getattr): Print the warning only the first time the
+	method gets fetched.
+
+	* Modules/OC_Python.m: Dropped. It was used just as a shortcut for
+	the Setup file.
+
+	* Include/OC_Python.h: Idem.
+
+	* Modules/Setup.PyObjC.in (ObjC): Removed OC_Python.m, added
+	PythonObject.m OC_PythonInt.m OC_PythonString.m.  
+
+Mon Oct 14 15:48:58 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/ObjC.h (PyObjC_VERSION): Version 0.45.
+
+	* Doc/libObjC.tex: Describe the single-underscore syntax.
+
+Thu Oct 10 11:11:21 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/OC_Stream.h: Renamed +newFromMappedFile: to
+	+newFromFilename:. 
+	Rename -saveToFile: to -saveToFilename:.
+
+	* Modules/ObjCStreams.m (ObjCStream_seek): Use the renamed method. 
+
+	* Include/OC_Stream.h: Renamed -setStreamPosition:from: to
+	 -setStreamPosition:seekMode: for uniformity with GNUstep.
+
+	* Modules/ObjCStreams.m (ObjCStream_dealloc): test for
+	WITH_FOUNDATION, not GNU_RUNTIME.
+	(STREAM_.*DURING.*): Simplified and implemented Foundation
+	variants. 
+
+	* Modules/objc_support.h: stub support for OpenStep.
+
+Wed Oct  9 10:46:50 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/ObjC.h (PyObjC_VERSION): Version 0.44.
+
+Tue Oct  8 18:02:58 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/ObjC.m (ObjCPointer_unpack): Check for void *.
+	(ObjC_methods): new method make_pointer, to create arbitrary
+	pointer objects.
+
+	* Modules/objc_support.m (depythonify_c_value:_C_DBL): accepts an
+	integer value too.
+	(depythonify_c_value:_C_FLT): likewise.
+
+Mon Oct  7 14:46:35 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/ObjC.h (PyObjC_VERSION): Version 0.43.
+
+	* Modules/Setup.PyObjC.in: Added ObjCStreams.m.
+
+Fri Oct  4 16:53:41 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/ObjC.h (PyObjC_VERSION): Version 0.42.
+
+	* Modules/ObjC.m: ObjCStream objects implementation. 
+
+	* Modules/objc_support.m (pythonify_c_value): Hack to support
+	passing NXStreams as ObjCStream objects.
+	(depythonify_c_value): likewise.
+
+Thu Oct  3 12:42:30 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/ObjC.m: Moved BUGS section to BUGS.PyObjC.
+	(ObjCObject_call): Support for initialization arguments.
+
+        * README.PyObjC: splitted, creating INSTALL.PyObjC and
+	NEWS.PyObjC.
+	
+	* Modules/makesetup: Little note to explain my changes.
+	: Undone */* hack on source names. Silly me! I should never fix
+	something too early in the morning ;-)
+	
+	* Modules/Setup.PyObjC.in: Sources are in the Modules/ directory.
+
+Wed Oct  2 12:36:10 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/ObjC.h (PyObjC_VERSION): Version 0.41.
+
+	* Misc/Makefile.pre.in: Fits PyObjC needs.
+	
+	* Modules/ObjC.m (ObjCMethod_pack_argument): Return an ObjCPointer
+	object, not a string.
+	(ObjCMethod_unpack_argument): Accepts ObjCPointer objects as
+	well as strings.
+
+	* Modules/objc_support.m (objc_skip_typespec): Corrected
+	_C_UNION_B branch: unions are not prepended by their tag like
+	structures.
+	(objc_alignof_type): likewise.
+	(objc_sizeof_type): likewise.
+	(pythonify_c_value): Support _C_UNIONs by translating them to
+	strings. 
+	(depythonify_c_value): Likewise, accepting a string of the right
+	size. 
+	(pythonify_c_value): Use ObjCPointer to encode pointers, do not
+	pythonify the content of the pointed value.
+
+Fri Sep 27 17:10:12 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/objc_support.m (execute_and_pythonify_objc_method): Show
+	the expected ObjC type in the error message for type mismatch.
+
+	* Modules/ObjC.m (ObjCMethod_pack_argument): likewise.
+	(ObjC_lookup_class): better error message.
+	(ObjCRuntime_getattro): Set the error message if the class cannot
+	be found.
+	(ObjCMethod_pack_argument): Reset the buffer if the value is not
+	given. 
+
+Fri Sep 27 11:40:04 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/ObjC.h (PyObjC_VERSION): Version 0.4.
+
+	* Modules/ObjC.m (ObjCRuntime_sel_is_mapped): Implemented.
+
+	* Modules/objc_support.m (execute_and_pythonify_objc_method):
+	Handle floats and doubles return values.
+
+Thu Sep 26 10:45:36 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/ObjC.h (PyObjC_VERSION): Version 0.31.
+
+	* Modules/ObjC.m (ObjC_list_classes): Oops! Use DECREF not INCREF
+        on item.
+
+	* Modules/objc_support.m (execute_and_pythonify_objc_method): For
+	consistency, refer to the first argument as 0, not 1.
+
+	* Modules/ObjC.m (ObjCRuntime_getattro): Added 'kind' member,
+	which is set to ``GNU'' if using the GNU runtime, ``NeXT''
+	otherwise. 
+
+Tue Sep 24 12:40:18 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/OC_PythonObject.m (get_method_for_selector): To support
+	the single underscore notation, always pythonify the objc message.
+
+	* Modules/objc_support.h (pythonify_objc_message): Support for
+	single underscore notation.
+	(depythonify_objc_message): likewise.
+
+Fri Sep 20 12:03:22 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/ObjC.h (PyObjC_VERSION): Version 0.3.
+
+	* Modules/ObjC.m (ObjCMethod_pack_argument): Implemented
+	GNU_RUNTIME support.
+	(ObjCMethod_unpack_argument): Likewise.
+
+	* Modules/OC_PythonObject.m (-forward::): Banalized: removed check
+	against the runtime, since it was in any way a guess. Also, support
+	the GNU runtime.
+
+	* Modules/objc_support.m (execute_and_pythonify_objc_method): If
+	an error occurred executing the method, do not pythonify the
+	result and let the interpreter raise the error by returning NULL.
+
+	* Modules/OC_PythonObject.m (-respondsTo:): Clear the error status
+	and return NO if the Python Object does not respond to the method.
+
+	* Modules/ObjC.m: Added version number to the module's doc, and
+	show an example of the alternative syntax.
+
+Mon Sep 16 11:44:35 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Include/ObjC.h (PyObjC_VERSION): Version 0.2.
+
+	* Modules/objc_support.m (depythonify_c_value): Accept also Class
+	object for _C_ID type ([Object isKindOf:] does not specify its arg
+	must be a class...).
+
+	* Modules/ObjC.m (ObjCMethod_pack_argument): New method on
+	ObjCMethod, to support pass-by-ref parameters. 
+	(ObjCMethod_unpack_argument): idem.
+
+	* Modules/ObjC.m (ObjCObject_get_class): New method on ObjCObject,
+	named "Class", as a workaround to get the class of an object
+	(``class'' is a reserved keyword in Python).
+
+	* Modules/ObjC.m (ObjCRuntime_getattro): Clean the error set by
+	PyDict_GetItem and by Py_FindMethod.
+
+	* Modules/objc_support.m (depythonify_c_value): For pointer
+	arguments, accept a string object too: if the sizes match, then
+	the string object will contain whatever the method will put in it,
+	so you'll can use struct.unpack() on it.
+
+Fri Sep 13 11:14:50 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+        * All sources: added a disclaimer, you never know...
+	
+	* Include/ObjC.h (PyObjC_VERSION): Initialized to 0.1.
+
+	* Modules/ObjC.m (ObjCObject_call): Implemented: if X is an ObjC
+	class, then X() is equivalent to X.new(). Does not handle
+	arguments yet.
+	(ObjCRuntime_Type): Implemented.
+	(initObjC): Put an instance of ObjCRuntime in the module
+	dictionary as the ``runtime'' member. This allow a new syntax to
+	get an ObjC class: ObjC.runtime.TheClass.
+	(initObjC): Added ``__version__'' to module's dictionary.
+
+	* Modules/objc_support.m (pythonify_c_value): Do not convert
+	pointers to integers, but rather dereference them and convert the
+	value they point to.
+	(depythonify_c_value): Correctly handle pointers: allocate some
+	memory to keep the pointed value and depythonify there.
+	(execute_and_pythonify_objc_method): initialize the arguments
+	arena, where we eventually allocate memory for pointer arguments. 
+
+Thu Sep 12 16:12:43 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/OC_PythonObject.m (-mappingDelItemString:): Work around
+	to 1.4b3 bug: use PyDict_DelItemString if PyMapping_DelItemString
+	is not defined in abstract.h. 
+	(-mappingDelItem:): likewise.
+
+	* Modules/objc_support.m (pythonify_c_value): Convert nil to None,
+	not NULL. nil is sometimes used by the current NS API to signal an
+	error. But OpenStep will use exceptions, so I think this is a safe
+	change. This cures x.superclass() bug when x is an instance of the
+	root class.
+
+	* Modules/ObjC.m (ObjCObject_methods): added .isInstance and
+	.isClass methods.
+
+Wed Sep 11 11:50:02 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/objc_support.m (execute_and_pythonify_objc_method): In
+	the error message about bad arguments, refer to the first argument
+	as "1", not "0".
+
+Tue Sep 10 19:31:10 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/ObjC.m (ObjCMethod_call): Support for passing/receiving
+	complex structures to/from the ObjC method.
+
+Sat Sep  7 12:20:18 1996  Lele Gaifax  <lele@nautilus.eclipse.it>
+
+	* Modules/ObjC.m: unified the decoding/encoding switches. 
+
+	(ObjC_load_object_files): GNU rt support implemented.
+
