@@ -139,25 +139,34 @@ def package_version():
 	raise ValueError, "Version not found"
 
 
+packages = CorePackages + CocoaPackages + AddressBookPackages
+# The following line is needed to allow separate flat modules
+# to be installed from a different folder (needed for the 
+# bundlebuilder test below).
+package_dir = dict([(pkg, 'Lib/' + pkg) for pkg in packages])
+
 try:
+    import bundlebuilder
+except ImportError:
+    # bundlebuilder.py and plistlib.py shipped with newer versions of
+    # Python but are included with pyobjc be independent. The following
+    # magic makes distutils install the contents of MPCompat.
+    packages.append('')
+    package_dir[''] = 'MPCompat'
 
-    setup (name = "pyobjc",
-           version = package_version(),
-           description = "Python<->ObjC Interoperability Module",
-           author = "bbum, RonaldO, SteveM, LeleG, many others stretching back through the reaches of time...",
-           author_email = "pyobjc-dev@lists.sourceforge.net",
-	   url = "http://pyobjc.sourceforge.net/",
-           ext_modules = (
-	     		   CoreExtensions 
-	   		 + CocoaExtensions 
-			 + AddressBookExtensions 
-			 ),
-	   packages = CorePackages + CocoaPackages + AddressBookPackages,
-	   package_dir = { '':'Lib' },
-           scripts = [ 'Scripts/nibclassbuilder', ],
-           )
 
-except:
-    import sys
-    import traceback
-    traceback.print_exc()
+setup(name = "pyobjc",
+      version = package_version(),
+      description = "Python<->ObjC Interoperability Module",
+      author = "bbum, RonaldO, SteveM, LeleG, many others stretching back through the reaches of time...",
+      author_email = "pyobjc-dev@lists.sourceforge.net",
+      url = "http://pyobjc.sourceforge.net/",
+      ext_modules = (
+		      CoreExtensions 
+		    + CocoaExtensions 
+		    + AddressBookExtensions 
+		    ),
+      packages = packages,
+      package_dir = package_dir,
+      scripts = [ 'Scripts/nibclassbuilder', ],
+)
