@@ -1,3 +1,18 @@
+2003-02-06  Bill Bumgarner  <bbum@codefab.com>
+    * Lib/Foundation/test/test_nsstring.py: Added another test from David
+      E. that demonstrates issues with string encoding.
+
+2003-02-04  Bill Bumgarner  <bbum@codefab.com>
+    * Lib/AppKit/test/test_nscell.py (TestNSCell.testFloat): Added unit test
+      from David Eppstein.
+    * objc_support.m (depythonify_c_value): Now uses OC_PythonString to
+      encapsulate strings.
+    * OC_PythonString.m: implemented.  Class should be optimized by covering
+      the various random utility/extension methods in NSString's API as
+      transparent call-throughs to the appropriate method/function on the
+      encapsulated CFString.
+    * OC_Python*.m: fixed -dealloc to call super.
+
 2003-02-03  Bill Bumgarner  <bbum@codefab.com>
     * Lib/Foundation/test/test_nsundomanager.py: Added integer test from
       David Eppstein
