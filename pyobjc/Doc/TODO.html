@@ -36,12 +36,12 @@ Contents</title>
 <li><a href="#implement-more-of-nsmutabledictionary-in-oc-pythondictionary" id="id21" name="id21">Implement more of NSMutableDictionary in OC_PythonDictionary</a></li>
 <li><a href="#clean-up-oc-pythonobject" id="id22" name="id22">Clean up OC_PythonObject</a></li>
 <li><a href="#rewrite-scripts-find-raw-pointers-py" id="id23" name="id23">Rewrite scripts/find-raw-pointers.py</a></li>
-<li><a href="#finish-refactoring-of-the-code-generator-scripts" id="id25" name="id25">Finish refactoring of the code-generator scripts</a></li>
-<li><a href="#setup-py-cleanup" id="id26" name="id26">setup.py cleanup</a></li>
-<li><a href="#unique-proxies-for-python-objects" id="id27" name="id27">Unique proxies for Python objects</a></li>
-<li><a href="#nsset-vs-set" id="id28" name="id28">NSSet vs set</a></li>
-<li><a href="#python-2-4" id="id29" name="id29">Python 2.4</a></li>
-<li><a href="#nslog-stringwithformat" id="id30" name="id30">NSLog, stringWithFormat, ...</a></li>
+<li><a href="#finish-refactoring-of-the-code-generator-scripts" id="id24" name="id24">Finish refactoring of the code-generator scripts</a></li>
+<li><a href="#setup-py-cleanup" id="id25" name="id25">setup.py cleanup</a></li>
+<li><a href="#unique-proxies-for-python-objects" id="id26" name="id26">Unique proxies for Python objects</a></li>
+<li><a href="#nsset-vs-set" id="id27" name="id27">NSSet vs set</a></li>
+<li><a href="#python-2-4" id="id28" name="id28">Python 2.4</a></li>
+<li><a href="#nslog-stringwithformat" id="id29" name="id29">NSLog, stringWithFormat, ...</a></li>
 </ul>
 </li>
 </ul>
@@ -89,6 +89,8 @@ class methods in the obvious way.  This would (finally) close <a href="http://so
 </ul>
 <ul>
 <li>Likewise for class-builder.m, this file is way to large.</li>
+<li>Allow ivars of Objective-C classes to be introspected
+(but not directly from the __dict__?)</li>
 <li>We've several types that wrap pointer values, such as <code><span>SessionWrapper</span></code> in
 <code><span>Modules/AppKit</span></code>. Should add a function for creating these types, 
 possibly exposed to C code.</li>
@@ -204,28 +206,28 @@ methods we cannot implement efficiently.</p>
 <h3><a href="#id23" name="rewrite-scripts-find-raw-pointers-py">Rewrite scripts/find-raw-pointers.py</a></h3>
 <p>This is a script for finding 'difficult' methods. The script should be 
 refactored to make it easier to create readable reports.</p>
-<h3><a href="#id25" name="finish-refactoring-of-the-code-generator-scripts">Finish refactoring of the code-generator scripts</a></h3>
+<h3><a href="#id24" name="finish-refactoring-of-the-code-generator-scripts">Finish refactoring of the code-generator scripts</a></h3>
 <ol type="1">
 <li>Change code-generator scripts to use loadBundleFunctions, etc.</li>
 <li>Move the code-generator scripts to <code><span>PyObjCTools</span></code>, to make it easier
 for others to generate wrappers.</li>
 <li>Install <code><span>pyobjc-api.h</span></code>.</li>
 </ol>
-<h3><a href="#id26" name="setup-py-cleanup">setup.py cleanup</a></h3>
+<h3><a href="#id25" name="setup-py-cleanup">setup.py cleanup</a></h3>
 <ul>
 <li>Use 'WrapperGenerator.py', probably need to create a custom build action
 for that.</li>
 </ul>
-<h3><a href="#id27" name="unique-proxies-for-python-objects">Unique proxies for Python objects</a></h3>
+<h3><a href="#id26" name="unique-proxies-for-python-objects">Unique proxies for Python objects</a></h3>
 <p>Some Cocoa/CoreFoundation API's basically require that <code><span>a[0]</span> <span>is</span> <span>a[0]</span></code>. The
 container wrappers contain support for that, but we should try to move that
 into the generic core: there should be at most one Objective-C proxy object
 alive for every Python object (just like there's at most one Python proxy for
 every Objective-C object).</p>
-<h3><a href="#id28" name="nsset-vs-set">NSSet vs set</a></h3>
+<h3><a href="#id27" name="nsset-vs-set">NSSet vs set</a></h3>
 <p>Check if it is possible to wrap <code><span>NSSet</span></code> using <code><span>set</span></code> (and v.v.).</p>
 <p>Only implement this when it is possible to convert without loss of information.</p>
-<h3><a href="#id29" name="python-2-4">Python 2.4</a></h3>
+<h3><a href="#id28" name="python-2-4">Python 2.4</a></h3>
 <p>Python 2.4 introduces a decorator syntax. Add convenience functions that
 make it easier to use decorators with PyObjC.</p>
 <p>Also add example programs using decorators. Actually, first add the example(s)
@@ -247,7 +249,7 @@ class FooClass (NSObject):
         def myIntMethod_(self, value):
                 pass
 </pre>
-<h3><a href="#id30" name="nslog-stringwithformat">NSLog, stringWithFormat, ...</a></h3>
+<h3><a href="#id29" name="nslog-stringwithformat">NSLog, stringWithFormat, ...</a></h3>
 <p>Functions and methods that use format strings are not properly wrapped. Fix
 that.</p>
 </body>

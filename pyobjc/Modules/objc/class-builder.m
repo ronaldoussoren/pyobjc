@@ -674,6 +674,10 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			/* XXX: Add alignment! */
 
 			if (((PyObjCInstanceVariable*)value)->isSlot) {
+				/*
+				  XXX: Use @encode(PyObject**)?
+				       Why is this not (PyObject*)?
+				*/
 				var->ivar_type = "^v";
 				item_size = sizeof(PyObject**);
 			} else {
