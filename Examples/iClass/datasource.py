@@ -151,7 +151,7 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass):
         self._classList = getClassList()
         self._classTree = {}
         self._methodInfo = []
-        
+
         for cls in self._classList:
             super = cls.__bases__[0]
             if super == objc_object:
@@ -177,7 +177,7 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass):
     def awakeFromNib(self):
         self._classInfo = getClassList()
         self.refreshClasses()
-    
+
 
     def outlineView_child_ofItem_(self, outlineview, index, item):
         return wrap_object(self._classTree[unwrap_object(item)][index])
@@ -196,10 +196,10 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass):
             v = item.value
             return v.__name__
 
-    
+
     def numberOfRowsInTableView_(self, aTableView):
         return len(self._methodInfo)
 
-    def tableView_objectValueForTableColumn_row_(self,    
-                             aTableView, aTableColumn, rowIndex):  
+    def tableView_objectValueForTableColumn_row_(self,
+                             aTableView, aTableColumn, rowIndex):
         return self._methodInfo[rowIndex][methodIdentifier[aTableColumn.identifier()]]

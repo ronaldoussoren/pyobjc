@@ -47,7 +47,7 @@ def main():
     win.initWithContentRect_styleMask_backing_defer_ (frame, 15, 2, 0)
     win.setTitle_ ('HelloWorld')
 
-    app.run()    
+    app.run()
 
-if __name__ == '__main__' : 
+if __name__ == '__main__' :
     main()

@@ -12,7 +12,7 @@ class ProgressViewPalette (IBPalette):
     def finishInstantiate(self):
         # `finishInstantiate' can be used to associate non-view objects with
         # a view in the palette's nib.  For example:
-        # self.associateObject_ofType_withView_(aNonUIObject, 
+        # self.associateObject_ofType_withView_(aNonUIObject,
         #       IBObjectPboardType , self.aView)
         pass
 
@@ -24,7 +24,7 @@ class ProgressViewPalette (IBPalette):
         return self
 
     # Implementation functions for IBViewResourceDraggingDelegates protocol
- 
+
     def viewResourcePasteboardTypes(self):
         return [NSColorPboardType]
 
