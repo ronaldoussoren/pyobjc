@@ -2,9 +2,8 @@
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            CLASS = "ÇPROJECTNAMEASIDENTIFIERÈAppDelegate"; 
+            CLASS = ÇPROJECTNAMEASIDENTIFIERÈAppDelegate; 
             LANGUAGE = ObjC; 
-            OUTLETS = {window = NSWindow; }; 
             SUPERCLASS = NSObject; 
         }
     ); 

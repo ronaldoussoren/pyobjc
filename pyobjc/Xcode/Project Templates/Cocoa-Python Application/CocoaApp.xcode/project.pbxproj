@@ -7,7 +7,7 @@
 	objects = {
 		080E96DDFE201D6D7F000001 = {
 			children = (
-				F60DD8BD0358A22201C8ED3C,
+				E24A799D060CFE2300E71E78,
 			);
 			isa = PBXGroup;
 			name = Classes;
@@ -42,6 +42,15 @@
 //102
 //103
 //104
+		1058C7A0FEA54F0111CA2CBB = {
+			children = (
+				1058C7A1FEA54F0111CA2CBB,
+			);
+			isa = PBXGroup;
+			name = "Linked Frameworks";
+			refType = 4;
+			sourceTree = "<group>";
+		};
 		1058C7A1FEA54F0111CA2CBB = {
 			fallbackIsa = PBXFileReference;
 			isa = PBXFrameworkReference;
@@ -50,6 +59,16 @@
 			path = /System/Library/Frameworks/Cocoa.framework;
 			refType = 0;
 			sourceTree = "<absolute>";
+		};
+		1058C7A2FEA54F0111CA2CBB = {
+			children = (
+				29B97325FDCFA39411CA2CEA,
+				29B97324FDCFA39411CA2CEA,
+			);
+			isa = PBXGroup;
+			name = "Other Frameworks";
+			refType = 4;
+			sourceTree = "<group>";
 		};
 //100
 //101
@@ -63,7 +82,7 @@
 //194
 		19C28FACFE9D520D11CA2CBB = {
 			children = (
-				1BFB80A804CEE27800DEF731,
+				8D1107320486CEB800E47090,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -75,207 +94,6 @@
 //192
 //193
 //194
-//1B0
-//1B1
-//1B2
-//1B3
-//1B4
-		1BFB7DBF04CEE17C00DEF731 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.objc;
-			path = "main-embedded-interpreter.m";
-			refType = 2;
-			sourceTree = SOURCE_ROOT;
-		};
-		1BFB7DD504CEE24900DEF731 = {
-			isa = PBXFileReference;
-			lastKnownFileType = wrapper.framework;
-			name = Python.framework;
-			path = /System/Library/Frameworks/Python.framework;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		1BFB7F6D04CEE27700DEF731 = {
-			buildPhases = (
-				1BFB7F6E04CEE27700DEF731,
-				1BFB7F6F04CEE27700DEF731,
-				1BFB801004CEE27700DEF731,
-				1BFB801204CEE27700DEF731,
-				77A8F17D04D6B2470033F030,
-			);
-			buildRules = (
-			);
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_ENABLE_TRIGRAPHS = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "«PROJECTNAMEASIDENTIFIER»_Prefix.pch";
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "«PROJECTNAME»";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
-				WRAPPER_EXTENSION = app;
-			};
-			dependencies = (
-			);
-			isa = PBXNativeTarget;
-			name = "«PROJECTNAME»";
-			productInstallPath = "$(HOME)/Applications";
-			productName = "«PROJECTNAME»";
-			productReference = 1BFB80A804CEE27800DEF731;
-			productType = "com.apple.product-type.application";
-		};
-		1BFB7F6E04CEE27700DEF731 = {
-			buildActionMask = 2147483647;
-			files = (
-			);
-			isa = PBXHeadersBuildPhase;
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1BFB7F6F04CEE27700DEF731 = {
-			buildActionMask = 2147483647;
-			files = (
-				1BFB7F7004CEE27700DEF731,
-				1BFB7F7104CEE27700DEF731,
-				1BFB7F7204CEE27700DEF731,
-				1BFB7F7304CEE27700DEF731,
-				777C19C904D6B9D800FBF432,
-				77A9B0E204D6BD1E00EC1630,
-				529BAE1E05DCECA500CC5BD4,
-				529BAE1F05DCECA500CC5BD4,
-				529BAE2005DCECA500CC5BD4,
-				529BAE2105DCECA500CC5BD4,
-				529BAE2205DCECA500CC5BD4,
-				529BAE2305DCECA500CC5BD4,
-				529BAE2405DCECA500CC5BD4,
-				529BAE2505DCECA500CC5BD4,
-				529BAE2605DCECA500CC5BD4,
-				529BAE2705DCECA500CC5BD4,
-				529BAE2805DCECA500CC5BD4,
-				529BAE2905DCECA500CC5BD4,
-				529BAE2A05DCECA500CC5BD4,
-				529BAE2C05DCECA500CC5BD4,
-				529BAE2E05DCECA500CC5BD4,
-				529BAE3005DCECA500CC5BD4,
-				529BAE4A05DCECA500CC5BD4,
-				529BAE4C05DCECA500CC5BD4,
-				529BAE4D05DCECA500CC5BD4,
-				529BAE4F05DCECA500CC5BD4,
-				529BAE5105DCECA500CC5BD4,
-				529BAE8505DCECA500CC5BD4,
-				529BAE8705DCECA500CC5BD4,
-				529BAE8805DCECA500CC5BD4,
-				529BAE8E05DCECA500CC5BD4,
-				529BAE9005DCECA500CC5BD4,
-				529BAE9205DCECA500CC5BD4,
-				529BAEC405DCECA500CC5BD4,
-				529BAEC605DCECA500CC5BD4,
-				529BAECB05DCECA500CC5BD4,
-				529BAECD05DCECA500CC5BD4,
-				529BAECF05DCECA500CC5BD4,
-				529BAED105DCECA500CC5BD4,
-				529BAED305DCECA500CC5BD4,
-				529BAED905DCECA500CC5BD4,
-				529BAEE105DCECA500CC5BD4,
-				529BAEE705DCECA500CC5BD4,
-				529BAEE905DCECA500CC5BD4,
-				529BAEEA05DCECA500CC5BD4,
-				529BAEF005DCECA500CC5BD4,
-				529BAEF205DCECA500CC5BD4,
-				529BAEF305DCECA500CC5BD4,
-			);
-			isa = PBXResourcesBuildPhase;
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1BFB7F7004CEE27700DEF731 = {
-			fileRef = 29B97318FDCFA39411CA2CEA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		1BFB7F7104CEE27700DEF731 = {
-			fileRef = 089C165CFE840E0CC02AAC07;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		1BFB7F7204CEE27700DEF731 = {
-			fileRef = F60DD8BC0358A22201C8ED3C;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		1BFB7F7304CEE27700DEF731 = {
-			fileRef = F60DD8BD0358A22201C8ED3C;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		1BFB801004CEE27700DEF731 = {
-			buildActionMask = 2147483647;
-			files = (
-				1BFB801104CEE27700DEF731,
-			);
-			isa = PBXSourcesBuildPhase;
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1BFB801104CEE27700DEF731 = {
-			fileRef = 1BFB7DBF04CEE17C00DEF731;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		1BFB801204CEE27700DEF731 = {
-			buildActionMask = 2147483647;
-			files = (
-				1BFB801304CEE27700DEF731,
-				1BFB80F904CEE38B00DEF731,
-				1BFB801404CEE27700DEF731,
-			);
-			isa = PBXFrameworksBuildPhase;
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1BFB801304CEE27700DEF731 = {
-			fileRef = 29B97325FDCFA39411CA2CEA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		1BFB801404CEE27700DEF731 = {
-			fileRef = 1BFB7DD504CEE24900DEF731;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		1BFB80A804CEE27800DEF731 = {
-			explicitFileType = wrapper.application;
-			includeInIndex = 0;
-			isa = PBXFileReference;
-			path = "«PROJECTNAME».app";
-			refType = 3;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1BFB80F904CEE38B00DEF731 = {
-			fileRef = 1058C7A1FEA54F0111CA2CBB;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-//1B0
-//1B1
-//1B2
-//1B3
-//1B4
 //290
 //291
 //292
@@ -293,7 +111,7 @@
 			mainGroup = 29B97314FDCFA39411CA2CEA;
 			projectDirPath = "";
 			targets = (
-				1BFB7F6D04CEE27700DEF731,
+				8D1107260486CEB800E47090,
 			);
 		};
 		29B97314FDCFA39411CA2CEA = {
@@ -305,17 +123,16 @@
 				19C28FACFE9D520D11CA2CBB,
 			);
 			isa = PBXGroup;
-			name = "«PROJECTNAMEASXML»";
+			name = «PROJECTNAMEASXML»;
 			path = "";
 			refType = 4;
 			sourceTree = "<group>";
 		};
 		29B97315FDCFA39411CA2CEA = {
 			children = (
-				F60DD8BC0358A22201C8ED3C,
-				1BFB7DBF04CEE17C00DEF731,
-				777C19C804D6B9D800FBF432,
-				77A9B0E104D6BD1E00EC1630,
+				E24A798F060CFDC300E71E78,
+				E2D80597060D41BA00B63C81,
+				29B97316FDCFA39411CA2CEA,
 			);
 			isa = PBXGroup;
 			name = "Other Sources";
@@ -323,10 +140,19 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
+		29B97316FDCFA39411CA2CEA = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = main.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
 		29B97317FDCFA39411CA2CEA = {
 			children = (
-				29B97318FDCFA39411CA2CEA,
+				8D1107310486CEB800E47090,
 				089C165CFE840E0CC02AAC07,
+				29B97318FDCFA39411CA2CEA,
 			);
 			isa = PBXGroup;
 			name = Resources;
@@ -354,14 +180,11 @@
 		};
 		29B97323FDCFA39411CA2CEA = {
 			children = (
-				29B97324FDCFA39411CA2CEA,
-				1058C7A1FEA54F0111CA2CBB,
-				29B97325FDCFA39411CA2CEA,
-				1BFB7DD504CEE24900DEF731,
-				77A8EFE904D6B2200033F030,
+				1058C7A0FEA54F0111CA2CBB,
+				1058C7A2FEA54F0111CA2CBB,
 			);
 			isa = PBXGroup;
-			name = "Frameworks & Modules";
+			name = Frameworks;
 			path = "";
 			refType = 4;
 			sourceTree = "<group>";
@@ -399,6 +222,7 @@
 			);
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -414,8 +238,6 @@
 			);
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				DEPLOYMENT_LOCATION = YES;
-				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				ZERO_LINK = NO;
 			};
@@ -427,822 +249,177 @@
 //4A2
 //4A3
 //4A4
-//520
-//521
-//522
-//523
-//524
-		529BAD2F05DCECA400CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = "compiled.mach-o.bundle";
-			name = _AppKit.so;
-			path = /Library/Python/2.3/PyObjC/_AppKit.so;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BAD3005DCECA400CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = "compiled.mach-o.bundle";
-			name = _Foundation.so;
-			path = /Library/Python/2.3/PyObjC/_Foundation.so;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BAD3105DCECA400CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = "compiled.mach-o.bundle";
-			name = _objc.so;
-			path = /Library/Python/2.3/PyObjC/_objc.so;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BAD3205DCECA400CC5BD4 = {
-			children = (
-				529BAD3305DCECA400CC5BD4,
-				529BAD3405DCECA400CC5BD4,
-				529BAD3505DCECA400CC5BD4,
-				529BAD3605DCECA500CC5BD4,
-				529BAD3705DCECA500CC5BD4,
-				529BAD3805DCECA500CC5BD4,
+//8D0
+//8D1
+//8D2
+//8D3
+//8D4
+		8D1107260486CEB800E47090 = {
+			buildPhases = (
+				8D1107270486CEB800E47090,
+				8D1107290486CEB800E47090,
+				8D11072C0486CEB800E47090,
+				8D11072E0486CEB800E47090,
 			);
-			isa = PBXGroup;
-			name = AddressBook;
-			path = /Library/Python/2.3/PyObjC/AddressBook;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BAD3305DCECA400CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = __init__.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD3405DCECA400CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = __init__.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD3505DCECA400CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = "compiled.mach-o.bundle";
-			path = _AddressBook.so;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD3605DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = protocols.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD3705DCECA500CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = protocols.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD3805DCECA500CC5BD4 = {
-			children = (
-				529BAD3905DCECA500CC5BD4,
-				529BAD3A05DCECA500CC5BD4,
-				529BAD3B05DCECA500CC5BD4,
-				529BAD3C05DCECA500CC5BD4,
+			buildRules = (
 			);
-			isa = PBXGroup;
-			path = test;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD3905DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = __init__.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD3A05DCECA500CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = __init__.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD3B05DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = test_loaded.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD3C05DCECA500CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = test_loaded.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD3D05DCECA500CC5BD4 = {
-			children = (
-				529BAD3E05DCECA500CC5BD4,
-				529BAD4005DCECA500CC5BD4,
-				529BAD4205DCECA500CC5BD4,
-				529BAD4405DCECA500CC5BD4,
-				529BAD5F05DCECA500CC5BD4,
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = «PROJECTNAME»_Prefix.pch;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = «PROJECTNAME»;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = app;
+			};
+			dependencies = (
 			);
-			isa = PBXGroup;
-			name = AppKit;
-			path = /Library/Python/2.3/PyObjC/AppKit;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BAD3E05DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = __init__.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD4005DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = _AppKitSignatures.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD4205DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = NibClassBuilder.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD4405DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = protocols.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD5F05DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = test_nsbitmap.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD6105DCECA500CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = "compiled.mach-o.bundle";
-			name = autoGIL.so;
-			path = /Library/Python/2.3/PyObjC/autoGIL.so;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BAD6205DCECA500CC5BD4 = {
-			children = (
-				529BAD6305DCECA500CC5BD4,
-				529BAD6505DCECA500CC5BD4,
-				529BAD6705DCECA500CC5BD4,
-			);
-			isa = PBXGroup;
-			name = Foundation;
-			path = /Library/Python/2.3/PyObjC/Foundation;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BAD6305DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = __init__.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD6505DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = Conversion.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD6705DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = protocols.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD9C05DCECA500CC5BD4 = {
-			children = (
-				529BAD9D05DCECA500CC5BD4,
-				529BAD9F05DCECA500CC5BD4,
-				529BADA005DCECA500CC5BD4,
-			);
-			isa = PBXGroup;
-			name = InterfaceBuilder;
-			path = /Library/Python/2.3/PyObjC/InterfaceBuilder;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BAD9D05DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = __init__.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAD9F05DCECA500CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = "compiled.mach-o.bundle";
-			path = _InterfaceBuilder.so;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BADA005DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = protocols.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BADA705DCECA500CC5BD4 = {
-			children = (
-				529BADA805DCECA500CC5BD4,
-				529BADAA05DCECA500CC5BD4,
-				529BADAC05DCECA500CC5BD4,
-			);
-			isa = PBXGroup;
-			name = objc;
-			path = /Library/Python/2.3/PyObjC/objc;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BADA805DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = __init__.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BADAA05DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = _convenience.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BADAC05DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = _FoundationSignatures.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BADDF05DCECA500CC5BD4 = {
-			children = (
-				529BADE005DCECA500CC5BD4,
-				529BADE205DCECA500CC5BD4,
-			);
-			isa = PBXGroup;
-			name = PreferencePanes;
-			path = /Library/Python/2.3/PyObjC/PreferencePanes;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BADE005DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = __init__.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BADE205DCECA500CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = "compiled.mach-o.bundle";
-			path = _PreferencePanes.so;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BADE805DCECA500CC5BD4 = {
-			children = (
-				529BADE905DCECA500CC5BD4,
-				529BADEB05DCECA500CC5BD4,
-				529BADED05DCECA500CC5BD4,
-				529BADEF05DCECA500CC5BD4,
-				529BADF105DCECA500CC5BD4,
-				529BADF705DCECA500CC5BD4,
-			);
-			isa = PBXGroup;
-			name = PyObjCTools;
-			path = /Library/Python/2.3/PyObjC/PyObjCTools;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BADE905DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = __init__.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BADEB05DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = AppHelper.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BADED05DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = Conversion.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BADEF05DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = KeyValueCoding.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BADF105DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = NibClassBuilder.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BADF705DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = Signals.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAE0005DCECA500CC5BD4 = {
-			children = (
-				529BAE0105DCECA500CC5BD4,
-			);
-			isa = PBXGroup;
-			name = ScreenSaver;
-			path = /Library/Python/2.3/PyObjC/ScreenSaver;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BAE0105DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = __init__.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAE0805DCECA500CC5BD4 = {
-			children = (
-				529BAE0905DCECA500CC5BD4,
-				529BAE0B05DCECA500CC5BD4,
-				529BAE0C05DCECA500CC5BD4,
-			);
-			isa = PBXGroup;
-			name = SecurityInterface;
-			path = /Library/Python/2.3/PyObjC/SecurityInterface;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BAE0905DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = __init__.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAE0B05DCECA500CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = "compiled.mach-o.bundle";
-			path = _SecurityInterface.so;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAE0C05DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = protocols.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAE1305DCECA500CC5BD4 = {
-			children = (
-				529BAE1405DCECA500CC5BD4,
-				529BAE1605DCECA500CC5BD4,
-				529BAE1705DCECA500CC5BD4,
-			);
-			isa = PBXGroup;
-			name = WebKit;
-			path = /Library/Python/2.3/PyObjC/WebKit;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		529BAE1405DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = __init__.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAE1605DCECA500CC5BD4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = "compiled.mach-o.bundle";
-			path = _WebKit.so;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAE1705DCECA500CC5BD4 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = protocols.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		529BAE1E05DCECA500CC5BD4 = {
-			fileRef = 529BAD2F05DCECA400CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE1F05DCECA500CC5BD4 = {
-			fileRef = 529BAD3005DCECA400CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2005DCECA500CC5BD4 = {
-			fileRef = 529BAD3105DCECA400CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2105DCECA500CC5BD4 = {
-			fileRef = 529BAD3305DCECA400CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2205DCECA500CC5BD4 = {
-			fileRef = 529BAD3405DCECA400CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2305DCECA500CC5BD4 = {
-			fileRef = 529BAD3505DCECA400CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2405DCECA500CC5BD4 = {
-			fileRef = 529BAD3605DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2505DCECA500CC5BD4 = {
-			fileRef = 529BAD3705DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2605DCECA500CC5BD4 = {
-			fileRef = 529BAD3905DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2705DCECA500CC5BD4 = {
-			fileRef = 529BAD3A05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2805DCECA500CC5BD4 = {
-			fileRef = 529BAD3B05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2905DCECA500CC5BD4 = {
-			fileRef = 529BAD3C05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2A05DCECA500CC5BD4 = {
-			fileRef = 529BAD3E05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2C05DCECA500CC5BD4 = {
-			fileRef = 529BAD4005DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE2E05DCECA500CC5BD4 = {
-			fileRef = 529BAD4205DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE3005DCECA500CC5BD4 = {
-			fileRef = 529BAD4405DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE4A05DCECA500CC5BD4 = {
-			fileRef = 529BAD5F05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE4C05DCECA500CC5BD4 = {
-			fileRef = 529BAD6105DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE4D05DCECA500CC5BD4 = {
-			fileRef = 529BAD6305DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE4F05DCECA500CC5BD4 = {
-			fileRef = 529BAD6505DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE5105DCECA500CC5BD4 = {
-			fileRef = 529BAD6705DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE8505DCECA500CC5BD4 = {
-			fileRef = 529BAD9D05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE8705DCECA500CC5BD4 = {
-			fileRef = 529BAD9F05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE8805DCECA500CC5BD4 = {
-			fileRef = 529BADA005DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE8E05DCECA500CC5BD4 = {
-			fileRef = 529BADA805DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE9005DCECA500CC5BD4 = {
-			fileRef = 529BADAA05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAE9205DCECA500CC5BD4 = {
-			fileRef = 529BADAC05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAEC405DCECA500CC5BD4 = {
-			fileRef = 529BADE005DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAEC605DCECA500CC5BD4 = {
-			fileRef = 529BADE205DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAECB05DCECA500CC5BD4 = {
-			fileRef = 529BADE905DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAECD05DCECA500CC5BD4 = {
-			fileRef = 529BADEB05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAECF05DCECA500CC5BD4 = {
-			fileRef = 529BADED05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAED105DCECA500CC5BD4 = {
-			fileRef = 529BADEF05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAED305DCECA500CC5BD4 = {
-			fileRef = 529BADF105DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAED905DCECA500CC5BD4 = {
-			fileRef = 529BADF705DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAEE105DCECA500CC5BD4 = {
-			fileRef = 529BAE0105DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAEE705DCECA500CC5BD4 = {
-			fileRef = 529BAE0905DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAEE905DCECA500CC5BD4 = {
-			fileRef = 529BAE0B05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAEEA05DCECA500CC5BD4 = {
-			fileRef = 529BAE0C05DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAEF005DCECA500CC5BD4 = {
-			fileRef = 529BAE1405DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAEF205DCECA500CC5BD4 = {
-			fileRef = 529BAE1605DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		529BAEF305DCECA500CC5BD4 = {
-			fileRef = 529BAE1705DCECA500CC5BD4;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-//520
-//521
-//522
-//523
-//524
-//770
-//771
-//772
-//773
-//774
-		777C19C804D6B9D800FBF432 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			path = "«PROJECTNAMEASIDENTIFIER»_Prefix.pch";
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		777C19C904D6B9D800FBF432 = {
-			fileRef = 777C19C804D6B9D800FBF432;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		77A8EFE904D6B2200033F030 = {
-			children = (
-				529BAD2F05DCECA400CC5BD4,
-				529BAD3005DCECA400CC5BD4,
-				529BAD3105DCECA400CC5BD4,
-				529BAD3205DCECA400CC5BD4,
-				529BAD3D05DCECA500CC5BD4,
-				529BAD6105DCECA500CC5BD4,
-				529BAD6205DCECA500CC5BD4,
-				529BAD9C05DCECA500CC5BD4,
-				529BADA705DCECA500CC5BD4,
-				529BADDF05DCECA500CC5BD4,
-				529BADE805DCECA500CC5BD4,
-				529BAE0005DCECA500CC5BD4,
-				529BAE0805DCECA500CC5BD4,
-				529BAE1305DCECA500CC5BD4,
-			);
-			isa = PBXGroup;
-			name = PyObjC;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		77A8F17D04D6B2470033F030 = {
-			buildActionMask = 8;
-			dstPath = "";
-			dstSubfolderSpec = 7;
+			isa = PBXNativeTarget;
+			name = «PROJECTNAME»;
+			productInstallPath = "$(HOME)/Applications";
+			productName = «PROJECTNAME»;
+			productReference = 8D1107320486CEB800E47090;
+			productType = "com.apple.product-type.application";
+		};
+		8D1107270486CEB800E47090 = {
+			buildActionMask = 2147483647;
 			files = (
 			);
-			isa = PBXCopyFilesBuildPhase;
-			runOnlyForDeploymentPostprocessing = 1;
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		77A9B0E104D6BD1E00EC1630 = {
-			fileEncoding = 30;
+		8D1107290486CEB800E47090 = {
+			buildActionMask = 2147483647;
+			files = (
+				8D11072A0486CEB800E47090,
+				8D11072B0486CEB800E47090,
+				E24A7990060CFDC300E71E78,
+				E24A799E060CFE2300E71E78,
+				E2D80598060D41BA00B63C81,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D11072A0486CEB800E47090 = {
+			fileRef = 29B97318FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		8D11072B0486CEB800E47090 = {
+			fileRef = 089C165CFE840E0CC02AAC07;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		8D11072C0486CEB800E47090 = {
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D11072D0486CEB800E47090 = {
+			fileRef = 29B97316FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+				);
+			};
+		};
+		8D11072E0486CEB800E47090 = {
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D11072F0486CEB800E47090 = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		8D1107310486CEB800E47090 = {
+			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = text.plist;
 			path = Info.plist;
 			refType = 4;
 			sourceTree = "<group>";
 		};
-		77A9B0E204D6BD1E00EC1630 = {
-			fileRef = 77A9B0E104D6BD1E00EC1630;
+		8D1107320486CEB800E47090 = {
+			explicitFileType = wrapper.application;
+			includeInIndex = 0;
+			isa = PBXFileReference;
+			path = «PROJECTNAME».app;
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+//8D0
+//8D1
+//8D2
+//8D3
+//8D4
+//E20
+//E21
+//E22
+//E23
+//E24
+		E24A798F060CFDC300E71E78 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.script.python;
+			path = __main__.py;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E24A7990060CFDC300E71E78 = {
+			fileRef = E24A798F060CFDC300E71E78;
 			isa = PBXBuildFile;
 			settings = {
 			};
 		};
-//770
-//771
-//772
-//773
-//774
-//F60
-//F61
-//F62
-//F63
-//F64
-		F60DD8BC0358A22201C8ED3C = {
-			fallbackIsa = PBXFileReference;
-			fileEncoding = 30;
-			isa = PBXExecutableFileReference;
-			lastKnownFileType = text.script.python;
-			path = __main__.py;
-			refType = 2;
-			sourceTree = SOURCE_ROOT;
-		};
-		F60DD8BD0358A22201C8ED3C = {
-			fileEncoding = 30;
+		E24A799D060CFE2300E71E78 = {
+			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = text.script.python;
-			path = "«PROJECTNAMEASIDENTIFIER»AppDelegate.py";
-			refType = 2;
-			sourceTree = SOURCE_ROOT;
+			path = «PROJECTNAMEASIDENTIFIER»AppDelegate.py;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E24A799E060CFE2300E71E78 = {
+			fileRef = E24A799D060CFE2300E71E78;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E2D80597060D41BA00B63C81 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = «PROJECTNAME»_Prefix.pch;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E2D80598060D41BA00B63C81 = {
+			fileRef = E2D80597060D41BA00B63C81;
+			isa = PBXBuildFile;
+			settings = {
+			};
 		};
 	};
 	rootObject = 29B97313FDCFA39411CA2CEA;

@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string></string>
         <key>CFBundleIdentifier</key>
-	<string>com.«ORGANIZATIONNAME».«PROJECTNAMEASXML»</string>
+	<string>com.apple.myCocoaApp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -22,5 +22,14 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>PyRuntimeLocations</key>
+	<array>
+		<string>@executable_path/../Frameworks/Python.framework/Versions/2.3/Python</string>
+		<string>~/Library/Frameworks/Python.framework/Versions/2.3/Python</string>
+		<string>/Library/Frameworks/Python.framework/Versions/2.3/Python</string>
+		<string>/Network/Library/Frameworks/Python.framework/Versions/2.3/Python</string>
+		<string>/System/Library/Frameworks/Python.framework/Versions/2.3/Python</string>
+		<string>/sw/lib/libpython2.3.dylib</string>
+	</array>
 </dict>
 </plist>
