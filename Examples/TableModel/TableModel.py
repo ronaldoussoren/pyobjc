@@ -23,7 +23,7 @@ ROWCOUNT = 200
 class PyModel(NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
-        self.stuff = {}
+        self.editedFields = {}
         self.rowcount = ROWCOUNT
         # tableView is an outlet set in Interface Builder
         self.tableView.setTarget_(self)
@@ -32,7 +32,6 @@ class PyModel(NibClassBuilder.AutoBaseClass):
         #self.tableView.setDoubleAction_(self.doubleClick_)
 
     def init(self):
-        print "XXX"
         self.rowcount = ROWCOUNT
         return self
 
@@ -47,13 +46,13 @@ class PyModel(NibClassBuilder.AutoBaseClass):
     def tableView_objectValueForTableColumn_row_(
             self, aTableView, aTableColumn, rowIndex):
         col = aTableColumn.identifier()
-        return self.stuff.get((aTableColumn, rowIndex),
+        return self.editedFields.get((aTableColumn, rowIndex),
             "{%s, %d}" % (col, rowIndex))
 
     def tableView_setObjectValue_forTableColumn_row_(
             self, aTableView, anObject, aTableColumn, rowIndex):
         col = aTableColumn.identifier()
-        self.stuff[(aTableColumn, rowIndex)] = anObject
+        self.editedFields[(aTableColumn, rowIndex)] = anObject
 
     # delegate methods
     def tableView_shouldSelectRow_(self, aTableView, rowIndex):
