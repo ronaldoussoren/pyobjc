@@ -344,8 +344,10 @@ BEGIN_UNITTEST(TestSimplifySignature)
 	ASSERT_STREQUALS("@@:{_NSPoint=ff}i", b);
 END_UNITTEST
 
+
 static PyMethodDef unittest_methods[] = {
 	TESTDEF(CheckNSInvoke),
+
 	TESTDEF(StructSize),	
 	TESTDEF(StructAlign),	
 	TESTDEF(FillStruct1),	

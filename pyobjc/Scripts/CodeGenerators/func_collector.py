@@ -13,7 +13,7 @@ attribute_unused=re.compile(r'__attribute__\(\(_?_?unused_?_?\)\)')
 
 def process_file(outfp, filename, match_prefix='', ignore_list=()):
 
-    MATCH_RE=re.compile('%(match_prefix)s(.+\s+.+\(.*\)\s*[;{])'%{
+    MATCH_RE=re.compile('%(match_prefix)s(.+\s+.+\([^);{]+\)\s*[;{])'%{
             'match_prefix':match_prefix, 'IDENT':IDENT})
 
     fp = open(filename, 'r')

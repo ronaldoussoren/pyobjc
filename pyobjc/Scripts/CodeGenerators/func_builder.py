@@ -36,6 +36,11 @@ IGNORE_VARARGS = []
 
 # Function mapping
 FUNC_MAP = {}
+DEFAULT_FUNCMAP=None
+
+# FUNCMAPS can set an argument-type to this value ('is' not '==') to remove
+# the argument from the python interface and force it to a specific value.
+FORCE_VALUE="ForceValue"
 
 HDR="""\
 /*
@@ -205,6 +210,7 @@ else:
     )
 
 def hidden_from_python(typestr):
+    if typestr is FORCE_VALUE: return 1
     if typestr.startswith('const ') or typestr.startswith('const\t'):
         typestr = typestr[6:].strip()
 
@@ -321,9 +327,12 @@ def parse_prototype(protostr):
 
     if FUNC_MAP.has_key(funcname):
         arguments = FUNC_MAP[funcname](funcname, arguments)
+    elif DEFAULT_FUNCMAP is not None:
+        arguments = DEFAULT_FUNCMAP(funcname, arguments)
 
 
     for tp, name in arguments:
+        if tp is FORCE_VALUE: continue
         if not is_simple_type(tp):
             raise ValueError, "Complex function (arg of type %s)"%(tp,)
 
@@ -356,6 +365,7 @@ def process_function(fp, protostr, funclist):
     fmt = ''
     arglist = ''
     for tp, name in arguments:
+        if tp is FORCE_VALUE: continue
         fmt += parsetuple_fmt(tp)
         v =parsetuple_arguments(tp, "objc_%s"%name)
         if v:
@@ -378,10 +388,13 @@ def process_function(fp, protostr, funclist):
         fp.write("\t\tobjc_result = %s(\n"%funcname,)
     else:
         fp.write("\t\t%s(\n"%funcname,)
-    sep = ""
+    sep = "\t\t\t\t"
     for tp, name in arguments:
-        fp.write("%sobjc_%s"%(sep, name))
-        sep = ", "
+        if tp is FORCE_VALUE:
+            fp.write("%s%s"%(sep, name))
+        else:
+            fp.write("%sobjc_%s"%(sep, name))
+        sep = ",\n\t\t\t\t"
     fp.write(");\n")
     fp.write("\tNS_HANDLER\n")
     fp.write("\t\tPyObjCErr_FromObjC(localException);\n")
@@ -422,7 +435,6 @@ def process_list(fp, lst):
             sys.stderr.write("Converting '%s' ..."%l.strip())
             sys.stderr.write("failed: %s\n"%msg)
             sys.stderr.flush()
-            raise
 
     fp.write("\n")
 

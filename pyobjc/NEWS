@@ -7,6 +7,9 @@ An overview of the relevant changes in new, and older, releases.
 Version "Panther" (Off-CVS)
 ---------------------------
 
+- Backward incompatible change: class methods are no longer callable through
+  the instances.
+
 - Integrates full support for MacOS X 10.3 (aka Panther)
 
 - Adds a convenience/wrapper module for SecurityInterface

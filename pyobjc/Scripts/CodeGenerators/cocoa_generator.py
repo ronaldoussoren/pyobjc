@@ -307,7 +307,7 @@ if FOUNDATION_HDRS is not None:
         func_builder.FUNC_MAP['NSBeginCriticalAlertSheet'] = BeginSheetMapper
 
         fd = dupfile('build/codegen/_Fnd_Functions.inc', 'w')
-        structs = ['NSPoint', 'NSSize', 'NSRect', 'NSRange', 'NSSwappedDouble', 'NSSwappedFloat']
+        structs = ['NSPoint', 'NSSize', 'NSRect', 'NSRange', 'NSSwappedFloat', 'NSSwappedDouble']
         for s in structs:
             func_builder.SIMPLE_TYPES[s] = (
                 '\tresult = PyObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,

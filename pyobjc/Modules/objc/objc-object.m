@@ -322,6 +322,18 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 		     "'%.50s' object has no attribute '%.400s'",
 		     tp->tp_name, namestr);
   done:
+	if (res != NULL) {
+		/* class methods cannot be accessed through instances */
+		if (PyObjCSelector_Check(res) 
+				&& PyObjCSelector_IsClassMethod(res)) {
+			PyErr_Format(PyExc_AttributeError,
+			     "'%.50s' object has no attribute '%.400s'",
+			     tp->tp_name, PyString_AS_STRING(name));
+			Py_DECREF(res);
+			res = NULL;
+		}
+	}
+
 	Py_DECREF(name);
 	return res;
 }
@@ -463,6 +475,7 @@ obj_get_instanceMethods(PyObjCObject* self, void* closure __attribute__((__unuse
 }
 
 static PyGetSetDef obj_getset[] = {
+#if 0
 	{
 		"pyobjc_classMethods",
 		(getter)obj_get_classMethods,
@@ -470,6 +483,7 @@ static PyGetSetDef obj_getset[] = {
 		obj_get_classMethods_doc,
 		0
 	},
+#endif
 	{
 		"pyobjc_instanceMethods",
 		(getter)obj_get_instanceMethods,

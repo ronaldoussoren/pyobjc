@@ -697,7 +697,6 @@ struct objc_typestr_values {
 
 void init_objc(void);
 
-
 void init_objc(void)
 {
 	PyObject *m, *d;

@@ -11,7 +11,7 @@ class TestNSView (unittest.TestCase):
 
     def test_knowsPageRange(self):
         method = ObjCTestNSView_KnowPageRange.knowsPageRange_
-        self.assertEquals(method.signature, "C@:o^{_NSRange=II}")
+        self.assertEquals(method.signature, "c@:o^{_NSRange=II}")
 
 if __name__ == "__main__":
     unittest.main()

@@ -51,7 +51,6 @@ static PyObject* call_NSOutputStream_write_maxLength_(
 static PyObject* call_NSInputStream_read_maxLength_(
 		PyObject* method, PyObject* self, PyObject* arguments)
 {
-	char* buf;
 	int   bytes_len;
 	int	  bytes_read;
 	PyObject*	result;
@@ -61,7 +60,7 @@ static PyObject* call_NSInputStream_read_maxLength_(
 		return NULL;
 	}
 
-    result = PyString_FromStringAndSize((char *)0, bytes_len);
+	result = PyString_FromStringAndSize((char *)0, bytes_len);
 	if (result == NULL)
 		return NULL;
 	
