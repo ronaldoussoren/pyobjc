@@ -1,0 +1,113 @@
+=========================
+Installation Instructions
+=========================
+
+.. :authors: Bill Bumgarner, Ronald Oussoren
+ 
+Building the package
+====================
+
+If you're using the sources from CVS you should first download a copy of 
+libffi from `the PyObjC download site`_.  Extract this in a convenient location
+and update the variable ``LIBFF_SOURCES`` at the top of setup.py.  The released
+version of PyObjC includes a compatible version of libffi.
+
+.. _`the PyObjC download site`: http://sourceforge.net/project/showfiles.php?group_id=14534
+
+PyObjC is build and installed using the distutils package included with Python
+2.0 and beyond.  This package provides a single interface for building and
+packaging the module.   To see usage documentation for the module,
+issue the ``--help`` command::
+
+  % python setup.py --help
+
+To see an inventory of building and packaging commands, issue the
+command::
+
+  % python setup.py --help-commands
+
+The following command will build and install the pyobjc module::
+
+  % python setup.py install
+
+The setup.py system can also be used to create source and binary
+distribution archives automatically.
+
+Use ``sudo`` to install the pyobjc module into a the Apple supplied
+python's site-packages directory on OS X 10.2 and greater:
+
+% sudo python setup.py install
+
+If you have multiple versions of python installed on your system, the
+above will only install pyobjc for whatever version of python is the
+default on the command line.   Make sure you are installing python
+against the correct version of python.
+
+To be able to build the wrappers for the WebKit framework (included with
+Safari 1.0), you'll have to install the WebKit SDK. You can download 
+this from the `ADC website <http://connect.apple.com>`_.
+
+Examples
+========
+
+The `examples directory`_ contains a number of projects that demonstrate
+various features of the PyObjC bridge. The scripts at the top level of
+the `examples directory`_ were mostly written to test a particular
+feature of the bridge (or document a bug until a fix could be found).
+
+.. _`examples directory`: Examples/00ReadMe.html
+
+CurrencyConverter and TableModel are both examples of standalone
+Cocoa-Python applications.  To build and execute::
+
+  % cd TableModel
+  % python buildapp.py build
+
+The WebServicesTool is an example of Cocoa-Python applications created via 
+the Cocoa-Python project template found in the 
+``ProjectBuilder Extras/Project Templates`` directory.  Use Project Builder 
+to build the applications.
+
+
+Project Templates
+=================
+
+The ``ProjectBuilder Extras`` directory contains additional files that can
+be used with Project Builder. The directory ``Specifications`` contains files
+that enable syntax coloring for Python files in Project Builder.
+
+The ``Project Templates`` directory contains project templates for
+Project Builder.  These have to be copied to
+``/Developer/ProjectBuilder Extras/Project Templates/Application`` before
+they are useable from Project Builder.
+
+There are three templates available:
+
+* Cocoa-Python Application
+
+  A project created from this template is designed to implement standalone,
+  pure-Python, applications that are compatible with Apple's build of Python as
+  well as all other builds of python that support PyObjC.
+
+  When building the 'install' target, the resulting application wrapper will
+  included the PyObjC module and can be launched on any stock OS X 10.2 system
+  without requiring PyObjC to be preinstalled.
+
+* Cocoa-Python-ObjC Application
+ 
+  A project created from this template includes an embedded framework project
+  into which all compiled (Objective-C) code can be placed.  Upon launch, 
+  the application automatically dynamically loads the embedded framework 
+  containing the compiled code.
+
+  Each Framework's Resources directory is automatically added to sys.path.
+
+* Cocoa-Python Document-based Application
+
+  This template works like the Cocoa-Python Application template in that it
+  is compatible with the Apple build of Python.   It creates an application 
+  that uses Cocoa's Multiple Document Architecture in the same fashion as the
+  default Cocoa Document-based Application supplied with Project Builder. 
+
+More information on project templates can be found in the Project
+Builder documentation and/or release notes.

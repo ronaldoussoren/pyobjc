@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+PyObjC NEWS</title>
+</head>
+<body>
+<h2>PyObjC NEWS</h2>
+<p>An overview of the relevant changes in new, and older, releases.</p>
+<h2><a name="version-1-0rc2-2003-09-04">Version 1.0rc2 (2003-09-04)</a></h2>
+<ul>
+<li>Fix a number of bugs found in 1.0rc1.</li>
+</ul>
+<h2><a name="version-1-0rc1-2003-08-10">Version 1.0rc1 (2003-08-10)</a></h2>
+<ul>
+<li>Better support for the NSKeyValueCoding protocol.  The module 
+<code><span>PyObjCTools.KeyValueCoding</span></code> provides a python interface that makes it
+possible to use key-value coding with python objects as well as 
+Objective-C objects. Key-Value Coding also works as one would expect with
+Python objects when accessing them from Objective-C (both for plain Python
+objects and Python/Objective-C hybrid objects).</li>
+<li>objc.pyobjc_unicode objects are now pickled as unicode objects, previously
+the couldn't be pickled or were pickled as incomplete objects (protocol 
+version 2).</li>
+<li>Pickling of ObjC objects never worked, we now explicitly throw an exception
+if you try to pickle one: pickle protocol version 2 silently wrote the 
+incomplete state of objects to the pickle.</li>
+<li>The default repr() of ObjC objects is now the result of a call to the
+<code><span>description</span></code> method. This method is not called for unitialized objects,
+because that might crash the interpreter; we use a default implementation
+in that case.</li>
+<li>A minor change to the conversion rule for methods with output arguments
+(pointers to values in ObjC, where the method will write through the pointer).
+If the method has 'void' as its return type, we used to return a tuple where
+the first value is always None. This first element is no longer included,
+furthermore if the method has only 1 output argument we no longer return
+a tuple but return the output value directly (again only if the method has
+'void' as its return type).<p>This is a backward incompatible change, but there are not many of such
+methods.</p>
+</li>
+<li>Another backward incompatible change is a minor cleanup of the names in
+the <code><span>objc</span></code> module. The most significant of these is the change from
+<code><span>recycle_autorelease_pool</span></code> to <code><span>recycleAutoreleasePool</span></code>. The other 
+changed names are internal to the bridge and should not be used in other
+code.</li>
+<li>The interface of Foundation.NSFillRects changed, it now has an interface
+that is consistent with the rest of the bridge.</li>
+</ul>
+<h2><a name="version-1-0b1-2003-07-05">Version 1.0b1 (2003-07-05)</a></h2>
+<ul>
+<li>More tutorials<p>Two new tutorials were added: 'Adding Python code to an existing ObjC 
+application' and 'Understanding existing PyObjC examples'. The former
+explains how you can use Python to add new functionality to an already
+existing Objective-C application, the latter explains how to understand
+PyObjC programs written by other people.</p>
+</li>
+<li>More examples<p>Three examples were added: DotView, ClassBrowser and PythonBrowser,
+respectively showing the use of a custom NSView, NSBrowser and
+NSOutlineView.  PythonBrowser is reusable, making it trivial to add an
+object browser to your application.</p>
+</li>
+<li>Support for MacOS X 10.1<p>It is now possible to build PyObjC on MacOS X 10.1, with full access to 
+the Cocoa API's on that platform.</p>
+<p>Note: The port to MacOS X 10.1 is not as well supported as the 10.2 port.
+The developers do not have full-time access to a MacOS X 10.1 system.</p>
+</li>
+<li>Support for the WebKit framework, included with Safari 1.0.<p>If you build PyObjC from source you will have to build on a system that has
+the WebKit SDK installed to make use of this. Note that the additional 
+functionality will only be usuable on systems that have Safari 1.0 installed,
+however as long as you don't use the additional functionality it is safe
+to run a 'WebKit-enabled' PyObjC on systems without Safari 1.0.</p>
+</li>
+<li>It is no longer necessary to specify which protocols are implemented by<p>a class, this information is automaticly deduced from the list of implemented
+methods. You'll still a runtime error if you implement some methods of a 
+protocol and one of the unimplemented methods is required.</p>
+</li>
+<li>Support for &quot;toll-free bridging&quot; of Carbon.CF types to Objective-C objects.<p>It is now possible to use instances of Carbon.CF types in places where 
+Objective-C objects are expected. And to explicitly convert between the two.</p>
+<p>Note: this requires Python 2.3.</p>
+</li>
+<li>Better integration with MacPython 2.3:<ul>
+<li><code><span>NSMovie.initWithMovie_</span></code> and <code><span>NSMovie.QTMovie</span></code> now use <code><span>QT.Movie</span></code> 
+objects instead of generic pointer wrappers.</li>
+<li><code><span>NSWindow.initWithWindowRef_</span></code> and <code><span>Window.windowRef</span></code> now use 
+<code><span>Carbon.Window</span></code> objects instead of generic pointer wrappers.</li>
+<li>Methods returning CoreFoundation objects will return MacPython objects,
+and likewise, methods with CoreFoundation arguments will accept MacPython
+objects.</li>
+</ul>
+</li>
+<li>It is now possible to write plugin bundles, such as preference panes for 
+use in System Preferences, in Python. See Examples/PrefPanes for an example
+of this feature.</li>
+<li>The methods <code><span>pyobjcPopPool</span></code> and <code><span>pyobjcPushPool</span></code> of <code><span>NSAutoreleasePool</span></code>
+are deprecated. These were introduced when PyObjC did not yet support the
+usual method for creating autorelease pools and are no longer necessary.</li>
+<li>Improved unittests, greatly increasing the confidence in the correctness
+of the bridge.</li>
+<li>All suppport for non-FFI builds has been removed.</li>
+<li>Object state is completely stored in the Objective-C object.  This has no
+user-visible effects, but makes the implementation a lot easier to 
+comprehend and maintain.</li>
+<li>As part of the previous item we also fixed a bug that allowed addition of 
+attributes to Objective-C objects. This was never the intention and had 
+very odd semantics. Pure Objective-C objects not longer have a __dict__.</li>
+<li>Weakrefs are no longer used in the implementation of the bridge. Because
+the weakrefs to proxy objects isn't very useful the entire feature has 
+been removed: It is no longer possible to create weakrefs to Objective-C
+objects.<p>NOTE: You could create weakrefs in previous versions, but those would
+expire as soon as the last reference from Python died, <i>not</i> when the 
+Objective-C object died, therefore code that uses weakrefs to Objective-C
+objects is almost certainly incorrect.</p>
+</li>
+<li>Added support for custom conversion for pointer types. The end result is that
+we support more Cocoa APIs without special mappings.</li>
+<li>The generator scripts are automaticly called when building PyObjC. This
+should make it easier to support multiple versions of MacOS X.</li>
+</ul>
+<h2><a name="version-0-9-may-02-2003">Version 0.9 (May-02-2003)</a></h2>
+<ul>
+<li>This version includes numerous bugfixes and improvements.</li>
+<li>The module AppKit.NibClassBuilder has been moved to the package
+PyObjCTools.</li>
+<li>Usage of libFFI (<a href="http://sources.redhat.com/libffi">http://sources.redhat.com/libffi</a>) is now mandatory. The
+setup.py gives the impression that it isn't, but we do <i>not</i> support 
+non-FFI builds.</li>
+<li>We actually have some documentation, more will be added in future releases.</li>
+<li>There are more Project Builder templates (see 'Project Templates').</li>
+<li>The InterfaceBuilder, PreferencePanes and ScreenSaver frameworks have been
+wrapped.</li>
+<li>Management of reference counts is now completely automatic, it is no longer
+necessary to manually compensate for the higher reference count of objects 
+returned by the alloc, copy and copyWithZone: class methods.</li>
+<li>Various function and keyword arguments have been renamed for a better 
+integration with Cocoa. A partial list is of the changed names is:<pre>
+objc.lookup_class -&gt; objc.lookUpClass
+objc.selector arguments/attributes:
+        is_initializer -&gt; isInitializer
+        is_allocator -&gt; isAlloc
+        donates_ref -&gt; doesDonateReference
+        is_required -&gt; isRequired
+        class_method -&gt; isClassMethod
+        defining_class -&gt; definingClass
+        returns_self -&gt; returnsSelf
+        argument_types -&gt; argumentTypes
+        return_type -&gt; returnType
+objc.get_class_list -&gt; objc.getClassList
+</pre>
+</li>
+<li>On Python 2.2, objc.YES and objc.NO are instances of a private boolean type,
+on Python 2.3 these are instances of the builtin type bool.</li>
+<li>Because we now use libFFI a large amount of code could be disabled. The
+binaries are therefore much smaller, while we can now forward messages with
+arbitrary signatures (not limited to those we thought of while generating
+the static proxies that were used in 0.8)</li>
+<li>Better support for APIs that use byte arrays are arguments or return values. 
+Specifically, the developer can now manipulate bitmaps directly via the 
+NSBitmapImageRep class, work with binary data through the NSData class, and 
+very quickly draw points and rects via NSRectFillList()</li>
+<li>We added a subclass of unicode that is used to proxy NSString values. This
+makes it easily possible to use NSString values with Python APIs, while at 
+the same time allowing access to the full power of NSString.</li>
+</ul>
+<h2><a name="version-0-8-dec-10-2002">Version 0.8 (Dec-10-2002)</a></h2>
+<ul>
+<li>GNUStep support has been removed for lack of support.  Volunteers
+needed.</li>
+<li>Subclassing Objective-C classes from Python, including the addition
+of instance variables (like 'IBOutlet's)</li>
+<li>Generic support for pass-by-reference arguments</li>
+<li>More complete Cocoa package, including wrappers for a number of 
+C functions, enumerated types, and globals.</li>
+<li>More example code</li>
+<li>Objective-C mappings and sequences can be accessed using the normal
+python methods for accessing mappings and sequences (e.g. subscripting
+works as expected)</li>
+<li>Documentation: See the directory 'docs'</li>
+<li>Can build standalone Cocoa applications based entirely on Python
+without requiring that user installs anything extra (requires 10.2).</li>
+<li>Better packaging and wrapper construction tools (borrowed from
+MacPython).</li>
+<li>An installer package.</li>
+<li>Support for Project Builder based Cocoa-Python projects.</li>
+<li>Unit tests.</li>
+</ul>
+<h2><a name="version-2002-01-30-january-30-2002">Version 2002-01-30 (January 30, 2002)</a></h2>
+<ul>
+<li>Version bumped to 0.6.1 ( __version__ is now a PyString )</li>
+<li>Will now build for Python 2.2</li>
+<li>added Cocoa package with Foundation.py and AppKit.py wrappers.</li>
+<li>HelloWorld.py in Examples</li>
+<li>builds with -g flag for debugging. -v option will dump log
+of message sends to /tmp file.</li>
+<li>Fixed one major runtime bug: added ISCLASS test before isKindOfClass -
+without check, it crashes on sends to abstract classes like NSProxy.</li>
+<li>There are still problems with Delegates and Notifications.</li>
+</ul>
+<h2><a name="version-2001-03-17-march-17-2001">Version 2001-03-17 (March 17, 2001)</a></h2>
+<ul>
+<li>moved to using distutils setup.py (requires small patch to distutils
+that has been submitted against python 2.1b1)</li>
+</ul>
+<h2><a name="version-2000-11-14-november-14-2000">Version 2000-11-14 (November 14, 2000)</a></h2>
+<ul>
+<li>GNU_RUNTIME is likely completely broken</li>
+<li>Compiles on Mac OS X Server (python 2.0)</li>
+<li>Compiles on Mac OS X (python 2.0)</li>
+<li>Works as either a dynamically loadable module or statically built
+into a python executable</li>
+<li>Requires a modified makesetup to work [patches have been sent to
+SourceForge.net's Python project].</li>
+<li>Supports NSAutoReleasepool.</li>
+<li>Some pre-OSX stuff removed;  references to old APIs, etc... (but
+nowhere near clean)</li>
+</ul>
+<h2><a name="version-0-55-18-august-1998">Version 0.55, 18 August 1998</a></h2>
+<ul>
+<li>Here again, supporting GNU_RUNTIME and GNUstep Base! On my new Linux
+box I can finally test the module against them: I installed the
+latest snapshot of gstep-core, that contains the base library
+too. Given a sane GNUstep env (GNUSTEP_XXX env vars), you should be
+able to build a static ObjC-ized interpreter by:<pre>
+o Adjusting Setup, commenting out NeXT definition and enabling GNU
+  ones;
+o make -f Makefile.pre.in boot
+o make static
+</pre>
+</li>
+</ul>
+<h2><a name="version-0-54-24-march-1998">Version 0.54, 24 March 1998</a></h2>
+<ul>
+<li>OC_Pasteboard.[hm], OC_Stream.[mh] and ObjCStreams.m are definitively gone.</li>
+<li>OC_PythonObject derives from NSProxy.</li>
+</ul>
+<h2><a name="version-0-53-4-january-1998">Version 0.53, 4 January 1998</a></h2>
+<ul>
+<li>Tons of changes, retargeting the core functionality around the
+OpenSTEP API. This release basically matches the previous one
+in terms of functionalities, but is should be closer to GNUstep.</li>
+<li>OC_Streams and OC_Pasteboard aren't supported, I've not yet decided
+if they are needed anymore.</li>
+<li>Updated LittleButtonedWindow demo.</li>
+</ul>
+<h2><a name="version-0-47-29-october-1996">Version 0.47, 29 October 1996</a></h2>
+<ul>
+<li>Misc/Makefile.pre.in automatically sets TARGET to <code><span>pyobjc</span></code>.</li>
+<li>ObjC.m splitted to ObjCObject.m ObjCMethod.m ObjCPointer.m
+ObjCRuntime.m.</li>
+<li>New (almost invisible) types: ObjCSequenceObject and
+ObjCMappingObject; this to implement sequence and mapping syntax
+(several mapping methods have stub implementation).</li>
+<li>OC_Pasteboard class is gone. Its functionalities are now in a
+category of Pasteboard/NSPasteboard.</li>
+<li>Better methods doc.</li>
+<li>PyArg_ParseTuple format strings contain arguments names.</li>
+<li>OC_Streams are mapped to ObjCStreams by pythonify_c_value and its
+counterpart.</li>
+</ul>
+<h2><a name="version-0-46-18-october-1996">Version 0.46, 18 October 1996</a></h2>
+<ul>
+<li>OC_Stream is now a subclass of NSData under Foundation.</li>
+<li>New Objective-C class: OC_Pasteboard. Use it instead of Pasteboard/
+NSPasteboard.</li>
+<li>New Objective-C class: OC_PythonBundle. Use it instead of NXBundle/NSBundle.
+The ShellText demo has been upgraded to use it, and now you can run it
+directly from the WorkSpace.</li>
+<li>OC_Python.[hm] aren't in the package anymore.</li>
+<li>Setup.in directives changed again, due to OC_Python.m dropping.</li>
+</ul>
+<h2><a name="version-0-45-14-october-1996">Version 0.45, 14 October 1996</a></h2>
+<ul>
+<li>Double syntax: to make it easier for us to test and choose the
+better candidate, the only one that will be present in the final 1.0
+release. Keeping both would result in a speed penality.</li>
+<li>Revisited streams, in particular GNUstep support.</li>
+</ul>
+<h2><a name="version-0-44-9-october-1996">Version 0.44, 9 October 1996</a></h2>
+<ul>
+<li>Integers are now accepted too where floats or doubles are expected.</li>
+<li>New method: ObjC.make_pointer (1) returns an ObjCPointer containing
+<code><span>((void</span> <span>*)</span> <span>1)</span></code>.</li>
+</ul>
+<h2><a name="version-0-43-7-october-1996">Version 0.43, 7 October 1996</a></h2>
+<ul>
+<li>Completed ObjCStream implementation. There is now a new module, ObjCStreams
+which is automatically loaded by ObjC. You can access it as ObjC.streams.</li>
+<li>Manual splitted in three parts: libPyObjC.tex with the chapter intro,
+libObjC.tex describing the main module, libObjCStreams.tex explains the
+stream facilities.</li>
+</ul>
+<h2><a name="version-0-42-4-october-1996">Version 0.42, 4 October 1996</a></h2>
+<ul>
+<li>You can pass initialization arguments when using the <code><span>Class()</span></code> syntax. You
+select the right initializer selector with the <code><span>init</span></code> keyword parameter.</li>
+<li>First cut on ObjCStream objects. Thanx to Bill Bumgarner for motivations.</li>
+<li>New demo ShellText, to test above points.</li>
+</ul>
+<h2><a name="version-0-41-2-october-1996">Version 0.41, 2 October 1996</a></h2>
+<ul>
+<li>Revised error messages: for arguments type mismatch they show the ObjC type
+expected.</li>
+<li>When a method returns a pointer to something, it gets translated as an
+ObjCPointer object, not the pythonified pointed value. When a method
+expects a pointer argument, it accepts such an object as well.</li>
+<li>New demo: Fred. To halt it, suspend the Python process with ^Z then kill
+it ;-).</li>
+<li>Setup.in directives changed. See the new file Modules/Setup.PyObjC.in</li>
+<li>Distribuited as a standalone package. Special thanks to Bill Bumgarner.</li>
+</ul>
+<h2><a name="version-0-4-27-september-1996">Version 0.4, 27 September 1996</a></h2>
+<ul>
+<li>Now handles methods returning doubles or floats.</li>
+<li>ObjCRuntime responds to .sel_is_mapped().</li>
+</ul>
+<h2><a name="version-0-31-26-september-1996">Version 0.31, 26 September 1996</a></h2>
+<ul>
+<li>It's now possible to use a different strategy to map ObjC method names to
+Python ones. Sooner or later we should decide the one to go, and drop the
+other. For details, see comments on PYTHONIFY_WITH_DOUBLE_UNDERSCORE in
+objc_support.h.</li>
+<li>Manual section.</li>
+<li>ObjC.runtime.__dict__ added.</li>
+<li>ObjC.runtime.kind added.</li>
+</ul>
+<h2><a name="version-0-3-20-september-1996">Version 0.3, 20 September 1996</a></h2>
+<ul>
+<li>No user visible changes, just a little effort towards GNU_RUNTIME support.</li>
+</ul>
+<h2><a name="version-0-2-16-september-1996">Version 0.2, 16 September 1996</a></h2>
+<ul>
+<li>Accepts a struct.pack() string for pointer arguments, but...</li>
+<li>... New methods on ObjCMethod: .pack_argument and .unpack_argument:
+these should be used whenever an ObjC method expects a passed-by-reference
+argument; for example, on NeXTSTEP [View getFrame:] expects a pointer
+to an NXRect structure, that it will fill with the current frame of the
+view: in this case you should use something similar to:<pre>
+framep = aView.getFrame__.pack_argument (0)
+aView.getFrame__ (framep)
+frame = aView.getFrame__.unpack_argument (0, framep)
+</pre>
+</li>
+</ul>
+<h2><a name="version-0-1-13-september-1996">Version 0.1, 13 September 1996</a></h2>
+<ul>
+<li>Correctly handle pointer arguments.</li>
+<li>New syntax to get a class: ObjC.runtime.NameOfClass</li>
+<li>New syntax aliasing .new(): SomeClass()</li>
+<li>New Demo: LittleButtonedWindow, that tests points above.</li>
+<li>What follow is the recipe to get PyObjC dynamically loadable on NeXTSTEP:<ul>
+<li>apply the patch in Misc/INSTALL.PyObjC to Python/importdl.c</li>
+<li>modify Python/Makefile adding the switch <code><span>-ObjC</span></code> to the importdl.o
+build rule:<pre>
+importdl.o:   importdl.c
+  $(CC) -ObjC -c $(CFLAGS) -I$(DLINCLDIR) $(srcdir)/importdl.c
+</pre>
+</li>
+<li>modify Modules/Setup moving the PyObjC entry suggested above AFTER
+<code><span>*shared*</span></code>, and remove <code><span>-u</span> <span>libNeXT_s</span> <span>-lNeXT_s</span></code> from it.</li>
+<li>run <code><span>make</span></code>: this will update various files, in particular
+Modules/Makefile.</li>
+<li>modify Modules/Makefile adding <code><span>-u</span> <span>libNeXT_s</span> <span>-lNeXT_s</span></code> to SYSLIBS:<pre>
+SYSLIBS=      $(LIBM) $(LIBC) -u libNeXT_s -lNeXT_s
+</pre>
+</li>
+<li>run <code><span>make</span></code> again</li>
+</ul>
+</li>
+</ul>
+</body>
+</html>
