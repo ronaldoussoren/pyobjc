@@ -146,8 +146,13 @@ basedir = '%s/package'%(BUILDDIR)
 
 makeDir(basedir, 'Developer', 'ProjectBuilder Extras', 'Project Templates', 'Application')
 templateDestination = os.path.join(basedir, 'Developer', 'ProjectBuilder Extras',
-                                   'Project Templates', 'Application', 'Cocoa-Python Application')
-shutil.copytree('Project Templates/Cocoa-Python Application', templateDestination)
+                                   'Project Templates', 'Application')
+
+for dname in os.listdir('Project Templates'):
+    if dname == 'CVS': continue
+    path = os.path.join('Project Templates', dname)
+    if not os.path.isdir(path): continue
+    shutil.copytree(path, os.path.join(templateDestination, dname))
 
 print "Setting up developer examples"
 
