@@ -1,7 +1,7 @@
 <?
 $title = "Contributors";
-$cvs_author = '$Author: bbum $';
-$cvs_date = '$Date: 2002/11/12 07:41:06 $';
+$cvs_author = '$Author: ronaldoussoren $';
+$cvs_date = '$Date: 2002/11/13 15:24:22 $';
 
 include "header.inc";
 ?>
@@ -9,7 +9,7 @@ include "header.inc";
 <p>
 Many, many people have contributed to the PyObjC module in the recent months.  The mailing list should be parsed to complete this list.
 <ul>
-<li>Jack Jensen has provided constant technical assistance and direction based on his wealth of experience as the primary developer of the MacPython project.</li>
+<li>Jack Jansen has provided constant technical assistance and direction based on his wealth of experience as the primary developer of the MacPython project.</li>
 <li>Jim Tittsler provided a significant chunk of the look/feel of this web site, including the cool PyDog graphic.</li>
 <li>The <a href="http://fink.sourceforge.net/">Fink Project</a> deserves a huge amount of credit.  Beyond providing a model for building this site, Fink represents an incredible base of knowledge to anyone working with various open source tools and OS X.
 </ul>

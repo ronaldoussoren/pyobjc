@@ -1,5 +1,5 @@
 <?
-/* $Id: header.inc,v 1.2 2002/11/13 15:18:24 ronaldoussoren Exp $ */
+/* $Id: header.inc,v 1.3 2002/11/13 15:24:22 ronaldoussoren Exp $ */
 
 // section navigation (always visible)
 $sections = array(
@@ -102,7 +102,11 @@ for ($i = 0; $i < sizeof($sections); $i += 3) {
     print '<td colspan="2" bgcolor="#87b9e7"><a href="'.$root.$sections[$i].'">';
     print $sections[$i+1];
   } else {
-    print '<td colspan="2"><a href="'.$root.$sections[$i].'">';
+    if (substr($sections[$i], 0, 7) == 'http://') {
+	    print '<td colspan="2"><a href="'.$sections[$i].'">';
+    } else {
+	    print '<td colspan="2"><a href="'.$root.$sections[$i].'">';
+    }
     print $sections[$i+1];
   }
   print '</a></td></tr>'."\n";
