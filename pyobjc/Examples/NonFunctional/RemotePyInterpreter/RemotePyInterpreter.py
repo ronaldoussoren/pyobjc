@@ -12,9 +12,49 @@ NibClassBuilder.extractClasses("RemotePyInterpreter.nib")
 from AsyncPyInterpreter import *
 from ConsoleReactor import *
 
+def ensure_unicode(s):
+    if not isinstance(s, unicode):
+        s = unicode(s, 'utf-8')
+    return s
+
+def ensure_utf8(s):
+    if isinstance(s, unicode):
+        s = unicode.encode('utf-8')
+    return s
+
 class RemotePyInterpreterReactor(ConsoleReactor):
     def handleExpectCommand_(self, command):
-        super(RemotePyInterpreterReactor, self).handleExpectCommand_(command)
+        seq = command[0]
+        name = command[1]
+        args = command[2:]
+        netrepr = self.netReprCenter.netrepr
+        rval = None
+        code = None
+        if name == 'RemoteConsole.raw_input':
+            prompt = ensure_unicode(args[0])
+            def input_received(line):
+                self.sendResult_sequence_(ensure_utf8(line), seq)
+            self.delegate.expectCodeInput_withPrompt_(input_received, prompt)
+        elif name == 'RemoteConsole.write':
+            args = [ensure_unicode(args[0]), u'code']
+            self.doCallback_sequence_args_(self.delegate.writeString_forOutput_, seq, args)
+        elif name == 'RemoteConsole.displayhook':
+            obj = args[0]
+            def displayhook_respond(reprobject):
+                self.delegate.writeString_forOutput_(ensure_unicode(reprobject) + u'\n', u'code')
+            def displayhook_local(obj):
+                if obj is not None:
+                    displayhook_respond(repr(obj))
+            if isinstance(obj, RemoteObjectReference):
+                self.deferCallback_sequence_value_(displayhook_respond, seq, 'repr(%s)' % (netrepr(obj),))
+            else:
+                self.doCallback_sequence_args_(displayhook_local, seq, args)
+        #elif name.startswith('RemoteFileLike.'):
+        #    fh = getattr(sys, args[0])
+        #    meth = getattr(fh, name[len('RemoteFileLike.'):])
+        #    self.doCallback_sequence_args_(meth, seq, args[1:])
+        else:
+            self.doCallback_sequence_args_(NSLog, seq, [u'%r does not respond to expect %r' % (self, command,)])
     
 
 class PseudoUTF8Input(object):
@@ -68,6 +108,11 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
     turning it into a full featured interactive Python interpreter.
     """
 
+    def expectCodeInput_withPrompt_(self, callback, prompt):
+        self.writeString_forOutput_(prompt, u'code')
+        self.p_input_callbacks.append(callback)
+        self.flushCallbacks()
+
     def setupTextView(self):
         self.textView.setFont_(self.font())
         self.textView.setContinuousSpellCheckingEnabled_(False)
@@ -91,7 +136,9 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
         self.setAutoScroll_(True)
         self.setSingleLineInteraction_(False)
         self.p_history = [u'']
-        self.p_stdin = PseudoUTF8Input(self.p_nestedRunLoopReaderUntilEOLchars_)
+        self.p_input_callbacks = []
+        # XXX
+        #self.p_stdin = PseudoUTF8Input(self.p_nestedRunLoopReaderUntilEOLchars_)
 
         # XXX - should this be done later?
         self.setupTextView()
@@ -101,51 +148,51 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
     #  Modal input dialog support
     #
 
-    def p_nestedRunLoopReaderUntilEOLchars_(self, eolchars):
-        """
-        This makes the baby jesus cry.
+    #def p_nestedRunLoopReaderUntilEOLchars_(self, eolchars):
+    #    """
+    #    This makes the baby jesus cry.
 
-        I want co-routines.
-        """
-        app = NSApplication.sharedApplication()
-        window = self.textView.window()
-        self.setCharacterIndexForInput_(self.lengthOfTextView())
-        # change the color.. eh
-        self.textView.setTypingAttributes_({
-            NSFontAttributeName: self.font(),
-            NSForegroundColorAttributeName: self.colorForName_(u'code'),
-        })
-        while True:
-            event = app.nextEventMatchingMask_untilDate_inMode_dequeue_(
-                NSAnyEventMask,
-                NSDate.distantFuture(),
-                NSDefaultRunLoopMode,
-                True)
-            if (event.type() == NSKeyDown) and (event.window() is window):
-                eol = event.characters()
-                if eol in eolchars:
-                    break
-            app.sendEvent_(event)
-        cl = self.currentLine()
-        if eol == u'\r':
-            self.writeNewLine()
-        return cl + eol
+    #    I want co-routines.
+    #    """
+    #    app = NSApplication.sharedApplication()
+    #    window = self.textView.window()
+    #    self.setCharacterIndexForInput_(self.lengthOfTextView())
+    #    # change the color.. eh
+    #    self.textView.setTypingAttributes_({
+    #        NSFontAttributeName: self.font(),
+    #        NSForegroundColorAttributeName: self.colorForName_(u'code'),
+    #    })
+    #    while True:
+    #        event = app.nextEventMatchingMask_untilDate_inMode_dequeue_(
+    #            NSAnyEventMask,
+    #            NSDate.distantFuture(),
+    #            NSDefaultRunLoopMode,
+    #            True)
+    #        if (event.type() == NSKeyDown) and (event.window() is window):
+    #            eol = event.characters()
+    #            if eol in eolchars:
+    #                break
+    #        app.sendEvent_(event)
+    #    cl = self.currentLine()
+    #    if eol == u'\r':
+    #        self.writeNewLine()
+    #    return cl + eol
 
     #
     #  Interpreter functions
     #
 
-    def p_executeWithRedirectedIO(self, fn, *args, **kwargs):
-        old = sys.stdin, sys.stdout, sys.stderr
-        if self.p_stdin is not None:
-            sys.stdin = self.p_stdin
-        sys.stdout, sys.stderr = self.p_stdout, self.p_stderr
-        try:
-            rval = fn(*args, **kwargs)
-        finally:
-            sys.stdin, sys.stdout, sys.stderr = old
-            self.setCharacterIndexForInput_(self.lengthOfTextView())
-        return rval
+    #def p_executeWithRedirectedIO(self, fn, *args, **kwargs):
+    #    old = sys.stdin, sys.stdout, sys.stderr
+    #    if self.p_stdin is not None:
+    #        sys.stdin = self.p_stdin
+    #    sys.stdout, sys.stderr = self.p_stdout, self.p_stderr
+    #    try:
+    #        rval = fn(*args, **kwargs)
+    #    finally:
+    #        sys.stdin, sys.stdout, sys.stderr = old
+    #        self.setCharacterIndexForInput_(self.lengthOfTextView())
+    #    return rval
 
     def executeLine_(self, line):
         self.addHistoryLine_(line)
@@ -252,14 +299,22 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
     #
 
     def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, (begin, length), index):
-        txt = self.textView.textStorage().mutableString()
-        end = begin+length
-        while (begin>0) and (txt[begin].isalnum() or txt[begin] in u'._'):
-            begin -= 1
-        while not txt[begin].isalnum():
-            begin += 1
-        return [], 0
-        #return self.p_console.recommendCompletionsFor(txt[begin:end])
+        # XXX 
+        # this will probably have to be tricky in order to be asynchronous..
+        # either by:
+        #     nesting a run loop (bleh)
+        #     polling the subprocess (bleh)
+        #     returning nothing and calling self.textView.complete_ later
+        return None, 0
+
+        if False:
+            txt = self.textView.textStorage().mutableString()
+            end = begin+length
+            while (begin>0) and (txt[begin].isalnum() or txt[begin] in u'._'):
+                begin -= 1
+            while not txt[begin].isalnum():
+                begin += 1
+            return self.p_console.recommendCompletionsFor(txt[begin:end])
 
     def textView_shouldChangeTextInRange_replacementString_(self, aTextView, aRange, newString):
         begin, length = aRange
@@ -276,8 +331,8 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
             # multiline paste support
             #self.clearLine()
             newString = self.currentLine() + newString
-            for s in newString.strip().split('\n'):
-                self.writeString_forOutput_(s + '\n', u'code')
+            for s in newString.strip().split(u'\n'):
+                self.writeString_forOutput_(s + u'\n', u'code')
                 self.executeLine_(s)
             return False
         return True
@@ -354,12 +409,6 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
 
     def setHistoryLength_(self, length):
         self.p_historyLength = length
-
-    def more(self):
-        return self.p_more
-
-    def setMore_(self, v):
-        self.p_more = v
 
     def font(self):
         return self.p_font
