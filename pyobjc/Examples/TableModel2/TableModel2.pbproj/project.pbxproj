@@ -181,7 +181,7 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				HEADER_SEARCH_PATHS = /sw/include/python2.2;
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "/sw/lib/python2.2/config/ /sw/lib/python2.2/config";
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-force_flat_namespace -undefined suppress";
 				PREBINDING = NO;
