@@ -929,6 +929,8 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 		if (argtype[0] == _C_OUT && argtype[1] == _C_PTR) {
 			/* Just allocate room in argbuf and set that*/
+			int sz;
+
 			argbuf_cur = align(argbuf_cur, 
 				objc_alignof_type(argtype+2));
 			arg = argbuf + argbuf_cur;
@@ -937,7 +939,9 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			arglist[arglistOffset + i] = &ffi_type_pointer;
 			values[arglistOffset + i] = byref+i;
 
-			argbuf_cur += objc_sizeof_type(argtype+2);
+			sz = objc_sizeof_type(argtype+2);
+			memset(arg, 0, sz);
+			argbuf_cur += sz;
 		} else {
 			/* Encode argument, maybe after allocating space */
 

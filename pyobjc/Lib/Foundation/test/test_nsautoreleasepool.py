@@ -16,7 +16,7 @@ class TestNSAutoreleasePoolInteraction(unittest.TestCase):
         # The actual test will issue a DeprecationWarning, the warnings code
         # below surpresses that warning.
         import warnings
-        warnings.simplefilter('ignore', category=DeprecationWarning)
+        warnings.filterwarnings('ignore', category=DeprecationWarning)
         try:
             NSAutoreleasePool.pyobjcPushPool()
             bar = NSMutableArray.array()
