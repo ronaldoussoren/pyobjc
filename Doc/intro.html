@@ -26,7 +26,7 @@ Contents</title>
 </ul>
 </li>
 <li><a href="#cocoa-for-python-programmers" id="id10" name="id10">Cocoa for Python programmers</a></li>
-<li><a href="#special-tasks" id="id11" name="id11">Special tasks</a><ul>
+<li><a href="#notes-on-specific-tasks" id="id11" name="id11">Notes on specific tasks</a><ul>
 <li><a href="#working-with-threads" id="id12" name="id12">Working with threads</a></li>
 </ul>
 </li>
@@ -278,8 +278,7 @@ Python. The <a href="../Examples/00ReadMe.html">PyObjC Example index</a> contain
 <li><a href="http://www.stepwise.com/">stepwise.com</a></li>
 <li>Your local bookstore or library</li>
 </ul>
-<h2><a href="#id11" name="special-tasks">Special tasks</a></h2>
-<p>XXX: Rename this section</p>
+<h2><a href="#id11" name="notes-on-specific-tasks">Notes on specific tasks</a></h2>
 <h3><a href="#id12" name="working-with-threads">Working with threads</a></h3>
 <p>When you create a thread and want to use PyObjC from that thread you will
 have to create an <code><span>NSAutoreleasePool</span></code> in that thread and clean it up when
@@ -341,12 +340,10 @@ thing when you add a new file.</p>
 copy the PyObjC modules into the application bundle. This means that this 
 application bundle should be useable on any MacOS X 10.2 system.</p>
 <p>See <a href="ProjectBuilder-Templates.html">the documentation for the templates</a> for more details.</p>
-<p>XXX: But what about Panther, which seems to ship with Python 2.3, at the 
-very least you'll get warnings about the PyObjC extension modules (wrong 
-ABI version).</p>
-<p>XXX: The documentation for the templates should be installed into the 
-documentation folder on the DMG, otherwise the link above won't work, I've
-hacked <code><span>Scripts/update_html.py</span></code> to copy the HTML file to the Doc directory,
-but that is not a pretty solution.</p>
+<p>MacOS X 10.3 seems to ship with Python 2.3 as /usr/bin/python. This means that
+standalone applications build using the Project Builder templates will start
+to complain about Python ABI versions in the <code><span>Console</span></code> when you run them
+on MacOS X 10.3. These are harmless messages caused by the extension modules
+in PyObjC.</p>
 </body>
 </html>
