@@ -1,12 +1,12 @@
-========================
-Python Project Templates
-========================
+======================
+Python Xcode Templates
+======================
 
 :Author: Bill Bumgarner
 :Contact: bbum@mac.com
 
 To use the project templates, simply copy (or link) them into the Project
-Templates directory used by Project Builder.  The project templates are also
+Templates directory used by Xcode.  The Xcode templates are also
 included in the PyObjC installer package.
 
 .. contents::
@@ -54,6 +54,6 @@ pure-Python, applications that are compatible with Apple's build of Python as
 well as all other builds of python that support PyObjC.
 
 When building the 'install' target, the resulting application wrapper will
-included the PyObjC module and can be launched on any stock OS X 10.3 system
-without requiring PyObjC to be preinstalled.
+included the PyObjC module and can be launched on any stock Mac OS X 10.3
+system without requiring PyObjC to be preinstalled.
 
