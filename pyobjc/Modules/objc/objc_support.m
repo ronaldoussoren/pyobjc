@@ -1207,7 +1207,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 
 
 	/* Set 'self' argument, for class methods we use the class */ 
-	if (meth->sel_class_method) {
+	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
 		if (ObjCObject_Check(self)) {
 			self_obj = ObjCObject_GetObject(self)->isa;
 		} else if (ObjCClass_Check(self)) {
@@ -1424,6 +1424,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	return result;
 
 error_cleanup:
+
 	if (inv) {
 		self_obj = nil;
 #if 1

@@ -271,6 +271,7 @@ find_protocol_signature(PyObject* protocols, SEL selector)
  * be modified by this function.
  *
  * TODO:
+ * - Set 'sel_class' of ObjCPythonSelector instances
  * - This function complete ignores other base-classes, even though they
  *   might override methods. Need to check the MRO documentation to check
  *   if this is a problem. 
@@ -404,7 +405,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			ObjCSelector* sel = (ObjCSelector*)value;
 			Method        meth;
 
-			if (sel->sel_class_method) {
+			if (sel->sel_flags & ObjCSelector_kCLASS_METHOD) {
 				meth = class_getClassMethod(super_class,
 					sel->sel_selector);
 				if (meth) {
@@ -635,7 +636,7 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			int           is_override = 0;
 			struct objc_method_list* lst;
 
-			if (sel->sel_class_method) {
+			if (sel->sel_flags & ObjCSelector_kCLASS_METHOD) {
 				meth = class_getClassMethod(super_class,
 					sel->sel_selector);
 				if (!meth) continue;

@@ -409,31 +409,29 @@ class_dealloc(PyObject* cls)
 	abort();
 }
 
-static PyObject*
-class_getattro(PyObject* self, PyObject* name)
+void 
+ObjCClass_CheckMethodList(PyObject* cls)
 {
-	PyObject* result;
 	struct class_info* info;
-	int                magic;
+	int		   magic;
 
-	info = get_class_info(self);
+	info = get_class_info(cls);
 	if (info->method_magic != (magic = objc_methodlist_magic(info->class))){
 		int r;
 		r = add_class_fields(
 			info->class,
-			((PyTypeObject*)self)->tp_dict);
+			((PyTypeObject*)cls)->tp_dict);
 		if (r < 0) {
 			PyErr_SetString(PyExc_RuntimeError,
 				"Cannot rescan method table");
-			return NULL;
+			return;
 		}
 		r = ObjC_AddConvenienceMethods(info->class, 
-			((PyTypeObject*)self)->tp_dict);
+			((PyTypeObject*)cls)->tp_dict);
 		if (r < 0) {
-			PyErr_Print();
 			PyErr_SetString(PyExc_RuntimeError,
 				"Cannot rescan method table");
-			return NULL;
+			return;
 		}
 		info->method_magic = magic;
 		if (info->sel_to_py) {
@@ -441,6 +439,14 @@ class_getattro(PyObject* self, PyObject* name)
 			info->sel_to_py = PyDict_New();
 		}
 	}
+}
+
+static PyObject*
+class_getattro(PyObject* self, PyObject* name)
+{
+	PyObject* result;
+
+	ObjCClass_CheckMethodList(self);
 	
 	result = PyType_Type.tp_getattro(self, name);
 	if (result != NULL) {
@@ -460,7 +466,7 @@ class_getattro(PyObject* self, PyObject* name)
 		int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);
 		ObjCNativeSelector* x = (ObjCNativeSelector*)result;
 
-		if (x->sel_class_method) {
+		if (x->sel_flags & ObjCSelector_kCLASS_METHOD) {
 			x->sel_self = self;
 			Py_INCREF(x->sel_self);
 		}
@@ -671,7 +677,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			if ((descr = PyDict_GetItemString(dict, selbuf))) {
 				if (!ObjCSelector_Check(descr)) {
 					continue;
-				} else if (!((ObjCSelector*)descr)->sel_class_method) {
+				} else if (!(((ObjCSelector*)descr)->sel_flags & ObjCSelector_kCLASS_METHOD)) {
 					continue;
 				}
 			}
@@ -820,6 +826,8 @@ PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector)
 			"ObjCClass_GetClass called for non-class");
 		return nil;
 	}
+
+	ObjCClass_CheckMethodList(cls);
 	
 	info = get_class_info(cls);
 	if (info->sel_to_py == NULL) {
