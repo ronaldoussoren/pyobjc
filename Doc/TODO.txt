@@ -71,6 +71,11 @@ From the top of my head:
   do away with the difference between method implemented in Python and
   Objective-C.
 
+* Remove the need for ``pyobjc_classMethods``, you should be able to call
+  class methods in the obvious way.  This would (finally) close `836247`__.
+
+.. __: http://sourceforge.net/tracker/index.php?func=detail&aid=836247&group_id=14534&atid=114534
+
 * Likewise for class-builder.m, this file is way to large.
 
 * We've several types that wrap pointer values, such as ``SessionWrapper`` in
