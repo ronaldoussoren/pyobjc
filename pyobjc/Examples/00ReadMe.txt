@@ -324,7 +324,7 @@ later.
 
 * `TemperatureTransformer`_
 
-  An example that uses NSValueTransformer to convert between Celsius
+  An example that uses ``NSValueTransformer`` to convert between Celsius
   and Fahrenheit.
 
   Based on Apple's `Value Transformers`_ documentation,
