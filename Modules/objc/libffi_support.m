@@ -161,6 +161,8 @@ signature_to_ffi_type(const char* argtype)
 
 /* This function decodes its arguments into Python values, then
  * calls the python method and finally encodes the return value
+ *
+ * TODO: Check that this implements the reverse of ObjC_FFICaller
  */
 static void 
 method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
@@ -241,7 +243,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			ObjCErr_ToObjC();
 		}
 	} else {
-		/* We have some output parameter, locate them and encode
+		/* We have some output parameters, locate them and encode
 		 * their values
 		 */
 		int idx;
@@ -307,20 +309,24 @@ ObjC_MakeIMPForSignature(char* signature)
 	int               i;
 
 	methinfo = [NSMethodSignature signatureWithObjCTypes:signature];
+
+	/* Build FFI returntype description */
+	cl_ret_type = signature_to_ffi_type([methinfo methodReturnType]);
+	if (cl_ret_type == NULL) {
+		[methinfo release];
+		return NULL;
+	}
+
+	/* Build FFI argumentlist description */
 	objc_argcount = [methinfo numberOfArguments];
 
 	cl_arg_types = malloc(sizeof(ffi_type*) * objc_argcount);
 	if (cl_arg_types == NULL) {
+		free(cl_ret_type);
 		PyErr_NoMemory();
 		return NULL;
 	}
 
-	cl_ret_type = signature_to_ffi_type([methinfo methodReturnType]);
-	if (cl_ret_type == NULL) {
-		[methinfo release];
-		free(cl_arg_types);
-		return NULL;
-	}
 	for (i = 0; i < objc_argcount; i++) {
 		cl_arg_types[i] = signature_to_ffi_type(
 				[methinfo getArgumentTypeAtIndex:i]);
@@ -331,6 +337,7 @@ ObjC_MakeIMPForSignature(char* signature)
 		}
 	}
 
+	/* Create the invocation description */
 	cif = malloc(sizeof(*cif));
 	if (cif == NULL) {
 		free(cl_arg_types);
@@ -348,6 +355,7 @@ ObjC_MakeIMPForSignature(char* signature)
 		return NULL;
 	}
 
+	/* And finally create the actual closure */
 	cl = malloc(sizeof(*cl));
 	if (cl == NULL) {
 		free(cl_arg_types);
@@ -375,6 +383,7 @@ ObjC_MakeIMPForSignature(char* signature)
  * Changes w.r.t. execute_and_...
  * - All arguments are stored in 'argbuf', not only the structs
  * - libffi support
+ * - Accept strings as 'self' argument, and convert them to NSString
  */
 PyObject *
 ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
@@ -498,12 +507,16 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			goto error_cleanup;
 		}
 	} else {
+		const char* err;
 		if (ObjCObject_Check(self)) {
 			self_obj = ObjCObject_GetObject(self);
 		} else {
-			PyErr_SetString(PyExc_TypeError, 
-				"Need objective-C object as self");
-			goto error_cleanup;
+			err = depythonify_c_value("@", self, &self_obj);
+			if (err) {
+				PyErr_SetString(PyExc_TypeError, 
+					"Need objective-C object as self");
+				goto error_cleanup;
+			}
 		}
 	}
 

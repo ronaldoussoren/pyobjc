@@ -456,15 +456,30 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 
 	/* First stab at detecting super-calls... */
 	if (!self->sel_flags & ObjCSelector_kCLASS_METHOD) {
-		if (!ObjCObject_Check(pyself)) {
+		if (ObjCObject_Check(pyself)) {
+			pyself_class = ObjCClass_GetClass(
+				(PyObject*)pyself->ob_type);
+			if (pyself_class == NULL) {
+				return NULL;
+			}
+		} else if (
+			     /* XXX: List should be synchronized with
+			      * depythonify_c_value, thats not The Right Way(tm)
+			      */
+				PyString_Check(pyself) 
+			     || PyUnicode_Check(pyself)
+			     || PyInt_Check(pyself)
+			     || PySequence_Check(pyself)
+			     || PyDict_Check(pyself)
+			     || (pyself == Py_None)
+			  ) {
+			pyself_class = NULL;	
+			
+		} else {
 			PyObject* typerepr = PyObject_Repr(pyself);
 			ObjCErr_Set(PyExc_TypeError,
 				"First argument must be an objective-C object, got %s", PyString_AS_STRING(typerepr));
 			Py_DECREF(typerepr);
-			return NULL;
-		}
-		pyself_class = ObjCClass_GetClass((PyObject*)pyself->ob_type);
-		if (pyself_class == NULL) {
 			return NULL;
 		}
 
@@ -483,7 +498,7 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 	}
 
 
-	if (pyself_class != self->sel_class) {
+	if (pyself_class != NULL && pyself_class != self->sel_class) {
 		Method self_m;
 		Method pyself_m;
 

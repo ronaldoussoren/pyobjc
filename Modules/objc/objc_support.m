@@ -1222,12 +1222,18 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 			goto error_cleanup;
 		}
 	} else {
+		const char* err;
+
 		if (ObjCObject_Check(self)) {
 			self_obj = ObjCObject_GetObject(self);
+
 		} else {
-			PyErr_SetString(PyExc_TypeError, 
-				"Need objective-C object as self");
-			goto error_cleanup;
+			err = depythonify_c_value("@", self, &self_obj);
+			if (err) {
+				PyErr_SetString(PyExc_TypeError, 
+					"Need objective-C object as self");
+				goto error_cleanup;
+			}
 		}
 	}
 
