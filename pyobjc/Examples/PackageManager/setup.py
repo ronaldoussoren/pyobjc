@@ -1,9 +1,11 @@
-#
-# The build script for the application
-#
+"""
+Script for building the example.
+
+Usage:
+    python setup.py py2app
+"""
 # This is very likely incorrect, as the application is non-existant at the
 # moment.
-#
 from distutils.core import setup
 import py2app
 
@@ -41,7 +43,7 @@ plist = dict(
 )
 
 setup(
-    app = ["packman.py"],
-    data_files = glob.glob("Resources/*"),
-    options = dict(py2app=dict(plist=plist)),
+    app=["packman.py"],
+    data_files=glob.glob("Resources/*"),
+    options=dict(py2app=dict(plist=plist)),
 )
