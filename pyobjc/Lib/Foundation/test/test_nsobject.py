@@ -31,7 +31,7 @@ class TestNSObjectInteraction(unittest.TestCase):
         self.assert_( instance, "Failed to instantiate an instance" )
         self.assert_( instance.description(), "NSObject instance didn't respond to -description selector." )
         self.assert_( not instance.isProxy(), "Instance of NSObject claimed it was a proxy.   That seems odd." )
-        self.assert_( isinstance( instance, objc.runtime.NSObject ), "Instantiated object not an instance of NSObject." )
+        self.assert_( isinstance( instance, NSObject ), "Instantiated object not an instance of NSObject." )
         self.assertEqual( instance, instance, "Python identity check failed." )
         self.assert_( instance.isEqual_( instance ), "Obj-C identity check failed." )
 
