@@ -15,7 +15,6 @@
 
 #if defined(MACOSX) && ((__GNUC__* 100) + (__GNUC_MINOR__)) >= 303
 
-
 #define HAVE_BOOL
 
 #endif
@@ -2040,11 +2039,13 @@ static id arg2id(const char* argtype, void* argptr)
 {
 	id res;
 	PyObject* tmp;
+	PyGILState_STATE state = PyGILState_Ensure();
 	tmp = PyObjC_ObjCToPython(argtype, argptr);
-	if (tmp == NULL) { PyObjCErr_ToObjC(); return nil; }
+	if (tmp == NULL) { PyObjCErr_ToObjCWithGILState(&state); return nil; }
 	res = PyObjC_PythonToId(tmp);
 	Py_DECREF(tmp);
-	if (PyErr_Occurred()) { PyObjCErr_ToObjC(); return nil; }
+	if (PyErr_Occurred()) { PyObjCErr_ToObjCWithGILState(&state); return nil; }
+	PyGILState_Release(state);
 	return res;}
 
 
