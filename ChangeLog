@@ -1,3 +1,19 @@
+2002-11-17  Bill Bumgarner  <bbum@codefab.com>
+
+	* Normalize whitespace
+	* allow extractClasses() to be called multiple times for one nib
+	  (well it was allowed, but now less double work is performed)
+	* renamed NibClassBuilder to _NibClassBuilder: AutoBaseClass is
+	  not the way it's done.
+	* added module doc string and variaus method doc strings
+	* renamed loadClassesEtc. to extractClasses(), has a signature
+	  is as discussed on the list (ie. can parse nibs by name or by
+	  path)
+	* Changed name of NibLoader to NibClassBuilder
+
+	[Changes from Just van Rossum -- bbum acting as proxy because
+	Just's sourceforge account is broken]
+
 2002-11-15  Bill Bumgarner  <bbum@codefab.com>
 	* Fixed a minor bug in NibLoader.py when specifying NIBs without
 	the .nib extension

@@ -734,6 +734,45 @@ NSToolbarItemValidation = _objc.informal_protocol(
 	]
 )
 
+NSToolbarDelegate = _objc.informal_protocol(
+	'NSToolbarDelegate',
+	[
+	_objc.selector(
+	None,
+	selector='toolbar:itemForItemIdentifier:willBeInsertedIntoToolbar:',
+	signature='@@:@@c',
+	required=1
+	),
+	_objc.selector(
+	None,
+	selector='toolbarDefaultItemIdentifiers:',
+	signature='@@:@',
+	required=1
+	),
+	_objc.selector(
+	None,
+	selector='toolbarAllowedItemIdentifiers:',
+	signature='@@:@',
+	required=1
+	),
+
+	### The following are really notifications.  However, they are
+	# automatically invoked on the delegate, if the delegate implements the
+	# method. 
+	_objc.selector(
+	None,
+	selector='toolbarWillAddItem:',
+	signature='v@:@',
+	required=0
+	),
+	_objc.selector(
+	None,
+	selector='toolbarDidRemoveItem:',
+	signature='v@:@',
+	required=0
+	),
+	]
+	)
 
 NSUserInterfaceValidations = _objc.informal_protocol(
 	'NSUserInterfaceValidations',

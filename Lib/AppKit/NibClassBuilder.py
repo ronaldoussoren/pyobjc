@@ -1,30 +1,67 @@
 #!/usr/bin/env python
 
+"""NibClassBuilder.py -- Tools for working with class definitions in
+"Next Interface Builder" files ("nibs").
+
+
+Extracting class definitions from nibs.
+
+The module maintains a global set of class definitions, extracted from
+nibs. To add the classes from a nib to this set, use the extractClasses()
+function. It can be called in two ways:
+
+	extractClasses(nibName, bundle=<main-bundle>)
+		This finds the nib by name from a bundle. If no bundle
+		if given, the main bundle is searched.
+
+	extractClasses(path=pathToNib)
+		This uses an explicit path to a nib.
+
+extractClasses() can be called multiple times for the same bundle: the
+results are cached so no almost extra overhead is caused.
+
+
+Using the class definitions.
+
+The module contains a "magic" base (super) class called AutoBaseClass.
+Subclassing AutoBaseClass will invoke some magic that will look up the
+proper base class in the class definitions extraced from the nib(s).
+If you use multiple inheritance to use Cocoa's "informal protocols",
+you _must_ list AutoBaseClass as the first base class. For example:
+
+	class PyModel(AutoBaseClass, NSTableSource):
+		...
+
+
+The NibInfo class.
+
+The parsing of nibs and collecting the class definition is done by the
+NibInfo class. You normally don't use it directly, but it's here if you
+have special needs.
+
+
+The command line tool.
+
+When run from the command line, this module invokes a simple command
+line program, which you feed paths to nibs. This will print a Python
+template for all classes defined in the nib(s). For more doco, see
+the commandline_doc variable, or simply run the program wothout
+arguments. It also contains a simple test program.
 """
 
-loadClassesForNib(nibPath):
+#
+# Written by Just van Rossum <just@letterror.com>, borrowing heavily
+# from Ronald Oussoren's classnib.py module, which this module
+# supercedes. Lots of additional input from Bill Bumgarner and Jack
+# Jansen.
+#
 
-
-loadClassesForNibFromBundle(nibName[, sourceBundle=<mainbundle>]):
-
-
-NibClassBuilder -- metaclass
-
-  class PyModel(NSTbleSource):
-      __metaclass__ = NibClassBuilder
-      ...
-
-
-NibInfo
-
-"""
 import sys
 import os
 import objc
 
 
-__all__ = ["AutoBaseClass", "NibClassBuilder", "loadClassesForNib",
-           "loadClassesForNibFromBundle", "NibInfo"]
+__all__ = ["AutoBaseClass", "NibInfo", "extractClasses"]
 
 
 NSDictionary = objc.lookup_class("NSDictionary")
@@ -58,9 +95,15 @@ class NibInfo(object):
 
 	def __init__(self):
 		self.classes = {}
+		self.parsedNibs = {}
+
+	# we implement a subset of the dictionary protocol, for convenience.
 
 	def keys(self):
 		return self.classes.keys()
+
+	def has_key(self, name):
+		return self.classes.has_key(name)
 
 	def len(self):
 		return len(self.classes)
@@ -74,32 +117,49 @@ class NibInfo(object):
 	def get(self, name, default=None):
 		return self.classes.get(name, default)
 
-	def loadClassesForNib(self, nibPath):
-		nibName = os.path.basename(nibPath)
+	def extractClasses(self, nibName=None, bundle=None, path=None):
+		"""Extract the class definitions from a nib.
+
+		The nib can be specified by name, in which case it will be
+		searched in the main bundle (or in the bundle specified), or
+		by path.
+		"""
+		if path is None:
+			self._extractClassesFromNibFromBundle(nibName, bundle)
+		else:
+			if nibName is not None or bundle is not None:
+				raise ValueError, ("Can't specify 'nibName' or "
+					"'bundle' when specifying 'path'")
+			self._extractClassesFromNibFromPath(path)
+
+	def _extractClassesFromNibFromBundle(self, nibName, bundle=None):
+		if not bundle:
+			bundle = NSBundle.mainBundle()
+		if nibName[-4:] == '.nib':
+			resType = None
+		else:
+			resType = "nib"
+		path = bundle.pathForResource_ofType_(nibName, resType)
+		if not path:
+			raise NibLoaderError, ("Could not find nib named '%s' "
+					"in bundle '%s'" % (nibName, bundle))
+		self._extractClassesFromNibFromPath(path)
+
+	def _extractClassesFromNibFromPath(self, path):
+		if self.parsedNibs.has_key(path):
+			return  # we've alread pared this nib
+		nibName = os.path.basename(path)
 		nibInfo = NSDictionary.dictionaryWithContentsOfFile_(
-				os.path.join(nibPath, 'classes.nib'))
+				os.path.join(path, 'classes.nib'))
 		if nibInfo is None:
-			raise NibLoaderError, "Invalid NIB file [%s]" % nibPath
+			raise NibLoaderError, "Invalid NIB file [%s]" % path
 		if not nibInfo.has_key('IBVersion'):
 			raise NibLoaderError, "Invalid NIB info"
 		if nibInfo['IBVersion'] != '1':
 			raise NibLoaderError, "Unsupported NIB version"
 		for rawClsInfo in nibInfo['IBClasses']:
 			self._addClass(nibName, rawClsInfo)
-
-	def loadClassesForNibFromBundle(self, nibName, sourceBundle=None):
-		if not sourceBundle:
-			sourceBundle = NSBundle.mainBundle()
-
-		if nibName[-4:] == '.nib':
-			nibPath = sourceBundle.pathForResource_ofType_(nibName, None)
-		else:
-			nibPath = sourceBundle.pathForResource_ofType_(nibName, 'nib')
-
-		if not nibPath:
-			raise NibLoaderError, ("Could not find nib named '%s' "
-					"in bundle '%s'" % (nibName, sourceBundle))
-		self.loadClassesForNib(nibPath)
+		self.parsedNibs[path] = 1
 
 	def _addClass(self, nibName, rawClsInfo):
 		classes = self.classes
@@ -121,6 +181,9 @@ class NibInfo(object):
 			classes[name].merge(clsInfo)
 
 	def makeClass(self, name, bases, methods):
+		"""Construct a new class using the proper base class, as specified
+		in the nib.
+		"""
 		clsInfo = self.classes.get(name)
 		if clsInfo is None:
 			raise NibLoaderError, ("No class named '%s' found in "
@@ -140,16 +203,20 @@ class NibInfo(object):
 
 		for a in clsInfo.actions:
 			if not methods.has_key(a):
+				# XXX could issue warning here!
 				methods[a] = _actionStub
 
 		return metaClass(name, bases, methods)
 
 	def printTemplate(self, file=None):
+		"""Print a Python template of classes, matching their specification
+		in the nib(s).
+		"""
 		if file is None:
 			file = sys.stdout
 		writer = IndentWriter(file)
 		self._printTemplateHeader(writer)
-		
+
 		classes = self.classes.values()
 		classes.sort()  # see ClassInfo.__cmp__
 		for clsInfo in classes:
@@ -167,14 +234,14 @@ class NibInfo(object):
 		frameworks = {}
 		for clsInfo in self.classes.values():
 			super = clsInfo.super
-			framework = self._frameworkForClass(super)
+			framework = _frameworkForClass(super)
 			if not framework:
 				continue  # don't know what to do
 			try:
 				frameworks[framework].append(super)
 			except KeyError:
 				frameworks[framework] = [super]
-		
+
 		items = frameworks.items()
 		if items:
 			items.sort()
@@ -220,22 +287,24 @@ class NibInfo(object):
 			writer.writeln()
 			writer.dedent()
 
-	def _frameworkForClass(self, className):
-		"""Return the name of the framework containing the class."""
-		try:
-			cls = objc.lookup_class(className)
-		except objc.error:
-			return ""
-		path = NSBundle.bundleForClass_(cls).bundlePath()
-		if path == "/System/Library/Frameworks/Foundation.framework":
-			return "Foundation"
-		elif path == "/System/Library/Frameworks/AppKit.framework":
-			return "AppKit"
-		else:
-			return ""
+
+def _frameworkForClass(className):
+	"""Return the name of the framework containing the class."""
+	try:
+		cls = objc.lookup_class(className)
+	except objc.error:
+		return ""
+	path = NSBundle.bundleForClass_(cls).bundlePath()
+	if path == "/System/Library/Frameworks/Foundation.framework":
+		return "Foundation"
+	elif path == "/System/Library/Frameworks/AppKit.framework":
+		return "AppKit"
+	else:
+		return ""
 
 
 def _classExists(className):
+	"""Return True if a class exists in the Obj-C runtime."""
 	try:
 		objc.lookup_class(className)
 	except objc.error:
@@ -248,23 +317,25 @@ def _actionStub(self, sender): pass
 
 class IndentWriter:
 
+	"""Simple helper class for generating (Python) code."""
+
 	def __init__(self, file=None, indentString="\t"):
 		if file is None:
 			file = sys.stdout
 		self.file = file
 		self.indentString = indentString
 		self.indentLevel = 0
-	
+
 	def writeln(self, line=""):
 		if line:
 			self.file.write(self.indentLevel * self.indentString +
 					line + "\n")
 		else:
 			self.file.write("\n")
-	
+
 	def indent(self):
 		self.indentLevel += 1
-	
+
 	def dedent(self):
 		assert self.indentLevel > 0, "negative dedent"
 		self.indentLevel -= 1
@@ -279,35 +350,35 @@ def mergeLists(l1, l2):
 	return r.keys()
 
 
-class NibClassBuilder(type):
-	
+class _NibClassBuilder(type):
+
 	def _newSubclass(cls, name, bases, methods):
 		# Constructor for AutoBaseClass: create an actual
-		# instance that can be subclassed to invoke the
-		# magic behavior.
+		# instance of _NibClassBuilder that can be subclassed
+		# to invoke the magic behavior.
 		return type.__new__(cls, name, bases, methods)
 	_newSubclass = classmethod(_newSubclass)
-	
+
 	def __new__(cls, name, bases, methods):
 		# __new__ would normally create a subclass of cls, but
 		# instead we create a completely different class.
 		if bases and bases[0].__class__ is cls:
+			# get rid of the AutoBaseClass base class
 			bases = bases[1:]
 		return _nibInfo.makeClass(name, bases, methods)
 
 
-# AutoBaseClass is a class that has NibClassBuilder is its' metaclass.
-# This means that if you subclass from AutoBaseClass, NibClassBuilder
+# AutoBaseClass is a class that has _NibClassBuilder is its' metaclass.
+# This means that if you subclass from AutoBaseClass, _NibClassBuilder
 # will be used to create the new "subclass". This will however _not_
 # be a real subclass of AutoBaseClass, but rather a subclass of the
 # Cocoa class specified in the nib.
-AutoBaseClass = NibClassBuilder._newSubclass("AutoBaseClass", (), {})
+AutoBaseClass = _NibClassBuilder._newSubclass("AutoBaseClass", (), {})
 
 
 _nibInfo = NibInfo()
 
-loadClassesForNib =  _nibInfo.loadClassesForNib
-loadClassesForNibFromBundle =  _nibInfo.loadClassesForNibFromBundle
+extractClasses = _nibInfo.extractClasses
 
 
 #
@@ -319,7 +390,8 @@ NibLoader.py [-th] nib1 [...nibN]
   Print an overview of the classes found in the nib file(s) specified,
   listing their superclass, actions and outlets as Python source. This
   output can be used as a template or a stub.
-  -t Instead of printing the overview, perform a simple test.
+  -t Instead of printing the overview, perform a simple test on the
+     arguments.
   -h Print this text."""
 
 def usage(msg, code):
@@ -329,18 +401,17 @@ def usage(msg, code):
 	sys.exit(code)
 
 def test(nibFiles):
-	for nibPath in nibFiles:
-		print "Loading", nibPath
-		loadClassesForNib(nibPath)
+	for path in nibFiles:
+		print "Loading", path
+		extractClasses(path=path)
 	print
 	classNames = _nibInfo.keys()
 	classNames.sort()
 	for className in classNames:
 		try:
 			# instantiate class, equivalent to
-			# class %(className):
-			#     __metaclass__ = NibClassBuilder
-#			cls = NibClassBuilder(className, (), {})
+			# class <className>(AutoBaseClass):
+			#     pass
 			cls = type(className, (AutoBaseClass,), {})
 		except NibLoaderError, why:
 			print "*** Failed class: %s; NibLoaderError: %s" % (
@@ -350,10 +421,9 @@ def test(nibFiles):
 					cls.__bases__[0].__name__)
 
 def printTemplate(nibFiles):
-	info = NibInfo()
-	for nibPath in nibFiles:
-		info.loadClassesForNib(nibPath)
-	info.printTemplate()
+	for path in nibFiles:
+		extractClasses(path=path)
+	_nibInfo.printTemplate()
 
 def commandline():
 	import getopt
@@ -369,10 +439,10 @@ def commandline():
 			doTest = 1
 		elif opt == "-h":
 			usage("", 0)
-	
+
 	if not nibFiles:
 		usage("No nib file specified.", 1)
-	
+
 	if doTest:
 		test(nibFiles)
 	else:
