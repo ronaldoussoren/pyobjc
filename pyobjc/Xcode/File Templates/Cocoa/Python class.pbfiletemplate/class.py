@@ -9,4 +9,4 @@
 from Foundation import *
 
 class «FILEBASENAMEASIDENTIFIER» (NSObject):
-	pass
+    pass

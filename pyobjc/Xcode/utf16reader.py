@@ -12,7 +12,7 @@ def readline_unsized(self, buff):
             return (u'', buff)
         else:
             buff += chunk
-    
+
 def readline_sized(self, buff, size):
     while True:
         lines = buff.splitlines(True)
@@ -62,7 +62,7 @@ def test():
         utxt = u''.join(STRINGS)
         txt = u''.join(STRINGS).encode(codec)
         def testreader():
-           return codecs.getreader(codec)(StringIO(txt))
+            return codecs.getreader(codec)(StringIO(txt))
         # test readline()
         for new, orig in izip(testreader(), STRINGS):
             assert new == orig, '%r != %r' % (new, orig,)
