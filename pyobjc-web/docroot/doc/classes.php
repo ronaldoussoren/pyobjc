@@ -6,7 +6,7 @@
     include "header.inc";
 ?>
 <div class="document" id="python-classes-and-objective-c-code">
-<!-- This file is formatted using the rules for StructuredText -->
+<!-- This file is formatted using the rules for reStructuredText -->
 <!-- Version 0.1 -->
 <div class="section" id="introduction">
 <h1><a name="introduction">Introduction</a></h1>

@@ -39,7 +39,6 @@ There is actually a good chunk of developer documentation in the source tree (th
 <LI><A HREF="coding-style.php">Coding style for PyObjC</A>
 <LI><A HREF="c-api.php">Documentation for the PyObjC C-API (Preliminary)</A>
 <LI><A HREF="structure.php">Structure of the PyObjC package</A>
-<LI><A HREF="architecture.php">PyObjC Architecture</A>
 <LI><A HREF="classes.php">Python classes and Objective-C code</A>
 <!-- /DEVDOC -->
 </ul>

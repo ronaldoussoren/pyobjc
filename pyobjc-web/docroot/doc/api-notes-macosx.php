@@ -614,7 +614,7 @@ following methods with a &quot;difficult&quot; signature are not supported.</p>
 <h2><a class="toc-backref" href="#id43" name="id1">Class <tt class="literal"><span class="pre">NSView</span></tt></a></h2>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">objectAtPoint:rect:</span></tt></p>
-<p>Defined in a catagory on <tt class="literal"><span class="pre">NSView</span></tt>.</p>
+<p>Defined in a category on <tt class="literal"><span class="pre">NSView</span></tt>.</p>
 </li>
 </ul>
 </div>

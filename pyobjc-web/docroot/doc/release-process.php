@@ -32,14 +32,14 @@ should be completely bug-free.</li>
 <tt class="literal"><span class="pre">Modules/objc/pyobjc.h</span></tt>.</li>
 <li>Run <tt class="literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">sdist</span></tt> to build the source tarball.</li>
 <li>Run <tt class="literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">bdist_dmg</span></tt> to build a binary installer.  This should
-be done on each supported version of Mac OS X.</li>
+be done for each supported version combination of Mac OS X and Python.</li>
 </ul>
 <p>Trash you existing PyObjC installation and reinstall from the new release. Test
 that the new release is working correctly. Installing and testing should be
 done for the binary installer and for the source archive. The latter should
-be done in all supported configurations.  Also test to make sure that an
+be done for all supported configurations.  Also test to make sure that an
 upgrade from a previous release works as expected.</p>
-<p>If the package works as expected upload to a convenient location and ask some
+<p>If the package works as expected, upload to a convenient location and ask some
 other people (like the other maintainers) to test the new release.</p>
 </div>
 <div class="section" id="release-date">

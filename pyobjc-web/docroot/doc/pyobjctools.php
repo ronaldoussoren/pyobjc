@@ -22,7 +22,7 @@ start with a short overview.</p>
 <ul class="simple">
 <li><tt class="literal"><span class="pre">PyObjCTools.KeyValueCoding</span></tt></li>
 </ul>
-<p>A python API for working with <a class="reference" href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i">Key-Value Coding</a>.</p>
+<p>A Python API for working with <a class="reference" href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/">Key-Value Coding</a>.</p>
 <ul class="simple">
 <li><tt class="literal"><span class="pre">PyObjCTools.NibClassBuilder</span></tt></li>
 </ul>
@@ -53,7 +53,7 @@ exception. This module should only be used during development.</p>
 for sheet methods.</p>
 </li>
 <li><p class="first"><tt class="literal"><span class="pre">runEventLoop(argv=None,</span> <span class="pre">unexpectedErrorAlert=unexpectedErrorAlert)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>
-<p>Run the evenloop using <tt class="literal"><span class="pre">NSApplicationMain</span></tt> and ask the user if we should
+<p>Run the event loop using <tt class="literal"><span class="pre">NSApplicationMain</span></tt> and ask the user if we should
 continue if an exception is caught.</p>
 <p>This function doesn't return unless it throws an exception.</p>
 </li>
@@ -82,10 +82,10 @@ cannot be converted.</p>
 </div>
 <div class="section" id="pyobjctools-keyvaluecoding">
 <h1><a name="pyobjctools-keyvaluecoding"><tt class="literal"><span class="pre">PyObjCTools.KeyValueCoding</span></tt></a></h1>
-<p>A module for working with Key-Value Coding in python. Key-Value coding is
-explained <a class="reference" href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i">on the apple website</a></p>
-<p>This module provides a python interface to some of that functionality. The
-interface is modelled on the <tt class="literal"><span class="pre">getattr</span></tt> and <tt class="literal"><span class="pre">setattr</span></tt> functions.</p>
+<p>A module for working with Key-Value Coding in Python. Key-Value Coding is
+explained <a class="reference" href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/">on the Apple website</a></p>
+<p>This module provides a Python interface to some of that functionality. The
+interface is modeled on the <tt class="literal"><span class="pre">getattr</span></tt> and <tt class="literal"><span class="pre">setattr</span></tt> functions.</p>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">getKey(object,</span> <span class="pre">key)</span> <span class="pre">-&gt;</span> <span class="pre">value</span></tt></p>
 <p>Find the value for <tt class="literal"><span class="pre">key</span></tt>. Raises <tt class="literal"><span class="pre">KeyError</span></tt> if the key is not a valid
@@ -99,7 +99,7 @@ attribute of the object.</p>
 <li>the return value of <tt class="literal"><span class="pre">object._getKey()</span></tt></li>
 <li>the value of the attribute <tt class="literal"><span class="pre">key</span></tt>, or the value of <tt class="literal"><span class="pre">object.key()</span></tt> if
 <tt class="literal"><span class="pre">object.key</span></tt> is a method.</li>
-<li>the value of the attribue <tt class="literal"><span class="pre">_key</span></tt>, or the vale of <tt class="literal"><span class="pre">object._key()</span></tt> if
+<li>the value of the attribute <tt class="literal"><span class="pre">_key</span></tt>, or the vale of <tt class="literal"><span class="pre">object._key()</span></tt> if
 <tt class="literal"><span class="pre">object._key</span></tt> is a method.</li>
 </ul>
 </li>
@@ -124,7 +124,7 @@ final value.</p>
 </li>
 <li><p class="first"><tt class="literal"><span class="pre">setKeyPath(object,</span> <span class="pre">keypath,</span> <span class="pre">value)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>
 <p>The same as <tt class="literal"><span class="pre">setKey</span></tt>, but now using a key path. A key path is a sequence
-of keys seperated by dots. The <tt class="literal"><span class="pre">getKey</span></tt> function is used to traverse 
+of keys separated by dots. The <tt class="literal"><span class="pre">getKey</span></tt> function is used to traverse 
 the path up to the last item, and then <tt class="literal"><span class="pre">setKey</span></tt> is used to change the value.</p>
 </li>
 </ul>
@@ -152,7 +152,7 @@ results are cached so no almost extra overhead is caused.</p>
 <h2><a name="using-the-class-definitions">Using the class definitions</a></h2>
 <p>The module contains a &quot;magic&quot; base (super) class called <tt class="literal"><span class="pre">AutoBaseClass</span></tt>.
 Subclassing <tt class="literal"><span class="pre">AutoBaseClass</span></tt> will invoke some magic that will look up the
-proper base class in the class definitions extraced from the nib(s).
+proper base class in the class definitions extracted from the nib(s).
 If you use multiple inheritance to use Cocoa's &quot;informal protocols&quot;,
 you <em>must</em> list <tt class="literal"><span class="pre">AutoBaseClass</span></tt> as the first base class. For example:</p>
 <pre class="literal-block">
@@ -182,8 +182,8 @@ random crashes of a PyObjC program. These crashes are often caused by
 Objective-C style weak references or incorrectly implemented protocols.</p>
 <ul>
 <li><p class="first"><tt class="literal"><span class="pre">dumpStackOnFatalSignal()</span></tt></p>
-<p>This function will install signal handlers that print a stacktrace and
-then reraise the signal.</p>
+<p>This function will install signal handlers that print a stack trace and
+then re-raise the signal.</p>
 </li>
 <li><p class="first"><tt class="literal"><span class="pre">resetFatalSignals()</span></tt></p>
 <p>Restores the signal handlers to the state they had before the call to

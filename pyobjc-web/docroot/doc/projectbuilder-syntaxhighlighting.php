@@ -29,16 +29,15 @@ both the user defaults and within project files.</div>
 <div class="contents topic" id="contents">
 <p class="topic-title first"><a name="contents">Contents</a></p>
 <ul class="simple">
-<li><a class="reference" href="#installation" id="id2" name="id2">Installation</a></li>
-<li><a class="reference" href="#documentation" id="id3" name="id3">Documentation</a></li>
-<li><a class="reference" href="#to-do" id="id4" name="id4">To Do</a></li>
-<li><a class="reference" href="#misc" id="id5" name="id5">Misc.</a></li>
+<li><a class="reference" href="#installation" id="id1" name="id1">Installation</a></li>
+<li><a class="reference" href="#documentation" id="id2" name="id2">Documentation</a></li>
+<li><a class="reference" href="#to-do" id="id3" name="id3">To Do</a></li>
 </ul>
 </div>
 <p>Triple-quoted strings are not always treated correctly by Project Builder. This
 seems to be a Project Builder bug.</p>
 <div class="section" id="installation">
-<h1><a class="toc-backref" href="#id2" name="installation">Installation</a></h1>
+<h1><a class="toc-backref" href="#id1" name="installation">Installation</a></h1>
 <p>Create the directory 'Specifications' within
 <em>~/Developer/ProjectBuilder Extras/</em> or <em>/Developer/ProjectBuilder
 Extras/</em>:</p>
@@ -52,7 +51,7 @@ cp Python.pb*spec ~/Developer/ProjectBuilder\ Extras/Specifications/
 <p>The binary installer will install the specifications for you.</p>
 </div>
 <div class="section" id="documentation">
-<h1><a class="toc-backref" href="#id3" name="documentation">Documentation</a></h1>
+<h1><a class="toc-backref" href="#id2" name="documentation">Documentation</a></h1>
 <p>The version of Project Builder that ships with the December Developer Tools
 modularizes the support for file types and syntax based colorizing of
 source files.  The base mechanisms and definitions are found in:</p>
@@ -105,8 +104,10 @@ Out[2]:
 </pre>
 </div>
 <div class="section" id="to-do">
-<h1><a class="toc-backref" href="#id4" name="to-do">To Do</a></h1>
+<h1><a class="toc-backref" href="#id3" name="to-do">To Do</a></h1>
 <ul class="simple">
+<li>NOTE: PyObjC's Project Builder support is unmaintained.  It is unlikely that
+any of these items will ever be completed.</li>
 <li>There are a number of other specification files found within the PBXCore.  Of
 particular relevance to Python would be the Compiler Specifications.  It
 would be extremely handy to be able to check syntax and compile Python code
@@ -129,11 +130,6 @@ the compiler front, support would focus on feeding through to the mechanism
 that turns Python source into .class files.   All of this assumes that
 Python and Jython source can (and should?) be differentiated.</li>
 </ul>
-</div>
-<div class="section" id="misc">
-<h1><a class="toc-backref" href="#id5" name="misc">Misc.</a></h1>
-<p>This README is formatted as <a class="reference" href="http://docutils.sourceforge.net/docs/rst/quickstart.html">reStructuredText</a> input.  From it, the HTML and other
-formats can be automatically generated with the <a class="reference" href="http://docutils.sourceforge.net/">docutils tools</a>.</p>
 </div>
 </div>
 <?
