@@ -14,21 +14,28 @@ from optparse import OptionParser, Option, OptionValueError
 import logging
 from logging import error, info, debug
 
-## define functions used in script
-NASTYFILEEXPRS = map(re.compile, ['^.DS_Store$', '.*~.*$', '.*.pbxuser$', 'build'])
-def killNasties(dirName, aName, options):
-    for expr in NASTYFILEEXPRS:
-        if expr.match(aName):
-            break
-    else:
-        return
-
-    path = os.path.join(dirName, aName)
+def deletePath(path):
     info("Removing '%s'...", path)
     if os.path.isdir(path):
         shutil.rmtree(path)
     else:
         os.remove(path)
+
+## define functions used in script
+NASTYFILEEXPR = re.compile(r'|'.join([
+    r'(?:%s)' % (_exp,) for _exp in
+    [
+        r'^\.svn$', r'^CVS$', r'^\.DS_Store$', r'~.*$', r'\.pbxuser$',
+        r'^build$', r'\.mode[0-9]$'
+    ]
+]))
+
+def killNasties(dirName, aName, options):
+    if NASTYFILEEXPR.search(aName) is None:
+        return
+
+    path = os.path.join(dirName, aName)
+    deletePath(path)
 
 ## define per-file behaviors
 def maybenib(encoding):
@@ -77,11 +84,10 @@ ENCODINGS = _buildEncodingsDict()
 WORKINGCOPYFILES = ['.pch']
 CTYPEFILES = ['.pch']
 
-def doTemplateInfo(aFile, options):
-    if not options.doReverse:
-        basename, extension = os.path.splitext(aFile)
-        encoding = ENCODINGS.get(extension, lambda fn:None)(aFile)
-        doFileSubstitution(aFile, encoding, FORWARDTRANSLATOR)
+def doTemplateInfo(aFile, options, translator):
+    basename, extension = os.path.splitext(aFile)
+    encoding = ENCODINGS.get(extension, lambda fn:None)(aFile)
+    doFileSubstitution(aFile, encoding, translator)
 
 SPECIALFILES = {
     "TemplateInfo.plist" : doTemplateInfo,
@@ -106,7 +112,7 @@ def doSubstitutions(dirName, aName, options):
 
     specialCommand = SPECIALFILES.get(aName)
     if specialCommand is not None:
-        specialCommand(path, options)
+        specialCommand(path, options, translator)
         return
 
     basename, extension = os.path.splitext(path)
@@ -116,24 +122,28 @@ def doSubstitutions(dirName, aName, options):
         error("*WARN* Skipping unknown file with uknown type: %s", path)
     else:
         info('Processing %s....', aName)
-        doFileSubstitution(path, encoding, translator)
+        if options.makeWorking and (extension in WORKINGCOPYFILES) and not options.doReverse and aName.split("_", 1)[0] == 'xcPROJECTNAMExc':
+            deletePath(path)
+        else:
+            doFileSubstitution(path, encoding, translator)
 
-    if options.makeWorking and (extension in WORKINGCOPYFILES):
-        info('Making working copy of %s...', path)
-        tail = aName.split("_", 1)[1]
-        targetFile = os.path.join(dirName, "xcPROJECTNAMExc_%s" % (tail,))
+    if options.makeWorking and (extension in WORKINGCOPYFILES) and options.doReverse:
+            tail = aName.split("_", 1)[1]
+            targetFile = os.path.join(dirName, "xcPROJECTNAMExc_%s" % (tail,))
 
-        inFile = codecs.EncodedFile(file(path, "rb"), encoding)
-        outFile = codecs.EncodedFile(file(targetFile, 'wb'), encoding)
+            info('Making working copy of %s to %s...', path, targetFile)
 
-        if extension in CTYPEFILES:
-            outFile.write(SUBSTITUTIONMESSAGE % dict(name = aName))
-            
-        for line in inFile:
-            outFile.write(line)
+            inFile = codecs.EncodedFile(file(path, "rb"), encoding)
+            outFile = codecs.EncodedFile(file(targetFile, 'wb'), encoding)
 
-        inFile.close()
-        outFile.close()
+            if extension in CTYPEFILES:
+                outFile.write(SUBSTITUTIONMESSAGE % dict(name = aName))
+
+            for line in inFile:
+                outFile.write(line)
+
+            inFile.close()
+            outFile.close()
 
 def doFileSubstitution(aFile, encoding, translator):
     _tempFile = tempfile.TemporaryFile()
@@ -150,7 +160,7 @@ def doFileSubstitution(aFile, encoding, translator):
         BUFFER = 16384
         bytes = inFile.read(BUFFER)
         while bytes:
-            lines = bytes.split(u'\n')
+            lines = bytes.splitlines(True)
             bytes = lines.pop()
             for line in lines:
                 tline = translator(line)
@@ -158,6 +168,7 @@ def doFileSubstitution(aFile, encoding, translator):
             newbytes = inFile.read(BUFFER)
             bytes += newbytes
             if not newbytes and bytes:
+                # "EOF"
                 bytes += u'\n'
     inFile.close()
 
@@ -259,8 +270,7 @@ def main():
 
     if os.path.exists(dest):
         if options.killDest:
-            info("Removing '%s'...", dest)
-            shutil.rmtree(dest)
+            deletePath(dest)
         else:
             parser.error("Destination already exists.  -k to destroy or use different destination.")
             return
