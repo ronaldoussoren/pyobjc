@@ -19,6 +19,9 @@ SUBPATTERNS = dict(
     SEMI=r';\s*',
 )
 
+def deadspace(string, begin, end):
+    return 'NO MATCH FOR [%d:%d] %r' % (begin, end, string[begin:end])
+
 def pattern(s):
     return dedent(s).strip() % SUBPATTERNS
 
@@ -33,72 +36,9 @@ class SingleLineComment(Token):
     pattern = pattern(r'\s*//(?P<comment>[^\n]*)(\n|$)')
     example = example(r'// this is a single line comment')
 
-class NamedStruct(Token):
-    # XXX handle comments, needs its own internal parser
-    pattern = pattern(r'''
-    %(BOL)s
-    typedef
-    \s+struct
-    \s*{
-        (?P<content>[^}]*)
-    \s*}
-    \s*(?P<name>%(IDENTIFIER)s)
-    \s*%(SEMI)s
-    ''')
-    example = example(r'''
-    typedef struct {
-        signed foo name;
-        int bar;
-    } FooBarStruct;
-    ''')
- 
-class NamedEnum(Token):
-    # XXX handle comments, needs its own internal parser
-    pattern = pattern(r'''
-    %(BOL)s
-    typedef
-    \s+enum
-    \s*{
-        (?P<content>[^}]*)
-    \s*}
-    \s*(?P<name>%(IDENTIFIER)s)
-    \s*%(SEMI)s
-    ''')
-    example = example(r'''
-    typedef enum {
-        FooBar = 1,
-        Baz = 2,
-        Wibble
-    } FooBarBazWibble;
-    typedef enum {
-        FooBar,
-        Baz,
-        Wibble
-    } FooBarBazWibble;
-    ''')
-    
-class Enum(Token):
-    # XXX handle comments, needs its own internal parser
-    pattern = pattern(r'''
-    %(BOL)s
-    enum
-    \s*{
-        (?P<content>[^}]*)
-    \s*}
-    \s*%(SEMI)s
-    ''')
-    example = example(r'''
-    enum {
-        FooBar = 1,
-        Baz = 2,
-        Wibble
-    };
-    enum {
-        FooBar,
-        Baz,
-        Wibble
-    };
-    ''')
+class InsignificantWhitespace(IgnoreToken):
+    pattern = pattern(r'''\s+''')
+    example = example('  \t\n\r   ')
 
 class Interface(Token):
     pattern = pattern(r'''
@@ -230,7 +170,125 @@ class ForwardClassReference(Token):
     pattern = pattern(r'@class (?P<name>[^;]+);')
     example = example(r'@class Foo;')
 
+class EnumBareMember(Token):
+    pattern = pattern(r'''
+    \s*(?P<name>%(IDENTIFIER)s)
+    \s*,?
+    ''')
+    example = example(r'''
+    Foo,
+    Foo
+    ''')
+
+class EnumValueMember(Token):
+    pattern = pattern(r'''
+    \s*(?P<name>%(IDENTIFIER)s)
+    \s*=
+    \s*(?P<value>%(INTEGER)s)
+    \s*,?
+    ''')
+    example = example(r'''
+    Foo = 12,
+    Foo = 2
+    ''')
+
+class NamedEnumEnd(Token):
+    pattern = pattern(r'''
+    \s*}
+    \s*(?P<name>%(IDENTIFIER)s)
+    \s*%(SEMI)s
+    ''')
+    example = example(r'''
+    } FooBarBazWible;
+    ''')
+
+class NamedEnum(ScanningToken):
+    pattern = pattern(r'''
+    %(BOL)s
+    typedef
+    \s+enum
+    \s*{\s*
+    ''')
+    endtoken = NamedEnumEnd
+    lexicon = [
+        InsignificantWhitespace,
+        BlockComment,
+        SingleLineComment,
+        EnumValueMember,
+        EnumBareMember,
+    ]
+    example = example(r'''
+    typedef enum {
+        FooBar = 1, // This is the best value for FooBar
+        Baz = 2,
+        Wibble
+    } FooBarBazWibble;
+    typedef enum {
+        FooBar, /* But this FooBar has no value! */
+        Baz,
+        Wibble
+    } FooBarBazWibble;
+    ''')
+
+class EnumEnd(Token):
+    pattern = pattern(r'''
+    \s*}
+    \s*%(SEMI)s
+    ''')
+    example = example(r'''
+    };
+    ''')
+
+class Enum(ScanningToken):
+    pattern = pattern(r'''
+    %(BOL)s
+    \s*enum
+    \s*{\s*
+    ''')
+    endtoken = EnumEnd
+    lexicon = [
+        InsignificantWhitespace,
+        BlockComment,
+        SingleLineComment,
+        EnumValueMember,
+        EnumBareMember,
+    ]
+    example = example(r'''
+    enum {
+        FooBar = 1, // This is the best value for FooBar
+        Baz = 2,
+        Wibble
+    };
+    enum {
+        FooBar, /* But this FooBar has no value! */
+        Baz,
+        Wibble
+    };
+    ''')
+
+
+class NamedStruct(Token):
+    # XXX handle comments, needs its own internal parser
+    pattern = pattern(r'''
+    %(BOL)s
+    typedef
+    \s+struct
+    \s*{
+        (?P<content>[^}]*)
+    \s*}
+    \s*(?P<name>%(IDENTIFIER)s)
+    \s*%(SEMI)s
+    ''')
+    example = example(r'''
+    typedef struct {
+        signed foo name;
+        int bar;
+    } FooBarStruct;
+    ''')
+ 
+
 LEXICON = [
+    InsignificantWhitespace,
     BlockComment,
     SingleLineComment,
     Interface,
@@ -252,7 +310,6 @@ if __name__ == '__main__':
     fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSDecimal.h'
     fn = (sys.argv[1:] or [fn])[0]
     scan = Scanner(LEXICON)
-    def deadspace(string, begin, end):
-        return 'NO MATCH FOR [%d:%d] %r' % (begin, end, string[begin:end])
     for token in scan.iterscan(file(fn).read(), dead=deadspace):
-        print token
+        if token is not None:
+            print token
