@@ -283,7 +283,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	PyObject*                key = NULL;
 	PyObject*                value = NULL;
 	int                      i, key_count;
-	int	                 ivar_count = 0;
+	int                      ivar_count = 0;
 	int                      ivar_size  = 0;
 	int                      meta_method_count = 0;
 	int                      method_count = 0;
@@ -294,8 +294,8 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	struct class_wrapper*    new_class = NULL;
 	Class                    root_class;
 	char**                   curname;
-	PyObject*		 py_superclass;
-	int			 item_size;
+	PyObject*                py_superclass;
+	int                      item_size;
 
 
 	/* XXX: May as well directly pass this in... */
@@ -1005,6 +1005,7 @@ object_method_methodSignatureForSelector(
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
 		PyErr_Clear();
+		PyGILState_Release(state);
 		return;
 	}
 
@@ -1012,19 +1013,23 @@ object_method_methodSignatureForSelector(
 	if (!pymeth) {
 		Py_DECREF(pyself);
 		PyErr_Clear();
+		PyGILState_Release(state);
 		return;
 	}
 
+	PyGILState_Release(state);
 	NS_DURING
 		*presult =  [NSMethodSignature signatureWithObjCTypes:(
 				(PyObjCSelector*)pymeth)->sel_signature];
 	NS_HANDLER
+		state = PyGILState_Ensure();
 		Py_DECREF(pymeth);
 		Py_DECREF(pyself);
 		PyGILState_Release(state);
 		[localException raise];
 	NS_ENDHANDLER
 
+	state = PyGILState_Ensure();
 	Py_DECREF(pymeth);
 	Py_DECREF(pyself);
 	PyGILState_Release(state);
@@ -1258,6 +1263,7 @@ object_method_forwardInvocation(
 
 			PyObjCMethodSignature_Free(signature);
 			Py_DECREF(result);
+			PyGILState_Release(state);
 			return;
 		}
 
@@ -1691,33 +1697,22 @@ object_method_storedValueForKey_(
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
-	r = getAccessor(self, [NSString stringWithFormat: @"get_%@", key], 
-		presult);
-	if (r == 0) {
-		PyGILState_Release(state);
-		return;
-	}
+#define TRY_GETMETHOD(method, format, keyexp) { \
+	r = method(self, \
+			[NSString stringWithFormat: format, keyexp], presult); \
+	if (r == 0) { \
+		PyGILState_Release(state); \
+		return; \
+	} \
+}
 
-	r = getAttribute(self, key, presult);
-	if (r == 0) {
-		PyGILState_Release(state);
-		return;
-	}
+	TRY_GETMETHOD(getAccessor, @"get_%@", key);
+	TRY_GETMETHOD(getAttribute, @"%@", key);
+	TRY_GETMETHOD(getAccessor, @"_get_%@", key);
+	TRY_GETMETHOD(getAttribute, @"_%@", key);
 
+#undef TRY_GETMETHOD
 
-	r = getAccessor(self, [NSString stringWithFormat: @"_get_%@", key], 
-		presult);
-	if (r == 0) {
-		PyGILState_Release(state);
-		return;
-	}
-
-	r = getAttribute(self, [NSString stringWithFormat: @"_%@", key], 
-		presult);
-	if (r == 0) {
-		PyGILState_Release(state);
-		return;
-	}
 	PyGILState_Release(state);
 
 	/* Call super */
@@ -1733,69 +1728,35 @@ object_method_valueForKey_(
 		void** args,
 		void* userdata)
 {
+	int r;
 	id self = *(id*)args[0];
 	SEL _meth = *(SEL*)args[1];
 	NSString* key = *(NSString**)args[2];
 
 	id* presult = (id*)retval;
-	int r;
 	struct objc_super super;
 	PyGILState_STATE state = PyGILState_Ensure();
 
-	r = getAccessor(self, [NSString stringWithFormat: @"get_%@", key], 
-		presult);
-	if (r == 0) {
-		PyGILState_Release(state);
-		return;
-	}
+#define TRY_GETMETHOD(method, format, keyexp) { \
+	r = method(self, \
+			[NSString stringWithFormat: format, keyexp], presult); \
+	if (r == 0) { \
+		PyGILState_Release(state); \
+		return; \
+	} \
+}
 
-	r = getAccessor(self, [NSString stringWithFormat: @"get%@", [key capitalizedString]], presult);
-	if (r == 0) {
-		PyGILState_Release(state);
-		return;
-	}
+	TRY_GETMETHOD(getAccessor, @"get_%@", key);
+	TRY_GETMETHOD(getAccessor, @"get%@", [key capitalizedString]);
+	TRY_GETMETHOD(getAttribute, @"%@", key);
+	TRY_GETMETHOD(getAccessor, @"_get_%@", key);
+	TRY_GETMETHOD(getAccessor, @"_get%@", [key capitalizedString]);
+	TRY_GETMETHOD(getAccessor, @"%@", key);
+	TRY_GETMETHOD(getAccessor, @"_%@", key);
+	TRY_GETMETHOD(getAttribute, @"_%@", key);
 
-	r = getAttribute(self, key, presult);
-	if (r == 0) {
-		PyGILState_Release(state);
-		return;
-	}
-
-	r = getAccessor(self, [NSString stringWithFormat: @"_get_%@", key], 
-		presult);
-	if (r == 0) {
-		PyGILState_Release(state);
-		return;
-	}
-
-	r = getAccessor(self, [NSString stringWithFormat: @"_get%@", [key capitalizedString]], presult);
-	if (r == 0) {
-		PyGILState_Release(state);
-		return;
-	}
-
-	r = getAccessor(self, [NSString stringWithFormat: @"%@", key], 
-		presult);
-	if (r == 0) {
-		PyGILState_Release(state);
-		return;
-	}
-
-	r = getAccessor(self, [NSString stringWithFormat: @"_%@", key], 
-		presult);
-	if (r == 0) {
-		PyGILState_Release(state);
-		return;
-	}
-
-	r = getAttribute(self, [NSString stringWithFormat: @"_%@", key], 
-		presult);
-	if (r == 0) {
-		PyGILState_Release(state);
-		return;
-	}
-
-
+#undef TRY_GETMETHOD
+	
 	/* Call super */
 	PyGILState_Release(state);
 	super.class = (Class)userdata;
@@ -1820,102 +1781,39 @@ object_method_takeStoredValue_forKey_(
 	int r;
 	PyGILState_STATE state = PyGILState_Ensure();
 
-	r = setAccessor(self, 
-		[NSString stringWithFormat:@"set_%@", key], value);
-	if (r == 0) {
-		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			PyGILState_Release(state);
-			[[NSException 
-				exceptionWithName:@"NSUnknownKeyException"
-				reason:key userInfo:nil] raise];
-			return;
-		}
-		PyGILState_Release(state);
-		return;
-	}
 
-	r = setAccessor(self, 
-		[NSString stringWithFormat:@"set%@", [key capitalizedString]], 
-		value);
-	if (r == 0) {
-		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			PyGILState_Release(state);
-			[[NSException 
-				exceptionWithName:@"NSUnknownKeyException"
-				reason:key userInfo:nil] raise];
-			return;
-		}
-		PyGILState_Release(state);
-		return;
-	}
+#define TRY_SETMETHOD(method, format, keyexp) { \
+	r = method(self, \
+		[NSString stringWithFormat:format, keyexp], value); \
+	if (r == 0) { \
+		if (PyErr_Occurred()) { \
+			PyErr_Clear(); \
+			PyGILState_Release(state); \
+			[[NSException \
+				exceptionWithName:@"NSUnknownKeyException" \
+				reason:key userInfo:nil] raise]; \
+			return; \
+		} \
+		PyGILState_Release(state); \
+		return; \
+	} \
+}
 
-	r = setAttribute(self, key, value);
-	if (r == 0) {
-		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			PyGILState_Release(state);
-			[[NSException 
-				exceptionWithName:@"NSUnknownKeyException"
-				reason:key userInfo:nil] raise];
-			return;
-		}
-		PyGILState_Release(state);
-		return;
-	}
+	TRY_SETMETHOD(setAccessor, @"set_%@", key);
+	TRY_SETMETHOD(setAccessor, @"set%@", [key capitalizedString]);
+	TRY_SETMETHOD(setAttribute, @"%@", key);
+	TRY_SETMETHOD(setAccessor, @"_set_%@", key);
+	TRY_SETMETHOD(setAccessor, @"_set%@", [key capitalizedString]);
+	TRY_SETMETHOD(setAttribute, @"_%@", key);
 
-	r = setAccessor(self, 
-		[NSString stringWithFormat:@"_set_%@", key], value);
-	if (r == 0) {
-		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			PyGILState_Release(state);
-			[[NSException 
-				exceptionWithName:@"NSUnknownKeyException"
-				reason:key userInfo:nil] raise];
-			return;
-		}
-		PyGILState_Release(state);
-		return;
-	}
-
-	r = setAccessor(self, 
-		[NSString stringWithFormat:@"_set%@", [key capitalizedString]], 
-		value);
-	if (r == 0) {
-		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			PyGILState_Release(state);
-			[[NSException 
-				exceptionWithName:@"NSUnknownKeyException"
-				reason:key userInfo:nil] raise];
-			return;
-		}
-		PyGILState_Release(state);
-		return;
-	}
-
-	r = setAttribute(self, [NSString stringWithFormat:@"_%@", key], value);
-	if (r == 0) {
-		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			PyGILState_Release(state);
-			[[NSException 
-				exceptionWithName:@"NSUnknownKeyException"
-				reason:key userInfo:nil] raise];
-			return;
-		}
-		PyGILState_Release(state);
-		return;
-	}
+#undef TRY_SETMETHOD
 
 	/* Call super */
+	PyGILState_Release(state);
 	NS_DURING
 		super.class = (Class)userdata;
 		RECEIVER(super) = self;
 		(void)objc_msgSendSuper(&super, _meth, value, key);
-		PyGILState_Release(state);
 	NS_HANDLER
 		/* Parent doesn't know the key, try to create in the 
 		 * python side, just like for plain python objects.
@@ -1927,9 +1825,11 @@ object_method_takeStoredValue_forKey_(
 #endif
 			) {
 
-			PyObject* selfObj = PyObjCObject_New(self);
+			PyObject* selfObj;
 			PyObject* val;
 
+			state = PyGILState_Ensure();
+			selfObj = PyObjCObject_New(self);
 			val = pythonify_c_value(@encode(id), &value);
 			if (val == NULL) {
 				PyErr_Clear();
@@ -1949,7 +1849,6 @@ object_method_takeStoredValue_forKey_(
 			PyGILState_Release(state);
 				
 		} else {
-			PyGILState_Release(state);
 			[localException raise];
 		}
 	NS_ENDHANDLER
@@ -1971,103 +1870,38 @@ object_method_takeValue_forKey_(
 	int r;
 	PyGILState_STATE state = PyGILState_Ensure();
 
-	r = setAccessor(self, 
-		[NSString stringWithFormat:@"set_%@", key], value);
-	if (r == 0) {
-		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			PyGILState_Release(state);
-			[[NSException 
-				exceptionWithName:@"NSUnknownKeyException"
-				reason:key userInfo:nil] raise];
-			return;
-		}
-		PyGILState_Release(state);
-		return;
-	}
+#define TRY_SETMETHOD(method, format, keyexp) { \
+	r = method(self, \
+		[NSString stringWithFormat:format, keyexp], value); \
+	if (r == 0) { \
+		if (PyErr_Occurred()) { \
+			PyErr_Clear(); \
+			PyGILState_Release(state); \
+			[[NSException \
+				exceptionWithName:@"NSUnknownKeyException" \
+				reason:key userInfo:nil] raise]; \
+			return; \
+		} \
+		PyGILState_Release(state); \
+		return; \
+	} \
+}
 
-	r = setAccessor(self, 
-		[NSString stringWithFormat:@"set%@", [key capitalizedString]], 
-		value);
-	if (r == 0) {
-		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			PyGILState_Release(state);
-			[[NSException 
-				exceptionWithName:@"NSUnknownKeyException"
-				reason:key userInfo:nil] raise];
-			return;
-		}
-		PyGILState_Release(state);
-		return;
-	}
+	TRY_SETMETHOD(setAccessor, @"set_%@", key);
+	TRY_SETMETHOD(setAccessor, @"set%@", [key capitalizedString]);
+	TRY_SETMETHOD(setAttribute, @"%@", key);
+	TRY_SETMETHOD(setAccessor, @"_set_%@", key);
+	TRY_SETMETHOD(setAccessor, @"_set%@", [key capitalizedString]);
+	TRY_SETMETHOD(setAttribute, @"_%@", key);
 
-	r = setAttribute(self, key, value);
-	if (r == 0) {
-		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			PyGILState_Release(state);
-			[[NSException 
-				exceptionWithName:@"NSUnknownKeyException"
-				reason:key userInfo:nil] raise];
-			return;
-		}
-		PyGILState_Release(state);
-		return;
-	}
-
-	r = setAccessor(self, 
-		[NSString stringWithFormat:@"_set_%@", key], value);
-	if (r == 0) {
-		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			PyGILState_Release(state);
-			[[NSException 
-				exceptionWithName:@"NSUnknownKeyException"
-				reason:key userInfo:nil] raise];
-			return;
-		}
-		PyGILState_Release(state);
-		return;
-	}
-
-	r = setAccessor(self, 
-		[NSString stringWithFormat:@"_set%@", [key capitalizedString]], 
-		value);
-	if (r == 0) {
-		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			PyGILState_Release(state);
-			[[NSException 
-				exceptionWithName:@"NSUnknownKeyException"
-				reason:key userInfo:nil] raise];
-			return;
-		}
-		PyGILState_Release(state);
-		return;
-	}
-
-	r = setAttribute(self, [NSString stringWithFormat:@"_%@", key], value);
-	if (r == 0) {
-		if (PyErr_Occurred()) {
-			PyErr_Clear();
-			PyGILState_Release(state);
-			[[NSException 
-				exceptionWithName:@"NSUnknownKeyException"
-				reason:key userInfo:nil] raise];
-			return;
-		}
-		PyGILState_Release(state);
-		return;
-	}
-
+#undef TRY_SETMETHOD
 
 	/* Call super */
+	PyGILState_Release(state);
 	NS_DURING
 		super.class = (Class)userdata;
 		RECEIVER(super) = self;
 		(void)objc_msgSendSuper(&super, _meth, value, key);
-		PyGILState_Release(state);
 	NS_HANDLER
 		/* Parent doesn't know the key, try to create in the 
 		 * python side, just like for plain python objects.
@@ -2078,9 +1912,10 @@ object_method_takeValue_forKey_(
 				|| [[localException name] isEqual:@"NSInvalidArgumentException"]
 #endif
 				) {
-			PyObject* selfObj = PyObjCObject_New(self);
+			PyObject* selfObj;
 			PyObject* val;
-
+			state = PyGILState_Ensure();
+			selfObj = PyObjCObject_New(self);
 			val = pythonify_c_value(@encode(id), &value);
 			if (val == NULL) {
 				PyErr_Clear();
@@ -2100,7 +1935,6 @@ object_method_takeValue_forKey_(
 			PyGILState_Release(state);
 				
 		} else {
-			PyGILState_Release(state);
 			[localException raise];
 		}
 	NS_ENDHANDLER
