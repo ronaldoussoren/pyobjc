@@ -585,8 +585,7 @@ void init_Foundation(void)
 	}
 
 #ifdef MACOSX
-	bundle = CFBundleCreate(NULL,
-		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/Foundation.framework"]);
+	bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.Foundation"));
 #else
 	bundle = NULL;
 #endif

@@ -40,8 +40,7 @@ void init_AddressBook(void)
 	}
 
 #ifdef MACOSX 
-	bundle = CFBundleCreate(NULL,
-		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/AddressBook.framework"]);
+	bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.AddressBook.framework"));
 #else
 	bundle = nil;
 #endif

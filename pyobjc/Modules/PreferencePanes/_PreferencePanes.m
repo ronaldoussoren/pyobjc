@@ -41,8 +41,7 @@ void init_PreferencePanes(void)
 		return;
 	}
 
-	bundle = CFBundleCreate(NULL,
-		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/PreferencePanes.framework"]);
+	bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.frameworks.preferencepanes"));
 
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_variableList(d, bundle, string_table,
