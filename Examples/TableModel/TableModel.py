@@ -1,11 +1,12 @@
 from Foundation import NSObject
 from AppKit import NSApplicationMain, NSTableDataSource
-from AppKit.NibClassBuilder import extractClasses, AutoBaseClass
+from AppKit.NibClassBuilder import AutoBaseClass
+from AppKit import NibClassBuilder
 from objc import selector
 import sys
 
 
-extractClasses("MainMenu")
+NibClassBuilder.extractClasses("MainMenu")
 
 
 ROWCOUNT = 200
@@ -14,6 +15,7 @@ ROWCOUNT = 200
 class PyModel(AutoBaseClass, NSTableDataSource):
 
 	def awakeFromNib(self):
+		self.stuff = {}
 		self.rowcount = ROWCOUNT
 		return self
 
@@ -22,15 +24,19 @@ class PyModel(AutoBaseClass, NSTableDataSource):
 		return self
 
 	def numberOfRowsInTableView_(self, aTableView):
-		#print "numerOfRowsInTableView: called"
 		return self.rowcount
 
 
-	def tableView_objectValueForTableColumn_row_(self, 
-			aTableView, aTableColumn, rowIndex):
-		#print "tableView:objectValueForTableColumn:row: called"
-		return "{%s, %d}" % (aTableColumn.identifier(), rowIndex)
+	def tableView_objectValueForTableColumn_row_(self, aTableView,
+			aTableColumn, rowIndex):
+		col = aTableColumn.identifier()
+		return self.stuff.get((aTableColumn, rowIndex),
+			"{%s, %d}" % (col, rowIndex))
 
+	def tableView_setObjectValue_forTableColumn_row_(self, aTableView,
+			anObject, aTableColumn, rowIndex):
+		col = aTableColumn.identifier()
+		self.stuff[(aTableColumn, rowIndex)] = anObject
 
 
 sys.exit(NSApplicationMain(sys.argv))
