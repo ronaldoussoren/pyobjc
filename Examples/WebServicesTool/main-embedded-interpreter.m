@@ -1,3 +1,5 @@
+#error The project does not use this file.  It is left here both for reference purposes (if anyone is interested in going the embedded interpreter route) and in case Apple ships the Python library in OS X (the embedded interpreter is actually more efficient). 
+
 /*
  This main file can be used in cases where the developer desires to embed the python interpreter directly into the application.   The pyobjc_main() function initializes the python interpreter in an embedded context.
 

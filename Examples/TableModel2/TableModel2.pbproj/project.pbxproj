@@ -44,36 +44,11 @@
 //102
 //103
 //104
-		1058C7A0FEA54F0111CA2CBB = {
-			children = (
-				F67592030341FC8E01336B42,
-				F67592040341FC8E01336B42,
-				29B97325FDCFA39411CA2CEA,
-				1058C7A1FEA54F0111CA2CBB,
-			);
-			isa = PBXGroup;
-			name = "Linked Frameworks";
-			refType = 4;
-		};
 		1058C7A1FEA54F0111CA2CBB = {
 			isa = PBXFrameworkReference;
 			name = Cocoa.framework;
 			path = /System/Library/Frameworks/Cocoa.framework;
 			refType = 0;
-		};
-		1058C7A2FEA54F0111CA2CBB = {
-			children = (
-				29B97324FDCFA39411CA2CEA,
-			);
-			isa = PBXGroup;
-			name = "Other Frameworks";
-			refType = 4;
-		};
-		1058C7A3FEA54F0111CA2CBB = {
-			fileRef = 1058C7A1FEA54F0111CA2CBB;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 //100
 //101
@@ -161,6 +136,7 @@
 		};
 		29B97317FDCFA39411CA2CEA = {
 			children = (
+				F61BA2AC0357996801C36587,
 				089C165CFE840E0CC02AAC07,
 				F67591E6034123A101336B42,
 			);
@@ -171,9 +147,9 @@
 		};
 		29B97323FDCFA39411CA2CEA = {
 			children = (
-				1058C7A0FEA54F0111CA2CBB,
-				1058C7A2FEA54F0111CA2CBB,
-				F67591EB0341244601336B42,
+				29B97325FDCFA39411CA2CEA,
+				1058C7A1FEA54F0111CA2CBB,
+				29B97324FDCFA39411CA2CEA,
 			);
 			isa = PBXGroup;
 			name = Frameworks;
@@ -194,6 +170,7 @@
 		};
 		29B97326FDCFA39411CA2CEA = {
 			buildPhases = (
+				F61BA2B4035799BC01C36587,
 				29B97327FDCFA39411CA2CEA,
 				29B97328FDCFA39411CA2CEA,
 				29B9732BFDCFA39411CA2CEA,
@@ -285,11 +262,7 @@
 		29B9732DFDCFA39411CA2CEA = {
 			buildActionMask = 2147483647;
 			files = (
-				1058C7A3FEA54F0111CA2CBB,
 				F67591FA0341FC6601336B42,
-				F67595680341FC9001336B42,
-				F67595690341FC9001336B42,
-				F69197E60342BCD401B4D85B,
 			);
 			isa = PBXFrameworksBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -333,6 +306,68 @@
 //F62
 //F63
 //F64
+		F61BA2AC0357996801C36587 = {
+			children = (
+				F61BA2AD035799A001C36587,
+				F61BA2AE035799A001C36587,
+				F61BA2AF035799A001C36587,
+			);
+			isa = PBXGroup;
+			name = pyobjc;
+			path = "";
+			refType = 4;
+		};
+		F61BA2AD035799A001C36587 = {
+			includeInIndex = 1;
+			isa = PBXFolderReference;
+			name = AppKit;
+			path = "/usr/lib/python2.2/site-packages/AppKit";
+			refType = 0;
+		};
+		F61BA2AE035799A001C36587 = {
+			includeInIndex = 1;
+			isa = PBXFolderReference;
+			name = Foundation;
+			path = "/usr/lib/python2.2/site-packages/Foundation";
+			refType = 0;
+		};
+		F61BA2AF035799A001C36587 = {
+			includeInIndex = 1;
+			isa = PBXFolderReference;
+			name = objc;
+			path = "/usr/lib/python2.2/site-packages/objc";
+			refType = 0;
+		};
+		F61BA2B4035799BC01C36587 = {
+			buildActionMask = 8;
+			dstPath = pyobjc;
+			dstSubfolderSpec = 7;
+			files = (
+				F61BA2B7035799D301C36587,
+				F61BA2B9035799DD01C36587,
+				F61BA2BA035799E001C36587,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		F61BA2B7035799D301C36587 = {
+			fileRef = F61BA2AF035799A001C36587;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F61BA2B9035799DD01C36587 = {
+			fileRef = F61BA2AD035799A001C36587;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F61BA2BA035799E001C36587 = {
+			fileRef = F61BA2AE035799A001C36587;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		F67591E6034123A101336B42 = {
 			children = (
 				F67591E7034123A101336B42,
@@ -365,12 +400,6 @@
 			settings = {
 			};
 		};
-		F67591EB0341244601336B42 = {
-			isa = PBXFileReference;
-			name = libpython2.2.a;
-			path = /sw/lib/python2.2/config/libpython2.2.a;
-			refType = 0;
-		};
 		F67591ED0341252E01336B42 = {
 			isa = PBXFileReference;
 			path = README.txt;
@@ -384,36 +413,6 @@
 		};
 		F67591FA0341FC6601336B42 = {
 			fileRef = 29B97325FDCFA39411CA2CEA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F67592030341FC8E01336B42 = {
-			isa = PBXFrameworkReference;
-			name = CoreFoundation.framework;
-			path = /System/Library/Frameworks/CoreFoundation.framework;
-			refType = 0;
-		};
-		F67592040341FC8E01336B42 = {
-			isa = PBXFrameworkReference;
-			name = CoreServices.framework;
-			path = /System/Library/Frameworks/CoreServices.framework;
-			refType = 0;
-		};
-		F67595680341FC9001336B42 = {
-			fileRef = F67592030341FC8E01336B42;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F67595690341FC9001336B42 = {
-			fileRef = F67592040341FC8E01336B42;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F69197E60342BCD401B4D85B = {
-			fileRef = F67591EB0341244601336B42;
 			isa = PBXBuildFile;
 			settings = {
 			};

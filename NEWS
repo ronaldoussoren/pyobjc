@@ -9,8 +9,6 @@ Version 2002-XX-XX (Someday):
 
 - Version bumped to A.B.C
 
-- Requires Python 2.3, and on MacOS X a framework install of python
-
 - Support for the GNU runtime is even less functional than before
 
 - Subclassing Objective-C classes from Python, including the addition
@@ -28,6 +26,9 @@ Version 2002-XX-XX (Someday):
   works as expected)
 
 - Documentation: See the directory 'docs'
+
+- Can build standalone Cocoa applications based entirely on Python
+without requiring that user installs anything extra.
 
 Version 2002-01-30 (January 30, 2002):
 

@@ -1,3 +1,20 @@
+2002-10-11  Bill Bumgarner  <bbum@codefab.com>
+
+	* Removed various debugging/development noise from startup.
+
+	* Regenerated various incs in Modules/Cocoa based on new scripts.
+
+	* Updated Examples/WebServicesTool to be compatible with Apple
+	supplied Python.  Created a new main() implementation that
+	transfers control to '/usr/bin/python' via execve().
+
+	* Modules/Cocoa/scripts: Modified all scripts to use 0/1 instead
+	of False/True for compatibility with Python 2.2.  Modified scripts
+	that generate a table of information to emit the 'static' keyword
+	at the head of the declaration.  This fixes a namespace collision
+	with the Apple supplied Python.
+	
+
 2002-10-10 Ronald Oussoren <oussoren@cistron.nl>
 	* Modules/objc/objc-class.m: Implemented a 'class_traverse' function
 	  For some reason Python 2.2.0 crashes when we inherit tp_traverse

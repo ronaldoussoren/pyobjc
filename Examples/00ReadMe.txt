@@ -10,12 +10,20 @@ A number of simple scripts that demo the core module.
 - dictionary.py
   Use a NS*Dictionary object.
 
-And a number of Cocoa applications. These use the 'Cocoa' package.
+And a number of Cocoa applications. These use the 'AppKit' package.
+
 - CurrencyConverter
   A simple NIB based application
 
 - TableModel
   Shows how to use a NSTableView
+
+- TableModel2
+  Same as TableModel but built as a standard Cocoa Project Builder project.
+
+- Web Services Tool
+  Another Project Builder Cocoa project.  Quiries an XML-RPC enabled web
+  server for the methods that it implements.
 
 - Todo
   A more complex NIB based applications. This is a document-based application.
