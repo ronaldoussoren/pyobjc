@@ -13,7 +13,7 @@
  *
  */
 
-#include <Python.h>
+#include "Python.h"
 #include <objc/objc.h>
 
 #import <Foundation/NSException.h>

@@ -3,6 +3,7 @@
  * and the implementation of a number of exported functions.
  */
 #include "pyobjc.h"
+#include "OC_NSBundleHack.h"
 #include <objc/Protocol.h>
 
 #include <stddef.h>
@@ -851,6 +852,7 @@ init_objc(void)
 	 * warnings during startup of a python script.
 	 */
 	global_release_pool = [[NSAutoreleasePool alloc] init];
+	[OC_NSBundleHack installBundleHack];
 
 	PyObjCClass_DefaultModule = PyString_FromString("objc");
 
