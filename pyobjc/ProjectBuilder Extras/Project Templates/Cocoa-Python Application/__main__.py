@@ -6,14 +6,10 @@
 #  Copyright (c) ÇYEARÈ ÇORGANIZATIONNAMEÈ. All rights reserved.
 #
 
-# import PyObjC
-import objc
-import Foundation
-import AppKit
+from PyObjCTools import AppHelper
 
 # import classes required to start application
 import MyAppDelegate
 
-# pass control to the AppKit
-import sys
-sys.exit(AppKit.NSApplicationMain(sys.argv))
+# start the event loop
+AppHelper.runEventLoop()
