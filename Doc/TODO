@@ -339,6 +339,11 @@ methods we cannot implement efficiently.
 
 And the same is true of OC_PythonArray
 
+Clean up OC_PythonObject
+........................
+
+The code is a mess.
+
 Make it possible to redefine classes
 ....................................
 
