@@ -67,10 +67,11 @@ class TestNSBitmapImageRep(unittest.TestCase):
         b[0:len(b)] = bPlane[0:len(bPlane)]
 
         bitmapData = i2.bitmapData()
-        self.assertEquals(len(bitmapData), len(singlePlane))
+        singlePlaneBuffer = buffer(singlePlane)
+        self.assertEquals(len(bitmapData), len(singlePlaneBuffer))
         for i in range(0,100):
-            # barfs because type(bitmapData[0]) != type(singlePlane[0])
-            self.assertEquals(bitmapData[i], singlePlane[i], "bitmapData and singlePlane differ at byte %d" % i)
+            self.assertEquals(bitmapData[i], singlePlaneBuffer[i],
+                              "bitmapData and singlePlane differ at byte %d" % i)
 
 def suite():
     suite = unittest.TestSuite()
