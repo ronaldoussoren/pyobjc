@@ -80,6 +80,7 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 {
 	int r;
 	id rval;
+    PyObject *anObject;
 	 
 	if (argument == Py_None) {
 		rval = nil;
@@ -99,13 +100,24 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 	if (PyObjCClass_Check (argument)) {
 		rval = (id)PyObjCClass_GetClass(argument);
 		r = 0;
+        goto end;
 	} else if (PyObjCObject_Check (argument)) {
 		rval = PyObjCObject_GetObject(argument);
 		r = 0;
+        goto end;
 	} else if (PyObjCUnicode_Check(argument)) {
 		rval = PyObjCUnicode_Extract(argument);
 		r = 0;
-	} else if (PyUnicode_Check(argument)) {
+        goto end;
+	}
+    
+	anObject = PyObject_GetAttrString(argument, "__pyobjc_object__");
+	if (anObject && anObject != argument) {
+		return [self wrapPyObject:anObject toId:datum];
+	}
+	PyErr_Clear();
+ 
+	if (PyUnicode_Check(argument)) {
 #ifdef PyObjC_UNICODE_FAST_PATH
 		rval = [NSString stringWithCharacters:(const unichar *)PyUnicode_AS_UNICODE(argument) length:(unsigned)PyUnicode_GET_SIZE(argument)];
         r = 0;
@@ -164,11 +176,6 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 		r = 0;
 #endif /* MACOSX */
 	} else {
-		PyObject *anObject = PyObject_GetAttrString(argument, "__pyobjc_object__");
-		if (anObject && anObject != argument) {
-			return [self wrapPyObject:anObject toId:datum];
-		}
-		PyErr_Clear();
 		NS_DURING
 			rval = [OC_PythonObject 
 				newWithCoercedObject:argument];
