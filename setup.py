@@ -87,7 +87,8 @@ if USE_FFI:
         LIBFFI_BASE='libffi'
     LIBFFI_CFLAGS=[ 
         "-DOC_WITH_LIBFFI", 
-        "-I%s/include"%LIBFFI_BASE, 
+        #"-I%s/include"%LIBFFI_BASE, 
+        "-isystem", "%s/include"%LIBFFI_BASE, 
     ]
     LIBFFI_LDFLAGS=[ 
         '-read_only_relocs','warning',
@@ -110,6 +111,7 @@ sourceFiles = [
         "Modules/objc/class-builder.m",
         "Modules/objc/class-list.m",
         "Modules/objc/ObjCPointer.m",
+        "Modules/objc/py2.2bool.c",
         "Modules/objc/objc-class.m",
         "Modules/objc/unicode-object.m",
         "Modules/objc/informal-protocol.m",
@@ -139,7 +141,8 @@ if gs_root is None:
         "-no-cpp-precomp",
         "-Wno-long-double",
         "-g",
-        "-O0", "-g",
+        #"-O0", "-g",
+        #"-Werror",
         ]
 
     OBJC_LDFLAGS=[
