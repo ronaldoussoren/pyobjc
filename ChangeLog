@@ -1,4 +1,6 @@
 2002-10-22  Bill Bumgarner  <bbum@codefab.com>
+	* Split Foundation unit tests into two suites.
+
 	* Updated objc unit tests a bit.
 	* Added Foundation unit tests.
 	* Moved a number of tests from objc -> Foundation.
