@@ -114,7 +114,6 @@ def addNibFromBundle( nibName, sourceBundle = None ):
 class _NibLoader(type):
 	
 	def __new__(meta, name, bases, methods):
-		print "n: %s" % name
 		if not bases:
 			return type.__new__(meta, name, bases, methods)
 		else:
