@@ -1,4 +1,3 @@
-import sys
 from PyObjCTools import AppHelper
 
 # import classes required to start application

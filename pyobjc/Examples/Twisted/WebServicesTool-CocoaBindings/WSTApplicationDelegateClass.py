@@ -7,6 +7,7 @@ AutoBaseClass mechanism provided by the NibClassBuilder.
 """
 
 from PyObjCTools import NibClassBuilder
+from WSTConnectionWindowControllerClass import WSTConnectionWindowController
 
 # Make NibClassBuilder aware of the classes in the main NIB file.
 NibClassBuilder.extractClasses( "MainMenu" )
@@ -29,7 +30,6 @@ class WSTApplicationDelegate(NibClassBuilder.AutoBaseClass):
         (In this case, it is largely moot due to the implementation of
         applicationDidFinishLaunching_().
         """
-        from WSTConnectionWindowControllerClass import WSTConnectionWindowController
         WSTConnectionWindowController.connectionWindowController().showWindow_(sender)
 
     def applicationDidFinishLaunching_(self, aNotification):

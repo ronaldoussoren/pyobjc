@@ -8,38 +8,31 @@ Implements a standard toolbar.
 from AppKit import *
 from Foundation import *
 from PyObjCTools import NibClassBuilder
-
-from objc import IBOutlet
-from objc import selector
-from objc import YES, NO
+import objc
 
 import twisted.internet.cfreactor
 reactor = twisted.internet.cfreactor.install()
 from twisted.internet import defer
 from twisted.web.xmlrpc import Proxy
 
-import sys
-import types
-import string
-import traceback
-
-import RPCMethod
+from RPCMethod import *
 
 #from twisted.python import log
+#import sys
 #log.startLogging(sys.stdout)
 
 # cheap dirty way to turn those messages off
 # from twisted.python import log
 # log.logerr = open('/dev/null','w')
 
-kWSTReloadContentsToolbarItemIdentifier = "WST: Reload Contents Toolbar Identifier"
-"""Identifier for 'reload contents' toolbar item."""
+# Identifier for 'reload contents' toolbar item.
+kWSTReloadContentsToolbarItemIdentifier = u"WST: Reload Contents Toolbar Identifier"
 
-kWSTPreferencesToolbarItemIdentifier = "WST: Preferences Toolbar Identifier"
-"""Identifier for 'preferences' toolbar item."""
+# Identifier for 'preferences' toolbar item.
+kWSTPreferencesToolbarItemIdentifier = u"WST: Preferences Toolbar Identifier"
 
-kWSTUrlTextFieldToolbarItemIdentifier = "WST: URL Textfield Toolbar Identifier"
-"""Idnetifier for URL text field toolbar item."""
+# Identifier for URL text field toolbar item.
+kWSTUrlTextFieldToolbarItemIdentifier = u"WST: URL Textfield Toolbar Identifier"
 
 def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
                    aToolTip, aTarget, anAction, anItemContent, aMenu):
@@ -58,7 +51,7 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
     if anAction:
         toolbarItem.setAction_(anAction)
 
-    if type(anItemContent) == NSImage:
+    if isinstance(anItemContent, NSImage):
         toolbarItem.setImage_(anItemContent)
     else:
         toolbarItem.setView_(anItemContent)
@@ -74,7 +67,7 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
         menuItem.setTitle_( aMenu.title() )
         toolbarItem.setMenuFormRepresentation_(menuItem)
 
-    aController._toolbarItems[anIdentifier] = toolbarItem
+    aController.k_toolbarItems[anIdentifier] = toolbarItem
 
 NibClassBuilder.extractClasses( "WSTConnection" )
 
@@ -84,13 +77,6 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
     WSTConnectionWindowController is a subclass of
     NSWindowController.
     """
-    __slots__ = ('_toolbarItems',
-        '_toolbarDefaultItemIdentifiers',
-        '_toolbarAllowedItemIdentifiers',
-        '_methods',
-        '_methodList',
-        '_server',
-        '_methodPrefix',)
 
     def connectionWindowController(self):
         """
@@ -107,14 +93,14 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         Returns self (as per ObjC designated initializer definition,
         unlike Python's __init__() method).
         """
-        self = self.initWithWindowNibName_("WSTConnection")
+        self = self.initWithWindowNibName_(u"WSTConnection")
 
-        self._toolbarItems = {}
-        self._toolbarDefaultItemIdentifiers = []
-        self._toolbarAllowedItemIdentifiers = []
+        self.k_toolbarItems = {}
+        self.k_toolbarDefaultItemIdentifiers = []
+        self.k_toolbarAllowedItemIdentifiers = []
 
-        self._methods = {}
-        self._methodList = []
+        self.k_methods = {}
+        self.k_methodArray = []
         return self
 
     def awakeFromNib(self):
@@ -124,9 +110,9 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         """
         self.retain() # balanced by autorelease() in windowWillClose_
 
-        self.statusTextField.setStringValue_("No host specified.")
+        self.statusTextField.setStringValue_(u"No host specified.")
         self.progressIndicator.setStyle_(NSProgressIndicatorSpinningStyle)
-        self.progressIndicator.setDisplayedWhenStopped_(NO)
+        self.progressIndicator.setDisplayedWhenStopped_(False)
 
         self.createToolbar()
         # Start the CFReactor if it's not already going
@@ -144,16 +130,16 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         """
         Creates and configures the toolbar to be used by the window.
         """
-        toolbar = NSToolbar.alloc().initWithIdentifier_("WST Connection Window")
+        toolbar = NSToolbar.alloc().initWithIdentifier_(u"WST Connection Window")
         toolbar.setDelegate_(self)
-        toolbar.setAllowsUserCustomization_(YES)
-        toolbar.setAutosavesConfiguration_(YES)
+        toolbar.setAllowsUserCustomization_(True)
+        toolbar.setAutosavesConfiguration_(True)
 
         self.createToolbarItems()
 
         self.window().setToolbar_(toolbar)
 
-        lastURL = NSUserDefaults.standardUserDefaults().stringForKey_("LastURL")
+        lastURL = NSUserDefaults.standardUserDefaults().stringForKey_(u"LastURL")
         if lastURL and len(lastURL):
             self.urlTextField.setStringValue_(lastURL)
 
@@ -163,23 +149,27 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         the toolbar.  The actual set of available toolbar items is
         determined by other mechanisms (user defaults, for example).
         """
-        addToolbarItem(self, kWSTReloadContentsToolbarItemIdentifier,
-                       "Reload", "Reload", "Reload Contents", None,
-                       "reloadVisibleData:", NSImage.imageNamed_("Reload"), None)
-        addToolbarItem(self, kWSTPreferencesToolbarItemIdentifier,
-                       "Preferences", "Preferences", "Show Preferences", None,
-                       "orderFrontPreferences:", NSImage.imageNamed_("Preferences"), None)
-        addToolbarItem(self, kWSTUrlTextFieldToolbarItemIdentifier,
-                       "URL", "URL", "Server URL", None, None, self.urlTextField, None)
+        addToolbarItem(
+            self, kWSTReloadContentsToolbarItemIdentifier,
+            u"Reload", u"Reload", u"Reload Contents", None,
+            "reloadVisibleData:", NSImage.imageNamed_(u"Reload"), None)
+        addToolbarItem(
+            self, kWSTPreferencesToolbarItemIdentifier,
+            u"Preferences", u"Preferences", u"Show Preferences", None,
+            "orderFrontPreferences:", NSImage.imageNamed_(u"Preferences"), None)
+        addToolbarItem(
+            self, kWSTUrlTextFieldToolbarItemIdentifier,
+            u"URL", u"URL", u"Server URL", None,
+            None, self.urlTextField, None)
 
-        self._toolbarDefaultItemIdentifiers = [
+        self.k_toolbarDefaultItemIdentifiers = [
             kWSTReloadContentsToolbarItemIdentifier,
             kWSTUrlTextFieldToolbarItemIdentifier,
             NSToolbarSeparatorItemIdentifier,
             NSToolbarCustomizeToolbarItemIdentifier,
         ]
 
-        self._toolbarAllowedItemIdentifiers = [
+        self.k_toolbarAllowedItemIdentifiers = [
             kWSTReloadContentsToolbarItemIdentifier,
             kWSTUrlTextFieldToolbarItemIdentifier,
             NSToolbarSeparatorItemIdentifier,
@@ -196,13 +186,13 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         set, in order, of items that should be displayed on the
         default toolbar.
         """
-        return self._toolbarDefaultItemIdentifiers
+        return self.k_toolbarDefaultItemIdentifiers
 
     def toolbarAllowedItemIdentifiers_(self, anIdentifier):
         """
         Return an array of toolbar items that may be used in the toolbar.
         """
-        return self._toolbarAllowedItemIdentifiers
+        return self.k_toolbarAllowedItemIdentifiers
 
     def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self,
                                                                  toolbar,
@@ -215,7 +205,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         the toolbar item identified by itemIdentifier.
         """
         newItem = NSToolbarItem.alloc().initWithItemIdentifier_(itemIdentifier)
-        item = self._toolbarItems[itemIdentifier]
+        item = self.k_toolbarItems[itemIdentifier]
 
         newItem.setLabel_( item.label() )
         newItem.setPaletteLabel_( item.paletteLabel() )
@@ -241,8 +231,9 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         forces the fileld's contents to be redisplayed.
         """
         if not aMessage:
-            aMessage = "Displaying information about %d methods." % len(self._methods)
+            aMessage = u"Displaying information about %d methods." % (len(self.k_methods),)
         self.statusTextField.setStringValue_(aMessage)
+    setStatusTextFieldMessage_ = objc.accessor(setStatusTextFieldMessage_)
 
     def startWorking(self):
         """Signal the UI there's work goin on."""
@@ -259,21 +250,21 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         appropriate error messages, if necessary.
         """
         url = self.urlTextField.stringValue()
-        self._methods = {}
+        self.k_methods = {}
 
         if not url:
-            self.window().setTitle_("Untitled.")
-            self.setStatusTextFieldMessage_("No URL specified.")
+            self.window().setTitle_(u"Untitled.")
+            self.setStatusTextFieldMessage_(u"No URL specified.")
             return
 
         self.window().setTitle_(url)
-        NSUserDefaults.standardUserDefaults().setObject_forKey_(url, "LastURL")
+        NSUserDefaults.standardUserDefaults().setObject_forKey_(url, u"LastURL")
 
-        self.setStatusTextFieldMessage_("Retrieving method list...")
+        self.setStatusTextFieldMessage_(u"Retrieving method list...")
         self.getMethods(url)
 
     def getMethods(self, url):
-        _server = self._server = Proxy(url.encode('utf8'))
+        _server = self.k_server = Proxy(url.encode('utf8'))
         self.startWorking()
         return _server.callRemote('listMethods').addCallback(
             # call self.receivedMethods(result, _server, "") on success
@@ -293,33 +284,31 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         )
 
     def receivedMethodsFailure(self, why, method):
-        self._server = None
-        self._methodPrefix = None
+        self.k_server = None
+        self.k_methodPrefix = None
         self.setStatusTextFieldMessage_(
-           ("Server failed to respond to %s.  "
-            "See below for more information."       ) % (method,)
+           (u"Server failed to respond to %s.  "
+            u"See below for more information."       ) % (method,)
         )
         #log.err(why)
         self.methodDescriptionTextView.setString_(why.getTraceback())
 
     def receivedMethods(self, _methods, _server, _methodPrefix):
-        self._server = _server
-        self._methods = {}
+        self.k_server = _server
+        self.k_methods = {}
         for aMethod in _methods:
-            self._methods[aMethod] = RPCMethod.RPCMethod.alloc().init(self, aMethod)
-        self.willChangeValueForKey_("methodArray")
-        self._methodList = self._methods.values()
-        self._methodPrefix = _methodPrefix
+            self.k_methods[aMethod] = RPCMethod.alloc().initWithDocument_name_(self, aMethod)
+        self.setMethodArray_(self.k_methods.values())
+        self.k_methodPrefix = _methodPrefix
 
-        self.didChangeValueForKey_("methodArray")
         self.setStatusTextFieldMessage_(
-            "Retrieving information about %d methods." % (len(self._methods),)
+            u"Retrieving information about %d methods." % (len(self.k_methods),)
         )
 
         # we could make all the requests at once :)
         # but the server might not like that so we will chain them
         d = defer.succeed(None)
-        for index, aMethod in enumerate(self._methodList):
+        for index, aMethod in enumerate(self.k_methodArray):
             d.addCallback(
                 self.fetchMethodSignature, index, aMethod
             ).addCallbacks(
@@ -334,12 +323,12 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
 
     def fetchMethodSignature(self, ignore, index, aMethod):
         self.setStatusTextFieldMessage_(
-            "Retrieving signature for method %s (%d of %d)."
-            % (aMethod.methodName() , index, len(self._methods))
+            u"Retrieving signature for method %s (%d of %d)."
+            % (aMethod.methodName() , index, len(self.k_methods))
         )
-        return self._server.callRemote(
-            self._methodPrefix + 'methodSignature',
-            aMethod.methodName()
+        return self.k_server.callRemote(
+            (self.k_methodPrefix + 'methodSignature').encode('utf-8'),
+            aMethod.methodName().encode('utf-8')
         )
 
     def processSignatureForMethod(self, methodSignature, index, aMethod):
@@ -347,33 +336,56 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         if not len(methodSignature):
             return
         for aSignature in methodSignature:
-            if (type(aSignature) == types.ListType) and (len(aSignature) > 0):
-                signature = "%s %s(%s)" % (aSignature[0], aMethod.methodName(), string.join(aSignature[1:], ", "))
+            if isinstance(aSignature, list) and len(aSignature) > 0:
+                signature = u"%s %s(%s)" % (aSignature[0], aMethod.methodName(), u", ".join(aSignature[1:]))
             else:
                 signature = aSignature
         if signatures:
-            signatures = signatures + ", " + signature
+            signatures = signatures + u", " + signature
         else:
             signatures = signature
 
-        self.willChange_valuesAtIndexes_forKey_(NSKeyValueChangeReplacement, NSIndexSet.indexSetWithIndex_(index), "methodArray")
-        aMethod._methodSignature = signatures
-        self.didChange_valuesAtIndexes_forKey_(NSKeyValueChangeReplacement, NSIndexSet.indexSetWithIndex_(index), "methodArray")
+        aMethod.setMethodSignature_(signatures)
+        self.replaceObjectInMethodArrayAtIndex_withObject_(index, aMethod)
 
     def couldntProcessSignatureForMethod(self, why, index, aMethod):
         #log.err(why)
-        self.willChange_valuesAtIndexes_forKey_(NSKeyValueChangeReplacement, NSIndexSet.indexSetWithIndex_(index), "methodArray")
-        aMethod._methodSignature = ("<error> %s %s" % (aMethod.methodName(), why.getBriefTraceback()))
-        self.didChange_valuesAtIndexes_forKey_(NSKeyValueChangeReplacement, NSIndexSet.indexSetWithIndex_(index), "methodArray")
+        aMethod.setMethodSignature_(u"<error> %s %s" % (aMethod.methodName(), why.getBriefTraceback()))
+        self.replaceObjectInMethodArrayAtIndex_withObject_(index, aMethod)
 
     def fetchMethodDescription_(self, aMethod):
         def cacheDesc(v):
-            v = v or "No description available."
-            aMethod.setMethodDescription_(v)
+            aMethod.setMethodDescription_(v or u'No description available.')
 
-        self.setStatusTextFieldMessage_("Retrieving documentation for method %s..." % (aMethod.methodName(),))
+        self.setStatusTextFieldMessage_(u"Retrieving documentation for method %s..." % (aMethod.methodName(),))
         self.startWorking()
-        self._server.callRemote(self._methodPrefix + 'methodHelp',aMethod.methodName()).addCallback(cacheDesc)
+        self.k_server.callRemote((self.k_methodPrefix + u'methodHelp').encode('utf-8'), aMethod.methodName().encode('utf-8')).addCallback(cacheDesc)
 
     def methodArray(self):
-        return self._methodList
+        return self.k_methodArray
+
+    def countOfMethodArray(self):
+        if self.k_methodArray is None:
+            return 0
+        return self.k_methodArray
+    countOfMethodArray = objc.accessor(countOfMethodArray)
+
+    def objectInMethodArrayAtIndex_(self, anIndex):
+        return self.k_methodArray[anIndex]
+    objectInMethodArrayAtIndex_ = objc.accessor(objectInMethodArrayAtIndex_)
+
+    def insertObject_inMethodArrayAtIndex_(self, anObject, anIndex):
+        self.k_methodArray.insert(anIndex, anObject)
+    insertObject_inMethodArrayAtIndex_ = objc.accessor(insertObject_inMethodArrayAtIndex_)
+
+    def removeObjectFromMethodArrayAtIndex_(self, anIndex):
+        del self.k_methodArray[anIndex]
+    removeObjectFromMethodArrayAtIndex_ = objc.accessor(removeObjectFromMethodArrayAtIndex_)
+
+    def replaceObjectInMethodArrayAtIndex_withObject_(self, anIndex, anObject):
+        self.k_methodArray[anIndex] = anObject
+    replaceObjectInMethodArrayAtIndex_withObject_ = objc.accessor(replaceObjectInMethodArrayAtIndex_withObject_)
+
+    def setMethodArray_(self, anArray):
+        self.k_methodArray = anArray
+    setMethodArray_ = objc.accessor(setMethodArray_)
