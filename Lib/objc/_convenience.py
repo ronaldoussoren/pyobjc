@@ -1,10 +1,32 @@
+"""
+This module implements a callback function that is used by the C code to
+add Python special methods to Objective-C classes with a suitable interface.
 
+This module contains no user callable code.
+
+TODO:
+- Add external interface: Framework specific modules may want to add to this.
+"""
 from objc import set_class_extender, selector
 
 CONVENIENCE_METHODS = {}
-CLASS_METHODS = {}
+
+
+CLASS_METHODS = { }
 
 def add_convenience_methods(super_class, name, type_dict):
+	"""
+	Add additional methods to the type-dict of subclass 'name' of 
+	'super_class'. 
+	
+	CONVENIENCE_METHODS is a global variable containing a mapping from
+	an Objective-C selector to a Python method name and implementation.
+	
+	CLASS_METHODS is a global variable containing a mapping from 
+	class name to a list of Python method names and implementation.
+
+	Matching entries from both mappings are added to the 'type_dict'.
+	"""
 	for sel in type_dict.values():
 		if not isinstance(sel, selector):
 			continue
@@ -24,6 +46,7 @@ set_class_extender(add_convenience_methods)
 # is there to force conversion to type 'bool' on Python releases
 # that have such a type.
 def __contains__(self, elem):
+	print "doesContain_", elem
 	return self.doesContain_(elem) != 0
 def __eq__1(self, other):
 	return self.isEqualTo_(other) != 0

@@ -25,6 +25,7 @@ class_list = Foundation.load_bundle(
 gl = globals()
 for cls in class_list:
 	gl[cls.__name__] = cls
+	cls.__module__ = 'AppKit'
 
 Foundation._objc.recycle_autorelease_pool()
 

@@ -39,11 +39,13 @@ ObjC_GetClassList(void)
 	}
 
 	for (i = 0; i < bufferLen; i++) {
-		PyObject* pyclass = ObjCClass_New(buffer[i]);
+		PyObject* pyclass;
+
+		pyclass = ObjCClass_New(buffer[i]);
 		if (pyclass == NULL) {
 			goto error_cleanup;
 		}
-		if (PyTuple_SetItem(result, i, pyclass) < 0) {
+		if (PyTuple_SET_ITEM(result, i, pyclass) < 0) {
 			Py_DECREF(pyclass);
 			goto error_cleanup;
 		}

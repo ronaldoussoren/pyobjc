@@ -11,6 +11,8 @@ TODO:
 * the same module should contain function for replacing/enhancing the 
   Info.plist in the generated application.
 * Add compiled version of the extra sources, instead of the sources themselves
+* Add interface to use the python-starter trick as used by the Interface Builder
+  project.
 """
 
 import buildtools

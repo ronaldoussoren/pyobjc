@@ -11,8 +11,7 @@ PyDoc_STRVAR(proto_cls_doc,
 "\n"
 "This class can be used to specify which methods are supported by an informal\n"
 "protocol. Instances of this type can by used while creating subclasses of \n"
-"objective-C classes to automaticly specify method signatures et.al.\n"
-"\n"
+"objective-C classes to automaticly specify method signatures et.al."
 "");
 
 typedef struct {
@@ -83,6 +82,17 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 	return (PyObject*)result;
 }
 
+static int proto_traverse(PyObject* self, visitproc visit, void* handle)
+{
+	ObjCInformalProtocol* me = (ObjCInformalProtocol*)self;	
+	int                   err;
+
+	err = visit(me->name, handle);
+	if (err) return err;
+	err = visit(me->selectors, handle);	
+	if (err) return err;
+	return 0;
+}
 
 
 PyTypeObject ObjCInformalProtocol_Type = {
@@ -109,7 +119,7 @@ PyTypeObject ObjCInformalProtocol_Type = {
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT,			/* tp_flags */
  	proto_cls_doc,				/* tp_doc */
- 	0,					/* tp_traverse */
+ 	proto_traverse,				/* tp_traverse */
  	0,					/* tp_clear */
 	0,					/* tp_richcompare */
 	0,					/* tp_weaklistoffset */

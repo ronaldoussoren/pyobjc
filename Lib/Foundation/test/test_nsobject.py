@@ -6,7 +6,9 @@ from Foundation import *
 class TestNSObjectInteraction( unittest.TestCase ):
     def testNSObjectClass( self ):
         self.assert_( NSObject.instancesRespondToSelector_( "description" ), "NSObject class claims it doesn't respond to a selector that it does." )
+        self.assert_( hasattr(NSObject, "description"), "NSObject class claims it doesn't respond to a selector that it does." )
         # self.assert_( NSObject.description(), "NSObject class failed to respond to +description selector." )
+
 
     def testNSObjectInstance( self ):
         instance = NSObject.new()

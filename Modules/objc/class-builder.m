@@ -118,8 +118,10 @@ int ObjCClass_SetClass(Class objc_class, PyObject* py_class)
 	}
 	if (py_class == NULL || !ObjCClass_Check(py_class)) {
 		ObjCErr_Set(objc_internal_error,
-			"Trying to set class to of %s to invalid",
-			objc_class->name);
+			"Trying to set class to of %s to invalid value "
+			"(type %s instead of %s)",
+			objc_class->name, py_class->ob_type->tp_name,
+			ObjCClass_Type.tp_name);
 		return -1;
 	}
 	if (((struct class_wrapper*)objc_class)->python_class != NULL) {
@@ -154,13 +156,15 @@ void ObjCClass_UnbuildClass(Class objc_class)
 	}
 	if (class_getInstanceVariable(objc_class, pyobj_ivar) == NULL) {
 		ObjCErr_Set(objc_internal_error, 
-			"Trying to unregister class of non-python %s", 
+			"Trying to unregister class %s, but it is not "
+			"python based", 
 			objc_class->name);
 		return;
 	}
 	if (wrapper->python_class != NULL) {
 		ObjCErr_Set(objc_internal_error,
-			"Trying to unregister objective-C klass %s",
+			"Trying to unregister objective-C class %s, but it "
+			"is already registered with the runtime",
 			objc_class->name);
 		return;
 	}
@@ -511,6 +515,8 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		var->ivar_offset = ivar_size;
 		ivar_size += sizeof(void*);
 
+		/* XXX: Make these global lists instead of macros */
+
 #		define META_METH(pyname, selector, types, imp) 		\
 			meth = meta_method_list->method_list + 		\
 				meta_method_list->method_count++;	\
@@ -672,6 +678,8 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		class_addMethods(&(new_class->meta_class), meta_method_list);
 	}
 
+	Py_XDECREF(py_superclass);
+
 	/* 
 	 * NOTE: Class is not registered yet, we do that as lately as possible
 	 * because it is impossible to remove the registration from the
@@ -680,6 +688,8 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	return (Class)new_class;
 
 error_cleanup:
+	Py_XDECREF(py_superclass);
+
 	if (key_list != NULL) {
 		Py_DECREF(key_list);
 		key_list = NULL;

@@ -2,14 +2,27 @@
 This module contains functions and classes for dealing with the classes.nib
 file in a NIB 'file'.
 
-def parse_classes_nib(nibfile):
-	Parse the classes.nib file inside the given NIB file.
+Usage for this module:
+	NIBFILE1 = "MainMenu.nib"
+	NIBFILE2 = "DocumentWindow.nib"
 
-def generate_wrapper_module(outfp, classinfolist):
-	Generate the wrapper module given the class data in one or more
-	NIB files.
+	info1 = parse_classes_nib(NIBFILE1)
+	info2 = parse_classes_nib(NIBFILE2)
+	fp = open('nibclasses.py', 'w')
+	generate_wrapper_module(fp, [info1, info2])
+
+Using the generated module:
+	import nibclasses
+
+	class MyNibDefinedClass (nibclasses.MyNibDefinedClassBase):
+		def someAction_(self, sender):
+			pass
 
 
+The generated module contains base-classes for all classes defined in the
+NIB file. The base class serves as documentation for the list of methods
+that need to be implemented in subclasses, as wel as a way to avoid working
+with explicit method signatures.
 """
 #
 #An example classes.nib:
@@ -31,7 +44,8 @@ def generate_wrapper_module(outfp, classinfolist):
 
 def parse_classes_nib(nibfile):
 	"""
-	Parse a classes.nib file inside a NIB file.
+	Parse a classes.nib file inside a NIB file. Returns a list of
+	class information.
 	"""
 	import os
 	return ClassNibParser(
@@ -99,6 +113,10 @@ class ClassNibParser:
 
 	The only public entry points in this class are the contructor and
 	the parse method.
+
+	NOTE: I (Ronald) have not yet found documentation about the format
+	of the classes.nib file. This implementation is based on reading a
+	number of classes.nib files.
 	"""
 
 	def __init__(self, fp):

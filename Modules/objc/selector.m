@@ -174,8 +174,7 @@ base_signature(ObjCSelector* self, void* closure)
 	return PyString_FromString(self->sel_signature);
 }
 
-PyDoc_STRVAR(base_selector_doc, 
-"Objective-C selector for a method\n");
+PyDoc_STRVAR(base_selector_doc, "Objective-C name for a method\n");
 static PyObject*
 base_selector(ObjCSelector* self, void* closure)
 {
@@ -223,18 +222,48 @@ sel_dealloc(PyObject* object)
 	object->ob_type->tp_free(object);
 }
 
-
+/* Ronald: This is probably a bit too much documentation... */
 PyDoc_STRVAR(base_selector_type_doc,
-"selector(function, [, signature] [, selector] [, class_method=0] "
-"[, return_type] [, argument_types] [, required=True]) -> selector\n"
+"selector(function, [, signature] [, selector] [, class_method=0]\n"
+"    [, return_type] [, argument_types] [, required=True]) -> selector\n"
 "\n"
-"signature is an objective-C style signature string. return_type and \n"
-"argument_types specify the same information using a PyArg_ParseTuple style \n"
-"format\n\n"
-"The default for selector: function.__name__.replace('_', ':')\n"
-"The default for signature is that for a function that returns an object and \n"
-"takes objects as argument (one for every argument of 'function'.\n"
-"The 'required' argument is only used with informal protocols."
+"Return an Objective-C method from a function. The other arguments \n"
+"specify attributes of the Objective-C method.\n"
+"\n"
+"function:\n"
+"  A function object with at least one argument. The first argument will\n"
+"  be used to pass 'self'. This argument may be non when defineing an \n"
+"  informal_protocol object.\n"
+"selector:\n"
+"  The name of the Objective-C method. The default value of this\n"
+"  attribute is the name of the function, with all underscores replaced\n"
+"  by colons.\n"
+"signature:\n"
+"  Method signature for the Objective-C method. This should be a raw \n"
+"  Objective-C method signature, including specifications for 'self' and\n"
+"  '_cmd'. The default value a signature that describes a method with \n"
+"  arguments of type 'id' and a return-value of the same type.\n"
+"argument_types, return_type:\n"
+"  Alternative method for specifying the method signature. Return_type is\n"
+"  return type and argument_types describes the list of arguments. The \n"
+"  return_type is optional and defaults to 'void' (e.g. no return value).\n"
+"  Both are specified using a subset of the Py_BuildValue syntax:\n"
+"  - s, z, S: an NSString (id)\n"
+"  - b: a byte (char)\n"
+"  - h: a short integer (short int)\n"
+"  - i: an integer (int)\n"
+"  - l: a long integer (long int)\n"
+"  - c: a single character (char)\n"
+"  - f: a single precision float (float)\n"
+"  - d: a double precision float (double)\n"
+"  - O: any object (id)\n"
+"  It is not allowed to specify both 'argument_types' and 'signature'\n"
+"class_method:\n"
+"  True if the method is a class method, false otherwise"
+"required:\n"
+"  True if this is a required method in an informal protocol, false \n"
+"  otherwise. The default value is 'True'. This argument is only used\n"
+"  when defining an 'informal_protocol' object.\n"
 );
 PyTypeObject ObjCSelector_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)
@@ -423,10 +452,10 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 
 	if (res && ObjCObject_Check(res) && self->sel_allocator) {
 		/* Ownership transfered to us, but 'execute' method has
-		 * increased retainCount, the retainCount is now one to high
+		 * increased retainCount, the retainCount is now one too high
 		 */
-    // [ObjCObject_GetObject(res) release];
-    ;
+		id obj = ObjCObject_GetObject(res);
+    		/*[ObjCObject_GetObject(res) release]; XXX */
 	}
 	return res;
 }
@@ -467,8 +496,7 @@ objcsel_descr_get(ObjCNativeSelector* meth, PyObject* obj, PyObject* class)
 	return (PyObject*)result;
 }
 
-PyDoc_STRVAR(native_class_doc, 
-"Objective-C Class that defines a method\n");
+PyDoc_STRVAR(native_class_doc, "Objective-C Class that defines the method\n");
 static PyObject*
 native_class(ObjCNativeSelector* self, void* closure)
 {
@@ -525,7 +553,7 @@ PyTypeObject ObjCNativeSelector_Type = {
 	0,					/* tp_iternext */
 	0,					/* tp_methods */
 	0,					/* tp_members */
-	&native_getset,				/* tp_getset */
+	native_getset,				/* tp_getset */
 	&ObjCSelector_Type,			/* tp_base */
 	0,					/* tp_dict */
 	(descrgetfunc)objcsel_descr_get,	/* tp_descr_get */
@@ -572,6 +600,20 @@ ObjCSelector_FindNative(PyObject* self, char* name)
 
 	if (ObjCClass_Check(self)) {
 		Class cls = ObjCClass_GetClass(self);
+
+		if (!cls) {
+			ObjCErr_Set(PyExc_AttributeError,
+				"No attribute %s", name);
+			return NULL;
+		}
+
+		if (strcmp(cls->name, "NSProxy") == 0) {
+			if (sel == @selector(methodSignatureForSelector:)) {
+				ObjCErr_Set(PyExc_AttributeError,
+					"Cannot access NSProxy.%s", name);
+				return NULL;
+			}
+		}
 
 		if ([cls instancesRespondToSelector:sel]) {
 			methsig = [cls instanceMethodSignatureForSelector:sel];

@@ -104,6 +104,7 @@
 
 - (void) doesNotRecognizeSelector:(SEL) aSelector
 {
+	/* FIXME: Just raise the appropriate Foundation exception */
 	ObjCErr_Set(objc_error, "%s does not recognize -%s",
 		[[super description] cString], SELNAME(aSelector));
 	ObjCErr_ToObjC();

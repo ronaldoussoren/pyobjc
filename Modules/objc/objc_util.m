@@ -268,7 +268,6 @@ int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict)
 		return -1;
 	}
 	Py_DECREF(args);
-	Py_DECREF(super_class);
 
 	return 0;
 }
@@ -286,3 +285,60 @@ char* ObjC_strdup(const char* value)
 	result[len] = 0;
 	return result;
 }
+
+#if 0 /* Multithreading support */
+
+/*
+ * Initial support for multithread access to the bridge. Code is completely
+ * untested (even never compiled). Based on a hint by Jack Jansen.
+ *
+ * What needs to be done in the rest of the code: 
+ * - ObjC_ReleaseGIL() ... ObjC_AcquireGIL() around calls to Obj-C
+ * - ObjC_AcquireGIL() ... ObjC_ReleaseGIL() around calls to Python
+ * These should be wrapped into macros (like 'Py_BEGIN_ALLOW_THREADS')
+ * 
+ * OBJC_BEGIN_OBJC_CALL
+ * 	[objc doit]
+ * OBJC_END_OBJC_CALL
+ *
+ * And:
+ * OBJC_BEGIN_PYTHON_CALL
+ * 	PyList_GetItem([self pyObject], 3)
+ * 	...
+ * OBJC_END_PYTHON_CALL
+ */
+static id  threadKey = @"PyObjCInterpreterState";
+static int multiThreaded = 1;
+static PyInterpreterState* interpreterState = NULL;
+
+void  ObjC_ReleaseGIL(void)
+{
+	NSMutableDictionary* td = [[NSThread currentThread] threadDictionary];
+	PyThreadState* save;
+
+	if (interpreterState == NULL) {
+		interpreterState = PyThreadState_Get()->interp;
+	}
+
+	save = PyEval_SaveThread();
+
+	[td setObject:save forKey:threadKey];
+}
+
+void ObjC_AcquireGIL(void)
+{
+	PyThreadState* save;
+
+	save = [td objectForKey:threadKey];
+
+	if (save == nil) {
+		/* No thread state, make a new one */
+		PyEval_AcquireLock();
+		save = PyThreadState_New(interpreter);
+		PyThreadState_Swap(save);
+	} else {
+		PyEval_RestoreThread(save);
+	}
+}
+
+#endif /* Multithreading support */

@@ -63,6 +63,7 @@
 		return nil;
 	}
 
+	/* PyMapping_GetItemString exists, but no PyMapping_GetItem */
 #if 0
 	v = PyMapping_GetItem([self pyObject], k);
 #else
@@ -100,6 +101,7 @@
 		return;
 	}
 
+	/* PyMapping_SetItemString exists, but no PyMapping_SetItem */
 	if (PyDict_SetItem([self pyObject], k, v) < 0) {
 		Py_DECREF(v);
 		Py_DECREF(k);
@@ -133,7 +135,7 @@
 	PyObject* keys = PyMapping_Keys([self pyObject]);
 	id result = [OC_PythonArray newWithPythonObject:keys];
 	Py_DECREF(keys);
-	[result retain];
+	[result retain]; /* XXX leaking!!! */
 
 	return [result objectEnumerator];
 }
