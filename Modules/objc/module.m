@@ -106,7 +106,9 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 	Class targetClass;
 	int methodCount;
 	int methodIndex;
+	int r;
 	struct objc_method_list *methodsToAdd;
+	PyObject* extraDict = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, keywds, 
 			"OO:classAddMethods", kwlist,
@@ -130,6 +132,11 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		Py_INCREF(Py_None);
 		return Py_None;
 	}
+	
+	extraDict = PyDict_New();
+	if (extraDict == NULL) {
+		return NULL;
+	}
 
 	methodsToAdd = PyObjCRT_AllocMethodList(methodCount);
 	if (methodsToAdd == NULL) {
@@ -139,9 +146,11 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 
 	methodsToAdd->method_count = methodCount;
 
+
 	for (methodIndex = 0; methodIndex < methodCount; methodIndex++) {
 		PyObject* aMethod = PySequence_Fast_GET_ITEM(
 				methodsArray, methodIndex);
+		PyObject* name;
 		struct objc_method *objcMethod;
 
 		aMethod = PyObjCSelector_FromFunction(
@@ -167,16 +176,31 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		}
 		objcMethod->method_imp = PyObjCFFI_MakeIMPForPyObjCSelector(
 			(PyObjCSelector*)aMethod);
-		Py_DECREF(aMethod);
+		
+		name = PyObject_GetAttrString(aMethod, "__name__");
+		r = PyDict_SetItem(extraDict, name, aMethod);
+		Py_DECREF(name); name = NULL;
+		Py_DECREF(aMethod); aMethod = NULL;
+		if (r == -1) {
+			goto cleanup_and_return_error;
+		}
 	}
 
 	/* add the methods */
 	PyObjCRT_ClassAddMethodList(targetClass, methodsToAdd);
 
+	r = PyDict_Merge(((PyTypeObject*)classObject)->tp_dict, extraDict, 1);
+	if (r == -1) goto cleanup_and_return_error;
+
+	Py_DECREF(extraDict); extraDict = NULL;
+
 	Py_INCREF(Py_None);
 	return Py_None;
 
 cleanup_and_return_error:
+	if (extraDict) {
+		Py_DECREF(extraDict);
+	}
 	if (methodsToAdd) free(methodsToAdd);
 	return NULL;
 }

@@ -259,6 +259,12 @@ class TestCategory (unittest.TestCase):
         obj = BaseClassRedef.alloc().init()
 
         self.assertEquals(obj.foo(), 2)
+
+        def foo(self):
+            return 3
+        BaseClassRedef.foo = foo
+
+        self.assertEquals(obj.foo(), 3)
                 
 
 
