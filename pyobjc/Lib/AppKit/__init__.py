@@ -792,4 +792,89 @@ NSValidatedUserInterfaceItem = _objc.informal_protocol(
     ]
 )
 
+NSApplicationDelegate = _objc.informal_protocol(
+    'NSApplicationDelegate',
+    [
+# - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender;
+    _objc.selector(
+    None,
+    selector='applicationShouldTerminate:',
+    signature='i@:@',
+    required=0
+    ),
+
+# - (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename;
+    _objc.selector(
+    None,
+    selector='application:openFile:',
+    signature='c@:@@',
+    required=0
+    ),
+
+# - (BOOL)application:(NSApplication *)sender openTempFile:(NSString *)filename;
+    _objc.selector(
+    None,
+    selector='application:openTempFile:',
+    signature='c@:@@',
+    required=0
+    ),
+    
+# - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender;
+    _objc.selector(
+    None,
+    selector='applicationShouldOpenUntitledFile:',
+    signature='c@:@',
+    required=0
+    ),
+    
+# - (BOOL)applicationOpenUntitledFile:(NSApplication *)sender;
+    _objc.selector(
+    None,
+    selector='applicationOpenUntitledFile:',
+    signature='c@:@',
+    required=0
+    ),
+
+# - (BOOL)application:(id)sender openFileWithoutUI:(NSString *)filename;
+    _objc.selector(
+    None,
+    selector='application:openFileWithoutUI:',
+    signature='c@:@@',
+    required=0
+    ),
+
+# - (BOOL)application:(NSApplication *)sender printFile:(NSString *)filename;
+    _objc.selector(
+    None,
+    selector='application:printFile:',
+    signature='c@:@@',
+    required=0
+    ),
+
+# - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
+    _objc.selector(
+    None,
+    selector='applicationShouldTerminateAfterLastWindowClosed:',
+    signature='c@:@',
+    required=0
+    ),
+
+# - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag;
+    _objc.selector(
+    None,
+    selector='applicationShouldHandleReopen:hasVisibleWindows:',
+    signature='c@:@c',
+    required=0
+    ),
+
+# - (NSMenu *)applicationDockMenu:(NSApplication *)sender;
+    _objc.selector(
+    None,
+    selector='applicationDockMenu:',
+    signature='@@:@',
+    required=0
+    ),
+    ]
+)
+
 # TODO: NSWindowScripting
