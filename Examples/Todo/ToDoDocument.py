@@ -1,6 +1,6 @@
 from AppKit import *
 from Foundation import *
-from objc import IBOutlet
+from objc import IBOutlet, NO
 from ToDoCell import *
 from ToDoItem import *
 from SelectionNotifyMatrix import *
@@ -38,11 +38,6 @@ class  ToDoDocument (AutoBaseClass):
 
     def __del__(self): # dealloc in Objective-C code
 
-    	#if self._activeDays:
-    	#	self._activeDays.release()
-    	#if self._currentItems:
-    	#	self._currentItems.release()
-
     	NSNotificationCenter.defaultCenter().removeObserver_(self)
 
     def selectedItem(self):
@@ -65,11 +60,9 @@ class  ToDoDocument (AutoBaseClass):
     		aCell.setTarget_(self)
     		aCell.setAction_('itemStatusClicked:')
     		self.statusList.putCell_atRow_column_(aCell, index, 0)
-    		#aCell.release()
     	
     	if self._dataFromFile:
     		self.loadDocWithData_(self._dataFromFile)
-    		#self._dataFromFile.release()
     		self._dataFromFile = None
     	else:
     		self.loadDocWithData_(None)
@@ -125,12 +118,9 @@ class  ToDoDocument (AutoBaseClass):
     			NSTimeZone.defaultTimeZone(), 
     			None))
 
-    def initDataModelWithDictionary_(self, dict):
-    	#if self._activeDays:
-    	#	self._activeDays.autorelease()
-
-    	if dict:
-    		self._activeDays = dict # .retain()
+    def initDataModelWithDictionary_(self, aDict):
+    	if aDict:
+    		self._activeDays = aDict
     	else:
     		self._activeDays = NSMutableDictionary.alloc().init()
 
@@ -138,9 +128,6 @@ class  ToDoDocument (AutoBaseClass):
     	self.setCurrentItems_(self._activeDays.objectForKey_(date))
 
     def setCurrentItems_(self, newItems):
-    	#if self._currentItems:
-    	#	self._currentItems.autorelease()
-
     	if newItems:
     		self._currentItems = newItems.mutableCopy()
     	else:
@@ -200,7 +187,6 @@ class  ToDoDocument (AutoBaseClass):
     	elif newName != "":
     		newItem = ToDoItem.alloc().initWithName_andDate_(newName, self.calendar.selectedDay())
     		self._currentItems.replaceObjectAtIndex_withObject_(row, newItem)
-    		#newItem.release()
 
     	self._selectedItem = self._currentItems.objectAtIndex_(row)
 
@@ -253,7 +239,7 @@ class  ToDoDocument (AutoBaseClass):
     	if selfcalendar:
     		self.loadDocWithData_(data)
     	else:
-    		self._dataFromFile = data #.retain()
+    		self._dataFromFile = data
 
     	return 1
 
@@ -282,7 +268,7 @@ class  ToDoDocument (AutoBaseClass):
     				self,
     				'itemTimerFired:',
     				anItem,
-    				False)
+    				NO)
     		anItem.setTimer_(aTimer)
     	else:
     		anItem.setTimer_(None)

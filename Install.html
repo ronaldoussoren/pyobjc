@@ -56,13 +56,30 @@ the <code><span>Project</span> <span>Templates</span></code> directory.  Use Pro
 applications.</p>
 <h2><a name="project-templates">Project Templates</a></h2>
 <p>The <code><span>Project</span> <span>Templates</span></code> directory contains project templates for
-project builder.  Currently, there is one project builder template;  a
-Cocoa-Python Application project template.   When installed, this adds
-a project to Project Builder's project menu that allows new Cocoa
-applications implemented entirely in Python to be created from within
-Project Builder (in the same fashion as any other project).</p>
-<p>To install, simply copy the project template into the Project Builder
-project templates directory (or create a symlink).</p>
+project builder.  These have to be copied to
+<code><span>/Developer/ProjectBuilder</span> <span>Extras/Project</span> <span>Templates/Application</span></code> before
+they are useable from Project Builder.</p>
+<p>There are three templates available:</p>
+<ul>
+<li>Cocoa-Python Application<p>A project created from this template is designed to implement standalone,
+pure-Python, applications that are compatible with Apple's build of Python as
+well as all other builds of python that support PyObjC.</p>
+<p>When building the 'install' target, the resulting application wrapper will
+included the PyObjC module and can be launched on any stock OS X 10.2 system
+without requiring PyObjC to be preinstalled.</p>
+</li>
+<li>Cocoa-Python-ObjC Application<p>A project created from this template includes an embedded framework project
+into which all compiled (Objective-C) code can be placed.  Upon launch, 
+the application automatically dynamically loads the embedded framework 
+containing the compiled code.</p>
+<p>Each Framework's Resources directory is automatically added to sys.path.</p>
+</li>
+<li>Cocoa-Python Document-based Application<p>This template works like the Cocoa-Python Application template in that it
+is compatible with the Apple build of Python.   It creates an application 
+that uses Cocoa's Multiple Document Architecture in the same fashion as the
+default Cocoa Document-based Application supplied with Project Builder.</p>
+</li>
+</ul>
 <p>More information on project templates can be found in the Project
 Builder documentation and/or release notes.</p>
 </body>

@@ -66,7 +66,6 @@ class ToDoItem (NSObject):
     	self._timer = None
 
     	if not aName:
-    		#self.release()
     		return None
 
     	self.setItemName_(aName)
@@ -117,15 +116,11 @@ class ToDoItem (NSObject):
     	return self
 
     def __del__(self): # dealloc
-    	#if self._itemName: self._itemName.release()
-    	#if self._day: self._day.release()
-    	#if self._notes: self._notes.release()
     	if self._notes: 
     		self._timer.invalidate()
-    		#self._timer.release()
 
     def setDay_(self, newDay):
-    	self._day = newDay #.retain()
+    	self._day = newDay
 
     def day(self):
     	return self._day
@@ -145,10 +140,9 @@ class ToDoItem (NSObject):
     def setTimer_(self, newTimer):
     	if self._timer:
     		self._timer.invalidate()
-    		#self._timer.autorelease()
 
     	if newTimer:
-    		self._timer = newTimer #.retain()
+    		self._timer = newTimer
     	else:
     		self._timer = None
 
