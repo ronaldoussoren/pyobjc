@@ -856,7 +856,6 @@ free_ivars(id self, PyObject* cls)
 		clsValues = PyObject_CallMethod(clsDict, "values", NULL);
 		Py_DECREF(clsDict);
 		if (clsValues == NULL) {
-			PyErr_Print();
 			PyErr_Clear();
 			break;
 		}

@@ -106,7 +106,7 @@ static struct inttable enum_table[] = {
 	 { "NSObjCDoubleType", NSObjCDoubleType },
 	 { "NSObjCBoolType", NSObjCBoolType },
 	 { "NSObjCSelectorType", NSObjCSelectorType },
-	 { "NSPyObjCObjectType", NSObjCObjectType },
+	 { "NSObjCObjectType", NSObjCObjectType },
 	 { "NSObjCStructType", NSObjCStructType },
 	 { "NSObjCPointerType", NSObjCPointerType },
 	 { "NSObjCStringType", NSObjCStringType },

@@ -280,7 +280,6 @@ static struct registry* create_ffi(char* signature)
 
 	r = ObjC_RegisterSignatureMapping(signature, ObjC_FFICaller, ffiImp);
 	if (r == -1) {
-		PyErr_Print();
 		goto error;
 	}
 

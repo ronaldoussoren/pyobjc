@@ -1109,5 +1109,44 @@ NSTextViewDelegate = _objc.informal_protocol(
 	]
 )
 
-# TODO:
 # NSWindowScripting
+def scriptcmd(sel):
+    return _objc.selector(None, selector=sel, signature='@@:@', isRequired=0)
+def scriptquery(sel):
+    return _objc.selector(None, selector=sel, signature='c@:', isRequired=0)
+def scriptboolset(sel):
+    return _objc.selector(None, selector=sel, signature='v@:c', isRequired=0)
+
+NSTextViewDelegate = _objc.informal_protocol(
+    'NSTextViewDelegate',
+    [
+    scriptcmd('handleCloseScriptCommand:'),
+    scriptcmd('handlePrintScriptCommand:'),
+    scriptcmd('handleSaveScriptCommand:'),
+    scriptquery('hasCloseBox'),
+    scriptquery('hasTitleBar'),
+    scriptquery('isFloatingPanel'),
+    scriptquery('isMiniaturizable'),
+    scriptquery('isModalPanel'),
+    scriptquery('isResizable'),
+    scriptquery('isZoomable'),
+    _objc.selector(
+        None, 
+        selector='orderedIndex', 
+        signature='i@:', 
+        isRequired=0
+    ),
+    scriptboolset('setIsMiniaturized:'),
+    scriptboolset('setIsVisible:'),
+    scriptboolset('setIsZoomed:'),
+    _objc.selector(
+        None, 
+        selector='setOrderedIndex:', 
+        signature='v@:i', 
+        isRequired=0
+    ),
+    ]
+)
+del scriptcmd
+del scriptquery
+del scriptboolset

@@ -31,6 +31,7 @@ static void
 proto_dealloc(PyObject* object)
 {
 	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)object;	
+#if 0
 	int len = PyTuple_Size(self->selectors);
 	int i;
 
@@ -42,6 +43,7 @@ proto_dealloc(PyObject* object)
 		PyDict_DelItemString(selToProtocolMapping,
 			SELNAME(tmp->sel_selector));
 	}
+#endif
 
 	Py_XDECREF(self->selectors);
 	object->ob_type->tp_free(object);
@@ -97,6 +99,7 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 	result->name = name;
 	result->selectors = selectors;
 
+#if 0
 	len = PyTuple_Size(result->selectors);
 	for (i = 0; i < len; i++) {
 		if (!ObjCSelector_Check(PyTuple_GET_ITEM(selectors, i))) {
@@ -122,6 +125,7 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 			SELNAME(tmp->sel_selector),
 			name);
 	}
+#endif
 
 	Py_XINCREF(name);
 
@@ -217,6 +221,7 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
 	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;	
 	int i, len;
 	PyObject* cur;
+	PyObject* seq;
 
 	if (!PyObjCInformalProtocol_Check(obj)) {
 		ObjCErr_Set(PyExc_TypeError, 
@@ -224,22 +229,26 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
 		return 0;
 	}
 	/* XXX: should use PySequence_Fast */
-	len = PySequence_Length(self->selectors);
+	seq = PySequence_Fast(self->selectors,"selector list not a sequence?");
+	if (seq == NULL) {
+		return 0;
+	}
+
+	len = PySequence_Fast_GET_SIZE(seq);
 	for (i = 0; i < len; i++) {
-		cur = PySequence_GetItem(self->selectors, i);
+		cur = PySequence_Fast_GET_ITEM(self->selectors, i);
 		if (cur == NULL) {
-			PyErr_Print();
 			continue;
 		}
 
 		if (ObjCSelector_Check(cur)) {
 			if (ObjCSelector_Selector(cur) == selector) {
+				Py_DECREF(seq);
 				return cur;
 			}
 		}
-
-		Py_DECREF(cur);
 	}
+	Py_DECREF(seq);
 	return NULL;
 }
 
@@ -252,6 +261,7 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls)
 	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;	
 	int i, len;
 	PyObject* cur;
+	PyObject* seq;
 
 	if (!PyObjCInformalProtocol_Check(obj)) {
 		ObjCErr_Set(PyExc_TypeError, 
@@ -263,12 +273,15 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls)
 			"Second argument is not an objc.objc_class");
 		return 0;
 	}
+	seq = PySequence_Fast(self->selectors, "selector list not a sequence");
+	if (seq == NULL) {
+		return 0;
+	}
 
-	len = PySequence_Length(self->selectors);
+	len = PySequence_Fast_GET_SIZE(seq);
 	for (i = 0; i < len; i++) {
-		cur = PySequence_GetItem(self->selectors, i);
+		cur = PySequence_Fast_GET_ITEM(seq, i);
 		if (cur == NULL) {
-			PyErr_Print();
 			continue;
 		}
 
@@ -278,14 +291,13 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls)
 
 			m = PyObjCClass_FindSelector(cls, sel);
 			if (m == NULL && ObjCSelector_Required(cur)) {
-				PyErr_Print();
 				ObjCErr_Set(PyExc_TypeError,
 					"class %s does not implement protocol "
 					"%s: no implementation for %s",
 					((PyTypeObject*)cls)->tp_name,
 					PyString_AsString(self->name),
 					SELNAME(sel));
-				Py_DECREF(cur);
+				Py_DECREF(seq);
 				return 0;
 			}
 			if (m) {
@@ -299,16 +311,15 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls)
 						((PyTypeObject*)cls)->tp_name,
 						PyString_AsString(self->name),
 						SELNAME(sel));
-					Py_DECREF(cur);
+					Py_DECREF(seq);
 					return 0;
 				}
 			} else {
 				PyErr_Clear();
 			}
 		}
-
-		Py_DECREF(cur);
 	}
+	Py_DECREF(seq);
 	return 1;
 }
 
@@ -337,6 +348,7 @@ PyObjCInformalProtocol_Warnings(char* name, PyObject* clsDict, PyObject* protoco
 	if (!PyDict_Check(clsDict)) {
 		PyErr_SetString(PyExc_TypeError, 
 			"class dict is not a dictionary");
+		Py_DECREF(protoMap);
 		return -1;
 	}
 		
@@ -360,11 +372,13 @@ PyObjCInformalProtocol_Warnings(char* name, PyObject* clsDict, PyObject* protoco
 			Py_DECREF(seq);
 			Py_DECREF(protoMap);
 			return -1;
-		} else {
+		}  else {
 			Py_INCREF(obj->name);
+			Py_INCREF(obj);
 		}
 	}
 	Py_DECREF(seq);
+	seq = NULL;
 
 	/*
 	 * Actually perform the check.
@@ -376,7 +390,7 @@ PyObjCInformalProtocol_Warnings(char* name, PyObject* clsDict, PyObject* protoco
 	}
 
 	seq = PySequence_Fast(keys, "Dict keys not a sequence!?");
-	Py_DECREF(keys);
+	Py_DECREF(keys); keys = NULL;
 	if (seq == NULL) {
 		Py_DECREF(protoMap);
 		return -1;
@@ -395,7 +409,6 @@ PyObjCInformalProtocol_Warnings(char* name, PyObject* clsDict, PyObject* protoco
 		}
 
 		if (!ObjCSelector_Check(q)) {
-			Py_DECREF(q);
 			continue;
 		}
 

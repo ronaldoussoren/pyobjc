@@ -90,8 +90,12 @@ static inline int convert_id(PyObject* object, void* pvar)
 
 static inline int convert_SEL(PyObject* object, void* pvar)
 {
+        if (object == Py_None) {
+            *(SEL*)pvar = NULL;
+            return 1;
+        }
 	if (!PyString_Check(object)) {
-		PyErr_SetString(PyExc_TypeError, "Excpected string");
+		PyErr_SetString(PyExc_TypeError, "Expected string");
 		return 0;
 	}
 
@@ -102,7 +106,7 @@ static inline int convert_SEL(PyObject* object, void* pvar)
 static inline int convert_Class(PyObject* object, void* pvar)
 {
 	if (!PyObjCClass_Check(object)) {
-		PyErr_SetString(PyExc_TypeError, "Excpected objective-C class");
+		PyErr_SetString(PyExc_TypeError, "Expected objective-C class");
 		return 0;
 	}
 
@@ -119,7 +123,7 @@ static	char* keywords[] = { "decoder", NULL };
 	NSObject* objc_result;
 	id objc_decoder;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NXReadNSObjectFromCoder", keywords, convert_id, &objc_decoder) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NXReadNSObjectFromCoder", keywords, convert_id, &objc_decoder)) return NULL;
 	NS_DURING
 		objc_result = NXReadNSObjectFromCoder(
 objc_decoder);
@@ -138,7 +142,7 @@ static	char* keywords[] = { "anObject", NULL };
 	BOOL objc_result;
 	id objc_anObject;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSIsFreedObject", keywords, convert_id, &objc_anObject) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSIsFreedObject", keywords, convert_id, &objc_anObject)) return NULL;
 	NS_DURING
 		objc_result = NSIsFreedObject(
 objc_anObject);
@@ -157,7 +161,7 @@ static	char* keywords[] = { NULL };
 	PyObject* result;
 	unsigned objc_result;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSCountFrames", keywords) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":NSCountFrames", keywords)) return NULL;
 	NS_DURING
 		objc_result = NSCountFrames(
 );
@@ -178,7 +182,7 @@ static	char* keywords[] = { "aPoint", "bPoint", NULL };
 	NSPoint objc_aPoint;
 	NSPoint objc_bPoint;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSEqualPoints", keywords, convert_NSPoint, &objc_aPoint, convert_NSPoint, &objc_bPoint) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSEqualPoints", keywords, convert_NSPoint, &objc_aPoint, convert_NSPoint, &objc_bPoint)) return NULL;
 	NS_DURING
 		objc_result = NSEqualPoints(
 objc_aPoint, objc_bPoint);
@@ -199,7 +203,7 @@ static	char* keywords[] = { "aSize", "bSize", NULL };
 	NSSize objc_aSize;
 	NSSize objc_bSize;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSEqualSizes", keywords, convert_NSSize, &objc_aSize, convert_NSSize, &objc_bSize) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSEqualSizes", keywords, convert_NSSize, &objc_aSize, convert_NSSize, &objc_bSize)) return NULL;
 	NS_DURING
 		objc_result = NSEqualSizes(
 objc_aSize, objc_bSize);
@@ -220,7 +224,7 @@ static	char* keywords[] = { "aRect", "bRect", NULL };
 	NSRect objc_aRect;
 	NSRect objc_bRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSEqualRects", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_bRect) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSEqualRects", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_bRect)) return NULL;
 	NS_DURING
 		objc_result = NSEqualRects(
 objc_aRect, objc_bRect);
@@ -240,7 +244,7 @@ static	char* keywords[] = { "aRect", NULL };
 	BOOL objc_result;
 	NSRect objc_aRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSIsEmptyRect", keywords, convert_NSRect, &objc_aRect) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSIsEmptyRect", keywords, convert_NSRect, &objc_aRect)) return NULL;
 	NS_DURING
 		objc_result = NSIsEmptyRect(
 objc_aRect);
@@ -262,7 +266,7 @@ static	char* keywords[] = { "aRect", "dX", "dY", NULL };
 	float objc_dX;
 	float objc_dY;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&ff:NSInsetRect", keywords, convert_NSRect, &objc_aRect, &objc_dX, &objc_dY) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&ff:NSInsetRect", keywords, convert_NSRect, &objc_aRect, &objc_dX, &objc_dY)) return NULL;
 	NS_DURING
 		objc_result = NSInsetRect(
 objc_aRect, objc_dX, objc_dY);
@@ -282,7 +286,7 @@ static	char* keywords[] = { "aRect", NULL };
 	NSRect objc_result;
 	NSRect objc_aRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSIntegralRect", keywords, convert_NSRect, &objc_aRect) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSIntegralRect", keywords, convert_NSRect, &objc_aRect)) return NULL;
 	NS_DURING
 		objc_result = NSIntegralRect(
 objc_aRect);
@@ -303,7 +307,7 @@ static	char* keywords[] = { "aRect", "bRect", NULL };
 	NSRect objc_aRect;
 	NSRect objc_bRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSUnionRect", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_bRect) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSUnionRect", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_bRect)) return NULL;
 	NS_DURING
 		objc_result = NSUnionRect(
 objc_aRect, objc_bRect);
@@ -324,7 +328,7 @@ static	char* keywords[] = { "aRect", "bRect", NULL };
 	NSRect objc_aRect;
 	NSRect objc_bRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSIntersectionRect", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_bRect) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSIntersectionRect", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_bRect)) return NULL;
 	NS_DURING
 		objc_result = NSIntersectionRect(
 objc_aRect, objc_bRect);
@@ -346,7 +350,7 @@ static	char* keywords[] = { "aRect", "dX", "dY", NULL };
 	float objc_dX;
 	float objc_dY;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&ff:NSOffsetRect", keywords, convert_NSRect, &objc_aRect, &objc_dX, &objc_dY) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&ff:NSOffsetRect", keywords, convert_NSRect, &objc_aRect, &objc_dX, &objc_dY)) return NULL;
 	NS_DURING
 		objc_result = NSOffsetRect(
 objc_aRect, objc_dX, objc_dY);
@@ -367,7 +371,7 @@ static	char* keywords[] = { "aPoint", "aRect", NULL };
 	NSPoint objc_aPoint;
 	NSRect objc_aRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSPointInRect", keywords, convert_NSPoint, &objc_aPoint, convert_NSRect, &objc_aRect) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSPointInRect", keywords, convert_NSPoint, &objc_aPoint, convert_NSRect, &objc_aRect)) return NULL;
 	NS_DURING
 		objc_result = NSPointInRect(
 objc_aPoint, objc_aRect);
@@ -389,7 +393,7 @@ static	char* keywords[] = { "aPoint", "aRect", "flipped", NULL };
 	NSRect objc_aRect;
 	BOOL objc_flipped;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&:NSMouseInRect", keywords, convert_NSPoint, &objc_aPoint, convert_NSRect, &objc_aRect, convert_BOOL, &objc_flipped) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&:NSMouseInRect", keywords, convert_NSPoint, &objc_aPoint, convert_NSRect, &objc_aRect, convert_BOOL, &objc_flipped)) return NULL;
 	NS_DURING
 		objc_result = NSMouseInRect(
 objc_aPoint, objc_aRect, objc_flipped);
@@ -410,7 +414,7 @@ static	char* keywords[] = { "aRect", "bRect", NULL };
 	NSRect objc_aRect;
 	NSRect objc_bRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSContainsRect", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_bRect) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSContainsRect", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_bRect)) return NULL;
 	NS_DURING
 		objc_result = NSContainsRect(
 objc_aRect, objc_bRect);
@@ -431,7 +435,7 @@ static	char* keywords[] = { "aRect", "bRect", NULL };
 	NSRect objc_aRect;
 	NSRect objc_bRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSIntersectsRect", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_bRect) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSIntersectsRect", keywords, convert_NSRect, &objc_aRect, convert_NSRect, &objc_bRect)) return NULL;
 	NS_DURING
 		objc_result = NSIntersectsRect(
 objc_aRect, objc_bRect);
@@ -451,7 +455,7 @@ static	char* keywords[] = { "aPoint", NULL };
 	NSString* objc_result;
 	NSPoint objc_aPoint;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSStringFromPoint", keywords, convert_NSPoint, &objc_aPoint) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSStringFromPoint", keywords, convert_NSPoint, &objc_aPoint)) return NULL;
 	NS_DURING
 		objc_result = NSStringFromPoint(
 objc_aPoint);
@@ -470,7 +474,7 @@ static	char* keywords[] = { "aSize", NULL };
 	NSString* objc_result;
 	NSSize objc_aSize;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSStringFromSize", keywords, convert_NSSize, &objc_aSize) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSStringFromSize", keywords, convert_NSSize, &objc_aSize)) return NULL;
 	NS_DURING
 		objc_result = NSStringFromSize(
 objc_aSize);
@@ -489,7 +493,7 @@ static	char* keywords[] = { "aRect", NULL };
 	NSString* objc_result;
 	NSRect objc_aRect;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSStringFromRect", keywords, convert_NSRect, &objc_aRect) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSStringFromRect", keywords, convert_NSRect, &objc_aRect)) return NULL;
 	NS_DURING
 		objc_result = NSStringFromRect(
 objc_aRect);
@@ -508,7 +512,7 @@ static	char* keywords[] = { "aString", NULL };
 	NSPoint objc_result;
 	id objc_aString;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSPointFromString", keywords, convert_id, &objc_aString) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSPointFromString", keywords, convert_id, &objc_aString)) return NULL;
 	NS_DURING
 		objc_result = NSPointFromString(
 objc_aString);
@@ -528,7 +532,7 @@ static	char* keywords[] = { "aString", NULL };
 	NSSize objc_result;
 	id objc_aString;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSSizeFromString", keywords, convert_id, &objc_aString) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSSizeFromString", keywords, convert_id, &objc_aString)) return NULL;
 	NS_DURING
 		objc_result = NSSizeFromString(
 objc_aString);
@@ -548,7 +552,7 @@ static	char* keywords[] = { "aString", NULL };
 	NSRect objc_result;
 	id objc_aString;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSRectFromString", keywords, convert_id, &objc_aString) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSRectFromString", keywords, convert_id, &objc_aString)) return NULL;
 	NS_DURING
 		objc_result = NSRectFromString(
 objc_aString);
@@ -568,7 +572,7 @@ static	char* keywords[] = { "fullFilePath", NULL };
 	NSString* objc_result;
 	id objc_fullFilePath;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSHFSTypeOfFile", keywords, convert_id, &objc_fullFilePath) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSHFSTypeOfFile", keywords, convert_id, &objc_fullFilePath)) return NULL;
 	NS_DURING
 		objc_result = NSHFSTypeOfFile(
 objc_fullFilePath);
@@ -587,7 +591,7 @@ static	char* keywords[] = { "plist", NULL };
 	BOOL objc_result;
 	id objc_plist;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSJavaNeedsVirtualMachine", keywords, convert_id, &objc_plist) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSJavaNeedsVirtualMachine", keywords, convert_id, &objc_plist)) return NULL;
 	NS_DURING
 		objc_result = NSJavaNeedsVirtualMachine(
 objc_plist);
@@ -607,7 +611,7 @@ static	char* keywords[] = { "plist", NULL };
 	BOOL objc_result;
 	id objc_plist;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSJavaProvidesClasses", keywords, convert_id, &objc_plist) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSJavaProvidesClasses", keywords, convert_id, &objc_plist)) return NULL;
 	NS_DURING
 		objc_result = NSJavaProvidesClasses(
 objc_plist);
@@ -627,7 +631,7 @@ static	char* keywords[] = { "plist", NULL };
 	BOOL objc_result;
 	id objc_plist;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSJavaNeedsToLoadClasses", keywords, convert_id, &objc_plist) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSJavaNeedsToLoadClasses", keywords, convert_id, &objc_plist)) return NULL;
 	NS_DURING
 		objc_result = NSJavaNeedsToLoadClasses(
 objc_plist);
@@ -647,7 +651,7 @@ static	char* keywords[] = { "plist", NULL };
 	id objc_result;
 	id objc_plist;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSJavaSetup", keywords, convert_id, &objc_plist) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSJavaSetup", keywords, convert_id, &objc_plist)) return NULL;
 	NS_DURING
 		objc_result = NSJavaSetup(
 objc_plist);
@@ -665,7 +669,7 @@ static	char* keywords[] = { NULL };
 	PyObject* result;
 	id objc_result;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSJavaSetupVirtualMachine", keywords) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":NSJavaSetupVirtualMachine", keywords)) return NULL;
 	NS_DURING
 		objc_result = NSJavaSetupVirtualMachine(
 );
@@ -685,7 +689,7 @@ static	char* keywords[] = { "name", "path", NULL };
 	id objc_name;
 	id objc_path;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSJavaObjectNamedInPath", keywords, convert_id, &objc_name, convert_id, &objc_path) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSJavaObjectNamedInPath", keywords, convert_id, &objc_name, convert_id, &objc_path)) return NULL;
 	NS_DURING
 		objc_result = NSJavaObjectNamedInPath(
 objc_name, objc_path);
@@ -705,7 +709,7 @@ static	char* keywords[] = { "bundle", "plist", NULL };
 	id objc_bundle;
 	id objc_plist;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSJavaBundleSetup", keywords, convert_id, &objc_bundle, convert_id, &objc_plist) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSJavaBundleSetup", keywords, convert_id, &objc_bundle, convert_id, &objc_plist)) return NULL;
 	NS_DURING
 		objc_result = NSJavaBundleSetup(
 objc_bundle, objc_plist);
@@ -724,7 +728,7 @@ static	char* keywords[] = { "bundle", "plist", NULL };
 	id objc_bundle;
 	id objc_plist;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSJavaBundleCleanup", keywords, convert_id, &objc_bundle, convert_id, &objc_plist) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSJavaBundleCleanup", keywords, convert_id, &objc_bundle, convert_id, &objc_plist)) return NULL;
 	NS_DURING
 		NSJavaBundleCleanup(
 objc_bundle, objc_plist);
@@ -744,7 +748,7 @@ static	char* keywords[] = { "aSelector", NULL };
 	NSString* objc_result;
 	SEL objc_aSelector;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSStringFromSelector", keywords, convert_SEL, &objc_aSelector) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSStringFromSelector", keywords, convert_SEL, &objc_aSelector)) return NULL;
 	NS_DURING
 		objc_result = NSStringFromSelector(
 objc_aSelector);
@@ -763,7 +767,7 @@ static	char* keywords[] = { "aSelectorName", NULL };
 	SEL objc_result;
 	id objc_aSelectorName;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSSelectorFromString", keywords, convert_id, &objc_aSelectorName) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSSelectorFromString", keywords, convert_id, &objc_aSelectorName)) return NULL;
 	NS_DURING
 		objc_result = NSSelectorFromString(
 objc_aSelectorName);
@@ -783,7 +787,7 @@ static	char* keywords[] = { "aClassName", NULL };
 	Class objc_result;
 	id objc_aClassName;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSClassFromString", keywords, convert_id, &objc_aClassName) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSClassFromString", keywords, convert_id, &objc_aClassName)) return NULL;
 	NS_DURING
 		objc_result = NSClassFromString(
 objc_aClassName);
@@ -803,7 +807,7 @@ static	char* keywords[] = { "aClass", NULL };
 	NSString* objc_result;
 	Class objc_aClass;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSStringFromClass", keywords, convert_Class, &objc_aClass) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSStringFromClass", keywords, convert_Class, &objc_aClass)) return NULL;
 	NS_DURING
 		objc_result = NSStringFromClass(
 objc_aClass);
@@ -821,7 +825,7 @@ static	char* keywords[] = { "format", NULL };
 	PyObject* result;
 	id objc_format;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSLog", keywords, convert_id, &objc_format) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSLog", keywords, convert_id, &objc_format)) return NULL;
 	NS_DURING
 		NSLog(
 objc_format);
@@ -840,7 +844,7 @@ static	char* keywords[] = { "object", NULL };
 	PyObject* result;
 	id objc_object;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSDeallocateObject", keywords, convert_id, &objc_object) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSDeallocateObject", keywords, convert_id, &objc_object)) return NULL;
 	NS_DURING
 		NSDeallocateObject(
 objc_object);
@@ -859,7 +863,7 @@ static	char* keywords[] = { "object", NULL };
 	PyObject* result;
 	id objc_object;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSIncrementExtraRefCount", keywords, convert_id, &objc_object) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSIncrementExtraRefCount", keywords, convert_id, &objc_object)) return NULL;
 	NS_DURING
 		NSIncrementExtraRefCount(
 objc_object);
@@ -879,7 +883,7 @@ static	char* keywords[] = { "object", NULL };
 	BOOL objc_result;
 	id objc_object;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSDecrementExtraRefCountWasZero", keywords, convert_id, &objc_object) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSDecrementExtraRefCountWasZero", keywords, convert_id, &objc_object)) return NULL;
 	NS_DURING
 		objc_result = NSDecrementExtraRefCountWasZero(
 objc_object);
@@ -899,7 +903,7 @@ static	char* keywords[] = { "object", NULL };
 	unsigned objc_result;
 	id objc_object;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSExtraRefCount", keywords, convert_id, &objc_object) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSExtraRefCount", keywords, convert_id, &objc_object)) return NULL;
 	NS_DURING
 		objc_result = NSExtraRefCount(
 objc_object);
@@ -918,7 +922,7 @@ static	char* keywords[] = { NULL };
 	PyObject* result;
 	NSString* objc_result;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSUserName", keywords) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":NSUserName", keywords)) return NULL;
 	NS_DURING
 		objc_result = NSUserName(
 );
@@ -936,7 +940,7 @@ static	char* keywords[] = { NULL };
 	PyObject* result;
 	NSString* objc_result;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSFullUserName", keywords) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":NSFullUserName", keywords)) return NULL;
 	NS_DURING
 		objc_result = NSFullUserName(
 );
@@ -954,7 +958,7 @@ static	char* keywords[] = { NULL };
 	PyObject* result;
 	NSString* objc_result;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSHomeDirectory", keywords) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":NSHomeDirectory", keywords)) return NULL;
 	NS_DURING
 		objc_result = NSHomeDirectory(
 );
@@ -973,7 +977,7 @@ static	char* keywords[] = { "userName", NULL };
 	NSString* objc_result;
 	id objc_userName;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSHomeDirectoryForUser", keywords, convert_id, &objc_userName) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSHomeDirectoryForUser", keywords, convert_id, &objc_userName)) return NULL;
 	NS_DURING
 		objc_result = NSHomeDirectoryForUser(
 objc_userName);
@@ -991,7 +995,7 @@ static	char* keywords[] = { NULL };
 	PyObject* result;
 	NSString* objc_result;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSTemporaryDirectory", keywords) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":NSTemporaryDirectory", keywords)) return NULL;
 	NS_DURING
 		objc_result = NSTemporaryDirectory(
 );
@@ -1009,7 +1013,7 @@ static	char* keywords[] = { NULL };
 	PyObject* result;
 	NSString* objc_result;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSOpenStepRootDirectory", keywords) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":NSOpenStepRootDirectory", keywords)) return NULL;
 	NS_DURING
 		objc_result = NSOpenStepRootDirectory(
 );
@@ -1030,7 +1034,7 @@ static	char* keywords[] = { "directory", "domainMask", "expandTilde", NULL };
 	NSSearchPathDomainMask objc_domainMask;
 	BOOL objc_expandTilde;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "iiO&:NSSearchPathForDirectoriesInDomains", keywords, &objc_directory, &objc_domainMask, convert_BOOL, &objc_expandTilde) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "iiO&:NSSearchPathForDirectoriesInDomains", keywords, &objc_directory, &objc_domainMask, convert_BOOL, &objc_expandTilde)) return NULL;
 	NS_DURING
 		objc_result = NSSearchPathForDirectoriesInDomains(
 objc_directory, objc_domainMask, objc_expandTilde);
@@ -1050,7 +1054,7 @@ static	char* keywords[] = { "range1", "range2", NULL };
 	NSRange objc_range1;
 	NSRange objc_range2;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSUnionRange", keywords, convert_NSRange, &objc_range1, convert_NSRange, &objc_range2) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSUnionRange", keywords, convert_NSRange, &objc_range1, convert_NSRange, &objc_range2)) return NULL;
 	NS_DURING
 		objc_result = NSUnionRange(
 objc_range1, objc_range2);
@@ -1071,7 +1075,7 @@ static	char* keywords[] = { "range1", "range2", NULL };
 	NSRange objc_range1;
 	NSRange objc_range2;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSIntersectionRange", keywords, convert_NSRange, &objc_range1, convert_NSRange, &objc_range2) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSIntersectionRange", keywords, convert_NSRange, &objc_range1, convert_NSRange, &objc_range2)) return NULL;
 	NS_DURING
 		objc_result = NSIntersectionRange(
 objc_range1, objc_range2);
@@ -1091,7 +1095,7 @@ static	char* keywords[] = { "range", NULL };
 	NSString* objc_result;
 	NSRange objc_range;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSStringFromRange", keywords, convert_NSRange, &objc_range) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSStringFromRange", keywords, convert_NSRange, &objc_range)) return NULL;
 	NS_DURING
 		objc_result = NSStringFromRange(
 objc_range);
@@ -1110,7 +1114,7 @@ static	char* keywords[] = { "aString", NULL };
 	NSRange objc_result;
 	id objc_aString;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSRangeFromString", keywords, convert_id, &objc_aString) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSRangeFromString", keywords, convert_id, &objc_aString)) return NULL;
 	NS_DURING
 		objc_result = NSRangeFromString(
 objc_aString);
@@ -1129,7 +1133,7 @@ static	char* keywords[] = { NULL };
 	PyObject* result;
 	unsigned objc_result;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSPageSize", keywords) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":NSPageSize", keywords)) return NULL;
 	NS_DURING
 		objc_result = NSPageSize(
 );
@@ -1148,7 +1152,7 @@ static	char* keywords[] = { NULL };
 	PyObject* result;
 	unsigned objc_result;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSLogPageSize", keywords) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":NSLogPageSize", keywords)) return NULL;
 	NS_DURING
 		objc_result = NSLogPageSize(
 );
@@ -1168,7 +1172,7 @@ static	char* keywords[] = { "bytes", NULL };
 	unsigned objc_result;
 	unsigned objc_bytes;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSRoundUpToMultipleOfPageSize", keywords, &objc_bytes) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "i:NSRoundUpToMultipleOfPageSize", keywords, &objc_bytes)) return NULL;
 	NS_DURING
 		objc_result = NSRoundUpToMultipleOfPageSize(
 objc_bytes);
@@ -1188,7 +1192,7 @@ static	char* keywords[] = { "bytes", NULL };
 	unsigned objc_result;
 	unsigned objc_bytes;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "i:NSRoundDownToMultipleOfPageSize", keywords, &objc_bytes) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "i:NSRoundDownToMultipleOfPageSize", keywords, &objc_bytes)) return NULL;
 	NS_DURING
 		objc_result = NSRoundDownToMultipleOfPageSize(
 objc_bytes);
@@ -1207,7 +1211,7 @@ static	char* keywords[] = { NULL };
 	PyObject* result;
 	unsigned objc_result;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, ":NSRealMemoryAvailable", keywords) < 0) return NULL;
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":NSRealMemoryAvailable", keywords)) return NULL;
 	NS_DURING
 		objc_result = NSRealMemoryAvailable(
 );
