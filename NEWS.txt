@@ -23,10 +23,6 @@ Version 1.2 (2004-12-??)
 - Added ``objc.loadBundleVariables`` and ``objc.loadBundleFunctions``,
   two functions for reading global variables and functions from a bundle.
 
-- Rewrote the code-generating scripts, they now generate Python code and
-  are exported in the ``PyObjCTools.WrapperGenerator`` module.
-  [UNFINISHED]
- 
 - objc.runtime will now raise AttributeError instead of objc.nosuchclass_error
   when a class is not found.
 
