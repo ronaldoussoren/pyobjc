@@ -180,7 +180,7 @@ trying it with a couple of non-zero exchange rates we try it with an exchange ra
 zero (or empty, which is the same). We get a dialog box giving the Python exception, and
 offering the choice of continuing or quitting.<p>To debug this application with pdb, start the application with the following command line:</p>
 <pre>
-$ USE_PDB=1 ./dist/CurrencyConverter.app/Contents/MacOS
+$ env USE_PDB=1 ./dist/CurrencyConverter.app/Contents/MacOS
 </pre>
 <p>When running in this mode, we will get a <code><span>pdb.post_mortem(...)</span></code> console in the terminal
 instead of the alert panel.  You can see this in action if you try and invert an exchange
