@@ -300,6 +300,16 @@ later.
 
 .. __: CocoaBindings/TableModelWithSearch
 
+* `TemperatureTransformer`_
+
+  An example that uses NSValueTransformer to convert between Celsius
+  and Fahrenheit.
+
+  Based on Apple's `Value Transformers`_ documentation,
+  converted to PyObjC by u.fiedler.
+
+.. _`TemperatureTransformer`: CocoaBindings/TemperatureTransformer
+.. _`Value Transformers`: http://developer.apple.com/documentation/Cocoa/Conceptual/ValueTransformers/index.html
 
 OpenGL
 ------
