@@ -651,7 +651,7 @@ static PyObject*
 objcsel_descr_get(ObjCNativeSelector* meth, PyObject* volatile obj, PyObject* class)
 {
 	ObjCNativeSelector* result;
-	
+
 	if (meth->sel_self != NULL || obj == Py_None) {
 		Py_INCREF(meth);
 		return (PyObject*)meth;

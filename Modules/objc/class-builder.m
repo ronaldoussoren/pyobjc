@@ -1511,10 +1511,20 @@ getAttribute(id self, NSString* key, id* result)
 		PyErr_Clear();
 	} else {
 		if (!PyObjCSelector_Check(att)) {
+			PyObject* ps;
+
 			Py_DECREF(att);
+
+			ps = PyObjCObject_New(self);
+			if (ps == NULL) {
+				PyErr_Clear();
+				return -1;
+			}
+
 			val = PyObject_GetAttrString(
-				PyObjCObject_New(self),
+				ps,
 				(char*)[key cString]);
+			Py_DECREF(ps);
 			if (val == NULL) {
 				PyErr_Clear();
 				return -1;
@@ -1543,9 +1553,15 @@ getAttribute(id self, NSString* key, id* result)
 		if (att == NULL) {
 			PyErr_Clear();
 		} else if (!PyObjCSelector_Check(att)) {
+			PyObject* ps = PyObjCObject_New(self);
+			if (ps == NULL) {
+				PyErr_Clear();
+				return -1;
+			}
 			val = PyObject_GetAttrString(
-				PyObjCObject_New(self),
+				ps,
 				(char*)[key cString]);
+			Py_DECREF(ps);
 			if (val == NULL) {
 				PyErr_Clear();
 				return -1;
@@ -1578,11 +1594,21 @@ getAccessor(id self, NSString* key, id* result)
 		if (PyObjCSelector_Check(att) 
 				|| PyFunction_Check(att) 
 				|| PyMethod_Check(att)) {
+			PyObject* ps;
+
 			Py_DECREF(att);
+
+			ps = PyObjCObject_New(self);
+			if (ps == NULL) {
+				PyErr_Clear();
+				return -1;
+			}
+
 			val = PyObject_CallMethod(
-				PyObjCObject_New(self),
+				ps,
 				(char*)[key cString],
 				NULL);
+			Py_DECREF(ps);
 			if (val == NULL) {
 				PyErr_Clear();
 				return -1;
