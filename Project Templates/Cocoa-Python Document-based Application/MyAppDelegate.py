@@ -17,4 +17,3 @@ class MyAppDelegate(AutoBaseClass, NSApplicationDelegate):
     def applicationShouldOpenUntitledFile_(self, sender):
         # return NO if you don't want untitled document to be opened on app launch
         return YES
-
