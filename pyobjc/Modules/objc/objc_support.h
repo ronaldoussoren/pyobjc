@@ -312,5 +312,19 @@ extern struct objc_method_list *objc_allocMethodList(int numMethods);
 /* This one is implemented in super-call.m, should be moved and renamed */
 extern void simplify_signature(char* signature, char* buf, size_t buflen);
 
+/* From pointer-support.m */
+
+typedef PyObject* (*PyObjCPointerWrapper_ToPythonFunc)(void*);
+typedef int (*PyObjCPointerWrapper_FromPythonFunc)(PyObject*, void*);
+
+int PyObjCPointerWrapper_Register(
+	const char*, PyObjCPointerWrapper_ToPythonFunc pythonify,
+	PyObjCPointerWrapper_FromPythonFunc depythonify);
+
+PyObject* PyObjCPointerWrapper_ToPython(const char*, void*);
+
+int PyObjCPointerWrapper_FromPython(const char*, PyObject*, void*);
+int PyObjCPointerWrapper_Init(void);
+
 
 #endif /* _objc_support_H */

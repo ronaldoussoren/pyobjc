@@ -73,7 +73,7 @@ class TestSelectors(unittest.TestCase):
             def foo(self):
                 pass
 
-        self.assert_(repr(SelectorRepr.foo) == '<unbound selector foo of SelectorRepr>')
+        self.assert_(repr(SelectorRepr.foo).startswith('<unbound selector foo of SelectorRepr at'))
 
 if __name__ == '__main__':
     unittest.main()

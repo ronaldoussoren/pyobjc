@@ -272,6 +272,7 @@ def is_simple_type(typestr):
 
 	elif typestr in SIMPLE_TYPES:
 		return 1
+
 	else:
 		return is_id(typestr)
 

@@ -1,5 +1,5 @@
 from Foundation import NSObject
-from AppKit import NSApplicationMain, NSTableDataSource, NSTableViewDelegate
+from AppKit import NSApplicationMain
 from PyObjCTools import NibClassBuilder, AppHelper
 from objc import selector
 import sys

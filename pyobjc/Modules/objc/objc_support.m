@@ -685,8 +685,16 @@ pythonify_c_value (const char *type, void *datum)
 	}
 
 	case _C_PTR:
-		retobject = (PyObject*)PyObjCPointer_new(
-			*(void**) datum, type+1);
+		if (*(void**)datum == NULL) {
+			retobject = Py_None;
+			Py_INCREF(retobject);
+		} else {
+			retobject = PyObjCPointerWrapper_ToPython(type, datum);
+			if (retobject == NULL && !PyErr_Occurred()) {
+				retobject = (PyObject*)PyObjCPointer_new(
+					*(void**) datum, type+1);
+			}
+		}
 		break;
       
 	case _C_UNION_B:
@@ -1202,13 +1210,21 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
  
 	case _C_PTR:
-		if (PyObjCPointer_Check (argument)) {
-			*(void **) datum = ((PyObjCPointer *) argument)->ptr;
-		} else {
-			ObjCErr_Set(PyExc_ValueError,
-				"depythonifying 'pointer', got '%s'",
-					argument->ob_type->tp_name);
-			return -1;
+		if (argument == Py_None) {
+			*(void**)datum = NULL;
+			return 0;
+		} 
+		r = PyObjCPointerWrapper_FromPython(type, argument, datum);
+		if (r == -1 && !PyErr_Occurred()) {
+			if (PyObjCPointer_Check (argument)) {
+				*(void **) datum = (
+					(PyObjCPointer *) argument)->ptr;
+			} else {
+				ObjCErr_Set(PyExc_ValueError,
+					"depythonifying 'pointer', got '%s'",
+						argument->ob_type->tp_name);
+				return -1;
+			}
 		}
 		break;
 

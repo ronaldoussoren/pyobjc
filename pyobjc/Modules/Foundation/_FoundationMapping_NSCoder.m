@@ -519,7 +519,8 @@ static void imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 	Py_DECREF(values);
 }
 
-int _pyobjc_install_NSCoder(void)
+static int 
+_pyobjc_install_NSCoder(void)
 {
   Class classNSCoder = objc_lookUpClass("NSCoder");
   

@@ -10,11 +10,11 @@ try:
 
     class TestTollFreeBridging( unittest.TestCase ):
         def testExplicitToCF(self):
-            o = NSMutableArray.arrayWithArray_(("a", 1, 1.9))
-            self.assert_(isinstance(o, NSMutableArray))
+            o = NSArray.arrayWithArray_(("a", 1, 1.9))
+            self.assert_(isinstance(o, NSArray))
 
             c = ObjectToCF(o)
-            self.assert_(isinstance(c, CFMutableArrayRef))
+            self.assert_(isinstance(c, CFArrayRef))
 
         def testExplictFromCF(self):
             c = CFArrayCreateMutable(0)

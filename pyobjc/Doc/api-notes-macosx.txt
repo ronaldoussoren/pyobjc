@@ -44,8 +44,8 @@ NSSize is a tuple of 2 floats, or use ``AppKit.NSMakeSize()``.
 
 NSRect is a tuple of an NSPoint and an NSSize, or use ``AppKit.NSMakeRect()``.
 
-NSBezierPath
-............
+Class NSBezierPath
+..................
 
 * ``getLineDash:count:phase:``
   This method is not supported, I (Ronald) could not find a way to detect the
@@ -68,7 +68,17 @@ NSBezierPath
 Foundation framework
 --------------------
 
-T.B.D.
+The ``-forward::`` method is not supported. It's functionality can be accessed
+using the python function ``apply``. The ``performv::`` method is also not
+supported, with a simular work-around.
+
+Class NSFault
+.............
+
+The ``extraData`` argument/return value for ``-extraData`` and 
+``setTargetClassextraData:`` is represented as an integer.
+
+
 
 InterfaceBuilder framework
 --------------------------

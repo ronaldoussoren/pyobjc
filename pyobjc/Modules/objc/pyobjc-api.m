@@ -106,7 +106,8 @@ struct pyobjc_api objc_api = {
 	bool_check,			/* bool_check */
 	bool_init,			/* bool_init */
 	fill_super,			/* fill_super */
-	fill_super_cls			/* fill_super_cls*/
+	fill_super_cls,			/* fill_super_cls*/
+	PyObjCPointerWrapper_Register	/* register_pointer_wrapper */
 };
 
 int ObjCAPI_Register(PyObject* module_dict)
