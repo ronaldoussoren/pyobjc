@@ -267,7 +267,7 @@ later.
     
   Originally from
   `Introduction to Developing Cocoa Applications Using Bindings`_,
-  converted to PyObjC by ufiedler.
+  converted to PyObjC by u.fiedler.
 
 .. _`CurrencyConvBinding`: CocoaBindings/CurrencyConvBinding
 .. _`Introduction to Developing Cocoa Applications Using Bindings`: http://developer.apple.com/documentation/Cocoa/Conceptual/CurrencyConverterBindings/index.html
@@ -280,7 +280,7 @@ later.
   object implements custom validation method.
   
   Originally from `Cocoa Bindings Examples and Hints`_,
-  converted to PyObjC by ufiedler.
+  converted to PyObjC by u.fiedler.
 
 .. _`ManualBindings`: CocoaBindings/ManualBindings
 .. _`Cocoa Bindings Examples and Hints`: http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
