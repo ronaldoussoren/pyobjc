@@ -110,6 +110,13 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
         """ Clean up after ourselves """
         if hasattr(self, 'timer'):
             self.timer.invalidate()
+            del self.timer
+
+    def close(self):
+        if hasattr(self, 'timer'):
+            self.timer.invalidate()
+            del self.timer
+        super(PackageDatabase, self).close()
 
     def setDB(self, pimpURL, pimpDB):
         self.pimp = pimpDB
@@ -123,6 +130,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
             self.tableViewSelectionDidChange_(None)
 
         self.setFileName_(pimpURL)
+        self.pimpURL = pimpURL
 
         if hasattr(self, 'timer'):
             self.timer.invalidate()
