@@ -1,9 +1,5 @@
-* [ronald] OC_PythonObject.m contains cruft from the initial experimentations.
-
 * [ronald] MallocDebug.app causes a crash in pyobjc (Try running TableModel in
    MallocDebug)
-
-* [ronald] Check all compiler warnings on MacOS X
 
 * [ronald] Restructure header files in Modules/objc
 
@@ -25,32 +21,3 @@
 * [ronald] pyobjc-0.6.1 and earlier contain some code that is questionable in
   newer releases of Python. Need to check if all code, and repair where 
   necessary.
-
-FIXME_1: In pythonify_c_value() there is the conversion a returned
-	 NSString to a PyStringObject. How can we deal with NSString
-	 class cluster? Should it maybe check for -cString and -length?  
-  [Ronald: One possible fix is to not translate at all, but require an explicit
-    conversion. Need to look into the consequences of this. Either way we
-    need to look into Unicode support. ]
-
-* support -release and -autorelease invocations from within Python by setting the reference to the encapsulated ObJC object in the ObjCObject structure to nil (and passing through the release/autorelease).   This is not as trivial as it sounds;  a method invocation involves two mechanisms.  First, the getattr() function is called on ObjCObject to retrieve an ObjCMethod representing the method to be invoked.  The ObjCMethod structure contains a reference to the ObjC object in an NSInvocation, but does not contain a reference to the ObjCObject structure that would be required-- adding this appears to be a case of figuring out what is up with Python reference counting.
-  [Ronald: Is this needed? The python wrapper adds an additional reference to
-   objects, the release/retain code should only be used to compensate for
-   objective-C code. It might be usefull to bug-out when the retainCount falls
-   to 0, which would be a bug]
-
-* fix multithreading support in the method dispatch mechanisms.  In particular, I believe [but didn't dig] that the argument decoding/encoding stuff is not thread safe in that it uses static variables?
-  [Ronald: the argument_arena code is not thread-safe, and there are some
-   static buffers lurking in other parts of the code. The arguments_arena
-   code should no longer be necessary (and it is normally not compiled)]
-
-* add support for proper sequence and dictionary based manipulation of ObjC objects via the standard python mechanisms
-  [Ronald: Done, but mechanism is not 100% to my liking]
-
-* rip off various "intra-language interface friendly" API and code from Mssh: MultiScript Shell -- see ftp://ftp.codefab.com/pub/unsupported/.   (Before anyone gets offended by "rip off", I wrote Mssh and I'm writing this comment and, as such, I'm "ripping off" my own code!.  <bbum@codefab.com>)
-  [Might still be usefull, didn't look into this]
-
-* fix BUGS
-
-* rip out all code using 'alloca'. This function is marked depricated on most
-  platforms, and seems to confuse debuggers.

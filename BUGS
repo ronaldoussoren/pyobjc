@@ -14,9 +14,6 @@ the logic behind the methods that take varargs;  i.e. reimplementing
 everything necessary to deal with +stringWithFormat: or
 +arrayWithObjects: type API-- two very different beasts [bbum]). 
 
-(-) It's impossible to send messages containing '$' in the name: ObjC
-allows it, Python does not.
-
 Known portability problems
 --------------------------
 
@@ -38,11 +35,7 @@ Others
 ------
 
 (-) Sending ObjC messages from multiple threads does not currently work.
-The ``argument arena'' in objc_support.c should be rewritten thread-safe.
-  Ronald: The ``argument arena'' should be removed completely, we're mostly 
-  there.
-
-(-) Suspicious code is marked with 'XXX'.
+    See Docs/TODO.
 
 Missing
 -------
