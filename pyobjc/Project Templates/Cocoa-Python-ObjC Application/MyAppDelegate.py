@@ -9,12 +9,12 @@
 from Foundation import *
 
 # import Nib loading functionality from AppKit
-from AppKit import NibClassBuilder
+from AppKit import NibClassBuilder, NSApplicationDelegate
 from AppKit.NibClassBuilder import AutoBaseClass
 
 # create ObjC classes as defined in MainMenu.nib
 NibClassBuilder.extractClasses("MainMenu")
-class MyAppDelegate(AutoBaseClass):
+class MyAppDelegate(AutoBaseClass, NSApplicationDelegate):
     """
     Application delegate.
     """
