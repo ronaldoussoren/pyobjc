@@ -633,7 +633,7 @@ cls_get__name__(PyObject* self, void* closure __attribute__((__unused__)))
 {
 	Class cls = PyObjCClass_GetClass(self);
 	if (cls == NULL) {
-		return NULL;
+		return PyString_FromString("objc.objc_class");
 	} else {
 		return PyString_FromString(cls->name);
 	}

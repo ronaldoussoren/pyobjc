@@ -259,7 +259,10 @@ after you import ``AppKit`` in your Python script.
 
 These helper modules contain *only* functions, constants and classes that 
 wrap items in the corresponding framework. All utility functions and classes 
-are located in the ``PyObjCTools`` package and ``objc`` module. 
+are located in the ``PyObjCTools`` package and ``objc`` module. Note that it
+is possible to use ``pydoc`` (or the ``help()``) function with the framework
+wrappers, but that this is not very usefull for the entire module due to the
+size of these modules.
 
 This makes it easier to find documentation for an item: if you import it 
 from the wrapper module for an Objective-C framework the documentation for
