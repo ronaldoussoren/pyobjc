@@ -10,6 +10,7 @@
 #include <mach-o/dyld.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/syslimits.h>
 
 //
 // Constants
@@ -290,6 +291,13 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
 	if (pythonPath != nil)
 		[pythonPathArray addObjectsFromArray: [pythonPath componentsSeparatedByString: @":"]];
 
+    char executable_path[PATH_MAX];
+    unsigned long bufsize = PATH_MAX;
+    if (!_NSGetExecutablePath(executable_path, &bufsize)) {
+        executable_path[bufsize] = '\0';
+        setenv("EXECUTABLEPATH", executable_path, 1);
+    }
+    setenv("ARGVZERO", argv[0], 1);
     setenv("RESOURCEPATH", [resourcePath fileSystemRepresentation], 1);
 	setenv("PYTHONPATH", [[pythonPathArray componentsJoinedByString:@":"] fileSystemRepresentation], 1);
 	

@@ -229,7 +229,7 @@ Replacing shell pipe line
 output=`dmesg | grep hda`
 ==>
 p1 = Popen(["dmesg"], stdout=PIPE)
-p2 = Popen(["grep", "hda"], stdin=p1.stdout)
+p2 = Popen(["grep", "hda"], stdin=p1.stdout, stdout=PIPE)
 output = p2.communicate()[0]
 
 
@@ -503,6 +503,9 @@ class Popen(object):
                  startupinfo=None, creationflags=0):
         """Create new Popen instance."""
         _cleanup()
+
+        if not isinstance(bufsize, (int, long)):
+            raise TypeError("bufsize must be an integer")
 
         if mswindows:
             if preexec_fn is not None:
