@@ -78,6 +78,7 @@ int PyObjCAPI_Register(PyObject* module);
 extern PyObject* PyObjCMethodAccessor_New(PyObject* base, int class_method);
 
 /* Needed by method-accessor, name will be changed soon */
+extern PyTypeObject PyObjCMethodAccessor_Type;
 char* PyObjC_SELToPythonName(SEL, char*, size_t);
 
 

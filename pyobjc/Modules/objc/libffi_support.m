@@ -660,9 +660,9 @@ PyObjCFFI_MakeIMPForSignature(char* signature, PyObject* callable)
 IMP
 PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector) 
 {
-	if (ObjCNativeSelector_Check(aSelector)) {
-		ObjCNativeSelector *nativeSelector = 
-			(ObjCNativeSelector *) aSelector;
+	if (PyObjCNativeSelector_Check(aSelector)) {
+		PyObjCNativeSelector *nativeSelector = 
+			(PyObjCNativeSelector *) aSelector;
 		PyObjCRT_Method_t aMeth;
 
 		if (nativeSelector->sel_flags & PyObjCSelector_kCLASS_METHOD) {
@@ -672,7 +672,7 @@ PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector)
 		}
 		return aMeth->method_imp;
 	} else {
-		ObjCPythonSelector *pythonSelector = (ObjCPythonSelector *) aSelector;
+		PyObjCPythonSelector *pythonSelector = (PyObjCPythonSelector *) aSelector;
 		return PyObjCFFI_MakeIMPForSignature(pythonSelector->sel_signature, pythonSelector->callable);
 	}
 }
@@ -1006,7 +1006,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	void** byref = NULL; /* offset for arguments in argbuf */
 	const char* 	  rettype;
 	PyObjCMethodSignature*  volatile methinfo;
-	ObjCNativeSelector* meth = (ObjCNativeSelector*)aMeth;
+	PyObjCNativeSelector* meth = (PyObjCNativeSelector*)aMeth;
 	PyObject* objc_result = NULL;
 	PyObject* result = NULL;
 	id		  self_obj = nil;

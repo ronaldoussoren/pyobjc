@@ -265,7 +265,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
  * be modified by this function.
  *
  * TODO:
- * - Set 'sel_class' of ObjCPythonSelector instances
+ * - Set 'sel_class' of PyObjCPythonSelector instances
  * - This function complete ignores other base-classes, even though they
  *   might override methods. Need to check the MRO documentation to check
  *   if this is a problem. 
@@ -1139,7 +1139,7 @@ object_method_forwardInvocation(
 
 	pymeth = PyObjCObject_FindSelector(pyself, theSelector);
 
-	if ((pymeth == NULL) || ObjCNativeSelector_Check(pymeth)) {
+	if ((pymeth == NULL) || PyObjCNativeSelector_Check(pymeth)) {
 		struct objc_super super;
 
 		if (pymeth == NULL) {

@@ -823,23 +823,6 @@ init_objc(void)
 {
 	PyObject *m, *d;
 
-	/* HACK ALERT (Python 2.3)
-	 * If you do 'import objc' as the first thing in a fresh python
-	 * interpreter, PyTuple_Type.tp_mro happens to be NULL at this 
-	 * point. For some reason this messes up the bridge later on causing
-	 * 'pydoc Foundation' to crash. There seems to be a path were 
-	 * PyType_Ready isn't called when it should be. Specifically, we
-	 * end up with PyTuple_Type.tp_dict != NULL and 
-	 * PyTuple_Type.tp_mro == NULL in 
-	 * objc_util.m:ObjC_UpdateConvenienceMethods. It is unclear to me
-	 * what causes this.
-	 */
-	if (PyTuple_Type.tp_mro == NULL) {
-		if (PyType_Ready(&PyTuple_Type) < 0) {
-			return;
-		}
-	}
-
 	/* Allocate an auto-release pool for our own use, this avoids numerous
 	 * warnings during startup of a python script.
 	 */
@@ -850,13 +833,15 @@ init_objc(void)
 	PyType_Ready(&PyObjCClass_Type); 
 	PyType_Ready((PyTypeObject*)&PyObjCObject_Type);
 	PyType_Ready(&PyObjCSelector_Type); 
-	PyType_Ready(&ObjCNativeSelector_Type);
-	PyType_Ready(&ObjCPythonSelector_Type);
+	PyType_Ready(&PyObjCNativeSelector_Type);
+	PyType_Ready(&PyObjCPythonSelector_Type);
 	PyType_Ready(&PyObjCInstanceVariable_Type);
 	PyType_Ready(&PyObjCInformalProtocol_Type);
 	PyType_Ready(&PyObjCUnicode_Type);
 	PyType_Ready(&PyObjCInformalProtocol_Type);
 	PyType_Ready(&PyObjCIMP_Type);
+	PyType_Ready(&PyObjCMethodAccessor_Type);
+	PyType_Ready(&PyObjCZoneWrapper_Type);
 
 	m = Py_InitModule4("_objc", mod_methods, NULL,
 			NULL, PYTHON_API_VERSION);

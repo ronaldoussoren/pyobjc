@@ -343,7 +343,7 @@ obj_repr(ObjCMethodAccessor* self)
 	return PyString_FromString(buf);
 }
 
-static PyTypeObject ObjCMethodAccessor_Type = {
+PyTypeObject PyObjCMethodAccessor_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)
 	0,					/* ob_size */
 	"objc.method_acces",			/* tp_name */
@@ -398,7 +398,7 @@ PyObject* PyObjCMethodAccessor_New(PyObject* base, int class_method)
 {
 	ObjCMethodAccessor* result;
 
-	result = PyObject_New(ObjCMethodAccessor, &ObjCMethodAccessor_Type);
+	result = PyObject_New(ObjCMethodAccessor, &PyObjCMethodAccessor_Type);
 	if (result == NULL) return NULL;
 
 	result->base = base;
