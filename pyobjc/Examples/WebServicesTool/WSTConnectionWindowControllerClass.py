@@ -81,7 +81,7 @@ class WorkerThread(Thread):
     def __init__(self):
         """Create a worker thread. Start it by calling the start() method."""
         self.queue = Queue()
-        Thread.__init__(target=self.doWork)
+        Thread.__init__(self)
     
     def stop(self):
         """Stop the thread a.s.a.p., meaning whenever the currently running
@@ -414,6 +414,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         selectedMethod = self._methods[selectedRow]
         
         if not self._methodDescriptions.has_key(selectedMethod):
+            self._methodDescriptions[selectedMethod] = "<description is being retrieved>"
             self.startWorking()
             def work():
                 self.setStatusTextFieldMessage_("Retrieving signature for method %s..." % selectedMethod)
@@ -421,14 +422,15 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
                 if not methodDescription:
                     methodDescription = "No description available."
                 self._methodDescriptions[selectedMethod] = methodDescription
-                self.setStatusTextFieldMessage_(None)
-                self.methodDescriptionTextView.setString_(methodDescription)
+                if selectedRow == self.methodsTable.selectedRow():
+                    self.setStatusTextFieldMessage_(None)
+                    self.methodDescriptionTextView.setString_(methodDescription)
                 self.stopWorking()
             self._workerThread.scheduleWork(work)
         else:
-            methodDescription = self._methodDescriptions[selectedMethod]
             self.setStatusTextFieldMessage_(None)
-            self.methodDescriptionTextView.setString_(methodDescription)
+        methodDescription = self._methodDescriptions[selectedMethod]
+        self.methodDescriptionTextView.setString_(methodDescription)
 
     def numberOfRowsInTableView_(self, aTableView):
         """
