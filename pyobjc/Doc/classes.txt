@@ -123,8 +123,8 @@ Python method names: Concatenate all parts of the Objective-C method name
 
 Examples::
 
-  (void)myAction:(id)sender	<->	def `myAction_`(self, sender)
-  method:(int)x andY:y		<->	def `method_andY_`(self, x, y)
+  (void)myAction:(id)sender	<->	def myAction_(self, sender)
+  method:(int)x andY:y		<->	def method_andY_(self, x, y)
 
 As can be seen in the examples above, Objective-C allows you to specify
 the types of arguments and the return value, while this is not possible in
@@ -138,7 +138,7 @@ in subclasses of Objective-C classes. This function, objc.selector, should be
 used whenever you define a method that does not extend or override an existing
 Objective-C method in the superclass. 
 
-The following Objective-C class:
+The following Objective-C class::
 
 	@interface MyClass : NSObject
 	{
@@ -153,16 +153,16 @@ can be defined in Python like this:
 
 	class MyClass (NSObject):
 
-		def `methodWithX_andY_`(self, x, y):
+		def methodWithX_andY_(self, x, y):
 			pass
 
-		`methodWithX_and_Y_` = selector(`methodWithX_andY_`,
+		methodWithX_and_Y_ = selector(methodWithX_andY_,
 			signature='i@:if')
 
-		def `myAction_`(self, sender):
+		def myAction_(self, sender):
 			pass
 
-		myAction_ = selector(`myAction_`,
+		myAction_ = selector(myAction_,
 			signature='v@:')
 
 The explicit selectors don't really help to increase readability, especially
