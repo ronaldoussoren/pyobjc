@@ -107,7 +107,7 @@ if not basedir:
 
 print "Generateing HTML documentation"
 os.path.walk('Doc', rest2HTML, ['Doc/announcement.txt'])
-rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt', 'Installer Package/Resources/ReadMe.txt'])
+rest2HTML(None, '.', ['Install.txt', 'ReadMe.txt', 'Examples/00ReadMe.txt', 'Installer Package/ReadMe.txt'])
 
 if DOC_ONLY:
     sys.exit(0)
@@ -127,7 +127,7 @@ for ln in fd.xreadlines():
 	sys.stdout.write(ln)
 
 print "Copying readme and license"
-shutil.copyfile("ReadMe.txt", os.path.join(OUTPUTDIR, "ReadMe.txt"))
+shutil.copyfile("Installer Package/ReadMe.html", os.path.join(OUTPUTDIR, "ReadMe First.html"))
 shutil.copyfile("License.txt", os.path.join(OUTPUTDIR, "License.txt"))
 
 print "Setting up developer templates"
@@ -164,14 +164,15 @@ makeDir(basedir, 'Developer', 'ProjectBuilder Extras')
 pbxSpecificationsDestination = os.path.join(basedir, 'Developer', 'ProjectBuilder Extras', 'Specifications')
 shutil.copytree(os.path.join('ProjectBuilder Extras','Specifications'), pbxSpecificationsDestination)
 
-print "Setting up developer examples"
-makeDir(basedir, 'Library', 'Developer', 'Examples')
-examplesDestination = os.path.join(basedir, 'Library', 'Developer', 'Examples', 'PyObjC')
+print "Setting up developer examples & documentation"
+
+DOCDIR=os.path.join(OUTPUTDIR, "PyObjC Documentation & Examples")
+makeDir(OUTPUTDIR, "PyObjC Documentation & Examples")
+
+examplesDestination = os.path.join(DOCDIR, "Examples")
 shutil.copytree('Examples', examplesDestination)
 
-print "Setting up some documentation"
-makeDir(basedir, 'Library', 'Developer', 'Documentation')
-docsDestination = os.path.join(basedir, 'Library', 'Developer', 'Documentation', 'PyObjC')
+docsDestination = os.path.join(DOCDIR, "Documentation")
 shutil.copytree('Doc', docsDestination)
 
 os.path.walk(templateDestination, killNasties, None)

@@ -15,13 +15,13 @@ fi
 
 case $VER in
 10.0|10.1|10.0.*|10.1.*)
-	exit `expr $FAIL + MSG_TOO_OLD`
+	exit `expr $FAIL + $MSG_TOO_OLD`
 	;;
 
 10.2|10.2.*)
 	exit 0
 	;;
 *)
-	exit `expr $FAIL + MSG_TOO_NEW`
+	exit `expr $FAIL + $MSG_TOO_NEW`
 	;;
 esac

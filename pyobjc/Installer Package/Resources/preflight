@@ -8,6 +8,7 @@ rm -rf "/Developer/ProjectBuilder Extras/Project Templates/Application/Cocoa-Pyt
 rm -rf "/Developer/Examples/PyObjC"
 
 rm -rf "/Library/Receipts/PyObjC-0.8.pkg"
+rm -rf "/Library/Receipts/PyObjC 0.7.0.pkg"
 
 # Versions of PyObjC before 0.9 installed python files in the site-packages
 # directory, from 0.9 onwards we install in site-packages/PyObjC.
