@@ -19,17 +19,14 @@ URL
 SEL = 'initWithURL:cachePolicy:timeoutInterval:'
 oldIMP = NSURLRequest.instanceMethodForSelector_(SEL)
 def initWithURL_cachePolicy_timeoutInterval_(self, theURL, cachePolicy, timeoutInterval):
-    print 'checking', theURL, cachePolicy, timeoutInterval
     try:
         theURL = idnSnitch.checkURL_(theURL)
     except Exception, e:
         import traceback
         traceback.print_exc()
         NSLog(u"%s: %s" % (e.__class__.__name__, e))
-    print 'checked'
     self.retain()
     res = oldIMP(self, theURL, cachePolicy, timeoutInterval)
-    print 'got res'
     return res
 initWithURL_cachePolicy_timeoutInterval_ = objc.selector(
     initWithURL_cachePolicy_timeoutInterval_,
@@ -54,7 +51,6 @@ class IDNSnitch(NSObject):
             initWithURL_cachePolicy_timeoutInterval_)
 
     def checkURL_(self, anURL):
-        print 'checkURL', self, anURL
         if anURL is None:
             return anURL
         host = anURL.host()
