@@ -152,6 +152,7 @@
 		29B97315FDCFA39411CA2CEA = {
 			children = (
 				29B97316FDCFA39411CA2CEA,
+				F6AAC478035708BD01B76035,
 			);
 			isa = PBXGroup;
 			name = "Other Sources";
@@ -161,7 +162,7 @@
 		29B97316FDCFA39411CA2CEA = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			path = main.m;
+			path = "main-embedded-interpreter.m";
 			refType = 4;
 		};
 		29B97317FDCFA39411CA2CEA = {
@@ -304,18 +305,10 @@
 		29B9732BFDCFA39411CA2CEA = {
 			buildActionMask = 2147483647;
 			files = (
-				29B9732CFDCFA39411CA2CEA,
+				F6AAC47A035708BD01B76035,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
-		};
-		29B9732CFDCFA39411CA2CEA = {
-			fileRef = 29B97316FDCFA39411CA2CEA;
-			isa = PBXBuildFile;
-			settings = {
-				ATTRIBUTES = (
-				);
-			};
 		};
 		29B9732DFDCFA39411CA2CEA = {
 			buildActionMask = 2147483647;
@@ -417,6 +410,17 @@
 		};
 		F6783B7F0349DCCB01A73C9E = {
 			fileRef = F6783B7E0349DCCB01A73C9E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F6AAC478035708BD01B76035 = {
+			isa = PBXFileReference;
+			path = "main-bin-python.m";
+			refType = 4;
+		};
+		F6AAC47A035708BD01B76035 = {
+			fileRef = F6AAC478035708BD01B76035;
 			isa = PBXBuildFile;
 			settings = {
 			};
