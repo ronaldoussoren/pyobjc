@@ -2,6 +2,9 @@
 Test lowlevel message passing details (Python -> ObjC)
 
 
+NOTE: 'long long' return-value test for calls from Objective-C are disabled,
+  they crash the interpreter.
+
 Done:
 - Return simple values, but need to add limit-cases (exactly INT_MAX et.al.)
 - Return structs, but need to add more complex cases
@@ -733,6 +736,10 @@ class PyOCTestByReferenceArguments(unittest.TestCase):
 
 LONG_NUMBERS=[-(1L<<30)+2, -44, 0, 44, (1L<<30)+2]
 ULONG_NUMBERS=[0, 44, (1L<<30)+4]
+LONGLONG_NUMBERS=[-(1L<<36)+2, -44, 0, 44, (1L<<36)+2]
+ULONGLONG_NUMBERS=[0, 44, (1L<<36)+4]
+FLOAT_NUMBERS = [ makeCFloat(0.1), makeCFloat(100.0) ]
+DOUBLE_NUMBERS = [ 1.5, 3.5, 1e10, 1.99e10 ]
 
 class MyPyClass:
     def __init__(self):
@@ -771,6 +778,30 @@ class MyOCClass (objc.lookUpClass('NSObject')):
         self.idx += 1
         return ULONG_NUMBERS[i]
     ulongFunc = objc.selector(ulongFunc, signature='L@:')
+
+    def longlongFunc(self):
+        i = self.idx
+        self.idx += 1
+        return LONGLONG_NUMBERS[i]
+    longlongFunc = objc.selector(longlongFunc, signature='q@:')
+
+    def ulonglongFunc(self):
+        i = self.idx
+        self.idx += 1
+        return ULONGLONG_NUMBERS[i]
+    ulonglongFunc = objc.selector(ulonglongFunc, signature='Q@:')
+
+    def floatFunc(self):
+        i = self.idx
+        self.idx += 1
+        return FLOAT_NUMBERS[i]
+    floatFunc = objc.selector(floatFunc, signature='f@:')
+    
+    def doubleFunc(self):
+        i = self.idx
+        self.idx += 1
+        return DOUBLE_NUMBERS[i]
+    doubleFunc = objc.selector(doubleFunc, signature='d@:')
         
 class OCPyTestSimpleCalls(unittest.TestCase):
     #
@@ -794,6 +825,65 @@ class OCPyTestSimpleCalls(unittest.TestCase):
 
         for o in LONG_NUMBERS:
             self.assertEquals(self.obj.invokeInstanceLongFuncOf_(self.ocobj), o)
+
+    def testCULong(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in ULONG_NUMBERS:
+            self.assertEquals(self.obj.callInstanceUnsignedLongFuncOf_(self.ocobj), o)
+
+    def testIULong(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in ULONG_NUMBERS:
+            self.assertEquals(self.obj.invokeInstanceUnsignedLongFuncOf_(self.ocobj), o)
+
+    def testCLongLong(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in LONGLONG_NUMBERS:
+            #self.assertEquals(self.obj.callInstanceLongLongFuncOf_(self.ocobj), o)
+            pass
+
+    def testILongLong(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in LONGLONG_NUMBERS:
+            self.assertEquals(self.obj.invokeInstanceLongLongFuncOf_(self.ocobj), o)
+
+    def testCULongLong(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in ULONGLONG_NUMBERS:
+            #self.assertEquals(self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj), o)
+            pass
+
+    def testIULongLong(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in ULONGLONG_NUMBERS:
+            self.assertEquals(self.obj.invokeInstanceUnsignedLongLongFuncOf_(self.ocobj), o)
+
+    def testCFloat(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in FLOAT_NUMBERS:
+            self.assertEquals(self.obj.callInstanceFloatFuncOf_(self.ocobj), o)
+
+    def testIDouble(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in DOUBLE_NUMBERS:
+            self.assertEquals(self.obj.invokeInstanceDoubleFuncOf_(self.ocobj), o)
+
 
 def suite():
     suite = unittest.TestSuite()

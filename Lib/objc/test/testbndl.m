@@ -815,10 +815,21 @@ static 	char buf[1024];
 -(long)callInstanceLongFuncOf:(OC_TestClass1*)arg;
 -(unsigned long)callInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg;
 
+-(long long)callInstanceLongLongFuncOf:(OC_TestClass1*)arg;
+-(unsigned long long)callInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg;
+
+-(float)callInstanceFloatFuncOf:(OC_TestClass1*)arg;
+-(double)callInstanceDoubleFuncOf:(OC_TestClass1*)arg;
 
 /* "NSInvocation" calls */
 -(long )invokeInstanceLongFuncOf:(OC_TestClass1*)arg;
 -(unsigned long)invokeInstanceUnsignedLongFuncOf:(OC_TestClass1*)arg;
+
+-(long long)invokeInstanceLongLongFuncOf:(OC_TestClass1*)arg;
+-(unsigned long long)invokeInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg;
+
+-(float)invokeInstanceFloatFuncOf:(OC_TestClass1*)arg;
+-(double)invokeInstanceDoubleFuncOf:(OC_TestClass1*)arg;
 
 @end
 
@@ -859,6 +870,76 @@ static 	char buf[1024];
 	NSInvocation* inv;
 
 	SETUP_INVOCATION(inv, arg, @selector(ulongFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(long long)callInstanceLongLongFuncOf:(OC_TestClass1*)arg
+{
+	return [arg longlongFunc];
+}
+
+-(unsigned long long)callInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg
+{
+	return [arg ulonglongFunc];
+}
+
+-(float)callInstanceFloatFuncOf:(OC_TestClass1*)arg
+{
+	return [arg floatFunc];
+}
+
+
+-(double)callInstanceDoubleFuncOf:(OC_TestClass1*)arg
+{
+	return [arg doubleFunc];
+}
+
+
+-(long long)invokeInstanceLongLongFuncOf:(OC_TestClass1*)arg
+{
+	long long res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(longlongFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(unsigned long long)invokeInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg
+{
+	unsigned long long res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(ulonglongFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(float)invokeInstanceFloatFuncOf:(OC_TestClass1*)arg
+{
+	float res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(floatFunc))
+	
+	[arg forwardInvocation:inv];
+	[inv getReturnValue:&res];
+	return res;
+}
+
+-(double)invokeInstanceDoubleFuncOf:(OC_TestClass1*)arg
+{
+	double res;
+	NSInvocation* inv;
+
+	SETUP_INVOCATION(inv, arg, @selector(doubleFunc))
 	
 	[arg forwardInvocation:inv];
 	[inv getReturnValue:&res];
