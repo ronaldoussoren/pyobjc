@@ -9,7 +9,7 @@
 import sys
 import os
 import shutil
-
+import re
 import docutils.core
 
 
@@ -26,6 +26,36 @@ PHP_FOOTER='''\
 <?
     include "footer.inc";
 ?>'''
+
+
+def copy_tutorial_file(fn, tutdir, dstname):
+    src = os.path.join(tutdir, fn)
+    if os.path.isdir(src):
+        dstname = dstname + '.zip'
+        if os.path.exists(dstname):
+            os.unlink(dstname)
+        cwd = os.getcwd()
+        dstname = os.path.abspath(dstname)
+        srcdir, srcfile = os.path.split(src)
+        os.chdir(srcdir)
+        try:
+            args = ['zip', '-r9', dstname, srcfile]
+            os.spawnv(os.P_WAIT, args[0], args)
+        finally:
+            os.chdir(cwd)
+    else:
+        if os.path.exists(dstname):
+            os.unlink(dstname)
+        shutil.copy(src, dstname)
+    return (os.path.basename(src), os.path.basename(dstname))
+
+
+def replace_tutorial_zips(fn, replacements):
+    text = open(fn, 'r').read()
+    for orig, new in replacements:
+        if orig != new:
+            text = text.replace('"%s"' % (orig,), '"%s"' % (new,))
+    open(fn, 'w').write(text)
 
 
 if len(sys.argv) == 2:
@@ -55,6 +85,7 @@ def copy_project_docs(srctree):
     docs =  [ os.path.join(docdir, fn) 
                     for fn in os.listdir(docdir) if fn.endswith('.txt') ]
     docs.append(os.path.join(srctree, 'Install.txt'))
+    docs.append(os.path.join(srctree, 'NEWS.txt'))
     docs.append(os.path.join(docdir, 'tutorial', 'tutorial.txt'))
     docs.append(os.path.join(docdir, 'tutorial_embed', 'extending_objc_with_python.txt'))
 
@@ -157,40 +188,32 @@ def copy_project_docs(srctree):
                     fd.write('<LI><A HREF="%s">%s</A>\n'%(link, title))
 
     # Copy tutorial files
+    TUTORIAL_ENDINGS = ['.nib', '.py', '-src', '.h', '.m']
     tutdir = os.path.join(docdir, 'tutorial')
     files = os.listdir(tutdir)
+    replacements = []
     for fn in files:
-        if fn.endswith('.nib') or fn.endswith('.py'):
-            dstname = os.path.join('docroot', 'doc', fn)
-            if os.path.exists(dstname):
-                if os.path.isdir(dstname):
-                    shutil.rmtree(dstname)
-                else:
-                    os.unlink(dstname)
-            if os.path.isdir(os.path.join(tutdir, fn)):
-                shutil.copytree(os.path.join(tutdir, fn), dstname)
-            else:
-                shutil.copy(os.path.join(tutdir, fn), dstname)
-
+        for ext in TUTORIAL_ENDINGS:
+            if fn.endswith(ext):
+                dstname = os.path.join('docroot', 'doc', fn)
+                replacements.append(copy_tutorial_file(fn, tutdir, dstname))
+                break
+    replace_tutorial_zips(os.path.join('docroot', 'doc', 'tutorial.php'), replacements)
+ 
     tutdir = os.path.join(docdir, 'tutorial_embed', 'src')
     files = os.listdir(tutdir)
     if not os.path.exists(os.path.join('docroot', 'doc', 'src')):
         os.mkdir(os.path.join('docroot', 'doc', 'src'))
     for fn in files:
-        if fn.endswith('.nib') or fn.endswith('.py') or fn.endswith('.h') or fn.endswith('.m'):
-            dstname = os.path.join('docroot', 'doc', 'src', fn)
-            if os.path.exists(dstname):
-                if os.path.isdir(dstname):
-                    shutil.rmtree(dstname)
-                else:
-                    os.unlink(dstname)
-            if os.path.isdir(os.path.join(tutdir, fn)):
-                shutil.copytree(os.path.join(tutdir, fn), dstname)
-            else:
-                shutil.copy(os.path.join(tutdir, fn), dstname)
+        for ext in TUTORIAL_ENDINGS:
+            if fn.endswith(ext):
+                dstname = os.path.join('docroot', 'doc', 'src', fn)
+                replacements.append(copy_tutorial_file(fn, tutdir, dstname))
+                break
+    replace_tutorial_zips(os.path.join('docroot', 'doc', 'tutorial.php'), replacements)
 
-    print "Don't forget to update docroot/doc/tutorial.php: it's references to"
-    print "'step3-MainMenu.nib' and 'step12-src' should be changed to ZIP files"
+    #print "Don't forget to update docroot/doc/tutorial.php: it's references to"
+    #print "'step3-MainMenu.nib' and 'step12-src' should be changed to ZIP files"
 
 if __name__ == "__main__":
     copy_project_docs(srctree)

@@ -41,7 +41,7 @@ just after the section &quot;<em>Creating the Currency Converter Interface</em>&
 Work through &quot;Defining the Classes of Currency Converter&quot;, &quot;Connecting
 ConverterController to the Interface&quot;, and stop at &quot;<em>Implementing the Classes
 of Currency Converter</em>&quot;, as we are going to do this in Python, not Objective-C.
-Your nib file should now be the same as <a class="reference" href="step3-MainMenu.nib.zip">step3-MainMenu.nib.zip</a>.</li>
+Your nib file should now be the same as <a class="reference" href="step3-MainMenu.nib.zip">step3-MainMenu.nib</a>.</li>
 </ol>
 <ol class="arabic" start="4">
 <li><p class="first">Create the skeleton Python script by running the <tt class="docutils literal"><span class="pre">nibclassbuilder</span></tt> script.
@@ -205,7 +205,7 @@ instead of the alert panel.  You can see this in action if you try and invert an
 rate of <tt class="docutils literal"><span class="pre">0</span></tt>.</p>
 </li>
 <li><p class="first">Fix the final bug by testing for <tt class="docutils literal"><span class="pre">rate</span> <span class="pre">==</span> <span class="pre">0.0</span></tt> in <tt class="docutils literal"><span class="pre">invertRate_()</span></tt>. The result is in the
-<a class="reference" href="step12-src.zip">step12-src.zip</a> directory.</p>
+<a class="reference" href="step12-src.zip">step12-src</a> directory.</p>
 </li>
 </ol>
 </div>

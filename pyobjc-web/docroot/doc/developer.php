@@ -18,10 +18,12 @@ There is actually a good chunk of developer documentation in the source tree (th
 
 <ul>
 <!-- DEVDOC -->
+<LI><A HREF="todo.php">TODO list</A>
 <LI><A HREF="coding-style.php">Coding style for PyObjC</A>
 <LI><A HREF="c-api.php">Documentation for the PyObjC C-API (Preliminary)</A>
 <LI><A HREF="structure.php">Structure of the PyObjC package</A>
 <LI><A HREF="classes.php">Python classes and Objective-C code</A>
+<LI><A HREF="release-process.php">The PyObjC release process</A>
 <!-- /DEVDOC -->
 </ul>
 

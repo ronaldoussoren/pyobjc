@@ -18,6 +18,7 @@ This documentation should focus on the user.  Of course, the user is really a de
 <ul>
 <!-- USERDOC -->
 <LI><A HREF="install.php">Installation Instructions</A>
+<LI><A HREF="news.php">PyObjC NEWS</A>
 <LI><A HREF="intro.php">An introduction to PyObjC</A>
 <LI><A HREF="tutorial.php">Creating your first PyObjC application.</A>
 <LI><A HREF="extending_objc_with_python.php">Tutorial - Adding Python code to an existing ObjC application</A>
@@ -36,10 +37,12 @@ There is actually a good chunk of developer documentation in the source tree (th
 
 <ul>
 <!-- DEVDOC -->
+<LI><A HREF="todo.php">TODO list</A>
 <LI><A HREF="coding-style.php">Coding style for PyObjC</A>
 <LI><A HREF="c-api.php">Documentation for the PyObjC C-API (Preliminary)</A>
 <LI><A HREF="structure.php">Structure of the PyObjC package</A>
 <LI><A HREF="classes.php">Python classes and Objective-C code</A>
+<LI><A HREF="release-process.php">The PyObjC release process</A>
 <!-- /DEVDOC -->
 </ul>
 
