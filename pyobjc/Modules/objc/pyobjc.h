@@ -36,6 +36,8 @@
 #include "OC_PythonArray.h"
 #include "OC_PythonData.h"
 #include "OC_PythonDictionary.h"
+#include "OC_PythonUnicode.h"
+#include "OC_PythonString.h"
 #include "method-signature.h"
 #include "objc_util.h"
 #include "objc-class.h"
@@ -80,6 +82,7 @@
 
 extern int PyObjC_VerboseLevel;
 extern int PyObjC_StrBridgeEnabled;
+extern PyObject *PyObjCStrBridgeWarning;
 extern PyObject *PyObjC_NSNumberWrapper;
 
 

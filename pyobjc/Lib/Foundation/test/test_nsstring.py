@@ -93,15 +93,21 @@ class TestNSStringBridging(unittest.TestCase):
 
 
             self.assertRaises(UnicodeError, unicode, "\xff")
-            self.assertRaises(UnicodeError, NSString.stringWithString_, '\xff')
+            # XXX: string bridge now uses the default NSString encoding
+            # self.assertRaises(UnicodeError, NSString.stringWithString_, '\xff')
 
             objc.setStrBridgeEnabled(False)
 
             warnings.filterwarnings('error', category=objc.PyObjCStrBridgeWarning)
             try:
                 #v = NSString.stringWithString_("hello")
+
+                # we need to make sure that the str is unique
+                # because an already bridged one might have crossed
+                # and would be cached
+                newString = type('test_str', (str,), {})('hello2')
                 self.assertRaises(objc.PyObjCStrBridgeWarning,
-                        NSString.stringWithString_, "hello2")
+                        NSString.stringWithString_, newString)
 
             finally:
                 del warnings.filters[0]

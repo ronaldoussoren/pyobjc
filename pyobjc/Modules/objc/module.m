@@ -32,6 +32,7 @@
 int PyObjC_VerboseLevel = 0;
 PyObject* PyObjCClass_DefaultModule = NULL;
 PyObject* PyObjC_NSNumberWrapper = NULL;
+PyObject* PyObjCStrBridgeWarning = NULL;
 int PyObjC_StrBridgeEnabled = 1;
 
 static NSAutoreleasePool* global_release_pool = nil;
@@ -593,7 +594,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
 			"SO|O&O&:loadBundle",
 			keywords, &module_name, &module_globals,
-            PyObjCObject_Convert, &bundle_path, PyObjCObject_Convert, &bundle_identifier)) {
+			PyObjCObject_Convert, &bundle_path, PyObjCObject_Convert, &bundle_identifier)) {
 		return NULL;
 	}
 
@@ -611,11 +612,11 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	}
 
 	if (bundle_path) {
-        if (![bundle_path isKindOfClass:[NSString class]]) {
-            PyErr_SetString(PyExc_TypeError,
-                    "bundle_path is not a string");
-            return NULL;
-        }
+		if (![bundle_path isKindOfClass:[NSString class]]) {
+			PyErr_SetString(PyExc_TypeError,
+					"bundle_path is not a string");
+			return NULL;
+		}
 		bundle = [NSBundle bundleWithPath:bundle_path];
 	} else {
 #ifdef MACOSX
@@ -623,7 +624,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 			PyErr_SetString(PyExc_TypeError,
 					"bundle_identifier is not a string");
 			return NULL;
-        }
+		}
 		bundle = [NSBundle bundleWithIdentifier:bundle_identifier];
 #else  /* !MACOSX */
 		/* GNUstep doesn't seem to support ``bundleWithIdentifier:``
@@ -1267,6 +1268,9 @@ init_objc(void)
 	if (PyObjCUtil_Init(m) < 0) return;
 	if (PyObjCAPI_Register(m) < 0) return;
 	if (PyObjCIMP_SetUpMethodWrappers() < 0) return;
+
+	PyObjCStrBridgeWarning = PyErr_NewException("objc.PyObjCStrBridgeWarning", PyExc_DeprecationWarning, NULL);
+	PyModule_AddObject(m, "PyObjCStrBridgeWarning", PyObjCStrBridgeWarning);
 
 #if 1
 	/* Python based plugin bundles currently use only PyObjClass_GetClass,

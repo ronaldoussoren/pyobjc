@@ -31,6 +31,9 @@
 #import  <Foundation/NSKeyValueObserving.h>
 #endif
 
+#import "OC_PythonUnicode.h"
+#import "OC_PythonString.h"
+
 extern NSString * const NSUnknownKeyException; /* Radar #3336042 */
 
 PyObject *OC_PythonObject_DepythonifyTable = NULL;
@@ -112,25 +115,14 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 	PyErr_Clear();
  
 	if (PyUnicode_Check(argument)) {
-#ifdef PyObjC_UNICODE_FAST_PATH
-		rval = [NSString stringWithCharacters:(const unichar *)PyUnicode_AS_UNICODE(argument) length:(unsigned)PyUnicode_GET_SIZE(argument)];
-		r = 0;
-#else
-		PyObject* utf8 = PyUnicode_AsUTF8String(argument);
-		if (utf8) {
-			rval = [NSString 
-				stringWithUTF8String:
-					PyString_AS_STRING(utf8)];
-			Py_DECREF(utf8);
+		rval = [OC_PythonUnicode
+			newWithPythonObject:argument];
+		if (rval) {
+			PyObjC_RegisterObjCProxy(argument, rval);
 			r = 0;
 		} else {
-			PyErr_Format(PyExc_ValueError,
-				"depythonifying 'id', failed "
-				"to encode unicode string to UTF8");
-			rval = nil;
 			r = -1;
 		}
-#endif
 	} else if (PyBool_Check(argument)) {
 		rval = [NSNumber 
 			numberWithBool:PyInt_AS_LONG (argument)];
@@ -166,7 +158,25 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 			newWithPythonObject:argument];
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
-	} else if (PyObject_CheckReadBuffer(argument) && !PyString_Check(argument)) {
+	} else if (PyString_Check(argument)) {
+		r = 0;
+		if (PyObjC_StrBridgeEnabled == 0) {
+			if (PyErr_Warn(PyObjCStrBridgeWarning, "use unicode(str, encoding) for NSString")) {
+				r = -1;
+				rval = nil;
+			}
+		}
+		if (r == 0) {
+			rval = [OC_PythonString
+				newWithPythonObject:argument];
+			if (rval) {
+				PyObjC_RegisterObjCProxy(argument, rval);
+				r = 0;
+			} else {
+				r = -1;
+			}
+		}
+	} else if (PyObject_CheckReadBuffer(argument)) {
 		rval = [OC_PythonData
 			newWithPythonObject:argument];
 		if (rval) {

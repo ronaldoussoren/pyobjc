@@ -1,5 +1,5 @@
 /*!
- * @header OC_PythonArray.h 
+ * @header OC_PythonData.h 
  * @abstract Objective-C proxy class for Python buffers
  * @discussion
  *     This file defines the class that is used to represent Python buffers
@@ -27,7 +27,7 @@
 
 /*!
  * @method newWithPythonObject:
- * @abstract Create a new OC_PythonArray for a specific Python buffer
+ * @abstract Create a new OC_PythonData for a specific Python buffer
  * @param value A python buffer
  * @result Returns an autoreleased instance representing value
  *
@@ -37,7 +37,7 @@
 
 /*!
  * @method initWithPythonObject:
- * @abstract Initialise a OC_PythonArray for a specific Python buffer
+ * @abstract Initialise a OC_PythonData for a specific Python buffer
  * @param value A python buffer
  * @result Returns self
  *
