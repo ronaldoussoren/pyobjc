@@ -124,13 +124,25 @@ def Accessor(func):
         "Use objc.accessor instead of objc.Accessor", DeprecationWarning)
     return accessor(func)
 
+_PLUGINS = {}
+def registerPlugin(pluginName):
+    """
+    Register the current py2app plugin by name and return its bundle
+    """
+    import os
+    import sys
+    path = os.path.dirname(os.path.dirname(os.environ['RESOURCEPATH']))
+    if not isinstance(path, unicode):
+        path = unicode(path, sys.getfilesystemencoding())
+    _PLUGINS[pluginName] = path
+    return pluginBundle(pluginName)
+
 def pluginBundle(pluginName):
     """
     Return the main bundle for the named plugin. This should be used
-    in combination with ``PyObjCTools.pluginbuilder``.
+    only after it has been registered with registerPlugin
     """
-    cls = 'PyObjC_Bundle_' + pluginName
-    return lookUpClass('NSBundle').bundleForClass_(lookUpClass(cls))
+    return lookUpClass('NSBundle').bundleWithPath_(_PLUGINS[pluginName])
 
 from _convenience import CONVENIENCE_METHODS, CLASS_METHODS
 
