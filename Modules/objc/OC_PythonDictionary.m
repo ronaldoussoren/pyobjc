@@ -36,20 +36,18 @@
 
 -initWithPythonObject:(PyObject*)v;
 {
-	PyGILState_STATE state = PyGILState_Ensure();
 	value = PySequence_Fast(v, 
 		"pyObject of OC_PythonDictionaryEnumerator must be a sequence");
 	cur   = 0;
 	len = PySequence_Fast_GET_SIZE(value);
-	PyGILState_Release(state);
 	return self;
 }
 
 -(void)dealloc
 {
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 	Py_XDECREF(value);
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 }
 
 -(id)nextObject
@@ -58,16 +56,19 @@
 	id result;
 	int err;
 
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 	do {
-		if (cur >= len) return nil;
+		if (cur >= len) {
+			xPyGILState_Release(state);
+			return nil;
+		}
 
 		v = PySequence_Fast_GET_ITEM(value, cur++);
 		err = depythonify_c_value("@", v, &result);
 		if (err == -1) {
 			PyObjCErr_ToObjCWithGILState(&state);
-			return NULL;
+			return nil;
 		}
 
 		if (result == nil) {
@@ -77,7 +78,7 @@
 
 	} while (result == nil);
 
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 
 	return result;
 }
@@ -104,9 +105,12 @@
 
 -(void)dealloc
 {
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 	Py_XDECREF(value);
-	PyGILState_Release(state);
+	value = NULL;
+	xPyGILState_Release(state);
+
+	[super dealloc];
 }
 
 -(PyObject*)__pyobjc_PythonObject__
@@ -117,9 +121,9 @@
 
 -(int)count
 {
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 	int result = PyDict_Size(value);
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	return result;
 }
 
@@ -129,7 +133,7 @@
 	PyObject* k;
 	id result;
 	int err;
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 	k = pythonify_c_value("@", &key);
 	if (k == NULL) {
@@ -142,7 +146,7 @@
 	if (!v) {
 		Py_DECREF(k);
 		PyErr_Clear();
-		PyGILState_Release(state);
+		xPyGILState_Release(state);
 		return nil;
 	}
 
@@ -152,7 +156,7 @@
 		PyObjCErr_ToObjCWithGILState(&state);
 		return nil;
 	}
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	return result;
 }
 
@@ -161,7 +165,7 @@
 {
 	PyObject* v = NULL;
 	PyObject* k = NULL;
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 	v = pythonify_c_value("@", &val);
 	if (v == NULL) goto error;
@@ -173,7 +177,7 @@
 
 	Py_DECREF(v);
 	Py_DECREF(k);
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	return;
 
 error:
@@ -185,7 +189,7 @@ error:
 -(void)removeObjectForKey:key
 {
 	PyObject* k;
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 	k = pythonify_c_value("@", &key);
 	if (k == NULL) {
@@ -199,20 +203,20 @@ error:
 		return;
 	}
 	Py_DECREF(k);
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 }
 
 -keyEnumerator
 {
 	PyObject* keys;
 	id result;
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 	keys = PyDict_Keys(value);
 	result = [OC_PythonDictionaryEnumerator newWithPythonObject:keys];
 	Py_DECREF(keys);
 
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 
 	return result;
 }

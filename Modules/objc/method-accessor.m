@@ -19,7 +19,6 @@ find_selector(PyObject* self, char* name, int class_method)
 	char  buf[1024];
 	volatile int   unbound_instance_method = 0;
 	char* flattened;
-	PyThreadState *_save;
 
 
 	if (name[0] == '_' && name[1] == '_') {
@@ -78,17 +77,17 @@ find_selector(PyObject* self, char* name, int class_method)
 	}
 
 
-	Py_UNBLOCK_THREADS
-	NS_DURING
+	PyObjC_DURING
 		if (unbound_instance_method) {
 			methsig = [objc_object instanceMethodSignatureForSelector:sel];
 		} else {
 			methsig = [objc_object methodSignatureForSelector:sel];
 		}
-	NS_HANDLER
+
+	PyObjC_HANDLER
 		methsig = nil;
-	NS_ENDHANDLER
-	Py_BLOCK_THREADS
+
+	PyObjC_ENDHANDLER
 
 	if (methsig == NULL) {
 		PyErr_Format(PyExc_AttributeError,

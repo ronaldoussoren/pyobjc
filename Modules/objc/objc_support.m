@@ -54,23 +54,18 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-	PyGILState_STATE state = PyGILState_Ensure();
 	PyObject *rval = (PyObject *)PyObjCObject_New(self);
-	if (rval == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	}
-	PyGILState_Release(state);
 	return rval;
 }
 
 +(PyObject*)__pyobjc_PythonObject__
 {
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 	PyObject *rval = (PyObject *)PyObjCClass_New(self);
 	if (rval == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	return rval;
 }
 
@@ -85,23 +80,13 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-	PyGILState_STATE state = PyGILState_Ensure();
 	PyObject *rval = (PyObject *)PyObjCObject_New(self);
-	if (rval == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	}
-	PyGILState_Release(state);
 	return rval;
 }
 
 +(PyObject*)__pyobjc_PythonObject__
 {
-	PyGILState_STATE state = PyGILState_Ensure();
 	PyObject *rval = (PyObject *)PyObjCClass_New(self);
-	if (rval == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	}
-	PyGILState_Release(state);
 	return rval;
 }
 
@@ -116,12 +101,7 @@
 -(PyObject*)__pyobjc_PythonObject__
 {
 	abort();
-	PyGILState_STATE state = PyGILState_Ensure();
 	PyObject* rval =  (PyObject *)PyObjCObject_NewClassic(self);
-	if (rval == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	}
-	PyGILState_Release(state);
 	return rval;
 }
 
@@ -135,12 +115,7 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-	PyGILState_STATE state = PyGILState_Ensure();
 	PyObject* rval =  (PyObject *)PyObjCObject_NewClassic(self);
-	if (rval == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	}
-	PyGILState_Release(state);
 	return rval;
 }
 
@@ -163,7 +138,6 @@
 
 	[self getValue:buf];
 
-	state = PyGILState_Ensure();
 	if (0) {
 #ifdef MACOSX
 	/* NSNumber seems to be toll-free bridged to CFNumber,
@@ -178,7 +152,6 @@
 	} else {
 		rval = pythonify_c_value(typestr, buf);
 	}
-	PyGILState_Release(state);
 	return rval;
 }
 
@@ -196,12 +169,7 @@
 	/* NSDecimalNumbers don't have a Python counterpart, don't convert
 	 * these to Python but use a proxy. (Bug #831774)
 	 */
-	PyGILState_STATE state = PyGILState_Ensure();
 	PyObject *rval = (PyObject *)PyObjCObject_New(self);
-	if (rval == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	}
-	PyGILState_Release(state);
 	return rval;
 }
 
@@ -215,12 +183,7 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-	PyGILState_STATE state = PyGILState_Ensure();
 	PyObject *rval = (PyObject *)PyObjCUnicode_New(self);
-	if (rval == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-	}
-	PyGILState_Release(state);
 	return rval;
 }
 

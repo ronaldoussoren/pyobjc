@@ -60,7 +60,7 @@ ivar_descr_get(PyObjCInstanceVariable* self, PyObject* obj, PyObject* type __att
 		return NULL;
 	}
 
-	var = class_getInstanceVariable([objc class], self->name);
+	var = class_getInstanceVariable(GETISA(objc), self->name);
 	if (var == NULL) {
 		PyErr_SetString(PyExc_RuntimeError, 
 		    "objc_ivar descriptor for non-existing instance variable");
@@ -116,7 +116,7 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 	}
 
 	if (self->ivar == NULL) {
-		var = class_getInstanceVariable([objc class], self->name);
+		var = class_getInstanceVariable(GETISA(objc), self->name);
 		if (var == NULL) {
 			PyErr_SetString(PyExc_RuntimeError, 
 			    "objc_ivar descriptor for non-existing instance "
@@ -148,12 +148,15 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 		}
 
 		if (!self->isOutlet) {
-			[new_value retain];
-			[*(id*)(((char*)objc)+var->ivar_offset) release];
+			PyObjC_DURING
+				[new_value retain];
+				[*(id*)(((char*)objc)+var->ivar_offset) release];
+			PyObjC_HANDLER
+				NSLog(@"PyObjC: ignoreing exception during attribute replacement", localException);
+			PyObjC_ENDHANDLER
 		}
 
 		*(id*)(((char*)objc)+var->ivar_offset) = new_value;
-		/* XXX Crashme: NSLog(@"New value is %@", new_value); */
 
 		return 0;
 	}

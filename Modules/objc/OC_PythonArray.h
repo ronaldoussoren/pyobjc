@@ -30,6 +30,8 @@
  * @abstract Create a new OC_PythonArray for a specific Python sequence
  * @param value A python sequence
  * @result Returns an autoreleased instance representing value
+ *
+ * Caller must own the GIL.
  */
 + newWithPythonObject:(PyObject*)value;
 
@@ -38,6 +40,8 @@
  * @abstract Initialise a OC_PythonArray for a specific Python sequence
  * @param value A python sequence
  * @result Returns self
+ *
+ * Caller must own the GIL.
  */
 - initWithPythonObject:(PyObject*)value;
 
