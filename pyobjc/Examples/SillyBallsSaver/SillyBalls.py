@@ -17,18 +17,18 @@ NibClassBuilder.extractClasses("SillyBalls", objc.pluginBundle("SillyBalls"))
 
 class SillyBalls (NibClassBuilder.AutoBaseClass):
     def animateOneFrame(self):
-        # choose a random point. 
+        # choose a random point.
         (x, y), (fw, fh) = self.frame()
         x, y = randrange(0.0, fw), randrange(0.0, fw)
         ballSize = randrange(10.0, 90.0)
-        
+
         path = NSBezierPath.bezierPathWithOvalInRect_(((x, y), (ballSize, ballSize)))
-        
+
         # make a random color.
         randomColor = NSColor.colorWithCalibratedRed_green_blue_alpha_(random(), random(), random(), random())
-        
+
         # set it.
         randomColor.set()
-        
+
         # draw a new ball.
         path.fill()
