@@ -14,6 +14,20 @@
 #import <Foundation/NSProcessInfo.h>
 #import <Foundation/NSString.h>
 
+#ifdef MACOSX
+
+#include <mach-o/dyld.h>
+#include <pthread.h>
+#include "mach_inject.h"
+
+#define PYJECT_MACH_THREAD_STACK_SIZE 64 * 1024
+#define PYJECT_PTHREAD_STACK_SIZE 188 * 1024
+#define PYJECT_LINKOPTIONS (NSLINKMODULE_OPTION_BINDNOW | \
+	NSLINKMODULE_OPTION_RETURN_ON_ERROR | \
+	NSLINKMODULE_OPTION_PRIVATE)
+
+#endif /* MACOSX */
+
 int PyObjC_VerboseLevel = 0;
 PyObject* PyObjCClass_DefaultModule = NULL;
 int PyObjC_StrBridgeEnabled = 1;
@@ -684,6 +698,90 @@ static char* keywords[] = { "value", 0 };
 	return PyObjC_IDToCFType(PyObjCObject_GetObject(argument));
 }
 
+static void *
+pyject_pthread_entry_point(void *param) {
+	char *pathname = (char *)param;
+	NSObjectFileImageReturnCode rc;
+	NSObjectFileImage image;
+	NSModule newModule;
+	const char *errString;
+	char errBuf[512];
+
+	rc = NSCreateObjectFileImageFromFile(pathname, &image);
+	switch(rc) {
+		default:
+		case NSObjectFileImageFailure:
+		case NSObjectFileImageFormat:
+			/* for these a message is printed on stderr by dyld */
+			errString = "Can't create object file image";
+		break;
+		case NSObjectFileImageSuccess:
+			errString = NULL;
+			break;
+		case NSObjectFileImageInappropriateFile:
+			errString = "Inappropriate file type for dynamic loading";
+			break;
+		case NSObjectFileImageArch:
+			errString = "Wrong CPU type in object file";
+			break;
+		case NSObjectFileImageAccess:
+			errString = "Can't read object file (no access)";
+			break;
+	}
+	if (errString == NULL) {
+		newModule = NSLinkModule(image, pathname, PYJECT_LINKOPTIONS);
+		if (newModule == NULL) {
+			int errNo;
+			const char *fileName, *moreErrorStr;
+			NSLinkEditErrors c;
+			NSLinkEditError( &c, &errNo, &fileName, &moreErrorStr );
+			snprintf(errBuf, sizeof(errBuf), "Failure linking new module: %s: %s",
+					fileName, moreErrorStr);
+			errString = errBuf;
+		}
+	}
+	if (errString) {
+		printf(errString);
+	}
+	return NULL;
+}
+
+static void
+pyject_mach_entry_point(ptrdiff_t codeOffset, void *paramBlock, size_t paramSize) {
+	pthread_attr_t attr;
+	pthread_t tid;
+	pthread_attr_init(&attr);
+	pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+	pthread_attr_setstacksize(&attr, PYJECT_PTHREAD_STACK_SIZE);
+	pthread_create(&tid, &attr, codeOffset + &pyject_pthread_entry_point, (void *)paramBlock);
+	pthread_attr_destroy(&attr);
+	while (1) {
+		sleep(3600);
+	}
+}
+
+PyDoc_STRVAR(inject_doc,
+"inject(pid, bundle)\n"
+"\n"
+"Loads the given MH_BUNDLE in the target process identified by pid\n");
+
+static PyObject*
+pyject_inject(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds) {
+	static char *keywords[] = { "pid", "bundle", NULL };
+	int pid;
+	char *bundle;
+	mach_error_t e;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "is:inject", keywords, &pid, &bundle)) {
+		return NULL;
+	}
+
+	e = mach_inject(&pyject_mach_entry_point, bundle, strlen(bundle), pid, PYJECT_MACH_THREAD_STACK_SIZE);
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 
 #endif /* MACOSX */
 
@@ -809,6 +907,7 @@ static PyMethodDef mod_methods[] = {
 #ifdef MACOSX
 	{ "CFToObject", (PyCFunction)objc_CFToObject, METH_VARARGS|METH_KEYWORDS, objc_CFToObject_doc },
 	{ "ObjectToCF", (PyCFunction)objc_ObjectToCF, METH_VARARGS|METH_KEYWORDS, objc_ObjectToCF_doc },
+	{ "inject", (PyCFunction)pyject_inject, METH_VARARGS|METH_KEYWORDS, inject_doc },
 #endif
 	{ "enableThreading", (PyCFunction)enableThreading, METH_NOARGS, enableThreading_doc },
 	{ "protocolNamed", (PyCFunction)protocolNamed, METH_VARARGS|METH_KEYWORDS, protocolNamed_doc },
