@@ -27,13 +27,14 @@ int PyObjCRT_SetupClass(
 	cls->info = CLS_CLASS; // |CLS_METHOD_ARRAY;
 	metaCls->info = CLS_META; // |CLS_METHOD_ARRAY;
 
-	cls->name = PyObjCUtil_Strdup(name);
+	cls->name = strdup(name);
 	if (cls->name == NULL) {
 		return -1;
 	}
-	metaCls->name = PyObjCUtil_Strdup(name);
+	metaCls->name = strdup(name);
 	if (metaCls->name == NULL) {
 		free((char*)(cls->name));
+		cls->name = NULL;
 		return -1;
 	}
 
@@ -41,7 +42,9 @@ int PyObjCRT_SetupClass(
 	if (cls->methodLists == NULL) {
 		PyErr_NoMemory();
 		free((char*)(cls->name)); 
+		cls->name = NULL;
 		free((char*)(metaCls->name)); 
+		metaCls->name = NULL;
 		return -1;
 	}
 	memset(cls->methodLists, 0, sizeof(*(cls->methodLists)));
@@ -50,8 +53,11 @@ int PyObjCRT_SetupClass(
 	if (cls->methodLists == NULL) {
 		PyErr_NoMemory();
 		free((char*)(cls->name)); 
+		cls->name = NULL;
 		free((char*)(metaCls->name)); 
+		metaCls->name = NULL;
 		free(cls->methodLists);
+		cls->methodLists = NULL;
 		return -1;
 	}
 	memset(metaCls->methodLists, 0, sizeof(*(metaCls->methodLists)));
@@ -86,6 +92,7 @@ int PyObjCRT_SetupClass(
 
 void PyObjCRT_ClearClass(Class cls)
 {
+	return;
 	if (cls->methodLists) {
 		if (cls->methodLists) {
 			struct objc_method_list** cur;
@@ -94,6 +101,7 @@ void PyObjCRT_ClearClass(Class cls)
 			while (*cur != (struct objc_method_list*)-1) {
 				if (*cur != NULL) {
 					free(*cur);
+					*cur = NULL;
 				}
 				cur++;
 			}

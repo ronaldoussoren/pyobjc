@@ -97,7 +97,6 @@ objc_methodlist_magic(Class cls)
 	int res = 0; 
 	int cnt = 0;
 
-
 	/* The documented way of walking over the method-list is by using
 	 * class_nextMethodList. Handcoding it is noticeable faster (probably
 	 * because this exposes more information to the optimizer).
@@ -109,6 +108,7 @@ objc_methodlist_magic(Class cls)
 	for (p = cls->methodLists; 
 	     (*p != (struct objc_method_list*)-1) && (*p != NULL);
 	     p++) {
+
 		res += (*p)->method_count;
 		cnt++;
 	}

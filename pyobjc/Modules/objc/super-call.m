@@ -80,7 +80,7 @@ int PyObjC_RegisterMethodMapping(Class class, SEL sel,
 		if (pyclass == NULL) return -1;
 	}
 
-	v = malloc(sizeof(*v));
+	v = PyMem_Malloc(sizeof(*v));
 	if (v == NULL) {
 		PyErr_NoMemory();
 		return -1;
@@ -93,7 +93,7 @@ int PyObjC_RegisterMethodMapping(Class class, SEL sel,
 
 	PyTuple_SET_ITEM(entry, 0, pyclass);
 	PyTuple_SET_ITEM(entry, 1, PyString_InternFromString(selname));
-	PyTuple_SET_ITEM(entry, 2, PyCObject_FromVoidPtr(v, (free)));
+	PyTuple_SET_ITEM(entry, 2, PyCObject_FromVoidPtr(v, (PyMem_Free)));
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(entry);
@@ -170,7 +170,7 @@ int PyObjC_RegisterSignatureMapping(
 		return -1;
 	}
 
-	v = malloc(sizeof(*v));
+	v = PyMem_Malloc(sizeof(*v));
 	if (v == NULL) {
 		PyErr_NoMemory();
 		return -1;
@@ -178,9 +178,9 @@ int PyObjC_RegisterSignatureMapping(
 	v->call_to_objc  = call_to_objc;
 	v->call_to_python = call_to_python;
 
-	entry = PyCObject_FromVoidPtr(v, (free));
+	entry = PyCObject_FromVoidPtr(v, (PyMem_Free));
 	if (entry == NULL) {
-		free(v);
+		PyMem_Free(v);
 		return -1;
 	}
 

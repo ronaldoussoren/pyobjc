@@ -217,31 +217,6 @@ PyTypeObject PyObjCUnicode_Type = {
 PyObject* 
 PyObjCUnicode_New(NSString* value)
 {
-#if 0 /* def PyObjC_CONVERT_TO_UTF8_FIRST */
-	const char* utf8 = [value UTF8String];
-	PyUnicodeObject* tmp = (PyUnicodeObject*)PyUnicode_DecodeUTF8(
-			utf8, strlen(utf8), "strict");
-	PyObjCUnicodeObject* result;
-	if (tmp == NULL) return NULL;
-
-	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
-	PyUnicode_AS_UNICODE(result) = PyMem_NEW(Py_UNICODE,
-		PyUnicode_GET_SIZE(tmp));
-	if (PyUnicode_AS_UNICODE(result) == NULL) {
-		Py_DECREF((PyObject*)result);
-		PyErr_NoMemory();
-		return NULL;
-	}
-	PyUnicode_GET_SIZE(result) = PyUnicode_GET_SIZE(tmp);
-	memcpy((char*)PyUnicode_AS_DATA(result), PyUnicode_AS_DATA(tmp),
-		PyUnicode_GET_DATA_SIZE(tmp));
-
-	result->base.hash = -1;
-
-	result->base.defenc = tmp->defenc;
-	Py_XINCREF(tmp->defenc);
-	Py_DECREF(tmp);
-#else
 	/* Conversion to PyUnicode without creating an autoreleased object.
 	 *
 	 * NOTE: A final optimization is removing the copy of 'characters', but
@@ -268,7 +243,7 @@ PyObjCUnicode_New(NSString* value)
 
 	NS_DURING
 		length = [value length];
-		characters = malloc(sizeof(unichar) * length);
+		characters = PyMem_Malloc(sizeof(unichar) * length);
 		if (characters == NULL) {
 			PyErr_NoMemory();
 			NS_VALUERETURN(NULL, PyObject*);
@@ -280,7 +255,7 @@ PyObjCUnicode_New(NSString* value)
 
 	NS_HANDLER
 		if (characters) {
-			free(characters);
+			PyMem_Free(characters);
 			characters = NULL;
 		}
 		PyObjCErr_FromObjC(localException);
@@ -291,7 +266,7 @@ PyObjCUnicode_New(NSString* value)
 	PyUnicode_AS_UNICODE(result) = PyMem_NEW(Py_UNICODE, length);
 	if (PyUnicode_AS_UNICODE(result) == NULL) {
 		Py_DECREF((PyObject*)result);
-		free(characters); 
+		PyMem_Free(characters); characters = NULL;
 		PyErr_NoMemory();
 		return NULL;
 	}
@@ -299,10 +274,9 @@ PyObjCUnicode_New(NSString* value)
 	for (i = 0; i < length; i++) {
 		PyUnicode_AS_UNICODE(result)[i] = (Py_UNICODE)(characters[i]);
 	}
-	free(characters); 
+	PyMem_Free(characters); characters = NULL;
 
 	result->base.defenc = NULL;
-#endif
 
 	result->base.hash = -1;
 

@@ -121,7 +121,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		/* install in methods to add */
 		objcMethod = &methodsToAdd->method_list[methodIndex];
 		objcMethod->method_name = PyObjCSelector_GetSelector(aMethod);
-		objcMethod->method_types = PyObjCUtil_Strdup(
+		objcMethod->method_types = strdup(
 				PyObjCSelector_Signature(aMethod));
 		if (objcMethod->method_types == NULL) {
 			goto cleanup_and_return_error;
@@ -400,12 +400,10 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		return NULL;
 	}
 
+	module_key = PyString_FromString("__module__");
 	if (module_key == NULL) {
-		module_key = PyString_FromString("__module__");
-		if (module_key == NULL) {
-			Py_DECREF(class_list);
-			return NULL;
-		}
+		Py_DECREF(class_list);
+		return NULL;
 	}
 
 	len = PyTuple_GET_SIZE(class_list);
@@ -438,8 +436,8 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 					/* skip, posed-as type */
 				} else if (PyDict_SetItemString(module_globals, 
 						((PyTypeObject*)item)->tp_name, item) == -1) {
-					Py_DECREF(module_key);
-					Py_DECREF(class_list);
+					Py_DECREF(module_key);module_key = NULL;
+					Py_DECREF(class_list);class_list = NULL;
 					return NULL;
 				}
 				continue;
@@ -460,8 +458,8 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 
 		/* cls is located in bundle */
 		if (PyObject_SetAttr(item, module_key, module_name) == -1) {
-			Py_DECREF(module_key);
-			Py_DECREF(class_list);
+			Py_DECREF(module_key); module_key = NULL;
+			Py_DECREF(class_list); class_list = NULL;
 			return NULL;
 		}
 
@@ -469,15 +467,15 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 			/* skip, posed-as type */
 		} else if (PyDict_SetItemString(module_globals, 
 				((PyTypeObject*)item)->tp_name, item) == -1) {
-		//	Py_DECREF(module_key);
-			Py_DECREF(class_list);
+			Py_DECREF(module_key); module_key = NULL;
+			Py_DECREF(class_list); class_list = NULL;
 			return NULL;
 		}
 	}
-	//Py_XDECREF(module_key);
-	Py_XDECREF(class_list);
+	Py_XDECREF(module_key); module_key = NULL;
+	Py_XDECREF(class_list); class_list = NULL;
 
-	//NSLog(@"loadBundle %@ DONE", strval);
+	/*NSLog(@"loadBundle %@ DONE", strval);*/
 
 	Py_INCREF(Py_None);
 	return Py_None;
