@@ -35,6 +35,7 @@ PYOBJC_ROOT = dirname(objc.__path__[0])
 # expected failures in this text.
 HEADER="""\
 Running TestSuite for PyObjC %s
+Using Python %s
 
 NOTE: Loading the testcases takes some time.
 
@@ -46,7 +47,10 @@ YYYY-MM-DD HH:MM:SS.SSS python[PID] *** _NSAutoreleaseNoPool(): Object 0xABCDEFG
 Expected test failures:
 - FAIL: test_CheckNSInvoke (objc.test.test_ctests.CTests)
   This checks for a bug in Cocoa on MacOS X 10.2, 10.3
-"""%(objc.__version__)
+- FAIL: test_TestArrayCoding (objc.test.test_ctests.CTests)
+  This checks for a bug/feature of Cocoa on MacOS X 10.2, should not 
+  occur on MacOS X 10.3 and later.
+"""%(objc.__version__, sys.version)
 
 def recursiveGlob(root, pathPattern):
     """
