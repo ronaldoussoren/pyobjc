@@ -6,12 +6,19 @@
 WHAT'S NEW:
 
 Version 0.10CVS (Work in progress):
+
+- More examples
+  Three examples were added: DotView, ClassBrowser and PythonBrowser,
+  respectively showing the use of a custom NSView, NSBrowser and
+  NSOutlineView.  PythonBrowser is reusable, making it trivial to add an
+  object browser to your application.
+
 - Support for MacOS X 10.1
   It is now possible to build PyObjC on MacOS X 10.1, with full access to 
   the Cocoa API's on that platform.
 
   Note: The port to MacOS X 10.1 is not as well supported as the 10.2 port.
-  The developers to not have full-time access to a MacOS X 10.1 system.
+  The developers do not have full-time access to a MacOS X 10.1 system.
 
 - All suppport for non-FFI builds has been removed.
 
@@ -38,7 +45,7 @@ Version 0.10CVS (Work in progress):
   very odd semantics. Pure Objective-C objects not longer have a __dict__.
 
 - Weakrefs are no longer used in the implementation of the bridge. Because
-  the weakrefs to proxy objects isn't very usefull the entire feature has 
+  the weakrefs to proxy objects isn't very useful the entire feature has 
   been removed: It is no longer possible to create weakrefs to Objective-C
   objects. 
 
