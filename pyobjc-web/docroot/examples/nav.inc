@@ -4,13 +4,8 @@
 $section = "examples";
 $navbox = array(
   "examples/index.php", "Examples",
-  "examples/other.php", "Other sites",
-
 /*
-  "examples/index.php", "Example List",
-  "examples/TableModel.php", "TableModel <i>Standalone</i>",
-  "examples/TableModel2.php", "TableModel <i>Project Builder</i>",
-  "examples/AddressBook.php", "Address Book"
-  */
+  "examples/other.php", "Other sites",
+*/
   );
 ?>
