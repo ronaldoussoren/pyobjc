@@ -264,40 +264,40 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
 	}
 	
 	NSString *pythonPath = [[[NSProcessInfo processInfo] environment] objectForKey: @"PYTHONPATH"];
-    NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
-    NSMutableArray *pythonPathArray = [NSMutableArray arrayWithObjects: resourcePath, [resourcePath stringByAppendingPathComponent:@"PyObjC"], nil];
+	NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
+	NSMutableArray *pythonPathArray = [NSMutableArray arrayWithObjects: resourcePath, [resourcePath stringByAppendingPathComponent:@"PyObjC"], nil];
 	if (pythonPath != nil)
-        [pythonPathArray addObjectsFromArray: [pythonPath componentsSeparatedByString: @":"]];
-    
+		[pythonPathArray addObjectsFromArray: [pythonPath componentsSeparatedByString: @":"]];
+
 	// I *refuse* to set dirty DYLD environment variables..  
 	// If you want that, you'll have to do it in your main script or fork this bootstrap ;)
 	//
-    setenv("PYTHONPATH", [[pythonPathArray componentsJoinedByString:@":"] UTF8String], 1);
+	setenv("PYTHONPATH", [[pythonPathArray componentsJoinedByString:@":"] UTF8String], 1);
 	
 	NSArray *possibleMains = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"PyMainFileNames"];
 	if ( !possibleMains )
 		possibleMains = [NSArray array];
 	// find main python file.  __main__.py seems to be a standard, so we'll go ahead and add defaults.
-    possibleMains = [possibleMains arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:
-        @"__main__.py",
-        @"__main__.pyc",
-        @"__main__.pyo",
-        @"__realmain__.py",
-        @"__realmain__.pyc",
-        @"__realmain__.pyo",
-        @"Main.py",
-        @"Main.pyc",
-        @"Main.pyo",
-        nil]];
-    NSEnumerator *possibleMainsEnumerator = [possibleMains objectEnumerator];
-    NSString *mainPyPath = nil;
-    NSString *nextFileName;
+	possibleMains = [possibleMains arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:
+		@"__main__.py",
+		@"__main__.pyc",
+		@"__main__.pyo",
+		@"__realmain__.py",
+		@"__realmain__.pyc",
+		@"__realmain__.pyo",
+		@"Main.py",
+		@"Main.pyc",
+		@"Main.pyo",
+		nil]];
+	NSEnumerator *possibleMainsEnumerator = [possibleMains objectEnumerator];
+	NSString *mainPyPath = nil;
+	NSString *nextFileName;
 	
-    while (nextFileName = [possibleMainsEnumerator nextObject]) {
-        mainPyPath = [[NSBundle mainBundle] pathForResource: nextFileName ofType: nil];
-        if ( mainPyPath )
-            break;
-    }
+	while (nextFileName = [possibleMainsEnumerator nextObject]) {
+		mainPyPath = [[NSBundle mainBundle] pathForResource: nextFileName ofType: nil];
+		if ( mainPyPath )
+			break;
+	}
 
 	if ( !mainPyPath )
 		return report_error([ERR_NOPYTHONSCRIPT stringByAppendingString:[possibleMains componentsJoinedByString:@"\r"]]);
@@ -314,15 +314,15 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
 		return report_linkEdit_error(); \
 	NAME ## Ptr NAME = (NAME ## Ptr)NSAddressOfSymbol(tmpSymbol)
 
-    LOOKUP(Py_SetProgramName);
-    LOOKUP(Py_Initialize);
-    LOOKUP(PyRun_SimpleFile);
-    LOOKUP(Py_Finalize);
-    LOOKUP(PySys_GetObject);
-    LOOKUP(PySys_SetArgv);
-    LOOKUP(PyObject_Str);
-    LOOKUP(PyString_AsString);
-    LOOKUP(PyObject_GetAttrString);
+	LOOKUP(Py_SetProgramName);
+	LOOKUP(Py_Initialize);
+	LOOKUP(PyRun_SimpleFile);
+	LOOKUP(Py_Finalize);
+	LOOKUP(PySys_GetObject);
+	LOOKUP(PySys_SetArgv);
+	LOOKUP(PyObject_Str);
+	LOOKUP(PyString_AsString);
+	LOOKUP(PyObject_GetAttrString);
 
 #undef LOOKUP
 
@@ -346,15 +346,14 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
 	pythonProgramName = [[[pythonProgramName stringByAppendingPathComponent:@"bin"] stringByAppendingPathComponent:pyExecutableName] retain];
 	Py_SetProgramName([pythonProgramName fileSystemRepresentation]);
 	Py_Initialize();
-    PySys_SetArgv(argc, (char **)argv);
+	PySys_SetArgv(argc, (char **)argv);
 	
-    NSAutoreleasePool *pythonPool = [[NSAutoreleasePool alloc] init];
-    
-	FILE *mainPy = fopen([[mainPyPath retain] fileSystemRepresentation], "r");
-	NSString *scriptName = [mainPyPath lastPathComponent];
-	int rval = PyRun_SimpleFile(mainPy, [[scriptName retain] cString]);
+	NSAutoreleasePool *pythonPool = [[NSAutoreleasePool alloc] init];
+
+	[mainPyPath retain];
+	FILE *mainPy = fopen([mainPyPath retain fileSystemRepresentation], "r");
+	int rval = PyRun_SimpleFile(mainPy, [mainPyPath fileSystemRepresentation]);
 	fclose(mainPy);
-	[scriptName release];
 	[mainPyPath release];
 
 	while ( rval ) {
@@ -388,8 +387,8 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
 		break;
 	}
 
-    [pythonPool release];
-    
+	[pythonPool release];
+
 	Py_Finalize();
 
 	[pythonProgramName release];
