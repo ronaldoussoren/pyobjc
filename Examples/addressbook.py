@@ -8,8 +8,8 @@ me = book.me()
 
 propNames = me.properties()
 d = {}
-for i in range(len(propNames)):
-	d[propNames[i]] = me.valueForProperty_(propNames[i])
+for i in propNames:
+	d[i] = me.valueForProperty_(i)
 
 keys = d.keys()
 keys.sort()
