@@ -308,12 +308,6 @@
 //F52
 //F53
 //F54
-		F5318F930371DBBD01A801DC = {
-			fileRef = F57653070371679F01A801DC;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		F5318F940371DBCB01A801DC = {
 			fileRef = F57653070371679F01A801DC;
 			isa = PBXBuildFile;
@@ -375,7 +369,6 @@
 				F61BA2B7035799D301C36587,
 				F61BA2B9035799DD01C36587,
 				F61BA2BA035799E001C36587,
-				F5318F930371DBBD01A801DC,
 			);
 			isa = PBXCopyFilesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 1;
