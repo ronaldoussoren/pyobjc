@@ -364,7 +364,8 @@ def process_function(fp, protostr, funclist):
     fp.write(");\n")
     fp.write("\tPyObjC_HANDLER\n")
     fp.write("\t\tPyObjCErr_FromObjC(localException);\n")
-    fp.write("\t\treturn NULL;\n")
+    fp.write("\tPy_BLOCK_THREADS\n")
+    fp.write("\tNS_VALUERETURN(NULL, PyObject*);\n")
     fp.write("\tPyObjC_ENDHANDLER\n")
 
     if retval != 'void':
