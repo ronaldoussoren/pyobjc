@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {
+            CLASS = DatabasesController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {databaseTable = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {filter = id; install = id; }; 
+            CLASS = PackageController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {databaseList = id; descriptionField = id; table = id; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
