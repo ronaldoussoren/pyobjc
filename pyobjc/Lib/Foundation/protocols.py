@@ -256,6 +256,20 @@ NSDecimalNumberBehaviors = _objc.informal_protocol(
 NSDelayedPerforming = _objc.informal_protocol(
     "NSDelayedPerforming",
     [
+# (void)cancelPreviousPerformRequestsWithTarget:(id)aTarget
+        _objc.selector(
+            None,
+            selector='cancelPreviousPerformRequestsWithTarget:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)cancelPreviousPerformRequestsWithTarget:(id)aTarget selector:(SEL)aSelector object:(id)anArgument
+        _objc.selector(
+            None,
+            selector='cancelPreviousPerformRequestsWithTarget:selector:object:',
+            signature='v@:@:@',
+            isRequired=0,
+        ),
 # (void)performSelector:(SEL)aSelector withObject:(id)anArgument afterDelay:(NSTimeInterval)delay
         _objc.selector(
             None,
@@ -364,6 +378,13 @@ NSDistributedObjects = _objc.informal_protocol(
 NSKeyValueCoding = _objc.informal_protocol(
     "NSKeyValueCoding",
     [
+# (BOOL)accessInstanceVariablesDirectly
+        _objc.selector(
+            None,
+            selector='accessInstanceVariablesDirectly',
+            signature='c@:',
+            isRequired=0,
+        ),
 # (NSMutableArray *)mutableArrayValueForKey:(NSString *)key
         _objc.selector(
             None,
@@ -425,6 +446,13 @@ NSKeyValueCoding = _objc.informal_protocol(
             None,
             selector='takeStoredValue:forKey:',
             signature='v@:@@',
+            isRequired=0,
+        ),
+# (BOOL)useStoredAccessor
+        _objc.selector(
+            None,
+            selector='useStoredAccessor',
+            signature='c@:',
             isRequired=0,
         ),
 # (BOOL)validateValue:(id *)ioValue forKey:(NSString *)inKey error:(NSError **)outError
@@ -522,7 +550,7 @@ NSKeyValueObserverRegistration = _objc.informal_protocol(
 NSKeyValueObserving = _objc.informal_protocol(
     "NSKeyValueObserving",
     [
-# (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(NSObject *)object change:(NSDictionary *)change context:(void *)context
+# (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
         _objc.selector(
             None,
             selector='observeValueForKeyPath:ofObject:change:context:',
@@ -535,11 +563,25 @@ NSKeyValueObserving = _objc.informal_protocol(
 NSKeyValueObservingCustomization = _objc.informal_protocol(
     "NSKeyValueObservingCustomization",
     [
+# (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='automaticallyNotifiesObserversForKey:',
+            signature='c@:@',
+            isRequired=0,
+        ),
 # (void *)observationInfo
         _objc.selector(
             None,
             selector='observationInfo',
             signature='^v@:',
+            isRequired=0,
+        ),
+# (void)setKeys:(NSArray *)keys triggerChangeNotificationsForDependentKey:(NSString *)dependentKey
+        _objc.selector(
+            None,
+            selector='setKeys:triggerChangeNotificationsForDependentKey:',
+            signature='v@:@@',
             isRequired=0,
         ),
 # (void)setObservationInfo:(void *)observationInfo
@@ -551,20 +593,6 @@ NSKeyValueObservingCustomization = _objc.informal_protocol(
         ),
     ]
 )
-
-NSKeyValueObservingCustomization = _objc.informal_protocol(
-    "NSKeyValueObservingCustomization",
-    [
-# + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key;
-    _objc.selector(
-    None,
-    selector='automaticallyNotifiesObserversForKey:',
-    signature='c@:@',
-    isRequired=0,
-    isClassMethod=1,
-    ),
-    ]
-    )
 
 NSKeyedArchiverDelegate = _objc.informal_protocol(
     "NSKeyedArchiverDelegate",
@@ -671,6 +699,13 @@ NSKeyedUnarchiverDelegate = _objc.informal_protocol(
 NSKeyedUnarchiverObjectSubstitution = _objc.informal_protocol(
     "NSKeyedUnarchiverObjectSubstitution",
     [
+# (Class)classForKeyedUnarchiver
+        _objc.selector(
+            None,
+            selector='classForKeyedUnarchiver',
+            signature='#@:',
+            isRequired=0,
+        ),
     ]
 )
 

@@ -23,7 +23,7 @@ def getSelector(line):
     types = []
     selParts = []
     m = typeRE.match(line)
-    assert m is not None, "can't parse return type"
+    assert m is not None, "can't parse return type in {%s}" % line
     types.append(m.group(2).strip())
     pos = m.end()
     while 1:
@@ -66,13 +66,26 @@ def parseHeader(headerPath):
         rawProto = header[m.end():end]
         start = 0
         while 1:
-            start = rawProto.find("\n- ", start)
-            if start < 0:
-                break
+            instanceStart = rawProto.find("\n- ",start)
+            classStart = rawProto.find("\n+ ", start)
+            isClass = 0
+            if instanceStart < 0:
+                if classStart < 0:
+                    break
+                else:
+                    isClass = 1
+                    start = classStart
+            else:
+                if classStart < 0:
+                    isClass = 0
+                    start = instanceStart
+                else:
+                    isClass = classStart < instanceStart
+                    start = min(instanceStart, classStart)
             selend = rawProto.find(";", start)
             rawSelector = rawProto[start + 3:selend]
             selector, types = getSelector(rawSelector)
-            protocol.append((selector, types, " ".join(rawSelector.split())))
+            protocol.append((selector, types, " ".join(rawSelector.split()), isClass))
             start = selend + 1
         protocol.sort()
         assert end >= 0
@@ -137,7 +150,7 @@ def genProtocols(frameworkPath, outFile=None):
         items = protocols.items()
         items.sort()
         for protName, selectors in items:
-            for sel, types, line in selectors:
+            for sel, types, line, isClass in selectors:
                 for tp in types:
                     allTypes[tp] = 0
     makeTypeCodes(frameworkName, allTypes)
@@ -149,13 +162,14 @@ def genProtocols(frameworkPath, outFile=None):
         print >> outFile, '%s = _objc.informal_protocol(' % protoName
         print >> outFile, '    "%s",' % protoName
         print >> outFile, '    ['
-        for selector, types, line in selectors:
+        for selector, types, line, isClass in selectors:
             types = [allTypes[tp] for tp in types]
             print >> outFile, "#", line.strip()
             print >> outFile, "        _objc.selector("
             print >> outFile, "            None,"
             print >> outFile, "            selector='%s'," % selector
             print >> outFile, "            signature='%s'," % (types[0] + "@:" + "".join(types[1:]))
+            print >> outFile, "            isClassMethod=%s," % isClass
             print >> outFile, "            isRequired=0,"
             print >> outFile, "        ),"
         print >> outFile, "    ]"
