@@ -6,6 +6,7 @@ import types
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass('NSObject')
+NSArray = objc.lookUpClass('NSArray')
 
 class TestSubclassing(unittest.TestCase):
     def testMethodRaise(self):
@@ -28,7 +29,7 @@ class TestSubclassing(unittest.TestCase):
 
     def testMIObjC(self):
         try:
-            class MIClass1(NSObject, objc.runtime.NSArray):
+            class MIClass1(NSObject, NSArray):
                 pass
             self.assert_(0)
         except TypeError:
@@ -120,7 +121,7 @@ class TestCopying (unittest.TestCase):
                 return o
             copyWithZone_ = objc.selector(
                 copyWithZone_,
-                signature=objc.runtime.NSObject.copyWithZone_.signature,
+                signature=NSObject.copyWithZone_.signature,
                 isClassMethod=0)
 
 
@@ -147,7 +148,7 @@ class TestCopying (unittest.TestCase):
             def mixinMethod(self):
                 return "foo"
 
-        class MITestClass1 (objc.runtime.NSObject, MixinClass1):
+        class MITestClass1 (NSObject, MixinClass1):
             def init(self):
                 return NSObject.init(self)
 
@@ -162,7 +163,7 @@ class TestCopying (unittest.TestCase):
             def mixinMethod(self):
                 return "foo"
 
-        class MITestClass2 (objc.runtime.NSObject, MixinClass2):
+        class MITestClass2 (NSObject, MixinClass2):
             def init(self):
                 return NSObject.init(self)
 

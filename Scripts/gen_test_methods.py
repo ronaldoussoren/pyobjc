@@ -159,7 +159,7 @@ try:
 except AssertionError:
     nsinvoke_ok = 0
 
-NSArray = objc.runtime.NSArray
+NSArray = objc.lookUpClass('NSArray')
 
 # First make sure that the pass-by-reference methods have the correct signature
 setSignature = objc.setSignatureForSelector
@@ -808,7 +808,7 @@ def emit_python_subclass(fp):
 
     fp.write('\n\n')
 
-    fp.write('class Python_TestClass (objc.runtime.NSObject):\n')
+    fp.write('class Python_TestClass (objc.lookUpClass("NSObject")):\n')
     fp.write('\tdef init(self):\n')
     fp.write('\t\tself = super(Python_TestClass, self).init()\n')
     fp.write('\t\tself.reset()\n')
