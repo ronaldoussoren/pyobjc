@@ -7,41 +7,47 @@ Conversion offers API to convert between Python and Objective-C instances of var
 
 from Foundation import *
 from types import *
+import sys
+
+
 
 def propertyListFromPythonCollection(aPyCollection, conversionHelper=None):
     """Convert a Python collection (dictionary, array, tuple, string) into an Objective-C collection.
 
     If conversionHelper is defined, it must be a callable.  It will be called for any object encountered for which propertyListFromPythonCollection() cannot automatically convert the object.   The supplied helper function should convert the object and return the converted form.  If the conversion helper cannot convert the type, it should raise an exception or return None.
     """
-    containerType = type(aPyCollection)
-    if containerType == DictType:
+    if isinstance(aPyCollection, dict):
         collection = NSMutableDictionary.dictionary()
         for aKey in aPyCollection:
             convertedValue = propertyListFromPythonCollection( aPyCollection[aKey], conversionHelper=conversionHelper )
             if convertedValue is not None:
                 collection.setObject_forKey_( convertedValue , aKey )
         return collection
-    elif containerType in [TupleType, ListType]:
+    elif isinstance(aPyCollection,  (list, tuple)):
         collection = NSMutableArray.array()
         for aValue in aPyCollection:
             convertedValue = propertyListFromPythonCollection( aValue, conversionHelper=conversionHelper )
             if convertedValue is not None:
                 collection.addObject_( convertedValue  )
         return collection
-    elif containerType in StringTypes:
+    elif isinstance(aPyCollection, (str, unicode)):
         return aPyCollection # bridge will convert to NSString
-    elif containerType == IntType:
-        return NSNumber.numberWithInt_( aPyCollection )
-    elif containerType == LongType:
+    elif sys.version_info[:2] >= (2,3) and isinstance(aPyCollection, bool):
+        return NSNumber.numberWithBool_( aPyCollection )
+    elif isinstance(aPyCollection, int):
         return NSNumber.numberWithLong_( aPyCollection )
-    elif containerType == FloatType:
-        return NSNumber.numberWithFloat_( aPyCollection )
-    elif containerType == NoneType:
+    elif isinstance(aPyCollection, int):
+        return NSNumber.numberWithLong_( aPyCollection )
+    elif isinstance(aPyCollection, long):
+        return NSNumber.numberWithLongLong_( aPyCollection )
+    elif isinstance(aPyCollection, float):
+        return NSNumber.numberWithLongDouble_( aPyCollection )
+    elif aPyCollection is None:
         return NSNull.null()
     else:
         if conversionHelper:
             return conversionHelper(aPyCollection)
-    raise TypeError, "Type '%s' encountered in python collection;  don't know how to convert." % containerType
+    raise TypeError, "Type '%s' encountered in python collection;  don't know how to convert." % type(aPyCollection)
 
 def pythonCollectionFromPropertyList(aCollection, conversionHelper=None):
     """Converts a Foundation based collection-- a property list-- into a Python collection.
@@ -75,9 +81,9 @@ def pythonCollectionFromPropertyList(aCollection, conversionHelper=None):
         elif objCType is 'b': return aCollection.boolValue()
         elif objCType is 'q': return aCollection.longLongValue()
         raise TypeError, "Type '%s' encountered within an instance of the NSValue class." % type(objCType)
-    elif type(aCollection) in StringTypes:
+    elif isinstance(aCollection, (str, unicode)): 
         return aCollection
-    elif type(aCollection) in (IntType, LongType, FloatType):
+    elif isinstance(aCollection, (int, float, long)):
         return aCollection
     else:
         if conversionHelper:
