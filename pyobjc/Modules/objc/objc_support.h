@@ -191,9 +191,9 @@ objc_methodlist_magic(Class cls)
 	}
 
 #else
-	if (cls == NULL) return -1;
-
 	struct objc_method_list** p;
+
+	if (cls == NULL) return -1;
 
 	for (p = cls->methodLists; (*p != (struct objc_method_list*)-1) && (*p != NULL);
 	     p++) {

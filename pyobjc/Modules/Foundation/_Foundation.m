@@ -24,8 +24,16 @@
 
 #else /* !GNUSTEP */
 
+#ifndef MAC_OS_X_VERSION_10_2
+#define MAC_OS_X_VERSION_10_2 102000
+#define MAC_OS_X_VERSION_MAX_ALLOWED 101000
+#endif
+
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_Fnd_Functions.inc"
+
+#else
+#include "_Fnd_Functions.10.1.inc"
 #endif
 
 #endif /* !GNUSTEP */
@@ -217,9 +225,14 @@ PyDoc_STRVAR(foundation_doc,
 #include "_Fnd_Enum.GNUstep.inc"
 #include "_Fnd_Str.GNUstep.inc"
 #else  /* !GNUSTEP */
+
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_Fnd_Enum.inc"
 #include "_Fnd_Str.inc"
+
+#else
+#include "_Fnd_Enum.10.1.inc"
+#include "_Fnd_Str.10.1.inc"
 #endif
 #endif  /* !GNUSTEP */
 

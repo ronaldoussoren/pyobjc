@@ -49,6 +49,8 @@ def process_file(outfp, filename):
 		entry(outfp, ident)
 
 def generate(dirname, fn = None):
+	if not os.path.exists(dirname): return
+
 	if fn:
 		fp = open(fn, 'w')
 	else:

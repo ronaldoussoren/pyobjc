@@ -12,7 +12,16 @@
 #import <AppKit/AppKit.h>
 #import <AppKit/NSGraphics.h>
 #ifndef GNUSTEP
+
+#ifndef MAC_OS_X_VERSION_10_2
+#define MAC_OS_X_VERSION_10_2 102000
+#define MAC_OS_X_VERSION_MAX_ALLOWED 101000
+#endif
+
+#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #import <AppKit/NSAccessibility.h>
+#endif
+
 #import <AppKit/NSTypesetter.h>
 #endif
 
@@ -352,6 +361,8 @@ static char* keywords[] = { "context", "windowDumpStream", NULL };
 
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_App_Functions.inc"
+#else
+#include "_App_Functions.10.1.inc"
 #endif
 
 #endif /* !GNUSTEP */
@@ -450,6 +461,9 @@ PyDoc_STRVAR(appkit_doc,
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_App_Enum.inc"
 #include "_App_Str.inc"
+#else
+#include "_App_Enum.10.1.inc"
+#include "_App_Str.10.1.inc"
 #endif
 
 #endif /* !GNUSTEP */
@@ -564,6 +578,8 @@ void init_AppKit(void)
 
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #	include "_App_Var.inc"
+#else
+#	include "_App_Var.10.1.inc"
 #endif
 
 #endif /* !GNUSTEP */
@@ -611,7 +627,9 @@ void init_AppKit(void)
 	INT_VAR(NSColorPanelColorListModeMask);
 	INT_VAR(NSColorPanelWheelModeMask);
 #ifndef GNUSTEP
+#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 	INT_VAR(NSColorPanelCrayonModeMask);
+#endif
 #endif
 	INT_VAR(NSColorPanelAllModesMask);
 	INT_VAR(NSLeftMouseDownMask);
@@ -659,7 +677,9 @@ void init_AppKit(void)
 	INT_VAR(NSUtilityWindowMask);
 	INT_VAR(NSDocModalWindowMask);
 #ifndef GNUSTEP
+#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 	INT_VAR(NSNonactivatingPanelMask);
+#endif
 #endif
 	INT_VAR(NSBorderlessWindowMask);
 	INT_VAR(NSTitledWindowMask);
@@ -667,7 +687,9 @@ void init_AppKit(void)
 	INT_VAR(NSMiniaturizableWindowMask);
 	INT_VAR(NSResizableWindowMask);
 #ifndef GNUSTEP
+#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 	INT_VAR(NSTexturedBackgroundWindowMask);
+#endif
 #endif
 
 	{
