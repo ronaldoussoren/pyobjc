@@ -518,43 +518,14 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		mod = PyObject_GetAttr(item, module_key);
 		if (mod == NULL) {
 			PyErr_Clear();
-		} else {
-			int r, c;
-			r = PyObject_Cmp(mod, module_name, &c);
-			if (r == -1) {
-				PyErr_Clear();
-			} else if (c == 0) {
-				if (((PyTypeObject*)item)->tp_name[0] == '%') {
-					/* skip, posed-as type */
-				} else if (PyDict_SetItemString(module_globals, 
-						((PyTypeObject*)item)->tp_name, item) == -1) {
-					Py_DECREF(module_key);module_key = NULL;
-					Py_DECREF(class_list);class_list = NULL;
-					return NULL;
-				}
-				continue;
-			}
-			r = PyObject_Cmp(mod, PyObjCClass_DefaultModule, &c);
-			if (r == -1) {
-				PyErr_Clear();
-			} else if (c != 0) {
-				/* Already assigned to a module, skip 
-				 * expensive bundleForClass:
-				 */
-				continue;
+			/* cls has just been loaded */
+			if (PyObject_SetAttr(item, module_key, module_name) == -1) {
+				Py_DECREF(module_key); module_key = NULL;
+				Py_DECREF(class_list); class_list = NULL;
+				return NULL;
 			}
 		}
-		if ([NSBundle bundleForClass:cls] != bundle) {
-			continue;
-		}
-
-		/* cls is located in bundle */
-		if (PyObject_SetAttr(item, module_key, module_name) == -1) {
-			Py_DECREF(module_key); module_key = NULL;
-			Py_DECREF(class_list); class_list = NULL;
-			return NULL;
-		}
-
+		
 		if (((PyTypeObject*)item)->tp_name[0] == '%') {
 			/* skip, posed-as type */
 		} else if (PyDict_SetItemString(module_globals, 
