@@ -27,6 +27,7 @@
                 itemStatus = NSTextField; 
                 overwrite = id; 
                 packageTable = NSTableView; 
+                prerequisitesTable = id; 
                 progressOK = id; 
                 showHidden = id; 
                 verbose = id; 

@@ -121,6 +121,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
     def setDB(self, pimpURL, pimpDB):
         self.pimp = pimpDB
         self._packages = pimpDB.list()
+        self._prerequisites = []
         if self.databaseName is not None:
             self.databaseName.setStringValue_(DB_DESCRIPTION(self.pimp))
             self.databaseMaintainer.setStringValue_(DB_MAINTAINER(self.pimp))
@@ -252,6 +253,8 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
             setString(self.itemInstalled, None)
             self.itemDescription.setString_("")
             self.installButton.setEnabled_(False)
+            self._prerequisites = []
+            self.prerequisitesTable.reloadData()
 
         else:
             # Update the detail view
@@ -268,6 +271,8 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
             setString(self.itemInstalled, status)
             setString(self.itemStatus, msg)
             self.installButton.setEnabled_(True)
+            self._prerequisites = package.prerequisites()
+            self.prerequisitesTable.reloadData()
 
     def addToFavorites_(self, sender):
         appdel = NSApplication.sharedApplication().delegate()
@@ -278,15 +283,25 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
     #
 
     def numberOfRowsInTableView_(self, view):
+
         if not hasattr(self, 'pimp') or self.pimp is None:
             return 0
 
-        return len(self._packages)
+        if view is self.packageTable:
+            return len(self._packages)
+        else:
+            return len(self._prerequisites)
+
 
     def tableView_objectValueForTableColumn_row_(self, view, col, row):
 
         colname = col.identifier()
-        package = self._packages[row]
+
+        if view is self.packageTable:
+            package = self._packages[row]
+            shortdescription = None
+        else:
+            package, shortdescription = self._prerequisites[row]
 
         if colname == 'installed':
             # XXX: Nicer formatting
@@ -295,10 +310,8 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
         return getattr(package, colname)()
 
     def tableView_sortDescriptorsDidChange_(self, view, oldDescriptors):
-        self.sortPackages()
-
-
-
+        if view is self.packageTable:
+            self.sortPackages()
 
     def sortPackages(self):
         """
@@ -674,6 +687,7 @@ class PackageManager (NibClassBuilder.AutoBaseClass):
 
         Update the input fields to show the current item.
         """
+
         row = self.favoritesTable.selectedRow()
         if row == -1:
             self.favoritesTitle.setStringValue_('')
@@ -685,6 +699,7 @@ class PackageManager (NibClassBuilder.AutoBaseClass):
             self.favoritesURL.setStringValue_(self.favorites[row]['URL'])
             self.favoritesTitle.setEnabled_(True)
             self.favoritesURL.setEnabled_(True)
+
 
     def numberOfRowsInTableView_(self, view):
         """
