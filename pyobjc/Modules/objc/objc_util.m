@@ -100,6 +100,7 @@ void PyObjCErr_FromObjC(NSException* localException)
 	dict = PyDict_New();
 	v = PyString_FromString([[localException name] cString]);
 	PyDict_SetItemString(dict, "name", v);
+	v = PyString_FromString([[localException reason] cString]);
 	PyDict_SetItemString(dict, "reason",  v);
 	Py_DECREF(v);
 	if (userInfo) {
@@ -128,6 +129,7 @@ void PyObjCErr_FromObjC(NSException* localException)
 		[[localException name] cString]));
 	PyErr_Restore(exc_type, exc_value, exc_traceback);
 }
+
 
 void PyObjCErr_ToObjC(void)
 {
@@ -226,7 +228,6 @@ void PyObjCErr_ToObjC(void)
 		Py_XDECREF(exc_value);
 		Py_XDECREF(exc_traceback);
 	}
-
 	[val raise];
 }
 

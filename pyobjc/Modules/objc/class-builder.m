@@ -874,8 +874,6 @@ free_ivars(id self, PyObject* cls)
 			break;
 		}
 		
-
-
 		/* Class.__dict__ is a dictproxy, which is not a dict and
 		 * therefore PyDict_Values doesn't work.
 		 */
@@ -942,8 +940,11 @@ static void object_method_dealloc(id self, SEL sel __attribute__((__unused__)))
 	PyObject* delmethod;
 	PyObject* cls;
 
-	CHECK_MAGIC(self->isa);
+	PyObject* ptype, *pvalue, *ptraceback;
 
+	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+
+	CHECK_MAGIC(self->isa);
 	cls = PyObjCClass_New(self->isa);
 	if (!PyObjCClass_HasPythonImplementation(cls)) {
 		printf("-dealloc substitute called for pure ObjC class\n");
@@ -964,6 +965,8 @@ static void object_method_dealloc(id self, SEL sel __attribute__((__unused__)))
 	}
 
 	free_ivars(self, cls);
+
+	PyErr_Restore(ptype, pvalue, ptraceback);
 
 	super.class = find_real_superclass(GETISA(self),
 		@selector(dealloc), class_getInstanceMethod, 
