@@ -7,6 +7,8 @@ ProgressViewPalette
 This example does not work at the moment, Interface Builder completely ignores
 our classes. 
 
+Last tested with IB 2.4.2 (august 2004)
+
 ---------------------------------
 A simple InterfaceBuilder palette
 ---------------------------------
