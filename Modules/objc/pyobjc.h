@@ -103,7 +103,7 @@ PyObject* PyObjCClass_FindSelector(PyObject* cls, SEL selector);
 void 	  PyObjCClass_MaybeRescan(PyObject* class);
 int 	  PyObjCClass_IsSubClass(Class child, Class parent);
 int 	  ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
-void PyObjCClass_CheckMethodList(PyObject* cls);
+void PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
 int PyObjCClass_DictOffset(PyObject* cls);
 PyObject* PyObjCClass_GetDelMethod(PyObject* cls);
 void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);

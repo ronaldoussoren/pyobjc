@@ -8,70 +8,110 @@ most importantly the `Cocoa libraries`_ by `Apple`_.
 
 .. _`Apple`: http://www.apple.com/
 
-   _`Cocoa libraries`:  http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html 
+.. _`Cocoa libraries`:  http://developer.apple.com/techpubs/macosx/Cocoa/CocoaTopics.html 
 
-General documentation
-.....................
+General user documentation
+..........................
 
-NOTE: There's a lot of duplication between the first 3 of these.
+The following documents are usefull when you're interested in developing
+Cocoa applications in Python.
 
 * `An introduction to PyObjC`_
 
+  An overview of the PyObjC package and how to use it. Read this before
+  you start using the package, it will help you to avoid some surprises.
+
 * `Userguide for PyObjC`_
+
+  An older overview of PyObjC. 
 
 * `Python classes and Objective-C code`_
 
+  Another older overview of PyObjC. 
+
 * `Notes on supported APIs and classes on MacOS X`_
+
+  This document lists the methods and classes that are not fully supported,
+  or supported in an 'unexpected' way.
 
 Tutorials
 .........
 
 * `Creating your first PyObjC application (tutorial)`_
 
+  This tutorial guides you though creating a Python based Cocoa application.
+
+* `Adding Python code to an existing ObjC application`_
+
+  This tutorial teaches you how to extend you existing Objective-C based
+  Cocoa application using Python.
+
 Examples
 ........
 
-
-* `List of examples`__
+The source tree includes a number of examples, see the `list of examples`__ for
+more information.
 
 .. __: ../Examples/00ReadMe.html
-
 
 
 Technical documentation
 .......................
 
+These documents are only relevant if you want to modify PyObjC, not if
+you want to write Cocoa programs in Python.
+
 * `Coding style for PyObjC`_
 
-* `Using LibFFI with PyObjC`_
+  Rules for formatting code and documentation.
 
 * `PyObjC Architecture`_
 
+  An overview of the PyObjC architecture. This document is out of date.
+
 * `Structure of the PyObjC package`_
+
+  Another overview of the PyObjC package.
 
 * `How to wrap an Objective-C class library`_
 
+  This explains how you can provide a python wrapper for an existing 
+  Objective-C class library.
+
 * `Odd features`_
 
-..   _`An introduction to PyObjC`: intro.html
+  Describes some features of Objective-C that may surprise Python programmers.
+  Not very relevant.
 
-..   _`Userguide for PyObjC`: users.html
+* `Project Builder Python Support`_
 
-..   _`Python classes and Objective-C code`: classes.html
+  Describes the Python support for Project Builder, including a TODO list for
+  future versions.
 
-..   _`Coding style for PyObjC`: coding-style.html
 
-..   _`Using LibFFI with PyObjC`: libffi.html
 
-..   _`PyObjC Architecture`: architecture.html
+.. _`Project Builder Python Support`: ProjectBuilder-SyntaxHighlighting.html
 
-..   _`Structure of the PyObjC package`: structure.html
+.. _`An introduction to PyObjC`: intro.html
 
-..   _`How to wrap an Objective-C class library`: wrapping.html
+.. _`Userguide for PyObjC`: users.html
 
-..   _`Odd features`: warts.html
+.. _`Python classes and Objective-C code`: classes.html
 
-..   _`Creating your first PyObjC application (tutorial)`: tutorial/tutorial.html
+.. _`Coding style for PyObjC`: coding-style.html
 
-..   _`Notes on supported APIs and classes on MacOS X`: api-notes-macosx.txt
+.. _`Using LibFFI with PyObjC`: libffi.html
 
+.. _`PyObjC Architecture`: architecture.html
+
+.. _`Structure of the PyObjC package`: structure.html
+
+.. _`How to wrap an Objective-C class library`: wrapping.html
+
+.. _`Odd features`: warts.html
+
+.. _`Creating your first PyObjC application (tutorial)`: tutorial/tutorial.html
+
+.. _`Adding Python code to an existing ObjC application`: tutorial_embed/extending_objc_with_python.html
+
+.. _`Notes on supported APIs and classes on MacOS X`: api-notes-macosx.txt

@@ -12,6 +12,8 @@ This document gives an overview of the PyObjC for developers (of the package).
 
 One of the sections describes how all of it works, and some of the limitation.
 
+This document is a little dated, it should be updated.
+
 
 Methods
 -------

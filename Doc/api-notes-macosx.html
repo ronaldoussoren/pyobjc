@@ -103,7 +103,7 @@ the same functionality can be accessed by using the object-oriented interface.</
 use <code><span>AppKit.NSMakeRect(x,</span> <span>y,</span> <span>h,</span> <span>w)</span></code>.</p>
 <p>The callback methods for the NSSheet API's have a non-default signature
 and no fixed name. You should therefore explicitly specify the signature. This
-is done by calling the <code><span>NSEndSheetMethod</span></code> function after defining your
+is done by calling the <code><span>endSheetMethod</span></code> function after defining your
 callback:</p>
 <pre>
 class MYClass (NSObject):
@@ -111,7 +111,7 @@ class MYClass (NSObject):
                 &quot;&quot;&quot; Actual implementation goes here &quot;&quot;&quot;
                 pass
 
-        mysheetDidEnd = NSEndSheetMethod(mysheetDidEnd)
+        mysheetDidEnd = AppKit.endSheetMethod(mysheetDidEnd)
 </pre>
 <h3><a href="#id7" name="class-nsapplication">Class NSApplication</a></h3>
 <p><code><span>NSModalSession</span></code> objects are wrapped as opaque values. You can check if

@@ -142,7 +142,7 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 		assert(PyType_Check(base));
 
 		if (PyObjCClass_Check(base)) {
-			PyObjCClass_CheckMethodList(base);
+			PyObjCClass_CheckMethodList(base, 0);
 		}
 
 		dict = ((PyTypeObject *)base)->tp_dict;
@@ -515,7 +515,7 @@ PyObjCObject_New(id objc_object)
 	/* This should be in the tp_alloc for the new class, but 
 	 * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
 	 */
-	PyObjCClass_CheckMethodList((PyObject*)res->ob_type);
+	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = 0;
@@ -567,7 +567,7 @@ PyObjCObject_NewUnitialized(id objc_object)
 	/* This should be in the tp_alloc for the new class, but 
 	 * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
 	 */
-	PyObjCClass_CheckMethodList((PyObject*)res->ob_type);
+	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = 0;

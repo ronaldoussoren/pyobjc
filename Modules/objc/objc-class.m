@@ -217,7 +217,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	py_super_class = v;
 	super_class = PyObjCClass_GetClass(py_super_class);
 	if (super_class) {
-		PyObjCClass_CheckMethodList(py_super_class);
+		PyObjCClass_CheckMethodList(py_super_class, 1);
 	}
 
 	/*
@@ -463,11 +463,12 @@ class_dealloc(PyObject* cls)
 }
 
 void 
-PyObjCClass_CheckMethodList(PyObject* cls)
+PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 {
 	PyObjC_class_info* info;
 	int		   magic;
 
+	//printf("chkml_called %s %d\n", ((PyTypeObject*)cls)->tp_name, recursive);
 	info = get_class_info(cls);
 
 	if (info->class == NULL) return;
@@ -500,6 +501,7 @@ PyObjCClass_CheckMethodList(PyObject* cls)
 			}
 		}
 
+		if (!recursive) break;
 		if (info->class->super_class == NULL) break;
 		cls = PyObjCClass_New(info->class->super_class);
 		info = get_class_info(cls);
@@ -512,7 +514,22 @@ class_getattro(PyObject* self, PyObject* name)
 {
 	PyObject* result;
 
-	PyObjCClass_CheckMethodList(self);
+	/* Python will look for a number of "private" attributes during 
+	 * normal operations, such as when building subclasses. Avoid a
+	 * method rescan when that happens.
+	 *
+	 * NOTE: This method should be rewritten, copy the version of type()
+	 *       and modify as needed, that would avoid unnecessary rescans
+	 * 	 of superclasses. The same strategy is used in object_getattro.
+	 */
+	if (PyString_Check(name) && strncmp(PyString_AS_STRING(name), "__", 2) == 0) {
+		result = PyType_Type.tp_getattro(self, name);
+		if (result != NULL) {
+			return result;
+		}
+	}
+
+	PyObjCClass_CheckMethodList(self, 1);
 	
 	result = PyType_Type.tp_getattro(self, name);
 	if (result != NULL) {
@@ -990,7 +1007,7 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 		return NULL;
 	}
 
-	PyObjCClass_CheckMethodList(cls);
+	PyObjCClass_CheckMethodList(cls, 1);
 	
 	info = get_class_info(cls);
 	if (info->sel_to_py == NULL) {

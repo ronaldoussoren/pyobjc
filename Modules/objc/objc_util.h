@@ -26,8 +26,10 @@ char* ObjC_strdup(const char* value);
 #include <Foundation/NSMapTable.h>
 extern NSMapTableKeyCallBacks ObjC_PointerKeyCallBacks;
 extern NSMapTableValueCallBacks ObjC_PointerValueCallBacks;
-extern NSMapTableKeyCallBacks ObjC_PyObjectKeyCallBacks;
-extern NSMapTableValueCallBacks ObjC_PyObjectValueCallBacks;
+
+
+//extern NSMapTableKeyCallBacks ObjC_PyObjectKeyCallBacks;
+//extern NSMapTableValueCallBacks ObjC_PyObjectValueCallBacks;
 
 
 #endif /* OBJC_UTIL */

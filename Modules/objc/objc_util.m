@@ -414,6 +414,7 @@ char* ObjC_strdup(const char* value)
 	return result;
 }
 
+
 NSMapTableKeyCallBacks ObjC_PointerKeyCallBacks = {
 	NULL,
 	NULL,
@@ -429,6 +430,7 @@ NSMapTableValueCallBacks ObjC_PointerValueCallBacks = {
 	NULL,
 };
 
+#if 0
 static void pyobj_retain(NSMapTable* table __attribute__((__unused__)), const void* v)
 {
 	Py_XINCREF((PyObject*)v);
@@ -453,3 +455,5 @@ NSMapTableValueCallBacks ObjC_PyObjectValueCallBacks = {
 	pyobj_release,
 	NULL,
 };
+
+#endif
