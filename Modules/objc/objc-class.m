@@ -271,6 +271,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		if (protocols == NULL) return NULL;
 	} else {
 		PyObject* seq;
+		int protocols_len;
 
 		seq = PySequence_Fast(protocols, 
 			"__pyobjc_protocols__ not a sequence?");
@@ -280,12 +281,12 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		}
 		Py_DECREF(protocols);
 
-		len = PySequence_Fast_GET_SIZE(seq);
-		protocols = PyList_New(len);
+		protocols_len = PySequence_Fast_GET_SIZE(seq);
+		protocols = PyList_New(protocols_len);
 		if (protocols == NULL) {
 			return NULL;
 		}
-		for (i = 0; i < len; i++) {
+		for (i = 0; i < protocols_len; i++) {
 			PyList_SET_ITEM(protocols, i, 
 				PySequence_Fast_GET_ITEM(seq, i));
 			Py_INCREF(PySequence_Fast_GET_ITEM(seq, i));
@@ -304,7 +305,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		Py_DECREF(real_bases);
 		return NULL;
 	}
-	
+
 	for (i = 1; i < len; i++) {
 		v = PyTuple_GetItem(bases, i);
 		if (v == NULL) {
