@@ -1,4 +1,5 @@
 2003-01-04  Bill Bumgarner  <bbum@codefab.com>
+    * CocoaApp.pbproj/TemplateInfo.plist: Added description text.
     * Modules/Cocoa/_AppKitMapping.m: Added AppKitMapping as new module in
     setup.py (why wasn't it there before?).  Added support for
     NSImageBitmapRep.  Can now create a bitmap rep w/many arg designated
