@@ -924,7 +924,7 @@ pyject_inject(PyObject* self __attribute__((__unused__)), PyObject* args, PyObje
 	return Py_None;
 }
 
-#endif /* MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_3 */
+#endif /* MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3 */
 #endif /* MAC_OS_X_VERSION_10_3 */
 #endif /* MACOSX */
 
@@ -1029,9 +1029,9 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleVariables_doc },
 	{ "loadBundleFunctions", (PyCFunction)PyObjC_loadBundleFunctions,
 		METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleFunctions_doc },
-#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_3
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
 	{ "inject", (PyCFunction)pyject_inject, METH_VARARGS|METH_KEYWORDS, inject_doc },
-#endif /* MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_3 */
+#endif /* MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3 */
 #endif /* MACOSX */
 
 	{ 0, 0, 0, 0 } /* sentinel */
