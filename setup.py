@@ -49,7 +49,7 @@ if sys.version_info[0] < req_ver[0] or (
 
 # TODO: Autodetect libFFI, including LIBFFI_BASE
 # ... But first implement FFI support!
-if 0:
+if 1:
     LIBFFI_CFLAGS=[]
     LIBFFI_LDFLAGS=[]
     LIBFFI_SOURCEFILES=[]
@@ -66,14 +66,6 @@ else:
     LIBFFI_SOURCEFILES=[
         'Modules/objc/libffi_support.m',
     ]
-
-if sys.platform == 'darwin':
-    if 1:
-        LINK_OPT_STRIP=[ '-Wl,-S', '-Wl,-x' ]
-    else:
-        LINK_OPT_STRIP=[]
-else:
-    LINK_OPT_STRIP=[]
 
 sourceFiles = [
 	"Modules/objc/objc_util.m",
@@ -121,7 +113,7 @@ CoreExtensions =  [
 		   ] + LIBFFI_CFLAGS,
 		   extra_link_args=[
 			'-g', '-framework', 'Foundation',
-		   ] + LINK_OPT_STRIP + LIBFFI_LDFLAGS)
+		   ] + LIBFFI_LDFLAGS)
 	]
 CocoaPackages = [ 'Foundation', 'AppKit' ]
 CocoaExtensions = [
@@ -133,7 +125,7 @@ CocoaExtensions = [
 		   ],
 		   extra_link_args=[
 			'-framework', 'Foundation',
-		   ] + LINK_OPT_STRIP),
+		   ]),
 	  Extension("AppKit._AppKit", 
 		   ["Modules/Cocoa/_AppKit.m"],
 		   extra_compile_args=[
@@ -141,7 +133,7 @@ CocoaExtensions = [
 		   ],
 		   extra_link_args=[
 			'-framework', 'AppKit'
-		   ] + LINK_OPT_STRIP),
+		   ]),
 	  Extension("objc._FoundationMapping", 
 		   ["Modules/Cocoa/_FoundationMapping.m"],
 		   extra_compile_args=[
@@ -149,7 +141,7 @@ CocoaExtensions = [
 		   ],
 		   extra_link_args=[
 			'-framework', 'Foundation',
-		   ] + LINK_OPT_STRIP),
+		   ]),
 	  ]
 
 # The AdressBook module is only installed when the user actually has the
