@@ -303,5 +303,4 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	Py_INCREF(pyObject);
 	return pyObject;
 }
-
 @end /* OC_PythonObject class implementation */

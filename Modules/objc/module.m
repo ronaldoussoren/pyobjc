@@ -46,6 +46,79 @@ static 	char* keywords[] = { "class_name", NULL };
 	return PyObjCClass_New(objc_class);
 }
 
+PyDoc_STRVAR(classAddMethod_doc,
+	     "classAddMethod(targetClass, methodName, method)\n"
+	     "\n"
+	     "Adds method to targetClass with methodName as the name.  If methodName is None, name of method will be extraded from method in the same fashion as classAddMethods().");
+
+static PyObject*
+classAddMethod(PyObject* self __attribute__((__unused__)), 
+	PyObject* args, PyObject* keywds)
+{
+	static 	char* kwlist[] = { "targetClass", "methodName", "method", NULL };
+	PyObject* classObject = NULL;
+	char* methodName = NULL;
+	int methodNameSize = 0;
+	PyObject* method = NULL;
+	Class targetClass;
+	struct objc_method_list *methodsToAdd;
+
+	if (!PyArg_ParseTupleAndKeywords(args, keywds, 
+			"Oz#O:classAddMethod", kwlist,
+			&classObject, &methodName, &methodNameSize, &method)) {
+		return NULL;
+	}
+
+	targetClass  = PyObjCClass_GetClass(classObject);
+	methodsToAdd = objc_allocMethodList(1);
+	if (methodsToAdd == NULL) {
+	    PyErr_NoMemory();
+	    return NULL;
+	}
+
+	methodsToAdd->method_count = 1;
+
+	struct objc_method *objcMethod;
+	objcMethod = &methodsToAdd->method_list[0];
+
+	/* check
+	 * FIXME: We should support functions here, just like with
+	 * class definitions.
+	 */
+	if (!PyObjCSelector_Check(method)) {
+	    PyErr_SetString(PyExc_TypeError,
+			    "All objects in methodArray must be of type "
+			    "<objc.selector>.");
+	    goto cleanup_and_return_error;
+	}
+
+	/* install in methods to add */
+	if ( (methodName != NULL) && (methodNameSize > 0) ) {
+	    SEL aName = sel_getUid(methodName);
+	    if (aName == NULL)
+		aName = sel_registerName(methodName);
+	    if (aName == NULL) {
+		PyErr_SetString(PyExc_TypeError,
+				"Failed to register SEL.");
+		goto cleanup_and_return_error;
+	    }
+	    objcMethod->method_name = aName;
+	} else
+	    objcMethod->method_name = PyObjCSelector_Selector(method);
+	objcMethod->method_types = strdup(PyObjCSelector_Signature(method));
+	objcMethod->method_imp = ObjC_MakeIMPForPyObjCSelector((PyObjCSelector*)method);
+
+	/* add the methods */
+	class_addMethods(targetClass, methodsToAdd);
+
+	Py_INCREF(Py_None);
+	return Py_None;
+
+cleanup_and_return_error:
+	if (methodsToAdd) free(methodsToAdd);
+	return NULL;
+}
+
 PyDoc_STRVAR(classAddMethods_doc,
 	     "classAddMethods(targetClass, methodsArray)\n"
 	     "\n"
@@ -574,6 +647,12 @@ static PyMethodDef meta_methods[] = {
 	  (PyCFunction)lookUpClass,
 	  METH_VARARGS|METH_KEYWORDS,
 	  lookUpClass_doc
+	},
+	{
+	  "classAddMethod",
+	  (PyCFunction)classAddMethod,
+	  METH_VARARGS|METH_KEYWORDS,
+	  classAddMethod_doc
 	},
 	{
 	  "classAddMethods",
