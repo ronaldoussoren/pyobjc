@@ -26,7 +26,6 @@ else:
             u"/System/Library/Frameworks/AppKit.framework",
         ),
     )
-_objc.recycleAutoreleasePool()
 
 
 # Define useful utility methods here
