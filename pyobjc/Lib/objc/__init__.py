@@ -144,6 +144,13 @@ def Category(cls):
     retval = _CategoryMeta._newSubclass('Category', (), dict(real_class=cls))
     return retval
 
+def _make_bundleForClass(bundle):
+    """
+    used internally by the class builder
+    """
+    def bundleForClass(cls):
+        return bundle
+    return selector(bundleForClass, isClassMethod=True)
 
 ######
 # Backward compatibility stuff
