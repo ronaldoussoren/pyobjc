@@ -1270,6 +1270,13 @@ NSKeyValueBindingCreation = _objc.informal_protocol(
             signature='v@:@@@@',
             isRequired=0,
         ),
+# (void)exposeBinding:(NSString *)binding
+        _objc.selector(
+            None,
+            selector='exposeBinding:',
+            signature='v@:@',
+            isRequired=0,
+        ),
 # (NSArray *)exposedBindings
         _objc.selector(
             None,
@@ -1351,144 +1358,354 @@ NSMenuDelegate = _objc.informal_protocol(
 NSMenuItem = _objc.informal_protocol(
     "NSMenuItem",
     [
-# (void)add:(id)sender
+# (SEL)action
         _objc.selector(
             None,
-            selector='add:',
-            signature='v@:@',
+            selector='action',
+            signature=':@:',
             isRequired=0,
         ),
-# (void)addObject:(id)object
+# (NSAttributedString*)attributedTitle
         _objc.selector(
             None,
-            selector='addObject:',
-            signature='v@:@',
-            isRequired=0,
-        ),
-# (BOOL)automaticallyPreparesContent
-        _objc.selector(
-            None,
-            selector='automaticallyPreparesContent',
-            signature='c@:',
-            isRequired=0,
-        ),
-# (BOOL)canAdd
-        _objc.selector(
-            None,
-            selector='canAdd',
-            signature='c@:',
-            isRequired=0,
-        ),
-# (BOOL)canRemove
-        _objc.selector(
-            None,
-            selector='canRemove',
-            signature='c@:',
-            isRequired=0,
-        ),
-# (id)content
-        _objc.selector(
-            None,
-            selector='content',
+            selector='attributedTitle',
             signature='@@:',
             isRequired=0,
         ),
-# (id)initWithContent:(id)content
+# (BOOL)hasSubmenu
         _objc.selector(
             None,
-            selector='initWithContent:',
-            signature='@@:@',
-            isRequired=0,
-        ),
-# (BOOL)isEditable
-        _objc.selector(
-            None,
-            selector='isEditable',
+            selector='hasSubmenu',
             signature='c@:',
             isRequired=0,
         ),
-# (id)newObject
+# (NSImage *)image
         _objc.selector(
             None,
-            selector='newObject',
+            selector='image',
             signature='@@:',
             isRequired=0,
         ),
-# (Class)objectClass
+# (int) indentationLevel
         _objc.selector(
             None,
-            selector='objectClass',
-            signature='#@:',
+            selector='indentationLevel',
+            signature='i@:',
             isRequired=0,
         ),
-# (void)prepareContent
+# (id)initWithTitle:(NSString *)aString action:(SEL)aSelector keyEquivalent:(NSString *)charCode
         _objc.selector(
             None,
-            selector='prepareContent',
-            signature='v@:',
+            selector='initWithTitle:action:keyEquivalent:',
+            signature='@@:@:@',
             isRequired=0,
         ),
-# (void)remove:(id)sender
+# (BOOL) isAlternate
         _objc.selector(
             None,
-            selector='remove:',
-            signature='v@:@',
+            selector='isAlternate',
+            signature='c@:',
             isRequired=0,
         ),
-# (void)removeObject:(id)object
+# (BOOL)isEnabled
         _objc.selector(
             None,
-            selector='removeObject:',
-            signature='v@:@',
+            selector='isEnabled',
+            signature='c@:',
             isRequired=0,
         ),
-# (NSArray *)selectedObjects
+# (BOOL)isSeparatorItem
         _objc.selector(
             None,
-            selector='selectedObjects',
+            selector='isSeparatorItem',
+            signature='c@:',
+            isRequired=0,
+        ),
+# (NSString *)keyEquivalent
+        _objc.selector(
+            None,
+            selector='keyEquivalent',
             signature='@@:',
             isRequired=0,
         ),
-# (id)selection
+# (unsigned int)keyEquivalentModifierMask
         _objc.selector(
             None,
-            selector='selection',
+            selector='keyEquivalentModifierMask',
+            signature='I@:',
+            isRequired=0,
+        ),
+# (NSMenu *)menu
+        _objc.selector(
+            None,
+            selector='menu',
             signature='@@:',
             isRequired=0,
         ),
-# (void)setAutomaticallyPreparesContent:(BOOL)flag
+# (NSImage *)mixedStateImage
         _objc.selector(
             None,
-            selector='setAutomaticallyPreparesContent:',
+            selector='mixedStateImage',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (NSString *)mnemonic
+        _objc.selector(
+            None,
+            selector='mnemonic',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (unsigned)mnemonicLocation
+        _objc.selector(
+            None,
+            selector='mnemonicLocation',
+            signature='I@:',
+            isRequired=0,
+        ),
+# (NSImage *)offStateImage
+        _objc.selector(
+            None,
+            selector='offStateImage',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (NSImage *)onStateImage
+        _objc.selector(
+            None,
+            selector='onStateImage',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (id)representedObject
+        _objc.selector(
+            None,
+            selector='representedObject',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (id <NSMenuItem>)separatorItem
+        _objc.selector(
+            None,
+            selector='separatorItem',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (void)setAction:(SEL)aSelector
+        _objc.selector(
+            None,
+            selector='setAction:',
+            signature='v@::',
+            isRequired=0,
+        ),
+# (void) setAlternate:(BOOL)isAlternate
+        _objc.selector(
+            None,
+            selector='setAlternate:',
             signature='v@:c',
             isRequired=0,
         ),
-# (void)setContent:(id)content
+# (void)setAttributedTitle:(NSAttributedString*)string
         _objc.selector(
             None,
-            selector='setContent:',
+            selector='setAttributedTitle:',
             signature='v@:@',
             isRequired=0,
         ),
-# (void)setEditable:(BOOL)flag
+# (void)setEnabled:(BOOL)flag
         _objc.selector(
             None,
-            selector='setEditable:',
+            selector='setEnabled:',
             signature='v@:c',
             isRequired=0,
         ),
-# (void)setObjectClass:(Class)objectClass
+# (void)setImage:(NSImage *)menuImage
         _objc.selector(
             None,
-            selector='setObjectClass:',
-            signature='v@:#',
+            selector='setImage:',
+            signature='v@:@',
             isRequired=0,
         ),
-# (BOOL)validateMenuItem:(id <NSMenuItem>)menuItem
+# (void) setIndentationLevel:(int)indentationLevel
         _objc.selector(
             None,
-            selector='validateMenuItem:',
-            signature='c@:@',
+            selector='setIndentationLevel:',
+            signature='v@:i',
+            isRequired=0,
+        ),
+# (void)setKeyEquivalent:(NSString *)aKeyEquivalent
+        _objc.selector(
+            None,
+            selector='setKeyEquivalent:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)setKeyEquivalentModifierMask:(unsigned int)mask
+        _objc.selector(
+            None,
+            selector='setKeyEquivalentModifierMask:',
+            signature='v@:I',
+            isRequired=0,
+        ),
+# (void)setMenu:(NSMenu *)menu
+        _objc.selector(
+            None,
+            selector='setMenu:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)setMixedStateImage:(NSImage *)image
+        _objc.selector(
+            None,
+            selector='setMixedStateImage:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)setMnemonicLocation:(unsigned)location
+        _objc.selector(
+            None,
+            selector='setMnemonicLocation:',
+            signature='v@:I',
+            isRequired=0,
+        ),
+# (void)setOffStateImage:(NSImage *)image
+        _objc.selector(
+            None,
+            selector='setOffStateImage:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)setOnStateImage:(NSImage *)image
+        _objc.selector(
+            None,
+            selector='setOnStateImage:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)setRepresentedObject:(id)anObject
+        _objc.selector(
+            None,
+            selector='setRepresentedObject:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)setState:(int)state
+        _objc.selector(
+            None,
+            selector='setState:',
+            signature='v@:i',
+            isRequired=0,
+        ),
+# (void)setSubmenu:(NSMenu *)submenu
+        _objc.selector(
+            None,
+            selector='setSubmenu:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)setTag:(int)anInt
+        _objc.selector(
+            None,
+            selector='setTag:',
+            signature='v@:i',
+            isRequired=0,
+        ),
+# (void)setTarget:(id)anObject
+        _objc.selector(
+            None,
+            selector='setTarget:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)setTitle:(NSString *)aString
+        _objc.selector(
+            None,
+            selector='setTitle:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)setTitleWithMnemonic:(NSString *)stringWithAmpersand
+        _objc.selector(
+            None,
+            selector='setTitleWithMnemonic:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void) setToolTip:(NSString*)toolTip
+        _objc.selector(
+            None,
+            selector='setToolTip:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)setUsesUserKeyEquivalents:(BOOL)flag
+        _objc.selector(
+            None,
+            selector='setUsesUserKeyEquivalents:',
+            signature='v@:c',
+            isRequired=0,
+        ),
+# (int)state
+        _objc.selector(
+            None,
+            selector='state',
+            signature='i@:',
+            isRequired=0,
+        ),
+# (NSMenu *)submenu
+        _objc.selector(
+            None,
+            selector='submenu',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (int)tag
+        _objc.selector(
+            None,
+            selector='tag',
+            signature='i@:',
+            isRequired=0,
+        ),
+# (id)target
+        _objc.selector(
+            None,
+            selector='target',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (NSString *)title
+        _objc.selector(
+            None,
+            selector='title',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (NSString*) toolTip
+        _objc.selector(
+            None,
+            selector='toolTip',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (NSString *)userKeyEquivalent
+        _objc.selector(
+            None,
+            selector='userKeyEquivalent',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (unsigned int)userKeyEquivalentModifierMask
+        _objc.selector(
+            None,
+            selector='userKeyEquivalentModifierMask',
+            signature='I@:',
+            isRequired=0,
+        ),
+# (BOOL)usesUserKeyEquivalents
+        _objc.selector(
+            None,
+            selector='usesUserKeyEquivalents',
+            signature='c@:',
             isRequired=0,
         ),
     ]
@@ -1771,6 +1988,20 @@ NSPasteboardOwner = _objc.informal_protocol(
 NSPlaceholders = _objc.informal_protocol(
     "NSPlaceholders",
     [
+# (id)defaultPlaceholderForMarker:(id)marker withBinding:(NSString *)binding
+        _objc.selector(
+            None,
+            selector='defaultPlaceholderForMarker:withBinding:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (void)setDefaultPlaceholder:(id)placeholder forMarker:(id)marker withBinding:(NSString *)binding
+        _objc.selector(
+            None,
+            selector='setDefaultPlaceholder:forMarker:withBinding:',
+            signature='v@:@@@',
+            isRequired=0,
+        ),
     ]
 )
 

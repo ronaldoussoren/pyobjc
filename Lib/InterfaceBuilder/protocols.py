@@ -601,6 +601,13 @@ IBObjectProtocol = _objc.informal_protocol(
             signature='v@:@',
             isRequired=0,
         ),
+# (BOOL)canSubstituteForClass:(Class)originalObjectClass
+        _objc.selector(
+            None,
+            selector='canSubstituteForClass:',
+            signature='c@:#',
+            isRequired=0,
+        ),
 # (NSString *)classInspectorClassName
         _objc.selector(
             None,
