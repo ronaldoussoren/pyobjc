@@ -244,43 +244,45 @@ MPCompat/plistlib.py
 MPCompat/README
 NEWS
 Project Templates/00README.txt
-Project Templates/clean.py
-Project Templates/Cocoa-Python Application/00README.txt
-Project Templates/Cocoa-Python Application/__main__.py
-Project Templates/Cocoa-Python Application/bin-python-main.m
-Project Templates/Cocoa-Python Application/CocoaApp.pbproj/project.pbxproj
-Project Templates/Cocoa-Python Application/CocoaApp.pbproj/TemplateInfo.plist
-Project Templates/Cocoa-Python Application/English.lproj/InfoPlist.strings
-Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/classes.nib
-Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/info.nib
-Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/keyedobjects.nib
-Project Templates/Cocoa-Python Application/MyAppDelegate.py
-Project Templates/Cocoa-Python Document-based Application/00README.txt
-Project Templates/Cocoa-Python Document-based Application/__main__.py
-Project Templates/Cocoa-Python Document-based Application/bin-python-main.m
-Project Templates/Cocoa-Python Document-based Application/CocoaDocApp.pbproj/project.pbxproj
-Project Templates/Cocoa-Python Document-based Application/CocoaDocApp.pbproj/TemplateInfo.plist
-Project Templates/Cocoa-Python Document-based Application/English.lproj/Credits.rtf
-Project Templates/Cocoa-Python Document-based Application/English.lproj/InfoPlist.strings
-Project Templates/Cocoa-Python Document-based Application/English.lproj/MainMenu.nib/classes.nib
-Project Templates/Cocoa-Python Document-based Application/English.lproj/MainMenu.nib/info.nib
-Project Templates/Cocoa-Python Document-based Application/English.lproj/MainMenu.nib/keyedobjects.nib
-Project Templates/Cocoa-Python Document-based Application/English.lproj/MyDocument.nib/classes.nib
-Project Templates/Cocoa-Python Document-based Application/English.lproj/MyDocument.nib/info.nib
-Project Templates/Cocoa-Python Document-based Application/English.lproj/MyDocument.nib/objects.nib
-Project Templates/Cocoa-Python Document-based Application/MyAppDelegate.py
-Project Templates/Cocoa-Python Document-based Application/MyDocument.py
-Project Templates/Cocoa-Python-ObjC Application/__main__.py
-Project Templates/Cocoa-Python-ObjC Application/bin-python-main.m
-Project Templates/Cocoa-Python-ObjC Application/CocoaApp.pbproj/project.pbxproj
-Project Templates/Cocoa-Python-ObjC Application/CocoaApp.pbproj/TemplateInfo.plist
-Project Templates/Cocoa-Python-ObjC Application/English.lproj/InfoPlist.strings
-Project Templates/Cocoa-Python-ObjC Application/English.lproj/MainMenu.nib/classes.nib
-Project Templates/Cocoa-Python-ObjC Application/English.lproj/MainMenu.nib/info.nib
-Project Templates/Cocoa-Python-ObjC Application/English.lproj/MainMenu.nib/keyedobjects.nib
-Project Templates/Cocoa-Python-ObjC Application/HueView.h
-Project Templates/Cocoa-Python-ObjC Application/HueView.m
-Project Templates/Cocoa-Python-ObjC Application/MyAppDelegate.py
+ProjectBuilder Extras/Project Templates/clean.py
+ProjectBuilder Extras/Project Templates/Cocoa-Python Application/00README.txt
+ProjectBuilder Extras/Project Templates/Cocoa-Python Application/__main__.py
+ProjectBuilder Extras/Project Templates/Cocoa-Python Application/bin-python-main.m
+ProjectBuilder Extras/Project Templates/Cocoa-Python Application/CocoaApp.pbproj/project.pbxproj
+ProjectBuilder Extras/Project Templates/Cocoa-Python Application/CocoaApp.pbproj/TemplateInfo.plist
+ProjectBuilder Extras/Project Templates/Cocoa-Python Application/English.lproj/InfoPlist.strings
+ProjectBuilder Extras/Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/classes.nib
+ProjectBuilder Extras/Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/info.nib
+ProjectBuilder Extras/Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/keyedobjects.nib
+ProjectBuilder Extras/Project Templates/Cocoa-Python Application/MyAppDelegate.py
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/00README.txt
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/__main__.py
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/bin-python-main.m
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/CocoaDocApp.pbproj/project.pbxproj
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/CocoaDocApp.pbproj/TemplateInfo.plist
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/English.lproj/Credits.rtf
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/English.lproj/InfoPlist.strings
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/English.lproj/MainMenu.nib/classes.nib
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/English.lproj/MainMenu.nib/info.nib
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/English.lproj/MainMenu.nib/keyedobjects.nib
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/English.lproj/MyDocument.nib/classes.nib
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/English.lproj/MyDocument.nib/info.nib
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/English.lproj/MyDocument.nib/objects.nib
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/MyAppDelegate.py
+ProjectBuilder Extras/Project Templates/Cocoa-Python Document-based Application/MyDocument.py
+ProjectBuilder Extras/Project Templates/Cocoa-Python-ObjC Application/__main__.py
+ProjectBuilder Extras/Project Templates/Cocoa-Python-ObjC Application/bin-python-main.m
+ProjectBuilder Extras/Project Templates/Cocoa-Python-ObjC Application/CocoaApp.pbproj/project.pbxproj
+ProjectBuilder Extras/Project Templates/Cocoa-Python-ObjC Application/CocoaApp.pbproj/TemplateInfo.plist
+ProjectBuilder Extras/Project Templates/Cocoa-Python-ObjC Application/English.lproj/InfoPlist.strings
+ProjectBuilder Extras/Project Templates/Cocoa-Python-ObjC Application/English.lproj/MainMenu.nib/classes.nib
+ProjectBuilder Extras/Project Templates/Cocoa-Python-ObjC Application/English.lproj/MainMenu.nib/info.nib
+ProjectBuilder Extras/Project Templates/Cocoa-Python-ObjC Application/English.lproj/MainMenu.nib/keyedobjects.nib
+ProjectBuilder Extras/Project Templates/Cocoa-Python-ObjC Application/HueView.h
+ProjectBuilder Extras/Project Templates/Cocoa-Python-ObjC Application/HueView.m
+ProjectBuilder Extras/Project Templates/Cocoa-Python-ObjC Application/MyAppDelegate.py
+ProjectBuilder Extras/Specifications/Python.pbfilespec
+ProjectBuilder Extras/Specifications/Python.pblangspec
 HISTORIC.txt
 ReadMe.txt
 ReadMe.html

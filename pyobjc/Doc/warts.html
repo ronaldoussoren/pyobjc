@@ -21,7 +21,8 @@ calls, but will most likely raise an AttributeError. You'll have to remember
 this when translating from Objective-C to python.</li>
 <li>Some Cocoa classes store references to objects while not increasing the 
 reference count. One of those is NSOutlineView. A side-effect of this is that
-you <i>must</i> use subclasses of NSObject in your NSOutlineView model.</li>
+you <i>must</i> use subclasses of NSObject in your NSOutlineView model, and you
+<i>must</i> keep a reference to the objects you pass to NSOutlineView.</li>
 </ul>
 </body>
 </html>
