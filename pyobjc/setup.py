@@ -46,7 +46,8 @@ if USE_FFI:
     if LIBFFI_SOURCES is not None:
         if not os.path.isdir(LIBFFI_SOURCES):
             sys.stderr.write(
-                'LIBFFI_SOURCES is not a directory: %s'%LIBFFI_SOURCES)
+                'LIBFFI_SOURCES is not a directory: %s\n'%LIBFFI_SOURCES)
+            sys.stderr.write('\tSee Install.txt or Install.html for more information.\n')
             sys.exit(1)
         
         if not os.path.exists('build'):
