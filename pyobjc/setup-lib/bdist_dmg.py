@@ -7,11 +7,10 @@ import sys
 import shutil
 from distutils.dep_util import newer
 from distutils.cmd import Command
-from distutils.version import LooseVersion
 from pyobjc_setup_utils import runtasks
 from bdist_mpkg.tools import sw_vers
 
-OSX_VERSION = LooseVersion(sw_vers())
+OSX_VERSION = sw_vers()
 
 DMG_FILES = filter(None,
 """
