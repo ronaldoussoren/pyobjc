@@ -4,6 +4,7 @@
  * NOTE: The interface is specified with NSBundles, but we have to 
  * use CFBundles in the implementation. This is not portable to GNUstep :-(
  */
+#ifdef MACOSX
 #include "pyobjc.h"
 
 #include <CoreFoundation/CoreFoundation.h>
@@ -227,3 +228,4 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+#endif /* MACOSX */
