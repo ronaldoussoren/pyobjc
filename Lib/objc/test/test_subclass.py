@@ -6,7 +6,6 @@ NSObject = objc.lookUpClass('NSObject')
 
 class TestSubclassing(unittest.TestCase):
     def testSubclassOfSubclass(self):
-        import string
         class Level1Class (NSObject):
             def hello(self):
                 return "level1"
@@ -34,7 +33,7 @@ class TestSubclassing(unittest.TestCase):
 
         v = obj.description()
         # this may be a bit hardwired for comfort
-        self.assert_(string.index(v, "<Level2Class") == 0)
+        self.assert_(v.index("<Level2Class") == 0)
     
     def testUniqueNames(self):
         class SomeClass (NSObject): pass

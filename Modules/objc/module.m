@@ -237,6 +237,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	PyObject* class_list;
 	int       len, i;
 	PyObject* module_key = NULL;
+	PyObject* defModule;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
 			"SO|SS:loadBundle",
@@ -283,9 +284,20 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		return NULL;
 	}
 
+	if (module_key == NULL) {
+		module_key = PyString_FromString("__module__");
+		if (module_key == NULL) {
+			Py_DECREF(class_list);
+			return NULL;
+		}
+	}
+
+	defModule = PyString_FromString("objc");
+
 	len = PyTuple_Size(class_list);
 	for (i = 0; i < len; i++) {
 		PyObject* item;
+		PyObject* mod;
 		Class     cls;
 
 		item = PyTuple_GET_ITEM(class_list, i);
@@ -300,22 +312,45 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 			continue;
 		}
 
+		mod = PyObject_GetAttr(item, module_key);
+		if (mod == NULL) {
+			PyErr_Clear();
+		} else {
+			int r, c;
+			r = PyObject_Cmp(mod, module_name, &c);
+			if (r == -1) {
+				PyErr_Clear();
+			} else if (c == 0) {
+				if (PyDict_SetItemString(module_globals, 
+						((PyTypeObject*)item)->tp_name, item) == -1) {
+					Py_DECREF(module_key);
+					Py_DECREF(class_list);
+					Py_DECREF(defModule);
+					return NULL;
+				}
+				continue;
+			}
+			r = PyObject_Cmp(mod, defModule, &c);
+			if (r == -1) {
+				PyErr_Clear();
+			} else if (c != 0) {
+				/* Already assigned to a module, skip 
+				 * expensive bundleForClass:
+				 */
+				continue;
+			}
+		}
+				
 		if ([NSBundle bundleForClass:cls] != bundle) {
 			continue;
 		}
 
 		/* cls is located in bundle */
-		if (module_key == NULL) {
-			module_key = PyString_FromString("__module__");
-			if (module_key == NULL) {
-				Py_DECREF(class_list);
-				return NULL;
-			}
-		}
 
 		if (PyObject_SetAttr(item, module_key, module_name) == -1) {
 			Py_DECREF(module_key);
 			Py_DECREF(class_list);
+			Py_DECREF(defModule);
 			return NULL;
 		}
 
@@ -323,11 +358,13 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 				((PyTypeObject*)item)->tp_name, item) == -1) {
 			Py_DECREF(module_key);
 			Py_DECREF(class_list);
+			Py_DECREF(defModule);
 			return NULL;
 		}
 	}
 	Py_XDECREF(module_key);
 	Py_XDECREF(class_list);
+	Py_XDECREF(defModule);
 
 	Py_INCREF(Py_None);
 	return Py_None;
