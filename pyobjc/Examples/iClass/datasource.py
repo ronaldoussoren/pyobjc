@@ -94,7 +94,7 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass):
         self._methodInfo.sort()
         self.methodTable.reloadData()
 
-    def selectClass_(self, event):
+    def outlineViewSelectionDidChange_(self, notification):
         rowNr = self.classTable.selectedRow()
         if rowNr == -1:
             self.clearClassInfo()
