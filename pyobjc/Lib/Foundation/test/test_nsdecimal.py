@@ -349,11 +349,11 @@ class NSDecimalNumberOperators (unittest.TestCase):
         p = NSDecimalNumber.decimalNumberWithDecimal_(NSDecimal(2))
 
         NSDecimalAdd(r, o.decimalValue(), p.decimalValue(), NSRoundPlain)
-        self.assertEquals((o+p).decimalValue(), r)
-        self.assertEquals((o+2).decimalValue(), r)
-        self.assertEquals((o+2L).decimalValue(), r)
-        self.assertEquals((1+p).decimalValue(), r)
-        self.assertEquals((1+p).decimalValue(), r)
+        self.assertEquals((o+p), r)
+        self.assertEquals((o+2), r)
+        self.assertEquals((o+2L), r)
+        self.assertEquals((1+p), r)
+        self.assertEquals((1+p), r)
 
         self.assertRaises(TypeError, operator.add, o, 1.2)
         self.assertRaises(TypeError, operator.add, 1.2, o)
@@ -367,11 +367,11 @@ class NSDecimalNumberOperators (unittest.TestCase):
         p = NSDecimalNumber.decimalNumberWithDecimal_(NSDecimal(2))
 
         NSDecimalSubtract(r, o.decimalValue(), p.decimalValue(), NSRoundPlain)
-        self.assertEquals((o-p).decimalValue(), r)
-        self.assertEquals((o-2).decimalValue(), r)
-        self.assertEquals((o-2L).decimalValue(), r)
-        self.assertEquals((1-p).decimalValue(), r)
-        self.assertEquals((1-p).decimalValue(), r)
+        self.assertEquals((o-p), r)
+        self.assertEquals((o-2), r)
+        self.assertEquals((o-2L), r)
+        self.assertEquals((1-p), r)
+        self.assertEquals((1-p), r)
 
         self.assertRaises(TypeError, operator.sub, o, 1.2)
         self.assertRaises(TypeError, operator.sub, 1.2, o)
@@ -382,11 +382,11 @@ class NSDecimalNumberOperators (unittest.TestCase):
         p = NSDecimalNumber.decimalNumberWithDecimal_(NSDecimal(3))
 
         NSDecimalMultiply(r, o.decimalValue(), p.decimalValue(), NSRoundPlain)
-        self.assertEquals((o*p).decimalValue(), r)
-        self.assertEquals((o*3).decimalValue(), r)
-        self.assertEquals((o*3L).decimalValue(), r)
-        self.assertEquals((2*p).decimalValue(), r)
-        self.assertEquals((2*p).decimalValue(), r)
+        self.assertEquals((o*p), r)
+        self.assertEquals((o*3), r)
+        self.assertEquals((o*3L), r)
+        self.assertEquals((2*p), r)
+        self.assertEquals((2*p), r)
 
         self.assertRaises(TypeError, operator.mul, o, 1.2)
         self.assertRaises(TypeError, operator.mul, 1.2, o)
@@ -397,11 +397,11 @@ class NSDecimalNumberOperators (unittest.TestCase):
         p = NSDecimalNumber.decimalNumberWithDecimal_(NSDecimal(3))
 
         NSDecimalDivide(r, o.decimalValue(), p.decimalValue(), NSRoundPlain)
-        self.assertEquals((o/p).decimalValue(), r)
-        self.assertEquals((o/3).decimalValue(), r)
-        self.assertEquals((o/3L).decimalValue(), r)
-        self.assertEquals((2/p).decimalValue(), r)
-        self.assertEquals((2/p).decimalValue(), r)
+        self.assertEquals((o/p), r)
+        self.assertEquals((o/3), r)
+        self.assertEquals((o/3L), r)
+        self.assertEquals((2/p), r)
+        self.assertEquals((2/p), r)
 
         self.assertRaises(TypeError, operator.div, o, 1.2)
         self.assertRaises(TypeError, operator.div, 1.2, o)
@@ -410,22 +410,22 @@ class NSDecimalNumberOperators (unittest.TestCase):
         o = NSDecimalNumber.decimalNumberWithDecimal_(NSDecimal(2))
         p = NSDecimalNumber.decimalNumberWithDecimal_(NSDecimal(-2))
 
-        self.assertEquals((+o).decimalValue(), o.decimalValue())
-        self.assertEquals((+p).decimalValue(), p.decimalValue())
+        self.assertEquals((+o), o.decimalValue())
+        self.assertEquals((+p), p.decimalValue())
 
     def testNegative(self):
         o = NSDecimalNumber.decimalNumberWithDecimal_(NSDecimal(2))
         p = NSDecimalNumber.decimalNumberWithDecimal_(NSDecimal(-2))
 
-        self.assertEquals((-o).decimalValue(), p.decimalValue())
-        self.assertEquals((-p).decimalValue(), o.decimalValue())
+        self.assertEquals((-o), p.decimalValue())
+        self.assertEquals((-p), o.decimalValue())
 
     def testAbs(self):
         o = NSDecimalNumber.decimalNumberWithDecimal_(NSDecimal(2))
         p = NSDecimalNumber.decimalNumberWithDecimal_(NSDecimal(-2))
 
-        self.assertEquals(abs(o).decimalValue(), o.decimalValue())
-        self.assertEquals(abs(p).decimalValue(), o.decimalValue())
+        self.assertEquals(abs(o), o.decimalValue())
+        self.assertEquals(abs(p), o.decimalValue())
 
     def testBitwise(self):
         o = NSDecimalNumber.decimalNumberWithDecimal_(NSDecimal(2))

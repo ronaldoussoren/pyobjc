@@ -295,19 +295,6 @@ into the generic core: there should be at most one Objective-C proxy object
 alive for every Python object (just like there's at most one Python proxy for
 every Objective-C object).
 
-NSNumber
-........
-
-The implementation of NSNumber on Mac OS X can not be trusted to return the
-right thing for objCType, it should be a proxied object like NSString.
-
-NSDecimal vs decimal
-....................
-
-Check if it is possible to wrap ``NSDecimal`` using ``decimal`` (and v.v.).
-
-Only implement this when it is possible to convert without loss of information.
-
 NSSet vs set
 ............
 
