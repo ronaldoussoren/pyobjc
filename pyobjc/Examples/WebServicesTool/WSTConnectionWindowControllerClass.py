@@ -79,7 +79,7 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
 class WorkerThread(Thread):
     
     def __init__(self):
-        """Create and start our worker thread."""
+        """Create a worker thread. Start it by calling the start() method."""
         self.queue = Queue()
         Thread.__init__(target=self.doWork)
     
