@@ -4,12 +4,12 @@ from AppKit import *
 from InterfaceBuilder import *
 from ProgressView import ProgressView
 from ProgressCell import ProgressCell
-import pprint, os
+#import pprint, os
 
-objc.setVerbose(1) ### DEBUG
+#objc.setVerbose(1) ### DEBUG
 
-NSLog(u'ProgressViewPalette.py loaded')
-pprint.pprint(dict(os.environ))
+#NSLog(u'ProgressViewPalette.py loaded')
+#pprint.pprint(dict(os.environ))
 
 class ProgressViewPalette (IBPalette):
     __bundle_hack__ = True
