@@ -1,3 +1,13 @@
+/*
+PythonGlue is a class implementing a singleton object that does
+nothing, but it has one side effect: it initializes Python (which
+should be linked into the bundle containing this class) and executes
+Contents/Resourcs/PythonGlue.py from the main bundle.
+
+No error checking is done, but Python errors will result in messages
+on standard error (or the console, for programs started from the Finder).
+*/
+
 #import <Foundation/Foundation.h>
 #import "PythonGlue.h"
 #import <Python/Python.h>

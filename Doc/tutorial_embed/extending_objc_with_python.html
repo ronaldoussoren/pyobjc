@@ -20,7 +20,8 @@ python 2.3 (also known as MacPython-2.3), it does not work with Apple's
 the Python dynamic library, so you cannot embed this Python in your
 application.</p>
 <p>You will also need the Apple Developer Kit, and it is expected you are familiar
-with using Project Builder, Interface Builder and Terminal. MacPython is expected in the
+with using Project Builder, Interface Builder and Terminal. MacPython 2.3b2
+or later is expected in the
 standard location (<tt class="literal"><span class="pre">/Library/Frameworks</span></tt>, with auxiliary executables
 in <tt class="literal"><span class="pre">/usr/local/bin</span></tt> and on your <tt class="literal"><span class="pre">$PATH</span></tt>).</p>
 <p>The application we are going to modify is Apple's SimpleComboBox example.
@@ -44,7 +45,10 @@ Let's call this <tt class="literal"><span class="pre">SimpleComboBoxPlus</span><
 <li><p class="first">Open it in Project Builder, build it, and see what it does.</p>
 </li>
 <li><p class="first">Copy <tt class="literal"><span class="pre">PythonGlue.h</span></tt>, <tt class="literal"><span class="pre">PythonGlue.m</span></tt> and <tt class="literal"><span class="pre">PythonGlue.py</span></tt> from <tt class="literal"><span class="pre">src</span></tt>
-into the <tt class="literal"><span class="pre">SimpleComboBoxPlus</span></tt> folder.</p>
+into the <tt class="literal"><span class="pre">SimpleComboBoxPlus</span></tt> folder:</p>
+<pre class="literal-block">
+% cp -R src/PythonGlue.* SimpleComboBoxPlus
+</pre>
 </li>
 <li><p class="first">Add <tt class="literal"><span class="pre">PythonGlue.h</span></tt> and <tt class="literal"><span class="pre">PythonGlue.m</span></tt> to the &quot;Classes&quot; group.</p>
 <blockquote>
@@ -59,7 +63,8 @@ in <tt class="literal"><span class="pre">PythonGlue.py</span></tt>.</p>
 </li>
 <li><p class="first">Add <tt class="literal"><span class="pre">PythonGlue.py</span></tt> to the &quot;Resources&quot; group.</p>
 </li>
-<li><p class="first">&quot;Add Framework...&quot;, select <tt class="literal"><span class="pre">/Library/Frameworks/Python.framework</span></tt>.</p>
+<li><p class="first">Select the &quot;Frameworks&quot; group, &quot;Add Framework...&quot;, 
+select <tt class="literal"><span class="pre">/Library/Frameworks/Python.framework</span></tt>.</p>
 </li>
 <li><p class="first">Now we need to arrange to have a <tt class="literal"><span class="pre">PythonGlue</span></tt> object be instantiated
 being called early during startup. A good place to do this for the
@@ -79,17 +84,15 @@ standard output (&quot;PythonGlue: Warning: no Python modules found&quot;)
 but all else should be well.</p>
 </li>
 <li><p class="first">Open <tt class="literal"><span class="pre">CDInfoDocument.nib</span></tt>. Select the Class View, <tt class="literal"><span class="pre">NSObject</span></tt>, subclass
-as <tt class="literal"><span class="pre">ITunesCommunication</span></tt>. Give the class an <tt class="literal"><span class="pre">askITunes:</span></tt> action.</p>
+as <tt class="literal"><span class="pre">ITunesCommunication</span></tt>. Give the class an <tt class="literal"><span class="pre">askITunes:</span></tt> action.
+Instantiate the class as object <tt class="literal"><span class="pre">ITunesCommunication</span></tt>.</p>
 </li>
 <li><p class="first">Go to the object view again, open the Window.</p>
 </li>
 <li><p class="first">Move the text box down a bit to make space, add a button &quot;ask iTunes&quot;.</p>
 </li>
-<li><dl class="first">
-<dt>Connect this button to the <tt class="literal"><span class="pre">askITunes:</span></tt> action of the <tt class="literal"><span class="pre">ITunesCommunication</span></tt></dt>
-<dd><p class="first last">object.</p>
-</dd>
-</dl>
+<li><p class="first">Connect this button to the <tt class="literal"><span class="pre">askITunes:</span></tt> action of the <tt class="literal"><span class="pre">ITunesCommunication</span></tt>
+object.</p>
 </li>
 <li><p class="first">We now need to write the code implementing the <tt class="literal"><span class="pre">ITunesCommunication</span></tt> class.
 Create a file <tt class="literal"><span class="pre">ITunesCommunication.py</span></tt> in the Resources group. As this tutorial
@@ -97,6 +100,11 @@ is about using PyObjC in existing ObjC programs and not about PyObjC itself
 we are going to skip the code itself and simply copy it from <tt class="literal"><span class="pre">src/ITunesCommunication_1.py</span></tt>.
 Note that this is not the final code yet, it is a debug version that does not
 yet talk to iTunes.</p>
+<blockquote>
+<p>Double-clicking on <tt class="literal"><span class="pre">ITunesCommunication.py</span></tt> in Project Builder may cause
+it to try and run the code in stead of editing it. In this case bring up the
+contextual menu and select &quot;Open As...&quot;-&gt;&quot;Plain Text File&quot;.</p>
+</blockquote>
 </li>
 <li><p class="first">Build and run. When you press the &quot;Ask iTunes&quot; the &quot;CD Title&quot; and &quot;Band Name&quot;
 fields will be filled with one of the best albums of the last few years:-)</p>
@@ -111,6 +119,7 @@ so we have to actually look into the bowels of <tt class="literal"><span class="
 the following hefty command line which you should run in the
 <tt class="literal"><span class="pre">SimpleComboBoxPlus</span></tt> directory:</p>
 <pre class="literal-block">
+% cd SimpleComboBoxPlus
 % setenv FWPYTHON /Library/Frameworks/Python.framework/Versions/Current
 % pythonw $FWPYTHON/lib/python2.3/plat-mac/gensuitemodule.py \
         --output iTunes --resource --creator hook \

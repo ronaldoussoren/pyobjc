@@ -14,7 +14,8 @@ the Python dynamic library, so you cannot embed this Python in your
 application.
 
 You will also need the Apple Developer Kit, and it is expected you are familiar
-with using Project Builder, Interface Builder and Terminal. MacPython is expected in the
+with using Project Builder, Interface Builder and Terminal. MacPython 2.3b2
+or later is expected in the
 standard location (``/Library/Frameworks``, with auxiliary executables
 in ``/usr/local/bin`` and on your ``$PATH``).
 
@@ -39,7 +40,9 @@ Follow these steps:
 2. Open it in Project Builder, build it, and see what it does.
 
 3. Copy ``PythonGlue.h``, ``PythonGlue.m`` and ``PythonGlue.py`` from ``src``
-   into the ``SimpleComboBoxPlus`` folder.
+   into the ``SimpleComboBoxPlus`` folder::
+
+	% cp -R src/PythonGlue.* SimpleComboBoxPlus
    
 4. Add ``PythonGlue.h`` and ``PythonGlue.m`` to the "Classes" group.
 
@@ -53,7 +56,8 @@ Follow these steps:
 
 5. Add ``PythonGlue.py`` to the "Resources" group.
 
-6. "Add Framework...", select ``/Library/Frameworks/Python.framework``.
+6. Select the "Frameworks" group, "Add Framework...", 
+   select ``/Library/Frameworks/Python.framework``.
 
 7. Now we need to arrange to have a ``PythonGlue`` object be instantiated
    being called early during startup. A good place to do this for the
@@ -73,13 +77,14 @@ Follow these steps:
    
 9. Open ``CDInfoDocument.nib``. Select the Class View, ``NSObject``, subclass
    as ``ITunesCommunication``. Give the class an ``askITunes:`` action.
+   Instantiate the class as object ``ITunesCommunication``.
    
 10. Go to the object view again, open the Window.
 
 11. Move the text box down a bit to make space, add a button "ask iTunes".
 
 12. Connect this button to the ``askITunes:`` action of the ``ITunesCommunication``
-	object.
+    object.
 	
 13. We now need to write the code implementing the ``ITunesCommunication`` class.
     Create a file ``ITunesCommunication.py`` in the Resources group. As this tutorial
@@ -87,6 +92,10 @@ Follow these steps:
     we are going to skip the code itself and simply copy it from ``src/ITunesCommunication_1.py``.
     Note that this is not the final code yet, it is a debug version that does not
     yet talk to iTunes.
+    
+	Double-clicking on ``ITunesCommunication.py`` in Project Builder may cause
+	it to try and run the code in stead of editing it. In this case bring up the
+	contextual menu and select "Open As..."->"Plain Text File".
 
 14. Build and run. When you press the "Ask iTunes" the "CD Title" and "Band Name"
     fields will be filled with one of the best albums of the last few years:-)
@@ -101,6 +110,7 @@ Follow these steps:
     the following hefty command line which you should run in the
     ``SimpleComboBoxPlus`` directory::
     
+    	% cd SimpleComboBoxPlus
     	% setenv FWPYTHON /Library/Frameworks/Python.framework/Versions/Current
     	% pythonw $FWPYTHON/lib/python2.3/plat-mac/gensuitemodule.py \
     		--output iTunes --resource --creator hook \
