@@ -1,4 +1,41 @@
-#include "pyobjc.h"
+#import "OC_PythonArray.h"
+
+static void
+nsmaptable_python_retain(NSMapTable *table __attribute__((__unused__)), const void *datum) {
+	Py_INCREF((PyObject *)datum);
+}
+
+static void
+nsmaptable_python_release(NSMapTable *table __attribute__((__unused__)), void *datum) {
+	Py_DECREF((PyObject *)datum);
+}
+
+static void
+nsmaptable_objc_retain(NSMapTable *table __attribute__((__unused__)), const void *datum) {
+	[(id)datum retain];
+}
+
+static void
+nsmaptable_objc_release(NSMapTable *table __attribute__((__unused__)), void *datum) {
+	[(id)datum release];
+}
+
+static
+NSMapTableKeyCallBacks PyObjC_ObjectToIdTable_KeyCallBacks = {
+	NULL, // use pointer value for hash
+	NULL, // use pointer value for equality
+	&nsmaptable_python_retain,
+	&nsmaptable_python_release,
+	NULL, // generic description
+	NULL // not a key
+};
+
+static
+NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
+	&nsmaptable_objc_retain,
+	&nsmaptable_objc_release,
+	NULL  // generic description
+};
 
 @implementation OC_PythonArray 
 
@@ -16,9 +53,16 @@
 	self = [super init];
 	if (!self) return nil;
 
+
 	Py_INCREF(v);
 	Py_XDECREF(value);
 	value = v;
+	if (table) {
+		NSResetMapTable(table);
+	} else {
+		table = NSCreateMapTable(PyObjC_ObjectToIdTable_KeyCallBacks, PyObjC_ObjectToIdTable_ValueCallBacks, [self count]);
+	}
+    NSMapInsert(table, (const void *)Py_None, (const void *)[NSNull null]);
 	return self;
 }
 
@@ -31,8 +75,10 @@
 -(void)dealloc
 {
 	PyObjC_BEGIN_WITH_GIL
+		if (table) {
+			NSFreeMapTable(table);
+		}
 		Py_XDECREF(value);
-		value = NULL;
 
 	PyObjC_END_WITH_GIL
 
@@ -64,10 +110,16 @@
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-		err = depythonify_c_value(@encode(id), v, &result);
-		Py_DECREF(v);
-		if (err == -1) {
-			PyObjC_GIL_FORWARD_EXC();
+		if ((result = (id)NSMapGet(table, (const void *)v))) {
+			Py_DECREF(v);
+		} else {
+			err = depythonify_c_value(@encode(id), v, &result);
+			if (err == -1) {
+				PyObjC_GIL_FORWARD_EXC();
+			} else {
+				NSMapInsert(table, (const void *)v, (const void *)result);
+				Py_DECREF(v);
+			}
 		}
 	
 	PyObjC_END_WITH_GIL

@@ -1,5 +1,3 @@
-#ifndef OC_PythonDictionary_h
-#define OC_PythonDictionary_h
 /*!
  * @header OC_PythonDictionary.h
  * @abstract Objective-C proxy for Python dictionaries
@@ -8,7 +6,8 @@
  *     dictionaries to Objective-C.
  */
 
-#import <Foundation/NSDictionary.h>
+#import "pyobjc.h"
+#import <Foundation/Foundation.h>
 
 /*!
  * @class OC_PythonDictionary
@@ -26,6 +25,7 @@
 @interface OC_PythonDictionary : NSMutableDictionary
 {
 	PyObject* value;
+    NSMapTable* table;
 }
 
 /*!
@@ -97,6 +97,11 @@
  */
 - (id)objectForKey:(id)key;
 
-@end /* interface OC_PythonDictionary */
+/*
+ * XXX - document these, internal
+ */
+-(BOOL)wrappedKey:(id*)keyPtr value:(id*)valuePtr atPosition:(int*)positionPtr;
+-(int)depythonify:(PyObject*)v toId:(id*)datum;
 
-#endif /* OC_PythonDictionary_h */
+
+@end /* interface OC_PythonDictionary */

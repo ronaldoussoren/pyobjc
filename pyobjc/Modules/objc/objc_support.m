@@ -188,6 +188,15 @@
 
 @end /* NSString (PyObjCSupport) */
 
+@implementation NSNull (PyObjCSupport)
+
+-(PyObject*)__pyobjc_PythonObject__
+{
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+@end /* NSNull (PyObjCSupport) */
 
 
 #ifndef MAX

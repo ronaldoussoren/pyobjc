@@ -1,6 +1,3 @@
-#ifndef OC_PythonArray_h
-#define OC_PythonArray_h
-
 /*!
  * @header OC_PythonArray.h 
  * @abstract Objective-C proxy class for Python sequences
@@ -9,7 +6,8 @@
  *     in Objective-C.
  */
 
-#import <Foundation/NSArray.h>
+#import "pyobjc.h"
+#import <Foundation/Foundation.h>
 
 /*!
  * @class       OC_PythonArray
@@ -23,6 +21,7 @@
 @interface OC_PythonArray : NSMutableArray
 {
 	PyObject* value;
+	NSMapTable* table;
 }
 
 /*!
@@ -126,5 +125,3 @@
 -(void)removeObjectAtIndex:(unsigned)idx;
 
 @end
-
-#endif /* OC_PythonArray_h */
