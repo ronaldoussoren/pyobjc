@@ -11,7 +11,8 @@ def makepath(*paths):
     return dir, os.path.normcase(dir)
 
 for m in sys.modules.values():
-    if hasattr(m, "__file__") and m.__file__:
+    f = getattr(m, '__file__', None)
+    if isinstance(f, basestring) and os.path.exists(f):
         m.__file__ = os.path.abspath(m.__file__)
 del m
 

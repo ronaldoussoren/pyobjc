@@ -51,6 +51,8 @@ typedef int PyGILState_STATE;
 typedef PyGILState_STATE (*PyGILState_EnsurePtr)(void);
 typedef void (*PyGILState_ReleasePtr)(PyGILState_STATE);
 typedef void (*PyErr_ClearPtr)(void);
+typedef PyObject *(*PyString_FromStringPtr)(const char *);
+typedef int (*PyList_InsertPtr)(PyObject *, int, PyObject *);
 typedef void (*Py_DecRefPtr)(PyObject *);
 typedef void (*Py_SetProgramNamePtr)(const char *);
 typedef int (*Py_IsInitializedPtr)(void);
@@ -62,6 +64,8 @@ typedef int *(*PySys_SetArgvPtr)(int argc, char **argv);
 typedef PyObject *(*PyObject_StrPtr)(PyObject *);
 typedef const char *(*PyString_AsStringPtr)(PyObject *);
 typedef PyObject *(*PyObject_GetAttrStringPtr)(PyObject *, const char *);
+typedef PyObject *(*PyImport_ImportModulePtr)(char *);
+typedef void (*PyObject_SetItemPtr)(PyObject *, PyObject *, PyObject *);
 
 //
 // Signatures
@@ -334,7 +338,7 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
     setenv("EXECUTABLEPATH", bundlePath(), 1);
     setenv("ARGVZERO", argv[0], 1);
     setenv("RESOURCEPATH", [resourcePath fileSystemRepresentation], 1);
-    
+
     NSArray *possibleMains = [[bundleBundle() infoDictionary] objectForKey:@"PyMainFileNames"];
     if ( !possibleMains )
         possibleMains = [NSArray array];
@@ -397,43 +401,78 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp) {
     LOOKUP(PySys_SetArgv);
     LOOKUP(PyObject_Str);
     LOOKUP(PyString_AsString);
+    LOOKUP(PyString_FromString);
+    LOOKUP(PyList_Insert);
     LOOKUP(PyObject_GetAttrString);
+    LOOKUP(PyImport_ImportModule);
+    LOOKUP(PyObject_SetItem);
 
 #undef LOOKUP
 #undef LOOKUP_DEFINE
 #undef LOOKUP_DEFINEADDRESS
 #undef LOOKUP_SYMBOL
 
-    // XXX - this value should be used!
-    int __attribute__ ((__unused__)) was_initialized;
-    was_initialized = Py_IsInitialized();
-    NSString *pythonProgramName;
-    // $PREFIX/Python -> $PREFIX
-    pythonProgramName = [pyLocation stringByDeletingLastPathComponent];
-    // this is the non-framework case, hopefully
-    if (![[pyLocation pathExtension] isEqualToString:@""]) {
-        pythonProgramName = [pythonProgramName stringByDeletingLastPathComponent];
+    int was_initialized = Py_IsInitialized();
+
+    if (!was_initialized) {
+        NSString *pythonProgramName;
+        // $PREFIX/Python -> $PREFIX
+        pythonProgramName = [pyLocation stringByDeletingLastPathComponent];
+        // this is the non-framework case, hopefully
+        if (![[pyLocation pathExtension] isEqualToString:@""]) {
+            pythonProgramName = [pythonProgramName stringByDeletingLastPathComponent];
+        }
+
+        setenv("PYTHONPATH", [[pythonPathArray componentsJoinedByString:@":"] fileSystemRepresentation], 1);
+        setenv("PYTHONHOME", [pythonProgramName fileSystemRepresentation], 1);
+        
+        NSString *pyExecutableName = [[bundleBundle() infoDictionary] objectForKey:@"PyExecutableName"];
+        if ( !pyExecutableName )
+            pyExecutableName = @"python";
+
+        pythonProgramName = [[pythonProgramName stringByAppendingPathComponent:@"bin"] stringByAppendingPathComponent:pyExecutableName];
+        Py_SetProgramName([pythonProgramName fileSystemRepresentation]);
     }
 
-    setenv("PYTHONPATH", [[pythonPathArray componentsJoinedByString:@":"] fileSystemRepresentation], 1);
-    setenv("PYTHONHOME", [pythonProgramName fileSystemRepresentation], 1);
-    
-    NSString *pyExecutableName = [[bundleBundle() infoDictionary] objectForKey:@"PyExecutableName"];
-    if ( !pyExecutableName )
-        pyExecutableName = @"python";
-
-    pythonProgramName = [[pythonProgramName stringByAppendingPathComponent:@"bin"] stringByAppendingPathComponent:pyExecutableName];
-    Py_SetProgramName([pythonProgramName fileSystemRepresentation]);
-
-    NSMutableData *data_argv = [NSMutableData dataWithCapacity:(sizeof(char *) * argc)];
-    char *c_mainPyPath = (char *)[mainPyPath fileSystemRepresentation];
-    char **argv_new = [data_argv mutableBytes];
-    argv_new[0] = c_mainPyPath;
-    memcpy(&argv_new[1], &argv[1], (argc - 1) * sizeof(char *));
     Py_Initialize();
     PyEval_InitThreads();
     PyGILState_STATE gilState = PyGILState_Ensure();
-    PySys_SetArgv(argc, argv_new);
+
+    if (was_initialized) {
+        PyObject *path = PySys_GetObject("path");
+        NSEnumerator *pathEnumerator = [pythonPathArray reverseObjectEnumerator];
+        NSString *curPath;
+        while ((curPath = [pathEnumerator nextObject])) {
+            PyObject *s = PyString_FromString([curPath UTF8String]);
+            PyList_Insert(path, 0, s);
+            Py_DecRef(s);
+        }
+        PyObject *osModule = PyImport_ImportModule("os");
+        PyObject *pyenv = PyObject_GetAttrString(osModule, "environ");
+        Py_DecRef(osModule);
+#define TRANSFER_ENV(name) do { \
+    PyObject *key = PyString_FromString(name); \
+    PyObject *value = PyString_FromString(getenv(name)); \
+    PyObject_SetItem(pyenv, key, value); \
+    Py_DecRef(key); \
+    Py_DecRef(value); \
+} while (0)
+        TRANSFER_ENV("PYOBJC_BUNDLE_CLASS_WRAPPER_ADDRESS");
+        TRANSFER_ENV("EXECUTABLEPATH");
+        TRANSFER_ENV("ARGVZERO");
+        TRANSFER_ENV("RESOURCEPATH");
+#undef TRANSFER_ENV
+        Py_DecRef(pyenv);
+    }
+
+    char *c_mainPyPath = (char *)[mainPyPath fileSystemRepresentation];
+    if (!was_initialized) {
+        NSMutableData *data_argv = [NSMutableData dataWithCapacity:(sizeof(char *) * argc)];
+        char **argv_new = [data_argv mutableBytes];
+        argv_new[0] = c_mainPyPath;
+        memcpy(&argv_new[1], &argv[1], (argc - 1) * sizeof(char *));
+        PySys_SetArgv(argc, argv_new);
+    }
     
     FILE *mainPy = fopen(c_mainPyPath, "r");
     int rval = PyRun_SimpleFile(mainPy, c_mainPyPath);

@@ -11,7 +11,7 @@ def main():
         CFLAGS = '-Os -Wall'
         LDFLAGS = '-g -bundle -framework Foundation -framework AppKit'
         os.system('cc -o "%(dest)s" "%(src)s" %(CFLAGS)s %(LDFLAGS)s' % locals())
-        os.system('strip -Sx "%(dest)s"' % locals())
+        #os.system('strip -Sx "%(dest)s"' % locals())
     return dest
 
 if __name__ == '__main__':

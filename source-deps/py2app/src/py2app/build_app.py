@@ -291,13 +291,13 @@ class py2app(Command):
         self.fixup_distribution()
         dist = self.distribution
         plist = {}
-        for target in dist.app:
+        for target in self.targets:
             plist.update(getattr(target, 'plist', {}))
         plist.update(self.plist)
         self.plist = plist
         if self.alias:
             self.app_files = []
-            for target in dist.app:
+            for target in self.targets:
                 dst = self.build_alias_executable(target, target.script)
                 self.app_files.append(dst)
             return

@@ -58,6 +58,12 @@ setup(
             'lib/site.py',
             'src/main.m',
         ],
+        'py2app.bundletemplate': [
+            'prebuilt/main',
+            'lib/__error__.sh',
+            'lib/site.py',
+            'src/main.m',
+        ],
         'bdist_mpkg': [
             'lib/prepanther/InstallationCheck',
             'lib/prepanther/English.lproj/InstallationCheck.strings',
