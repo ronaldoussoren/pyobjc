@@ -83,7 +83,7 @@ argument signature. The 'correct' signature for method is therefore 'v@:o^@@'.
 The following code tells the brigde about this better method signature::
 
    import objc
-   objc.set_signature_for_selector("ClassName", "selector:withArguments:",
+   objc.setSignatureForSelector("ClassName", "selector:withArguments:",
    	"v@:o^@:@")
 
 To anotate method signatures you'll have to add a single character before all

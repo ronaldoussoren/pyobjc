@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.19 2003/07/16 19:36:51 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.20 2003/07/21 20:08:15 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -185,7 +185,13 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCUnsupportedMethod_Caller (PyObjC_API->unsupported_method_caller)
 
 
-static inline int PyObjCObject_Convert(PyObject* object, void* pvar)
+/* XXX: Check if we can use the following function in the bridge itself,
+ * if so: move these to a seperate C file. These are inline to avoid warnings
+ * and code-bloat for files that don't use these functions.
+ */
+
+static inline int 
+PyObjCObject_Convert(PyObject* object, void* pvar)
 {
 	id* pid = (id*)pvar;
 
@@ -195,6 +201,73 @@ static inline int PyObjCObject_Convert(PyObject* object, void* pvar)
 	    return 0;
         } 
 	return 1;
+}
+
+
+static inline int 
+PyObjC_ConvertBOOL(PyObject* object, void* pvar)
+{
+    BOOL* pbool = (BOOL*)pvar;
+
+    if (PyObject_IsTrue(object)) {
+        *pbool = YES;
+    } else {
+        *pbool = NO;
+    }
+
+    return 1;
+}
+
+static inline int 
+PyObjC_ConvertChar(PyObject* object, void* pvar)
+{
+    char* pchar = (char*)pvar;
+
+    if (!PyString_Check(object)) {
+        PyErr_SetString(PyExc_TypeError, "Expecting string of len 1");
+        return 0;
+    }
+
+    if (PyString_Size(object) != 1) {
+        PyErr_SetString(PyExc_TypeError, "Expecting string of len 1");
+        return 0;
+    }
+
+    *pchar = *PyString_AsString(object);
+    return 1;
+}
+
+static inline int 
+PyObjCSelector_Convert(PyObject* object, void* pvar)
+{
+    if (object == Py_None) {
+        *(SEL*)pvar = NULL;
+        return 1;
+    }
+    if (PyObjCSelector_Check(object)) {
+        *(SEL*)pvar = PyObjCSelector_GetSelector(object);
+        return 1;
+    }
+    if (!PyString_Check(object)) {
+        PyErr_SetString(PyExc_TypeError, "Expected string");
+        return 0;
+    }
+
+    *(SEL*)pvar = SELUID(PyString_AsString(object));
+    return 1;
+}
+
+static inline int 
+PyObjCClass_Convert(PyObject* object, void* pvar)
+{
+    if (!PyObjCClass_Check(object)) {
+        PyErr_SetString(PyExc_TypeError, "Expected objective-C class");
+        return 0;
+    }
+
+    *(Class*)pvar = PyObjCClass_GetClass(object);
+    if (*(Class*)pvar == NULL) return 0;
+    return 1;
 }
 
 

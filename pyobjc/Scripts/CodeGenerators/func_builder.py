@@ -36,82 +36,7 @@ HDR="""\
  * This is a generated file.
  */
 
-typedef void* PYOBJC_VOIDPTR;
-
-static inline int convert_BOOL(PyObject* object, void* pvar)
-{
-    BOOL* pbool = (BOOL*)pvar;
-
-    if (PyObject_IsTrue(object)) {
-        *pbool = YES;
-    } else {
-        *pbool = NO;
-    }
-
-    return 1;
-}
-
-
-static inline int convert_char(PyObject* object, void* pvar)
-{
-    char* pchar = (char*)pvar;
-
-    if (!PyString_Check(object)) {
-        PyErr_SetString(PyExc_TypeError, "Expecting string of len 1");
-        return 0;
-    }
-
-    if (PyString_Size(object) != 1) {
-        PyErr_SetString(PyExc_TypeError, "Expecting string of len 1");
-        return 0;
-    }
-
-    *pchar = *PyString_AsString(object);
-    return 1;
-}
-
-static inline int convert_id(PyObject* object, void* pvar)
-{
-    id* pid = (id*)pvar;
-
-    *pid = PyObjC_PythonToId(object);
-
-    if (PyErr_Occurred()) {
-        return 0;
-    } 
-    return 1;
-}
-
-static inline int convert_SEL(PyObject* object, void* pvar)
-{
-    if (object == Py_None) {
-        *(SEL*)pvar = NULL;
-        return 1;
-    }
-    if (PyObjCSelector_Check(object)) {
-        *(SEL*)pvar = PyObjCSelector_GetSelector(object);
-        return 1;
-    }
-    if (!PyString_Check(object)) {
-        PyErr_SetString(PyExc_TypeError, "Expected string");
-        return 0;
-    }
-
-    *(SEL*)pvar = SELUID(PyString_AsString(object));
-    return 1;
-}
-
-static inline int convert_Class(PyObject* object, void* pvar)
-{
-    if (!PyObjCClass_Check(object)) {
-        PyErr_SetString(PyExc_TypeError, "Expected objective-C class");
-        return 0;
-    }
-
-    *(Class*)pvar = PyObjCClass_GetClass(object);
-    if (*(Class*)pvar == NULL) return 0;
-    return 1;
-}
+/*typedef void* PYOBJC_VOIDPTR;*/
 
 """
 
@@ -148,6 +73,7 @@ def is_id(typestr):
 
 # TODO: actually use this, and add more types (when using: always check here
 # first, and then special logic (like handling 'id'-like values)
+# TODO: Use PyObjC_ObjCToPython/PyObjC_PythonToObjC!
 SIMPLE_TYPES={
     # key: ( 'to_python', 'parse_fmt', 'parse_args' ) 
     #      items in the tuple are either None (not needed), a string or
@@ -157,17 +83,17 @@ SIMPLE_TYPES={
     'char': (
         '\tresult = PyString_FromStringAndSize(&(%(varname)s), 1);\n\tif (result == NULL) return NULL;',
         'O&',                 
-        'convert_char, &%(varname)s', 
+        'PyObjC_ConvertChar, &%(varname)s', 
     ),
     'SEL': (
         '\tresult = PyString_FromString(SELNAME(%(varname)s));\n\tif (result == NULL) return NULL;',
         'O&',                 
-        'convert_SEL, &%(varname)s', 
+        'PyObjCSelector_Convert, &%(varname)s', 
     ),
     'Class': (
         '\tresult = PyObjCClass_New(%(varname)s);\n\tif (result == NULL) return NULL;',
         'O&',                 
-        'convert_Class, &%(varname)s', 
+        'PyObjCClass_Convert, &%(varname)s', 
     ),
     'int': (
         "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
@@ -184,13 +110,7 @@ SIMPLE_TYPES={
     'BOOL': (
         "\tresult = PyObjCBool_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
         'O&',                 
-        'convert_BOOL, &%(varname)s', 
-        None
-    ),
-    'unsigned': (
-        "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
-        'i',
-        '&%(varname)s',
+        'PyObjC_ConvertBOOL, &%(varname)s', 
         None
     ),
     'short': (
@@ -217,7 +137,60 @@ SIMPLE_TYPES={
         '&%(varname)s',
         None
     ),
+    'long long': (
+        "\t result = PyLong_FromLongLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+        'L',
+        '&%(varname)s',
+        None
+    ),
 }
+
+# Python2.3 has better PyArgs_Parse format-chars for unsigned integral types,
+# use those when available and use plain ints when not.
+if sys.version >= '2.3':
+    SIMPLE_TYPES['unsigned long long'] =  (
+        "\t result = PyLong_FromUnsignedLongLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+        'K',
+        '&%(varname)s',
+        None
+    )
+    SIMPLE_TYPES['unsigned'] = (
+        "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+        'I',
+        '&%(varname)s',
+        None
+    )
+    SIMPLE_TYPES['unsigned int'] = SIMPLE_TYPES['unsigned']
+    SIMPLE_TYPES['unsigned long'] = SIMPLE_TYPES['unsigned']
+
+    SIMPLE_TYPES['unsigned short'] = (
+        "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+        'H',
+        '&%(varname)s',
+        None
+    )
+
+else:
+    SIMPLE_TYPES['unsigned long long'] =  (
+        "\t result = PyLong_FromUnsignedLongLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+        'L',
+        '&%(varname)s',
+        None
+    )
+    SIMPLE_TYPES['unsigned'] = (
+        "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+        'i',
+        '&%(varname)s',
+        None
+    )
+    SIMPLE_TYPES['unsigned int'] = SIMPLE_TYPES['unsigned']
+    SIMPLE_TYPES['unsigned long'] = SIMPLE_TYPES['unsigned']
+    SIMPLE_TYPES['unsigned short'] = (
+        "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
+        'h',
+        '&%(varname)s',
+        None
+    )
                 
 def simple_to_python(varname, typestr):
     if typestr.startswith('const ') or typestr.startswith('const\t'):
@@ -258,7 +231,7 @@ def parsetuple_arguments(typestr, varname):
         typestr = typestr[6:].strip()
 
     if is_id(typestr):
-        return "convert_id, &%(varname)s"%{ 'varname': varname }
+        return "PyObjCObject_Convert, &%(varname)s"%{ 'varname': varname }
 
     if typestr in INT_ALIASES:
         x = SIMPLE_TYPES['int']
@@ -289,10 +262,10 @@ def is_simple_type(typestr):
 
 
 def parse_prototype(protostr):
-    protostr = protostr.strip()
+    protostr = protostr.strip()[:-1].strip()
     idx = protostr.index('(')
 
-    arguments = [ x.strip() for x in protostr[idx+1:-2].split(',') ]
+    arguments = [ x.strip() for x in protostr[idx+1:-1].split(',') ]
     before = protostr[:idx].strip()
     idx=len(before)-1
     while before[idx].isalnum() or before[idx] == '_':
@@ -326,9 +299,17 @@ def parse_prototype(protostr):
 
     return retval, funcname, arguments
 
+def have_func(fname, funclist):
+    for n, l in funclist:
+        if fname == n:
+            return 1
+    return 0
 
-def process_function(fp, protostr):
+def process_function(fp, protostr, funclist):
     retval, funcname, arguments = parse_prototype(protostr)
+
+    if have_func(funcname, funclist):
+        return
 
     fp.write("/* %s */\n"%protostr)
     fp.write("static PyObject* objc_%s(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)\n"%funcname)
@@ -397,7 +378,7 @@ def process_list(fp, lst):
         if l[0] == '#': continue
         total_count += 1
         try:
-            funcs.append((process_function(fp, l), l))
+            funcs.append((process_function(fp, l, funcs), l))
             if verbose:
                 sys.stderr.write("Converting '%s' ..."%l.strip())
                 sys.stderr.write("done\n")
@@ -411,17 +392,23 @@ def process_list(fp, lst):
 
     fp.write("\n")
 
+
+
+    if verbose:
+        sys.stderr.write("Converted %d of %d functions\n"%(ok_count, total_count))
+
+    return funcs
+
+def gen_method_table_entries(fp, funcs):
     if not funcs:
         fp.write("#define METHOD_TABLE_ENTRIES\n")
     else:
         fp.write("#define METHOD_TABLE_ENTRIES \\\n")
         for f in funcs:
+            if f[0] is None: continue
             fp.write('\t{ "%(funcname)s", (PyCFunction)objc_%(funcname)s, METH_VARARGS|METH_KEYWORDS, "%(funcproto)s" }, \\\n'%{'funcname':f[0], 'funcproto':f[1]})
         fp.write("\t/* END */\n")
 
-
-    if verbose:
-        sys.stderr.write("Converted %d of %d functions\n"%(ok_count, total_count))
 
 if __name__ == "__main__":
     import sys

@@ -13,7 +13,7 @@ import AppKit
 del AppKit
 
 # Custom method signature (undocumented class, this is a guess)
-objc.set_signature_for_selector("ScreenSaverUserInfo", "loginUserName:andID:", "v@:o^@o^I")
+objc.setSignatureForSelector("ScreenSaverUserInfo", "loginUserName:andID:", "v@:o^@o^I")
 
 objc.loadBundle("ScreenSaver", globals(), bundle_path="/System/Library/Frameworks/ScreenSaver.framework")
 

@@ -40,6 +40,22 @@
 - (BOOL) respondsToSelector:(SEL) aSelector;
 - (NSMethodSignature *) methodSignatureForSelector:(SEL) selector;
 - (void) doesNotRecognizeSelector:(SEL) aSelector;
+
+/* Key-Value Coding support */
++ (BOOL)useStoredAccessor;
++ (BOOL)accessInstanceVariablesDirectly;
+- valueForKey:(NSString*) key;
+- (NSDictionary*) valuesForKeys: (NSArray*)keys;
+- valueForKeyPath: (NSString*) keyPath;
+- storedValueForKey: (NSString*) key;
+- (void)takeValue: value forKey: (NSString*) key;
+- (void)takeStoredValue: value forKey: (NSString*) key;
+- (void)takeValue: value forKeyPath: (NSString*) keyPath;
+- (void)takeValuesFromDictionary: (NSDictionary*) aDictionary;
+- (void)unableToSetNilForKey: (NSString*) key;
+- (void)handleQueryWithUnboundKey: (NSString*) key;
+- (void)handleTakeValue: value forUnboundKey: (NSString*) key;
+
 @end /* OC_PythonObject class interface */
 
 #endif /* _OC_PythonObject_H */

@@ -200,6 +200,7 @@ FOUNDATION_IGNORE_LIST=(
     'NSFileTypeForHFSTypeCode(',
     'NSHFSTypeCodeFromFileType(',
     'NSStringFromPoint',
+    'NSDivideRect(',
 
     # NSDecimal support, should wrap type
     'NSDecimalCopy(',
@@ -231,7 +232,6 @@ FOUNDATION_IGNORE_LIST=(
     'NSUncaughtExceptionHandler(',
     'NSSetUncaughtExceptionHandler(',
     'NSGetUncaughtExceptionHandler(',
-    'NSDivideRect(',
     'NSDefaultMallocZone(',
 )
 
@@ -266,6 +266,8 @@ if VER == "10.1":
 
 func_collector.generate(FOUNDATION_HDRS, 'build/codegen/Foundation.prototypes', 
     FOUNDATION_PREFIX, FOUNDATION_IGNORE_LIST)
+func_collector.generate(FOUNDATION_HDRS, 'build/codegen/Foundation.prototype2', 
+    'FOUNDATION_STATIC_INLINE', FOUNDATION_IGNORE_LIST)
 func_collector.generate(APPKIT_HDRS, 'build/codegen/AppKit.prototypes', 
     APPKIT_PREFIX, APPKIT_IGNORE_LIST)
 
@@ -308,7 +310,7 @@ func_builder.FUNC_MAP['NSBeginInformationalAlertSheet'] = BeginSheetMapper
 func_builder.FUNC_MAP['NSBeginCriticalAlertSheet'] = BeginSheetMapper
 
 fd = dupfile('build/codegen/_Fnd_Functions.inc', 'w')
-structs = ['NSPoint', 'NSSize', 'NSRect', 'NSRange']
+structs = ['NSPoint', 'NSSize', 'NSRect', 'NSRange', 'NSSwappedDouble', 'NSSwappedFloat']
 for s in structs:
     func_builder.SIMPLE_TYPES[s] = (
         '\tresult = PyObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,
@@ -329,8 +331,11 @@ static inline int convert_%(type)s(PyObject* object, void* pvar)
 }
 '''%{'type': s })
 
+fd.write('typedef void* PYOBJC_VOIDPTR;\n')
 
-func_builder.process_list(fd , file('build/codegen/Foundation.prototypes'))
+funcs = func_builder.process_list(fd , file('build/codegen/Foundation.prototypes'))
+funcs2 = func_builder.process_list(fd , file('build/codegen/Foundation.prototype2'))
+func_builder.gen_method_table_entries(fd, funcs + funcs2)
 fd = None
 for s in structs:
     del func_builder.SIMPLE_TYPES[s]
@@ -389,6 +394,8 @@ func_builder.INT_ALIASES.extend([
 ])
 
 
-func_builder.process_list(fd, file('build/codegen/AppKit.prototypes'))
+fd.write('typedef void* PYOBJC_VOIDPTR;\n')
+funcs = func_builder.process_list(fd, file('build/codegen/AppKit.prototypes'))
+func_builder.gen_method_table_entries(fd, funcs)
 for s in structs:
     del func_builder.SIMPLE_TYPES[s]

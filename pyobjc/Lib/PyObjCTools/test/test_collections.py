@@ -77,4 +77,4 @@ if __name__ == '__main__':
         unittest.main( )
     except SystemExit :
         pass
-    objc.recycle_autorelease_pool()
+    objc.recyleAutoreleasePool()

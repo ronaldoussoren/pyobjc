@@ -8,7 +8,6 @@ An introduction to PyObjC
 	:copyright: 2003 The PyObjC Project
 
 
-
 .. contents::
 
 WORK IN PROGRESS
@@ -33,6 +32,10 @@ point of view of a Python programmer.
 Objective-C for PyObjC users
 ----------------------------
 
+It is necessary to understand a little bit of Objective-C to use PyObjC,
+this helps you to better understand the class libraries and makes it easier
+to read (and translate) example code.
+
 Objective-C is an object-oriented programming language that is an extension 
 of C and borrows heavily from Smalltalk. It features single inheritance with
 (in theory) multiple root classes and dynamic dispatch of methods. This is
@@ -46,6 +49,56 @@ be used as the types of arguments and the return value of methods.
 Object allocation and initialization are explicit and seperate actions in 
 Objective-C. The former is done by the class-method ``alloc``, while the
 latter is done by instance-methods whose name customarily starts with ``init``.
+
+Objective-C code looks just like plain C code, with some easily recognizable
+extensions for the Object-Oriented parts of the language. And example class
+declaration (usually found in ``.h`` files) and implementation (usually found
+in ``.m`` files) are listed below). Class declarations are easily recognized as 
+blocks of code between ``@interface`` and ``@end``, and simularly the 
+implementation is between ``@implementation`` and ``@end``. Calling methods
+is done using expressions enclosed with brackets (name?), e.g. 
+``[foo method]``.  This is the same as ``foo.method()`` in Python.
+
+A class declaration::
+
+   @interface MYClass : MySuperClass
+   {
+      id  anInstanceVariable;
+      int anotherInstanceVariable;
+   }
+
+   +aClassMethod;
+
+   -(int)anInstanceMethodWithArg1:arg1 andArg2:(BOOL)arg2;
+   @end
+
+A class implemenation::
+
+   @implementation MYClass
+
+   +aClassMethod
+   {
+   	id res = [[MYClass alloc] init];
+	return res;
+   }
+
+   -(int)anInstanceMethodWithArg1:arg1 andArg2:(BOOL)arg2
+   {
+   	int res;
+
+	if (arg2) {
+		res = [self fooWith:arg1];
+	} else {
+		res = [arg1 bar];
+	}
+   }
+
+   @end
+
+Objective-C also features exceptions, but as those are mostly used for disaster
+recovery and not for normal error handling you won't see them very often
+in example code. The `The Objective-C Programming Language`_ if you want to
+know more about exceptions in Objective-C. 
 
 For more information about Objective-C see:
 

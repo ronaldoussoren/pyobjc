@@ -19,7 +19,7 @@ class TestNSUndoManager(unittest.TestCase):
         self.assertEquals(l[0], 1)
 
     def __del__(self):
-        objc.recycle_autorelease_pool()
+        objc.recyleAutoreleasePool()
 
 ## Undo Integer test
 ## From David Eppstein

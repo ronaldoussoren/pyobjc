@@ -24,4 +24,4 @@ class TestAllocateBuffer(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    objc.recycle_autorelease_pool()
+    objc.recyleAutoreleasePool()

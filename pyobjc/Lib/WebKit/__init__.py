@@ -6,7 +6,7 @@ documentation for details on how to use these functions and classes.
 """
 
 import AppKit
-#import _WebKitSignatures
+del AppKit
 import objc as _objc
 
 # We first register special methods signatures with the runtime. The module
@@ -14,13 +14,9 @@ import objc as _objc
 
 from _WebKit import *
 
-
-# We try to import a module containing support code, the code
-# is only ever used from the C side.
-#import _WebKitMapping 
-
 # Load the Cocoa bundle, and gather all classes defined there
 _objc.loadBundle("WebKit", globals(), bundle_path="/System/Library/Frameworks/WebKit.framework")
-_objc.recycle_autorelease_pool()
+_objc.recyleAutoreleasePool()
 
 import protocols  # no need to export these, just register with PyObjC
+del _objc

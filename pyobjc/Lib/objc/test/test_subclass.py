@@ -1,6 +1,6 @@
 import unittest
 import objc
-from testbndl import PyObjC_TestClass3
+from objc.test.testbndl import PyObjC_TestClass3
 
 # Most usefull systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass('NSObject')

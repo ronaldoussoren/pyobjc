@@ -130,7 +130,7 @@ cleanup_and_return_error:
 
 
 PyDoc_STRVAR(recycle_autorelease_pool_doc,
-  "recycle_autorelease_pool()\n"
+  "recycleAutoreleasePool()\n"
   "\n"
   "This 'releases' the global autorelease pool and creates a new one.\n"
   "This method is for system use only\n");
@@ -153,7 +153,7 @@ static	char* keywords[] = { NULL };
 }
 
 PyDoc_STRVAR(set_class_extender_doc,
-	"set_class_extender(func) -> None\n"
+	"setClassExtender(func) -> None\n"
 	"\n"
 	"Register a function that will be called to update the class\n"
 	"dict of new Objective-C classes and class-proxies. This will\n"
@@ -176,7 +176,7 @@ set_class_extender(PyObject* self __attribute__((__unused__)),
 static 	char* keywords[] = { "callback", NULL };
 	PyObject* callback;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:set_class_extender",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:setClassExtender",
 			keywords, &callback)) {
 		return NULL;
 	}
@@ -207,7 +207,7 @@ getClassList(PyObject* self __attribute__((__unused__)))
 }
 
 PyDoc_STRVAR(set_signature_for_selector_doc,
-	"set_signature_for_selector(class_name, selector, signature) -> None\n"
+	"setSignatureForSelector(class_name, selector, signature) -> None\n"
 	"\n"
 	"Register a replacement signature for a specific selector. This \n"
 	"can be used to provide a more exact signature for a method.\n"
@@ -221,7 +221,7 @@ static 	char* keywords[] = { "class_name", "selector", "signature", NULL };
 	char* signature;
 	SEL   sel;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sss:set_signature_for_selector",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sss:setSignatureForSelector",
 			keywords, &class_name, &selector, &signature)) {
 		return NULL;
 	}
@@ -589,9 +589,9 @@ static PyMethodDef meta_methods[] = {
 	  classAddMethods_doc
 	},
 	{ "getClassList", (PyCFunction)getClassList, METH_NOARGS, getClassList_doc },
-	{ "set_class_extender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
-	{ "set_signature_for_selector", (PyCFunction)set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
-	{ "recycle_autorelease_pool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
+	{ "setClassExtender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
+	{ "setSignatureForSelector", (PyCFunction)set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
+	{ "recyleAutoreleasePool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
 	{ "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
 	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
 	{ "loadBundle", (PyCFunction)loadBundle, METH_VARARGS|METH_KEYWORDS, loadBundle_doc },

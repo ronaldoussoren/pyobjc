@@ -95,7 +95,7 @@ import sys
 NSArray = objc.runtime.NSArray
 
 # First make sure that the pass-by-reference methods have the correct signature
-set_signature = objc.set_signature_for_selector
+setSignature = objc.setSignatureForSelector
 """
 
 PY_MIDTEXT="""
@@ -447,16 +447,16 @@ def emit_objc_implementations(fp):
 def emit_py_method_signatures(fp):
     for tp, sign, values in TYPES:
         nm = tp2ident(tp)
-        fp.write('set_signature("PyObjC_TestClass1", "%sInOutArg:", "@@:N^%s")\n'%(nm, sign))
-        fp.write('set_signature("PyObjC_TestClass1", "%sOutArg:", "v@:o^%s")\n'%(nm, sign))
-        fp.write('set_signature("PyObjC_TestClass1", "%sInArg:", "@@:n^%s")\n'%(nm, sign))
+        fp.write('setSignature("PyObjC_TestClass1", "%sInOutArg:", "@@:N^%s")\n'%(nm, sign))
+        fp.write('setSignature("PyObjC_TestClass1", "%sOutArg:", "v@:o^%s")\n'%(nm, sign))
+        fp.write('setSignature("PyObjC_TestClass1", "%sInArg:", "@@:n^%s")\n'%(nm, sign))
 
-        fp.write('set_signature("PyObjC_TestClass2", "call%sInOutArg:of:", "@@:N^%s@")\n'%(nm, sign))
-        fp.write('set_signature("PyObjC_TestClass2", "call%sOutArg:of:", "v@:o^%s@")\n'%(nm, sign))
-        fp.write('set_signature("PyObjC_TestClass2", "call%sInArg:of:", "@@:n^%s@")\n'%(nm, sign))
-        fp.write('set_signature("PyObjC_TestClass2", "invoke%sInOutArg:of:", "@@:N^%s@")\n'%(nm, sign))
-        fp.write('set_signature("PyObjC_TestClass2", "invoke%sOutArg:of:", "v@:o^%s@")\n'%(nm, sign))
-        fp.write('set_signature("PyObjC_TestClass2", "invoke%sInArg:of:", "@@:n^%s@")\n'%(nm, sign))
+        fp.write('setSignature("PyObjC_TestClass2", "call%sInOutArg:of:", "@@:N^%s@")\n'%(nm, sign))
+        fp.write('setSignature("PyObjC_TestClass2", "call%sOutArg:of:", "v@:o^%s@")\n'%(nm, sign))
+        fp.write('setSignature("PyObjC_TestClass2", "call%sInArg:of:", "@@:n^%s@")\n'%(nm, sign))
+        fp.write('setSignature("PyObjC_TestClass2", "invoke%sInOutArg:of:", "@@:N^%s@")\n'%(nm, sign))
+        fp.write('setSignature("PyObjC_TestClass2", "invoke%sOutArg:of:", "v@:o^%s@")\n'%(nm, sign))
+        fp.write('setSignature("PyObjC_TestClass2", "invoke%sInArg:of:", "@@:n^%s@")\n'%(nm, sign))
 
 def emit_py_to_objc(fp):
     fp.write('class PyToObjC (TestCase):\n')

@@ -326,7 +326,6 @@ CoreExtensions =  [
     ]
 CocoaPackages = [ 'Foundation', 'AppKit' ]
 
-# XXX: Should not do this every time setup.py is called!
 subprocess("Generating wrappers & stubs", "%s Scripts/CodeGenerators/cocoa_generator.py" % (sys.executable,), None)
 
 # Provide some dependency information on Python 2.3 and later, this

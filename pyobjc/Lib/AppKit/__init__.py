@@ -21,7 +21,7 @@ import _AppKitMapping
 
 # Load the Cocoa bundle, and gather all classes defined there
 _objc.loadBundle("AppKit", globals(), bundle_path="/System/Library/Frameworks/AppKit.framework")
-_objc.recycle_autorelease_pool()
+_objc.recyleAutoreleasePool()
 del Foundation
 
 

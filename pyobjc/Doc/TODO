@@ -101,6 +101,11 @@ From the top of my head:
 * Restructure selector.m, this file is too long and complicated. We could
   do away with the difference between method implemented in Python and ObjC.
 
+* Likewise for class-builder.m, this file is way to large.
+
+* Use libffi to do away with class-builder.m:find_real_superclass. And check
+  if we can use libffi to simplify code.
+
 
 Support for GNUstep
 ...................

@@ -7,9 +7,6 @@ This module defines the core interfaces of the Python<->Objective-C bridge.
 ##
 ## Disable gc -- blows up w/Python 2.2.0
 ##
-## XXX Fix me: This is probably a bug in PyObjC, need to check why this
-## fails on Python 2.2.0 and not on Python 2.2.2. Copying gcmodule.c from
-## Python 2.2.2 to 2.2.0 causes the crash to go away...
 import sys
 if sys.version_info[:3] == (2,2,0):
     import gc
@@ -61,7 +58,12 @@ del _runtime
 #
 # Interface builder support.
 #
-IBOutlet = lambda name: ivar(name, isOutlet=1)
+def IBOutlet(name):
+    """
+    Create an instance variable that can be used as an outlet in
+    Interface Builder.
+    """
+    return ivar(name, isOutlet=1)
 
 def IBAction(func):
     """
@@ -109,3 +111,15 @@ def classAddMethod(cls, name, method):
         sel = selector(method, selector=name)
 
     return classAddMethods(cls, [sel])
+
+######
+# Backward compatibility stuff
+# (depricated functionality)
+
+def recycle_autorelease_pool():
+    """Depricated: Use recycleAutoreleasePool"""
+    import warnings
+    warings.warn(
+        "Use recycleAutoreleasePool instead of recycle_autorelease_pool",
+        DeprecationWarning)
+    recycleAutoreleasePool()
