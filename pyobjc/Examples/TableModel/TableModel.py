@@ -16,6 +16,8 @@ class PyModel(NibClassBuilder.AutoBaseClass, NSTableDataSource, NSTableViewDeleg
         # tableView is an outlet set in Interface Builder
         self.tableView.setTarget_(self)
         self.tableView.setDoubleAction_("doubleClick:")
+        # this also works, but you still need to set the target:
+        #self.tableView.setDoubleAction_(self.doubleClick_)
         return self
 
     def init(self):
