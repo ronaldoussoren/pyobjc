@@ -143,7 +143,7 @@ try:
     setup (name = "pyobjc",
            version = package_version(),
            description = "Python<->ObjC Interoperability Module",
-           author = "bbum, RonaldO, SteveM, many others stretching back through the reachtes of time...",
+           author = "bbum, RonaldO, SteveM, LeleG, many others stretching back through the reaches of time...",
            author_email = "pyobjc-dev@lists.sourceforge.net",
 	   url = "http://pyobjc.sourceforge.net/",
            ext_modules = (
