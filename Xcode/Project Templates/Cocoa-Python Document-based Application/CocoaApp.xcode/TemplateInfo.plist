@@ -1,0 +1,21 @@
+{
+	FilesToRename = {
+		"CocoaApp_Prefix.pch" = "ÇPROJECTNAMEASIDENTIFIERÈ_Prefix.pch";
+		"CocoaAppDelegate.py" = "ÇPROJECTNAMEASIDENTIFIERÈAppDelegate.py";
+		"CocoaAppDocument.py" = "ÇPROJECTNAMEASIDENTIFIERÈDocument.py";
+		"English.lproj/CocoaAppDocument.nib" = "English.lproj/ÇPROJECTNAMEASIDENTIFIERÈDocument.nib";
+	};
+	FilesToMacroExpand = (
+		"__main__.py",
+		"ÇPROJECTNAMEASIDENTIFIERÈAppDelegate.py",
+		"ÇPROJECTNAMEASIDENTIFIERÈ_Prefix.pch",
+		"Info.plist",
+		"English.lproj/InfoPlist.strings",
+		"English.lproj/MainMenu.nib/classes.nib",
+		"English.lproj/MainMenu.nib/keyedobjects.nib",
+		"English.lproj/ÇPROJECTNAMEASIDENTIFIERÈDocument.nib/classes.nib",
+		"English.lproj/ÇPROJECTNAMEASIDENTIFIERÈDocument.nib/keyedobjects.nib",
+		"main.m",
+	);
+	Description = "This project builds a Cocoa-based application written in Python and Objective-C that used the NSDocument architecture.";
+}
