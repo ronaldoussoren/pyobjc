@@ -1,14 +1,21 @@
-"""?PROJECTNAMEASIDENTIFIER? -- A minimal Document-based Cocoa application."""
+#
+#  ÇPROJECTNAMEASIDENTIFIERÈDocument.py
+#  ÇPROJECTNAMEÈ
+#
+#  Created by ÇFULLUSERNAMEÈ on ÇDATEÈ.
+#  Copyright (c) ÇYEARÈ ÇORGANIZATIONNAMEÈ. All rights reserved.
+#
+
 
 
 from PyObjCTools import NibClassBuilder, AppHelper
 
 
-NibClassBuilder.extractClasses("?PROJECTNAMEASIDENTIFIER?")
+NibClassBuilder.extractClasses("ÇPROJECTNAMEASIDENTIFIERÈDocument")
 
 
 # class defined in TinyTinyDocument.nib
-class ?PROJECTNAMEASIDENTIFIER?(NibClassBuilder.AutoBaseClass):
+class ÇPROJECTNAMEASIDENTIFIERÈDocument(NibClassBuilder.AutoBaseClass):
     # the actual base class is NSDocument
     # The following outlets are added to the class:
     # textView
@@ -16,7 +23,7 @@ class ?PROJECTNAMEASIDENTIFIER?(NibClassBuilder.AutoBaseClass):
     path = None
 
     def windowNibName(self):
-        return "?PROJECTNAMEASIDENTIFIER?"
+        return "ÇPROJECTNAMEASIDENTIFIERÈDocument"
 
     def readFromFile_ofType_(self, path, tp):
         if self.textView is None:
