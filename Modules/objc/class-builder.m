@@ -6,6 +6,9 @@
 
 #import <Foundation/NSInvocation.h>
 
+#if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
+#import <Foundation/NSKeyValueObserving.h>
+#endif
 
 /* List of instance variables, methods and class-methods that should not
  * be overridden from python
@@ -1583,6 +1586,21 @@ getAccessor(id self, NSString* key, id* result)
 	return -1;
 }
 
+/* 
+ * Support for NSKeyValueObserving on MacOS X 10.3 and later.
+ *
+ * XXX: It's probably better to detect this at runtime.
+ * XXX2: This is not correct, should also call 'willChangeValueForKey:'!
+ */
+#if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
+#   define WILL_CHANGE(self, key) [(NSObject*)(self) willChangeValueForKey:(key)]	
+#   define DID_CHANGE(self, key) [(NSObject*)(self) didChangeValueForKey:(key)]	
+#else
+#   define WILL_CHANGE(self, key) ((void)0)
+#   define DID_CHANGE(self, key) ((void)0)
+#endif
+
+
 static int
 setAttribute(id self, NSString* key, id value)
 {
@@ -1600,17 +1618,17 @@ setAttribute(id self, NSString* key, id value)
 
 			val = pythonify_c_value(@encode(id), &value);
 			if (val == NULL) {
-				PyErr_Clear();
-				return -1;
+				return 0;
 			}
 
+
+			WILL_CHANGE(self, key);
 			r = PyDict_SetItemString(*dictptr, 
 				(char*)[key cString], val);
-			if (r == -1) {
-				PyErr_Clear();
-			}
+			DID_CHANGE(self, key);
+
 			Py_DECREF(val);
-			return r;
+			return 0;
 		}
 	}
 
@@ -1627,18 +1645,16 @@ setAttribute(id self, NSString* key, id value)
 
 			val = pythonify_c_value(@encode(id), &value);
 			if (val == NULL) {
-				PyErr_Clear();
-				return -1;
+				return 0;
 			}
 
+			WILL_CHANGE(self, key);
 			r = PyObject_SetAttrString(
 				PyObjCObject_New(self),
 				(char*)[key cString], val);
-			if (r == -1) {
-				PyErr_Clear();
-			}
+			DID_CHANGE(self, key);
 			Py_DECREF(val);
-			return r;
+			return 0;
 		}
 		Py_DECREF(att);
 	}
@@ -1665,20 +1681,17 @@ setAccessor(id self, NSString* key, id value)
 
 			val = pythonify_c_value(@encode(id), &value);
 			if (val == NULL) {
-				PyErr_Clear();
-				return -1;
+				return 0;
 			}
 
+			WILL_CHANGE(self, key);
 			att = PyObject_CallMethod(
 				PyObjCObject_New(self),
 				(char*)[key cString], "O", val);
-			if (att == NULL) {
-				PyErr_Print();
-				PyErr_Clear();
-			}
+			DID_CHANGE(self, key);
 			Py_XDECREF(att);
 			Py_DECREF(val);
-			return (att == NULL) ? -1 : 0;
+			return 0;
 		}
 		Py_DECREF(att);
 	}
@@ -1797,6 +1810,7 @@ object_method_valueForKey_(id self, SEL _meth, NSString* key)
 	return result;
 }
 
+
 static void
 object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* key)
 {
@@ -1807,6 +1821,14 @@ object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* ke
 	r = setAccessor(self, 
 		[NSString stringWithFormat:@"set_%@", key], value);
 	if (r == 0) {
+		if (PyErr_Occurred()) {
+			PyErr_Clear();
+			PyGILState_Release(state);
+			[[NSException 
+				exceptionWithName:@"NSUnknownKeyException"
+				reason:key userInfo:nil] raise];
+			return;
+		}
 		PyGILState_Release(state);
 		return;
 	}
@@ -1815,12 +1837,28 @@ object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* ke
 		[NSString stringWithFormat:@"set%@", [key capitalizedString]], 
 		value);
 	if (r == 0) {
+		if (PyErr_Occurred()) {
+			PyErr_Clear();
+			PyGILState_Release(state);
+			[[NSException 
+				exceptionWithName:@"NSUnknownKeyException"
+				reason:key userInfo:nil] raise];
+			return;
+		}
 		PyGILState_Release(state);
 		return;
 	}
 
 	r = setAttribute(self, key, value);
 	if (r == 0) {
+		if (PyErr_Occurred()) {
+			PyErr_Clear();
+			PyGILState_Release(state);
+			[[NSException 
+				exceptionWithName:@"NSUnknownKeyException"
+				reason:key userInfo:nil] raise];
+			return;
+		}
 		PyGILState_Release(state);
 		return;
 	}
@@ -1828,6 +1866,14 @@ object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* ke
 	r = setAccessor(self, 
 		[NSString stringWithFormat:@"_set_%@", key], value);
 	if (r == 0) {
+		if (PyErr_Occurred()) {
+			PyErr_Clear();
+			PyGILState_Release(state);
+			[[NSException 
+				exceptionWithName:@"NSUnknownKeyException"
+				reason:key userInfo:nil] raise];
+			return;
+		}
 		PyGILState_Release(state);
 		return;
 	}
@@ -1836,12 +1882,28 @@ object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* ke
 		[NSString stringWithFormat:@"_set%@", [key capitalizedString]], 
 		value);
 	if (r == 0) {
+		if (PyErr_Occurred()) {
+			PyErr_Clear();
+			PyGILState_Release(state);
+			[[NSException 
+				exceptionWithName:@"NSUnknownKeyException"
+				reason:key userInfo:nil] raise];
+			return;
+		}
 		PyGILState_Release(state);
 		return;
 	}
 
 	r = setAttribute(self, [NSString stringWithFormat:@"_%@", key], value);
 	if (r == 0) {
+		if (PyErr_Occurred()) {
+			PyErr_Clear();
+			PyGILState_Release(state);
+			[[NSException 
+				exceptionWithName:@"NSUnknownKeyException"
+				reason:key userInfo:nil] raise];
+			return;
+		}
 		PyGILState_Release(state);
 		return;
 	}
@@ -1899,6 +1961,14 @@ object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
 	r = setAccessor(self, 
 		[NSString stringWithFormat:@"set_%@", key], value);
 	if (r == 0) {
+		if (PyErr_Occurred()) {
+			PyErr_Clear();
+			PyGILState_Release(state);
+			[[NSException 
+				exceptionWithName:@"NSUnknownKeyException"
+				reason:key userInfo:nil] raise];
+			return;
+		}
 		PyGILState_Release(state);
 		return;
 	}
@@ -1907,12 +1977,28 @@ object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
 		[NSString stringWithFormat:@"set%@", [key capitalizedString]], 
 		value);
 	if (r == 0) {
+		if (PyErr_Occurred()) {
+			PyErr_Clear();
+			PyGILState_Release(state);
+			[[NSException 
+				exceptionWithName:@"NSUnknownKeyException"
+				reason:key userInfo:nil] raise];
+			return;
+		}
 		PyGILState_Release(state);
 		return;
 	}
 
 	r = setAttribute(self, key, value);
 	if (r == 0) {
+		if (PyErr_Occurred()) {
+			PyErr_Clear();
+			PyGILState_Release(state);
+			[[NSException 
+				exceptionWithName:@"NSUnknownKeyException"
+				reason:key userInfo:nil] raise];
+			return;
+		}
 		PyGILState_Release(state);
 		return;
 	}
@@ -1920,6 +2006,14 @@ object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
 	r = setAccessor(self, 
 		[NSString stringWithFormat:@"_set_%@", key], value);
 	if (r == 0) {
+		if (PyErr_Occurred()) {
+			PyErr_Clear();
+			PyGILState_Release(state);
+			[[NSException 
+				exceptionWithName:@"NSUnknownKeyException"
+				reason:key userInfo:nil] raise];
+			return;
+		}
 		PyGILState_Release(state);
 		return;
 	}
@@ -1928,12 +2022,28 @@ object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
 		[NSString stringWithFormat:@"_set%@", [key capitalizedString]], 
 		value);
 	if (r == 0) {
+		if (PyErr_Occurred()) {
+			PyErr_Clear();
+			PyGILState_Release(state);
+			[[NSException 
+				exceptionWithName:@"NSUnknownKeyException"
+				reason:key userInfo:nil] raise];
+			return;
+		}
 		PyGILState_Release(state);
 		return;
 	}
 
 	r = setAttribute(self, [NSString stringWithFormat:@"_%@", key], value);
 	if (r == 0) {
+		if (PyErr_Occurred()) {
+			PyErr_Clear();
+			PyGILState_Release(state);
+			[[NSException 
+				exceptionWithName:@"NSUnknownKeyException"
+				reason:key userInfo:nil] raise];
+			return;
+		}
 		PyGILState_Release(state);
 		return;
 	}

@@ -44,7 +44,7 @@ setSignatureForSelector("NSObject", "validateValue:forKey:error:", "c@:N^@@o^@")
 setSignatureForSelector("NSObject", "validateValue:forKeyPath:error:", "c@:N^@@o^@")
 setSignatureForSelector("NSObject", "addObserver:forKeyPath:options:context:",
     "v@:@@Ii")
-setSignatureForSelector("NSObject", "observeValueForKeyPath:ofObject:change:context:", "v@:@@i")
+setSignatureForSelector("NSObject", "observeValueForKeyPath:ofObject:change:context:", "v@:@@@i")
 setSignatureForSelector("NSArray", "addObserver:toObjectsAtIndexes:forKeyPath:options:context:", 'v@:@@@Ii')
 setSignatureForSelector("NSURLConnection", "sendSynchronousRequest:returningResponse:error:", "@@:@o^@o^@")
 setSignatureForSelector("NSString", "getParagraphStart:end:contentsEnd:forRange:", "v@:o^Io^Io^I{_NSRange=II}")

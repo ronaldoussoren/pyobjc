@@ -80,42 +80,52 @@ else:
 </plist>
 """
 
-    class TestPropList (unittest.TestCase):
-        """
-        Test if numbers are stored properly in property-list. The most 
-        important part of the testcase are boolean values.
-        """
+class TestPropList (unittest.TestCase):
+    """
+    Test if numbers are stored properly in property-list. The most 
+    important part of the testcase are boolean values.
+    """
 
-        def testPropertyList1(self):
-            d = NSMutableDictionary.dictionary()
+    def testPropertyList1(self):
+        d = NSMutableDictionary.dictionary()
 
-            # Python 2.3 only...
-            d['plain'] = 1
-            d['bool'] = objc.YES
+        # Python 2.3 only...
+        d['plain'] = 1
+        d['bool'] = objc.YES
 
-            self.assertEquals(d.writeToFile_atomically_(
-                "/tmp/pyobjctest.plist", 0), 1)
-            
-            fd = open('/tmp/pyobjctest.plist', 'ru')
-            data = fd.read()
-            fd.close()
+        self.assertEquals(d.writeToFile_atomically_(
+            "/tmp/pyobjctest.plist", 0), 1)
+        
+        fd = open('/tmp/pyobjctest.plist', 'ru')
+        data = fd.read()
+        fd.close()
 
-            self.assertEquals(stripDocType(data), stripDocType(PLIST))
+        self.assertEquals(stripDocType(data), stripDocType(PLIST))
 
-        def testPropertyList2(self):
-            d = NSMutableDictionary.dictionary()
+    def testPropertyList2(self):
+        d = NSMutableDictionary.dictionary()
 
-            d['plain'] = NSNumber.numberWithLong_(1)
-            d['bool'] = NSNumber.numberWithBool_(1)
+        d['plain'] = NSNumber.numberWithLong_(1)
+        d['bool'] = NSNumber.numberWithBool_(1)
 
-            self.assertEquals(d.writeToFile_atomically_(
-                "/tmp/pyobjctest.plist", 0), 1)
-            
-            fd = open('/tmp/pyobjctest.plist', 'ru')
-            data = fd.read()
-            fd.close()
+        self.assertEquals(d.writeToFile_atomically_(
+            "/tmp/pyobjctest.plist", 0), 1)
+        
+        fd = open('/tmp/pyobjctest.plist', 'ru')
+        data = fd.read()
+        fd.close()
 
-            self.assertEquals(stripDocType(data), stripDocType(PLIST))
+        self.assertEquals(stripDocType(data), stripDocType(PLIST))
+
+class TestDecimalNumber (unittest.TestCase):
+    # NSDecimalNumber is treated specially
+
+    # TODO: Add tests for using decimal numbers (addition, multiplication, ...)
+
+    def testProxy (self):
+        o = NSDecimalNumber.decimalNumberWithString_("1.00")
+
+        self.assert_(isinstance(o, NSDecimalNumber))
 
 if __name__ == '__main__':
     unittest.main( )

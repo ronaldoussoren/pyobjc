@@ -6,11 +6,13 @@ in PyObjCTools.test.test_keyvalue and objc.test.test_keyvalue.
 
 TODO:
     - Tests that access properties in the parent Objective-C class!
+    - More key-error tests, the tests don't cover all relevant code yet.
 """
 import objc
 import unittest
 import sys
 from objc.test.testbndl import PyObjC_TestClass3 as STUB
+from Foundation import *
 
 class KeyValueClass1 (objc.runtime.NSObject):
     def init(self):
@@ -59,6 +61,23 @@ class KeyValueClass4 (objc.runtime.NSObject):
     bar = property(read_bar, write_bar)
 
     roprop = property(lambda self: "read-only")
+
+class KVOClass(objc.runtime.NSObject):
+    def automaticallyNotifiesObserversForKey_(self, aKey):
+        return objc.NO
+
+    def test(self): return "test"
+
+
+class KeyValueObserver (objc.runtime.NSObject):
+    def init(self):
+        self.observed = []
+        return self
+
+    def observeValueForKeyPath_ofObject_change_context_(
+            self, keyPath, object, change, context):
+        self.observed.append( (keyPath, object, change) )
+
 
 class PyKeyValueCoding (unittest.TestCase):
     def testNoPrivateVars(self):
@@ -233,11 +252,71 @@ class PyKeyValueCoding (unittest.TestCase):
         STUB.setKeyValue_forObject_key_value_(1, o, "multiple.level2.level3.keyB", 9.999)
         self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
 
-class KVOClass(objc.runtime.NSObject):
-    def automaticallyNotifiesObserversForKey_(self, aKey):
-        return objc.NO
+    if hasattr(objc.runtime.NSObject, "willChangeValueForKey_"):
+        # We're on a system that supports KeyValueCoding observations
+        # AFAIK this is on MacOS X from 10.3
 
-    def test(self): return "test"
+        def testKVO1(self):
+            o = KVOClass.alloc().init()
+            o.addObserver_forKeyPath_options_context_(self, "test", 0, 0)
+            o.removeObserver_forKeyPath_(self, "test")
+            o.retain()
+
+        def testKVO2(self):
+            """
+            Check if observations work for python-based keys on ObjC classes
+            """
+            observer = KeyValueObserver.alloc().init()
+            self.assertEquals(observer.observed, [])
+
+            o = KeyValueClass1.alloc().init()
+
+            o.addObserver_forKeyPath_options_context_(observer, "key3", 0, 0)
+            try:
+                STUB.setKeyValue_forObject_key_value_(2, o, 'key3', 'drie')
+                self.assertEquals(o.key3, "drie")
+
+                self.assertEquals(len(observer.observed), 1)
+
+                keyPath, object, change = observer.observed[0]
+                self.assertEquals(keyPath, "key3")
+                self.assert_(object is o)
+                self.assertEquals(change, {NSKeyValueChangeKindKey: 1 })
+            
+            finally:
+                o.removeObserver_forKeyPath_(observer, 'key3')
+
+        def testKVO3(self):
+            """
+            Check if observations work for python-based keys on ObjC classes
+            """
+            observer = KeyValueObserver.alloc().init()
+            self.assertEquals(observer.observed, [])
+
+            o = KeyValueClass1.alloc().init()
+            STUB.setKeyValue_forObject_key_value_(2, o, 'key3', 'three')
+
+            o.addObserver_forKeyPath_options_context_(observer, "key3", 
+                    NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld, 
+                    0)
+            try:
+                STUB.setKeyValue_forObject_key_value_(2, o, 'key3', 'drie')
+                self.assertEquals(o.key3, "drie")
+
+                self.assertEquals(len(observer.observed), 1)
+
+                keyPath, object, change = observer.observed[0]
+                self.assertEquals(keyPath, "key3")
+                self.assert_(object is o)
+                self.assertEquals(change, 
+                    {
+                        NSKeyValueChangeKindKey:1, 
+                        NSKeyValueChangeNewKey:'drie', 
+                        NSKeyValueChangeOldKey:'three' 
+                    })
+            
+            finally:
+                o.removeObserver_forKeyPath_(observer, 'key3')
 
 class TestBaseExceptions (unittest.TestCase):
     """
@@ -260,10 +339,7 @@ class TestBaseExceptions (unittest.TestCase):
         self.assertRaises(KeyError, 
             o.takeStoredValue_forKey_, "value", "unknownKey")
 
-    def testKVO(self):
-        # MacOS X 10.3 ?
-        o = KVOClass.alloc().init()
-        o.addObserver_forKeyPath_options_context_(self, "test", 0, 0)
+
 
 if __name__ == "__main__":
     unittest.main()
