@@ -10,7 +10,7 @@ NSMutableArray = objc.lookUpClass('NSMutableArray')
 
 Level1Del = 0
 
-class Level1Class (NSObject):
+class LeaksClass (NSObject):
     def __del__(self):
         global Level1Del 
 
@@ -24,7 +24,7 @@ class TestRetains(unittest.TestCase):
         Level1Del = 0
         self.assertEquals(Level1Del, 0)
 
-        o = Level1Class.alloc().init()
+        o = LeaksClass.alloc().init()
         self.assert_(o is not None)
         self.assertEquals(Level1Del, 0)
         del o
@@ -35,7 +35,7 @@ class TestRetains(unittest.TestCase):
 
         Level1Del = 0
         self.assertEquals(Level1Del, 0)
-        c = NSMutableArray.arrayWithArray_([ Level1Class.alloc().init() ])
+        c = NSMutableArray.arrayWithArray_([ LeaksClass.alloc().init() ])
         objc.recycle_autorelease_pool()
 
         self.assert_(c is not None)
@@ -50,7 +50,7 @@ class TestRetains(unittest.TestCase):
         self.assertEquals(Level1Del, 0)
         c = NSMutableArray.alloc()
         c = c.initWithArray_(
-            [ Level1Class.alloc().init() ])
+            [ LeaksClass.alloc().init() ])
         objc.recycle_autorelease_pool()
 
         self.assert_(c is not None)

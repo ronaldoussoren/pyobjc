@@ -9,7 +9,7 @@ typedef struct
 
   void *ptr;
   PyStringObject *type;
-  char contents[0];
+  char contents[1];
 } PyObjCPointer;
 
 /* Corresponding Python type object */

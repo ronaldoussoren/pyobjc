@@ -1,7 +1,6 @@
 /*
  * Implementation of objective-C object wrapper
  */
-#include <Python.h>
 #include "pyobjc.h"
 #include "objc_support.h"
 #include <stddef.h>
@@ -17,11 +16,7 @@ find_existing_proxy(id objc_obj)
 	if (proxy_dict == NULL) return NULL;
 
 	v = NSMapGet(proxy_dict, objc_obj);
-	if (v == NULL) {
-		return NULL;
-	}
-
-	Py_INCREF(v);
+	Py_XINCREF(v);
 	return v;
 }
 
@@ -65,6 +60,7 @@ register_proxy(PyObject* proxy_obj)
 
 	return 0;
 }
+
 
 
 static PyObject*
@@ -157,11 +153,13 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 
 static PyObject** _get_dictptr(PyObject* obj)
 {
-	int dictoffset = PyObjCClass_DictOffset((PyObject*)obj->ob_type);
+	//int dictoffset = PyObjCClass_DictOffset((PyObject*)obj->ob_type);
+	//
+	//if (dictoffset == 0) return NULL;
+	//
+	//return (PyObject**)(((char*)PyObjCObject_GetObject(obj)) + dictoffset);
 
-	if (dictoffset == 0) return NULL;
-
-	return (PyObject**)(((char*)PyObjCObject_GetObject(obj)) + dictoffset);
+	return _PyObject_GetDictPtr(obj);
 }
 
 static PyObject *
@@ -171,7 +169,6 @@ object_getattro(PyObject *obj, PyObject *name)
 	PyObject *descr = NULL;
 	PyObject *res = NULL;
 	descrgetfunc f;
-	long dictoffset;
 	PyObject **dictptr;
 
 	if (!PyString_Check(name)){
@@ -213,7 +210,7 @@ object_getattro(PyObject *obj, PyObject *name)
 		}
 	}
 
-
+#if 0
 	if (strcmp(PyString_AS_STRING(name), "__del__") == 0) {
 		res = PyObjCClass_GetDelMethod((PyObject*)obj->ob_type);
 		if (res != NULL) {
@@ -221,6 +218,7 @@ object_getattro(PyObject *obj, PyObject *name)
 		}
 		goto done;
 	}
+#endif
 
 	/* First try the __dict__ */
 	dictptr = _get_dictptr(obj);
@@ -410,7 +408,8 @@ static PyGetSetDef obj_getset[] = {
 	{ 0, 0, 0, 0, 0 }
 };
 
-PyObjCClassObject PyObjCObject_Type = {{
+PyObjCClassObject PyObjCObject_Type = {
+   {
 	PyObject_HEAD_INIT(&PyObjCClass_Type)
 	0,					/* ob_size */
 	"objc_object",				/* tp_name */
@@ -453,15 +452,18 @@ PyObjCClassObject PyObjCObject_Type = {{
 	PyType_GenericAlloc,			/* tp_alloc */
 	object_new,				/* tp_new */
 	0,		        		/* tp_free */
-	0,					/* tp_free */
 	0,					/* tp_is_gc */
 	0,					/* tp_bases */
 	0,					/* tp_mro */
 	0,					/* tp_cache */
 	0,					/* tp_subclasses */
 	0,					/* tp_weaklist */
-	(destructor)object_del				/* tp_del */
-}, 0};
+	0 //(destructor)object_del				/* tp_del */
+   }
+#ifdef PyObjC_CLASS_INFO_IN_TYPE
+   , 0
+#endif
+};
 
 
 
@@ -488,7 +490,6 @@ PyObjCObject_New(id objc_object)
 	}
 
 	res = cls_type->tp_alloc(cls_type, 0);
-	//res = (PyObject*)PyObject_New(PyObjCObject, cls_type);
 	if (res == NULL) {
 		return NULL;
 	}

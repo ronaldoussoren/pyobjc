@@ -242,7 +242,7 @@ static  PyObject* struct_types = NULL; // XXX: Use NSMap
 		Py_DECREF(v);
 		return NULL;
 	}
-	Py_DECREF(v);
+	//Py_DECREF(v);
 	return type;
 }
 
@@ -384,7 +384,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			return;
 		}
 		if (PyList_Append(arglist, v) == -1) {
-			Py_DECREF(v);
+			//Py_DECREF(v);
 			Py_DECREF(arglist);
 			ObjCErr_ToObjC();
 			return;

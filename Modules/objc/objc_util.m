@@ -102,7 +102,7 @@ void ObjCErr_FromObjC(NSException* localException)
 		v = PyObjCObject_New(userInfo);
 		if (v != NULL) {
 			PyDict_SetItemString(dict, "userInfo", v);
-			Py_DECREF(v);
+	//		Py_DECREF(v);
 		} else { 
 			PyErr_Clear();
 		}
@@ -266,7 +266,7 @@ int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict)
 	Py_INCREF(type_dict);
 
 	res = PyObject_CallObject(ObjC_class_extender, args);
-	Py_DECREF(args);
+//	Py_DECREF(args);
 	if (res == NULL) {
 		return -1;
 	}

@@ -23,6 +23,7 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 	/* XXX: Shouldn't we use method->sel_class here? */
 	RECEIVER(super) = (id)PyObjCClass_GetClass(self);
 	super.class = GETISA((Class)(RECEIVER(super)));
+	//super.class = GETISA(((ObjCSelector*)method)->sel_class);
 
 	NS_DURING
 		result = objc_msgSendSuper(&super, @selector(alloc));
@@ -31,9 +32,15 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 		result = nil;
 	NS_ENDHANDLER;
 
+
 	if (result == nil && PyErr_Occurred()) {
 		return NULL;
 	}
+
+	if (PyObjC_HasPythonImplementation(result)) {
+		return PyObjC_GetPythonImplementation(result);
+	}
+
 
 	return PyObjCObject_NewUnitialized(result);
 }

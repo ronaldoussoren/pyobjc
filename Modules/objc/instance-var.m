@@ -1,4 +1,3 @@
-#include <Python.h>
 #include "pyobjc.h"
 #include "objc_support.h"
 
@@ -36,8 +35,6 @@ ivar_descr_get(PyObjCInstanceVariable* self, PyObject* obj, PyObject* type)
 {
 	IVAR var;
 	id   objc;
-	int  size;
-	void* buf;
 	PyObject* res;
 
 	if (!obj || PyObjCClass_Check(obj)) {

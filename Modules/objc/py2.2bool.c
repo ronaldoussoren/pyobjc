@@ -13,7 +13,7 @@
 
 #if PY_VERSION_HEX >= 0x0203000A /* Python 2.3a0 or later */
 
-static int dummy;
+static int dummy __attribute__((__unused__));
 
 #else /* Python 2.2 */
 

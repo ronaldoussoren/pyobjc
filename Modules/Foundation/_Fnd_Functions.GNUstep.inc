@@ -98,7 +98,7 @@ static inline int convert_Class(PyObject* object, void* pvar)
 
 #ifndef GNUSTEP
 /* NSObject *NXReadNSObjectFromCoder(NSCoder *decoder); */
-PyObject* objc_NXReadNSObjectFromCoder(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NXReadNSObjectFromCoder(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "decoder", NULL };
 	PyObject* result;
@@ -120,7 +120,7 @@ objc_decoder);
 
 #ifndef GNUSTEP
 /* BOOL NSIsFreedObject(id anObject); */
-PyObject* objc_NSIsFreedObject(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSIsFreedObject(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "anObject", NULL };
 	PyObject* result;
@@ -141,7 +141,7 @@ objc_anObject);
 }
 #endif
 /* unsigned NSCountFrames(void); */
-PyObject* objc_NSCountFrames(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSCountFrames(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 	PyObject* result;
@@ -160,7 +160,7 @@ static	char* keywords[] = { NULL };
 	return result;
 }
 /* BOOL NSEqualPoints(NSPoint aPoint, NSPoint bPoint); */
-PyObject* objc_NSEqualPoints(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSEqualPoints(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aPoint", "bPoint", NULL };
 	PyObject* result;
@@ -181,7 +181,7 @@ objc_aPoint, objc_bPoint);
 	return result;
 }
 /* BOOL NSEqualSizes(NSSize aSize, NSSize bSize); */
-PyObject* objc_NSEqualSizes(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSEqualSizes(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aSize", "bSize", NULL };
 	PyObject* result;
@@ -202,7 +202,7 @@ objc_aSize, objc_bSize);
 	return result;
 }
 /* BOOL NSEqualRects(NSRect aRect, NSRect bRect); */
-PyObject* objc_NSEqualRects(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSEqualRects(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "bRect", NULL };
 	PyObject* result;
@@ -223,7 +223,7 @@ objc_aRect, objc_bRect);
 	return result;
 }
 /* BOOL NSIsEmptyRect(NSRect aRect); */
-PyObject* objc_NSIsEmptyRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSIsEmptyRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
@@ -243,7 +243,7 @@ objc_aRect);
 	return result;
 }
 /* NSRect NSInsetRect(NSRect aRect, float dX, float dY); */
-PyObject* objc_NSInsetRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSInsetRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "dX", "dY", NULL };
 	PyObject* result;
@@ -265,7 +265,7 @@ objc_aRect, objc_dX, objc_dY);
 	return result;
 }
 /* NSRect NSIntegralRect(NSRect aRect); */
-PyObject* objc_NSIntegralRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSIntegralRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
@@ -285,7 +285,7 @@ objc_aRect);
 	return result;
 }
 /* NSRect NSUnionRect(NSRect aRect, NSRect bRect); */
-PyObject* objc_NSUnionRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSUnionRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "bRect", NULL };
 	PyObject* result;
@@ -306,7 +306,7 @@ objc_aRect, objc_bRect);
 	return result;
 }
 /* NSRect NSIntersectionRect(NSRect aRect, NSRect bRect); */
-PyObject* objc_NSIntersectionRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSIntersectionRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "bRect", NULL };
 	PyObject* result;
@@ -327,7 +327,7 @@ objc_aRect, objc_bRect);
 	return result;
 }
 /* NSRect NSOffsetRect(NSRect aRect, float dX, float dY); */
-PyObject* objc_NSOffsetRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSOffsetRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "dX", "dY", NULL };
 	PyObject* result;
@@ -349,7 +349,7 @@ objc_aRect, objc_dX, objc_dY);
 	return result;
 }
 /* BOOL NSPointInRect(NSPoint aPoint, NSRect aRect); */
-PyObject* objc_NSPointInRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSPointInRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aPoint", "aRect", NULL };
 	PyObject* result;
@@ -370,7 +370,7 @@ objc_aPoint, objc_aRect);
 	return result;
 }
 /* BOOL NSMouseInRect(NSPoint aPoint, NSRect aRect, BOOL flipped); */
-PyObject* objc_NSMouseInRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSMouseInRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aPoint", "aRect", "flipped", NULL };
 	PyObject* result;
@@ -392,7 +392,7 @@ objc_aPoint, objc_aRect, objc_flipped);
 	return result;
 }
 /* BOOL NSContainsRect(NSRect aRect, NSRect bRect); */
-PyObject* objc_NSContainsRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSContainsRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "bRect", NULL };
 	PyObject* result;
@@ -413,7 +413,7 @@ objc_aRect, objc_bRect);
 	return result;
 }
 /* BOOL NSIntersectsRect(NSRect aRect, NSRect bRect); */
-PyObject* objc_NSIntersectsRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSIntersectsRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "bRect", NULL };
 	PyObject* result;
@@ -434,7 +434,7 @@ objc_aRect, objc_bRect);
 	return result;
 }
 /* NSString *NSStringFromPoint(NSPoint aPoint); */
-PyObject* objc_NSStringFromPoint(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSStringFromPoint(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aPoint", NULL };
 	PyObject* result;
@@ -453,7 +453,7 @@ objc_aPoint);
 	return result;
 }
 /* NSString *NSStringFromSize(NSSize aSize); */
-PyObject* objc_NSStringFromSize(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSStringFromSize(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aSize", NULL };
 	PyObject* result;
@@ -472,7 +472,7 @@ objc_aSize);
 	return result;
 }
 /* NSString *NSStringFromRect(NSRect aRect); */
-PyObject* objc_NSStringFromRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSStringFromRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
@@ -491,7 +491,7 @@ objc_aRect);
 	return result;
 }
 /* NSPoint NSPointFromString(NSString *aString); */
-PyObject* objc_NSPointFromString(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSPointFromString(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aString", NULL };
 	PyObject* result;
@@ -511,7 +511,7 @@ objc_aString);
 	return result;
 }
 /* NSSize NSSizeFromString(NSString *aString); */
-PyObject* objc_NSSizeFromString(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSSizeFromString(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aString", NULL };
 	PyObject* result;
@@ -531,7 +531,7 @@ objc_aString);
 	return result;
 }
 /* NSRect NSRectFromString(NSString *aString); */
-PyObject* objc_NSRectFromString(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRectFromString(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aString", NULL };
 	PyObject* result;
@@ -552,7 +552,7 @@ objc_aString);
 }
 #ifndef GNUSTEP
 /* NSString *NSHFSTypeOfFile(NSString *fullFilePath); */
-PyObject* objc_NSHFSTypeOfFile(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSHFSTypeOfFile(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "fullFilePath", NULL };
 	PyObject* result;
@@ -571,7 +571,7 @@ objc_fullFilePath);
 	return result;
 }
 /* BOOL NSJavaNeedsVirtualMachine(NSDictionary *plist); */
-PyObject* objc_NSJavaNeedsVirtualMachine(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSJavaNeedsVirtualMachine(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "plist", NULL };
 	PyObject* result;
@@ -592,7 +592,7 @@ objc_plist);
 }
 
 /* BOOL NSJavaProvidesClasses(NSDictionary *plist); */
-PyObject* objc_NSJavaProvidesClasses(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSJavaProvidesClasses(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "plist", NULL };
 	PyObject* result;
@@ -612,7 +612,7 @@ objc_plist);
 	return result;
 }
 /* BOOL NSJavaNeedsToLoadClasses(NSDictionary *plist); */
-PyObject* objc_NSJavaNeedsToLoadClasses(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSJavaNeedsToLoadClasses(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "plist", NULL };
 	PyObject* result;
@@ -632,7 +632,7 @@ objc_plist);
 	return result;
 }
 /* id NSJavaSetup(NSDictionary *plist); */
-PyObject* objc_NSJavaSetup(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSJavaSetup(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "plist", NULL };
 	PyObject* result;
@@ -651,7 +651,7 @@ objc_plist);
 	return result;
 }
 /* id NSJavaSetupVirtualMachine(void); */
-PyObject* objc_NSJavaSetupVirtualMachine(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSJavaSetupVirtualMachine(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 	PyObject* result;
@@ -669,7 +669,7 @@ static	char* keywords[] = { NULL };
 	return result;
 }
 /* id NSJavaObjectNamedInPath(NSString *name, NSArray *path); */
-PyObject* objc_NSJavaObjectNamedInPath(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSJavaObjectNamedInPath(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "name", "path", NULL };
 	PyObject* result;
@@ -689,7 +689,7 @@ objc_name, objc_path);
 	return result;
 }
 /* id NSJavaBundleSetup(NSBundle *bundle, NSDictionary *plist); */
-PyObject* objc_NSJavaBundleSetup(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSJavaBundleSetup(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "bundle", "plist", NULL };
 	PyObject* result;
@@ -709,7 +709,7 @@ objc_bundle, objc_plist);
 	return result;
 }
 /* void NSJavaBundleCleanup(NSBundle *bundle, NSDictionary *plist); */
-PyObject* objc_NSJavaBundleCleanup(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSJavaBundleCleanup(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "bundle", "plist", NULL };
 	PyObject* result;
@@ -731,7 +731,7 @@ objc_bundle, objc_plist);
 #endif
 
 /* NSString *NSStringFromSelector(SEL aSelector); */
-PyObject* objc_NSStringFromSelector(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSStringFromSelector(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aSelector", NULL };
 	PyObject* result;
@@ -750,7 +750,7 @@ objc_aSelector);
 	return result;
 }
 /* SEL NSSelectorFromString(NSString *aSelectorName); */
-PyObject* objc_NSSelectorFromString(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSSelectorFromString(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aSelectorName", NULL };
 	PyObject* result;
@@ -770,7 +770,7 @@ objc_aSelectorName);
 	return result;
 }
 /* Class NSClassFromString(NSString *aClassName); */
-PyObject* objc_NSClassFromString(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSClassFromString(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aClassName", NULL };
 	PyObject* result;
@@ -790,7 +790,7 @@ objc_aClassName);
 	return result;
 }
 /* NSString *NSStringFromClass(Class aClass); */
-PyObject* objc_NSStringFromClass(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSStringFromClass(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aClass", NULL };
 	PyObject* result;
@@ -809,7 +809,7 @@ objc_aClass);
 	return result;
 }
 /* void NSDeallocateObject(id <NSObject>object); */
-PyObject* objc_NSDeallocateObject(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSDeallocateObject(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "object", NULL };
 	PyObject* result;
@@ -828,7 +828,7 @@ objc_object);
 	return result;
 }
 /* void NSIncrementExtraRefCount(id object); */
-PyObject* objc_NSIncrementExtraRefCount(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSIncrementExtraRefCount(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "object", NULL };
 	PyObject* result;
@@ -847,7 +847,7 @@ objc_object);
 	return result;
 }
 /* BOOL NSDecrementExtraRefCountWasZero(id object); */
-PyObject* objc_NSDecrementExtraRefCountWasZero(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSDecrementExtraRefCountWasZero(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "object", NULL };
 	PyObject* result;
@@ -867,7 +867,7 @@ objc_object);
 	return result;
 }
 /* unsigned NSExtraRefCount(id object); */
-PyObject* objc_NSExtraRefCount(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSExtraRefCount(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "object", NULL };
 	PyObject* result;
@@ -887,7 +887,7 @@ objc_object);
 	return result;
 }
 /* NSString *NSUserName(void); */
-PyObject* objc_NSUserName(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSUserName(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 	PyObject* result;
@@ -905,7 +905,7 @@ static	char* keywords[] = { NULL };
 	return result;
 }
 /* NSString *NSFullUserName(void); */
-PyObject* objc_NSFullUserName(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSFullUserName(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 	PyObject* result;
@@ -923,7 +923,7 @@ static	char* keywords[] = { NULL };
 	return result;
 }
 /* NSString *NSHomeDirectory(void); */
-PyObject* objc_NSHomeDirectory(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSHomeDirectory(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 	PyObject* result;
@@ -941,7 +941,7 @@ static	char* keywords[] = { NULL };
 	return result;
 }
 /* NSString *NSHomeDirectoryForUser(NSString *userName); */
-PyObject* objc_NSHomeDirectoryForUser(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSHomeDirectoryForUser(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "userName", NULL };
 	PyObject* result;
@@ -960,7 +960,7 @@ objc_userName);
 	return result;
 }
 /* NSString *NSTemporaryDirectory(void); */
-PyObject* objc_NSTemporaryDirectory(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSTemporaryDirectory(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 	PyObject* result;
@@ -978,7 +978,7 @@ static	char* keywords[] = { NULL };
 	return result;
 }
 /* NSString *NSOpenStepRootDirectory(void); */
-PyObject* objc_NSOpenStepRootDirectory(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSOpenStepRootDirectory(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 	PyObject* result;
@@ -996,7 +996,7 @@ static	char* keywords[] = { NULL };
 	return result;
 }
 /* NSArray *NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde); */
-PyObject* objc_NSSearchPathForDirectoriesInDomains(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSSearchPathForDirectoriesInDomains(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "directory", "domainMask", "expandTilde", NULL };
 	PyObject* result;
@@ -1017,7 +1017,7 @@ objc_directory, objc_domainMask, objc_expandTilde);
 	return result;
 }
 /* NSRange NSUnionRange(NSRange range1, NSRange range2); */
-PyObject* objc_NSUnionRange(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSUnionRange(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "range1", "range2", NULL };
 	PyObject* result;
@@ -1038,7 +1038,7 @@ objc_range1, objc_range2);
 	return result;
 }
 /* NSRange NSIntersectionRange(NSRange range1, NSRange range2); */
-PyObject* objc_NSIntersectionRange(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSIntersectionRange(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "range1", "range2", NULL };
 	PyObject* result;
@@ -1059,7 +1059,7 @@ objc_range1, objc_range2);
 	return result;
 }
 /* NSString *NSStringFromRange(NSRange range); */
-PyObject* objc_NSStringFromRange(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSStringFromRange(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "range", NULL };
 	PyObject* result;
@@ -1078,7 +1078,7 @@ objc_range);
 	return result;
 }
 /* NSRange NSRangeFromString(NSString *aString); */
-PyObject* objc_NSRangeFromString(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRangeFromString(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aString", NULL };
 	PyObject* result;
@@ -1098,7 +1098,7 @@ objc_aString);
 	return result;
 }
 /* unsigned NSPageSize(void); */
-PyObject* objc_NSPageSize(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSPageSize(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 	PyObject* result;
@@ -1117,7 +1117,7 @@ static	char* keywords[] = { NULL };
 	return result;
 }
 /* unsigned NSLogPageSize(void); */
-PyObject* objc_NSLogPageSize(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSLogPageSize(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 	PyObject* result;
@@ -1136,7 +1136,7 @@ static	char* keywords[] = { NULL };
 	return result;
 }
 /* unsigned NSRoundUpToMultipleOfPageSize(unsigned bytes); */
-PyObject* objc_NSRoundUpToMultipleOfPageSize(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRoundUpToMultipleOfPageSize(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "bytes", NULL };
 	PyObject* result;
@@ -1156,7 +1156,7 @@ objc_bytes);
 	return result;
 }
 /* unsigned NSRoundDownToMultipleOfPageSize(unsigned bytes); */
-PyObject* objc_NSRoundDownToMultipleOfPageSize(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRoundDownToMultipleOfPageSize(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "bytes", NULL };
 	PyObject* result;
@@ -1176,7 +1176,7 @@ objc_bytes);
 	return result;
 }
 /* unsigned NSRealMemoryAvailable(void); */
-PyObject* objc_NSRealMemoryAvailable(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRealMemoryAvailable(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 	PyObject* result;

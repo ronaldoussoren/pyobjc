@@ -4,7 +4,6 @@
  * The idea is to use a trick like this to perform our magic tasks with
  * Python subclasses of Objective-C classes.
  */
-#include <Python.h>
 #include "pyobjc.h"
 #include <stddef.h>
 #import <Foundation/NSAutoreleasePool.h>
@@ -114,8 +113,7 @@ classAddMethods(PyObject* self, PyObject* args, PyObject* keywds)
 	return Py_None;
 
 cleanup_and_return_error:
-	if (methodsToAdd)
-	free(methodsToAdd);
+	if (methodsToAdd) free(methodsToAdd);
 	return NULL;
 }
 
@@ -272,7 +270,7 @@ PyDoc_STRVAR(allocateBuffer_doc,
 	     "Allocate a buffer of memory of size. Buffer is \n"
 	     "read/write."
 	     );
-PyObject*
+static PyObject*
 allocateBuffer(PyObject* self, PyObject* args, PyObject* kwds)
 {
 	int length;
@@ -297,7 +295,7 @@ PyDoc_STRVAR(loadBundle_doc,
 	"Find all classes defined in the 'bundle', set their __module__ to\n"
 	"'module_name' and load them into 'module_globals'"
 );
-PyObject*
+static PyObject*
 loadBundle(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bundle_identifier", NULL };
@@ -437,7 +435,7 @@ PyDoc_STRVAR(objc_splitSignature_doc,
 	"\n"
 	"Split a signature string into a list of items."
 );
-PyObject*
+static PyObject*
 objc_splitSignature(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { "signature", NULL };
@@ -490,7 +488,6 @@ PyDoc_STRVAR(objc_CFToObject_doc,
 static PyObject*
 objc_CFToObject(PyObject* self, PyObject* args, PyObject* kwds)
 {
-	PyObject* result;
 	PyObject* argument;
 	id	  res;
 
@@ -518,9 +515,7 @@ PyDoc_STRVAR(objc_ObjectToCF_doc,
 static PyObject*
 objc_ObjectToCF(PyObject* self, PyObject* args, PyObject* kwds)
 {
-	PyObject* result;
 	PyObject* argument;
-	id	  obj;
 
 	if (!PyArg_ParseTuple(args, 
 			"O:ObjectToCF",

@@ -32,6 +32,7 @@ class TestSubclassing(unittest.TestCase):
         self.assertEquals(v, "level1")
 
         v = obj.description()
+        print v
         # this may be a bit hardwired for comfort
         self.assert_(v.index("<Level2Class") == 0)
     
