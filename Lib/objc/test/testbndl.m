@@ -1584,7 +1584,7 @@ static 	char buf[1024];
 +(NSObject*)createObservedOfClass:(Class)class observer:(NSObject*)obj keyPath:(NSString*)path
 {
 	NSObject* o = [[class alloc] init];
-	[o addObserver:self
+	[o addObserver:obj
 	   forKeyPath:path
 	   options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
 	   context:0];

@@ -696,8 +696,8 @@ static PyMethodDef meta_methods[] = {
 	{ "allocateBuffer", (PyCFunction)allocateBuffer, METH_VARARGS|METH_KEYWORDS, allocateBuffer_doc },
 
 #ifdef MACOSX
-	{ "CFToObject", (PyCFunction)objc_CFToObject, METH_VARARGS, objc_CFToObject_doc },
-	{ "ObjectToCF", (PyCFunction)objc_ObjectToCF, METH_VARARGS, objc_ObjectToCF_doc },
+	{ "CFToObject", (PyCFunction)objc_CFToObject, METH_VARARGS|METH_KEYWORDS, objc_CFToObject_doc },
+	{ "ObjectToCF", (PyCFunction)objc_ObjectToCF, METH_VARARGS|METH_KEYWORDS, objc_ObjectToCF_doc },
 #endif
 	{ "enableThreading", (PyCFunction)enableThreading, METH_NOARGS, enableThreading_doc },
 	{ "protocolNamed", (PyCFunction)protocolNamed, METH_VARARGS|METH_KEYWORDS, protocolNamed_doc },

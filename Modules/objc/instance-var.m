@@ -16,7 +16,7 @@
 static void
 ivar_dealloc(PyObjCInstanceVariable* ivar)
 {
-	PyMem_Free(ivar->name);
+	free(ivar->name);
 	ivar->ob_type->tp_free((PyObject*)ivar);
 }
 

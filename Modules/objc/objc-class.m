@@ -76,7 +76,7 @@ get_class_info(PyObject* class)
 		return (PyObjC_class_info*)item;
 	}
 
-	info = PyMem_Malloc(sizeof(PyObjC_class_info));
+	info = malloc(sizeof(PyObjC_class_info));
 	if (info == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -675,15 +675,15 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 				PyObjCSelector_Signature(newVal));
 
 		if (objcMethod->method_types == NULL) {
-			PyMem_Free(methodsToAdd);
+			free(methodsToAdd);
 			Py_DECREF(newVal);
 			return -1;
 		}
 		objcMethod->method_imp = ObjC_MakeIMPForPyObjCSelector(
 				(PyObjCSelector*)newVal);
 		if (objcMethod->method_imp == NULL) {
-			PyMem_Free((char*)objcMethod->method_types);
-			PyMem_Free(methodsToAdd);
+			free((char*)objcMethod->method_types);
+			free(methodsToAdd);
 			Py_DECREF(newVal);
 			PyErr_NoMemory();
 			return -1;
@@ -692,8 +692,8 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 		r = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, newVal);
 		Py_DECREF(newVal);
 		if (r == -1) {
-			PyMem_Free((char*)objcMethod->method_types);
-			PyMem_Free(methodsToAdd);
+			free((char*)objcMethod->method_types);
+			free(methodsToAdd);
 			PyErr_NoMemory();
 			return -1;
 		}

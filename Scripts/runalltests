@@ -32,6 +32,9 @@ def perform_some_tests(dummy, dirname, fnames):
                     # Odd GNUstep bug...
                     if _ln.startswith('Unable to retrieve information about SIGPIPE'): continue
 
+                    # Debugging version of python
+                    if _ln.startswith('[') and _ln.endswith(' refs]\n'): continue
+
                     ln = _ln
 
                 xit = fd.close()

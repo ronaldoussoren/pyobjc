@@ -137,7 +137,8 @@ object_dealloc(PyObject* obj)
 	PyObject* ptype, *pvalue, *ptraceback;
 	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
-	if (PyObjCObject_GetObject(obj) != nil) {
+	if (PyObjCObject_Flags(obj) != PyObjCObject_kDEALLOC_HELPER 
+			&& PyObjCObject_GetObject(obj) != nil) {
 		/* Release the proxied object, we don't have to do this when
 		 * there is no proxied object!
 		 */
@@ -721,7 +722,7 @@ _PyObjCObject_NewDeallocHelper(id objc_object)
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
 	((PyObjCObject*)res)->objc_object = objc_object;
-	((PyObjCObject*)res)->flags = 0;
+	((PyObjCObject*)res)->flags = PyObjCObject_kDEALLOC_HELPER;
 	return res;
 }
 
@@ -754,18 +755,7 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 		}
 		return;
 	}
-
-#ifdef FREELIST_SIZE
-	if (obj_freelist_top == FREELIST_SIZE) {
-		obj->ob_type->tp_free(obj);
-	} else {
-		obj_freelist[obj_freelist_top++] = obj;
-		obj->ob_refcnt = 0xDEADBEEF;
-	}
-#else
-	obj->ob_type->tp_free(obj);
-#endif
-
+	Py_DECREF(obj);
 }
 
 

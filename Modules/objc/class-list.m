@@ -43,9 +43,9 @@ PyObjC_GetClassList(void)
 			 * the buffer is NULL.
 			 */
 			if (buffer == NULL) {
-				newBuffer = PyMem_Malloc(sizeof(Class) * bufferLen);
+				newBuffer = malloc(sizeof(Class) * bufferLen);
 			} else {
-				newBuffer = PyMem_Realloc(buffer, 
+				newBuffer = realloc(buffer, 
 						sizeof(Class) * bufferLen);
 			}
 			if (newBuffer == NULL) {
@@ -77,13 +77,13 @@ PyObjC_GetClassList(void)
 	}
 
 	if (buffer != initialBuffer) {
-		PyMem_Free(buffer); buffer = NULL;
+		free(buffer); buffer = NULL;
 	}
 	return result;
 
 error:
 	if (buffer && buffer != initialBuffer) {
-		PyMem_Free(buffer);
+		free(buffer);
 		buffer = NULL;
 	}
 	Py_XDECREF(result);

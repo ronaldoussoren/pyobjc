@@ -668,7 +668,7 @@ PyObjC_MakeStructType(
 	PyMemberDef* members;
 	int i;
 
-	members = PyMem_Malloc(sizeof(PyMemberDef) * (numFields+1));
+	members = malloc(sizeof(PyMemberDef) * (numFields+1));
 	if (members == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -682,9 +682,9 @@ PyObjC_MakeStructType(
 	}
 	members[numFields].name = NULL;
 
-	result = PyMem_Malloc(sizeof(PyTypeObject));
+	result = malloc(sizeof(PyTypeObject));
 	if (result == NULL) {
-		PyMem_Free(members);
+		free(members);
 		PyErr_NoMemory();
 		return NULL;
 	}
@@ -701,8 +701,8 @@ PyObjC_MakeStructType(
 
 	if (PyType_Ready(result) == -1) {
 		/* Is freeing save? */
-		PyMem_Free(result);
-		PyMem_Free(members);
+		free(result);
+		free(members);
 		return NULL;
 	}
 	return (PyObject*)result;
