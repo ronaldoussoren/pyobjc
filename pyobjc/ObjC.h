@@ -20,7 +20,7 @@
 /* Version of the module. Should be bumped at each release.
    Versions < 1.0 are to be considered buggy, incomplete and
    NOT stable */
-#define PyObjC_VERSION 0.6
+#define PyObjC_VERSION "0.6.1"
 
 
 #if defined(__MACH__) && defined(__APPLE__)
