@@ -109,6 +109,9 @@ void ObjCErr_FromObjC(NSException* localException)
 
 	PyErr_SetObject(exception, PyString_FromString(buf));
 	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
+	if (!exc_value || !PyObject_IsInstance(exc_value, exc_type)) {
+		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
+	}
 	PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict);
 	PyObject_SetAttrString(exc_value, "name", PyString_FromString(
 		[[localException name] cString]));
