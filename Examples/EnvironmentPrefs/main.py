@@ -20,7 +20,7 @@ import os
 
 # Uncomment this during development, you'll get exception tracebacks when
 # the Python code fails.
-#objc.setVerbose(1)
+objc.setVerbose(1)
 
 # NibClassBuilder needs to read our Nib files to do its work,
 # we need to specify the optional second argument to extractClasses
@@ -128,7 +128,7 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
         dname = os.path.dirname(fname)
         if not os.path.isdir(dname):
             try:
-                os.path.mkdir(dname)
+                os.mkdir(dname)
             except os.error, msg:
                 return False
 

@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.25 2004/01/14 20:10:15 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.26 2004/03/19 14:01:44 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -336,6 +336,8 @@ PyObjC_ConvertChar(PyObject* object, void* pvar)
 static inline int 
 PyObjCSelector_Convert(PyObject* object, void* pvar)
 { 
+    int r;
+
     if (object == Py_None) {
         *(SEL*)pvar = NULL;
         return 1;
@@ -349,7 +351,11 @@ PyObjCSelector_Convert(PyObject* object, void* pvar)
         return 0;
     }
 
-    return PyObjC_PythonToObjC(@encode(SEL), object, pvar);
+    r = PyObjC_PythonToObjC(@encode(SEL), object, pvar);
+    if (r == -1) {
+	    return 0;
+    }	 
+    return 1;
 }
 
 static inline int 
