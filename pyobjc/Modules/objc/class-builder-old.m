@@ -285,6 +285,71 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 	return NULL;
 }
 
+
+/*
+ * Be smart about slots: Push them into Objective-C and leave an empty
+ * __slots__ attribute.
+ */
+static int 
+do_slots(PyObject* super_class, PyObject* clsdict)
+{
+	PyObject* slot_value;
+	PyObject* slots;
+	int       len, i;
+
+	slot_value = PyDict_GetItemString(clsdict, "__slots__");
+	if (slot_value == NULL) {
+		/* No slots, let type.__new__ add a __dict__ */
+		return 0;
+	}
+
+	slots = PySequence_Fast(slot_value, "__slots__ must be a sequence");
+	if (slots == NULL) {
+		return -1;
+	}
+	
+	len = PySequence_Fast_GET_SIZE(slots);
+	for (i = 0; i < len; i++) {
+		PyObjCInstanceVariable* var;
+		slot_value = PySequence_Fast_GET_ITEM(slots, i);
+
+		if (!PyString_Check(slot_value)) {
+			ObjCErr_Set(PyExc_TypeError, 
+				"__slots__ entry %d is not a string", i);
+			Py_DECREF(slots);
+			return -1;
+		}
+
+		var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(
+				PyString_AS_STRING(slot_value));
+		if (var == NULL) {
+			Py_DECREF(slots);
+			return -1;
+		}
+		var->type[0] = '\0';
+		((PyObjCInstanceVariable*)var)->isSlot = 1;
+	
+		if (PyDict_SetItem(clsdict, slot_value, (PyObject*)var) < 0) {
+			Py_DECREF(slots);
+			Py_DECREF(var);
+			return -1;
+		}
+		Py_DECREF(var);
+	}
+	Py_DECREF(slots);
+
+	slot_value = PyTuple_New(0);
+	if (slot_value == NULL) {
+		return NULL;
+	}
+	if (PyDict_SetItemString(clsdict, "__slots__", slot_value) < 0) {
+		Py_DECREF(slot_value);
+		return -1;
+	}
+	Py_DECREF(slot_value);
+	return 0;
+}
+
 /*
  * First step of creating a python subclass of an objective-C class
  *
@@ -325,6 +390,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	py_superclass = PyObjCClass_New(super_class);
 	if (py_superclass == NULL) return NULL;
 
+	do_slots(py_superclass, class_dict);
 
 	if (!PyList_Check(protocols)) {
 		ObjCErr_Set(ObjCExc_internal_error, "%s", 
@@ -1070,6 +1136,10 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 	/* First check if we respond */
 	pyself = PyObjC_GetPythonImplementation(self);
 	if (pyself == NULL) {
+		PyErr_Clear();
+		return NO;
+	}
+	if (pyself == Py_None) {
 		return NO;
 	}
 	pymeth = PyObjCObject_FindSelector(pyself, aSelector);
@@ -1078,7 +1148,6 @@ object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
 		return YES;
 	}
 	PyErr_Clear();
-
 
 	/* Check superclass */
 	super.class = find_real_superclass(GETISA(self),
@@ -1117,7 +1186,7 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 	}
 
 	pyself = PyObjC_GetPythonImplementation(self);
-	if (pyself == NULL) {
+	if (pyself == NULL || pyself == Py_None) {
 		PyErr_Clear();
 		return nil;
 	}
@@ -1130,7 +1199,7 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 
 	result =  [NSMethodSignature signatureWithObjCTypes:(
 		  	(ObjCSelector*)pymeth)->sel_signature];
-	[result autorelease];
+	//[result autorelease];
 	Py_DECREF(pymeth);
 	return result;
 }

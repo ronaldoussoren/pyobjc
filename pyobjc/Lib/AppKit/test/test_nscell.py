@@ -27,10 +27,5 @@ class TestNSCell(unittest.TestCase):
       cell.setFloatValue_(f)
       self.assertEquals(cell.floatValue(), f)
 
-def suite():
-   suite = unittest.TestSuite()
-   suite.addTest(unittest.makeSuite(TestNSCell))
-   return suite
-
 if __name__ == '__main__':
    unittest.main( )

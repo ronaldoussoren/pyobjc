@@ -153,13 +153,11 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 
 static PyObject** _get_dictptr(PyObject* obj)
 {
-	//int dictoffset = PyObjCClass_DictOffset((PyObject*)obj->ob_type);
-	//
-	//if (dictoffset == 0) return NULL;
-	//
-	//return (PyObject**)(((char*)PyObjCObject_GetObject(obj)) + dictoffset);
-
-	return _PyObject_GetDictPtr(obj);
+	int dictoffset = PyObjCClass_DictOffset((PyObject*)obj->ob_type);
+	
+	if (dictoffset == 0) return NULL;
+	
+	return (PyObject**)(((char*)PyObjCObject_GetObject(obj)) + dictoffset);
 }
 
 static PyObject *
@@ -210,7 +208,7 @@ object_getattro(PyObject *obj, PyObject *name)
 		}
 	}
 
-#if 0
+#if 1
 	if (strcmp(PyString_AS_STRING(name), "__del__") == 0) {
 		res = PyObjCClass_GetDelMethod((PyObject*)obj->ob_type);
 		if (res != NULL) {
@@ -458,7 +456,7 @@ PyObjCClassObject PyObjCObject_Type = {
 	0,					/* tp_cache */
 	0,					/* tp_subclasses */
 	0,					/* tp_weaklist */
-	0 //(destructor)object_del				/* tp_del */
+	(destructor)object_del				/* tp_del */
    }
 #ifdef PyObjC_CLASS_INFO_IN_TYPE
    , 0

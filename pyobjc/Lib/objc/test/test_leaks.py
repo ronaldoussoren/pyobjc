@@ -8,55 +8,55 @@ import objc
 NSObject = objc.lookUpClass('NSObject')
 NSMutableArray = objc.lookUpClass('NSMutableArray')
 
-Level1Del = 0
+LeaksDel = 0
 
 class LeaksClass (NSObject):
     def __del__(self):
-        global Level1Del 
+        global LeaksDel 
 
-        Level1Del = 1
+        LeaksDel = 1
 
 class TestRetains(unittest.TestCase):
     def testPyClass(self):
 
-        global Level1Del
+        global LeaksDel
 
-        Level1Del = 0
-        self.assertEquals(Level1Del, 0)
+        LeaksDel = 0
+        self.assertEquals(LeaksDel, 0)
 
         o = LeaksClass.alloc().init()
         self.assert_(o is not None)
-        self.assertEquals(Level1Del, 0)
+        self.assertEquals(LeaksDel, 0)
         del o
-        self.assertEquals(Level1Del, 1)
+        self.assertEquals(LeaksDel, 1)
 
     def testOCClass1(self):
-        global Level1Del
+        global LeaksDel
 
-        Level1Del = 0
-        self.assertEquals(Level1Del, 0)
+        LeaksDel = 0
+        self.assertEquals(LeaksDel, 0)
         c = NSMutableArray.arrayWithArray_([ LeaksClass.alloc().init() ])
         objc.recycle_autorelease_pool()
 
         self.assert_(c is not None)
-        self.assertEquals(Level1Del, 0)
+        self.assertEquals(LeaksDel, 0)
         del c
-        self.assertEquals(Level1Del, 1)
+        self.assertEquals(LeaksDel, 1)
 
     def testOCClass2(self):
-        global Level1Del
+        global LeaksDel
 
-        Level1Del = 0
-        self.assertEquals(Level1Del, 0)
+        LeaksDel = 0
+        self.assertEquals(LeaksDel, 0)
         c = NSMutableArray.alloc()
         c = c.initWithArray_(
             [ LeaksClass.alloc().init() ])
         objc.recycle_autorelease_pool()
 
         self.assert_(c is not None)
-        self.assertEquals(Level1Del, 0)
+        self.assertEquals(LeaksDel, 0)
         del c
-        self.assertEquals(Level1Del, 1)
+        self.assertEquals(LeaksDel, 1)
 
 
 if __name__ == '__main__':

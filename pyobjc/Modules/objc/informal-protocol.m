@@ -24,6 +24,8 @@ typedef struct {
 } PyObjCInformalProtocol;
 
 
+static PyObject* selToProtocolMapping = NULL;
+
 
 static void
 proto_dealloc(PyObject* object)
@@ -54,6 +56,7 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 	PyObjCInformalProtocol* result;
 	PyObject* name;
 	PyObject* selectors;
+	int       i, len;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO:informal_protocol",
 			keywords, &name, &selectors)) { 
@@ -82,6 +85,22 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 
 	result->name = name;
 	result->selectors = selectors;
+
+#if 0
+	len = PyTuple_Length(result->selectors);
+	for (i = 0; i < len; i++) {
+		if (!PyObjCInformalProtocol_Check(PyTuple_GET_ITEM(selectors, i))) {
+			PyErr_Set(PyExc_TypeError, "msg");
+		}
+	}
+
+	/* TODO: Add to selToProtocolMapping */
+	for (i = 0; i < len; i++) {
+		if (!PyObjCInformalProtocol_Check(PyTuple_GET_ITEM(selectors, i))) {
+			PyErr_Set(PyExc_TypeError, "msg");
+		}
+	}
+#endif
 
 	Py_XINCREF(name);
 

@@ -3,7 +3,14 @@ import sys
 
 import objc
 
-preEverythingInstance = objc.runtime.NSObject.new()
+# NSIdEnumerator is not used anywhere else in the unittests
+MEClass  = objc.runtime.NSIdEnumerator
+
+## If you use this definition this test causes a crash.
+#class MEClass(objc.runtime.NSObject):
+#   pass
+
+preEverythingInstance = MEClass.new()
 
 class Methods(objc.runtime.NSObject):
     def description(self):
@@ -34,7 +41,7 @@ class PurePython:
 
 class TestFromObjCSuperToObjCClass(unittest.TestCase):
     def setUp(self):
-        self.NSObjectClass = objc.runtime.NSObject
+        self.NSObjectClass = MEClass
 
     def testBasicBehavior(self):
         anInstance = Methods.new()

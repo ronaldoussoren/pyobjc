@@ -224,3 +224,23 @@ python code and only differ in the build method.
 
 * using-nsscanner.py
   Move to unitest
+
+Platform dependencies in Foundation & AppKit
+............................................
+
+Both modules contain some ugly defines and includes to add platform/version
+specific definitions, like this::
+
+   #ifdef  GNUSTEP
+   #       include "_Fnd_Var.GNUstep.inc"
+   #else /* !GNUSTEP */
+   #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
+   #       include "_Fnd_Var.inc"
+   #else
+   #       include "_Fnd_Var.10.1.inc"
+   #endif
+   #endif /* !GNUSTEP */
+
+It would be nice if this could be abstracted away to something like::
+
+   #include PyObjC_PLAT_FILE("_Fnd_Var", ".inc")

@@ -68,13 +68,5 @@ if 0:
 
         self.assertEquals(l[0], 1)
 
-
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestNSUndoManager))
-    suite.addTest(unittest.makeSuite(TestUndoInt))
-    suite.addTest(unittest.makeSuite(TestSubclassingUndo))
-    return suite
-
 if __name__ == '__main__':
     unittest.main( )

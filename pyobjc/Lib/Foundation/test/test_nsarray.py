@@ -3,19 +3,19 @@ import objc
 
 from Foundation import *
 
-class TestNSArrayInteraction( unittest.TestCase ):
-    def testRepeatedAllocInit( self ):
+class TestNSArrayInteraction(unittest.TestCase):
+    def testRepeatedAllocInit(self):
         for i in range(1,1000):
             a = NSArray.alloc().init()
 
-    def testIndices( self ):
+    def testIndices(self):
         x = NSArray.arrayWithArray_( ["foo", "bar", "baz"] )
 
         self.assertEquals( x.indexOfObject_("bar"), 1 )
 
         self.assertRaises( IndexError, x.objectAtIndex_, 100)
 
-    def testEnumeration( self ):
+    def testEnumeration(self):
         x = NSArray.arrayWithArray_([1, 2, "foo", "bar", "", "baz"])
         y = []
 
@@ -24,7 +24,7 @@ class TestNSArrayInteraction( unittest.TestCase ):
 
         self.assertEquals(len(x), len(y))
 
-    def testContains( self ):
+    def testContains(self):
         x = NSArray.arrayWithArray_( ["foo", "bar", "baz"] )
         self.assertEquals( x.count(), 3 )
         self.assertEquals( len(x), 3 )
@@ -35,7 +35,7 @@ class TestNSArrayInteraction( unittest.TestCase ):
         self.assert_( "foo" in x )
         self.assert_( not "dumbledorf" in x )
 
-    def testIn( self ):
+    def testIn(self):
         x = NSMutableArray.array()
         for i in range(0, 100):
             x.addObject_(i)
@@ -88,7 +88,7 @@ class TestNSArrayInteraction( unittest.TestCase ):
         self.assertEquals( x[-15:-5], z[-15:-5] )
         self.assertEquals( y[-15:-5], z[-15:-5] )
 
-    def testSlice( self ):
+    def testSlice(self):
         x = NSMutableArray.array()
         for i in range(0, 100):
             x.addObject_(i)
@@ -176,14 +176,6 @@ class TestNSArrayInteraction( unittest.TestCase ):
         self.assert_(x[1] == 2)
         self.assert_(y[2] == 3)
         self.assert_(z[3] == 4)
-
-
-
-
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest( unittest.makeSuite( TestNSArrayInteraction ) )
-    return suite
 
 if __name__ == '__main__':
     unittest.main( )

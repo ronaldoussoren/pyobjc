@@ -734,7 +734,6 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	new_class->class.METHODLISTS = 
 		calloc(1, sizeof(struct objc_method_list*));
 	if (new_class->class.METHODLISTS == NULL) goto error_cleanup;
-	
 	new_class->class.METHODLISTS[0] = NULL;
 
 	new_class->meta_class.METHODLISTS = 
@@ -835,15 +834,20 @@ free_ivars(id self, PyObject* cls)
 
 	while (cls != NULL) {
 		Class     objcClass = PyObjCClass_GetClass(cls);
-		PyObject* clsDict = PyObject_GetAttrString(cls, "__dict__");
+		PyObject* clsDict; 
 		PyObject* clsValues;
 		PyObject* o;
 		int       len, i;
 
+		if (objcClass == nil) break;
+
+
+		clsDict = PyObject_GetAttrString(cls, "__dict__");
 		if (clsDict == NULL) {
 			PyErr_Clear();
 			break;
 		}
+		
 
 
 		/* Class.__dict__ is a dictproxy, which is not a dict and
@@ -894,13 +898,14 @@ free_ivars(id self, PyObject* cls)
 		}  else if (PyTuple_Size(o) == 0) {
 			PyErr_Clear();
 			cls = NULL;
+			Py_DECREF(o);
+		} else {
+			cls = PyTuple_GET_ITEM(o, 0);
+			if (cls == (PyObject*)&PyObjCClass_Type) {
+				cls = NULL;
+			}
+			Py_DECREF(o);
 		}
-
-		cls = PyTuple_GET_ITEM(o, 0);
-		if (cls == (PyObject*)&PyObjCClass_Type) {
-			cls = NULL;
-		}
-		Py_DECREF(o);
 	}
 
 }
@@ -1026,7 +1031,7 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 
 	result =  [NSMethodSignature signatureWithObjCTypes:(
 		  	(ObjCSelector*)pymeth)->sel_signature];
-	[result autorelease];
+	//[result autorelease];
 	Py_DECREF(pymeth);
 	Py_DECREF(pyself);
 	return result;

@@ -14,12 +14,5 @@ class TestNSLocalizedString(unittest.TestCase):
         self.assertEquals (s, "hello world")
         self.assertEquals (s.nsstring().description(), "hello world")
 
-        
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestNSLocalizedString))
-    return suite
-
 if __name__ == '__main__':
     unittest.main( )
-

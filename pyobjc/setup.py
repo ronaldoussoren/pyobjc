@@ -129,7 +129,8 @@ LIBFFI_LDFLAGS=[
 sourceFiles = [
         "Modules/objc/objc_util.m",
         "Modules/objc/objc_support.m",
-        "Modules/objc/class-builder-old.m",
+        #"Modules/objc/class-builder-old.m",
+        "Modules/objc/class-builder.m",
         "Modules/objc/class-list.m",
         "Modules/objc/ObjCPointer.m",
         "Modules/objc/py2.2bool.c",
@@ -171,7 +172,7 @@ if gs_root is None:
         #"-Wmissing-declarations",
         #"-Wnested-externs", "-Wunreachable-code", "-Wno-long-long",
         #"-pedantic",
-        #"-O0", "-g",
+        "-O0", "-g",
         #"-Werror",
         ]
 

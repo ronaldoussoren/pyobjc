@@ -3,8 +3,8 @@ import unittest
 from objc import *
 from Foundation import *
 
-class TestSearchPaths( unittest.TestCase ):
-    def testSearchPaths( self ):
+class TestSearchPaths(unittest.TestCase):
+    def testSearchPaths(self):
         self.assert_( NSSearchPathForDirectoriesInDomains( NSAllLibrariesDirectory, NSAllDomainsMask, NO ),
                       "NSSearchPathForDirectoriesInDomains() failed to return anything." )
 
@@ -17,11 +17,5 @@ class TestSearchPaths( unittest.TestCase ):
             self.assert_(NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask, boolVal)[0][0] != '/', boolVal)
 
 
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest( unittest.makeSuite( TestSearchPaths ) )
-    return suite
-
 if __name__ == '__main__':
     unittest.main( )
-

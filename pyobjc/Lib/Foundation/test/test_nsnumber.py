@@ -117,10 +117,5 @@ else:
 
             self.assertEquals(stripDocType(data), stripDocType(PLIST))
 
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest( unittest.makeSuite( TestNSNumber ) )
-    return suite
-
 if __name__ == '__main__':
     unittest.main( )

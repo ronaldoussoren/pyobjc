@@ -3,12 +3,12 @@ import objc
 
 from Foundation import *
 
-class TestNSDictionaryInteraction( unittest.TestCase ):
-    def testRepeatedAllocInit( self ):
+class TestNSDictionaryInteraction(unittest.TestCase):
+    def testRepeatedAllocInit(self):
         for i in range(1,1000):
             d = NSDictionary.alloc().init()
 
-    def testBasicInteraction( self ):
+    def testBasicInteraction(self):
         d = NSMutableDictionary.dictionary()
         d['a'] = "foo"
         d['b'] = "bar"
@@ -20,7 +20,7 @@ class TestNSDictionaryInteraction( unittest.TestCase ):
         except KeyError:
             pass
 
-    def testIn( self ):
+    def testIn(self):
         d = NSMutableDictionary.dictionary()
         d['a'] = "foo"
         d['b'] = "bar"
@@ -86,11 +86,6 @@ class TestNSDictionaryInteraction( unittest.TestCase ):
         self.assert_(x['one'] == 1)
         self.assert_(y['two'] == 2)
         self.assert_(z['four'] == 4)
-
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest( unittest.makeSuite( TestNSDictionaryInteraction ) )
-    return suite
 
 if __name__ == '__main__':
     unittest.main( )

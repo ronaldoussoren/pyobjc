@@ -83,11 +83,5 @@ class TestBadCreation(unittest.TestCase):
             dataPlanes = (None, None, None, None, None)
             y = y.initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
 
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestNSBitmapImageRep))
-    return suite
-
 if __name__ == '__main__':
     unittest.main( )
-

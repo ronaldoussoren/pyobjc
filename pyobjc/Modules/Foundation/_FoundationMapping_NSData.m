@@ -297,7 +297,7 @@ static void *imp_NSMutableData_mutableBytes(id self, SEL sel)
   return NULL;
 }
 
-int __pyobjc_install_NSData(void)
+int _pyobjc_install_NSData(void)
 {
   if (ObjC_RegisterMethodMapping(objc_lookUpClass("NSData"), 
 				 @selector(initWithBytes:length:),

@@ -53,7 +53,8 @@ static	char* keywords[] = { "key", "comment", NULL };
 	NSString* oc_comment;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSLocalizedString",
-			keywords, convert_id, &oc_key, convert_id, &oc_comment)) {
+			keywords, convert_id, &oc_key, 
+			convert_id, &oc_comment)) {
 		return NULL;
 	}
 
@@ -73,12 +74,17 @@ static	char* keywords[] = { "key", "tableName", "comment", NULL };
 	NSString* oc_tableName;
 	NSString* oc_comment;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&:NSLocalizedString",
-			keywords, convert_id, &oc_tableName, convert_id, &oc_key, convert_id, &oc_comment)) {
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
+			"O&O&O&:NSLocalizedStringFromTable",
+			keywords, 
+			convert_id, &oc_tableName, 
+			convert_id, &oc_key, 
+			convert_id, &oc_comment)) {
 		return NULL;
 	}
 
-	oc_result = NSLocalizedStringFromTable(oc_key, oc_tableName, oc_comment);
+	oc_result = NSLocalizedStringFromTable(
+		oc_key, oc_tableName, oc_comment);
 	result = ObjC_IdToPython(oc_result);
 	return result;
 }
@@ -87,25 +93,23 @@ static	char* keywords[] = { "key", "tableName", "comment", NULL };
 static PyObject* objc_NSLocalizedStringFromTableInBundle(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
-	PyObject* bundle;
-	PyObject*  result;
+	PyObject* result;
 	NSString* oc_result;
 	NSString* oc_key;
 	id        oc_bundle;
 	NSString* oc_tableName;
 	NSString* oc_comment;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&O&O:NSLocalizedString",
-			keywords, convert_id, &oc_tableName, convert_id, &oc_key, convert_id, &oc_comment, &bundle)) {
-		return NULL;
-	}
-	if (!PyObjCObject_Check(bundle)) {
-		PyErr_SetString(PyExc_TypeError,
-			"expecting NSBundle for bundle");
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
+			"O&O&O&O:NSLocalizedStringFromTableInBundle",
+			keywords, 
+			convert_id, &oc_tableName, 
+			convert_id, &oc_key, 
+			convert_id, &oc_comment, 
+			convert_id, &oc_bundle)) {
 		return NULL;
 	}
 
-	oc_bundle = PyObjCObject_GetObject(bundle);
 	oc_result = NSLocalizedStringFromTableInBundle(
 			oc_key, oc_tableName, oc_bundle, oc_comment);
 
@@ -125,7 +129,8 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 	NSString*  oc_result;
 	OSType hfsTypeCode;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSFileTypeForHFSTypeCode",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
+			"O&:NSFileTypeForHFSTypeCode",
 			keywords, PyMac_GetOSType, &hfsTypeCode)) {
 		return NULL;
 	}
@@ -133,8 +138,8 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 	NS_DURING
 		oc_result = NSFileTypeForHFSTypeCode(hfsTypeCode);
 	NS_HANDLER
-		oc_result = NULL;
 		ObjCErr_FromObjC(localException);
+		oc_result = NULL;
 	NS_ENDHANDLER
 
 	if (PyErr_Occurred()) return NULL;
@@ -145,13 +150,15 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 
 /* OSType NSHFSTypeCodeFromFileType(NSString *fileType); */
 
-static PyObject* objc_NSHFSTypeCodeFromFileType(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSHFSTypeCodeFromFileType(PyObject* self, 
+		PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "hfsTypeCode", NULL };
 	NSString*  fileType;
 	OSType hfsTypeCode;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSHFSTypeCodeFromFileType",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
+			"O&:NSHFSTypeCodeFromFileType",
 			keywords, convert_id, &fileType)) {
 		return NULL;
 	}
@@ -236,8 +243,6 @@ void init_Foundation(void)
 {
 	PyObject *m, *d;
 
-	//	printf("Init _Foundation\n");
-
 	m = Py_InitModule4("_Foundation", foundation_methods, foundation_doc, 
 			NULL, PYTHON_API_VERSION);
 	d = PyModule_GetDict(m);
@@ -250,6 +255,7 @@ void init_Foundation(void)
 	/* Register information in generated tables */
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_strings(d, string_table) < 0) return;
+
 #ifdef  GNUSTEP 
 #	include "_Fnd_Var.GNUstep.inc"
 #else /* !GNUSTEP */

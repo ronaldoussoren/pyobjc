@@ -1,8 +1,5 @@
 /*
  * This module contains custom mapping functions for problematic methods
- *
- * TODO: I (Ronald) have now written mappings for two methods, and I'd say
- *       that we can do better...
  */
 
 #include <Python.h>
@@ -36,11 +33,6 @@ void init_FoundationMapping(void)
 		return;
 	}
 
-	if (__pyobjc_install_NSCoder()) return;
-	if (__pyobjc_install_NSData()) return;
-	
-	if (PyErr_Occurred()) {
-		printf("Python error\n");
-		PyErr_Print();
-	}
+	if (_pyobjc_install_NSCoder()) return;
+	if (_pyobjc_install_NSData()) return;
 }

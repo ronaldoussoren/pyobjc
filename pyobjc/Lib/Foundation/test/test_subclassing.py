@@ -3,9 +3,9 @@ import objc
 
 from Foundation import *
 
-class TestSubclassing( unittest.TestCase ):
-    def testBasicSubclassing( self ):
-        class NSObjectSubclass( NSObject ):
+class TestSubclassing(unittest.TestCase):
+    def testBasicSubclassing(self):
+        class NSObjectSubclass(NSObject):
             def someRandomMethod(self):
                 return 42
 
@@ -24,10 +24,5 @@ class TestSubclassing( unittest.TestCase ):
         self.assert_( subclassInstance is subclassInstance, "Identity check failed." )
         self.assert_( subclassInstance is subclassInstance.self(), "Identity check failed." )
     
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest( unittest.makeSuite( TestSubclassing ) )
-    return suite
-
 if __name__ == '__main__':
     unittest.main( )
