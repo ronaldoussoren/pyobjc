@@ -1,6 +1,6 @@
 import unittest
 import objc
-from objc.test.testclassandinst import PyObjC_TestClassAndInstance
+from objc.test.testclassandinst import PyObjC_TestClassAndInstance, PyObjC_TestUnallocatable
 
 class PyObjC_TestClassAndInstanceSubclass(PyObjC_TestClassAndInstance):
     """Simple subclass, just make sure it still works"""
@@ -71,6 +71,9 @@ class TestClassAndInstance(unittest.TestCase):
         # But we'll have to settle for this one instead:
         self.assertEquals(PyObjC_TestClassAndInstance.pyobjc_classMethods.isInstance(), objc.NO)
         self.assertEquals(PyObjC_TestClassAndInstance.alloc().init().isInstance(), objc.YES)
+
+    def testUnallocatable(self):
+        self.assertEquals(PyObjC_TestUnallocatable.alloc(), None)
 
 if __name__ == '__main__':
     unittest.main()

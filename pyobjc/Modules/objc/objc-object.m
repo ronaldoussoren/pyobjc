@@ -179,7 +179,6 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	descrgetfunc f;
 	PyObject **dictptr;
 	char*      namestr;
-	Class obj_class;
 	id obj_inst;
 
 	if (!PyString_Check(name)){
@@ -220,8 +219,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 		goto done;
 	}
 
-	obj_class = GETISA(obj_inst);
-	tp = (PyTypeObject*)PyObjCClass_New(obj_class);
+	tp = (PyTypeObject*)PyObjCClass_New(GETISA(obj_inst));
 
 	descr = NULL;
 
@@ -593,13 +591,11 @@ PyObjCClassObject PyObjCObject_Type = {
 PyObject* 
 _PyObjCObject_NewDeallocHelper(id objc_object)
 {
-	Class cls; 
 	PyObject* res;
 	PyTypeObject* cls_type;
 
 	assert(objc_object != nil);
-	cls = GETISA(objc_object);
-	cls_type = (PyTypeObject*)PyObjCClass_New(cls);
+	cls_type = (PyTypeObject*)PyObjCClass_New(GETISA(objc_object));
 	if (cls_type == NULL) {
 		return NULL;
 	}
@@ -612,7 +608,6 @@ _PyObjCObject_NewDeallocHelper(id objc_object)
 
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
-	assert(objc_object != nil);
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = PyObjCObject_kDEALLOC_HELPER;
 	return res;
@@ -658,10 +653,7 @@ PyObjCObject_New(id objc_object)
 	res = PyObjC_FindPythonProxy(objc_object);
 	if (res) return res;
 
-	if (objc_object == NULL) {
-		Py_INCREF(Py_None);
-		return Py_None;
-	}
+	assert(objc_object != nil);
 
 	cls_type = (PyTypeObject*)PyObjCClass_New(cls);
 	if (cls_type == NULL) {
@@ -679,7 +671,6 @@ PyObjCObject_New(id objc_object)
 	 */
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
-	assert(objc_object != nil);
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = 0;
 
@@ -704,10 +695,7 @@ PyObjCObject_NewClassic(id objc_object)
 	res = PyObjC_FindPythonProxy(objc_object);
 	if (res) return res;
 
-	if (objc_object == NULL) {
-		Py_INCREF(Py_None);
-		return Py_None;
-	}
+	assert(objc_object != nil);
 
 	cls_type = (PyTypeObject*)PyObjCClass_New(cls);
 	if (cls_type == NULL) {
@@ -725,7 +713,6 @@ PyObjCObject_NewClassic(id objc_object)
 	 */
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
-	assert(objc_object != nil);
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = PyObjCObject_kCLASSIC;
 
@@ -735,19 +722,15 @@ PyObjCObject_NewClassic(id objc_object)
 PyObject* 
 PyObjCObject_NewUnitialized(id objc_object)
 {
-	Class cls = GETISA(objc_object);
 	PyTypeObject* cls_type;
 	PyObject*     res;
 
 	res = PyObjC_FindPythonProxy(objc_object);
 	if (res) return res;
 
-	if (objc_object == NULL) {
-		Py_INCREF(Py_None);
-		return Py_None;
-	}
+	assert(objc_object != nil);
 
-	cls_type = (PyTypeObject*)PyObjCClass_New(cls);
+	cls_type = (PyTypeObject*)PyObjCClass_New(GETISA(objc_object));
 	if (cls_type == NULL) {
 		return NULL;
 	}
@@ -763,7 +746,6 @@ PyObjCObject_NewUnitialized(id objc_object)
 	 */
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
-	assert(objc_object != nil);
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = 0;
 

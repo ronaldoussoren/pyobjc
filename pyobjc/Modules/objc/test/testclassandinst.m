@@ -12,6 +12,18 @@
 #include <objc/objc-runtime.h>
 #endif
 
+@interface PyObjC_TestUnallocatable : NSObject
+{
+}
+@end
+
+@implementation PyObjC_TestUnallocatable
++ allocWithZone:(NSZone *)zone
+{
+    return nil;
+}
+@end
+
 @interface PyObjC_TestClassAndInstance: NSObject
 {
 }
@@ -49,4 +61,7 @@ void inittestclassandinst(void)
 
 	PyModule_AddObject(m, "PyObjC_TestClassAndInstance", 
 		PyObjCClass_New([PyObjC_TestClassAndInstance class]));
+
+	PyModule_AddObject(m, "PyObjC_TestUnallocatable", 
+		PyObjCClass_New([PyObjC_TestUnallocatable class]));
 }
