@@ -24,6 +24,30 @@ import Foundation
 import AppKit
 
 #
+# Automatically load any frameworks identified by the bootstrap
+# process (the code in bin-python-main.m).
+#
+# If any of the frameworks have an Init.py, it will be executed
+# and, as such, can be used to load/initialize any of the
+# frameworks in the Python interpreter context.
+#
+pyFrameworkPathsIndex = sys.argv.index("-PyFrameworkPaths")
+if not (pyFrameworkPathsIndex == -1):
+  import string
+  from Foundation import NSBundle
+  paths = string.split(sys.argv[pyFrameworkPathsIndex + 1], ":")
+  count = 0
+  for path in paths:
+    bundle = NSBundle.bundleWithPath_(path)
+    bundle.principalClass()
+    sys.path.insert(count, bundle.resourcePath())
+    count = count + 1
+    
+    initPath = bundle.pathForResource_ofType_( "Init", "py")
+    if initPath:
+      execfile(initPath, globals(), locals())
+
+#
 # Import application specific componentry.  At the least, all
 # classes necessary to load the main NIB file must be loaded here.
 #
