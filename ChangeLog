@@ -1,3 +1,7 @@
+2003-02-27  Bill Bumgarner  <bbum@codefab.com>
+    * Lib/AppKit/__init__.py (NSTableViewDelegate): Added NSTableViewDelegate
+      declaration and updated TableModel2 example.
+
 2003-02-25  Bill Bumgarner  <bbum@codefab.com>
     * Restructured Modules/ to reflect the division between modules.  Names
       are the same as their framework counterparts as much as possible.

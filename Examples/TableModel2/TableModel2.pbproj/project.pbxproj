@@ -98,6 +98,7 @@
 				4A9504CCFFE6A4B311CA0CBA,
 				4A9504CDFFE6A4B311CA0CBA,
 			);
+			hasScannedForEncodings = 1;
 			isa = PBXProject;
 			mainGroup = 29B97314FDCFA39411CA2CEA;
 			projectDirPath = "";
@@ -223,7 +224,6 @@
 </dict>
 </plist>
 ";
-			shouldUseHeadermap = 1;
 		};
 		29B97327FDCFA39411CA2CEA = {
 			buildActionMask = 2147483647;
@@ -390,6 +390,7 @@
 			};
 		};
 		F67591E9034123C701336B42 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = TableModel.py;
 			refType = 4;
@@ -401,6 +402,7 @@
 			};
 		};
 		F67591ED0341252E01336B42 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = README.txt;
 			refType = 4;
