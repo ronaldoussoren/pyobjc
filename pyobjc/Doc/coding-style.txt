@@ -1,0 +1,51 @@
+=======================
+Coding style for PyObjC 
+=======================
+
+.. contents:
+
+Introduction
+------------
+
+This document describes the coding style for PyObjC. Please use this style for
+new code and try apply this style to existing code while working on it.
+
+*NOTE* This document is a work in progress and does _not_ describe the existing
+code.
+
+Python code
+-----------
+
+The coding style for core Python is used (see `PEP 8`_). For consistency with
+Cocoa we use mixed-case identifiers (like lookUpClass). 
+
+PyObjC extensions to Apple frameworks should be clearly marked as such, 
+preferably by prefixing names with 'PyObjC' or 'pyobjc'. This should make it
+clear to users where they should look for documentation of an item: The Apple
+documentation or ours.
+
+The entire 'objc' module is an "extension" and all items exported from that
+module should be documented in our documentation.
+
+.. _`PEP 8`: http://www.python.org/peps/pep-0008.txt
+
+C code
+------
+
+The coding style for core Python is used (see `PEP 7`_). We use 'PyObjC' instead
+of 'Py' as the prefix for globally visible symbols.
+
+.. _`PEP 7`: http://www.python.org/peps/pep-0007.txt
+
+
+Documentation
+-------------
+
+All items exported by the objc module and all PyObjC extensions to Apple
+frameworks (the AppKit and Foundation modules) should be documented using
+docstrings. See `PEP 257`_ for good docstring conventions.
+
+All other documents should be marked up using reStructedText_. 
+
+.. _`PEP 257` : http://www.python.org/peps-0257.txt
+.. _reStructedText : http://docutils.sourceforge.net/rst.html

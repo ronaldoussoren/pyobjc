@@ -1,83 +1,136 @@
-Important:
-- reference counting cleanup (add Py_INC/DECREF and retain/release at 
-  correct places)
-- [EASY]implement missing functions needed to instantiate python-objc hybrids
-  (from objcective-C) [+alloc, -retain, ...]
-- [EASY]implement script to generate 'proxy-methods' needed to override 
-  objective-C methods in python.
-- [?] error-checking
-- [?] forwarding of exceptions (both from objc->python and python->objc)
-- Methods & multiple inheritance: selectors inherited from non-primary
-  superclasses will not be registered with runtime. (Is that necessary?)
+=========
+Todo list
+=========
 
-Less important
-- [HARD] implement calling of superclass implementation of methods
-- [?] make objc_support thread-safe
-- [MEDIUM] design and implement mechanism to use custom mapping for
-   selectors (needed to properly support NSScanner)
-- [EASY] use above to map troublesome methods in AppKit and Foundation
-- [EASY] implement python module that maps static functions, types and
-   constants in AppKit and Foundation
-- Write example application (adapt CurrencyConverter and implement a
-  document-based application)
-- Add tools/skeletons/... needed to implement specific Cocoa projects:
-  * Application
-  * Configuration panel
-  * (Standalone) service
-  * Screensaver
-  * ...
+.. contents:
 
-Housekeeping
-- code cleanup
-- documentation
+Introduction
+------------
 
-===============
+This document contains an (incomplete) list of work items. 
 
-- Merge code to call to objective-C methods from pyobjc
-  But: we probably need to use low-level code from runtime instead of 
-  NSInvocation, for now that seems the best way to transparently support
-  super(...) calls in the python code.
-- Merge/implement code to proxy objective-C objects
-- implement subclassing
-- test-code
-- documentation
-- Foundation and AppKit helper modules
+Important items
+---------------
 
-The structure for the 'new' pyobjc:
+Better documentation
+....................
 
-package pyobjc
-  module _pyobjc              # The 'core' native code
-  module _FoundationMapping   # Special mapping code for Foundation classes
-  module __init__	      # Package init
-     # Basically does:
-     from _pyobjc import *
-     import _FoundationMapping
-     _pyobjc.init()
-     del init
-     del _pyobjc
+There should be more developer documentation and end-user documentation is
+virtually non-existant. Related to this is the website: This should be filled.
+
+We should also merge ../BUGS and ../FIXME into one file, possibly even into
+this file.
+
+We should also add scripts to convert documentation to a format that is 
+useable on the website.
+
+Multi-threading support
+.......................
+
+The code should be mostly thread-safe, but this should be checked. Furthermore
+we should add code that enables using python in multiple threads:
+
+* Give up the global interpreter lock (GIL) before calling into Objective-C
+
+* Make sure the current thread-state is stored in thread-local storage (TLS)
+  before calling into Objective-C 
+
+* Fetch the thread-state from a TLS during callbacks from Objective-C and
+  create one if it doesn't exist yet. The latter assumes 1 python interpreter
+  per process.
+
+* Acquire the GIL during callbacks from Objective-C (this includes python
+  methods called from Objective-C)
+
+Ronald has started working on this, based on hints by Jack Janssen.
+
+Test suite
+..........
+
+The test suite needs to be enhanced.
 
 
-package Cocoa:
-  package Foundation:
-    module _Foundation
-      # Global functions and C-types in Foundation kit
-    module __init__
-      # Does:
-      import pyobjc
-      from _Foundation import *
-      clslist = (
-      	'NSObject', ....
-      )
-      for cls in clslist:
-      	tmp = pyobjc.lookup_class(cls)
-	set_global(cls, tmp)
-      # NSBundle.bundleForClass: may be usefull here!
+Less important items
+--------------------
 
-  package AppKit:
-    module _AppKitMapping
-      # Helper code to fully support mapping AppKit classes
-    module _AppKit
-      # Mapping of global function and types in AppKit
-    module __init__
-      # Like Foundation.__init__
+Support for GNUstep
+...................
 
+We currently don't support GNUstep. Modules/objc/objc_support.h contains 
+some definitions that help in supporting GNUstep, we should use those where
+applicable. 
+
+Support beyond that requires someone that actually tries to perform the 
+port to GNUstep. 
+
+Mirko Viviani <mirko@objectlab.org> seems to be working on this.
+
+Support for libFFI
+..................
+
+LibFFI_ is a library for dynamicly contructing stack-frames and calling 
+functions. It can also be used to build closures.
+
+The primary use for libFFI_ would be to remove the need for the generated,
+and huge, file Modules/objc/register.m. It could also be used to replace
+methods in 'pure' Objective-C classes, or replace existing methods in those
+classes.
+
+The primary disadvantage of libFFI_ is that there is no current release of
+the library, the current version is part of GCC and can only be fetched from
+its source tree.
+
+Ronald is working on this. 
+
+Some PPC assembly magic is necessary in libFFI to remove a link-time warning (
+see the mailing-list archives for details).
+
+.. _LibFFI: http://sources.redhat.com/libffi
+
+Naming convention / coding style
+................................
+
+Global symbols should be named with a prefix. We currently use several
+prefixes and some symbols do not have a prefix at all. 
+
+See the document `Coding style` for a proposal for a coding style and naming
+convention. The code should be changed to conform to this document.
+
+.. _`Coding style`: coding-style.txt
+
+Add template for various project-types
+......................................
+
+We currently have a Project Builder template for a basic PyObjC application. We
+should simular templates for other usefull projects and most importantly a 
+document-based application. 
+
+Other possibilies include:
+* Standalone Service
+* IBPalette
+* PreferencePane
+* Screen Saver
+* Cocoa Bundle
+
+In contrast to a template for a document-based application these last four 
+require additional (Objective-C) code: There needs to be a mechanism to 
+initialize a python interpreter and load the python code in the project when 
+the plugin/bundle is loaded. Furthermore we need to make sure that exactly one 
+interpreter is created, even when more than one Python based plugin/bundle is
+loaded.
+
+Complete Cocoa wrapping
+.......................
+
+We do not yet have a 100% coverage of the Cocoa API's. We also need code in
+the testsuite that checks if the function wrappers are working as expected.
+
+Someone needs to check if we correctly export all constants from Cocoa and if
+the generation script finds all global functions.
+
+MacOS 10.1 support
+..................
+
+The native code for supporting Cocoa don't compile on MacOS 10.1. Need a way
+to conditionally compile parts of this code. Problem is that most of that code
+is generated.
