@@ -122,7 +122,7 @@
 				19C28FACFE9D520D11CA2CBB,
 			);
 			isa = PBXGroup;
-			name = «PROJECTNAMEASXML»;
+			name = "«PROJECTNAMEASXML»";
 			path = "";
 			refType = 4;
 			sourceTree = "<group>";
@@ -262,7 +262,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = «PROJECTNAME»;
+				PRODUCT_NAME = "«PROJECTNAME»";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
 				WRAPPER_EXTENSION = app;
@@ -270,9 +270,9 @@
 			dependencies = (
 			);
 			isa = PBXNativeTarget;
-			name = «PROJECTNAME»;
+			name = "«PROJECTNAME»";
 			productInstallPath = "$(HOME)/Applications";
-			productName = «PROJECTNAME»;
+			productName = "«PROJECTNAME»";
 			productReference = 8D1107320486CEB800E47090;
 			productType = "com.apple.product-type.application";
 		};
