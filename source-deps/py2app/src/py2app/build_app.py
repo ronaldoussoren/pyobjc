@@ -25,6 +25,7 @@ import macholib.dyld
 import macholib.MachOGraph
 
 from py2app.create_appbundle import create_appbundle
+from py2app.create_pluginbundle import create_pluginbundle
 from py2app.util import fancy_split, byte_compile, make_loader, imp_find_module, copy_tree, move, fsencoding, strip_path, writablefile
 from py2app import recipes
 
@@ -114,7 +115,7 @@ def installation_info():
         return sys.version[:3]
 
 class py2app(Command):
-    description = "create a Mac OS X application from Python scripts"
+    description = "create a Mac OS X application or plugin from Python scripts"
     # List of option tuples: long name, short name (None if no short
     # name), and help string.
     
@@ -139,6 +140,8 @@ class py2app(Command):
          "comma-separated list of additional frameworks and dylibs to include"),
         ("plist=", 'P',
          "Info.plist template file, dict, or plistlib.Plist"),
+        ("extension=", None,
+         "Bundle extension [default:.app for app, .plugin for plugin]"),
         ("graph", 'g',
          "output module dependency graph"),
         ("strip", 'S',
@@ -146,7 +149,7 @@ class py2app(Command):
         #("compressed", 'c',
         # "create a compressed zipfile"),
         ("no-chdir", 'C',
-         "do not change to the data directory (Contents/Resources)"),
+         "do not change to the data directory (Contents/Resources) [forced for plugins]"),
         #("no-zip", 'Z',
         # "do not use a zip file (XXX)"),
         ("semi-standalone", 's',
@@ -154,7 +157,7 @@ class py2app(Command):
         ("alias", 'A',
          "Use an alias to current source file (for development only!)"),
         ("argv-emulation", 'a',
-         "Use argv emulation"),
+         "Use argv emulation [disabled for plugins]"),
         ("argv-inject=", None,
          "Inject some commands into the argv"),
         ('bdist-base=', 'b',
@@ -187,6 +190,7 @@ class py2app(Command):
         self.optimize = 0
         self.strip = False
         self.iconfile = None
+        self.extension = None
         self.alias = 0
         self.argv_emulation = 0
         self.argv_inject = None
@@ -302,7 +306,7 @@ class py2app(Command):
         required_files = set()
         rdict = dict(iterRecipes())
 
-        for target in dist.app:
+        for target in self.targets:
             required_files.add(target.script)
             required_files.update([k for k in target.prescripts if isinstance(k, basestring)])
 
@@ -339,7 +343,7 @@ class py2app(Command):
                 for fn in newbootstraps:
                     if isinstance(fn, basestring):
                         mf.run_script(fn)
-                for target in dist.app:
+                for target in self.targets:
                     target.prescripts.extend(newbootstraps)
                 break
             else:
@@ -359,11 +363,11 @@ class py2app(Command):
         print '%d remaining' % (nodes_seen - nodes_removed,)
 
         if self.graph:
-            for target in dist.app:
+            for target in self.targets:
                 base = target.get_dest_base()
                 appdir = os.path.join(self.dist_dir, os.path.dirname(base))
                 appname = self.plist.get('CFBundleName', os.path.basename(base))
-                dgraph = os.path.join(appdir, appname+'.dot')
+                dgraph = os.path.join(appdir, appname + '.dot')
                 print "*** creating dependency graph: %s ***" % (os.path.basename(dgraph),)
                 mf.graphreport(file(dgraph, 'w'), flatpackages=flatpackages)
         
@@ -516,7 +520,7 @@ class py2app(Command):
                 f.close()
 
         # build the executables
-        for target in dist.app:
+        for target in self.targets:
             dst = self.build_executable(target, arcname, pkgexts, target.script)
             if self.strip:
                 strip_path(dst)
@@ -572,11 +576,27 @@ class py2app(Command):
         
         # Convert our args into target objects.
         dist.app = FixupTargets(dist.app, "script")
+        dist.plugin = FixupTargets(dist.plugin, "script")
 
+        if dist.app and dist.plugin:
+            raise DistutilsOptionError, \
+                "You may not specify both app and plugin"
+        elif dist.app:
+            self.style = 'app'
+            self.targets = dist.app
+        elif dist.plugin:
+            self.style = 'plugin'
+            self.targets = dist.plugin
+        else:
+            raise DistutilsOptionError, \
+                "You must specify either app or plugin"
+        if not self.extension:
+            self.extension = '.' + self.style
+        
         # make sure all targets use the same directory, this is
         # also the directory where the pythonXX.dylib must reside
         paths = set()
-        for target in dist.app:
+        for target in self.targets:
             paths.add(os.path.dirname(target.get_dest_base()))
 
         if len(paths) > 1:
@@ -601,13 +621,13 @@ class py2app(Command):
         if self.iconfile:
             iconfile = self.iconfile
             if not os.path.exists(iconfile):
-                iconfile = iconfile+'.icns'
+                iconfile = iconfile + '.icns'
             if not os.path.exists(iconfile):
                 raise DistutilsOptionError, "icon file must exist: %r" % (self.icon,)
             self.resources.append(iconfile)
             self.plist[u'CFBundleIconFile'] = os.path.basename(iconfile)
             
-        if self.argv_emulation:
+        if self.argv_emulation and not self.style == 'plugin':
             prescripts.append('argv_emulation')
             if u'CFBundleDocumentTypes' not in self.plist:
                 self.plist[u'CFBundleDocumentTypes'] = [
@@ -626,17 +646,17 @@ class py2app(Command):
             prescripts.append(
                 StringIO('_argv_inject(%r)\n' % (self.argv_inject,)))
 
-        if not self.no_chdir:
+        if not (self.style == 'plugin' or self.no_chdir):
             prescripts.append('chdir_resource')
         if not self.alias:
             prescripts.append('disable_linecache')
-            prescripts.append('boot_app')
+            prescripts.append('boot_' + self.style)
         else:
             if self.additional_paths:
                 prescripts.append('path_inject')
                 prescripts.append(
                     StringIO('_path_inject(%r)\n' % (self.additional_paths,)))
-            prescripts.append('boot_aliasapp')
+            prescripts.append('boot_alias' + self.style)
         newprescripts = []
         for s in prescripts:
             if isinstance(s, basestring):
@@ -644,7 +664,7 @@ class py2app(Command):
             else:
                 newprescripts.append(s)
 
-        for target in dist.app:
+        for target in self.targets:
             target.prescripts = newprescripts
             
 
@@ -661,6 +681,24 @@ class py2app(Command):
         else:
             return file(bootstrap, 'rU').read()
         
+    def create_pluginbundle(self, target, script, use_runtime_preference=True):
+        base = target.get_dest_base()
+        appdir = os.path.join(self.dist_dir, os.path.dirname(base))
+        appname = os.path.basename(base)
+        print "*** creating plugin bundle: %s ***" % (appname,)
+        if self.runtime_preferences and use_runtime_preference:
+            self.plist.setdefault(
+                'PyRuntimeLocations', self.runtime_preferences)
+        appdir, plist = create_pluginbundle(
+            appdir,
+            appname,
+            plist=self.plist,
+            extension=self.extension,
+        )
+        appdir = fsencoding(appdir)
+        resdir = os.path.join(appdir, 'Contents', 'Resources')
+        return appdir, resdir, plist
+        
     def create_appbundle(self, target, script, use_runtime_preference=True):
         base = target.get_dest_base()
         appdir = os.path.join(self.dist_dir, os.path.dirname(base))
@@ -669,14 +707,27 @@ class py2app(Command):
         if self.runtime_preferences and use_runtime_preference:
             self.plist.setdefault(
                 'PyRuntimeLocations', self.runtime_preferences)
-        appdir, plist = create_appbundle(appdir, appname, plist=self.plist)
+        appdir, plist = create_appbundle(
+            appdir,
+            appname,
+            plist=self.plist,
+            extension=self.extension,
+        )
         appdir = fsencoding(appdir)
         resdir = os.path.join(appdir, 'Contents', 'Resources')
         return appdir, resdir, plist
         
+    def create_bundle(self, target, script, use_runtime_preference=True):
+        fn = getattr(self, 'create_%sbundle' % (self.style,))
+        return fn(
+            target,
+            script,
+            use_runtime_preference=use_runtime_preference
+        )
+    
     def build_alias_executable(self, target, script):
         # Build an alias executable for the target
-        appdir, resdir, plist = self.create_appbundle(target, script)
+        appdir, resdir, plist = self.create_bundle(target, script)
 
         # symlink data files
         for src, dest in self.iter_data_files():
@@ -702,7 +753,7 @@ class py2app(Command):
 
     def build_executable(self, target, arcname, pkgexts, script):
         # Build an executable for the target
-        appdir, resdir, plist = self.create_appbundle(target, script)
+        appdir, resdir, plist = self.create_bundle(target, script)
 
         for src, dest in self.iter_data_files():
             dest = os.path.join(resdir, dest)
