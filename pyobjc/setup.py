@@ -153,7 +153,8 @@ try:
 			 + AddressBookExtensions 
 			 ),
 	   packages = CorePackages + CocoaPackages + AddressBookPackages,
-	   package_dir = { '':'Lib' }
+	   package_dir = { '':'Lib' },
+           scripts = [ 'Scripts/nibclassbuilder', ],
            )
 
 except:
