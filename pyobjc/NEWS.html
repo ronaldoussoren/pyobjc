@@ -13,7 +13,22 @@ PyObjC NEWS</title>
 <ul>
 <li>(UNFINISHED) New RemotePyInterpreter example that demonstrates an
 out-of-process Python interpreter (primarily for IDE uses).</li>
-<li>New FilteringController example in CocoaBindings that Demonstrates
+<li>New IDNSnitch example in Inject that demonstrates how to write an
+application that detects the launch of another application,
+uses <code><span>objc.inject</span></code> to load code into it, and how to override the
+implementation of an existing method but still call back into the
+original implementation (method swizzling).</li>
+<li>New ToDos example in CocoaBindings that demonstrates how to use
+two array controllers for the same data, and how to use value
+transformers to alter the color of text.  Originally from
+&quot;Cocoa Bindings Examples and Hints&quot;, converted to PyObjC by u.fiedler.</li>
+<li>New Bookmarks example in CocoaBindings that demonstrates how to
+subclass <code><span>NSArrayController</span></code> to implement the <code><span>NSTableView</span></code>
+delegate drag and drop protocol, including copying of objects between
+documents and accepting URL drops from other applications.  Also
+demonstrates re-ordering of the content array.  Originally from
+&quot;Cocoa Bindings Examples and Hints&quot;, converted to PyObjC by u.fiedler.</li>
+<li>New FilteringController example in CocoaBindings that demonstrates
 how to subclass <code><span>NSArrayController</span></code> to implement filtering
 of a <code><span>NSTableView</span></code>.  Also demonstrates the use of indexed accessors.
 Originally from &quot;Cocoa Bindings Examples and Hints&quot;, converted to PyObjC
@@ -44,7 +59,7 @@ descend from <code><span>NSObject</span></code>, unless they implement a custom
 automatically trigger notifications.  This works in all cases,
 whether <code><span>foo</span></code> is a <code><span>property</span></code>, <code><span>ivar</span></code>, or just in the
 <code><span>__dict__</span></code>.</li>
-<li>New Inject folder in Examples, with a PyInterpreter
+<li>New Inject folder in Examples, with an InjectInterpreter
 example that will inject a GUI Python interpreter into any process.</li>
 <li>New <code><span>objc.inject()</span></code> function for Mac OS X 10.3 and later,
 allows an arbitrary bundle to be loaded into another process
