@@ -38,7 +38,7 @@ if sys.version >= '2.3':
             'Environment :: Console',
             'Environment :: MacOS X :: Cocoa',
             'Intended Audience :: Developers',
-            'License :: OSI Approvied:: MIT License',
+            'License :: OSI Approved :: MIT License',
             'Natural Language :: English',
             'Operating System :: MacOS :: MacOS X',
             'Programming Language :: Python',
