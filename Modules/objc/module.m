@@ -393,7 +393,7 @@ PyDoc_STRVAR(currentBundle_doc,
 	"\n"
 	"Note that this is the default bundle used by\n"
 	"NibClassBuilder.extractClasses(...),\n"
-	"so calling it explicitly is rarely useful."
+	"so calling it explicitly is rarely useful.\n"
 	"After module initialization, use\n"
 	"NSBundle.bundleForClass_(ClassInYourBundle)."
 );
