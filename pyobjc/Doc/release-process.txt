@@ -13,14 +13,14 @@ The timeframe is a guideline only and should be taken with a grain of salt.
 Release date -2 weeks
 ---------------------
 
-Full feature freeze, documenation updates and critical bugfixes only. At this
+Full feature freeze, documentation updates and critical bug-fixes only. At this
 time:
 
 * Check if the NEWS file is up-to-date
 
 * Tests the tutorial(s)
   Read the tutorial(s) and follow the instructions exactly, the tutorials should
-  be completely bugfree.
+  be completely bug-free.
 
 * Proofread the documentation
 
@@ -67,7 +67,7 @@ Release-date
 
   - Organization: PyObjC Team
   
-  - Name of Produt... : PyObjC
+  - Name of Product... : PyObjC
 
   - URL: http://pyobjc.sourceforge.net
 

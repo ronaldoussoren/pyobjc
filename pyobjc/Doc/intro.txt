@@ -33,14 +33,14 @@ to read (and translate) example code.
 Objective-C is an object-oriented programming language that is an extension 
 of C and borrows heavily from Smalltalk. It features single inheritance with
 (in theory) multiple root classes and dynamic dispatch of methods. This is
-basicly the same as Python with single inheritance.
+basically the same as Python with single inheritance.
 
 An important difference between Python and Objective-C is that the latter is
 not a pure object-oriented language. Some values are not objects, but values
 of plain C types, such as ``int`` and ``double``. These basic C types can also
 be used as the types of arguments and the return value of methods. 
 
-Object allocation and initialization are explicit and seperate actions in 
+Object allocation and initialization are explicit and separate actions in 
 Objective-C. The former is done by the class-method ``alloc``, while the
 latter is done by instance-methods whose name customarily starts with ``init``.
 
@@ -66,7 +66,7 @@ A class declaration::
    -(int)anInstanceMethodWithArg1:arg1 andArg2:(BOOL)arg2;
    @end
 
-A class implemenation::
+A class implementation::
 
    @implementation MYClass
 
@@ -120,7 +120,7 @@ differences between normal Python classes and Objective-C classes are the way
 you create instances and the fact that Objective-C methods have odd names.
 
 You can use multiple inheritance with Objective-C classes, as long as the
-Objetive-C class is the first base-class and there is only one Objective-C 
+Objective-C class is the first base-class and there is only one Objective-C 
 base-class. E.g. it is not possible to subclass from multiple Objective-C classes
 at the same time. Multiple inheritance should also not be used to mix-in
 different implementations for Objective-C methods. It will not work and
@@ -137,7 +137,7 @@ As described in `Objective-C for PyObjC users`_ the creation of Objective-C
 objects is a two-stage process. You first call the class method ``alloc``, and
 then call some variation of ``init`` to initialize the objects. The newly
 created object is the result of the call to ``init``. Most classes have 
-convienence class methods that combine the calls to ``alloc`` and ``init``.
+convenience class methods that combine the calls to ``alloc`` and ``init``.
 
 Methods and functions
 .....................
@@ -211,9 +211,9 @@ the bridge (yet), the information is therefore not entirely correct.
 When you define methods in a subclass of an Objective-C class, the bridge has
 to tell the Objective-C runtime what the signature of those methods is. The
 basic rule is that all arguments as well as the return value are objects (just
-like with normal Python methods). The bridge will automaticly pick a better 
+like with normal Python methods). The bridge will automatically pick a better 
 signature when it has more information available. Specifically, if you 
-overide an existing method the bridge will assume you want to use the same
+override an existing method the bridge will assume you want to use the same
 method signature. And furthermore, if you implement a method in an (informal)
 protocol known to the bridge it will use the signature from the corresponding
 method in that signature.
@@ -255,7 +255,7 @@ It turns out that Cocoa uses a primitive form of `weak references`_. Those
 are not true `weak references`_ as in Python, but use-cases where an object 
 stores a reference to another object without increasing the reference count
 for that other object. The bridge cannot solve the issues this introduces
-for you, which means that you get hard crashes when you're not carefull when
+for you, which means that you get hard crashes when you're not careful when
 dealing with those `weak references`_.
 
 .. _`weak references`: http://www.python.org/doc/current/lib/module-weakref.html
@@ -292,7 +292,7 @@ only ones that have to care about these objects are the maintainers of
 wrappers around Objective-C frameworks: they have to keep these protocol
 wrappers up-to-date.
 
-PyObjC will automaticly use the information in the ``informal_protocol`` 
+PyObjC will automatically use the information in the ``informal_protocol`` 
 objects to add the right method signatures to methods, and to warn about
 classes that partially implement a protocol.
 
@@ -365,7 +365,7 @@ you're done. The easiest way to that is to create an instance of that class
 bound to a local variable. If the thread is long-lived you may want to arrange
 for recycling the pool once in a while.
 
-There are some limitiation w.r.t. threading. You cannot use ``NSThread`` to 
+There are some limitation w.r.t. threading. You cannot use ``NSThread`` to 
 create new threads, but must use the python primitives instead. 
 
 You must also make sure that Objective-C only makes calls to Python from a 

@@ -30,8 +30,8 @@ TODO
 
 * Fix bugs found using the unittests
 
-  runPyObjCTests finds some problems that disapear when those tests are run
-  seperately...
+  runPyObjCTests finds some problems that disappear when those tests 
+  are run separately...
 
 * Port the AppKit wrappers
 
