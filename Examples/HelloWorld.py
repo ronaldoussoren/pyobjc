@@ -34,7 +34,8 @@ class AppDelegate (NSObject):
 def main():
     NSApp = NSApplication.sharedApplication()
 
-    NSApp.setDelegate_( AppDelegate.alloc().init() )
+    delegate = AppDelegate.alloc().init()
+    NSApp.setDelegate_(delegate)
 
     win = NSWindow.alloc()
     frame = ((200.0, 300.0), (250.0, 100.0))
