@@ -1,4 +1,4 @@
-from objc import setSignatureForSelector
+from _objc import setSignatureForSelector
 
 setSignatureForSelector("NSScanner", "scanCharactersFromSet:intoString:", "c@:@o^@")
 setSignatureForSelector("NSScanner", "scanDouble:", "c@:o^d")

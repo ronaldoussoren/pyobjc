@@ -1,6 +1,6 @@
 __all__ = ['classAddMethod', 'Category']
 
-from objc import selector, classAddMethods, objc_class
+from _objc import selector, classAddMethods, objc_class
 
 def classAddMethod(cls, name, method):
     """
