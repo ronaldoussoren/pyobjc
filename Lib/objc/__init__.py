@@ -9,17 +9,13 @@ nil = None
 YES = True
 NO = False
 
-from _objc import *
-from _objc import __version__, __C_API__
+def _update(g=globals()):
+    import _objc
+    for k,v in _objc.__dict__.iteritems():
+        g.setdefault(k,v)
+_update()
+del _update
 import _FoundationSignatures
-
-# Import values used to define signatures
-import _objc
-gl = globals()
-for nm in [ x for x in dir(_objc) if x.startswith('_C_') ]:
-    gl[nm] = getattr(_objc, nm)
-del gl, nm, _objc, x
-
 
 # Add useful utility functions below
 if platform == 'MACOSX':
@@ -150,13 +146,26 @@ def Category(cls):
     retval = _CategoryMeta._newSubclass('Category', (), dict(real_class=cls))
     return retval
 
-def _make_bundleForClass(bundle):
+def _subclass_extender(name, base, protocols, dct):
     """
     used internally by the class builder
+
+    This is the rough equivalent to a metaclass for a
+    Python subclass of an Objective-C class.
+
+    Typically it will just modify the class dct, but may choose
+    to raise an exception.
     """
-    def bundleForClass(cls):
-        return bundle
-    return selector(bundleForClass, isClassMethod=True)
+    if 'bundleForClass' not in dct:
+        cb = currentBundle()
+        def bundleForClass(cls):
+            return cb
+        dct['bundleForClass'] = selector(bundleForClass, isClassMethod=True)
+    if '__bundle_hack__' in dct:
+        import warnings
+        warnings.warn(
+            "__bundle_hack__ is not necessary in PyObjC 1.3+ / py2app 0.1.8+",
+            DeprecationWarning)
 
 ######
 # Backward compatibility stuff
