@@ -335,9 +335,11 @@ static int set_defaults(PyObject* self, const char* typestr)
 		}
 		next = PyObjCRT_SkipTypeSpec(typestr);
 		switch (*typestr) {
+#ifdef _C_BOOL
 		case _C_BOOL: 
 			v = PyBool_FromLong(0);
 			break;
+#endif
 
 		case _C_CHR: case _C_UCHR:
 		case _C_SHT: case _C_USHT:
