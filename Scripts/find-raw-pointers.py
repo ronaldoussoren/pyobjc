@@ -7,13 +7,13 @@ require further investigation before they can be used from Python.
 If you write a custom wrapper for a method you should add it to the list below,
 likewise for methods that won't be supported by the bridge.
 
-Don't forget to add unittests for methods that are wrapped, or whose signature 
+Don't forget to add unittests for methods that are wrapped, or whose signature
 you change.
 
 XXX:
 - The data should be stored in a seperate file, to make it possible to use the
   data for other purposes
-- The new annotation possibilities should be used, add a comment possibility 
+- The new annotation possibilities should be used, add a comment possibility
   as well.
 - Write tools for editing the data, and creating HTML reports (for the website)
 """
@@ -134,7 +134,7 @@ WRAPPED_METHODS={
     'NSMutableArray_removeObjectsFromIndices_numIndices_': (REL_OSX_10_2, TP_SUPPORTED),
     'NSMutableArray_replaceObjectsInRange_withObjects_count_': (REL_OSX_10_2, TP_SUPPORTED),
     'NSMutableArray_sortUsingFunction_context_': (REL_OSX_10_2, TP_SUPPORTED),
-    'NSMutableArray_sortUsingFunction_context_range_': (REL_OSX_10_2, TP_SUPPORTED),    
+    'NSMutableArray_sortUsingFunction_context_range_': (REL_OSX_10_2, TP_SUPPORTED),
 
     #<AppKit>
     'NSATSUStyleObject_initWithStyle_': (REL_OSX_10_3, TP_UNDOCUMENTED),
@@ -158,7 +158,7 @@ WRAPPED_METHODS={
     'NSValueBinder_validateAndCommitValueInEditor_editingIsEnding_errorUserInterfaceHandled_': (REL_OSX_10_3, TP_UNDOCUMENTED),
     'NSToolTipStringDrawingLayoutManager_sizeForDisplayingAttributedString_': (REL_OSX_10_3, TP_UNDOCUMENTED),
     'NSAATAttributes_fillPlatformStyle_': (REL_OSX_10_3, TP_UNDOCUMENTED),
-    
+
 
     'NSATSTypesetter_getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_': (REL_OSX_10_2, TP_SUPPORTED),
     'NSATSTypesetter_getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_': (REL_OSX_10_2, TP_SUPPORTED),
@@ -250,7 +250,7 @@ WRAPPED_METHODS={
 
 
 # Undocumented methods:
-    # from 'WebKit' 
+    # from 'WebKit'
     'WebCoreBridge_adjustPageHeightNew_top_bottom_limit_':1,
     'WebCoreBridge_copyDOMNode_copier_':1,
     'WebCoreBridge_copyRenderNode_copier_':1,
@@ -558,7 +558,7 @@ WRAPPED_METHODS={
     'NSConstantString_initWithCharactersNoCopy_length_':1,
 
     #<AppKit>
-       # .. Panther .. 
+       # .. Panther ..
     'NSGlyphGenerator_generateGlyphsForGlyphStorage_desiredNumberOfCharacters_glyphIndex_characterIndex_':1,
     'NSMatrix_textView_completions_forPartialWordRange_indexOfSelectedItem_':1,
     'NSSavePanel_control_textView_completions_forPartialWordRange_indexOfSelectedItem_':1,
@@ -611,7 +611,7 @@ WRAPPED_METHODS={
 
 
 
-     
+
        # .. Jaguar ..
     'NSCGSContext_windowID':1,
     'NSPreferences_confirmCloseSheetIsDone_returnCode_contextInfo_':1,
@@ -705,7 +705,7 @@ WRAPPED_METHODS={
     'IBObjectContainer_decodeObjectToObjectMapTableForKey_fromCoder_alwaysCreate_':1,
     'IBXMLDecoder_allocObjectWithClassName_':1,
     'IBSplitScrollView_getMinimumX_maximumX_':1,
-    
+
     # XXX: Loads of 10.3 stuff
     'PBXReference_pruneReferencesBySendingBooleanSelector_toObject_withContext_':(REL_OSX_10_3, TP_UNDOCUMENTED),
     'PBXObject_copyWithZone_getUnretainedObjectMappings_':(REL_OSX_10_3, TP_UNDOCUMENTED),

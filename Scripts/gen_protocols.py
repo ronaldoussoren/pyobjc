@@ -61,7 +61,7 @@ def parseHeader(headerPath):
             # @protocol
             name = m.group(2)
         end = header.find("@end", m.end())
-        
+
         protocol = []
         rawProto = header[m.end():end]
         start = 0
@@ -100,7 +100,7 @@ template = r"""
 
 int main() {
     char *m;
-    
+
     %s
 
     return 0;

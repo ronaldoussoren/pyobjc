@@ -46,7 +46,7 @@ def process_file(outfp, filename, match_prefix='', ignore_list=()):
 
 
         m = MATCH_RE.match(ln)
-        if not m: 
+        if not m:
             if saved_line is None and ln.startswith(match_prefix):
                 saved_line=ln
             else:

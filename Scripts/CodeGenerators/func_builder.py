@@ -67,7 +67,7 @@ def is_id(typestr):
         return 1
     elif typestr[-1] != '*':
         return 0
-    
+
     if objc != None:
         try:
             objc.lookUpClass(typestr[:-1])
@@ -86,20 +86,20 @@ def is_id(typestr):
 # first, and then special logic (like handling 'id'-like values)
 # TODO: Use PyObjC_ObjCToPython/PyObjC_PythonToObjC!
 SIMPLE_TYPES={
-    # key: ( 'to_python', 'parse_fmt', 'parse_args' ) 
+    # key: ( 'to_python', 'parse_fmt', 'parse_args' )
     #      items in the tuple are either None (not needed), a string or
     #      a function. The string will be %-expanded with a dict containing
     #      the key 'varname', and varname will be the only argument to
     #      the function that must return a string.
     'char': (
         '\tresult = PyString_FromStringAndSize(&(%(varname)s), 1);\n\tif (result == NULL) return NULL;',
-        'O&',                 
-        'PyObjC_ConvertChar, &%(varname)s', 
+        'O&',
+        'PyObjC_ConvertChar, &%(varname)s',
     ),
     'Class': (
         '\tresult = PyObjCClass_New(%(varname)s);\n\tif (result == NULL) return NULL;',
-        'O&',                 
-        'PyObjCClass_Convert, &%(varname)s', 
+        'O&',
+        'PyObjCClass_Convert, &%(varname)s',
     ),
     'int': (
         "\tresult = PyInt_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
@@ -115,8 +115,8 @@ SIMPLE_TYPES={
     ),
     'BOOL': (
         "\tresult = PyObjCBool_FromLong(%(varname)s);\n\tif (result == NULL) return NULL;",
-        'O&',                 
-        'PyObjC_ConvertBOOL, &%(varname)s', 
+        'O&',
+        'PyObjC_ConvertBOOL, &%(varname)s',
         None
     ),
     'short': (
@@ -160,14 +160,14 @@ SIMPLE_TYPES={
 if sys.platform == 'darwin':
     SIMPLE_TYPES['SEL'] = (
         '\tresult = PyString_FromString(SELNAME(%(varname)s));\n\tif (result == NULL) return NULL;',
-        'O&',                 
-        'PyObjCSelector_Convert, &%(varname)s', 
+        'O&',
+        'PyObjCSelector_Convert, &%(varname)s',
     )
 else:
     SIMPLE_TYPES['SEL'] = (
         '\tresult = PyString_FromString(sel_get_name(%(varname)s));\n\tif (result == NULL) return NULL;',
-        'O&',                 
-        'PyObjCSelector_Convert, &%(varname)s', 
+        'O&',
+        'PyObjCSelector_Convert, &%(varname)s',
     )
 
 # Python2.3 has better PyArgs_Parse format-chars for unsigned integral types,
@@ -234,7 +234,7 @@ def hidden_from_python(typestr):
         return 1
     return 0
 
-                
+
 def simple_to_python(varname, typestr):
     if typestr.startswith('const ') or typestr.startswith('const\t'):
         typestr = typestr[6:].strip()
@@ -293,7 +293,7 @@ def parsetuple_arguments(typestr, varname):
 def is_simple_type(typestr):
     if typestr.startswith('const ') or typestr.startswith('const\t'):
         typestr = typestr[6:].strip()
-        
+
     if typestr in INT_ALIASES:
         return 1
 
@@ -315,7 +315,7 @@ def parse_prototype(protostr):
     idx=len(before)-1
     while before[idx].isalnum() or before[idx] == '_':
         idx -= 1
-    
+
     funcname = before[idx+1:].strip()
     retval = simplify_type(before[:idx+1].strip())
 
@@ -371,7 +371,7 @@ def process_function(fp, protostr, funclist):
     fp.write("\tPyObject* result;\n")
     if retval != 'void':
         fp.write("\t%s _objc__result_;\n"%retval)
-    
+
     fmt = ''
     arglist = ''
     for tp, name in arguments:

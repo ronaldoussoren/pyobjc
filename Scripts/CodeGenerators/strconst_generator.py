@@ -72,10 +72,10 @@ def process_file(outfp, filename, ignore):
 
         if struct_level:
             continue
-            
+
 
         m = MATCH_RE.search(ln)
-        if m: 
+        if m:
             ident = m.group(2)
             entry(outfp, ident, ignore)
 
