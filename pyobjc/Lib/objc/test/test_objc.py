@@ -38,7 +38,7 @@ class TestClassLookup(unittest.TestCase):
 
 class TestMethodInvocation(unittest.TestCase):
     def setUp(self):
-        self.NSObjectInstance = objc.runtime.NSObject.alloc()
+        self.NSObjectInstance = objc.runtime.NSObject.alloc().init()
 
     def testClassInvocation(self):
         self.assert_(objc.runtime.NSObject.pyobjc_classMethods.description(), "Failed to invoke the +description method.")
