@@ -46,7 +46,7 @@ static inline void PyGILState_Release(
 #define PyObjC_BEGIN_WITH_GIL \
 	{ \
 		PyGILState_STATE _GILState; \
-		_GILState = PyObjCGILState_Ensure(); 
+		_GILState = PyGILState_Ensure(); 
 
 #define PyObjC_GIL_FORWARD_EXC() \
 		do { \
@@ -88,7 +88,7 @@ static inline void PyGILState_Release(
 #define PyObjC_BEGIN_WITH_GIL \
 	{ \
 		PyGILState_STATE _GILState; \
-		_GILState = PyObjCGILState_Ensure(); 
+		_GILState = PyGILState_Ensure(); 
 
 #define PyObjC_GIL_FORWARD_EXC() \
 		do { \
@@ -191,7 +191,7 @@ static inline void PyGILState_Release(
  *	PyObjC_RegisterSignatureMapping and PyObjCUnsupportedMethod_IMP,
  *      adds PyObjC_RegisterStructType and removes PyObjC_CallPython
  * - Version 6 adds PyObjCIMP_Type, PyObjCIMP_GetIMP and PyObjCIMP_GetSelector
- * - Version 7 adds PyObjCErr_AsExc, PyObjCGILState_Ensure
+ * - Version 7 adds PyObjCErr_AsExc, PyGILState_Ensure
  * - Version 8 adds PyObjCObject_IsUninitialized,
         removes PyObjCSelector_IsInitializer
  * - Version 9 (???)
@@ -321,7 +321,7 @@ struct pyobjc_api {
     /* PyObjCErr_AsExc */
     NSException* (*err_python_to_nsexception)(void);
 
-    /* PyObjCGILState_Ensure */
+    /* PyGILState_Ensure */
     PyGILState_STATE (*gilstate_ensure)(void);
 
     int (*obj_is_uninitialized)(PyObject*);
@@ -374,7 +374,6 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjC_RegisterStructType   (PyObjC_API->register_struct)
 #define PyObjCIMP_GetIMP   (PyObjC_API->imp_get_imp)
 #define PyObjCIMP_GetSelector   (PyObjC_API->imp_get_sel)
-#define PyObjCGILState_Ensure (PyObjC_API->gilstate_ensure)
 #define PyObjCObject_IsUninitialized (PyObjC_API->obj_is_uninitialized)
 
 

@@ -30,7 +30,7 @@ static NSString *_threadPoolIdentifier = @"PyObjC:  NSThread AutoreleasePool Ide
 	NSAutoreleasePool *p;
 	PyGILState_STATE state;
 
-	state = PyObjCGILState_Ensure();
+	state = PyGILState_Ensure();
 	PyErr_Warn(PyExc_DeprecationWarning, 
 		"NSAutoreleasePool.pyobjcPushPool() is deprecated: Use NSAutoreleasePool.alloc().init() instead");
 	if (PyErr_Occurred()) {

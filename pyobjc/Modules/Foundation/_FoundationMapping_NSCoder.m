@@ -100,7 +100,7 @@ imp_NSCoder_encodeValueOfObjCType_at_(
 	PyObject* arglist = NULL;
 	PyObject* v = NULL;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
@@ -239,7 +239,7 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(
 	int       size;
 	int       i;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) goto error;
@@ -364,7 +364,7 @@ imp_NSCoder_decodeValueOfObjCType_at_(
 	PyObject* v;
 	int err;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) goto error;
@@ -491,7 +491,7 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(
 	int       i;
 	int res;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
@@ -605,7 +605,7 @@ imp_NSCoder_encodeBytes_length_(
 	PyObject* arglist = NULL;
 	PyObject* v;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
@@ -738,7 +738,7 @@ imp_NSCoder_decodeBytesWithReturnedLength_(
 	int buflen;
 	int len;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) goto error;
@@ -898,7 +898,7 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
 	int buflen;
 	int len;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) goto error;
@@ -1018,7 +1018,7 @@ imp_NSCoder_encodeBytes_length_forKey_(
 	PyObject* arglist = NULL;
 	PyObject* v;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) goto error;

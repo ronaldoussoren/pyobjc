@@ -14,11 +14,6 @@ PyObject* ObjCExc_internal_error;
 PyObject* PyObjCExc_NoProtocol;
 PyObject* PyObjCExc_UnInitDeallocWarning;
 
-PyGILState_STATE PyObjCGILState_Ensure(void)
-{
-	return PyGILState_Ensure();
-}
-
 int ObjCUtil_Init(PyObject* module)
 {
 #define NEW_EXC(identifier, name, base_class) \
@@ -87,7 +82,7 @@ void PyObjCErr_FromObjC(NSException* localException)
 			/* -pyObject returns a borrowed reference and 
 			 * PyErr_Restore steals one from us.
 			 */
-			state = PyObjCGILState_Ensure();
+			state = PyGILState_Ensure();
 			Py_INCREF(exc_type);
 			Py_XINCREF(exc_value);
 			Py_XINCREF(exc_traceback);
@@ -98,7 +93,7 @@ void PyObjCErr_FromObjC(NSException* localException)
 		}
 	}
 
-	state = PyObjCGILState_Ensure();
+	state = PyGILState_Ensure();
 	dict = PyDict_New();
 	v = PyString_FromString(c_localException_name);
 	PyDict_SetItemString(dict, "name", v);

@@ -131,7 +131,7 @@ imp_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 	PyObject* v;
 	int i;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
@@ -296,7 +296,7 @@ imp_NSFont_fontWithName_matrix_(
 	PyObject* v;
 	int i;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;

@@ -1076,7 +1076,7 @@ object_method_forwardInvocation(
 	PyObject* pymeth;
 	PyObject* pyself;
 	volatile int have_output = 0;
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
@@ -1741,7 +1741,7 @@ object_method_storedValueForKey_(
 	int r;
 	struct objc_super super;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 #define TRY_GETMETHOD(method, format, keyexp) { \
 	r = method(self, \
@@ -1781,7 +1781,7 @@ object_method_valueForKey_(
 
 	id* presult = (id*)retval;
 	struct objc_super super;
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 #define TRY_GETMETHOD(method, format, keyexp) { \
 	r = method(self, \
@@ -1825,7 +1825,7 @@ object_method_takeStoredValue_forKey_(
 
 	struct objc_super super;
 	int r;
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 
 #define TRY_SETMETHOD(method, format, keyexp) { \
@@ -1874,7 +1874,7 @@ object_method_takeStoredValue_forKey_(
 			PyObject* selfObj;
 			PyObject* val;
 
-			state = PyObjCGILState_Ensure();
+			state = PyGILState_Ensure();
 			selfObj = PyObjCObject_New(self);
 			val = pythonify_c_value(@encode(id), &value);
 			if (val == NULL) {
@@ -1915,7 +1915,7 @@ object_method_takeValue_forKey_(
 
 	struct objc_super super;
 	int r;
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 #define TRY_SETMETHOD(method, format, keyexp) { \
 	r = method(self, \
@@ -1961,7 +1961,7 @@ object_method_takeValue_forKey_(
 				) {
 			PyObject* selfObj;
 			PyObject* val;
-			state = PyObjCGILState_Ensure();
+			state = PyGILState_Ensure();
 			selfObj = PyObjCObject_New(self);
 			val = pythonify_c_value(@encode(id), &value);
 			if (val == NULL) {
@@ -2033,7 +2033,7 @@ object_method_copyWithZone_(
 		*(id*)resp = nil;
 	}
 
-	state = PyObjCGILState_Ensure();
+	state = PyGILState_Ensure();
 
 	/* Update the reference counts for slots/outlets */
 

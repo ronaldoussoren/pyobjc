@@ -472,7 +472,7 @@ imp_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
 	PyObject* v;
 	int i;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) goto error;
@@ -529,7 +529,7 @@ imp_NSBezierPath_appendBezierPathWithPoints_count_(
 	PyObject* v;
 	int i;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
@@ -583,7 +583,7 @@ imp_NSBezierPath_elementAtIndex_associatedPoints_(
 	int pointCount;
 	int i;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) goto error;
@@ -677,7 +677,7 @@ imp_NSBezierPath_setLineDash_count_phase_(
 	PyObject* arglist = NULL;
 	PyObject* v;
 
-	PyGILState_STATE state = PyObjCGILState_Ensure();
+	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) goto error;
