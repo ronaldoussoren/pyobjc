@@ -93,6 +93,7 @@ typedef struct {
 	PyObject* delmethod;
 	int hasPythonImpl;
 	int generation;
+	int useKVO;
 } PyObjCClassObject;
 
 extern PyObject* PyObjCClass_DefaultModule;

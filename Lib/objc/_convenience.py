@@ -15,6 +15,8 @@ __all__ = ['CONVENIENCE_METHODS', 'CLASS_METHODS']
 CONVENIENCE_METHODS = {}
 CLASS_METHODS = {}
 
+NSObject = lookUpClass('NSObject')
+
 def add_convenience_methods(super_class, name, type_dict):
     """
     Add additional methods to the type-dict of subclass 'name' of
@@ -34,6 +36,8 @@ def add_convenience_methods(super_class, name, type_dict):
             def bundleForClass(cls):
                 return cb
             type_dict['bundleForClass'] = selector(bundleForClass, isClassMethod=True)
+            #if '__useKVO__' not in type_dict:
+            #    type_dict['__useKVO__'] = issubclass(super_class, NSObject)
         if '__bundle_hack__' in type_dict:
             import warnings
             warnings.warn(

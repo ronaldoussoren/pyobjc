@@ -7,6 +7,21 @@
 
 #include <objc/Object.h>
 
+/* 
+ * Support for NSKeyValueObserving on MacOS X 10.3 and later.
+ *      
+ * XXX: It's probably better to detect this at runtime.
+ * XXX2: This is copied from class-builder.m
+ */     
+#if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
+#   define WILL_CHANGE(self, key) [(NSObject*)(self) willChangeValueForKey:(key)]   
+#   define DID_CHANGE(self, key) [(NSObject*)(self) didChangeValueForKey:(key)] 
+#else   
+#   define WILL_CHANGE(self, key) ((void)0)
+#   define DID_CHANGE(self, key) ((void)0)
+#endif  
+        
+
 static NSMapTable* proxy_dict = NULL;
 
 static PyObject* 
@@ -393,6 +408,8 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	descrsetfunc f;
 	PyObject** dictptr;
 	int res = -1;
+	id obj_inst;
+	NSString *obj_name = nil;
 	
 	if (!PyString_Check(name)) {
 #ifdef Py_USING_UNICODE
@@ -416,7 +433,8 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 		Py_INCREF(name);
 	}
 
-	if (PyObjCObject_GetObject(obj) == nil) {
+	obj_inst = PyObjCObject_GetObject(obj);
+	if (obj_inst == nil) {
 		PyErr_Format(PyExc_AttributeError,
 		     "Cannot set '%s.400s' on NIL '%.50s' object",
 		     PyString_AS_STRING(name),
@@ -424,11 +442,10 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 		goto done;
 	}
 
-	if (tp->tp_dict == NULL) {
-		if (PyType_Ready(tp) < 0)
-			goto done;
+	if (((PyObjCClassObject*)tp)->useKVO) {
+		obj_name = [NSString stringWithCString:PyString_AS_STRING(name)];
+		WILL_CHANGE(obj_inst, obj_name);
 	}
-
 	descr = _type_lookup(tp, name);
 	f = NULL;
 	if (descr != NULL &&
@@ -482,6 +499,9 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 		     "'%.50s' object attribute '%.400s' is read-only",
 		     tp->tp_name, PyString_AS_STRING(name));
   done:
+	if (obj_inst && obj_name) {
+		DID_CHANGE(obj_inst, obj_name);
+	}
 	Py_DECREF(name);
 	return res;
 }
@@ -621,7 +641,7 @@ PyObjCClassObject PyObjCObject_Type = {
      { 0, 0, 0, 0 },			/* as_buffer */
      0,					/* name */
      0,					/* slots */
-   }, 0, 0, 0, 0, 0, 0, 0
+   }, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
 /*

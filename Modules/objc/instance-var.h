@@ -3,8 +3,8 @@
 
 typedef struct {
 	PyObject_HEAD
-	char* name;	/* Name of the instance variable */
-	char  type[2];	/* Type of the instance variable for definition only */
+	char* name;      /* Name of the instance variable */
+	char* type;      /* Type of the instance variable for definition only */
 	int   isOutlet;
 	int   isSlot;
 	PyObjCRT_Ivar_t   ivar;

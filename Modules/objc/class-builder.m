@@ -190,7 +190,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 		if (v == NULL) {
 			return -1;
 		}
-		((PyObjCInstanceVariable*)v)->type[0] = '\0';
+		((PyObjCInstanceVariable*)v)->type = PyObjCUtil_Strdup("");
 		((PyObjCInstanceVariable*)v)->isSlot = 1;
 		if (PyDict_SetItemString(clsdict, "__dict__", v) < 0) {
 			Py_DECREF(v);
@@ -234,7 +234,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 			Py_DECREF(slots);
 			return -1;
 		}
-		var->type[0] = '\0';
+		((PyObjCInstanceVariable*)var)->type = PyObjCUtil_Strdup("");
 		((PyObjCInstanceVariable*)var)->isSlot = 1;
 	
 		if (PyDict_SetItem(clsdict, slot_value, (PyObject*)var) < 0) {
@@ -818,7 +818,7 @@ error_cleanup:
  * subclass Objective-C classes from Python. 
  *
  * These are added to the new Objective-C class by  PyObjCClass_BuildClass (but
- * only if the super_class is a 'pure' objective-C klass)
+ * only if the super_class is a 'pure' objective-C class)
  *
  * NOTE:
  * - These functions will be used as methods, but as far as the compiler
@@ -877,8 +877,8 @@ free_ivars(id self, PyObject* volatile cls )
 		
 			iv = ((PyObjCInstanceVariable*)o);
 
-			if (iv->type[0] != '@') continue;
 			if (iv->isOutlet) continue;
+			if (strcmp(iv->type, "@") != 0) continue;
 
 			var = class_getInstanceVariable(objcClass, iv->name);
 			if (var == NULL) continue;
@@ -1660,7 +1660,7 @@ getAccessor(id self, NSString* key, id* result)
  * Support for NSKeyValueObserving on MacOS X 10.3 and later.
  *
  * XXX: It's probably better to detect this at runtime.
- * XXX2: This is not correct, should also call 'willChangeValueForKey:'!
+ * XXX2: This is copied in objc-object.m
  */
 #if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
 #   define WILL_CHANGE(self, key) [(NSObject*)(self) willChangeValueForKey:(key)]	
@@ -2119,7 +2119,7 @@ object_method_copyWithZone_(
 		
 			iv = ((PyObjCInstanceVariable*)o);
 
-			if (iv->type[0] != '@') continue;
+			if (strcmp(iv->type, "@") != 0) continue;
 			if (iv->isOutlet) continue;
 
 			var = class_getInstanceVariable(objcClass, iv->name);
