@@ -696,7 +696,7 @@ static Class Object_class = nil;
 PyObject*
 PyObjCSelector_FindNative(PyObject* self, const char* name)
 {
-	SEL   sel = PyObjCSelector_DefaultSelector(name);
+	volatile SEL   sel = PyObjCSelector_DefaultSelector(name);
 	PyObject* retval;
 
 	NSMethodSignature* methsig;
@@ -1267,7 +1267,7 @@ static	char*	keywords[] = { "function", "selector", "signature",
 	if (required) {
 		result->sel_flags |= PyObjCSelector_kREQUIRED;
 	}
-	return result;
+	return (PyObject *)result;
 }
 
 static PyObject*

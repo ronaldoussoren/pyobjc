@@ -660,7 +660,7 @@ call_NSCoder_decodeBytesWithReturnedLength_(
 				(PyObjCIMP_GetIMP(method)))(
 					PyObjCObject_GetObject(self),
 					PyObjCIMP_GetSelector(method),
-					&size);
+					(int *)&size);
 		} else {
 			PyObjC_InitSuper(&super, 
 				PyObjCSelector_GetClass(method),
@@ -818,7 +818,7 @@ call_NSCoder_decodeBytesForKey_returnedLength_(
 				(PyObjCIMP_GetIMP(method)))(
 					PyObjCObject_GetObject(self),
 					PyObjCIMP_GetSelector(method),
-					key, &size);
+					key, (int *)&size);
 		} else {
 			PyObjC_InitSuper(&super, 
 				PyObjCSelector_GetClass(method),

@@ -573,7 +573,7 @@ imp_NSBezierPath_elementAtIndex_associatedPoints_(
 	id self = *(id*)args[0];
 	//SEL _meth = *(SEL*)args[1];
 	int idx = *(int*)args[2];
-	NSPoint* points = *(NSPoint**)points;
+	NSPoint* points = *(NSPoint**)args[3];
 
 	PyObject* result;
 	PyObject* seq = NULL;

@@ -290,7 +290,7 @@ NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
 	PyObjC_END_WITH_GIL
 }
 
--keyEnumerator
+-(NSEnumerator *)keyEnumerator
 {
 	return [OC_PythonDictionaryEnumerator newWithWrappedDictionary:self];
 }
