@@ -5,7 +5,7 @@
  * Central include file for PyObjC. 
  */
 
-#define OBJC_VERSION "1.2b2"
+#define OBJC_VERSION "1.2"
 
 #include <Python.h>
 #include "structmember.h"
