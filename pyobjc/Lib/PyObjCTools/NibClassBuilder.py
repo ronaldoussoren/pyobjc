@@ -74,7 +74,7 @@ class NibLoaderError(Exception): pass
 
 class ClassInfo:
 
-    __slots__ = ("nibs", "name", "super", "actions", "outlets")
+    attrNames = ("nibs", "name", "super", "actions", "outlets")
 
     def __repr__(self):
         items = self.__dict__.items()
@@ -92,8 +92,8 @@ class ClassInfo:
         self.actions = mergeLists(self.actions, other.actions)
 
     def __cmp__(self, other):
-        s = [getattr(self, x) for x in self.__slots__]
-        o = [getattr(other, x) for x in self.__slots__]
+        s = [getattr(self, x) for x in self.attrNames]
+        o = [getattr(other, x) for x in self.attrNames]
         return cmp(s, o)
 
 
