@@ -36,6 +36,9 @@ else:
     TOOL = None
 
 class build_html(Command):
+    description = "Generate HTML from ReST documentation"
+    user_options = []
+
     def initialize_options(self):
         self.finalized = False
 

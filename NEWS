@@ -4,7 +4,7 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 1.2 (2004-??-??)
+Version 1.2 (2004-12-??)
 ------------------------
 
 - This version no longer support Python 2.2. Python 2.3 or later is
@@ -27,9 +27,9 @@ Version 1.2 (2004-??-??)
 
 - objc.Category can be used to define categories on existing classes::
 
- 	class NSObject (objc.Category(NSObject)):
-		def myMethod(self):
-			pass
+    class NSObject (objc.Category(NSObject)):
+        def myMethod(self):
+            pass
 
   This adds method ``myMethod`` to class NSObject.
 
@@ -45,8 +45,54 @@ Version 1.2 (2004-??-??)
   class builder to use a statically allocated class wrapper if one is
   available via certain environment variables.  This functionality is used
   to enable +[NSBundle bundleForClass:] to work for exactly one class from
-  a py2app-created plugin bundle.  We now have a working Interface Builder
-  palette example due to this hack.
+  a py2app-created plugin bundle.
+  
+- We now have a working Interface Builder palette example due to
+  __bundle__hack__.
+
+- bool(NSNull.null()) is now false.
+
+- setup.py supports several new commands::
+
+    * build_libffi
+    
+      builds libffi (used by build_ext)
+
+    * build_html
+
+      builds html documentation from ReST source
+
+    * bdist_dmg
+
+      creates a disk image with the binary installer
+
+    * bdist_mpkg
+
+      creates a binary installer
+
+    * test
+
+      runs unit test suite (replaces Scripts/runPyObjCTests
+      and Scripts/runalltests)
+
+- PyObjCStrBridgeWarning can now be generated when Python ``str`` objects
+  cross the bridge by calling ``objc.setStrBridgeEnabled(False)``.  It is
+  HIGHLY recommended that your application never send ``str`` objects over
+  the bridge, as it is likely to cause problems due to the required
+  coercion to unicode.
+
+- The coercion bridge from Python to Objective-C instances can now be
+  augmented from Python as it is exposed by OC_PythonObject.  See
+  ``objc._bridges``.  This is how the ``str`` -> ``unicode`` -> ``NSString``
+  bridge with optional warnings is implemented.
+
+- The coercion bridge between Python objects and Objective-C structures
+  can now be augmented from Python as it is explosed by OC_PythonObject.
+  See ``objc._bridges``.  This is how the ``Carbon.File.FSRef`` 
+  <-> ``'{FSRef=[80c]}'`` structure bridge is implemented.
+
+- Extension modules such as _objc, _AppKit, etc. are now inside packages.
+  They should never be used directly.
 
 Version 1.1 (2004-05-30)
 ------------------------
@@ -91,17 +137,17 @@ Version 1.1b1 (2004-02-20)
 - There is now an easier way to define methods that conform to the expectations
   of Cocoa bindings::
 
-  	class MyClass (NSObject):
+    class MyClass (NSObject):
 
-		def setSomething_(self, value):
-			pass
+        def setSomething_(self, value):
+            pass
 
-		setSomething_ = objc.accessor(setSomething_)
+        setSomething_ = objc.accessor(setSomething_)
 
-		def something(self):
-			return "something!"
+        def something(self):
+            return "something!"
 
-		something = objc.accessor(something)
+        something = objc.accessor(something)
 
   It is not necessary to use ``objc.accessor`` when overriding an existing 
   accessor method.
@@ -377,18 +423,18 @@ Version 0.9 (May-02-2003)
 - Various function and keyword arguments have been renamed for a better 
   integration with Cocoa. A partial list is of the changed names is::
 
-  	objc.lookup_class -> objc.lookUpClass
-	objc.selector arguments/attributes:
-		is_initializer -> isInitializer
-		is_allocator -> isAlloc
-		donates_ref -> doesDonateReference
-		is_required -> isRequired
-		class_method -> isClassMethod
-		defining_class -> definingClass
-		returns_self -> returnsSelf
-		argument_types -> argumentTypes
-		return_type -> returnType
-	objc.get_class_list -> objc.getClassList
+    objc.lookup_class -> objc.lookUpClass
+    objc.selector arguments/attributes:
+        is_initializer -> isInitializer
+        is_allocator -> isAlloc
+        donates_ref -> doesDonateReference
+        is_required -> isRequired
+        class_method -> isClassMethod
+        defining_class -> definingClass
+        returns_self -> returnsSelf
+        argument_types -> argumentTypes
+        return_type -> returnType
+    objc.get_class_list -> objc.getClassList
 
 - On Python 2.2, objc.YES and objc.NO are instances of a private boolean type,
   on Python 2.3 these are instances of the builtin type bool.
