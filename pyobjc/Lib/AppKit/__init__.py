@@ -4,12 +4,11 @@ Python mapping for the Cocoa AppKit.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
+import _AppKitSignatures 
 import objc as _objc
 
 # We first register special methods signatures with the runtime. The module
 # is not used for anything else.
-import _AppKitSignatures as dummy
-del dummy
 
 from _AppKit import *
 
@@ -20,21 +19,9 @@ from _AppKit import *
 
 # Load the Cocoa bundle, and gather all classes defined there
 import Foundation
-class_list = Foundation.load_bundle(
-    '/System/Library/Frameworks/AppKit.framework')
-gl = globals()
-for cls in class_list:
-    gl[cls.__name__] = cls
-    cls.__module__ = 'AppKit'
-
+Foundation._objc.loadBundle("AppKit", globals(), bundle_path="/System/Library/Frameworks/AppKit.framework")
 Foundation._objc.recycle_autorelease_pool()
-
-# clean-up after ourselves.
-del class_list
-del cls
-del gl
 del Foundation
-
 
 
 # Define usefull utility methods here
