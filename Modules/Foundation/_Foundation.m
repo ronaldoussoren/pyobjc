@@ -306,6 +306,9 @@ static inline int add_NSRect(PyObject* d, char* name, NSRect value)
 /*
  * Include the implementation of difficult methods.
  */
+#ifdef MACOSX
+#include "_FoundationMapping_NSAppleEventDescriptor.m"
+#endif
 #include "_FoundationMapping_NSArray.m"
 #include "_FoundationMapping_NSCoder.m"
 #include "_FoundationMapping_NSData.m"
@@ -357,6 +360,10 @@ void init_Foundation(void)
 
 
 	/* Install wrappers for difficult methods */
+#ifdef MACOSX
+    /* XXX - check for OS X 10.2+ */
+    if (_pyobjc_install_NSAppleEventDescriptor() != 0) return;
+#endif
 	if (_pyobjc_install_NSArray() != 0) return;
 	if (_pyobjc_install_NSCoder() != 0) return;
 	if (_pyobjc_install_NSData() != 0) return;
