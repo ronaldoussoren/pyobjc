@@ -424,7 +424,7 @@ CFLAGS.append('-Ibuild/codegen/')
 
 CorePackages = [ 'objc' ]
 CoreExtensions =  [
-    Extension("_objc",
+    Extension("objc._objc",
               sourceFiles,
               extra_compile_args=[
               ] + LIBFFI_CFLAGS + CFLAGS,
@@ -483,7 +483,7 @@ WebKitDepends = {
 
 FoundationPackages, FoundationExtensions = \
         IfFrameWork('Foundation.framework', [ 'Foundation' ], [
-          Extension("_Foundation",
+          Extension("Foundation._Foundation",
                     [
                         "Modules/Foundation/_Foundation.m",
                     ],
@@ -498,7 +498,7 @@ FoundationPackages, FoundationExtensions = \
 
 AppKitPackages, AppKitExtensions = \
         IfFrameWork('AppKit.framework', [ 'AppKit' ], [
-          Extension("_AppKit",
+          Extension("AppKit._AppKit",
                     ["Modules/AppKit/_AppKit.m"],
                     extra_compile_args=[
                         "-IModules/objc",
@@ -513,7 +513,7 @@ AppKitPackages, AppKitExtensions = \
 # AddressBook framework.
 AddressBookPackages, AddressBookExtensions = \
         IfFrameWork('AddressBook.framework', [ 'AddressBook' ], [
-            Extension('_AddressBook',
+            Extension('AddressBook._AddressBook',
                       [ 'Modules/AddressBook/_AddressBook.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
@@ -526,7 +526,7 @@ AddressBookPackages, AddressBookExtensions = \
 
 CoreFoundationPackages, CoreFoundationExtensions = \
         IfFrameWork('CoreFoundation.framework', [ 'CoreFoundation' ], [
-            Extension("_machsignals",
+            Extension("PyObjCTools._machsignals",
                       [ 'Modules/CoreFoundation/machsignals.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
@@ -538,7 +538,7 @@ CoreFoundationPackages, CoreFoundationExtensions = \
 
 SecurityInterfacePackages, SecurityInterfaceExtensions = \
         IfFrameWork('SecurityInterface.framework', [ 'SecurityInterface' ], [
-            Extension('_SecurityInterface',
+            Extension('SecurityInterface._SecurityInterface',
                       [ 'Modules/SecurityInterface/_SecurityInterface.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
@@ -551,7 +551,7 @@ SecurityInterfacePackages, SecurityInterfaceExtensions = \
 
 ExceptionHandlingPackages, ExceptionHandlingExtensions = \
         IfFrameWork('ExceptionHandling.framework', [ 'ExceptionHandling' ], [
-            Extension('_ExceptionHandling',
+            Extension('ExceptionHandling._ExceptionHandling',
                       [ 'Modules/ExceptionHandling/_ExceptionHandling.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
@@ -564,7 +564,7 @@ ExceptionHandlingPackages, ExceptionHandlingExtensions = \
 
 PrefPanesPackages, PrefPanesExtensions = \
         IfFrameWork('PreferencePanes.framework', [ 'PreferencePanes' ], [
-            Extension('_PreferencePanes',
+            Extension('PreferencePanes._PreferencePanes',
                       [ 'Modules/PreferencePanes/_PreferencePanes.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
@@ -583,7 +583,7 @@ MessagePackages, MessageExtensions = \
 
 InterfaceBuilderPackages, InterfaceBuilderExtensions = \
         IfFrameWork('InterfaceBuilder.framework', [ 'InterfaceBuilder' ], [
-            Extension('_InterfaceBuilder',
+            Extension('InterfaceBuilder._InterfaceBuilder',
                       [ 'Modules/InterfaceBuilder/_InterfaceBuilder.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
@@ -598,7 +598,7 @@ InterfaceBuilderPackages, InterfaceBuilderExtensions = \
 
 WebKitPackages, WebKitExtensions = \
         IfFrameWork('WebKit.framework', [ 'WebKit' ], [
-            Extension('_WebKit',
+            Extension('WebKit._WebKit',
                       [ 'Modules/WebKit/_WebKit.m' ],
                       extra_compile_args=[
                         '-IModules/objc',
@@ -688,11 +688,11 @@ dist = setup(name = "pyobjc",
 
 if "install" in sys.argv:
     # Hack to remove a previous version that may have been installed
-    # directly into site-packages (pre 0.9) as opposed to a new subdir.
     import shutil
     inst = dist.get_command_obj("install")
     install_dir = inst.install_platlib
     if install_dir is not None:
+        # clean up cruft from pre 0.9
         for name in ("objc", "Foundation", "AppKit", "AddressBook", "autoGIL"):
             path = os.path.join(install_dir, name)
             if os.path.isdir(path):
@@ -702,15 +702,10 @@ if "install" in sys.argv:
                 print "(removing old version: %s)" % path
                 os.remove(path)
 
-    # In version 1.1 some of the extension modules moved, clean up the old
-    # location
-    if install_dir is not None:
-        for name in ('objc', 'AppKit', 'Foundation', 'AddressBook', 'WebKit', 'InterfaceBuilder', 'PreferencePanes', 'SecurityInterface'):
-            path = os.path.join(install_dir, 'PyObjC', name)
-            if not os.path.exists(path): continue
-
-            exts = [ fn for fn in os.listdir(path) if fn.endswith('.so') ]
-            for fn in exts:
-                p = os.path.join(path, fn)
-                print "(removing old version: %s)"%(p,)
-                os.unlink(p)
+        # In version 1.2 some of the extension modules moved, clean up the old
+        # location
+        install_dir = os.path.join(install_dir, 'PyObjC')
+        for fn in os.listdir(install_dir):
+            fn = os.path.join(install_dir, fn)
+            if fn.endswith('.so'):
+                os.unlink(fn)

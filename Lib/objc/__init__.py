@@ -4,24 +4,11 @@ Python <-> Objective-C bridge (PyObjC)
 This module defines the core interfaces of the Python<->Objective-C bridge.
 """
 
-##
-## Disable gc -- blows up w/Python 2.2.0
-##
-import sys as _sys
-if _sys.version_info[:3] == (2,2,0):
-    import warnings
-    warnings.warn(
-        "Python 2.2.0's garbage collector crashes when used with PyObjC, disabling.  Python 2.3 or later is highly recommended.",
-        RuntimeWarning,
-    )
-    import gc
-    gc.disable()
-
 # Aliases for some common Objective-C constants
 nil=None
 
 from _objc import *
-from _objc import __version__
+from _objc import __version__, __C_API__
 import _FoundationSignatures
 
 try:

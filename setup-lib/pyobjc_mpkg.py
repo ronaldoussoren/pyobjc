@@ -2,7 +2,7 @@ import os
 import sys
 from distutils.version import LooseVersion
 from distutils import log
-from bdist_mpkg.bdist_mpkg import bdist_mpkg as _bdist_mpkg
+from bdist_mpkg.command import bdist_mpkg as _bdist_mpkg
 from py2app.util import copy_tree, skipscm
 try:
     set
@@ -113,6 +113,10 @@ class bdist_mpkg(_bdist_mpkg):
         self.scheme_map[scheme] = '/Developer/ProjectBuilder Extras'
         copy_tree('ProjectBuilder Extras', schemedir,
             condition=skipjunk, dry_run=self.dry_run, verbose=self.verbose)
+        # skip clean.py
+        cleanpath = os.path.join(schemedir, 'ProjectBuilder Extras', 'Project Templates', 'clean.py')
+        if os.path.exists(cleanpath):
+            os.unlink(cleanpath)
         files = []
         files.extend([
             os.path.join('Project Templates', fn)
@@ -127,7 +131,11 @@ class bdist_mpkg(_bdist_mpkg):
         schemedir = os.path.join(self.pkg_base, scheme)
         self.scheme_map[scheme] = '/Library/Application Support/Apple/Developer Tools'
         files = []
-        for path in ['Project Templates', 'File Templates']:
+        for path in [
+                    'Project Templates',
+                    'File Templates/Cocoa',
+                    'File Templates/Pure Python',
+                ]:
             copy_tree(
                 os.path.join('Xcode', path),
                 os.path.join(schemedir, path),

@@ -9,8 +9,10 @@ This module contains no user callable code.
 TODO:
 - Add external interface: Framework specific modules may want to add to this.
 """
-from objc import setClassExtender, selector, runtime
+from objc import setClassExtender, selector, lookUpClass
 import warnings
+
+__all__ = []
 
 CONVENIENCE_METHODS = {}
 CLASS_METHODS = {}
@@ -277,7 +279,7 @@ def dictItems(aDict):
     NSDictionary.items()
     """
     keys = aDict.allKeys()
-    values = aDict.objectsForKeys_notFoundMarker_(keys, runtime.NSNull.null())
+    values = aDict.objectsForKeys_notFoundMarker_(keys, NSNull.null())
     return zip(keys, values)
 
 
@@ -331,16 +333,15 @@ CONVENIENCE_METHODS['nextObject'] = (
 # NSNumber seems to be and abstract base-class that is implemented using
 # NSCFNumber, a CoreFoundation 'proxy'.
 #
-NSDecimalNumber = runtime.NSDecimalNumber
-from _Foundation import NSDecimal
+NSDecimalNumber = lookUpClass('NSDecimalNumber')
+NSNull = lookUpClass('NSNull')
+from Foundation import NSDecimal
 
 def _num_to_python(v):
     """
     Magic method that converts NSNumber values to Python, see
     <Foundation/CFNumber.h> for the magic numbers
     """
-    global NSDecimal
-
     if isinstance(v, NSDecimalNumber):
         return v.decimalValue()
 
@@ -505,14 +506,6 @@ def __xor__CFNumber(numA, numB):
         return NSDecimalNumber.decimalNumberWithDecimal_(r)
     else:
         return r
-
-import __builtin__
-if not hasattr(__builtin__, 'bool'):
-    def bool(x):
-        if x:
-            return 1
-        else:
-            return 0
 
 def __nonzero__CFNumber(numA):
     return bool(_num_to_python(numA))
