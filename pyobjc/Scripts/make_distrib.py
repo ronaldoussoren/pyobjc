@@ -148,7 +148,7 @@ os.path.walk(examplesDestination, killNasties, None)
 os.path.walk(docsDestination, killNasties, None)
 
 print 'Building package'
-pm = buildpkg.PackageMaker('PyObjC-%s' % package_version(), package_version(), 
+pm = buildpkg.PackageMaker('PyObjC', package_version(), 
 """\
 Python <-> Objective-C bridge that supports building full featured Cocoa
 applications.

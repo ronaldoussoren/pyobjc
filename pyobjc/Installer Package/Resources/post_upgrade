@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Version of PyObjC before 0.9 installed python files in the site-packages
+# directory, from 0.9 onwards we install in site-packages/PyObjC.
+
+for dn in AddressBook AppKit Foundation autoGil.so objc
+do
+	rm -rf "/usr/lib/python2.2/site-packages/${dn}"
+done
+
+exit 0

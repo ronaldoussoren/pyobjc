@@ -70,6 +70,7 @@ Relocatable
 Required
 InstallOnly
 RequiresReboot
+RootVolumeOnly
 InstallFat\
 """
 
@@ -147,8 +148,8 @@ class PackageMaker:
         'Required': 'NO',
         'InstallOnly': 'NO',
         'RequiresReboot': 'NO',
-        'InstallFat': 'NO',
-        'RootVolumeOnly' : 'NO'}
+        'RootVolumeOnly' : 'NO',
+        'InstallFat': 'NO'}
 
 
     def __init__(self, title, version, desc):
@@ -281,31 +282,37 @@ class PackageMaker:
             allFiles = allFiles + glob.glob(pattern)
 
         # find pre-process and post-process scripts
-        # naming convention: packageName.{pre,post}-{upgrade,install}
-        # Alternatively the filenames can be {pre,post}-{upgrade,install}
+        # naming convention: packageName.{pre,post}_{upgrade,install}
+        # Alternatively the filenames can be {pre,post}_{upgrade,install}
         # in which case we prepend the package name
         packageName = self.packageInfo["Title"]
-        for pat in ("*upgrade", "*install"):
+        for pat in ("*upgrade", "*install", "*flight"):
             pattern = join(self.resourceFolder, packageName + pat)
+            pattern2 = join(self.resourceFolder, pat)
             allFiles = allFiles + glob.glob(pattern)
+            allFiles = allFiles + glob.glob(pattern2)
 
         # check name patterns
         files = []
         for f in allFiles:
             for s in ("Welcome", "License", "ReadMe"):
                 if string.find(basename(f), s) == 0:
-                    files.append((f, basename(f)))
+                    files.append((f, f))
             if f[-6:] == ".lproj":
-                files.append((f, basename(f)))
-            elif f in ["pre-upgrade", "pre-install", "post-upgrade", "post-install"]:
-                files.append((f, self.packageInfo["Title"]+"."+basename(f)))
-            elif f[-8:] == "-upgrade":
-                files.append((f,basename(f)))
-            elif f[-8:] == "-install":
-                files.append((f,basename(f)))
+                files.append((f, f))
+            elif basename(f) in ["pre_upgrade", "pre_install", "post_upgrade", "post_install"]:
+                files.append((f, packageName+"."+basename(f)))
+            elif basename(f) in ["preflight", "postflight"]:
+                files.append((f, f))
+            elif f[-8:] == "_upgrade":
+                files.append((f,f))
+            elif f[-8:] == "_install":
+                files.append((f,f))
 
         # copy files
         for src, dst in files:
+            src = basename(src)
+            dst = basename(dst)
             f = join(self.resourceFolder, src)
             if isfile(f):
                 shutil.copy(f, os.path.join(self.packageResourceFolder, dst))
