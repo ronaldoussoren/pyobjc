@@ -67,6 +67,8 @@ def generate(dirname, fn = None, match_prefix='', ignore_list=()):
 	for f in fnames:
 		process_file(fp, f, match_prefix, ignore_list)
 
+        fp.close()
+
 if __name__ == "__main__":
 	import sys
 	generate(sys.argv[1], match_prefix=sys.argv[2])

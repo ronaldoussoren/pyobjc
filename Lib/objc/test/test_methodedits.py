@@ -4,11 +4,11 @@ import sys
 import objc
 
 # NSIdEnumerator is not used anywhere else in the unittests
-MEClass  = objc.runtime.NSIdEnumerator
+#MEClass  = objc.runtime.NSIdEnumerator
 
 ## If you use this definition this test causes a crash.
-#class MEClass(objc.runtime.NSObject):
-#   pass
+class MEClass(objc.runtime.NSObject):
+   pass
 
 preEverythingInstance = MEClass.new()
 

@@ -5,4 +5,3 @@ NibClassBuilder.extractClasses('MainMenu.nib')
 import CGraphController
 
 AppHelper.runEventLoop()
-

@@ -149,6 +149,19 @@ static char* pysel_default_signature(PyObject* callable);
 static PyObject*
 pysel_new(PyTypeObject* type, PyObject* args, PyObject* kwds);
 
+PyDoc_STRVAR(base_self_doc, "'self' object for bound methods, None otherwise");
+static PyObject*
+base_self(PyObjCSelector* self, void* closure __attribute__((__unused__)))
+{
+	if (self->sel_self) {
+		Py_INCREF(self->sel_self);
+		return self->sel_self;
+	} else {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+}
+
 PyDoc_STRVAR(base_signature_doc, "Objective-C signature for the method");
 static PyObject*
 base_signature(PyObjCSelector* self, void* closure __attribute__((__unused__)))
@@ -320,6 +333,13 @@ static PyGetSetDef base_getset[] = {
 		(getter)base_signature, 
 		0,
 		base_signature_doc, 
+		0
+	},
+	{ 
+		"self", 
+		(getter)base_self, 
+		0,
+		base_self_doc, 
 		0
 	},
 	{ 
