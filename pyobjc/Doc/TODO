@@ -9,15 +9,6 @@ Introduction
 
 This document contains an (incomplete) list of work items. 
 
-TODO for 1.1
-------------
-
-* Sync with latest libffi (optional)
-
-* Test on OSX 10.2 and create installer
-
-* Test on OSX 10.1
-
 Important items
 ---------------
 
@@ -34,13 +25,6 @@ Also needed: document listing the differences between Objective-C Cocoa and
 Python Cocoa: which functions/methods are not available, list differences
 in arguments (e.g. NSBeginAlertSheet has a variable number of arguments in
 Objective-C, the format-arguments are not present in Python).
-
-Multi-threading support
-.......................
-
-Thanks to the autoGIL module the GIL is given up when the main runloop
-sleeps. We could give up the GIL before calling into Objective-C, but that
-requires a lot of work for minimal advantages.
 
 Test suite
 ..........
@@ -73,6 +57,15 @@ The first two bullets require at least some GUI tests.
 Less important items
 --------------------
 
+Drop support for Python 2.2
+...........................
+
+None of the core developers uses Python 2.2 anymore, which means Python 2.2
+suffers from bitrot. Furthermore, Python 2.2 on Jaguar is not very useful in
+the first place.
+
+Removing Python 2.2 support allows for slightly cleaner code.
+
 Refactor some parts of the bridge
 .................................
 
@@ -99,6 +92,12 @@ See the document `Coding style` for a proposal for a coding style and naming
 convention. The code should be changed to conform to this document.
 
 .. _`Coding style`: coding-style.txt
+
+Interface Builder Palettes
+..........................
+
+IB doesn't "see" PyObjC class definitions. We need to investigate why this
+is so.
 
 Add templates for various file types
 ....................................
@@ -175,6 +174,14 @@ implement these.
 
 See also `Pickle support`.
 
+``-copy``
+.........
+
+There are issues with implementing ``-copy`` in python, these need to be fixed.
+
+Specifically, overriding an existing ``-copy`` implementation does not work 
+unless ``__slots__ == ()``
+
 Known issues
 ............
 
@@ -237,18 +244,6 @@ Add examples that demonstrate:
 
 - how to integrate with MacPython
 
-
-Access to method implementations
-................................
-
-Add a wrapper for 'instanceMethodForSelector:' and 'methodForSelector:', these
-should return selector objects that call a specific C function. This would make
-it possible to use classAddMethods to replace existing methods while still 
-calling the previous implementation.
-
-The same mechanism could be used to wrap "simple" global functions. OTOH the
-current mechanism works good enough at the moment.
-
 Performance tuning/testing
 ..........................
 
@@ -295,6 +290,9 @@ Formal Protocols, Distributed Objects
 
 ``DO`` seems to use formal protocols, we don't support those at all. 
 
+XXX: We do support accessing protocols (e.g. an equivalent to @protocol(Foo)),
+but you cannot define new protocols in python yet.
+
 Links to Apple documentation
 ............................
 
@@ -328,17 +326,6 @@ implemented efficiently. The default implementation will take care of the
 methods we cannot implement efficiently.
 
 And the same is true of OC_PythonArray
-
-Finish support for methodForSelector:
--------------------------------------
-
-* All call_ functions in Foundation and AppKit should support calling 
-  IMP-wrappers.
-
-* You should be able to use an IMP as the implementation of a method in
-  a different class.
-
-* More unittests
 
 Make it possible to redefine classes
 ....................................
