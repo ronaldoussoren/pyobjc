@@ -1,3 +1,33 @@
+2002-01-30  Steve Majewski <sdm7g@Virginia.EDU>
+	
+	* will now build for Python 2.2
+	 (includes a #define to correct bug in Python-2.2 abstract.h)
+
+	* Cocoa package containing Foundation and AppKit added
+	  to HelloWorld.py in Examples. MANIFEST and setup.py 
+	  updated. 
+	
+	* PyObjC_Version  changed to 0.6.1 
+	 (and ObjC.m changed to make __version__ a string.)
+
+	 * OC_PythonObject.m addes NS_HANDLER code to try to
+	  catch problem code, but now it just dies with a BusErr
+	  somewhere after the exception.
+
+2002-1-22  Steve Majewski <sdm7g@Virginia.EDU>
+	
+	* setup.py : added -g flag to compile for debugging
+	
+	* ObjC.m :  -v flag now dumps message sends to /tmp file
+	
+	* ObjCObject.m : added ISCLASS test before isKindOfClass -
+	  without check, it crashes on sends to abstract classes
+	  like NSProxy. Removed previous hack that wrongly commented
+	  out some [super forwardInvocation] messages.
+
+	* Examples/HelloWorld.py : fixed spelling and inserted
+	    missing line.
+
 2001-04-05  Steve Majewski <sdm7g@Virginia.EDU>
 
 	* ObjC.h,objc_support.m,ObjCMethod.m:  Changed conditional code 
