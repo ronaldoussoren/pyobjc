@@ -2,6 +2,7 @@ import sys
 import traceback
 import sets
 import keyword
+import time
 from code import InteractiveConsole, softspace
 from StringIO import StringIO
 from objc import YES, NO, selector
@@ -225,6 +226,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         self._interp = self._console.asyncinteract(
             write=self.writeCode_,
         ).next
+        self._autoscroll = True
 
     #
     #  Modal input dialog support
@@ -237,7 +239,6 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         I want co-routines.
         """
         app = NSApplication.sharedApplication()
-        NSAnyEventMask = 0xFFFFFFFFL
         window = self.textView.window()
         self.setCharacterIndexForInput_(self.lengthOfTextView())
         # change the color.. eh
@@ -354,6 +355,32 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     def _writeString_forOutput_(self, s, name):
         self.textView.textStorage().appendAttributedString_(getattr(self, name+'String_')(s))
 
+        window = self.textView.window()
+        app = NSApplication.sharedApplication()
+        st = time.time()
+        now = time.time
+
+        if self._autoscroll:
+            self.textView.scrollRangeToVisible_((self.lengthOfTextView(), 0))
+
+        while app.isRunning() and now() - st < 0.01:
+            event = app.nextEventMatchingMask_untilDate_inMode_dequeue_(
+                NSAnyEventMask,
+                NSDate.dateWithTimeIntervalSinceNow_(0.01),
+                NSDefaultRunLoopMode,
+                True)
+
+            if event is None:
+                continue
+
+            if (event.type() == NSKeyDown) and (event.window() == window):
+                chr = event.charactersIgnoringModifiers()
+                if chr == 'c' and (event.modifierFlags() & NSControlKeyMask):
+                    raise KeyboardInterrupt
+
+            app.sendEvent_(event)
+
+
     codeString_   = lambda self, s: self._formatString_forOutput_(s, 'code')
     stderrString_ = lambda self, s: self._formatString_forOutput_(s, 'stderr')
     stdoutString_ = lambda self, s: self._formatString_forOutput_(s, 'stdout')
@@ -397,6 +424,12 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
 
     def setIsInteracting(self, v):
         self._isInteracting = v
+
+    def isAutoScroll(self):
+        return self._autoScroll
+
+    def setAutoScroll(self, v):
+        self._autoScroll = v
 
 
     #
