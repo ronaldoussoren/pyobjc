@@ -847,7 +847,7 @@ pyject_mach_entry_point(ptrdiff_t codeOffset, void *paramBlock, size_t paramSize
 	pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
 	pthread_attr_setstacksize(&attr, PYJECT_PTHREAD_STACK_SIZE);
-	pthread_create(&tid, &attr, codeOffset + (void *)&pyject_pthread_entry_point, (void *)paramBlock);
+	pthread_create(&tid, &attr, (void*)((char*)&pyject_pthread_entry_point+codeOffset), (void *)paramBlock);
 	pthread_attr_destroy(&attr);
 	while (1) {
 		sleep(3600);
@@ -962,7 +962,6 @@ PyDoc_STRVAR(PyObjC_loadBundleFunctions_doc,
 	"The signature is the Objective-C type specifier for the function \n"
 	"signature.");
 
-
 static PyMethodDef mod_methods[] = {
 	{
 	  "splitSignature",
@@ -1072,6 +1071,10 @@ init_objc(void)
 	[OC_NSBundleHack installBundleHack];
 
 	PyObjCClass_DefaultModule = PyString_FromString("objc");
+
+	if (PyObjC_InitProxyRegistry() < 0) {
+		return;
+	}
 
 	PyType_Ready(&PyObjCClass_Type); 
 	PyType_Ready((PyTypeObject*)&PyObjCObject_Type);
