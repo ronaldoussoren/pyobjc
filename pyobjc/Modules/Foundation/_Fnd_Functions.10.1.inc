@@ -2,7 +2,7 @@ static inline int convert_NSPoint(PyObject* object, void* pvar)
 {
 	int err;
 
-	err = ObjC_PythonToObjC(@encode(NSPoint), object, pvar);
+	err = PyObjC_PythonToObjC(@encode(NSPoint), object, pvar);
 	if (err == -1) {
 		return 0;
 	}
@@ -12,7 +12,7 @@ static inline int convert_NSSize(PyObject* object, void* pvar)
 {
 	int err;
 
-	err = ObjC_PythonToObjC(@encode(NSSize), object, pvar);
+	err = PyObjC_PythonToObjC(@encode(NSSize), object, pvar);
 	if (err == -1) {
 		return 0;
 	}
@@ -22,7 +22,7 @@ static inline int convert_NSRect(PyObject* object, void* pvar)
 {
 	int err;
 
-	err = ObjC_PythonToObjC(@encode(NSRect), object, pvar);
+	err = PyObjC_PythonToObjC(@encode(NSRect), object, pvar);
 	if (err == -1) {
 		return 0;
 	}
@@ -32,7 +32,7 @@ static inline int convert_NSRange(PyObject* object, void* pvar)
 {
 	int err;
 
-	err = ObjC_PythonToObjC(@encode(NSRange), object, pvar);
+	err = PyObjC_PythonToObjC(@encode(NSRange), object, pvar);
 	if (err == -1) {
 		return 0;
 	}
@@ -80,7 +80,7 @@ static inline int convert_id(PyObject* object, void* pvar)
 {
 	id* pid = (id*)pvar;
 
-	*pid = ObjC_PythonToId(object);
+	*pid = PyObjC_PythonToId(object);
 
         if (PyErr_Occurred()) {
             return 0;
@@ -124,10 +124,10 @@ static	char* keywords[] = { "decoder", NULL };
 		objc_result = NXReadNSObjectFromCoder(
 objc_decoder);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* BOOL NSIsFreedObject(id anObject); */
@@ -143,7 +143,7 @@ static	char* keywords[] = { "anObject", NULL };
 		objc_result = NSIsFreedObject(
 objc_anObject);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -162,7 +162,7 @@ static	char* keywords[] = { NULL };
 		objc_result = NSCountFrames(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyInt_FromLong(objc_result);
@@ -183,7 +183,7 @@ static	char* keywords[] = { "aPoint", "bPoint", NULL };
 		objc_result = NSEqualPoints(
 objc_aPoint, objc_bPoint);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -204,7 +204,7 @@ static	char* keywords[] = { "aSize", "bSize", NULL };
 		objc_result = NSEqualSizes(
 objc_aSize, objc_bSize);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -225,7 +225,7 @@ static	char* keywords[] = { "aRect", "bRect", NULL };
 		objc_result = NSEqualRects(
 objc_aRect, objc_bRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -245,7 +245,7 @@ static	char* keywords[] = { "aRect", NULL };
 		objc_result = NSIsEmptyRect(
 objc_aRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -267,10 +267,10 @@ static	char* keywords[] = { "aRect", "dX", "dY", NULL };
 		objc_result = NSInsetRect(
 objc_aRect, objc_dX, objc_dY);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
+		result = PyObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -287,10 +287,10 @@ static	char* keywords[] = { "aRect", NULL };
 		objc_result = NSIntegralRect(
 objc_aRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
+		result = PyObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -308,10 +308,10 @@ static	char* keywords[] = { "aRect", "bRect", NULL };
 		objc_result = NSUnionRect(
 objc_aRect, objc_bRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
+		result = PyObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -329,10 +329,10 @@ static	char* keywords[] = { "aRect", "bRect", NULL };
 		objc_result = NSIntersectionRect(
 objc_aRect, objc_bRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
+		result = PyObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -351,10 +351,10 @@ static	char* keywords[] = { "aRect", "dX", "dY", NULL };
 		objc_result = NSOffsetRect(
 objc_aRect, objc_dX, objc_dY);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
+		result = PyObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -372,7 +372,7 @@ static	char* keywords[] = { "aPoint", "aRect", NULL };
 		objc_result = NSPointInRect(
 objc_aPoint, objc_aRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -394,7 +394,7 @@ static	char* keywords[] = { "aPoint", "aRect", "flipped", NULL };
 		objc_result = NSMouseInRect(
 objc_aPoint, objc_aRect, objc_flipped);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -415,7 +415,7 @@ static	char* keywords[] = { "aRect", "bRect", NULL };
 		objc_result = NSContainsRect(
 objc_aRect, objc_bRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -436,7 +436,7 @@ static	char* keywords[] = { "aRect", "bRect", NULL };
 		objc_result = NSIntersectsRect(
 objc_aRect, objc_bRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -456,10 +456,10 @@ static	char* keywords[] = { "aPoint", NULL };
 		objc_result = NSStringFromPoint(
 objc_aPoint);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSString *NSStringFromSize(NSSize aSize); */
@@ -475,10 +475,10 @@ static	char* keywords[] = { "aSize", NULL };
 		objc_result = NSStringFromSize(
 objc_aSize);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSString *NSStringFromRect(NSRect aRect); */
@@ -494,10 +494,10 @@ static	char* keywords[] = { "aRect", NULL };
 		objc_result = NSStringFromRect(
 objc_aRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSPoint NSPointFromString(NSString *aString); */
@@ -513,10 +513,10 @@ static	char* keywords[] = { "aString", NULL };
 		objc_result = NSPointFromString(
 objc_aString);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_ObjCToPython(@encode(NSPoint), (void*)&objc_result); 
+		result = PyObjC_ObjCToPython(@encode(NSPoint), (void*)&objc_result); 
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -533,10 +533,10 @@ static	char* keywords[] = { "aString", NULL };
 		objc_result = NSSizeFromString(
 objc_aString);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_ObjCToPython(@encode(NSSize), (void*)&objc_result); 
+		result = PyObjC_ObjCToPython(@encode(NSSize), (void*)&objc_result); 
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -553,10 +553,10 @@ static	char* keywords[] = { "aString", NULL };
 		objc_result = NSRectFromString(
 objc_aString);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
+		result = PyObjC_ObjCToPython(@encode(NSRect), (void*)&objc_result); 
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -573,7 +573,7 @@ static	char* keywords[] = { "plist", NULL };
 		objc_result = NSJavaNeedsVirtualMachine(
 objc_plist);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -593,7 +593,7 @@ static	char* keywords[] = { "plist", NULL };
 		objc_result = NSJavaProvidesClasses(
 objc_plist);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -613,7 +613,7 @@ static	char* keywords[] = { "plist", NULL };
 		objc_result = NSJavaNeedsToLoadClasses(
 objc_plist);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -633,10 +633,10 @@ static	char* keywords[] = { "plist", NULL };
 		objc_result = NSJavaSetup(
 objc_plist);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* id NSJavaSetupVirtualMachine(void); */
@@ -651,10 +651,10 @@ static	char* keywords[] = { NULL };
 		objc_result = NSJavaSetupVirtualMachine(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* id NSJavaObjectNamedInPath(NSString *name, NSArray *path); */
@@ -671,10 +671,10 @@ static	char* keywords[] = { "name", "path", NULL };
 		objc_result = NSJavaObjectNamedInPath(
 objc_name, objc_path);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* id NSJavaBundleSetup(NSBundle *bundle, NSDictionary *plist); */
@@ -691,10 +691,10 @@ static	char* keywords[] = { "bundle", "plist", NULL };
 		objc_result = NSJavaBundleSetup(
 objc_bundle, objc_plist);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* void NSJavaBundleCleanup(NSBundle *bundle, NSDictionary *plist); */
@@ -710,7 +710,7 @@ static	char* keywords[] = { "bundle", "plist", NULL };
 		NSJavaBundleCleanup(
 objc_bundle, objc_plist);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -730,10 +730,10 @@ static	char* keywords[] = { "aSelector", NULL };
 		objc_result = NSStringFromSelector(
 objc_aSelector);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* SEL NSSelectorFromString(NSString *aSelectorName); */
@@ -749,7 +749,7 @@ static	char* keywords[] = { "aSelectorName", NULL };
 		objc_result = NSSelectorFromString(
 objc_aSelectorName);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyString_FromString(SELNAME(objc_result));
@@ -769,7 +769,7 @@ static	char* keywords[] = { "aClassName", NULL };
 		objc_result = NSClassFromString(
 objc_aClassName);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCClass_New(objc_result);
@@ -789,10 +789,10 @@ static	char* keywords[] = { "aClass", NULL };
 		objc_result = NSStringFromClass(
 objc_aClass);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* void NSLog(NSString *format, ...); */
@@ -807,7 +807,7 @@ static	char* keywords[] = { "format", NULL };
 		NSLog(
 objc_format);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -826,7 +826,7 @@ static	char* keywords[] = { "object", NULL };
 		NSDeallocateObject(
 objc_object);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -845,7 +845,7 @@ static	char* keywords[] = { "object", NULL };
 		NSIncrementExtraRefCount(
 objc_object);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -865,7 +865,7 @@ static	char* keywords[] = { "object", NULL };
 		objc_result = NSDecrementExtraRefCountWasZero(
 objc_object);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -885,7 +885,7 @@ static	char* keywords[] = { "object", NULL };
 		objc_result = NSExtraRefCount(
 objc_object);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyInt_FromLong(objc_result);
@@ -904,10 +904,10 @@ static	char* keywords[] = { NULL };
 		objc_result = NSUserName(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSString *NSFullUserName(void); */
@@ -922,10 +922,10 @@ static	char* keywords[] = { NULL };
 		objc_result = NSFullUserName(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSString *NSHomeDirectory(void); */
@@ -940,10 +940,10 @@ static	char* keywords[] = { NULL };
 		objc_result = NSHomeDirectory(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSString *NSHomeDirectoryForUser(NSString *userName); */
@@ -959,10 +959,10 @@ static	char* keywords[] = { "userName", NULL };
 		objc_result = NSHomeDirectoryForUser(
 objc_userName);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSString *NSTemporaryDirectory(void); */
@@ -977,10 +977,10 @@ static	char* keywords[] = { NULL };
 		objc_result = NSTemporaryDirectory(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSString *NSOpenStepRootDirectory(void); */
@@ -995,10 +995,10 @@ static	char* keywords[] = { NULL };
 		objc_result = NSOpenStepRootDirectory(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSArray *NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde); */
@@ -1016,10 +1016,10 @@ static	char* keywords[] = { "directory", "domainMask", "expandTilde", NULL };
 		objc_result = NSSearchPathForDirectoriesInDomains(
 objc_directory, objc_domainMask, objc_expandTilde);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSRange NSUnionRange(NSRange range1, NSRange range2); */
@@ -1036,10 +1036,10 @@ static	char* keywords[] = { "range1", "range2", NULL };
 		objc_result = NSUnionRange(
 objc_range1, objc_range2);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_ObjCToPython(@encode(NSRange), (void*)&objc_result); 
+		result = PyObjC_ObjCToPython(@encode(NSRange), (void*)&objc_result); 
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -1057,10 +1057,10 @@ static	char* keywords[] = { "range1", "range2", NULL };
 		objc_result = NSIntersectionRange(
 objc_range1, objc_range2);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_ObjCToPython(@encode(NSRange), (void*)&objc_result); 
+		result = PyObjC_ObjCToPython(@encode(NSRange), (void*)&objc_result); 
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -1077,10 +1077,10 @@ static	char* keywords[] = { "range", NULL };
 		objc_result = NSStringFromRange(
 objc_range);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSRange NSRangeFromString(NSString *aString); */
@@ -1096,10 +1096,10 @@ static	char* keywords[] = { "aString", NULL };
 		objc_result = NSRangeFromString(
 objc_aString);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_ObjCToPython(@encode(NSRange), (void*)&objc_result); 
+		result = PyObjC_ObjCToPython(@encode(NSRange), (void*)&objc_result); 
 	if (result == NULL) return NULL;
 	return result;
 }
@@ -1115,7 +1115,7 @@ static	char* keywords[] = { NULL };
 		objc_result = NSPageSize(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyInt_FromLong(objc_result);
@@ -1134,7 +1134,7 @@ static	char* keywords[] = { NULL };
 		objc_result = NSLogPageSize(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyInt_FromLong(objc_result);
@@ -1154,7 +1154,7 @@ static	char* keywords[] = { "bytes", NULL };
 		objc_result = NSRoundUpToMultipleOfPageSize(
 objc_bytes);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyInt_FromLong(objc_result);
@@ -1174,7 +1174,7 @@ static	char* keywords[] = { "bytes", NULL };
 		objc_result = NSRoundDownToMultipleOfPageSize(
 objc_bytes);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyInt_FromLong(objc_result);
@@ -1193,7 +1193,7 @@ static	char* keywords[] = { NULL };
 		objc_result = NSRealMemoryAvailable(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyInt_FromLong(objc_result);

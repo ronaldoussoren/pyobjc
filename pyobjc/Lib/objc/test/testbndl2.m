@@ -1288,11 +1288,11 @@ static id arg2id(const char* argtype, void* argptr)
 {
 	id res;
 	PyObject* tmp;
-	tmp = ObjC_ObjCToPython(argtype, argptr);
-	if (tmp == NULL) { ObjCErr_ToObjC(); return nil; }
-	res = ObjC_PythonToId(tmp);
+	tmp = PyObjC_ObjCToPython(argtype, argptr);
+	if (tmp == NULL) { PyObjCErr_ToObjC(); return nil; }
+	res = PyObjC_PythonToId(tmp);
 	Py_DECREF(tmp);
-	if (PyErr_Occurred()) { ObjCErr_ToObjC(); return nil; }
+	if (PyErr_Occurred()) { PyObjCErr_ToObjC(); return nil; }
 	return res;}
 
 
@@ -4535,7 +4535,7 @@ static id arg2id(const char* argtype, void* argptr)
 		id sign = [target methodSignatureForSelector:selector];\
 		if (sign == NULL) {\
 			PyErr_SetString(PyExc_AttributeError, SELNAME(selector));\
-			ObjCErr_ToObjC();\
+			PyObjCErr_ToObjC();\
 		}\
 		inv = [NSInvocation invocationWithMethodSignature:\
 			[target methodSignatureForSelector:selector]];\
@@ -11144,7 +11144,7 @@ void inittestbndl2(void)
                     NULL, NULL, PYTHON_API_VERSION);
         if (!m) return;
 
-        if (ObjC_ImportModule(m) < 0) return;
+        if (PyObjC_ImportAPI(m) < 0) return;
 
         PyModule_AddObject(m, "PyObjC_TestClass1",
             PyObjCClass_New([PyObjC_TestClass1 class]));

@@ -38,7 +38,32 @@ the same functionality can be accessed by using the object-oriented interface.
 AppKit framework
 ----------------
 
-T.B.D.
+NSPoint is a tuple of 2 floats, or use ``AppKit.NSMakePoint()``.
+
+NSSize is a tuple of 2 floats, or use ``AppKit.NSMakeSize()``.
+
+NSRect is a tuple of an NSPoint and an NSSize, or use ``AppKit.NSMakeRect()``.
+
+NSBezierPath
+............
+
+* ``getLineDash:count:phase:``
+  This method is not supported, I (Ronald) could not find a way to detect the
+  required size for the pattern buffer. 
+
+* ``appendBezierPathWithGlyphs:count:inFont:``
+  The first argument is a list of integers, count should be at most the lenght
+  of the first argument.
+
+* ``appendBezierPathWithPoints:count:``
+  The first argument is a list of points, count should be at most the lenght
+  of the first argument. 
+
+* ``setAssociatedPoints:atIndex:``
+  Implementing this method in Python is not yet supported.
+
+* All other methods are supported (MacOS X 10.2)
+
 
 Foundation framework
 --------------------

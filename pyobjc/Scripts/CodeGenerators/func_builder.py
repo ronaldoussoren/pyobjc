@@ -72,7 +72,7 @@ static inline int convert_id(PyObject* object, void* pvar)
 {
 	id* pid = (id*)pvar;
 
-	*pid = ObjC_PythonToId(object);
+	*pid = PyObjC_PythonToId(object);
 
         if (PyErr_Occurred()) {
             return 0;
@@ -213,7 +213,7 @@ def simple_to_python(varname, typestr):
 		typestr = typestr[6:].strip()
 
 	if is_id(typestr):
-		return "\tresult = ObjC_IdToPython(%(varname)s); if (result == NULL) return NULL;"%{ 'varname': varname }
+		return "\tresult = PyObjC_IdToPython(%(varname)s); if (result == NULL) return NULL;"%{ 'varname': varname }
 
 	if typestr in INT_ALIASES:
 		x = SIMPLE_TYPES['int']
@@ -358,7 +358,7 @@ def process_function(fp, protostr):
 		sep = ", "
 	fp.write(");\n")
 	fp.write("\tNS_HANDLER\n")
-	fp.write("\t\tObjCErr_FromObjC(localException);\n")
+	fp.write("\t\tPyObjCErr_FromObjC(localException);\n")
 	fp.write("\t\treturn NULL;\n")
 	fp.write("\tNS_ENDHANDLER\n")
 

@@ -28,9 +28,10 @@ from objc import set_signature_for_selector
 """%sys.argv[1])
 
 for ln in fp_in:
-	cls, selector, real_sign, repl_sign = ln.strip().split(ln[0])[1:]
-	if not repl_sign:
-		continue
-	fp_out.write('set_signature_for_selector("%s", "%s", "%s")\n'%(
-		cls, selector, repl_sign))
-
+    cls, selector, real_sign, repl_sign = ln.strip().split(ln[0])[1:]
+    if not repl_sign:
+        continue
+    if repl_sign.startswith('%'):
+        continue
+    fp_out.write('set_signature_for_selector("%s", "%s", "%s")\n'%(
+            cls, selector, repl_sign))

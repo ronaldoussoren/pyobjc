@@ -43,7 +43,7 @@ init_registry(void)
 	return 0;
 }
 
-int ObjC_RegisterMethodMapping(Class class, SEL sel, 
+int PyObjC_RegisterMethodMapping(Class class, SEL sel, 
 	ObjC_CallFunc_t call_to_objc,
 	IMP		    call_to_python)
 {
@@ -58,7 +58,7 @@ int ObjC_RegisterMethodMapping(Class class, SEL sel,
 
 	if (!call_to_python) {
 		PyErr_SetString(ObjCExc_error, 
-			"ObjC_RegisterMethodMapping: all functions required");
+			"PyObjC_RegisterMethodMapping: all functions required");
 		return NULL;
 	}
 
@@ -134,7 +134,7 @@ simplify_signature(char* signature, char* buf, size_t buflen)
 
 
 	
-int ObjC_RegisterSignatureMapping(
+int PyObjC_RegisterSignatureMapping(
 	char*           signature,
 	ObjC_CallFunc_t call_to_objc,
 	IMP		call_to_python)
@@ -153,7 +153,7 @@ int ObjC_RegisterSignatureMapping(
 
 	if (!call_to_objc || !call_to_python) {
 		PyErr_SetString(ObjCExc_error, 
-		   "ObjC_RegisterSignatureMapping: all functions required");
+		   "PyObjC_RegisterSignatureMapping: all functions required");
 		return NULL;
 	}
 
@@ -278,7 +278,7 @@ static struct registry* create_ffi(char* signature)
 	if (ffiImp == NULL) 
 		goto error;
 
-	r = ObjC_RegisterSignatureMapping(signature, ObjC_FFICaller, ffiImp);
+	r = PyObjC_RegisterSignatureMapping(signature, ObjC_FFICaller, ffiImp);
 	if (r == -1) {
 		goto error;
 	}
@@ -331,12 +331,12 @@ IMP ObjC_FindIMP(Class class, SEL sel)
 		PyErr_Clear();
 	}
 
-	generic = find_signature(ObjCSelector_Signature(objc_sel));
+	generic = find_signature(PyObjCSelector_Signature(objc_sel));
 	if (generic) {
 		return generic->call_to_python;
 	}
 
-	generic = create_ffi(ObjCSelector_Signature(objc_sel));
+	generic = create_ffi(PyObjCSelector_Signature(objc_sel));
 	if (generic) {
 		return generic->call_to_python;
 	}

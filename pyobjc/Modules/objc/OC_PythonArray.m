@@ -47,14 +47,14 @@
 
 	v = PySequence_GetItem(value, idx);
 	if (v == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 
 	err = depythonify_c_value("@", v, &result);
 	Py_DECREF(v);
 	if (err == -1) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return nil;
 	}
 
@@ -68,13 +68,13 @@
 
 	v = pythonify_c_value("@", &newValue);
 	if (v == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	if (PySequence_SetItem(value, idx, v) < 0) {
 		Py_DECREF(v);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	Py_DECREF(v);

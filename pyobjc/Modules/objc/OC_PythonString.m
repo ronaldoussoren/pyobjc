@@ -26,7 +26,7 @@
 	result = PyString_AsStringAndSize(value, &buffer, &length);
 	if(result == -1) {
 	    [self release];
-	    ObjCErr_ToObjC();
+	    PyObjCErr_ToObjC();
 	    return nil; 
 	}
 	stringValue = CFStringCreateWithCStringNoCopy(NULL,
@@ -42,7 +42,7 @@
 	_internalRep = PyUnicode_AsUTF8String(value);
 	result = PyString_AsStringAndSize(_internalRep, &buffer, &length);
 	if(result == -1) {
-	    ObjCErr_ToObjC();
+	    PyObjCErr_ToObjC();
 	    [self release];
 	    return nil;
 	}

@@ -2,8 +2,6 @@ import unittest
 import objc
 import warnings
 
-warnings.filterwarnings("error", category=objc.ProtocolWarning)
-
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass('NSObject')
 
@@ -14,13 +12,12 @@ MyProto = objc.informal_protocol("MyProto", (
 
 class TestProtocols(unittest.TestCase):
 
-    def doMissingProto(self):
+
+    def testMissingProto(self):
         class ProtoClass1 (NSObject):
             def testMethod(self):
                 pass
-
-    def testMissingProto(self):
-        self.assertRaises(objc.ProtocolWarning, self.doMissingProto)
+        self.assertEquals(ProtoClass1.testMethod.signature, "v@:")
 
 
     def doIncompleteClass(self):

@@ -345,11 +345,11 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	arglist = PyList_New(0);
 	v = pythonify_c_value("@", args[0+argOffset]);
 	if (v == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	if (PyList_Append(arglist, v) == -1) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	Py_DECREF(v);
@@ -386,13 +386,13 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 		}
 		if (v == NULL) {
 			Py_DECREF(arglist);
-			ObjCErr_ToObjC();
+			PyObjCErr_ToObjC();
 			return;
 		}
 		if (PyList_Append(arglist, v) == -1) {
 			Py_DECREF(v);
 			Py_DECREF(arglist);
-			ObjCErr_ToObjC();
+			PyObjCErr_ToObjC();
 			return;
 		}
 		Py_DECREF(v); 
@@ -401,7 +401,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	v = PyList_AsTuple(arglist);
 	if (v == NULL) {
 		Py_DECREF(arglist);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	Py_DECREF(arglist);
@@ -428,7 +428,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			}
 			Py_DECREF(res);
 			if (err == -1) {
-				ObjCErr_ToObjC();
+				PyObjCErr_ToObjC();
 			}
 		}
 	} else {
@@ -443,7 +443,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 				"%s: Need tuple of %d arguments as result",
 				SELNAME(*(SEL*)args[1]), have_output+1);
 			Py_DECREF(res);
-			ObjCErr_ToObjC();
+			PyObjCErr_ToObjC();
 		}
 
 		real_res = PyTuple_GET_ITEM(res, 0);
@@ -469,7 +469,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			v = PyTuple_GET_ITEM(res, idx++);
 			err = depythonify_c_value(argtype, v, *(void**)args[i]);
 			if (err == -1) {
-				ObjCErr_ToObjC();
+				PyObjCErr_ToObjC();
 			}
 			if (v->ob_refcnt == 1 && argtype[0] == _C_ID) {
 				/* make sure return value doesn't die before
@@ -490,7 +490,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			}
 			if (err == -1) {
 				Py_DECREF(res);
-				ObjCErr_ToObjC();
+				PyObjCErr_ToObjC();
 			}
 		}
 
@@ -620,13 +620,13 @@ ObjC_MakeIMPForSignature(char* signature, PyObject* callable)
 }
 
 IMP
-ObjC_MakeIMPForObjCSelector(ObjCSelector *aSelector) {
+ObjC_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector) {
 	if ObjCNativeSelector_Check(aSelector) {
 		ObjCNativeSelector *nativeSelector = 
 			(ObjCNativeSelector *) aSelector;
 		Method aMethod;
 
-		if (nativeSelector->sel_flags & ObjCSelector_kCLASS_METHOD) {
+		if (nativeSelector->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 			aMethod = class_getClassMethod(nativeSelector->sel_class, nativeSelector->sel_selector);
 		} else {
 			aMethod = class_getInstanceMethod(nativeSelector->sel_class, nativeSelector->sel_selector);
@@ -813,7 +813,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	}
 
 	/* Set 'self' argument, for class methods we use the class */ 
-	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
+	if (meth->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 		if (PyObjCObject_Check(self)) {
 			self_obj = PyObjCObject_GetObject(self);
 			if (self_obj != NULL) {
@@ -839,7 +839,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	}
 
 	super.receiver = self_obj;
-	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
+	if (meth->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 		super.class = GETISA(meth->sel_class);
 	} else {
 		super.class = meth->sel_class;
@@ -1012,7 +1012,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 		}
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 	if (PyErr_Occurred()) goto error_cleanup;
 
@@ -1023,7 +1023,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		Py_INCREF(Py_None);
 		objc_result =  Py_None;
 	}
-	if ( (meth->sel_flags & ObjCSelector_kRETURNS_SELF)
+	if ( (meth->sel_flags & PyObjCSelector_kRETURNS_SELF)
 		&& (objc_result != self)) {
 
 		/* meth is a method that returns a possibly reallocated
@@ -1031,7 +1031,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		 * value of self is assumed to be no longer valid
 		 */
 		if (PyObjCObject_Check(self) && PyObjCObject_Check(objc_result)
-			&& (meth->sel_flags & ObjCSelector_kINITIALIZER) &&
+			&& (meth->sel_flags & PyObjCSelector_kINITIALIZER) &&
 			(((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED)) {
 			[PyObjCObject_GetObject(objc_result) release];
 		}

@@ -54,17 +54,17 @@ static PyObject* id_to_python(id object)
 static Class      sel_get_class(PyObject* sel)
 {
 	if (!ObjCNativeSelector_Check(sel)) {
-		PyErr_SetString(PyExc_TypeError, "Expecting ObjCSelector");
+		PyErr_SetString(PyExc_TypeError, "Expecting PyObjCSelector");
 	}
 	return ((ObjCNativeSelector*)sel)->sel_class;
 }
 
 static SEL      sel_get_sel(PyObject* sel)
 {
-	if (!ObjCSelector_Check(sel)) {
-		PyErr_SetString(PyExc_TypeError, "Expecting ObjCSelector");
+	if (!PyObjCSelector_Check(sel)) {
+		PyErr_SetString(PyExc_TypeError, "Expecting PyObjCSelector");
 	}
-	return ((ObjCSelector*)sel)->sel_selector;
+	return ((PyObjCSelector*)sel)->sel_selector;
 }
 
 static void 	fill_super(struct objc_super* super, Class cls, id receiver)
@@ -86,17 +86,17 @@ struct pyobjc_api objc_api = {
 	sizeof(struct pyobjc_api),	/* struct_size */
 	&PyObjCClass_Type,		/* class_type */
 	(PyTypeObject*)&PyObjCObject_Type, /* object_type */
-	&ObjCSelector_Type,		/* select_type */
-	ObjC_RegisterMethodMapping,	/* register_method_mapping */
-	ObjC_RegisterSignatureMapping,	/* register_signature_mapping */
+	&PyObjCSelector_Type,		/* select_type */
+	PyObjC_RegisterMethodMapping,	/* register_method_mapping */
+	PyObjC_RegisterSignatureMapping,	/* register_signature_mapping */
 	PyObjCObject_GetObject,		/* obj_get_object */
 	PyObjCObject_ClearObject,		/* obj_clear_object */
 	PyObjCClass_GetClass,		/* cls_get_class */
 	PyObjCClass_New,			/* cls_to_python */
 	python_to_id,			/* python_to_id */
 	id_to_python,			/* id_to_python */
-	ObjCErr_FromObjC,		/* err_objc_to_python */
-	ObjCErr_ToObjC,			/* err_python_to_objc */
+	PyObjCErr_FromObjC,		/* err_objc_to_python */
+	PyObjCErr_ToObjC,			/* err_python_to_objc */
 	depythonify_c_value,		/* py_to_objc */
 	pythonify_c_value,		/* objc_to_python */
 	PyObjC_CallPython,		/* call_to_python */

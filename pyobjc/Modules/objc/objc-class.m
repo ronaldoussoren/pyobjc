@@ -158,9 +158,6 @@ objc_class_locate(Class objc_class)
  * PyObjCClass_Type.tp_new.
  *
  * Note: This function creates new _classes_
- *
- * TODO:
- * - Add support for Objective-C 'Protocol' instances in the list of bases
  */
 
 
@@ -223,9 +220,38 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		PyObjCClass_CheckMethodList(py_super_class);
 	}
 
-	/* TODO: Make list available through __pyobjc_protocols__ */
-	protocols = PyList_New(0);
-	if (protocols == NULL) return NULL;
+	/*
+	 * __pyobjc_protocols__ contains the list of protocols supported
+	 * by an existing class.
+	 */
+	protocols = PyObject_GetAttrString(py_super_class, 
+		"__pyobjc_protocols__");
+	if (protocols == NULL) {
+		PyErr_Clear();
+		protocols = PyList_New(0);
+		if (protocols == NULL) return NULL;
+	} else {
+		PyObject* seq;
+
+		seq = PySequence_Fast(protocols, 
+			"__pyobjc_protocols__ not a sequence?");
+		if (seq == NULL) {
+			Py_DECREF(protocols);
+			return NULL;
+		}
+		Py_DECREF(protocols);
+
+		len = PySequence_Fast_GET_SIZE(seq);
+		protocols = PyList_New(len);
+		if (protocols == NULL) {
+			return NULL;
+		}
+		for (i = 0; i < len; i++) {
+			PyList_SET_ITEM(protocols, i, 
+				PySequence_Fast_GET_ITEM(seq, i));
+			Py_INCREF(PySequence_Fast_GET_ITEM(seq, i));
+		}
+	}
 
 	real_bases = PyList_New(0);
 	if (real_bases == NULL) {
@@ -301,6 +327,27 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		}
 	}
 
+	/*
+	 * add __pyobjc_protocols__ to the class-dict.
+	 */
+	v = PyList_AsTuple(protocols);
+	if (v == NULL) {
+		Py_DECREF(real_bases);
+		Py_DECREF(protocols);
+		PyObjCClass_UnbuildClass(objc_class);
+		return NULL;
+	}
+
+	PyDict_SetItemString(dict, "__pyobjc_protocols__", v);
+	Py_DECREF(v);
+		
+
+	/*
+	 * Users can define a __del__ method. We special-case this to
+	 * avoid triggering the default mechanisms for this method: The
+	 * method should only be called when the Objective-C side of the
+	 * instance is deallocated, not whenever the Python proxy is.
+	 */
 	delmethod = PyDict_GetItemString(dict, "__del__");
 	if (delmethod == NULL) {
 		PyErr_Clear();
@@ -475,9 +522,9 @@ class_getattro(PyObject* self, PyObject* name)
 	/* Try to find the method anyway */
 	PyErr_Clear();
 	NS_DURING
-		result = ObjCSelector_FindNative(self, PyString_AsString(name));
+		result = PyObjCSelector_FindNative(self, PyString_AsString(name));
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		result = NULL;
 	NS_ENDHANDLER
 
@@ -485,7 +532,7 @@ class_getattro(PyObject* self, PyObject* name)
 		int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);
 		ObjCNativeSelector* x = (ObjCNativeSelector*)result;
 
-		if (x->sel_flags & ObjCSelector_kCLASS_METHOD) {
+		if (x->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 			x->sel_self = self;
 			Py_INCREF(x->sel_self);
 		}
@@ -732,7 +779,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			} 
 			 */
 
-			descr = ObjCSelector_NewNative(
+			descr = PyObjCSelector_NewNative(
 					objc_class,
 					meth->method_name,
 					meth->method_types,
@@ -773,14 +820,14 @@ add_class_fields(Class objc_class, PyObject* dict)
 				sizeof(selbuf));
 
 			if ((descr = PyDict_GetItemString(dict, selbuf))) {
-				if (!ObjCSelector_Check(descr)) {
+				if (!PyObjCSelector_Check(descr)) {
 					continue;
-				} else if (!(((ObjCSelector*)descr)->sel_flags & ObjCSelector_kCLASS_METHOD)) {
+				} else if (!(((PyObjCSelector*)descr)->sel_flags & PyObjCSelector_kCLASS_METHOD)) {
 					continue;
 				}
 			}
 
-			descr = ObjCSelector_NewNative(
+			descr = PyObjCSelector_NewNative(
 				objc_class,
 				meth->method_name,
 				meth->method_types,
@@ -1005,8 +1052,8 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 			continue;
 		}
 
-		if (ObjCSelector_Check(v)) {
-			if (((ObjCSelector*)v)->sel_selector == selector) {
+		if (PyObjCSelector_Check(v)) {
+			if (((PyObjCSelector*)v)->sel_selector == selector) {
 				Py_DECREF(attributes);
 				PyDict_SetItemString(info->sel_to_py,
 					(char*)SELNAME(selector), v);

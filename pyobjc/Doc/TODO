@@ -81,6 +81,23 @@ From the top of my head:
   and in the implementation of objc.classAddMethod (currently doesn't support
   raw functions).
 
+  Interface:
+    PyObject* PyObjCSelector_MakeDefaultSelector(
+    	PyObject* class, PyObject* protocols, PyObject* callable);
+
+    - protocols is optional, and should be a writable list if passed in.
+    - callable could be any callable, it should be a method, function,
+      selector or classmethod({method,function}).
+    - Return NULL and set PyExc if no conversion was performed, the new
+      selector otherwise.
+
+  Use this method in class-builder.m and in the implementation of 
+  classAddMethods.
+
+* Restructure selector.m, this file is too long and complicated. We could
+  do away with the difference between method implemented in Python and ObjC.
+
+
 Support for GNUstep
 ...................
 
@@ -135,7 +152,8 @@ We do not yet have a 100% coverage of the Cocoa API's. We also need code in
 the testsuite that checks if the function wrappers are working as expected.
 
 Someone needs to check if we correctly export all constants from Cocoa and if
-the generation script finds all global functions.
+the generation script finds all global functions. Simularly for the annotations
+for input/output arguments.
 
 Pickle support
 ..............
@@ -165,6 +183,9 @@ generic code (you have to reimplement allmost all of the logic of these
 methods in order to know how many and which types of arguments are expected).
 Luckily there are not many varargs methods and most (if no all) of them can
 be easily avoided.
+
+All existing varargs methods should be located and documented. Where possible
+we should provide custom wrappers, otherwise we should document alternatives.
 
 Cleanup Examples
 ................
@@ -199,9 +220,6 @@ python code and only differ in the build method.
 * super-call.py
   Move to documentation  (unittest?)
 
-* using-nscoder.py
-  Move to unittest (and expand)
-
 Add examples that demonstrate:
 
 - how to use a lot of Cocoa features
@@ -234,3 +252,17 @@ Convenience functions
 
 Add function to PyObjCTools that can be used to decode the values returned
 by NSNetService.address()
+
+Access to method implementations
+................................
+
+Add a wrapper for 'instanceMethodForSelector:' and 'methodForSelector:', these
+should return selector objects that call a specific C function. This would make
+it possible to use classAddMethods to replace existing methods while still 
+calling the previous implementation.
+
+Performance tuning/testing
+..........................
+
+Design and implement a set of performance tests for the bridge. Use this to 
+invistigate and fix any possible performance problems.

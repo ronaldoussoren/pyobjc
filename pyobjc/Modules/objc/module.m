@@ -91,7 +91,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		 * FIXME: We should support functions here, just like with
 		 * class definitions.
 		 */
-		if (!ObjCSelector_Check(aMethod)) {
+		if (!PyObjCSelector_Check(aMethod)) {
 			PyErr_SetString(PyExc_TypeError ,
 			      "All objects in methodArray must be of type "
 			      "<objc.selector>.");
@@ -100,12 +100,12 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 
 		/* install in methods to add */
 		objcMethod = &methodsToAdd->method_list[methodIndex];
-		objcMethod->method_name = ObjCSelector_Selector(aMethod);
+		objcMethod->method_name = PyObjCSelector_Selector(aMethod);
 
-		objcMethod->method_types = strdup(ObjCSelector_Signature(
+		objcMethod->method_types = strdup(PyObjCSelector_Signature(
 			aMethod));
-		objcMethod->method_imp = ObjC_MakeIMPForObjCSelector(
-			(ObjCSelector*)aMethod);
+		objcMethod->method_imp = ObjC_MakeIMPForPyObjCSelector(
+			(PyObjCSelector*)aMethod);
 	}
 
 	/* add the methods */
@@ -637,7 +637,7 @@ void init_objc(void)
 
 	PyType_Ready(&PyObjCClass_Type); 
 	PyType_Ready((PyTypeObject*)&PyObjCObject_Type);
-	PyType_Ready(&ObjCSelector_Type); 
+	PyType_Ready(&PyObjCSelector_Type); 
 	PyType_Ready(&ObjCNativeSelector_Type);
 	PyType_Ready(&ObjCPythonSelector_Type);
 	PyType_Ready(&PyObjCInstanceVariable_Type);
@@ -650,7 +650,8 @@ void init_objc(void)
 
 	PyDict_SetItemString(d, "objc_class", (PyObject*)&PyObjCClass_Type);
 	PyDict_SetItemString(d, "objc_object", (PyObject*)&PyObjCObject_Type);
-	PyDict_SetItemString(d, "selector", (PyObject*)&ObjCSelector_Type);
+	PyDict_SetItemString(d, "pyobjc_unicode", (PyObject*)&PyObjCUnicode_Type);
+	PyDict_SetItemString(d, "selector", (PyObject*)&PyObjCSelector_Type);
 	PyDict_SetItemString(d, "ivar", (PyObject*)&PyObjCInstanceVariable_Type);
 	PyDict_SetItemString(d, "informal_protocol", (PyObject*)&PyObjCInformalProtocol_Type);
 	PyDict_SetItemString(d, "YES", PyObjCBool_FromLong(1));

@@ -101,7 +101,7 @@ static	char* keywords[] = { "argv", NULL };
 	NS_DURING
 		res = NSApplicationMain(argc, (const char**)argv);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		res = -1;
 	NS_ENDHANDLER
 
@@ -140,7 +140,7 @@ static  char* keywords[] = { NULL };
 		return NULL;
 	}
 
-	result = ObjC_IdToPython(NSApp);
+	result = PyObjC_IdToPython(NSApp);
 
 	return result;                               
 }
@@ -158,7 +158,7 @@ static  char* keywords[] = { NULL };
 	NS_DURING
 		NSCountWindows(&count);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 	if (PyErr_Occurred()) return NULL;
 
@@ -179,7 +179,7 @@ static  char* keywords[] = { "context", NULL };
 	NS_DURING
 		NSCountWindowsForContext(context, &count);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 	if (PyErr_Occurred()) return NULL;
 
@@ -201,7 +201,7 @@ static  char* keywords[] = { NULL };
 		depths = NSAvailableWindowDepths();
 	NS_HANDLER
 		depths = NULL;
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 	if (PyErr_Occurred()) return NULL;
 
@@ -298,7 +298,7 @@ static char* keywords[] = { "context", "windowDumpStream", NULL };
 		}
 	NS_HANDLER
 		res = 0;
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 
 	if (PyErr_Occurred()) {
@@ -332,7 +332,7 @@ static char* keywords[] = { "context", "windowDumpStream", NULL };
 
 	PyTuple_SET_ITEM(result, 2, v);
 
-	v = ObjC_IdToPython(windowDumpStream);
+	v = PyObjC_IdToPython(windowDumpStream);
 	if (v == NULL) {
 		Py_DECREF(result);
 		return NULL;
@@ -557,7 +557,7 @@ void init_AppKit(void)
 	d = PyModule_GetDict(m);
 	if (!d) return;
 
-	if (ObjC_ImportModule(m) < 0) {
+	if (PyObjC_ImportAPI(m) < 0) {
 		return;
 	}
 

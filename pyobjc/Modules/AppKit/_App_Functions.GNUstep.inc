@@ -2,7 +2,7 @@ static inline int convert_NSAffineTransformStruct(PyObject* object, void* pvar)
 {
 	const char* errstr;
 
-	errstr = ObjC_PythonToObjC(@encode(NSAffineTransformStruct), object, pvar);
+	errstr = PyObjC_PythonToObjC(@encode(NSAffineTransformStruct), object, pvar);
 	if (errstr) {
 		PyErr_SetString(PyExc_TypeError, errstr);
 		return 0;
@@ -13,7 +13,7 @@ static inline int convert_NSRect(PyObject* object, void* pvar)
 {
 	const char* errstr;
 
-	errstr = ObjC_PythonToObjC(@encode(NSRect), object, pvar);
+	errstr = PyObjC_PythonToObjC(@encode(NSRect), object, pvar);
 	if (errstr) {
 		PyErr_SetString(PyExc_TypeError, errstr);
 		return 0;
@@ -24,7 +24,7 @@ static inline int convert_NSPoint(PyObject* object, void* pvar)
 {
 	const char* errstr;
 
-	errstr = ObjC_PythonToObjC(@encode(NSPoint), object, pvar);
+	errstr = PyObjC_PythonToObjC(@encode(NSPoint), object, pvar);
 	if (errstr) {
 		PyErr_SetString(PyExc_TypeError, errstr);
 		return 0;
@@ -57,7 +57,7 @@ static inline int convert_id(PyObject* object, void* pvar)
 {
 	id* pid = (id*)pvar;
 
-	*pid = ObjC_PythonToId(object);
+	*pid = PyObjC_PythonToId(object);
 
 	return (*pid != nil);
 }
@@ -99,10 +99,10 @@ static	char* keywords[] = { "element", NULL };
 		objc_result = NSAccessibilityUnignoredAncestor(
 objc_element);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* id NSAccessibilityUnignoredDescendant(id element); */
@@ -118,10 +118,10 @@ static	char* keywords[] = { "element", NULL };
 		objc_result = NSAccessibilityUnignoredDescendant(
 objc_element);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSArray *NSAccessibilityUnignoredChildren(NSArray *originalChildren); */
@@ -137,10 +137,10 @@ static	char* keywords[] = { "originalChildren", NULL };
 		objc_result = NSAccessibilityUnignoredChildren(
 objc_originalChildren);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSArray *NSAccessibilityUnignoredChildrenForOnlyChild(id originalChild); */
@@ -156,10 +156,10 @@ static	char* keywords[] = { "originalChild", NULL };
 		objc_result = NSAccessibilityUnignoredChildrenForOnlyChild(
 objc_originalChild);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 #endif
@@ -177,7 +177,7 @@ static	char* keywords[] = { "element", "notification", NULL };
 		NSAccessibilityPostNotification(
 objc_element, objc_notification);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -196,7 +196,7 @@ static	char* keywords[] = { NULL };
 		objc_result = NSApplicationLoad(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -216,7 +216,7 @@ static	char* keywords[] = { "itemName", NULL };
 		objc_result = NSShowsServicesMenuItem(
 objc_itemName);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -237,7 +237,7 @@ static	char* keywords[] = { "itemName", "enabled", NULL };
 		objc_result = NSSetShowsServicesMenuItem(
 objc_itemName, objc_enabled);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyInt_FromLong(objc_result);
@@ -255,7 +255,7 @@ static	char* keywords[] = { NULL };
 		NSUpdateDynamicServices(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -276,7 +276,7 @@ static	char* keywords[] = { "itemName", "pboard", NULL };
 		objc_result = NSPerformService(
 objc_itemName, objc_pboard);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -296,7 +296,7 @@ static	char* keywords[] = { "provider", "name", NULL };
 		NSRegisterServicesProvider(
 objc_provider, objc_name);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -315,7 +315,7 @@ static	char* keywords[] = { "name", NULL };
 		NSUnregisterServicesProvider(
 objc_name);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -335,7 +335,7 @@ static	char* keywords[] = { "depth", NULL };
 		objc_result = NSPlanarFromDepth(
 objc_depth);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyObjCBool_FromLong(objc_result);
@@ -355,10 +355,10 @@ static	char* keywords[] = { "depth", NULL };
 		objc_result = NSColorSpaceFromDepth(
 objc_depth);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* int NSBitsPerSampleFromDepth (NSWindowDepth depth); */
@@ -374,7 +374,7 @@ static	char* keywords[] = { "depth", NULL };
 		objc_result = NSBitsPerSampleFromDepth(
 objc_depth);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyInt_FromLong(objc_result);
@@ -394,7 +394,7 @@ static	char* keywords[] = { "depth", NULL };
 		objc_result = NSBitsPerPixelFromDepth(
 objc_depth);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyInt_FromLong(objc_result);
@@ -414,7 +414,7 @@ static	char* keywords[] = { "colorSpaceName", NULL };
 		objc_result = NSNumberOfColorComponents(
 objc_colorSpaceName);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyInt_FromLong(objc_result);
@@ -433,7 +433,7 @@ static	char* keywords[] = { "aRect", NULL };
 		NSRectFill(
 objc_aRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -453,7 +453,7 @@ static	char* keywords[] = { "aRect", "op", NULL };
 		NSRectFillUsingOperation(
 objc_aRect, objc_op);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -472,7 +472,7 @@ static	char* keywords[] = { "aRect", NULL };
 		NSFrameRect(
 objc_aRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -492,7 +492,7 @@ static	char* keywords[] = { "aRect", "frameWidth", NULL };
 		NSFrameRectWithWidth(
 objc_aRect, objc_frameWidth);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -513,7 +513,7 @@ static	char* keywords[] = { "aRect", "frameWidth", "op", NULL };
 		NSFrameRectWithWidthUsingOperation(
 objc_aRect, objc_frameWidth, objc_op);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -532,7 +532,7 @@ static	char* keywords[] = { "aRect", NULL };
 		NSRectClip(
 objc_aRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -552,7 +552,7 @@ static	char* keywords[] = { "aRect", "clipRect", NULL };
 		NSDrawGrayBezel(
 objc_aRect, objc_clipRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -572,7 +572,7 @@ static	char* keywords[] = { "aRect", "clipRect", NULL };
 		NSDrawGroove(
 objc_aRect, objc_clipRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -592,7 +592,7 @@ static	char* keywords[] = { "aRect", "clipRect", NULL };
 		NSDrawWhiteBezel(
 objc_aRect, objc_clipRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -612,7 +612,7 @@ static	char* keywords[] = { "aRect", "clipRect", NULL };
 		NSDrawButton(
 objc_aRect, objc_clipRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -631,7 +631,7 @@ static	char* keywords[] = { "aRect", NULL };
 		NSEraseRect(
 objc_aRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -651,10 +651,10 @@ static	char* keywords[] = { "passedPoint", NULL };
 		objc_result = NSReadPixel(
 objc_passedPoint);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* void NSCopyBits(int srcGState, NSRect srcRect, NSPoint destPoint); */
@@ -671,7 +671,7 @@ static	char* keywords[] = { "srcGState", "srcRect", "destPoint", NULL };
 		NSCopyBits(
 objc_srcGState, objc_srcRect, objc_destPoint);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -690,7 +690,7 @@ static	char* keywords[] = { "aRect", NULL };
 		NSHighlightRect(
 objc_aRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -708,7 +708,7 @@ static	char* keywords[] = { NULL };
 		NSBeep(
 );
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -728,7 +728,7 @@ static	char* keywords[] = { "aRect", "clipRect", NULL };
 		NSDrawDarkBezel(
 objc_aRect, objc_clipRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -748,7 +748,7 @@ static	char* keywords[] = { "aRect", "clipRect", NULL };
 		NSDrawLightBezel(
 objc_aRect, objc_clipRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -767,7 +767,7 @@ static	char* keywords[] = { "aRect", NULL };
 		NSDottedFrameRect(
 objc_aRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -786,7 +786,7 @@ static	char* keywords[] = { "aRect", NULL };
 		NSDrawWindowBackground(
 objc_aRect);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -807,7 +807,7 @@ static	char* keywords[] = { "placement", NULL };
 		NSSetFocusRingStyle(
 objc_placement);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -830,7 +830,7 @@ static	char* keywords[] = { "key", "responder", NULL };
 		objc_result = NSInterfaceStyleForKey(
 objc_key, objc_responder);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 		result = PyInt_FromLong(objc_result);
@@ -849,7 +849,7 @@ static	char* keywords[] = { "panel", NULL };
 		NSReleaseAlertPanel(
 objc_panel);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
 	result = Py_None;
@@ -869,10 +869,10 @@ static	char* keywords[] = { "fileType", NULL };
 		objc_result = NSCreateFilenamePboardType(
 objc_fileType);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSString *NSCreateFileContentsPboardType(NSString *fileType); */
@@ -888,10 +888,10 @@ static	char* keywords[] = { "fileType", NULL };
 		objc_result = NSCreateFileContentsPboardType(
 objc_fileType);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSString *NSGetFileType(NSString *pboardType); */
@@ -907,10 +907,10 @@ static	char* keywords[] = { "pboardType", NULL };
 		objc_result = NSGetFileType(
 objc_pboardType);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 /* NSArray *NSGetFileTypes(NSArray *pboardTypes); */
@@ -926,10 +926,10 @@ static	char* keywords[] = { "pboardTypes", NULL };
 		objc_result = NSGetFileTypes(
 objc_pboardTypes);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		return NULL;
 	NS_ENDHANDLER
-		result = ObjC_IdToPython(objc_result); if (result == NULL) return NULL;
+		result = PyObjC_IdToPython(objc_result); if (result == NULL) return NULL;
 	return result;
 }
 

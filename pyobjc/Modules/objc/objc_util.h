@@ -16,8 +16,8 @@ int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict);
 int  ObjC_UpdateConvenienceMethods(PyObject* cls);
 
 void ObjCErr_Set(PyObject* exc, char* fmt, ...);
-void ObjCErr_FromObjC(NSException* localException);
-void ObjCErr_ToObjC(void);
+void PyObjCErr_FromObjC(NSException* localException);
+void PyObjCErr_ToObjC(void);
 
 PyObject* PyObjC_CallPython(id self, SEL selector, PyObject* arglist);
 

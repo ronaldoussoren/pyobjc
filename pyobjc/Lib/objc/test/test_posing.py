@@ -15,15 +15,15 @@ class TestPosing(unittest.TestCase):
             __slots__ = ()  # Don't add instance variables, not even __dict__
             def testPosingMethod(self):
                 return "<PoseClass instance>"
-
-        PoseClass.poseAsClass_(BaseClass)
+        
+        self.assertRaises(ValueError, PoseClass.poseAsClass_, BaseClass)
        
         # Whoops, this is a problem: We keep referencing the old class!
         #obj = objc.lookUpClass(BaseName).new()
-        obj = objc.runtime.__getattr__(BaseName).alloc().init()
-        self.assert_(isinstance(obj, PoseClass))
-        self.assertEquals(obj.testPosingMethod(), "<PoseClass instance>")
-        del obj
+        #obj = objc.runtime.__getattr__(BaseName).alloc().init()
+        #self.assert_(isinstance(obj, PoseClass))
+        #self.assertEquals(obj.testPosingMethod(), "<PoseClass instance>")
+        #del obj
 
 
 

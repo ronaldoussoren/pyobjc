@@ -69,7 +69,7 @@ void inittestbndl2(void)
                     NULL, NULL, PYTHON_API_VERSION);
         if (!m) return;
 
-        if (ObjC_ImportModule(m) < 0) return;
+        if (PyObjC_ImportAPI(m) < 0) return;
 
         PyModule_AddObject(m, "PyObjC_TestClass1",
             PyObjCClass_New([PyObjC_TestClass1 class]));
@@ -257,11 +257,11 @@ def emit_objc_implementations(fp):
     fp.write('{\n')
     fp.write('\tid res;\n')
     fp.write('\tPyObject* tmp;\n')
-    fp.write('\ttmp = ObjC_ObjCToPython(argtype, argptr);\n')
-    fp.write('\tif (tmp == NULL) { ObjCErr_ToObjC(); return nil; }\n')
-    fp.write('\tres = ObjC_PythonToId(tmp);\n')
+    fp.write('\ttmp = PyObjC_ObjCToPython(argtype, argptr);\n')
+    fp.write('\tif (tmp == NULL) { PyObjCErr_ToObjC(); return nil; }\n')
+    fp.write('\tres = PyObjC_PythonToId(tmp);\n')
     fp.write('\tPy_DECREF(tmp);\n')
-    fp.write('\tif (PyErr_Occurred()) { ObjCErr_ToObjC(); return nil; }\n')
+    fp.write('\tif (PyErr_Occurred()) { PyObjCErr_ToObjC(); return nil; }\n')
     fp.write('\treturn res;')
     fp.write('}\n\n\n')
 
@@ -340,7 +340,7 @@ def emit_objc_implementations(fp):
     fp.write('\t\tid sign = [target methodSignatureForSelector:selector];\\\n')
     fp.write('\t\tif (sign == NULL) {\\\n')
     fp.write('\t\t\tPyErr_SetString(PyExc_AttributeError, SELNAME(selector));\\\n')
-    fp.write('\t\t\tObjCErr_ToObjC();\\\n')
+    fp.write('\t\t\tPyObjCErr_ToObjC();\\\n')
     fp.write('\t\t}\\\n')
     fp.write('\t\tinv = [NSInvocation invocationWithMethodSignature:\\\n')
     fp.write('\t\t\t[target methodSignatureForSelector:selector]];\\\n')

@@ -45,7 +45,7 @@ error:
 static PyObject* 
 find_selector(PyObject* self, char* name, int class_method)
 {
-	SEL   sel = ObjCSelector_DefaultSelector(name);
+	SEL   sel = PyObjCSelector_DefaultSelector(name);
 	id    objc_object;
 	NSMethodSignature* methsig;
 	char  buf[1024];
@@ -121,7 +121,7 @@ find_selector(PyObject* self, char* name, int class_method)
 		return NULL;
 	}
 
-	return ObjCSelector_NewNative((Class)objc_object, sel,
+	return PyObjCSelector_NewNative((Class)objc_object, sel,
 		flattened, class_method);
 }
 
@@ -189,12 +189,12 @@ make_dict(PyObject* self, int class_method)
 				v = PyObject_GetAttrString(self, name);
 				if (v == NULL) {
 					PyErr_Clear();
-				} else if (!ObjCSelector_Check(v)) {
+				} else if (!PyObjCSelector_Check(v)) {
 					Py_DECREF(v);
 					v = NULL;
 				} else {
 					int cm;
-					cm = ((ObjCSelector*)v)->sel_flags & ObjCSelector_kCLASS_METHOD;
+					cm = ((PyObjCSelector*)v)->sel_flags & PyObjCSelector_kCLASS_METHOD;
 					if (!cm  != !class_method) {
 						Py_DECREF(v);
 						v = NULL;
@@ -202,7 +202,7 @@ make_dict(PyObject* self, int class_method)
 				}
 
 				if (v == NULL) {
-					v = ObjCSelector_NewNative(
+					v = PyObjCSelector_NewNative(
 						objc_class, meth->method_name,
 						meth->method_types, class_method);
 					if (v == NULL) {
@@ -271,11 +271,11 @@ obj_getattro(ObjCMethodAccessor* self, PyObject* name)
 	result = PyObject_GetAttr(self->base, name);
 	if (result == NULL) {
 		PyErr_Clear();
-	} else if (!ObjCSelector_Check(result)) {
+	} else if (!PyObjCSelector_Check(result)) {
 		Py_DECREF(result);
 		result = NULL;
 	} else {
-		class_method = ((ObjCSelector*)result)->sel_flags & ObjCSelector_kCLASS_METHOD;
+		class_method = ((PyObjCSelector*)result)->sel_flags & PyObjCSelector_kCLASS_METHOD;
 		if (!self->class_method  == !class_method) {
 			/* NOTE: ! is used to normalize the values */
 			return result;
@@ -290,15 +290,15 @@ obj_getattro(ObjCMethodAccessor* self, PyObject* name)
 
 	if (self->class_method && PyObjCObject_Check(self->base)) {
 		/* Class method */
-		((ObjCSelector*)result)->sel_self = (PyObject*)(self->base->ob_type);
+		((PyObjCSelector*)result)->sel_self = (PyObject*)(self->base->ob_type);
 	} else if (!self->class_method && PyObjCClass_Check(self->base)) {
 		/* Unbound instance method */
-		((ObjCSelector*)result)->sel_self = NULL;
+		((PyObjCSelector*)result)->sel_self = NULL;
 	} else {
 		/* Bound instance method */
-		((ObjCSelector*)result)->sel_self = self->base;
+		((PyObjCSelector*)result)->sel_self = self->base;
 	}
-	Py_XINCREF(((ObjCSelector*)result)->sel_self);
+	Py_XINCREF(((PyObjCSelector*)result)->sel_self);
 	return result;
 }
 

@@ -1,140 +1,36 @@
-,NSPPDParse,growBuffer:current:end:factor:,@32@4:8^{?=*i}12^*16^*20f36,
-,NSPPDParse,openInclude:,^v8@4:8@12,
-,NSPPDParse,readFromStream:,@8@4:8^v12,
-,NSPPDParse,startInputStream:closeOnEnd:,@9@4:8^v12c16,
-,NSImageWriter,initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:size:,@56@4:8^*12i16i20i24i28c32c43@44i48i52{_NSSize=ff}56,
-,NSMenu,menuZone,^{_NSZone=}4@4:8,
-,NSMenu,setMenuZone:,v8@4:8^{_NSZone=}12,
-,NSFocusState,clip:,@8@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,
-,NSSurface,surfaceID,^v4@4:8,
-,NSInputManager,getMarkedText:selectedRange:,v12@4:8^@12^{_NSRange=II}16,v@:o^@o^{_NSRange=II}
-,NSStorage,addElement:,v8@4:8^v12,
-,NSStorage,elementAtIndex:,^v8@4:8I12,
-,NSStorage,insertElement:atIndex:,v12@4:8^v12I16,
-,NSStorage,insertElements:count:atIndex:,v16@4:8^v12I16I20,
-,NSStorage,pointerToElement:directlyAccessibleElements:,^v12@4:8I12^{_NSRange=II}16,
-,NSStorage,replaceElementAtIndex:withElement:,v12@4:8I12^v16,
-,NSFileLocator,_shouldUseAliasToLocate:,c8@4:8r^{FSRef=[80C]}12,
-,NSToolbar,_configSheetDidEnd:returnCode:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
-,NSOutlineView,_adjustSelectionForItemEntry:numberOfRows:,v12@4:8^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}12i16,
-,NSOutlineView,_collapseItemEntry:collapseChildren:clearExpandState:recursionLevel:,^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}20@4:8^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}12c16c20i24,
-,NSOutlineView,_expandItemEntry:addIntoExpandSet:expandChildren:,^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}13@4:8^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}12@16c20,
-,NSOutlineView,_findParentWithLevel:beginingAtItem:childEncountered:,@16@4:8i12@16^i20,
-,NSOutlineView,_rowEntryForChild:ofParent:,^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}12@4:8i12^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}16,
-,NSOutlineView,_rowEntryForItem:,^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}8@4:8@12,
-,NSOutlineView,_rowEntryForRow:,^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}8@4:8i12,
-,_NSPICTPboardTypeConverter,_setConvertedData:pboard:generation:inItem:,v20@4:8@12^{__CFPasteboard=}16i20^v24,
-,NSPageData,stream,^{_NXStream=I**iilii^{stream_functions}^v}4@4:8,
-,NSRulebookSetObject,initWithSetHeader:,@8@4:8^{_NSRulebookSetHeader=i[4L]iiii[1i]}12,
-,NSRulebookSetObject,setHeader,^{_NSRulebookSetHeader=i[4L]iiii[1i]}4@4:8,
-,NSInputContext,keyBindingState,^v4@4:8,
-,NSEvent,_cgsEventRecord,{_CGSEventRecord=SSII{CGPoint=ff}{CGPoint=ff}QI^v^v(?={?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=ssSSSsssI[11i]}{?=ssii[13i]}{?=SSIIi[12i]}{?=ssssi[13i]}{?=iiiSS{?=ss}SsSsss[8i]}{?=SSSSSSIQICCs[8i]}{?=ss(?=[15f][15i][30s][60c])})}8@8:12,
-,NSEvent,_cgsevent,{_CGSEvent=I{CGPoint=ff}II^v(?={?=ssiCcs}{?=ssSSSs}{?=ssii}{?=SSLL}{?=ssssl}{?=ss(?=[2f][2l][4s][8c])})^v}8@8:12,
-,NSEvent,_eventRef,^v4@4:8,
-,NSEvent,_eventWithCGSEvent:,@120@4:8{_CGSEventRecord=SSII{CGPoint=ff}{CGPoint=ff}QI^v^v(?={?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=ssSSSsssI[11i]}{?=ssii[13i]}{?=SSIIi[12i]}{?=ssssi[13i]}{?=iiiSS{?=ss}SsSsss[8i]}{?=SSSSSSIQICCs[8i]}{?=ss(?=[15f][15i][30s][60c])})}16,
-,NSEvent,_initWithCGSEvent:eventRef:,@124@4:8{_CGSEventRecord=SSII{CGPoint=ff}{CGPoint=ff}QI^v^v(?={?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=ssSSSsssI[11i]}{?=ssii[13i]}{?=SSIIi[12i]}{?=ssssi[13i]}{?=iiiSS{?=ss}SsSsss[8i]}{?=SSSSSSIQICCs[8i]}{?=ss(?=[15f][15i][30s][60c])})}16^v128,
-,NSEvent,_setEventRef:,v8@4:8^v12,
-,NSEvent,enterExitEventWithType:location:modifierFlags:timestamp:windowNumber:context:eventNumber:trackingNumber:userData:,@52@4:8i12{_NSPoint=ff}16I24d36i40@44i48i52^v56,@52@4:8i12{_NSPoint=ff}16I24d36i40@44i48i52i56
-,NSEvent,userData,^v4@4:8,
-,_NSPDFPboardTypeConverter,_setConvertedData:pboard:generation:inItem:,v20@4:8@12^{__CFPasteboard=}16i20^v24,
-,NSSliderCell,_calcTrackRect:andAdjustRect:,c9@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12c16,
-,NSCarbonWindow,handleMouseDownEvent:at:inPart:withMods:,i20@4:8^{OpaqueEventRef=}12{Point=ss}16s20I24,
-,NSCarbonWindow,initWithCarbonWindowRef:takingOwnership:,@9@4:8^{OpaqueWindowPtr=}12c16,
-,NSCarbonWindow,sendCarbonUpdateHICommandStatusEvent:withMenuRef:andMenuItemIndex:,C14@4:8I12^{OpaqueMenuHandle=}16S20,
-,NSCarbonWindow,windowRef,^{OpaqueWindowPtr=}4@4:8,
-,NSPSMatrix,invTransformRect:,@8@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,
-,NSPSMatrix,invTransform:,@8@4:8^{_NSPoint=ff}12,
-,NSPSMatrix,transformRect:,@8@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,
-,NSPSMatrix,transform:,@8@4:8^{_NSPoint=ff}12,
-,NSHFSObject,iconRef:label:,v12@4:8^^{OpaqueIconRef}12^s16,
-,NSHFSObject,initWithRawCatalogInfo:name:parentRef:hidden:,@17@4:8^{FSCatalogInfo=SsIICCCC{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}[4I][16C][16C]QQQQII}12@16^{FSRef=[80C]}20c24,
-,NSHFSObject,ref,^{FSRef=[80C]}4@4:8,
-,NSHFSObject,updateInfo:parent:rootObject:resolve:,c17@4:8@12^{FSRef=[80C]}16c20c24,
-,NSHFSBrowserCell,setIconRef:label:,v10@4:8^{OpaqueIconRef=}12s16,
-,NSImageRep,_createPatternFromRect:,^v20@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,
-,NSCoreDragManager,_dragUntilMouseUp:accepted:,v12@4:8@12^c16,
-,NSPrinterFeatures,_calcRowsAndColumnsInView:boxSize:numBoxes:rows:columns:,v28@4:8@12{_NSSize=ff}16i24^i28^i32,
-,NSPrinterFeatures,_createOptionBoxes:andButtons:,v12@4:8^@12^@16,
-,NSProgressIndicator,_fillGrayRect:with:,v12@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12i16,
-,_NSTIFFPboardTypeConverter,_setConvertedData:pboard:generation:inItem:,v20@4:8@12^{__CFPasteboard=}16i20^v24,
-,NSHyphenator,getHyphenLocations:inString:,I12@4:8^I12@16,
-,NSHyphenator,getHyphenLocations:inString:wordAtIndex:,I16@4:8^I12@16I20,
-,NSButton,getPeriodicDelay:interval:,v12@4:8^f12^f16,v@:o^fo^f
-,NSRulebook,codeSegment,^i4@4:8,
-,NSRulebook,findEntryListFor:,^i6@4:8S12,
-,NSRulebook,propertyTableAtIndex:,^{_NSRulebookSetHeader=i[4L]iiii[1i]}8@4:8I12,
-,NSRulebook,testStructArrayAtIndex:,^{_NSRulebookTestStruct=iii[12i]}8@4:8I12,
-,NSPrinter,_appendKey:option:value:inKeyNode:,@20@4:8r*12r*16r*20^{?=b4b1b24(?=*^{?}^{__CFDictionary})}24,
-,NSPrinter,_appendStringInKeyNode:key:value:,@16@4:8^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12r*16r*20,
-,NSPrinter,_freeNode:,@8@4:8^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12,
-,NSPrinter,_getNodeForKey:inTable:,^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12@4:8r*12r*16,
-,NSPrinter,_keyListForKeyNode:,@8@4:8^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12,
-,NSPrinter,_makeKeyNode:inKeyNode:,^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12@4:8r*12^{?=b4b1b24(?=*^{?}^{__CFDictionary})}16,
-,NSPrinter,_makeTable:inNode:,^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12@4:8r*12^{?=b4b1b24(?=*^{?}^{__CFDictionary})}16,
-,NSPrinter,_newNode:,^{?=b4b1b24(?=*^{?}^{__CFDictionary})}8@4:8i12,
-,NSPrinter,_setStringInKeyNode:key:value:,@16@4:8^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12r*16*20,
-,NSPrinter,_setStringListInKeyNode:key:list:len:,@20@4:8^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12r*16^*20i24,
-,NSOpenGLPixelFormat,getValues:forAttribute:forVirtualScreen:,v16@4:8^l12i16i20,
-,NSOpenGLPixelFormat,initWithAttributes:,@8@4:8^i12,
-,NSBrowserCell,_checkLoaded:rect:highlight:,c16@4:8@12r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}16i20,
-,NSColorPickerUserView,_pointInPicker:,c8@4:8^{_NSPoint=ff}12,
-,NSAKSerializerStream,copySerializationInto:,v8@4:8^v12,
-,NSAKSerializerStream,writeData:length:,I12@4:8r^v12I16,
-,NSAKSerializerStream,writeRoomForInt:,I8@4:8^i12,
-,NSServiceListener,_doInvokeServiceIn:msg:pb:userData:error:unhide:,@25@4:8@12@16@20@24^@28c32,
-,NSServiceListener,invokeServiceIn:msg:pb:userData:error:,i24@4:8@12@16@20@24^@28,
-,NSMenuItemCell,_rectsForBounds:,^{_NSRect={_NSPoint=ff}{_NSSize=ff}}20@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,
-,NSQuickDrawView,qdPort,^v4@4:8,
-,NSGraphicsContext,focusStack,^v4@4:8,
-,NSGraphicsContext,graphicsPort,^v4@4:8,
-,NSGraphicsContext,setFocusStack:,v8@4:8^v12,
-,NSMenuItem,_iconRef,^{OpaqueIconRef=}4@4:8,
-,NSMenuItem,_setIconRef:,v8@4:8^{OpaqueIconRef=}12,
-,NSView,_autoSizeView:::::,v24@4:8c12I16r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}20r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}24^{_NSRect={_NSPoint=ff}{_NSSize=ff}}28,
-,NSView,_convertPointFromSuperview:test:,c9@4:8^{_NSPoint=ff}12c16,
-,NSView,_crackPoint:,@8@4:8^{_NSPoint=ff}12,
-,NSView,_crackRect:,@8@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,
-,NSView,_isAncestorOfViewIdenticalTo:,c8@4:8^v12,
-,NSView,_optimizedRectFill:gray:,c32@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12f36,
-,NSView,_regionForOpaqueDescendants:,^v20@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,
-,NSView,_scrollPoint:fromView:,v12@4:8r^{_NSPoint=ff}12@16,
-,NSView,_scrollRectToVisible:fromView:,c12@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@16,
-,NSView,addToolTipRect:owner:userData:,i28@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@28^v32,i28@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@28i32
-,NSView,addTrackingRect:owner:userData:assumeInside:,i36@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@28^v32c43,
-,NSView,heartBeat:,v8@4:8^{?=ddd}12,
-,NSView,scrollPoint:fromView:,v12@4:8r^{_NSPoint=ff}12@16,
-,NSView,scrollRectToVisible:fromView:,c12@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@16,
-,NSView,sortSubviewsUsingFunction:context:,v12@4:8^?12^v16,
-,NSBezierPath,appendBezierPathWithGlyphs:count:inFont:,v16@4:8^I12i16@20,
-,NSBezierPath,appendBezierPathWithPoints:count:,v12@4:8^{_NSPoint=ff}12i16,
-,NSBezierPath,elementAtIndex:associatedPoints:,i12@4:8i12^{_NSPoint=ff}16,
-,NSBezierPath,getLineDash:count:phase:,v16@4:8^f12^i16^f20,
-,NSBezierPath,setAssociatedPoints:atIndex:,v12@4:8^{_NSPoint=ff}12i16,
-,NSBezierPath,setLineDash:count:phase:,v32@4:8r^f12i16f36,
+,NSAKDeserializerStream,initFromMemoryNoCopy:length:freeWhenDone:,@13@4:8r^v12I16c20,%undocumented class
+,NSAKDeserializerStream,readData:length:,v12@4:8^v12I16,%undocumented class
+,NSAKSerializerStream,copySerializationInto:,v8@4:8^v12,%undocumented class
+,NSAKSerializerStream,writeData:length:,I12@4:8r^v12I16,%undocumented class
+,NSAKSerializerStream,writeRoomForInt:,I8@4:8^i12,%undocumented class
+,NSActionCell,_delegateValidation:object:uiHandled:,c16@4:8@12@16^c20,%private method
+,NSAffineTransform,_fillFloatArray:,v8@4:8^f12,%private method
 ,NSAlert,didEndSheet:returnCode:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
-,NSFileSpecifier,asRef,r^{FSRef=[80C]}4@4:8,
-,NSFileSpecifier,initWithRefNoCopy:,@8@4:8^{FSRef=[80C]}12,
-,NSFileSpecifier,initWithRef:,@8@4:8r^{FSRef=[80C]}12,
-,NSPrintInfo,_initPrivData,^{?=^{OpaquePMPrintSession}^{OpaquePMPrintSettings}^{OpaquePMPageFormat}}4@4:8,
-,NSPrintInfo,_initWithDictionary:pageFormat:printSettings:,@16@4:8@12^{OpaquePMPageFormat=}16^{OpaquePMPrintSettings=}20,
-,NSPrintInfo,_pmPrintSession,^{OpaquePMPrintSession=}4@4:8,
-,NSPrintInfo,pmPageFormat,^{OpaquePMPageFormat=}4@4:8,
-,NSPrintInfo,pmPrintSettings,^{OpaquePMPrintSettings=}4@4:8,
-,NSPrintInfo,setPMPageFormat:,v8@4:8^{OpaquePMPageFormat=}12,
-,NSPrintInfo,setPMPrintSettings:,v8@4:8^{OpaquePMPrintSettings=}12,
-,NSCatalogColor,newWithCoder:zone:,@12@4:8@12^{_NSZone=}16,
-,NSCollatorElement,entryState:,v8@4:8^{_NSSortState=iIIII[4@]}12,
-,NSCollatorElement,stepKey:elements:number:state:,i20@4:8@12^S16^i20^{_NSSortState=iIIII[4@]}24,
-,NSCalibratedRGBColor,newWithCoder:zone:,@12@4:8@12^{_NSZone=}16,
-,NSSavePanel,_completeName:,i8@4:8^@12,
-,NSSavePanel,_infoForFile:inColumn:isDir:isAutomount:info:,c24@4:8@12i16^c20^c24^@28,
-,NSSavePanel,_runModalForDirectory:file:relativeToWindow:modalDelegate:didEndSelector:contextInfo:,v28@4:8@12@16@20@24:28^v32,v28@4:8@12@16@20@24:28i32
-,NSSavePanel,beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:,v28@4:8@12@16@20@24:28^v32,v28@4:8@12@16@20@24:28i32
-,NSSavePanel,didEndSheet:returnCode:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
-,NSBMPImageReader,palette,r^S4@4:8,
-,NSPageLayout,_sheetDidEnd:returnCode:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
-,NSPageLayout,beginSheetWithPrintInfo:modalForWindow:delegate:didEndSelector:contextInfo:,v24@4:8@12@16@20:24^v28,v24@4:8@12@16@20:24i28
-,NSPageLayout,convertOldFactor:newFactor:,v12@4:8^f12^f16,v@:i^fo^f
+,NSApplication,_commonBeginModalSessionForWindow:relativeToWindow:modalDelegate:didEndSelector:contextInfo:,^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}24@4:8@12@16@20:24^v28,^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}24@4:8@12@16@20:24i28
+,NSApplication,_createDockMenu:,^{__CFArray=}5@4:8c12,%private method
+,NSApplication,_doModalLoop:peek:,v9@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12c16,%private method
+,NSApplication,_doOpenFile:ok:tryTemp:,v13@4:8@12^i16c20,%private method
+,NSApplication,_doPostedModalLoopMsg:,v8@4:8^{?=^{_NSModalSession}c@}12,%private method
+,NSApplication,_doPrintFile:ok:,v12@4:8@12^i16,%private method
+,NSApplication,_flattenMenu:,^{__CFArray=}8@4:8@12,%private method
+,NSApplication,_flattenMenuItem:,^{__CFDictionary=}8@4:8@12,%private method
+,NSApplication,_realDoModalLoop:peek:,v9@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12c16,%private method
+,NSApplication,beginModalSessionForWindow:,^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}8@4:8@12,%need special support (wrap NSModalSession)
+,NSApplication,beginModalSessionForWindow:relativeToWindow:,^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12@4:8@12@16,%need special support (wrap NSModalSession)
+,NSApplication,beginSheet:modalForWindow:modalDelegate:didEndSelector:contextInfo:,v24@4:8@12@16@20:24^v28,v@:@@@:i
+,NSApplication,contextID,^v4@4:8,i4@4:8
+,NSApplication,endModalSession:,v8@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12,
+,NSApplication,msgPrint:ok:,i12@4:8r*12^i16,%undocumented method
+,NSApplication,openFile:ok:,i12@4:8@12^i16,i12@4:8@12o^i16
+,NSApplication,openTempFile:ok:,i12@4:8@12^i16,i12@4:8@12o^i16
+,NSApplication,runModalSession:,i8@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12,i8@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12
+,NSBMPImageReader,palette,r^S4@4:8,%undocumented class
+,NSBezierPath,appendBezierPathWithGlyphs:count:inFont:,v16@4:8^I12i16@20,%need special support
+,NSBezierPath,appendBezierPathWithPoints:count:,v12@4:8^{_NSPoint=ff}12i16,%need special support
+,NSBezierPath,elementAtIndex:associatedPoints:,i12@4:8i12^{_NSPoint=ff}16,%need special support
+,NSBezierPath,getLineDash:count:phase:,v16@4:8^f12^i16^f20,%need special support
+,NSBezierPath,setAssociatedPoints:atIndex:,v12@4:8^{_NSPoint=ff}12i16,%need special support
+,NSBezierPath,setLineDash:count:phase:,v32@4:8r^f12i16f36,%need special support
 ,NSBitmapImageRep,_imagesFromIcon:inApp:zone:,@16@4:8@12@16^{_NSZone=}20,
 ,NSBitmapImageRep,_imagesWithData:hfsFileType:extension:zone:,@20@4:8@12@16@20^{_NSZone=}24,
 ,NSBitmapImageRep,_initWithData:tiff:imageNumber:,@14@4:8@12^{tiff=*^{_NXStream}sccsll{?=IIIIIISSSSSSSSSSIIIffSSffII[2S]ISSSSI^S^S^S^S[3^S]*********[2I]II^I^I[2S]^f[2S]S^f^f^f[4^S]S[2S]**I^v}{?=SSL}^i^i[10i]liillil^?^?^?^?^?^?^?^?^?^?^?^?*ii*l*llii}16s20,
@@ -146,32 +42,47 @@
 ,NSBitmapImageRep,getCompression:factor:,v12@4:8^i12^f16,v@:o^io^f
 ,NSBitmapImageRep,getTIFFCompressionTypes:count:,v12@4:8r^^i12^i16,
 ,NSBitmapImageRep,initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:,@48@4:8^*12i16i20i24i28c32c43@44i48i52,
+,NSBrowser,_getMatchingRow:forString:inMatrix:startingAtRow:prefixMatch:caseSensitive:,c25@4:8^i12@16@20i24c28c32,
+,NSBrowserCell,_checkLoaded:rect:highlight:,c16@4:8@12r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}16i20,%private method
+,NSButton,getPeriodicDelay:interval:,v12@4:8^f12^f16,v@:o^fo^f
+,NSCGSContext,windowID,^v4@4:8,
+,NSCGSFont,_atsFontID,^v4@4:8,
+,NSCGSFont,_backingCGSFont,^{CGFont=^{CGFontVTable}Ii^{CGEncoding}^{CGCMap}^{CGAdvanceSet}^{CGAdvanceSet}i^{CGFontCache}^vb1b1b1b1}4@4:8,
+,NSCGSFont,_nominalChars,^S4@4:8,
+,NSCGSFont,_nominalGlyphs,^S4@4:8,
+,NSCalibratedRGBColor,newWithCoder:zone:,@12@4:8@12^{_NSZone=}16,
+,NSCalibratedWhiteColor,newWithCoder:zone:,@12@4:8@12^{_NSZone=}16,
+,NSCarbonWindow,handleMouseDownEvent:at:inPart:withMods:,i20@4:8^{OpaqueEventRef=}12{Point=ss}16s20I24,%need special support
+,NSCarbonWindow,initWithCarbonWindowRef:takingOwnership:,@9@4:8^{OpaqueWindowPtr=}12c16,%need special support
+,NSCarbonWindow,sendCarbonUpdateHICommandStatusEvent:withMenuRef:andMenuItemIndex:,C14@4:8I12^{OpaqueMenuHandle=}16S20,%need special support
+,NSCarbonWindow,windowRef,^{OpaqueWindowPtr=}4@4:8,%need special support
+,NSCatalogColor,newWithCoder:zone:,@12@4:8@12^{_NSZone=}16,%NSZone is unsupported
+,NSCell,_objectValue:forString:,c12@4:8^@12@16,
+,NSCell,_selectOrEdit:inView:target:editor:event:start:end:,@36@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@16@20@24@28i32i40,
+,NSCell,_validateEntryString:uiHandled:,c12@4:8@12^c16,
+,NSCell,getPeriodicDelay:interval:,v12@4:8^f12^f16,
+,NSCharacterProperty,initWithRulebookSet:,@8@4:8^{_NSRulebookSetHeader=i[4L]iiii[1i]}12,
+,NSClipView,_scrollTo:,c8@4:8r^{_NSPoint=ff}12,
+,NSCollatorElement,entryState:,v8@4:8^{_NSSortState=iIIII[4@]}12,
+,NSCollatorElement,stepKey:elements:number:state:,i20@4:8@12^S16^i20^{_NSSortState=iIIII[4@]}24,
 ,NSColor,getCyan:magenta:yellow:black:alpha:,v24@4:8^f12^f16^f20^f24^f28,v@:o^fo^fo^fo^f
 ,NSColor,getHue:saturation:brightness:alpha:,v20@4:8^f12^f16^f20^f24,v@:o^fo^fo^fo^f
 ,NSColor,getRed:green:blue:alpha:,v20@4:8^f12^f16^f20^f24,v@:o^fo^fo^fo^f
 ,NSColor,getWhite:alpha:,v12@4:8^f12^f16,v@:o^fo^f
-,NSFont,__matrix,r^f4@4:8,
-,NSFont,_concreteFontInit:,^{_NSFaceInfo=i^{_NSFaceInfo}@i{_NSFont_faceFlags=b1b1b1b1b1b1b1b1b1b1b22}^{_NSFontMetrics}^{_NSCGSFontMetrics}}8@4:8^{_NSFaceInfo=i^{_NSFaceInfo}@i{_NSFont_faceFlags=b1b1b1b1b1b1b1b1b1b1b22}^{_NSFontMetrics}^{_NSCGSFontMetrics}}12,
-,NSFont,_decodeMatrixWithCoder:,r^f8@4:8@12,
-,NSFont,_findFont:size:matrix:flag:,@32@4:8@12f36r^f20i24,
-,NSFont,_fontWithName:size:matrix:,@32@4:8@12f36r^f20,
-,NSFont,_makeSpecialFontName:size:matrix:bit:,@32@4:8@12f36r^f20I24,
-,NSFont,_preInitSetMatrix:fontSize:,v32@4:8r^f12f36,
-,NSFont,fontWithName:matrix:,@12@4:8@12r^f16,
-,NSFont,matrix,r^f4@4:8,
-,NSFont,metrics,^v4@4:8,
-,NSFont,positionOfGlyph:precededByGlyph:isNominal:,{_NSPoint=ff}20@8:12I16I20^c24,
-,NSFont,positionOfGlyph:struckOverGlyph:metricsExist:,{_NSPoint=ff}20@8:12I16I20^c24,
-,NSFont,positionOfGlyph:struckOverRect:metricsExist:,{_NSPoint=ff}36@8:12I16{_NSRect={_NSPoint=ff}{_NSSize=ff}}20^c40,
-,NSFont,positionOfGlyph:withRelation:toBaseGlyph:totalAdvancement:metricsExist:,{_NSPoint=ff}28@8:12I16i20I24^{_NSSize=ff}28^c32,
-,NSFont,positionsForCompositeSequence:numberOfGlyphs:pointArray:,i16@4:8^I12i16^{_NSPoint=ff}20,
-,NSTextView,getMarkedText:selectedRange:,v12@4:8^@12^{_NSRange=II}16,
+,NSColorHolder,initFromSize:andColor:,@12@4:8r^{_NSSize=ff}12@16,
+,NSColorPanel,_makeNewSizeLegal:,@8@4:8^{_NSSize=ff}12,
+,NSColorPickerList,_attachColorList:systemList:,@9@4:8^@12c16,
+,NSColorPickerList,_attachColorList:systemList:makeSelected:,@13@4:8^@12c16c20,
+,NSColorPickerUserView,_pointInPicker:,c8@4:8^{_NSPoint=ff}12,%private method
 ,NSColorPickerWheelView,_pointInPicker:,c8@4:8^{_NSPoint=ff}12,
-,NSWorkspace,_willUnmountDeviceAtPath:ok:,v12@4:8@12^i16,
-,NSWorkspace,getFileSystemInfoForPath:isRemovable:isWritable:isUnmountable:description:type:,c28@4:8@12^c16^c20^c24^@28^@32,c28@4:8@12o^c16o^c20o^c24o^@28o^@32
-,NSWorkspace,getInfoForFile:application:type:,c16@4:8@12^@16^@20,c16@4:8@12o^@16o^@20
-,NSWorkspace,performFileOperation:source:destination:files:tag:,c24@4:8@12@16@20@24^i28,
-,NSIBObjectData,_encodeMapTable:forTypes:withCoder:,v16@4:8^{_NSMapTable=}12r*16@20,
+,NSConcretePrintOperation,_operationInfo,^{_PrivatePrintOperationInfo={_NSRect={_NSPoint=ff}{_NSSize=ff}}{_NSRect={_NSPoint=ff}{_NSSize=ff}}cccccccciiiiiii@@{_NSRect={_NSPoint=ff}{_NSSize=ff}}ccciffffii{_NSPoint=ff}I^{_NSModalSession}@iiciii@c@ic@@i@}4@4:8,
+,NSConcretePrintOperation,_printPanel:didEndAndReturn:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
+,NSConcretePrintOperation,_progressPanel:didEndAndReturn:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
+,NSConcretePrintOperation,_progressPanelWasCancelled:contextInfo:,v12@4:8@12^v16,v12@4:8@12i16
+,NSCoreDragManager,_dragUntilMouseUp:accepted:,v12@4:8@12^c16,%private method
+,NSDefaultEnglishSpellServerDelegate,spellServer:findMisspelledWordInString:language:wordCount:countOnly:,{_NSRange=II}25@8:12@16@20@24^i28c32,
+,NSDeviceCMYKColor,newWithCoder:zone:,@12@4:8@12^{_NSZone=}16,
+,NSDocInfo,initFromInfo:,@8@4:8^{stat=iISSIIi{timespec=ii}{timespec=ii}{timespec=ii}qqIIIi[2q]}12,
 ,NSDocument,_changeAlertDidEnd:returnCode:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
 ,NSDocument,_compatibility_canCloseDocumentWithDelegate:shouldCloseSelector:contextInfo:,v16@4:8@12:16^v20,v16@4:8@12:16i20
 ,NSDocument,_compatibility_doSavePanelSave:delegate:didSaveSelector:contextInfo:,v20@4:8i12@16:20^v24,v20@4:8i12@16:20i24
@@ -195,30 +106,65 @@
 ,NSDocument,saveDocumentWithDelegate:didSaveSelector:contextInfo:,v16@4:8@12:16^v20,v16@4:8@12:16i20
 ,NSDocument,saveToFile:saveOperation:delegate:didSaveSelector:contextInfo:,v24@4:8@12i16@20:24^v28,v24@4:8@12i16@20:24i28
 ,NSDocument,shouldCloseWindowController:delegate:shouldCloseSelector:contextInfo:,v20@4:8@12@16:20^v24,v20@4:8@12@16:20i24
-,NSColorPanel,_makeNewSizeLegal:,@8@4:8^{_NSSize=ff}12,
-,NSAffineTransform,_fillFloatArray:,v8@4:8^f12,
-,NSLeafProxy,allocWithZone:,@8@4:8^{_NSZone=}12,
-,NSLeafProxy,copyWithZone:,@8@4:8^{_NSZone=}12,
-,NSLeafProxy,forward::,@12@4:8:12^v16,
-,NSTitledFrame,_drawFrameInterior:clip:,v24@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12{_NSRect={_NSPoint=ff}{_NSSize=ff}}16,
-,NSTitledFrame,constrainResizeEdge:withDelta:elapsedTime:,c32@4:8^i12{_NSSize=ff}16f36,
-,NSPasteboard,_cfPasteboard,^{__CFPasteboard=}4@4:8,
-,NSWindow,_auxStorage,^v4@4:8,
-,NSWindow,_confirmSize:force:,c9@4:8^{_NSSize=ff}12c16,
-,NSWindow,_document:shouldClose:contextInfo:,v16@4:8@12c16^v20,v16@4:8@12c16i20
-,NSWindow,_initContent:styleMask:backing:defer:contentView:,@24@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12I16i20c24@28,
-,NSWindow,_initContent:styleMask:backing:defer:counterpart:,@24@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12I16i20c24@28,
-,NSWindow,_initContent:styleMask:backing:defer:screen:contentView:,@28@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12I16i20c24@28@32,
-,NSWindow,_initFromGlobalWindow:inRect:,@12@4:8i12r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}16,
-,NSWindow,_initFromGlobalWindow:inRect:styleMask:,@16@4:8i12r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}16I20,
-,NSWindow,_setTrackingRect:inside:owner:userData:,i36@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12c28@32^v40,i36@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12c28@32i40
-,NSWindow,_validSize:force:,v9@4:8^{_NSSize=ff}12c16,
-,NSWindow,graphicsPort,^v4@4:8,
-,NSMovieView,movieController,^v4@4:8,
-,NSTypesetter,layoutGlyphsInLayoutManager:startingAtGlyphIndex:maxNumberOfLineFragments:nextGlyphIndex:,v20@4:8@12I16I20^I24,
-,NSRTFD,addCommon:docInfo:value:zone:,@20@4:8@12@16@20^{_NSZone=}24,
-,NSTableView,dragImageForRows:event:dragImageOffset:,@16@4:8@12@16^{_NSPoint=ff}20,
-,NSCharacterProperty,initWithRulebookSet:,@8@4:8^{_NSRulebookSetHeader=i[4L]iiii[1i]}12,
+,NSDocumentController,_closeDocumentsStartingWith:shouldClose:closeAllContext:,v16@4:8@12c16^v20,
+,NSDocumentController,_document:didSave:contextInfo:,v16@4:8@12c16^v20,v16@4:8@12c16i20
+,NSDocumentController,_installOpenRecentMenuOpeningEventHandler:,v8@4:8^{OpaqueMenuHandle=}12,
+,NSDocumentController,closeAllDocumentsWithDelegate:didCloseAllSelector:contextInfo:,v16@4:8@12:16^v20,v16@4:8@12:16i20
+,NSDocumentController,reviewUnsavedDocumentsWithAlertTitle:cancellable:delegate:didReviewAllSelector:contextInfo:,v24@4:8@12c16@20:24^v28,v24@4:8@12c16@20:24i28
+,NSDragDestination,_receiveHandlerRef,^{OpaqueCoreDragHandler=}4@4:8,
+,NSDragDestination,_setDragRef:,v8@4:8^{OpaqueCoreDrag=}12,
+,NSDragDestination,_setReceiveHandlerRef:,v8@4:8^{OpaqueCoreDragHandler=}12,
+,NSDragDestination,_setTrackingHandlerRef:,v8@4:8^{OpaqueCoreDragHandler=}12,
+,NSDragDestination,_trackingHandlerRef,^{OpaqueCoreDragHandler=}4@4:8,
+,NSEPSImageRep,_imagesFromIcon:inApp:zone:,@16@4:8@12@16^{_NSZone=}20,
+,NSEvent,_cgsEventRecord,{_CGSEventRecord=SSII{CGPoint=ff}{CGPoint=ff}QI^v^v(?={?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=ssSSSsssI[11i]}{?=ssii[13i]}{?=SSIIi[12i]}{?=ssssi[13i]}{?=iiiSS{?=ss}SsSsss[8i]}{?=SSSSSSIQICCs[8i]}{?=ss(?=[15f][15i][30s][60c])})}8@8:12,%private method
+,NSEvent,_cgsevent,{_CGSEvent=I{CGPoint=ff}II^v(?={?=ssiCcs}{?=ssSSSs}{?=ssii}{?=SSLL}{?=ssssl}{?=ss(?=[2f][2l][4s][8c])})^v}8@8:12,%private method
+,NSEvent,_eventRef,^v4@4:8,%private method
+,NSEvent,_eventWithCGSEvent:,@120@4:8{_CGSEventRecord=SSII{CGPoint=ff}{CGPoint=ff}QI^v^v(?={?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=ssSSSsssI[11i]}{?=ssii[13i]}{?=SSIIi[12i]}{?=ssssi[13i]}{?=iiiSS{?=ss}SsSsss[8i]}{?=SSSSSSIQICCs[8i]}{?=ss(?=[15f][15i][30s][60c])})}16,%private method
+,NSEvent,_initWithCGSEvent:eventRef:,@124@4:8{_CGSEventRecord=SSII{CGPoint=ff}{CGPoint=ff}QI^v^v(?={?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=ssSSSsssI[11i]}{?=ssii[13i]}{?=SSIIi[12i]}{?=ssssi[13i]}{?=iiiSS{?=ss}SsSsss[8i]}{?=SSSSSSIQICCs[8i]}{?=ss(?=[15f][15i][30s][60c])})}16^v128,%private method
+,NSEvent,_setEventRef:,v8@4:8^v12,%private method
+,NSEvent,enterExitEventWithType:location:modifierFlags:timestamp:windowNumber:context:eventNumber:trackingNumber:userData:,@52@4:8i12{_NSPoint=ff}16I24d36i40@44i48i52^v56,@52@4:8i12{_NSPoint=ff}16I24d36i40@44i48i52i56
+,NSEvent,userData,^v4@4:8,i@:
+,NSFileLocator,_shouldUseAliasToLocate:,c8@4:8r^{FSRef=[80C]}12,@private method
+,NSFileSpecifier,asRef,r^{FSRef=[80C]}4@4:8,%need special support
+,NSFileSpecifier,initWithRef:,@8@4:8r^{FSRef=[80C]}12,%need special support
+,NSFileSpecifier,initWithRefNoCopy:,@8@4:8^{FSRef=[80C]}12,%need special support
+,NSFocusState,clip:,@8@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,@@:i^{_NSRect={_NSPoint=ff}{_NSSize=ff}}
+,NSFont,__matrix,r^f4@4:8,
+,NSFont,_concreteFontInit:,^{_NSFaceInfo=i^{_NSFaceInfo}@i{_NSFont_faceFlags=b1b1b1b1b1b1b1b1b1b1b22}^{_NSFontMetrics}^{_NSCGSFontMetrics}}8@4:8^{_NSFaceInfo=i^{_NSFaceInfo}@i{_NSFont_faceFlags=b1b1b1b1b1b1b1b1b1b1b22}^{_NSFontMetrics}^{_NSCGSFontMetrics}}12,
+,NSFont,_decodeMatrixWithCoder:,r^f8@4:8@12,
+,NSFont,_findFont:size:matrix:flag:,@32@4:8@12f36r^f20i24,
+,NSFont,_fontWithName:size:matrix:,@32@4:8@12f36r^f20,
+,NSFont,_makeSpecialFontName:size:matrix:bit:,@32@4:8@12f36r^f20I24,
+,NSFont,_preInitSetMatrix:fontSize:,v32@4:8r^f12f36,
+,NSFont,fontWithName:matrix:,@12@4:8@12r^f16,
+,NSFont,matrix,r^f4@4:8,
+,NSFont,metrics,^v4@4:8,
+,NSFont,positionOfGlyph:precededByGlyph:isNominal:,{_NSPoint=ff}20@8:12I16I20^c24,
+,NSFont,positionOfGlyph:struckOverGlyph:metricsExist:,{_NSPoint=ff}20@8:12I16I20^c24,
+,NSFont,positionOfGlyph:struckOverRect:metricsExist:,{_NSPoint=ff}36@8:12I16{_NSRect={_NSPoint=ff}{_NSSize=ff}}20^c40,
+,NSFont,positionOfGlyph:withRelation:toBaseGlyph:totalAdvancement:metricsExist:,{_NSPoint=ff}28@8:12I16i20I24^{_NSSize=ff}28^c32,
+,NSFont,positionsForCompositeSequence:numberOfGlyphs:pointArray:,i16@4:8^I12i16^{_NSPoint=ff}20,
+,NSGlyphGenerator,_callImplementor:context:chars:glyphs:stringBuffer:font:,v28@4:8i12^{_NSGlyphGenContext=iiiiiiiiiii@[32i][32i][32i][64i]{_NSRange=II}{_NSRange=II}ii^{_NSGlyphInsertBuffer}}16@20@24^{_NSRAStringBuffer=@IIIIII[100S]}28@32,
+,NSGlyphGenerator,_recurWithContext:chars:glyphs:stringBuffer:font:,v24@4:8^{_NSGlyphGenContext=iiiiiiiiiii@[32i][32i][32i][64i]{_NSRange=II}{_NSRange=II}ii^{_NSGlyphInsertBuffer}}12@16@20^{_NSRAStringBuffer=@IIIIII[100S]}24@28,
+,NSGlyphGenerator,generateGlyphsForLayoutManager:range:desiredNumberOfCharacters:startingAtGlyphIndex:completedRange:nextGlyphIndex:,v36@4:8@12{_NSRange=II}16I24I28^{_NSRange=II}32^I40,
+,NSGraphicsContext,focusStack,^v4@4:8,%unclear 
+,NSGraphicsContext,graphicsPort,^v4@4:8,%need special support: CGContextRef
+,NSGraphicsContext,setFocusStack:,v8@4:8^v12,%unclear
+,NSHFSBrowserCell,setIconRef:label:,v10@4:8^{OpaqueIconRef=}12s16,%need special support
+,NSHFSContainer,getRef:forObjectName:,c12@4:8^{FSRef=[80C]}12@16,
+,NSHFSContainer,iconRef:label:forObjectName:,v16@4:8^^{OpaqueIconRef}12^s16@20,
+,NSHFSContainer,initWithRef:,@8@4:8^{FSRef=[80C]}12,
+,NSHFSContainer,initWithRef:containerType:,@12@4:8^{FSRef=[80C]}12i16,
+,NSHFSContainer,ref,^{FSRef=[80C]}4@4:8,
+,NSHFSIndirectObject,initWithRef:hidden:iDisk:,@13@4:8^{FSRef=[80C]}12c16c20,
+,NSHFSObject,iconRef:label:,v12@4:8^^{OpaqueIconRef}12^s16,%need special support
+,NSHFSObject,initWithRawCatalogInfo:name:parentRef:hidden:,@17@4:8^{FSCatalogInfo=SsIICCCC{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}[4I][16C][16C]QQQQII}12@16^{FSRef=[80C]}20c24,%need special support
+,NSHFSObject,ref,^{FSRef=[80C]}4@4:8,%need special support
+,NSHFSObject,updateInfo:parent:rootObject:resolve:,c17@4:8@12^{FSRef=[80C]}16c20c24,%need special support
+,NSHyphenator,getHyphenLocations:inString:,I12@4:8^I12@16,%undocumened class
+,NSHyphenator,getHyphenLocations:inString:wordAtIndex:,I16@4:8^I12@16I20,%undocumened class
+,NSIBObjectData,_encodeMapTable:forTypes:withCoder:,v16@4:8^{_NSMapTable=}12r*16@20,
 ,NSImage,_addOneRepFrom:toRep:,c12@4:8@12^{_RepresentationInfo=^{_RepresentationInfo}^{_CacheWindowInfo}{_CacheRect=SSSS}@{_RepresentationInfoFlags=b1b1b1b4b1b24}@@^vi}16,
 ,NSImage,_addRepsFrom:toRep:,c12@4:8@12^{_RepresentationInfo=^{_RepresentationInfo}^{_CacheWindowInfo}{_CacheRect=SSSS}@{_RepresentationInfoFlags=b1b1b1b4b1b24}@@^vi}16,
 ,NSImage,_bestRepresentation:device:bestWidth:checkFlag:,^{_RepresentationInfo=^{_RepresentationInfo}^{_CacheWindowInfo}{_CacheRect=SSSS}@{_RepresentationInfoFlags=b1b1b1b4b1b24}@@^vi}32@4:8c12@16f36c24,
@@ -249,27 +195,18 @@
 ,NSImage,getImage:rect:,v12@4:8^@12^{_NSRect={_NSPoint=ff}{_NSSize=ff}}16,
 ,NSImageReader,bitmapDataPlanes,^*4@4:8,
 ,NSImageReader,loadImage:,c8@4:8^*12,
-,NSTabViewItem,_validateViewIsInViewHeirarchy:,v8@4:8^@12,
-,NSEPSImageRep,_imagesFromIcon:inApp:zone:,@16@4:8@12@16^{_NSZone=}20,
-,NSScreen,supportedWindowDepths,r^i4@4:8,
-,NSCell,_objectValue:forString:,c12@4:8^@12@16,
-,NSCell,_selectOrEdit:inView:target:editor:event:start:end:,@36@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@16@20@24@28i32i40,
-,NSCell,_validateEntryString:uiHandled:,c12@4:8@12^c16,
-,NSCell,getPeriodicDelay:interval:,v12@4:8^f12^f16,
-,NSRulebookCharacterSet,_initWithSet:,@8@4:8^v12,
-,NSProgressPanel,setCancellationDelegate:wasCancelledSelector:contextInfo:,v16@4:8@12:16^v20,v16@4:8@12:16i20
-,NSSystemStatusBar,drawBackgroundInRect:inView:highlight:,v13@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@16c20,
-,NSQuickDrawPort,port,^{OpaqueGrafPtr=}4@4:8,
-,_NSPDFDocument,adjustCTM:,v8@4:8^{CGContext=}12,
-,_NSPDFDocument,document,^{CGPDFDocument=}4@4:8,
+,NSImageRep,_createPatternFromRect:,^v20@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,%private method
+,NSImageWriter,initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:size:,@56@4:8^*12i16i20i24i28c32c43@44i48i52{_NSSize=ff}56,%undocumented class
+,NSInputContext,keyBindingState,^v4@4:8,%undocumented class
+,NSInputManager,getMarkedText:selectedRange:,v12@4:8^@12^{_NSRange=II}16,v@:o^@o^{_NSRange=II}
 ,NSLayoutManager,_invalidateGlyphsForCharacterRange:editedCharacterRange:changeInLength:actualCharacterRange:,v28@4:8{_NSRange=II}12{_NSRange=II}20i28^{_NSRange=II}32,
 ,NSLayoutManager,_temporaryAttribute:atCharacterIndex:effectiveRange:,@16@4:8@12I16^{_NSRange=II}20,
 ,NSLayoutManager,_temporaryAttribute:atCharacterIndex:longestEffectiveRange:inRange:,@24@4:8@12I16^{_NSRange=II}20{_NSRange=II}24,
 ,NSLayoutManager,_temporaryAttributesAtCharacterIndex:longestEffectiveRange:inRange:,@20@4:8I12^{_NSRange=II}16{_NSRange=II}20,
 ,NSLayoutManager,characterRangeForGlyphRange:actualGlyphRange:,{_NSRange=II}20@8:12{_NSRange=II}16^{_NSRange=II}24,
 ,NSLayoutManager,getFirstUnlaidCharacterIndex:glyphIndex:,v12@4:8^I12^I16,
-,NSLayoutManager,getGlyphsInRange:glyphs:characterIndexes:glyphInscriptions:elasticBits:,I28@4:8{_NSRange=II}12^I20^I24^i28^c32,
 ,NSLayoutManager,getGlyphs:range:,I16@4:8^I12{_NSRange=II}16,
+,NSLayoutManager,getGlyphsInRange:glyphs:characterIndexes:glyphInscriptions:elasticBits:,I28@4:8{_NSRange=II}12^I20^I24^i28^c32,
 ,NSLayoutManager,glyphAtIndex:isValidIndex:,I12@4:8I12^c16,
 ,NSLayoutManager,glyphIndexForPoint:inTextContainer:fractionOfDistanceThroughGlyph:,I20@4:8{_NSPoint=ff}12@20^f24,
 ,NSLayoutManager,glyphRangeForCharacterRange:actualCharacterRange:,{_NSRange=II}20@8:12{_NSRange=II}16^{_NSRange=II}24,
@@ -281,37 +218,9 @@
 ,NSLayoutManager,rectArrayForGlyphRange:withinSelectedGlyphRange:inTextContainer:rectCount:,^{_NSRect={_NSPoint=ff}{_NSSize=ff}}28@4:8{_NSRange=II}12{_NSRange=II}20@28^I32,
 ,NSLayoutManager,temporaryAttributesAtCharacterIndex:effectiveRange:,@12@4:8I12^{_NSRange=II}16,
 ,NSLayoutManager,textContainerForGlyphAtIndex:effectiveRange:,@12@4:8I12^{_NSRange=II}16,
-,NSOpenPanel,beginSheetForDirectory:file:types:modalForWindow:modalDelegate:didEndSelector:contextInfo:,v36@4:8@12@16@20@24@28:32^v40,v36@4:8@12@16@20@24@28:32i40
-,NSPICTImageRep,_verifyDataIsPICT:withFrame:fromFile:,c16@4:8@12^{_NSRect={_NSPoint=ff}{_NSSize=ff}}16^c20,
-,NSPrintOperation,runOperationModalForWindow:delegate:didRunSelector:contextInfo:,v20@4:8@12@16:20^v24,v20@4:8@12@16:20i24
-,NSRunStorage,elementAtIndex:effectiveRange:,^v12@4:8I12^{_NSRange=II}16,
-,NSRunStorage,insertElement:range:coalesceRuns:,v17@4:8^v12{_NSRange=II}16c24,
-,NSRunStorage,replaceElementsInRange:withElement:coalesceRuns:,v17@4:8{_NSRange=II}12^v20c24,
-,NSColorPickerList,_attachColorList:systemList:,@9@4:8^@12c16,
-,NSColorPickerList,_attachColorList:systemList:makeSelected:,@13@4:8^@12c16c20,
-,NSPanel,_doSetAccessoryView:topView:bottomView:oldView:,@20@4:8@12@16@20^@24,
-,NSSimpleHorizontalTypesetter,_glyphInfoAtIndex:,^{_NSTypesetterGlyphInfo={_NSPoint=ff}fffI@{_NSSize=ff}{?=b1b1b1}}8@4:8i12,
-,NSSimpleHorizontalTypesetter,baseOfTypesetterGlyphInfo,^{_NSTypesetterGlyphInfo={_NSPoint=ff}fffI@{_NSSize=ff}{?=b1b1b1}}4@4:8,
-,NSSimpleHorizontalTypesetter,layoutGlyphsInHorizontalLineFragment:baseline:,i12@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12^f16,
-,_NSFilenamePboardTypeConverter,_setConvertedData:pboard:generation:inItem:,v20@4:8@12^{__CFPasteboard=}16i20^v24,
-,_NSURLPboardTypeConverter,_setConvertedData:pboard:generation:inItem:,v20@4:8@12^{__CFPasteboard=}16i20^v24,
-,NSHFSContainer,getRef:forObjectName:,c12@4:8^{FSRef=[80C]}12@16,
-,NSHFSContainer,iconRef:label:forObjectName:,v16@4:8^^{OpaqueIconRef}12^s16@20,
-,NSHFSContainer,initWithRef:,@8@4:8^{FSRef=[80C]}12,
-,NSHFSContainer,initWithRef:containerType:,@12@4:8^{FSRef=[80C]}12i16,
-,NSHFSContainer,ref,^{FSRef=[80C]}4@4:8,
-,NSOpenGLContext,getValues:forParameter:,v12@4:8^l12i16,
-,NSOpenGLContext,setOffScreen:width:height:rowbytes:,v20@4:8^v12l16l20l24,
-,NSOpenGLContext,setValues:forParameter:,v12@4:8r^i12i16,
-,NSToolbarItemViewer,_computeLayoutInfoForIconViewSize:frameSize:iconFrame:labelFrame:,v24@4:8{_NSSize=ff}12^{_NSSize=ff}20^{_NSRect={_NSPoint=ff}{_NSSize=ff}}24^{_NSRect={_NSPoint=ff}{_NSSize=ff}}28,
-,NSSpellChecker,_chunkAndFindMisspelledWordInString:language:learnedDictionaries:wordCount:usingSpellServer:,{_NSRange=II}28@8:12@16@20@24^i28@32,
-,NSSpellChecker,checkSpellingOfString:startingAt:language:wrap:inSpellDocumentWithTag:wordCount:,{_NSRange=II}36@8:12@16i20@24c28i32^i40,
-,NSSpellChecker,checkSpellingOfString:startingAt:language:wrap:inSpellDocumentWithTag:wordCount:reconnectOnError:,{_NSRange=II}40@8:12@16i20@24c28i32^i40c47,
-,NSActionCell,_delegateValidation:object:uiHandled:,c16@4:8@12@16^c20,
-,NSDocInfo,initFromInfo:,@8@4:8^{stat=iISSIIi{timespec=ii}{timespec=ii}{timespec=ii}qqIIIi[2q]}12,
-,NSToolTipManager,_setToolTip:forView:cell:rect:owner:ownerIsDisplayDelegate:userData:,i48@4:8@12@16@20{_NSRect={_NSPoint=ff}{_NSSize=ff}}28@44c51^v52,i48@4:8@12@16@20{_NSRect={_NSPoint=ff}{_NSSize=ff}}28@44c51i52
-,NSToolTipManager,setToolTipForView:rect:displayDelegate:userData:,i36@4:8@12{_NSRect={_NSPoint=ff}{_NSSize=ff}}16@32^v40,i36@4:8@12{_NSRect={_NSPoint=ff}{_NSSize=ff}}16@32i40
-,NSToolTipManager,setToolTipForView:rect:owner:userData:,i36@4:8@12{_NSRect={_NSPoint=ff}{_NSSize=ff}}16@32^v40,i36@4:8@12{_NSRect={_NSPoint=ff}{_NSSize=ff}}16@32i40
+,NSLeafProxy,allocWithZone:,@8@4:8^{_NSZone=}12,
+,NSLeafProxy,copyWithZone:,@8@4:8^{_NSZone=}12,
+,NSLeafProxy,forward::,@12@4:8:12^v16,
 ,NSMatrix,_addToolTipRect:displayDelegate:userData:,i28@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@28^v32,
 ,NSMatrix,_findFirstOne::,@12@4:8^i12^i16,
 ,NSMatrix,_getBrowser:browserColumn:,v12@4:8^@12^i16,
@@ -332,65 +241,156 @@
 ,NSMatrix,sortUsingFunction:context:,v12@4:8^?12^v16,
 ,NSMatrix,view:frameForToolTip:point:userData:,{_NSRect={_NSPoint=ff}{_NSSize=ff}}28@8:12@16i20{_NSPoint=ff}24^v32,{_NSRect={_NSPoint=ff}{_NSSize=ff}}28@8:12@16i20{_NSPoint=ff}24i32
 ,NSMatrix,view:stringForToolTip:point:userData:,@24@4:8@12i16{_NSPoint=ff}20^v28,@24@4:8@12i16{_NSPoint=ff}20i28
-,NSDeviceCMYKColor,newWithCoder:zone:,@12@4:8@12^{_NSZone=}16,
-,NSColorHolder,initFromSize:andColor:,@12@4:8r^{_NSSize=ff}12@16,
-,NSClipView,_scrollTo:,c8@4:8r^{_NSPoint=ff}12,
-,NSDocumentController,_closeDocumentsStartingWith:shouldClose:closeAllContext:,v16@4:8@12c16^v20,
-,NSDocumentController,_document:didSave:contextInfo:,v16@4:8@12c16^v20,v16@4:8@12c16i20
-,NSDocumentController,_installOpenRecentMenuOpeningEventHandler:,v8@4:8^{OpaqueMenuHandle=}12,
-,NSDocumentController,closeAllDocumentsWithDelegate:didCloseAllSelector:contextInfo:,v16@4:8@12:16^v20,v16@4:8@12:16i20
-,NSDocumentController,reviewUnsavedDocumentsWithAlertTitle:cancellable:delegate:didReviewAllSelector:contextInfo:,v24@4:8@12c16@20:24^v28,v24@4:8@12c16@20:24i28
-,NSHFSIndirectObject,initWithRef:hidden:iDisk:,@13@4:8^{FSRef=[80C]}12c16c20,
-,NSPatternColor,newWithCoder:zone:,@12@4:8@12^{_NSZone=}16,
-,NSScroller,_getPartStruct:numberOfParts:withInnerBounds:,v28@4:8^{_PartStruct=if}12^I16{_NSRect={_NSPoint=ff}{_NSSize=ff}}20,
-,NSConcretePrintOperation,_operationInfo,^{_PrivatePrintOperationInfo={_NSRect={_NSPoint=ff}{_NSSize=ff}}{_NSRect={_NSPoint=ff}{_NSSize=ff}}cccccccciiiiiii@@{_NSRect={_NSPoint=ff}{_NSSize=ff}}ccciffffii{_NSPoint=ff}I^{_NSModalSession}@iiciii@c@ic@@i@}4@4:8,
-,NSConcretePrintOperation,_printPanel:didEndAndReturn:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
-,NSConcretePrintOperation,_progressPanelWasCancelled:contextInfo:,v12@4:8@12^v16,v12@4:8@12i16
-,NSConcretePrintOperation,_progressPanel:didEndAndReturn:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
-,NSAKDeserializerStream,initFromMemoryNoCopy:length:freeWhenDone:,@13@4:8r^v12I16c20,
-,NSAKDeserializerStream,readData:length:,v12@4:8^v12I16,
-,NSDefaultEnglishSpellServerDelegate,spellServer:findMisspelledWordInString:language:wordCount:countOnly:,{_NSRange=II}25@8:12@16@20@24^i28c32,
-,NSTextFieldCell,_getTextColor:backgroundColor:,v12@4:8^@12^@16,
-,NSNextStepFrame,_calcTextRect:,@8@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,
-,NSNextStepFrame,_inResize:,i8@4:8r^{_NSPoint=ff}12,
-,NSThemeDocumentButton,setIconForFileName:,v8@4:8^{FSRef=[80C]}12,
-,NSPrintPanel,_sheetDidEnd:returnCode:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
-,NSPrintPanel,beginSheetWithPrintInfo:modalForWindow:delegate:didEndSelector:contextInfo:,v24@4:8@12@16@20:24^v28,v24@4:8@12@16@20:24i28
-,NSDragDestination,_receiveHandlerRef,^{OpaqueCoreDragHandler=}4@4:8,
-,NSDragDestination,_setDragRef:,v8@4:8^{OpaqueCoreDrag=}12,
-,NSDragDestination,_setReceiveHandlerRef:,v8@4:8^{OpaqueCoreDragHandler=}12,
-,NSDragDestination,_setTrackingHandlerRef:,v8@4:8^{OpaqueCoreDragHandler=}12,
-,NSDragDestination,_trackingHandlerRef,^{OpaqueCoreDragHandler=}4@4:8,
-,NSBrowser,_getMatchingRow:forString:inMatrix:startingAtRow:prefixMatch:caseSensitive:,c25@4:8^i12@16@20i24c28c32,
-,NSTextContainer,lineFragmentRectForProposedRect:sweepDirection:movementDirection:remainingRect:,{_NSRect={_NSPoint=ff}{_NSSize=ff}}40@8:12{_NSRect={_NSPoint=ff}{_NSSize=ff}}16i32i40^{_NSRect={_NSPoint=ff}{_NSSize=ff}}44,
+,NSMenu,menuZone,^{_NSZone=}4@4:8,%NSZone not supported
+,NSMenu,setMenuZone:,v8@4:8^{_NSZone=}12,%NSZone not supported
+,NSMenuItem,_iconRef,^{OpaqueIconRef=}4@4:8,%private method
+,NSMenuItem,_setIconRef:,v8@4:8^{OpaqueIconRef=}12,%private method
+,NSMenuItemCell,_rectsForBounds:,^{_NSRect={_NSPoint=ff}{_NSSize=ff}}20@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,%private method
 ,NSMovie,QTMovie,^v4@4:8,
 ,NSMovie,initWithMovie:,@8@4:8^v12,
-,NSApplication,_commonBeginModalSessionForWindow:relativeToWindow:modalDelegate:didEndSelector:contextInfo:,^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}24@4:8@12@16@20:24^v28,^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}24@4:8@12@16@20:24i28
-,NSApplication,_createDockMenu:,^{__CFArray=}5@4:8c12,
-,NSApplication,_doModalLoop:peek:,v9@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12c16,
-,NSApplication,_doOpenFile:ok:tryTemp:,v13@4:8@12^i16c20,
-,NSApplication,_doPostedModalLoopMsg:,v8@4:8^{?=^{_NSModalSession}c@}12,
-,NSApplication,_doPrintFile:ok:,v12@4:8@12^i16,
-,NSApplication,_flattenMenuItem:,^{__CFDictionary=}8@4:8@12,
-,NSApplication,_flattenMenu:,^{__CFArray=}8@4:8@12,
-,NSApplication,_realDoModalLoop:peek:,v9@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12c16,
-,NSApplication,beginModalSessionForWindow:,^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}8@4:8@12,
-,NSApplication,beginModalSessionForWindow:relativeToWindow:,^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12@4:8@12@16,
-,NSApplication,beginSheet:modalForWindow:modalDelegate:didEndSelector:contextInfo:,v24@4:8@12@16@20:24^v28,v@:@@@:i
-,NSApplication,contextID,^v4@4:8,i4@4:8
-,NSApplication,endModalSession:,v8@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12,
-,NSApplication,msgPrint:ok:,i12@4:8r*12^i16,
-,NSApplication,openFile:ok:,i12@4:8@12^i16,i12@4:8@12o^i16
-,NSApplication,openTempFile:ok:,i12@4:8@12^i16,i12@4:8@12o^i16
-,NSApplication,runModalSession:,i8@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12,i8@4:8^{_NSModalSession=@@^{_NSModalSession}iciI^vi@@:^vi}12
-,NSCalibratedWhiteColor,newWithCoder:zone:,@12@4:8@12^{_NSZone=}16,
-,NSCGSFont,_atsFontID,^v4@4:8,
-,NSCGSFont,_backingCGSFont,^{CGFont=^{CGFontVTable}Ii^{CGEncoding}^{CGCMap}^{CGAdvanceSet}^{CGAdvanceSet}i^{CGFontCache}^vb1b1b1b1}4@4:8,
-,NSCGSFont,_nominalChars,^S4@4:8,
-,NSCGSFont,_nominalGlyphs,^S4@4:8,
-,_NSRTFPboardTypeConverter,_setConvertedData:pboard:generation:inItem:,v20@4:8@12^{__CFPasteboard=}16i20^v24,
+,NSMovieView,movieController,^v4@4:8,
+,NSNextStepFrame,_calcTextRect:,@8@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,
+,NSNextStepFrame,_inResize:,i8@4:8r^{_NSPoint=ff}12,
+,NSOpenGLContext,getValues:forParameter:,v12@4:8^l12i16,
+,NSOpenGLContext,setOffScreen:width:height:rowbytes:,v20@4:8^v12l16l20l24,
+,NSOpenGLContext,setValues:forParameter:,v12@4:8r^i12i16,
+,NSOpenGLPixelFormat,getValues:forAttribute:forVirtualScreen:,v16@4:8^l12i16i20,%undocumented class
+,NSOpenGLPixelFormat,initWithAttributes:,@8@4:8^i12,%undocumented class
+,NSOpenPanel,beginSheetForDirectory:file:types:modalForWindow:modalDelegate:didEndSelector:contextInfo:,v36@4:8@12@16@20@24@28:32^v40,v36@4:8@12@16@20@24@28:32i40
+,NSOutlineView,_adjustSelectionForItemEntry:numberOfRows:,v12@4:8^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}12i16,@private method
+,NSOutlineView,_collapseItemEntry:collapseChildren:clearExpandState:recursionLevel:,^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}20@4:8^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}12c16c20i24,@private method
+,NSOutlineView,_expandItemEntry:addIntoExpandSet:expandChildren:,^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}13@4:8^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}12@16c20,@private method
+,NSOutlineView,_findParentWithLevel:beginingAtItem:childEncountered:,@16@4:8i12@16^i20,@private method
+,NSOutlineView,_rowEntryForChild:ofParent:,^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}12@4:8i12^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}16,@private method
+,NSOutlineView,_rowEntryForItem:,^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}8@4:8@12,@private method
+,NSOutlineView,_rowEntryForRow:,^{_RowEntry=^{_RowEntry}^{_RowEntry}@sscccc}8@4:8i12,@private method
+,NSPICTImageRep,_verifyDataIsPICT:withFrame:fromFile:,c16@4:8@12^{_NSRect={_NSPoint=ff}{_NSSize=ff}}16^c20,
+,NSPPDParse,growBuffer:current:end:factor:,@32@4:8^{?=*i}12^*16^*20f36,%undocumented class
+,NSPPDParse,openInclude:,^v8@4:8@12,%undocumented class
+,NSPPDParse,readFromStream:,@8@4:8^v12,%undocumented class
+,NSPPDParse,startInputStream:closeOnEnd:,@9@4:8^v12c16,%undocumented class
+,NSPSMatrix,invTransform:,@8@4:8^{_NSPoint=ff}12,@@:N^{_NSPoint=ff}
+,NSPSMatrix,invTransformRect:,@8@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,@@:N^{_NSRect={_NSPoint=ff}{_NSSize=ff}}
+,NSPSMatrix,transform:,@8@4:8^{_NSPoint=ff}12,@@:N^{_NSPoint=ff}
+,NSPSMatrix,transformRect:,@8@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,@@:N^{_NSRect={_NSPoint=ff}{_NSSize=ff}}
+,NSPageData,stream,^{_NXStream=I**iilii^{stream_functions}^v}4@4:8,%undocumented class
+,NSPageLayout,_sheetDidEnd:returnCode:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
+,NSPageLayout,beginSheetWithPrintInfo:modalForWindow:delegate:didEndSelector:contextInfo:,v24@4:8@12@16@20:24^v28,v24@4:8@12@16@20:24i28
+,NSPageLayout,convertOldFactor:newFactor:,v12@4:8^f12^f16,v@:i^fo^f
+,NSPanel,_doSetAccessoryView:topView:bottomView:oldView:,@20@4:8@12@16@20^@24,
+,NSPasteboard,_cfPasteboard,^{__CFPasteboard=}4@4:8,
+,NSPatternColor,newWithCoder:zone:,@12@4:8@12^{_NSZone=}16,
+,NSPrintInfo,_initPrivData,^{?=^{OpaquePMPrintSession}^{OpaquePMPrintSettings}^{OpaquePMPageFormat}}4@4:8,%private method
+,NSPrintInfo,_initWithDictionary:pageFormat:printSettings:,@16@4:8@12^{OpaquePMPageFormat=}16^{OpaquePMPrintSettings=}20,%private method
+,NSPrintInfo,_pmPrintSession,^{OpaquePMPrintSession=}4@4:8,%private method
+,NSPrintInfo,pmPageFormat,^{OpaquePMPageFormat=}4@4:8,%undocumented method
+,NSPrintInfo,pmPrintSettings,^{OpaquePMPrintSettings=}4@4:8,%undocumented method
+,NSPrintInfo,setPMPageFormat:,v8@4:8^{OpaquePMPageFormat=}12,%undocumented method
+,NSPrintInfo,setPMPrintSettings:,v8@4:8^{OpaquePMPrintSettings=}12,%undocumented method
+,NSPrintOperation,runOperationModalForWindow:delegate:didRunSelector:contextInfo:,v20@4:8@12@16:20^v24,v20@4:8@12@16:20i24
+,NSPrintPanel,_sheetDidEnd:returnCode:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
+,NSPrintPanel,beginSheetWithPrintInfo:modalForWindow:delegate:didEndSelector:contextInfo:,v24@4:8@12@16@20:24^v28,v24@4:8@12@16@20:24i28
+,NSPrinter,_appendKey:option:value:inKeyNode:,@20@4:8r*12r*16r*20^{?=b4b1b24(?=*^{?}^{__CFDictionary})}24,%private method
+,NSPrinter,_appendStringInKeyNode:key:value:,@16@4:8^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12r*16r*20,%private method
+,NSPrinter,_freeNode:,@8@4:8^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12,%private method
+,NSPrinter,_getNodeForKey:inTable:,^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12@4:8r*12r*16,%private method
+,NSPrinter,_keyListForKeyNode:,@8@4:8^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12,%private method
+,NSPrinter,_makeKeyNode:inKeyNode:,^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12@4:8r*12^{?=b4b1b24(?=*^{?}^{__CFDictionary})}16,%private method
+,NSPrinter,_makeTable:inNode:,^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12@4:8r*12^{?=b4b1b24(?=*^{?}^{__CFDictionary})}16,%private method
+,NSPrinter,_newNode:,^{?=b4b1b24(?=*^{?}^{__CFDictionary})}8@4:8i12,%private method
+,NSPrinter,_setStringInKeyNode:key:value:,@16@4:8^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12r*16*20,%private method
+,NSPrinter,_setStringListInKeyNode:key:list:len:,@20@4:8^{?=b4b1b24(?=*^{?}^{__CFDictionary})}12r*16^*20i24,%private method
+,NSPrinterFeatures,_calcRowsAndColumnsInView:boxSize:numBoxes:rows:columns:,v28@4:8@12{_NSSize=ff}16i24^i28^i32,%private method
+,NSPrinterFeatures,_createOptionBoxes:andButtons:,v12@4:8^@12^@16,%private method
+,NSProgressIndicator,_fillGrayRect:with:,v12@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12i16,%private method
+,NSProgressPanel,setCancellationDelegate:wasCancelledSelector:contextInfo:,v16@4:8@12:16^v20,v16@4:8@12:16i20
+,NSQuickDrawPort,port,^{OpaqueGrafPtr=}4@4:8,
+,NSQuickDrawView,qdPort,^v4@4:8,%need special support
+,NSRTFD,addCommon:docInfo:value:zone:,@20@4:8@12@16@20^{_NSZone=}24,
+,NSRulebook,codeSegment,^i4@4:8,%undocumented class
+,NSRulebook,findEntryListFor:,^i6@4:8S12,%undocumented class
+,NSRulebook,propertyTableAtIndex:,^{_NSRulebookSetHeader=i[4L]iiii[1i]}8@4:8I12,%undocumented class
+,NSRulebook,testStructArrayAtIndex:,^{_NSRulebookTestStruct=iii[12i]}8@4:8I12,%undocumented class
+,NSRulebookCharacterSet,_initWithSet:,@8@4:8^v12,
+,NSRulebookSetObject,initWithSetHeader:,@8@4:8^{_NSRulebookSetHeader=i[4L]iiii[1i]}12,%undocumented clas
+,NSRulebookSetObject,setHeader,^{_NSRulebookSetHeader=i[4L]iiii[1i]}4@4:8,%undocumented clas
+,NSRunStorage,elementAtIndex:effectiveRange:,^v12@4:8I12^{_NSRange=II}16,
+,NSRunStorage,insertElement:range:coalesceRuns:,v17@4:8^v12{_NSRange=II}16c24,
+,NSRunStorage,replaceElementsInRange:withElement:coalesceRuns:,v17@4:8{_NSRange=II}12^v20c24,
+,NSSavePanel,_completeName:,i8@4:8^@12,
+,NSSavePanel,_infoForFile:inColumn:isDir:isAutomount:info:,c24@4:8@12i16^c20^c24^@28,
+,NSSavePanel,_runModalForDirectory:file:relativeToWindow:modalDelegate:didEndSelector:contextInfo:,v28@4:8@12@16@20@24:28^v32,v28@4:8@12@16@20@24:28i32
+,NSSavePanel,beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:,v28@4:8@12@16@20@24:28^v32,v28@4:8@12@16@20@24:28i32
+,NSSavePanel,didEndSheet:returnCode:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
+,NSScreen,supportedWindowDepths,r^i4@4:8,
+,NSScroller,_getPartStruct:numberOfParts:withInnerBounds:,v28@4:8^{_PartStruct=if}12^I16{_NSRect={_NSPoint=ff}{_NSSize=ff}}20,
+,NSServiceListener,_doInvokeServiceIn:msg:pb:userData:error:unhide:,@25@4:8@12@16@20@24^@28c32,%private method
+,NSServiceListener,invokeServiceIn:msg:pb:userData:error:,i24@4:8@12@16@20@24^@28,%undocumented class
+,NSSimpleHorizontalTypesetter,_glyphInfoAtIndex:,^{_NSTypesetterGlyphInfo={_NSPoint=ff}fffI@{_NSSize=ff}{?=b1b1b1}}8@4:8i12,
+,NSSimpleHorizontalTypesetter,baseOfTypesetterGlyphInfo,^{_NSTypesetterGlyphInfo={_NSPoint=ff}fffI@{_NSSize=ff}{?=b1b1b1}}4@4:8,
+,NSSimpleHorizontalTypesetter,layoutGlyphsInHorizontalLineFragment:baseline:,i12@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12^f16,
+,NSSliderCell,_calcTrackRect:andAdjustRect:,c9@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12c16,%private method
+,NSSpellChecker,_chunkAndFindMisspelledWordInString:language:learnedDictionaries:wordCount:usingSpellServer:,{_NSRange=II}28@8:12@16@20@24^i28@32,
+,NSSpellChecker,checkSpellingOfString:startingAt:language:wrap:inSpellDocumentWithTag:wordCount:,{_NSRange=II}36@8:12@16i20@24c28i32^i40,
+,NSSpellChecker,checkSpellingOfString:startingAt:language:wrap:inSpellDocumentWithTag:wordCount:reconnectOnError:,{_NSRange=II}40@8:12@16i20@24c28i32^i40c47,
+,NSStorage,addElement:,v8@4:8^v12,@undocumented class
+,NSStorage,elementAtIndex:,^v8@4:8I12,@undocumented class
+,NSStorage,insertElement:atIndex:,v12@4:8^v12I16,@undocumented class
+,NSStorage,insertElements:count:atIndex:,v16@4:8^v12I16I20,@undocumented class
+,NSStorage,pointerToElement:directlyAccessibleElements:,^v12@4:8I12^{_NSRange=II}16,@undocumented class
+,NSStorage,replaceElementAtIndex:withElement:,v12@4:8I12^v16,@undocumented class
+,NSSurface,surfaceID,^v4@4:8,i@:
+,NSSystemStatusBar,drawBackgroundInRect:inView:highlight:,v13@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@16c20,
+,NSTabViewItem,_validateViewIsInViewHeirarchy:,v8@4:8^@12,
+,NSTableView,dragImageForRows:event:dragImageOffset:,@16@4:8@12@16^{_NSPoint=ff}20,
 ,NSTabletEvent,_initWithCGSEvent:,@120@4:8{_CGSEventRecord=SSII{CGPoint=ff}{CGPoint=ff}QI^v^v(?={?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=CCsiCcCCss(?={_CGSTabletPointData=iiiSS{?=ss}SsSsss}{_CGSTabletProximityData=SSSSSSIQICCs})[4i]}{?=ssSSSsssI[11i]}{?=ssii[13i]}{?=SSIIi[12i]}{?=ssssi[13i]}{?=iiiSS{?=ss}SsSsss[8i]}{?=SSSSSSIQICCs[8i]}{?=ss(?=[15f][15i][30s][60c])})}16,
-,NSGlyphGenerator,_callImplementor:context:chars:glyphs:stringBuffer:font:,v28@4:8i12^{_NSGlyphGenContext=iiiiiiiiiii@[32i][32i][32i][64i]{_NSRange=II}{_NSRange=II}ii^{_NSGlyphInsertBuffer}}16@20@24^{_NSRAStringBuffer=@IIIIII[100S]}28@32,
-,NSGlyphGenerator,_recurWithContext:chars:glyphs:stringBuffer:font:,v24@4:8^{_NSGlyphGenContext=iiiiiiiiiii@[32i][32i][32i][64i]{_NSRange=II}{_NSRange=II}ii^{_NSGlyphInsertBuffer}}12@16@20^{_NSRAStringBuffer=@IIIIII[100S]}24@28,
-,NSGlyphGenerator,generateGlyphsForLayoutManager:range:desiredNumberOfCharacters:startingAtGlyphIndex:completedRange:nextGlyphIndex:,v36@4:8@12{_NSRange=II}16I24I28^{_NSRange=II}32^I40,
-,NSCGSContext,windowID,^v4@4:8,
+,NSTextContainer,lineFragmentRectForProposedRect:sweepDirection:movementDirection:remainingRect:,{_NSRect={_NSPoint=ff}{_NSSize=ff}}40@8:12{_NSRect={_NSPoint=ff}{_NSSize=ff}}16i32i40^{_NSRect={_NSPoint=ff}{_NSSize=ff}}44,
+,NSTextFieldCell,_getTextColor:backgroundColor:,v12@4:8^@12^@16,
+,NSTextView,getMarkedText:selectedRange:,v12@4:8^@12^{_NSRange=II}16,
+,NSThemeDocumentButton,setIconForFileName:,v8@4:8^{FSRef=[80C]}12,
+,NSTitledFrame,_drawFrameInterior:clip:,v24@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12{_NSRect={_NSPoint=ff}{_NSSize=ff}}16,
+,NSTitledFrame,constrainResizeEdge:withDelta:elapsedTime:,c32@4:8^i12{_NSSize=ff}16f36,
+,NSToolTipManager,_setToolTip:forView:cell:rect:owner:ownerIsDisplayDelegate:userData:,i48@4:8@12@16@20{_NSRect={_NSPoint=ff}{_NSSize=ff}}28@44c51^v52,i48@4:8@12@16@20{_NSRect={_NSPoint=ff}{_NSSize=ff}}28@44c51i52
+,NSToolTipManager,setToolTipForView:rect:displayDelegate:userData:,i36@4:8@12{_NSRect={_NSPoint=ff}{_NSSize=ff}}16@32^v40,i36@4:8@12{_NSRect={_NSPoint=ff}{_NSSize=ff}}16@32i40
+,NSToolTipManager,setToolTipForView:rect:owner:userData:,i36@4:8@12{_NSRect={_NSPoint=ff}{_NSSize=ff}}16@32^v40,i36@4:8@12{_NSRect={_NSPoint=ff}{_NSSize=ff}}16@32i40
+,NSToolbar,_configSheetDidEnd:returnCode:contextInfo:,v16@4:8@12i16^v20,v16@4:8@12i16i20
+,NSToolbarItemViewer,_computeLayoutInfoForIconViewSize:frameSize:iconFrame:labelFrame:,v24@4:8{_NSSize=ff}12^{_NSSize=ff}20^{_NSRect={_NSPoint=ff}{_NSSize=ff}}24^{_NSRect={_NSPoint=ff}{_NSSize=ff}}28,
+,NSTypesetter,layoutGlyphsInLayoutManager:startingAtGlyphIndex:maxNumberOfLineFragments:nextGlyphIndex:,v20@4:8@12I16I20^I24,
+,NSView,_autoSizeView:::::,v24@4:8c12I16r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}20r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}24^{_NSRect={_NSPoint=ff}{_NSSize=ff}}28,%private method
+,NSView,_convertPointFromSuperview:test:,c9@4:8^{_NSPoint=ff}12c16,%private method
+,NSView,_crackPoint:,@8@4:8^{_NSPoint=ff}12,%private method
+,NSView,_crackRect:,@8@4:8^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,%private method
+,NSView,_isAncestorOfViewIdenticalTo:,c8@4:8^v12,%private method
+,NSView,_optimizedRectFill:gray:,c32@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12f36,%private method
+,NSView,_regionForOpaqueDescendants:,^v20@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12,%private method
+,NSView,_scrollPoint:fromView:,v12@4:8r^{_NSPoint=ff}12@16,%private method
+,NSView,_scrollRectToVisible:fromView:,c12@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@16,%private method
+,NSView,addToolTipRect:owner:userData:,i28@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@28^v32,i28@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@28i32
+,NSView,addTrackingRect:owner:userData:assumeInside:,i36@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@28^v32c43,i@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}@ic
+,NSView,heartBeat:,v8@4:8^{?=ddd}12,%undocumented method
+,NSView,scrollPoint:fromView:,v12@4:8r^{_NSPoint=ff}12@16,%undocumented method
+,NSView,scrollRectToVisible:fromView:,c12@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@16,%undocumented method
+,NSView,sortSubviewsUsingFunction:context:,v12@4:8^?12^v16,%need special support
+,NSWindow,_auxStorage,^v4@4:8,
+,NSWindow,_confirmSize:force:,c9@4:8^{_NSSize=ff}12c16,
+,NSWindow,_document:shouldClose:contextInfo:,v16@4:8@12c16^v20,v16@4:8@12c16i20
+,NSWindow,_initContent:styleMask:backing:defer:contentView:,@24@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12I16i20c24@28,
+,NSWindow,_initContent:styleMask:backing:defer:counterpart:,@24@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12I16i20c24@28,
+,NSWindow,_initContent:styleMask:backing:defer:screen:contentView:,@28@4:8r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}12I16i20c24@28@32,
+,NSWindow,_initFromGlobalWindow:inRect:,@12@4:8i12r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}16,
+,NSWindow,_initFromGlobalWindow:inRect:styleMask:,@16@4:8i12r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}16I20,
+,NSWindow,_setTrackingRect:inside:owner:userData:,i36@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12c28@32^v40,i36@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12c28@32i40
+,NSWindow,_validSize:force:,v9@4:8^{_NSSize=ff}12c16,
+,NSWindow,graphicsPort,^v4@4:8,
+,NSWorkspace,_willUnmountDeviceAtPath:ok:,v12@4:8@12^i16,
+,NSWorkspace,getFileSystemInfoForPath:isRemovable:isWritable:isUnmountable:description:type:,c28@4:8@12^c16^c20^c24^@28^@32,c28@4:8@12o^c16o^c20o^c24o^@28o^@32
+,NSWorkspace,getInfoForFile:application:type:,c16@4:8@12^@16^@20,c16@4:8@12o^@16o^@20
+,NSWorkspace,performFileOperation:source:destination:files:tag:,c24@4:8@12@16@20@24^i28,
+,_NSFilenamePboardTypeConverter,_setConvertedData:pboard:generation:inItem:,v20@4:8@12^{__CFPasteboard=}16i20^v24,
+,_NSPDFDocument,adjustCTM:,v8@4:8^{CGContext=}12,
+,_NSPDFDocument,document,^{CGPDFDocument=}4@4:8,
+,_NSPDFPboardTypeConverter,_setConvertedData:pboard:generation:inItem:,v20@4:8@12^{__CFPasteboard=}16i20^v24,%private method
+,_NSPICTPboardTypeConverter,_setConvertedData:pboard:generation:inItem:,v20@4:8@12^{__CFPasteboard=}16i20^v24,@private method
+,_NSRTFPboardTypeConverter,_setConvertedData:pboard:generation:inItem:,v20@4:8@12^{__CFPasteboard=}16i20^v24,
+,_NSTIFFPboardTypeConverter,_setConvertedData:pboard:generation:inItem:,v20@4:8@12^{__CFPasteboard=}16i20^v24,%private class
+,_NSURLPboardTypeConverter,_setConvertedData:pboard:generation:inItem:,v20@4:8@12^{__CFPasteboard=}16i20^v24,

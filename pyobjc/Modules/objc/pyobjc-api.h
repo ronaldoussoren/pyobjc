@@ -6,15 +6,12 @@
  * for functions that deal with objective-C objects/classes
  * 
  * This header defines some utility wrappers for importing and using 
- * the objective-C module.
+ * the core bridge. 
  *
- * NOTES:
- * - I (ronald) access the core pyobj in such a 'strange' way to avoid
- *   linking with that module. 
- * - This interface is in development, the the API will probably change in
- *   incompatible ways.
+ * This is the *only* header file that should be used to access 
+ * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.12 2003/05/11 14:11:14 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.13 2003/06/01 19:06:31 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -44,7 +41,14 @@
 #define PyDoc_STRVAR(name, str) PyDoc_VAR(name) = PyDoc_STR(str)
 #endif
 
-#define PYOBJC_API_VERSION -1
+/* Current API version, increase whenever:
+ * - Semantics of current functions change
+ * - Functions are removed
+ * Do not increase when adding a new function, the struct_len field
+ * can be used for that
+ */
+#define PYOBJC_API_VERSION 1
+
 #define PYOBJC_API_NAME "__C_API__"
 
 /* 
@@ -58,15 +62,15 @@ typedef int (RegisterMethodMappingFunctionType)(
 
 struct pyobjc_api {
 	int	      api_version;	/* API version */
-	int	      struct_len;	/* Length of this struct */
+	size_t	      struct_len;	/* Length of this struct */
 	PyTypeObject* class_type;	/* PyObjCClass_Type    */
 	PyTypeObject* object_type;	/* PyObjCObject_Type   */
-	PyTypeObject* select_type;	/* ObjCSelector_Type */
+	PyTypeObject* select_type;	/* PyObjCSelector_Type */
 
-	/* ObjC_RegisterMethodMapping */
+	/* PyObjC_RegisterMethodMapping */
 	RegisterMethodMappingFunctionType *register_method_mapping;
 
-	/* ObjC_RegisterSignatureMapping */
+	/* PyObjC_RegisterSignatureMapping */
 	int (*register_signature_mapping)(
 			char*,
 			PyObject *(*)(PyObject*, PyObject*, PyObject*),
@@ -84,34 +88,34 @@ struct pyobjc_api {
 	/* PyObjCClass_New */
 	PyObject* (*cls_to_python)(Class cls);
 
-	/* ObjC_PythonToId */
+	/* PyObjC_PythonToId */
 	id (*python_to_id)(PyObject*);
 
-	/* ObjC_IdToPython */
+	/* PyObjC_IdToPython */
 	PyObject* (*id_to_python)(id);
 
-	/* ObjCErr_FromObjC */
+	/* PyObjCErr_FromObjC */
 	void (*err_objc_to_python)(NSException*);
 
-	/* ObjCErr_ToObjC */
+	/* PyObjCErr_ToObjC */
 	void (*err_python_to_objc)(void);
 
-	/* ObjC_PythonToObjC */
+	/* PyObjC_PythonToObjC */
 	int (*py_to_objc)(const char*, PyObject*, void*);
 
-	/* ObjC_ObjCToPython */
+	/* PyObjC_ObjCToPython */
 	PyObject* (*objc_to_py)(const char*, void*);
 
 	/* PyObjC_CallPython */
 	PyObject* (*call_to_python)(id, SEL, PyObject*);
 
-	/* ObjC_SizeOfType */
+	/* PyObjC_SizeOfType */
 	int 	   (*sizeof_type)(const char*);
 
-	/* ObjCSelector_GetClass */
+	/* PyObjCSelector_GetClass */
 	Class	   (*sel_get_class)(PyObject* sel);
 
-	/* ObjCSelector_GetSelector */
+	/* PyObjCSelector_GetSelector */
 	SEL	   (*sel_get_sel)(PyObject* sel);
 
 	/* PyObjCBool_Check */
@@ -131,39 +135,51 @@ struct pyobjc_api {
 #ifndef PYOBJC_BUILD
 
 #ifndef PYOBJC_METHOD_STUB_IMPL
-static struct pyobjc_api*	ObjC_API;
+static struct pyobjc_api*	PyObjC_API;
 #endif /* PYOBJC_METHOD_STUB_IMPL */
 
-#define PyObjCObject_Check(obj) PyObject_TypeCheck(obj, ObjC_API->object_type)
-#define PyObjCClass_Check(obj)  PyObject_TypeCheck(obj, ObjC_API->class_type)
-#define ObjCSelector_Check(obj)  PyObject_TypeCheck(obj, ObjC_API->class_type)
+#define PyObjCObject_Check(obj) PyObject_TypeCheck(obj, PyObjC_API->object_type)
+#define PyObjCClass_Check(obj)  PyObject_TypeCheck(obj, PyObjC_API->class_type)
+#define PyObjCSelector_Check(obj)  PyObject_TypeCheck(obj, PyObjC_API->class_type)
+#define PyObjCObject_GetObject (PyObjC_API->obj_get_object)
+#define PyObjCObject_ClearObject (PyObjC_API->obj_clear_object)
+#define PyObjCClass_GetClass   (PyObjC_API->cls_get_class)
+#define PyObjCClass_New 	     (PyObjC_API->cls_to_python)
+#define PyObjCSelector_GetClass (PyObjC_API->sel_get_class)
+#define PyObjCSelector_GetSelector (PyObjC_API->sel_get_sel)
+#define PyObjC_PythonToId      (PyObjC_API->python_to_id)
+#define PyObjC_IdToPython      (PyObjC_API->id_to_python)
+#define PyObjCErr_FromObjC     (PyObjC_API->err_objc_to_python)
+#define PyObjCErr_ToObjC       (PyObjC_API->err_python_to_objc)
+#define PyObjC_PythonToObjC    (PyObjC_API->py_to_objc)
+#define PyObjC_ObjCToPython    (PyObjC_API->objc_to_py)
+#define PyObjC_CallPython	     (PyObjC_API->call_to_python)
+#define PyObjC_RegisterMethodMapping (PyObjC_API->register_method_mapping)
+#define PyObjC_RegisterSignatureMapping (PyObjC_API->register_signature_mapping)
+#define PyObjC_SizeOfType      (PyObjC_API->sizeof_type)
+#define PyObjC_PythonToObjC   (PyObjC_API->py_to_objc)
+#define PyObjC_ObjCToPython   (PyObjC_API->objc_to_py)
+#define PyObjCBool_Check   (PyObjC_API->bool_check)
+#define PyObjCBool_FromLong   (PyObjC_API->bool_init)
+#define PyObjC_InitSuper	(PyObjC_API->fill_super)
+#define PyObjC_InitSuperCls	(PyObjC_API->fill_super_cls)
 
-#define PyObjCObject_GetObject (ObjC_API->obj_get_object)
-#define PyObjCObject_ClearObject (ObjC_API->obj_clear_object)
-#define PyObjCClass_GetClass   (ObjC_API->cls_get_class)
-#define PyObjCClass_New 	     (ObjC_API->cls_to_python)
-#define ObjCSelector_GetClass (ObjC_API->sel_get_class)
-#define ObjCSelector_GetSelector (ObjC_API->sel_get_sel)
-#define ObjC_PythonToId      (ObjC_API->python_to_id)
-#define ObjC_IdToPython      (ObjC_API->id_to_python)
-#define ObjCErr_FromObjC     (ObjC_API->err_objc_to_python)
-#define ObjCErr_ToObjC       (ObjC_API->err_python_to_objc)
-#define ObjC_PythonToObjC    (ObjC_API->py_to_objc)
-#define ObjC_ObjCToPython    (ObjC_API->objc_to_py)
-#define PyObjC_CallPython	     (ObjC_API->call_to_python)
-#define ObjC_RegisterMethodMapping (ObjC_API->register_method_mapping)
-#define ObjC_RegisterSignatureMapping (ObjC_API->register_signature_mapping)
-#define ObjC_SizeOfType      (ObjC_API->sizeof_type)
-#define ObjC_PythonToObjC   (ObjC_API->py_to_objc)
-#define ObjC_ObjCToPython   (ObjC_API->objc_to_py)
-#define PyObjCBool_Check   (ObjC_API->bool_check)
-#define PyObjCBool_FromLong   (ObjC_API->bool_init)
-#define PyObjC_InitSuper	(ObjC_API->fill_super)
-#define PyObjC_InitSuperCls	(ObjC_API->fill_super_cls)
+static inline int PyObjCObject_Convert(PyObject* object, void* pvar)
+{
+	id* pid = (id*)pvar;
+
+	*pid = PyObjC_PythonToId(object);
+			        
+	if (PyErr_Occurred()) {
+	    return 0;
+        } 
+	return 1;
+}
+
 
 #ifndef PYOBJC_METHOD_STUB_IMPL
 static int
-ObjC_ImportModule(PyObject* calling_module)
+PyObjC_ImportAPI(PyObject* calling_module)
 {
 	PyObject* m;
 	PyObject* d;
@@ -189,9 +205,21 @@ ObjC_ImportModule(PyObject* calling_module)
 			"No C_API in objc module");
 		return -1;
 	}
-	ObjC_API = PyCObject_AsVoidPtr(api_obj);
-	if (ObjC_API == NULL) return 0;
-	if (ObjC_API->api_version != PYOBJC_API_VERSION) return 0;
+	PyObjC_API = PyCObject_AsVoidPtr(api_obj);
+	if (PyObjC_API == NULL) {
+		return 0;
+	}
+	if (PyObjC_API->api_version != PYOBJC_API_VERSION) {
+		PyErr_SetString(PyExc_RuntimeError,
+			"Wrong version of PyObjC C API");
+		return -1;
+	}
+	
+	if (PyObjC_API->struct_len < sizeof(struct pyobjc_api)) {
+		PyErr_SetString(PyExc_RuntimeError,
+			"Wrong struct-size of PyObjC C API");
+		return -1;
+	}
 
 	Py_INCREF(api_obj);
 

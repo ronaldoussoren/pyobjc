@@ -31,7 +31,7 @@ static PyObject* call_NSCoder_encodeValueOfObjCType_at_(
 		return NULL;
 	}
 
-	size = ObjC_SizeOfType(signature);
+	size = PyObjC_SizeOfType(signature);
 	if (size == -1) {
 		return NULL;
 	}
@@ -41,7 +41,7 @@ static PyObject* call_NSCoder_encodeValueOfObjCType_at_(
 		return NULL;
 	}
 
-	err = ObjC_PythonToObjC(signature, value, buf);
+	err = PyObjC_PythonToObjC(signature, value, buf);
 	if (err == -1) {
 		return NULL;
 	}
@@ -57,7 +57,7 @@ static PyObject* call_NSCoder_encodeValueOfObjCType_at_(
 		result = Py_None;
 		Py_INCREF(result);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		result = NULL;
 	NS_ENDHANDLER
 
@@ -72,30 +72,30 @@ static void imp_NSCoder_encodeValueOfObjCType_at_(id self, SEL sel,
 
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	PyTuple_SetItem(arglist, 0, PyString_FromString(signature));
-	PyTuple_SetItem(arglist, 1, ObjC_ObjCToPython(signature, buf));
+	PyTuple_SetItem(arglist, 1, PyObjC_ObjCToPython(signature, buf));
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	if (result != Py_None) {
 		PyErr_SetString(PyExc_TypeError, "Must return None");
 		Py_DECREF(result);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	Py_DECREF(result);
@@ -124,7 +124,7 @@ static PyObject* call_NSCoder_encodeArrayOfObjCType_count_at_(
 		return NULL;
 	}
 
-	size = ObjC_SizeOfType(signature);
+	size = PyObjC_SizeOfType(signature);
 	if (size == -1) {
 		return NULL;
 	}
@@ -146,7 +146,7 @@ static PyObject* call_NSCoder_encodeArrayOfObjCType_count_at_(
 	}
 
 	for (i = 0; i < count; i++) {
-		err = ObjC_PythonToObjC(signature, 
+		err = PyObjC_PythonToObjC(signature, 
 				PySequence_GetItem(value, i), 
 				((char*)buf) + (size * i));
 		if (err == -1) {
@@ -165,7 +165,7 @@ static PyObject* call_NSCoder_encodeArrayOfObjCType_count_at_(
 		result = Py_None;
 		Py_INCREF(result);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		result = NULL;
 	NS_ENDHANDLER
 
@@ -183,13 +183,13 @@ static void imp_NSCoder_encodeArrayOfObjCType_count_at_(id self, SEL sel,
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
-	size = ObjC_SizeOfType(signature);
+	size = PyObjC_SizeOfType(signature);
 	if (size == -1) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
@@ -198,39 +198,39 @@ static void imp_NSCoder_encodeArrayOfObjCType_count_at_(id self, SEL sel,
 
 	values = PyTuple_New(count);
 	if (values == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	for (i = 0; (unsigned)i < count; i++) {
-		PyTuple_SetItem(values, i, ObjC_ObjCToPython(signature, 
+		PyTuple_SetItem(values, i, PyObjC_ObjCToPython(signature, 
 			((char*)buf)+(i*size)));
 	}
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
 		Py_DECREF(values);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	PyTuple_SetItem(arglist, 2, values);
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	if (result != Py_None) {
 		PyErr_SetString(PyExc_TypeError, "Must return None");
 		Py_DECREF(result);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	Py_DECREF(result);
@@ -250,7 +250,7 @@ static PyObject* call_NSCoder_decodeValueOfObjCType_at_(
 		return NULL;
 	}
 
-	size = ObjC_SizeOfType(signature);
+	size = PyObjC_SizeOfType(signature);
 	if (size == -1) {
 		return NULL;
 	}
@@ -270,14 +270,14 @@ static PyObject* call_NSCoder_decodeValueOfObjCType_at_(
 				@selector(decodeValueOfObjCType:at:),
 				signature, buf);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 
 	if (PyErr_Occurred()) {
 		return NULL;
 	}
 
-	value = ObjC_ObjCToPython(signature, buf);
+	value = PyObjC_ObjCToPython(signature, buf);
 	if (value == NULL) {
 		return NULL;
 	}
@@ -305,7 +305,7 @@ static void imp_NSCoder_decodeValueOfObjCType_at_(id self, SEL sel,
 
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
@@ -313,21 +313,21 @@ static void imp_NSCoder_decodeValueOfObjCType_at_(id self, SEL sel,
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	seq = PySequence_Fast(result, "Must return a sequence of length 2");
 	if (seq == NULL) {
 		Py_DECREF(result);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	Py_DECREF(result);
@@ -337,7 +337,7 @@ static void imp_NSCoder_decodeValueOfObjCType_at_(id self, SEL sel,
 		PyErr_SetString(PyExc_TypeError,
 			"Must return a sequence of length 2");
 		Py_DECREF(seq);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
@@ -345,15 +345,15 @@ static void imp_NSCoder_decodeValueOfObjCType_at_(id self, SEL sel,
 		PyErr_SetString(PyExc_TypeError,
 			"returnvalue[0] must be Py_None");
 		Py_DECREF(seq);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
-	err = ObjC_PythonToObjC(signature, 
+	err = PyObjC_PythonToObjC(signature, 
 		PySequence_Fast_GET_ITEM(seq, 1), buf);
 	if (err == -1) {
 		Py_DECREF(seq);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
@@ -380,7 +380,7 @@ static PyObject* call_NSCoder_decodeArrayOfObjCType_count_at_(
 		return NULL;
 	}
 
-	size = ObjC_SizeOfType(signature);
+	size = PyObjC_SizeOfType(signature);
 	if (size == -1) {
 		return NULL;
 	}
@@ -399,7 +399,7 @@ static PyObject* call_NSCoder_decodeArrayOfObjCType_count_at_(
 				@selector(decodeArrayOfObjCType:count:at:),
 				signature, count, buf);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 
 	if (PyErr_Occurred()) {
@@ -412,7 +412,7 @@ static PyObject* call_NSCoder_decodeArrayOfObjCType_count_at_(
 	}
 
 	for (i = 0; i < count; i++) {
-		PyTuple_SET_ITEM(result, i,  ObjC_ObjCToPython(signature, 
+		PyTuple_SET_ITEM(result, i,  PyObjC_ObjCToPython(signature, 
 				((char*)buf) + (size * i)));
 		if (PyTuple_GET_ITEM(result, i) == NULL) {
 			Py_DECREF(result);
@@ -439,13 +439,13 @@ static void imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
-	size = ObjC_SizeOfType(signature);
+	size = PyObjC_SizeOfType(signature);
 	if (size == -1) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
@@ -454,20 +454,20 @@ static void imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(arglist);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	result = PyObjC_CallPython(self, sel, arglist);
 	Py_DECREF(arglist);
 	if (result == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 	seq = PySequence_Fast(result, "Must return a sequence of length 2");
 	if (seq == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
@@ -476,7 +476,7 @@ static void imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 		PyErr_SetString(PyExc_TypeError,
 			"Must return a sequence of length 2");
 		Py_DECREF(seq);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
@@ -484,7 +484,7 @@ static void imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 		PyErr_SetString(PyExc_TypeError,
 			"returnvalue[0] must be Py_None");
 		Py_DECREF(seq);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
@@ -493,7 +493,7 @@ static void imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 		PyErr_SetString(PyExc_TypeError,
 			"returnvalue[1] must be a sequence");
 		Py_DECREF(seq);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 	Py_DECREF(seq);
@@ -502,18 +502,18 @@ static void imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 		PyErr_SetString(PyExc_TypeError,
 			"returnvalue[1] must be a of correct size");
 		Py_DECREF(values);
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 		return;
 	}
 
 
 	for (i = 0; (unsigned)i < count; i++) {
-		res = ObjC_PythonToObjC(signature, 
+		res = PyObjC_PythonToObjC(signature, 
 			PySequence_Fast_GET_ITEM(values, i),
 			((char*)buf)+(i*size));
 		if (res == -1) {
 			Py_DECREF(values);
-			ObjCErr_ToObjC();
+			PyObjCErr_ToObjC();
 		}
 	}
 	Py_DECREF(values);
@@ -523,7 +523,7 @@ int _pyobjc_install_NSCoder(void)
 {
   Class classNSCoder = objc_lookUpClass("NSCoder");
   
-  if (ObjC_RegisterMethodMapping(
+  if (PyObjC_RegisterMethodMapping(
 	 classNSCoder,
 	 @selector(encodeArrayOfObjCType:count:at:),
 	 call_NSCoder_encodeArrayOfObjCType_count_at_,
@@ -532,7 +532,7 @@ int _pyobjc_install_NSCoder(void)
     	@"Error occurred while installing NSCoder bridge method -encodeArrayOfObjCType:count:at:");
     return -1;
   }
-  if (ObjC_RegisterMethodMapping(
+  if (PyObjC_RegisterMethodMapping(
 	 classNSCoder,
 	 @selector(encodeValueOfObjCType:at:),
 	 call_NSCoder_encodeValueOfObjCType_at_,
@@ -541,7 +541,7 @@ int _pyobjc_install_NSCoder(void)
     return -1;
   }
 
-  if (ObjC_RegisterMethodMapping(
+  if (PyObjC_RegisterMethodMapping(
 	 classNSCoder,
 	 @selector(decodeArrayOfObjCType:count:at:),
 	 call_NSCoder_decodeArrayOfObjCType_count_at_,
@@ -551,7 +551,7 @@ int _pyobjc_install_NSCoder(void)
     return -1;
   }
 
-  if (ObjC_RegisterMethodMapping(
+  if (PyObjC_RegisterMethodMapping(
 	 classNSCoder,
 	 @selector(decodeValueOfObjCType:at:),
 	 call_NSCoder_decodeValueOfObjCType_at_,

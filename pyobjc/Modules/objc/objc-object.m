@@ -264,9 +264,9 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 
 	namestr = PyString_AS_STRING(name);
 	NS_DURING
-		res = ObjCSelector_FindNative(obj, namestr);
+		res = PyObjCSelector_FindNative(obj, namestr);
 	NS_HANDLER
-		ObjCErr_FromObjC(localException);
+		PyObjCErr_FromObjC(localException);
 		res = NULL;
 	NS_ENDHANDLER
 

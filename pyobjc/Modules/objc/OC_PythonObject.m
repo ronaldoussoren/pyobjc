@@ -67,7 +67,7 @@
 		err = depythonify_c_value ("@", repr, &result);
 		Py_DECREF (repr);
 		if (err == -1) {
-			ObjCErr_ToObjC();		
+			PyObjCErr_ToObjC();		
 			return @"a python object";
 		}
 		return result;
@@ -224,7 +224,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	char*              retbuffer;
 
 	if (retsize == -1) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 	}
 	
 	retbuffer = alloca(retsize);
@@ -250,7 +250,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	argcount = [msign numberOfArguments];
 	args = PyTuple_New(argcount-2);
 	if (args == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 	}
 	for (i=2; i< argcount; i++) {
 		const char *argtype;
@@ -264,14 +264,14 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 		argsize = objc_sizeof_type(argtype);
 		if (argsize == -1) {
-			ObjCErr_ToObjC();
+			PyObjCErr_ToObjC();
 		}
 		argbuffer = alloca (argsize);
 		[invocation getArgument:argbuffer atIndex:i];
 		pyarg = pythonify_c_value (argtype, argbuffer);
 		if (pyarg == NULL) {
 			Py_DECREF(args);
-			ObjCErr_ToObjC();
+			PyObjCErr_ToObjC();
 			return;
 		}
 
@@ -281,12 +281,12 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	Py_DECREF(args);
 
 	if (result == NULL) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 	}
 
 	err = depythonify_c_value (rettype, result, retbuffer);
 	if (err == -1) {
-		ObjCErr_ToObjC();
+		PyObjCErr_ToObjC();
 	} else {
 		[invocation setReturnValue:retbuffer];
 	}
