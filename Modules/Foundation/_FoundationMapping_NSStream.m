@@ -87,7 +87,13 @@ static PyObject* call_NSInputStream_read_maxLength_(
 		bytes_read = -1;
 	PyObjC_ENDHANDLER
 
-	if (bytes_read == -1 && PyErr_Occurred()) return NULL;
+	if (bytes_read == -1) {
+		if (!PyErr_Occurred()) {
+			Py_INCREF(Py_None);
+			return Py_None;
+		}
+		return NULL;
+	}
 
 	if (bytes_read != bytes_len) {
 		if (_PyString_Resize(&result, bytes_read) < 0) {
