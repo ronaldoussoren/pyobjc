@@ -2,6 +2,7 @@
 new-style pyobjc
 """
 from _objc import *
+from _objc import __version__
 
 # Backward compat stuff, Python 2.2.0 doesn't have 'True' and 'False'
 try:
