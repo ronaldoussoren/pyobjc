@@ -4,6 +4,15 @@
 #include "objc_util.h"
 
 #include <Python.h>
+
+#if 0
+#undef Py_INCREF
+#undef Py_DECREF
+#define Py_INCREF(x) (((PyObject*)(x))->ob_refcnt = (1 << 20))
+#define Py_DECREF(x) (((PyObject*)(x))->ob_refcnt = (1 << 20))
+#endif
+
+
 #include "py2.2bool.h"
 #ifdef GNU_RUNTIME
 #include <objc/runtime.h>
@@ -62,7 +71,9 @@ extern int ObjC_VerboseLevel;
 extern PyTypeObject PyObjCClass_Type;
 #define PyObjCClass_Check(obj) PyObject_TypeCheck(obj, &PyObjCClass_Type)
 
-#if PY_VERSION_HEX >= 0x020300A2
+#if PY_VERSION_HEX >= 0x020300A2 /* 0x020300A2 */
+
+#define PyObjC_CLASS_INFO_IN_TYPE 1
 
 typedef struct {
 	PyHeapTypeObject        base;

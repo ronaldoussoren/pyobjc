@@ -315,7 +315,7 @@ def process_function(fp, protostr):
 	retval, funcname, arguments = parse_prototype(protostr)
 
 	fp.write("/* %s */\n"%protostr)
-	fp.write("PyObject* objc_%s(PyObject* self, PyObject* args, PyObject* kwds)\n"%funcname)
+	fp.write("static PyObject* objc_%s(PyObject* self, PyObject* args, PyObject* kwds)\n"%funcname)
 	fp.write("{\n")
 	keywords = [ a[1] for a in arguments ]
 	keywords = '", "'.join(keywords)

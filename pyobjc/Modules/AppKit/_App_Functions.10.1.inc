@@ -102,7 +102,7 @@ static inline int convert_Class(PyObject* object, void* pvar)
 }
 
 /* BOOL NSShowsServicesMenuItem(NSString * itemName); */
-PyObject* objc_NSShowsServicesMenuItem(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSShowsServicesMenuItem(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "itemName", NULL };
 	PyObject* result;
@@ -122,7 +122,7 @@ objc_itemName);
 	return result;
 }
 /* int NSSetShowsServicesMenuItem(NSString * itemName, BOOL enabled); */
-PyObject* objc_NSSetShowsServicesMenuItem(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSSetShowsServicesMenuItem(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "itemName", "enabled", NULL };
 	PyObject* result;
@@ -143,7 +143,7 @@ objc_itemName, objc_enabled);
 	return result;
 }
 /* void NSUpdateDynamicServices(void); */
-PyObject* objc_NSUpdateDynamicServices(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSUpdateDynamicServices(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 	PyObject* result;
@@ -161,7 +161,7 @@ static	char* keywords[] = { NULL };
 	return result;
 }
 /* BOOL NSPerformService(NSString *itemName, NSPasteboard *pboard); */
-PyObject* objc_NSPerformService(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSPerformService(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "itemName", "pboard", NULL };
 	PyObject* result;
@@ -182,7 +182,7 @@ objc_itemName, objc_pboard);
 	return result;
 }
 /* void NSRegisterServicesProvider(id provider, NSString *name); */
-PyObject* objc_NSRegisterServicesProvider(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRegisterServicesProvider(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "provider", "name", NULL };
 	PyObject* result;
@@ -202,7 +202,7 @@ objc_provider, objc_name);
 	return result;
 }
 /* void NSUnregisterServicesProvider(NSString *name); */
-PyObject* objc_NSUnregisterServicesProvider(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSUnregisterServicesProvider(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "name", NULL };
 	PyObject* result;
@@ -221,7 +221,7 @@ objc_name);
 	return result;
 }
 /* BOOL NSPlanarFromDepth (NSWindowDepth depth); */
-PyObject* objc_NSPlanarFromDepth(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSPlanarFromDepth(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "depth", NULL };
 	PyObject* result;
@@ -241,7 +241,7 @@ objc_depth);
 	return result;
 }
 /* NSString *NSColorSpaceFromDepth (NSWindowDepth depth); */
-PyObject* objc_NSColorSpaceFromDepth(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSColorSpaceFromDepth(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "depth", NULL };
 	PyObject* result;
@@ -260,7 +260,7 @@ objc_depth);
 	return result;
 }
 /* int NSBitsPerSampleFromDepth (NSWindowDepth depth); */
-PyObject* objc_NSBitsPerSampleFromDepth(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSBitsPerSampleFromDepth(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "depth", NULL };
 	PyObject* result;
@@ -280,7 +280,7 @@ objc_depth);
 	return result;
 }
 /* int NSBitsPerPixelFromDepth (NSWindowDepth depth); */
-PyObject* objc_NSBitsPerPixelFromDepth(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSBitsPerPixelFromDepth(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "depth", NULL };
 	PyObject* result;
@@ -300,7 +300,7 @@ objc_depth);
 	return result;
 }
 /* int NSNumberOfColorComponents (NSString *colorSpaceName); */
-PyObject* objc_NSNumberOfColorComponents(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSNumberOfColorComponents(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "colorSpaceName", NULL };
 	PyObject* result;
@@ -320,7 +320,7 @@ objc_colorSpaceName);
 	return result;
 }
 /* void NSRectFill(NSRect aRect); */
-PyObject* objc_NSRectFill(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRectFill(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
@@ -339,7 +339,7 @@ objc_aRect);
 	return result;
 }
 /* void NSRectFillUsingOperation(NSRect aRect, NSCompositingOperation op); */
-PyObject* objc_NSRectFillUsingOperation(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRectFillUsingOperation(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "op", NULL };
 	PyObject* result;
@@ -359,7 +359,7 @@ objc_aRect, objc_op);
 	return result;
 }
 /* void NSFrameRect(NSRect aRect); */
-PyObject* objc_NSFrameRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSFrameRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
@@ -378,7 +378,7 @@ objc_aRect);
 	return result;
 }
 /* void NSFrameRectWithWidth(NSRect aRect, float frameWidth); */
-PyObject* objc_NSFrameRectWithWidth(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSFrameRectWithWidth(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "frameWidth", NULL };
 	PyObject* result;
@@ -398,7 +398,7 @@ objc_aRect, objc_frameWidth);
 	return result;
 }
 /* void NSFrameRectWithWidthUsingOperation(NSRect aRect, float frameWidth, NSCompositingOperation op); */
-PyObject* objc_NSFrameRectWithWidthUsingOperation(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSFrameRectWithWidthUsingOperation(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "frameWidth", "op", NULL };
 	PyObject* result;
@@ -419,7 +419,7 @@ objc_aRect, objc_frameWidth, objc_op);
 	return result;
 }
 /* void NSRectClip(NSRect aRect); */
-PyObject* objc_NSRectClip(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRectClip(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
@@ -438,7 +438,7 @@ objc_aRect);
 	return result;
 }
 /* void NSDrawGrayBezel(NSRect aRect, NSRect clipRect); */
-PyObject* objc_NSDrawGrayBezel(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSDrawGrayBezel(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "clipRect", NULL };
 	PyObject* result;
@@ -458,7 +458,7 @@ objc_aRect, objc_clipRect);
 	return result;
 }
 /* void NSDrawGroove(NSRect aRect, NSRect clipRect); */
-PyObject* objc_NSDrawGroove(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSDrawGroove(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "clipRect", NULL };
 	PyObject* result;
@@ -478,7 +478,7 @@ objc_aRect, objc_clipRect);
 	return result;
 }
 /* void NSDrawWhiteBezel(NSRect aRect, NSRect clipRect); */
-PyObject* objc_NSDrawWhiteBezel(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSDrawWhiteBezel(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "clipRect", NULL };
 	PyObject* result;
@@ -498,7 +498,7 @@ objc_aRect, objc_clipRect);
 	return result;
 }
 /* void NSDrawButton(NSRect aRect, NSRect clipRect); */
-PyObject* objc_NSDrawButton(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSDrawButton(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "clipRect", NULL };
 	PyObject* result;
@@ -518,7 +518,7 @@ objc_aRect, objc_clipRect);
 	return result;
 }
 /* void NSEraseRect(NSRect aRect); */
-PyObject* objc_NSEraseRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSEraseRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
@@ -537,7 +537,7 @@ objc_aRect);
 	return result;
 }
 /* NSColor *NSReadPixel(NSPoint passedPoint); */
-PyObject* objc_NSReadPixel(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSReadPixel(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "passedPoint", NULL };
 	PyObject* result;
@@ -558,7 +558,7 @@ objc_passedPoint);
 
 #if 0 /* Compiles but doesn't link? */
 /* void NSCopyBitmapFromGState(int srcGState, NSRect srcRect, NSRect destRect); */
-PyObject* objc_NSCopyBitmapFromGState(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSCopyBitmapFromGState(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "srcGState", "srcRect", "destRect", NULL };
 	PyObject* result;
@@ -580,7 +580,7 @@ objc_srcGState, objc_srcRect, objc_destRect);
 }
 #endif
 /* void NSCopyBits(int srcGState, NSRect srcRect, NSPoint destPoint); */
-PyObject* objc_NSCopyBits(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSCopyBits(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "srcGState", "srcRect", "destPoint", NULL };
 	PyObject* result;
@@ -601,7 +601,7 @@ objc_srcGState, objc_srcRect, objc_destPoint);
 	return result;
 }
 /* void NSHighlightRect(NSRect aRect); */
-PyObject* objc_NSHighlightRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSHighlightRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
@@ -620,7 +620,7 @@ objc_aRect);
 	return result;
 }
 /* void NSBeep(void); */
-PyObject* objc_NSBeep(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSBeep(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { NULL };
 	PyObject* result;
@@ -638,7 +638,7 @@ static	char* keywords[] = { NULL };
 	return result;
 }
 /* void NSDrawDarkBezel(NSRect aRect, NSRect clipRect); */
-PyObject* objc_NSDrawDarkBezel(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSDrawDarkBezel(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "clipRect", NULL };
 	PyObject* result;
@@ -658,7 +658,7 @@ objc_aRect, objc_clipRect);
 	return result;
 }
 /* void NSDrawLightBezel(NSRect aRect, NSRect clipRect); */
-PyObject* objc_NSDrawLightBezel(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSDrawLightBezel(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", "clipRect", NULL };
 	PyObject* result;
@@ -678,7 +678,7 @@ objc_aRect, objc_clipRect);
 	return result;
 }
 /* void NSDottedFrameRect(NSRect aRect); */
-PyObject* objc_NSDottedFrameRect(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSDottedFrameRect(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
@@ -697,7 +697,7 @@ objc_aRect);
 	return result;
 }
 /* void NSDrawWindowBackground(NSRect aRect); */
-PyObject* objc_NSDrawWindowBackground(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSDrawWindowBackground(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "aRect", NULL };
 	PyObject* result;
@@ -716,7 +716,7 @@ objc_aRect);
 	return result;
 }
 /* void NSSetFocusRingStyle(NSFocusRingPlacement placement); */
-PyObject* objc_NSSetFocusRingStyle(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSSetFocusRingStyle(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "placement", NULL };
 	PyObject* result;
@@ -735,7 +735,7 @@ objc_placement);
 	return result;
 }
 /* NSInterfaceStyle NSInterfaceStyleForKey(NSString *key, NSResponder *responder); */
-PyObject* objc_NSInterfaceStyleForKey(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSInterfaceStyleForKey(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "key", "responder", NULL };
 	PyObject* result;
@@ -756,7 +756,7 @@ objc_key, objc_responder);
 	return result;
 }
 /* int NSRunAlertPanel(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...); */
-PyObject* objc_NSRunAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRunAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", "otherButton", NULL };
 	PyObject* result;
@@ -780,7 +780,7 @@ objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton
 	return result;
 }
 /* int NSRunInformationalAlertPanel(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...); */
-PyObject* objc_NSRunInformationalAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRunInformationalAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", "otherButton", NULL };
 	PyObject* result;
@@ -804,7 +804,7 @@ objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton
 	return result;
 }
 /* int NSRunCriticalAlertPanel(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...); */
-PyObject* objc_NSRunCriticalAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRunCriticalAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", "otherButton", NULL };
 	PyObject* result;
@@ -828,7 +828,7 @@ objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton
 	return result;
 }
 /* int NSRunAlertPanelRelativeToWindow(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, ...); */
-PyObject* objc_NSRunAlertPanelRelativeToWindow(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRunAlertPanelRelativeToWindow(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", "otherButton", "docWindow", NULL };
 	PyObject* result;
@@ -853,7 +853,7 @@ objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton
 	return result;
 }
 /* int NSRunInformationalAlertPanelRelativeToWindow(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, ...); */
-PyObject* objc_NSRunInformationalAlertPanelRelativeToWindow(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRunInformationalAlertPanelRelativeToWindow(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", "otherButton", "docWindow", NULL };
 	PyObject* result;
@@ -878,7 +878,7 @@ objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton
 	return result;
 }
 /* int NSRunCriticalAlertPanelRelativeToWindow(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, ...); */
-PyObject* objc_NSRunCriticalAlertPanelRelativeToWindow(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSRunCriticalAlertPanelRelativeToWindow(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", "otherButton", "docWindow", NULL };
 	PyObject* result;
@@ -903,7 +903,7 @@ objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton
 	return result;
 }
 /* void NSBeginAlertSheet(NSString *title, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, id modalDelegate, SEL didEndSelector, SEL didDismissSelector, void *contextInfo, NSString *msg, ...); */
-PyObject* objc_NSBeginAlertSheet(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSBeginAlertSheet(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "title", "defaultButton", "alternateButton", "otherButton", "docWindow", "modalDelegate", "didEndSelector", "didDismissSelector", "contextInfo", "msg", NULL };
 	PyObject* result;
@@ -931,7 +931,7 @@ objc_title, objc_defaultButton, objc_alternateButton, objc_otherButton, objc_doc
 	return result;
 }
 /* void NSBeginInformationalAlertSheet(NSString *title, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, id modalDelegate, SEL didEndSelector, SEL didDismissSelector, void *contextInfo, NSString *msg, ...); */
-PyObject* objc_NSBeginInformationalAlertSheet(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSBeginInformationalAlertSheet(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "title", "defaultButton", "alternateButton", "otherButton", "docWindow", "modalDelegate", "didEndSelector", "didDismissSelector", "contextInfo", "msg", NULL };
 	PyObject* result;
@@ -959,7 +959,7 @@ objc_title, objc_defaultButton, objc_alternateButton, objc_otherButton, objc_doc
 	return result;
 }
 /* void NSBeginCriticalAlertSheet(NSString *title, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, id modalDelegate, SEL didEndSelector, SEL didDismissSelector, void *contextInfo, NSString *msg, ...); */
-PyObject* objc_NSBeginCriticalAlertSheet(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSBeginCriticalAlertSheet(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "title", "defaultButton", "alternateButton", "otherButton", "docWindow", "modalDelegate", "didEndSelector", "didDismissSelector", "contextInfo", "msg", NULL };
 	PyObject* result;
@@ -987,7 +987,7 @@ objc_title, objc_defaultButton, objc_alternateButton, objc_otherButton, objc_doc
 	return result;
 }
 /* id NSGetAlertPanel(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...); */
-PyObject* objc_NSGetAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSGetAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", "otherButton", NULL };
 	PyObject* result;
@@ -1010,7 +1010,7 @@ objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton
 	return result;
 }
 /* id NSGetInformationalAlertPanel(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...); */
-PyObject* objc_NSGetInformationalAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSGetInformationalAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", "otherButton", NULL };
 	PyObject* result;
@@ -1033,7 +1033,7 @@ objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton
 	return result;
 }
 /* id NSGetCriticalAlertPanel(NSString *title, NSString *msg, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...); */
-PyObject* objc_NSGetCriticalAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSGetCriticalAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "title", "msg", "defaultButton", "alternateButton", "otherButton", NULL };
 	PyObject* result;
@@ -1056,7 +1056,7 @@ objc_title, objc_msg, objc_defaultButton, objc_alternateButton, objc_otherButton
 	return result;
 }
 /* void NSReleaseAlertPanel(id panel); */
-PyObject* objc_NSReleaseAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSReleaseAlertPanel(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "panel", NULL };
 	PyObject* result;
@@ -1075,7 +1075,7 @@ objc_panel);
 	return result;
 }
 /* NSString *NSCreateFilenamePboardType(NSString *fileType); */
-PyObject* objc_NSCreateFilenamePboardType(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSCreateFilenamePboardType(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "fileType", NULL };
 	PyObject* result;
@@ -1094,7 +1094,7 @@ objc_fileType);
 	return result;
 }
 /* NSString *NSCreateFileContentsPboardType(NSString *fileType); */
-PyObject* objc_NSCreateFileContentsPboardType(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSCreateFileContentsPboardType(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "fileType", NULL };
 	PyObject* result;
@@ -1113,7 +1113,7 @@ objc_fileType);
 	return result;
 }
 /* NSString *NSGetFileType(NSString *pboardType); */
-PyObject* objc_NSGetFileType(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSGetFileType(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "pboardType", NULL };
 	PyObject* result;
@@ -1132,7 +1132,7 @@ objc_pboardType);
 	return result;
 }
 /* NSArray *NSGetFileTypes(NSArray *pboardTypes); */
-PyObject* objc_NSGetFileTypes(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* objc_NSGetFileTypes(PyObject* self, PyObject* args, PyObject* kwds)
 {
 static	char* keywords[] = { "pboardTypes", NULL };
 	PyObject* result;

@@ -36,7 +36,7 @@ static int add_class_fields(Class objc_class, PyObject* dict);
  * the type struct.
  */
 
-#if PY_VERSION_HEX < 0x020300A2 /* Python 2.2 and early 2.3 alpha's */
+#ifndef PyObjC_CLASS_INFO_IN_TYPE
 
 typedef struct {
 	Class	  class;
@@ -70,7 +70,8 @@ get_class_info(PyObject* class)
 		return (PyObjC_class_info*)item;
 	}
 
-	info = PyMem_Malloc(sizeof(*item));
+	info = malloc(sizeof(PyObjC_class_info));
+	//printf("malloc(%d) == %p for %s\n", (int)sizeof(PyObjC_class_info), info, ((PyTypeObject*)class)->tp_name);
 	if (info == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -79,13 +80,16 @@ get_class_info(PyObject* class)
 	info->class     = nil;
 	info->sel_to_py = NULL;
 	info->method_magic = 0;
+	info->dictoffset = 0;
+	info->delmethod = NULL ;
+	info->hasPythonImpl = 0;
 
 	Py_INCREF(class); 
 	NSMapInsert(class_to_objc, class, info);
 	return info;
 }
 
-#else /* Python >= 2.3 */
+#else /* defined PyObjC_CLASS_INFO_IN_TYPE */
 
 /* NOTE: This requires a version that more recent that 2.3a2 */
 
@@ -93,7 +97,7 @@ get_class_info(PyObject* class)
 #define PyObjC_class_info PyObjCClassObject
 
 
-#endif /* Python >= 2.3 */
+#endif /* defined PyObjC_CLASS_INFO_IN_TYPE */
 
 
 /* 
@@ -269,6 +273,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
+#if 0
 	delmethod = PyDict_GetItemString(dict, "__del__");
 	if (delmethod == NULL) {
 		PyErr_Clear();
@@ -281,6 +286,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			return NULL;
 		}
 	}
+#endif
 
 
 
@@ -306,7 +312,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 	Py_DECREF(args);
-	Py_DECREF(real_bases);
+	//Py_DECREF(real_bases);
 	args = NULL;
 	real_bases = NULL;
 
@@ -445,6 +451,7 @@ PyObjCClass_CheckMethodList(PyObject* cls)
 			}
 		}
 
+		//break;
 		if (info->class->super_class == NULL) break;
 		cls = PyObjCClass_New(info->class->super_class);
 		info = get_class_info(cls);
@@ -727,7 +734,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 					name,
 					descr) != 0) {
 
-				Py_DECREF(descr); 
+				//Py_DECREF(descr); 
 				return -1;
 			}
 			Py_DECREF(descr); 
@@ -771,7 +778,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			if (PyDict_SetItemString(dict, 
 					selbuf,
 					descr) != 0) {
-				Py_DECREF(descr);
+				//Py_DECREF(descr);
 				return -1;
 			}
 			Py_DECREF(descr);
@@ -800,7 +807,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			}
 			if (PyDict_SetItemString(dict, 
 					var->ivar_name, descr) != 0) {
-				Py_DECREF(descr);
+				//Py_DECREF(descr);
 				return -1;
 			}
 			Py_DECREF(descr);
@@ -830,12 +837,14 @@ PyObjCClass_New(Class objc_class)
 	PyObjC_class_info* info;
 	IVAR var;
 
+	//printf("objc-class-new %p %s\n", objc_class, objc_class->name);
+
 	result = objc_class_locate(objc_class);
 	if (result != NULL) {
+		//printf("direct %s\n",  objc_class->name);
 		Py_INCREF(result);
 		return result;
 	}
-	PyErr_Clear();
 
 	dict = PyDict_New();
 	PyDict_SetItemString(dict, "__slots__", PyTuple_New(0));
@@ -873,7 +882,7 @@ PyObjCClass_New(Class objc_class)
 	info->sel_to_py = PyDict_New(); 
 	info->method_magic = 0;
 	info->dictoffset = 0;
-	info->delmethod = 0;
+	info->delmethod = NULL;
 	info->hasPythonImpl = 0;
 
 	var = class_getInstanceVariable(objc_class, "__dict__");

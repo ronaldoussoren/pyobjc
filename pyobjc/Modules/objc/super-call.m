@@ -11,7 +11,6 @@
  * two classes contain lots of functions because the normal runtime doesn't
  * allow for dynamicly creating these types of calls (see also: register.m)
  */
-#include <Python.h>
 #include "pyobjc.h"
 #include "objc_support.h"
 #include "super-call.h"
@@ -230,7 +229,7 @@ ObjC_CallFunc_t ObjC_FindCallFunc(Class class, SEL sel)
 {
 	struct registry* special;
 
-	if (special_registry == NULL) ObjC_FFICaller;
+	if (special_registry == NULL) return ObjC_FFICaller;
 
 	special = search_special(class, sel);
 	if (special) {

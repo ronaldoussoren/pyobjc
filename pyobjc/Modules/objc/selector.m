@@ -346,7 +346,7 @@ static PyGetSetDef base_getset[] = {
 };
 
 
-void
+static void
 sel_dealloc(PyObject* object)
 {
 	ObjCSelector* self = (ObjCSelector*)object;	
