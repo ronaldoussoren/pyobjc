@@ -76,6 +76,12 @@ class ClassInfo:
 
 	__slots__ = ("nibs", "name", "super", "actions", "outlets")
 
+        def __repr__(self):
+            items = self.__dict__.items()
+            items.sort()
+            return self.__class__.__name__ + "(" + \
+                ", ".join([ "%s=%s"%i for i in items ]) + ")"
+
 	def merge(self, other):
 		assert self.name == other.name
 		if self.super != other.super:
@@ -278,18 +284,18 @@ class NibInfo(object):
 			writer.writeln("# the actual base class is %s" % clsInfo.super)
 			outlets = clsInfo.outlets
 			actions = clsInfo.actions
+                        if outlets:
+                                writer.writeln("# The following outlets are added to the class:")
+                                outlets.sort()
+                                for o in outlets:
+                                        writer.writeln("# %s" % o)
+                                        #writer.writeln("%s = ivar('%s')" % (o, o))
+                                writer.writeln()
 			if not actions:
 				writer.writeln("pass")
 				writer.writeln()
 			else:
 				writer.writeln()
-				if outlets:
-					writer.writeln("# The following outlets are added to the class:")
-					outlets.sort()
-					for o in outlets:
-						writer.writeln("# %s" % o)
-						#writer.writeln("%s = ivar('%s')" % (o, o))
-					writer.writeln()
 				if actions:
 					actions.sort()
 					for a in actions:
