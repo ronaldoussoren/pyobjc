@@ -5,6 +5,24 @@
 
 WHAT'S NEW:
 
+Version 2002-01-30 (January 30, 2002):
+
+- Version bumped to 0.6.1 ( __version__ is now a PyString )
+
+- Will now build for Python 2.2
+
+- added Cocoa package with Foundation.py and AppKit.py wrappers.
+
+- HelloWorld.py in Examples
+
+- builds with -g flag for debugging. -v option will dump log
+  of message sends to /tmp file.
+
+- Fixed one major runtime bug: added ISCLASS test before isKindOfClass -
+  without check, it crashes on sends to abstract classes like NSProxy.
+
+- There are still problems with Delegates and Notifications. 
+
 Version 2001-03-17 (March 17, 2001):
 
 - moved to using distutils setup.py (requires small patch to distutils
