@@ -7,10 +7,16 @@ Custom 'sdist' action for setup.py
 # should be removed.
 from distutils.command.sdist import sdist as sdist_base
 
-class cmd_sdist (sdist_base):
+class sdist (sdist_base):
+
+    def run(self):
+        self.run_command('build_html')
+        sdist_base.run(self)
 
     def prune_file_list(self):
         sdist_base.prune_file_list(self)
         self.filelist.exclude_pattern(r'/\.svn/.*$', is_regex=1)
         self.filelist.exclude_pattern(r'/build/.*$', is_regex=1)
         self.filelist.exclude_pattern(r'/.*~\.nib/.*$', is_regex=1)
+
+cmdclass = dict(sdist=sdist)
