@@ -98,7 +98,7 @@ static PyObject* call_NSBezierPath_appendBezierPathWithPoints_count_(
 	int count;
 	int i;
 	
-	if  (!PyArg_ParseTuple(arguments, "OiO&", &pointList, &count)) {
+	if  (!PyArg_ParseTuple(arguments, "Oi", &pointList, &count)) {
 		return NULL;
 	}
 
