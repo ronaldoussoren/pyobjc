@@ -1252,6 +1252,34 @@ pysel_dealloc(PyObject* obj)
 	sel_dealloc(obj);
 }
 
+PyDoc_STRVAR(pysel_get_callable_doc, 
+"Returns the python 'function' that implements this method.\n"
+"\n"
+);
+static PyObject*
+pysel_get_callable(ObjCPythonSelector* self, void* closure __attribute__((__unused__)))
+{
+	Py_INCREF(self->callable);
+	return self->callable;
+}
+
+static PyGetSetDef pysel_getset[] = {
+	{
+		"callable",
+		(getter)pysel_get_callable,
+		(setter)NULL,
+		pysel_get_callable_doc,
+		0
+	},
+	{
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		0
+	}
+};
+
 PyTypeObject ObjCPythonSelector_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)
 	0,					/* ob_size */
@@ -1284,7 +1312,7 @@ PyTypeObject ObjCPythonSelector_Type = {
 	0,					/* tp_iternext */
 	0,					/* tp_methods */
 	0,					/* tp_members */
-	0,					/* tp_getset */
+	pysel_getset,				/* tp_getset */
 	&PyObjCSelector_Type,			/* tp_base */
 	0,					/* tp_dict */
 	(descrgetfunc)pysel_descr_get,		/* tp_descr_get */
