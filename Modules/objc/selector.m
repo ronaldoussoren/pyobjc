@@ -9,6 +9,7 @@
 #include "compile.h" /* from Python */
 #include "pyobjc.h"
 #include "objc_support.h"
+#include <objc/Object.h>
 
 /*
  * First section deals with registering replacement signatures for methods.
@@ -351,7 +352,6 @@ sel_dealloc(PyObject* object)
 {
 	PyObjCSelector* self = (PyObjCSelector*)object;	
 
-	/* HACK */
 	if (ObjCNativeSelector_Check(self)) {
 		[((ObjCNativeSelector*)self)->sel_oc_signature release];
 	}
@@ -619,8 +619,12 @@ objcsel_descr_get(ObjCNativeSelector* meth, PyObject* obj, PyObject* class)
 	result->sel_call_func = meth->sel_call_func;
 
 	if (meth->sel_oc_signature == NULL) {
-		meth->sel_oc_signature = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
-		[meth->sel_oc_signature retain];
+		NS_DURING
+			meth->sel_oc_signature = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
+			[meth->sel_oc_signature retain];
+		NS_HANDLER
+			meth->sel_oc_signature = nil;
+		NS_ENDHANDLER
 	}
 	result->sel_oc_signature = meth->sel_oc_signature;
 	[result->sel_oc_signature retain];
@@ -712,7 +716,8 @@ typestr_from_NSMethodSignature(NSMethodSignature* sig, char* buf, size_t buflen)
 
 	return result;
 }
-	
+
+static Class Object_class = nil;
 
 PyObject*
 PyObjCSelector_FindNative(PyObject* self, char* name)
@@ -721,6 +726,10 @@ PyObjCSelector_FindNative(PyObject* self, char* name)
 
 	NSMethodSignature* methsig;
 	char  buf[1024];
+
+	if (Object_class == nil) {
+		Object_class = [Object class];
+	}
 
 	if (PyObjCClass_Check(self)) {
 		Class cls = PyObjCClass_GetClass(self);
@@ -743,7 +752,7 @@ PyObjCSelector_FindNative(PyObject* self, char* name)
 			methsig = [cls instanceMethodSignatureForSelector:sel];
 			return PyObjCSelector_NewNative(cls, sel, 
 				typestr_from_NSMethodSignature(methsig, buf, sizeof(buf)), 0);
-		} else if (nil != (methsig = [cls methodSignatureForSelector:sel])) {
+		} else if ((cls != Object_class) && nil != (methsig = [cls methodSignatureForSelector:sel])) {
 			return PyObjCSelector_NewNative(cls, sel, 
 				typestr_from_NSMethodSignature(methsig, buf, sizeof(buf)), 1);
 		} else {
@@ -782,7 +791,6 @@ PyObjCSelector_FindNative(PyObject* self, char* name)
 }
 
 
-
 PyObject*
 PyObjCSelector_NewNative(Class class, 
 			SEL selector, char* signature, int class_method)
@@ -817,9 +825,10 @@ PyObjCSelector_NewNative(Class class,
 
 PyObject*
 PyObjCSelector_New(PyObject* callable, 
-	SEL selector, char* signature, int class_method)
+	SEL selector, char* signature, int class_method, Class cls)
 {
 	ObjCPythonSelector* result;
+
 
 	result = PyObject_New(ObjCPythonSelector, &ObjCPythonSelector_Type);
 	if (result == NULL) return NULL;
@@ -835,7 +844,7 @@ PyObjCSelector_New(PyObject* callable,
 		}
 	}
 	result->sel_self = NULL;
-	result->sel_class = NULL;
+	result->sel_class = cls;
 	result->sel_flags = 0;
 	result->callable = callable;
 	if (class_method) {
@@ -862,13 +871,15 @@ pysel_repr(ObjCPythonSelector* sel)
 	if (sel->sel_self == NULL) {
 		if (sel->sel_class) {
 			snprintf(buf, sizeof(buf),
-				"<unbound selector %s of %s>", 
+				"<unbound selector %s of %s at %p>", 
 				SELNAME(sel->sel_selector),
-				sel->sel_class->name);
+				sel->sel_class->name, 
+				sel);
 		} else {
 			snprintf(buf, sizeof(buf),
-				"<unbound selector %s>", 
-				SELNAME(sel->sel_selector));
+				"<unbound selector %s at %p>", 
+				SELNAME(sel->sel_selector),
+				sel);
 		}
 	} else {
 		PyObject* selfrepr = PyObject_Repr(sel->sel_self);
@@ -1237,6 +1248,7 @@ static void
 pysel_dealloc(PyObject* obj)
 {
 	Py_DECREF(((ObjCPythonSelector*)obj)->callable);
+	(((ObjCPythonSelector*)obj)->callable) = NULL;
 	sel_dealloc(obj);
 }
 

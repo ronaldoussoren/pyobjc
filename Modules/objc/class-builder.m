@@ -428,6 +428,12 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		method_count      += 4;
 	}
 
+	/* Allocate the class as soon as possible, for new selector objects */
+	new_class = calloc(1, sizeof(struct class_wrapper));
+	if (new_class == NULL) {
+		goto error_cleanup;
+	}
+
 	/* First round, count new instance-vars and check for overridden 
 	 * methods.
 	 */
@@ -486,6 +492,10 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				method_count ++;
 			}
 
+			/* TODO: If it already has a sel_class, create a copy */
+			((PyObjCSelector*)value)->sel_class =
+				&new_class->class;
+
 		} else if (PyMethod_Check(value) || PyFunction_Check(value)) {
 			PyObject* pyname;
 			char*     ocname;
@@ -530,7 +540,9 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 					value, 
 					selector, 
 					PyObjCSelector_Signature(super_sel),
-					is_class_method);
+					is_class_method,
+					&new_class->class);
+				new_class->class.name = "TempValue";
 				Py_DECREF(super_sel);
 			} else {
 				char* signature;
@@ -541,7 +553,8 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 					value, 
 					selector, 
 					signature,
-					0);
+					0,
+					&new_class->class);
 			}
 			if (value == NULL) goto error_cleanup;
 				
@@ -597,6 +610,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 	/* And fill the method_lists and ivar_list */
 
+#if 0
 	/* Create new_class here, just in case we are the first python
 	 * generation, in which case we need to use new_class (it must just
 	 * be there, it doesn't have to be initialized)
@@ -605,6 +619,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	if (new_class == NULL) {
 		goto error_cleanup;
 	}
+#endif
 
 
 	ivar_size = super_class->instance_size;
@@ -1283,12 +1298,17 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist)
 	PyObject* result;
 
 
-	pyself = PyObjCObject_New(self);
+	pyself = pythonify_c_value("@", &self);
 	if (pyself == NULL) {
 		PyObjCErr_ToObjC();
 		return NULL;
 	}
-	pymeth = PyObjCObject_FindSelector(pyself, selector);
+	
+	if (PyObjCClass_Check(pyself)) {
+		pymeth = PyObjCClass_FindSelector(pyself, selector);
+	} else {
+		pymeth = PyObjCObject_FindSelector(pyself, selector);
+	}
 	if (pymeth == NULL) {
 		Py_DECREF(pyself);
 		PyObjCErr_ToObjC();

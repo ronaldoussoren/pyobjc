@@ -148,6 +148,7 @@ PyObjCRT_SkipTypeSpec (const char *type)
 
 	switch (*type) {
 	/* The following are one character type codes */
+	case _C_UNDEF:
 	case _C_ID:
 	case _C_CLASS:
 	case _C_SEL:
@@ -165,6 +166,7 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	case _C_VOID:
 	case _C_LNGLNG:
 	case _C_ULNGLNG:
+	case _C_BFLD: /* Not really 1 character, but close enough  */
 		++type;
 		break;
 
@@ -173,24 +175,25 @@ PyObjCRT_SkipTypeSpec (const char *type)
     
 		while (isdigit (*++type));
 		type = PyObjCRT_SkipTypeSpec (type);
-		assert (*type == _C_ARY_E);
-		++type;
+		assert (type == NULL || *type == _C_ARY_E);
+		if (type) type++;
 		break;
       
 	case _C_STRUCT_B:
 		/* skip name, and elements until closing '}'  */
-    
-		while (*type != _C_STRUCT_E && *type++ != '=');
-		while (*type != _C_STRUCT_E)
+   		while (*type != _C_STRUCT_E && *type++ != '='); 
+		while (type && *type != _C_STRUCT_E)
 			type = PyObjCRT_SkipTypeSpec (type);
-		++type;
+		if (type) type++;
 		break;
 
 	case _C_UNION_B:
 		/* skip name, and elements until closing ')'  */
-		type++;
-		while (*type != _C_UNION_E) { type = PyObjCRT_SkipTypeSpec (type); }
-		++type;
+   		while (*type != _C_UNION_E && *type++ != '='); 
+		while (type && *type != _C_UNION_E) { 
+			type = PyObjCRT_SkipTypeSpec (type); 
+		}
+		if (type) type++;
 		break;
       
 	case _C_PTR:
@@ -212,7 +215,7 @@ PyObjCRT_SkipTypeSpec (const char *type)
 		return NULL;
 	}
 
-	while (isdigit(*type)) type++;
+	while (type && isdigit(*type)) type++;
 	return type;
 }
 

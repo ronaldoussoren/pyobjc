@@ -983,6 +983,7 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 	int                i;
 	int                len;
 
+
 	if (!PyObjCClass_Check(cls)) {
 		ObjCErr_Set(ObjCExc_internal_error,
 			"PyObjCClass_GetClass called for non-class");

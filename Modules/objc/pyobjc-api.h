@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.13 2003/06/01 19:06:31 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.14 2003/06/05 20:11:52 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -124,11 +124,11 @@ struct pyobjc_api {
 	/* PyObjCBool_FromLong */
 	PyObject*  (*bool_init)(long i);
 
-	/* PyObjC_InitSuper */
+	/* PyObjC_InitSuper */ 	// FIX ME!
 	void	(*fill_super)(struct objc_super*, Class, id);
 
 	/* PyObjC_InitSuperCls */
-	void	(*fill_super_cls)(struct objc_super*, Class);
+	void	(*fill_super_cls)(struct objc_super*, Class, Class);
 };
 
 
