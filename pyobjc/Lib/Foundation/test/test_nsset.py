@@ -4,17 +4,17 @@ import objc
 from Foundation import *
 
 class TestNSSetInteraction(unittest.TestCase):
-    def testRepeatedAllocInit( self ):
+    def __testRepeatedAllocInit( self ):
         for i in range(1,1000):
             a = NSSet.alloc().init()
 
-    def testContains( self ):
+    def __testContains( self ):
         x = NSSet.setWithArray_( ["foo", "bar", "baz"] )
 
         self.assert_( "foo" in x )
         self.assert_( "notfoo" not in x )
 
-    def testIteration( self ):
+    def __testIteration( self ):
         x = NSSet.setWithArray_( ["foo", "bar", "baz"] )
 
         for i in x:

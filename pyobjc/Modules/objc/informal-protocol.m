@@ -259,7 +259,7 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
 }
 
 static PyObject*
-FindSelInDict(PyObject* clsdict, SEL selector)
+findSelInDict(PyObject* clsdict, SEL selector)
 {
 	PyObject* values;
 	PyObject* seq;
@@ -282,6 +282,7 @@ FindSelInDict(PyObject* clsdict, SEL selector)
 		if (PyObjCSelector_GetSelector(v) == selector) {
 			Py_DECREF(seq);
 			Py_DECREF(values);
+			Py_INCREF(v);
 			return v;
 		}
 	}
@@ -290,7 +291,8 @@ FindSelInDict(PyObject* clsdict, SEL selector)
 	return NULL;
 }
 
-static int signaturesEqual(char* sig1, char* sig2)
+static int 
+signaturesEqual(char* sig1, char* sig2)
 {
 	char buf1[1024];
 	char buf2[1024];
@@ -359,12 +361,13 @@ PyObjCInformalProtocol_CheckClass(
 
 		sel = PyObjCSelector_GetSelector(cur);
 
-		m = FindSelInDict(clsdict, sel);
+		m = findSelInDict(clsdict, sel);
 		if (m == NULL) {
 			m = PyObjCClass_FindSelector(super_class, sel);
 		}
 
 		if (m == NULL || !PyObjCSelector_Check(m)) {
+			Py_XDECREF(m);
 			if (PyObjCSelector_Required(cur)) {
 				PyErr_Format(PyExc_TypeError,
 					"class %s does not fully implement "
@@ -393,8 +396,10 @@ PyObjCInformalProtocol_CheckClass(
 					PyObjCSelector_Signature(cur)
 				);
 				Py_DECREF(seq);
+				Py_DECREF(m);
 				return 0;
 			}
+			Py_DECREF(m);
 		}
 	}
 	Py_DECREF(seq);

@@ -11,17 +11,6 @@
 #include <AppKit/AppKit.h>
 #include "pyobjc-api.h"
 
-#ifdef MACOSX 
-
-/* 1. I can't manage to get a working OpenGL on my develbox
- * 2. Need to detect if OpenGL support is present
- */
-
-#include <OpenGL/gl.h>
-
-#endif
-
-
 static int 
 _pyobjc_install_NSOpenGLContext(void)
 {

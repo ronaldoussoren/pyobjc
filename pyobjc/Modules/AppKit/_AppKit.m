@@ -9,7 +9,9 @@
 #import <AppKit/AppKit.h>
 #import <AppKit/NSGraphics.h>
 
+
 #ifdef MACOSX
+#import <CoreFoundation/CoreFoundation.h>
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_2
 #import <AppKit/NSNib.h>
@@ -114,9 +116,11 @@ static	char* keywords[] = { "argv", NULL };
 			anArg++;
 		}
 
-		// Don't release the orignal arguments, unknown whether this 
-		// list is owned by the object.
-		//[((NSProcessInfoStruct *)processInfo)->arguments release]; 
+		/* Don't release the orignal arguments, because we don't know
+		 * if the list is owned by the processInfo object.
+		 *
+		 *[((NSProcessInfoStruct *)processInfo)->arguments release]; 
+		 */
 		((NSProcessInfoStruct *)processInfo)->arguments = newarglist;
 	}
 #endif /* MACOSX */
@@ -139,7 +143,7 @@ static	char* keywords[] = { "argv", NULL };
 
 error_cleanup:
 	if (argv != NULL) {
-		for (i = 0; i < argc; i++) {\
+		for (i = 0; i < argc; i++) {
 			if (argv[i] != NULL) {
 				free(argv[i]);
 				argv[i] = NULL;
@@ -651,7 +655,7 @@ objc_NSWindowListForContext(
 		return NULL;
 	}
 
-	list = malloc(sizeof(int)*size);
+	list = PyMem_Malloc(sizeof(int)*size);
 	if (list == NULL) {
 		PyErr_NoMemory();
 		return 0;
@@ -665,12 +669,12 @@ objc_NSWindowListForContext(
 	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
-		free(list);
+		PyMem_Free(list);
 		return NULL;
 	}
 
 	result = PyObjC_CArrayToPython(@encode(int), list, size);
-	free(list);
+	PyMem_Free(list);
 	return result;
 }
 
@@ -689,7 +693,7 @@ objc_NSWindowList(
 		return NULL;
 	}
 
-	list = malloc(sizeof(int)*size);
+	list = PyMem_Malloc(sizeof(int)*size);
 	if (list == NULL) {
 		PyErr_NoMemory();
 		return 0;
@@ -703,12 +707,12 @@ objc_NSWindowList(
 	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
-		free(list);
+		PyMem_Free(list);
 		return NULL;
 	}
 
 	result = PyObjC_CArrayToPython(@encode(int), list, size);
-	free(list);
+	PyMem_Free(list);
 	return result;
 }
 
@@ -759,7 +763,7 @@ objc_NSBestDepth(
 	int bps;
 	int bpp;
 	PyObject* pyPlanar;
-	BOOL planarVal; // planar is a global symbol??
+	BOOL planarVal; 
 	BOOL exactMatch;
 	NSWindowDepth bestDepth;
 	PyObject* result;
@@ -961,67 +965,67 @@ static PyMethodDef appkit_methods[] = {
 	{
 	        "NSRectFillList",
 		(PyCFunction)objc_NSRectFillList,
-		METH_VARARGS,
+		METH_VARARGS|METH_KEYWORDS,
 		"void NSRectFillList(const NSRect *rects, int count);"
 	},
 	{
 	        "NSBestDepth",
 		(PyCFunction)objc_NSBestDepth,
-		METH_VARARGS,
+		METH_VARARGS|METH_KEYWORDS,
 		"NSWindowDepth NSBestDepth(NSString *colorSpace, int bps, int bpp, BOOL planar, BOOL *exactMatch);"
 	},
 	{
 	        "NSAvailableWindowDepths",
 		(PyCFunction)objc_NSAvailableWindowDepths,
-		METH_VARARGS,
+		METH_VARARGS|METH_KEYWORDS,
 		"int* NSAvailableWindowDepths(void);"
 	},
 	{
 	        "NSRectClipList",
 		(PyCFunction)objc_NSRectClipList,
-		METH_VARARGS,
+		METH_VARARGS|METH_KEYWORDS,
 		"void NSRectClipList(const NSRect *rects, int count);"
 	},
 	{
 	        "NSDrawTiledRects",
 		(PyCFunction)objc_NSDrawTiledRects,
-		METH_VARARGS,
+		METH_VARARGS|METH_KEYWORDS,
 		"void NSDrawTiledRects(NSRect boundsRect, NSRect clipRect, const NSRectEdge* sides, const float* grays, int count);"
 	},
 	{
 	        "NSDrawColorTiledRects",
 		(PyCFunction)objc_NSDrawColorTiledRects,
-		METH_VARARGS,
+		METH_VARARGS|METH_KEYWORDS,
 		"void NSDrawColorTiledRects(NSRect boundsRect, NSRect clipRect, const NSRectEdge* sides, const NSColor** colors, int count);"
 	},
 	{
 	        "NSRectFillListWithColors",
 		(PyCFunction)objc_NSRectFillListWithColors,
-		METH_VARARGS,
+		METH_VARARGS|METH_KEYWORDS,
 		"void NSRectFillListWithColors(const NSRect *rects, NSColor **colors, int count);"
 	},
 	{
 	        "NSRectFillListWithColorsUsingOperation",
 		(PyCFunction)objc_NSRectFillListWithColorsUsingOperation,
-		METH_VARARGS,
+		METH_VARARGS|METH_KEYWORDS,
 		"void NSRectFillListWithColorsUsingOperation(const NSRect *rects, NSColor **colors, int count, NSCompositingOperation op)"
 	},
 	{
 	        "NSRectFillListWithGrays",
 		(PyCFunction)objc_NSRectFillListWithGrays,
-		METH_VARARGS,
+		METH_VARARGS|METH_KEYWORDS,
 		"void NSRectFillListWithGrays(const NSRect *rects, const float *grays, int count);"
 	},
 	{
 	        "NSRectFillListUsingOperation",
 		(PyCFunction)objc_NSRectFillListUsingOperation,
-		METH_VARARGS,
+		METH_VARARGS|METH_KEYWORDS,
 		"void NSRectFillListUsingOperation(const NSRect *rects, int count, NSCompositingOperation op);"
 	},
 	{
 		"NSGetWindowServerMemory",
 		(PyCFunction)objc_NSGetWindowServerMemory,
-		METH_VARARGS,
+		METH_VARARGS|METH_KEYWORDS,
 		"int NSGetWindowServerMemory(int context, int *virtualMemory, int *windowBackingMemory, NSString **windowDumpString);"
 	},
 
@@ -1143,6 +1147,7 @@ fontMatrix(PyObject* d, const char* name, const float* value)
 			Py_DECREF(v);
 			return -1;
 		}
+		PyTuple_SET_ITEM(v, i, t);
 	}
 	
 	if (PyDict_SetItemString(d, (char*)name, v) == -1) {
@@ -1268,7 +1273,7 @@ void init_AppKit(void)
 	 * seems to have the value of the first entry in the matrix,
 	 * instead of being the address of the array...
 	 */
-	fontMatrix(d, "NSFontIdentityMatrix", &NSFontIdentityMatrix);
+	fontMatrix(d, "NSFontIdentityMatrix", (float*)&NSFontIdentityMatrix);
 
 #else
 
@@ -1284,8 +1289,6 @@ void init_AppKit(void)
 	if (v == NULL) return;
 	PyDict_SetItemString(d, "NSAffineTransformStruct", v);
 	Py_DECREF(v);
-
-	/* TODO: NSTypesetterGlyphInfo */
 
 	/* register other method mappings */
 	if (_pyobjc_install_NSApplication() < 0) return;

@@ -172,10 +172,13 @@ error:
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 
+#endif
 
 static int 
 _pyobjc_install_NSMovie(void)
 {
+
+#ifdef MACOSX
 	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSMovie"), 
 		@selector(QTMovie),
 		call_NSMovie_QTMovie,
@@ -191,16 +194,7 @@ _pyobjc_install_NSMovie(void)
 
 		return -1;
 	}
+#endif /* MACOSX */
 
 	return 0;
 }
-
-#else /* GNUSTEP */
-
-static int 
-_pyobjc_install_NSMovie(void)
-{
-	return 0;
-}
-
-#endif

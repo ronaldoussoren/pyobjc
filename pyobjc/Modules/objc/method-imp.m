@@ -109,26 +109,6 @@ imp_call(PyObjCIMPObject* self, PyObject* args)
 
 	execute = self->callfunc;
 
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-	if (PyObjCObject_Check(pyself) 
-		&& (PyObjCObject_GetFlags(pyself) & PyObjCObject_kUNINITIALIZED) 
-		&& !(self->flags & PyObjCSelector_kINITIALIZER)) {
-
-		char buf[1024];
-
-		snprintf(buf, sizeof(buf), 
-			"Calling IMP %s on uninitialized object %p of class %s\n",
-			PyObjCRT_SELName(self->selector),
-			(void*)PyObjCObject_GetObject(pyself),
-			GETISA(PyObjCObject_GetObject(pyself))->name);
-
-		if (PyErr_Warn(PyExc_RuntimeWarning, buf) < 0) {
-			return NULL;
-		}
-	}
-#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
-
-
 	arglist = PyTuple_New(argslen - 1);
 	for (i = 1; i < argslen; i++) {
 		PyObject* v = PyTuple_GET_ITEM(args, i);
@@ -147,24 +127,13 @@ imp_call(PyObjCIMPObject* self, PyObject* args)
 	if (res && PyObjCObject_Check(res)) {
 		if (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
 			((PyObjCObject*)res)->flags |= PyObjCObject_kUNINITIALIZED;
-		}
-#if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-		else if (((PyObjCObject*)res)->flags & PyObjCObject_kUNINITIALIZED) {
+		} else if (((PyObjCObject*)res)->flags & PyObjCObject_kUNINITIALIZED) {
 			((PyObjCObject*)res)->flags &=
 				~PyObjCObject_kUNINITIALIZED;
 			if (pyself && pyself != res && PyObjCObject_Check(pyself) && !PyErr_Occurred()) {
 				PyObjCObject_ClearObject(pyself);
 			}
 		}
-#else
-		if (self->flags & PyObjCSelector_kINITIALIZER) {
-			if (((PyObjCObject*)res)->flags & PyObjCObject_kUNINITIALIZED)
-			{
-				((PyObjCObject*)res)->flags &= 
-					~PyObjCObject_kUNINITIALIZED;
-			}
-		}
-#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
 
 		if (self->flags & PyObjCSelector_kDONATE_REF) {
 			/* Ownership transfered to us, but 'execute' method has
@@ -245,40 +214,8 @@ imp_is_alloc(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
 	return PyObjCBool_FromLong(0 != (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED));
 }
 
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-PyDoc_STRVAR(imp_returns_self_doc, 
-"True if this is method returns a reallocated 'self', False otherwise\n"
-"\n"
-"NOTE: This field is used by the implementation."
-);
-static PyObject*
-imp_returns_self(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
-{
-	return PyObjCBool_FromLong(0 != (self->flags & PyObjCSelector_kRETURNS_SELF));
-}
-
-PyDoc_STRVAR(imp_is_initializer_doc, 
-"True if this is method is an object initializer\n"
-"\n"
-"NOTE: This field is used by the implementation."
-);
-static PyObject*
-imp_is_initializer(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
-{
-	return PyObjCBool_FromLong(0 != (self->flags & PyObjCSelector_kINITIALIZER));
-}
-#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 
 static PyGetSetDef imp_getset[] = {
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-	{
-		"isInitializer",
-		(getter)imp_is_initializer,
-		0,
-		imp_is_initializer_doc,
-		0
-	},
-#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 	{
 		"isAlloc",
 		(getter)imp_is_alloc,
@@ -316,15 +253,6 @@ static PyGetSetDef imp_getset[] = {
 		imp_selector_doc,
 		0
 	},
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-	{
-		"returnsSelf",
-		(getter)imp_returns_self,
-		0,
-		imp_returns_self_doc,
-		0
-	},
-#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
 	{ 
 		"__name__",  
 		(getter)imp_selector, 

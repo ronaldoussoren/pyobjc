@@ -42,7 +42,7 @@ call_NSCoder_encodeValueOfObjCType_at_(
 	if (size == -1) {
 		return NULL;
 	}
-	buf = alloca(size);
+	buf = PyMem_Malloc(size);
 	if (buf == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -50,6 +50,7 @@ call_NSCoder_encodeValueOfObjCType_at_(
 
 	err = PyObjC_PythonToObjC(signature, value, buf);
 	if (err == -1) {
+		PyMem_Free(buf);
 		return NULL;
 	}
 
@@ -72,6 +73,8 @@ call_NSCoder_encodeValueOfObjCType_at_(
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 	PyObjC_ENDHANDLER
+
+	PyMem_Free(buf);
 
 	if (PyErr_Occurred()) {
 		return NULL;
@@ -160,19 +163,21 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 	if (size == -1) {
 		return NULL;
 	}
-	buf = alloca(size * (count+1));
+	buf = PyMem_Malloc(size * (count+1));
 	if (buf == NULL) {
 		PyErr_NoMemory();
 		return NULL;
 	}
 
 	if (!PySequence_Check(value)) {
+		PyMem_Free(buf);
 		PyErr_SetString(PyExc_TypeError, "Need sequence of objects");
 		return NULL;
 	}
 
 	value_len = PySequence_Size(value);
 	if (value_len > count) {
+		PyMem_Free(buf);
 		PyErr_SetString(PyExc_ValueError, "Inconsistent arguments");
 		return NULL;
 	}
@@ -182,6 +187,7 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 				PySequence_GetItem(value, i), 
 				((char*)buf) + (size * i));
 		if (err == -1) {
+			PyMem_Free(buf);
 			return NULL;
 		}
 	}
@@ -206,8 +212,8 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 		PyObjCErr_FromObjC(localException);
 	PyObjC_ENDHANDLER
 
+	PyMem_Free(buf);
 	if (PyErr_Occurred()) return NULL;
-
 
 	Py_INCREF(Py_None);
 	return Py_None;
@@ -301,12 +307,11 @@ call_NSCoder_decodeValueOfObjCType_at_(
 	if (size == -1) {
 		return NULL;
 	}
-	buf = alloca(size);
+	buf = PyMem_Malloc(size);
 	if (buf == NULL) {
 		PyErr_NoMemory();
 		return NULL;
 	}
-
 
 	PyObjC_DURING
 		if (PyObjCIMP_Check(method)) {
@@ -329,10 +334,12 @@ call_NSCoder_decodeValueOfObjCType_at_(
 	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
+		PyMem_Free(buf);
 		return NULL;
 	}
 
 	value = PyObjC_ObjCToPython(signature, buf);
+	PyMem_Free(buf);
 	if (value == NULL) {
 		return NULL;
 	}
@@ -412,7 +419,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 	if (size == -1) {
 		return NULL;
 	}
-	buf = alloca(size * (count+1));
+	buf = PyMem_Malloc(size * (count+1));
 	if (buf == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -439,11 +446,13 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 	PyObjC_ENDHANDLER
 
 	if (PyErr_Occurred()) {
+		PyMem_Free(buf);
 		return NULL;
 	}
 
 	result = PyTuple_New(count);
 	if (result == NULL) {
+		PyMem_Free(buf);
 		return NULL;
 	}
 
@@ -452,10 +461,12 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 				((char*)buf) + (size * i)));
 		if (PyTuple_GET_ITEM(result, i) == NULL) {
 			Py_DECREF(result);
+			PyMem_Free(buf);
 			return NULL;
 		}
 	}
 
+	PyMem_Free(buf);
 	return result;
 }
 

@@ -93,10 +93,13 @@ error:
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 
+#endif /* MACOSX */
 
 static int 
 _pyobjc_install_NSQuickDrawView(void)
 {
+
+#ifdef MACOSX 
 	Class classNSQuickDrawView = objc_lookUpClass("NSQuickDrawView");
 
 	if (PyObjC_RegisterMethodMapping(
@@ -107,16 +110,7 @@ _pyobjc_install_NSQuickDrawView(void)
 
 		return -1;
 	}
+#endif /* MACOSX */
 
 	return 0;
 }
-
-#else
-
-static int 
-_pyobjc_install_NSQuickDrawView(void)
-{
-	return 0;
-}
-
-#endif

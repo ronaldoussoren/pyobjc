@@ -1841,7 +1841,7 @@ static PyObject* pyobjcpy(PyObject* self __attribute__((__unused__)), PyObject* 
 		return NULL;
 	}
 
-	buf = alloca(PyObjCRT_SizeOfType(signature));
+	buf = PyMem_Malloc(PyObjCRT_SizeOfType(signature));
 	if (buf == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -1849,10 +1849,12 @@ static PyObject* pyobjcpy(PyObject* self __attribute__((__unused__)), PyObject* 
 
 	r = PyObjC_PythonToObjC(signature, o, buf);
 	if (r < 0) {
+		PyMem_Free(buf);
 		return NULL;
 	}
 
 	o = PyObjC_ObjCToPython(signature, buf);
+	PyMem_Free(buf);
 	return o;
 
 }

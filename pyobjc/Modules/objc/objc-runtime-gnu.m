@@ -72,8 +72,8 @@ int PyObjCRT_SetupClass(
 
 	cls->protocols = metaCls->protocols = NULL;
 
-        __objc_install_premature_dtable (metaCls);
-	__objc_install_premature_dtable (cls);
+	metaCls->dtable = objc_get_uninstalled_dtable();
+	cls->dtable = objc_get_uninstalled_dtable();
 
 	return 0;
 }

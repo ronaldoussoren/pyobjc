@@ -13,6 +13,10 @@
 
 #ifdef MACOSX 
 
+/* 1. I can't manage to get a working OpenGL on my Linux develbox
+ * 2. Need to detect if OpenGL support is present
+ */
+
 #include <OpenGL/gl.h>
 
 static PyObject*

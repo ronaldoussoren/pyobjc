@@ -1,7 +1,6 @@
 import objc
 import unittest
 
-PYOBJC_NEW_INITIALIZER_PATTERN = not (hasattr(objc.selector, 'returnsSelf') and hasattr(objc.selector, 'isInitializer'))
 
 class TestBasicIMP (unittest.TestCase):
     # Test the basic functionality of IMP's. Imp's are basically unbound
@@ -19,8 +18,6 @@ class TestBasicIMP (unittest.TestCase):
         self.assert_(m.isClassMethod)
         self.assertEquals(m.isAlloc, cls.alloc.isAlloc)
         self.assertEquals(m.doesDonateReference, cls.alloc.doesDonateReference)
-        if not PYOBJC_NEW_INITIALIZER_PATTERN:
-            self.assertEquals(m.returnsSelf, cls.alloc.returnsSelf)
         self.assertEquals(m.selector, 'alloc')
 
         o = m(cls).init()
@@ -33,8 +30,6 @@ class TestBasicIMP (unittest.TestCase):
         self.assert_(not m.isClassMethod)
         self.assertEquals(m.isAlloc, cls.init.isAlloc)
         self.assertEquals(m.doesDonateReference, cls.init.doesDonateReference)
-        if not PYOBJC_NEW_INITIALIZER_PATTERN:
-            self.assertEquals(m.returnsSelf, cls.init.returnsSelf)
         self.assertEquals(m.selector, 'init')
 
         o = m(cls.alloc())
@@ -49,8 +44,6 @@ class TestBasicIMP (unittest.TestCase):
         self.assert_(not m.isClassMethod)
         self.assertEquals(m.isAlloc, cls.init.isAlloc)
         self.assertEquals(m.doesDonateReference, cls.init.doesDonateReference)
-        if not PYOBJC_NEW_INITIALIZER_PATTERN:
-            self.assertEquals(m.returnsSelf, cls.init.returnsSelf)
         self.assertEquals(m.selector, 'init')
 
         o = m(cls.alloc())

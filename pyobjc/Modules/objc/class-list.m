@@ -110,11 +110,7 @@ PyObjC_GetClassList(void)
 		PyObject* pyclass = PyObjCClass_New(classid);
 		if (pyclass == NULL) goto error;
 
-		if (PyTuple_SET_ITEM(result, i, pyclass) < 0) {
-			Py_DECREF(pyclass);
-			goto error;
-		}
-
+		PyTuple_SET_ITEM(result, i, pyclass);
 		i++;
 	}
 

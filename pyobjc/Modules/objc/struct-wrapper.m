@@ -763,7 +763,7 @@ PyObjC_RegisterStructType(
 {
 	PyObject* structType;
 	int r;
-	
+
 	structType = PyObjC_MakeStructType(name, doc, tpinit, 
 						numFields, fieldnames);
 	if (structType == NULL) {

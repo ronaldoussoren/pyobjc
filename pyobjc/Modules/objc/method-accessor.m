@@ -145,6 +145,7 @@ make_dict(PyObject* self, int class_method)
 		} else {
 			bound_self = NULL;
 		}
+
 	} else {
 		PyErr_BadInternalCall();
 		return NULL;

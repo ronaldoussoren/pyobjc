@@ -436,7 +436,7 @@ PyObjCRT_AlignOfType (const char *type)
 		type++;
 		while (*type != _C_UNION_E)
 		{
-			int item_align = PyObjC_EmbeddedAlignOfType(type);
+			int item_align = PyObjCRT_AlignOfType(type);
 			if (item_align == -1) return -1;
 			maxalign = MAX (maxalign, item_align);
 			type = PyObjCRT_SkipTypeSpec (type);
@@ -1444,12 +1444,6 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 #ifdef MACOSX
 			*(id*) datum = PyObjC_CFTypeToID(argument);
 			if (*(id*)datum != NULL) {
-				/* BUG! for some reason the unittests fail
-				 * without this retain. This needs further
-				 * investigation, as this doesn't look
-				 * correct to me
-				 */
-				[*(id*)datum retain];
 				return 0;
 			}
 #endif /* MACOSX */

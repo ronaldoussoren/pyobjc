@@ -16,28 +16,6 @@ class TestRegressions(unittest.TestCase):
         self.assertRaises(TypeError, fm.stringWithFileSystemRepresentation_length_, "/var")
         self.assertEquals(u"/var", fm.stringWithFileSystemRepresentation_length_("/var/boo", 4))
 
-    def testUninitWarning(self):
-        """
-        Check that calling methods on unitialized objects raises an error
-        """
-        import warnings
-        import Foundation
-
-        # Not applicable to PYOBJC_NEW_INITIALIZER_PATTERN
-        PYOBJC_NEW_INITIALIZER_PATTERN = not (hasattr(objc.selector, 'returnsSelf') and hasattr(objc.selector, 'isInitializer'))
-        if PYOBJC_NEW_INITIALIZER_PATTERN:
-            return
-
-        warnings.filterwarnings('ignore',
-            category=objc.UninitializedDeallocWarning)
-        o = Foundation.NSObject.alloc() # Not yet initialized
-        warnings.filterwarnings('error', category=RuntimeWarning)
-        try:
-            self.assertRaises(RuntimeWarning, o.description)
-            del o
-        finally:
-            del warnings.filters[0:2]
-
     def testMemoryInit(self):
         """
         Regression test for bug #814683, that didn't initialize the memory

@@ -509,7 +509,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 				if (err == -1) {
 					goto error;
 				}
-				if (v->ob_refcnt == 1 && argtype[0] == _C_ID) {
+				if (res->ob_refcnt == 1 && argtype[0] == _C_ID) {
 					/* make sure return value doesn't die before
 					 * the caller can get its hands on it.
 					 */
@@ -596,7 +596,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 					   "a value",
 					   PyObjCRT_SELName(*(SEL*)args[1]));
 				}
-				Py_DECREF(res); /* XXX */
+				Py_DECREF(res); 
 				goto error;
 			}
 		}
@@ -1104,7 +1104,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		Py_INCREF(Py_None);
 		objc_result =  Py_None;
 	}
-#if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
+
 	if (objc_result != self
 		&& PyObjCObject_Check(self) && PyObjCObject_Check(objc_result)
 		&& !(flags & PyObjCSelector_kRETURNS_UNINITIALIZED)
@@ -1112,22 +1112,6 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		[PyObjCObject_GetObject(objc_result) release];
 		PyObjCObject_ClearObject(self);
 	}
-#else
-	if ( (flags & PyObjCSelector_kRETURNS_SELF)
-		&& (objc_result != self)) {
-
-		/* meth is a method that returns a possibly reallocated
-		 * version of self and self != return-value, the current
-		 * value of self is assumed to be no longer valid
-		 */
-		if (PyObjCObject_Check(self) && PyObjCObject_Check(objc_result)
-			&& (flags & PyObjCSelector_kINITIALIZER) &&
-			(((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED)) {
-			[PyObjCObject_GetObject(objc_result) release];
-		}
-		PyObjCObject_ClearObject(self);
-	}
-#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
 
 	if (byref_out_count == 0) {
 		result = objc_result;

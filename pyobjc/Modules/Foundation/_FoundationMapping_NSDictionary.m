@@ -58,7 +58,7 @@ call_NSDictionary_initWithObjects_forKeys_count_(
 		return NULL;
 	}
 
-	keys = alloca(sizeof(id) * count);
+	keys = PyMem_Malloc(sizeof(id) * count);
 	if (keys == NULL) {
 		Py_DECREF(keySeq);
 		Py_DECREF(objectSeq);
@@ -66,8 +66,9 @@ call_NSDictionary_initWithObjects_forKeys_count_(
 		return NULL;
 	}
 
-	objects = alloca(sizeof(id) * count);
+	objects = PyMem_Malloc(sizeof(id) * count);
 	if (objects == NULL) {
+		PyMem_Free(keys);
 		Py_DECREF(keySeq);
 		Py_DECREF(objectSeq);
 		PyErr_NoMemory();
@@ -78,6 +79,8 @@ call_NSDictionary_initWithObjects_forKeys_count_(
 		err = PyObjC_PythonToObjC(@encode(id), 
 			PySequence_Fast_GET_ITEM(objectSeq, i), objects + i);
 		if (err == -1) {
+			PyMem_Free(keys);
+			PyMem_Free(objects);
 			Py_DECREF(keySeq);
 			Py_DECREF(objectSeq);
 			PyErr_NoMemory();
@@ -87,6 +90,8 @@ call_NSDictionary_initWithObjects_forKeys_count_(
 		err = PyObjC_PythonToObjC(@encode(id), 
 			PySequence_Fast_GET_ITEM(keySeq, i), keys + i);
 		if (err == -1) {
+			PyMem_Free(keys);
+			PyMem_Free(objects);
 			Py_DECREF(keySeq);
 			Py_DECREF(objectSeq);
 			PyErr_NoMemory();
@@ -107,6 +112,8 @@ call_NSDictionary_initWithObjects_forKeys_count_(
 		res = nil;
 	PyObjC_ENDHANDLER
 
+	PyMem_Free(keys);
+	PyMem_Free(objects);
 	Py_DECREF(objectSeq);
 	Py_DECREF(keySeq);
 
@@ -230,7 +237,7 @@ call_NSDictionary_dictionaryWithObjects_forKeys_count_(
 		return NULL;
 	}
 
-	keys = alloca(sizeof(id) * count);
+	keys = PyMem_Malloc(sizeof(id) * count);
 	if (keys == NULL) {
 		Py_DECREF(keySeq);
 		Py_DECREF(objectSeq);
@@ -238,8 +245,9 @@ call_NSDictionary_dictionaryWithObjects_forKeys_count_(
 		return NULL;
 	}
 
-	objects = alloca(sizeof(id) * count);
+	objects = PyMem_Malloc(sizeof(id) * count);
 	if (objects == NULL) {
+		PyMem_Free(keys);
 		Py_DECREF(keySeq);
 		Py_DECREF(objectSeq);
 		PyErr_NoMemory();
@@ -250,6 +258,8 @@ call_NSDictionary_dictionaryWithObjects_forKeys_count_(
 		err = PyObjC_PythonToObjC(@encode(id), 
 			PySequence_Fast_GET_ITEM(objectSeq, i), objects + i);
 		if (err == -1) {
+			PyMem_Free(keys);
+			PyMem_Free(objects);
 			Py_DECREF(keySeq);
 			Py_DECREF(objectSeq);
 			PyErr_NoMemory();
@@ -259,6 +269,8 @@ call_NSDictionary_dictionaryWithObjects_forKeys_count_(
 		err = PyObjC_PythonToObjC(@encode(id), 
 			PySequence_Fast_GET_ITEM(keySeq, i), keys + i);
 		if (err == -1) {
+			PyMem_Free(keys);
+			PyMem_Free(objects);
 			Py_DECREF(keySeq);
 			Py_DECREF(objectSeq);
 			PyErr_NoMemory();
@@ -280,6 +292,8 @@ call_NSDictionary_dictionaryWithObjects_forKeys_count_(
 		res = nil;
 	PyObjC_ENDHANDLER
 
+	PyMem_Free(keys);
+	PyMem_Free(objects);
 	Py_DECREF(objectSeq);
 	Py_DECREF(keySeq);
 

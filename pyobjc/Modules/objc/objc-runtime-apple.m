@@ -92,7 +92,6 @@ int PyObjCRT_SetupClass(
 
 void PyObjCRT_ClearClass(Class cls)
 {
-	return;
 	if (cls->methodLists) {
 		if (cls->methodLists) {
 			struct objc_method_list** cur;

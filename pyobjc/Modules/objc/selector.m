@@ -225,52 +225,6 @@ base_donates_ref_setter(ObjCNativeSelector* self, PyObject* newVal, void* closur
 	return 0;
 }
 
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-
-PyDoc_STRVAR(base_returns_self_doc, 
-"True if this is method returns a reallocated 'self', False otherwise\n"
-"\n"
-"NOTE: This field is used by the implementation."
-);
-static PyObject*
-base_returns_self(ObjCNativeSelector* self, void* closure __attribute__((__unused__)))
-{
-	return PyObjCBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kRETURNS_SELF));
-}
-static int
-base_returns_self_setter(ObjCNativeSelector* self, PyObject* newVal, void* closure __attribute__((__unused__)))
-{
-	if (PyObject_IsTrue(newVal)) {
-		self->sel_flags |= PyObjCSelector_kRETURNS_SELF;
-	} else {
-		self->sel_flags &= ~PyObjCSelector_kRETURNS_SELF;
-	}
-	return 0;
-}
-
-PyDoc_STRVAR(base_is_initializer_doc, 
-"True if this is method is an object initializer\n"
-"\n"
-"NOTE: This field is used by the implementation."
-);
-static PyObject*
-base_is_initializer(ObjCNativeSelector* self, void* closure __attribute__((__unused__)))
-{
-	return PyObjCBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kINITIALIZER));
-}
-static int
-base_is_initializer_setter(ObjCNativeSelector* self, PyObject* newVal, void* closure __attribute__((__unused__)))
-{
-	if (PyObject_IsTrue(newVal)) {
-		self->sel_flags |= PyObjCSelector_kINITIALIZER;
-	} else {
-		self->sel_flags &= ~PyObjCSelector_kINITIALIZER;
-	}
-	return 0;
-}
-
-#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
-
 PyDoc_STRVAR(base_is_alloc_doc, 
 "True if this is method returns a a freshly allocated object (uninitialized)\n"
 "\n"
@@ -293,15 +247,6 @@ base_is_alloc_setter(ObjCNativeSelector* self, PyObject* newVal, void* closure _
 }
 
 static PyGetSetDef base_getset[] = {
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-	{
-		"isInitializer",
-		(getter)base_is_initializer,
-		(setter)base_is_initializer_setter,
-		base_is_initializer_doc,
-		0
-	},
-#endif /* ! PYOBJC_NEW_INIITALIZER_PATTERN */
 	{
 		"isAlloc",
 		(getter)base_is_alloc,
@@ -358,15 +303,6 @@ static PyGetSetDef base_getset[] = {
 		base_selector_doc,
 		0
 	},
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-	{
-		"returnsSelf",
-		(getter)base_returns_self,
-		(setter)base_returns_self_setter,
-		base_returns_self_doc,
-		0
-	},
-#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 	{ 
 		"__name__",  
 		(getter)base_selector, 
@@ -564,27 +500,6 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		self->sel_call_func = execute;
 	}
 
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-	if (self->sel_self && PyObjCObject_Check(self->sel_self) 
-	    && (((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED)
-	    && !(self->sel_flags & PyObjCSelector_kINITIALIZER)) {
-		char buf[1024];
-
-		snprintf(buf, sizeof(buf), 
-			"Calling method (%s) on uninitialized object %p of class %s\n",
-			PyObjCRT_SELName(self->sel_selector),
-			(void*)PyObjCObject_GetObject(self->sel_self),
-			GETISA(PyObjCObject_GetObject(self->sel_self))->name);
-
-		if (PyErr_Warn(PyExc_RuntimeWarning, buf) < 0) {
-			return NULL;
-		}
-	}
-#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
-
-
-
-
 	if (self->sel_self != NULL) {
 		pyres = res = execute((PyObject*)self, self->sel_self, args);
 		if (pyres != NULL
@@ -594,19 +509,11 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			pyres = pyself;
 		}
 
-#if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 		if (((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
 			if (self->sel_self != pyres && !PyErr_Occurred()) {
 				PyObjCObject_ClearObject(pyself);
 			}
 		}
-#else
-		if (self->sel_flags & PyObjCSelector_kINITIALIZER) {
-			if (self->sel_self != pyres && !PyErr_Occurred()) {
-				PyObjCObject_ClearObject(self->sel_self);
-			}
-		}
-#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
 	} else {
 		PyObject* arglist;
 		PyObject* myClass;
@@ -648,37 +555,19 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			pyres = pyself;
 		}
 
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-		if (self->sel_flags & PyObjCSelector_kINITIALIZER) {
-			if (pyself != pyres && !PyErr_Occurred()) {
-				PyObjCObject_ClearObject(pyself);
-			}
-		}
-#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
 		Py_DECREF(arglist);
 	}
 
 	if (pyres && PyObjCObject_Check(pyres)) {
 		if (self->sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
 			((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
-		}
-#if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-		else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
+		} else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
 			((PyObjCObject*)pyres)->flags &= 
 				~PyObjCObject_kUNINITIALIZED;
 			if (self->sel_self && self->sel_self != pyres && !PyErr_Occurred()) {
 				PyObjCObject_ClearObject(self->sel_self);
 			}
 		}
-#else
-		if (self->sel_flags & PyObjCSelector_kINITIALIZER) {
-			if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED)
-			{
-				((PyObjCObject*)pyres)->flags &= 
-					~PyObjCObject_kUNINITIALIZED;
-			}
-		}
-#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
 				
 		if (self->sel_flags & PyObjCSelector_kDONATE_REF) {
 			/* Ownership transfered to us, but 'execute' method has
@@ -1048,25 +937,6 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 		/* normal function code will perform other checks */
 	}
 
-	/* TODO: Do same if self->sel_self is NULL */
-#if !defined(PYOBJC_NEW_INITIALIZER_PATTERN)
-	if ( !(self->sel_flags & PyObjCSelector_kINITIALIZER)
-	     && (self->sel_self) && (PyObjCObject_Check(self->sel_self)) &&
-	     ((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
-		char buf[1024];
-
-		snprintf(buf, sizeof(buf), 
-		   "Calling method (%s) on uninitialized object %p of class %s\n",
-		   PyObjCRT_SELName(self->sel_selector),
-		   (void*)PyObjCObject_GetObject(self->sel_self),
-		   GETISA(PyObjCObject_GetObject(self->sel_self))->name);
-
-		if (PyErr_Warn(PyExc_RuntimeWarning, buf) < 0) {
-			return NULL;
-		}
-	}
-#endif /* ! PYOBJC_NEW_INITIALIZER_PATTERN */
-
 	/*
 	 * Assume callable will check arguments
 	 */
@@ -1094,22 +964,11 @@ pysel_call(ObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 		Py_DECREF(actual_args);
 	}
 
-#if defined(PYOBJC_NEW_INITIALIZER_PATTERN)
 	if ( result && (self->sel_self) && (PyObjCObject_Check(self->sel_self)) &&
 	     ((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
 
 	     ((PyObjCObject*)self->sel_self)->flags &= ~PyObjCObject_kUNINITIALIZED;
 	}
-#else
-	/* TODO: Do same if self->sel_self is NULL */
-	if ( result && (self->sel_flags & PyObjCSelector_kINITIALIZER)
-	     && (self->sel_self) && (PyObjCObject_Check(self->sel_self)) &&
-	     ((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
-
-	     ((PyObjCObject*)self->sel_self)->flags &= ~PyObjCObject_kUNINITIALIZED;
-	    
-	}
-#endif /* PYOBJC_NEW_INITIALIZER_PATTERN */
 
 	return result;
 }

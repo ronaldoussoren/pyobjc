@@ -546,18 +546,6 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	return res;
 }
 
-#if 0 /* No longer used */
-PyDoc_STRVAR(obj_get_classMethods_doc,
-"The attributes of this field are the class methods of this object. This can\n"
-"be used to force access to a class method."
-);
-static PyObject*
-obj_get_classMethods(PyObjCObject* self, void* closure __attribute__((__unused__)))
-{
-	return ObjCMethodAccessor_New((PyObject*)self, 1);
-}
-#endif
-
 PyDoc_STRVAR(objc_get_real_class_doc, "Return the current ISA of the object");
 static PyObject* objc_get_real_class(PyObject* self, void* closure __attribute__((__unused__)))
 {
@@ -585,15 +573,6 @@ obj_get_instanceMethods(PyObjCObject* self, void* closure __attribute__((__unuse
 }
 
 static PyGetSetDef obj_getset[] = {
-#if 0
-	{
-		"pyobjc_classMethods",
-		(getter)obj_get_classMethods,
-		NULL,
-		obj_get_classMethods_doc,
-		0
-	},
-#endif
 	{
 		"pyobjc_ISA",
 		(getter)objc_get_real_class,
@@ -735,6 +714,7 @@ _PyObjCObject_NewDeallocHelper(id objc_object)
 #ifdef FREELIST_SIZE
 	if (obj_freelist_top == 0) {
 		res = cls_type->tp_alloc(cls_type, 0);
+		Py_DECREF(cls_type);
 		if (res == NULL) {
 			return NULL;
 		}
@@ -747,6 +727,7 @@ _PyObjCObject_NewDeallocHelper(id objc_object)
 	}
 #else
 	res = cls_type->tp_alloc(cls_type, 0);
+	Py_DECREF(cls_type);
 	if (res == NULL) {
 		return NULL;
 	}
@@ -816,6 +797,7 @@ PyObjCObject_New(id objc_object)
 #ifdef FREELIST_SIZE
 	if (obj_freelist_top == 0) {
 		res = cls_type->tp_alloc(cls_type, 0);
+		Py_DECREF(cls_type);
 		if (res == NULL) {
 			return NULL;
 		}
@@ -828,6 +810,7 @@ PyObjCObject_New(id objc_object)
 	}
 #else
 	res = cls_type->tp_alloc(cls_type, 0);
+	Py_DECREF(cls_type);
 	if (res == NULL) {
 		return NULL;
 	}
@@ -883,6 +866,7 @@ PyObjCObject_NewClassic(id objc_object)
 #ifdef FREELIST_SIZE
 	if (obj_freelist_top == 0) {
 		res = cls_type->tp_alloc(cls_type, 0);
+		Py_DECREF(cls_type);
 		if (res == NULL) {
 			return NULL;
 		}
@@ -895,6 +879,7 @@ PyObjCObject_NewClassic(id objc_object)
 	}
 #else
 	res = cls_type->tp_alloc(cls_type, 0);
+	Py_DECREF(cls_type);
 	if (res == NULL) {
 		return NULL;
 	}
@@ -939,6 +924,7 @@ PyObjCObject_NewUnitialized(id objc_object)
 	}
 
 	res = cls_type->tp_alloc(cls_type, 0);
+	Py_DECREF(cls_type);
 	if (res == NULL) {
 		return NULL;
 	}
@@ -989,7 +975,7 @@ id
 void        
 PyObjCObject_ClearObject(PyObject* object)
 {
-    if (object == NULL) abort();
+	if (object == NULL) abort();
 	if (!PyObjCObject_Check(object)) {
 		PyErr_Format(PyExc_TypeError,
 			"'objc.objc_object' expected, got '%s'",

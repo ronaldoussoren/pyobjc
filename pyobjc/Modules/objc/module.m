@@ -101,10 +101,6 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		PyObject* aMethod = PySequence_Fast_GET_ITEM(methodsArray, methodIndex);
 		struct objc_method *objcMethod;
 
-		/* check
-		 * FIXME: We should support functions here, just like with
-		 * class definitions.
-		 */
 		aMethod = PyObjCSelector_FromFunction(
 			NULL,
 			aMethod,
@@ -653,9 +649,6 @@ static char* keywords[] = { "name", NULL };
 		for (j = 0; j < cls->protocols->count; j++) {
 			Protocol* p = cls->protocols->list[j];
 			if (strcmp([p name], name) == 0) {
-#if 0
-				printf("Found it in %s\n", cls->name);
-#endif
 				return PyObjCObject_NewClassic(p);
 			}
 		}

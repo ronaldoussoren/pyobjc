@@ -4,7 +4,6 @@
 #include <Python.h>
 
 #import <AddressBook/AddressBook.h>
-#import <CoreFoundation/CoreFoundation.h>
 
 #include "pyobjc-api.h"
 #include "wrapper-const-table.h"
@@ -15,8 +14,8 @@ static PyMethodDef addressbook_methods[] = {
 
 
 PyDoc_STRVAR(addressbook_doc,
-"Cocoa._AddressBook defines constants, types and global functions used by "
-"Cocoa.AddressBook."
+  "_AddressBook defines constants, types and global functions used by "
+  "AddressBook."
 );
 
 
@@ -40,8 +39,12 @@ void init_AddressBook(void)
 		return;
 	}
 
+#ifdef MACOSX 
 	bundle = CFBundleCreate(NULL,
 		(CFURLRef)[NSURL fileURLWithPath:@"/System/Library/Frameworks/AddressBook.framework"]);
+#else
+	bundle = nil;
+#endif
 
 
 	if (register_ints(d, enum_table) < 0) return;
