@@ -18,6 +18,7 @@ General guidelines for use:
 from Foundation import NSObject, NSLog
 import objc
 import os
+import sys
 
 import traceback
 from ExceptionHandling import NSExceptionHandler, NSLogUncaughtExceptionMask, NSLogAndHandleEveryExceptionMask, NSStackTraceKey
