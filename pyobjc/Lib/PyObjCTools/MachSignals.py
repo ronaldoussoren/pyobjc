@@ -1,5 +1,4 @@
 import _machsignals
-import signal as signalmodule
 __all__ = ['getsignal', 'signal']
 
 def getsignal(signum):
