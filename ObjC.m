@@ -146,6 +146,10 @@ initpyobjc (void)
   [OC_PythonBundle class];
   
   ObjCObject_initialize();
+
+  // sdm7g 2002-1-22: if -v ($PYVERBOSE) log all message sends to /tmp file
+  // [see:  objc*/runtime/objc-class.m in Darwin sources]
+  if (Py_VerboseFlag) instrumentObjcMessageSends(YES);
   
   if (PyErr_Occurred())
     Py_FatalError ("can't initialize module pyobjc");

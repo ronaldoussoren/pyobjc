@@ -32,7 +32,10 @@ def main():
     pool = rt.NSAutoreleasePool()
 
     # Load Application Framework:
-    rt.NSBundle.bundleWithPath_('/System/Library/Frameworks/AppKit.framework').load()
+    rt.NSBundle.bundleWithPath_(
+	'/System/Library/Frameworks/AppKit.framework').load()
+
+    NSApp = rt.NSApplication.sharedApplication()
 
     ##! NSApp.setDelegate_( AppDelegate() )
 
@@ -58,7 +61,7 @@ def main():
     bye.setTarget_ (NSApp)
     bye.setAction_ ('stop:')
     bye.setEnabled_ ( 1 )
-    bye.setTitle_( 'Goobye!' )
+    bye.setTitle_( 'Goodbye!' )
 
     adios = rt.NSSound.alloc()
     adios.initWithContentsOfFile_byReference_( 

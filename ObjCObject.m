@@ -52,7 +52,9 @@ ObjCObject_new (id obj)
   if (self == NULL)
     return NULL;
 
-  if (obj && ([obj isKindOfClass: [NSAutoreleasePool class]] == NO) )
+  /* sdm7g 2002-1-22: isKindOfClass crashes on abstract classes like NSProxy */
+  if (obj &&  !ISCLASS(obj) && 
+      ([obj isKindOfClass: [NSAutoreleasePool class]] == NO) )
     [obj retain];
   
   self->oc_object = obj;
