@@ -16,7 +16,7 @@ SUBPATTERNS = dict(
     HEX=r'(0[xX][0-9a-fA-F]+[lL]?)',
     EXTERN=r'((([A-Z-a-z_]\w*?_)?(EXTERN|EXPORT)|extern))',
     EXPORT=r'((([A-Z-a-z_]\w*?_)?(EXPORT|EXTERN)|extern))',
-    STATIC_INLINE=r'((([A-Z-a-z_]\w*?_)?INLINE|static inline|static __inline__))',
+    STATIC_INLINE=r'((([A-Z-a-z_]\w*?_)?INLINE|static\sinline|static\s__inline__))',
     BRACES=r'(([^\n}]*|([^}][^\n]*\n)*))',
     INDIRECTION=r'(\s*\*)',
     BOL=r'(\s*^\s*)',
@@ -452,6 +452,7 @@ class StaticInlineFunction(Token):
     }
     ''')
     example = example(r'''
+    static inline unsigned int NSEventMaskFromType(NSEventType type) { return (1 << type); }
     FOUNDATION_STATIC_INLINE BOOL NSDecimalIsNotANumber(const NSDecimal *dcm)
       { return ((dcm->_length == 0) && dcm->_isNegative); }
     FOUNDATION_STATIC_INLINE unsigned short NSSwapShort(unsigned short inv) {
@@ -499,7 +500,9 @@ if __name__ == '__main__':
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSByteOrder.h'
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSObject.h'
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSZone.h'
-    fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSAccessibility.h'
+    #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSAccessibility.h'
+    #fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSEvent.h'
+    fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSProgressIndicator.h'
     files = sys.argv[1:] or [fn]
     def deadraise(string, i, j):
         print string[i:j]
