@@ -13,7 +13,7 @@ USE_ADJUST_REFCOUNTS = 1
 # Set this to the path to an extracted tree of libffi to automaticly build
 # a compatible version of libffi
 LIBFFI_SOURCES=None
-LIBFFI_SOURCES='/Volumes/Data/Users/ronald/Projects/research/sourceforge/libffi/libffi'
+LIBFFI_SOURCES='libffi-src'
 
 import sys
 import os
@@ -373,6 +373,9 @@ for aPackage in package_dir.keys():
 
 try:
     import bundlebuilder
+
+    if sys.version_info[:2] == (2,2):
+        raise ImportError, "We're the only provider of these modules ATM."
 except ImportError:
     # bundlebuilder.py and plistlib.py shipped with newer versions of
     # Python but are included with pyobjc be independent. The following

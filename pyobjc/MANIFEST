@@ -1,208 +1,360 @@
-./BUGS
-./ChangeLog
-./Doc/architecture.txt
-./Doc/classes.txt
-./Doc/structure.txt
-./Doc/TODO
-./Doc/users.txt
-./Doc/warts.txt
-./Doc/wrapping.txt
-./Examples/00ReadMe.txt
-./Examples/addressbook.py
-./Examples/CurrencyConverter/buildapp.py
-./Examples/CurrencyConverter/CurrencyConverter.py
-./Examples/CurrencyConverter/English.lproj/InfoPlist.strings
-./Examples/CurrencyConverter/English.lproj/MainMenu.nib/classes.nib
-./Examples/CurrencyConverter/English.lproj/MainMenu.nib/info.nib
-./Examples/CurrencyConverter/English.lproj/MainMenu.nib/objects.nib
-./Examples/dictionary.py
-./Examples/HelloWorld.py
-./Examples/iClass/datasource.py
-./Examples/iClass/English.lproj/MainMenu.nib/classes.nib
-./Examples/iClass/English.lproj/MainMenu.nib/info.nib
-./Examples/iClass/English.lproj/MainMenu.nib/objects.nib
-./Examples/iClass/main.py
-./Examples/method-weirdness.py
-./Examples/objc-vars.py
-./Examples/pydict-to-objcdict.py
-./Examples/subclassing-objective-c.py
-./Examples/super-call.py
-./Examples/TableModel/00ReadMe.txt
-./Examples/TableModel/buildapp.py
-./Examples/TableModel/English.lproj/MainMenu.nib/classes.nib
-./Examples/TableModel/English.lproj/MainMenu.nib/info.nib
-./Examples/TableModel/English.lproj/MainMenu.nib/objects.nib
-./Examples/TableModel/TableModel.py
-./Examples/TableModel2/English.lproj/InfoPlist.strings
-./Examples/TableModel2/English.lproj/MainMenu.nib/classes.nib
-./Examples/TableModel2/English.lproj/MainMenu.nib/info.nib
-./Examples/TableModel2/English.lproj/MainMenu.nib/objects.nib
-./Examples/TableModel2/main.m
-./Examples/TableModel2/README.txt
-./Examples/TableModel2/TableModel.py
-./Examples/TableModel2/TableModel2.pbproj/bbum.pbxuser
-./Examples/TableModel2/TableModel2.pbproj/project.pbxproj
-./Examples/Todo/00ReadMe.txt
-./Examples/Todo/buildapp.py
-./Examples/Todo/CalendarMatrix.py
-./Examples/Todo/English.lproj/Credits.rtf
-./Examples/Todo/English.lproj/InfoPlist.strings
-./Examples/Todo/English.lproj/MainMenu.nib/classes.nib
-./Examples/Todo/English.lproj/MainMenu.nib/info.nib
-./Examples/Todo/English.lproj/MainMenu.nib/objects.nib
-./Examples/Todo/English.lproj/ToDoDocument.nib/classes.nib
-./Examples/Todo/English.lproj/ToDoDocument.nib/info.nib
-./Examples/Todo/English.lproj/ToDoDocument.nib/objects.nib
-./Examples/Todo/English.lproj/ToDoInfoWindow.nib/classes.nib
-./Examples/Todo/English.lproj/ToDoInfoWindow.nib/info.nib
-./Examples/Todo/English.lproj/ToDoInfoWindow.nib/objects.nib
-./Examples/Todo/Icons/ToDoApp.icns
-./Examples/Todo/Icons/ToDoDoc.icns
-./Examples/Todo/Images/DeferredMark.tiff
-./Examples/Todo/Images/DoneMark.tiff
-./Examples/Todo/Images/LeftArrow.tiff
-./Examples/Todo/Images/RightArrow.tiff
-./Examples/Todo/Info.plist
-./Examples/Todo/InfoWindowController.py
-./Examples/Todo/main.py
-./Examples/Todo/SelectionNotifyMatrix.py
-./Examples/Todo/TodoAppDelegate.py
-./Examples/Todo/ToDoCell.py
-./Examples/Todo/ToDoDocument.py
-./Examples/Todo/ToDoItem.py
-./Examples/using-nscoder.py
-./Examples/using-nsscanner.py
-./Examples/WebServicesTool/__main__.py
-./Examples/WebServicesTool/bin-python-main.m
-./Examples/WebServicesTool/English.lproj/InfoPlist.strings
-./Examples/WebServicesTool/English.lproj/MainMenu.nib/classes.nib
-./Examples/WebServicesTool/English.lproj/MainMenu.nib/info.nib
-./Examples/WebServicesTool/English.lproj/MainMenu.nib/keyedobjects.nib
-./Examples/WebServicesTool/English.lproj/MainMenu~.nib/classes.nib
-./Examples/WebServicesTool/English.lproj/MainMenu~.nib/info.nib
-./Examples/WebServicesTool/English.lproj/MainMenu~.nib/keyedobjects.nib
-./Examples/WebServicesTool/English.lproj/WSTConnection.nib/classes.nib
-./Examples/WebServicesTool/English.lproj/WSTConnection.nib/info.nib
-./Examples/WebServicesTool/English.lproj/WSTConnection.nib/keyedobjects.nib
-./Examples/WebServicesTool/LICENSE.txt
-./Examples/WebServicesTool/Preferences.png
-./Examples/WebServicesTool/README.txt
-./Examples/WebServicesTool/Reload.png
-./Examples/WebServicesTool/Web Services Tool.pbproj/project.pbxproj
-./Examples/WebServicesTool/WST.icns
-./Examples/WebServicesTool/WST.png
-./Examples/WebServicesTool/WSTApplicationDelegateClass.py
-./Examples/WebServicesTool/WSTConnectionWindowControllerClass.py
-./FIXME
-./INSTALL
-./Installer Package/Resources/Description.plist
-./Installer Package/Resources/License.txt
-./Installer Package/Resources/ReadMe.txt
-./Lib/AddressBook/__init__.py
-./Lib/AppKit/__init__.py
-./Lib/AppKit/_AppKitSignatures.py
-./Lib/AppKit/AppKit.byref
-./Lib/AppKit/NibClassBuilder.py
-./Lib/Foundation/__init__.py
-./Lib/Foundation/Foundation.byref
-./Lib/Foundation/test/test_nsarray.py
-./Lib/Foundation/test/test_nsautoreleasepool.py
-./Lib/Foundation/test/test_nsdictionary.py
-./Lib/Foundation/test/test_nsexception.py
-./Lib/Foundation/test/test_nsnumber.py
-./Lib/Foundation/test/test_nsobject.py
-./Lib/Foundation/test/test_nsset.py
-./Lib/Foundation/test/test_paths.py
-./Lib/Foundation/test/test_subclassing.py
-./Lib/objc/__init__.py
-./Lib/objc/_convenience.py
-./Lib/objc/_FoundationSignatures.py
-./Lib/objc/test/test_objc.py
-./Lib/objc/test/test_subclass.py
-./License.txt
-./Modules/Cocoa/00ReadMe.txt
-./Modules/Cocoa/_App_Enum.inc
-./Modules/Cocoa/_App_Functions.inc
-./Modules/Cocoa/_App_Str.inc
-./Modules/Cocoa/_App_Var.inc
-./Modules/Cocoa/_AppKit.m
-./Modules/Cocoa/_AppKitMapping.m
-./Modules/Cocoa/_Fnd_Enum.inc
-./Modules/Cocoa/_Fnd_Functions.inc
-./Modules/Cocoa/_Fnd_NSCoder.inc
-./Modules/Cocoa/_Fnd_NSData.inc
-./Modules/Cocoa/_Fnd_Str.inc
-./Modules/Cocoa/_Fnd_Var.inc
-./Modules/Cocoa/_Foundation.m
-./Modules/Cocoa/_FoundationMapping.m
-./Modules/Cocoa/AppKit.prototypes
-./Modules/Cocoa/const-table.h
-./Modules/Cocoa/Foundation.prototypes
-./Modules/Cocoa/func_builder.err
-./Modules/Cocoa/func_builder.out
-./Modules/Cocoa/NSAutoreleasePoolSupport.m
-./Modules/Cocoa/scripts/cocoa_generator.py
-./Modules/Cocoa/scripts/enum_generator.py
-./Modules/Cocoa/scripts/func_builder.py
-./Modules/Cocoa/scripts/func_collector.py
-./Modules/Cocoa/scripts/strconst_generator.py
-./Modules/Cocoa/scripts/var_generator.py
-./Modules/objc/alloc_hack.m
-./Modules/objc/class-builder.h
-./Modules/objc/class-builder.m
-./Modules/objc/class-list.m
-./Modules/objc/CocoaSignatures.lst
-./Modules/objc/informal-protocol.m
-./Modules/objc/instance-var.h
-./Modules/objc/instance-var.m
-./Modules/objc/module.m
-./Modules/objc/objc-class.m
-./Modules/objc/objc-object.m
-./Modules/objc/objc_support.h
-./Modules/objc/objc_support.m
-./Modules/objc/objc_util.h
-./Modules/objc/objc_util.m
-./Modules/objc/ObjCPointer.h
-./Modules/objc/ObjCPointer.m
-./Modules/objc/OC_PythonArray.h
-./Modules/objc/OC_PythonArray.m
-./Modules/objc/OC_PythonDictionary.h
-./Modules/objc/OC_PythonDictionary.m
-./Modules/objc/OC_PythonInt.h
-./Modules/objc/OC_PythonInt.m
-./Modules/objc/OC_PythonObject.h
-./Modules/objc/OC_PythonObject.m
-./Modules/objc/OC_PythonString.h
-./Modules/objc/OC_PythonString.m
-./Modules/objc/pyobjc-api.h
-./Modules/objc/pyobjc-api.m
-./Modules/objc/pyobjc.h
-./Modules/objc/register.m
-./Modules/objc/selector.m
-./Modules/objc/signatures.lst
-./Modules/objc/super-call.h
-./Modules/objc/super-call.m
-./MPCompat/bundlebuilder.py
-./MPCompat/plistlib.py
-./MPCompat/README
-./NEWS
-./Project Templates/00README.txt
-./Project Templates/Cocoa-Python Application/__main__.py
-./Project Templates/Cocoa-Python Application/bin-python-main.m
-./Project Templates/Cocoa-Python Application/CocoaApp.pbproj/project.pbxproj
-./Project Templates/Cocoa-Python Application/CocoaApp.pbproj/TemplateInfo.plist
-./Project Templates/Cocoa-Python Application/English.lproj/InfoPlist.strings
-./Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/classes.nib
-./Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/info.nib
-./Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/keyedobjects.nib
-./Project Templates/Cocoa-Python Application/MyAppDelegate.py
-./README-OLD.txt
-./ReadMe.txt
-./Scripts/buildpkg.py
-./Scripts/create_byref_module.py
-./Scripts/extract_byref_signatures.py
-./Scripts/generate-stubs.py
-./Scripts/make_distrib.py
-./Scripts/nibclassbuilder
-./Scripts/README
-./setup.py
+BUGS
+ChangeLog
+Doc/architecture.txt
+Doc/classes.txt
+Doc/coding-style.txt
+Doc/intro.txt
+Doc/libffi.txt
+Doc/structure.txt
+Doc/TODO
+Doc/users.txt
+Doc/warts.txt
+Doc/website.lst
+Doc/wrapping.txt
+Examples/00ReadMe.txt
+Examples/addressbook.m
+Examples/addressbook.py
+Examples/autoreadme.py
+Examples/CurrencyConverter/00README.txt
+Examples/CurrencyConverter/buildapp.py
+Examples/CurrencyConverter/CurrencyConverter.py
+Examples/CurrencyConverter/English.lproj/InfoPlist.strings
+Examples/CurrencyConverter/English.lproj/MainMenu.nib/classes.nib
+Examples/CurrencyConverter/English.lproj/MainMenu.nib/info.nib
+Examples/CurrencyConverter/English.lproj/MainMenu.nib/objects.nib
+Examples/dictionary.py
+Examples/HelloWorld.py
+Examples/iClass/buildapp.py
+Examples/iClass/datasource.py
+Examples/iClass/English.lproj/MainMenu.nib/classes.nib
+Examples/iClass/English.lproj/MainMenu.nib/info.nib
+Examples/iClass/English.lproj/MainMenu.nib/objects.nib
+Examples/iClass/main.py
+Examples/method-weirdness.py
+Examples/objc-vars.py
+Examples/pydict-to-objcdict.py
+Examples/subclassing-objective-c.py
+Examples/super-call.py
+Examples/TableModel/00ReadMe.txt
+Examples/TableModel/buildapp.py
+Examples/TableModel/English.lproj/MainMenu.nib/classes.nib
+Examples/TableModel/English.lproj/MainMenu.nib/info.nib
+Examples/TableModel/English.lproj/MainMenu.nib/objects.nib
+Examples/TableModel/TableModel.py
+Examples/TableModel2/English.lproj/InfoPlist.strings
+Examples/TableModel2/English.lproj/MainMenu.nib/classes.nib
+Examples/TableModel2/English.lproj/MainMenu.nib/info.nib
+Examples/TableModel2/English.lproj/MainMenu.nib/objects.nib
+Examples/TableModel2/main.m
+Examples/TableModel2/README.txt
+Examples/TableModel2/TableModel.py
+Examples/TableModel2/TableModel2.pbproj/project.pbxproj
+Examples/Todo/00ReadMe.txt
+Examples/Todo/buildapp.py
+Examples/Todo/CalendarMatrix.py
+Examples/Todo/English.lproj/Credits.rtf
+Examples/Todo/English.lproj/InfoPlist.strings
+Examples/Todo/English.lproj/MainMenu.nib/classes.nib
+Examples/Todo/English.lproj/MainMenu.nib/info.nib
+Examples/Todo/English.lproj/MainMenu.nib/objects.nib
+Examples/Todo/English.lproj/ToDoDocument.nib/classes.nib
+Examples/Todo/English.lproj/ToDoDocument.nib/info.nib
+Examples/Todo/English.lproj/ToDoDocument.nib/objects.nib
+Examples/Todo/English.lproj/ToDoInfoWindow.nib/classes.nib
+Examples/Todo/English.lproj/ToDoInfoWindow.nib/info.nib
+Examples/Todo/English.lproj/ToDoInfoWindow.nib/objects.nib
+Examples/Todo/Icons/ToDoApp.icns
+Examples/Todo/Icons/ToDoDoc.icns
+Examples/Todo/Images/DeferredMark.tiff
+Examples/Todo/Images/DoneMark.tiff
+Examples/Todo/Images/LeftArrow.tiff
+Examples/Todo/Images/RightArrow.tiff
+Examples/Todo/Info.plist
+Examples/Todo/InfoWindowController.py
+Examples/Todo/main.py
+Examples/Todo/SelectionNotifyMatrix.py
+Examples/Todo/TodoAppDelegate.py
+Examples/Todo/ToDoCell.py
+Examples/Todo/ToDoDocument.py
+Examples/Todo/ToDoItem.py
+Examples/using-nscoder.py
+Examples/using-nsscanner.py
+Examples/WebServicesTool/bin-python-main.m
+Examples/WebServicesTool/English.lproj/InfoPlist.strings
+Examples/WebServicesTool/English.lproj/MainMenu.nib/classes.nib
+Examples/WebServicesTool/English.lproj/MainMenu.nib/info.nib
+Examples/WebServicesTool/English.lproj/MainMenu.nib/keyedobjects.nib
+Examples/WebServicesTool/English.lproj/WSTConnection.nib/classes.nib
+Examples/WebServicesTool/English.lproj/WSTConnection.nib/info.nib
+Examples/WebServicesTool/English.lproj/WSTConnection.nib/keyedobjects.nib
+Examples/WebServicesTool/LICENSE.txt
+Examples/WebServicesTool/Main.py
+Examples/WebServicesTool/Preferences.png
+Examples/WebServicesTool/README.txt
+Examples/WebServicesTool/Reload.png
+Examples/WebServicesTool/Web Services Tool.pbproj/project.pbxproj
+Examples/WebServicesTool/WST.icns
+Examples/WebServicesTool/WST.png
+Examples/WebServicesTool/WSTApplicationDelegateClass.py
+Examples/WebServicesTool/WSTConnectionWindowControllerClass.py
+FIXME
+INSTALL
+Installer Package/Resources/Description.plist
+Installer Package/Resources/License.txt
+Installer Package/Resources/ReadMe.txt
+Lib/AddressBook/__init__.py
+Lib/AppKit/__init__.py
+Lib/AppKit/_AppKitSignatures.py
+Lib/AppKit/AppKit.byref
+Lib/AppKit/test/__init__.py
+Lib/AppKit/test/test_nsbitmapimagerep.py
+Lib/AppKit/test/test_nscell.py
+Lib/AppKit/test/test_nsworkspace.py
+Lib/Foundation/__init__.py
+Lib/Foundation/Foundation.byref
+Lib/Foundation/test/__init__.py
+Lib/Foundation/test/test_nsarray.py
+Lib/Foundation/test/test_nsautoreleasepool.py
+Lib/Foundation/test/test_nsdata.py
+Lib/Foundation/test/test_nsdictionary.py
+Lib/Foundation/test/test_nsenumerator.py
+Lib/Foundation/test/test_nsexception.py
+Lib/Foundation/test/test_nslocalizedstring.py
+Lib/Foundation/test/test_nsmachport.py
+Lib/Foundation/test/test_nsnumber.py
+Lib/Foundation/test/test_nsobject.py
+Lib/Foundation/test/test_nsset.py
+Lib/Foundation/test/test_nsstring.py
+Lib/Foundation/test/test_nsundomanager.py
+Lib/Foundation/test/test_paths.py
+Lib/Foundation/test/test_subclassing.py
+Lib/InterfaceBuilder/__init__.py
+Lib/objc/__init__.py
+Lib/objc/_convenience.py
+Lib/objc/_FoundationSignatures.py
+Lib/objc/test/__init__.py
+Lib/objc/test/test_allocatebuffer.py
+Lib/objc/test/test_leaks.py
+Lib/objc/test/test_methodedits.py
+Lib/objc/test/test_methods.py
+Lib/objc/test/test_objc.py
+Lib/objc/test/test_posing.py
+Lib/objc/test/test_regr.py
+Lib/objc/test/test_subclass.py
+Lib/objc/test/testbndl.m
+Lib/PreferencePanes/__init__.py
+Lib/PyObjCTools/__init__.py
+Lib/PyObjCTools/AppHelper.py
+Lib/PyObjCTools/Conversion.py
+Lib/PyObjCTools/NibClassBuilder.py
+Lib/PyObjCTools/test/__init__.py
+Lib/PyObjCTools/test/test_collections.py
+Lib/ScreenSaver.py
+License.txt
+MANIFEST
+Modules/AddressBook/_Addr_Enum.inc
+Modules/AddressBook/_Addr_Str.inc
+Modules/AddressBook/_Addr_Var.inc
+Modules/AddressBook/_AddressBook.m
+Modules/AppKit/00ReadMe.txt
+Modules/AppKit/_App_Enum.GNUstep.inc
+Modules/AppKit/_App_Enum.inc
+Modules/AppKit/_App_Functions.GNUstep.inc
+Modules/AppKit/_App_Functions.inc
+Modules/AppKit/_App_Str.GNUstep.inc
+Modules/AppKit/_App_Str.inc
+Modules/AppKit/_App_Var.GNUstep.inc
+Modules/AppKit/_App_Var.inc
+Modules/AppKit/_AppKit.m
+Modules/AppKit/_AppKitMapping.m
+Modules/autoGIL.c
+Modules/Foundation/_Fnd_Enum.GNUstep.inc
+Modules/Foundation/_Fnd_Enum.inc
+Modules/Foundation/_Fnd_Functions.GNUstep.inc
+Modules/Foundation/_Fnd_Functions.inc
+Modules/Foundation/_Fnd_Str.GNUstep.inc
+Modules/Foundation/_Fnd_Str.inc
+Modules/Foundation/_Fnd_Var.GNUstep.inc
+Modules/Foundation/_Fnd_Var.inc
+Modules/Foundation/_Foundation.m
+Modules/Foundation/_FoundationMapping.m
+Modules/Foundation/_FoundationMapping_NSCoder.m
+Modules/Foundation/_FoundationMapping_NSData.m
+Modules/Foundation/NSAutoreleasePoolSupport.m
+Modules/InterfaceBuilder/_InterfaceBuilder.m
+Modules/InterfaceBuilder/_InterfaceBuilder_Enum.inc
+Modules/InterfaceBuilder/_InterfaceBuilder_Str.inc
+Modules/objc/alloc_hack.m
+Modules/objc/class-builder.h
+Modules/objc/class-builder.m
+Modules/objc/class-list.m
+Modules/objc/CocoaSignatures.lst
+Modules/objc/informal-protocol.m
+Modules/objc/instance-var.h
+Modules/objc/instance-var.m
+Modules/objc/libffi_support.m
+Modules/objc/method-accessor.m
+Modules/objc/module.m
+Modules/objc/objc-class.m
+Modules/objc/objc-object.m
+Modules/objc/objc_support.h
+Modules/objc/objc_support.m
+Modules/objc/objc_util.h
+Modules/objc/objc_util.m
+Modules/objc/ObjCPointer.h
+Modules/objc/ObjCPointer.m
+Modules/objc/OC_PythonArray.h
+Modules/objc/OC_PythonArray.m
+Modules/objc/OC_PythonDictionary.h
+Modules/objc/OC_PythonDictionary.m
+Modules/objc/OC_PythonInt.h
+Modules/objc/OC_PythonInt.m
+Modules/objc/OC_PythonObject.h
+Modules/objc/OC_PythonObject.m
+Modules/objc/OC_PythonString.h
+Modules/objc/OC_PythonString.m
+Modules/objc/py2.2bool.c
+Modules/objc/py2.2bool.h
+Modules/objc/pyobjc-api.h
+Modules/objc/pyobjc-api.m
+Modules/objc/pyobjc.h
+Modules/objc/register.m
+Modules/objc/selector.m
+Modules/objc/signatures.lst
+Modules/objc/super-call.h
+Modules/objc/super-call.m
+Modules/objc/unicode-object.m
+Modules/objc/wrapper-const-table.h
+Modules/PreferencePanes/_PreferencePanes.m
+Modules/PreferencePanes/_PreferencePanes_Enum.inc
+Modules/PreferencePanes/_PreferencePanes_Str.inc
+MPCompat/bundlebuilder.py
+MPCompat/plistlib.py
+MPCompat/README
+NEWS
+Project Templates/00README.txt
+Project Templates/clean.py
+Project Templates/Cocoa-Python Application/00README.txt
+Project Templates/Cocoa-Python Application/__main__.py
+Project Templates/Cocoa-Python Application/bin-python-main.m
+Project Templates/Cocoa-Python Application/CocoaApp.pbproj/project.pbxproj
+Project Templates/Cocoa-Python Application/CocoaApp.pbproj/TemplateInfo.plist
+Project Templates/Cocoa-Python Application/English.lproj/InfoPlist.strings
+Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/classes.nib
+Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/info.nib
+Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/keyedobjects.nib
+Project Templates/Cocoa-Python Application/MyAppDelegate.py
+Project Templates/Cocoa-Python Document-based Application/00README.txt
+Project Templates/Cocoa-Python Document-based Application/__main__.py
+Project Templates/Cocoa-Python Document-based Application/bin-python-main.m
+Project Templates/Cocoa-Python Document-based Application/CocoaDocApp.pbproj/project.pbxproj
+Project Templates/Cocoa-Python Document-based Application/CocoaDocApp.pbproj/TemplateInfo.plist
+Project Templates/Cocoa-Python Document-based Application/English.lproj/Credits.rtf
+Project Templates/Cocoa-Python Document-based Application/English.lproj/InfoPlist.strings
+Project Templates/Cocoa-Python Document-based Application/English.lproj/MainMenu.nib/classes.nib
+Project Templates/Cocoa-Python Document-based Application/English.lproj/MainMenu.nib/info.nib
+Project Templates/Cocoa-Python Document-based Application/English.lproj/MainMenu.nib/keyedobjects.nib
+Project Templates/Cocoa-Python Document-based Application/English.lproj/MyDocument.nib/classes.nib
+Project Templates/Cocoa-Python Document-based Application/English.lproj/MyDocument.nib/info.nib
+Project Templates/Cocoa-Python Document-based Application/English.lproj/MyDocument.nib/objects.nib
+Project Templates/Cocoa-Python Document-based Application/MyAppDelegate.py
+Project Templates/Cocoa-Python Document-based Application/MyDocument.py
+Project Templates/Cocoa-Python-ObjC Application/__main__.py
+Project Templates/Cocoa-Python-ObjC Application/bin-python-main.m
+Project Templates/Cocoa-Python-ObjC Application/CocoaApp.pbproj/project.pbxproj
+Project Templates/Cocoa-Python-ObjC Application/CocoaApp.pbproj/TemplateInfo.plist
+Project Templates/Cocoa-Python-ObjC Application/English.lproj/InfoPlist.strings
+Project Templates/Cocoa-Python-ObjC Application/English.lproj/MainMenu.nib/classes.nib
+Project Templates/Cocoa-Python-ObjC Application/English.lproj/MainMenu.nib/info.nib
+Project Templates/Cocoa-Python-ObjC Application/English.lproj/MainMenu.nib/keyedobjects.nib
+Project Templates/Cocoa-Python-ObjC Application/HueView.h
+Project Templates/Cocoa-Python-ObjC Application/HueView.m
+Project Templates/Cocoa-Python-ObjC Application/MyAppDelegate.py
+README-OLD.txt
+ReadMe.txt
+Scripts/buildpkg.py
+Scripts/clean-install
+Scripts/CodeGenerators/00README.txt
+Scripts/CodeGenerators/cocoa_generator.py
+Scripts/CodeGenerators/enum_generator.py
+Scripts/CodeGenerators/func_builder.py
+Scripts/CodeGenerators/func_collector.py
+Scripts/CodeGenerators/strconst_generator.py
+Scripts/CodeGenerators/var_generator.py
+Scripts/create_byref_module.py
+Scripts/extract_byref_signatures.py
+Scripts/generate-stubs.py
+Scripts/make_distrib.py
+Scripts/nibclassbuilder
+Scripts/README
+Scripts/runalltests
+setup.py
+libffi-src/acconfig.h
+libffi-src/acinclude.m4
+libffi-src/aclocal.m4
+libffi-src/ChangeLog
+libffi-src/ChangeLog.libgcj
+libffi-src/ChangeLog.v1
+libffi-src/confdefs.h
+libffi-src/config.guess
+libffi-src/config.sub
+libffi-src/configure
+libffi-src/configure.in
+libffi-src/fficonfig.h.in
+libffi-src/include/ffi.h.in
+libffi-src/include/ffi_common.h
+libffi-src/include/ffi_mips.h
+libffi-src/include/fficonfig.h
+libffi-src/include/Makefile.am
+libffi-src/include/Makefile.in
+libffi-src/INSTALL
+libffi-src/install-sh
+libffi-src/LICENSE
+libffi-src/ltcf-c.sh
+libffi-src/ltconfig
+libffi-src/ltmain.sh
+libffi-src/Makefile.am
+libffi-src/Makefile.in
+libffi-src/mkinstalldirs
+libffi-src/README
+libffi-src/README.Ronald
+libffi-src/src/alpha/ffi.c
+libffi-src/src/alpha/osf.S
+libffi-src/src/arm/ffi.c
+libffi-src/src/arm/sysv.S
+libffi-src/src/debug.c
+libffi-src/src/ffitest.c
+libffi-src/src/ia64/ffi.c
+libffi-src/src/ia64/ia64_flags.h
+libffi-src/src/ia64/unix.S
+libffi-src/src/java_raw_api.c
+libffi-src/src/m68k/ffi.c
+libffi-src/src/m68k/sysv.S
+libffi-src/src/mips/ffi.c
+libffi-src/src/mips/n32.S
+libffi-src/src/mips/o32.S
+libffi-src/src/powerpc/aix.S
+libffi-src/src/powerpc/aix_closure.S
+libffi-src/src/powerpc/asm.h
+libffi-src/src/powerpc/darwin.S
+libffi-src/src/powerpc/darwin_closure.S
+libffi-src/src/powerpc/ffi.c
+libffi-src/src/powerpc/ffi_darwin.c
+libffi-src/src/powerpc/ppc_closure.S
+libffi-src/src/powerpc/sysv.S
+libffi-src/src/prep_cif.c
+libffi-src/src/raw_api.c
+libffi-src/src/s390/ffi.c
+libffi-src/src/s390/sysv.S
+libffi-src/src/sh/ffi.c
+libffi-src/src/sh/sysv.S
+libffi-src/src/sparc/ffi.c
+libffi-src/src/sparc/v8.S
+libffi-src/src/sparc/v9.S
+libffi-src/src/types.c
+libffi-src/src/x86/ffi.c
+libffi-src/src/x86/ffi64.c
+libffi-src/src/x86/sysv.S
+libffi-src/src/x86/unix64.S
+libffi-src/src/x86/win32.S
+libffi-src/stamp-h.in
