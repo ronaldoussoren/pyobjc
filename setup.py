@@ -106,7 +106,8 @@ CocoaExtensions = [
 			'-framework', 'Foundation',
 		   ]),
 	  Extension("AppKit._AppKit", 
-		   ["Modules/Cocoa/_AppKit.m"],
+		   ["Modules/Cocoa/_AppKit.m",
+		    "Modules/Cocoa/NSWorkspaceSupport.m"],
 		   extra_compile_args=[
 			"-g", "-IModules/objc", 
 		   ],
