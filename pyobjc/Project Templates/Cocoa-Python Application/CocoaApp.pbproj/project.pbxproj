@@ -104,6 +104,7 @@
 				4A9504CCFFE6A4B311CA0CBA,
 				4A9504CDFFE6A4B311CA0CBA,
 			);
+			hasScannedForEncodings = 1;
 			isa = PBXProject;
 			mainGroup = 29B97314FDCFA39411CA2CEA;
 			projectDirPath = "";
@@ -241,7 +242,6 @@
 </dict>
 </plist>
 ";
-			shouldUseHeadermap = 1;
 		};
 		29B97327FDCFA39411CA2CEA = {
 			buildActionMask = 2147483647;
@@ -325,11 +325,13 @@
 //F63
 //F64
 		F60DD8BC0358A22201C8ED3C = {
+			fileEncoding = 30;
 			isa = PBXExecutableFileReference;
 			path = __main__.py;
 			refType = 2;
 		};
 		F60DD8BD0358A22201C8ED3C = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = MyAppDelegate.py;
 			refType = 2;

@@ -146,6 +146,13 @@ packages = CorePackages + CocoaPackages + AddressBookPackages
 # bundlebuilder test below).
 package_dir = dict([(pkg, 'Lib/' + pkg) for pkg in packages])
 
+for aPackage in package_dir.keys():
+        testDir = os.path.join(package_dir[aPackage], 'test')
+        if os.path.isdir(testDir):
+                packageName = '%s.test' % aPackage
+                package_dir[packageName] = testDir
+                packages.append(packageName)
+
 try:
     import bundlebuilder
 except ImportError:
@@ -154,7 +161,6 @@ except ImportError:
     # magic makes distutils install the contents of MPCompat.
     packages.append('')
     package_dir[''] = 'MPCompat'
-
 
 setup(name = "pyobjc",
       version = package_version(),

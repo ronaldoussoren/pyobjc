@@ -1,18 +1,20 @@
 ./BUGS
 ./ChangeLog
 ./Doc/architecture.txt
+./Doc/classes.txt
 ./Doc/structure.txt
 ./Doc/TODO
 ./Doc/users.txt
 ./Doc/warts.txt
+./Doc/wrapping.txt
 ./Examples/00ReadMe.txt
 ./Examples/addressbook.py
+./Examples/CurrencyConverter/buildapp.py
 ./Examples/CurrencyConverter/CurrencyConverter.py
 ./Examples/CurrencyConverter/English.lproj/InfoPlist.strings
 ./Examples/CurrencyConverter/English.lproj/MainMenu.nib/classes.nib
 ./Examples/CurrencyConverter/English.lproj/MainMenu.nib/info.nib
 ./Examples/CurrencyConverter/English.lproj/MainMenu.nib/objects.nib
-./Examples/CurrencyConverter/setup-app.py
 ./Examples/dictionary.py
 ./Examples/HelloWorld.py
 ./Examples/iClass/datasource.py
@@ -20,17 +22,16 @@
 ./Examples/iClass/English.lproj/MainMenu.nib/info.nib
 ./Examples/iClass/English.lproj/MainMenu.nib/objects.nib
 ./Examples/iClass/main.py
-./Examples/iClass/setup-app.py
 ./Examples/method-weirdness.py
 ./Examples/objc-vars.py
 ./Examples/pydict-to-objcdict.py
 ./Examples/subclassing-objective-c.py
 ./Examples/super-call.py
 ./Examples/TableModel/00ReadMe.txt
+./Examples/TableModel/buildapp.py
 ./Examples/TableModel/English.lproj/MainMenu.nib/classes.nib
 ./Examples/TableModel/English.lproj/MainMenu.nib/info.nib
 ./Examples/TableModel/English.lproj/MainMenu.nib/objects.nib
-./Examples/TableModel/setup-app.py
 ./Examples/TableModel/TableModel.py
 ./Examples/TableModel2/English.lproj/InfoPlist.strings
 ./Examples/TableModel2/English.lproj/MainMenu.nib/classes.nib
@@ -39,9 +40,10 @@
 ./Examples/TableModel2/main.m
 ./Examples/TableModel2/README.txt
 ./Examples/TableModel2/TableModel.py
+./Examples/TableModel2/TableModel2.pbproj/bbum.pbxuser
 ./Examples/TableModel2/TableModel2.pbproj/project.pbxproj
 ./Examples/Todo/00ReadMe.txt
-./Examples/Todo/buildpyapp.sh
+./Examples/Todo/buildapp.py
 ./Examples/Todo/CalendarMatrix.py
 ./Examples/Todo/English.lproj/Credits.rtf
 ./Examples/Todo/English.lproj/InfoPlist.strings
@@ -64,24 +66,25 @@
 ./Examples/Todo/InfoWindowController.py
 ./Examples/Todo/main.py
 ./Examples/Todo/SelectionNotifyMatrix.py
-./Examples/Todo/setup-app.py
 ./Examples/Todo/TodoAppDelegate.py
 ./Examples/Todo/ToDoCell.py
 ./Examples/Todo/ToDoDocument.py
 ./Examples/Todo/ToDoItem.py
 ./Examples/using-nscoder.py
 ./Examples/using-nsscanner.py
+./Examples/WebServicesTool/__main__.py
+./Examples/WebServicesTool/bin-python-main.m
 ./Examples/WebServicesTool/English.lproj/InfoPlist.strings
 ./Examples/WebServicesTool/English.lproj/MainMenu.nib/classes.nib
 ./Examples/WebServicesTool/English.lproj/MainMenu.nib/info.nib
 ./Examples/WebServicesTool/English.lproj/MainMenu.nib/keyedobjects.nib
+./Examples/WebServicesTool/English.lproj/MainMenu~.nib/classes.nib
+./Examples/WebServicesTool/English.lproj/MainMenu~.nib/info.nib
+./Examples/WebServicesTool/English.lproj/MainMenu~.nib/keyedobjects.nib
 ./Examples/WebServicesTool/English.lproj/WSTConnection.nib/classes.nib
 ./Examples/WebServicesTool/English.lproj/WSTConnection.nib/info.nib
 ./Examples/WebServicesTool/English.lproj/WSTConnection.nib/keyedobjects.nib
 ./Examples/WebServicesTool/LICENSE.txt
-./Examples/WebServicesTool/main-bin-python.m
-./Examples/WebServicesTool/main-embedded-interpreter.m
-./Examples/WebServicesTool/Main.py
 ./Examples/WebServicesTool/Preferences.png
 ./Examples/WebServicesTool/README.txt
 ./Examples/WebServicesTool/Reload.png
@@ -92,7 +95,6 @@
 ./Examples/WebServicesTool/WSTConnectionWindowControllerClass.py
 ./FIXME
 ./INSTALL
-./Installer Package/PyObjC.pmsp
 ./Installer Package/Resources/Description.plist
 ./Installer Package/Resources/License.txt
 ./Installer Package/Resources/ReadMe.txt
@@ -100,18 +102,24 @@
 ./Lib/AppKit/__init__.py
 ./Lib/AppKit/_AppKitSignatures.py
 ./Lib/AppKit/AppKit.byref
+./Lib/AppKit/NibClassBuilder.py
 ./Lib/Foundation/__init__.py
 ./Lib/Foundation/Foundation.byref
-./Lib/Foundation/test/test_subclassing.py
+./Lib/Foundation/test/test_nsarray.py
+./Lib/Foundation/test/test_nsautoreleasepool.py
+./Lib/Foundation/test/test_nsdictionary.py
+./Lib/Foundation/test/test_nsexception.py
+./Lib/Foundation/test/test_nsnumber.py
 ./Lib/Foundation/test/test_nsobject.py
+./Lib/Foundation/test/test_nsset.py
+./Lib/Foundation/test/test_paths.py
+./Lib/Foundation/test/test_subclassing.py
 ./Lib/objc/__init__.py
 ./Lib/objc/_convenience.py
 ./Lib/objc/_FoundationSignatures.py
-./Lib/objc/builder.py
-./Lib/objc/classnib.py
 ./Lib/objc/test/test_objc.py
+./Lib/objc/test/test_subclass.py
 ./License.txt
-./MANIFEST
 ./Modules/Cocoa/00ReadMe.txt
 ./Modules/Cocoa/_App_Enum.inc
 ./Modules/Cocoa/_App_Functions.inc
@@ -132,12 +140,14 @@
 ./Modules/Cocoa/Foundation.prototypes
 ./Modules/Cocoa/func_builder.err
 ./Modules/Cocoa/func_builder.out
+./Modules/Cocoa/NSAutoreleasePoolSupport.m
 ./Modules/Cocoa/scripts/cocoa_generator.py
 ./Modules/Cocoa/scripts/enum_generator.py
 ./Modules/Cocoa/scripts/func_builder.py
 ./Modules/Cocoa/scripts/func_collector.py
 ./Modules/Cocoa/scripts/strconst_generator.py
 ./Modules/Cocoa/scripts/var_generator.py
+./Modules/objc/alloc_hack.m
 ./Modules/objc/class-builder.h
 ./Modules/objc/class-builder.m
 ./Modules/objc/class-list.m
@@ -172,8 +182,12 @@
 ./Modules/objc/signatures.lst
 ./Modules/objc/super-call.h
 ./Modules/objc/super-call.m
+./MPCompat/bundlebuilder.py
+./MPCompat/plistlib.py
+./MPCompat/README
 ./NEWS
 ./Project Templates/00README.txt
+./Project Templates/Cocoa-Python Application/__main__.py
 ./Project Templates/Cocoa-Python Application/bin-python-main.m
 ./Project Templates/Cocoa-Python Application/CocoaApp.pbproj/project.pbxproj
 ./Project Templates/Cocoa-Python Application/CocoaApp.pbproj/TemplateInfo.plist
@@ -181,13 +195,14 @@
 ./Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/classes.nib
 ./Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/info.nib
 ./Project Templates/Cocoa-Python Application/English.lproj/MainMenu.nib/keyedobjects.nib
-./Project Templates/Cocoa-Python Application/Main.py
 ./Project Templates/Cocoa-Python Application/MyAppDelegate.py
-./Project Templates/install.sh
 ./README-OLD.txt
 ./ReadMe.txt
+./Scripts/buildpkg.py
+./Scripts/create_byref_module.py
 ./Scripts/extract_byref_signatures.py
 ./Scripts/generate-stubs.py
+./Scripts/make_distrib.py
+./Scripts/nibclassbuilder
 ./Scripts/README
 ./setup.py
-./Tools/README

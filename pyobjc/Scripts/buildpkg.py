@@ -147,7 +147,8 @@ class PackageMaker:
         'Required': 'NO',
         'InstallOnly': 'NO',
         'RequiresReboot': 'NO',
-        'InstallFat': 'NO'}
+        'InstallFat': 'NO',
+        'RootVolumeOnly' : 'NO'}
 
 
     def __init__(self, title, version, desc):
