@@ -577,7 +577,6 @@ PyObjCRT_SizeOfType (const char *type)
 	default:
 		PyErr_Format(PyObjCExc_InternalError, 
 			"PyObjCRT_SizeOfType: Unhandled type '%#x", *type);
-		abort();
 		return -1;
 	}
 }
