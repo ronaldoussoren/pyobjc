@@ -1,0 +1,53 @@
+body, td, p  {
+	font-family: arial,helvetica,sans-serif;
+}
+
+th {
+	font-family: arial,helvetica,sans-serif;
+	font-weight: bold;
+	text-align: left;
+}
+
+td.layout {
+  font-size:0px;
+}
+
+.default {
+  color:black;
+  font-family:"Trebuchet MS",sans-serif;
+  font-size:11pt;
+}
+
+em {
+	font-weight: bold;
+	font-style: italic;
+}
+
+td.banner {
+	background-image: url("../img/stripes.gif");
+}
+
+span.headbanner {
+	font-family: "Trebuchet MS",arial,helvetica,sans-serif;
+	font-size: 48pt;
+	font-weight: bold;
+}
+
+span.subbanner {
+	font-family: "Trebuchet MS",arial,helvetica,sans-serif;
+	font-size: medium;
+	font-weight: bold;
+}
+
+h1 {
+	font-family: arial,helvetica,sans-serif;
+	font-size: medium;
+	font-weight: bold;
+}
+
+.news {
+        font-style: italic;
+        color: #6666cc;
+        font-size:small;
+}
+
