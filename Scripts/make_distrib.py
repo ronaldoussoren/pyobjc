@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+# Build the distribution. Requires Python2.2 on Jaguar, docutils and DocArticle.
+# 
+# NOTES: Really needs a rewrite!
+
 import sys
 import getopt
 import os
@@ -120,6 +124,7 @@ fd = os.popen("'%s' setup.py sdist -d '%s'"%(
 for ln in fd.xreadlines():
 	sys.stdout.write(ln)
 
+
 print "Running: '%s' setup.py install --prefix='%s/package%s' --install-scripts=%s/package%s/lib/python%s/site-packages/PyObjC/bin"%(
 	escquotes(PYTHON), escquotes(BUILDDIR), escquotes(basedir), escquotes(BUILDDIR), escquotes(basedir), PYTHONVER)
 fd = os.popen("'%s' setup.py install --prefix='%s/package%s' --install-scripts=%s/package%s/lib/python%s/site-packages/PyObjC/bin"%(
@@ -194,5 +199,32 @@ pm.build(os.path.join(basedir),
 	NeedsAuthorization="YES",
 	Relocatable="NO",
         RootVolumeOnly="YES")
+
+#
+# build 'objc_extras.tar.gz', and archive containing stuff not included in
+# the binary PackMan installer (which is built manually)
+#
+print "Running: '%s' setup.py bdist -d '%s'"%(
+			escquotes("python2.3"), escquotes(OUTPUTDIR))
+fd = os.popen("'%s' setup.py bdist -d '%s'"%(
+			escquotes("python2.3"), escquotes(OUTPUTDIR)), 'r')
+for ln in fd.xreadlines():
+	sys.stdout.write(ln)
+
+print 'building "pyobjc_extras-%s.tar.gz"'%(package_version(),)
+OUTPUTDIR='release-dir/extra_work/Applications/MacPython-2.3/Extras/pyobjc-%s'%(
+        package_version(),)
+makeDir(*(OUTPUTDIR.split('/')))
+shutil.copytree(docsDestination, os.path.join(OUTPUTDIR, "Doc"))
+shutil.copytree(examplesDestination, os.path.join(OUTPUTDIR, "Examples"))
+for fn in [ 
+    'HISTORIC.txt', 'Install.html', 'Install.txt', 'License.txt',
+    'NEWS.html', 'ReadMe.html', 'ReadMe.txt' ]:
+
+        shutil.copyfile(fn, os.path.join(OUTPUTDIR, fn))
+
+os.system('cd release-dir/extra_work && tar zcf ../pyobjc_extras-%s.tar.gz Applications/MacPython-2.3/Extras/pyobjc-%s'%(
+        package_version(), package_version()))
+
 
 print "Done. Don't forget to test the output!"

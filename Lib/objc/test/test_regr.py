@@ -36,11 +36,23 @@ class TestRegressions(unittest.TestCase):
         import Foundation
 
         o = Foundation.NSObject.alloc() # Not yet initialized
-        warnings.simplefilter('error', RuntimeWarning)
+        warnings.filterwarnings('error', category=RuntimeWarning)
         try:
             self.assertRaises(RuntimeWarning, o.description)
         finally:
             del warnings.filters[0]
+
+    def testMemoryInit(self):
+        """
+        Regression test for bug #814683, that didn't initialize the memory
+        space for output parameters correctly.
+        """
+        import Foundation
+        plist = 0
+        r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(plist, Foundation.NSPropertyListXMLFormat_v1_0)
+        self.assertEquals(r[1], None)
+        r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(plist, Foundation.NSPropertyListXMLFormat_v1_0)
+        self.assertEquals(r[1], None)
 
 if __name__ == '__main__':
     unittest.main()
