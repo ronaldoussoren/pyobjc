@@ -24,6 +24,13 @@ Simple scripts that demo the core modules
 Cocoa applications
 ------------------
 
+Most of the following examples contain a ``buildapp.py`` script that can
+build an application. See `Building applications`_ for details how to invoke
+these scripts. Some examples contain a ``Project Builder`` project file;
+simply double-click it and choose ``Build and Run``.
+
+.. _`Building applications`: ../Doc/intro.html#building-applications
+
 * `ClassBrowser`_
 
   A simple class browser, demonstrating the use of NSBrowser (a "column view"
