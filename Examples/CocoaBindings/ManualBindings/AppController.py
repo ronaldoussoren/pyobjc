@@ -76,12 +76,35 @@ class AppController(NibClassBuilder.AutoBaseClass):
         self._k_itemsArray[idx] = obj
     replaceObjectInItemsArrayAtIndex_withObject_ = objc.accessor(replaceObjectInItemsArrayAtIndex_withObject_)
         
+ITEM_ERROR_DOMAIN = u'ITEM_ERROR_DOMAIN'
+ITEM_NEGATIVE_PRICE = 10001
         
 class Item(NSObject):
-    name = objc.ivar('name', '@')
-    price = objc.ivar('price', 'd')
+    def price(self):
+        return getattr(self, '_k_price', 0.0)
+
+    def setPrice_(self, aPrice):
+        self._k_price = aPrice
+
+    def name(self):
+        return getattr(self, '_k_name', None)
+
+    def setName_(self, aName):
+        self._k_name = aName
     
     def validatePrice_error_(self, value):
         print ">>>> validatePrice_error_", value #.price
-        return True, value, None
+        error = None
+        if value >= 0:
+            return True, value, error
+
+        errorString = u'Price cannot be negative'
+        userInfoDict = {NSLocalizedDescriptionKey: errorString}
+        error = NSError.alloc().initWithDomain_code_userInfo_(
+            ITEM_ERROR_DOMAIN,
+            ITEM_NEGATIVE_PRICE,
+            userInfoDict)
+
+        return False, value, error
+
     validatePrice_error_ = objc.accessor(validatePrice_error_)
