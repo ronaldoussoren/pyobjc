@@ -60,4 +60,4 @@ import protocols  # no need to export these, just register with PyObjC
 from protocols import NSConnectionDelegateMethods, NSDistantObjectRequestMethods, \
                       NSCopyLinkMoveHandler, NSKeyedArchiverDelegate, \
                       NSKeyedUnarchiverDelegate, NSNetServiceDelegateMethods, \
-                      NSNetServiceBrowserDelegateMethods, NSPortDelegateMethods \
+                      NSNetServiceBrowserDelegateMethods, NSPortDelegateMethods
