@@ -4,6 +4,11 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 1.0rc2 (2003-09-04)
+---------------------------
+
+- Fix a number of bugs found in 1.0rc1.
+
 Version 1.0rc1 (2003-08-10)
 ---------------------------
 
