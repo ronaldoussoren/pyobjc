@@ -359,7 +359,9 @@ rowCount, columnCount = matrix.getNumberOfRows_columns_()
 as arguments, you can pass <code><span>None</span></code> as the length.  The length of the sequence
 that is used for the array of values is passed to Objective-C as the length
 argument.</p>
-<p>XXX: Add information about <code><span>array.array</span></code> rules.</p>
+<p>Python's <code><span>array.array</span></code> type may be used to represent a C array if the
+typestr and size match what is expected by the selector.  Numeric, numarray,
+and other third party array types are not supported in PyObjC 1.2.</p>
 <p>When you define methods in a subclass of an Objective-C class, the bridge has
 to tell the Objective-C runtime what the signature of those methods is.  The
 basic rule is that all arguments as well as the return value are objects (just
