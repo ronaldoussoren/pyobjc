@@ -18,13 +18,9 @@ def ensure_unicode(s):
         s = unicode(s, 'utf-8', 'replace')
     return s
 
-def ensure_utf8(s):
-    if isinstance(s, unicode):
-        s = s.encode('utf-8')
-    return s
-
 class RemotePyInterpreterReactor(NibClassBuilder.AutoBaseClass):
     def handleExpectCommand_(self, command):
+        print command
         seq = command[0]
         name = command[1]
         args = command[2:]
@@ -34,7 +30,7 @@ class RemotePyInterpreterReactor(NibClassBuilder.AutoBaseClass):
         if name == 'RemoteConsole.raw_input':
             prompt = ensure_unicode(args[0])
             def input_received(line):
-                self.sendResult_sequence_(ensure_utf8(line), seq)
+                self.sendResult_sequence_(line, seq)
             self.delegate.expectCodeInput_withPrompt_(input_received, prompt)
         elif name == 'RemoteConsole.write':
             args = [ensure_unicode(args[0]), u'code']
@@ -75,6 +71,7 @@ class RemotePyInterpreterReactor(NibClassBuilder.AutoBaseClass):
     def close(self):
         super(RemotePyInterpreterReactor, self).close()
         self.delegate = None
+
 
 class PseudoUTF8Input(object):
     softspace = 0

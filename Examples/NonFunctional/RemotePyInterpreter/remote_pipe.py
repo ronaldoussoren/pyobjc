@@ -1,14 +1,30 @@
 import itertools
 
-def as_unicode(s):
+def as_unicode(s, encoding='utf-8'):
     typ = type(s)
-    if typ is not unicode:
-        if issubclass(typ, unicode):
-            s = unicode(s)
+    if typ is unicode:
+        pass
+    elif issubclass(typ, unicode):
+        s = unicode(s)
     elif issubclass(typ, str):
-        s = unicode(s, 'utf-8', 'replace')
+        s = unicode(s, encoding, 'replace')
     else:
         raise TypeError, 'expecting basestring, not %s' % (typ.__name__,)
+    return s
+
+
+def as_str(s, encoding='utf-8'):
+    typ = type(s)
+    if typ is str:
+        pass
+    elif issubclass(typ, str):
+        s = str(s)
+    elif issubclass(typ, unicode):
+        s = s.encode(encoding)
+    else:
+        raise TypeError, 'expecting basestring, not %s' % (typ.__name__,)
+    return s
+
 
 class RemotePipe(object):
     def __init__(self, runcode, clientfile, netReprCenter, namespace, pool):
@@ -50,6 +66,7 @@ class RemoteFileLike(object):
     softspace = 0
     closed = False
     encoding = 'utf-8'
+
     def __init__(self, pipe, ident):
         self.pipe = pipe
         self.ident = ident
@@ -62,6 +79,7 @@ class RemoteFileLike(object):
             yield rval
 
     def write(self, s):
+        s = as_unicode(s, self.encoding)
         self.pipe.expect('RemoteFileLike.write', self.ident, s)
 
     def writelines(self, lines):
@@ -78,10 +96,16 @@ class RemoteFileLike(object):
         return True
 
     def read(self, size=-1):
-        return self.pipe.expect('RemoteFileLike.read', self.ident, size)
+        return as_str(
+            self.pipe.expect('RemoteFileLike.read', self.ident, size),
+            self.encoding,
+        )
 
     def readline(self, size=-1):
-        return self.pipe.expect('RemoteFileLike.readline', self.ident, size)
+        return as_str(
+            self.pipe.expect('RemoteFileLike.readline', self.ident, size),
+            self.encoding,
+        )
 
     def readlines(self):
         return list(self)
