@@ -58,7 +58,10 @@ class _runtime:
         elif name == '__kind__':
             return 'python'
 
-        return lookUpClass(name)
+        try:
+            return lookUpClass(name)
+        except nosuchclass_error:
+            raise AttributeError, name
 
     def __eq__(self, other):
         return self is other
