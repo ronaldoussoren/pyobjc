@@ -16,7 +16,7 @@ def dumpHandler(signum, frame):
     resetFatalSignals()
     print "*** Handling fatal signal '%d'." % signum
     traceback.print_stack(frame)
-    print "*** Restored handlers and resignaling." % signum
+    print "*** Restored handlers and resignaling."
     os.kill(os.getpid(), signum)
 
 def installHandler(sig):
