@@ -234,7 +234,7 @@ class PyKeyValueCoding (unittest.TestCase):
 
 class KVOClass(objc.runtime.NSObject):
     def automaticallyNotifiesObserversForKey_(self, aKey):
-        return NO
+        return objc.NO
 
     def test(self): return "test"
 

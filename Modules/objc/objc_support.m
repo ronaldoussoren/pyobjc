@@ -244,7 +244,20 @@ PyObjCRT_SkipTypeSpec (const char *type)
   Return the alignment of an object specified by type 
 */
 
-/* XXX: Platform dependend code */
+/*
+ *  On MacOS X, the elements of a struct are aligned differently inside the
+ *  struct than outside. That is, the maximum alignment of any struct field
+ *  (except the first) is 4, doubles outside of a struct have an alignment of
+ *  8.
+ *
+ *  Other platform don't seem to have this inconsistency.
+ *  
+ *  XXX: sizeof_struct, alignof_struct and {de,}pythonify_c_struct should
+ *  probably be moved to platform dependend files. As long as this is the
+ *  only platform dependent code this isn't worth the effort.
+ */
+#ifdef MACOSX
+
 static inline int
 PyObjC_EmbeddedAlignOfType (const char*  type)
 {
@@ -256,6 +269,16 @@ PyObjC_EmbeddedAlignOfType (const char*  type)
 		return 4;
 	}
 }
+
+#else
+
+static inline int
+PyObjC_EmbeddedAlignOfType (const char*  type)
+{
+	return PyObjCRT_AlignOfType(type);
+}
+
+#endif
 
 int
 PyObjCRT_AlignOfType (const char *type)

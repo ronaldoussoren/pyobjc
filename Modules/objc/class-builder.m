@@ -1380,7 +1380,26 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 	}
 
 	if (NULL != ((PyObjCSelector*)pymeth)->sel_self) {
-		abort();
+		/* The selector is a bound selector, we didn't expect that...*/
+		PyObject* arg_self;
+
+		arg_self = PyTuple_GetItem(arglist, 0);
+		if (arg_self == NULL) {
+			return NULL;
+		}
+		if (arg_self != ((PyObjCSelector*)pymeth)->sel_self) {
+			PyErr_SetString(PyExc_TypeError,
+				"PyObjC_CallPython called with 'self' and "
+				"a method bound to another object");
+			return NULL;
+		}
+
+		arglist = PyTuple_GetSlice(arglist, 1, PyTuple_Size(arglist));
+		if (arglist == NULL) {
+			return NULL;
+		}
+	} else {
+		Py_INCREF(arglist);
 	}
 
 	if (isAlloc != NULL) {
@@ -1389,6 +1408,7 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 	}
 
 	result = PyObject_Call(pymeth, arglist, NULL);
+	Py_DECREF(arglist);
 	Py_DECREF(pymeth);
 	Py_DECREF(pyself);
 
