@@ -36,8 +36,6 @@ You can then define a subclass of this class using the usual syntax::
     ...        global DEALLOC_COUNT
     ...        DEALLOC_COUNT = DEALLOC_COUNT + 1
 
-    >>> MyEnumerator
-    <objective-c class MyEnumerator at 0x350fb0>
 
 To check that our instances our deallocated we maintain a ``DEALLOC_COUNT``::
 
