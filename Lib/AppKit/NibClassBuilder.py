@@ -154,7 +154,7 @@ class NibInfo(object):
 	def _extractClassesFromNibFromPath(self, path):
 		path = os.path.normpath(path)
 		if self.parsedNibs.has_key(path):
-			return  # we've alread pared this nib
+			return  # we've already parsed this nib
 		nibName = os.path.basename(path)
 		nibInfo = NSDictionary.dictionaryWithContentsOfFile_(
 				os.path.join(path, 'classes.nib'))
@@ -296,7 +296,6 @@ class NibInfo(object):
 				writer.writeln("pass")
 				writer.writeln()
 			else:
-				writer.writeln()
 				if actions:
 					actions.sort()
 					for a in actions:
