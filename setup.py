@@ -122,7 +122,6 @@ elif os.environ.has_key('LIBFFI_BASE'):
 else:
     LIBFFI_BASE='libffi'
 LIBFFI_CFLAGS=[ 
-    "-DOC_WITH_LIBFFI", 
     "-isystem", "%s/include"%LIBFFI_BASE, 
 ]
 LIBFFI_LDFLAGS=[ 
@@ -284,6 +283,7 @@ else:
     PREFPANES_LDFLAGS=[]
 
 CFLAGS.append('-IInclude/')
+CFLAGS.append('-Ibuild/codegen/')
 
 def IfFrameWork(name, packages, extensions):
     """
