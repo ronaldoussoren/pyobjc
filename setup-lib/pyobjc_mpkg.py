@@ -23,11 +23,11 @@ def skipjunk(fn, junk=JUNK, junk_exts=JUNK_EXTS):
         return False
     return True
 
-PREFLIGHT_RM = """#!/usr/bin/env python
+PREFLIGHT_RM = """#!/usr/bin/python
 import shutil, os
 for fn in %(files)r:
     if os.path.isdir(fn):
-        shutil.rmtree(fn, ignore_errors=True)
+        shutil.rmtree(fn, ignore_errors=1)
     elif os.path.exists(fn):
         os.unlink(fn)
 """
