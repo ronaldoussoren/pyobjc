@@ -15,13 +15,15 @@ sourceFiles = ["OC_PythonBundle.m",
 
 try:
     setup (name = "pyobjc",
-           version = "0.6",
+           version = "0.6.1",
            description = "Python<->ObjC Interoperability Module",
            author = "bbum, SteveM, many others stretching back through the reaches of time...",
            author_email = "bbum@codefab.com",
            url = "http://pyobjc.sourceforge.net/",
            ext_modules = [Extension("pyobjc", sourceFiles,
-				   extra_compile_args=["-g"]) ]
+				   extra_compile_args=["-g"]) ],
+	   packages = ['Cocoa'],
+	   package_dir = { '':'Examples' }
            )
 except:
     import sys
