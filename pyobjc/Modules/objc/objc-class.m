@@ -142,6 +142,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	PyObject* protocols;
 	PyObject* real_bases;
 	PyObject* delmethod;
+	PyObject* useKVOObj;
 	PyObjCRT_Ivar_t var;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:__new__",
@@ -367,6 +368,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	info->sel_to_py = NULL; 
 	info->method_magic = objc_methodlist_magic(objc_class);
 	info->dictoffset = 0;
+	info->useKVO = 0;
 	info->delmethod = delmethod;
 	info->hasPythonImpl = 1;
 
@@ -375,6 +377,11 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	var = class_getInstanceVariable(objc_class, "__dict__");
 	if (var != NULL) {
 		info->dictoffset = var->ivar_offset;
+	}
+
+	useKVOObj = PyDict_GetItemString(dict, "__useKVO__");
+	if (useKVOObj != NULL) {
+		info->useKVO = PyObject_IsTrue(useKVOObj);
 	}
 
 	Py_INCREF(res);
@@ -696,7 +703,7 @@ cls_get__name__(PyObject* self, void* closure __attribute__((__unused__)))
 	}
 }
 
-static PyGetSetDef cls_getset[] = {
+static PyGetSetDef class_getset[] = {
 		{
 				"pyobjc_classMethods",
 				(getter)cls_get_classMethods,
@@ -722,6 +729,17 @@ static PyGetSetDef cls_getset[] = {
 		0
 	},
 		{ 0, 0, 0, 0, 0 }
+};
+
+static PyMemberDef class_members[] = {
+	{
+		"__useKVO__",
+		T_INT,
+		offsetof(PyObjCClassObject, useKVO),
+		0,
+		"Use KVO notifications when setting attributes from Python",
+	},
+	{ NULL, 0, 0, 0, NULL}
 };
 
 
@@ -757,8 +775,8 @@ PyTypeObject PyObjCClass_Type = {
 	0,					/* tp_iter */
 	0,					/* tp_iternext */
 	0,					/* tp_methods */
-	0,					/* tp_members */
-	cls_getset,				/* tp_getset */
+	class_members,					/* tp_members */
+	class_getset,				/* tp_getset */
 	&PyType_Type,				/* tp_base */
 	0,					/* tp_dict */
 	0,					/* tp_descr_get */
@@ -1015,6 +1033,7 @@ PyObjCClass_New(Class objc_class)
 	info->sel_to_py = NULL;
 	info->method_magic = 0;
 	info->dictoffset = 0;
+	info->useKVO = 0;
 	info->delmethod = NULL;
 	info->hasPythonImpl = 0;
 

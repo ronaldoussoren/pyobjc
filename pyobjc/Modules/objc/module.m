@@ -699,7 +699,8 @@ static char* keywords[] = { "value", 0 };
 	return PyObjC_IDToCFType(PyObjCObject_GetObject(argument));
 }
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_3
+#ifdef MAC_OS_X_VERSION_10_3
+#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_3
 static void *
 pyject_pthread_entry_point(void *param) {
 	char *pathname = (char *)param;
@@ -785,6 +786,7 @@ pyject_inject(PyObject* self __attribute__((__unused__)), PyObject* args, PyObje
 	return Py_None;
 }
 
+#endif /* MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_3 */
 #endif /* MAC_OS_X_VERSION_10_3 */
 #endif /* MACOSX */
 
@@ -910,9 +912,9 @@ static PyMethodDef mod_methods[] = {
 #ifdef MACOSX
 	{ "CFToObject", (PyCFunction)objc_CFToObject, METH_VARARGS|METH_KEYWORDS, objc_CFToObject_doc },
 	{ "ObjectToCF", (PyCFunction)objc_ObjectToCF, METH_VARARGS|METH_KEYWORDS, objc_ObjectToCF_doc },
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_3
+#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_3
 	{ "inject", (PyCFunction)pyject_inject, METH_VARARGS|METH_KEYWORDS, inject_doc },
-#endif /* MAC_OS_X_VERSION_10_3 */
+#endif /* MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_3 */
 #endif /* MACOSX */
 	{ "enableThreading", (PyCFunction)enableThreading, METH_NOARGS, enableThreading_doc },
 	{ "protocolNamed", (PyCFunction)protocolNamed, METH_VARARGS|METH_KEYWORDS, protocolNamed_doc },
