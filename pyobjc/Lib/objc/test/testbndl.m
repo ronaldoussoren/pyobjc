@@ -1606,11 +1606,15 @@ static 	char buf[1024];
 + (NSArray*)fetchArray:(NSCoder*)coder;
 @end
 
+@interface NSObject (IKnowWhatImDoing)
+- call;
+@end
+
 @implementation PyObjC_TestClass4
 - (void)runThread:(id)object
 {
 	NSObject* pool = [[NSAutoreleasePool alloc] init];
-	returnObject = (id)[object call];
+	returnObject = [object call];
 	[returnObject retain];
 	[pool release];
 }
