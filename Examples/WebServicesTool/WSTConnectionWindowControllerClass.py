@@ -63,14 +63,21 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
 
 
 def doWork(queue):
+    """Worker thread. Fetch work from a queue, block when there's
+    nothing to do."""
     while 1:
         work = queue.get()
         if work is None:
             break
         func, args, kwargs = work
         NSAutoreleasePool.pyobjcPushPool()
-        func(*args, **kwargs)
-        NSAutoreleasePool.pyobjcPopPool()
+        try:
+            func(*args, **kwargs)
+        finally:
+            # delete all local references; if they are the last refs they
+            # may invoke autoreleases, which should then end up in our pool
+            del func, args, kwargs, work
+            NSAutoreleasePool.pyobjcPopPool()
 
 
 from PyObjCTools import NibClassBuilder
@@ -140,7 +147,6 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         
         self.statusTextField.setStringValue_("No host specified.")
         self.progressIndicator.setStyle_(NSProgressIndicatorSpinningStyle)
-#        self.progressIndicator.setUsesThreadedAnimation_(YES)
         self.progressIndicator.setDisplayedWhenStopped_(NO)
         
         self.createToolbar()
@@ -152,9 +158,9 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
         """
         Clean up when the document window is closed.
         """
-        self._windowIsClosing = 1
-        self._workQueue.put(None)
-        self._workerThread.join()
+        self._windowIsClosing = 1  # try to stop the thread a.s.a.p.
+        self._workQueue.put(None)  # signal the thread that there is no more work to do
+        self._workerThread.join()  # wait until it finishes
         self.autorelease()
 
     def createToolbar(self):
@@ -338,10 +344,10 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
             if not (index % 5):
                 self.reloadData()
             self.setStatusTextFieldMessage_("Retrieving signature for method %s (%d of %d)." % (aMethod , index, len(self._methods)))
+            NSAutoreleasePool.pyobjcPopPool()
             methodSignature = getattr(self._server, self._methodPrefix + "methodSignature")(aMethod)
             signatures = None
             if not len(methodSignature):
-                NSAutoreleasePool.pyobjcPopPool()
                 continue
             for aSignature in methodSignature:
                 if (type(aSignature) == types.ListType) and (len(aSignature) > 0):
@@ -353,7 +359,6 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass,
             else:
                 signatures = signature
             self._methodSignatures[aMethod] = signatures
-            NSAutoreleasePool.pyobjcPopPool()
         self.setStatusTextFieldMessage_(None)
         self.reloadData()
         self.stopWorking()
