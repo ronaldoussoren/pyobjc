@@ -333,7 +333,6 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
 {
 	PyObject* sel;
 	SEL selector;
-	struct objc_super super;
 	IMP retval;
 	PyObject* attr;
 	PyObject* res;
@@ -354,10 +353,7 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
 	}
 
 	PyObjC_DURING
-		RECEIVER(super) = PyObjCSelector_GET_CLASS(method);
-		super.class = GETISA(PyObjCSelector_GET_CLASS(method));
-
-		retval = (IMP)objc_msgSendSuper(&super,
+		retval = (IMP)objc_msgSend(PyObjCClass_GetClass(self),
 			PyObjCSelector_GET_SELECTOR(method),
 			selector);
 	PyObjC_HANDLER
@@ -414,12 +410,11 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 	}
 
 	if (PyObjCClass_Check(self)) {
-		RECEIVER(super) = PyObjCSelector_GET_CLASS(method);
-		super.class = GETISA(PyObjCSelector_GET_CLASS(method));
+		RECEIVER(super) = PyObjCClass_GetClass(self);
 	} else {
 		RECEIVER(super) = PyObjCObject_GetObject(self);
-		super.class = PyObjCSelector_GetClass(method);
 	}
+	super.class = GETISA(RECEIVER(super));
 
 	PyObjC_DURING
 		retval = (IMP)objc_msgSendSuper(&super,
