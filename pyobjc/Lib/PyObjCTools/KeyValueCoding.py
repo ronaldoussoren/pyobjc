@@ -21,8 +21,8 @@ require changes to existing Python classes to make use of Key-Value coding,
 making it easier to build applications as a platform independent core with
 a Cocoa GUI layer.
 
-See the Cocoa documentation on the Apple developer website for more 
-information on Key-Value coding. The protocol is basicly used to enable 
+See the Cocoa documentation on the Apple developer website for more
+information on Key-Value coding. The protocol is basicly used to enable
 weaker coupling between the view and model layers.
 
 TODO: Add unittests (in test/test_keyvalue.py)
@@ -41,7 +41,7 @@ def getKey(obj, key):
     The following attributes and accesors at tried (in this order):
     - Accessor 'getKey'
     - Accesoor 'get_key'
-    - Attribute or accessor 'key' 
+    - Attribute or accessor 'key'
     - Attribute '_key'
 
     If none of these exist, raise KeyError
@@ -51,7 +51,7 @@ def getKey(obj, key):
             return obj.valueForKey_(key)
         except ValueError, msg:
             # This is not entirely correct, should check if this
-            # is the right kind of ValueError before translating 
+            # is the right kind of ValueError before translating
             raise KeyError, str(msg)
 
 

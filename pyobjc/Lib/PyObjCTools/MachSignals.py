@@ -25,7 +25,7 @@ def getsignal(signum):
 
 def signal(signum, handler):
     """
-    Install a new signal handler for ``signum``. Returns the old signal 
+    Install a new signal handler for ``signum``. Returns the old signal
     handler (``None`` when there is no previous handler.
     """
     rval = getsignal(signum)

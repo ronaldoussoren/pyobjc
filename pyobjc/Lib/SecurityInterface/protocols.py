@@ -42,4 +42,3 @@ SFAuthorizationViewDelegate = _objc.informal_protocol(
         ),
     ]
 )
-

@@ -12,10 +12,10 @@ This module has two functions in its public API:
   Restores the signal handlers to the state they had before the call to
   dumpStackOnFatalSignal.
 
-This module is not designed to provide fine grained control over signal 
+This module is not designed to provide fine grained control over signal
 handling. Nor is it intended to be terribly robust. It may give useful
 information when your program gets unexpected signals, but it might just
-as easily cause a crash when such a signal gets in. 
+as easily cause a crash when such a signal gets in.
 
           DO NOT USE THIS MODULE IN PRODUCTION CODE
 """
@@ -49,7 +49,7 @@ def installHandler(sig):
 def dumpStackOnFatalSignal():
     """
     Install signal handlers that might print a useful stack trace when
-    this process receives a fatal signal. 
+    this process receives a fatal signal.
 
     NOTE: See module docstring
     """

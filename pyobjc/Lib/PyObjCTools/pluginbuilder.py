@@ -1,8 +1,8 @@
 """
-pluginbuilder.py -- Tools to assemble MacOS X python-based plugin bundles 
+pluginbuilder.py -- Tools to assemble MacOS X python-based plugin bundles
 
 This module defines one class to build python based plugin bundles for MacOS X.
-Examples of plugin bundles include PreferencePanes and InterfaceBuilder 
+Examples of plugin bundles include PreferencePanes and InterfaceBuilder
 palletes.
 
 You *must* use a framework build of Python to be able to use this module.
@@ -113,8 +113,8 @@ static PyObject* myModule = NULL;
             Py_DECREF(t);
             PyErr_Clear();
             return nil;
-        } 
-       
+        }
+
         getClass = PyCObject_AsVoidPtr(n);
         Py_DECREF(n);
 
@@ -161,7 +161,7 @@ static void changeClass(id obj, Class newClass)
     NSString* mainPath;
     FILE*     fp;
         PyObject *m, *d, *v;
-        
+
 
     bundle = [NSBundle bundleForClass:self];
     [bundle load];
@@ -173,7 +173,7 @@ static void changeClass(id obj, Class newClass)
 
     if (mainPath == NULL) {
         mainPath = [bundle pathForResource:@"%(MAINFILE)s" ofType:@"pyc"];
-        [NSException raise:NSInternalInconsistencyException 
+        [NSException raise:NSInternalInconsistencyException
             format:@"Bundle %%@ does not contain a %(MAINFILE)s file",
             bundle];
     }
@@ -185,13 +185,13 @@ static void changeClass(id obj, Class newClass)
 
     fp = fopen([mainPath cString], "r");
     if (fp == NULL) {
-        [NSException raise:NSInternalInconsistencyException 
+        [NSException raise:NSInternalInconsistencyException
             format:@"Cannot open %(MAINFILE)s in bundle %%@",
             bundle];
     }
 
         /*
-         * We cannot use 'PyRun_SimpleFile' because that would make it 
+         * We cannot use 'PyRun_SimpleFile' because that would make it
          * too easy to cause interference between two Python based plugins.
          *
          * This code works like PyRun_SimpleFile, but runs the code in
@@ -204,18 +204,18 @@ static void changeClass(id obj, Class newClass)
         m = PyImport_AddModule("__main_%(BUNDLE)s__");
         if (m == NULL) {
                 PyErr_Print();
-        [NSException raise:NSInternalInconsistencyException 
+        [NSException raise:NSInternalInconsistencyException
             format:@"Cannot create main module for bundle %%@",
             bundle];
     }
 
         PyModule_AddStringConstant(m, "__file__", (char*)[mainPath cString]);
-        PyModule_AddStringConstant(m, "__path__", 
+        PyModule_AddStringConstant(m, "__path__",
                     (char*)[[bundle resourcePath] cString]);
         d = PyModule_GetDict(m);
         if (d == NULL) {
                 PyErr_Print();
-        [NSException raise:NSInternalInconsistencyException 
+        [NSException raise:NSInternalInconsistencyException
             format:@"Failed to initialize bundle %%@",
             bundle];
         }
@@ -224,7 +224,7 @@ static void changeClass(id obj, Class newClass)
             PyObject* bimod = PyImport_ImportModule("__builtin__");
             if (bimod == NULL || PyDict_SetItemString(d, "__builtins__", bimod) != 0) {
                 PyErr_Print();
-        [NSException raise:NSInternalInconsistencyException 
+        [NSException raise:NSInternalInconsistencyException
             format:@"Failed to initialize bundle %%@",
             bundle];
             }
@@ -233,14 +233,14 @@ static void changeClass(id obj, Class newClass)
 
         if (PyErr_Occurred()) {
                 PyErr_Print();
-        [NSException raise:NSInternalInconsistencyException 
+        [NSException raise:NSInternalInconsistencyException
             format:@"Failed to initialize bundle %%@",
             bundle];
         }
         v = PyRun_File(fp, [mainPath cString], Py_file_input, d, d);
         if (v == NULL) {
             PyErr_Print();
-        [NSException raise:NSInternalInconsistencyException 
+        [NSException raise:NSInternalInconsistencyException
         format:@"Failed to initialize bundle %%@",
         bundle];
         }
@@ -260,7 +260,7 @@ class PluginBuilder(bundlebuilder.BundleBuilder):
     # Override type of the bundle
     type = "BNDL"
 
-    # platform, name of the subfolder of Contents that contains the 
+    # platform, name of the subfolder of Contents that contains the
     # executable
     platform = "MacOS"
 
@@ -289,7 +289,7 @@ class PluginBuilder(bundlebuilder.BundleBuilder):
     # Found Python modules: [(name, codeobject, ispkg), ...]
     pymodules = []
 
-    # Modules that modulefinder couldn't find:        
+    # Modules that modulefinder couldn't find:
     missingModules = []
     maybeMissingModules = []
 
@@ -358,7 +358,7 @@ class PluginBuilder(bundlebuilder.BundleBuilder):
         destdir = os.path.join(self.bundlepath, self.execdir)
         if not os.path.exists(destdir):
             os.mkdir(destdir)
-        compileBundle(os.path.join(destdir, self.name), 
+        compileBundle(os.path.join(destdir, self.name),
             self.name, self.mainmodule)
         self.binaries.append(os.path.join(self.execdir, self.name))
 
@@ -395,7 +395,7 @@ def compileBundle(outputName, bundle, mainModule):
 
         fd = os.popen(
                 "cc -bundle -Wno-long-double -o '%s' '%s' -framework Foundation -framework Python 2>&1"%(
-                    quoteArg(outputName), quoteArg(tmpFile)                    
+                    quoteArg(outputName), quoteArg(tmpFile)
                 ),  'r')
         for ln in fd:
             sys.stdout.write(ln)
@@ -453,7 +453,7 @@ def main(builder=None):
         builder = PluginBuilder(verbosity=1)
 
     shortopts = "b:n:r:f:m:p:x:i:hvq"
-    longopts = ("builddir=", "name=", "resource=", "file=", 
+    longopts = ("builddir=", "name=", "resource=", "file=",
         "mainmodule=", "creator=", "nib=", "principalClas=",
                 "plist=", "help", "verbose", "quiet", "standalone",
         "exclude=", "include=", "package=", "strip", "iconfile=",
