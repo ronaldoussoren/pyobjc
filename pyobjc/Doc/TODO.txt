@@ -26,9 +26,6 @@ Python Cocoa: which functions/methods are not available, list differences
 in arguments (e.g. NSBeginAlertSheet has a variable number of arguments in
 Objective-C, the format-arguments are not present in Python).
 
-Add a description of how to use PyObjC to embed Python in an existing 
-Cocoa application (bill?)
-
 Test suite
 ..........
 
@@ -38,7 +35,7 @@ The test suite needs to be enhanced.
   of PyObjC.
 
 * tests for all functions in ``Modules/*/*Mapping*.m``
-  (inclusing IMPs)
+  (including IMPs)
 
 * tests for all non-generated function wrappers (and some for the generated
   functions as well, just in case the generator script is buggy)
@@ -77,7 +74,7 @@ From the top of my head:
 Support for GNUstep
 ...................
 
-The current CVS version contains some support for GNUstep, this needs to
+The current SVN version contains some support for GNUstep, this needs to
 be enhanced.
 
 Unless somebody actually starts working on this GNUstep support will slowly
@@ -86,17 +83,12 @@ fade away.
 Plugin bundles
 ..............
 
-The code in PyObjCTools.pluginbuilder is a hack. 
-
-Need to investigate how to support multiple independent Python-based plugins 
-in a single application. Currently plugins don't seem to be completely 
-independent (see mailinglist archives).
-
-Interface Builder Palettes
-++++++++++++++++++++++++++
-
-IB doesn't "see" PyObjC class definitions. We need to investigate why this
-is so.
+Allow for more than one class to show up in the bundle via
+``+[NSBundle bundleForClass:]``.  The implementation of this would statically
+allocate some fixed large number of class wrappers in the __OBJC section of
+the py2app bundletemplate.  The class builder would have a "stack" of
+allocation spaces for classes, and the bundletemplate would push/pop this
+stack.
 
 Project templates
 .................
@@ -104,29 +96,13 @@ Project templates
 Nobody seems to care enough about the templates to actually maintain them, this
 is a shame. 
 
-* Source updates:
-  - Templates in the source tree should be working projects
-  - Convert them to templates when building the installer
-  - Add ``install_xcode`` action to setup.py that will install the
-    templates (and hook that into ``install`` action).
-
-* Is it possible to tell SVN that the main.m in the various templates should
-  be the same file (hard link)?
-
-* Add Xcode template for building a plugin (like PyObjCTools.pluginbuilder)
-
-* Add '--semi-standalone' and '--standalone' functionality to the templates
-  (if feaseable).
-
-* Possibly: add templates based on this for building specific kinds of
-  plugins (ScreenSaver, PreferencePane)
+* Integrate Xcode template with py2app, somehow
 
 * Update or remove the Project Builder templates
 
   I prefer updating them, by rebuilding the Xcode templates in Project Builder.
 
-  This would require Python 2.3 on Jaguar, but that's not a problem because
-  I want to `Drop support for Python 2.2`_
+  This would require Python 2.3 on Jaguar.
 
 Complete Cocoa wrapping
 .......................
@@ -144,22 +120,18 @@ not too hard but it is a lot of work.
 Pickle support
 ..............
 
-Objective-C objects don't support pickling. They do pickle without errors using
-protocol version 2 (Python >= 2.3a2), but that doesn't include the state of
-the Objective-C object only that of the proxy.
+Objective-C objects don't support pickling.
 
-This is post-1.0 work, in general this is a hard problem because it may 
+This is post-1.2 work, in general this is a hard problem because it may 
 involve object cycles that cross the Python-ObjC boundary.
-
-NOTE: 1.0b1+ contains a patch that disables pickling even for pickle protocol 2,
-that's more usefull than writing incomplete objects to the pickle.
 
 NSCoder support
 ...............
 
 It might be usefull to add default implementations of ``encodeWithCoder:`` and
 ``initWithCoder:`` methods to Python subclasses of Objective-C classes that 
-implement these.
+implement these.  Note that property list types should already be serializable
+(int, long, unicode, list, tuple, dict).
 
 See also `Pickle support`.
 
@@ -170,6 +142,8 @@ There are issues with implementing ``-copy`` in python, these need to be fixed.
 
 Specifically, overriding an existing ``-copy`` implementation does not work 
 unless ``__slots__ == ()``
+
+XXX: is this still true?
 
 Known issues
 ............
@@ -247,6 +221,8 @@ Key-Value Encoding
 
 XXX: Need to check if the current implementation is correct.
 
+XXX: It has proven to work quite well, is this still a TODO item?
+
 The takeValue:forKey: implementation correctly emits notifications (on MacOS X
 10.3). MacOS X 10.3 is currently detected at compile-time, this should probably
 be done dynamicly.
@@ -260,8 +236,8 @@ The right notifications are not yet emitted for:
 
 * setattr() on pure Python objects
 
-  It is impossible to detect such changes, even finding the right ObjC wrapper
-  is not possible at the moment (but that is fixable).
+  It is extremely difficult to detect such changes, even finding the right ObjC
+  wrapper is not possible at the moment (but that is fixable).
 
   The documentation should mention that observations don't work for pure
   Python objects.
@@ -276,6 +252,7 @@ Formal Protocols, Distributed Objects
 
 XXX: We do support accessing protocols (e.g. an equivalent to @protocol(Foo)),
 but you cannot define new protocols in python yet.
+XXX: Is it still true that we can't define new protocols from Python?
 
 Links to Apple documentation
 ............................
@@ -286,17 +263,6 @@ location?
 
 But: we should also provide links to locally installed documetation, especially
 in the documentation that will be installed on the users machine.
-
-Installer support for OSX 10.3
-..............................
-
-The installers for 10.3 and 10.2 should share more "sources".
-
-Related to this: it would probably be usefull to rewrite buildpkg.py, this
-module has been hacked up to support new-style packages. It should be rewritten
-based on the Apple documentation on the layout of packages, there is no need
-to support 10.1-style packages. This new module should be donated to
-MacPython).
 
 Implement more of NSMutableDictionary in OC_PythonDictionary
 .............................................................
@@ -313,12 +279,6 @@ Clean up OC_PythonObject
 
 The code is a mess.
 
-Rewrite packaging scripts
-.........................
-
-The scripts we use for doing releases should be cleaned up, generic 
-functionality should be made available for others.
-
 Rewrite scripts/find-raw-pointers.py
 ....................................
 
@@ -328,41 +288,28 @@ refactored to make it easier to create readable reports.
 Finish struct-wrapper.m
 .......................
 
+XXX: Is this still true?
+
 We need more unittests and an implementation of the extended slice interface.
 
 Why does the GC support cause an assertion failure when it is enabled?
 
-Refactors the code-generator scripts
-....................................
+Finish refactoring of the code-generator scripts
+................................................
 
-1. Add a function to the ``_objc`` module that makes it possible to load
-   global contants::
+1. Change code-generator scripts to use loadBundleFunctions, etc.
 
-   	b = objc.openBundle(someBundleIdentifier)
-	NSSomeFoo = objc.loadConstant(b, "NSSomeFoo", "i")
-	# Or objc.loadConstants(b, [("someFoo", 'i'), ... ], globals())
-
-2. Add a function to create wrappers for "simple" functions (which would be
-   most if not all functions generated by the code-generator scripts).
-
-3. Change code-generator scripts to use these functions
-
-4. Move the code-generator scripts to ``PyObjCTools``, to make it easier
+2. Move the code-generator scripts to ``PyObjCTools``, to make it easier
    for others to generate wrappers.
 
-5. Install ``pyobjc-api.h``.
+3. Install ``pyobjc-api.h``.
 
 setup.py cleanup
 ................
 
-* Split more code into seperate modules in setup-lib
+XXX: Why not use docarticle?
 
-* Add an action to build the binary installer to setup.py
-
-* update action 'sdist' to recreate the HTML files, and remove those from
-  the repository. Also: don't use docarticle to create HTML.
-
-* Add action to install Xcode extras and/or PB extras
+* Don't use docarticle to create HTML from build_html.
 
 * Use 'WrapperGenerator.py', probably need to create a custom build action
   for that.
