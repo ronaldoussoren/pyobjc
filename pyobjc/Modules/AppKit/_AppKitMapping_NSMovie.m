@@ -140,7 +140,8 @@ static id imp_NSMovie_initWithMovie_(id self, SEL sel, void* movie)
 }
 
 
-int _pyobjc_install_NSMovie(void)
+static int 
+_pyobjc_install_NSMovie(void)
 {
 	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSMovie"), 
 		@selector(QTMovie),

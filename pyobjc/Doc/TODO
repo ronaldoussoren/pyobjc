@@ -155,6 +155,9 @@ Someone needs to check if we correctly export all constants from Cocoa and if
 the generation script finds all global functions. Simularly for the annotations
 for input/output arguments.
 
+We also don't support all "difficult" methods yet, implementing these is
+not too hard but it is a lot of work.
+
 Pickle support
 ..............
 
@@ -162,12 +165,17 @@ Objective-C objects don't support pickling. They do pickle without errors using
 protocol version 2 (Python >= 2.3a2), but that doesn't include the state of
 the Objective-C object only that of the proxy.
 
+This is post-1.0 work, in general this is a hard problem because it may 
+involve object cycles that cross the Python-ObjC boundary.
+
 NSCoder support
 ...............
 
 It might be usefull to add default implementations of ``encodeWithCoder:`` and
 ``initWithCoder:`` methods to Python subclasses of Objective-C classes that 
 implement these.
+
+See also `Pickle support`.
 
 Build cleanups
 ..............

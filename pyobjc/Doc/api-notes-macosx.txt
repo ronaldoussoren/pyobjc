@@ -72,12 +72,17 @@ The ``-forward::`` method is not supported. It's functionality can be accessed
 using the python function ``apply``. The ``performv::`` method is also not
 supported, with a simular work-around.
 
+Class NSDictionary
+..................
+
+The (undocumented) methods ``getKeys:``, ``getObjects:`` and 
+``getObjects:andKeys:`` are not supported.
+
 Class NSFault
 .............
 
 The ``extraData`` argument/return value for ``-extraData`` and 
 ``setTargetClassextraData:`` is represented as an integer.
-
 
 
 InterfaceBuilder framework

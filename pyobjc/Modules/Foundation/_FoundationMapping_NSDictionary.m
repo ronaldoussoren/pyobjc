@@ -4,9 +4,8 @@
  * -initWithObjects:forKeys:count:		[call ,imp]
  * +dictionaryWithObjects:forKeys:count:	[call, imp]
  *
- * TODO:
- *
- * -getKeys:
+ * Undocumented methods:
+ * -getKeys:		
  * -getObjects:
  * -getObjects:andKeys:
  */
@@ -400,6 +399,33 @@ _pyobjc_install_NSDictionary(void)
 		@selector(dictionaryWithObjects:forKeys:count:),
 		call_NSDictionary_dictionaryWithObjects_forKeys_count_,
 		(IMP)imp_NSDictionary_dictionaryWithObjects_forKeys_count_) < 0) {
+
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(
+		classNSDictionary,
+		@selector(getKeys:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(
+		classNSDictionary,
+		@selector(getObjects:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(
+		classNSDictionary,
+		@selector(getObjects:andKeys:),
+		PyObjCUnsupportedMethod_Caller,
+		PyObjCUnsupportedMethod_IMP) < 0) {
 
 		return -1;
 	}
