@@ -325,7 +325,7 @@ obj_getattro(ObjCMethodAccessor* self, PyObject* name)
 static PyObject*
 obj_repr(ObjCMethodAccessor* self)
 {
-	char buf[1024];
+	PyObject* rval;
 	PyObject* repr;
 
 	repr = PyObject_Repr(self->base);
@@ -335,12 +335,12 @@ obj_repr(ObjCMethodAccessor* self)
 		return NULL;
 	}
 
-	snprintf(buf, sizeof(buf), 
-		"<%s method-accessor for %s>",
-		self->class_method?"class":"instance",
+
+	rval = PyString_FromFormat("<%s method-accessor for %s>",
+		self->class_method ? "class" : "instance",
 		PyString_AS_STRING(repr));
 	Py_DECREF(repr);
-	return PyString_FromString(buf);
+	return rval;
 }
 
 PyTypeObject PyObjCMethodAccessor_Type = {

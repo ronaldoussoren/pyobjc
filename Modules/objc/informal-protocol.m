@@ -53,14 +53,9 @@ proto_dealloc(PyObject* object)
 static PyObject*
 proto_repr(PyObject* object)
 {
-	char buf[1024];
-
 	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)object;	
 
-	snprintf(buf, sizeof(buf), "<%s %s at %p>",
-		self->ob_type->tp_name, PyString_AsString(self->name),
-		(void*)self);
-	return PyString_FromString(buf);
+	return PyString_FromFormat("<%s %s at %p>", self->ob_type->tp_name, PyString_AsString(self->name), (void*)self);
 }
 
 static PyObject*

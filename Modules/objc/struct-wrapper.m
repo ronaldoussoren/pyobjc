@@ -553,36 +553,33 @@ struct_clear(PyObject* self)
 static PyObject*
 struct_repr(PyObject* self)
 {
-	char buffer[128];
 	int i, len;
 	PyObject* cur;
 	PyMemberDef* member;
 
 	len = struct_sq_length(self);
 	if (len == 0) {
-		snprintf(buffer, sizeof(buffer), "<%s>", 
+		return PyString_FromFormat("<%s>",
 				self->ob_type->tp_name);
-		return PyString_FromString(buffer);
 	}
 
 	i = Py_ReprEnter(self);
-	if (i < 0) return NULL;
-	if (i != 0) {
+	if (i < 0) {
+		return NULL;
+	} else if (i != 0) {
 		/* Self-recursive struct */
-		snprintf(buffer, sizeof(buffer), "<%s ...>", 
+		return PyString_FromFormat("<%s ...>",
 				self->ob_type->tp_name);
-		return PyString_FromString(buffer);
 	}
 
-	snprintf(buffer, sizeof(buffer), "<%s", self->ob_type->tp_name);
-	cur = PyString_FromString(buffer);
+	cur = PyString_FromFormat("<%s", self->ob_type->tp_name);
 
 	member = self->ob_type->tp_members;
 	while (member->name != NULL) {
 		PyObject* v;
 
-		snprintf(buffer, sizeof(buffer), " %s=", member->name);
-		PyString_ConcatAndDel(&cur, PyString_FromString(buffer));
+		PyString_ConcatAndDel(&cur, 
+			PyString_FromFormat(" %s=", member->name));
 		if (cur == NULL) goto done;
 
 		v = GET_FIELD(self, member);

@@ -386,21 +386,16 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 static PyObject*
 class_repr(PyObject* obj)
 {
-	char buffer[256];
-	Class cls;
-
-	cls = PyObjCClass_GetClass(obj);
+	Class cls = PyObjCClass_GetClass(obj);
 
 	if (cls) {
-		snprintf(buffer, sizeof(buffer), 
+		return PyString_FromFormat(
 			"<objective-c class %s at %p>", 
 			cls->name, (void*)cls);
 	} else {
-		snprintf(buffer, sizeof(buffer),
+		return PyString_FromFormat(
 			"%s", "<objective-c class NIL>");
 	}
-
-	return PyString_FromString(buffer);
 }
 
 

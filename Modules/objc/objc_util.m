@@ -57,7 +57,7 @@ PyObjCErr_FromObjC(NSException* localException)
 	PyObject*     dict;
 	PyObject*     exception;
 	PyObject*     v;
-	char          buf[256];
+	PyObject*	  buf;
 	PyObject*     exc_type;
 	PyObject*     exc_value;
 	PyObject*     exc_traceback;
@@ -116,11 +116,12 @@ PyObjCErr_FromObjC(NSException* localException)
 		PyDict_SetItemString(dict, "userInfo", Py_None);
 	}
 
-	snprintf(buf, sizeof(buf), "%s - %s", 
+	
+	buf = PyString_FromFormat("%s - %s", 
 		c_localException_name,
 		c_localException_reason);
 
-	PyErr_SetObject(exception, PyString_FromString(buf));
+	PyErr_SetObject(exception, buf);
 	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
 	if (!exc_value || !PyObject_IsInstance(exc_value, exc_type)) {
 		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
