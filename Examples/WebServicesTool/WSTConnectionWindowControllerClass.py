@@ -60,7 +60,7 @@ class WSTConnectionWindowController(NSWindowController):
         '_methodPrefix' )
     
     def connectionWindowController(self):
-        return WSTConnectionWindowController.alloc().init().autorelease()
+        return WSTConnectionWindowController.alloc().init()
            
     def init(self):
         self = self.initWithWindowNibName_("WSTConnection")
