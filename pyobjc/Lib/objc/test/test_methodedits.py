@@ -214,6 +214,39 @@ class TestCategory (unittest.TestCase):
         self.assert_(o.myCategoryMethod())
         self.assert_(not o.myCategoryMethod2())
 
+    def testCategoryMultipleInheritance(self):
+
+        try:
+
+            class NSObject ( objc.Category(objc.runtime.NSObject), object ):
+                pass
+
+            raise AssertionError, "Can use objc.Category with MI"
+        except TypeError:
+            pass
+
+    def testCategoryName(self):
+        try:
+            class NSFoo (objc.Category(objc.runtime.NSObject)):
+                    pass
+
+            raise AssertionError, "Category name != class name"
+
+        except TypeError:
+            pass
+
+    def testCategoryOnPurePython(self):
+        try:
+            global list
+
+            class list (objc.Category(list)):
+                pass
+
+            raise AssertionError, "Category on list???"
+
+        except TypeError:
+            pass
+
 
 if __name__ == '__main__':
     unittest.main()

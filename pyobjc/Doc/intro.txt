@@ -334,6 +334,10 @@ mechanism, implemented on top of ``objc.classAddMethods``::
 		def objectFootprint(self):
 			pass
 
+To make it clear that ``objc.Category`` performs a special task the name in
+the class definition must be the same as the ``__name__`` of the argument
+to ``objc.Category``.
+
 Cocoa for Python programmers
 ----------------------------
 
