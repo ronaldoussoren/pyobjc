@@ -109,9 +109,45 @@ CONVENIENCE_METHODS['removeObjectForKey:'] = (
     ('__delitem__', lambda self, key: self.removeObjectForKey_(key)), 
 )
 
+def dict_update(self, other):
+    for key, value in other.items():
+        self.setObject_forKey_(value, key)
+
+def dict_setdefault(self, key, dflt=None):
+    res = self.objectForKey_(key)
+    if res is None:
+        res = dflt
+        self.setObject_forKey_(dflt, key)
+    return res
+
+def dict_pop(self, key, dflt=None):
+    res = self.objectForKey_(key)
+    if res is None:
+        if dflt is None:
+            raise KeyError, key
+        res = dflt
+    else:
+        self.removeObjectForKey_(key)
+    return res
+
+
+def dict_popitem(self):
+    o = self.keyEnumerator().nextItem()
+    if o is None:
+        raise KeyError, "popitem on an empty dict"
+    v = self.objectForKey_(o)
+    if v is None:
+        raise KeyError, "popitem on an empty dict"
+    return (o, v)
+
 CONVENIENCE_METHODS['setObject:forKey:'] = (
     ('__setitem__', lambda self, key, value: self.setObject_forKey_(value, key)), 
+    ('update', dict_update),
+    ('setdefault', dict_setdefault),
+    ('pop', dict_pop),
+    ('popitem', dict_popitem),
 )
+
 
 CONVENIENCE_METHODS['count'] = (
     ('__len__', lambda self: self.count()),
@@ -183,6 +219,29 @@ def __getitem__objectAtIndex(self, idx):
             raise IndexError, "index out of range"
     return self.objectAtIndex_(idx)
 
+CONVENIENCE_METHODS['addObject:'] = (
+    ( 'append', lambda self, item: self.addObject_(item) ),
+)
+
+CONVENIENCE_METHODS['addObjectsFromArray:'] = (
+    ('extend', lambda self, item: self.addObjectsFromArray_(item)),
+)
+
+def index_indexOfObject(self, item):
+    import Foundation
+
+    res = self.indexOfObject_(item)
+    if res == Foundation.NSNotFound:
+        raise ValueError, "NSArray.index(x): x not in list"
+
+CONVENIENCE_METHODS['indexOfObject:'] = (
+    ('index', index_indexOfObject),
+)
+
+CONVENIENCE_METHODS['insertObject:atIndex:'] = (
+    ( 'insert', lambda self, idx, item: self.insertObject_atIndex(item,idx)),
+)
+
 CONVENIENCE_METHODS['objectAtIndex:'] = (
     ('__getitem__', __getitem__objectAtIndex),
     ('__getslice__', __getitem__objectAtIndexWithSlice),
@@ -240,6 +299,7 @@ def dictItems(aDict):
     values = aDict.objectsForKeys_notFoundMarker_(keys, runtime.NSNull.null())
     return zip(keys, values)
 
+
 CONVENIENCE_METHODS['allKeys'] = (
     ('keys', lambda self: self.allKeys()),
     ('items', lambda self: dictItems(self)),
@@ -249,9 +309,17 @@ CONVENIENCE_METHODS['allValues'] = (
     ('values', lambda self: self.allValues()),
 )
 
+def itemsGenerator(aDict):
+    anEnumerator = aDict.keyEnumerator()
+    nextObject = anEnumerator.nextObject()
+    while nextObject is not None:
+        yield (nextObject, aDict.objectForKey_(nextObject))
+        nextObject = anEnumerator.nextObject()
+
 CONVENIENCE_METHODS['keyEnumerator'] = (
     ('__iter__', lambda self: enumeratorGenerator(self.keyEnumerator())),
     ('iterkeys', lambda self: enumeratorGenerator( self.keyEnumerator())),
+    ('iteritems', lambda self: itemsGenerator(self)),
 )
 
 CONVENIENCE_METHODS['objectEnumerator'] = (
@@ -530,3 +598,9 @@ CONVENIENCE_METHODS['initWithObjects:forKeys:count:'] = (
         selector(initWithObjects_forKeys_count_, signature='@@:^@^@i') ),
 )
 
+def UnsupportedMethod(self, *args):
+    raise ValueError, "Unsupported method"
+
+CONVENIENCE_METHODS['poseAsClass:'] = (
+    ('poseAsClass_', (UnsupportedMethod)),
+)

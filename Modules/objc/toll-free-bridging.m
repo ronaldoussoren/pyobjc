@@ -25,6 +25,14 @@ id PyObjC_CFTypeToID(PyObject* argument)
 	int r;
 	id  val;
 
+#if PY_VERSION_HEX >= 0x020300B1 
+
+	r = CFObj_Convert(argument, (CFTypeRef*)&val);
+	if (r) return val;
+	PyErr_Clear();
+	return NULL;
+
+#else
 	r = CFTypeRefObj_Convert(argument, (CFTypeRef*)&val);
 	if (r) return val;
 
@@ -52,10 +60,15 @@ id PyObjC_CFTypeToID(PyObject* argument)
 
 	PyErr_Clear();
 	return NULL;
+#endif
 }
 
 PyObject* PyObjC_IDToCFType(id argument)
 {
+#if PY_VERSION_HEX >= 0x020300B1 
+	return CFObj_New((CFTypeRef)argument);
+
+#else
 	if ([argument isKindOfClass:[NSMutableString class]]) {
 		return CFMutableStringRefObj_New((CFMutableStringRef)argument);
 	}
@@ -91,6 +104,7 @@ PyObject* PyObjC_IDToCFType(id argument)
 	 * generic one.
 	 */
 	return CFTypeRefObj_New((CFTypeRef)argument);
+#endif 
 }
 
 
