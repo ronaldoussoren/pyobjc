@@ -441,12 +441,9 @@ PyTypeObject PyObjCSelector_Type = {
 static PyObject*
 objcsel_repr(PyObjCNativeSelector* sel)
 {
-	char buf[256];
-
+	PyObject *rval;
 	if (sel->sel_self == NULL) {
-		snprintf(buf, sizeof(buf),
-			"<unbound native-selector %s in %s>", 
-			PyObjCRT_SELName(sel->sel_selector), sel->sel_class->name);
+		rval = PyString_FromFormat("<unbound native-selector %s in %s>", PyObjCRT_SELName(sel->sel_selector), sel->sel_class->name);
 	} else {
 		PyObject* selfrepr = PyObject_Repr(sel->sel_self);
 		if (selfrepr == NULL) {
@@ -456,14 +453,10 @@ objcsel_repr(PyObjCNativeSelector* sel)
 			Py_DECREF(selfrepr);
 			return NULL;
 		}
-		snprintf(buf, sizeof(buf),
-			"<native-selector %s of %s>", 
-			PyObjCRT_SELName(sel->sel_selector),
-			PyString_AS_STRING(selfrepr));
+		rval = PyString_FromFormat("<native-selector %s of %s>", PyObjCRT_SELName(sel->sel_selector), PyString_AS_STRING(selfrepr));
 		Py_DECREF(selfrepr);
 	}
-
-	return PyString_FromString(buf);
+	return rval;
 }
 
 
@@ -867,20 +860,13 @@ PyObjCSelector_New(PyObject* callable,
 static PyObject*
 pysel_repr(PyObjCPythonSelector* sel)
 {
-	char buf[256];
+	PyObject *rval;
 
 	if (sel->sel_self == NULL) {
 		if (sel->sel_class) {
-			snprintf(buf, sizeof(buf),
-				"<unbound selector %s of %s at %p>", 
-				PyObjCRT_SELName(sel->sel_selector),
-				sel->sel_class->name, 
-				sel);
+			rval = PyString_FromFormat("<unbound selector %s of %s at %p>", PyObjCRT_SELName(sel->sel_selector), sel->sel_class->name, sel);
 		} else {
-			snprintf(buf, sizeof(buf),
-				"<unbound selector %s at %p>", 
-				PyObjCRT_SELName(sel->sel_selector),
-				sel);
+			rval = PyString_FromFormat("<unbound selector %s at %p>", PyObjCRT_SELName(sel->sel_selector), sel);
 		}
 	} else {
 		PyObject* selfrepr = PyObject_Repr(sel->sel_self);
@@ -891,14 +877,10 @@ pysel_repr(PyObjCPythonSelector* sel)
 			Py_DECREF(selfrepr);
 			return NULL;
 		}
-		snprintf(buf, sizeof(buf),
-			"<selector %s of %s>", 
-			PyObjCRT_SELName(sel->sel_selector),
-			PyString_AS_STRING(selfrepr));
+		rval = PyString_FromFormat("<selector %s of %s>", PyObjCRT_SELName(sel->sel_selector), PyString_AS_STRING(selfrepr));
 		Py_DECREF(selfrepr);
 	}
-
-	return PyString_FromString(buf);
+	return rval;
 }
 
 static PyObject*
@@ -1052,7 +1034,7 @@ pysel_default_selector(PyObject* callable)
 		return NULL;
 	}
 
-	snprintf(buf, sizeof(buf), "%s", PyString_AS_STRING(name));	
+	strncpy(buf, PyString_AS_STRING(name), sizeof(buf)-1);
 
 	cur = strchr(buf, '_');
 	while (cur != NULL) {
@@ -1069,7 +1051,8 @@ PyObjCSelector_DefaultSelector(const char* methname)
 	char* cur;
 	int   ln;
 
-	ln = snprintf(buf, sizeof(buf), "%s", methname);
+	strncpy(buf, methname, sizeof(buf)-1);
+	ln = strlen(buf);
 
 	cur = buf + ln;
 	if (cur - buf > 3) {
