@@ -60,6 +60,10 @@ And a number of Cocoa applications. These use the 'AppKit' package.
 
   Basic demo that shows how to use a NSTableView.
 
+- TinyTinyEdit
+
+  A minimal Document-based text editor application.
+
 - Todo
 
   A more complex NIB based applications. This is a document-based application.
