@@ -244,4 +244,5 @@ void init_objc(void)
 	PyDict_SetItemString(d, "__version__", 
 		PyString_FromString(OBJC_VERSION));
 
+	ObjC_InstallAllocHack();
 }
