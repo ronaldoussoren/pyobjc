@@ -570,6 +570,7 @@ class DumbHeaderParser (object):
         return typestr
 
     def isOpaquePointer(self, value):
+        print "--", value
         return value.replace('const', '').replace(' ', '') in self.opaque_pointers
 
     def make_func_signature(self, rettype, arguments):

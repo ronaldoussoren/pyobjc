@@ -180,6 +180,40 @@ class TestClassAsignments (unittest.TestCase):
         self.assertRaises(AttributeError, delattr, theClass, 'alloc')
         self.assertRaises(AttributeError, delattr, theClass, 'init')
 
+class TestCategory (unittest.TestCase):
+    # Tests of objc.Category
+
+    def testPyClassCategory(self):
+        global Methods
+
+        o = Methods.alloc().init()
+        self.assertRaises(AttributeError, getattr, o, 'categoryMethod')
+
+        class Methods (objc.Category(Methods)):
+            def categoryMethod(self):
+                return True
+
+            def categoryMethod2(self):
+                return False
+
+        self.assert_(o.categoryMethod())
+        self.assert_(not o.categoryMethod2())
+
+    def testObjCClassCategory(self):
+
+        o = objc.runtime.NSObject.alloc().init()
+        self.assertRaises(AttributeError, getattr, o, 'myCategoryMethod')
+
+        class NSObject (objc.Category(objc.runtime.NSObject)):
+            def myCategoryMethod(self):
+                return True
+
+            def myCategoryMethod2(self):
+                return False
+
+        self.assert_(o.myCategoryMethod())
+        self.assert_(not o.myCategoryMethod2())
+
 
 if __name__ == '__main__':
     unittest.main()

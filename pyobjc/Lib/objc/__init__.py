@@ -178,7 +178,7 @@ class _CategoryMeta (type):
     Meta class for categories.
     """
     __slots__ = ()
-    _IGNORENAMES = ('__module__', )
+    _IGNORENAMES = ('__module__', '__name__')
     def _newSubclass(cls, name, bases, methods):
         return type.__new__(cls, name, bases, methods)
     _newSubclass = classmethod(_newSubclass)
