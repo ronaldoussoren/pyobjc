@@ -222,6 +222,11 @@ todo item.
 All existing varargs methods should be located and documented. Where possible
 we should provide custom wrappers, otherwise we should document alternatives.
 
+We should further investigate why the call to ``PyType_Ready(&PyTuple_Type)``
+in module.m is necessary. See `bug #77730`__.
+
+.. _: http://sourceforge.net/tracker/index.php?func=detail&aid=777308&group_id=14534&atid=114534
+
 
 Cleanup Examples
 ................
