@@ -379,6 +379,7 @@ int ObjC_UpdateConvenienceMethods(PyObject* cls)
 		if (	   strcmp(n, "__dict__") == 0 
 			|| strcmp(n, "__bases__") == 0
 			|| strcmp(n, "__slots__") == 0
+			|| strcmp(n, "__mro__") == 0
 		   ) {
 
 			Py_DECREF(k);
