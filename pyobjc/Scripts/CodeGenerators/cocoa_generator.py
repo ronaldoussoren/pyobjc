@@ -50,6 +50,7 @@ if sys.platform == "darwin":
         SECINT_HDRS=None
 
     WEBKIT_HDRS=os.path.join(FRAMEWORKS, "WebKit.framework", "Headers")
+    EXCHND_HDRS=os.path.join(FRAMEWORKS, "ExceptionHandling.framework", "Headers")
 
 else:
     # This is probably incorrect, and was added to help a future 
@@ -87,6 +88,10 @@ else:
     if not os.path.exists(WEBKIT_HDRS):
         WEBKIT_HDRS=None
 
+    EXCHND_HDRS=os.path.join(HDR_BASE, "ExceptionHandling")
+    if not os.path.exists(EXCHND_HDRS):
+        EXCHND_HDRS=None
+
     SECINT_HDRS=os.path.join(HDR_BASE, "SecurityInterface")
     if not os.path.exists(SECINT_HDRS):
             SECINT_HDRS=None
@@ -115,10 +120,10 @@ def filterAddressBookHeaders(fn):
 
 if FOUNDATION_HDRS is not None:
         enum_generator.generate(
-                FOUNDATION_HDRS, 
+                FOUNDATION_HDRS,
                 'build/codegen/_Fnd_Enum.inc')
         strconst_generator.generate(
-                FOUNDATION_HDRS, 
+                FOUNDATION_HDRS,
                 'build/codegen/_Fnd_Str.inc',
                 ignore=(
                     # Declared on GNUstep, but not actually inside the
@@ -140,7 +145,7 @@ if FOUNDATION_HDRS is not None:
             "NSNonRetainedObjectMapKeyCallBacks",
             "NSObjectMapKeyCallBacks",
             "NSOwnedPointerMapKeyCallBacks",
-            "NSIntMapValueCallBacks", 
+            "NSIntMapValueCallBacks",
             "NSNonOwnedPointerMapValueCallBacks",
             "NSObjectMapValueCallBacks",
             "NSNonRetainedObjectMapValueCallBacks",
@@ -150,9 +155,9 @@ if FOUNDATION_HDRS is not None:
         )
 
         var_generator.generate(
-                FOUNDATION_HDRS, 
-                'build/codegen/_Fnd_Var.inc', 
-                FOUNDATION_VAR_PREFIX, 
+                FOUNDATION_HDRS,
+                'build/codegen/_Fnd_Var.inc',
+                FOUNDATION_VAR_PREFIX,
                 FOUNDATION_IGNORE_LIST)
 
         FOUNDATION_IGNORE_LIST=(
@@ -263,14 +268,14 @@ if FOUNDATION_HDRS is not None:
         )
 
         func_collector.generate(
-                FOUNDATION_HDRS, 
-                'build/codegen/Foundation.prototypes', 
-                FOUNDATION_FUNCTION_PREFIX, 
+                FOUNDATION_HDRS,
+                'build/codegen/Foundation.prototypes',
+                FOUNDATION_FUNCTION_PREFIX,
                 FOUNDATION_IGNORE_LIST)
 
         func_collector.generate(
-                FOUNDATION_HDRS, 
-                'build/codegen/Foundation.prototype2', 
+                FOUNDATION_HDRS,
+                'build/codegen/Foundation.prototype2',
                 FOUNDATION_INLINE_PREFIX,
                 FOUNDATION_IGNORE_LIST)
 
@@ -363,25 +368,25 @@ if FOUNDATION_HDRS is not None:
 
 if APPKIT_HDRS is not None:
         enum_generator.generate(
-                APPKIT_HDRS, 
+                APPKIT_HDRS,
                 'build/codegen/_App_Enum.inc')
 
         strconst_generator.generate(
-                APPKIT_HDRS, 
+                APPKIT_HDRS,
                 'build/codegen/_App_Str.inc')
         APPKIT_PREFIX="APPKIT_EXTERN"
         APPKIT_IGNORE_LIST=(
             # First two have types that are not yet mapped
-            'NSIconSize', 
-            'NSTokenSize', 
+            'NSIconSize',
+            'NSTokenSize',
 
             # NSApp is a 'real' variable, will probably add get/set functions
             'NSApp')
 
         var_generator.generate(
-                APPKIT_HDRS, 
-                'build/codegen/_App_Var.inc', 
-                APPKIT_PREFIX, 
+                APPKIT_HDRS,
+                'build/codegen/_App_Var.inc',
+                APPKIT_PREFIX,
                 APPKIT_IGNORE_LIST)
 
         APPKIT_IGNORE_LIST=(
@@ -412,9 +417,9 @@ if APPKIT_HDRS is not None:
                 APPKIT_IGNORE_LIST = APPKIT_IGNORE_LIST + ('NSCopyBitmapFromGState',)
 
         func_collector.generate(
-                APPKIT_HDRS, 
-                'build/codegen/AppKit.prototypes', 
-                APPKIT_PREFIX, 
+                APPKIT_HDRS,
+                'build/codegen/AppKit.prototypes',
+                APPKIT_PREFIX,
                 APPKIT_IGNORE_LIST)
 
         func_builder.FUNC_MAP['NSShowAnimationEffect'] = BeginSheetMapper
@@ -458,7 +463,7 @@ if APPKIT_HDRS is not None:
             'NSMatrixMode', 'NSMultibyteGlyphPacking', 'NSOpenGLContextParameter',
             'NSOpenGLGlobalOption', 'NSOpenGLPixelFormatAttribute',
             'NSPopUpArrowPosition', 'NSPrinterTableStatus',
-            'NSPrintingOrientation', 'NSPrintingPageOrder', 
+            'NSPrintingOrientation', 'NSPrintingPageOrder',
             'NSPrintingPaginationMode', 'NSProgressIndicatorThickness',
             'NSQTMovieLoopMode', 'NSRequestUserAttentionType',
             'NSRulerOrientation', 'NSSaveOperationType',
@@ -500,37 +505,49 @@ if ADDRESSBOOK_HDRS is not None:
 
 if PREFPANES_HDRS is not None:
         enum_generator.generate(
-                PREFPANES_HDRS, 
+                PREFPANES_HDRS,
                 'build/codegen/_PreferencePanes_Enum.inc')
         strconst_generator.generate(
-                PREFPANES_HDRS, 
+                PREFPANES_HDRS,
                 'build/codegen/_PreferencePanes_Str.inc')
 
 if IB_HDRS is not None:
         enum_generator.generate(
-                IB_HDRS, 
+                IB_HDRS,
                 'build/codegen/_InterfaceBuilder_Enum.inc')
         strconst_generator.generate(
-                IB_HDRS, 
+                IB_HDRS,
                 'build/codegen/_InterfaceBuilder_Str.inc')
 
 if WEBKIT_HDRS is not None:
         enum_generator.generate(
-                WEBKIT_HDRS, 
+                WEBKIT_HDRS,
                 'build/codegen/_WebKit_Enum.inc')
 
         # The two items on the ignore-list cause link errors, 
         # to-be-investigated.
         strconst_generator.generate(WEBKIT_HDRS,
                                     'build/codegen/_WebKit_Str.inc',
-                                    ignore=('WebElementImageAltStringKey', 
+                                    ignore=('WebElementImageAltStringKey',
                                             'WebPreferencesChangedNotification')
         )
 
+if EXCHND_HDRS is not None:
+        enum_generator.generate(
+                EXCHND_HDRS,
+                'build/codegen/_ExceptionHandling_Enum.inc')
+
+        # The two items on the ignore-list cause link errors, 
+        # to-be-investigated.
+        strconst_generator.generate(
+            EXCHND_HDRS,
+            'build/codegen/_ExceptionHandling_Str.inc')
+
+
 if SECINT_HDRS is not None:
         enum_generator.generate(
-                SECINT_HDRS, 
+                SECINT_HDRS,
                 'build/codegen/_SecInt_Enum.inc')
         strconst_generator.generate(
-                SECINT_HDRS, 
+                SECINT_HDRS,
                 'build/codegen/_SecInt_Str.inc')

@@ -56,6 +56,11 @@ try:
 except ImportError:
     pass
 
+try:
+    import ExceptionHandlers
+except ImportError:
+    pass
+
 PTRSIG={}
 
 
