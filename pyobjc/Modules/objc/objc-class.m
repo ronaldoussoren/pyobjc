@@ -30,7 +30,7 @@ static int update_convenience_methods(PyObject* cls);
 /*
  * Due to the way dynamicly created PyTypeObject's are processed it is not 
  * possible to add new fields to a type struct in Python 2.2. We therefore
- * store the additional information in a seperate data-structure. 
+ * store the additional information in a separate data-structure. 
  *
  * The struct class_info contains the additional information for a class object,
  * and class_to_objc stores a mapping from a class object to its additional
@@ -161,6 +161,9 @@ objc_class_unregister(Class objc_class)
 {
 	if (class_registry == NULL) return 0;
 
+	/* XXX: Aren't we leaking memory here, I'd expect that we'd have
+         *      to DECREF the py_class.
+	 */ 
 	NSMapRemove(class_registry, objc_class);
 	return 0;
 }
@@ -186,10 +189,6 @@ objc_class_locate(Class objc_class)
 	result = NSMapGet(class_registry, objc_class);
 	return result;
 }
-
-
-
-
 
 
 /*
@@ -242,7 +241,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
-	v = PyTuple_GetItem(bases, 0);
+	v = PyTuple_GET_ITEM(bases, 0);
 	if (v == NULL) {
 		return NULL;
 	}
@@ -307,7 +306,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	}
 
 	for (i = 1; i < len; i++) {
-		v = PyTuple_GetItem(bases, i);
+		v = PyTuple_GET_ITEM(bases, i);
 		if (v == NULL) {
 			return NULL;
 		}
@@ -542,9 +541,9 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 		if (!recursive) break;
 		if (info->class->super_class == NULL) break;
 		cls = PyObjCClass_New(info->class->super_class);
-			/* XXX REFCNT leak!! */
-		info = get_class_info(cls);
 
+		Py_DECREF(cls);
+		info = get_class_info(cls);
 	}
 }
 
@@ -1508,7 +1507,6 @@ update_convenience_methods(PyObject* cls)
 		}
 	}
 
-	Py_DECREF(keys);
 	Py_DECREF(args);
 
 	return 0;
