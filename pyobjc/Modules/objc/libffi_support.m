@@ -249,6 +249,7 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			return;
 		}
 		PyList_Append(arglist, v);
+		Py_DECREF(v); /* XXX ?*/
 	}
 
 	v = PyList_AsTuple(arglist);

@@ -38,12 +38,12 @@
 
 - (int) size
 {
-	return PyString_Size([self pyObject]);
+	return PyString_Size([self  pyObject]);
 }
 
 - (char *) asString
 {
-	return PyString_AsString([self pyObject]);
+	return PyString_AsString([self  pyObject]);
 }
 
 @end /* OC_PythonString class implementation */

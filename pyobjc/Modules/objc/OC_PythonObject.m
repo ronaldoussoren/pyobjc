@@ -182,7 +182,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		return YES;
 	} 
     
-	m = get_method_for_selector([self pyObject], aSelector);
+	m = get_method_for_selector(pyObject, aSelector);
 
 	if (m) {
         	return YES;
@@ -210,7 +210,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		return [NSMethodSignature signatureWithObjCTypes:encoding];
 	}
 
-	pymethod = get_method_for_selector([self pyObject], sel);
+	pymethod = get_method_for_selector(pyObject, sel);
 	if (!pymethod) {
 		PyErr_Clear();
 		[NSException raise:NSInvalidArgumentException 
@@ -257,7 +257,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	
 	retbuffer = alloca(retsize);
   
-	pymethod = get_method_for_selector([self pyObject], aSelector);
+	pymethod = get_method_for_selector(pyObject, aSelector);
 
 	if (!pymethod) {
 		/* The method does not exist. We cannot forward this to our 
@@ -326,13 +326,13 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (int) numberCheck
 {
-	return PyNumber_Check([self pyObject]);
+	return PyNumber_Check(pyObject);
 }
 
 - (id <PythonObject>) numberAdd:(id <PythonObject>) o2
 {
 	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
+	PyObject *pyo2 = [o2  pyObject];
 	PyObject *result = PyNumber_Add(pyo1, pyo2);
 
 	RETURN_RESULT(result);
@@ -340,8 +340,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberSubtract:(id <PythonObject>) o2
 {
-	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
+	PyObject *pyo1 = [self  pyObject];
+	PyObject *pyo2 = [o2  pyObject];
 	PyObject *result = PyNumber_Subtract(pyo1, pyo2);
 
 	RETURN_RESULT(result);
@@ -349,8 +349,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberMultiply:(id <PythonObject>) o2
 {
-	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
+	PyObject *pyo1 = [self  pyObject];
+	PyObject *pyo2 = [o2  pyObject];
 	PyObject *result = PyNumber_Multiply(pyo1, pyo2);
 
 	RETURN_RESULT(result);
@@ -358,8 +358,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberDivide:(id <PythonObject>) o2
 {
-	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
+	PyObject *pyo1 = [self  pyObject];
+	PyObject *pyo2 = [o2  pyObject];
 	PyObject *result = PyNumber_Divide(pyo1, pyo2);
 
 	RETURN_RESULT(result);
@@ -367,8 +367,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberRemainder:(id <PythonObject>) o2
 {
-	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
+	PyObject *pyo1 = [self  pyObject];
+	PyObject *pyo2 = [o2  pyObject];
 	PyObject *result = PyNumber_Remainder(pyo1, pyo2);
 
 	RETURN_RESULT(result);
@@ -376,8 +376,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberDivmod:(id <PythonObject>) o2
 {
-	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
+	PyObject *pyo1 = [self  pyObject];
+	PyObject *pyo2 = [o2  pyObject];
 	PyObject *result = PyNumber_Divmod(pyo1, pyo2);
 
 	RETURN_RESULT(result);
@@ -386,9 +386,9 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 - (id <PythonObject>) numberPower:(id <PythonObject>) o2
                                  :(id <PythonObject>) o3
 {
-	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
-	PyObject *pyo3 = [o3 pyObject];
+	PyObject *pyo1 = [self  pyObject];
+	PyObject *pyo2 = [o2  pyObject];
+	PyObject *pyo3 = [o3  pyObject];
 	PyObject *result = PyNumber_Power(pyo1, pyo2, pyo3);
 
 	RETURN_RESULT(result);
@@ -396,7 +396,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberNegative
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 	PyObject *result = PyNumber_Negative(pyo);
 
 	RETURN_RESULT(result);
@@ -404,7 +404,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberPositive
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 	PyObject *result = PyNumber_Positive(pyo);
 
 	RETURN_RESULT(result);
@@ -412,7 +412,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberAbsolute
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 	PyObject *result = PyNumber_Absolute(pyo);
 
 	RETURN_RESULT(result);
@@ -420,7 +420,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberInvert
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 	PyObject *result = PyNumber_Invert(pyo);
 
 	RETURN_RESULT(result);
@@ -428,8 +428,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberLshift:(id <PythonObject>) o2
 {
-	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
+	PyObject *pyo1 = [self  pyObject];
+	PyObject *pyo2 = [o2  pyObject];
 	PyObject *result = PyNumber_Lshift(pyo1, pyo2);
 
 	RETURN_RESULT(result);
@@ -437,8 +437,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberRshift:(id <PythonObject>) o2
 {
-	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
+	PyObject *pyo1 = [self  pyObject];
+	PyObject *pyo2 = [o2  pyObject];
 	PyObject *result = PyNumber_Rshift(pyo1, pyo2);
 
 	RETURN_RESULT(result);
@@ -446,8 +446,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberAnd:(id <PythonObject>) o2
 {
-	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
+	PyObject *pyo1 = [self  pyObject];
+	PyObject *pyo2 = [o2  pyObject];
 	PyObject *result = PyNumber_And(pyo1, pyo2);
 
 	RETURN_RESULT(result);
@@ -455,8 +455,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberXor:(id <PythonObject>) o2
 {
-	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
+	PyObject *pyo1 = [self  pyObject];
+	PyObject *pyo2 = [o2  pyObject];
 	PyObject *result = PyNumber_Xor(pyo1, pyo2);
 
 	RETURN_RESULT(result);
@@ -464,8 +464,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberOr:(id <PythonObject>) o2
 {
-	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
+	PyObject *pyo1 = [self  pyObject];
+	PyObject *pyo2 = [o2  pyObject];
 	PyObject *result = PyNumber_Or(pyo1, pyo2);
 
 	RETURN_RESULT(result);
@@ -473,7 +473,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberInt
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 	PyObject *result = PyNumber_Int(pyo);
 
 	RETURN_RESULT(result);
@@ -481,7 +481,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberLong
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 	PyObject *result = PyNumber_Long(pyo);
 
 	RETURN_RESULT(result);
@@ -489,7 +489,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) numberFloat
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 	PyObject *result = PyNumber_Float(pyo);
 
 	RETURN_RESULT(result);
@@ -499,18 +499,18 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (int) sequenceCheck
 {
-	return PySequence_Check([self pyObject]);
+	return PySequence_Check([self  pyObject]);
 }
 
 - (int) sequenceLength
 {
-	return PySequence_Length([self pyObject]);
+	return PySequence_Length([self  pyObject]);
 }
 
 - (id <PythonObject>) sequenceConcat:(id <PythonObject>) o2
 {
-	PyObject *pyo1 = [self pyObject];
-	PyObject *pyo2 = [o2 pyObject];
+	PyObject *pyo1 = [self  pyObject];
+	PyObject *pyo2 = [o2  pyObject];
 	PyObject *result = PySequence_Concat(pyo1, pyo2);
 
 	RETURN_RESULT(result);
@@ -518,7 +518,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) sequenceRepeat:(int) count
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 	PyObject *result = PySequence_Repeat(pyo, count);
 
 	RETURN_RESULT(result);
@@ -526,7 +526,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) sequenceGetItem:(int) count
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 	PyObject *result = PySequence_GetItem(pyo, count);
 
 	RETURN_RESULT(result);
@@ -534,7 +534,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
   
 - (id <PythonObject>) sequenceGetSliceFrom:(int) i1 to:(int) i2
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 	PyObject *result = PySequence_GetSlice(pyo, i1, i2);
 
 	RETURN_RESULT(result);
@@ -542,15 +542,15 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (int) sequenceSetItem:(int) i value:(id <PythonObject>) v
 {
-	PyObject *pyo = [self pyObject];
-	PyObject *pyv = [v pyObject];
+	PyObject *pyo = [self  pyObject];
+	PyObject *pyv = [v  pyObject];
 
 	return PySequence_SetItem(pyo, i, pyv);
 }
 
 - (int) sequenceDelItem:(int) i
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 
 	return PySequence_DelItem(pyo, i);
 }
@@ -559,8 +559,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
                           to:(int) i2
                        value:(id <PythonObject>) v
 {
-	PyObject *pyo = [self pyObject];
-	PyObject *pyv = [v pyObject];
+	PyObject *pyo = [self  pyObject];
+	PyObject *pyv = [v  pyObject];
 
 	return PySequence_SetSlice(pyo, i1, i2, pyv);
 }
@@ -568,14 +568,14 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 - (int) sequenceDelSliceFrom:(int) i1
                           to:(int) i2
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 
 	return PySequence_DelSlice(pyo, i1, i2);
 }
 
 - (id <PythonObject>) sequenceTuple
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 	PyObject *result = PySequence_Tuple(pyo);
 
 	RETURN_RESULT(result);
@@ -583,7 +583,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) sequenceList
 {
-	PyObject *pyo = [self pyObject];
+	PyObject *pyo = [self  pyObject];
 	PyObject *result = PySequence_List(pyo);
 
 	RETURN_RESULT(result);
@@ -591,24 +591,24 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (int) sequenceCount:(id <PythonObject>) value
 {
-	PyObject *pyo = [self pyObject];
-	PyObject *pyv = [value pyObject];
+	PyObject *pyo = [self  pyObject];
+	PyObject *pyv = [value  pyObject];
 
 	return PySequence_Count(pyo, pyv);
 }
 
 - (int) sequenceIn:(id <PythonObject>) value
 {
-	PyObject *pyo = [self pyObject];
-	PyObject *pyv = [value pyObject];
+	PyObject *pyo = [self  pyObject];
+	PyObject *pyv = [value  pyObject];
 
 	return PySequence_In(pyo, pyv);
 }
 
 - (int) sequenceIndex:(id <PythonObject>) value
 {
-	PyObject *pyo = [self pyObject];
-	PyObject *pyv = [value pyObject];
+	PyObject *pyo = [self  pyObject];
+	PyObject *pyv = [value  pyObject];
 
 	return PySequence_Index(pyo, pyv);
 }
@@ -617,13 +617,13 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (int) callableCheck
 {
-	return PyCallable_Check([self pyObject]);
+	return PyCallable_Check([self  pyObject]);
 }
 
 - (id <PythonObject>) callableCall:(id <PythonObject>) args
 {
-	PyObject *pyo = [self pyObject];
-	PyObject *pyargs = [args pyObject];
+	PyObject *pyo = [self  pyObject];
+	PyObject *pyargs = [args  pyObject];
 	PyObject *result = PyObject_CallObject(pyo, pyargs);
 
 	RETURN_RESULT(result);
@@ -659,7 +659,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		args = a;
 	}
 
-	result = PyObject_CallObject([self pyObject], args);
+	result = PyObject_CallObject([self  pyObject], args);
 	Py_DECREF(args);
 	RETURN_RESULT(result);
 }
@@ -673,7 +673,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	PyObject *method;
 	PyObject *result;
 
-	method = PyObject_GetAttrString([self pyObject], m);
+	method = PyObject_GetAttrString([self  pyObject], m);
 	if (!method) {
 	      PyErr_SetString(PyExc_AttributeError, m);
 	      return nil;
@@ -712,210 +712,216 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (int) mappingCheck
 {
-	return PyMapping_Check([self pyObject]);
+	return PyMapping_Check([self  pyObject]);
 }
 
 - (int) mappingLength
 {
-	return PyMapping_Length([self pyObject]);
+	return PyMapping_Length([self  pyObject]);
 }
 
 - (int) mappingDelItemCString:(char *) key
 {
-	return PyMapping_DelItemString([self pyObject], key);
+	return PyMapping_DelItemString([self  pyObject], key);
 }
 
 - (int) mappingDelItemString:(NSString *) key
 {
 	return PyMapping_DelItemString(
-		[self pyObject], (char *) [key cString]);
+		[self  pyObject], (char *) [key cString]);
 }
 
 - (int) mappingDelItem:(id <PythonObject>) key
 {
-	return PyMapping_DelItem([self pyObject], [key pyObject]);
+	return PyMapping_DelItem([self  pyObject], [key  pyObject]);
 }
 
 - (int) mappingHasKeyCString:(char *) key
 {
-	return PyMapping_HasKeyString([self pyObject], key);
+	return PyMapping_HasKeyString([self  pyObject], key);
 }
 
 - (int) mappingHasKeyString:(NSString *) key
 {
-	return PyMapping_HasKeyString([self pyObject], (char *) [key cString]);
+	return PyMapping_HasKeyString([self  pyObject], (char *) [key cString]);
 }
 
 - (int) mappingHasKey:(id <PythonObject>) key
 {
-	return PyMapping_HasKey([self pyObject], [key pyObject]);
+	return PyMapping_HasKey([self  pyObject], [key  pyObject]);
 }
 
 - (id <PythonObject>) mappingKeys
 {
-	PyObject *pykeys = PyMapping_Keys([self pyObject]);
+	PyObject *pykeys = PyMapping_Keys([self  pyObject]);
 	RETURN_RESULT(pykeys);
 }
 
 - (id <PythonObject>) mappingItems
 {
-	PyObject *pyitems = PyMapping_Items([self pyObject]);
+	PyObject *pyitems = PyMapping_Items([self  pyObject]);
 	RETURN_RESULT(pyitems);
 }
 
 - (id <PythonObject>) mappingValues
 {
-	PyObject *pyvalues = PyMapping_Values([self pyObject]);
+	PyObject *pyvalues = PyMapping_Values([self  pyObject]);
 	RETURN_RESULT(pyvalues);
 }
 
 - (id <PythonObject>) mappingGetItemCString:(char *) key
 {
-	PyObject *r= PyMapping_GetItemString([self pyObject], key);
+	PyObject *r= PyMapping_GetItemString([self  pyObject], key);
 	RETURN_RESULT(r);
 }
 
 - (id <PythonObject>) mappingGetItemString:(NSString *) key
 {
 	PyObject *r = PyMapping_GetItemString(
-		[self pyObject], (char *) [key cString]);
+		[self  pyObject], (char *) [key cString]);
 	RETURN_RESULT(r);
 }
 
 - (int) mappingSetItemCString:(char *) key value:(id <PythonObject>) value
 {
-	return PyMapping_SetItemString([self pyObject], key, [value pyObject]);
+	return PyMapping_SetItemString([self  pyObject], key, [value  pyObject]);
 }
 
 - (int) mappingSetItemString:(NSString *) key value:(id <PythonObject>) value
 {
-	return PyMapping_SetItemString([self pyObject],
-			 (char *) [key cString], [value pyObject]);
+	return PyMapping_SetItemString([self  pyObject],
+			 (char *) [key cString], [value  pyObject]);
 }
 
 
 /*********************** PYTHON OBJECT PROTOCOL *****************************/
 
-- (PyObject *) pyObject
+- (PyObject *)  pyObject
 {
+	return pyObject;
+}
+
+- (PyObject *)  __pyobjc_PythonObject__
+{
+	Py_INCREF(pyObject);
 	return pyObject;
 }
 
 - (int) print:(FILE *) fp flags:(int) flags
 {
-	return PyObject_Print([self pyObject], fp, flags);
+	return PyObject_Print([self  pyObject], fp, flags);
 }
 
 - (int) hasAttrCString:(char *) attr_name
 {
-	return PyObject_HasAttrString([self pyObject], attr_name);
+	return PyObject_HasAttrString([self  pyObject], attr_name);
 }
 
 - (int) hasAttrString:(NSString *) attr_name
 {
-	return PyObject_HasAttrString([self pyObject], 
+	return PyObject_HasAttrString([self  pyObject], 
 		(char *) [attr_name cString]);
 }
 
 - (id <PythonObject>) getAttrCString:(char *) attr_name
 {
-	PyObject *r = PyObject_GetAttrString([self pyObject], attr_name);
+	PyObject *r = PyObject_GetAttrString([self  pyObject], attr_name);
 	RETURN_RESULT(r);
 }
 
 - (id <PythonObject>) getAttrString:(NSString *) attr_name
 {
 	PyObject *r = PyObject_GetAttrString(
-		[self pyObject], (char *) [attr_name cString]);
+		[self  pyObject], (char *) [attr_name cString]);
 	RETURN_RESULT(r);
 }
 
 - (int) hasAttr:(id <PythonObject>) attr_name
 {
-	return PyObject_HasAttr([self pyObject], [attr_name pyObject]);
+	return PyObject_HasAttr([self  pyObject], [attr_name  pyObject]);
 }
 
 - (id <PythonObject>) getAttr:(id <PythonObject>) attr_name
 {
-	PyObject *r = PyObject_GetAttr([self pyObject], [attr_name pyObject]);
+	PyObject *r = PyObject_GetAttr([self  pyObject], [attr_name  pyObject]);
 	RETURN_RESULT(r);
 }
 
 - (int) setAttrCString:(char *) attr_name value:(id <PythonObject>) value
 {
 	return PyObject_SetAttrString(
-		[self pyObject], attr_name, [value pyObject]);
+		[self  pyObject], attr_name, [value  pyObject]);
 }
 
 - (int) setAttrString:(NSString *) attr_name value:(id <PythonObject>) value
 {
 	return PyObject_SetAttrString(
-		[self pyObject], (char *)[attr_name cString], [value pyObject]);
+		[self  pyObject], (char *)[attr_name cString], [value  pyObject]);
 }
 
 - (int) setAttr:(id <PythonObject>) attr_name value:(id <PythonObject>) value
 {
 	return PyObject_SetAttr(
-		[self pyObject], [attr_name pyObject], [value pyObject]);
+		[self  pyObject], [attr_name  pyObject], [value  pyObject]);
 }
 
 - (int) delAttrCString:(char *) attr_name
 {
-	return PyObject_DelAttrString([self pyObject], attr_name);
+	return PyObject_DelAttrString([self  pyObject], attr_name);
 }
 
 - (int) delAttrString:(NSString *) attr_name
 {
 	return PyObject_DelAttrString(
-		[self pyObject], (char *)[attr_name cString]);
+		[self  pyObject], (char *)[attr_name cString]);
 }
 
 - (int) delAttr:(id <PythonObject>) attr_name
 {
-	return PyObject_DelAttr([self pyObject], [attr_name pyObject]);
+	return PyObject_DelAttr([self  pyObject], [attr_name  pyObject]);
 }
 
 - (int) cmp:(id <PythonObject>) o2 result:(int *) result
 {
-	return PyObject_Cmp([self pyObject], [o2 pyObject], result);
+	return PyObject_Cmp([self  pyObject], [o2  pyObject], result);
 }
 
 - (int) compare:(id <PythonObject>) o2
 {
-	return PyObject_Compare([self pyObject], [o2 pyObject]);
+	return PyObject_Compare([self  pyObject], [o2  pyObject]);
 }
 
 - (id <PythonObject>) repr
 {
-	PyObject* r = PyObject_Repr([self pyObject]);
+	PyObject* r = PyObject_Repr([self  pyObject]);
 	RETURN_RESULT(r);
 }
 
 - (id <PythonObject>) str
 {
-	PyObject* r = PyObject_Str([self pyObject]);
+	PyObject* r = PyObject_Str([self  pyObject]);
 	RETURN_RESULT(r);
 }
 
 - (unsigned int) hash
 {
-	return PyObject_Hash([self pyObject]);
+	return PyObject_Hash([self  pyObject]);
 }
 
 - (int) isTrue
 {
-	return PyObject_IsTrue([self pyObject]);
+	return PyObject_IsTrue([self  pyObject]);
 }
 
 - (id <PythonObject>) type
 {
-	PyObject* r = PyObject_Type([self pyObject]);
+	PyObject* r = PyObject_Type([self  pyObject]);
 	RETURN_RESULT(r);
 }
 
 - (unsigned int) length
 {
-	int len = PyObject_Length([self pyObject]);
+	int len = PyObject_Length([self  pyObject]);
 
 	if (PyErr_Occurred()) {
 		ObjCErr_ToObjC();
@@ -931,18 +937,18 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (id <PythonObject>) getItem:(id <PythonObject>) key
 {
-	PyObject* r = PyObject_GetItem([self pyObject], [key pyObject]);
+	PyObject* r = PyObject_GetItem([self  pyObject], [key  pyObject]);
 	RETURN_RESULT(r);
 }
 
 - (int) setItem:(id <PythonObject>) key value:(id <PythonObject>) v
 {
-	return PyObject_SetItem([self pyObject], [key pyObject], [v pyObject]);
+	return PyObject_SetItem([self  pyObject], [key  pyObject], [v  pyObject]);
 }
 
 - (int) delItem:(id <PythonObject>) key
 {
-	return PyObject_DelItem([self pyObject], [key pyObject]);
+	return PyObject_DelItem([self  pyObject], [key  pyObject]);
 }
 
 @end /* OC_PythonObject class implementation */

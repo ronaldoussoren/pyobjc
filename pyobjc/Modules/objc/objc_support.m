@@ -25,6 +25,72 @@
 #import <Foundation/NSData.h> 
 #import <Foundation/NSValue.h> 
 
+
+/*
+ * Category on NSObject to make sure that every object supports 
+ * the method  __pyobjc_PythonObject__, this helps to simplify
+ * pythonify_c_value.
+ *
+ * The class-method is a experiment to do away with the ISCLASS 
+ * test in pythonify_c_value.
+ */
+@interface NSObject (PyObjCSupport)
+-(PyObject*)__pyobjc_PythonObject__;
++(PyObject*)__pyobjc_PythonObject__;
+@end /* PyObjCSupport */
+
+@implementation NSObject (PyObjCSupport)
+
+-(PyObject*)__pyobjc_PythonObject__
+{
+        return (PyObject *) ObjCObject_New(self);
+}
+
++(PyObject*)__pyobjc_PythonObject__
+{
+	return ObjCClass_New(self);
+}
+
+@end /* PyObjCSupport */
+
+@interface NSNumber (PyObjCSupport)
+-(PyObject*)__pyobjc_PythonObject__;
+@end /* NSNumber (PyObjCSupport) */
+
+@implementation NSNumber (PyObjCSupport)
+
+-(PyObject*)__pyobjc_PythonObject__
+{
+	const char* typestr = [self objCType];
+	char        buf[objc_sizeof_type(typestr)];
+
+	[self getValue:buf];
+	return pythonify_c_value(typestr, buf);
+}
+
+@end /* NSNumber (PyObjCSupport) */
+
+@interface NSString (PyObjCSupport)
+-(PyObject*)__pyobjc_PythonObject__;
+@end /* NSString (PyObjCSupport) */
+
+@implementation NSString (PyObjCSupport)
+
+-(PyObject*)__pyobjc_PythonObject__
+{
+	NSData* data = [self dataUsingEncoding:NSASCIIStringEncoding];
+	if (data == NULL) {
+		const char* utf8 = [self UTF8String];
+		return PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
+	} else {
+		return PyString_FromStringAndSize([data bytes], [data length]);
+	}
+}
+
+@end /* NSString (PyObjCSupport) */
+
+
+
 #ifndef GNU_RUNTIME
 
 #ifndef MAX
@@ -597,80 +663,22 @@ pythonify_c_value (const char *type, void *datum)
     {
       id obj = *(id *) datum;
 
-      if (obj == nil)
-      {
+      if (obj == nil) {
         retobject = Py_None;
         Py_INCREF (retobject);
+      } else {
+        retobject = [obj  __pyobjc_PythonObject__];
       }
-      else
-      {
-        if ([obj isKindOfClass:[OC_PythonArray class]])
-        {
-          retobject = [(OC_PythonArray *)obj pyObject];
-          Py_INCREF(retobject);
-        }
-        else if ([obj isKindOfClass:[OC_PythonDictionary class]])
-        {
-          retobject = [(OC_PythonDictionary *)obj pyObject];
-          Py_INCREF(retobject);
-        }
-        else if ([obj isKindOfClass:[NSString class]])
-        {
-          /* All string classes seem to be subclasses of NSString.
-          * We convert to a python string where possible, and a python
-          * unicode object otherwise.
-          * XXX: are we too smart here?
-          */
-          NSData* data = [(NSString*)obj dataUsingEncoding:NSASCIIStringEncoding];
-          if (data == NULL) {
-            const char* utf8 = [(NSString*)obj UTF8String];
-
-            retobject = PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
-          } else {
-            retobject = PyString_FromStringAndSize(
-                                                   [data bytes], [data length]);
-          }
-        }
-        else if ([obj conformsToProtocol:@protocol (PythonObject)])
-        {
-          retobject = [(OC_PythonObject *) obj pyObject];
-          Py_INCREF(retobject);
-        }
-
-        else if (ObjC_HasPythonImplementation(obj))
-        {
-          retobject =  ObjC_GetPythonImplementation(obj);
-          Py_INCREF(retobject);
-        }
-	else if (ISCLASS(obj))
-	{
-	  retobject = (PyObject*) ObjCClass_New((Class)obj);
-	}
-        else
-        {
-          retobject = (PyObject *) ObjCObject_New (obj);
-        }
-      }
-      break;
     }
+    break;
 
     case _C_SEL:
-	/* Ronald: We don't have a seperate type for methods that are not 
-	 * bound to a class, may need to add this, but using strings probably
-	 * works just as well.
-	 */
-#if 0
-      retobject = (PyObject *) ObjCMethod_new_with_selector (NULL,
-                                                             *(SEL *) datum);
-#else
       if (*(SEL*)datum == NULL) {
 	      retobject = Py_None;
 	      Py_INCREF(retobject);
       } else {
 	      retobject = PyString_FromString(SELNAME(*(SEL*)datum)); 
       }
-#endif
-
       break;
 
     case _C_CLASS:

@@ -41,12 +41,30 @@ def add_convenience_methods(super_class, name, type_dict):
         elif sel.selector == "alloc" or sel.selector == "allocWithZone:":
             sel.is_alloc = 1
 
+        if sel.selector in ( 'copy', 'copyWithZone:', 
+                      'mutableCopy', 'mutableCopyWithZone:'):
+            # These methods transfer ownership to the caller, the runtime uses
+            # this information to adjust the reference count.
+            sel.donates_ref = 1
+
         sel = sel.selector
 
         if CONVENIENCE_METHODS.has_key(sel):
             v = CONVENIENCE_METHODS[sel]
             for name, value in v:
-                type_dict[name] = value
+                if name in type_dict and isinstance(type_dict[name], selector):
+
+                    # Clone attributes of already existing version
+
+                    t = type_dict[name]
+                    v = selector(value, selector=t.selector, 
+                        signature=t.signature, class_method=t.class_method)
+                    v.is_initializer = t.is_initializer
+                    v.returns_reallocated_self = t.returns_reallocated_self
+                    v.is_alloc = t.is_alloc
+                    type_dict[name] = v
+                else:
+                    type_dict[name] = value
 
     if CLASS_METHODS.has_key(name):
         for name, value in CLASS_METHODS[name]:
@@ -336,6 +354,16 @@ def __truediv__CFNumber(numA, numB):
 def __xor__CFNumber(numA, numB):
     return _num_to_python(numA)  ^ _num_to_python(numB)
 
+import __builtin__
+if not hasattr(__builtin__, 'bool'):
+    def bool(x):
+        if x:
+            return 1
+        else:
+            return 0
+
+def __nonzero__CFNumber(numA):
+    return bool(_num_to_python(numA))
 
 CONVENIENCE_METHODS['_cfNumberType'] = (
     ('__abs__', __abs__CFNumber),
@@ -375,11 +403,12 @@ CONVENIENCE_METHODS['_cfNumberType'] = (
     ('__sub__', __sub__CFNumber),
     ('__truediv__', __truediv__CFNumber),
     ('__xor__', __xor__CFNumber),
+    ('__nonzero__', __nonzero__CFNumber),
 )
 
-CONVENIENCE_METHODS['boolValue'] = (
-    ('__nonzero__', lambda (self): self.boolValue() != 0),
-)
+#CONVENIENCE_METHODS['boolValue'] = (
+#    ('__nonzero__', lambda (self): self.boolValue() != 0),
+#)
 
 
 #

@@ -77,9 +77,9 @@ void ObjCErr_FromObjC(NSException* localException)
 
 		val = [userInfo objectForKey:@"__pyobjc_exc_type__"];
 		if (val) {
-			exc_type = [val pyObject];
-			exc_value = [[userInfo objectForKey:@"__pyobjc_exc_value__"] pyObject];
-			exc_traceback = [[userInfo objectForKey:@"__pyobjc_exc_traceback__"] pyObject];
+			exc_type = [val  pyObject];
+			exc_value = [[userInfo objectForKey:@"__pyobjc_exc_value__"]  pyObject];
+			exc_traceback = [[userInfo objectForKey:@"__pyobjc_exc_traceback__"]  pyObject];
 			PyErr_Restore(exc_type, exc_value , exc_traceback);
 			return;
 		}

@@ -55,11 +55,12 @@ extern PyTypeObject ObjCClass_Type;
 #define ObjCClass_Check(obj) PyObject_TypeCheck(obj, &ObjCClass_Type)
 
 
+#define ObjCObject_kUNINITIALIZED 	0x01
 typedef struct {
 	PyObject_HEAD
 	PyObject* weak_refs;
 	id        objc_object;
-	int 	  is_paired;
+	int 	  flags;
 } ObjCObject;
 
 extern PyTypeObject ObjCObject_Type;
@@ -104,10 +105,12 @@ extern char objcclass_descr_doc[];
  * implemented in Objective-C)
  */
 
-#define ObjCSelector_kCLASS_METHOD    0x1
-#define ObjCSelector_kDONATE_REF      0x2
-#define ObjCSelector_kREQUIRED        0x4
-#define ObjCSelector_kRETURNS_SELF    0x8
+#define ObjCSelector_kCLASS_METHOD          0x000001
+#define ObjCSelector_kDONATE_REF            0x000002
+#define ObjCSelector_kREQUIRED              0x000004
+#define ObjCSelector_kRETURNS_SELF          0x000008
+#define ObjCSelector_kRETURNS_UNINITIALIZED 0x000010
+#define ObjCSelector_kINITIALIZER    	    0x000020
 
 #define ObjCSelector_HEAD \
 	PyObject_HEAD 			\

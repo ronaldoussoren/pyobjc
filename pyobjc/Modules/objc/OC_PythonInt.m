@@ -29,7 +29,7 @@
 
 - (long) asLong
 {
-	return PyInt_AsLong([self pyObject]);
+	return PyInt_AsLong([self  pyObject]);
 }
 
 

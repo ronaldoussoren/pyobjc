@@ -380,7 +380,6 @@ ObjCClass_CheckMethodList(PyObject* cls)
 		}
 		r =  ObjC_UpdateConvenienceMethods(cls);
 		if (r < 0) {
-			PyErr_Print();
 			PyErr_SetString(PyExc_RuntimeError,
 				"Cannot rescan method table");
 			return;

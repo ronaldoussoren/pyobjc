@@ -77,6 +77,8 @@ def pythonCollectionFromPropertyList(aCollection, conversionHelper=None):
         raise TypeError, "Type '%s' encountered within an instance of the NSValue class." % type(objCType)
     elif type(aCollection) in StringTypes:
         return aCollection
+    elif type(aCollection) in (IntType, LongType, FloatType):
+        return aCollection
     else:
         if conversionHelper:
             return conversionHelper(aCollection)

@@ -19,7 +19,7 @@
 +newWithPythonObject:(PyObject*)value;
 -initWithPythonObject:(PyObject*)value;
 -(void)dealloc;
--(PyObject*)pyObject;
+-(PyObject*)__pyobjc_PythonObject__;
 
 -(int)count;
 -objectAtIndex:(int)idx;
