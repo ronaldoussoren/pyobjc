@@ -77,6 +77,21 @@ def IBAction(func):
     """
     return selector(func, signature="v@:@")
 
+def Accessor(func):
+    """
+    Return an Objective-C method object that is conformant with key-value coding
+    and key-value observing.
+    """
+    argCount = func.func_code.co_argcount
+    if argCount is 2:
+        return selector(func, signature="v@:@")
+    elif argCount is 1:
+        return selector(func, signature="@@:")
+    elif argCount is 0:
+        raise ValueError, "Too few arguments to function '%s'.  Cannot create selector." % foo.func_name
+    else:
+        raise ValueError, "Too many arguments to function '%s'.  Cannot create selector." % foo.func_name
+
 def pluginBundle(pluginName):
     """
     Return the main bundle for the named plugin. This should be used
