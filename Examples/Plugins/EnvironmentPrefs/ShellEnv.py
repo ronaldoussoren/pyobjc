@@ -11,16 +11,17 @@ when the user logs in using SSH.
 TODO:
 - Undo
 """
+import objc
+objc.registerPlugin('EnvironmentPane')
 from AppKit import *
 from Foundation import *
 from PreferencePanes import *
-import objc
 from PyObjCTools import NibClassBuilder, AppHelper
 import os
 
 # Uncomment this during development, you'll get exception tracebacks when
 # the Python code fails.
-objc.setVerbose(1)
+#objc.setVerbose(1)
 
 # NibClassBuilder needs to read our Nib files to do its work,
 # we need to specify the optional second argument to extractClasses
@@ -38,12 +39,13 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
     """
     The 'model/controller' for the "Shell Environment" preference pane
     """
+    __bundle_hack__ = True
 
-    __slots__ = (
-        'environ',  # The actual environment, as a NSMutableDictionary
-        'keys',     # The list of keys, in the right order for the tableView
-        'changed',  # True if we should save before exitting
-    )
+    #__slots__ = (
+    #    'environ',  # The actual environment, as a NSMutableDictionary
+    #    'keys',     # The list of keys, in the right order for the tableView
+    #    'changed',  # True if we should save before exitting
+    #)
 
     def initWithBundle_(self, bundle):
         # Our bundle has been loaded, initialize the instance variables.
