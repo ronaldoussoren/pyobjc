@@ -47,6 +47,13 @@ To be able to build the wrappers for the WebKit framework (included with
 Safari 1.0), you'll have to install the WebKit SDK. You can download 
 this from the `ADC website <http://connect.apple.com>`_.
 
+PyObjC has limited support for `GNUstep`_. See `Doc/gnustep.txt`_ for 
+more information.
+
+.. _GNUStep: http://www.gnustep.org/
+
+.. _`Doc/gnustep.txt`: Doc/gnustep.html
+
 Examples
 ========
 
