@@ -668,7 +668,7 @@ NSControlSubclassDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='control:textView:completions:forPartialWordRange:indexOfSelectedItem:',
-            signature='@@:@@@{_NSRange=II}^i',
+            signature='@@:@@@{_NSRange=II}N^i',
             isRequired=0,
         ),
 # (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
@@ -2425,7 +2425,7 @@ NSTextViewDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='textView:completions:forPartialWordRange:indexOfSelectedItem:',
-            signature='@@:@@{_NSRange=II}^i',
+            signature='@@:@@{_NSRange=II}N^i',
             isRequired=0,
         ),
 # (BOOL)textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
