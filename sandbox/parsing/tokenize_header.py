@@ -473,7 +473,8 @@ if __name__ == '__main__':
     import sys
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSDecimal.h'
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSBundle.h'
-    fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSException.h'
+    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSException.h'
+    fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSInvocation.h'
     files = sys.argv[1:] or [fn]
     def deadraise(string, i, j):
         print string[i:j]
