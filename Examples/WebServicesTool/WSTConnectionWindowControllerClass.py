@@ -60,16 +60,25 @@ class WSTConnectionWindowController(NSWindowController):
         '_methodPrefix' )
     
     def connectionWindowController(self):
+        print "Creating window controller...."
         return WSTConnectionWindowController.alloc().init()
            
     def init(self):
+        print "Into"
+
         self = self.initWithWindowNibName_("WSTConnection")
+
+        print "next"
         
         self._toolbarItems = NSMutableDictionary.alloc().init()
         self._toolbarDefaultItemIdentifiers = NSMutableArray.alloc().init()
         self._toolbarAllowedItemIdentifiers = NSMutableArray.alloc().init()
+
+        print "bob"
         
         self._methods = []
+
+        print "Initialized window controller..."
                 
         return self
     
