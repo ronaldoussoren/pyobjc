@@ -6,7 +6,7 @@ documentation for details on how to use these functions and classes.
 """
 
 import Foundation
-import _AppKitSignatures 
+import _AppKitSignatures
 import objc as _objc
 
 # Import contansts and global functions.
@@ -48,7 +48,7 @@ protocols.NSWindowPrinting = _objc.informal_protocol(
 
 
 #
-# (informal) protocols eported for b/w compatibility
+# (informal) protocols exported for b/w compatibility
 #
 from protocols import NSAccessibility, NSChangeSpelling, NSColorPickingCustom, \
                        NSColorPickingDefault, NSComboBoxCellDataSource, NSComboBoxDataSource, \
