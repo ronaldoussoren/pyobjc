@@ -1,25 +1,35 @@
 #import <Foundation/Foundation.h>
 
-static NSMutableArray *_poolStack;
+static NSString *_threadPoolIdentifier = @"PyObjC:  NSThread AutoreleasePool Identifier.";
 
 @interface NSAutoreleasePool(PyObjCPushPopSupport)
 @end
 @implementation NSAutoreleasePool (PyObjCPushPopSupport)
-+ (void) load
++ (NSMutableArray *) pyobjcPoolStackForCurrentThread
 {
-  _poolStack = [[NSMutableArray alloc] init];
+  NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
+  NSMutableArray *poolStack;
+
+  poolStack = [threadDictionary objectForKey: _threadPoolIdentifier];
+  if (!poolStack) {
+    poolStack = [NSMutableArray array];
+    [threadDictionary setObject: poolStack forKey: _threadPoolIdentifier];
+  }
+
+  return poolStack;
 }
 
 + (void) pyobjcPushPool
 {
   NSAutoreleasePool *p = [[NSAutoreleasePool alloc] init];
-  [_poolStack addObject: [NSValue valueWithNonretainedObject: p]];
+  [[self pyobjcPoolStackForCurrentThread] addObject: [NSValue valueWithNonretainedObject: p]];
 }
 
 + (void) pyobjcPopPool
 {
-  NSAutoreleasePool *p = [_poolStack lastObject];
+  NSMutableArray *poolStack = [self pyobjcPoolStackForCurrentThread];
+  NSAutoreleasePool *p = [poolStack lastObject];
   [p release];
-  [_poolStack removeLastObject];
+  [poolStack removeLastObject];
 }
 @end

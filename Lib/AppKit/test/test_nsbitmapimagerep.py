@@ -23,12 +23,15 @@ class TestNSBitmapImageRep(unittest.TestCase):
 
         rPlane = array.array('B')
         rPlane.fromlist( [y%256 for y in range(0,height) for x in range(0,width)] )
+        rPlane = buffer(rPlane)
 
         gPlane = array.array('B')
         gPlane.fromlist( [y%256 for x in range(0,height) for x in range(width,0,-1)] )
+        gPlane = buffer(gPlane)
 
         bPlane = array.array('B')
         bPlane.fromlist( [x%256 for x in range(0,height) for x in range(0,width)] )
+        bPlane = buffer(bPlane)
 
         dataPlanes = (rPlane, gPlane, bPlane, None, None)
 
@@ -36,8 +39,7 @@ class TestNSBitmapImageRep(unittest.TestCase):
         i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, YES, NSDeviceRGBColorSpace, 0, 0)
         self.assert_(i1)
 
-        singlePlane = array.array('B')
-        singlePlane.fromlist([0 for x in  range(0, width*height*3)] )
+        singlePlane = objc.allocateBuffer(width*height*3)
         for i in range(0, 256*256):
             si = i * 3
             singlePlane[si] = rPlane[i]
@@ -67,11 +69,8 @@ class TestNSBitmapImageRep(unittest.TestCase):
         b[0:len(b)] = bPlane[0:len(bPlane)]
 
         bitmapData = i2.bitmapData()
-        singlePlaneBuffer = buffer(singlePlane)
-        self.assertEquals(len(bitmapData), len(singlePlaneBuffer))
-        for i in range(0,100):
-            self.assertEquals(bitmapData[i], singlePlaneBuffer[i],
-                              "bitmapData and singlePlane differ at byte %d" % i)
+        self.assertEquals(len(bitmapData), len(singlePlane))
+        self.assertEquals(bitmapData, singlePlane)
 
 def suite():
     suite = unittest.TestSuite()

@@ -191,6 +191,30 @@ static 	char* keywords[] = { NULL };
 }
 
 
+PyDoc_STRVAR(func_allocateBuffer_doc,
+	     "allocateBuffer(size) -> <r/w buffer>\n"
+	     "\n"
+	     "Allocate a buffer of memory of size. Buffer is \n"
+	     "read/write."
+	     );
+
+PyObject*
+func_allocateBuffer(PyObject* self, PyObject* args, PyObject* kwds)
+{
+  int length;
+  PyObject *result;
+
+  if (!PyArg_ParseTuple(args, "i", &length)) {
+      return NULL;
+  }
+
+  if (length <= 0 ) {
+    PyErr_SetString(PyExc_ValueError, "Length must be greater than 0.");
+    return NULL;
+  }
+
+  return PyBuffer_New(length);
+}
 
 
 PyDoc_STRVAR(objc_loadBundle_doc,
@@ -318,6 +342,7 @@ static PyMethodDef meta_methods[] = {
 	{ "setVerbose", (PyCFunction)func_setVerbose, METH_VARARGS|METH_KEYWORDS, func_setVerbose_doc },
 	{ "getVerbose", (PyCFunction)func_getVerbose, METH_VARARGS|METH_KEYWORDS, func_getVerbose_doc },
 	{ "loadBundle", (PyCFunction)objc_loadBundle, METH_VARARGS|METH_KEYWORDS, objc_loadBundle_doc },
+	{ "allocateBuffer", (PyCFunction)func_allocateBuffer, METH_VARARGS|METH_KEYWORDS, func_allocateBuffer_doc },
 	{ 0, 0, 0, 0 } /* sentinel */
 };
 
