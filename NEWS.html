@@ -11,6 +11,15 @@ PyObjC NEWS</title>
 <p>An overview of the relevant changes in new, and older, releases.</p>
 <h2><a name="version-1-3-2005-03">Version 1.3 (2005-03-??)</a></h2>
 <ul>
+<li>The bridge now maintains object identity across the bridge
+in both directions. Previous versions of the bridge only did this when
+bridging from Objective-C to Python.<p>Exceptions: NSString and NSNumber do not have unique proxies. NSString
+never will have. Python numbers and strings are converted, not proxied and
+therefore also don't get unique proxies.</p>
+<p>And finally, any python object that is proxied using the <code><span>__pyobjc_object__</span></code>
+interface will only get a unique proxy if the <code><span>__pyobjc_object__</span></code> method
+implements that feature.</p>
+</li>
 <li>(UNFINISHED) New RemotePyInterpreter example that demonstrates an
 out-of-process Python interpreter (primarily for IDE uses).</li>
 <li>New <code><span>objc.protocolsForClass</span></code> function that returns a list of protocols
@@ -21,6 +30,13 @@ class MyLockingClass(NSObject, objc.protocolNamed('NSLocking')):
     # implementation
     pass
 </pre>
+<p>It is also possible to define new protocols:</p>
+<pre>
+MyProtocol = objc.formal_protocol(&quot;MyProtocol&quot;, None, [
+   selector(None, selector='mymethod', signature='v@:'),
+])
+</pre>
+<p>All formal protocols are instances of <code><span>objc.formal_protocol</span></code>.</p>
 </li>
 <li>PyObjCTools.KeyValueCoding has a new <code><span>kvc</span></code> class that allows
 Pythonic Key-Value Coding.<ul>
@@ -33,9 +49,10 @@ Pythonic Key-Value Coding.<ul>
 as the wrapped object.</p>
 </li>
 <li><code><span>NSNumber</span></code> instances are bridged to a <code><span>float</span></code>, <code><span>long</span></code>, or <code><span>int</span></code>
-subclass that uses <code><span>__pyobjc_object__</span></code>.  <code><span>NSDecimalNumber</span></code> is bridged
-to <code><span>Foundation.NSDecimal</span></code>, which now supports <code><span>__pyobjc_object__</span></code>.
-This eliminates a HUGE amount of cruft in <code><span>objc._conveniences</span></code>.</li>
+subclass that uses <code><span>__pyobjc_object__</span></code>.  
+<code><span>NSDecimal</span></code> is converted to <code><span>NSDecimalNumber</span></code> when used as an object,
+<code><span>NSDecimalNumber</span></code> is not bridged to <code><span>NSDecimal</span></code> because the latter is
+a mutable type.</li>
 <li>The Python to Objective-C bridge now looks for a <code><span>__pyobjc_object__</span></code> 
 attribute to get a PyObjC object from a Python object.</li>
 <li>New IDNSnitch example in Inject that demonstrates how to write an
@@ -133,6 +150,8 @@ makes plugins less of a hassle to develop and allows identical code
 to be used for application or plugin development.</li>
 <li><code><span>objc.registerPlugin()</span></code> and <code><span>objc.pluginBundle()</span></code> are now deprecated
 as they are no longer useful.</li>
+<li>It is now possible to subclass a class that implements <code><span>copyWithZone:</span></code>
+without setting <code><span>__slots__</span></code> to <code><span>()</span></code>.</li>
 </ul>
 <h2><a name="version-1-2-2004-12-29">Version 1.2 (2004-12-29)</a></h2>
 <ul>

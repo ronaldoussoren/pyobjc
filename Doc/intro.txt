@@ -575,6 +575,30 @@ In PyObjC you should always use the ``__del__`` method, the ``dealloc`` method
 can safely be ignored and the bridge will complain when you try to override
 this method.
 
+Copying
+.......
+
+It is possible to implement the ``NSCopying`` protocol in your classes. Some
+care must be taken when you inherit from a class that already implements 
+that protocol. 
+
+Some classes copy the template object manually, you'll have to copy your 
+own fields manually in that case. Other classes use a convenience function
+that creates the copy. In that case you wont have to copy your own fields.
+However, the fields in the copy will rever to the same objects as the 
+fields in the original (that is, the copy will share some state with the
+original). This is no problem when the fields rever to immutable values (such
+as integers), but is probably not what you want when the fields rever to
+mutable values (such as lists).
+
+NOTE: PyObjC might introduce a helper class when you inherit from a class
+that implements ``NSCopying``. You should not rely on the existance of this
+class.
+
+NOTE2: You shouldn't assign to ``SomeClass.copyWithZone_`` unless that class
+already implements ``copyWithZone:``. If you do you may end up with seemingly
+random memory coruption.
+
 Building applications
 ---------------------
 

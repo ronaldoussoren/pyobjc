@@ -181,6 +181,9 @@ Version 1.3 (2005-03-??)
 - ``objc.registerPlugin()`` and ``objc.pluginBundle()`` are now deprecated
   as they are no longer useful.
 
+- It is now possible to subclass a class that implements ``copyWithZone:``
+  without setting ``__slots__`` to ``()``. 
+
 Version 1.2 (2004-12-29)
 ------------------------
 
