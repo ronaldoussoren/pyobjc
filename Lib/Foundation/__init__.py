@@ -9,20 +9,6 @@ NSClassFromString = _objc.lookUpClass
 
 NSBundle = _objc.lookUpClass('NSBundle')
 
-# We use strings to represent selectors, therefore 
-# NSSelectorFromString and NSStringFromSelector are no-ops (for now)
-
-def NSSelectorFromString(aSelectorName):
-    if not isinstance(aSelectorName, str):
-        raise TypeError, "aSelector must be string"
-
-    return aSelectorName
-
-NSStringFromSelector = NSSelectorFromString
-
-def NSStringFromClass(aClass):
-    return aClass.__name__
-
 _objc.loadBundle("Foundation", globals(), bundle_path="/System/Library/Frameworks/Foundation.framework")
 
 import os

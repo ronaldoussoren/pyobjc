@@ -401,7 +401,9 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 			if (r == -1) {
 				PyErr_Clear();
 			} else if (c == 0) {
-				if (PyDict_SetItemString(module_globals, 
+				if (((PyTypeObject*)item)->tp_name[0] == '%') {
+					/* skip, posed-as type */
+				} else if (PyDict_SetItemString(module_globals, 
 						((PyTypeObject*)item)->tp_name, item) == -1) {
 					Py_DECREF(module_key);
 					Py_DECREF(class_list);
@@ -431,7 +433,9 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 			return NULL;
 		}
 
-		if (PyDict_SetItemString(module_globals, 
+		if (((PyTypeObject*)item)->tp_name[0] == '%') {
+			/* skip, posed-as type */
+		} else if (PyDict_SetItemString(module_globals, 
 				((PyTypeObject*)item)->tp_name, item) == -1) {
 			Py_DECREF(module_key);
 			Py_DECREF(class_list);

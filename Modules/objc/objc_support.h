@@ -30,13 +30,17 @@
 #define nil NULL
 #endif
 
-#ifndef _C_LNGLNG
-#define _C_LNGLNG 'q'
+#ifndef _C_LNG_LNG
+#define _C_LNG_LNG 'q'
 #endif
 
-#ifndef _C_ULNGLNG
-#define _C_ULNGLNG 'Q'
+#ifndef _C_ULNG_LNG
+#define _C_ULNG_LNG 'Q'
 #endif
+
+/* What we call _C_LNGLNG is actually _C_LNG_LNG in the GNU runtime */
+#define _C_LNGLNG _C_LNG_LNG
+#define _C_ULNGLNG _C_ULNG_LNG
 
 extern Ivar_t class_getInstanceVariable(Class aClass, const char *name);
 extern Ivar_t object_getInstanceVariable(id obj, const char *name, void **out);

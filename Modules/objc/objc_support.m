@@ -147,6 +147,12 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	type = PyObjCRT_SkipTypeQualifiers (type);
 
 	switch (*type) {
+	case 'B':	
+		/* This turned up on Panther, without documentation */
+		NSLog(@"Parsing typespec containing unsupported code 'B'");
+		type++;
+		break;
+
 	/* The following are one character type codes */
 	case _C_UNDEF:
 	case _C_ID:
@@ -155,6 +161,9 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	case _C_CHR:
 	case _C_UCHR:
 	case _C_CHARPTR:
+#ifdef _C_ATOM
+	case _C_ATOM:
+#endif
 	case _C_SHT:
 	case _C_USHT:
 	case _C_INT:
@@ -243,6 +252,9 @@ objc_alignof_type (const char *type)
 	case _C_FLT:   return __alignof__ (float);
 	case _C_DBL:   return __alignof__ (double);
 	case _C_CHARPTR: return __alignof__ (char *);
+#ifdef _C_ATOM
+	case _C_ATOM: return __alignof__ (char *);
+#endif
 	case _C_PTR:   return __alignof__ (void *);
 	case _C_LNGLNG: return __alignof__(long long);
 	case _C_ULNGLNG: return __alignof__(unsigned long long);
@@ -344,6 +356,9 @@ objc_sizeof_type (const char *type)
 
 	case _C_PTR:
 	case _C_CHARPTR:
+#ifdef _C_ATOM
+	case _C_ATOM
+#endif
 		return sizeof(char*);
       
 	case _C_ARY_B:
@@ -582,7 +597,10 @@ pythonify_c_value (const char *type, void *datum)
 			(long)(*(unsigned char*)datum));
 		break;
 
-	case _C_CHARPTR:
+	case _C_CHARPTR: 
+#ifdef _C_ATOM
+	case _C_ATOM:
+#endif
 	{
 		char *cp = *(char **) datum;
 
@@ -952,6 +970,9 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	type = PyObjCRT_SkipTypeQualifiers (type);
   
 	switch (*type) {
+#ifdef _C_ATOM
+	case _C_ATOM:
+#endif
 	case _C_CHARPTR:
 		if (!PyString_Check (argument) && argument != Py_None) {
 			ObjCErr_Set(PyExc_ValueError,
