@@ -3,25 +3,83 @@
 #include "pyobjc.h"
 #include "objc_support.h"
 
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION == 2 && PY_MICRO_VERSION == 0
+#import <Foundation/NSEnumerator.h>
 
-/* Python 2.2.0 contains incorrect definitions for PyMapping_DelItem
- * and PyMapping_DelItemString
+/*
+ * OC_PythonDictionaryEnumerator - Enumerator for Python dictionaries
+ *
+ * This class implements an NSEnumerator for proxied Python dictionaries.
  */
-#   undef PyMapping_DelItem
-#   undef PyMapping_DelItemString
+@interface OC_PythonDictionaryEnumerator  : NSEnumerator
+{
+        PyObject* value;
+	int       cur;
+	int       len;
+}
++newWithPythonObject:(PyObject*)value;
+-initWithPythonObject:(PyObject*)value;
+-(void)dealloc;
 
-#   define PyMapping_DelItem(O,K) PyDict_DelItem((O),(K))
-#   define PyMapping_DelItemString(O,K) PyDict_DelItemString((O),(K))
+-(id)nextObject;
+@end // interface OC_PythonDictionaryEnumerator
 
-#endif /* Python 2.2.0 */
+@implementation OC_PythonDictionaryEnumerator
+
++newWithPythonObject:(PyObject*)v;
+{
+	OC_PythonDictionaryEnumerator* res = 
+		[[OC_PythonDictionaryEnumerator alloc] initWithPythonObject:v];
+	[res autorelease];
+	return res;
+}
+
+-initWithPythonObject:(PyObject*)v;
+{
+	value = PySequence_Fast(v, 
+		"pyObject of OC_PythonDictionaryEnumerator must be a sequence");
+	cur   = 0;
+	len = PySequence_Fast_GET_SIZE(value);
+	return self;
+}
+
+-(void)dealloc
+{
+	Py_XDECREF(value);
+}
+
+-(id)nextObject
+{
+	PyObject*   v;
+	const char* errstr;
+	id          result;
+
+	do {
+		if (cur >= len) return nil;
+
+		v = PySequence_Fast_GET_ITEM(value, cur++);
+		errstr = depythonify_c_value("@", v, &result);
+		if (errstr) {
+			[NSException raise:NSInternalInconsistencyException
+			     format:@"Cannot convert result %s", errstr];
+		}
+
+		if (result == nil) {
+			NSLog(@"OC_PythonDictionaryEnumerator: Python dict with None as key");
+		}
+
+	} while (result == nil);
+
+	return result;
+}
+
+@end // implementation OC_PythonDictionaryEnumerator
 
 
 @implementation OC_PythonDictionary 
 
 +newWithPythonObject:(PyObject*)v;
 {
-	OC_PythonArray* res = 
+	OC_PythonDictionary* res = 
 		[[OC_PythonDictionary alloc] initWithPythonObject:v];
 	[res autorelease];
 	return res;
@@ -44,10 +102,9 @@
 	return value;
 }
 
-
 -(int)count
 {
-	return PyMapping_Length([self pyObject]);
+	return PyDict_Size(value);
 }
 
 -objectForKey:key
@@ -63,12 +120,7 @@
 		return nil;
 	}
 
-	/* XXX: PyMapping_GetItemString exists, but no PyMapping_GetItem */
-#if 0
-	v = PyMapping_GetItem([self pyObject], k);
-#else
-	v = PyDict_GetItem([self pyObject], k);
-#endif
+	v = PyDict_GetItem(value, k);
 
 	err = depythonify_c_value("@", v, &result);
 	Py_DECREF(v);
@@ -101,8 +153,7 @@
 		return;
 	}
 
-	/* XXX: PyMapping_SetItemString exists, but no PyMapping_SetItem */
-	if (PyDict_SetItem([self pyObject], k, v) < 0) {
+	if (PyDict_SetItem(value, k, v) < 0) {
 		Py_DECREF(v);
 		Py_DECREF(k);
 		ObjCErr_ToObjC();
@@ -122,7 +173,7 @@
 		return;
 	}
 
-	if (PyMapping_DelItem([self pyObject], k) < 0) {
+	if (PyDict_DelItem(value, k) < 0) {
 		Py_DECREF(k);
 		ObjCErr_ToObjC();
 		return;
@@ -132,17 +183,11 @@
 
 -keyEnumerator
 {
-	/* XXX: Should replace this by a custom enumerator, the current 
-	 *      version is leaking memory!
-	 */
-
-	PyObject* keys = PyMapping_Keys([self pyObject]);
-	id result = [OC_PythonArray newWithPythonObject:keys];
+	PyObject* keys = PyDict_Keys(value);
+	id result = [OC_PythonDictionaryEnumerator newWithPythonObject:keys];
 	Py_DECREF(keys);
 
-	[result retain]; 
-
-	return [result objectEnumerator];
+	return result;
 }
 
-@end 
+@end  // interface OC_PythonDictionary

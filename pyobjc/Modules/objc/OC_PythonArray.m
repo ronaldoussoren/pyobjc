@@ -19,20 +19,19 @@
 	return self;
 }
 
--(void)dealloc
-{
-	Py_XDECREF(value);
-}
-
 -(PyObject*)pyObject
 {
 	return value;
 }
 
+-(void)dealloc
+{
+	Py_XDECREF(value);
+}
 
 -(int)count
 {
-	return PySequence_Length([self pyObject]);
+	return PySequence_Length(value);
 }
 
 -objectAtIndex:(int)idx
@@ -41,7 +40,7 @@
 	id         result;
 	const char* err;
 
-	v = PySequence_GetItem([self pyObject], idx);
+	v = PySequence_GetItem(value, idx);
 	if (v == NULL) {
 		ObjCErr_ToObjC();
 		return nil;
@@ -70,7 +69,7 @@
 		return;
 	}
 
-	if (PySequence_SetItem([self pyObject], idx, v) < 0) {
+	if (PySequence_SetItem(value, idx, v) < 0) {
 		Py_DECREF(v);
 		ObjCErr_ToObjC();
 		return;
@@ -78,4 +77,4 @@
 	Py_DECREF(v);
 }
 
-@end 
+@end // implementation OC_PythonArray
