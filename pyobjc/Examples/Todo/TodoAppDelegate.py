@@ -4,4 +4,4 @@ from PyObjCTools.NibClassBuilder import AutoBaseClass
 
 class ToDoAppDelegate (AutoBaseClass):
     def showInfo_(self, sender):
-    	InfoWindowController.sharedInfoWindowController().showWindow_(sender)
+        InfoWindowController.sharedInfoWindowController().showWindow_(sender)

@@ -31,12 +31,12 @@ class CalendarMatrix (AutoBaseClass):
                 count += 1
 
         self._selectedDay = NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
-                now.yearOfCommonEra(), 
-                now.monthOfYear(), 
-                now.dayOfMonth(), 
-                0, 
-                0, 
-                0, 
+                now.yearOfCommonEra(),
+                now.monthOfYear(),
+                now.dayOfMonth(),
+                0,
+                0,
+                0,
                 NSTimeZone.localTimeZone())
         return self
 
@@ -142,9 +142,9 @@ class CalendarMatrix (AutoBaseClass):
         now = NSCalendarDate.date()
         selDate = self.selectedDay()
 
-        if selDate.yearOfCommonEra() == now.yearOfCommonEra() \
-                and selDate.monthOfYear() == now.monthOfYear() \
-                and selDate.dayOfMonth() == now.dayOfMonth():
+        if (selDate.yearOfCommonEra() == now.yearOfCommonEra()
+                and selDate.monthOfYear() == now.monthOfYear()
+                and selDate.dayOfMonth() == now.dayOfMonth()):
             aCell = self.cellWithTag_(
                 now.dayOfMonth() + self._startOffset - 1)
             aCell.setHighlightsBy_(NSMomentaryChangeButton)
