@@ -68,29 +68,20 @@ LOGSTACKTRACE = 1 << 0
 DEFAULTVERBOSITY = 0
 
 class PyObjCDebuggingDelegate(NSObject):
-    def init(self):
-        self = super(PyObjCDebuggingDelegate, self).init()
-        self.setVerbosity_(DEFAULTVERBOSITY)
-        return self
-
+    verbosity = objc.ivar('verbosity', 'i')
+    
     def initWithVerbosity_(self, verbosity):
         self = self.init()
-        self.setVerbosity_(verbosity)
+        self.verbosity = verbosity
         return self
-
-    def setVerbosity_(self, verbosity):
-        self._verbosity = verbosity
-
-    def verbosity(self):
-        return self._verbosity
 
     def exceptionHandler_shouldLogException_mask_(self, sender, exception, aMask):
         try:
             if isPythonException(exception):
-                if self.verbosity() & LOGSTACKTRACE:
+                if self.verbosity & LOGSTACKTRACE:
                     nsLogObjCException(exception)
                 return nsLogPythonException(exception)
-            elif self.verbosity() & LOGSTACKTRACE:
+            elif self.verbosity & LOGSTACKTRACE:
                 return nsLogObjCException(exception)
             else:
                 return False
