@@ -13,34 +13,39 @@ class PyModel(NibClassBuilder.AutoBaseClass, NSTableDataSource, NSTableViewDeleg
     def awakeFromNib(self):
         self.stuff = {}
         self.rowcount = ROWCOUNT
+        # tableView is an outlet set in Interface Builder
+        self.tableView.setTarget_(self)
+        self.tableView.setDoubleAction_("doubleClick:")
         return self
-
 
     def init(self):
         self.rowcount = ROWCOUNT
         return self
 
+    def doubleClick_(self, sender):
+        # double-clicking a column header causes clickedRow() to return -1
+        print "doubleClick!", sender.clickedColumn(), sender.clickedRow()
 
     def numberOfRowsInTableView_(self, aTableView):
         return self.rowcount
 
-
     def tableView_objectValueForTableColumn_row_(
             self, aTableView, aTableColumn, rowIndex):
-
         col = aTableColumn.identifier()
         return self.stuff.get((aTableColumn, rowIndex),
             "{%s, %d}" % (col, rowIndex))
 
-
     def tableView_setObjectValue_forTableColumn_row_(
             self, aTableView, anObject, aTableColumn, rowIndex):
-
         col = aTableColumn.identifier()
         self.stuff[(aTableColumn, rowIndex)] = anObject
 
     def tableView_shouldSelectRow_(self, aTableView, rowIndex):
         print "shouldSelectRow_", rowIndex
         return (rowIndex % 2)
+
+    def tableView_shouldEditTableColumn_row_(self, aTableView, aTableColumn, rowIndex):
+        return (rowIndex % 2)
+
 
 AppHelper.runEventLoop()
