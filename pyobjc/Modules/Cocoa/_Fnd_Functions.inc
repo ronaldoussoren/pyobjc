@@ -374,7 +374,7 @@ static	char* keywords[] = { "aPoint", "aRect", "flipped", NULL };
 	NSRect objc_aRect;
 	BOOL objc_flipped;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&i:NSMouseInRect", keywords, convert_NSPoint, &objc_aPoint, convert_NSRect, &objc_aRect, &objc_flipped) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "O&O&b:NSMouseInRect", keywords, convert_NSPoint, &objc_aPoint, convert_NSRect, &objc_aRect, &objc_flipped) < 0) return NULL;
 	NS_DURING
 		objc_result = NSMouseInRect(
 objc_aPoint, objc_aRect, objc_flipped);
@@ -996,7 +996,7 @@ static	char* keywords[] = { "directory", "domainMask", "expandTilde", NULL };
 	NSSearchPathDomainMask objc_domainMask;
 	BOOL objc_expandTilde;
 
-	if (PyArg_ParseTupleAndKeywords(args, kwds, "iii:NSSearchPathForDirectoriesInDomains", keywords, &objc_directory, &objc_domainMask, &objc_expandTilde) < 0) return NULL;
+	if (PyArg_ParseTupleAndKeywords(args, kwds, "iib:NSSearchPathForDirectoriesInDomains", keywords, &objc_directory, &objc_domainMask, &objc_expandTilde) < 0) return NULL;
 	NS_DURING
 		objc_result = NSSearchPathForDirectoriesInDomains(
 objc_directory, objc_domainMask, objc_expandTilde);
