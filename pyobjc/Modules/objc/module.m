@@ -45,6 +45,75 @@ static 	char* keywords[] = { "class_name", NULL };
 	return ObjCClass_New(objc_class);
 }
 
+#ifdef OC_WITH_LIBFFI
+PyDoc_STRVAR(classAddMethods_doc,
+	     "classAddMethods(targetClass, methodsArray)\n"
+	     "\n"
+	     "Adds methods in methodsArray to class.   The effect is similar to how categories work.   If class already implements a method as defined in methodsArray, the original implementation will be replaced by the implementation from methodsArray.");
+
+static PyObject*
+classAddMethods(PyObject* self, PyObject* args, PyObject* keywds)
+{
+  static 	char* kwlist[] = { "targetClass", "methodsArray", NULL };
+  PyObject* classObject = NULL;
+  PyObject* methodsArray = NULL;
+
+  if (!PyArg_ParseTupleAndKeywords(args, keywds, "OO:classAddMethods", kwlist,
+				   &classObject, &methodsArray)) {
+    return NULL;
+  }
+
+  Class targetClass = ObjCClass_GetClass(classObject);
+  int methodCount = PyList_Size(methodsArray);
+  int methodIndex;
+  struct objc_method_list *methodsToAdd;
+
+  if (methodCount == 0) {
+    Py_INCREF(Py_None);
+    return Py_None;
+  }
+  
+  methodsToAdd = objc_allocMethodList(methodCount);
+  if (methodsToAdd == NULL) {
+    PyErr_NoMemory();
+    return NULL;
+  }
+
+  methodsToAdd->method_count = methodCount;
+  
+  for (methodIndex = 0; methodIndex < methodCount; methodIndex++) {
+    PyObject* aMethod = PyList_GetItem(methodsArray, methodIndex);
+
+    // check
+    if (!ObjCSelector_Check(aMethod)) {
+      PyErr_SetString(PyExc_TypeError ,
+		      "All objects in methodArray must be of type <objc.selector>.");
+      goto cleanup_and_return_error;
+    }
+
+    // install in methods to add
+    struct objc_method *objcMethod = &methodsToAdd->method_list[methodIndex];
+    objcMethod->method_name = ObjCSelector_Selector(aMethod);
+
+#warning bbum: the strdup() is necessary or else the unit test fail. But is this correct???
+    objcMethod->method_types = strdup(ObjCSelector_Signature(aMethod));
+    objcMethod->method_imp = ObjC_MakeIMPForObjCSelector((ObjCSelector*)aMethod);
+  }
+
+  // add the methods
+  class_addMethods(targetClass, methodsToAdd);
+  
+  Py_INCREF(Py_None);
+  return Py_None;
+
+ cleanup_and_return_error:
+  if (methodsToAdd)
+    free(methodsToAdd);
+  return NULL;
+}
+#endif
+
+
 PyDoc_STRVAR(objc_recycle_autorelease_pool_doc,
   "recycle_autorelease_pool()\n"
   "\n"
@@ -363,7 +432,20 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 }
 
 static PyMethodDef meta_methods[] = {
-	{ "lookUpClass", (PyCFunction)lookUpClass, METH_VARARGS|METH_KEYWORDS, lookUpClass_doc },
+	{
+	  "lookUpClass",
+	  (PyCFunction)lookUpClass,
+	  METH_VARARGS|METH_KEYWORDS,
+	  lookUpClass_doc
+	},
+#ifdef OC_WITH_LIBFFI
+	{
+	  "classAddMethods",
+	  (PyCFunction)classAddMethods,
+	  METH_VARARGS|METH_KEYWORDS,
+	  classAddMethods_doc
+	},
+#endif
 	{ "getClassList", (PyCFunction)getClassList, METH_NOARGS, getClassList_doc },
 	{ "set_class_extender", (PyCFunction)objc_set_class_extender, METH_VARARGS|METH_KEYWORDS, objc_set_class_extender_doc  },
 	{ "set_signature_for_selector", (PyCFunction)objc_set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },

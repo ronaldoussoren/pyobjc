@@ -1,5 +1,12 @@
-2003-01-23  Bill Bumgarner  <bbum@codefab.com>
+2003-01-25  Bill Bumgarner  <bbum@codefab.com>
+    * Modules/objc/libffi_support.m: Modified such that a Python based
+      implementation can be stuck onto an objc class through the user of a
+      closure to carry along the Python callable.   See classAddMethods().
+    * Modules/objc/module.m: Added classAddMethods()
+    * Lib/objc/test/test_methodedits.py: unit tests for classAddMethods().
+      One currently fails due to a bug in PyObjC.
 
+2003-01-23  Bill Bumgarner  <bbum@codefab.com>
     * setup.py (USE_FFI): Enabled FFI.  Refactored setup.py slightly to push
       FFI configuration to top.
 

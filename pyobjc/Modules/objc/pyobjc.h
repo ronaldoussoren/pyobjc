@@ -206,7 +206,8 @@ int ObjC_InstallAllocHack(void);
 
 #ifdef OC_WITH_LIBFFI
 
-IMP ObjC_MakeIMPForSignature(char* signature);
+IMP ObjC_MakeIMPForSignature(char* signature, PyObject* callable);
+IMP ObjC_MakeIMPForObjCSelector(ObjCSelector *aSelector);
 PyObject *ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args);
 
 #endif /* OC_WITH_LIBFFI */
