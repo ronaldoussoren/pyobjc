@@ -16,6 +16,8 @@
 
 #include "objc_support.h"
 #include "abstract.h"
+/* the def below is to fix Python2.2 bug */
+#define PyMapping_DelItem(O,K) PyDict_DelItem((O),(K))
 #include "compile.h"
 
 #include <stdarg.h>
@@ -229,7 +231,16 @@ get_method_for_selector (PyObject *obj, SEL aSelector)
 
 - (NSMethodSignature *) methodSignatureForSelector:(SEL) sel
 {
-  NSMethodSignature *result = [super methodSignatureForSelector:sel];
+
+  NSMethodSignature *result;
+
+  NS_DURING
+    result = [super methodSignatureForSelector:sel];
+  NS_HANDLER
+    result = nil;
+    NSLog( [localException name]);
+    NSLog( [localException reason] );
+  NS_ENDHANDLER
   
   if (!result)
     {
