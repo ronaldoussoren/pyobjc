@@ -20,11 +20,16 @@ SPECIALS['AppKit'] = {
 
 }
 
+ALTMAIN={
+    'SecurityInterface':'SFAuthorizationView',
+    'ExceptionHandling':'NSExceptionHandler',
+}
+
 for framework in [
-        "AppKit", 
-        "Foundation", 
-        "AddressBook", 
-        "InterfaceBuilder", 
+        "AppKit",
+        "Foundation",
+        "AddressBook",
+        "InterfaceBuilder",
       ]:
     path = "/System/Library/Frameworks/%s.framework" % framework
     protfile = file(os.path.join(libdir, framework, "protocols.py"), "w")
@@ -32,18 +37,11 @@ for framework in [
     genProtocols(path, protfile, SPECIALS.get(framework, {}))
 
 # Optional frameworks
-for framework in ["WebKit", ]:
+for framework in ["WebKit", "ExceptionHandling", "SecurityInterface"]:
     path = "/System/Library/Frameworks/%s.framework" % framework
     protfile = file(os.path.join(libdir, framework, "protocols.py"), "w")
 
     if not os.path.exists(path): continue
 
     print "generating protocols for", framework
-    genProtocols(path, protfile)
-
-if os.path.isdir('/System/Library/Frameworks/SecurityInterface.framework'):
-    framework = 'SecurityInterface'
-    path = "/System/Library/Frameworks/%s.framework" % framework
-    protfile = file(os.path.join(libdir, framework, "protocols.py"), "w")
-    print "generating protocols for", framework
-    genProtocols(path, protfile, SPECIALS.get(framework, {}), 'SFAuthorizationView')
+    genProtocols(path, protfile, SPECIALS.get(framework, {}), ALTMAIN.get(framework, None))
