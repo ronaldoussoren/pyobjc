@@ -295,9 +295,10 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	struct objc_method_list* meta_method_list = NULL;
 	struct class_wrapper*    new_class = NULL;
 	Class                    root_class;
-	Class			 cur_class;
+	int                      static_class_wrapper = 0;
+	Class                    cur_class;
 	char**                   curname;
-	PyObject*                py_superclass;
+	PyObject*                py_superclass = NULL;
 	int                      item_size;
 
 	if (!PyList_Check(protocols)) {
@@ -416,7 +417,18 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	}
 
 	/* Allocate the class as soon as possible, for new selector objects */
-	new_class = malloc(sizeof(struct class_wrapper));
+	if (PyDict_GetItemString(class_dict, "__bundle_hack__")) {
+		char *class_wrapper_address = getenv("PYOBJC_BUNDLE_CLASS_WRAPPER_ADDRESS");
+		if (class_wrapper_address) {
+			if (sscanf(class_wrapper_address, "%p", &new_class) == 1) {
+				unsetenv("PYOBJC_BUNDLE_CLASS_WRAPPER_ADDRESS");
+				static_class_wrapper = 1;
+			}
+		}
+	}
+	if (!static_class_wrapper) {
+		new_class = malloc(sizeof(struct class_wrapper));
+	}
 	if (new_class == NULL) {
 		goto error_cleanup;
 	}
@@ -805,7 +817,9 @@ error_cleanup:
 	if (new_class != NULL) {
 		PyObjCRT_ClearClass(&(new_class->class));
 		PyObjCRT_ClearClass(&(new_class->meta_class));
-		free(new_class);
+		if (static_class_wrapper) {
+			free(new_class);
+		}
 	}
 
 	return NULL;
@@ -987,7 +1001,7 @@ object_method_respondsToSelector(
 	int* pres = (int*)retval; // Actually BOOL.
 
 	struct objc_super super;
-        PyObject* pyself;
+	PyObject* pyself;
 	PyObject* pymeth;
 
 	PyObjC_BEGIN_WITH_GIL
@@ -1034,7 +1048,7 @@ object_method_methodSignatureForSelector(
 	SEL aSelector = *(SEL*)args[2];
 
 	struct objc_super  super;
-        PyObject*          pyself;
+	PyObject*          pyself;
 	PyObject*          pymeth;
 	NSMethodSignature** presult = (NSMethodSignature**)retval;
 

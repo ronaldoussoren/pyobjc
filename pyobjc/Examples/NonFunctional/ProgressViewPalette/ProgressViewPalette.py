@@ -1,14 +1,18 @@
-import os, sys
-sys.path.append(os.path.dirname(__file__))
+import objc
+from Foundation import *
+from AppKit import *
 from InterfaceBuilder import *
 from ProgressView import ProgressView
 from ProgressCell import ProgressCell
-import objc
-from AppKit import *
+import pprint, os
 
 objc.setVerbose(1) ### DEBUG
 
+NSLog(u'ProgressViewPalette.py loaded')
+pprint.pprint(dict(os.environ))
+
 class ProgressViewPalette (IBPalette):
+    __bundle_hack__ = True
     def finishInstantiate(self):
         # `finishInstantiate' can be used to associate non-view objects with
         # a view in the palette's nib.  For example:
@@ -60,18 +64,17 @@ class ProgressViewPalette (IBPalette):
     def shouldDrawConnectionFrame(self):
         return True
 
+class ProgressView(objc.Category(ProgressView)):
+    def inspectorClassName(self):
+        return u'ProgressViewInspector'
 
-#
-# Poor mans categories...
-#
+    def allowsAltDragging(self):
+        return True
 
-ProgressView.inspectorClassName = lambda self: "ProgressViewInspector"
-ProgressView.allowsAltDragging = lambda self: True
-
-ProgressCell.inspectorClassName = lambda self: "ProgressViewInspector"
+class ProgressCell(objc.Category(ProgressCell)):
+    def inspectorClassName(self):
+        return u'ProgressViewInspector'
 
 def ibMatchPrototype_(self, prototype):
     super(ProgressCell, self).ibMatchPrototype_(prototype)
     self.setPercentageIncrement_(prototype.percentageIncrement())
-
-ProgressCell.ibMatchPrototype_ = ibMatchPrototype_

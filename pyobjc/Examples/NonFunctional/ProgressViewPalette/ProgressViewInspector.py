@@ -1,4 +1,3 @@
-
 from ProgressView import ProgressView
 from AppKit import *
 from Foundation import *
