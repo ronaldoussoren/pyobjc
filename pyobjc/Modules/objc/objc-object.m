@@ -134,7 +134,6 @@ object_dealloc(PyObject* obj)
 	/* XXX: This should not be necessary, but if we don't do this we
 	 * sometimes loose exception information...
 	 */
-	PyThreadState *_save;
 	PyObject* ptype, *pvalue, *ptraceback;
 	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
@@ -150,24 +149,25 @@ object_dealloc(PyObject* obj)
 		/* pass */
 	} else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
 		/* Lets hope 'init' is always a valid initializer */
-		Py_UNBLOCK_THREADS
-		NS_DURING
+		PyObjC_DURING
 			[[((PyObjCObject*)obj)->objc_object init] release];
-		NS_HANDLER
+
+		PyObjC_HANDLER
 			NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
 				localException);
-		NS_ENDHANDLER
-		Py_BLOCK_THREADS
+
+		PyObjC_ENDHANDLER
+
 		((PyObjCObject*)obj)->objc_object = nil;
 	} else {
-		Py_UNBLOCK_THREADS
-		NS_DURING
+		PyObjC_DURING
 			[((PyObjCObject*)obj)->objc_object release];
-		NS_HANDLER
+
+		PyObjC_HANDLER
 			NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
 				localException);
-		NS_ENDHANDLER
-		Py_BLOCK_THREADS
+
+		PyObjC_ENDHANDLER
 		((PyObjCObject*)obj)->objc_object = nil;
 	}
 

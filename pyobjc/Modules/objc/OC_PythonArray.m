@@ -13,11 +13,9 @@
 
 - initWithPythonObject:(PyObject*)v;
 {
-	PyGILState_STATE state = PyGILState_Ensure();
 	Py_INCREF(v);
 	Py_XDECREF(value);
 	value = v;
-	PyGILState_Release(state);
 	return self;
 }
 
@@ -29,21 +27,24 @@
 
 -(void)dealloc
 {
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyObjC_BEGIN_WITH_GIL
+		Py_XDECREF(value);
+		value = NULL;
 
-	Py_XDECREF(value);
+	PyObjC_END_WITH_GIL
 
-	PyGILState_Release(state);
+	[super dealloc];
 }
 
 -(int)count
 {
 	int result;
-	PyGILState_STATE state = PyGILState_Ensure();
 
-	result = PySequence_Length(value);
+	PyObjC_BEGIN_WITH_GIL
+		result = PySequence_Length(value);
 
-	PyGILState_Release(state);
+	PyObjC_END_WITH_GIL
+
 	return result;
 }
 
@@ -52,7 +53,7 @@
 	PyObject* v;
 	id  result;
 	int err;
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 	v = PySequence_GetItem(value, idx);
 	if (v == NULL) {
@@ -67,7 +68,7 @@
 		return nil;
 	}
 
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	return result;
 }
 
@@ -75,7 +76,7 @@
 -(void)replaceObjectAtIndex:(int)idx withObject:newValue;
 {
 	PyObject* v;
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 	v = pythonify_c_value("@", &newValue);
 	if (v == NULL) {
@@ -89,7 +90,7 @@
 		return;
 	}
 	Py_DECREF(v);
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 }
 
 -(void)getObjects:(id*)buffer inRange:(NSRange)range

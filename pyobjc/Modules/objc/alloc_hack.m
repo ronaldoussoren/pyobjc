@@ -9,10 +9,9 @@ call_NSObject_alloc(PyObject* method,
 {
 	id result = nil;
 	struct objc_super super;
-	PyThreadState *_save;
 	IMP anIMP;
 	Class aClass;
-	SEL aSel;
+	SEL volatile aSel;
 
 	if (PyArg_ParseTuple(arguments, "") < 0) {
 		return NULL;
@@ -27,14 +26,15 @@ call_NSObject_alloc(PyObject* method,
 		anIMP = PyObjCIMP_GetIMP(method);
 		aClass = PyObjCClass_GetClass(self);
 		aSel = PyObjCIMP_GetSelector(method);
-		Py_UNBLOCK_THREADS
-		NS_DURING
+
+		PyObjC_DURING
 			result = anIMP(aClass, aSel);
-		NS_HANDLER
+
+		PyObjC_HANDLER
 			PyObjCErr_FromObjC(localException);
 			result = nil;
-		NS_ENDHANDLER;
-		Py_BLOCK_THREADS
+
+		PyObjC_ENDHANDLER;
 
 	} else {
 		RECEIVER(super) = (id)PyObjCClass_GetClass(self);
@@ -42,14 +42,14 @@ call_NSObject_alloc(PyObject* method,
 		super.class = GETISA(super.class);
 		aSel = PyObjCSelector_GetSelector(method);
 
-		Py_UNBLOCK_THREADS
-		NS_DURING
+		PyObjC_DURING
 			result = objc_msgSendSuper(&super, aSel); 
-		NS_HANDLER
+
+		PyObjC_HANDLER
 			PyObjCErr_FromObjC(localException);
 			result = nil;
-		NS_ENDHANDLER;
-		Py_BLOCK_THREADS
+
+		PyObjC_ENDHANDLER;
 	}
 
 	if (result == nil && PyErr_Occurred()) {
@@ -71,7 +71,7 @@ imp_NSObject_alloc(
 	PyObject* v = NULL;
 	PyObject* result = NULL;
 
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) goto error;
@@ -90,13 +90,12 @@ imp_NSObject_alloc(
 	Py_DECREF(result); result = NULL;
 	if (err == -1) goto error;
 
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	return;
 
 error:
 	Py_XDECREF(arglist);
 	PyObjCErr_ToObjCWithGILState(&state);
-	return;
 }
 
 int

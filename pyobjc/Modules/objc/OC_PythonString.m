@@ -4,6 +4,8 @@
  * FIXME: Using CFString in the implementation of this class seems unnecessary.
  */
 
+#error "This code is not used and probably suffered from bitrot"
+
 @implementation OC_PythonString
 +newWithPythonObject:(PyObject*)v;
 {

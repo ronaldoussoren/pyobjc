@@ -280,6 +280,7 @@ imp_NSData_bytes(
 	if (result == Py_None) {
 		*pretval = NULL;
 		Py_DECREF(result);
+		PyGILState_Release(state);
 		return;
 	}
 
@@ -291,8 +292,8 @@ imp_NSData_bytes(
 			goto error;
 		}
 		Py_DECREF(result);
-		PyGILState_Release(state);
 		*pretval =  (void *)p;
+		PyGILState_Release(state);
 		return;
 	} else if (PyString_Check(result)) {
 		/* XXX: Is this correct */
@@ -300,6 +301,7 @@ imp_NSData_bytes(
 
 		p = PyString_AsString(result);
 		*pretval = (void*)p;
+		PyGILState_Release(state);
 		return;
 	}
 
@@ -379,6 +381,7 @@ imp_NSMutableData_mutableBytes(
 	if (result == Py_None) {
 		*pretval = NULL;
 		Py_DECREF(result);
+		PyGILState_Release(state);
 		return;
 	}
 
@@ -389,6 +392,7 @@ imp_NSMutableData_mutableBytes(
 		if (PyObject_AsWriteBuffer(result, &p, &len) == -1) goto error;
 		Py_DECREF(result);
 		*pretval = (void *)p;
+		PyGILState_Release(state);
 		return;
 	}
 

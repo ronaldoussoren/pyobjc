@@ -398,17 +398,18 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
 		return NULL;
 	}
 
-	NS_DURING
-		RECEIVER(super) = PyObjCSelector_GetClass(method);
-		super.class = GETISA(PyObjCSelector_GetClass(method));
+	PyObjC_DURING
+		RECEIVER(super) = PyObjCSelector_GET_CLASS(method);
+		super.class = GETISA(PyObjCSelector_GET_CLASS(method));
 
 		retval = (IMP)objc_msgSendSuper(&super,
-			PyObjCSelector_GetSelector(method),
+			PyObjCSelector_GET_SELECTOR(method),
 			selector);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		retval = NULL;
-	NS_ENDHANDLER
+
+	PyObjC_ENDHANDLER
 
 	if (retval == NULL) {
 		if (PyErr_Occurred()) {
@@ -457,23 +458,22 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 		return NULL;
 	}
 
+	if (PyObjCClass_Check(self)) {
+		RECEIVER(super) = PyObjCSelector_GET_CLASS(method);
+		super.class = GETISA(PyObjCSelector_GET_CLASS(method));
+	} else {
+		RECEIVER(super) = PyObjCObject_GetObject(self);
+		super.class = PyObjCSelector_GetClass(method);
+	}
 
-	NS_DURING
-		if (PyObjCClass_Check(self)) {
-			RECEIVER(super) = PyObjCSelector_GetClass(method);
-			super.class = GETISA(PyObjCSelector_GetClass(method));
-		} else {
-			RECEIVER(super) = PyObjCObject_GetObject(self);
-			super.class = PyObjCSelector_GetClass(method);
-		}
-
+	PyObjC_DURING
 		retval = (IMP)objc_msgSendSuper(&super,
-			PyObjCSelector_GetSelector(method),
+			PyObjCSelector_GET_SELECTOR(method),
 			selector);
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		retval = NULL;
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	if (retval == NULL) {
 		if (PyErr_Occurred()) {

@@ -366,7 +366,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	int                have_output = 0;
 	const char*        rettype;
 
-	PyGILState_STATE   state = PyGILState_Ensure();
+	PyGILState_STATE   state = xPyGILState_Ensure();
 
 	rettype = methinfo->rettype;
 
@@ -519,7 +519,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 				break;
 			}
 
-			PyGILState_Release(state);
+			xPyGILState_Release(state);
 			return;
 		}
 
@@ -605,7 +605,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 	}
 
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	
 	return;
 
@@ -710,6 +710,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	void*		  arg;
 	volatile int      flags;
 	SEL		  theSel;
+	PyThreadState* volatile    _save = NULL;
 
 	if (PyObjCIMP_Check(aMeth)) {
 		methinfo = PyObjCIMP_GetSignature(aMeth);
@@ -1050,8 +1051,10 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 	NS_DURING
 		if (PyObjCIMP_Check(aMeth)) {
+			_save = PyEval_SaveThread();
 			ffi_call(&cif, FFI_FN(PyObjCIMP_GetIMP(aMeth)), 
 				msgResult, values);
+			PyEval_RestoreThread(_save); _save = NULL;
 
 		} else {
 #ifdef GNU_RUNTIME
@@ -1065,6 +1068,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			Method_t m = class_get_instance_method(super.class, 
 				meth->sel_selector);
 
+			_save = PyEval_SaveThread();
 			if (m == NULL) {
 				/* Class doesn't really have an IMP for the 
 				 * selector, find a forwarder for the method 
@@ -1078,9 +1082,11 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 				ffi_call(&cif, FFI_FN(m->method_imp), 
 					msgResult, values);
 			}
+			PyEval_RestoreThread(_save); _save = NULL;
 
 #else /* !GNU_RUNTIME */
 
+			_save = PyEval_SaveThread();
 			if (arglistOffset) {
 				ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), 
 					NULL, values);
@@ -1089,10 +1095,14 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 					msgResult, values);
 
 			}
+			PyEval_RestoreThread(_save); _save = NULL;
 #endif /* !GNU_RUNTIME */
 		}
 
 	NS_HANDLER
+		if (_save != NULL) {
+			PyEval_RestoreThread(_save); _save = NULL;
+		}
 		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
 

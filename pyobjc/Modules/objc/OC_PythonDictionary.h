@@ -33,6 +33,8 @@
  * @abstract Create a new autoreleased proxy object
  * @param value  A Python dict
  * @result Returns an autoreleased proxy object for the Python dict
+ *
+ * The caller must own the GIL.
  */
 + newWithPythonObject:(PyObject*)value;
 
@@ -43,6 +45,8 @@
  * @result Returns self
  * @discussion
  *    Makes the proxy object a proxy for the specified Python dict.
+ *
+ *    The caller must own the GIL.
  */
 - initWithPythonObject:(PyObject*)value;
 

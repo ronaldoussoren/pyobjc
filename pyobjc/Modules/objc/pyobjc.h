@@ -107,4 +107,41 @@ PyObject* PyObjC_IDToCFType(id argument);
 #define PyObjC_Assert(expr, retval) \
 	if (!(expr)) { PyObjCErr_InternalError(); return (retval); }
 
+
+static inline PyGILState_STATE xPyGILState_Ensure_(const char* __function__)
+{
+	//printf("Ensure in %s\n", __function__); 
+	return PyGILState_Ensure();
+}
+#define xPyGILState_Ensure() xPyGILState_Ensure_(__FUNCTION__)
+
+static inline void xPyGILState_Release_(PyGILState_STATE state, const char* __function__)
+{
+	//printf("Release in %s\n", __function__); 
+	PyGILState_Release(state);
+}
+#define xPyGILState_Release(state) xPyGILState_Release_(state, __FUNCTION__)
+
+/* threading support */
+#define PyObjC_DURING \
+		Py_BEGIN_ALLOW_THREADS \
+		NS_DURING
+
+#define PyObjC_HANDLER NS_HANDLER
+
+#define PyObjC_ENDHANDLER \
+		NS_ENDHANDLER \
+		Py_END_ALLOW_THREADS
+
+#define PyObjC_BEGIN_WITH_GIL \
+	{ \
+		PyGILState_STATE _GILState; \
+		_GILState = xPyGILState_Ensure(); 
+
+
+#define PyObjC_END_WITH_GIL \
+		xPyGILState_Release(_GILState); \
+	}
+
+
 #endif /* PyObjC_H */

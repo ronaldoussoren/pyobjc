@@ -65,6 +65,19 @@ static void object_method_takeValue_forKey_(
 		void** args,
 		void* userarg);
 
+#if 0
+static void object_method_copyWithZone_(
+		ffi_cif* cif,
+		void* retval,
+		void** args,
+		void* userarg);
+
+struct copyWithZoneData {
+	Class 	  class;
+	PyObject* callable;
+};
+#endif
+
 
 /*
  * When we create a 'Class' we actually create the struct below. This allows
@@ -883,7 +896,7 @@ object_method_dealloc(
 	PyObject* delmethod;
 	PyObject* cls;
 	PyObject* ptype, *pvalue, *ptraceback;
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
@@ -914,7 +927,7 @@ object_method_dealloc(
 	super.class = (Class)userdata;
 	RECEIVER(super) = self;
 
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	objc_msgSendSuper(&super, _meth);
 }
 
@@ -934,12 +947,13 @@ object_method_respondsToSelector(
 	struct objc_super super;
         PyObject* pyself;
 	PyObject* pymeth;
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 	/* First check if we respond */
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
 		*pres = NO;
+		xPyGILState_Release(state);
 		return;
 	}
 	pymeth = PyObjCObject_FindSelector(pyself, aSelector);
@@ -952,7 +966,7 @@ object_method_respondsToSelector(
 		}
 			
 		Py_DECREF(pymeth);
-		PyGILState_Release(state);
+		xPyGILState_Release(state);
 		return;
 	}
 	PyErr_Clear();
@@ -961,7 +975,7 @@ object_method_respondsToSelector(
 	super.class = (Class)userdata;
 	RECEIVER(super) = self;
 
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	*pres = (int)objc_msgSendSuper(&super, _meth, aSelector);
 	return;
 }
@@ -986,7 +1000,6 @@ object_method_methodSignatureForSelector(
 
 	*presult = nil;
 
-
 	super.class = (Class)userdata;
 	RECEIVER(super) = self;
 
@@ -1000,12 +1013,12 @@ object_method_methodSignatureForSelector(
 		return;
 	}
 
-	state = PyGILState_Ensure();
+	state = xPyGILState_Ensure();
 
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
 		PyErr_Clear();
-		PyGILState_Release(state);
+		xPyGILState_Release(state);
 		return;
 	}
 
@@ -1013,26 +1026,26 @@ object_method_methodSignatureForSelector(
 	if (!pymeth) {
 		Py_DECREF(pyself);
 		PyErr_Clear();
-		PyGILState_Release(state);
+		xPyGILState_Release(state);
 		return;
 	}
 
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	NS_DURING
 		*presult =  [NSMethodSignature signatureWithObjCTypes:(
 				(PyObjCSelector*)pymeth)->sel_signature];
 	NS_HANDLER
-		state = PyGILState_Ensure();
+		state = xPyGILState_Ensure();
 		Py_DECREF(pymeth);
 		Py_DECREF(pyself);
-		PyGILState_Release(state);
+		xPyGILState_Release(state);
 		[localException raise];
 	NS_ENDHANDLER
 
-	state = PyGILState_Ensure();
+	state = xPyGILState_Ensure();
 	Py_DECREF(pymeth);
 	Py_DECREF(pyself);
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 }
 
 /* -forwardInvocation: */
@@ -1062,7 +1075,7 @@ object_method_forwardInvocation(
 	PyObject* pymeth;
 	PyObject* pyself;
 	int have_output = 0;
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
@@ -1082,7 +1095,7 @@ object_method_forwardInvocation(
 
 		super.class = (Class)userdata;
 		RECEIVER(super) = self;
-		PyGILState_Release(state);
+		xPyGILState_Release(state);
 		objc_msgSendSuper(&super, _meth, invocation);
 		return;
 	}
@@ -1263,7 +1276,7 @@ object_method_forwardInvocation(
 
 			PyObjCMethodSignature_Free(signature);
 			Py_DECREF(result);
-			PyGILState_Release(state);
+			xPyGILState_Release(state);
 			return;
 		}
 
@@ -1351,7 +1364,7 @@ object_method_forwardInvocation(
 		Py_DECREF(result);
 	}
 	PyObjCMethodSignature_Free(signature);
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 }
 
 /*
@@ -1377,12 +1390,6 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 	if (pymeth == NULL) {
 		Py_DECREF(pyself);
 		return NULL;
-	}
-
-	if (ObjCNativeSelector_Check(pymeth)) {
-		printf("-- %s --\n", PyObject_REPR(PyObject_GetAttrString(pyself, "__class__")));
-		printf("-- %s --\n", PyObject_REPR(pymeth));
-		abort();
 	}
 
 	if (NULL != ((PyObjCSelector*)pymeth)->sel_self) {
@@ -1695,13 +1702,13 @@ object_method_storedValueForKey_(
 	int r;
 	struct objc_super super;
 
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 #define TRY_GETMETHOD(method, format, keyexp) { \
 	r = method(self, \
 			[NSString stringWithFormat: format, keyexp], presult); \
 	if (r == 0) { \
-		PyGILState_Release(state); \
+		xPyGILState_Release(state); \
 		return; \
 	} \
 }
@@ -1713,7 +1720,7 @@ object_method_storedValueForKey_(
 
 #undef TRY_GETMETHOD
 
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 
 	/* Call super */
 	super.class = (Class)userdata;
@@ -1735,13 +1742,13 @@ object_method_valueForKey_(
 
 	id* presult = (id*)retval;
 	struct objc_super super;
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 #define TRY_GETMETHOD(method, format, keyexp) { \
 	r = method(self, \
 			[NSString stringWithFormat: format, keyexp], presult); \
 	if (r == 0) { \
-		PyGILState_Release(state); \
+		xPyGILState_Release(state); \
 		return; \
 	} \
 }
@@ -1758,7 +1765,7 @@ object_method_valueForKey_(
 #undef TRY_GETMETHOD
 	
 	/* Call super */
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	super.class = (Class)userdata;
 	RECEIVER(super) = self;
 	*presult = objc_msgSendSuper(&super, _meth, key);
@@ -1779,7 +1786,7 @@ object_method_takeStoredValue_forKey_(
 
 	struct objc_super super;
 	int r;
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 
 #define TRY_SETMETHOD(method, format, keyexp) { \
@@ -1788,13 +1795,13 @@ object_method_takeStoredValue_forKey_(
 	if (r == 0) { \
 		if (PyErr_Occurred()) { \
 			PyErr_Clear(); \
-			PyGILState_Release(state); \
+			xPyGILState_Release(state); \
 			[[NSException \
 				exceptionWithName:@"NSUnknownKeyException" \
 				reason:key userInfo:nil] raise]; \
 			return; \
 		} \
-		PyGILState_Release(state); \
+		xPyGILState_Release(state); \
 		return; \
 	} \
 }
@@ -1809,7 +1816,7 @@ object_method_takeStoredValue_forKey_(
 #undef TRY_SETMETHOD
 
 	/* Call super */
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	NS_DURING
 		super.class = (Class)userdata;
 		RECEIVER(super) = self;
@@ -1828,12 +1835,12 @@ object_method_takeStoredValue_forKey_(
 			PyObject* selfObj;
 			PyObject* val;
 
-			state = PyGILState_Ensure();
+			state = xPyGILState_Ensure();
 			selfObj = PyObjCObject_New(self);
 			val = pythonify_c_value(@encode(id), &value);
 			if (val == NULL) {
 				PyErr_Clear();
-				PyGILState_Release(state);
+				xPyGILState_Release(state);
 				[localException raise];
 			}
 
@@ -1843,10 +1850,10 @@ object_method_takeStoredValue_forKey_(
 			Py_DECREF(val);
 			if (r == -1) {
 				PyErr_Clear();
-				PyGILState_Release(state);
+				xPyGILState_Release(state);
 				[localException raise];
 			}
-			PyGILState_Release(state);
+			xPyGILState_Release(state);
 				
 		} else {
 			[localException raise];
@@ -1868,7 +1875,7 @@ object_method_takeValue_forKey_(
 
 	struct objc_super super;
 	int r;
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = xPyGILState_Ensure();
 
 #define TRY_SETMETHOD(method, format, keyexp) { \
 	r = method(self, \
@@ -1876,13 +1883,13 @@ object_method_takeValue_forKey_(
 	if (r == 0) { \
 		if (PyErr_Occurred()) { \
 			PyErr_Clear(); \
-			PyGILState_Release(state); \
+			xPyGILState_Release(state); \
 			[[NSException \
 				exceptionWithName:@"NSUnknownKeyException" \
 				reason:key userInfo:nil] raise]; \
 			return; \
 		} \
-		PyGILState_Release(state); \
+		xPyGILState_Release(state); \
 		return; \
 	} \
 }
@@ -1897,7 +1904,7 @@ object_method_takeValue_forKey_(
 #undef TRY_SETMETHOD
 
 	/* Call super */
-	PyGILState_Release(state);
+	xPyGILState_Release(state);
 	NS_DURING
 		super.class = (Class)userdata;
 		RECEIVER(super) = self;
@@ -1914,12 +1921,12 @@ object_method_takeValue_forKey_(
 				) {
 			PyObject* selfObj;
 			PyObject* val;
-			state = PyGILState_Ensure();
+			state = xPyGILState_Ensure();
 			selfObj = PyObjCObject_New(self);
 			val = pythonify_c_value(@encode(id), &value);
 			if (val == NULL) {
 				PyErr_Clear();
-				PyGILState_Release(state);
+				xPyGILState_Release(state);
 				[localException raise];
 			}
 
@@ -1929,13 +1936,156 @@ object_method_takeValue_forKey_(
 			Py_DECREF(val);
 			if (r == -1) {
 				PyErr_Clear();
-				PyGILState_Release(state);
+				xPyGILState_Release(state);
 				[localException raise];
 			}
-			PyGILState_Release(state);
+			xPyGILState_Release(state);
 				
 		} else {
 			[localException raise];
 		}
 	NS_ENDHANDLER
 }
+
+#if 0
+ /* This will one day be the copyWithZone: for subclasses of classes that define
+  * copyWithZone:. There's just one problem: how can we allow the user to
+  * hook into this (e.g. the user must be able to override copyWithZone:
+  * without introducing problems). 
+  *
+  * Luckily we can break existing code, that code is broken anyway :-)
+  *
+  * Why is this needed? In many cases the default copyWithZone: either doesn't
+  * copy python slots, or it copies them without updating the reference count.
+  * For __dict__ and values in __slots__ the second option is a serious 
+  * problem: there is nothing the user can do to fix this (those values are 
+  * PyObject*-s and there is no interface for changing their refcount from 
+  * Python).  The only workaround: have '__slots__ = ()' in the class (e.g.
+  * do NOT have additional instance variables).
+  */
+
+static void
+object_method_copyWithZone_(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* resp,
+		void** args,
+		void* userdata)
+{
+	id self = *(id*)args[0];
+	id copy;
+	SEL _meth = *(SEL*)args[1];
+	NSZone* zone = *(NSZone**)args[2];
+	struct copyWithZoneData* data = (PyObject*)userdata;
+
+	struct objc_super super;
+	int r;
+	PyGILState_STATE state;
+	PyObjCRT_Ivar_t var;
+
+	/* Ask super to create a copy */
+
+	super.class = data->class;
+	RECEIVER(super) = self;
+	copy = objc_msgSendSuper(&super, _meth, zone);
+
+	if (copy == nil) {
+		*(id*)resp = nil;
+	}
+
+	state = xPyGILState_Ensure();
+
+	/* Update the reference counts for slots/outlets */
+
+	while (cls != NULL) {
+		Class     objcClass = PyObjCClass_GetClass(cls);
+		PyObject* clsDict; 
+		PyObject* clsValues;
+		PyObject* o;
+		int       len, i;
+
+		if (objcClass == nil) break;
+
+		clsDict = PyObject_GetAttrString(cls, "__dict__");
+		if (clsDict == NULL) {
+			PyErr_Clear();
+			break;
+		}
+		
+		/* Class.__dict__ is a dictproxy, which is not a dict and
+		 * therefore PyDict_Values doesn't work.
+		 */
+		clsValues = PyObject_CallMethod(clsDict, "values", NULL);
+		Py_DECREF(clsDict);
+		if (clsValues == NULL) {
+			PyErr_Clear();
+			break;
+		}
+
+		len = PyList_Size(clsValues);
+		/* Check type */
+		for (i = 0; i < len; i++) {
+			PyObjCInstanceVariable* iv;
+
+			o = PyList_GET_ITEM(clsValues, i);
+
+			if (o == NULL) continue;
+			if (!PyObjCInstanceVariable_Check(o)) continue;
+		
+			iv = ((PyObjCInstanceVariable*)o);
+
+			if (iv->type[0] != '@') continue;
+			if (iv->isOutlet) continue;
+
+			var = class_getInstanceVariable(objcClass, iv->name);
+			if (var == NULL) continue;
+
+			if (iv->isSlot) {
+				Py_XINCREF(*(PyObject**)(((char*)self) + 
+					var->ivar_offset));
+				*(PyObject**)(((char*)copy) + var->ivar_offset) =
+					*(PyObject**)(((char*)self) + var->ivar_offset);
+			} else {
+				[*(id*)(((char*)self) + var->ivar_offset) retain];
+				*(id*)(((char*)copy) + var->ivar_offset) = *(id*)(((char*)self) + var->ivar_offset);
+			}
+		}
+
+		Py_DECREF(clsValues);
+
+		o = PyObject_GetAttrString(cls, "__bases__");
+		if (o == NULL) {
+			PyErr_Clear();
+			cls = NULL;
+		}  else if (PyTuple_Size(o) == 0) {
+			PyErr_Clear();
+			cls = NULL;
+			Py_DECREF(o);
+		} else {
+			cls = PyTuple_GET_ITEM(o, 0);
+			if (cls == (PyObject*)&PyObjCClass_Type) {
+				cls = NULL;
+			}
+			Py_DECREF(o);
+		}
+	}
+
+	/* And at the end copy the dict */
+	var = class_getInstanceVariable(PyObjCClass_GetClass(cls), "__dict__");
+	if (var != NULL) {
+		*(PyObject**)(((char*)copy) + var->ivar_offset) = 
+			PyDict_Copy(
+			    *(PyObject**)(((char*)self) + var->ivar_offset));
+
+		if (*(PyObject**)(((char*)copy) + var->ivar_offset) == NULL) {
+			[copy release];
+			*(id*)resp = nil;
+			PyObjCErr_ToObjCWithGILState(&state);
+			return;
+		}
+	}
+	
+	xPyGILState_Release(state);
+	*(id*)resp = copy;
+}
+
+#endif
