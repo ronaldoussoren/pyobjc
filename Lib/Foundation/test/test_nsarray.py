@@ -136,6 +136,38 @@ class TestNSArrayInteraction( unittest.TestCase ):
         self.assertRaises( IndexError, x.__getitem__, 100)
         self.assertRaises( IndexError, x.__getitem__, -100)
 
+    def test_varargConstruction(self):
+        w = NSArray.arrayWithObjects_(1,2,3,4, None)
+        x = NSArray.alloc().initWithObjects_(1,2,3,4, None)
+        y = NSArray.arrayWithObjects_count_([1,2,3,4,5,6], 4)
+        z = NSArray.alloc().initWithObjects_count_([1,2,3,4,5,6], 4)
+
+        self.assert_(len(w) == 4)
+        self.assert_(len(x) == 4)
+        self.assert_(len(y) == 4)
+        self.assert_(len(z) == 4)
+
+        self.assert_(w[0] == 1)
+        self.assert_(x[1] == 2)
+        self.assert_(y[2] == 3)
+        self.assert_(z[3] == 4)
+
+    def test_varargConstruction2(self):
+        w = NSMutableArray.arrayWithObjects_(1,2,3,4, None)
+        x = NSMutableArray.alloc().initWithObjects_(1,2,3,4, None)
+        y = NSMutableArray.arrayWithObjects_count_([1,2,3,4,5,6], 4)
+        z = NSMutableArray.alloc().initWithObjects_count_([1,2,3,4,5,6], 4)
+
+        self.assert_(len(w) == 4)
+        self.assert_(len(x) == 4)
+        self.assert_(len(y) == 4)
+        self.assert_(len(z) == 4)
+
+        self.assert_(w[0] == 1)
+        self.assert_(x[1] == 2)
+        self.assert_(y[2] == 3)
+        self.assert_(z[3] == 4)
+
 
 
 

@@ -42,7 +42,50 @@ class TestNSDictionaryInteraction( unittest.TestCase ):
             
         del d['a']
         self.assert_( 'a' not in d )
-        
+    
+    def test_varargConstruction(self):
+        u = NSDictionary.dictionaryWithObjects_forKeys_([1,2,3,4], ['one', 'two', 'three', 'four'])
+        v = NSDictionary.alloc().initWithObjects_forKeys_([1,2,3,4], ['one', 'two', 'three', 'four'])
+        w = NSDictionary.dictionaryWithObjects_forKeys_count_([1,2,3,4,5], ['one', 'two', 'three', 'four', 'five'], 4)
+        x = NSDictionary.alloc().initWithObjects_forKeys_count_([1,2,3,4,5], ['one', 'two', 'three', 'four', 'five'], 4)
+        y = NSDictionary.dictionaryWithObjectsAndKeys_(1, 'one', 2, 'two', 3, 'three', 4, 'four', None)
+        z = NSDictionary.alloc().initWithObjectsAndKeys_(1, 'one', 2, 'two', 3, 'three', 4, 'four', None)
+
+        self.assert_(len(u) == 4)
+        self.assert_(len(v) == 4)
+        self.assert_(len(w) == 4)
+        self.assert_(len(x) == 4)
+        self.assert_(len(y) == 4)
+        self.assert_(len(z) == 4)
+
+        self.assert_(u['one'] == 1)
+        self.assert_(v['two'] == 2)
+        self.assert_(w['three'] == 3)
+        self.assert_(x['one'] == 1)
+        self.assert_(y['two'] == 2)
+        self.assert_(z['four'] == 4)
+
+    def test_varargConstruction2(self):
+        u = NSMutableDictionary.dictionaryWithObjects_forKeys_([1,2,3,4], ['one', 'two', 'three', 'four'])
+        v = NSMutableDictionary.alloc().initWithObjects_forKeys_([1,2,3,4], ['one', 'two', 'three', 'four'])
+        w = NSMutableDictionary.dictionaryWithObjects_forKeys_count_([1,2,3,4,5], ['one', 'two', 'three', 'four', 'five'], 4)
+        x = NSMutableDictionary.alloc().initWithObjects_forKeys_count_([1,2,3,4,5], ['one', 'two', 'three', 'four', 'five'], 4)
+        y = NSMutableDictionary.dictionaryWithObjectsAndKeys_(1, 'one', 2, 'two', 3, 'three', 4, 'four', None)
+        z = NSMutableDictionary.alloc().initWithObjectsAndKeys_(1, 'one', 2, 'two', 3, 'three', 4, 'four', None)
+
+        self.assert_(len(u) == 4)
+        self.assert_(len(v) == 4)
+        self.assert_(len(w) == 4)
+        self.assert_(len(x) == 4)
+        self.assert_(len(y) == 4)
+        self.assert_(len(z) == 4)
+
+        self.assert_(u['one'] == 1)
+        self.assert_(v['two'] == 2)
+        self.assert_(w['three'] == 3)
+        self.assert_(x['one'] == 1)
+        self.assert_(y['two'] == 2)
+        self.assert_(z['four'] == 4)
 
 def suite():
     suite = unittest.TestSuite()

@@ -1,3 +1,8 @@
+2003-01-03 Ronald Oussoren <oussoren@cistron.nl>
+    * Added methods to objc/_convenience that allow us to use 
+      NSArray.arrayWithObjects_ and other varargs constructors (by calling
+      non-varargs versions under the hood)
+
 2003-01-03  Bill Bumgarner  <bbum@codefab.com>
     * Lib/Foundation/test/test_nsdata.py (TestNSData.testBytes): Added test
       for NSData.

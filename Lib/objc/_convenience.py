@@ -36,7 +36,7 @@ def add_convenience_methods(super_class, name, type_dict):
             v = CONVENIENCE_METHODS[sel]
             for name, value in v:
                 type_dict[name] = value
-    
+
     if CLASS_METHODS.has_key(name):
         for name, value in CLASS_METHODS[name]:
             type_dict[name] = value
@@ -351,3 +351,106 @@ CONVENIENCE_METHODS['_cfNumberType'] = (
     ('__truediv__', __truediv__CFNumber),
     ('__xor__', __xor__CFNumber),
 )
+
+#
+# Special wrappers for a number of varargs functions (constructors)
+#
+
+def initWithObjects_(self, *args):
+    if args[-1] is not None:
+        raise ValueError, "Need None as the last argument"
+    return self.initWithArray_(args[:-1])
+
+CONVENIENCE_METHODS['initWithObjects:'] = (
+    ('initWithObjects_', initWithObjects_),
+)
+
+def arrayWithObjects_(self, *args):
+    if args[-1] is not None:
+        raise ValueError, "Need None as the last argument"
+    return self.arrayWithArray_(args[:-1])
+
+CONVENIENCE_METHODS['arrayWithObjects:'] = (
+    ('arrayWithObjects_', selector(arrayWithObjects_, signature='@@:@', class_method=1)),
+)
+
+def arrayWithObjects_count_(self, args, count):
+    return self.arrayWithArray_(args[:count])
+
+CONVENIENCE_METHODS['arrayWithObjects:count:'] = (
+    ('arrayWithObjects_count_', selector(arrayWithObjects_count_, signature='@@:^@i', class_method=1)),
+)
+
+def initWithObjects_count_(self, args, count):
+    return self.initWithArray_(args[:count])
+
+CONVENIENCE_METHODS['initWithObjects:count:'] = (
+    ('initWithObjects_count_', initWithObjects_count_),
+)
+
+def setWithObjects_(self, *args):
+    if args[-1] is not None:
+        raise ValueError, "Need None as the last argument"
+    return self.setWithArray_(args[:-1])
+
+CONVENIENCE_METHODS['setWithObjects:'] = (
+    ('setWithObjects_', selector(setWithObjects_, signature='@@:@', class_method=1)),
+)
+
+def setWithObjects_count_(self, args, count):
+    return self.setWithArray_(args[:count])
+
+CONVENIENCE_METHODS['setWithObjects:count:'] = (
+    ('setWithObjects_count_', selector(setWithObjects_count_, signature='@@:^@i', class_method=1)),
+)
+
+def splitObjectsAndKeys(values):
+    if values[-1] is not None:
+        raise ValueError, "Need None as the last argument"
+    if len(values) % 2 != 1:
+        raise ValueError, "Odd number of arguments"
+
+    objects = []
+    keys = []
+    for i in range(0, len(values)-1, 2):
+        objects.append(values[i])
+        keys.append(values[i+1])
+    return objects, keys
+
+def dictionaryWithObjectsAndKeys_(self, *values):
+    objects, keys = splitObjectsAndKeys(values)
+
+    return self.dictionaryWithObjects_forKeys_(objects, keys)
+
+CONVENIENCE_METHODS['dictionaryWithObjectsAndKeys:'] = (
+    ('dictionaryWithObjectsAndKeys_', 
+      selector(dictionaryWithObjectsAndKeys_, signature='@@:@',class_method=1)),
+)
+
+def initWithObjectsAndKeys_(self, *values):
+    objects, keys = splitObjectsAndKeys(values)
+    return self.initWithObjects_forKeys_(objects, keys)
+
+CONVENIENCE_METHODS['initWithObjectsAndKeys:'] = (
+    ( 'initWithObjectsAndKeys_', initWithObjectsAndKeys_ ),
+)
+
+# 'dictionaryWithObjects:forKeys:count' is not really a varargs function, but
+# would require a custom wrapper.
+
+def dictionaryWithObjects_forKeys_count_(self, objects, keys, count):
+    return self.dictionaryWithObjects_forKeys_(objects[:count], keys[:count])
+
+CONVENIENCE_METHODS['dictionaryWithObjects:forKeys:count:'] = (
+    ('dictionaryWithObjects_forKeys_count_', 
+      selector(dictionaryWithObjects_forKeys_count_, signature='@@:^@^@i', class_method=1)),
+)
+
+def initWithObjects_forKeys_count_(self, objects, keys, count):
+    return self.initWithObjects_forKeys_(objects[:count], keys[:count])
+
+CONVENIENCE_METHODS['initWithObjects:forKeys:count:'] = (
+    ( 'initWithObjects_forKeys_count_', 
+        selector(initWithObjects_forKeys_count_, signature='@@:^@^@i') ),
+)
+
