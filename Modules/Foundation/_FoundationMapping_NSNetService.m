@@ -143,8 +143,6 @@ static PyObject* call_NSNetService_addresses(
 	int len, i;
 	NSData* item;
 
-	printf("NSNetService_addresses %s %s\n", PyObject_REPR(method), PyObject_REPR(self));
-
 	if  (!PyArg_ParseTuple(arguments, "")) {
 		return NULL;
 	}
