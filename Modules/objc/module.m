@@ -448,6 +448,7 @@ static  char* keywords[] = { "signature", NULL };
 	const char* signature;
 	const char* end;
 	PyObject* result;
+	PyObject* tuple;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
 			"s:splitSignature",
@@ -487,7 +488,10 @@ static  char* keywords[] = { "signature", NULL };
 
 		signature = end;
 	}	
-	return result;
+
+	tuple = PyList_AsTuple(result);
+	Py_DECREF(result);
+	return tuple;
 }
 
 #ifdef MACOSX

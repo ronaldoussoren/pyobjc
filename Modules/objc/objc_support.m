@@ -212,7 +212,6 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	default:
 		ObjCErr_Set(ObjCExc_internal_error,
 			"PyObjCRT_SkipTypeSpec: Unhandled type '%#x'", *type); 
-		abort(); // XXX
 		return NULL;
 	}
 

@@ -18,6 +18,7 @@ set_signature_for_selector("NSScanner", "scanUpToCharactersFromSet:intoString:",
 set_signature_for_selector("NSScanner", "scanUpToString:intoString:", "c@:@o^@")
 set_signature_for_selector("NSString", "completePathIntoString:caseSensitive:matchesIntoArray:filterTypes:", "Io^@co^@@")
 set_signature_for_selector("NSString", "getLineStart:end:contentsEnd:forRange:", "v@:o^Io^Io^I{_NSRange=II}")
+set_signature_for_selector("NSMutableAttributedString", "readFromURL:options:documentAttributes:", "c@:@@o^@")
 set_signature_for_selector("NSAttributedString", "attribute:atIndex:effectiveRange:", "@0@4:8@12I16o^{_NSRange=II}20")
 set_signature_for_selector("NSAttributedString", "attribute:atIndex:longestEffectiveRange:inRange:", "@0@4:8@12I16o^{_NSRange=II}20{_NSRange=II}24")
 set_signature_for_selector("NSAttributedString", "attributesAtIndex:effectiveRange:", "@0@4:8I12o^{_NSRange=II}16")

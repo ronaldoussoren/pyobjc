@@ -63,7 +63,7 @@ class TestNSArrayInteraction(unittest.TestCase):
         self.assertEquals( x, x[:] )
         self.assertEquals( y, y[:] )
         self.assertEquals( z, z[:] )
-        
+    
         self.assertEquals( x[25:75], y[25:75] )
         self.assertEquals( x[25:75], z[25:75] )
         self.assertEquals( y[25:75], z[25:75] )
@@ -177,6 +177,57 @@ class TestNSArrayInteraction(unittest.TestCase):
         self.assert_(x[1] == 2)
         self.assert_(y[2] == 3)
         self.assert_(z[3] == 4)
+
+class TestNSArraySpecialMethods(unittest.TestCase):
+    """
+    Test calling 'difficult' methods from Python
+    """
+
+    def test_initWithObjects_count_(self):
+        a = NSArray.alloc().initWithObjects_count_(('a','b','c','d'), 3)
+        self.assertEquals(a, ['a','b','c'])
+
+        self.assertRaises(ValueError, NSArray.alloc().initWithObjects_count_, ('a','b'), 3)
+
+    def test_arrayWithObjects_count_(self):
+        a = NSArray.arrayWithObjects_count_(('a','b','c','d'), 3)
+        self.assertEquals(a, ['a','b','c'])
+        
+        self.assertRaises(ValueError, NSArray.arrayWithObjects_count_, ('a','b'), 3)
+
+    def test_arrayByAddingObjects_count_(self):
+        a = NSArray.arrayWithArray_(('a', 'b', 'c'))
+        self.assertEquals(a, ('a', 'b', 'c'))
+
+        b = a.arrayByAddingObjects_count_(('d', 'e', 'f'), 3)
+        self.assertEquals(a, ('a', 'b', 'c'))
+        self.assertEquals(b, ('a', 'b', 'c', 'd', 'e', 'f'))
+
+        self.assertRaises(ValueError, a.arrayByAddingObjects_count_, ('a','b'), 3)
+    def test_sortedArrayUsingFunction_context_(self):
+        a = NSArray.arrayWithArray_(('a', 'b', 'c'))
+        self.assertEquals(a, ('a', 'b', 'c'))
+
+        def cmpfunc(l, r, c):
+            return -cmp(l,r)
+
+        b = a.sortedArrayUsingFunction_context_(cmpfunc, 'hello')
+        self.assertEquals(a, ('a', 'b', 'c'))
+        self.assertEquals(b, ('c', 'b', 'a'))
+
+    def test_sortedArrayUsingFunction_context_hint_(self):
+        a = NSArray.arrayWithArray_(('a', 'b', 'c'))
+        self.assertEquals(a, ('a', 'b', 'c'))
+
+        def cmpfunc(l, r, c):
+            return -cmp(l,r)
+
+        b = a.sortedArrayUsingFunction_context_hint_(cmpfunc, 'hello', a.sortedArrayHint())
+        self.assertEquals(a, ('a', 'b', 'c'))
+        self.assertEquals(b, ('c', 'b', 'a'))
+
+
+
 
 if __name__ == '__main__':
     unittest.main( )
