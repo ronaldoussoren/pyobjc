@@ -17,59 +17,31 @@ Building the Module
 ***        specifying --with-objc to the configure script to use this.
 ***
 
-Statically
-==========
+***
+*** NOTE:  This no longer seems to be true under OSX Final Candidate
+*** (and future versions, I would suspect).   A build of python
+*** configured with './configure --with-suffix=.exe --with-threads
+*** --with-dyld' worked fine!
+***
 
-When freshly unpacked, the first task is to build the Makefile that
-will be used for all subsequent builds.  To do this, invoke the
-following make command:
+The module uses the distutils package included with Python 2.0 and
+beyond.   This package provides a single interface for building and
+packaging the module.   To see usage documentation for the module,
+issue the '--help' command:
 
-        make -f Makefile.pre.in boot
+% python setup.py --help
 
-maybe specifying PYTHON=python1.5 if you didn't installed it at all or
-used altinstall to do it.
+To see an inventory of building and packaging commands, issue the
+command:
 
-Once the Makefile is built, a statically linked Python executable
-containing all of the modules mentioned in Setup.in can be built by
-making the target 'static'.  By default, it will build a binary named
-`pyobjc'. Alternatively, the name of the resulting statically linked
-executable can be controlled by setting the TARGET variable's value
-from the make command line:
+% python setup.py --help-commands
 
-        make static
-or
-        make static TARGET=python-with-objc
-        
-Once done, try:
+The following command will build and install the pyobjc module:
 
-$ ./pyobjc 
-Python 1.5 (#11, Sun Jan 04 1998, 14:41:11)  [GCC NeXT DevKit-based
-CPP 4.0] on next4
->>> import ObjC
->>> dir (ObjC.runtime)
-['HashTable', 'List', 'NSAllDescendantPathsEnumerator', ...]
+% python setup.py install
 
-and you should get the list of known Objective-C classes.
-
-
-Shared Module
-=============
-
-An alternative way is to build a shared module: add a single line
-containing just "*shared*" at the top of Setup.in, *BEFORE* building
-the Makefile, or *YOU*HAVE*TO* run it again.
-
-To build the module in this way simply issue a "make" command, without
-the "static" argument. To test it of course you will have to load the
-normal interpreter, and import it as usual.
-
-$ python -v
-...
-Python 1.5 (#14, Thu Jan 08 1998, 22:14:25)  [GCC NeXT DevKit-based CPP 4.0] on next4
-Copyright 1991-1995 Stichting Mathematisch Centrum, Amsterdam
->>> import ObjC
-import ObjC # dynamically loaded from ObjC.so
-
+The setup.py system can also be used to create source and binary
+distribution archives automatically.
 
 Demos
 =====

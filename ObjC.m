@@ -127,16 +127,16 @@ NSString *PyObjCException = @"PyObjCException";
 + (void) initModule
 #else
 void
-initObjC (void)
+initpyobjc (void)
 #endif
 {
   PyObject *m, *d;
   extern void ObjCObject_initialize (void);
 
-  m = Py_InitModule4 ("ObjC", ObjC_methods, ObjC_doc, NULL, PYTHON_API_VERSION);
+  m = Py_InitModule4 ("pyobjc", ObjC_methods, ObjC_doc, NULL, PYTHON_API_VERSION);
   d = PyModule_GetDict (m);
 
-  ObjC_Error = PyString_FromString ("ObjC.error");
+  ObjC_Error = PyString_FromString ("pyobjc.error");
   PyDict_SetItemString (d, "error", ObjC_Error);
 
   PyDict_SetItemString (d, "runtime", (PyObject *) ObjCRuntime_new());
@@ -148,7 +148,7 @@ initObjC (void)
   ObjCObject_initialize();
   
   if (PyErr_Occurred())
-    Py_FatalError ("can't initialize module ObjC");
+    Py_FatalError ("can't initialize module pyobjc");
   
 #if defined(WITH_THREAD) && !defined(GNU_RUNTIME)
   objc_setMultithreaded (1);
