@@ -1,4 +1,4 @@
-(This is the MIT license, note that libffi-src is a seperate product with its
+(This is the MIT license, note that libffi-src is a separate product with its
 own license)
 
 Copyright 2002, 2003 - Bill Bumgarner, Ronald Oussoren, Steve Majewski, Lele Gaifax, et.al.
