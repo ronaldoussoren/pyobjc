@@ -25,7 +25,7 @@ static PyObject* call_NSData_dataWithBytes_length_(
 	PyObject* result;
 	id        objc_result;
 
-	if  (PyArg_ParseTuple(arguments, "s#i", &bytes, &bytes_len, &len) < 0) {
+	if  (PyArg_ParseTuple(arguments, "t#i", &bytes, &bytes_len, &len) < 0) {
 		return NULL;
 	}
 
@@ -57,7 +57,7 @@ static PyObject* supercall_NSData_dataWithBytes_length_(
 	struct objc_super super;
 	id        objc_result;
 
-	if  (PyArg_ParseTuple(arguments, "s#i", &bytes, &bytes_len, &len) < 0) {
+	if  (PyArg_ParseTuple(arguments, "t#i", &bytes, &bytes_len, &len) < 0) {
 		return NULL;
 	}
 
@@ -133,7 +133,7 @@ static PyObject* call_NSData_initWithBytes_length_(
 	PyObject* result;
 	id        objc_result;
 
-	if  (PyArg_ParseTuple(arguments, "s#i", &bytes, &bytes_len, &len) < 0) {
+	if  (PyArg_ParseTuple(arguments, "t#i", &bytes, &bytes_len, &len) < 0) {
 		return NULL;
 	}
 
@@ -165,7 +165,7 @@ static PyObject* supercall_NSData_initWithBytes_length_(
 	struct objc_super super;
 	id        objc_result;
 
-	if  (PyArg_ParseTuple(arguments, "s#i", &bytes, &bytes_len, &len) < 0) {
+	if  (PyArg_ParseTuple(arguments, "t#i", &bytes, &bytes_len, &len) < 0) {
 		return NULL;
 	}
 
@@ -237,7 +237,11 @@ static PyObject* call_NSData_bytes(PyObject* method, PyObject* self, PyObject* a
   const void* bytes;
   unsigned    bytes_len;
   PyObject* result;
-  
+
+  if (PyArg_ParseTuple(arguments, "") < 0) {
+    return NULL;
+  }
+
   NS_DURING
     dataObject = ObjCObject_GetObject(self);
 
@@ -259,6 +263,10 @@ static PyObject* supercall_NSData_bytes(PyObject* method, PyObject* self, PyObje
   unsigned    bytes_len;
   PyObject* result;
   struct objc_super super;
+
+  if (PyArg_ParseTuple(arguments, "") < 0) {
+    return NULL;
+  }
 
   NS_DURING
     super.receiver = ObjCObject_GetObject(self);
@@ -311,6 +319,10 @@ static PyObject* call_NSMutableData_mutableBytes(PyObject* method, PyObject* sel
   unsigned  bytes_len;
   PyObject* result;
   
+  if (PyArg_ParseTuple(arguments, "") < 0) {
+    return NULL;
+  }
+
   NS_DURING
     dataObject = ObjCObject_GetObject(self);
 
@@ -332,6 +344,10 @@ static PyObject* supercall_NSMutableData_mutableBytes(PyObject* method, PyObject
   unsigned  bytes_len;
   PyObject* result;
   struct objc_super super;
+
+  if (PyArg_ParseTuple(arguments, "") < 0) {
+    return NULL;
+  }
 
   NS_DURING
     super.receiver = ObjCObject_GetObject(self);

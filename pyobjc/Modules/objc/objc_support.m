@@ -90,8 +90,8 @@ objc_skip_typespec (const char *type)
       return objc_skip_typespec (++type);
     
     default:
-      PySys_WriteStderr("PyObjC: objc_skip_typespec: Unhandled type '%c'\n", 
-      	*type);
+      PySys_WriteStderr("PyObjC: objc_skip_typespec: Unhandled type '%c' (%d)\n", 
+			*type, *type);
       abort();
     }
 }
@@ -345,8 +345,8 @@ objc_sizeof_type (const char *type)
 	    return sizeof(unsigned long long);
 
     default:
-      PySys_WriteStderr("PyObjC: objc_sizeof_type: Unhandled type '%c'\n", 
-      	*type);
+      PySys_WriteStderr("PyObjC: objc_sizeof_type: Unhandled type '%c' (%d)\n", 
+			*type, *type);
       abort();
     }
 }

@@ -74,8 +74,9 @@ class TestNSData(unittest.TestCase):
 
             self.assertEquals(len(bytes), data.length())
             self.assertEquals(len(mutableBytes), mutableData.length())
-
             self.assertEquals(bytes, mutableBytes)
+
+            mutableBytes[0:len(mutableBytes)] = bytes[0:len(bytes)]
 
 def suite():
     suite = unittest.TestSuite()

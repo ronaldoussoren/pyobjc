@@ -116,6 +116,11 @@ CocoaExtensions = [
                     extra_link_args=[
                         '-framework', 'AppKit'
                     ]),
+          Extension("AppKit._AppKitMapping",
+                    ["Modules/Cocoa/_AppKitMapping.m"],
+                    extra_compile_args=[ "-g", "-IModules/objc",],
+                    extra_link_args=['-framework', 'AppKit'
+                                     ]),
           Extension("objc._FoundationMapping", 
                     ["Modules/Cocoa/_FoundationMapping.m"],
                     extra_compile_args=[
