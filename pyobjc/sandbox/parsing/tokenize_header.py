@@ -64,7 +64,7 @@ class UninterestingTypedef(Token):
 class CompilerDirective(Token):
     pattern = pattern(r'''
     \s*
-    \#(?P<name>undef|if|ifdef|ifndef|endif|else|elif|pragma|error|warn)
+    \#(?P<name>undef|if|ifdef|ifndef|endif|else|elif|pragma|error|warn|define)
     \s*(?P<body>([^\\\n]|\\(\n|$))*)
     ''')
     example = example(r'''
@@ -73,6 +73,8 @@ class CompilerDirective(Token):
         insane
     #endif
     #else stuff
+    #define NS_DURING { \
+        GARBAGE!  blah blah {
     ''')
 
 class Interface(Token):
@@ -412,6 +414,7 @@ class ExportFunction(Token):
 
 class StaticInlineFunction(Token):
     # XXX need to figure out how to find a close brace
+    #     will probably need something stateful I guess
     pattern = pattern(r'''
     %(STATIC_INLINE)s
     \s*(?P<returns>
@@ -423,15 +426,24 @@ class StaticInlineFunction(Token):
     \s*\(
         (?P<args>\s*[^)]*)
     \s*\)
-    \s*{
-        (?P<body>\s*[^}]*)
-    \s*}\s*
+    (?P<body>
+            \s*{[^}\n]*}(\n|$)
+        |
+            \s*{([^}\n]|[^\n]}|\n[^}])*\n}
+    )\s*
     ''')
     example = example(r'''
     FOUNDATION_STATIC_INLINE BOOL NSDecimalIsNotANumber(const NSDecimal *dcm)
       { return ((dcm->_length == 0) && dcm->_isNegative); }
     FOUNDATION_STATIC_INLINE unsigned short NSSwapShort(unsigned short inv) {
         return CFSwapInt16(inv);
+    }
+    FOUNDATION_STATIC_INLINE NSSwappedFloat NSConvertHostFloatToSwapped(float x) {
+        union fconv {
+        float number;
+        NSSwappedFloat sf;
+        };
+        return ((union fconv *)&x)->sf;
     }
     ''')
 
@@ -452,9 +464,9 @@ LEXICON = [
     Struct,
     ExportFunction,
     StaticInlineFunction,
-    CompilerDirective,
     UninterestingTypedef,
     MacroDefine,
+    CompilerDirective,
 ]
 
 if __name__ == '__main__':
