@@ -47,7 +47,7 @@ def installMachInterrupt():
         return
     MachSignals.signal(signal.SIGINT, machInterrupt)
 
-def runConsoleEventLoop(argv=None, installInterrupt=True):
+def runConsoleEventLoop(argv=None, installInterrupt=False):
     if argv is None:
         argv = sys.argv
     if installInterrupt:
