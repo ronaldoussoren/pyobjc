@@ -77,12 +77,7 @@ def maybeutf(encoding=None):
         if firstline.startswith('// !$*UTF8*$!'):
             return 'utf_8'
         return encoding
-    #return maybeutf
-    def debug(fn):
-        rval = maybeutf(fn)
-        print fn, rval
-        return rval
-    return debug
+    return maybeutf
 
 
 def _buildEncodingsDict():
