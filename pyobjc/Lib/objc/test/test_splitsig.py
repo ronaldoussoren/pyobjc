@@ -41,7 +41,7 @@ class SplitSignatureTest (unittest.TestCase):
     # signatures, and therefore all signatures changed by PyObjC, are
     # valid.
         for cls in objc.getClassList():
-            for selName in dir(cls):
+            for selName in cls.__dict__.keys():
                 try:
                     sel = getattr(cls, selName)
                 except AttributeError:
@@ -70,7 +70,7 @@ class SplitSignatureTest (unittest.TestCase):
         ]
 
         for cls in objc.getClassList():
-            for selName in dir(cls):
+            for selName in cls.__dict__.keys():
                 if selName in EXCEPTIONS: continue
 
                 try:
