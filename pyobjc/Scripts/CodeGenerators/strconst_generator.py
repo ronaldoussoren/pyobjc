@@ -67,6 +67,7 @@ def generate(dirname, fn = None, ignore=(), filter = lambda x: 1):
     fnames = [ os.path.join(dirname, fn)
                         for fn in os.listdir(dirname)
                         if fn.endswith('.h') and filter(fn) ]
+    fnames.sort()
     for f in fnames:
         process_file(fp, f, ignore)
     fp.write("\t{0, 0} /* Sentinel */\n")

@@ -65,6 +65,7 @@ def generate(dirname, fn = None, match_prefix='', ignore_list=()):
     fnames = [ os.path.join(dirname, fn)
                         for fn in os.listdir(dirname)
                         if fn.endswith('.h') ]
+    fnames.sort()
     for f in fnames:
         process_file(fp, f, match_prefix, ignore_list)
 

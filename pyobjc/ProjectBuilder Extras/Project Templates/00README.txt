@@ -68,17 +68,17 @@ compiled code.
 
 Each Framework's Resources directory is automatically added to sys.path.
 
-Cocoa-Python Application (Embedded Interpreter)
------------------------------------------------
+.. Cocoa-Python Application (Embedded Interpreter)
+   -----------------------------------------------
 
-This project template uses an embedded Python interpreter.  As such,
-Objective-C classes can be freely mixed into the project along with Python
-classes.   However, because it uses an embedded interpreter, this project
-must be built and run after some version of Python is installed that can
-support an embedded interpreter.  Alternatively, an application based on this
-template must include a build of Python within its app wrapper.
+.. This project template uses an embedded Python interpreter.  As such,
+   Objective-C classes can be freely mixed into the project along with Python
+   classes.   However, because it uses an embedded interpreter, this project
+   must be built and run after some version of Python is installed that can
+   support an embedded interpreter.  Alternatively, an application based on this
+   template must include a build of Python within its app wrapper.
 
-This type of project is not compatible with Apple's build of Python.
+.. This type of project is not compatible with Apple's build of Python.
 
 Cocoa-Python Document-based Application
 ---------------------------------------
@@ -88,14 +88,27 @@ is compatible with the Apple build of Python.   It creates an application
 that uses Cocoa's Multiple Document Architecture in the same fashion as the
 default Cocoa Document-based Application supplied with Project Builder.
 
-Cocoa-Python Document-based Application (Embedded Interpreter)
---------------------------------------------------------------
+Cocoa-Python-ObjC Document-based Application
+-----------------------------
 
-This template works like the `Cocoa-Python Application (Embedded
-Interpreter)`_ template in that it is incompatible with the Apple build of
-Python.   It creates an application that uses Cocoa's Multiple Document
-Architecture in the same fashion as the default Cocoa Document-based
+A project created from this template includes an embedded framework project
+into which all compiled code can be placed.  Upon launch, the application
+automatically dynamically loads the embedded framework containing the
+compiled code. It is based on the `Cocoa-Python Document-based Application`_
+template.  It creates an application that uses Cocoa's Multiple Document 
+Architecture in the same fashion as the default Cocoa Document-based 
 Application supplied with Project Builder.
+
+Each Framework's Resources directory is automatically added to sys.path.
+
+.. Cocoa-Python Document-based Application (Embedded Interpreter)
+   --------------------------------------------------------------
+
+.. This template works like the `Cocoa-Python Application (Embedded
+   Interpreter)`_ template in that it is incompatible with the Apple build of
+   Python.   It creates an application that uses Cocoa's Multiple Document
+   Architecture in the same fashion as the default Cocoa Document-based
+   Application supplied with Project Builder.
 
 .. [#] Apple's build of python lacks a shared or static library to which an
        application can be linked.  As such, it is impossible to embed the

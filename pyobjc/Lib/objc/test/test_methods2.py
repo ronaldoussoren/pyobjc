@@ -8,7 +8,7 @@ the Objective-C helper classes used in theses tests.
 import unittest
 import objc
 from objc import YES, NO, nil
-from Foundation import NSPriorDayDesignations 
+from Foundation import NSPriorDayDesignations
 import sys
 
 NSArray = objc.runtime.NSArray
@@ -11729,11 +11729,9 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.BOOLOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], YES)
+		self.assertEquals(r, YES)
 		r = o.BOOLOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], NO)
+		self.assertEquals(r, NO)
 
 
 	def testcharOut(self):
@@ -11741,14 +11739,11 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.charOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -128)
+		self.assertEquals(r, -128)
 		r = o.charOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = o.charOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 127)
+		self.assertEquals(r, 127)
 
 
 	def testsignedshortOut(self):
@@ -11756,20 +11751,15 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.signedshortOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -(1<<14))
+		self.assertEquals(r, -(1<<14))
 		r = o.signedshortOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -42)
+		self.assertEquals(r, -42)
 		r = o.signedshortOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = o.signedshortOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = o.signedshortOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1 << 14)
+		self.assertEquals(r, 1 << 14)
 
 
 	def testsignedintOut(self):
@@ -11777,20 +11767,15 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.signedintOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -(1<<30))
+		self.assertEquals(r, -(1<<30))
 		r = o.signedintOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -42)
+		self.assertEquals(r, -42)
 		r = o.signedintOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = o.signedintOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = o.signedintOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1 << 30)
+		self.assertEquals(r, 1 << 30)
 
 
 	def testsignedlongOut(self):
@@ -11798,20 +11783,15 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.signedlongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -(1<<30))
+		self.assertEquals(r, -(1<<30))
 		r = o.signedlongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -42)
+		self.assertEquals(r, -42)
 		r = o.signedlongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = o.signedlongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = o.signedlongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1 << 30)
+		self.assertEquals(r, 1 << 30)
 
 
 	def testsignedlonglongOut(self):
@@ -11819,20 +11799,15 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.signedlonglongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -(1L << 60))
+		self.assertEquals(r, -(1L << 60))
 		r = o.signedlonglongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -42)
+		self.assertEquals(r, -42)
 		r = o.signedlonglongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = o.signedlonglongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = o.signedlonglongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1L << 60)
+		self.assertEquals(r, 1L << 60)
 
 
 	def testunsignedcharOut(self):
@@ -11840,14 +11815,11 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.unsignedcharOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = o.unsignedcharOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 128)
+		self.assertEquals(r, 128)
 		r = o.unsignedcharOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 255)
+		self.assertEquals(r, 255)
 
 
 	def testunsignedshortOut(self):
@@ -11855,14 +11827,11 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.unsignedshortOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = o.unsignedshortOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = o.unsignedshortOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1<<14)
+		self.assertEquals(r, 1<<14)
 
 
 	def testunsignedintOut(self):
@@ -11870,14 +11839,11 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.unsignedintOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = o.unsignedintOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = o.unsignedintOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1 << 30)
+		self.assertEquals(r, 1 << 30)
 
 
 	def testunsignedlongOut(self):
@@ -11885,14 +11851,11 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.unsignedlongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = o.unsignedlongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = o.unsignedlongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1L << 30)
+		self.assertEquals(r, 1L << 30)
 
 
 	def testunsignedlonglongOut(self):
@@ -11900,14 +11863,11 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.unsignedlonglongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = o.unsignedlonglongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = o.unsignedlonglongOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1L << 62)
+		self.assertEquals(r, 1L << 62)
 
 
 	def testfloatOut(self):
@@ -11915,17 +11875,13 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.floatOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 0.128)
+		self.assertAlmostEquals(r, 0.128)
 		r = o.floatOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 1.0)
+		self.assertAlmostEquals(r, 1.0)
 		r = o.floatOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 42.0)
+		self.assertAlmostEquals(r, 42.0)
 		r = o.floatOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 1e10)
+		self.assertAlmostEquals(r, 1e10)
 
 
 	def testdoubleOut(self):
@@ -11933,17 +11889,13 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.doubleOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 0.128)
+		self.assertAlmostEquals(r, 0.128)
 		r = o.doubleOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 1.0)
+		self.assertAlmostEquals(r, 1.0)
 		r = o.doubleOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 42.0)
+		self.assertAlmostEquals(r, 42.0)
 		r = o.doubleOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 1e10)
+		self.assertAlmostEquals(r, 1e10)
 
 
 	def testidOut(self):
@@ -11951,8 +11903,7 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.idOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], NSPriorDayDesignations)
+		self.assertEquals(r, NSPriorDayDesignations)
 
 
 	def testcharPtrOut(self):
@@ -11960,14 +11911,11 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.charPtrOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], "hello")
+		self.assertEquals(r, "hello")
 		r = o.charPtrOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], "world")
+		self.assertEquals(r, "world")
 		r = o.charPtrOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], "foobar")
+		self.assertEquals(r, "foobar")
 
 
 	def testNSPointOut(self):
@@ -11975,11 +11923,9 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.NSPointOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], (1, 2))
+		self.assertEquals(r, (1, 2))
 		r = o.NSPointOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], (3, 4))
+		self.assertEquals(r, (3, 4))
 
 
 	def testNSRectOut(self):
@@ -11987,14 +11933,12 @@ class PyToObjC (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = o.NSRectOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		self.assertEquals(r, ((1, 2), (3, 4)))
 		r = o.NSRectOutArg_()
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], ((7, 8), (9, 10)))
+		self.assertEquals(r, ((7, 8), (9, 10)))
 
 
-	# Pass by reference arguments (out)
+	# Pass by reference arguments (inout)
 
 	def testBOOLInOut(self):
 		o = PyObjC_TestClass1.alloc().init()
@@ -13972,7 +13916,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 2): self.reset()
 		res = g_BOOL_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	BOOLOutArg_ = objc.selector(BOOLOutArg_, signature="v@:o^c")
 
 
@@ -13993,7 +13937,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 3): self.reset()
 		res = g_char_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	charOutArg_ = objc.selector(charOutArg_, signature="v@:o^c")
 
 
@@ -14014,7 +13958,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 5): self.reset()
 		res = g_signedshort_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	signedshortOutArg_ = objc.selector(signedshortOutArg_, signature="v@:o^s")
 
 
@@ -14035,7 +13979,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 5): self.reset()
 		res = g_signedint_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	signedintOutArg_ = objc.selector(signedintOutArg_, signature="v@:o^i")
 
 
@@ -14056,7 +14000,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 5): self.reset()
 		res = g_signedlong_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	signedlongOutArg_ = objc.selector(signedlongOutArg_, signature="v@:o^l")
 
 
@@ -14077,7 +14021,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 5): self.reset()
 		res = g_signedlonglong_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	signedlonglongOutArg_ = objc.selector(signedlonglongOutArg_, signature="v@:o^q")
 
 
@@ -14098,7 +14042,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 3): self.reset()
 		res = g_unsignedchar_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	unsignedcharOutArg_ = objc.selector(unsignedcharOutArg_, signature="v@:o^C")
 
 
@@ -14119,7 +14063,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 3): self.reset()
 		res = g_unsignedshort_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	unsignedshortOutArg_ = objc.selector(unsignedshortOutArg_, signature="v@:o^S")
 
 
@@ -14140,7 +14084,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 3): self.reset()
 		res = g_unsignedint_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	unsignedintOutArg_ = objc.selector(unsignedintOutArg_, signature="v@:o^I")
 
 
@@ -14161,7 +14105,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 3): self.reset()
 		res = g_unsignedlong_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	unsignedlongOutArg_ = objc.selector(unsignedlongOutArg_, signature="v@:o^L")
 
 
@@ -14182,7 +14126,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 3): self.reset()
 		res = g_unsignedlonglong_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	unsignedlonglongOutArg_ = objc.selector(unsignedlonglongOutArg_, signature="v@:o^Q")
 
 
@@ -14203,7 +14147,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 4): self.reset()
 		res = g_float_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	floatOutArg_ = objc.selector(floatOutArg_, signature="v@:o^f")
 
 
@@ -14224,7 +14168,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 4): self.reset()
 		res = g_double_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	doubleOutArg_ = objc.selector(doubleOutArg_, signature="v@:o^d")
 
 
@@ -14245,7 +14189,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 1): self.reset()
 		res = g_id_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	idOutArg_ = objc.selector(idOutArg_, signature="v@:o^@")
 
 
@@ -14266,7 +14210,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 3): self.reset()
 		res = g_charPtr_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	charPtrOutArg_ = objc.selector(charPtrOutArg_, signature="v@:o^*")
 
 
@@ -14287,7 +14231,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 2): self.reset()
 		res = g_NSPoint_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	NSPointOutArg_ = objc.selector(NSPointOutArg_, signature="v@:o^{_NSPoint=ff}")
 
 
@@ -14308,7 +14252,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		if (self.counter > 2): self.reset()
 		res = g_NSRect_values[self.counter]
 		self.counter += 1
-		return (None, res)
+		return res
 	NSRectOutArg_ = objc.selector(NSRectOutArg_, signature="v@:o^{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
 
 
@@ -37147,11 +37091,9 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callBOOLOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], YES)
+		self.assertEquals(r, YES)
 		r = PyObjC_TestClass2.callBOOLOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], NO)
+		self.assertEquals(r, NO)
 
 
 	def testinvokeBOOLOut(self):
@@ -37159,11 +37101,9 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokeBOOLOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], YES)
+		self.assertEquals(r, YES)
 		r = PyObjC_TestClass2.invokeBOOLOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], NO)
+		self.assertEquals(r, NO)
 
 
 	def testcallcharOut(self):
@@ -37171,14 +37111,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callcharOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -128)
+		self.assertEquals(r, -128)
 		r = PyObjC_TestClass2.callcharOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.callcharOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 127)
+		self.assertEquals(r, 127)
 
 
 	def testinvokecharOut(self):
@@ -37186,14 +37123,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokecharOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -128)
+		self.assertEquals(r, -128)
 		r = PyObjC_TestClass2.invokecharOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.invokecharOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 127)
+		self.assertEquals(r, 127)
 
 
 	def testcallsignedshortOut(self):
@@ -37201,20 +37135,15 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callsignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -(1<<14))
+		self.assertEquals(r, -(1<<14))
 		r = PyObjC_TestClass2.callsignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -42)
+		self.assertEquals(r, -42)
 		r = PyObjC_TestClass2.callsignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.callsignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.callsignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1 << 14)
+		self.assertEquals(r, 1 << 14)
 
 
 	def testinvokesignedshortOut(self):
@@ -37222,20 +37151,15 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokesignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -(1<<14))
+		self.assertEquals(r, -(1<<14))
 		r = PyObjC_TestClass2.invokesignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -42)
+		self.assertEquals(r, -42)
 		r = PyObjC_TestClass2.invokesignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.invokesignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.invokesignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1 << 14)
+		self.assertEquals(r, 1 << 14)
 
 
 	def testcallsignedintOut(self):
@@ -37243,20 +37167,15 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callsignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -(1<<30))
+		self.assertEquals(r, -(1<<30))
 		r = PyObjC_TestClass2.callsignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -42)
+		self.assertEquals(r, -42)
 		r = PyObjC_TestClass2.callsignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.callsignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.callsignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1 << 30)
+		self.assertEquals(r, 1 << 30)
 
 
 	def testinvokesignedintOut(self):
@@ -37264,20 +37183,15 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokesignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -(1<<30))
+		self.assertEquals(r, -(1<<30))
 		r = PyObjC_TestClass2.invokesignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -42)
+		self.assertEquals(r, -42)
 		r = PyObjC_TestClass2.invokesignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.invokesignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.invokesignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1 << 30)
+		self.assertEquals(r, 1 << 30)
 
 
 	def testcallsignedlongOut(self):
@@ -37285,20 +37199,15 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callsignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -(1<<30))
+		self.assertEquals(r, -(1<<30))
 		r = PyObjC_TestClass2.callsignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -42)
+		self.assertEquals(r, -42)
 		r = PyObjC_TestClass2.callsignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.callsignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.callsignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1 << 30)
+		self.assertEquals(r, 1 << 30)
 
 
 	def testinvokesignedlongOut(self):
@@ -37306,20 +37215,15 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokesignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -(1<<30))
+		self.assertEquals(r, -(1<<30))
 		r = PyObjC_TestClass2.invokesignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -42)
+		self.assertEquals(r, -42)
 		r = PyObjC_TestClass2.invokesignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.invokesignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.invokesignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1 << 30)
+		self.assertEquals(r, 1 << 30)
 
 
 	def testcallsignedlonglongOut(self):
@@ -37327,20 +37231,15 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callsignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -(1L << 60))
+		self.assertEquals(r, -(1L << 60))
 		r = PyObjC_TestClass2.callsignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -42)
+		self.assertEquals(r, -42)
 		r = PyObjC_TestClass2.callsignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.callsignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.callsignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1L << 60)
+		self.assertEquals(r, 1L << 60)
 
 
 	def testinvokesignedlonglongOut(self):
@@ -37348,20 +37247,15 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokesignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -(1L << 60))
+		self.assertEquals(r, -(1L << 60))
 		r = PyObjC_TestClass2.invokesignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], -42)
+		self.assertEquals(r, -42)
 		r = PyObjC_TestClass2.invokesignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.invokesignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.invokesignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1L << 60)
+		self.assertEquals(r, 1L << 60)
 
 
 	def testcallunsignedcharOut(self):
@@ -37369,14 +37263,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callunsignedcharOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.callunsignedcharOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 128)
+		self.assertEquals(r, 128)
 		r = PyObjC_TestClass2.callunsignedcharOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 255)
+		self.assertEquals(r, 255)
 
 
 	def testinvokeunsignedcharOut(self):
@@ -37384,14 +37275,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokeunsignedcharOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.invokeunsignedcharOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 128)
+		self.assertEquals(r, 128)
 		r = PyObjC_TestClass2.invokeunsignedcharOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 255)
+		self.assertEquals(r, 255)
 
 
 	def testcallunsignedshortOut(self):
@@ -37399,14 +37287,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callunsignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.callunsignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.callunsignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1<<14)
+		self.assertEquals(r, 1<<14)
 
 
 	def testinvokeunsignedshortOut(self):
@@ -37414,14 +37299,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokeunsignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.invokeunsignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.invokeunsignedshortOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1<<14)
+		self.assertEquals(r, 1<<14)
 
 
 	def testcallunsignedintOut(self):
@@ -37429,14 +37311,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callunsignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.callunsignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.callunsignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1 << 30)
+		self.assertEquals(r, 1 << 30)
 
 
 	def testinvokeunsignedintOut(self):
@@ -37444,14 +37323,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokeunsignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.invokeunsignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.invokeunsignedintOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1 << 30)
+		self.assertEquals(r, 1 << 30)
 
 
 	def testcallunsignedlongOut(self):
@@ -37459,14 +37335,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callunsignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.callunsignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.callunsignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1L << 30)
+		self.assertEquals(r, 1L << 30)
 
 
 	def testinvokeunsignedlongOut(self):
@@ -37474,14 +37347,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokeunsignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.invokeunsignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.invokeunsignedlongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1L << 30)
+		self.assertEquals(r, 1L << 30)
 
 
 	def testcallunsignedlonglongOut(self):
@@ -37489,14 +37359,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callunsignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.callunsignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.callunsignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1L << 62)
+		self.assertEquals(r, 1L << 62)
 
 
 	def testinvokeunsignedlonglongOut(self):
@@ -37504,14 +37371,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokeunsignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 0)
+		self.assertEquals(r, 0)
 		r = PyObjC_TestClass2.invokeunsignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 42)
+		self.assertEquals(r, 42)
 		r = PyObjC_TestClass2.invokeunsignedlonglongOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], 1L << 62)
+		self.assertEquals(r, 1L << 62)
 
 
 	def testcallfloatOut(self):
@@ -37519,17 +37383,13 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callfloatOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 0.128)
+		self.assertAlmostEquals(r, 0.128)
 		r = PyObjC_TestClass2.callfloatOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 1.0)
+		self.assertAlmostEquals(r, 1.0)
 		r = PyObjC_TestClass2.callfloatOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 42.0)
+		self.assertAlmostEquals(r, 42.0)
 		r = PyObjC_TestClass2.callfloatOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 1e10)
+		self.assertAlmostEquals(r, 1e10)
 
 
 	def testinvokefloatOut(self):
@@ -37537,17 +37397,13 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokefloatOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 0.128)
+		self.assertAlmostEquals(r, 0.128)
 		r = PyObjC_TestClass2.invokefloatOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 1.0)
+		self.assertAlmostEquals(r, 1.0)
 		r = PyObjC_TestClass2.invokefloatOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 42.0)
+		self.assertAlmostEquals(r, 42.0)
 		r = PyObjC_TestClass2.invokefloatOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 1e10)
+		self.assertAlmostEquals(r, 1e10)
 
 
 	def testcalldoubleOut(self):
@@ -37555,17 +37411,13 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.calldoubleOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 0.128)
+		self.assertAlmostEquals(r, 0.128)
 		r = PyObjC_TestClass2.calldoubleOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 1.0)
+		self.assertAlmostEquals(r, 1.0)
 		r = PyObjC_TestClass2.calldoubleOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 42.0)
+		self.assertAlmostEquals(r, 42.0)
 		r = PyObjC_TestClass2.calldoubleOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 1e10)
+		self.assertAlmostEquals(r, 1e10)
 
 
 	def testinvokedoubleOut(self):
@@ -37573,17 +37425,13 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokedoubleOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 0.128)
+		self.assertAlmostEquals(r, 0.128)
 		r = PyObjC_TestClass2.invokedoubleOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 1.0)
+		self.assertAlmostEquals(r, 1.0)
 		r = PyObjC_TestClass2.invokedoubleOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 42.0)
+		self.assertAlmostEquals(r, 42.0)
 		r = PyObjC_TestClass2.invokedoubleOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertAlmostEquals(r[1], 1e10)
+		self.assertAlmostEquals(r, 1e10)
 
 
 	def testcallidOut(self):
@@ -37591,8 +37439,7 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callidOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], NSPriorDayDesignations)
+		self.assertEquals(r, NSPriorDayDesignations)
 
 
 	def testinvokeidOut(self):
@@ -37600,8 +37447,7 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokeidOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], NSPriorDayDesignations)
+		self.assertEquals(r, NSPriorDayDesignations)
 
 
 	def testcallcharPtrOut(self):
@@ -37609,14 +37455,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callcharPtrOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], "hello")
+		self.assertEquals(r, "hello")
 		r = PyObjC_TestClass2.callcharPtrOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], "world")
+		self.assertEquals(r, "world")
 		r = PyObjC_TestClass2.callcharPtrOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], "foobar")
+		self.assertEquals(r, "foobar")
 
 
 	def testinvokecharPtrOut(self):
@@ -37624,14 +37467,11 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokecharPtrOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], "hello")
+		self.assertEquals(r, "hello")
 		r = PyObjC_TestClass2.invokecharPtrOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], "world")
+		self.assertEquals(r, "world")
 		r = PyObjC_TestClass2.invokecharPtrOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], "foobar")
+		self.assertEquals(r, "foobar")
 
 
 	def testcallNSPointOut(self):
@@ -37639,11 +37479,9 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callNSPointOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], (1, 2))
+		self.assertEquals(r, (1, 2))
 		r = PyObjC_TestClass2.callNSPointOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], (3, 4))
+		self.assertEquals(r, (3, 4))
 
 
 	def testinvokeNSPointOut(self):
@@ -37651,11 +37489,9 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokeNSPointOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], (1, 2))
+		self.assertEquals(r, (1, 2))
 		r = PyObjC_TestClass2.invokeNSPointOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], (3, 4))
+		self.assertEquals(r, (3, 4))
 
 
 	def testcallNSRectOut(self):
@@ -37663,11 +37499,9 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.callNSRectOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		self.assertEquals(r, ((1, 2), (3, 4)))
 		r = PyObjC_TestClass2.callNSRectOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], ((7, 8), (9, 10)))
+		self.assertEquals(r, ((7, 8), (9, 10)))
 
 
 	def testinvokeNSRectOut(self):
@@ -37675,11 +37509,9 @@ class ObjCToPy (TestCase):
 		self.assert_(o is not None)
 		o.reset()
 		r = PyObjC_TestClass2.invokeNSRectOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		self.assertEquals(r, ((1, 2), (3, 4)))
 		r = PyObjC_TestClass2.invokeNSRectOutArg_of_(o)
-		self.assertEquals(r[0], None)
-		self.assertEquals(r[1], ((7, 8), (9, 10)))
+		self.assertEquals(r, ((7, 8), (9, 10)))
 
 
 	# Pass by reference arguments (out)

@@ -131,7 +131,7 @@ class  ToDoDocument (AutoBaseClass):
     	if newItems:
     		self._currentItems = newItems.mutableCopy()
     	else:
-    		numRows, numCols = 6,1 # self.itemList.getNumberOfRows_columns_()
+    		numRows, numCols = self.itemList.getNumberOfRows_columns_()
     		self._currentItems = NSMutableArray.alloc().initWithCapacity_(numRows)
 
     		for d in range(numRows):

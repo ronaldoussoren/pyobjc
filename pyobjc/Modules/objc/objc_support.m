@@ -799,10 +799,9 @@ depythonify_unsigned_int_value(PyObject* argument, char* descr,
 		}
 
 		ObjCErr_Set(PyExc_ValueError,
-			"depythonifying '%s', got '%s' of %d",
+			"depythonifying '%s', got '%s'",
 				descr,
-				argument->ob_type->tp_name,
-				PyString_Size(argument));
+				argument->ob_type->tp_name);
 		return -1;
 	}
 }

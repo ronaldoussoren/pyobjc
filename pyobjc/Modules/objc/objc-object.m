@@ -434,7 +434,7 @@ static PyGetSetDef obj_getset[] = {
  * pickle). This method forces a failure during pickling.
  */
 static PyObject*
-meth_reduce(PyObject* self)
+meth_reduce(PyObject* self __attribute__((__unused__)))
 {
         PyErr_SetString(PyExc_TypeError,
 		"Cannot pickle Objective-C objects");

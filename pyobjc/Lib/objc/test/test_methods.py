@@ -533,24 +533,24 @@ class PyOCTestByReferenceArguments(unittest.TestCase):
 
     def testCharOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutChar_(), (None, -128))
-        self.assertEquals(self.obj.passOutChar_(), (None, 0))
-        self.assertEquals(self.obj.passOutChar_(), (None, 127))
+        self.assertEquals(self.obj.passOutChar_(), -128)
+        self.assertEquals(self.obj.passOutChar_(), 0)
+        self.assertEquals(self.obj.passOutChar_(), 127)
 
     def testCharInOut(self):
-        self.assertEquals(self.obj.passInOutChar_('\x10'), (None, 0x3a))
+        self.assertEquals(self.obj.passInOutChar_('\x10'), 0x3a)
 
     def testUCharIn(self):
         self.assertEquals(self.obj.passInUChar_(10), 19)
 
     def testUCharOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutUChar_(), (None, 0))
-        self.assertEquals(self.obj.passOutUChar_(), (None, 128))
-        self.assertEquals(self.obj.passOutUChar_(), (None, 255))
+        self.assertEquals(self.obj.passOutUChar_(), 0)
+        self.assertEquals(self.obj.passOutUChar_(), 128)
+        self.assertEquals(self.obj.passOutUChar_(), 255)
 
     def testUCharInOut(self):
-        self.assertEquals(self.obj.passInOutUChar_(10), (None, 52))
+        self.assertEquals(self.obj.passInOutUChar_(10), 52)
 
     def testShortIn(self):
         self.assertEquals(self.obj.passInShort_(10), 19)
@@ -559,28 +559,28 @@ class PyOCTestByReferenceArguments(unittest.TestCase):
 
     def testShortOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutShort_(), (None, -(1 << 14)))
-        self.assertEquals(self.obj.passOutShort_(), (None, -42))
-        self.assertEquals(self.obj.passOutShort_(), (None, 0))
-        self.assertEquals(self.obj.passOutShort_(), (None, 42))
-        self.assertEquals(self.obj.passOutShort_(), (None, (1 << 14)))
+        self.assertEquals(self.obj.passOutShort_(), -(1 << 14))
+        self.assertEquals(self.obj.passOutShort_(), -42)
+        self.assertEquals(self.obj.passOutShort_(), 0)
+        self.assertEquals(self.obj.passOutShort_(), 42)
+        self.assertEquals(self.obj.passOutShort_(), 1 << 14)
 
     def testShortInOut(self):
-        self.assertEquals(self.obj.passInOutShort_(10), (None, 52))
-        self.assertEquals(self.obj.passInOutShort_(-100), (None, -58))
-        self.assertEquals(self.obj.passInOutShort_(-100.0), (None, -58))
+        self.assertEquals(self.obj.passInOutShort_(10), 52)
+        self.assertEquals(self.obj.passInOutShort_(-100), -58)
+        self.assertEquals(self.obj.passInOutShort_(-100.0), -58)
 
     def testUShortIn(self):
         self.assertEquals(self.obj.passInUShort_(10), 19)
 
     def testUShortOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutUShort_(), (None, 0))
-        self.assertEquals(self.obj.passOutUShort_(), (None, 42))
-        self.assertEquals(self.obj.passOutUShort_(), (None, (1 << 14)))
+        self.assertEquals(self.obj.passOutUShort_(), 0)
+        self.assertEquals(self.obj.passOutUShort_(), 42)
+        self.assertEquals(self.obj.passOutUShort_(), (1 << 14))
 
     def testUShortInOut(self):
-        self.assertEquals(self.obj.passInOutUShort_(10), (None, 52))
+        self.assertEquals(self.obj.passInOutUShort_(10), 52)
 
     def testIntIn(self):
         self.assertEquals(self.obj.passInInt_(10), 19)
@@ -588,29 +588,29 @@ class PyOCTestByReferenceArguments(unittest.TestCase):
 
     def testIntOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutInt_(), (None, -(1 << 30)))
-        self.assertEquals(self.obj.passOutInt_(), (None, -42))
-        self.assertEquals(self.obj.passOutInt_(), (None, 0))
-        self.assertEquals(self.obj.passOutInt_(), (None, 42))
-        self.assertEquals(self.obj.passOutInt_(), (None, (1 << 30)))
+        self.assertEquals(self.obj.passOutInt_(), -(1 << 30))
+        self.assertEquals(self.obj.passOutInt_(), -42)
+        self.assertEquals(self.obj.passOutInt_(), 0)
+        self.assertEquals(self.obj.passOutInt_(), 42)
+        self.assertEquals(self.obj.passOutInt_(), (1 << 30))
 
     def testIntInOut(self):
-        self.assertEquals(self.obj.passInOutInt_(10), (None, 52))
-        self.assertEquals(self.obj.passInOutInt_(-100), (None, -58))
-        self.assertEquals(self.obj.passInOutInt_(-100.0), (None, -58))
+        self.assertEquals(self.obj.passInOutInt_(10), 52)
+        self.assertEquals(self.obj.passInOutInt_(-100), -58)
+        self.assertEquals(self.obj.passInOutInt_(-100.0), -58)
 
     def testUIntIn(self):
         self.assertEquals(self.obj.passInUInt_(10), 19)
 
     def testUIntOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutUInt_(), (None, 0))
-        self.assertEquals(self.obj.passOutUInt_(), (None, 42))
-        self.assertEquals(self.obj.passOutUInt_(), (None, (1 << 30)))
+        self.assertEquals(self.obj.passOutUInt_(), 0)
+        self.assertEquals(self.obj.passOutUInt_(), 42)
+        self.assertEquals(self.obj.passOutUInt_(), (1 << 30))
 
     def testUIntInOut(self):
-        self.assertEquals(self.obj.passInOutUInt_(10), (None, 52))
-        self.assertEquals(self.obj.passInOutUInt_(10.0), (None, 52))
+        self.assertEquals(self.obj.passInOutUInt_(10), 52)
+        self.assertEquals(self.obj.passInOutUInt_(10.0), 52)
 
     def testLongIn(self):
         self.assertEquals(self.obj.passInLong_(10), 19)
@@ -618,29 +618,29 @@ class PyOCTestByReferenceArguments(unittest.TestCase):
 
     def testLongOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutLong_(), (None, -(1 << 30)))
-        self.assertEquals(self.obj.passOutLong_(), (None, -42))
-        self.assertEquals(self.obj.passOutLong_(), (None, 0))
-        self.assertEquals(self.obj.passOutLong_(), (None, 42))
-        self.assertEquals(self.obj.passOutLong_(), (None, (1 << 30)))
+        self.assertEquals(self.obj.passOutLong_(), -(1 << 30))
+        self.assertEquals(self.obj.passOutLong_(), -42)
+        self.assertEquals(self.obj.passOutLong_(), 0)
+        self.assertEquals(self.obj.passOutLong_(), 42)
+        self.assertEquals(self.obj.passOutLong_(), (1 << 30))
 
     def testLongInOut(self):
-        self.assertEquals(self.obj.passInOutLong_(10), (None, 52))
-        self.assertEquals(self.obj.passInOutLong_(-100), (None, -58))
-        self.assertEquals(self.obj.passInOutLong_(-100.0), (None, -58))
+        self.assertEquals(self.obj.passInOutLong_(10), 52)
+        self.assertEquals(self.obj.passInOutLong_(-100), -58)
+        self.assertEquals(self.obj.passInOutLong_(-100.0), -58)
 
     def testULongIn(self):
         self.assertEquals(self.obj.passInULong_(10), 19)
 
     def testULongOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutULong_(), (None, 0))
-        self.assertEquals(self.obj.passOutULong_(), (None, 42))
-        self.assertEquals(self.obj.passOutULong_(), (None, (1 << 30)))
+        self.assertEquals(self.obj.passOutULong_(), 0)
+        self.assertEquals(self.obj.passOutULong_(), 42)
+        self.assertEquals(self.obj.passOutULong_(), (1 << 30))
 
     def testULongInOut(self):
-        self.assertEquals(self.obj.passInOutULong_(10), (None, 52))
-        self.assertEquals(self.obj.passInOutULong_(10.0), (None, 52))
+        self.assertEquals(self.obj.passInOutULong_(10), 52)
+        self.assertEquals(self.obj.passInOutULong_(10.0), 52)
 
     def testLongLongIn(self):
         self.assertEquals(self.obj.passInLongLong_(10), 19)
@@ -648,29 +648,29 @@ class PyOCTestByReferenceArguments(unittest.TestCase):
 
     def testLongLongOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutLongLong_(), (None, -(1L << 60)))
-        self.assertEquals(self.obj.passOutLongLong_(), (None, -42))
-        self.assertEquals(self.obj.passOutLongLong_(), (None, 0))
-        self.assertEquals(self.obj.passOutLongLong_(), (None, 42))
-        self.assertEquals(self.obj.passOutLongLong_(), (None, (1L << 60)))
+        self.assertEquals(self.obj.passOutLongLong_(), -(1L << 60))
+        self.assertEquals(self.obj.passOutLongLong_(), -42)
+        self.assertEquals(self.obj.passOutLongLong_(), 0)
+        self.assertEquals(self.obj.passOutLongLong_(), 42)
+        self.assertEquals(self.obj.passOutLongLong_(), (1L << 60))
 
     def testLongLongInOut(self):
-        self.assertEquals(self.obj.passInOutLongLong_(10), (None, 52))
-        self.assertEquals(self.obj.passInOutLongLong_(-100), (None, -58))
-        self.assertEquals(self.obj.passInOutLongLong_(-100.0), (None, -58))
+        self.assertEquals(self.obj.passInOutLongLong_(10), 52)
+        self.assertEquals(self.obj.passInOutLongLong_(-100), -58)
+        self.assertEquals(self.obj.passInOutLongLong_(-100.0), -58)
 
     def testULongLongIn(self):
         self.assertEquals(self.obj.passInULongLong_(10), 19)
 
     def testULongLongOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutULongLong_(), (None, 0))
-        self.assertEquals(self.obj.passOutULongLong_(), (None, 42))
-        self.assertEquals(self.obj.passOutULongLong_(), (None, (1L << 63)))
+        self.assertEquals(self.obj.passOutULongLong_(), 0)
+        self.assertEquals(self.obj.passOutULongLong_(), 42)
+        self.assertEquals(self.obj.passOutULongLong_(), (1L << 63))
 
     def testULongLongInOut(self):
-        self.assertEquals(self.obj.passInOutULongLong_(10), (None, 52))
-        self.assertEquals(self.obj.passInOutULongLong_(10.0), (None, 52))
+        self.assertEquals(self.obj.passInOutULongLong_(10), 52)
+        self.assertEquals(self.obj.passInOutULongLong_(10.0), 52)
 
     def testFloatIn(self):
         self.assertEquals(self.obj.passInFloat_(10), makeCFloat(90.0))
@@ -678,15 +678,15 @@ class PyOCTestByReferenceArguments(unittest.TestCase):
 
     def testFloatOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutFloat_(), (None, makeCFloat(0.128)))
-        self.assertEquals(self.obj.passOutFloat_(), (None, makeCFloat(1.0)))
-        self.assertEquals(self.obj.passOutFloat_(), (None, makeCFloat(42.0)))
-        self.assertEquals(self.obj.passOutFloat_(), (None, makeCFloat(1e10)))
+        self.assertEquals(self.obj.passOutFloat_(), makeCFloat(0.128))
+        self.assertEquals(self.obj.passOutFloat_(), makeCFloat(1.0))
+        self.assertEquals(self.obj.passOutFloat_(), makeCFloat(42.0))
+        self.assertEquals(self.obj.passOutFloat_(), makeCFloat(1e10))
 
     def testFloatInOut(self):
-        self.assertEquals(self.obj.passInOutFloat_(10), (None, makeCFloat(420)))
-        self.assertEquals(self.obj.passInOutFloat_(10.0), (None, makeCFloat(420)))
-        self.assertEquals(self.obj.passInOutFloat_(0.01), (None, makeCFloat(0.42)))
+        self.assertEquals(self.obj.passInOutFloat_(10), makeCFloat(420))
+        self.assertEquals(self.obj.passInOutFloat_(10.0), makeCFloat(420))
+        self.assertEquals(self.obj.passInOutFloat_(0.01), makeCFloat(0.42))
 
     def testDoubleIn(self):
         self.assertEquals(self.obj.passInDouble_(10), 90.0)
@@ -694,15 +694,15 @@ class PyOCTestByReferenceArguments(unittest.TestCase):
 
     def testDoubleOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutDouble_(), (None, 0.128))
-        self.assertEquals(self.obj.passOutDouble_(), (None, 1.0))
-        self.assertEquals(self.obj.passOutDouble_(), (None, 42.0))
-        self.assertEquals(self.obj.passOutDouble_(), (None, 1e10))
+        self.assertEquals(self.obj.passOutDouble_(), 0.128)
+        self.assertEquals(self.obj.passOutDouble_(), 1.0)
+        self.assertEquals(self.obj.passOutDouble_(), 42.0)
+        self.assertEquals(self.obj.passOutDouble_(), 1e10)
 
     def testDoubleInOut(self):
-        self.assertEquals(self.obj.passInOutDouble_(10), (None, 420))
-        self.assertEquals(self.obj.passInOutDouble_(10.0), (None, 420))
-        self.assertEquals(self.obj.passInOutDouble_(0.01), (None, 0.42))
+        self.assertEquals(self.obj.passInOutDouble_(10), 420)
+        self.assertEquals(self.obj.passInOutDouble_(10.0), 420)
+        self.assertEquals(self.obj.passInOutDouble_(0.01), 0.42)
 
     def testCharpIn(self):
         self.assertEquals(self.obj.passInCharp_("hello"), "hheelllloo")
@@ -710,13 +710,13 @@ class PyOCTestByReferenceArguments(unittest.TestCase):
 
     def testCharpOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutCharp_(), (None, "hello"))
-        self.assertEquals(self.obj.passOutCharp_(), (None, "world"))
-        self.assertEquals(self.obj.passOutCharp_(), (None, "foobar"))
+        self.assertEquals(self.obj.passOutCharp_(), "hello")
+        self.assertEquals(self.obj.passOutCharp_(), "world")
+        self.assertEquals(self.obj.passOutCharp_(), "foobar")
 
     def testCharpInOut(self):
-        self.assertEquals(self.obj.passInOutCharp_("hello"), (None, "hheelllloo"))
-        self.assertEquals(self.obj.passInOutCharp_("abcdef"), (None, "aabbccddeeff"))
+        self.assertEquals(self.obj.passInOutCharp_("hello"), "hheelllloo")
+        self.assertEquals(self.obj.passInOutCharp_("abcdef"), "aabbccddeeff")
 
     # TODO: structs (including Objective-C part)
 
