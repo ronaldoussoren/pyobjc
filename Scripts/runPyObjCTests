@@ -46,6 +46,11 @@ Expected test failures:
 
 - FAIL: test_CheckNSInvoke (objc.test.test_ctests.CTests)
   This checks for a bug in Cocoa 
+
+- ERROR: testClassAndInstance
+- ERROR: testClassAndInstanceInstanceOverride 
+- ERROR: testClassAndInstanceSubclass
+  PyObjC does not support these semantics yet
 """%(objc.__version__)
 
 def recursiveGlob(root, pathPattern):
