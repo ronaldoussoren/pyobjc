@@ -44,7 +44,7 @@ of plain C types, such as ``int`` and ``double``.  These basic C types can
 be used as the types of arguments and the return value of methods. 
 
 Object allocation and initialization are explicit and separate actions in 
-Objective-C. The former is done by the class-method ``alloc``, while the
+Objective-C.  The former is done by the class-method ``alloc``, while the
 latter is done by instance methods whose name customarily starts with ``init``.
 
 Objective-C code looks just like plain C code, with some easily recognizable
@@ -54,7 +54,8 @@ example class declaration (usually found in ``.h`` files) and implementation
 recognized as blocks of code between ``@interface`` and ``@end``, and similarly
 the implementation is between ``@implementation`` and ``@end``.  An expression
 enclosed in brackets in Objective-C is called a message, and is the equivalent
-to an instance method invocation in Python.  For example, this Objective-C code::
+to an instance method invocation in Python.  For example, this Objective-C
+code::
 
     [aMutableArray addObject:@"constant string"];
 
@@ -381,8 +382,8 @@ we have provided convenience decorators (used like ``staticmethod`` or
     Use this to wrap the implementation of a sheet's "didEndSelector" callback.
 
 For complete control of the mapping to Objective-C you can use the function
-``objc.selector`` to create custom descriptors. See the documentation of the
-``objc`` module for the arguments you can use with this function. It is
+``objc.selector`` to create custom descriptors.  See the documentation of the
+``objc`` module for the arguments you can use with this function.  It is
 normally used like this::
 
 	class MyObject (NSObject):
@@ -395,9 +396,9 @@ Reference counting
 ..................
 
 The `Cocoa libraries`_, and most (if not all) other class libraries for 
-Objective-C use explicit reference counting to manage memory. The methods
+Objective-C use explicit reference counting to manage memory.  The methods
 ``retain``, ``release`` and ``autorelease`` are used to manage these 
-reference counts. You won't have to manage reference counts in Python, the
+reference counts.  You won't have to manage reference counts in Python, the
 bridge does all that work for you (but see `Notes on supported APIs and classes 
 on Mac OS X`__ for some advanced issues).
 
@@ -407,45 +408,45 @@ The only reasons reference counts are mentioned at all are to tell you about
 ignoring them, and more importantly to introduce you to some issues w.r.t. 
 reference counting.
 
-It turns out that Cocoa uses a primitive form of `weak references`_. Those 
+It turns out that Cocoa uses a primitive form of `weak references`_.  Those 
 are not true `weak references`_ as in Python, but use-cases where an object 
 stores a reference to another object without increasing the reference count
-for that other object. The bridge cannot solve the issues this introduces
+for that other object.  The bridge cannot solve the issues this introduces
 for you, which means that you get hard crashes when you're not careful when
 dealing with those `weak references`_.
 
 .. _`weak references`: http://www.python.org/doc/current/lib/module-weakref.html
 
 The basic rule to deal with weak references is: make sure objects stays
-alive as long as someone might have a weak reference to them. Due to the way
+alive as long as someone might have a weak reference to them.  Due to the way
 the bridge works, this means that you must make sure that you don't create
-weak references from Objective-C to a plain Python object. The Python
+weak references from Objective-C to a plain Python object.  The Python
 object stays alive, but the proxy object as seen by the Objective-C code is
 actually an autoreleased object that will be cleaned up unless the Objective-C
 code increases its reference count.
 
 The document `Notes on supported APIs and classes on Mac OS X`_ contains 
-information about classes that work with weak references. The most important
+information about classes that work with weak references.  The most important
 are notification centers and ``NSOutlineView``, to be exact: the outline view
 stores weak references to the objects return by the method 
-``outlineView:child:ofItem:`` of its data source. The easiest way to avoid
+``outlineView:child:ofItem:`` of its data source.  The easiest way to avoid
 crashes with outline views is to make sure that you model for the view uses
 subclasses of ``NSObject`` to represent the nodes in the outline view.
 
 Another gotcha is that ``obj.setDelegate_()`` often does *not* retain the
 delegate, so a reference should be maintained elsewhere.
 
-(Informal) protocols
-....................
+Protocols
+.........
 
 Cocoa defines a number of formal and informal protocols that specify methods
 that should be implemented by a class if it is to be used in a specific role,
 such as the data source for an ``NSTableView``.
 
-Those protocols are represented by instances of ``objc.informal_protocol``. The
-only ones that have to care about these objects are the maintainers of 
-wrappers around Objective-C frameworks: they have to keep these protocol
-wrappers up-to-date.
+Those protocols are represented by instances of ``objc.informal_protocol``,
+and ``objc.formal_protocol``.  The only ones that have to care about these
+objects are the maintainers of wrappers around Objective-C frameworks: they
+have to keep these protocol wrappers up-to-date.
 
 PyObjC will automatically use the information in the ``informal_protocol`` 
 objects to add the right method signatures to methods, and to warn about
@@ -459,8 +460,8 @@ Cocoa Bindings
 ..............
 
 In Mac OS X 10.3 Apple introduced `Cocoa Bindings`_, a method to make it easier
-to create and use *Controller* objects using `Key-Value Observing`_ and `Key-Value
-Coding`_.  In order to create accessors compatible with this, you
+to create and use *Controller* objects using `Key-Value Observing`_ and
+`Key-Value Coding`_.  In order to create accessors compatible with this, you
 must use ``objc.accessor`` to create an appropriate selector descriptor.
 
 .. _`Cocoa Bindings`: http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaBindings/
@@ -472,7 +473,7 @@ Categories
 
 Objective-C has a mechanism for modularize a class definition, it is possible
 to add methods to an existing class in a separate compilation unit and even
-a separate library. This mechanism is named categories and is used to enhance
+a separate library.  This mechanism is named categories and is used to enhance
 existing classes, for splitting classes in several parts and to document
 informal protocols.
 
@@ -482,7 +483,7 @@ An example of a category definition::
 	- (NSSize)objectFootprint;
 	@end
 
-This declares an additional category on ``NSObject``. This category contains
+This declares an additional category on ``NSObject``.  This category contains
 a single method.
 
 The function ``objc.classAddMethods`` can be used to get the same effect in
@@ -512,8 +513,8 @@ the classes, constants and functions from the AppKit framework are available
 after you import ``AppKit`` in your Python script. 
 
 These helper modules contain *only* functions, constants and classes that 
-wrap items in the corresponding framework. All utility functions and classes 
-are located in the ``PyObjCTools`` package and ``objc`` module. Note that it
+wrap items in the corresponding framework.  All utility functions and classes 
+are located in the ``PyObjCTools`` package and ``objc`` module.  Note that it
 is possible to use ``pydoc`` (or the ``help()``) function with the framework
 wrappers, but that this is not very useful for the entire module due to the
 size of these modules.
@@ -524,13 +525,13 @@ that item can be found in the documentation for the framework; otherwise the
 item is documented in the PyObjC documentation.
 
 The module ``PyObjCTools.NibClassBuilder`` can be used to make working with 
-NIB files more convenient. This module can be used to extract information 
+NIB files more convenient.  This module can be used to extract information 
 about classes from NIB files, both as a standalone tool generating source code 
-and during runtime. See the online documentation for this module for more
+and during runtime.  See the online documentation for this module for more
 information.
 
 PyObjC includes a number of examples that show how to use Cocoa from
-Python. The `PyObjC Example index`_ contains an overview of those examples.
+Python.  The `PyObjC Example index`_ contains an overview of those examples.
 
 More information on Cocoa programming can be found at:
 
@@ -560,56 +561,54 @@ Working with threads
 
 When you create a thread and want to use PyObjC from that thread you will
 have to create an ``NSAutoreleasePool`` in that thread and clean it up when
-you're done. The easiest way to that is to create an instance of that class
-bound to a local variable. If the thread is long-lived you may want to arrange
+you're done.  The easiest way to that is to create an instance of that class
+bound to a local variable.  If the thread is long-lived you may want to arrange
 for recycling the pool once in a while.
 
 Finalizers
 ..........
 
 In Python you can use the method ``__del__`` to clean up resources when your
-object is garbage collected. In Objective-C/Cocoa this is done with a method 
+object is garbage collected.  In Objective-C/Cocoa this is done with a method 
 named ``dealloc``. 
 
-In Python subclasses of Objective-C classes you can use either convention. You
+In Python subclasses of Objective-C classes you can use either convention.  You
 should pick one convention for your own code, the order in which ``__del__``
 and ``dealloc`` methods are called is undefined.
 
 Copying
 .......
 
-It is possible to implement the ``NSCopying`` protocol in your classes. Some
+It is possible to implement the ``NSCopying`` protocol in your classes.  Some
 care must be taken when you inherit from a class that already implements 
 that protocol. 
 
 Some classes copy the template object manually, you'll have to copy your 
-own fields manually in that case. Other classes use a convenience function
-that creates the copy. In that case you wont have to copy your own fields.
+own fields manually in that case.  Other classes use a convenience function
+that creates the copy.  In that case you wont have to copy your own fields.
 However, the fields in the copy will rever to the same objects as the 
 fields in the original (that is, the copy will share some state with the
-original). This is no problem when the fields rever to immutable values (such
+original).  This is no problem when the fields rever to immutable values (such
 as integers), but is probably not what you want when the fields rever to
 mutable values (such as lists).
 
 NOTE: PyObjC might introduce a helper class when you inherit from a class
-that implements ``NSCopying``. You should not rely on the existance of this
+that implements ``NSCopying``.  You should not rely on the existance of this
 class.
 
 NOTE2: You shouldn't assign to ``SomeClass.copyWithZone_`` unless that class
-already implements ``copyWithZone:``. If you do you may end up with seemingly
+already implements ``copyWithZone:``.  If you do you may end up with seemingly
 random memory coruption.
 
 Building applications
 ---------------------
 
-There are two different ways to build applications with PyObjC. py2app
-should be the preferred method, however using the Xcode template can
-be convenient for development.
+There are two different recommended ways to build applications with PyObjC.
 
 "py2app" :  setup.py
 ....................
 
-The PyObjC installer includes a copy of the ``py2app`` package. This package
+The PyObjC installer includes a copy of the ``py2app`` package.  This package
 offers a way to build distutils scripts for building (standalone)
 applications and plugin bundles.
 
@@ -652,18 +651,9 @@ following command to see the list of options::
 ......................
 
 PyObjC includes a number of Xcode templates that can be used to 
-develop applications. Those templates are used like any other
-Xcode template. The only non-obvious detail is that you have to
-add your sources as resources, but Project Builder usually does the right
-thing when you add a new file.
-
-The templates will build an application that makes use of the installed copy
-``/System/Library/Frameworks/Python.framework`` (e.g. the one shipped by
-Apple in Mac OS X 10.3) and will copy the PyObjC modules into the application
-bundle. This means that this application bundle *should* be useable on any
-Mac OS X 10.3 system, if you do not have any additional dependencies.  Using
-py2app to deploy your application is a more reliable method, and builds more
-compact bundles.
+develop applications, using the same underlying functionality that
+is in py2app.  These templates are used like any other Xcode template,
+but there are some organizational rules about the template.
 
 See `the documentation for the templates`__ for more details.
 

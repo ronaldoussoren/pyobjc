@@ -14,22 +14,22 @@ protocols::
 	@end
 
 Informal protocols on the other hand are purely documentation, the Objective-C 
-compiler doesn't know about them. For end users the main difference between
+compiler doesn't know about them.  For end users the main difference between
 formal and informal protocols is that you have to declare that you implement a
 formal protocol and that formal protocols do not have optional methods.
 
 Informal protocols and PyObjC
 -----------------------------
 
-PyObjC does have an explicit representation for informal protocols. This makes
+PyObjC does have an explicit representation for informal protocols.  This makes
 it possible to use the protocol description to provide better error messages and
 to automaticly deduce the method signatures for classes that implement an
 informal protocol.
 
 Informal protocols are represented using instances of 
-``objc.informal_protocol``. These instances are automaticly added to a registry,
-therefore it is not necessary to declare that you implement an informal 
-protocol.
+``objc.informal_protocol``.  These instances are automaticly added to a
+registry, therefore it is not necessary to declare that you implement an
+informal protocol.
 
 Formal protocols and PyObjC
 ---------------------------
@@ -38,8 +38,8 @@ PyObjC also has an explicit representation for formal protocols.
 
 Formal protocols are represented as instances of ``objc.formal_protocol``. 
 Unlike informal protocols you have to declare that you implement a formal 
-protocol to get all features of formal protocols. However, all formal protocols
-in Cocoa are also described using ``objc.informal_protocol`` objects.
+protocol to get all features of formal protocols.  However, all formal
+protocols in Cocoa are also described using ``objc.informal_protocol`` objects.
 
 XXX: is this necessary? we could also use the same strategy as for informal
 protocols, and drop the informal_protocol wrappers for formal protocols.
@@ -51,8 +51,8 @@ a mix-in::
 		def lock(self): pass
 		def unlock(self): pass
 
-The class now formally implements the ``NSLocking`` protocol, you can check this
-using the Objective-C introspection methods::
+The class now formally implements the ``NSLocking`` protocol, you can check
+this using the Objective-C introspection methods::
 
 	>>> MyLockingObject.pyobjc_classMethods.conformsToProtocol_(NSLocking)
 	1

@@ -35,8 +35,9 @@ accessed although without access to constants and global functions defined
 by those frameworks.
 
 This document is not entirely complete, but does cover the most used APIs.
+Classes not mentioned in this document may very well work properly.
 
-Core objective-C runtime
+Core Objective-C runtime
 ------------------------
 
 Class Protocol
@@ -256,9 +257,8 @@ NOTE: The list below is mostly based on scripts that find methods that can
 not be automatically handled by the bridge. We have not yet performed a manual
 search for such methods in the Cocoa documentation.
 
-The ``-forward::`` method is not supported. It's functionality can be accessed
-using the python function ``apply``. The ``performv::`` method is also not
-supported, with a similar work-around.
+The ``-forward::`` and ``performv::`` methods are not supported.  You can
+work-around this using normal Python function invocation.
 
 Structs are wrapped using a struct-like type. They can be accessed using the
 field-names from Objective-C, or you can access them as sequences. Accessing
@@ -344,6 +344,10 @@ represent the return value of this method in Python.
 Class ``NSData``
 ................
 
+NSData subclasses support the Python buffer protocol, and any Python
+object that implements the Python buffer protocol (except str and unicode)
+are wrapped as an NSData subclass.
+
 * ``initWithBytesNoCopy:length:``
 
   This method is not supported, use ``initWithBytes:length:`` instead.
@@ -391,9 +395,7 @@ Class ``NSData``
 Class ``NSDecimalNumber`` and the ``NSDecimal`` type
 ....................................................
 
-NSDecimal is wrapped by a Python type. This type does not (yet) support
-mathematical operators, but does support explicit conversion to and from
-Python numbers. 
+NSDecimal is wrapped by a Python type.
 
 Creating an ``NSDecimal`` instance: ``NSDecimal(value)`` or 
 ``NSDecimal(mantisssa, exponent, isNegative)``.  ``Value`` can be a string,
@@ -514,10 +516,10 @@ Class ``NSString``
 ..................
 
 Objective-C strings are usually represented as instances of a subclass of
-the Python type ``unicode``. It is possible to access the "real" Objective-C
-string by using the method ``NSString``. This should only be necessary when
-dealing with mutable strings, or when you want to access methods that don't
-have a Python equivalent.
+the Python type ``unicode``.  Since Python ``unicode`` objects are immutable,
+working with ``NSMutableString`` can be tricky.  If you need to update the
+Python representation of the string, use ``aString.self()``, which will be a
+new string.
 
 * ``initWithCharactersNoCopy:length:freeWhenDone:`` 
 

@@ -16,7 +16,7 @@ Methods
 -------
 
 Classes are scanned for methods when the Python wrapper for a class is created.
-We then create Python wrappers for those methods. This way users can use the
+We then create Python wrappers for those methods.  This way users can use the
 normal Python introspection methods to check which methods are available.
 
 There are several occasions when these method tables are rescanned, because
@@ -97,43 +97,42 @@ methods, such as ``[NSString stringWithCString:"bla"]``!
 
 When programming Cocoa in Python, you rarely need to worry about
 reference counts: the ``objc`` module makes this completely transparent to
-user.  This is mostly implemented in ``[de]pythonify_c_value``. Additonal
+user.  This is mostly implemented in ``[de]pythonify_c_value``.  Additonal
 code is needed when calling methods that transfer ownership of their return
 value (as described above) and when updating a instance variable in an
-Objective-C object (retain new and release old, in that order). Both are
+Objective-C object (retain new and release old, in that order).  Both are
 implemented.
 
 Strings
 -------
 
-Python ``unicode`` instances are automatically converted to ``NSString`` and
-back.  An ``NSString`` is represented in Python as a subtype of ``unicode``:
+Python ``unicode`` instances are proxied by the ``OC_PythonUnicode`` subclass
+of ``NSString``.  This is a proxy, and will maintain the identity of the
+original ``unicode`` instance.
+
+``NSString`` instances are represented in Python as a subtype of ``unicode``:
 ``objc.pyobjc_unicode``.  This performs a conversion, because Python's
 ``unicode`` type is immutable, but it also maintains a *reference* to the
-original ``NSString``.  Currently, the conversion is done using UTF-8 for
-exchange, because the internal representation of ``unicode`` is dependent on
-compile time settings.
+original ``NSString``.  ``NSString`` and ``NSMutableString`` methods are
+available from the ``objc.pyobjc_unicode`` object, though they do not show up
+via Python's introspection mechanisms.  In order to get the latest Python
+representation of a ``NSMutableString``, use the return value of its ``self()``
+method.
 
-The original, unwrapped, ``NSString`` instance is accessible from Python
-with the ``nsstring()`` method of ``objc.pyobjc_unicode``, primarily used
-to access an updated copy of an ``NSMutableString``'s contents.  Since
-PyObjC 1.3, ``NSString`` and ``NSMutableString`` methods are available from
-the ``objc.pyobjc_unicode`` object, though they do not show up via Python's
-introspection mechanisms.
+Python ``str`` instances are proxied by the ``OC_PythonString`` subclass of
+``NSString``.  This is a proxy, and will maintain the identity of the
+original ``str`` instance.  ``OC_PythonString`` will use the default encoding
+of ``NSString``, so its results might be surprising if you are using non-ASCII
+text.  It is recommended that you use ``unicode`` whenever possible.  In order
+to help you determine where you are not using ``unicode``, it is possible
+to trigger an ``objc.PyObjCStrBridgeWarning`` warning whenever a ``str``
+instance crosses the bridge::
 
-The ``str`` bridge is now disabled by default, and will issue
-``objc.PyObjCStrBridgeWarning`` warnings.  To promote these to an
-exception, do the following::
+      import objc
+      objc.setStrBridgeEnabled(False)
+
+To promote these to an exception, do the following::
 
       import objc
       import warnings
       warnings.filterwarnings('error', objc.PyObjCStrBridgeWarning)
-
-To enable the str bridge, without warnings, use::
-
-      import objc
-      objc.setStrBridgeEnabled(True)
-
-In PyObjC 1.4, this warning will go away, and ``str`` objects will not be
-usable as ``NSString`` instances.  To pass text across the bridge,
-always use ``unicode``.

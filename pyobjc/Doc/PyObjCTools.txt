@@ -46,6 +46,11 @@ during development.
 Module that tries to print useful information when the program gets a fatal
 exception. This module should only be used during development.
 
+* ``PyObjCTools.XcodeSupport``
+
+Used by the PyObjC Xcode templates to derive py2app options from an Xcode
+project file.
+
 
 ``PyObjCTools.AppHelper``
 .........................

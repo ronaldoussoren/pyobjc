@@ -10,11 +10,11 @@ The PyObjC release process</title>
 <h2>The PyObjC release process</h2>
 <!-- :author: Ronald Oussoren -->
 <p>This document gives an exhaustive overview of what needs to be done when 
-building and releasing a new version of PyObjC. It is meant for the project
+building and releasing a new version of PyObjC.  It is meant for the project
 administrators, and not of much use for users of PyObjC.</p>
 <p>The timeframe is a guideline only and should be taken with a grain of salt.</p>
 <h2><a name="release-date-2-weeks">Release date -2 weeks</a></h2>
-<p>Full feature freeze, documentation updates and critical bug-fixes only. At
+<p>Full feature freeze, documentation updates and critical bug-fixes only.  At
 this time:</p>
 <ul>
 <li>Check if the NEWS file is up-to-date</li>
@@ -33,9 +33,9 @@ should be completely bug-free.</li>
 <li>Run <code><span>python</span> <span>setup.py</span> <span>bdist_dmg</span></code> to build a binary installer.  This should
 be done for each supported version combination of Mac OS X and Python.</li>
 </ul>
-<p>Trash you existing PyObjC installation and reinstall from the new release. Test
-that the new release is working correctly. Installing and testing should be
-done for the binary installer and for the source archive. The latter should
+<p>Trash you existing PyObjC installation and reinstall from the new release.
+Test that the new release is working correctly.  Installing and testing should
+be done for the binary installer and for the source archive.  The latter should
 be done for all supported configurations.  Also test to make sure that an
 upgrade from a previous release works as expected.</p>
 <p>If the package works as expected, upload to a convenient location and ask some
