@@ -69,6 +69,11 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		return NULL;
 	}
 
+	if (!PyObjCClass_Check(classObject)) {
+		PyErr_SetString(PyExc_TypeError, "not a class");
+		return NULL;
+	}
+
 	targetClass  = PyObjCClass_GetClass(classObject);
 	methodCount  = PyList_Size(methodsArray);
 
