@@ -552,6 +552,20 @@ NSKeyValueObservingCustomization = _objc.informal_protocol(
     ]
 )
 
+NSKeyValueObservingCustomization = _objc.informal_protocol(
+    "NSKeyValueObservingCustomization",
+    [
+# + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key;
+    _objc.selector(
+    None,
+    selector='automaticallyNotifiesObserversForKey:',
+    signature='c@:@',
+    isRequired=0,
+    isClassMethod=1,
+    ),
+    ]
+    )
+
 NSKeyedArchiverDelegate = _objc.informal_protocol(
     "NSKeyedArchiverDelegate",
     [
