@@ -1,4 +1,5 @@
 import sys
+import os
 import __builtin__
 import traceback
 import keyword
@@ -60,6 +61,7 @@ class RemoteConsole(InteractiveConsole):
         sys.stdout = self.pipe.stdout
         sys.stderr = self.pipe.stderr
         try:
+            self.pipe.expect('RemoteConsole.initialize', repr(sys.version_info), sys.executable, os.getpid())
             InteractiveConsole.interact(self)
         finally:
             __builtin__.raw_input = old_raw_input

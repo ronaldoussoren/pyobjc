@@ -1,5 +1,6 @@
 __all__ = ['ConsoleReactor']
 
+import sys
 from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
 from Foundation import *
 
@@ -61,7 +62,7 @@ class ConsoleReactor(NSObject):
         self.doCallback_sequence_args_(
             self.commands.pop(command[0]),
             command[0],
-            command[1:],
+            map(self.netEval_, command[1:]),
         )
 
     def sendResult_sequence_(self, rval, seq):
@@ -114,6 +115,8 @@ class ConsoleReactor(NSObject):
             fh = getattr(sys, args[0])
             meth = getattr(fh, name[len('RemoteFileLike.'):])
             self.doCallback_sequence_args_(meth, seq, args[1:])
+        elif name == 'RemoteConsole.initialize':
+            self.doCallback_sequence_args_(lambda *args:None, seq, args)
         else:
             self.doCallback_sequence_args_(NSLog, seq, [u'%r does not respond to expect %r' % (self, command,)])
 
