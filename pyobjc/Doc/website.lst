@@ -2,8 +2,11 @@
 Install.txt,user,0
 intro.txt,user,5
 users.txt,user,10
-tutorial.txt,user,14
+tutorial.txt,user,12
+extending_objc_with_python.txt,user,13
+tutorial_reading.txt,user,14
 ProjectBuilder-SyntaxHighlighting.txt,user,15
+api-notes-macosx.txt,user,17
 warts.txt,user,20
 wrapping.txt,user,30
 coding-style.txt,developer,10
