@@ -1,43 +1,39 @@
 static inline int convert_NSPoint(PyObject* object, void* pvar)
 {
-	const char* errstr;
+	int err;
 
-	errstr = ObjC_PythonToObjC(@encode(NSPoint), object, pvar);
-	if (errstr) {
-		PyErr_SetString(PyExc_TypeError, errstr);
+	err = ObjC_PythonToObjC(@encode(NSPoint), object, pvar);
+	if (err == -1) {
 		return 0;
 	}
 	return 1;
 }
 static inline int convert_NSSize(PyObject* object, void* pvar)
 {
-	const char* errstr;
+	int err;
 
-	errstr = ObjC_PythonToObjC(@encode(NSSize), object, pvar);
-	if (errstr) {
-		PyErr_SetString(PyExc_TypeError, errstr);
+	err = ObjC_PythonToObjC(@encode(NSSize), object, pvar);
+	if (err == -1) {
 		return 0;
 	}
 	return 1;
 }
 static inline int convert_NSRect(PyObject* object, void* pvar)
 {
-	const char* errstr;
+	int err;
 
-	errstr = ObjC_PythonToObjC(@encode(NSRect), object, pvar);
-	if (errstr) {
-		PyErr_SetString(PyExc_TypeError, errstr);
+	err = ObjC_PythonToObjC(@encode(NSRect), object, pvar);
+	if (err == -1) {
 		return 0;
 	}
 	return 1;
 }
 static inline int convert_NSRange(PyObject* object, void* pvar)
 {
-	const char* errstr;
+	int err;
 
-	errstr = ObjC_PythonToObjC(@encode(NSRange), object, pvar);
-	if (errstr) {
-		PyErr_SetString(PyExc_TypeError, errstr);
+	err = ObjC_PythonToObjC(@encode(NSRange), object, pvar);
+	if (err == -1) {
 		return 0;
 	}
 	return 1;

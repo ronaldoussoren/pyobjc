@@ -129,6 +129,7 @@ error_cleanup:
 	return NULL;
 }
 
+
 static PyObject*
 objc_NSApp(PyObject* self, PyObject* args, PyObject* kwds)
 {
@@ -184,6 +185,49 @@ static  char* keywords[] = { "context", NULL };
 
 	return PyInt_FromLong(count);
 }
+
+static PyObject*
+objc_NSAvailableWindowDepths(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static  char* keywords[] = { NULL };
+	int       count;
+	const NSWindowDepth*	  depths;
+	PyObject *result, *tmp;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, ":NSAvailableWindowDepts", keywords)) {
+		return NULL;
+	}
+
+	NS_DURING
+		depths = NSAvailableWindowDepths();
+	NS_HANDLER
+		ObjCErr_FromObjC(localException);
+	NS_ENDHANDLER
+	if (PyErr_Occurred()) return NULL;
+
+	result = PyList_New(0);
+	if (result == NULL) return NULL;
+
+	while (*depths != 0) {
+		PyObject* v = PyInt_FromLong(*depths);
+		if (v == NULL) {
+			Py_DECREF(result);
+			return NULL;
+		}
+
+		if (PyList_Append(result, v) == -1) {
+			Py_DECREF(result);
+			return NULL;
+		}
+
+		depths++;
+	}
+
+	tmp = PyList_AsTuple(result);
+	Py_XDECREF(result);
+	return tmp;
+}
+
 
 static PyObject*
 objc_NSRectFillList(PyObject* self, PyObject* args, PyObject* kwds)
@@ -263,6 +307,12 @@ static PyMethodDef appkit_methods[] = {
 	{
 	        "NSRectFillList",
 		(PyCFunction)objc_NSRectFillList,
+		METH_VARARGS,
+		NULL
+	},
+	{
+	        "NSAvailableWindowDepths",
+		(PyCFunction)objc_NSAvailableWindowDepths,
 		METH_VARARGS,
 		NULL
 	},

@@ -34,7 +34,16 @@ def process_file(outfp, filename, match_prefix='', ignore_list=()):
 		m = MATCH_RE.match(ln)
 		if not m: continue
 
-		outfp.write('%s\n'%m.group(1).strip())
+                prototype=m.group(1).strip()
+
+                ign = 0
+                for i in ignore_list:
+                    if i in prototype:
+                        ign=1
+                        break
+
+                if not ign:
+                    outfp.write('%s\n'%prototype)
 
 def generate(dirname, fn = None, match_prefix='', ignore_list=()):
 	if fn:

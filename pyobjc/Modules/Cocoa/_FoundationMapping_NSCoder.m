@@ -23,7 +23,7 @@ static PyObject* call_NSCoder_encodeValueOfObjCType_at_(
 	PyObject* result;
 	void*     buf;
 	size_t    size;
-	const char* errstr;
+	int err;
 
 	if  (PyArg_ParseTuple(arguments, "sO", &signature, &value) < 0) {
 		return NULL;
@@ -39,12 +39,8 @@ static PyObject* call_NSCoder_encodeValueOfObjCType_at_(
 		return NULL;
 	}
 
-	errstr = ObjC_PythonToObjC(signature, value, buf);
-	if (errstr) {
-		printf("Cannot encode %s of %s into %p: %p '%s', %s\n",
-				PyString_AS_STRING(PyObject_Repr(value)),
-				signature, buf, errstr, errstr, ((PyObject*)errstr)->ob_type->tp_name);
-		PyErr_SetString(PyExc_ValueError, errstr);
+	err = ObjC_PythonToObjC(signature, value, buf);
+	if (err == -1) {
 		return NULL;
 	}
 
@@ -70,7 +66,7 @@ static PyObject* supercall_NSCoder_encodeValueOfObjCType_at_(
 	PyObject* result;
 	void*     buf;
 	size_t    size;
-	const char* errstr;
+	int err;
 	struct objc_super super;
 
 	if  (PyArg_ParseTuple(arguments, "sO", &signature, &value) < 0) {
@@ -87,9 +83,8 @@ static PyObject* supercall_NSCoder_encodeValueOfObjCType_at_(
 		return NULL;
 	}
 
-	errstr = ObjC_PythonToObjC(signature, value, buf);
-	if (errstr) {
-		PyErr_SetString(PyExc_ValueError, errstr);
+	err = ObjC_PythonToObjC(signature, value, buf);
+	if (err == -1) {
 		return NULL;
 	}
 
@@ -158,7 +153,7 @@ static PyObject* call_NSCoder_encodeArrayOfObjCType_count_at_(
 	PyObject* result;
 	void*     buf;
 	size_t    size;
-	const char* errstr;
+	int err;
 
 	if  (PyArg_ParseTuple(arguments, "siO", &signature, &count, &value) < 0) {
 		return NULL;
@@ -191,11 +186,10 @@ static PyObject* call_NSCoder_encodeArrayOfObjCType_count_at_(
 	}
 
 	for (i = 0; i < count; i++) {
-		errstr = ObjC_PythonToObjC(signature, 
+		err = ObjC_PythonToObjC(signature, 
 				PySequence_GetItem(value, i), 
 				((char*)buf) + (size * i));
-		if (errstr) {
-			PyErr_SetString(PyExc_ValueError, errstr);
+		if (err == -1) {
 			return NULL;
 		}
 	}
@@ -224,7 +218,7 @@ static PyObject* supercall_NSCoder_encodeArrayOfObjCType_count_at_(
 	PyObject* result;
 	void*     buf;
 	size_t    size;
-	const char* errstr;
+	int err;
 	struct objc_super super;
 
 	if  (PyArg_ParseTuple(arguments, "siO", &signature, &count, &value) < 0) {
@@ -258,11 +252,10 @@ static PyObject* supercall_NSCoder_encodeArrayOfObjCType_count_at_(
 	}
 
 	for (i = 0; i < count; i++) {
-		errstr = ObjC_PythonToObjC(signature, 
+		err = ObjC_PythonToObjC(signature, 
 				PySequence_GetItem(value, i), 
 				((char*)buf) + (size * i));
-		if (errstr) {
-			PyErr_SetString(PyExc_ValueError, errstr);
+		if (err == -1) {
 			return NULL;
 		}
 	}
