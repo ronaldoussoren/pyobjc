@@ -453,6 +453,17 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		}
 	}
 
+#if 1 /* ndef OC_WITH_LIBFFI */
+	/* 
+	 * Ronald: If we use libffi we don't need this block of code, just
+	 * always using the 'super_call' code-path suffices. If it doesn't
+	 * the information in the class-proxy is incorrect and we're hosed 
+	 * anyway. 
+	 *  Not using this block of code gives a measureable speedup of the
+	 * proxy and makes the code easier to understand, especially if we
+	 * remove non-ffi support.
+	 */
+
 	/* First stab at detecting super-calls... */
 	if (!(self->sel_flags & ObjCSelector_kCLASS_METHOD)) {
 		if (ObjCObject_Check(pyself)) {
@@ -516,6 +527,9 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			is_super_call = 1;
 		} 
 	}
+#else /* !OC_WITH_FFI */
+	is_super_call = 1;
+#endif /* !OC_WITH_FFI */
 
 	if (is_super_call) {
 		if (self->sel_call_super) {
@@ -552,7 +566,6 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			}
 
 			PyTuple_SetItem(arglist, i-1, v);
-			OC_CheckRevive(v);
 			Py_INCREF(v);
 		}
 
@@ -615,7 +628,6 @@ objcsel_descr_get(ObjCNativeSelector* meth, PyObject* obj, PyObject* class)
 
 	result->sel_self       = obj;
 	if (result->sel_self) {
-		OC_CheckRevive(result->sel_self);
 		Py_INCREF(result->sel_self);
 	}
 
@@ -744,7 +756,6 @@ ObjCSelector_FindNative(PyObject* self, char* name)
 			if (res != NULL) {
 				/* Bind the method to self */
 				res->sel_self = self;
-				OC_CheckRevive(res->sel_self);
 				Py_INCREF(res->sel_self);
 			}
 			return (PyObject*)res;
@@ -912,13 +923,11 @@ pysel_call(ObjCPythonSelector* self, PyObject* args)
 		if (actual_args == NULL) {
 			return NULL;
 		}
-		OC_CheckRevive(self->sel_self);
 		Py_INCREF(self->sel_self);
 		PyTuple_SetItem(actual_args, 0, self->sel_self);
 		for (i = 0; i < argc; i++) {
 			PyObject* v = PyTuple_GET_ITEM(args, i);
 			/*if (v == NULL) return NULL;*/
-			OC_CheckRevive(v);
 			Py_XINCREF(v);
 			PyTuple_SET_ITEM(actual_args, i+1, v);
 		}
@@ -1181,7 +1190,6 @@ pysel_descr_get(ObjCPythonSelector* meth, PyObject* obj, PyObject* class)
 	result->sel_flags = meth->sel_flags;
 	result->callable = meth->callable;
 	if (result->sel_self) {
-		OC_CheckRevive(result->sel_self);
 		Py_INCREF(result->sel_self);
 	}
 	if (result->callable) {

@@ -208,6 +208,7 @@ objc_methodlist_magic(Class cls)
 }
 
 extern int objc_sizeof_type (const char *type);
+extern int objc_alignof_type (const char *type);
 extern const char *objc_skip_typespec (const char *type);
 extern void objc_freeMethodList(struct objc_method_list **list);
 

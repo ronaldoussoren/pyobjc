@@ -237,17 +237,25 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 - (void) forwardInvocation:(NSInvocation *) invocation
 {
+	/* XXX: Needs cleanup */
 	NSMethodSignature* msign = [invocation methodSignature];
 	SEL                aSelector = [invocation selector];
 	PyObject*          pymethod;
 	PyObject*          result;
 	const char*        rettype = [msign methodReturnType];
-	char*              retbuffer = alloca(objc_sizeof_type (rettype));
 	const char*        error;
 	PyObject*          args = NULL;
 	unsigned int       i;
 	unsigned int       argcount;      
 	PyCodeObject*      func_code;
+	int		   retsize = objc_sizeof_type (rettype);
+	char*              retbuffer;
+
+	if (retsize == -1) {
+		ObjCErr_ToObjC();
+	}
+	
+	retbuffer = alloca(retsize);
   
 	pymethod = get_method_for_selector([self pyObject], aSelector);
 
@@ -277,6 +285,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	for (i=argcount+1; i>1; i--) {
 		const char *argtype;
 		char *argbuffer;
+		int  argsize;
 		PyObject *pyarg;
 
 #ifdef NOTOSX /* XXX: This should be abstracted into a macro/function */
@@ -284,7 +293,11 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 #else
 		argtype = [msign getArgumentTypeAtIndex:i];
 #endif
-		argbuffer = alloca (objc_sizeof_type (argtype));
+		argsize = objc_sizeof_type(argtype);
+		if (argsize == -1) {
+			ObjCErr_ToObjC();
+		}
+		argbuffer = alloca (argsize);
 		[invocation getArgument:argbuffer atIndex:i];
 		pyarg = pythonify_c_value (argtype, argbuffer);
 
@@ -299,9 +312,10 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 	error = depythonify_c_value (rettype, result, retbuffer);
 	if (error) {
-		NSLog(@"PyObjC: error depythonifying return value of %s: %s\n", SELNAME(aSelector), error);
-		/* XXX: Throw ObjC exception */
-		abort();
+		[NSException raise:NSInvalidArgumentException
+			     format:@"depythonify return value of %s: %s",
+			     	SELNAME(aSelector),
+				error];
 	} else {
 		[invocation setReturnValue:retbuffer];
 	}

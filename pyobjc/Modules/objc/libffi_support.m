@@ -35,6 +35,13 @@ static int OBJC_FFI_SUPPORT_dummy = 0;
 #    error "Need FFI_CLOSURES!"
 #endif
 
+static int align(int offset, int alignment)
+{
+	int rest = offset % alignment;
+	if (rest == 0) return offset;
+	return offset + (alignment - rest);
+}
+
 static int
 count_struct(const char* argtype)
 {
@@ -47,6 +54,7 @@ count_struct(const char* argtype)
 	argtype++;
 	while (*argtype != _C_STRUCT_E) {
 		argtype = objc_skip_typespec(argtype);
+		if (argtype == NULL) return -1;
 		res ++;
 	}
 	return res;
@@ -85,7 +93,12 @@ static  PyObject* struct_types = NULL;
 	 * create it.
 	 */
 	field_count = count_struct(argtype);
-	if (field_count == -1) abort();
+	if (field_count == -1) {
+		ObjCErr_Set(ObjCExc_internal_error,
+			"Cannot determine layout of %s", argtype);
+		return NULL;
+	}
+			
 	type = malloc(sizeof(*type));
 	if (type == NULL) {
 		PyErr_NoMemory();
@@ -110,12 +123,15 @@ static  PyObject* struct_types = NULL;
 			type->elements[field_count] = 
 				signature_to_ffi_type(curtype);
 			if (type->elements[field_count] == NULL) {
-				abort();
 				free(type->elements);
 				return NULL;
 			}
 			field_count++;
 			curtype = objc_skip_typespec(curtype);
+			if (curtype == NULL) {
+				free(type->elements);
+				return NULL;
+			}
 		}
 	}
 	type->elements[field_count] = NULL;
@@ -161,8 +177,6 @@ signature_to_ffi_type(const char* argtype)
 		return signature_to_ffi_type(argtype+1);
 	case _C_STRUCT_B: 
 		return struct_to_ffi_type(argtype);
-	case 0:
-		abort();
 	default:
 		ObjCErr_Set(PyExc_NotImplementedError,
 			"Type '%x' not supported", *argtype);
@@ -452,7 +466,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	size_t            objc_argcount;
 	size_t            py_arg;
 	int               i;
-	int*		  byref = NULL; /* offset for arguments in argbuf */
+	void**		  byref = NULL; /* offset for arguments in argbuf */
 	const char* 	  rettype;
 	NSMethodSignature*  methinfo;
 	ObjCNativeSelector* meth = (ObjCNativeSelector*)aMeth;
@@ -468,6 +482,9 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	void*		  msgResult;
 	int               resultSize;
 	int               arglistOffset;
+	int		  itemSize;
+	int		  itemAlign;
+	char		  tpBuf[2];
 
 	if (meth->sel_oc_signature) {
 		methinfo = meth->sel_oc_signature;
@@ -475,13 +492,33 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		methinfo = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
 		meth->sel_oc_signature = methinfo;
 	}
+	rettype = [methinfo methodReturnType];
+	if (*rettype == _C_CHR) {
+		/* This might be ABI related: On MacOSX the return value is
+		 * bogus unless we act as if a method return a 'char' (BOOL)
+		 * returns an 'int'.
+		 */
+		rettype = tpBuf;
+		tpBuf[0] = _C_INT;
+		tpBuf[1] = 0;
+	} else if (*rettype == _C_UCHR) {
+		rettype = tpBuf;
+		tpBuf[0] = _C_UINT;
+		tpBuf[1] = 0;
+	}
 	objc_argcount = [methinfo numberOfArguments];
-	resultSize = objc_sizeof_type([methinfo methodReturnType]);
+	resultSize = objc_sizeof_type(rettype);
+	if (resultSize == -1) {
+		return NULL;
+	}
+
 
 	/* First count the number of by reference parameters, and the number
 	 * of bytes of storage needed for them. Note that arguments 0 and 1
 	 * are self and the selector, no need to count counted or checked those.
 	 */
+	argbuf_len = resultSize;
+
 	for (i = 2; i < objc_argcount; i++) {
 		const char *argtype = [methinfo getArgumentTypeAtIndex:i];
 
@@ -489,44 +526,92 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		case _C_PTR: 
 			byref_in_count ++;
 			byref_out_count ++;
-			argbuf_len += objc_sizeof_type(argtype+1);
+			itemSize = objc_sizeof_type(argtype+1);
+			itemAlign = objc_alignof_type(argtype+1);
+			if (itemSize == -1) {
+				return NULL;
+			}
+			argbuf_len = align(argbuf_len, itemAlign);
+			argbuf_len += itemSize;
 			break;
 
 		case _C_INOUT:
 			if (argtype[1] == _C_PTR) {
 				byref_out_count ++;
 				byref_in_count ++;
-				argbuf_len += objc_sizeof_type(argtype+2);
+				itemAlign = objc_alignof_type(argtype+2);
+				itemSize = objc_sizeof_type(argtype+2);
+				if (itemSize == -1) {
+					return NULL;
+				}
 			} else {
-				argbuf_len += objc_sizeof_type(argtype+1);
+				itemSize = objc_sizeof_type(argtype+1);
+				itemAlign = objc_alignof_type(argtype+1);
+				if (itemSize == -1) {
+					return NULL;
+				}
 			}
+			argbuf_len = align(argbuf_len, itemAlign);
+			argbuf_len += itemSize;
 			break;
 
 		case _C_IN: case _C_CONST:
 			if (argtype[1] == _C_PTR) {
 				byref_in_count ++;
-				argbuf_len += objc_sizeof_type(argtype+2);
+				itemSize = objc_sizeof_type(argtype+2);
+				itemAlign = objc_alignof_type(argtype+2);
+				if (itemSize == -1) {
+					return NULL;
+				}
 			} else {
-				argbuf_len += objc_sizeof_type(argtype+1);
+				itemSize = objc_sizeof_type(argtype+1);
+				itemAlign = objc_alignof_type(argtype+1);
+				if (itemSize == -1) {
+					return NULL;
+				}
 			}
+			argbuf_len = align(argbuf_len, itemAlign);
+			argbuf_len += itemSize;
 			break;
 
 		case _C_OUT:
 			if (argtype[1] == _C_PTR) {
 				byref_out_count ++;
-				argbuf_len += objc_sizeof_type(argtype+2);
+				itemSize = objc_sizeof_type(argtype+2);
+				itemAlign = objc_alignof_type(argtype+2);
+				if (itemSize == -1) {
+					return NULL;
+				}
 			} else {
-				argbuf_len += objc_sizeof_type(argtype+1);
+				itemSize = objc_sizeof_type(argtype+1);
+				itemAlign = objc_alignof_type(argtype+1);
+				if (itemSize == -1) {
+					return NULL;
+				}
 			}
+			argbuf_len = align(argbuf_len, itemAlign);
+			argbuf_len += itemSize;
 			break;
 
 		case _C_STRUCT_B: case _C_UNION_B: case _C_ARY_B:
 			plain_count++;
-			argbuf_len += objc_sizeof_type(argtype);
+			itemSize = objc_sizeof_type(argtype);
+			itemAlign = objc_alignof_type(argtype);
+			if (itemSize == -1) {
+				return NULL;
+			}
+			argbuf_len = align(argbuf_len, itemAlign);
+			argbuf_len += itemSize;
 			break;
 
 		default:
-			argbuf_len += objc_sizeof_type(argtype);
+			itemSize = objc_sizeof_type(argtype);
+			itemAlign = objc_alignof_type(argtype);
+			if (itemSize == -1) {
+				return NULL;
+			}
+			argbuf_len = align(argbuf_len, itemAlign);
+			argbuf_len += itemSize;
 			plain_count++;
 			break;
 		}
@@ -542,19 +627,18 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		goto error_cleanup;
 	}
 
-	argbuf_len += resultSize;
 
 	argbuf = PyMem_Malloc(argbuf_len);
 	if (argbuf == 0) {
 		PyErr_NoMemory();
 		goto error_cleanup;
 	}
-	byref = PyMem_Malloc(sizeof(int) * objc_argcount);
+	byref = PyMem_Malloc(sizeof(void*) * objc_argcount);
 	if (byref == NULL) {
 		PyErr_NoMemory();
 		goto error_cleanup;
 	}
-	memset(byref, 0, sizeof(int) * objc_argcount);
+	//memset(byref, 0, sizeof(void*) * objc_argcount);
 
 	/* Set 'self' argument, for class methods we use the class */ 
 	if (meth->sel_flags & ObjCSelector_kCLASS_METHOD) {
@@ -591,12 +675,17 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		super.class = meth->sel_class;
 	}
 
-	if (sizeof(id) >= resultSize) {
-		arglistOffset = 0;
-	} else {
+	if (resultSize > sizeof(id) && *rettype != _C_DBL) {
+		/*XXX: I'm not sure if the test is correct, either the 
+		 * code dealing with .._stret is buggy or the test for
+		 * _C_DBL is necessary. 
+		 * This might be a calling convention issue.
+		 */
 		arglistOffset = 1;
 		arglist[0] = &ffi_type_pointer;
-		values[0] = argbuf;
+		values[0] = &argbuf;
+	} else {
+		arglistOffset = 0;
 	}
 	
 	superPtr = &super;
@@ -616,11 +705,13 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 		if (argtype[0] == _C_OUT && argtype[1] == _C_PTR) {
 			/* Just allocate room in argbuf and set that*/
 			void* arg;
-			byref[i] = argbuf_cur;
+			argbuf_cur = align(argbuf_cur, 
+				objc_alignof_type(argtype+2));
 			arg = argbuf + argbuf_cur;
+			byref[i] = arg;
 
 			arglist[arglistOffset + i] = &ffi_type_pointer;
-			values[arglistOffset + i] = arg;
+			values[arglistOffset + i] = byref+i;
 
 			argbuf_cur += objc_sizeof_type(argtype+2);
 		} else {
@@ -633,9 +724,11 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			case _C_STRUCT_B: case _C_ARY_B: case _C_UNION_B:
 				/* Allocate space and encode */
 				{
+					argbuf_cur = align(argbuf_cur, 
+						objc_alignof_type(argtype));
 					void* arg = argbuf + argbuf_cur;
 					argbuf_cur += objc_sizeof_type(argtype);
-					byref[i] = argbuf_cur;
+					byref[i] = arg;
 	  				error = depythonify_c_value (
 						argtype, 
 						argument, 
@@ -651,16 +744,18 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			case _C_PTR:
 				/* Allocate space and encode */
 				{
+					argbuf_cur = align(argbuf_cur, 
+						objc_alignof_type(argtype+1));
 					void* arg = argbuf + argbuf_cur;
 					argbuf_cur += objc_sizeof_type(argtype+1);
-					byref[i] = argbuf_cur;
+					byref[i] = arg;
 	  				error = depythonify_c_value (
 						argtype+1, 
 						argument, 
 						arg);
 
 					arglist[arglistOffset + i] = &ffi_type_pointer;
-					values[arglistOffset + i] = arg;
+					values[arglistOffset + i] = byref+i;
 				} 
 				break;
 
@@ -670,9 +765,10 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 				if (argbuf[1] == _C_PTR) {
 					/* Allocate space and encode */
+					argbuf_cur = align(argbuf_cur, objc_alignof_type(argtype+2));
 					void* arg = argbuf + argbuf_cur;
 					argbuf_cur += objc_sizeof_type(argtype+2);
-					byref[i] = argbuf_cur;
+					byref[i] = arg;
 	  				error = depythonify_c_value (
 						argtype+2, 
 						argument, 
@@ -683,6 +779,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 				} else {
 					/* just encode */
+					argbuf_cur = align(argbuf_cur, objc_alignof_type(argtype+1));
 					void* arg = argbuf + argbuf_cur;
 					argbuf_cur += objc_sizeof_type(argtype+1);
 	  				error = depythonify_c_value (
@@ -698,6 +795,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 				break;
 			default:
 				{
+				argbuf_cur = align(argbuf_cur, objc_alignof_type(argtype));
 				void* arg = argbuf + argbuf_cur;
 				argbuf_cur += objc_sizeof_type(argtype);
 
@@ -713,6 +811,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 			if (error) {
 				const char* typeend = objc_skip_typespec(argtype);
+				if (typeend == NULL) goto error_cleanup;
 				ObjCErr_Set(PyExc_TypeError,
 					"expected %s for argument %d: its "
 					"typespec is '%.*s'",
@@ -729,7 +828,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			&ffi_type_void, arglist);
 	} else {
 		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, objc_argcount,
-			&ffi_type_pointer, arglist);
+			signature_to_ffi_type(rettype), arglist);
 	}
 	if (r != FFI_OK) {
 		ObjCErr_Set(PyExc_RuntimeError,
@@ -740,7 +839,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	/* XXX This only works for short return values! */
 	NS_DURING
 		if (arglistOffset) {
-			ffi_call(&cif, FFI_FN(objc_msgSendSuper), NULL, values);
+			ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), NULL, values);
 		} else {
 			ffi_call(&cif, FFI_FN(objc_msgSendSuper), msgResult, values);
 		}
@@ -749,11 +848,9 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 	NS_ENDHANDLER
 	if (PyErr_Occurred()) goto error_cleanup;
 
-	rettype = [methinfo methodReturnType];
 	if ( (*rettype != _C_VOID) && ([methinfo isOneway] == NO) )
 	{
-		objc_result = pythonify_c_value (
-			[methinfo methodReturnType], msgResult);
+		objc_result = pythonify_c_value (rettype, msgResult);
 	} else {
 		Py_INCREF(Py_None);
 		objc_result =  Py_None;
@@ -788,7 +885,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 			switch (*argtype) {
 			case _C_PTR: 
-				arg = argbuf + byref[i];
+				arg = byref[i];
 				v = pythonify_c_value(argtype+1, arg);
 				if (!v) goto error_cleanup;
 				if (PyTuple_SetItem(result, py_arg++, v) < 0) {
@@ -800,7 +897,7 @@ ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args)
 			case _C_INOUT:
 			case _C_OUT:
 				if (argtype[1] == _C_PTR) {
-					arg = argbuf + byref[i];
+					arg = byref[i];
 					v = pythonify_c_value(argtype+2, arg);
 					if (!v) goto error_cleanup;
 					if (PyTuple_SetItem(result, 

@@ -31,8 +31,6 @@ static int add_class_fields(Class objc_class, PyObject* dict);
  * The struct class_info contains the additional information for a class object,
  * and class_to_objc stores a mapping from a class object to its additional
  * information.
- *
- * TODO: Rewrite these using NSHashTable and check if this improves performance
  */
 struct class_info {
 	Class	  class;
@@ -40,7 +38,7 @@ struct class_info {
 	int	  method_magic;
 };
 
-static PyObject* 	class_to_objc = NULL;
+static NSMapTable* 	class_to_objc = NULL;
 
 
 /*
@@ -54,18 +52,16 @@ get_class_info(PyObject* class)
 	struct class_info* info;
 
 	if (class_to_objc == NULL) {
-		class_to_objc = PyDict_New();
-		if (class_to_objc == NULL) return NULL;
+		class_to_objc = NSCreateMapTable(ObjC_PyObjectKeyCallBacks,
+			ObjC_PointerValueCallBacks, 500);
 	}
 
-	item = PyDict_GetItem(class_to_objc, class);
+	item = NSMapGet(class_to_objc, class);
 	if (item != NULL) {
-		return (struct class_info*)PyCObject_AsVoidPtr(item);
+		return (struct class_info*)item;
 	}
 
-	PyErr_Clear();
 	info = PyMem_Malloc(sizeof(*item));
-
 	if (info == NULL) {
 		PyErr_NoMemory();
 		return NULL;
@@ -74,21 +70,8 @@ get_class_info(PyObject* class)
 	info->class     = nil;
 	info->sel_to_py = NULL;
 	info->method_magic = 0;
-	item = PyCObject_FromVoidPtr(info, NULL);
-	if (item == NULL) {
-		PyMem_Free(info);
-		PyErr_SetString(PyExc_MemoryError, 
-			"allocating class_info");
-		return NULL;
-	}
 
-	if (PyDict_SetItem(class_to_objc, class, item) < 0) {
-		Py_DECREF(item);
-		PyMem_Free(info);
-		return NULL;
-	}
-	Py_DECREF(item); 
-	// Py_INCREF(class); // XXX Needed?
+	NSMapInsert(class_to_objc, class, info);
 	return info;
 }
 
@@ -98,43 +81,26 @@ get_class_info(PyObject* class)
  * to correctly handle subclassing and avoids creating two python classes that
  * represent the same objective-C object.
  */
-static PyObject*	class_registry = NULL;
+static NSMapTable*	class_registry = NULL;
 
 
 	
 static int 
 objc_class_register(Class objc_class, PyObject* py_class)
 {
-	/* TODO: Also add to 'register_proxy' structure in obc-object.m
-	 * (just in case a class is returned where an 'id' is expected 
-	 * according to the method signature)
-	 */
-	int res;
-	
 	if (class_registry == NULL) {
-		class_registry = PyDict_New();
-		if (class_registry == NULL) {
-			return -1;
-		}
+		class_registry = NSCreateMapTable(ObjC_PointerKeyCallBacks,
+			ObjC_PyObjectValueCallBacks, 500);
 	}
 
-	if (PyDict_GetItemString(class_registry, (char*)objc_class->name)) {
-		abort();
+	if (NSMapGet(class_registry, objc_class)) {
+		PyErr_BadInternalCall();
+		return -1;
 	}
 
-	res = PyDict_SetItemString(class_registry, 
-		(char*)objc_class->name, py_class);
-	if (res != 0) {
-		abort();
-	}
-	Py_INCREF(py_class);
+	NSMapInsert(class_registry, objc_class, py_class);
 
-	res = ObjC_RegisterClassProxy(objc_class, py_class);
-	if (res != 0) {
-		abort();
-	}
-
-	return res;
+	return 0;
 }
 
 static int 
@@ -142,7 +108,8 @@ objc_class_unregister(Class objc_class)
 {
 	if (class_registry == NULL) return 0;
 
-	return PyDict_DelItemString(class_registry, (char*)objc_class->name);
+	NSMapRemove(class_registry, objc_class);
+	return 0;
 }
 
 static PyObject*
@@ -153,8 +120,7 @@ objc_class_locate(Class objc_class)
 	if (class_registry == NULL) return NULL;
 	if (objc_class == NULL) return NULL;
 
-	result = PyDict_GetItemString(class_registry, 
-		(char*)objc_class->name);
+	result = NSMapGet(class_registry, objc_class);
 	return result;
 }
 
@@ -273,9 +239,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	 */
 	objc_class = ObjCClass_BuildClass(super_class, protocols, name, dict);
 	if (objc_class == NULL) {
-		if (!PyErr_Occurred()) {
-			abort();
-		}
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
 		return NULL;
@@ -344,7 +307,8 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	if (info == NULL) {
 		if (objc_class_unregister(objc_class) < 0) {
 			/* Oops, cannot unregister */
-			abort();
+			Py_FatalError(
+				"PyObjC: Cannot unregister unbuild class");
 		}
 		Py_DECREF(res);
 		ObjCClass_UnbuildClass(objc_class);
@@ -386,9 +350,7 @@ static void
 class_dealloc(PyObject* cls)
 {
 	/* This should never happen */
-	PySys_WriteStderr("Deallocating objective-C class %s\n", 
-		((PyTypeObject*)cls)->tp_name);
-	abort();
+	Py_FatalError("Deallocating objective-C class");
 }
 
 void 
@@ -519,9 +481,9 @@ PyDoc_STRVAR(cls_get_classMethods_doc,
 "be used to force access to a class method."
 );
 static PyObject*
-cls_get_classMethods(ObjCObject* self, void* closure)
+cls_get_classMethods(PyObject* self, void* closure)
 {
-	return ObjCMethodAccessor_New((PyObject*)self, 1);
+	return ObjCMethodAccessor_New(self, 1);
 }
 
 PyDoc_STRVAR(cls_get_instanceMethods_doc,
@@ -529,9 +491,20 @@ PyDoc_STRVAR(cls_get_instanceMethods_doc,
 "can be used to force access to an instance method."
 );
 static PyObject*
-cls_get_instanceMethods(ObjCObject* self, void* closure)
+cls_get_instanceMethods(PyObject* self, void* closure)
 {
-	return ObjCMethodAccessor_New((PyObject*)self, 0);
+	return ObjCMethodAccessor_New(self, 0);
+}
+
+static PyObject*
+cls_get__name__(PyObject* self, void* closure)
+{
+	Class cls = ObjCClass_GetClass(self);
+	if (cls == NULL) {
+		return NULL;
+	} else {
+		return PyString_FromString(cls->name);
+	}
 }
 
 static PyGetSetDef cls_getset[] = {
@@ -549,6 +522,16 @@ static PyGetSetDef cls_getset[] = {
                 cls_get_instanceMethods_doc,
                 0
         },
+	{
+		/* Access __name__ through a property: Objective-C name 
+		 * might change due to posing.
+		 */
+		"__name__",
+		(getter)cls_get__name__,
+		NULL,
+		NULL,
+		0
+	},
         { 0, 0, 0, 0, 0 }
 };
 
@@ -812,7 +795,12 @@ PyObject* ObjCClass_New(Class objc_class)
 	Py_DECREF(args); 
 
 	info = get_class_info(result);
-	if (info == NULL) abort();
+	if (info == NULL) {
+		Py_DECREF(result);
+		PyErr_SetString(PyExc_RuntimeError,
+			"PyObjC: Cannot build class information");
+		return NULL;
+	}
 
 	info->class = objc_class;
 	info->sel_to_py = PyDict_New(); 
@@ -866,7 +854,6 @@ PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector)
 	if (info->sel_to_py == NULL) {
 		info->sel_to_py = PyDict_New();
 		if (info->sel_to_py == NULL) {
-			abort();
 			return NULL;
 		}
 	}
@@ -891,16 +878,15 @@ PyObject* ObjCClass_FindSelector(PyObject* cls, SEL selector)
 
 	attributes = PyObject_Dir(cls);
 	if (attributes == NULL) {
-		if (!PyErr_Occurred()) {
-			abort();
-		}
 		return NULL;
 	}
 
 	len = PySequence_Size(attributes);
 	for (i = 0; i < len; i++) {
 		key = PySequence_GetItem(attributes, i);
-		if (key == NULL) abort();
+		if (key == NULL) {
+			return NULL;
+		}
 
 		v = PyObject_GetAttr(cls, key);
 		Py_DECREF(key);

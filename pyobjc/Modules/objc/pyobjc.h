@@ -183,23 +183,6 @@ extern PyTypeObject ObjCInformalProtocol_Type;
 
 int     ObjCIPVerify(PyObject* obj, PyObject* cls);
 PyObject* ObjCIPFindInfo(PyObject* obj, SEL selector);
-#ifdef OBJC_PARANOIA_MODExxx
-
-#define OC_CheckRevive(obj)     \
-        do {  \
-                if ((obj)->ob_refcnt == 0) {                            \
-                        PySys_WriteStderr("%s:%d %s revives %p\n",      \
-                                      __FILE__, __LINE__, __FUNCTION__, \
-                                      (obj)); \
-                        abort(); \
-                } \
-	} while (0)
-
-#else /* !OBJC_PARANOIA_MODE */
-
-#define OC_CheckRevive(obj)
-
-#endif /* !OBJC_PARANOIA_MODE */
 
 /* See alloc_hack.m */
 int ObjC_InstallAllocHack(void);

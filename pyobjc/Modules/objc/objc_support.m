@@ -105,9 +105,9 @@ objc_skip_typespec (const char *type)
 
     
     default:
-      PySys_WriteStderr("PyObjC: objc_skip_typespec: Unhandled type '%c' (%d)\n", 
-			*type, *type);
-      abort();
+      ObjCErr_Set(ObjCExc_internal_error,
+      	"objc_skip_typespec: Unhandled type '%#x'", *type); 
+      return NULL;
     }
 
     while (isdigit(*type)) type++;
@@ -118,7 +118,7 @@ objc_skip_typespec (const char *type)
   Return the alignment of an object specified by type 
 */
 
-static int
+int
 objc_alignof_type (const char *type)
 {
   switch (*type)
@@ -189,12 +189,17 @@ objc_alignof_type (const char *type)
       
     case _C_STRUCT_B:
       {
+      	/* XXX Ronald: Is this valid? */
         struct { int x; double y; } fooalign;
+	int    item_align;
         while(*type != _C_STRUCT_E && *type++ != '=') /* do nothing */;
-        if (*type != _C_STRUCT_E)
-          return MAX (objc_alignof_type (type), __alignof__ (fooalign));
-        else
+        if (*type != _C_STRUCT_E) {
+	  item_align = objc_alignof_type(type);
+	  if (item_align == -1) return -1;
+          return MAX (item_align, __alignof__ (fooalign));
+        } else {
           return __alignof__ (fooalign);
+	}
       }
 
     case _C_UNION_B:
@@ -203,7 +208,9 @@ objc_alignof_type (const char *type)
         type++;
         while (*type != _C_UNION_E)
           {
-            maxalign = MAX (maxalign, objc_alignof_type (type));
+	    int item_align = objc_alignof_type(type);
+	    if (item_align == -1) return -1;
+            maxalign = MAX (maxalign, item_align);
             type = objc_skip_typespec (type);
           }
         return maxalign;
@@ -224,9 +231,9 @@ objc_alignof_type (const char *type)
 	    return __alignof__(unsigned long long);
     
     default:
-      PySys_WriteStderr("PyObjC: objc_align_type: Unhandled type '%c'\n", 
-      	*type);
-      abort();
+      ObjCErr_Set(ObjCExc_internal_error, 
+      	"objc_align_type: Unhandled type '%#x'", *type);
+      return -1;
     }
 }
 
@@ -237,10 +244,10 @@ objc_alignof_type (const char *type)
 static int
 objc_aligned_size (const char *type)
 {
-  static int objc_sizeof_type (const char *type);
-  
   int size = objc_sizeof_type (type);
   int align = objc_alignof_type (type);
+
+  if (size == -1 || align == -1) return -1;
   return ROUND (size, align);
 }
 
@@ -251,6 +258,7 @@ objc_aligned_size (const char *type)
 int
 objc_sizeof_type (const char *type)
 {
+  int itemSize;
   switch (*type)
     {
     case _C_VOID:
@@ -316,8 +324,11 @@ objc_sizeof_type (const char *type)
     case _C_ARY_B:
       {
         int len = atoi(type+1);
+	int item_align;
         while (isdigit(*++type));
-        return len*objc_aligned_size (type);
+	item_align = objc_aligned_size(type);
+	if (item_align == NULL) return -1;
+        return len*item_align;
       }
     break; 
     
@@ -329,8 +340,11 @@ objc_sizeof_type (const char *type)
         while (*type != _C_STRUCT_E)
           {
             align = objc_alignof_type (type);       /* padd to alignment */
+	    if (align == -1) return -1;
             acc_size = ROUND (acc_size, align);
-            acc_size += objc_sizeof_type (type);   /* add component size */
+	    itemSize = objc_sizeof_type (type);   /* add component size */
+	    if (itemSize == -1) return -1;
+            acc_size += itemSize;
             type = objc_skip_typespec (type);            /* skip component */
           }
         return acc_size;
@@ -342,7 +356,9 @@ objc_sizeof_type (const char *type)
         type++;
         while (*type != _C_UNION_E)
           {
-            max_size = MAX (max_size, objc_sizeof_type (type));
+	    itemSize = objc_sizeof_type (type);
+	    if (itemSize == -1) return -1;
+            max_size = MAX (max_size, itemSize);
             type = objc_skip_typespec (type);
           }
         return max_size;
@@ -363,9 +379,9 @@ objc_sizeof_type (const char *type)
 	    return sizeof(unsigned long long);
 
     default:
-      PySys_WriteStderr("PyObjC: objc_sizeof_type: Unhandled type '%c' (%d)\n", 
-			*type, *type);
-      abort();
+      ObjCErr_Set(ObjCExc_internal_error, 
+      	"objc_sizeof_type: Unhandled type '%#x", *type);
+      return -1;
     }
 }
 
@@ -382,6 +398,9 @@ pythonify_c_array (const char *type, void *datum)
   nitems = atoi (type+1);
   while (isdigit (*++type));
   sizeofitem = objc_sizeof_type (type);
+  if (sizeofitem == -1) {
+	  return NULL;
+  }
 
   ret = PyTuple_New (nitems);
   if (!ret)
@@ -458,11 +477,12 @@ depythonify_c_array (const char *type, PyObject *arg, void *datum)
   nitems = atoi (type+1);
   while (isdigit (*++type));
   sizeofitem = objc_sizeof_type (type);
+  if (sizeofitem == -1) return "cannot depythonify array of unknown type";
 
   if (nitems != PyTuple_Size (arg))
     {
 #define ERRMSG "a tuple of %d items, got one of %d"
-      static char errmsg[sizeof ERRMSG + 4];
+      static char errmsg[sizeof ERRMSG + 4]; /* XXX Static buffer */
 
       snprintf (errmsg, sizeof(errmsg), ERRMSG, nitems, PyTuple_Size (arg));
       return errmsg;
@@ -620,7 +640,6 @@ pythonify_c_value (const char *type, void *datum)
         else if (ObjC_HasPythonImplementation(obj))
         {
           retobject =  ObjC_GetPythonImplementation(obj);
-	  OC_CheckRevive(retobject);
           Py_INCREF(retobject);
         }
 	else if (ISCLASS(obj))
@@ -644,7 +663,12 @@ pythonify_c_value (const char *type, void *datum)
       retobject = (PyObject *) ObjCMethod_new_with_selector (NULL,
                                                              *(SEL *) datum);
 #else
-      retobject = PyString_FromString(SELNAME(*(SEL*)datum));
+      if (*(SEL*)datum == NULL) {
+	      retobject = Py_None;
+	      Py_INCREF(retobject);
+      } else {
+	      retobject = PyString_FromString(SELNAME(*(SEL*)datum)); 
+      }
 #endif
 
       break;
@@ -669,7 +693,8 @@ pythonify_c_value (const char *type, void *datum)
       
     case _C_UNION_B:
       {
-        unsigned int size = objc_sizeof_type (type);
+        int size = objc_sizeof_type (type);
+	if (size == -1) return NULL;
         retobject = PyString_FromStringAndSize ((void*)datum, size);
         break;
       }
@@ -696,113 +721,6 @@ pythonify_c_value (const char *type, void *datum)
 
   return retobject;
 }
-
-#if 0 /* def OBJC_WITH_ARGUMENTS_ARENA */
- /* Ronald: The arguments arena is not the right way (tm) to deal with
-  * pointer arguments. You'll have to have additional knowlegde about a pointer
-  * to know how to deal with it.
-  *
-  * For now we try to do without support for _C_PTR in this file, except for
-  * special support in 'execute_and_pythonify_objc_method'. Datastructures
-  * containing pointers require custom C code for now.
-  */
-
-#ifdef WITH_THREAD
-#warning Does not support multiple threads yet.
-#endif
-
-/* This is used as an array of pointers: both the memory for the array
-   and that for each array's slot is dynamically allocated with malloc().
-   We use it when we have to give an ObjC method a pointer to some datum:
-   since from the Python point of view we always work on values, not pointers,
-   when an ObjC does actually want a pointer, we allocate memory in the
-   next free slot (eventually growing the array), depythonify the argument
-   in that space and feed it to the method.
-   On the next method call this space will be freed. */
-
-void **arguments_arena;
-
-/* Count of used slots in arguments_arena. */
-static unsigned int arguments_arena_current_count;
-
-/* Total number of slots in arguments_arena. */
-static unsigned int arguments_arena_slots;
-
-static inline void
-xfree (void *ptr)
-{
-  if (ptr)
-    free (ptr);
-}
-
-static inline void *
-xmalloc (unsigned int size)
-{
-  void *ptr = malloc (size);
-
-  if (ptr == 0)
-    {
-#define ERRMSG "xmalloc: memory exausted"
-      write (fileno (stderr), ERRMSG, sizeof (ERRMSG)-1);
-      exit (1);
-#undef ERRMSG
-    }
-  return ptr;
-}
-
-static inline void *
-xrealloc (void *ptr, unsigned int size)
-{
-  if (ptr == 0)
-    return xmalloc (size);
-  ptr = realloc (ptr, size);
-  if (ptr == 0)
-    {
-#define ERRMSG "xrealloc: memory exausted"
-      write (fileno (stderr), ERRMSG, sizeof (ERRMSG)-1);
-      exit (1);
-#undef ERRMSG
-    }
-  return ptr;
-}
-
-/* If the arena is not empty, free it. Then initialize counters. */
-static inline void
-initialize_arguments_arena(void)
-{
-  if (arguments_arena)
-    {
-      while (arguments_arena_current_count--)
-        xfree (arguments_arena[arguments_arena_current_count]);
-
-      xfree (arguments_arena);
-    }
-  arguments_arena_current_count = arguments_arena_slots = 0;
-  arguments_arena = NULL;
-}
-
-/* Calculates the space needed to keep a value of type TYPE, then if
-   the arena isn't big enough reallocates a bigger array for it;
-   allocates the needed amount of memory for the value recording
-   its address in the next free slot and returns that pointer. */ 
-static void *
-get_space_on_arena_for_type (const char *type)
-{
-  unsigned int needed = objc_sizeof_type (type);
-  
-  if (arguments_arena_current_count == arguments_arena_slots)
-    {
-      if (arguments_arena_slots)
-        arguments_arena_slots *= 2;
-      else
-        arguments_arena_slots = 2;
-      arguments_arena = xrealloc (arguments_arena,
-                                  arguments_arena_slots * sizeof (arguments_arena[0]));
-    }
-  return arguments_arena[arguments_arena_current_count++] = xmalloc (needed);
-}
-
-#endif /* OBJC_WITH_ARGUMENTS_ARENA */
 
 const char *
 depythonify_c_value (const char *type, PyObject *argument, void *datum)
@@ -961,7 +879,9 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
       break;
 
     case _C_SEL:
-      if (! ObjCSelector_Check (argument) && ! PyString_Check (argument))
+      if (argument == Py_None) {
+	  *(SEL*)datum = NULL;
+      } else if (! ObjCSelector_Check (argument) && ! PyString_Check (argument))
         error = "a ObjC method or a string";
       else
         if (ObjCSelector_Check (argument))
@@ -986,48 +906,11 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	 * (3) Is not needed for *most* Cocoa code
 	 *     [We should only get here for pointers inside data structures]
 	 */
-#if 0 /* def OBJC_WITH_ARGUMENTS_ARENA */
-      if (PyString_Check (argument))
-        {
-	  /* XXX: The use of PyString here is outdated! Python strings cache
-	   * their hashvalue. If this depythonified value is used as an output
-	   * parameter that cached hashvalue will most likely be incorrect. 
-	   * And then there's string interning...
-	   */
-	  if (*(type+1) != _C_VOID)
-	    {
-	      unsigned int expected_size = objc_sizeof_type (++type);
-	      
-	      if (expected_size != PyString_Size (argument))
-		{
-#define ERRMSG "a string of size %d instead of %d"
-		  static char errmsg[sizeof (ERRMSG)+6+6];
-		  
-		  snprintf (errmsg, sizeof(errmsg), ERRMSG, expected_size, PyString_Size (argument));
-		  error = errmsg;
-#undef ERRMSG
-		  break;
-		}
-	    }
-	  *(void **) datum = PyString_AS_STRING ((PyStringObject *) argument);
-        }
-      else if (ObjCPointer_Check (argument))
-        *(void **) datum = ((ObjCPointer *) argument)->ptr;
-      else             
-        {
-          *(void **) datum = get_space_on_arena_for_type (++type);
-          error = depythonify_c_value (type, argument, *(void **) datum);
-        }
-
-#else /* !OBJC_WITH_ARGUMENTS_ARENA */
 
       if (ObjCPointer_Check (argument))
         *(void **) datum = ((ObjCPointer *) argument)->ptr;
       else
 	error = "nested pointers unimplemented";
-
-#endif /* !OBJC_WITH_ARGUMENTS_ARENA */
-
 
       break;
 
@@ -1053,11 +936,13 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
       if (PyString_Check (argument))
         {
           unsigned int expected_size = objc_sizeof_type (type);
-          
-          if (expected_size != PyString_Size (argument))
+
+	  if (expected_size == (unsigned int)-1) {
+		  error = "cannot depythonify union of unknown size";
+          } else if (expected_size != PyString_Size (argument))
             {
 #define ERRMSG "a string of size %d instead of %d"
-              static char errmsg[sizeof (ERRMSG)+6+6];
+              static char errmsg[sizeof (ERRMSG)+6+6]; /* XXX Static buffer */
 
               snprintf (errmsg, sizeof(errmsg), ERRMSG, expected_size, PyString_Size (argument));
               error = errmsg;
@@ -1151,6 +1036,7 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	id		  self_obj = nil;
 	id                nil_obj = nil;
 	const char*	  curspec;
+	int               itemSize;
 
 	if (meth->sel_oc_signature) {
 		methinfo = meth->sel_oc_signature;
@@ -1174,34 +1060,44 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 		case _C_PTR: 
 			byref_in_count ++;
 			byref_out_count ++;
-			argbuf_len += objc_sizeof_type(argtype+1);
+			itemSize = objc_sizeof_type(argtype+1);
+			if (itemSize == -1) return NULL;
+			argbuf_len += itemSize;
 			break;
 
 		case _C_INOUT:
 			if (argtype[1] == _C_PTR) {
 				byref_out_count ++;
 				byref_in_count ++;
-				argbuf_len += objc_sizeof_type(argtype+2);
+				itemSize = objc_sizeof_type(argtype+2);
+				if (itemSize == -1) return NULL;
+				argbuf_len += itemSize;
 			}
 			break;
 
 		case _C_IN: case _C_CONST:
 			if (argtype[1] == _C_PTR) {
 				byref_in_count ++;
-				argbuf_len += objc_sizeof_type(argtype+2);
+				itemSize = objc_sizeof_type(argtype+2);
+				if (itemSize == -1) return NULL;
+				argbuf_len += itemSize;
 			}
 			break;
 
 		case _C_OUT:
 			if (argtype[1] == _C_PTR) {
 				byref_out_count ++;
-				argbuf_len += objc_sizeof_type(argtype+2);
+				itemSize = objc_sizeof_type(argtype+2);
+				if (itemSize == -1) return NULL;
+				argbuf_len += itemSize;
 			}
 			break;
 
 		case _C_STRUCT_B: case _C_UNION_B: case _C_ARY_B:
 			plain_count++;
-			argbuf_len += objc_sizeof_type(argtype);
+			itemSize = objc_sizeof_type(argtype);
+			if (itemSize == -1) return NULL;
+			argbuf_len += itemSize;
 			break;
 
 		default:
@@ -1393,11 +1289,16 @@ execute_and_pythonify_objc_method (PyObject *aMeth, PyObject* self, PyObject *ar
 	rettype = meth->sel_signature; 
 	if ( (*rettype != _C_VOID) && ([methinfo isOneway] == NO) )
 	{
-		char *retbuffer = alloca (objc_sizeof_type(rettype));
+		int retSize = objc_sizeof_type(rettype);
+		char *retbuffer;
 
-		[inv getReturnValue:retbuffer];
-
-		objc_result = pythonify_c_value (rettype, retbuffer);
+		if (retSize == -1) {
+			objc_result = NULL;
+		} else {
+			retbuffer = alloca (retSize);
+			[inv getReturnValue:retbuffer];
+			objc_result = pythonify_c_value (rettype, retbuffer);
+		}
 	} else {
 		Py_INCREF(Py_None);
 		objc_result =  Py_None;
