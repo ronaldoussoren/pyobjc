@@ -8,6 +8,7 @@ import objc
 import unittest
 from Foundation import *
 
+
 # Native code is needed to access the python class from Objective-C, otherwise
 # the Key-Value support cannot be tested.
 from objc.test.testbndl import PyObjC_TestClass3 as STUB
@@ -395,7 +396,7 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
             self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
 
 
-class PyObjC_TestKeyValueSource (objc.runtime.NSObject):
+class PyObjC_TestKeyValueSource (NSObject):
     def getFoobar(self):
         return u"Hello world"
 
@@ -411,7 +412,7 @@ if PyObjCTest_KeyValueObserver is not None:
 
     DEALLOCS = 0
 
-    class PyObjCTestObserved1 (objc.runtime.NSObject):
+    class PyObjCTestObserved1 (NSObject):
         __slots__ = ( '_kvo_bar', '_kvo_foo')
 
         FOOBASE = u"base"
@@ -528,7 +529,7 @@ if PyObjCTest_KeyValueObserver is not None:
                 (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
                 0)
 
-            a = objc.runtime.NSArray.arrayWithArray_([o])
+            a = NSArray.arrayWithArray_([o])
             del o
             o = a[0]
 
@@ -552,10 +553,10 @@ if PyObjCTest_KeyValueObserver is not None:
 
             observer = PyObjCTestObserver.alloc().init()
             o = STUB.createObservedOfClass_observer_keyPath_(
-                    objc.runtime.NSObject, observer, u"observationInfo")
+                    NSObject, observer, u"observationInfo")
 
             try:
-                self.assert_(isinstance(o, objc.runtime.NSObject))
+                self.assert_(isinstance(o, NSObject))
             finally:
                 o.removeObserver_forKeyPath_(observer, u"observationInfo")
 

@@ -1,6 +1,8 @@
 import objc
 import unittest
 
+NSObject = objc.lookUpClass('NSObject')
+
 
 class TestBasicIMP (unittest.TestCase):
     # Test the basic functionality of IMP's. Imp's are basically unbound
@@ -12,7 +14,7 @@ class TestBasicIMP (unittest.TestCase):
         self.assert_(hasattr(objc, "IMP"))
 
     def testAlloc(self):
-        cls = objc.runtime.NSObject
+        cls = NSObject
         m = cls.pyobjc_classMethods.methodForSelector_("alloc")
         self.assert_(isinstance(m, objc.IMP))
         self.assert_(m.isClassMethod)
@@ -24,7 +26,7 @@ class TestBasicIMP (unittest.TestCase):
         self.assert_(isinstance(o, cls))
 
     def testInit1(self):
-        cls = objc.runtime.NSObject
+        cls = NSObject
         m = cls.instanceMethodForSelector_("init")
         self.assert_(isinstance(m, objc.IMP))
         self.assert_(not m.isClassMethod)
@@ -36,7 +38,7 @@ class TestBasicIMP (unittest.TestCase):
         self.assert_(isinstance(o, cls))
 
     def testInit2(self):
-        cls = objc.runtime.NSObject
+        cls = NSObject
         o = cls.alloc().init()
 
         m = o.methodForSelector_("init")
@@ -50,7 +52,7 @@ class TestBasicIMP (unittest.TestCase):
         self.assert_(isinstance(o, cls))
 
     def testDescription(self):
-        o = objc.runtime.NSObject.alloc().init()
+        o = NSObject.alloc().init()
 
         self.assertEquals(o.description(), o.methodForSelector_('description')(o))
 

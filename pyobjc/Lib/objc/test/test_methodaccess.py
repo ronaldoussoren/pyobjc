@@ -2,6 +2,11 @@ import unittest
 import objc
 import sys
 
+NSObject = objc.lookUpClass('NSObject')
+_NSZombie = objc.lookUpClass('_NSZombie')
+NSProxy = objc.lookUpClass('NSProxy')
+
+
 
 class MethodAccessTest (unittest.TestCase):
 
@@ -14,19 +19,19 @@ class MethodAccessTest (unittest.TestCase):
     def testNSProxyStuff(self):
         # NSProxy is incompatitble with pyobjc_{class,instance}Methods, but
         # this should not crash the interpreter
-        self.assertRaises(AttributeError, getattr, objc.runtime.NSProxy.pyobjc_instanceMethods, 'foobar')
-        self.assertRaises(AttributeError, getattr, objc.runtime.NSProxy.pyobjc_classMethods, 'foobar')
-        self.assertRaises(AttributeError, getattr, objc.runtime.NSProxy, 'foobar')
+        self.assertRaises(AttributeError, getattr, NSProxy.pyobjc_instanceMethods, 'foobar')
+        self.assertRaises(AttributeError, getattr, NSProxy.pyobjc_classMethods, 'foobar')
+        self.assertRaises(AttributeError, getattr, NSProxy, 'foobar')
 
     if sys.platform == 'darwin':
         def testNSZombie(self):
-            self.assertRaises(AttributeError, getattr, objc.runtime._NSZombie.pyobjc_instanceMethods, "foobar")
-            self.assertRaises(AttributeError, getattr, objc.runtime._NSZombie.pyobjc_classMethods, "foobar")
-            self.assertRaises(AttributeError, getattr, objc.runtime._NSZombie, "foobar")
+            self.assertRaises(AttributeError, getattr, _NSZombie.pyobjc_instanceMethods, "foobar")
+            self.assertRaises(AttributeError, getattr, _NSZombie.pyobjc_classMethods, "foobar")
+            self.assertRaises(AttributeError, getattr, _NSZombie, "foobar")
 
 
     def testDir(self):
-        o = objc.runtime.NSObject.new()
+        o = NSObject.new()
 
         d = dir(o.pyobjc_instanceMethods)
         self.assert_(len(d) > 10)
@@ -36,18 +41,18 @@ class MethodAccessTest (unittest.TestCase):
         #self.assert_(len(d) > 10)
         #self.assert_("alloc" in d)
 
-        d = dir(objc.runtime.NSObject.pyobjc_classMethods)
+        d = dir(NSObject.pyobjc_classMethods)
         self.assert_(len(d) > 10)
         self.assert_("alloc" in d)
 
     def testDict(self):
-        o = objc.runtime.NSObject.new()
+        o = NSObject.new()
 
         d = o.pyobjc_instanceMethods.__dict__.keys()
         self.assert_(len(d) > 10)
         self.assert_("init" in d)
 
-        d = objc.runtime.NSObject.pyobjc_classMethods.__dict__.keys()
+        d = NSObject.pyobjc_classMethods.__dict__.keys()
         self.assert_(len(d) > 10)
         self.assert_("alloc" in d)
 
@@ -56,17 +61,17 @@ class MethodAccessTest (unittest.TestCase):
         #self.assert_("alloc" in d)
 
     def testAttributes(self):
-        o = objc.runtime.NSObject.new()
+        o = NSObject.new()
 
         self.assert_(hasattr(o.pyobjc_instanceMethods, "init"))
         #self.assert_(hasattr(o.pyobjc_classMethods, "alloc"))
 
-        self.assert_(hasattr(objc.runtime.NSObject.pyobjc_classMethods, "alloc"))
+        self.assert_(hasattr(NSObject.pyobjc_classMethods, "alloc"))
 
 class ClassAndInstanceMethods(unittest.TestCase):
     def testClassThroughInstance(self):
         # Class methods are not accessible through instances.
-        self.assertRaises(AttributeError, getattr, objc.runtime.NSObject.new(), 'alloc')
+        self.assertRaises(AttributeError, getattr, NSObject.new(), 'alloc')
 
 if __name__ == "__main__":
     unittest.main()

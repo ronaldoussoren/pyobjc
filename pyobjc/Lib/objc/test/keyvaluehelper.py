@@ -4,6 +4,8 @@ Helper module for KeyValue tests
 from objc.test.testbndl import PyObjCTest_KVBaseClass, PyObjCTest_KVPathClass
 import objc
 
+NSObject = objc.lookUpClass('NSObject')
+
 DirectString = u'Direct String'
 IndirectString = u'Indirect String'
 DirectNumber = 42
@@ -74,7 +76,7 @@ class KVPySubOverObjCPath(PyObjCTest_KVPathClass):
     def setOverIndirectHead_(self, aHead):
         self._overIndirectHead = aHead
 
-class PyObjCTestObserver (objc.runtime.NSObject):
+class PyObjCTestObserver (NSObject):
     def init(self):
         self = super(PyObjCTestObserver, self).init()
         if self is not None:
