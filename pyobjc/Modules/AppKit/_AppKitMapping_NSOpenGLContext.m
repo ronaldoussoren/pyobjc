@@ -10,6 +10,7 @@
 #include <Python.h>
 #include <AppKit/AppKit.h>
 #include "pyobjc-api.h"
+#include <OpenGL/gl.h>
 
 
 static int 
