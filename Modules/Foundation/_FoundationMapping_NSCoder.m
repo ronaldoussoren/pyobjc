@@ -29,7 +29,6 @@ call_NSCoder_encodeValueOfObjCType_at_(
 {
 	char* signature;
 	PyObject* value;
-	PyObject* result;
 	void*     buf;
 	int    size;
 	int err;
@@ -72,15 +71,14 @@ call_NSCoder_encodeValueOfObjCType_at_(
 		}
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-		result = NULL;
 	PyObjC_ENDHANDLER
 
-	if (!PyErr_Occurred()) {
-		result = Py_None;
-		Py_INCREF(result);
+	if (PyErr_Occurred()) {
+		return NULL;
 	}
 
-	return result;
+	Py_INCREF(Py_None);
+	return Py_None;
 }
 
 static void 
@@ -144,7 +142,6 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 	int   count;
 	int   value_len, i;
 	PyObject* value;
-	PyObject* result;
 	void*     buf;
 	int    size;
 	int err;
@@ -207,15 +204,13 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 		}
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-		result = NULL;
 	PyObjC_ENDHANDLER
 
-	if (!PyErr_Occurred()) {
-		result = Py_None;
-		Py_INCREF(result);
-	}
+	if (PyErr_Occurred()) return NULL;
 
-	return result;
+
+	Py_INCREF(Py_None);
+	return Py_None;
 }
 
 static void 
@@ -546,7 +541,6 @@ call_NSCoder_encodeBytes_length_(
 	int    size;
 	int    length;
 
-	PyObject* result;
 	struct objc_super super;
 
 	if  (!PyArg_ParseTuple(arguments, "t#i", &bytes, &size, &length)) {
@@ -576,15 +570,12 @@ call_NSCoder_encodeBytes_length_(
 		}
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-		result = NULL;
 	PyObjC_ENDHANDLER
 
-	if (!PyErr_Occurred()){
-		result = Py_None;
-		Py_INCREF(result);
-	}
+	if (PyErr_Occurred()) return NULL;
 
-	return result;
+	Py_INCREF(Py_None);
+	return Py_None;
 }
 
 static void 

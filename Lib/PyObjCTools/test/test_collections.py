@@ -67,7 +67,10 @@ class TestCollections(unittest.TestCase):
         self.assertRaises(TypeError, propertyListFromPythonCollection, { '1' : type([]) })
         propertyListFromPythonCollection({'1' : type([])}, conversionHelper)
 
-        d = NSDictionary.dictionaryWithDictionary_( {'1' : NSBundle.mainBundle()} )
+        d = NSDictionary.dictionaryWithDictionary_( {'1' : NSObject.alloc().init() }) 
+        # was: NSBundle.bundleForClass_(NSObject)} ) 
+        # XXX: using NSBundle doesn't work on GNUstep
+
         self.assertRaises(TypeError, pythonCollectionFromPropertyList, d)
         pythonCollectionFromPropertyList(d, conversionHelper)
 
