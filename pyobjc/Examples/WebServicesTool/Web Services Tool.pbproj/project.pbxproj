@@ -13,6 +13,7 @@
 		};
 		080E96DDFE201D6D7F000001 = {
 			children = (
+				F6D75F2C039008BF01A801C8,
 				F6646A4E0344927801F2B36F,
 				F6646A500344928B01F2B36F,
 				F6646A5C0344985501F2B36F,
@@ -132,6 +133,7 @@
 		29B97315FDCFA39411CA2CEA = {
 			children = (
 				29B97316FDCFA39411CA2CEA,
+				F6D75F2D0390096901A801C8,
 				F6AAC478035708BD01B76035,
 			);
 			isa = PBXGroup;
@@ -496,7 +498,7 @@
 		};
 		F6646A4E0344927801F2B36F = {
 			isa = PBXFileReference;
-			path = Main.py;
+			path = __main__.py;
 			refType = 4;
 		};
 		F6646A4F0344927801F2B36F = {
@@ -539,9 +541,11 @@
 			};
 		};
 		F6AAC478035708BD01B76035 = {
+			indentWidth = 4;
 			isa = PBXFileReference;
-			path = "main-bin-python.m";
+			path = "bin-python-main.m";
 			refType = 4;
+			tabWidth = 4;
 		};
 		F6AAC47A035708BD01B76035 = {
 			fileRef = F6AAC478035708BD01B76035;
@@ -569,6 +573,20 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
+		};
+		F6D75F2C039008BF01A801C8 = {
+			indentWidth = 2;
+			isa = PBXFileReference;
+			path = Main.py;
+			refType = 4;
+			usesTabs = 0;
+		};
+		F6D75F2D0390096901A801C8 = {
+			indentWidth = 2;
+			isa = PBXFileReference;
+			path = "main-bin-python.m";
+			refType = 4;
+			usesTabs = 0;
 		};
 		F6ED47D803453061016073B7 = {
 			isa = PBXFileReference;

@@ -11,8 +11,8 @@ import types
 import string
 import traceback
 
-from AppKit import NibLoader
-NibLoader.loadClassesForNibFromBundle( "WSTConnection" )
+from AppKit import NibClassBuilder
+from AppKit.NibClassBuilder import AutoBaseClass
 
 kWSTReloadContentsToolbarItemIdentifier = "WST: Reload Contents Toolbar Identifier"
 kWSTPreferencesToolbarItemIdentifier = "WST: Preferences Toolbar Identifier"
@@ -47,9 +47,8 @@ def addToolbarItem(self, anIdentifier, aLabel, aPaletteLabel, aToolTip, aTarget,
     
     self._toolbarItems.setObject_forKey_(toolbarItem, anIdentifier)
 
-class WSTConnectionWindowController:
-    __metaclass__ = NibLoader.NibClassBuilder
-
+NibClassBuilder.extractClasses( "WSTConnection" )
+class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource, NSToolbarDelegate):
     __slots__ = ('_toolbarItems',
         '_toolbarDefaultItemIdentifiers',
         '_toolbarAllowedItemIdentifiers',
@@ -247,9 +246,4 @@ class WSTConnectionWindowController:
             return aMethod
 
     ### adjust method decls to be in line with ObjC requirements
-    toolbarDefaultItemIdentifiers_ = selector(toolbarDefaultItemIdentifiers_, signature='@@:@')
-    toolbarAllowedItemIdentifiers_ = selector(toolbarAllowedItemIdentifiers_, signature='@@:@')
     connectionWindowController = selector(connectionWindowController, class_method=1)
-    toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_ = selector(toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_, signature='@@:@@c')
-    numberOfRowsInTableView_ = selector(numberOfRowsInTableView_, signature="i@:@")
-    tableView_objectValueForTableColumn_row_ = selector(tableView_objectValueForTableColumn_row_, signature='@@:@@i')
