@@ -47,10 +47,11 @@ Getting Started
    
 3. Proceed with the instructions as lined out in Apple's
    `Developing Cocoa Objective-C Applications: a Tutorial`_, `chapter 3`_,
-   just after the section "*Creating the Currency Converter Interface*". Stop when you get
-   to the section "*Implementing the Classes of Currency Converter*",
-   as we are going to do this in Python, not Objective-C. Your nib file
-   should now be the same as step3-MainMenu.nib_.
+   just after the section "*Creating the Currency Converter Interface*".
+   Work through "Defining the Classes of Currency Converter", "Connecting
+   ConverterController to the Interface", and stop at "*Implementing the Classes
+   of Currency Converter*", as we are going to do this in Python, not Objective-C.
+   Your nib file should now be the same as step3-MainMenu.nib_.
    
 .. _`Developing Cocoa Objective-C Applications: a Tutorial`: http://developer.apple.com/techpubs/macosx/Cocoa/ObjCTutorial/index.html
 .. _`chapter 3`: http://developer.apple.com/techpubs/macosx/Cocoa/ObjCTutorial/chapter03/index.html
