@@ -34,6 +34,9 @@ class AppDelegate (NSObject):
 def main():
     NSApp = NSApplication.sharedApplication()
 
+    # we must keep a reference to the delegate object ourselves,
+    # NSApp.setDelegate_() doesn't retain it. A local variable is
+    # enough here.
     delegate = AppDelegate.alloc().init()
     NSApp.setDelegate_(delegate)
 
