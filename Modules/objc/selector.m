@@ -706,8 +706,7 @@ ObjCSelector_FindNative(PyObject* self, char* name)
 			methsig = [cls instanceMethodSignatureForSelector:sel];
 			return ObjCSelector_NewNative(cls, sel, 
 				typestr_from_NSMethodSignature(methsig, buf, sizeof(buf)), 0);
-		} else if ([cls respondsToSelector:sel]) {
-			methsig = [cls methodSignatureForSelector:sel];
+		} else if (nil != (methsig = [cls methodSignatureForSelector:sel])) {
 			return ObjCSelector_NewNative(cls, sel, 
 				typestr_from_NSMethodSignature(methsig, buf, sizeof(buf)), 1);
 		} else {
@@ -720,9 +719,8 @@ ObjCSelector_FindNative(PyObject* self, char* name)
 
 		object = ObjCObject_GetObject(self);
 
-		if ([object respondsToSelector:sel]) {
+		if (nil != (methsig = [object methodSignatureForSelector:sel])){
 			ObjCNativeSelector* res;
-			methsig = [object methodSignatureForSelector:sel];
 			res =  (ObjCNativeSelector*)ObjCSelector_NewNative(
 				object->isa, sel, 
 				typestr_from_NSMethodSignature(methsig, 

@@ -46,6 +46,26 @@ class TestSubclassing(unittest.TestCase):
         except objc.error, msg:
             self.assertEquals(str(msg), "Class already exists in Objective-C runtime")
 
+    def testMethodSignature(self):
+        class Signature (NSObject):
+            def test_x_(self, arg, x):
+                pass
+            test_x_ = objc.selector(test_x_, signature='v@:@i')
+
+        v = Signature.new()
+
+        self.assertEquals(v.methodSignatureForSelector_('foo:'), None)
+
+        x = v.methodSignatureForSelector_('test:x:')
+        self.assert_(x != None)
+        self.assert_(x.methodReturnType() == 'v')
+        self.assert_(x.numberOfArguments() == 4)
+        self.assert_(x.getArgumentTypeAtIndex_(0) == '@')
+        self.assert_(x.getArgumentTypeAtIndex_(1) == ':')
+        self.assert_(x.getArgumentTypeAtIndex_(2) == '@')
+        self.assert_(x.getArgumentTypeAtIndex_(3) == 'i')
+
+
 class TestSelectors(unittest.TestCase):
     def testSelectorRepr(self):
         class SelectorRepr(NSObject):
