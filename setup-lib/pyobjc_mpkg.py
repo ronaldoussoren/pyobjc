@@ -53,7 +53,7 @@ def write_preflight_rm(path, files):
     os.chmod(path, 0775)
 
 OSX_VERSION = LooseVersion(tools.sw_vers())
-class bdist_mpkg(_bdist_mpkg):
+class pyobjc_bdist_mpkg(_bdist_mpkg):
     def initialize_options(self):
         _bdist_mpkg.initialize_options(self)
         self.readme = 'Installer Package/%s/Resources/ReadMe.txt' % ('.'.join(map(str, OSX_VERSION.version[:2])),)
@@ -88,14 +88,16 @@ class bdist_mpkg(_bdist_mpkg):
         write_preflight_rm(preflight, rmfiles)
 
     def pyobjc_py2app(self):
-        bdist_base = os.path.abspath(os.path.join(self.bdist_base, 'py2app'))
+        build_base = os.path.abspath(os.path.join(self.build_base, 'py2app'))
         dist_dir = os.path.abspath(self.packagesdir)
         cwd = os.getcwd()
         srcdir = os.path.abspath('source-deps/py2app')
         os.chdir(srcdir)
         old_path = list(sys.path)
         sys.path.insert(0, srcdir)
-        args = ['bdist_mpkg', '--bdist-base=' + bdist_base, '--dist-dir=' + dist_dir]
+        args = ['bdist_mpkg', '--build-base=' + build_base, '--dist-dir=' + dist_dir]
+        if self.keep_temp:
+            args.append('--keep-temp')
         try:
             sub = run_setup(os.path.abspath('setup.py'), args)
             pkg = sub.get_command_obj('bdist_mpkg').metapackagename
@@ -165,4 +167,4 @@ class bdist_mpkg(_bdist_mpkg):
             condition=skipjunk)
         self.preflight_rm[scheme] = ['.']
 
-cmdclass = {'bdist_mpkg': bdist_mpkg}
+cmdclass = {'bdist_mpkg': pyobjc_bdist_mpkg}
