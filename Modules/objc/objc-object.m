@@ -6,6 +6,18 @@
 #include <stddef.h>
 #include <objc/Object.h>
 
+
+/*
+ * Basic freelist. 
+ * - to delete an object: obj_freelist[obj_freelist_top++] = OBJ
+ * - to create an object: OBJ = obj_freelist[--obj_freelist_top];
+ */
+#define FREELIST_SIZE 1024
+
+static PyObject* obj_freelist[FREELIST_SIZE];
+static int obj_freelist_top = 0;
+
+
 static NSMapTable* proxy_dict = NULL;
 
 static PyObject* 
@@ -121,7 +133,12 @@ object_dealloc(PyObject* obj)
 		((PyObjCObject*)obj)->objc_object = nil;
 	}
 
-	obj->ob_type->tp_free(obj);
+	/* Push self onto the freelist */
+	if (obj_freelist_top == FREELIST_SIZE) {
+		obj->ob_type->tp_free(obj);
+	} else {
+		obj_freelist[obj_freelist_top++] = obj;
+	}
 }
 
 
@@ -522,8 +539,6 @@ PyObjCObject_New(id objc_object)
 	PyTypeObject* cls_type;
 	PyObject*     res;
 
-
-
 	res = find_existing_proxy(objc_object);
 	if (res) return res;
 
@@ -537,9 +552,16 @@ PyObjCObject_New(id objc_object)
 		return NULL;
 	}
 
-	res = cls_type->tp_alloc(cls_type, 0);
-	if (res == NULL) {
-		return NULL;
+	if (obj_freelist_top == 0) {
+		res = cls_type->tp_alloc(cls_type, 0);
+		if (res == NULL) {
+			return NULL;
+		}
+	} else {
+		res = obj_freelist[obj_freelist_top-1];
+		obj_freelist_top -= 1;
+		res->ob_refcnt = 1;
+		res->ob_type = cls_type;
 	}
 
 	/* This should be in the tp_alloc for the new class, but 
