@@ -211,7 +211,16 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 	objc_argcount = [methinfo numberOfArguments];
 
 	arglist = PyList_New(0);
-	PyList_Append(arglist, pythonify_c_value("@", args[0]));
+	v = pythonify_c_value("@", args[0]);
+	if (v == NULL) {
+		ObjCErr_ToObjC();
+		return;
+	}
+	if (PyList_Append(arglist, v) == -1) {
+		ObjCErr_ToObjC();
+		return;
+	}
+	Py_DECREF(v);
 
 	/* First translate from Objective-C to python */
 	for (i = 2; i < objc_argcount; i++) {
@@ -248,8 +257,12 @@ method_stub(ffi_cif* cif, void* resp, void** args, void* userdata)
 			ObjCErr_ToObjC();
 			return;
 		}
-		PyList_Append(arglist, v);
-		Py_DECREF(v); /* XXX ?*/
+		if (PyList_Append(arglist, v) == -1) {
+			Py_DECREF(arglist);
+			ObjCErr_ToObjC();
+			return;
+		}
+		Py_DECREF(v); 
 	}
 
 	v = PyList_AsTuple(arglist);
