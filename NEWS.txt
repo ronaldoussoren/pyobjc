@@ -33,7 +33,7 @@ Version 1.2 (2004-12-??)
 
   This adds method ``myMethod`` to class NSObject.
 
-- py2app is now used for all Example scripts and is the recommended method
+- ``py2app`` is now used for all Example scripts and is the recommended method
   for creating PyObjC applications.
 
 - Proxies of dict, list, and tuple now respect the invariant that you should
@@ -41,18 +41,18 @@ Version 1.2 (2004-12-??)
   collection has not been mutated.  This fixes some problems with binary
   plist serialization, and potentially some edge cases elsewhere.
 
-- There is now a __bundle_hack__ class attribute that will cause the PyObjC
+- There is now a ``__bundle_hack__`` class attribute that will cause the PyObjC
   class builder to use a statically allocated class wrapper if one is
   available via certain environment variables.  This functionality is used
   to enable +[NSBundle bundleForClass:] to work for exactly one class from
   a py2app-created plugin bundle.
   
 - We now have a working Interface Builder palette example due to
-  __bundle__hack__.
+  ``__bundle__hack__``.
 
-- bool(NSNull.null()) is now false.
+- ``bool(NSNull.null())`` is now false.
 
-- setup.py supports several new commands::
+- ``setup.py`` supports several new commands::
 
     * build_libffi
     
@@ -75,24 +75,25 @@ Version 1.2 (2004-12-??)
       runs unit test suite (replaces Scripts/runPyObjCTests
       and Scripts/runalltests)
 
-- PyObjCStrBridgeWarning can now be generated when Python ``str`` objects
+- ``PyObjCStrBridgeWarning`` can now be generated when Python ``str`` objects
   cross the bridge by calling ``objc.setStrBridgeEnabled(False)``.  It is
   HIGHLY recommended that your application never send ``str`` objects over
   the bridge, as it is likely to cause problems due to the required
   coercion to unicode.
 
 - The coercion bridge from Python to Objective-C instances can now be
-  augmented from Python as it is exposed by OC_PythonObject.  See
+  augmented from Python as it is exposed by ``OC_PythonObject``.  See
   ``objc._bridges``.  This is how the ``str`` -> ``unicode`` -> ``NSString``
   bridge with optional warnings is implemented.
 
 - The coercion bridge between Python objects and Objective-C structures
-  can now be augmented from Python as it is explosed by OC_PythonObject.
+  can now be augmented from Python as it is exposed by ``OC_PythonObject``.
   See ``objc._bridges``.  This is how the ``Carbon.File.FSRef`` 
   <-> ``'{FSRef=[80c]}'`` structure bridge is implemented.
 
-- Extension modules such as _objc, _AppKit, etc. are now inside packages.
-  They should never be used directly.
+- Extension modules such as ``_objc``, ``_AppKit``, etc. are now inside
+  packages as ``objc._objc``, ``AppKit._AppKit``, etc.  They should never be
+  used directly, so this should not break user code.
 
 Version 1.1 (2004-05-30)
 ------------------------
@@ -181,14 +182,15 @@ Version 1.1a0 (2004-02-02)
 - If an Objective-C method name is a Python keyword you can now access it
   by appending two underscores to its name, e.g. someObject.class__().
 
-  The same is true for defining methods, if you define a method 'raise__' in a 
-  subclass of NSObject it will registered with the runtime as 'raise'.
+  The same is true for defining methods, if you define a method ``raise__`` in
+  a subclass of NSObject it will registered with the runtime as ``raise``.
 
-  NOTE: Currently only 'class' and 'raise' are treated like this, because
+  NOTE: Currently only ``class`` and ``raise`` are treated like this, because
   those are the only Python keywords that are actually used as Objective-C
   method names.
 
-- Experimental support for instanceMethodForSelector: and methodForSelector:. 
+- Experimental support for ``instanceMethodForSelector:`` and 
+  ``methodForSelector:``. 
   This support is not 100% stable, and might change in the future.
 
 - Backward incompatible change: class methods are no longer callable through

@@ -19,6 +19,7 @@ HISTORIC.txt
 Install.html
 Install.txt
 License.txt
+NEWS.txt
 NEWS.html
 ReadMe.html
 ReadMe.txt
