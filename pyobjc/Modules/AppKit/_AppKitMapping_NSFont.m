@@ -20,7 +20,7 @@ call_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 	NSPoint* points;
 	int i, len;
 
-	if (PyArg_ParseTuple(arguments, "Oi", &glyphList, &numGlyphs) < 0) {
+	if (!PyArg_ParseTuple(arguments, "Oi", &glyphList, &numGlyphs)) {
 		return 0;
 	}
 

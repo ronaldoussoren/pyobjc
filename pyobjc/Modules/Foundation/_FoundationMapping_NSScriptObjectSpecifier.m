@@ -20,8 +20,8 @@ call_NSScriptObjectSpecifier_indicesOfObjectsByEvaluatingWithContainer_count_(
 	PyObject* v;
 	int i;
 
-	if  (PyArg_ParseTuple(arguments, "O&", 
-			PyObjCObject_Convert, &container) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "O&", 
+			PyObjCObject_Convert, &container)) {
 		return NULL;
 	}
 

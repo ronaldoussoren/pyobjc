@@ -37,7 +37,7 @@ static PyObject* call_NSData_dataWithBytes_length_(
 	struct objc_super super;
 	id        objc_result;
 
-	if  (PyArg_ParseTuple(arguments, "t#i", &bytes, &bytes_len, &len) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "t#i", &bytes, &bytes_len, &len)) {
 		return NULL;
 	}
 
@@ -113,7 +113,7 @@ static PyObject* call_NSData_initWithBytes_length_(
 	struct objc_super super;
 	id        objc_result;
 
-	if  (PyArg_ParseTuple(arguments, "t#i", &bytes, &bytes_len, &len) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "t#i", &bytes, &bytes_len, &len)) {
 		return NULL;
 	}
 
@@ -197,7 +197,7 @@ static PyObject* call_NSData_bytes(PyObject* method __attribute__((__unused__)),
   PyObject* result;
   struct objc_super super;
 
-  if (PyArg_ParseTuple(arguments, "") < 0) {
+  if (!PyArg_ParseTuple(arguments, "")) {
     return NULL;
   }
 
@@ -254,7 +254,7 @@ static PyObject* call_NSMutableData_mutableBytes(PyObject* method __attribute__(
   PyObject* result;
   struct objc_super super;
 
-  if (PyArg_ParseTuple(arguments, "") < 0) {
+  if (!PyArg_ParseTuple(arguments, "")) {
     return NULL;
   }
 

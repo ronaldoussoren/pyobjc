@@ -1,0 +1,12 @@
+{
+	FilesToMacroExpand = (
+		"English.lproj/InfoPlist.strings",
+		"bin-python-main.m",
+		"__main__.py",
+		"MyAppDelegate.py",
+                "MyDocument.py",
+                "HueView.m"
+	);
+
+	Description = "This project builds a Cocoa Document-based application written in both Python and Objective-C.  The Objective-C code can be loaded as a bundle, from Python, at runtime.";
+}

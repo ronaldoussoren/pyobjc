@@ -177,17 +177,20 @@ Class ``NSOpenGLPixelFormat``
 .............................
 
 * ``getValues:forAttribute:forVirtualScreen:``
+
   This method is not yet supported
 
 * ``initWithAttributes:``
+
   This method is not yet supported
 
 Class ``NSQuickDrawView``
 .........................
 
 * ``qdPort``
-  This method is not yet supported and will return a MacPython wrapper for
-  a QuickDraw port in the future.
+
+  This method returns an instance from a type Carbon.QuickDraw. This 
+  requires MacPython.
 
 Class ``NSSimpleHorizontalTypesetter``
 ......................................
@@ -264,17 +267,23 @@ Class ``NSCoder``
 The following methods are not supported in the current version of PyObjC.
 This limitation will be lifted in a future version of the bridge.
 
-* ``encodeBytes:length:``
-
 * ``decodeBytesWithReturnedLength:``
-
-* ``encodeValuesOfObjCType:``
-
-* ``decodeValuesOfObjCType:``
 
 * ``decodeBytesForKey:returnedLength:``
 
-* ``decodeBytesWithoutReturnedLength:``
+* ``encodeValuesOfObjCType:``
+
+  Use multiple calls to ``encodeValueOfObjCType:at:`` instead.
+
+* ``decodeValuesOfObjCType:``
+
+  Use multiple calls to ``decodeValueOfObjCType:at:`` instead. Note that
+  that won't work if your trying to read back data that was written using
+  ``encodeValuesOfObjCType:``.
+
+The method ``decodeBytesWithoutReturnedLength:`` is not supported, use 
+``decodeBytesWithReturnedLength:`` instead. It is not possible to safely
+represent the return value of this method in Python.
 
 
 Class ``NSData``

@@ -44,7 +44,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method __attribute__((__unused__)
   struct objc_super super;
 
   // check for five well defined read buffers in data planes argument
-  if (PyArg_ParseTuple(arguments, "(z#z#z#z#z#)iiiibbsii",
+  if (!PyArg_ParseTuple(arguments, "(z#z#z#z#z#)iiiibbsii",
 		       &dataPlanes[0], &garbage,
 		       &dataPlanes[1], &garbage,
 		       &dataPlanes[2], &garbage,
@@ -58,7 +58,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method __attribute__((__unused__)
 		       &isPlanar,
 		       &colorSpaceName,
 		       &bpr,
-		       &bpp) == 0) {
+		       &bpp)) {
 
     if ( !PyErr_ExceptionMatches(PyExc_TypeError) )
       return NULL;
@@ -66,7 +66,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method __attribute__((__unused__)
     PyErr_Clear();
     bzero(dataPlanes, sizeof(dataPlanes));
 
-    if (PyArg_ParseTuple(arguments, "Oiiiibbsii",
+    if (!PyArg_ParseTuple(arguments, "Oiiiibbsii",
 			 &maybeNone,
 			 &width,
 			 &height,
@@ -76,7 +76,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method __attribute__((__unused__)
 			 &isPlanar,
 			 &colorSpaceName,
 			 &bpr,
-			 &bpp) == 0){
+			 &bpp)){
       return NULL; //! any other situations that we need to parse specific args go here
     } else {
       // first arg must be none as nothing else makes sense
@@ -122,7 +122,7 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method __attribute__((__unu
   PyObject* result;
   struct objc_super super;
   
-  if (PyArg_ParseTuple(arguments, "") < 0) {
+  if (!PyArg_ParseTuple(arguments, "")) {
     return NULL;
   }
 
@@ -180,7 +180,7 @@ call_NSBitmapImageRep_bitmapData(PyObject* method __attribute__((__unused__)),
   PyObject* result;
   struct objc_super super;
   
-  if (PyArg_ParseTuple(arguments, "") < 0) {
+  if (!PyArg_ParseTuple(arguments, "")) {
     return NULL;
   }
 

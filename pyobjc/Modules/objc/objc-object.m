@@ -88,7 +88,22 @@ static PyObject*
 object_repr(PyObjCObject* self)
 {
 	char buffer[256];
+	PyObject* res;
 
+	if (self->flags & PyObjCObject_kUNINITIALIZED) {
+		/* Try to call the method 'description', which is the ObjC
+		 * equivalent of __repr__. If that fails we'll fall back to
+		 * the default repr.
+		 * Don't call 'description' for uninitialized objects, that
+		 * crashes the interpreter for several classes.
+		 */
+		res = PyObject_CallMethod((PyObject*)self, "description", NULL);
+		if (res == NULL) {
+			PyErr_Clear();
+		} else {
+			return res;
+		}
+	}
 	snprintf(buffer, sizeof(buffer), "<%s objective-c instance %p>",
 		self->ob_type->tp_name, self->objc_object);
 

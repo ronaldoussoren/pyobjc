@@ -66,7 +66,7 @@ static PyObject* call_NSMatrix_sortUsingFunction_context_(
 	PyObject* realContext;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "OO", &sortFunc, &context) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "OO", &sortFunc, &context)) {
 		return NULL;
 	}
 

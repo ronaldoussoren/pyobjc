@@ -1,17 +1,23 @@
 /*
  * NSCoder mappings for special methods:
- * - encodeValueOfObjCType:at: 
- * - decodeValueOfObjCType:at:
- * - encodeArrayOfObjCType:count:at:
- * - decodeArrayOfObjCType:count:at:
+ * - encodeValueOfObjCType:at: 			[call, imp]
+ * - decodeValueOfObjCType:at:			[call, imp]
+ * - encodeArrayOfObjCType:count:at:		[call, imp]
+ * - decodeArrayOfObjCType:count:at:		[call, imp]
+ * - encodeBytes:length:			[call, imp]
+ * - encodeBytes:length:forKey:			[call, imp]
  *
  * TODO:
- * - encodeBytes:length:
  * - decodeBytesWithReturnedLength:
+ * - decodeBytesForKey:returnedLength:
  * - encodeValuesOfObjCType: 
  * - decodeValuesOfObjCType:
- * - decodeBytesForKey:returnedLength:
+ *
+ * Unsupported method:
  * - decodeBytesWithoutReturnedLength:
+ *   Use ...WithReturnedLenght instead.
+ *
+ * XXX Check usage of self in upcalls, write unittests (including upcalls)
  */
 #include <Python.h>
 #include <Foundation/Foundation.h>
@@ -29,7 +35,7 @@ static PyObject* call_NSCoder_encodeValueOfObjCType_at_(
 	int err;
 	struct objc_super super;
 
-	if  (PyArg_ParseTuple(arguments, "sO", &signature, &value) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "sO", &signature, &value)) {
 		return NULL;
 	}
 
@@ -117,7 +123,7 @@ static PyObject* call_NSCoder_encodeArrayOfObjCType_count_at_(
 	int err;
 	struct objc_super super;
 
-	if  (PyArg_ParseTuple(arguments, "siO", &signature, &count, &value) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "siO", &signature, &count, &value)) {
 		return NULL;
 	}
 
@@ -247,7 +253,7 @@ static PyObject* call_NSCoder_decodeValueOfObjCType_at_(
 	int    size;
 	struct objc_super super;
 
-	if  (PyArg_ParseTuple(arguments, "s", &signature) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "s", &signature)) {
 		return NULL;
 	}
 
@@ -334,7 +340,7 @@ static PyObject* call_NSCoder_decodeArrayOfObjCType_count_at_(
 	int    size;
 	struct objc_super super;
 
-	if  (PyArg_ParseTuple(arguments, "si", &signature, &count) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "si", &signature, &count)) {
 		return NULL;
 	}
 
@@ -381,9 +387,6 @@ static PyObject* call_NSCoder_decodeArrayOfObjCType_count_at_(
 			Py_DECREF(result);
 			return NULL;
 		}
-
-		/* XXX: Isn't this incorrect??, we get a crash without this */
-		//Py_INCREF(PyTuple_GET_ITEM(result, i)); 
 	}
 
 	return result;
@@ -482,47 +485,198 @@ static void imp_NSCoder_decodeArrayOfObjCType_count_at_(id self, SEL sel,
 	Py_DECREF(values);
 }
 
+static PyObject* call_NSCoder_encodeBytes_length_(
+		PyObject* method __attribute__((__unused__)), 
+		PyObject* self, PyObject* arguments)
+{
+	char* bytes;
+	int    size;
+
+	PyObject* result;
+	struct objc_super super;
+
+	if  (!PyArg_ParseTuple(arguments, "t#", &bytes, &size)) {
+		return NULL;
+	}
+
+	NS_DURING
+		PyObjC_InitSuper(&super, 
+			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCObject_GetObject(self));
+
+		(void)objc_msgSendSuper(&super,
+				@selector(encodeBytes:length:),
+				bytes, size);
+		result = Py_None;
+		Py_INCREF(result);
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+		result = NULL;
+	NS_ENDHANDLER
+
+	return result;
+}
+
+static void imp_NSCoder_encodeBytes_length_(id self, SEL sel,
+		char* bytes, int length)	
+{
+	PyObject* result;
+	PyObject* arglist;
+
+	arglist = PyTuple_New(2);
+	if (arglist == NULL) {
+		PyObjCErr_ToObjC();
+		return;
+	}
+
+	PyTuple_SetItem(arglist, 0, PyString_FromStringAndSize(bytes, length));
+	PyTuple_SetItem(arglist, 1, PyInt_FromLong(length));
+
+	if (PyErr_Occurred()) {
+		Py_DECREF(arglist);
+		PyObjCErr_ToObjC();
+		return;
+	}
+
+	result = PyObjC_CallPython(self, sel, arglist);
+	Py_DECREF(arglist);
+	if (result == NULL) {
+		PyObjCErr_ToObjC();
+		return;
+	}
+
+	if (result != Py_None) {
+		PyErr_SetString(PyExc_TypeError, "Must return None");
+		Py_DECREF(result);
+		PyObjCErr_ToObjC();
+		return;
+	}
+	Py_DECREF(result);
+}
+
+static PyObject* call_NSCoder_encodeBytes_length_forKey_(
+		PyObject* method __attribute__((__unused__)), 
+		PyObject* self, PyObject* arguments)
+{
+	char* bytes;
+	int    size;
+	id     key;
+	PyObject* result;
+	struct objc_super super;
+
+	if  (!PyArg_ParseTuple(arguments, "t#O&", &bytes, &size, 
+			PyObjCObject_Convert, &key)) {
+		return NULL;
+	}
+
+	NS_DURING
+		PyObjC_InitSuper(&super, 
+			PyObjCClass_GetClass((PyObject*)(self->ob_type)),
+			PyObjCObject_GetObject(self));
+
+		(void)objc_msgSendSuper(&super,
+				@selector(encodeBytes:length:forKey:),
+				bytes, size, key);
+		result = Py_None;
+		Py_INCREF(result);
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+		result = NULL;
+	NS_ENDHANDLER
+
+	return result;
+}
+
+static void imp_NSCoder_encodeBytes_length_forKey_(id self, SEL sel,
+		char* bytes, int length, id key)	
+{
+	PyObject* result;
+	PyObject* arglist;
+
+	arglist = PyTuple_New(3);
+	if (arglist == NULL) {
+		PyObjCErr_ToObjC();
+		return;
+	}
+
+	PyTuple_SetItem(arglist, 0, PyString_FromStringAndSize(bytes, length));
+	PyTuple_SetItem(arglist, 1, PyInt_FromLong(length));
+	PyTuple_SetItem(arglist, 2, PyObjC_IdToPython(key));
+
+	if (PyErr_Occurred()) {
+		Py_DECREF(arglist);
+		PyObjCErr_ToObjC();
+		return;
+	}
+
+	result = PyObjC_CallPython(self, sel, arglist);
+	Py_DECREF(arglist);
+	if (result == NULL) {
+		PyObjCErr_ToObjC();
+		return;
+	}
+
+	if (result != Py_None) {
+		PyErr_SetString(PyExc_TypeError, "Must return None");
+		Py_DECREF(result);
+		PyObjCErr_ToObjC();
+		return;
+	}
+	Py_DECREF(result);
+}
+
 static int 
 _pyobjc_install_NSCoder(void)
 {
-  Class classNSCoder = objc_lookUpClass("NSCoder");
+	Class classNSCoder = objc_lookUpClass("NSCoder");
   
-  if (PyObjC_RegisterMethodMapping(
-	 classNSCoder,
-	 @selector(encodeArrayOfObjCType:count:at:),
-	 call_NSCoder_encodeArrayOfObjCType_count_at_,
-	 (IMP)imp_NSCoder_encodeArrayOfObjCType_count_at_) < 0) {
-    NSLog(
-    	@"Error occurred while installing NSCoder bridge method -encodeArrayOfObjCType:count:at:");
-    return -1;
-  }
-  if (PyObjC_RegisterMethodMapping(
-	 classNSCoder,
-	 @selector(encodeValueOfObjCType:at:),
-	 call_NSCoder_encodeValueOfObjCType_at_,
-	 (IMP)imp_NSCoder_encodeValueOfObjCType_at_) < 0) {
-    NSLog(@"Error occurred while installing NSCoder bridge method -encodeArrayOfObjCType:at:");
-    return -1;
-  }
+	if (PyObjC_RegisterMethodMapping(
+			classNSCoder,
+			@selector(encodeArrayOfObjCType:count:at:),
+			call_NSCoder_encodeArrayOfObjCType_count_at_,
+			(IMP)imp_NSCoder_encodeArrayOfObjCType_count_at_) < 0) {
+		return -1;
+	}
 
-  if (PyObjC_RegisterMethodMapping(
-	 classNSCoder,
-	 @selector(decodeArrayOfObjCType:count:at:),
-	 call_NSCoder_decodeArrayOfObjCType_count_at_,
-	 (IMP)imp_NSCoder_decodeArrayOfObjCType_count_at_) < 0) {
-    NSLog(
-    	@"Error occurred while installing NSCoder bridge method -encodeArrayOfObjCType:count:at:");
-    return -1;
-  }
+	if (PyObjC_RegisterMethodMapping(
+			classNSCoder,
+			@selector(encodeValueOfObjCType:at:),
+			call_NSCoder_encodeValueOfObjCType_at_,
+			(IMP)imp_NSCoder_encodeValueOfObjCType_at_) < 0) {
+		return -1;
+	}
 
-  if (PyObjC_RegisterMethodMapping(
-	 classNSCoder,
-	 @selector(decodeValueOfObjCType:at:),
-	 call_NSCoder_decodeValueOfObjCType_at_,
-	 (IMP)imp_NSCoder_decodeValueOfObjCType_at_) < 0) {
-    NSLog(@"Error occurred while installing NSCoder bridge method -decodeArrayOfObjCType:at:");
-    return -1;
-  }
+	if (PyObjC_RegisterMethodMapping(
+			classNSCoder,
+			@selector(decodeArrayOfObjCType:count:at:),
+			call_NSCoder_decodeArrayOfObjCType_count_at_,
+			(IMP)imp_NSCoder_decodeArrayOfObjCType_count_at_) < 0) {
+		return -1;
+	}
 
-  return 0;
+	if (PyObjC_RegisterMethodMapping(
+			classNSCoder,
+			@selector(decodeValueOfObjCType:at:),
+			call_NSCoder_decodeValueOfObjCType_at_,
+			(IMP)imp_NSCoder_decodeValueOfObjCType_at_) < 0) {
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(
+			classNSCoder,
+			@selector(encodeBytes:length:),
+			call_NSCoder_encodeBytes_length_,
+			(IMP)imp_NSCoder_encodeBytes_length_) < 0) {
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(
+			classNSCoder,
+			@selector(encodeBytes:length:forKey:),
+			call_NSCoder_encodeBytes_length_forKey_,
+			(IMP)imp_NSCoder_encodeBytes_length_forKey_) < 0) {
+		return -1;
+	}
+
+	return 0;
 }

@@ -14,6 +14,22 @@ Version 1.0b1+ (CVS):
   if you try to pickle one: pickle protocol version 2 silently wrote the 
   incomplete state of objects to the pickle.
 
+- The default repr() of ObjC objects is now the result of a call to the
+  `description` method. This method is not called for unitialized objects,
+  because that might crash the interpreter; we use a default implementation
+  in that case.
+
+- A minor change to the conversion rule for methods with output arguments
+  (pointers to values in ObjC, where the method will write through the pointer).
+  If the method has 'void' as its return type, we used to return a tuple where
+  the first value is always None. This first element is no longer included,
+  furthermore if the method has only 1 output argument we no longer return
+  a tuple but return the output value directly (again only if the method has
+  'void' as its return type).
+  
+  This is a backward incompatible change, but there are not many of such
+  methods.
+
 Version 1.0b1 (2003-07-05):
 
 - More tutorials

@@ -1,5 +1,7 @@
 /*
  * This module contains custom mapping functions for problematic methods
+ *
+ * NOTE: all interesting code is in _FoundationMapping_*.m
  */
 
 #include <Python.h>
@@ -15,8 +17,6 @@ static PyMethodDef mapping_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
-/* These are needed to silence GCC */
-void init_FoundationMapping(void);
 
 #include "_FoundationMapping_NSArray.m"
 #include "_FoundationMapping_NSCoder.m"
@@ -28,6 +28,8 @@ void init_FoundationMapping(void);
 #include "_FoundationMapping_NSSet.m"
 #include "_FoundationMapping_NSString.m"
 
+/* This prototype is needed to silence a GCC warning */
+void init_FoundationMapping(void);
 
 void init_FoundationMapping(void)
 {
@@ -44,13 +46,13 @@ void init_FoundationMapping(void)
 		return;
 	}
 
-	if (_pyobjc_install_NSArray()) return;
-	if (_pyobjc_install_NSCoder()) return;
-	if (_pyobjc_install_NSData()) return;
-	if (_pyobjc_install_NSDictionary()) return;
-	if (_pyobjc_install_NSMutableArray()) return;
-	if (_pyobjc_install_NSNetService()) return;
-	if (_pyobjc_install_NSScriptObjectSpecifier()) return;
-	if (_pyobjc_install_NSSet()) return;
-	if (_pyobjc_install_NSString()) return;
+	if (_pyobjc_install_NSArray() != 0) return;
+	if (_pyobjc_install_NSCoder() != 0) return;
+	if (_pyobjc_install_NSData() != 0) return;
+	if (_pyobjc_install_NSDictionary() != 0) return;
+	if (_pyobjc_install_NSMutableArray() != 0) return;
+	if (_pyobjc_install_NSNetService() != 0) return;
+	if (_pyobjc_install_NSScriptObjectSpecifier() != 0) return;
+	if (_pyobjc_install_NSSet() != 0) return;
+	if (_pyobjc_install_NSString() != 0) return;
 }

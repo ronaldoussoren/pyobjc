@@ -1,11 +1,5 @@
 /*
- * Mapping of static items in the Foundation kit:
- * - constants
- * - notification
- * - data types (TODO)
- * - enumerations (TODO)
- * - exceptions (TODO)
- * - global functions (TODO)
+ * Mapping of static items in the Foundation kit.
  */
 #include <Python.h>
 #import <Foundation/Foundation.h>

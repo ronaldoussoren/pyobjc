@@ -28,8 +28,8 @@ static PyObject* call_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
 	id fontObj;
 	int i;
 	
-	if  (PyArg_ParseTuple(arguments, "OiO&", &glyphList, &count, 
-			PyObjCObject_Convert, &fontObj) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "OiO&", &glyphList, &count, 
+			PyObjCObject_Convert, &fontObj)) {
 		return NULL;
 	}
 
@@ -96,7 +96,7 @@ static PyObject* call_NSBezierPath_appendBezierPathWithPoints_count_(
 	int count;
 	int i;
 	
-	if  (PyArg_ParseTuple(arguments, "OiO&", &pointList, &count) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "OiO&", &pointList, &count)) {
 		return NULL;
 	}
 
@@ -162,7 +162,7 @@ static PyObject* call_NSBezierPath_elementAtIndex_associatedPoints_(
 	NSBezierPathElement res;
 	int i;
 	
-	if  (PyArg_ParseTuple(arguments, "i", &idx) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "i", &idx)) {
 		return NULL;
 	}
 
@@ -236,7 +236,7 @@ static PyObject* call_NSBezierPath_setAssociatedPoints_atIndex_(
 	PyObject* seq;
 	int i, len;
 	
-	if  (PyArg_ParseTuple(arguments, "Oi", &pointList, &idx) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "Oi", &pointList, &idx)) {
 		return NULL;
 	}
 
@@ -296,7 +296,7 @@ static PyObject* call_NSBezierPath_setLineDash_count_phase_(
 	float phase;
 
 	
-	if  (PyArg_ParseTuple(arguments, "Oif", &patternList, &count, &phase) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "Oif", &patternList, &count, &phase)) {
 		return NULL;
 	}
 

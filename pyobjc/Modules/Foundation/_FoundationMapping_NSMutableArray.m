@@ -20,7 +20,7 @@ static PyObject* call_NSMutableArray_sortUsingFunction_context_(
 	PyObject* realContext;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "OO", &sortFunc, &context) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "OO", &sortFunc, &context)) {
 		return NULL;
 	}
 
@@ -39,9 +39,10 @@ static PyObject* call_NSMutableArray_sortUsingFunction_context_(
 			PyObjCObject_GetObject(self));
 
 			
-		res = objc_msgSendSuper(&super,
+		(void)objc_msgSendSuper(&super,
 				@selector(sortUsingFunction:context:),
 				 SortHelperFunc, realContext);
+		res = nil;
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
@@ -70,8 +71,8 @@ static PyObject* call_NSMutableArray_sortUsingFunction_context_range_(
 	PyObject* realContext;
 	id  res;
 
-	if  (PyArg_ParseTuple(arguments, "OOO&O", &sortFunc, &context,
-			 &rangeObj) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "OOO", &sortFunc, &context,
+			 &rangeObj)) {
 		return NULL;
 	}
 
@@ -94,9 +95,10 @@ static PyObject* call_NSMutableArray_sortUsingFunction_context_range_(
 			PyObjCObject_GetObject(self));
 
 			
-		res = objc_msgSendSuper(&super,
+		(void)objc_msgSendSuper(&super,
 			@selector(sortUsingFunction:context:range:),
-			 sortFunc, realContext, range);
+			 SortHelperFunc, realContext, range);
+		res = nil;
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
@@ -254,7 +256,7 @@ static PyObject* call_NSMutableArray_removeObjectsFromIndices_numIndices_(
 	int count;
 	int i;
 
-	if  (PyArg_ParseTuple(arguments, "Oi", &indicesList, &count) < 0) {
+	if (!PyArg_ParseTuple(arguments, "Oi", &indicesList, &count)) {
 		return NULL;
 	}
 
@@ -287,10 +289,9 @@ static PyObject* call_NSMutableArray_removeObjectsFromIndices_numIndices_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuperCls(&super, 
+		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
-			PyObjCClass_GetClass(self));
-
+			PyObjCObject_GetObject(self));
 			
 		objc_msgSendSuper(&super,
 				@selector(removeObjectsFromIndices:numIndices:),
@@ -380,7 +381,7 @@ static PyObject* call_NSMutableArray_replaceObjectsInRange_withObjects_count_(
 	int count;
 	int i;
 
-	if  (PyArg_ParseTuple(arguments, "OOi", &rangeObj, &objectList, &count) < 0) {
+	if  (!PyArg_ParseTuple(arguments, "OOi", &rangeObj, &objectList, &count)) {
 		return NULL;
 	}
 
