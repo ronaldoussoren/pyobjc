@@ -14,6 +14,9 @@ from optparse import OptionParser, Option, OptionValueError
 import logging
 from logging import error, info, debug
 
+import utf16reader
+utf16reader.install()
+
 def deletePath(path):
     info("Removing '%s'...", path)
     if os.path.isdir(path):
@@ -152,24 +155,9 @@ def doFileSubstitution(aFile, encoding, translator):
     debug('encoding is: %s', encoding)
     inFile = codecs.getreader(encoding)(file(aFile, "rb"))
     outFile = codecs.getwriter(encoding)(_tempFile)
-    try:
-        for line in inFile:
-            tline = translator(line)
-            outFile.write(tline)
-    except NotImplementedError:
-        BUFFER = 16384
-        bytes = inFile.read(BUFFER)
-        while bytes:
-            lines = bytes.splitlines(True)
-            bytes = lines.pop()
-            for line in lines:
-                tline = translator(line)
-                outFile.write(tline)
-            newbytes = inFile.read(BUFFER)
-            bytes += newbytes
-            if not newbytes and bytes:
-                # "EOF"
-                bytes += u'\n'
+    for line in inFile:
+        tline = translator(line)
+        outFile.write(tline)
     inFile.close()
 
     # do the copy
