@@ -343,7 +343,7 @@ PyObject* ObjCObject_FindSelector(PyObject* object, SEL selector)
 	meth = ObjCClass_FindSelector((PyObject*)object->ob_type, selector);
 
 	if (meth == NULL) {
-		return NULL;
+		return NULL; 
 	} else {
 		return meth;
 	}	

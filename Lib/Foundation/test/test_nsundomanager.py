@@ -45,10 +45,29 @@ class TestUndoInt(unittest.TestCase):
         assert(x.idx.index() == 0)
 ## end Undo Integer test
 
+
+class TestSubclassingUndo(unittest.TestCase):
+    # Bugreport: 678759 Subclassing NSUndoManager fails
+
+    def testSubclass(self):
+        class UndoSubclass (NSUndoManager):
+            pass
+
+        x = TestHelper.new()
+        m = UndoSubclass.new()
+        l = [ 0 ]
+
+        m.prepareWithInvocationTarget_(x).incFoo_(l)
+        m.undo()
+
+        self.assertEquals(l[0], 1)
+
+
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestNSUndoManager))
     suite.addTest(unittest.makeSuite(TestUndoInt))
+    suite.addTest(unittest.makeSuite(TestSubclassingUndo))
     return suite
 
 if __name__ == '__main__':
