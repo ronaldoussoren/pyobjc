@@ -2,8 +2,6 @@
 Welcome to PyObjC
 =================
 
-.. :authors: Ronald Oussoren, Bill Bumgarner
-
 The PyObjC package provides the glue needed to interface the Python interpreter with the Objective-C language. At its core is the ``objc`` module makes 
 Objective-C objects and classes available as first-class Python citizens, it is 
 not only possible to use Objective-C objects but you can also subclass 

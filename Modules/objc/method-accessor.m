@@ -52,6 +52,22 @@ find_selector(PyObject* self, char* name, int class_method)
 	int   unbound_instance_method = 0;
 	char* flattened;
 
+	if (strcmp(name, "__class__") == 0) {
+		/* Someone does 'type(object.pybojc_instanceMethods)' */
+		Py_INCREF(self->ob_type);
+		return self->ob_type;
+	}
+
+	if (name[0] == '_' && name[1] == '_') {
+		/*
+		 * FIXME: Some classes (NSFault, NSFinalProxy) crash hard
+		 * on these names
+		 */
+		ObjCErr_Set(PyExc_AttributeError,
+			"No selector %s", name);
+		return NULL;
+	}
+
 	if (PyObjCClass_Check(self)) {
 		objc_object = (id)PyObjCClass_GetClass(self);
 	

@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # Using the AddressBook framework on MacOS X
-#
-# I didn't add a single line of C code for this!
 import AddressBook
 
 book = AddressBook.ABAddressBook.sharedAddressBook()

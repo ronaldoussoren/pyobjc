@@ -1,5 +1,5 @@
 from Foundation import NSObject, NSBundle
-from AppKit import NSOutlineViewDataSource, NSTableDataSource, 
+from AppKit import NSOutlineViewDataSource, NSTableDataSource
 from PyObjCTools import NibClassBuilder
 from objc import selector, getClassList, objc_object, IBOutlet
 
@@ -18,6 +18,18 @@ class Wrapper (NSObject):
 
     def description(self):
         return str(self)
+
+def wrap_object(obj):
+    if WRAPPED.has_key(obj):
+        return WRAPPED[obj]
+    else:
+        WRAPPED[obj] = Wrapper.alloc().init_(obj)
+        return WRAPPED[obj]
+
+def unwrap_object(obj):
+    if obj is None:
+        return obj
+    return obj.value
 
 methodIdentifier = {
     'objc_method':0,
@@ -46,17 +58,14 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass, NSOutlineViewDataSource,
     __slots__ = ('_classList', '_classTree', '_methodInfo')
 
     def clearClassInfo(self):
-        print "clearClassInfo"
         self._methodInfo = []
         self.methodTable.reloadData()
         self.window.setTitle_('iClass')
 
 
     def setClassInfo(self, cls):
-        print "setClassInfo for",cls
         self.window.setTitle_('iClass: %s'%cls.__name__)
         self.classLabel.setStringValue_(classPath(cls))
-        print (classPath(cls))
         self.frameworkLabel.setStringValue_(classBundle(cls))
         self._methodInfo = []
         for nm in dir(cls):
@@ -69,33 +78,29 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass, NSOutlineViewDataSource,
         self.methodTable.reloadData()
 
     def selectClass_(self, event):
-        print "selectClass:"
         rowNr = self.classTable.selectedRow()
         if rowNr == -1:
             self.clearClassInfo()
         else:
             item = self.classTable.itemAtRow_(rowNr)
-            item = item.value
-            self.setClassInfo(item)
+            self.setClassInfo(unwrap_object(item))
 
     def showClass(self, cls):
-        print "showClass:", cls
         # First expand the tree (to make item visible)
         super = cls.__bases__[0]
         if  super == objc_object:
             return
 
         self.showClass(super)
-        item = WRAPPED[super]
+        item = wrap_object[super]
         rowNr = self.classTable.rowForItem_(item)
         self.classTable.expandItem_(item)
 
 
     def selectClass(self, cls):
-        print "selectClass"
         self.showClass(cls)
 
-        item = WRAPPED[cls]
+        item = wrap_object[cls]
         rowNr = self.classTable.rowForItem_(item)
 
         self.classTable.scrollRowToVisible_(rowNr)
@@ -103,11 +108,9 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass, NSOutlineViewDataSource,
 
 
     def searchClass_(self, event):
-        print "searchClass:"
         val = self.searchBox.stringValue()
         if not val:
             return
-        print "Searching", val
 
         found = None
         for cls in self._classTree.keys():
@@ -127,7 +130,6 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass, NSOutlineViewDataSource,
 
 
     def refreshClasses(self):
-        print "refreshClasses"
         self._classList = getClassList()
         self._classTree = {}
         self._methodInfo = []
@@ -149,59 +151,37 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass, NSOutlineViewDataSource,
         for lst in self._classTree.values():
             lst.sort()
 
-        #print self._classTree
-
     def init(self):
-        print "Init", self
         self._classInfo = getClassList()
         self.refreshClasses()
         return self
 
     def awakeFromNib(self):
-        print "Awaking", self
         self._classInfo = getClassList()
         self.refreshClasses()
     
 
     def outlineView_child_ofItem_(self, outlineview, index, item):
-        print "childOfItem:", index, item
-        if not (item is None):
-            item = item.value
-        v = self._classTree[item][index]
-        #print 'child is', v
-        if not WRAPPED.has_key(v):
-            print "Make Wrapper for", v
-            WRAPPED[v] = Wrapper.alloc().init_(v)
-        return WRAPPED[v]
+        return wrap_object(self._classTree[unwrap_object(item)][index])
 
     def outlineView_isItemExpandable_(self, outlineview, item):
-        print "isItemExpandable:", item
-        if not (item is None):
-            item = item.value
-        return len(self._classTree[item]) != 0
+        return len(self._classTree[unwrap_object(item)]) != 0
 
 
     def outlineView_numberOfChildrenOfItem_(self, outlineview, item):
-        print "numChildren:", item
-        if not (item is None):
-            item = item.value
-        return len(self._classTree[item])
+        return len(self._classTree[unwrap_object(item)])
 
     def outlineView_objectValueForTableColumn_byItem_(self, outlineview, column, item):
-        print "objectValue:", item
         if item is None:
             return '<None>'
         else:
-            #print "value:", item.value
             v = item.value
             return v.__name__
 
     
     def numberOfRowsInTableView_(self, aTableView):
-        print "numberOfRows", aTableView
         return len(self._methodInfo)
 
     def tableView_objectValueForTableColumn_row_(self,    
                              aTableView, aTableColumn, rowIndex):  
-        print "objectValue", aTableView, aTableColumn, rowIndex
         return self._methodInfo[rowIndex][methodIdentifier[aTableColumn.identifier()]]

@@ -212,5 +212,44 @@ methods in order to know how many and which types of arguments are expected).
 Luckily there are not many varargs methods and most (if no all) of them can
 be easily avoided.
 
+Cleanup Examples
+................
 
+The CurrentConvertor example should be removed, this should be the same as the
+final step of the tutorial. It isn't at the moment because additional cruft in
+the example.
 
+The TableModel and TableModel2 examples should be merged, the contain the same
+python code and only differ in the build method.
+
+* method-weirdness.py
+  Not really a suitable example, but shows a strange feature of Apple's 
+  implementation of Cocoa. Move to a unittest.
+
+* addressbook.py
+  Cleanup, maybe transform this into a usefull utility (import/export from/to
+  CSV springs to mind).
+
+* autoreadme.py
+  Add documentation
+
+* dictionary.py
+  Should be a unittest, and should be added to the (non-existing) manual
+
+* objc-vars.py
+  Move to unittests (and documentation)
+
+* pydict-to-objcdict.py
+  Move to unittests
+
+* subclassing-objective-c.py
+  Move to documentation (unittest?)
+
+* super-call.py
+  Move to documentation  (unittest?)
+
+* using-nscoder.py
+  Move to unittest (and expand)
+
+* using-nsscanner.py
+  Move to unitest
