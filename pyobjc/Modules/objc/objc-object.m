@@ -62,8 +62,10 @@ register_proxy(PyObject* proxy_obj)
 	}
 
 	if (proxy_dict == NULL)  {
-		proxy_dict =  NSCreateMapTable(ObjC_PointerKeyCallBacks,
-			ObjC_PointerValueCallBacks, 500);
+		proxy_dict =  NSCreateMapTable(
+			PyObjCUtil_PointerKeyCallBacks,
+			PyObjCUtil_PointerValueCallBacks, 
+			500);
 
 		if (proxy_dict == NULL) return -1;
 	}
@@ -811,8 +813,8 @@ id
 (PyObjCObject_GetObject)(PyObject* object)
 {
 	if (!PyObjCObject_Check(object)) {
-		ObjCErr_Set(PyExc_TypeError,
-			"objc.objc_object expected, got %s",
+		PyErr_Format(PyExc_TypeError,
+			"'objc.objc_object' expected, got '%s'",
 			object->ob_type->tp_name);
 		
 	}
@@ -823,8 +825,8 @@ void
 PyObjCObject_ClearObject(PyObject* object)
 {
 	if (!PyObjCObject_Check(object)) {
-		ObjCErr_Set(PyExc_TypeError,
-			"objc.objc_object expected, got %s",
+		PyErr_Format(PyExc_TypeError,
+			"'objc.objc_object' expected, got '%s'",
 			object->ob_type->tp_name);
 		
 	}

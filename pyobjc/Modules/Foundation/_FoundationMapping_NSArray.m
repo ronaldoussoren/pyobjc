@@ -93,14 +93,22 @@ call_NSArray_sortedArrayUsingFunction_context_(
 	Py_INCREF(context);
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			res = ((id(*)(id,SEL, int(*)(id, id, void*), void*))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					SortHelperFunc, realContext);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
 			
-		res = objc_msgSendSuper(&super,
-				PyObjCSelector_GetSelector(method), 
-				SortHelperFunc, realContext);
+			res = objc_msgSendSuper(&super,
+					PyObjCSelector_GetSelector(method), 
+					SortHelperFunc, realContext);
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;
@@ -144,13 +152,21 @@ call_NSArray_sortedArrayUsingFunction_context_hint_(
 	Py_INCREF(context);
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
-			
-		res = objc_msgSendSuper(&super,
-			 PyObjCSelector_GetSelector(method),
-			 SortHelperFunc, realContext, hint);
+		if (PyObjCIMP_Check(method)) {
+			res = ((id(*)(id,SEL, int(*)(id, id, void*), void*, id))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					SortHelperFunc, realContext, hint);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
+				
+			res = objc_msgSendSuper(&super,
+				 PyObjCSelector_GetSelector(method),
+				 SortHelperFunc, realContext, hint);
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;

@@ -350,12 +350,20 @@ CONVENIENCE_METHODS['nextObject'] = (
 # NSNumber seems to be and abstract base-class that is implemented using
 # NSCFNumber, a CoreFoundation 'proxy'.
 #
+NSDecimalNumber = runtime.NSDecimalNumber
+from _Foundation import NSDecimal
+
 def _num_to_python(v):
     """
     Magic method that converts NSNumber values to Python, see 
     <Foundation/CFNumber.h> for the magic numbers
     """
-    if hasattr(v, '_cfNumberType'):
+    global NSDecimal
+
+    if isinstance(v, NSDecimalNumber):
+        return v.decimalValue()
+
+    elif hasattr(v, '_cfNumberType'):
         tp = v._cfNumberType()
         if tp in [ 1, 2, 3, 7, 8, 9, 10 ]:
             v = v.longValue()
@@ -369,25 +377,53 @@ def _num_to_python(v):
     return v
 
 def __abs__CFNumber(numA):
-    return abs(_num_to_python(numA))
+    r =  abs(_num_to_python(numA))
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __add__CFNumber(numA, numB):
-    return _num_to_python(numA) + _num_to_python(numB)
+    r = _num_to_python(numA) + _num_to_python(numB)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __and__CFNumber(numA, numB):
-    return _num_to_python(numA) & _num_to_python(numB)
+    r = _num_to_python(numA) & _num_to_python(numB)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __div__CFNumber(numA, numB):
-    return _num_to_python(numA) / _num_to_python(numB)
+    r = _num_to_python(numA) / _num_to_python(numB)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __divmod__CFNumber(numA, numB):
-    return divmod(_num_to_python(numA), _num_to_python(numB))
+    r = divmod(_num_to_python(numA), _num_to_python(numB))
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __float__CFNumber(numA):
-    return float(_num_to_python(numA))
+    r = float(_num_to_python(numA))
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __floordiv__CFNumber(numA, numB):
-    return _num_to_python(numA) // _num_to_python(numB)
+    r = _num_to_python(numA) // _num_to_python(numB)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __hex__CFNumber(numA):
     return hex(_num_to_python(numA))
@@ -396,49 +432,98 @@ def __int__CFNumber(numA):
     return int(_num_to_python(numA))
 
 def __invert__CFNumber(numA):
-    return ~_num_to_python(numA)
+    r = ~_num_to_python(numA)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __long__CFNumber(numA):
     return long(_num_to_python(numA))
 
 def __lshift__CFNumber(numA, numB):
-    return _num_to_python(numA) << _num_to_python(numB)
+    r = _num_to_python(numA) << _num_to_python(numB)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __rshift__CFNumber(numA, numB):
-    return _num_to_python(numA) >> _num_to_python(numB)
+    r = _num_to_python(numA) >> _num_to_python(numB)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __mod__CFNumber(numA, numB):
-    return _num_to_python(numA) % _num_to_python(numB)
+    r = _num_to_python(numA) % _num_to_python(numB)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __mul__CFNumber(numA, numB):
-    return _num_to_python(numA) * _num_to_python(numB)
+    r = _num_to_python(numA) * _num_to_python(numB)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __neg__CFNumber(numA):
-    return -_num_to_python(numA)
+    r = -_num_to_python(numA)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __oct__CFNumber(numA):
     return oct(_num_to_python(numA))
 
 def __or__CFNumber(numA, numB):
-    return _num_to_python(numA)  | _num_to_python(numB)
+    r = _num_to_python(numA)  | _num_to_python(numB)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __pos__CFNumber(numA):
-    return +_num_to_python(numA)
+    r = +_num_to_python(numA)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __pow__CFNumber(numA, numB, modulo=None):
     if modulo is None:
-        return _num_to_python(numA)  ** _num_to_python(numB)
+        r = _num_to_python(numA)  ** _num_to_python(numB)
     else:
-        return pow(_num_to_python(numA), _num_to_python(numB), modulo)
+        r = pow(_num_to_python(numA), _num_to_python(numB), modulo)
+    
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __sub__CFNumber(numA, numB):
-    return _num_to_python(numA)  - _num_to_python(numB)
+    r = _num_to_python(numA)  - _num_to_python(numB)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __truediv__CFNumber(numA, numB):
-    return _num_to_python(numA) / _num_to_python(numB)
+    r = _num_to_python(numA) / _num_to_python(numB)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 def __xor__CFNumber(numA, numB):
-    return _num_to_python(numA)  ^ _num_to_python(numB)
+    r = _num_to_python(numA)  ^ _num_to_python(numB)
+    if isinstance(r, NSDecimal):
+        return NSDecimalNumber.decimalNumberWithDecimal_(r)
+    else:
+        return r
 
 import __builtin__
 if not hasattr(__builtin__, 'bool'):

@@ -55,13 +55,21 @@ call_NSCoder_encodeValueOfObjCType_at_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			((void(*)(id,SEL, char*,void*))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					signature, buf);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		(void)objc_msgSendSuper(&super,
-				PyObjCSelector_GetSelector(method),
-				signature, buf);
+			(void)objc_msgSendSuper(&super,
+					PyObjCSelector_GetSelector(method),
+					signature, buf);
+		}
 		result = Py_None;
 		Py_INCREF(result);
 	NS_HANDLER
@@ -179,13 +187,21 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			((void(*)(id,SEL, char*,int, void*))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					signature, count, buf);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		(void)objc_msgSendSuper(&super,
-				PyObjCSelector_GetSelector(method),
-				signature, count, buf);
+			(void)objc_msgSendSuper(&super,
+					PyObjCSelector_GetSelector(method),
+					signature, count, buf);
+		}
 		result = Py_None;
 		Py_INCREF(result);
 	NS_HANDLER
@@ -292,13 +308,21 @@ call_NSCoder_decodeValueOfObjCType_at_(
 
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			((void(*)(id,SEL, char*,void*))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					signature, buf);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		(void)objc_msgSendSuper(&super,
-				PyObjCSelector_GetSelector(method),
-				signature, buf);
+			(void)objc_msgSendSuper(&super,
+					PyObjCSelector_GetSelector(method),
+					signature, buf);
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
@@ -394,13 +418,21 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method), 
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			((void(*)(id,SEL, char*,int, void*))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					signature, count, buf);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method), 
+				PyObjCObject_GetObject(self));
 
-		(void)objc_msgSendSuper(&super,
+			(void)objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method),
 				signature, count, buf);
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
@@ -521,13 +553,21 @@ call_NSCoder_encodeBytes_length_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			((void(*)(id,SEL,void*,int))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					bytes, length);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		(void)objc_msgSendSuper(&super,
+			(void)objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method),
 				bytes, length);
+		}
 		result = Py_None;
 		Py_INCREF(result);
 	NS_HANDLER
@@ -604,13 +644,21 @@ call_NSCoder_decodeBytesWithReturnedLength_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			bytes = ((void*(*)(id,SEL,int*))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					&size);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		bytes = (void*)objc_msgSendSuper(&super,
+			bytes = (void*)objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method),
 				&size);
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		bytes = NULL;
@@ -754,14 +802,22 @@ call_NSCoder_decodeBytesForKey_returnedLength_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			bytes = ((void*(*)(id,SEL,id, int*))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					key, &size);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		bytes = (void*)objc_msgSendSuper(&super,
+			bytes = (void*)objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method),
 				key,
 				&size);
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		bytes = NULL;
@@ -910,13 +966,21 @@ call_NSCoder_encodeBytes_length_forKey_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			((void(*)(id,SEL,void*, int, id))
+				(PyObjCIMP_GetIMP(method)))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					bytes, size, key);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		(void)objc_msgSendSuper(&super,
+			(void)objc_msgSendSuper(&super,
 				PyObjCSelector_GetSelector(method),
 				bytes, size, key);
+		}
 		result = Py_None;
 		Py_INCREF(result);
 	NS_HANDLER

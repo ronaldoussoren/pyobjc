@@ -24,10 +24,9 @@ PyObjCMethodSignature* PyObjCMethodSignature_FromSignature(
 
 	retval->nargs = nargs;
 	retval->retainCount = 1;
-	retval->signature = strdup(signature);
+	retval->signature = PyObjCUtil_Strdup(signature);
 	if (retval->signature == NULL) {
 		free(retval);
-		PyErr_NoMemory();
 		return NULL;
 	}
 

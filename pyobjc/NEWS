@@ -23,6 +23,12 @@ Version "Panther" (Off-CVS)
   a pickle containing these values created using this version of PyObjC cannot
   be unpickled on older versions of PyObjC.
 
+- This version adds support for NSDecimal. This is a fixed-point type defined
+  in Cocoa. 
+
+- NSDecimalNumbers are no longer converted to floats, that would loose 
+  information.
+
 - If an Objective-C method name is a Python keyword you can now access it
   by appending two underscores to its name, e.g. someObject.class__().
 
@@ -32,6 +38,9 @@ Version "Panther" (Off-CVS)
   NOTE: Currently only 'class' and 'raise' are treated like this, because
   those are the only Python keywords that are actually used as Objective-C
   method names.
+
+- Experimental support for instanceMethodForSelector: and methodForSelector:. 
+  This support is not 100% stable, and might change in the future.
 
 - Backward incompatible change: class methods are no longer callable through
   the instances.

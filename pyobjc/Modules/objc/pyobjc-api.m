@@ -112,7 +112,10 @@ struct pyobjc_api objc_api = {
 	PyObjC_FreeCArray,		/* free_c_array */
 	PyObjC_PythonToCArray,		/* py_to_c_array */
 	PyObjC_CArrayToPython,		/* c_array_to_py */
-	PyObjC_RegisterStructType	/* register_struct */
+	PyObjC_RegisterStructType,	/* register_struct */
+	&PyObjCIMP_Type,		/* imp_type */
+	PyObjCIMP_GetIMP,		/* imp_get_imp */
+	PyObjCIMP_GetSelector		/* imp_get_sel */
 };
 
 int ObjCAPI_Register(PyObject* module_dict)

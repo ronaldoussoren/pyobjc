@@ -448,6 +448,15 @@ Class ``NSObject``
 
   The context is an integer
 
+* ``methodForSelector:``, ``instanceMethodForSelector:``
+
+  These methods return instances of objc.IMP. The major difference with
+  Objective-C is that you don't have to, or even can, pass the selector to
+  the IMP. In other words, the interface is the same as for unbound
+  instance methods: you have to pass ``self`` and the method arguments.
+
+  WARNING: This interface is experimental and might change in a future version
+  of PyObjC.
 
 Class ``NSScriptObjectSpecifier``
 .................................

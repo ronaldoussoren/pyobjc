@@ -1,5 +1,8 @@
 /*
  * Support code for the GNU runtime
+ *
+ * NOTE: This file uses some private functions in the GNU runtime as that seems
+ * to be the only way to properly interface with that runtime.
  */
 #include "pyobjc.h"
 
@@ -41,39 +44,18 @@ int PyObjCRT_SetupClass(
 	cls->info = CLS_CLASS;
 	metaCls->info = CLS_META;
 
-	cls->name = strdup(name);
+	cls->name = PyObjCUtil_Strdup(name);
 	if (cls->name == NULL) {
-		PyErr_NoMemory();
 		return -1;
 	}
-	metaCls->name = strdup(name);
+	metaCls->name = PyObjCUtil_Strdup(name);
 	if (metaCls->name == NULL) {
-		PyErr_NoMemory();
 		free((char*)(cls->name));
 		return -1;
 	}
 
-#if 0
-	cls->methods = calloc(1, sizeof(struct objc_method_list*));
-	if (cls->methods == NULL) {
-		PyErr_NoMemory();
-		free((char*)(cls->name)); 
-		free((char*)(metaCls->name)); 
-		return -1;
-	}
-
-	metaCls->methods = calloc(1, sizeof(struct objc_method_list*));
-	if (cls->methods == NULL) {
-		PyErr_NoMemory();
-		free((char*)(cls->name)); 
-		free((char*)(metaCls->name)); 
-		free(cls->methods);
-		return -1;
-	}
-#else
 	cls->methods = NULL;
 	metaCls->methods = NULL;
-#endif
 
 	cls->super_class = superCls;
 	metaCls->super_class = superCls->class_pointer;

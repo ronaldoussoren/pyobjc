@@ -65,13 +65,21 @@ call_NSFont_positionsForCompositeSequence_numberOfGlyphs_pointArray_(
 	Py_DECREF(seq);
 
 	NS_DURING
-		PyObjC_InitSuper(&super,
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			len = ((int(*)(id, SEL, NSGlyph*, int, NSPoint*))
+			 	PyObjCIMP_GetIMP(method))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					glyphs, numGlyphs, points);
+		} else {
+			PyObjC_InitSuper(&super,
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		len = (int)objc_msgSendSuper(&super,
-			@selector(positionsForCompositeSequence:numberOfGlyphs:pointArray:),
-			glyphs, numGlyphs, points);
+			len = (int)objc_msgSendSuper(&super,
+				PyObjCSelector_GetSelector(method),
+				glyphs, numGlyphs, points);
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		len = -1;
@@ -259,12 +267,20 @@ call_NSFont_fontWithName_matrix_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuperCls(&super,
-			PyObjCSelector_GetClass(method),
-			PyObjCClass_GetClass(self));
-		font = objc_msgSendSuper(&super,
-			PyObjCSelector_GetSelector(method),
-			typeface, matrix);
+		if (PyObjCIMP_Check(method)) {
+			font = ((id(*)(id, SEL, id, float*))
+			 	PyObjCIMP_GetIMP(method))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					typeface, matrix);
+		} else {
+			PyObjC_InitSuperCls(&super,
+				PyObjCSelector_GetClass(method),
+				PyObjCClass_GetClass(self));
+			font = objc_msgSendSuper(&super,
+				PyObjCSelector_GetSelector(method),
+				typeface, matrix);
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		font = nil;
@@ -355,12 +371,19 @@ call_NSFont_matrix(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super,
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			matrix = ((float*(*)(id, SEL))
+			 	PyObjCIMP_GetIMP(method))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method));
+		} else {
+			PyObjC_InitSuper(&super,
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		matrix = (float*)objc_msgSendSuper(&super,
-			PyObjCSelector_GetSelector(method));
+			matrix = (float*)objc_msgSendSuper(&super,
+				PyObjCSelector_GetSelector(method));
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 		matrix = nil;

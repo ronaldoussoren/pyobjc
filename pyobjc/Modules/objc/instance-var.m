@@ -71,7 +71,7 @@ ivar_descr_get(PyObjCInstanceVariable* self, PyObject* obj, PyObject* type __att
 		res = *(PyObject**)(((char*)objc) + var->ivar_offset);
 
 		if (res == NULL) {
-			ObjCErr_Set(PyExc_AttributeError,
+			PyErr_Format(PyExc_AttributeError,
 				"No attribute %s\n", var->ivar_name);
 		} else {
 			Py_INCREF(res);
@@ -183,7 +183,10 @@ static  char* keywords[] = { "name", "type", "isOutlet", NULL };
 			keywords, &name, &type, &isOutletObj))
 		return -1;
 
-	self->name = strdup(name);	
+	self->name = PyObjCUtil_Strdup(name);	
+	if (self ->name == NULL) {
+		return -1;
+	}
 	self->type[0] = *type;
 	self->type[1] = '\0';
 	if (isOutletObj) {
@@ -268,10 +271,14 @@ PyObjCInstanceVariable_New(char* name)
 	if (result == NULL) {
 		return NULL;
 	}
-	((PyObjCInstanceVariable*)result)->name = strdup(name);
 	((PyObjCInstanceVariable*)result)->type[0] = '\0';
 	((PyObjCInstanceVariable*)result)->isOutlet = 0;
 	((PyObjCInstanceVariable*)result)->isSlot = 0;
 	((PyObjCInstanceVariable*)result)->ivar = 0;
+	((PyObjCInstanceVariable*)result)->name = PyObjCUtil_Strdup(name);
+	if (((PyObjCInstanceVariable*)result)->name == NULL) {
+		Py_DECREF(result);
+		return NULL;
+	}
 	return result;
 }

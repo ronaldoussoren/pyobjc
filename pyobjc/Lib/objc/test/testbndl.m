@@ -1474,6 +1474,7 @@ static 	char buf[1024];
 +createAHostWithAddress:(NSString*)address;
 +makeACopy:source;
 +makeDataWithBytes:(Class)cls method:(int)i;
++makeDictFromClass:(Class)cls method:(int)i;
 +getBytes:(NSData*)data;
 +keyValue:(int)idx forObject: value key: id;
 +(void)setKeyValue:(int)idx forObject: object key: key value: value;
@@ -1505,6 +1506,32 @@ static 	char buf[1024];
 	} else {
 		id o = [cls alloc];
 		return [o initWithBytes:"hello world" length:sizeof("hello world")-1];
+	}
+}
+
++makeDictFromClass:(Class)cls method:(int)i
+{
+	id objects[4];
+	id keys[4];
+
+	objects[0] = [[NSObject alloc] init];
+	objects[1] = [[NSObject alloc] init];
+	objects[2] = [[NSObject alloc] init];
+	objects[3] = [[NSObject alloc] init];
+
+	keys[0] = [[NSObject alloc] init];
+	keys[1] = [[NSObject alloc] init];
+	keys[2] = [[NSObject alloc] init];
+	keys[3] = [[NSObject alloc] init];
+
+	if (i == 0) {
+		return [cls 
+				dictionaryWithObjects:objects 
+				forKeys:keys count:4];
+	} else {
+		return [[cls alloc] 
+				initWithObjects:objects 
+				forKeys:keys count:4];
 	}
 }
 

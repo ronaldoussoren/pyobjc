@@ -13,13 +13,15 @@
 	int       cur;
 	int       len;
 }
-+newWithPythonObject:(PyObject*)value;
--initWithPythonObject:(PyObject*)value;
++ newWithPythonObject:(PyObject*)value;
+- initWithPythonObject:(PyObject*)value;
 -(void)dealloc;
 
 -(id)nextObject;
 
 @end /* interface OC_PythonDictionaryEnumerator */
+
+
 
 @implementation OC_PythonDictionaryEnumerator
 
@@ -155,32 +157,27 @@
 
 -(void)setObject:val forKey:key
 {
-	PyObject* v;
-	PyObject* k;
+	PyObject* v = NULL;
+	PyObject* k = NULL;
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	v = pythonify_c_value("@", &val);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (v == NULL) goto error;
 
 	k = pythonify_c_value("@", &key);
-	if (k == NULL) {
-		Py_DECREF(v);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (k == NULL) goto error;
 
-	if (PyDict_SetItem(value, k, v) < 0) {
-		Py_DECREF(v);
-		Py_DECREF(k);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return;
-	}
+	if (PyDict_SetItem(value, k, v) < 0) goto error;
+
 	Py_DECREF(v);
 	Py_DECREF(k);
 	PyGILState_Release(state);
+	return;
+
+error:
+	Py_XDECREF(v);
+	Py_XDECREF(k);
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
 -(void)removeObjectForKey:key

@@ -126,7 +126,6 @@ if FOUNDATION_HDRS is not None:
                     'ConnectionBecameInvalidNotification',
                 )
         )
-
         FOUNDATION_IGNORE_LIST=(
             # All have types that are not (yet) mapped to python
             "NSNonOwnedPointerHashCallBacks",
@@ -370,7 +369,6 @@ if APPKIT_HDRS is not None:
         strconst_generator.generate(
                 APPKIT_HDRS, 
                 'build/codegen/_App_Str.inc')
-
         APPKIT_PREFIX="APPKIT_EXTERN"
         APPKIT_IGNORE_LIST=(
             # First two have types that are not yet mapped

@@ -4,12 +4,6 @@
  *
  * The PyObjC unittest objc.test.test_ctests executes the tests in this file.
  *
- * TODO:
- * - check PyObjCRT_SizeOfType
- * - check PyObjCRT_AlignOfType
- * - check pythonify_c_value
- * - check depythonify_c_value
- *
  * All at least for structured types, the basic types have fairly trivial 
  * implementations.
  *

@@ -63,16 +63,27 @@ call_NSBezierPath_appendBezierPathWithGlyphs_count_inFont_(
 	} 
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			((void(*)(id, SEL, NSGlyph*, int, id))
+			 	PyObjCIMP_GetIMP(method))(
+					PyObjCObject_GetObject(self),
+					PyObjCIMP_GetSelector(method),
+					glyphs,
+					count,
+					fontObj);
+
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
 
-		(void)objc_msgSendSuper(&super,
-			PyObjCSelector_GetSelector(method),
-			glyphs,
-			count,
-			fontObj);
+			(void)objc_msgSendSuper(&super,
+				PyObjCSelector_GetSelector(method),
+				glyphs,
+				count,
+				fontObj);
+		}
 
 		free(glyphs);
 		result = Py_None;
@@ -131,16 +142,24 @@ call_NSBezierPath_appendBezierPathWithPoints_count_(
 	} 
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			((void(*)(id,SEL,NSPoint*,int))
+			   PyObjCIMP_GetIMP(method))(
+			   	PyObjCObject_GetObject(self),
+				PyObjCIMP_GetSelector(method),
+				points,
+				count);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
 
-		(void)objc_msgSendSuper(&super,
-			PyObjCSelector_GetSelector(method),
-			points,
-			count);
-
+			(void)objc_msgSendSuper(&super,
+				PyObjCSelector_GetSelector(method),
+				points,
+				count);
+		}
 		free(points);
 		result = Py_None;
 		Py_INCREF(result);
@@ -171,16 +190,25 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method), 
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			res = ((NSBezierPathElement(*)(id,SEL,int,NSPoint*))
+			   PyObjCIMP_GetIMP(method))(
+			   	PyObjCObject_GetObject(self),
+				PyObjCIMP_GetSelector(method),
+				idx,
+				points
+			   );
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method), 
+				PyObjCObject_GetObject(self));
 
 
-		res = (NSBezierPathElement)objc_msgSendSuper(&super,
-			PyObjCSelector_GetSelector(method), 
-			idx,
-			points);
-
+			res = (NSBezierPathElement)objc_msgSendSuper(&super,
+				PyObjCSelector_GetSelector(method), 
+				idx,
+				points);
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
 	NS_ENDHANDLER
@@ -268,16 +296,24 @@ call_NSBezierPath_setAssociatedPoints_atIndex_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			((void(*)(id,SEL,NSPoint*,int))
+			   PyObjCIMP_GetIMP(method))(
+			   	PyObjCObject_GetObject(self),
+				PyObjCIMP_GetSelector(method),
+				points,
+				idx);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
 
-		(void)objc_msgSendSuper(&super,
-			PyObjCSelector_GetSelector(method),
-			points,
-			idx);
-
+			(void)objc_msgSendSuper(&super,
+				PyObjCSelector_GetSelector(method),
+				points,
+				idx);
+		}
 		result = Py_None;
 		Py_INCREF(result);
 	NS_HANDLER
@@ -334,15 +370,22 @@ call_NSBezierPath_setLineDash_count_phase_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			((void(*)(id,SEL,float*,int,float))
+			   PyObjCIMP_GetIMP(method))(
+			   	PyObjCObject_GetObject(self),
+				PyObjCIMP_GetSelector(method),
+				pattern, count, phase);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
 
-		objc_msgSendSuper(&super,
-			PyObjCSelector_GetSelector(method),
-			pattern, count, phase);
-
+			objc_msgSendSuper(&super,
+				PyObjCSelector_GetSelector(method),
+				pattern, count, phase);
+		}
 		result = Py_None;
 		Py_INCREF(result);
 	NS_HANDLER
@@ -381,22 +424,28 @@ call_NSBezierPath_getLineDash_count_phase_(
 	}
 
 	NS_DURING
-		PyObjC_InitSuper(&super, 
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		if (PyObjCIMP_Check(method)) {
+			((void(*)(id,SEL,float*,int*,float*))
+			   PyObjCIMP_GetIMP(method))(
+			   	PyObjCObject_GetObject(self),
+				PyObjCIMP_GetSelector(method),
+				pattern, &countOut, &phase);
+		} else {
+			PyObjC_InitSuper(&super, 
+				PyObjCSelector_GetClass(method),
+				PyObjCObject_GetObject(self));
 
-		countOut = countIn;
-		objc_msgSendSuper(&super,
-			PyObjCSelector_GetSelector(method),
-			pattern, &countOut, &phase);
+			countOut = countIn;
+			objc_msgSendSuper(&super,
+				PyObjCSelector_GetSelector(method),
+				pattern, &countOut, &phase);
 
-		result = Py_None; // Dummy
+		}
 	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
-		result = NULL;
 	NS_ENDHANDLER
 
-	if (result == NULL) {
+	if (PyErr_Occurred()) {
 		return NULL;
 	}
 

@@ -67,11 +67,104 @@ from distutils.core import setup, Extension
 from distutils.command.build_ext import build_ext
 import os
 
+
+
+
 class pyobjc_build_ext (build_ext):
+    # Custom build_ext implementation. This differs in two ways from the
+    # standard one:
+    # 1. We first run the CodeGenerator script
+    # 2. We calculate a class-list after building the extensions, and if that
+    #    is different from what we had before (e.g. clean install or serious
+    #    OS upgrade) we rebuild the extensions.
+
+    def create_empty_class_list(self):
+        for fw in ('Fnd', 'App'):
+            fd = open('build/codegen/_%s_Classes.inc'%(fw,), 'w')
+            fd.write('static const char* gClassNames[] = {\n')
+            fd.write('\tNULL\n')
+            fd.write('};')
+            fd.close()
+
+    def create_cached_class_list(self):
+        sys.path.insert(0, self.build_lib)
+        import objc
+        retval = 0
+
+        for pfx, name in (('Fnd', 'Foundation'), ('App', 'AppKit')):
+            try:
+                m = __import__(name)
+            except ImportError:
+                continue
+            fd = open('build/codegen/_%s_Classes.inc~'%(pfx,), 'w')
+            fd.write('static const char* gClassNames[] = {\n')
+            for o in m.__dict__.values():
+                if not isinstance(o, objc.objc_class): continue
+                fd.write('\t"%s",\n'%(o.__name__))
+            fd.write('\tNULL\n')
+            fd.write('};')
+            fd.close()
+
+            d1 = open('build/codegen/_%s_Classes.inc~'%(pfx,), 'r').read()
+            d2 = open('build/codegen/_%s_Classes.inc'%(pfx,), 'r').read()
+
+            if d1 != d2:
+                os.rename(
+                        'build/codegen/_%s_Classes.inc~'%(pfx,),
+                        'build/codegen/_%s_Classes.inc'%(pfx,)
+                    )
+                retval = 1
+
+
+        return retval
+
+
+                
+
+
     def run(self):
         task_build_libffi()
+
+        # Save self.compiler, we need to reset it when we have to rebuild
+        # the extensions.
+        compiler_saved = self.compiler
+
         subprocess("Generating wrappers & stubs", "%s Scripts/CodeGenerators/cocoa_generator.py" % (sys.executable,), None)
+        if not os.path.exists('build/codegen/_Fnd_Classes.inc'):
+            # Create a dummy classname list, to enable bootstrapping. Don't
+            # do this if there already is a list, everything is better than
+            # an empty list.
+            self.create_empty_class_list()
+
         build_ext.run(self)
+
+        if self.create_cached_class_list():
+            import shutil
+            # Note: dependencies don't work here, we depend on a file that
+            # probably didn't exist when the glob was done...
+            print "** Created a fresh class-cache, rebuilding the extensions"
+            shutil.rmtree(
+                    os.path.join(self.build_temp, 'Modules', 'AppKit'))
+            os.mkdir(
+                    os.path.join(self.build_temp, 'Modules', 'AppKit'))
+            shutil.rmtree(
+                    os.path.join(self.build_temp, 'Modules', 'Foundation'))
+            os.mkdir(
+                    os.path.join(self.build_temp, 'Modules', 'Foundation'))
+
+            try:
+                os.unlink(os.path.join(self.build_lib, '_AppKit.so'))
+            except os.error:
+                pass
+
+            try:
+                os.unlink(os.path.join(self.build_lib, '_Foundation.so'))
+            except os.error:
+                pass
+
+            self.compiler = compiler_saved
+
+            build_ext.run(self)
 
 LIBFFI_SOURCES='libffi-src'
 if sys.platform != 'darwin' and os.path.exists('/usr/include/ffi.h'):
@@ -175,6 +268,7 @@ sourceFiles = [
         "Modules/objc/libffi_support.m",
         "Modules/objc/pointer-support.m",
         "Modules/objc/struct-wrapper.m",
+        "Modules/objc/method-imp.m",
 ]
 
 # On GNUstep we can read some configuration from the environment.
@@ -227,7 +321,7 @@ if gs_root is None:
         "-Wno-import",
         #"-O0", "-g",
         #"-Werror",
-        #"-O3", "-mcpu=7450", "-maltivec",
+        "-O3", "-mcpu=7450", "-maltivec",
         ]
 
     OBJC_LDFLAGS=[
@@ -322,7 +416,7 @@ CFLAGS.append('-Ibuild/codegen/')
 
 CorePackages = [ 'objc' ]
 CoreExtensions =  [
-    Extension("objc._objc",
+    Extension("_objc",
               sourceFiles,
               extra_compile_args=[
               ] + LIBFFI_CFLAGS + CFLAGS,
@@ -408,7 +502,7 @@ FoundationPackages, FoundationExtensions = \
 
 AppKitPackages, AppKitExtensions = \
         IfFrameWork('AppKit.framework', [ 'AppKit' ], [
-          Extension("AppKit._AppKit",
+          Extension("_AppKit",
                     ["Modules/AppKit/_AppKit.m"],
                     extra_compile_args=[
                         "-IModules/objc",

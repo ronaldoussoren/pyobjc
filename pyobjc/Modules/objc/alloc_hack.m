@@ -19,17 +19,29 @@ call_NSObject_alloc(PyObject* method,
 		return NULL;
 	}
 
-	RECEIVER(super) = (id)PyObjCClass_GetClass(self);
-	super.class = PyObjCSelector_GetClass(method); 
-	super.class = GETISA(super.class);
+	if (PyObjCIMP_Check(method)) {
+		NS_DURING
+			result = PyObjCIMP_GetIMP(method)(
+					PyObjCClass_GetClass(self), 
+					PyObjCIMP_GetSelector(method));
+		NS_HANDLER
+			PyObjCErr_FromObjC(localException);
+			result = nil;
+		NS_ENDHANDLER;
 
-	NS_DURING
-		result = objc_msgSendSuper(&super, 
-				PyObjCSelector_GetSelector(method)); 
-	NS_HANDLER
-		PyObjCErr_FromObjC(localException);
-		result = nil;
-	NS_ENDHANDLER;
+	} else {
+		RECEIVER(super) = (id)PyObjCClass_GetClass(self);
+		super.class = PyObjCSelector_GetClass(method); 
+		super.class = GETISA(super.class);
+
+		NS_DURING
+			result = objc_msgSendSuper(&super, 
+					PyObjCSelector_GetSelector(method)); 
+		NS_HANDLER
+			PyObjCErr_FromObjC(localException);
+			result = nil;
+		NS_ENDHANDLER;
+	}
 
 	if (result == nil && PyErr_Occurred()) {
 		return NULL;

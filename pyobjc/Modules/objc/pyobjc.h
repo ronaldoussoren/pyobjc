@@ -43,6 +43,7 @@
 #include "class-descriptor.h"
 #include "class-list.h"
 #include "struct-wrapper.h"
+#include "method-imp.h"
 
 
 /*

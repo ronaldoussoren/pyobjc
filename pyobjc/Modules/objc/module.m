@@ -1,5 +1,5 @@
 /*
- * The module entry point for ``objc._objc``. This file contains ``init_objc``
+ * The module entry point for ``_objc``. This file contains ``init_objc``
  * and the implementation of a number of exported functions.
  */
 #include "pyobjc.h"
@@ -120,8 +120,11 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		/* install in methods to add */
 		objcMethod = &methodsToAdd->method_list[methodIndex];
 		objcMethod->method_name = PyObjCSelector_GetSelector(aMethod);
-		objcMethod->method_types = strdup(PyObjCSelector_Signature(
-			aMethod));
+		objcMethod->method_types = PyObjCUtil_Strdup(
+				PyObjCSelector_Signature(aMethod));
+		if (objcMethod->method_types == NULL) {
+			goto cleanup_and_return_error;
+		}
 		objcMethod->method_imp = ObjC_MakeIMPForPyObjCSelector(
 			(PyObjCSelector*)aMethod);
 		Py_DECREF(aMethod);
@@ -444,7 +447,6 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 				continue;
 			}
 		}
-
 		if ([NSBundle bundleForClass:cls] != bundle) {
 			continue;
 		}
@@ -729,6 +731,7 @@ void init_objc(void)
 	PyType_Ready(&PyObjCInformalProtocol_Type);
 	PyType_Ready(&PyObjCUnicode_Type);
 	PyType_Ready(&PyObjCInformalProtocol_Type);
+	PyType_Ready(&PyObjCIMP_Type);
 
 	m = Py_InitModule4("_objc", meta_methods, NULL,
 			NULL, PYTHON_API_VERSION);
@@ -740,11 +743,13 @@ void init_objc(void)
 	PyDict_SetItemString(d, "selector", (PyObject*)&PyObjCSelector_Type);
 	PyDict_SetItemString(d, "ivar", (PyObject*)&PyObjCInstanceVariable_Type);
 	PyDict_SetItemString(d, "informal_protocol", (PyObject*)&PyObjCInformalProtocol_Type);
+	PyDict_SetItemString(d, "IMP", (PyObject*)&PyObjCIMP_Type);
 	PyDict_SetItemString(d, "YES", PyObjCBool_FromLong(1));
 	PyDict_SetItemString(d, "NO", PyObjCBool_FromLong(0));
 
 	if (ObjCUtil_Init(m) < 0) return;
 	if (ObjCAPI_Register(d) < 0) return;
+	if (PyObjCIMP_SetUpMethodWrappers() < 0) return;
 
 #if 1
 	/* Python based plugin bundles currently use only PyObjClass_GetClass,
@@ -774,4 +779,22 @@ void init_objc(void)
 
 	PyObjCPointerWrapper_Init();
 	PyObjC_InstallAllocHack();
+
+#ifdef MAC_OS_X_VERSION_MAX_ALLOWED
+	/* An easy way to check for the MacOS X version we did build for */
+	PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_MAX_ALLOWED", MAC_OS_X_VERSION_MAX_ALLOWED);
+#endif /* MAC_OS_X_VERSION_MAX_ALLOWED */
+
+#ifdef MAC_OS_X_VERSION_10_1
+	PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_1", MAC_OS_X_VERSION_10_1);
+#endif /* MAC_OS_X_VERSION_10_1 */
+
+#ifdef MAC_OS_X_VERSION_10_2
+	PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_2", MAC_OS_X_VERSION_10_2);
+#endif /* MAC_OS_X_VERSION_10_2 */
+
+#ifdef MAC_OS_X_VERSION_10_3
+	PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_3", MAC_OS_X_VERSION_10_3);
+#endif /* MAC_OS_X_VERSION_10_3 */
+
 }

@@ -9,6 +9,9 @@
  * numbers behave differently from Python numbers (explicit rounding)
  *
  * - number methods
+ *   NSDecimal objects support +, -, *, /, +=, -=, *= and /=, which directly
+ *   correspond with NSDecimal* functions with the NSRoundPlain argument.
+ *   They also support unary -, unary + and abs, with the obvious semantics.
  */
 
 typedef struct {
@@ -18,6 +21,7 @@ typedef struct {
 
 #define Decimal_Value(v) ((DecimalObject*)(v))->value
 
+static PyObject* Decimal_New(NSDecimal* aDecimal);
 static PyObject* decimal_repr(PyObject* self);
 static PyObject* decimal_richcompare(PyObject* self, PyObject* other, int type);
 static void decimal_dealloc(PyObject* self);
@@ -25,6 +29,60 @@ static int decimal_init(PyObject* self, PyObject* args, PyObject* kwds);
 static PyObject* decimal_new(PyTypeObject* type, PyObject* args, PyObject* kwds);
 static PyObject* decimal_asint(PyObject* self);
 static PyObject* decimal_asfloat(PyObject* self);
+static PyObject* decimal_add(PyObject* left, PyObject* right);
+static PyObject* decimal_subtract(PyObject* left, PyObject* right);
+static PyObject* decimal_multiply(PyObject* left, PyObject* right);
+static PyObject* decimal_divide(PyObject* left, PyObject* right);
+static int decimal_nonzero(PyObject* self);
+static int decimal_coerce(PyObject** l, PyObject** r);
+static PyObject* decimal_inplace_add(PyObject* left, PyObject* right);
+static PyObject* decimal_inplace_subtract(PyObject* left, PyObject* right);
+static PyObject* decimal_inplace_multiply(PyObject* left, PyObject* right);
+static PyObject* decimal_inplace_divide(PyObject* left, PyObject* right);
+static PyObject* decimal_positive(PyObject* self);
+static PyObject* decimal_negative(PyObject* self);
+static PyObject* decimal_absolute(PyObject* self);
+
+static PyNumberMethods decimal_asnumber = {
+	decimal_add,			/* nb_add */
+	decimal_subtract,		/* nb_subtract */
+	decimal_multiply,		/* nb_multiply */
+	decimal_divide,			/* nb_divide */
+	NULL,				/* nb_remainder */
+	NULL,				/* nb_divmod */
+	NULL,				/* nb_power */
+	decimal_negative,		/* nb_negative */
+	decimal_positive,		/* nb_positive */
+	decimal_absolute,		/* nb_absolute */
+	decimal_nonzero,		/* nb_nonzero */
+	NULL,				/* nb_invert */
+	NULL,				/* nb_lshift */
+	NULL,				/* nb_rshift */
+	NULL,				/* nb_and */
+	NULL,				/* nb_xor */
+	NULL,				/* nb_or */
+	decimal_coerce,			/* nb_coerce */
+	NULL,				/* nb_int */
+	NULL,				/* nb_long */
+	NULL,				/* nb_float */
+	NULL,				/* nb_oct */
+	NULL,				/* nb_hex */
+	decimal_inplace_add,		/* nb_inplace_add */
+	decimal_inplace_subtract,	/* nb_inplace_subtract */
+	decimal_inplace_multiply,	/* nb_inplace_multiply */
+	decimal_inplace_divide,		/* nb_inplace_divide */
+	NULL,				/* nb_inplace_remainder */
+	NULL,				/* nb_inplace_power */
+	NULL,				/* nb_inplace_lshift */
+	NULL,				/* nb_inplace_rshift */
+	NULL,				/* nb_inplace_and */
+	NULL,				/* nb_inplace_xor */
+	NULL,				/* nb_inplace_or */
+	NULL,				/* nb_floor_divide */
+	NULL,				/* nb_true_divide */
+	NULL,				/* nb_inplace_floor_divide */
+	NULL				/* nb_inplace_true_divide */
+};
 
 static PyMethodDef decimal_methods[] = {
 	{
@@ -62,7 +120,7 @@ static PyTypeObject Decimal_Type = {
 	0,					/* tp_setattr */
 	0,					/* tp_compare */
 	decimal_repr,				/* tp_repr */
-	0,					/* tp_as_number */
+	&decimal_asnumber,			/* tp_as_number */
 	0,					/* tp_as_sequence */
 	0,					/* tp_as_mapping */
 	0,					/* tp_hash */
@@ -71,7 +129,7 @@ static PyTypeObject Decimal_Type = {
 	PyObject_GenericGetAttr,		/* tp_getattro */
 	PyObject_GenericSetAttr,		/* tp_setattro */
 	0,					/* tp_as_buffer */
-	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_RICHCOMPARE, /* tp_flags */
+	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_RICHCOMPARE | Py_TPFLAGS_HAVE_INPLACEOPS, /* tp_flags */
 	"NSDecimal wrapper",			/* tp_doc */
 	0,					/* tp_traverse */
 	0,					/* tp_clear */
@@ -311,6 +369,361 @@ static PyObject* decimal_asfloat(PyObject* self)
 	return PyFloat_FromDouble(retval);
 }
 
+static PyObject* decimal_add(PyObject* left, PyObject* right)
+{
+	NSDecimal  result;
+	NSCalculationError err;
+
+	err = NSDecimalAdd(&result, 
+			&Decimal_Value(left), 
+			&Decimal_Value(right),
+			NSRoundPlain);
+	if (err == NSCalculationOverflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+		return NULL;
+	} else if (err == NSCalculationUnderflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+		return NULL;
+	} else  {
+		NSDecimalCompact(&result);
+		return Decimal_New(&result);
+	}
+}
+
+static PyObject* decimal_subtract(PyObject* left, PyObject* right)
+{
+	NSDecimal  result;
+	NSCalculationError err;
+
+	err = NSDecimalSubtract(&result, 
+			&Decimal_Value(left), 
+			&Decimal_Value(right),
+			NSRoundPlain);
+	if (err == NSCalculationOverflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+		return NULL;
+	} else if (err == NSCalculationUnderflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+		return NULL;
+	} else  {
+		NSDecimalCompact(&result);
+		return Decimal_New(&result);
+	}
+}
+
+static PyObject* decimal_multiply(PyObject* left, PyObject* right)
+{
+	NSDecimal  result;
+	NSCalculationError err;
+
+	err = NSDecimalMultiply(&result, 
+			&Decimal_Value(left), 
+			&Decimal_Value(right),
+			NSRoundPlain);
+	if (err == NSCalculationOverflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+		return NULL;
+	} else if (err == NSCalculationUnderflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+		return NULL;
+	} else  {
+		NSDecimalCompact(&result);
+		return Decimal_New(&result);
+	}
+}
+
+static PyObject* decimal_divide(PyObject* left, PyObject* right)
+{
+	NSDecimal  result;
+	NSCalculationError err;
+
+	err = NSDecimalDivide(&result, 
+			&Decimal_Value(left), 
+			&Decimal_Value(right),
+			NSRoundPlain);
+	if (err == NSCalculationOverflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+		return NULL;
+	} else if (err == NSCalculationUnderflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+		return NULL;
+	} else  {
+		NSDecimalCompact(&result);
+		return Decimal_New(&result);
+	}
+}
+
+static PyObject* decimal_inplace_add(PyObject* left, PyObject* right)
+{
+	NSDecimal  result;
+	NSCalculationError err;
+	int r = decimal_coerce(&left, &right);
+	if (r == 1) {
+		PyErr_Format(PyExc_TypeError,
+			"unsupported operand type(s) for +=: '%s' and '%s'",
+			left->ob_type->tp_name,
+			right->ob_type->tp_name);
+		return NULL;
+	}
+
+	err = NSDecimalAdd(&result, 
+			&Decimal_Value(left), 
+			&Decimal_Value(right),
+			NSRoundPlain);
+	if (err == NSCalculationOverflow) {
+		Py_DECREF(left); Py_DECREF(right);
+		PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+		return NULL;
+	} else if (err == NSCalculationUnderflow) {
+		Py_DECREF(left); Py_DECREF(right);
+		PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+		return NULL;
+	} else  {
+		Py_DECREF(right);
+		NSDecimalCompact(&result);
+		Decimal_Value(left) = result;
+		return left;
+	}
+}
+
+static PyObject* decimal_inplace_subtract(PyObject* left, PyObject* right)
+{
+	NSDecimal  result;
+	NSCalculationError err;
+	int r = decimal_coerce(&left, &right);
+	if (r == 1) {
+		PyErr_Format(PyExc_TypeError,
+			"unsupported operand type(s) for -=: '%s' and '%s'",
+			left->ob_type->tp_name,
+			right->ob_type->tp_name);
+		return NULL;
+	}
+
+	err = NSDecimalSubtract(&result, 
+			&Decimal_Value(left), 
+			&Decimal_Value(right),
+			NSRoundPlain);
+	if (err == NSCalculationOverflow) {
+		Py_DECREF(left); Py_DECREF(right);
+		PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+		return NULL;
+	} else if (err == NSCalculationUnderflow) {
+		Py_DECREF(left); Py_DECREF(right);
+		PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+		return NULL;
+	} else  {
+		Py_DECREF(right);
+		NSDecimalCompact(&result);
+		Decimal_Value(left) = result;
+		return left;
+	}
+}
+
+static PyObject* decimal_inplace_multiply(PyObject* left, PyObject* right)
+{
+	NSDecimal  result;
+	NSCalculationError err;
+	int r = decimal_coerce(&left, &right);
+	if (r == 1) {
+		PyErr_Format(PyExc_TypeError,
+			"unsupported operand type(s) for *=: '%s' and '%s'",
+			left->ob_type->tp_name,
+			right->ob_type->tp_name);
+		return NULL;
+	}
+
+	err = NSDecimalMultiply(&result, 
+			&Decimal_Value(left), 
+			&Decimal_Value(right),
+			NSRoundPlain);
+	if (err == NSCalculationOverflow) {
+		Py_DECREF(left); Py_DECREF(right);
+		PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+		return NULL;
+	} else if (err == NSCalculationUnderflow) {
+		Py_DECREF(left); Py_DECREF(right);
+		PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+		return NULL;
+	} else  {
+		Py_DECREF(right);
+		NSDecimalCompact(&result);
+		Decimal_Value(left) = result;
+		return left;
+	}
+}
+
+static PyObject* decimal_inplace_divide(PyObject* left, PyObject* right)
+{
+	NSDecimal  result;
+	NSCalculationError err;
+	int r = decimal_coerce(&left, &right);
+	if (r == 1) {
+		PyErr_Format(PyExc_TypeError,
+			"unsupported operand type(s) for /=: '%s' and '%s'",
+			left->ob_type->tp_name,
+			right->ob_type->tp_name);
+		return NULL;
+	}
+
+	err = NSDecimalDivide(&result, 
+			&Decimal_Value(left), 
+			&Decimal_Value(right),
+			NSRoundPlain);
+	if (err == NSCalculationOverflow) {
+		Py_DECREF(left); Py_DECREF(right);
+		PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+		return NULL;
+	} else if (err == NSCalculationUnderflow) {
+		Py_DECREF(left); Py_DECREF(right);
+		PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+		return NULL;
+	} else  {
+		Py_DECREF(right);
+		NSDecimalCompact(&result);
+		Decimal_Value(left) = result;
+		return left;
+	}
+}
+
+static int decimal_nonzero(PyObject* self)
+{
+	NSDecimal zero;
+
+	DecimalFromComponents(&zero, 0, 0, 0);
+
+	return NSDecimalCompare(&zero, &Decimal_Value(self)) == NSOrderedSame;
+}
+
+static PyObject* decimal_positive(PyObject* self)
+{
+	Py_INCREF(self);
+	return self;
+}
+
+static PyObject* decimal_negative(PyObject* self)
+{
+	NSDecimal  result;
+	NSCalculationError err;
+	NSDecimal  zero;
+	DecimalFromComponents(&zero, 0, 0, 0);
+
+	err = NSDecimalSubtract(&result, 
+			&zero, 
+			&Decimal_Value(self),
+			NSRoundPlain);
+	if (err == NSCalculationOverflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+		return NULL;
+	} else if (err == NSCalculationUnderflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+		return NULL;
+	} else  {
+		NSDecimalCompact(&result);
+		return Decimal_New(&result);
+	}
+}
+
+static PyObject* decimal_absolute(PyObject* self)
+{
+	NSDecimal  result;
+	NSCalculationError err;
+	NSDecimal  zero;
+	DecimalFromComponents(&zero, 0, 0, 0);
+
+
+	switch (NSDecimalCompare(&zero, &Decimal_Value(self))) {
+	case NSOrderedSame:
+	case NSOrderedAscending:
+		/* self >= 0 */
+		Py_INCREF(self);
+		return self;
+
+	case NSOrderedDescending: ;
+	}
+
+
+	err = NSDecimalSubtract(&result, 
+			&zero, 
+			&Decimal_Value(self),
+			NSRoundPlain);
+	if (err == NSCalculationOverflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+		return NULL;
+	} else if (err == NSCalculationUnderflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+		return NULL;
+	} else  {
+		NSDecimalCompact(&result);
+		return Decimal_New(&result);
+	}
+}
+
+static int decimal_coerce(PyObject** l, PyObject** r)
+{
+	PyObject* right = NULL;
+	PyObject* left = NULL;
+	PyObject* args = NULL;
+	int res;
+
+	if (Decimal_Check(*l) && Decimal_Check(*r)) {
+		Py_INCREF(*l);
+		Py_INCREF(*r);
+		return 0;
+	}
+
+	if (!Decimal_Check(*l)) {
+		/* The test is needed to avoid silently converting strings */
+		if (!(PyInt_Check(*l) || PyLong_Check(*l))) goto error;
+		
+		left = (PyObject*)PyObject_New(DecimalObject, &Decimal_Type);
+		if (left == NULL) goto error;
+
+		args = Py_BuildValue("(O)", *l);
+		if (args == NULL) goto error;
+
+		res = decimal_init(left, args, NULL);
+		if (res == -1) goto error;
+
+		Py_DECREF(args); args = NULL;
+	}
+
+	if (!Decimal_Check(*r)) {
+		/* The test is needed to avoid silently converting strings */
+		if (!(PyInt_Check(*r) || PyLong_Check(*r))) goto error;
+		
+		right = (PyObject*)PyObject_New(DecimalObject, &Decimal_Type);
+		if (right == NULL) goto error;
+
+		args = Py_BuildValue("(O)", *r);
+		if (args == NULL) goto error;
+
+		res = decimal_init(right, args, NULL);
+		if (res == -1) goto error;
+
+		Py_DECREF(args); args = NULL;
+	}
+
+	if (left != NULL) {
+		*l = left;
+	} else {
+		Py_INCREF(*l);
+	}
+
+	if (right != NULL) {
+		*r = right;
+	} else {
+		Py_INCREF(*r);
+	}
+
+	return 0;
+
+error:
+	Py_XDECREF(args);
+	Py_XDECREF(left);
+	Py_XDECREF(right);
+	return 1;
+}
+
 static PyObject*
 decimal_repr(PyObject* self)
 {
@@ -330,7 +743,7 @@ Decimal_Convert(PyObject* self, void* val)
 }
 
 
-static inline PyObject*
+static PyObject*
 Decimal_New(NSDecimal* aDecimal)
 {
 	DecimalObject* result;
