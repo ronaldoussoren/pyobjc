@@ -6,6 +6,13 @@
 #  Copyright (c) ÇYEARÈ ÇORGANIZATIONNAMEÈ. All rights reserved.
 #
 
+try:
+    # scan for pth files that made it into the bundle
+    import os, site
+    site.addsitedir(os.path.dirname(os.path.realpath(__file__)))
+except ImportError:
+    pass
+
 from PyObjCTools import AppHelper
 from Foundation import NSProcessInfo
 
