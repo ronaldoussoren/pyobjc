@@ -1,3 +1,7 @@
+2002-11-15  Bill Bumgarner  <bbum@codefab.com>
+	* Modified NibLoader to not generate a class for FirstResponder.
+	* Integrated Just van Rossum's NibLoader script into the module.
+
 2002-11-13 Ronald Oussoren <oussoren@cistron.nl>
 	* Added workaround for 1 of the problems with NSTextView
 
