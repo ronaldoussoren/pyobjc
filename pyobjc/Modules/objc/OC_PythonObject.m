@@ -761,7 +761,7 @@ static  PyObject* getKeyFunc = NULL;
 /* Calls PyObjCTools.KeyValueCoding.setKey to set the key */
 
 /* This is the 10.2 flavour of this method, deprecated in 10.3 */
-- (void)takeValue: value forKey: key
+- (void)takeValue: value forKey: (NSString*) key
 {
 	[self setValue: value forKey: key];
 }
@@ -847,7 +847,7 @@ static  PyObject* setKeyFunc = NULL;
 }
 
 /* takeValue:forKeyPath: was deprecated in 10.3, and is the right way on 10.2 */
-- (void)takeValue: value forKeyPath: keyPath
+- (void)takeValue: value forKeyPath: (NSString*)keyPath
 {
 	[self setValue: value forKeyPath: keyPath];
 }
