@@ -880,8 +880,6 @@ init_objc(void)
 	PyDict_SetItemString(d, "informal_protocol", (PyObject*)&PyObjCInformalProtocol_Type);
 	PyDict_SetItemString(d, "function", (PyObject*)&PyObjCFunc_Type);
 	PyDict_SetItemString(d, "IMP", (PyObject*)&PyObjCIMP_Type);
-	PyDict_SetItemString(d, "YES", PyBool_FromLong(1));
-	PyDict_SetItemString(d, "NO", PyBool_FromLong(0));
 
 	if (PyObjCUtil_Init(m) < 0) return;
 	if (PyObjCAPI_Register(m) < 0) return;

@@ -5,18 +5,13 @@ This module defines the core interfaces of the Python<->Objective-C bridge.
 """
 
 # Aliases for some common Objective-C constants
-nil=None
+nil = None
+YES = True
+NO = False
 
 from _objc import *
 from _objc import __version__, __C_API__
 import _FoundationSignatures
-
-try:
-    import _Foundation
-except ImportError:
-    pass
-
-_objc_bool = type(YES)
 
 # Import values used to define signatures
 import _objc
@@ -58,71 +53,7 @@ class _runtime:
 runtime = _runtime()
 del _runtime
 
-#
-# Interface builder support.
-#
-def IBOutlet(name):
-    """
-    Create an instance variable that can be used as an outlet in
-    Interface Builder.
-    """
-    return ivar(name, isOutlet=1)
-
-def IBAction(func):
-    """
-    Return an Objective-C method object that can be used as an action
-    in Interface Builder.
-    """
-    return selector(func, signature="v@:@")
-
-def accessor(func, typeSignature='@'):
-    """
-    Return an Objective-C method object that is conformant with key-value coding
-    and key-value observing.
-    """
-    if not isinstance(func, type(accessor)):
-        raise ValueError, '%s is not a function'%(func,)
-
-
-    argCount = func.func_code.co_argcount
-    funcName = func.func_name
-
-    if argCount == 3:
-        if funcName.startswith('insertObject_in') and funcName.endswith('AtIndex_'):
-            return selector(func, signature='v@:@i')
-        elif funcName.startswith('replaceObjectIn') and funcName.endswith('AtIndex_withObject_'):
-            return selector(func, signature='v@:i@')
-        elif funcName.startswith('validate') and funcName.endswith('_error_'):
-            return selector(func, signature='c@:N^@o^@')
-
-
-        raise ValueError, "Too many arguments to function '%s'.  Cannot create selector." % foo.func_name
-
-    elif argCount == 2:
-        if funcName.startswith('objectIn') and funcName.endswith('AtIndex_'):
-            return selector(func, signature='@@:i')
-        elif funcName.startswith('removeObjectFrom') and funcName.endswith('AtIndex_'):
-            return selector(func, signature='v@:i')
-        elif funcName.startswith('get') and funcName.endswith('_range_'):
-            return selector(func, signature='@@:{_NSRange=ii}')
-
-        return selector(func, signature="v@:" + typeSignature)
-
-    elif argCount == 1:
-        if typeSignature == '@' and func.func_name.startswith('countOf'):
-            typeSignature = 'i'
-
-        return selector(func, signature=typeSignature + "@:")
-    elif argCount == 0:
-        raise ValueError, "Too few arguments to function '%s'.  Cannot create selector." % foo.func_name
-    else:
-        raise ValueError, "Too many arguments to function '%s'.  Cannot create selector." % foo.func_name
-
-def Accessor(func):
-    import warnings
-    warnings.warn(
-        "Use objc.accessor instead of objc.Accessor", DeprecationWarning)
-    return accessor(func)
+from _descriptors import *
 
 _PLUGINS = {}
 def registerPlugin(pluginName):
