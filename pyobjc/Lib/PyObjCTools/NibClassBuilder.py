@@ -240,7 +240,7 @@ class NibInfo(object):
 				self._printClass(writer, clsInfo)
 				writer.dedent()
                 
-                self._printTemplateFooter(self, writer)
+                self._printTemplateFooter(writer)
 
 	def _printTemplateHeader(self, writer):
 		frameworks = {}
@@ -274,7 +274,7 @@ class NibInfo(object):
 		writer.writeln()
 		writer.writeln()
 
-	def _printTemplateHeader(self, writer):
+	def _printTemplateFooter(self, writer):
             writer.writeln()
             writer.writeln('if __name__ == "__main__":')
             writer.indent()

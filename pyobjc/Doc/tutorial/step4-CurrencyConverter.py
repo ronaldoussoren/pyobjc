@@ -1,18 +1,17 @@
 from Foundation import NSObject, NSObject
-from AppKit import NibClassBuilder
-from AppKit.NibClassBuilder import AutoBaseClass
+from PyObjCTools import NibClassBuilder, AppHelper
 
 NibClassBuilder.extractClasses("MainMenu")
 
 
 # class defined in MainMenu.nib
-class Converter(AutoBaseClass):
+class Converter(NibClassBuilder.AutoBaseClass):
     # the actual base class is NSObject
     pass
 
 
 # class defined in MainMenu.nib
-class ConverterController(AutoBaseClass):
+class ConverterController(NibClassBuilder.AutoBaseClass):
     # the actual base class is NSObject
     # The following outlets are added to the class:
     # converter
@@ -24,3 +23,6 @@ class ConverterController(AutoBaseClass):
         pass
 
 
+
+if __name__ == "__main__":
+    AppHelper.runEventLoop()

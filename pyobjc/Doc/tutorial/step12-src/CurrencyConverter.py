@@ -1,19 +1,18 @@
 from Foundation import NSObject, NSObject
-from AppKit import NibClassBuilder
-from AppKit.NibClassBuilder import AutoBaseClass
+from PyObjCTools import NibClassBuilder, AppHelper
 
 NibClassBuilder.extractClasses("MainMenu")
 
 
 # class defined in MainMenu.nib
-class Converter(AutoBaseClass):
+class Converter(NibClassBuilder.AutoBaseClass):
     # the actual base class is NSObject
     
     def convertAmount(self, amt, rate):
         return amt*rate
 
 # class defined in MainMenu.nib
-class ConverterController(AutoBaseClass):
+class ConverterController(NibClassBuilder.AutoBaseClass):
     # the actual base class is NSObject
     # The following outlets are added to the class:
     # converter
@@ -39,7 +38,5 @@ class ConverterController(AutoBaseClass):
             rate = 1/rate
         self.rateField.setFloatValue_(rate)
 
-if __name__ == '__main__':
-	import sys
-	import PyObjCTools.AppHelper
-	PyObjCTools.AppHelper.runEventloop(sys.argv)
+if __name__ == "__main__":
+        AppHelper.runEventLoop()
