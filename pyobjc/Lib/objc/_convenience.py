@@ -400,14 +400,22 @@ def _num_to_python(v):
         return _numberForDecimal(v)
     # XXX - this only works for Mac OS X
     #       GNUstep and Mac OS X can both use objCType
-    if hasattr(v, '_cfNumberType'):
-        tp = v._cfNumberType()
-        if tp in [ 1, 2, 3, 7, 8, 9, 10 ]:
+    if hasattr(v, 'objCType'):
+        tp = v.objCType()
+        if tp in 'sil':
             v = v.longValue()
-        elif tp in [ 4, 11 ]:
+        elif tp in 'SIL':
+            v = v.unsignedlongValue()
+
+        elif tp == 'q':
             v = v.longlongValue()
-        elif tp in [ 5, 6, 12, 13 ]:
+
+        elif tp == 'Q':
+            v = v.unsignedLonglongValue()
+
+        elif tp in 'fd':
             v = v.doubleValue()
+
         else:
             import warnings
             warnings.warn(RuntimeWarning, "Unhandled numeric type: %r" % (tp,))
