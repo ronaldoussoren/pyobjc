@@ -4,7 +4,7 @@ This package also installs modules that provide convenient access to (most of)
 the Foundation and AppKit frameworks. This makes it easy to build Cocoa 
 applications in Python. 
 
-Other than the python modules the installer also installs Project Builder templates, some examples (in /Developer/Examples/PyObjC) and documentation (in /Developer/Documentation/PyObjC).
+Other than the python modules the installer also installs Project Builder templates, some examples (in /Library/Developer/Examples/PyObjC) and documentation (in /Library/Developer/Documentation/PyObjC).
 
 The latest information can always be found at:
 

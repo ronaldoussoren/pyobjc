@@ -19,14 +19,6 @@
  *   and execute_and_pythonify_objc_method (in objc_support.m): These are
  *   almost identical.
  */
-#ifndef OC_WITH_LIBFFI
-
-static int OBJC_FFI_SUPPORT_dummy = 0;
-
-#warning "No FFI support"
-
-#else /* OC_WITH_LIBFFI */
-
 #include "ffi.h"
 #include "pyobjc.h"
 #include "objc_support.h"
@@ -53,7 +45,7 @@ count_struct(const char* argtype)
 	
 	argtype++;
 	while (*argtype != _C_STRUCT_E) {
-		argtype = objc_skip_typespec(argtype);
+		argtype = PyObjCRT_SkipTypeSpec(argtype);
 		if (argtype == NULL) return -1;
 		res ++;
 	}
@@ -193,7 +185,7 @@ static  PyObject* struct_types = NULL;
 				return NULL;
 			}
 			field_count++;
-			curtype = objc_skip_typespec(curtype);
+			curtype = PyObjCRT_SkipTypeSpec(curtype);
 			if (curtype == NULL) {
 				free(type->elements);
 				return NULL;
@@ -1083,7 +1075,3 @@ error_cleanup:
 	}
 	return NULL;
 }
-
-
-
-#endif /* OC_WITH_LIBFFI */

@@ -40,9 +40,9 @@
 
 - initWithObject:(PyObject *) obj
 {
+	Py_XINCREF(obj);
 	Py_XDECREF(pyObject);
 	pyObject = obj;
-	Py_XINCREF(obj);
 
 	return self;
 }
@@ -232,6 +232,13 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		 * super because NSProxy doesn't implement forwardInvocation. 
 		 */
 		PyErr_Clear();
+
+
+		if (aSelector == @selector(description)) {
+			id res = [self description];
+			[invocation setReturnValue:&res];
+			return;
+		}
 		[self doesNotRecognizeSelector:aSelector];
 		return;
 	}

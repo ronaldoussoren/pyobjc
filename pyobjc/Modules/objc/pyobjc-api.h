@@ -14,7 +14,7 @@
  * - This interface is in development, the the API will probably change in
  *   incompatible ways.
  *
- * $Id: pyobjc-api.h,v 1.11 2003/05/05 17:16:11 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.12 2003/05/11 14:11:14 ronaldoussoren Exp $
  */
 
 #include <Python.h>
@@ -53,7 +53,6 @@
 typedef int (RegisterMethodMappingFunctionType)(
 			Class, 
 			SEL, 
-			PyObject *(*)(PyObject*, PyObject*, PyObject*),
 			PyObject *(*)(PyObject*, PyObject*, PyObject*),
 			IMP);
 

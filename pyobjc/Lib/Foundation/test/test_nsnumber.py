@@ -5,7 +5,13 @@ import re
 from Foundation import *
 
 def stripDocType(val):
-    return re.sub('<!DOCTYPE [^>]*>', '<!DOCTYPE>', val)
+    """
+    Strip non-significant information. This is needed because the proplists
+    on MacOS X 10.1 are slightly different from the ones on MacOS X 10.2 (
+    different DOCTYPE and version).
+    """
+    r =  re.sub('<!DOCTYPE [^>]*>', '<!DOCTYPE>', val)
+    return r.replace('version="0.9"', 'version="1.0"')
   
 
 if 0:
@@ -96,7 +102,7 @@ else:
 
             self.assertEquals(stripDocType(data), stripDocType(PLIST))
 
-        def testPropertyList1(self):
+        def testPropertyList2(self):
             d = NSMutableDictionary.dictionary()
 
             d['plain'] = NSNumber.numberWithLong_(1)
@@ -109,7 +115,7 @@ else:
             data = fd.read()
             fd.close()
 
-            self.assertEquals(data, PLIST)
+            self.assertEquals(stripDocType(data), stripDocType(PLIST))
 
 def suite():
     suite = unittest.TestSuite()

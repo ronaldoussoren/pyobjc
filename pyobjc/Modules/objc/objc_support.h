@@ -151,19 +151,6 @@ objc_methodlist_magic(Class cls)
 #define _C_LNGLNG   'q'
 #define _C_ULNGLNG   'Q'
 
-static inline const char *
-objc_skip_type_qualifiers (const char *type)
-{
-  while (*type == _C_CONST ||
-	 *type == _C_IN ||
-	 *type == _C_INOUT ||
-	 *type == _C_OUT ||
-	 *type == _C_BYCOPY ||
-	 *type == _C_ONEWAY)
-    type++;
-  return type;
-}
-
 
 /* Return a number that is likely to change when the method list changes,
  * and is cheap to compute.
@@ -210,7 +197,7 @@ objc_methodlist_magic(Class cls)
 extern int objc_sizeof_return_type(const char* type);
 extern int objc_sizeof_type (const char *type);
 extern int objc_alignof_type (const char *type);
-extern const char *objc_skip_typespec (const char *type);
+extern const char *PyObjCRT_SkipTypeSpec (const char *type);
 extern void objc_freeMethodList(struct objc_method_list **list);
 
 static inline const char *
@@ -319,12 +306,6 @@ extern int depythonify_c_value (const char *type,
 extern int depythonify_c_return_value (const char *type,
 					PyObject *arg,
 					void *datum);
-
-/*#F Executes the ObjC method wrapped by @var{self}, applying it to
-  the arguments in @var{args}, then returns the ``pythonified''
-  result. */
-extern PyObject *execute_and_pythonify_objc_method (PyObject *meth,
-				PyObject* self, PyObject *args);
 
 extern struct objc_method_list *objc_allocMethodList(int numMethods);
 

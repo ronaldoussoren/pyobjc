@@ -18,8 +18,7 @@
 
 struct registry
 {
-	ObjC_CallFunc_t call_to_self;
-	ObjC_CallFunc_t call_to_super;
+	ObjC_CallFunc_t call_to_objc;
 	IMP		call_to_python;
 };
 	
@@ -46,8 +45,7 @@ init_registry(void)
 }
 
 int ObjC_RegisterMethodMapping(Class class, SEL sel, 
-	ObjC_CallFunc_t call_to_self,  
-	ObjC_CallFunc_t call_to_super,
+	ObjC_CallFunc_t call_to_objc,
 	IMP		    call_to_python)
 {
 	struct registry* v;
@@ -59,7 +57,7 @@ int ObjC_RegisterMethodMapping(Class class, SEL sel,
 		if (init_registry() < 0) return -1;
 	}
 
-	if (!call_to_self || !call_to_super || !call_to_python) {
+	if (!call_to_objc || !call_to_python) {
 		PyErr_SetString(ObjCExc_error, 
 			"ObjC_RegisterMethodMapping: all functions required");
 		return NULL;
@@ -73,8 +71,7 @@ int ObjC_RegisterMethodMapping(Class class, SEL sel,
 		PyErr_NoMemory();
 		return -1;
 	}
-	v->call_to_self   = call_to_self;
-	v->call_to_super  = call_to_super;
+	v->call_to_objc  = call_to_objc;
 	v->call_to_python = call_to_python;
 
 	entry = PyTuple_New(3);
@@ -136,7 +133,7 @@ simplify_signature(char* signature, char* buf, size_t buflen)
 	
 int ObjC_RegisterSignatureMapping(
 	char*           signature,
-	ObjC_CallFunc_t call_to_super,
+	ObjC_CallFunc_t call_to_objc,
 	IMP		call_to_python)
 {
 	struct registry* v;
@@ -151,7 +148,7 @@ int ObjC_RegisterSignatureMapping(
 	simplify_signature(signature, signature_buf, sizeof(signature_buf));
 	if (PyErr_Occurred()) return -1;
 
-	if (!call_to_super || !call_to_python) {
+	if (!call_to_objc || !call_to_python) {
 		PyErr_SetString(ObjCExc_error, 
 		   "ObjC_RegisterSignatureMapping: all functions required");
 		return NULL;
@@ -162,8 +159,7 @@ int ObjC_RegisterSignatureMapping(
 		PyErr_NoMemory();
 		return -1;
 	}
-	v->call_to_self   = NULL;
-	v->call_to_super  = call_to_super;
+	v->call_to_objc  = call_to_objc;
 	v->call_to_python = call_to_python;
 
 	entry = PyCObject_FromVoidPtr(v, (PyMem_Free));
@@ -226,29 +222,20 @@ search_special(Class class, SEL sel)
 }
 
 
-ObjC_CallFunc_t ObjC_FindSelfCaller(Class class, SEL sel)
+ObjC_CallFunc_t ObjC_FindCallFunc(Class class, SEL sel)
 {
-	ObjC_CallFunc_t result;
-	struct registry* rec;
+	struct registry* special;
 
-#if defined(OC_WITH_LIBFFI) && defined(OC_USE_FFI_SHORTCUTS)
-	result = ObjC_FFICaller;
-#else
-	result = execute_and_pythonify_objc_method;
-#endif
-	if (special_registry == NULL) return result;
+	if (special_registry == NULL) ObjC_FFICaller;
 
-	/* Check the list of exceptions */
-	rec = search_special(class, sel);
-	if (rec) {
-#if defined(OC_WITH_LIBFFI) && defined(OC_USE_FFI_SHORTCUTS)
-		result = rec->call_to_super;
-#else
-		result = rec->call_to_self;
-#endif
+	special = search_special(class, sel);
+	if (special) {
+		return special->call_to_objc;
+	} else {
+		PyErr_Clear();
 	}
 
-	return result;
+	return ObjC_FFICaller;
 }
 
 static struct registry*
@@ -277,7 +264,6 @@ find_signature(char* signature)
 	return r;
 }
 
-#ifdef OC_WITH_LIBFFI
 static struct registry* create_ffi(char* signature)
 {
 	IMP ffiImp = NULL;
@@ -301,8 +287,6 @@ error:
 	return NULL;
 }
 
-#endif /* OC_WITH_LIBFFI */
-
 
 IMP ObjC_FindIMPForSignature(char* signature)
 {
@@ -313,14 +297,10 @@ IMP ObjC_FindIMPForSignature(char* signature)
 		return r->call_to_python;
 	}
 
-#ifdef OC_WITH_LIBFFI
-
 	r = create_ffi(signature);
 	if (r) {
 		return r->call_to_python;
 	}
-
-#endif /* OC_WITH_LIBFFI */
 
 	return NULL;
 }
@@ -354,67 +334,10 @@ IMP ObjC_FindIMP(Class class, SEL sel)
 		return generic->call_to_python;
 	}
 
-#ifdef OC_WITH_LIBFFI
-
 	generic = create_ffi(ObjCSelector_Signature(objc_sel));
 	if (generic) {
 		return generic->call_to_python;
 	}
 
-#endif /* OC_WITH_LIBFFI */
-
 	return NULL;
-}
-
-
-ObjC_CallFunc_t ObjC_FindSupercaller(Class class, SEL sel)
-{
-	struct registry* special;
-
-	special = search_special(class, sel);
-	if (special) {
-		return special->call_to_super;
-	} else {
-		PyErr_Clear();
-	}
-
-
-#ifdef OC_WITH_LIBFFI 
-	return ObjC_FFICaller;
-
-#else
-    {
-	struct registry* generic;
-	METHOD           m;
-
-	m = class_getInstanceMethod(class, sel);
-	if (!m) {
-		ObjCErr_Set(ObjCExc_error,
-			"Class %s does not respond to %s",
-			class->name, SELNAME(sel));
-		return NULL;
-	}
-
-	generic = find_signature(m->method_types);
-	if (generic) {
-		return generic->call_to_super;
-	}
-	return NULL;
-    }
-#endif /* OC_WITH_LIBFFI */
-
-}
-
-void ObjC_FindCaller(Class class, SEL sel, ObjC_CallFunc_t* call_self, ObjC_CallFunc_t* call_super)
-{
-#if defined(OC_WITH_LIBFFI) && defined(OC_USE_FFI_SHORTCUTS)
-	*call_self = *call_super = ObjC_FindSupercaller(class, sel);
-
-#else /* OC_WITH_LIBFFI */
-	*call_self = ObjC_FindSelfCaller(class, sel);
-	*call_super = ObjC_FindSupercaller(class, sel);
-
-#endif /* OC_WITH_LIBFFI */
-
-	if (*call_self == NULL || *call_super == NULL) PyErr_Clear();
 }

@@ -22,6 +22,8 @@ time:
   Read the tutorial(s) and follow the instructions exactly, the tutorials should
   be completely bugfree.
 
+* Proofread the documentation
+
 * Update the announcement messages.
 
 Release-date -3 days
@@ -54,6 +56,9 @@ Release-date
 
 * add a news item to the website and update the download page
 
+* add the latest documentation to the website (run scripts/doc2php in
+  the pyobjc-web tree).
+
 * announce the new version at ADC news: 
 	http://developer.apple.com/devnews/submit.html
 
@@ -71,11 +76,13 @@ Release-date
 
 * update the information at a number of software databases:
 
-  - versiontrack.com (billb knows how)
+  - versiontracker.com (billb knows how)
 
   - macupdate.com
 
-  - PyPI database at python.org
+  - freshmeat.net (ronald knows how)
+
+  - PyPI database at python.org (run ``python2.3 setup.py register``)
 
 * send the announcement text to:
 

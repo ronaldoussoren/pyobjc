@@ -13,9 +13,6 @@
 #import <Foundation/NSString.h>
 #include "objc_support.h"
 
-/* defined in register.m (a generated file) */
-int ObjC_RegisterStdStubs(struct pyobjc_api* api);
-
 int ObjC_VerboseLevel = 0;
 NSAutoreleasePool* ObjC_global_release_pool = nil;
 PyObject* PyObjCClass_DefaultModule = NULL;
@@ -47,7 +44,6 @@ static 	char* keywords[] = { "class_name", NULL };
 	return PyObjCClass_New(objc_class);
 }
 
-#ifdef OC_WITH_LIBFFI
 PyDoc_STRVAR(classAddMethods_doc,
 	     "classAddMethods(targetClass, methodsArray)\n"
 	     "\n"
@@ -122,7 +118,6 @@ cleanup_and_return_error:
 	free(methodsToAdd);
 	return NULL;
 }
-#endif
 
 
 PyDoc_STRVAR(recycle_autorelease_pool_doc,
@@ -462,7 +457,7 @@ static  char* keywords[] = { "signature", NULL };
 	while (*signature != 0) {
 		PyObject* str;
 
-		end = objc_skip_typespec(signature);
+		end = PyObjCRT_SkipTypeSpec(signature);
 		if (end == NULL) {
 			Py_DECREF(result);
 			return NULL;
@@ -561,14 +556,12 @@ static PyMethodDef meta_methods[] = {
 	  METH_VARARGS|METH_KEYWORDS,
 	  lookUpClass_doc
 	},
-#ifdef OC_WITH_LIBFFI
 	{
 	  "classAddMethods",
 	  (PyCFunction)classAddMethods,
 	  METH_VARARGS|METH_KEYWORDS,
 	  classAddMethods_doc
 	},
-#endif
 	{ "getClassList", (PyCFunction)getClassList, METH_NOARGS, getClassList_doc },
 	{ "set_class_extender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
 	{ "set_signature_for_selector", (PyCFunction)set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
@@ -661,7 +654,6 @@ void init_objc(void)
 
 	if (ObjCUtil_Init(m) < 0) return;
 	if (ObjCAPI_Register(d) < 0) return;
-	if (ObjC_RegisterStdStubs(&objc_api) < 0) return;
 
 	{
 		struct objc_typestr_values* cur = objc_typestr_values;

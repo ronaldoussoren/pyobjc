@@ -11,50 +11,8 @@
 #include <Foundation/Foundation.h>
 #include "pyobjc-api.h"
 
+
 static PyObject* call_NSCoder_encodeValueOfObjCType_at_(
-		PyObject* method, PyObject* self, PyObject* arguments)
-{
-	char* signature;
-	PyObject* value;
-	PyObject* result;
-	void*     buf;
-	size_t    size;
-	int err;
-
-	if  (PyArg_ParseTuple(arguments, "sO", &signature, &value) < 0) {
-		return NULL;
-	}
-
-	size = ObjC_SizeOfType(signature);
-	if (size == -1) {
-		return NULL;
-	}
-	buf = alloca(size);
-	if (buf == NULL) {
-		PyErr_NoMemory();
-		return NULL;
-	}
-
-	err = ObjC_PythonToObjC(signature, value, buf);
-	if (err == -1) {
-		return NULL;
-	}
-
-	NS_DURING
-		(void)objc_msgSend(PyObjCObject_GetObject(self),
-				@selector(encodeValueOfObjCType:at:),
-				signature, buf);
-		result = Py_None;
-		Py_INCREF(result);
-	NS_HANDLER
-		ObjCErr_FromObjC(localException);
-		result = NULL;
-	NS_ENDHANDLER
-
-	return result;
-}
-
-static PyObject* supercall_NSCoder_encodeValueOfObjCType_at_(
 		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	char* signature;
@@ -139,73 +97,8 @@ static void imp_NSCoder_encodeValueOfObjCType_at_(id self, SEL sel,
 	Py_DECREF(result);
 }
 
-/* XXX */
+
 static PyObject* call_NSCoder_encodeArrayOfObjCType_count_at_(
-		PyObject* method, PyObject* self, PyObject* arguments)
-{
-	char* signature;
-	int   count;
-	int   value_len, i;
-	PyObject* value;
-	PyObject* result;
-	void*     buf;
-	size_t    size;
-	int err;
-
-	if  (PyArg_ParseTuple(arguments, "siO", &signature, &count, &value) < 0) {
-		return NULL;
-	}
-
-	if (count < 0) {
-		PyErr_SetString(PyExc_ValueError, "negative count");
-		return NULL;
-	}
-
-	size = ObjC_SizeOfType(signature);
-	if (size == -1) {
-		return NULL;
-	}
-	buf = alloca(size * (count+1));
-	if (buf == NULL) {
-		PyErr_NoMemory();
-		return NULL;
-	}
-
-	if (!PySequence_Check(value)) {
-		PyErr_SetString(PyExc_TypeError, "Need sequence of objects");
-		return NULL;
-	}
-
-	value_len = PySequence_Size(value);
-	if (value_len > count) {
-		PyErr_SetString(PyExc_ValueError, "Inconsistent arguments");
-		return NULL;
-	}
-
-	for (i = 0; i < count; i++) {
-		err = ObjC_PythonToObjC(signature, 
-				PySequence_GetItem(value, i), 
-				((char*)buf) + (size * i));
-		if (err == -1) {
-			return NULL;
-		}
-	}
-
-	NS_DURING
-		(void)objc_msgSend(PyObjCObject_GetObject(self),
-				@selector(encodeArrayOfObjCType:count:at:),
-				signature, count, buf);
-		result = Py_None;
-		Py_INCREF(result);
-	NS_HANDLER
-		ObjCErr_FromObjC(localException);
-		result = NULL;
-	NS_ENDHANDLER
-
-	return result;
-}
-
-static PyObject* supercall_NSCoder_encodeArrayOfObjCType_count_at_(
 		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	char* signature;
@@ -347,7 +240,6 @@ int __pyobjc_install_NSCoder(void)
 				 classNSCoder,
 				 @selector(encodeArrayOfObjCType:count:at:),
 				 call_NSCoder_encodeArrayOfObjCType_count_at_,
-				 supercall_NSCoder_encodeArrayOfObjCType_count_at_,
 				 (IMP)imp_NSCoder_encodeArrayOfObjCType_count_at_) < 0) {
     NSLog(@"Error occurred while installing NSCoder bridge method -encodeArrayOfObjCType:count:at:");
     PyErr_Print();
@@ -357,7 +249,6 @@ int __pyobjc_install_NSCoder(void)
 				 classNSCoder,
 				 @selector(encodeValueOfObjCType:at:),
 				 call_NSCoder_encodeValueOfObjCType_at_,
-				 supercall_NSCoder_encodeValueOfObjCType_at_,
 				 (IMP)imp_NSCoder_encodeValueOfObjCType_at_) < 0) {
     NSLog(@"Error occurred while installing NSCoder bridge method -encodeArrayOfObjCType:at:");
     PyErr_Print();

@@ -33,6 +33,7 @@
 
 /* On 10.1 there are no defines for the OS version. */
 #ifndef MAC_OS_X_VERSION_10_1
+#define PyObjC_COMPILING_ON_MACOSX_10_1
 #define MAC_OS_X_VERSION_10_1 1010
 #define MAC_OS_X_VERSION_MAX_ALLOWED MAC_OS_X_VERSION_10_1
 #endif
@@ -152,8 +153,7 @@ typedef struct {
 typedef struct {
 	ObjCSelector_HEAD
 	NSMethodSignature* sel_oc_signature;
-	ObjC_CallFunc_t sel_call_self; 
-	ObjC_CallFunc_t sel_call_super;
+	ObjC_CallFunc_t sel_call_func; 
 } ObjCNativeSelector;
 
 typedef struct {
@@ -215,13 +215,10 @@ PyObject* PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector);
 /* See alloc_hack.m */
 int PyObjC_InstallAllocHack(void);
 
-#ifdef OC_WITH_LIBFFI
-
 IMP ObjC_MakeIMPForSignature(char* signature, PyObject* callable);
 IMP ObjC_MakeIMPForObjCSelector(ObjCSelector *aSelector);
 PyObject *ObjC_FFICaller(PyObject *aMeth, PyObject* self, PyObject *args);
 
-#endif /* OC_WITH_LIBFFI */
 
 extern PyObject* ObjCMethodAccessor_New(PyObject* base, int class_method);
 

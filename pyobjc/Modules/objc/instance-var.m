@@ -128,27 +128,29 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 
 	buf = alloca(size);
 
-	res = depythonify_c_value(var->ivar_type, value, buf);
-	if (res == -1) {
-		return -1;
-	}
 	if (strcmp(var->ivar_type, "@") == 0) {
 		/* Automagically manage refcounting of instance variables */
-		id  old_value = nil;
+		id new_value;
 
-		object_getInstanceVariable(objc, self->name, (void*)&old_value);
-		[*(id*)buf retain];
-		[old_value release];
+		res = depythonify_c_value("@", value, &new_value);
+		if (res == -1) {
+			return -1;
+		}
 
+		[new_value retain];
+
+		[*(id*)(((char*)objc)+var->ivar_offset) release];
+
+		*(id*)(((char*)objc)+var->ivar_offset) = new_value;
+		//XXX Crashme: NSLog(@"New value is %@", new_value);
+
+		return 0;
 	}
-	if (strcmp(var->ivar_type, "@") == 0) {
-		object_setInstanceVariable(objc, self->name, *(id*)buf);
-	} else {	
-		object_setInstanceVariable(objc, self->name, *(void**)buf);
-	}
-	if (strcmp(var->ivar_type, "@") == 0) {
-		id  old_value = nil;
-		object_getInstanceVariable(objc, self->name, (void*)&old_value);
+
+	res = depythonify_c_value(var->ivar_type, value, 
+		(void*)(((char*)objc)+var->ivar_offset));
+	if (res == -1) {
+		return -1;
 	}
 
 	return 0;

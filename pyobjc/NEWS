@@ -10,26 +10,28 @@ Version 0.10CVS (Work in progress):
   It is now possible to build PyObjC on MacOS X 10.1, with full access to 
   the Cocoa API's on that platform.
 
+  Note: The port to MacOS X 10.1 is not as well supported as the 10.2 port.
+  The developers to not have full-time access to a MacOS X 10.1 system.
+
 - All suppport for non-FFI builds has been removed.
- [ TODO, I'm getting the port to OSX 10.1 stable first. Then:
-   - Remove all code guarded by '#ifndef OC_WITH_LIBFFI'
-   - Remove all code guared by  '#ifndef OC_USE_FFI_SHORTCUTS'
-   - Remove register.m
-   - Rename 'callsuper' methods in AppKit/Foundation/... to 'call' methods,
-     remove existing 'call' methods. 
-   - ObjC_FindSuperCaller -> ObjC_FindCaller and remove ObjC_FindSelfCaller
-   - ObjC_RegisterMethodMapping looses first argument
-   - Remove support code in setup.py
-   ...
- ] 
 
 - Support for "toll-free bridging" of Carbon.CF types to Objective-C objects.
   It is now possible to use instances of Carbon.CF types in places where 
-  Objective-C objects are expected.
-  [Partially done, need to add 'CFToObject' and 'ObjectToCF' functions to the
-   objc module]
+  Objective-C objects are expected. And to explicitly convert between the two.
 
   Note: this requires Python 2.3.
+
+- Better integration with MacPython 2.3:
+
+  * NSMovie.initWithMovie_ and NSMovie.QTMovie now use QT.Movie objects instead
+    of generic pointer wrappers.
+
+- Improved unittests
+
+
+Version 0.9.1 (May-??-2003):
+
+- Fixed some glitches in the documentation
 
 Version 0.9 (May-02-2003):
 - This version includes numerous bugfixes and improvements.
@@ -70,6 +72,19 @@ Version 0.9 (May-02-2003):
 - On Python 2.2, objc.YES and objc.NO are instances of a private boolean type,
   on Python 2.3 these are instances of the builtin type bool.
 
+- Because we now use libFFI a large amount of code could be disabled. The
+  binaries are therefore much smaller, while we can now forward messages with
+  arbitrary signatures (not limited to those we thought of while generating
+  the static proxies that were used in 0.8)
+
+- Better support for APIs that use byte arrays are arguments or return values. 
+  Specifically, the developer can now manipulate bitmaps directly via the 
+  NSBitmapImageRep class, work with binary data through the NSData class, and 
+  very quickly draw points and rects via NSRectFillList()
+
+- We added a subclass of unicode that is used to proxy NSString values. This
+  makes it easily possible to use NSString values with Python APIs, while at 
+  the same time allowing access to the full power of NSString.
 
 Version 0.8 (Dec-10-2002):
 

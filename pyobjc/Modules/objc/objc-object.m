@@ -166,6 +166,7 @@ object_repr(PyObjCObject* self)
 	return PyString_FromString(buffer);
 }
 
+
 static void
 object_dealloc(PyObject* obj)
 {
