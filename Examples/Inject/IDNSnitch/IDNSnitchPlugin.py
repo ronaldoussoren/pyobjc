@@ -25,7 +25,6 @@ def initWithURL_cachePolicy_timeoutInterval_(self, theURL, cachePolicy, timeoutI
         import traceback
         traceback.print_exc()
         NSLog(u"%s: %s" % (e.__class__.__name__, e))
-    self.retain()
     res = oldIMP(self, theURL, cachePolicy, timeoutInterval)
     return res
 initWithURL_cachePolicy_timeoutInterval_ = objc.selector(
