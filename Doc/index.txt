@@ -34,6 +34,12 @@ Cocoa applications in Python.
   This document lists the methods and classes that are not fully supported,
   or supported in an 'unexpected' way.
 
+* `How to wrap an Objective-C class library`_
+
+  This explains how you can provide a python wrapper for an existing 
+  Objective-C class library.
+
+
 Tutorials
 .........
 
@@ -72,11 +78,6 @@ you want to write Cocoa programs in Python.
 * `Structure of the PyObjC package`_
 
   Another overview of the PyObjC package.
-
-* `How to wrap an Objective-C class library`_
-
-  This explains how you can provide a python wrapper for an existing 
-  Objective-C class library.
 
 * `Project Builder Python Support`_
 
