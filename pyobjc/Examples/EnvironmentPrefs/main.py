@@ -1,7 +1,7 @@
 """
 EnvironmentPane - PreferencePane for changing the global user environment
 
-This PreferencePane provides an easy to use UI for changeing 
+This PreferencePane provides an easy to use UI for changeing
 ~/.MacOSX/environment.plist. This plist is loaded by the loginwindow application
 when the user logs in and is used to initialize the "shell" environment.
 
@@ -25,7 +25,7 @@ objc.setVerbose(1)
 # NibClassBuilder needs to read our Nib files to do its work,
 # we need to specify the optional second argument to extractClasses
 # because we're not in the main bundle.
-NibClassBuilder.extractClasses("EnvironmentPane", 
+NibClassBuilder.extractClasses("EnvironmentPane",
     objc.pluginBundle("EnvironmentPane"))
 
 # Location of the environment.plist
@@ -47,7 +47,7 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
 
     def initWithBundle_(self, bundle):
         # Our bundle has been loaded, initialize the instance variables.
-        # We don't load the environment.plist yet, do that when we're 
+        # We don't load the environment.plist yet, do that when we're
         # actually selected. That way we can easier pick up manual changes.
 
         self = super(EnvironmentPane, self).initWithBundle_(bundle)
@@ -74,14 +74,14 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
         self.changed = False
         self.mainTable.reloadData()
 
-    def shouldUnselect(self): 
-        # The user wants to select another preference pane. If we have 
+    def shouldUnselect(self):
+        # The user wants to select another preference pane. If we have
         # unsaved changes ask if they should be saved right now.
 
         if self.changed:
             NSBeginAlertSheet(
                 NSLocalizedString("Save changes?", ""),
-                NSLocalizedString("Cancel", ""), 
+                NSLocalizedString("Cancel", ""),
                 NSLocalizedString("Don't Save", ""),
                 NSLocalizedString("Save", ""),
                 self.mainView().window(),
@@ -178,7 +178,7 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
         elif name == "value":
             return self.environ[envname]
 
-    def tableView_setObjectValue_forTableColumn_row_(self, 
+    def tableView_setObjectValue_forTableColumn_row_(self,
             aView, value, aCol,rowIndex):
         """ Change the name or value of an environment variable """
         if self.environ is None:

@@ -22,13 +22,13 @@ from FilteringArrayController import kLiteralSearch, kRegularExpressionSearch
 class ToolbarCreator(NibClassBuilder.AutoBaseClass):
     def awakeFromNib(self):
         self.toolbarItemCache = {}
-        
+
         # create toolbar containing search field
         toolbar = NSToolbar.alloc().initWithIdentifier_(kToolbarIdentifier)
         toolbar.setDelegate_(self)
         toolbar.setAllowsUserCustomization_(YES)
         toolbar.setAutosavesConfiguration_(YES)
-        
+
         searchFieldItem = NSToolbarItem.alloc().initWithItemIdentifier_(kSearchFieldItemIdentifier)
         self.searchFieldItem = searchFieldItem
         searchFieldItem.setLabel_("Search")
@@ -39,7 +39,7 @@ class ToolbarCreator(NibClassBuilder.AutoBaseClass):
         maxSize = self.searchField.bounds().size
         maxSize.width = maxSize.width + 150
         searchFieldItem.setMaxSize_(maxSize)
-        
+
         self.toolbarItemCache[kSearchFieldItemIdentifier] = searchFieldItem
 
         self.window.setToolbar_(toolbar)
@@ -60,7 +60,7 @@ class ToolbarCreator(NibClassBuilder.AutoBaseClass):
         self.searchField.cell().setPlaceholderString_(obj)
         self.searchField.setStringValue_(u'')
         self.filteringArrayController.changeSearchType_(obj)
-    
+
     def toolbarDefaultItemIdentifiers_(self, aToolbar):
         return [
             kSearchFieldItemIdentifier,
@@ -89,12 +89,12 @@ class ToolbarCreator(NibClassBuilder.AutoBaseClass):
             newItem.setView_( item.view() )
         else:
             newItem.setImage_( item.image() )
-            
+
         newItem.setToolTip_( item.toolTip() )
         newItem.setTarget_( item.target() )
         newItem.setAction_( item.action() )
         newItem.setMenuFormRepresentation_( item.menuFormRepresentation() )
-        
+
         if newItem.view():
             newItem.setMinSize_( item.minSize() )
             newItem.setMaxSize_( item.maxSize() )

@@ -37,7 +37,7 @@ class FilteringArrayController(NibClassBuilder.AutoBaseClass):
     searchString = None
     lastRegex = None
     searchType = kLiteralSearch
-    
+
     def arrangeObjects_(self, objects):
         supermethod = super(FilteringArrayController, self).arrangeObjects_
         try:
@@ -48,7 +48,7 @@ class FilteringArrayController(NibClassBuilder.AutoBaseClass):
         if regex is None:
             return supermethod(objects)
         return supermethod(list(dictValueFilter(objects, regex)))
-    
+
     def performSearch_(self, sender):
         self.searchString = sender.stringValue()
         self.rearrangeObjects()

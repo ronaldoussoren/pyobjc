@@ -17,7 +17,7 @@ class  ToDoDocument (AutoBaseClass):
 
         if row == -1:
             #print 'No rowSelected?'
-            return 
+            return
 
         self._selectedItem = self._currentItems.objectAtIndex_(row)
 
@@ -51,7 +51,7 @@ class  ToDoDocument (AutoBaseClass):
 
         self.setHasUndoManager_(0)
         self.itemList.setDelegate_(self)
-        
+
         index = self.statusList.cells().count()
         while index:
             index -= 1
@@ -60,7 +60,7 @@ class  ToDoDocument (AutoBaseClass):
             aCell.setTarget_(self)
             aCell.setAction_('itemStatusClicked:')
             self.statusList.putCell_atRow_column_(aCell, index, 0)
-        
+
         if self._dataFromFile:
             self.loadDocWithData_(self._dataFromFile)
             self._dataFromFile = None
@@ -69,14 +69,14 @@ class  ToDoDocument (AutoBaseClass):
 
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'rowSelected:', RowSelectedNotification, self.itemList)
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'rowSelected:', RowSelectedNotification, self.statusList)
-    
+
     def loadDocWithData_(self, data):
         if data:
             dict = NSUnarchiver.unarchiveObjectWithData_(data)
             self.initDataModelWithDictinary_(dict)
             dayEnum = self._activeDays.keyEnumerator()
             now = NSData.date()
-            
+
             itemDate = dayEnum.nextObject()
             while itemDate:
                 itemArray = self._activeDays.objectForKey_(itemDate)
@@ -136,7 +136,7 @@ class  ToDoDocument (AutoBaseClass):
 
             for d in range(numRows):
                 self._currentItems.addObject_("")
-    
+
     def updateLists(self):
         numRows = self.itemList.cells().count()
 
@@ -215,7 +215,7 @@ class  ToDoDocument (AutoBaseClass):
             self.setCurrentItems_(self._activeDays.objectForKey_(date))
         else:
             #print "calenderMatrix:didChangeToDate: -> no _activeDays"
-                        pass
+            pass
 
         self.dayLabel.setStringValue_(
             date.descriptionWithCalendarFormat_timeZone_locale_(

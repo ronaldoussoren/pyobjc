@@ -9,7 +9,7 @@ extractClasses('MainMenu')
 extractClasses('ToDoDocument')
 extractClasses('ToDoInfoWindow')
 
-# Import all submodules,  to make sure all 
+# Import all submodules,  to make sure all
 # classes are known to the runtime
 import CalendarMatrix
 import InfoWindowController
