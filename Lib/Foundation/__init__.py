@@ -19,11 +19,8 @@ def NSSelectorFromString(aSelectorName):
 NSStringFromSelector = NSSelectorFromString
 
 
-def NSClassFromString(aClass):
+def NSStringFromClass(aClass):
 	return aClass.__name__
-
-
-
 
 # Define usefull utility methods here
 
@@ -51,4 +48,35 @@ del class_list
 del cls
 del gl
 
-# Define usefull utility methods here
+from types import *
+def propertyListFromPythonCollection(aPyCollection):
+	containerType = type(aPyCollection)
+	if containerType == DictType:
+		collection = NSMutableDictionary.dictionary()
+		for aKey in aPyCollection:
+			convertedValue = propertyListFromPythonCollection( aPyCollection[aKey] )
+			collection.setObject_forKey_( convertedValue , aKey )
+		return collection
+	elif containerType in [TupleType, ListType]:
+		collection = NSMutableArray.array()
+		for aValue in aPyCollection:
+			convertedValue = propertyListFromPythonCollection( aValue )
+			collection.addObject_( convertedValue  )
+		return collection
+	elif containerType in StringTypes:
+		return aPyCollection # bridge will convert to NSString
+	elif containerType == IntType:
+		return NSNumber.numberWithInt_( aPyCollection )
+	elif containerType == LongType:
+		return NSNumber.numberWithLong_( aPyCollection )
+	elif containerType == FloatType:
+		return NSNumber.numberWithFloat_( aPyCollection )
+	elif containerType == NoneType:
+		return NSNull.null()
+	else:
+		raise "UnrecognizedTypeException", "Type %s encountered in python collection;  don't know how to convert." % containerType
+
+# def pythonCollectionFromPropertyList(aPropertyList):
+#	elementClass = aPropertyList.
+#
+# How do I figure out if [aPropertyList isKindOfClass: [NSDictionary class]]??
