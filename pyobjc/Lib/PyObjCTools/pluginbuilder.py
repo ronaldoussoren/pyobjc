@@ -33,6 +33,7 @@ import sys
 from bundlebuilder import BundleBuilderError
 
 
+# XXX: Move this to a seperate file, possibly into an Xcode template
 CODE="""\
 /*
  * !!!! THIS IS GENERATED CODE, DO NOT EDIT !!!!
@@ -63,16 +64,24 @@ static PyObject* myModule = NULL;
     PyObject* m;
     PyObject* t;
     PyObject* n;
+    PyGILState_STATE state;
 
     Class result = [super classNamed: name];
     if (result) {
         return result;
     }
 
+    state = PyGILState_Ensure();
+    if (state == -1) {
+        PyErr_Clear();
+        return nil;
+    }
+
     if (myModule == NULL) {
         n = PyString_FromString("__main_%(BUNDLE)s__");
         if (n == NULL) {
             PyErr_Clear();
+            PyGILState_Release(state);
             return nil;
         }
 
@@ -80,6 +89,7 @@ static PyObject* myModule = NULL;
         Py_DECREF(n);
         if (myModule == NULL) {
             PyErr_Clear();
+            PyGILState_Release(state);
             return nil;
         }
     }
@@ -87,6 +97,7 @@ static PyObject* myModule = NULL;
     t = PyObject_GetAttrString(myModule, (char*)[name cString]);
     if (t == NULL) {
         PyErr_Clear();
+        PyGILState_Release(state);
         return nil;
     }
 
@@ -95,6 +106,7 @@ static PyObject* myModule = NULL;
         if (n == NULL) {
             PyErr_Clear();
             Py_DECREF(t);
+            PyGILState_Release(state);
             return nil;
         }
 
@@ -104,6 +116,7 @@ static PyObject* myModule = NULL;
             PyErr_Clear();
             Py_DECREF(n);
             Py_DECREF(t);
+            PyGILState_Release(state);
             return nil;
         }
 
@@ -112,6 +125,7 @@ static PyObject* myModule = NULL;
         if (n == NULL) {
             Py_DECREF(t);
             PyErr_Clear();
+            PyGILState_Release(state);
             return nil;
         }
 
@@ -121,6 +135,7 @@ static PyObject* myModule = NULL;
         if (getClass == NULL) {
             PyErr_Clear();
             Py_DECREF(t);
+            PyGILState_Release(state);
             return nil;
         }
     }
@@ -131,6 +146,7 @@ static PyObject* myModule = NULL;
     }
 
     Py_DECREF(t);
+    PyGILState_Release(state);
     return result;
 }
 @end
@@ -149,8 +165,50 @@ static PyObject* myModule = NULL;
 
 static void changeClass(id obj, Class newClass)
 {
-    //[newClass poseAsClass:obj->isa];
     obj->isa = newClass;
+}
+
+static int SetupInterpreter(NSBundle* bundle)
+{
+    if (!Py_IsInitialized()) {
+        Py_Initialize();
+        return -42;
+    } else  {
+        PyGILState_STATE state;
+
+        state = PyGILState_Ensure();
+        if (state == -1) {
+            [NSException raise:NSInternalInconsistencyException
+                format:@"Cannot acquire python GIL in bundle %%@",
+                bundle];
+        }
+        return state;
+    }
+}
+
+static void ReleaseInterpreter(int interpreterState)
+{
+    if (interpreterState == -42) {
+        /*
+         * We called Py_Initialize(), clear the default thread state
+         */
+#if 0
+        PyThreadState* ts;
+
+        ts = PyThreadState_Swap(NULL);
+        //PyThreadState_Clear(ts);
+        //PyThreadState_Delete(ts);
+        PyEval_ReleaseLock();
+#else
+        PyThreadState* _save;
+
+        printf("unblock threads\\n");
+        Py_UNBLOCK_THREADS
+
+#endif
+    } else {
+        PyGILState_Release((PyGILState_STATE)interpreterState); 
+    }
 }
 
 @implementation PyObjC_Bundle_%(BUNDLE)s
@@ -160,16 +218,17 @@ static void changeClass(id obj, Class newClass)
     NSBundle* bundle;
     NSString* mainPath;
     FILE*     fp;
-        PyObject *m, *d, *v;
+    PyObject *m, *d, *v;
+    int       interpreterState;
 
 
     bundle = [NSBundle bundleForClass:self];
     [bundle load];
 
-        /* This is *very* ugly */
-        changeClass(bundle, [_PyObjC_BundleHelper_%(BUNDLE)s_ class]);
+    /* This is *very* ugly */
+    changeClass(bundle, [_PyObjC_BundleHelper_%(BUNDLE)s_ class]);
 
-        mainPath = [bundle pathForResource:@"%(MAINFILE)s" ofType:@"py"];
+    mainPath = [bundle pathForResource:@"%(MAINFILE)s" ofType:@"py"];
 
     if (mainPath == NULL) {
         mainPath = [bundle pathForResource:@"%(MAINFILE)s" ofType:@"pyc"];
@@ -178,77 +237,83 @@ static void changeClass(id obj, Class newClass)
             bundle];
     }
 
-    if (!Py_IsInitialized()) {
-        Py_Initialize();
-    }
-
+    interpreterState = SetupInterpreter(bundle);
 
     fp = fopen([mainPath cString], "r");
     if (fp == NULL) {
+        ReleaseInterpreter(interpreterState);
         [NSException raise:NSInternalInconsistencyException
             format:@"Cannot open %(MAINFILE)s in bundle %%@",
             bundle];
     }
 
-        /*
-         * We cannot use 'PyRun_SimpleFile' because that would make it
-         * too easy to cause interference between two Python based plugins.
-         *
-         * This code works like PyRun_SimpleFile, but runs the code in
-         * a unique module (we hope), that has a __path__ attribute. This way
-         * we don't have to update sys.path, and that will hopefully avoid
-         * most interference between plugins.
-         *
-         * PyRun_SimpleFile(fp, [mainPath cString]);
-         */
-        m = PyImport_AddModule("__main_%(BUNDLE)s__");
-        if (m == NULL) {
-                PyErr_Print();
+    /*
+     * We cannot use 'PyRun_SimpleFile' because that would make it
+     * too easy to cause interference between two Python based plugins.
+     *
+     * This code works like PyRun_SimpleFile, but runs the code in
+     * a unique module (we hope), that has a __path__ attribute. This way
+     * we don't have to update sys.path, and that will hopefully avoid
+     * most interference between plugins.
+     *
+     * PyRun_SimpleFile(fp, [mainPath cString]);
+     */
+    m = PyImport_AddModule("__main_%(BUNDLE)s__");
+    if (m == NULL) {
+        PyErr_Print();
+        ReleaseInterpreter(interpreterState);
         [NSException raise:NSInternalInconsistencyException
             format:@"Cannot create main module for bundle %%@",
             bundle];
     }
 
-        PyModule_AddStringConstant(m, "__file__", (char*)[mainPath cString]);
-        PyModule_AddStringConstant(m, "__path__",
-                    (char*)[[bundle resourcePath] cString]);
-        d = PyModule_GetDict(m);
-        if (d == NULL) {
-                PyErr_Print();
+    PyModule_AddStringConstant(m, "__file__", (char*)[mainPath cString]);
+    PyModule_AddStringConstant(m, "__path__",
+                (char*)[[bundle resourcePath] cString]);
+    d = PyModule_GetDict(m);
+    if (d == NULL) {
+        PyErr_Print();
+        ReleaseInterpreter(interpreterState);
         [NSException raise:NSInternalInconsistencyException
             format:@"Failed to initialize bundle %%@",
             bundle];
-        }
+    }
 
-        if (PyDict_GetItemString(d, "__builtins__") == NULL) {
-            PyObject* bimod = PyImport_ImportModule("__builtin__");
-            if (bimod == NULL || PyDict_SetItemString(d, "__builtins__", bimod) != 0) {
-                PyErr_Print();
-        [NSException raise:NSInternalInconsistencyException
-            format:@"Failed to initialize bundle %%@",
-            bundle];
-            }
-            Py_XDECREF(bimod);
-        }
-
-        if (PyErr_Occurred()) {
-                PyErr_Print();
-        [NSException raise:NSInternalInconsistencyException
-            format:@"Failed to initialize bundle %%@",
-            bundle];
-        }
-        v = PyRun_File(fp, [mainPath cString], Py_file_input, d, d);
-        if (v == NULL) {
+    if (PyDict_GetItemString(d, "__builtins__") == NULL) {
+        PyObject* bimod = PyImport_ImportModule("__builtin__");
+        if (bimod == NULL || 
+                PyDict_SetItemString(d, "__builtins__", bimod) != 0) {
             PyErr_Print();
+            ReleaseInterpreter(interpreterState);
+            [NSException raise:NSInternalInconsistencyException
+                format:@"Failed to initialize bundle %%@",
+                bundle];
+        }
+        Py_XDECREF(bimod);
+    }
+
+    if (PyErr_Occurred()) {
+        PyErr_Print();
+        ReleaseInterpreter(interpreterState);
+        [NSException raise:NSInternalInconsistencyException
+            format:@"Failed to initialize bundle %%@",
+            bundle];
+    }
+
+    v = PyRun_File(fp, [mainPath cString], Py_file_input, d, d);
+    if (v == NULL) {
+        PyErr_Print();
+        ReleaseInterpreter(interpreterState);
         [NSException raise:NSInternalInconsistencyException
         format:@"Failed to initialize bundle %%@",
         bundle];
-        }
-        Py_DECREF(v);
-        if (Py_FlushLine()) {
-            PyErr_Print();
-            PyErr_Clear();
-        }
+    }
+    Py_DECREF(v);
+    if (Py_FlushLine()) {
+        PyErr_Print();
+        PyErr_Clear();
+    }
+    ReleaseInterpreter(interpreterState);
 }
 
 @end
