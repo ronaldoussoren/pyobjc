@@ -11,6 +11,9 @@ import types
 import string
 import traceback
 
+from AppKit import NibLoader
+NibLoader.loadClassesForNibFromBundle( "WSTConnection" )
+
 kWSTReloadContentsToolbarItemIdentifier = "WST: Reload Contents Toolbar Identifier"
 kWSTPreferencesToolbarItemIdentifier = "WST: Preferences Toolbar Identifier"
 kWSTUrlTextFieldToolbarItemIdentifier = "WST: URL Textfield Toolbar Identifier"
@@ -44,12 +47,9 @@ def addToolbarItem(self, anIdentifier, aLabel, aPaletteLabel, aToolTip, aTarget,
     
     self._toolbarItems.setObject_forKey_(toolbarItem, anIdentifier)
 
-class WSTConnectionWindowController(NSWindowController):
-    _progressIndicator = IBOutlet("progressIndicator")
-    _statusTextField = IBOutlet("statusTextField")
-    _methodsTable = IBOutlet("methodsTable")
-    _urlTextField = IBOutlet("urlTextField")
-    _methodDescriptionTextView = IBOutlet("methodDescriptionTextView")
+class WSTConnectionWindowController:
+    __metaclass__ = NibLoader.NibClassBuilder
+
     __slots__ = ('_toolbarItems',
         '_toolbarDefaultItemIdentifiers',
         '_toolbarAllowedItemIdentifiers',
@@ -76,10 +76,10 @@ class WSTConnectionWindowController(NSWindowController):
     def awakeFromNib(self):
         self.retain() # balanced by autorelease() in windowWillClose_
         
-        self._statusTextField.setStringValue_("No host specified.")
-        self._progressIndicator.setStyle_(NSProgressIndicatorSpinningStyle)
-        self._progressIndicator.setUsesThreadedAnimation_(YES)
-        self._progressIndicator.setDisplayedWhenStopped_(NO)
+        self.statusTextField.setStringValue_("No host specified.")
+        self.progressIndicator.setStyle_(NSProgressIndicatorSpinningStyle)
+        self.progressIndicator.setUsesThreadedAnimation_(YES)
+        self.progressIndicator.setDisplayedWhenStopped_(NO)
         
         self.createToolbar()
         
@@ -98,12 +98,12 @@ class WSTConnectionWindowController(NSWindowController):
 
         lastURL = NSUserDefaults.standardUserDefaults().stringForKey_("LastURL")
         if lastURL and len(lastURL):
-            self._urlTextField.setStringValue_(lastURL)
+            self.urlTextField.setStringValue_(lastURL)
         
     def createToolbarItems(self):
         addToolbarItem(self, kWSTReloadContentsToolbarItemIdentifier, "Reload", "Reload", "Reload Contents", None, "reloadVisibleData:", NSImage.imageNamed_("Reload"), None)
         addToolbarItem(self, kWSTPreferencesToolbarItemIdentifier, "Preferences", "Preferences", "Show Preferences", None, "orderFrontPreferences:", NSImage.imageNamed_("Preferences"), None)
-        addToolbarItem(self, kWSTUrlTextFieldToolbarItemIdentifier, "URL", "URL", "Server URL", None, None, self._urlTextField, None)
+        addToolbarItem(self, kWSTUrlTextFieldToolbarItemIdentifier, "URL", "URL", "Server URL", None, None, self.urlTextField, None)
         
         self._toolbarDefaultItemIdentifiers.addObject_(kWSTReloadContentsToolbarItemIdentifier)
         self._toolbarDefaultItemIdentifiers.addObject_(kWSTUrlTextFieldToolbarItemIdentifier)
@@ -152,18 +152,18 @@ class WSTConnectionWindowController(NSWindowController):
     def setStatusTextFieldMessage_(self, aMessage):
         if not aMessage:
             aMessage = "Displaying information about %d methods." % len(self._methods)
-        self._statusTextField.setStringValue_(aMessage)
-        self._statusTextField.display()
+        self.statusTextField.setStringValue_(aMessage)
+        self.statusTextField.display()
 
     def reloadVisibleData_(self, sender):
-        url = self._urlTextField.stringValue()
+        url = self.urlTextField.stringValue()
         self._methods = []
         self._methodSignatures = {}
         self._methodDescriptions = {}
         
         if url and len(url):
             self._server = xmlrpclib.ServerProxy(url)
-            self._progressIndicator.startAnimation_(sender)
+            self.progressIndicator.startAnimation_(sender)
             self.setStatusTextFieldMessage_("Retrieving method list...")
             try:
                 self._methods = self._server.listMethods()
@@ -174,18 +174,18 @@ class WSTConnectionWindowController(NSWindowController):
                     self._methodPrefix = "system."
                 except:
                     self.setStatusTextFieldMessage_("Server failed to respond to listMethods query.  See below for more information.")
-                    self._progressIndicator.stopAnimation_(sender)
+                    self.progressIndicator.stopAnimation_(sender)
                     self._server = None
                     self._methodPrefix = None
                     
                     exceptionType, exceptionValue, exceptionTraceback = sys.exc_info()
-                    self._methodDescriptionTextView.setString_("Exception information\n\nType: %s\n\nValue: %s\n\nTraceback:\n\n %s\n" % (exceptionType, exceptionValue, string.join(traceback.format_tb( exceptionTraceback ), '\n' )))
+                    self.methodDescriptionTextView.setString_("Exception information\n\nType: %s\n\nValue: %s\n\nTraceback:\n\n %s\n" % (exceptionType, exceptionValue, string.join(traceback.format_tb( exceptionTraceback ), '\n' )))
                     
                     return
                     
             self._methods.sort(lambda x, y: cmp(x, y))
-            self._methodsTable.reloadData()
-            self._methodsTable.display()
+            self.methodsTable.reloadData()
+            self.methodsTable.display()
             self.setStatusTextFieldMessage_("Retrieving information about %d methods." % len(self._methods))
             self.window().setTitle_(url)
             NSUserDefaults.standardUserDefaults().setObject_forKey_(url, "LastURL")
@@ -194,8 +194,8 @@ class WSTConnectionWindowController(NSWindowController):
             for aMethod in self._methods:
                 index = index + 1
                 if not (index % 5):
-                    self._methodsTable.reloadData()
-                    self._methodsTable.display()
+                    self.methodsTable.reloadData()
+                    self.methodsTable.display()
                 self.setStatusTextFieldMessage_("Retrieving signature for method %s (%d of %d)." % (aMethod , index, len(self._methods)))
                 methodSignature = getattr(self._server, self._methodPrefix + "methodSignature")(aMethod)
                 signatures = None
@@ -212,29 +212,29 @@ class WSTConnectionWindowController(NSWindowController):
                     signatures = signature
                 self._methodSignatures[aMethod] = signatures
             self.setStatusTextFieldMessage_(None)
-            self._progressIndicator.stopAnimation_(sender)
-            self._methodsTable.reloadData()
+            self.progressIndicator.stopAnimation_(sender)
+            self.methodsTable.reloadData()
         else:
             self.window().setTitle_("Untitled.")
             self.setStatusTextFieldMessage_("No URL specified.")
     
     def selectMethodAction_(self, sender):
-        selectedRow = self._methodsTable.selectedRow()
+        selectedRow = self.methodsTable.selectedRow()
         selectedMethod = self._methods[selectedRow]
         
         if  not self._methodDescriptions.has_key(selectedMethod):
-            self._progressIndicator.startAnimation_(sender)
+            self.progressIndicator.startAnimation_(sender)
             self.setStatusTextFieldMessage_("Retrieving signature for method %s..." % selectedMethod)
             methodDescription = getattr(self._server, self._methodPrefix + "methodHelp")(selectedMethod)
             if not methodDescription:
                 methodDescription = "No description available."
             self._methodDescriptions[selectedMethod] = methodDescription
-            self._progressIndicator.stopAnimation_(sender)
+            self.progressIndicator.stopAnimation_(sender)
         else:
             methodDescription = self._methodDescriptions[selectedMethod]
        
         self.setStatusTextFieldMessage_(None)
-        self._methodDescriptionTextView.setString_(methodDescription)
+        self.methodDescriptionTextView.setString_(methodDescription)
 
     def numberOfRowsInTableView_(self, aTableView):
         return len(self._methods)
