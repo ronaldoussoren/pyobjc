@@ -32,7 +32,7 @@ if 'PYOBJCFRAMEWORKS' in os.environ:
     for path in paths:
         bundle = NSBundle.bundleWithPath_(path)
         bundle.principalClass()
-        sys.path.insert(count, bundle.resourcePath())
+        sys.path.insert(count, str(bundle.resourcePath()))
         count = count + 1
 
         initPath = bundle.pathForResource_ofType_( "Init", "py")

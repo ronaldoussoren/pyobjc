@@ -14,7 +14,7 @@ from PyObjCTools import NibClassBuilder
 
 # create ObjC classes as defined in MainMenu.nib
 NibClassBuilder.extractClasses("MainMenu")
-class MyAppDelegate(PyObjCTools.AutoBaseClass, NSApplicationDelegate):
+class MyAppDelegate(NibClassBuilder.AutoBaseClass, NSApplicationDelegate):
     """
     Application delegate.
     """
