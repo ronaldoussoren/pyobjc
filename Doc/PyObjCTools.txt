@@ -71,7 +71,7 @@ This module exports two functions that are useful when working with the
   This function doesn't return unless it throws an exception.
 
 
-``PyObjCTools.Conversiony``
+``PyObjCTools.Conversion``
 .............................
 
 Functions for converting between Cocoa and pure Python data structures.
