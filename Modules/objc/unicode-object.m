@@ -110,7 +110,27 @@ static PyMethodDef class_methods[] = {
 	  METH_NOARGS,
 	  "Used for pickling"
 	},
-        { 0, 0, 0, 0 } /* sentinel */
+	{ 0, 0, 0, 0 } /* sentinel */
+};
+
+static PyObject*
+nsstring_get__pyobjc_object__(PyObject *self, void *closure __attribute__((__unused__))) {
+	return meth_nsstring(self);
+}
+
+static PyGetSetDef nsstring_getseters[] = {
+	{
+		"__pyobjc_object__",
+		(getter)nsstring_get__pyobjc_object__, NULL,
+		"raw NSString instance",
+		NULL
+	},
+	{
+		NULL,
+		NULL, NULL,
+		NULL,
+		NULL
+	}
 };
 
 static PyObject* 
