@@ -171,6 +171,13 @@ have installed.
 
 .. __: AppKit/FieldGraph
 
+* `HotKeyPython`__
+
+  Demonstrates how to use Carbon global hot keys from a PyObjC application.
+  Also demonstrates how to use a ``NSApplication`` subclass.
+
+.. __: AppKit/HotKeyPYthon
+
 * `iClass`__
 
   A more elaborate class browser; demonstrates ``NSOutlineView`` and
@@ -269,6 +276,18 @@ later.
 
 .. __: CocoaBindings/TableModelWithSearch
 
+* `ManualBindings`_
+
+  A simple example that illustrates establishing bindings
+  programmatically, including a number of options such as validation
+  and an array operator, and indexed accessor methods. A custom model
+  object implements custom validation method.
+  
+  Originally from `Cocoa Bindings Examples and Hints`_,
+  converted to PyObjC by ufiedler.
+
+.. _`ManualBindings`: CocoaBindings/ManualBindings
+.. _`Cocoa Bindings Examples and Hints`: http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 OpenGL
 ------
