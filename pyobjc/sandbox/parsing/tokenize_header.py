@@ -14,6 +14,9 @@ SUBPATTERNS = dict(
     CFSTRING=r'(?:CFSTR\("(?:[^\\"\n]|\\")*"\))',
     HEX=r'(?:0[xX][0-9a-fA-F]+[lL]?)',
     EXTERN=r'(?:(?:(?:[A-Z-a-z_]\w*?_)?EXTERN|extern))',
+    EXPORT=r'(?:(?:(?:[A-Z-a-z_]\w*?_)?EXPORT|extern))',
+    STATIC_INLINE=r'(?:(?:(?:[A-Z-a-z_]\w*?_)?INLINE|static inline|static __inline__))',
+    INDIRECTION=r'(?:\s*\*)',
     BOL=r'(?:\s*^\s*)',
     EOL=r'(?:\s*$\n?)',
     SEMI=r';\s*',
@@ -239,6 +242,52 @@ class EnumEnd(Token):
     };
     ''')
 
+class Struct(Token):
+    # XXX handle comments? need its own internal parser?
+    pattern = pattern(r'''
+    %(BOL)s
+    struct
+    \s*(?P<structname>%(IDENTIFIER)s)?
+    \s*{
+        (?P<content>[^}]*)
+    \s*}
+    \s*%(SEMI)s
+    ''')
+    example = example(r'''
+    struct {
+        signed foo name;
+        int bar;
+    };
+    struct _FooBarStruct {
+        signed foo name;
+        int bar;
+    };
+    ''')
+
+class NamedStruct(Token):
+    # XXX handle comments, needs its own internal parser
+    pattern = pattern(r'''
+    %(BOL)s
+    typedef
+    \s+struct
+    \s*(?P<structname>%(IDENTIFIER)s)?
+    \s*{
+        (?P<content>[^}]*)
+    \s*}
+    \s*(?P<name>%(IDENTIFIER)s)
+    \s*%(SEMI)s
+    ''')
+    example = example(r'''
+    typedef struct {
+        signed foo name;
+        int bar;
+    } FooBarStruct;
+    typedef struct _FooBarStruct {
+        signed foo name;
+        int bar;
+    } FooBarStruct;
+    ''')
+ 
 class Enum(ScanningToken):
     pattern = pattern(r'''
     %(BOL)s
@@ -266,26 +315,80 @@ class Enum(ScanningToken):
     };
     ''')
 
-
-class NamedStruct(Token):
-    # XXX handle comments, needs its own internal parser
+class FunctionEnd(Token):
     pattern = pattern(r'''
-    %(BOL)s
-    typedef
-    \s+struct
-    \s*{
-        (?P<content>[^}]*)
-    \s*}
-    \s*(?P<name>%(IDENTIFIER)s)
+    \)
     \s*%(SEMI)s
     ''')
     example = example(r'''
-    typedef struct {
-        signed foo name;
-        int bar;
-    } FooBarStruct;
+    );
+    )  ;
     ''')
- 
+
+class FunctionParameter(Token):
+    pattern = pattern(r'''
+    (%(IDENTIFIER)s\s*)+
+    \s*%(INDIRECTION)s
+    \s*%(IDENTIFIER)s?
+    \s*,?\s*
+    ''')
+    example = example(r'''
+    NSString *foo, NSString *bar
+    ''')
+
+#class ExportFunction(ScanningToken):
+#    pattern = pattern(r'''
+#    %(BOL)s
+#    %(EXPORT)s
+#    \s*(?P<returns>%(IDENTIFIER)s%(INDIRECTION)s*)
+#    \s*%(IDENTIFIER)s
+#    \s*\(
+#    ''')
+#    endtoken = FunctionEnd
+#    lexicon = [
+#        InsignificantWhitespace,
+#        FunctionParameter,
+#    ]
+#    example = example(r'''
+#    FOUNDATION_EXPORT SomeResult **SomeName(const Foo *, const Foo *Bar);
+#    FOUNDATION_EXPORT SomeResult SomeName(int,float);
+#    ''')
+
+class ExportFunction(Token):
+    pattern = pattern(r'''
+    %(BOL)s
+    %(EXPORT)s
+    \s*(?P<returns>%(IDENTIFIER)s%(INDIRECTION)s*)
+    \s*(?P<name>%(IDENTIFIER)s)
+    \s*\(
+    \s*[^)]*
+    \s*\)
+    \s*%(SEMI)s
+    ''')
+    example = example(r'''
+    FOUNDATION_EXPORT SomeResult **SomeName(const Foo *, const Foo *Bar);
+    FOUNDATION_EXPORT SomeResult SomeName(int,float);
+    ''')
+
+class StaticInlineFunction(Token):
+    # XXX need to figure out how to find a close brace
+    pattern = pattern(r'''
+    %(BOL)s
+    %(STATIC_INLINE)s
+    \s*(?P<returns>%(IDENTIFIER)s%(INDIRECTION)s*)
+    \s*(?P<name>%(IDENTIFIER)s)
+    \s*\(
+    \s*[^)]*
+    \s*\)
+    \s*{
+    \s*[^}]*
+    \s*}
+    ''')
+    example = example(r'''
+    FOUNDATION_STATIC_INLINE BOOL NSDecimalIsNotANumber(const NSDecimal *dcm)
+      { return ((dcm->_length == 0) && dcm->_isNegative); }
+    ''')
+
 
 LEXICON = [
     InsignificantWhitespace,
@@ -301,6 +404,9 @@ LEXICON = [
     NamedEnum,
     Enum,
     NamedStruct,
+    Struct,
+    ExportFunction,
+    StaticInlineFunction,
 ]
 
 if __name__ == '__main__':
