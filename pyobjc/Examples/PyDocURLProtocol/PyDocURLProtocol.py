@@ -7,42 +7,24 @@ PYDOCSCHEME = u'pydoc'
 class PyDocURLProtocol(NSURLProtocol):
 
     def canInitWithRequest_(klass, request):
-        print "canInitWithRequest_"
         if request.URL().scheme() == PYDOCSCHEME:
             return True
         return False
         
-    canInitWithRequest_ = objc.selector(
-        canInitWithRequest_,
-        signature=NSURLProtocol.canInitWithRequest_.signature,
-        isClassMethod=True,
-    )
-
     def canonicalRequestForRequest_(klass, request):
-        print "canonical", request.URL().standardizedURL().path()
         return request
         
-    canonicalRequestForRequest_= objc.selector(
-        canonicalRequestForRequest_,
-        signature=NSURLProtocol.canonicalRequestForRequest_.signature,
-        isClassMethod=True,
-    )
-
     def startLoading(self):
-        print "start"
         client = self.client()
         request = self.request()
         urlpath = request.URL().standardizedURL().path()
-        print 'urlpath', urlpath
         modpath = urlpath.replace(u'/', u'.'
             ).lstrip(u'.'
             ).replace(u'.html', u'')
             
-        print 'modpath', modpath
         try:
             data = gethtmldoc(modpath.encode('utf-8'))
         except Exception, e:
-            print repr(e), str(e)
             client.URLProtocol_didFailWithError_(
                 self,
                 NSError.errorWithDomain_code_userInfo_(
@@ -70,7 +52,7 @@ class PyDocURLProtocol(NSURLProtocol):
             client.URLProtocolDidFinishLoading_(self)
 
     def stopLoading(self):
-        print "stop"
+        pass
 
 def setup():
     NSURLProtocol.registerClass_(PyDocURLProtocol)
