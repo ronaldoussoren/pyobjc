@@ -332,7 +332,7 @@ if gs_root is None:
         #"-Werror",
 
         # no optimization, for debugging
-        #"-O0",
+        #"-O0", "-g",
 
         # g4 optimized
         #"-O3", "-mcpu=7450", "-maltivec",
