@@ -115,12 +115,14 @@ static	char* keywords[] = { "argv", NULL };
 	}
 #endif /* MACOSX */
 
-	NS_DURING
+	PyObjC_DURING
 		res = NSApplicationMain(argc, (const char**)argv);
-	NS_HANDLER
-		PyObjCErr_FromObjC(localException);
-		res = -1;
-	NS_ENDHANDLER
+	PyObjC_HANDLER
+		PyObjC_BEGIN_WITH_GIL
+			PyObjCErr_FromObjC(localException);
+			res = -1;
+		PyObjC_END_WITH_GIL
+	PyObjC_ENDHANDLER
 
 	for (i = 0; i < argc; i++) {
 		free(argv[i]);
