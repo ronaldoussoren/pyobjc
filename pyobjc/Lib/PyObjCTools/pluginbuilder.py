@@ -316,9 +316,10 @@ class PluginBuilder(bundlebuilder.BundleBuilder):
             raise bundlebuilder.BundleBuilderError, ("can't specify "
                 "'strip' at the moment, sorry")
 
-        if self.nibname is None:
-            raise bundlebuilder.BundleBuilderError, ("must specify 'nibname'"
-                " when building a plugin bundle")
+        # Having a NIB is not actually necessary for all types of plugins
+        #!#if self.nibname is None:
+        #!#    raise bundlebuilder.BundleBuilderError, ("must specify 'nibname'"
+        #!#        " when building a plugin bundle")
 
         self.execdir = os.path.join("Contents", self.platform)
 
@@ -328,14 +329,15 @@ class PluginBuilder(bundlebuilder.BundleBuilder):
         if not self.name.endswith(self.bundlesuffix):
             self.name += self.bundlesuffix
 
-        if self.nibname:
+        if self.nibname is not None:
             self.plist.NSMainNibFile = self.nibname
-            if not hasattr(self.plist, "NSPrincipalClass"):
-                if self.principalClass is None:
-                    raise bundlebuilder.BundleBuilderError, (
-                        "must specify 'principalClass' when building a "
-                        "plugin bundle")
-                self.plist.NSPrincipalClass = self.principalClass
+
+        if not hasattr(self.plist, "NSPrincipalClass"):
+            if self.principalClass is None:
+                raise bundlebuilder.BundleBuilderError, (
+                    "must specify 'principalClass' when building a "
+                    "plugin bundle")
+            self.plist.NSPrincipalClass = self.principalClass
 
         bundlebuilder.BundleBuilder.setup(self)
 
