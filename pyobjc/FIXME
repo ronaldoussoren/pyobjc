@@ -1,3 +1,10 @@
+[bbum] This needs to be automated.  How to build a package:
+	- install module into /tmp/pyobjc/
+	- cd into Project Templates
+	- ./install.sh /tmp/pyobjc/
+	- open the package template
+	- cmd-k to make the package
+
 * [ronald] OC_PythonObject.m contains cruft from the initial experimentations.
 
 * [ronald] MallocDebug.app causes a crash in pyobjc (Try running TableModel in
