@@ -1,6 +1,6 @@
 from objc import setSignatureForSelector
 
-setSignatureForSelector("NSFocusState", "clip:", "@@:i^{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
+setSignatureForSelector("NSFocusState", "clip:", "@@:n^{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
 setSignatureForSelector("NSSurface", "surfaceID", "i@:")
 setSignatureForSelector("NSInputManager", "getMarkedText:selectedRange:", "v@:o^@o^{_NSRange=II}")
 setSignatureForSelector("NSToolbar", "_configSheetDidEnd:returnCode:contextInfo:", "v16@4:8@12i16i20")
@@ -20,9 +20,9 @@ setSignatureForSelector("NSSavePanel", "beginSheetForDirectory:file:modalForWind
 setSignatureForSelector("NSSavePanel", "didEndSheet:returnCode:contextInfo:", "v16@4:8@12i16i20")
 setSignatureForSelector("NSPageLayout", "_sheetDidEnd:returnCode:contextInfo:", "v16@4:8@12i16i20")
 setSignatureForSelector("NSPageLayout", "beginSheetWithPrintInfo:modalForWindow:delegate:didEndSelector:contextInfo:", "v24@4:8@12@16@20:24i28")
-setSignatureForSelector("NSPageLayout", "convertOldFactor:newFactor:", "v@:i^fo^f")
+setSignatureForSelector("NSPageLayout", "convertOldFactor:newFactor:", "v@:n^fo^f")
 setSignatureForSelector("NSBitmapImageRep", "getCompression:factor:", "v@:o^io^f")
-setSignatureForSelector("NSColor", "getCyan:magenta:yellow:black:alpha:", "v@:o^fo^fo^fo^f")
+setSignatureForSelector("NSColor", "getCyan:magenta:yellow:black:alpha:", "v@:o^fo^fo^fo^fo^f")
 setSignatureForSelector("NSColor", "getHue:saturation:brightness:alpha:", "v@:o^fo^fo^fo^f")
 setSignatureForSelector("NSColor", "getRed:green:blue:alpha:", "v@:o^fo^fo^fo^f")
 setSignatureForSelector("NSColor", "getWhite:alpha:", "v@:o^fo^f")
@@ -105,7 +105,7 @@ setSignatureForSelector("NSNib", "instantiateNibWithOwner:topLevelObjects:", "c@
 setSignatureForSelector("NSWorkspace", "launchAppWithBundleIdentifier:options:additionalEventParamDescriptor:launchIdentifier:", "c24@0:4@8I12@16o^@20")
 setSignatureForSelector("NSWorkspace", "openURLs:withAppBundleIdentifier:options:additionalEventParamDescriptor:launchIdentifiers:", "c28@0:4@8@12I16@20o^@24")
 setSignatureForSelector("NSTextRulerOptions", "sheetDidEnd:returnCode:contextInfo:", "v@:@ii")
-setSignatureForSelector("NSAlert", "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:", "v28@4:8@12@16@20@24:28i32")
+setSignatureForSelector("NSAlert", "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:", "v@:@@:i")
 setSignatureForSelector("NSATSTypesetter", "characterRangeForGlyphRange:actualGlyphRange:", "{_NSRange=II}@:{_NSRange=II}o^{_NSRange=II}")
 setSignatureForSelector("NSATSTypesetter", "glyphRangeForGlyphRange:actualGlyphRange:", "{_NSRange=II}@:{_NSRange=II}o^{_NSRange=II}")
 setSignatureForSelector("NSATSTypesetter", "layoutParagraphAtPoint:", "I@:{_NSPoint=ff}")

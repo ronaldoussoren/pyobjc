@@ -40,19 +40,19 @@ class SimpleImage:
         rowOffset = x * self.rowbytes
         pixelOffset = y * self.pixbytes
         offset = rowOffset + pixelOffset
-       
+
         pixel = self.data[offset:offset + self.pixbytes]
         return pixel
 
 class RectTest (unittest.TestCase):
     def setUp(self):
 
-        
+
         self.points = (
-            ((10,  0), ( 1,  1)), 
-            ((10, 10), ( 1,  1)), 
-            (( 0, 10), ( 1,  1)), 
-            (( 0,  0), ( 1,  1)), 
+            ((10,  0), ( 1,  1)),
+            ((10, 10), ( 1,  1)),
+            (( 0, 10), ( 1,  1)),
+            (( 0,  0), ( 1,  1)),
             ((70, 70), (10, 10))
         )
 
@@ -78,7 +78,7 @@ class RectTest (unittest.TestCase):
 
         img = SimpleImage(image)
 
-        allpoints = [ (x, y) 
+        allpoints = [ (x, y)
                 for x in range(img.width())
                 for y in range(img.height())
         ]
@@ -100,7 +100,7 @@ class RectTest (unittest.TestCase):
                 '\x00\x00\x00\x00',
                 'White pixel at %d,%d'%(x, y))
 
-    
+
     def tearDown(self):
         pass
 

@@ -13,10 +13,10 @@
 #import <Foundation/NSProcessInfo.h>
 #import <Foundation/NSString.h>
 
-
-int ObjC_VerboseLevel = 0;
-static NSAutoreleasePool* global_release_pool = nil;
+int PyObjC_VerboseLevel = 0;
 PyObject* PyObjCClass_DefaultModule = NULL;
+
+static NSAutoreleasePool* global_release_pool = nil;
 
 PyDoc_STRVAR(lookUpClass_doc,
   "lookUpClass(class_name) -> class\n"
@@ -78,7 +78,8 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		return NULL;
 	}
 
-	methodsArray = PySequence_Fast(methodsArray, "methodsArray must be a sequence");
+	methodsArray = PySequence_Fast(
+			methodsArray, "methodsArray must be a sequence");
 	if (methodsArray == NULL) return NULL;
 	
 	targetClass  = PyObjCClass_GetClass(classObject);
@@ -98,7 +99,8 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 	methodsToAdd->method_count = methodCount;
 
 	for (methodIndex = 0; methodIndex < methodCount; methodIndex++) {
-		PyObject* aMethod = PySequence_Fast_GET_ITEM(methodsArray, methodIndex);
+		PyObject* aMethod = PySequence_Fast_GET_ITEM(
+				methodsArray, methodIndex);
 		struct objc_method *objcMethod;
 
 		aMethod = PyObjCSelector_FromFunction(
@@ -122,7 +124,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		if (objcMethod->method_types == NULL) {
 			goto cleanup_and_return_error;
 		}
-		objcMethod->method_imp = ObjC_MakeIMPForPyObjCSelector(
+		objcMethod->method_imp = PyObjCFFI_MakeIMPForPyObjCSelector(
 			(PyObjCSelector*)aMethod);
 		Py_DECREF(aMethod);
 	}
@@ -267,7 +269,7 @@ static 	char* keywords[] = { "level", NULL };
 		return NULL;
 	}
 
-	ObjC_VerboseLevel = PyObject_IsTrue(o);
+	PyObjC_VerboseLevel = PyObject_IsTrue(o);
 
 	Py_INCREF(Py_None);
 	return Py_None;
@@ -288,7 +290,7 @@ static 	char* keywords[] = { NULL };
 		return NULL;
 	}
 
-	return PyObjCBool_FromLong(ObjC_VerboseLevel);
+	return PyObjCBool_FromLong(PyObjC_VerboseLevel);
 }
 
 
@@ -477,8 +479,6 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	Py_XDECREF(module_key); module_key = NULL;
 	Py_XDECREF(class_list); class_list = NULL;
 
-	/*NSLog(@"loadBundle %@ DONE", strval);*/
-
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -664,7 +664,7 @@ static char* keywords[] = { "name", NULL };
 	return NULL;
 }
 
-static PyMethodDef meta_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{
 	  "splitSignature",
 	  (PyCFunction)objc_splitSignature,
@@ -748,7 +748,8 @@ struct objc_typestr_values {
 
 void init_objc(void);
 
-void init_objc(void)
+void 
+init_objc(void)
 {
 	PyObject *m, *d;
 
@@ -787,7 +788,7 @@ void init_objc(void)
 	PyType_Ready(&PyObjCInformalProtocol_Type);
 	PyType_Ready(&PyObjCIMP_Type);
 
-	m = Py_InitModule4("_objc", meta_methods, NULL,
+	m = Py_InitModule4("_objc", mod_methods, NULL,
 			NULL, PYTHON_API_VERSION);
 	d = PyModule_GetDict(m);
 
@@ -801,8 +802,8 @@ void init_objc(void)
 	PyDict_SetItemString(d, "YES", PyObjCBool_FromLong(1));
 	PyDict_SetItemString(d, "NO", PyObjCBool_FromLong(0));
 
-	if (ObjCUtil_Init(m) < 0) return;
-	if (ObjCAPI_Register(d) < 0) return;
+	if (PyObjCUtil_Init(m) < 0) return;
+	if (PyObjCAPI_Register(d) < 0) return;
 	if (PyObjCIMP_SetUpMethodWrappers() < 0) return;
 
 #if 1

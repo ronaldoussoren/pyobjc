@@ -8,5 +8,3 @@ warnings.warn(
     DeprecationWarning)
 
 from PyObjCTools.NibClassBuilder import *
-
-
