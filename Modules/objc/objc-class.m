@@ -44,7 +44,6 @@ static int update_convenience_methods(PyObject* cls);
  */
 static NSMapTable* class_registry = NULL;
 
-
 /*!
  * @function objc_class_register
  * @abstract Add a class to the class registry
@@ -59,7 +58,7 @@ objc_class_register(Class objc_class, PyObject* py_class)
 		class_registry = NSCreateMapTable(
 			PyObjCUtil_PointerKeyCallBacks,
 			PyObjCUtil_PointerValueCallBacks, 
-			500);
+			PYOBJC_EXPECTED_CLASS_COUNT);
 	}
 
 	if (NSMapGet(class_registry, objc_class)) {

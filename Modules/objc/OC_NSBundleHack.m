@@ -36,17 +36,13 @@ NSMapTableValueCallBacks PyObjC_ClassToNSBundle_ValueCallBacks = {
 	NULL  // generic description
 };
 
-// running the test suite ends up with approximately 1000 classes
-// for Mac OS X 10.3
-#define EXPECTED_CLASS_COUNT 2048
-
 @implementation OC_NSBundleHack
 +(NSBundle*)bundleForClass:(Class)aClass
 {
 	static NSBundle* mainBundle = nil;
 	static NSMapTable* bundleCache = nil;
 	if (!mainBundle) mainBundle = [[NSBundle mainBundle] retain];
-	if (!bundleCache) bundleCache = NSCreateMapTable(PyObjC_ClassToNSBundleTable_KeyCallBacks, PyObjC_ClassToNSBundle_ValueCallBacks, EXPECTED_CLASS_COUNT);
+	if (!bundleCache) bundleCache = NSCreateMapTable(PyObjC_ClassToNSBundleTable_KeyCallBacks, PyObjC_ClassToNSBundle_ValueCallBacks, PYOBJC_EXPECTED_CLASS_COUNT);
 	id rval = (id)NSMapGet(bundleCache, (const void *)aClass);
 	if (rval) {
 		return rval;
