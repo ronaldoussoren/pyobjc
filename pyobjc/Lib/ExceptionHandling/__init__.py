@@ -13,7 +13,7 @@ if _objc.platform == 'MACOSX':
     _objc.loadBundle(
         "ExceptionHandling",
         globals(),
-        bundle_identifier='com.apple.AppKit',
+        bundle_identifier='com.apple.ExceptionHandling',
     )
 else:
     _objc.loadBundle(
