@@ -18,6 +18,7 @@ class Distribution(distutils.dist.Distribution):
 
     def __init__(self, attrs):
         self.app = []
+        self.plugin = []
         self.zipfile = "site-packages.zip"
 
         distutils.dist.Distribution.__init__(self, attrs)

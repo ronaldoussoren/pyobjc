@@ -4,12 +4,12 @@ import plistlib
 import py2app.apptemplate
 from py2app.util import makedirs, mergecopy, mergetree, skipscm
 
-def create_appbundle(destdir, name, module=py2app.apptemplate,
+def create_appbundle(destdir, name, extension='.app', module=py2app.apptemplate,
         platform='MacOS', copy=mergecopy, mergetree=mergetree,
         condition=skipscm, plist={}):
     kw = module.plist_template.infoPlistDict(
         plist.get('CFBundleExecutable', name), plist)
-    app = os.path.join(destdir, kw['CFBundleName']+'.app')
+    app = os.path.join(destdir, kw['CFBundleName'] + extension)
     contents = os.path.join(app, 'Contents')
     resources = os.path.join(contents, 'Resources')
     platdir = os.path.join(contents, platform)

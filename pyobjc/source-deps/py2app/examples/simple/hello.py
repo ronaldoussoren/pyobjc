@@ -1,4 +1,5 @@
 import sys, os
+import pprint
 
 def somefunc():
     print "Hello from py2app"
@@ -12,6 +13,7 @@ def somefunc():
     print "sys.prefix", sys.prefix
     print "sys.argv", sys.argv
     print "os.getcwd()", os.getcwd()
+    pprint.pprint(dict(os.environ))
 
 if __name__ == '__main__':
     somefunc()
