@@ -38,6 +38,7 @@ class TableModel(NibClassBuilder.AutoBaseClass):
         self.tableView.setAutosaveTableColumns_(1)
         self.tableView.setTarget_(self)
         self.tableView.setDoubleAction_("doubleClick:")
+        self.tableView.window().setDelegate_(self)
         # this also works, but you still need to set the target:
         #self.tableView.setDoubleAction_(self.doubleClick_)
 
@@ -88,6 +89,10 @@ class TableModel(NibClassBuilder.AutoBaseClass):
             word = "Row"
         label = "%s%s: %s" % (word, ("s", "")[len(items) == 1], ", ".join([str(x) for x in items]))
         self.label.setStringValue_(label)
+
+    def windowShouldClose_(self, sender):
+        print "Should Close?"
+        return 0
 
 
 AppHelper.runEventLoop()

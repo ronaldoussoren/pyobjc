@@ -96,10 +96,8 @@ static PyObject* call_NSDictionary_initWithObjects_forKeys_count_(
 	NS_DURING
 		PyObjC_InitSuper(&super, 
 			PyObjCSelector_GetClass(method),
-			//PyObjCClass_GetClass((PyObject*)(self->ob_type)),
 			PyObjCObject_GetObject(self));
 
-			
 		res = objc_msgSendSuper(&super,
 				@selector(initWithObjects:forKeys:count:),
 				objects, keys, count);

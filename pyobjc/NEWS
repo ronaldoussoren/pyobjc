@@ -44,6 +44,9 @@ Version 1.0b1+ (CVS):
   changed names are internal to the bridge and should not be used in other
   code.
 
+- The interface of Foundation.NSFillRects changed, it now has an interface
+  that is consistent with the rest of the bridge.
+
 Version 1.0b1 (2003-07-05):
 
 - More tutorials
