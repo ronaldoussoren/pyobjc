@@ -62,7 +62,7 @@ NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
 	} else {
 		table = NSCreateMapTable(PyObjC_ObjectToIdTable_KeyCallBacks, PyObjC_ObjectToIdTable_ValueCallBacks, [self count]);
 	}
-    NSMapInsert(table, (const void *)Py_None, (const void *)[NSNull null]);
+	NSMapInsert(table, (const void *)Py_None, (const void *)[NSNull null]);
 	return self;
 }
 
@@ -133,9 +133,14 @@ NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
 	PyObject* v;
 
 	PyObjC_BEGIN_WITH_GIL
-		v = pythonify_c_value(@encode(id), &newValue);
-		if (v == NULL) {
-			PyObjC_GIL_FORWARD_EXC();
+		if (newValue == [NSNull null]) {
+			Py_INCREF(Py_None);
+			v = Py_None;
+		} else {
+			v = PyObjC_IdToPython(newValue);
+			if (v == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
 		}
 
 		if (PySequence_SetItem(value, idx, v) < 0) {
@@ -162,9 +167,14 @@ NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
 	PyObject* w;
 
 	PyObjC_BEGIN_WITH_GIL
-		v = pythonify_c_value(@encode(id), &anObject);
-		if (v == NULL) {
-			PyObjC_GIL_FORWARD_EXC();
+		if (anObject == [NSNull null]) {
+			Py_INCREF(Py_None);
+			v = Py_None;
+		} else {
+			v = PyObjC_IdToPython(anObject);
+			if (v == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
 		}
 
 		w = PyObject_CallMethod(value, "append", "O", v);
@@ -184,9 +194,14 @@ NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
 	PyObject* w;
 
 	PyObjC_BEGIN_WITH_GIL
-		v = pythonify_c_value(@encode(id), &anObject);
-		if (v == NULL) {
-			PyObjC_GIL_FORWARD_EXC();
+		if (anObject == [NSNull null]) {
+			Py_INCREF(Py_None);
+			v = Py_None;
+		} else {
+			v = PyObjC_IdToPython(anObject);
+			if (v == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
 		}
 
 		w = PyObject_CallMethod(value, "insert", "iO", idx, v);
