@@ -275,3 +275,5 @@ os.system('cd release-dir/extra_work && tar zcf ../pyobjc_extras-%s.tar.gz Appli
 
 
 print "Done. Don't forget to test the output!"
+print "-- hdiutil create -imagekey zlib-level=9 -srcfolder PyObjC-1.1a0 pyobjc-1.1a0-panther.dmg"
+
