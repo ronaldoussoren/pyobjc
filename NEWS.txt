@@ -7,6 +7,15 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3 (2005-??-??)
 ------------------------
 
+- ``PyObjCTools.AppHelper.runEventLoop()`` no longer breaks on
+  pure Objective-C exceptions.  Most exceptions of this variety
+  are more like warnings, and there is nothing that can be done
+  them anyway.
+
+- ``PyObjCTools.AppHelper.runEventLoop()`` now installs the
+  interrupt handler and verbose exception logging when using pdb,
+  either explicitly or by the USE_PDB environment variable.
+
 - There is now a fast path for the ``NSString``/``unicode``
   bridge when ``Py_UNICODE_SIZE`` is 2.  This is the default
   setting for Python.
