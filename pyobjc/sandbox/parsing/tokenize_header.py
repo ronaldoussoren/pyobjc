@@ -14,8 +14,8 @@ SUBPATTERNS = dict(
     STRING=r'("([^\\"\n]|\\")*")',
     CFSTRING=r'(CFSTR\("([^\\"\n]|\\")*"\))',
     HEX=r'(0[xX][0-9a-fA-F]+[lL]?)',
-    EXTERN=r'((([A-Z-a-z_]\w*?_)?EXTERN|extern))',
-    EXPORT=r'((([A-Z-a-z_]\w*?_)?EXPORT|extern))',
+    EXTERN=r'((([A-Z-a-z_]\w*?_)?(EXTERN|EXPORT)|extern))',
+    EXPORT=r'((([A-Z-a-z_]\w*?_)?(EXPORT|EXTERN)|extern))',
     STATIC_INLINE=r'((([A-Z-a-z_]\w*?_)?INLINE|static inline|static __inline__))',
     BRACES=r'(([^\n}]*|([^}][^\n]*\n)*))',
     INDIRECTION=r'(\s*\*)',
@@ -45,7 +45,7 @@ class BlockComment(Token):
     ''')
 
 class SingleLineComment(Token):
-    pattern = pattern(r'\s*//(?P<comment>[^\n]*)(\n|$)')
+    pattern = pattern(r'//(?P<comment>[^\n]*)(\n|$)')
     example = example(r'// this is a single line comment')
 
 class UninterestingTypedef(Token):
@@ -190,7 +190,10 @@ class GlobalThing(Token):
     (?P<type>%(IDENTIFIER)s%(INDIRECTION)s*)
     \s*(const\s+)?
     (?P<name>%(IDENTIFIER)s)(?:\s*\[\s*\]\s*|\b)
-    (?:\s+%(AVAILABLE)s)?
+    (
+        (\s*//(?P<comment>[^\n]*)(\n|$))?
+        (?:\s+%(AVAILABLE)s)
+    )?
     %(SEMI)s
     ''')
     example = example(r'''
@@ -198,6 +201,8 @@ class GlobalThing(Token):
     extern const NSString *foo;
     extern NSString *foo;
     APPKIT_EXTERN NSString* const foo;
+    APPKIT_EXTERN NSString* const foo // argh a comment
+        AVAILABLE_SOMEWHERE;
     FOUNDATION_EXPORT NSString * const Foo;
     extern CFStringRef cfFoo AVAILABLE_MAC_OSX_10_8;
     APPKIT_EXTERN const char foosball[] AVAILABLE_NEVER;
@@ -417,10 +422,12 @@ class ExportFunction(Token):
         (?P<args>\s*[^)]*)
     \s*\)
     (\s*(?P<available>%(AVAILABLE)s))?
-    \s*%(SEMI)s\s*
+    \s*%(SEMI)s
     ''')
     example = example(r'''
-    FOUNDATION_EXPORT void *NSAllocateCollectable(unsigned long size, unsigned long options) AVAILABLE_MAC_OS_X_VERSION_10_4_AND_LATER;
+    APPKIT_EXTERN NSString *NSSomething(NSString *arg, NSString *arg)
+        AVAILABLE_SOMEWHERE;
+    FOUNDATION_EXPORT void *NSSomething(unsigned long arg, unsigned long arg) AVAILABLE_SOMEWHERE;
     FOUNDATION_EXPORT SomeResult <NSObject> SomeName(const Foo *, const Foo *Bar);
     FOUNDATION_EXPORT SomeResult **SomeName(const Foo *, const Foo *Bar);
     FOUNDATION_EXPORT SomeResult SomeName(int,float);
@@ -491,7 +498,8 @@ if __name__ == '__main__':
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSInvocation.h'
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSByteOrder.h'
     #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSObject.h'
-    fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSZone.h'
+    #fn = '/System/Library/Frameworks/Foundation.framework/Headers/NSZone.h'
+    fn = '/System/Library/Frameworks/AppKit.framework/Headers/NSAccessibility.h'
     files = sys.argv[1:] or [fn]
     def deadraise(string, i, j):
         print string[i:j]
