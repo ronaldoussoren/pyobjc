@@ -571,7 +571,7 @@ array_elem_code(const char* typestr)
 	if (*typestr++ != _C_ARY_B) {
 		return '\0';
 	}
-	while (isdigit(typestr++)) 
+	while (isdigit(*typestr)) typestr++;
 
 	if (*typestr == _C_ARY_E) {
 		return '\0';

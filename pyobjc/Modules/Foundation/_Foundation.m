@@ -15,81 +15,9 @@
 #include "pyobjc-api.h"
 #include "wrapper-const-table.h"
 
+#include "NSAutoreleasePoolSupport.m"
+
 #include "_Fnd_Functions.inc"
-
-#define NSLocalizedString_doc 0
-static PyObject* objc_NSLocalizedString(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static	char* keywords[] = { "key", "comment", NULL };
-	PyObject*  result;
-	NSString* oc_result;
-	NSString* oc_key;
-	NSString* oc_comment;
-
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O&:NSLocalizedString",
-			keywords, PyObjCObject_Convert, &oc_key, 
-			PyObjCObject_Convert, &oc_comment)) {
-		return NULL;
-	}
-
-	oc_result = NSLocalizedString(oc_key, oc_comment);
-
-	result = PyObjC_IdToPython(oc_result);
-	return result;
-}
-
-#define NSLocalizedStringFromTable_doc 0
-static PyObject* objc_NSLocalizedStringFromTable(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static	char* keywords[] = { "key", "tableName", "comment", NULL };
-	PyObject*  result;
-	NSString* oc_result;
-	NSString* oc_key;
-	NSString* oc_tableName;
-	NSString* oc_comment;
-
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-			"O&O&O&:NSLocalizedStringFromTable",
-			keywords, 
-			PyObjCObject_Convert, &oc_tableName, 
-			PyObjCObject_Convert, &oc_key, 
-			PyObjCObject_Convert, &oc_comment)) {
-		return NULL;
-	}
-
-	oc_result = NSLocalizedStringFromTable(
-		oc_key, oc_tableName, oc_comment);
-	result = PyObjC_IdToPython(oc_result);
-	return result;
-}
-
-#define NSLocalizedStringFromTableInBundle_doc 0
-static PyObject* objc_NSLocalizedStringFromTableInBundle(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static	char* keywords[] = { "key", "tableName", "comment", "bundle", NULL };
-	PyObject* result;
-	NSString* oc_result;
-	NSString* oc_key;
-	id        oc_bundle;
-	NSString* oc_tableName;
-	NSString* oc_comment;
-
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-			"O&O&O&O:NSLocalizedStringFromTableInBundle",
-			keywords, 
-			PyObjCObject_Convert, &oc_tableName, 
-			PyObjCObject_Convert, &oc_key, 
-			PyObjCObject_Convert, &oc_comment, 
-			PyObjCObject_Convert, &oc_bundle)) {
-		return NULL;
-	}
-
-	oc_result = NSLocalizedStringFromTableInBundle(
-			oc_key, oc_tableName, oc_bundle, oc_comment);
-
-	result = PyObjC_IdToPython(oc_result);
-	return result;
-}
 
 #ifdef MACOSX
 
@@ -105,9 +33,14 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 	OSType hfsTypeCode;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-			"O&:NSFileTypeForHFSTypeCode",
-			keywords, PyMac_GetOSType, &hfsTypeCode)) {
-		return NULL;
+			"i:NSFileTypeForHFSTypeCode",
+			keywords, &hfsTypeCode)) {
+		PyErr_Clear();
+		if (!PyArg_ParseTupleAndKeywords(args, kwds, 
+				"O&:NSFileTypeForHFSTypeCode",
+				keywords, PyMac_GetOSType, &hfsTypeCode)) {
+			return NULL;
+		}
 	}
 	
 	NS_DURING
@@ -226,24 +159,6 @@ static PyMethodDef foundation_methods[] = {
 	},
 
 #endif /* MACOSX */
-	{ 
-		"NSLocalizedString", 
-		(PyCFunction)objc_NSLocalizedString, 
-		METH_VARARGS|METH_KEYWORDS, 
-		NSLocalizedString_doc 
-	},
-	{ 
-		"NSLocalizedStringFromTable", 
-		(PyCFunction)objc_NSLocalizedStringFromTable, 
-		METH_VARARGS|METH_KEYWORDS, 
-		NSLocalizedStringFromTable_doc 
-	},
-	{ 
-		"NSLocalizedStringFromTableInBundle", 
-		(PyCFunction)objc_NSLocalizedStringFromTableInBundle, 
-		METH_VARARGS|METH_KEYWORDS, 
-		NSLocalizedStringFromTable_doc 
-	},
 	{
 		"NSDivideRect",
 		(PyCFunction)objc_NSDivideRect,

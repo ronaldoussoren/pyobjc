@@ -262,9 +262,240 @@ static char* keywords[] = { "rects", "count", 0 };
 
 	if (arrayToken == -1) return NULL;
 
-	NSRectFillList(rects, rectCount);
+	NS_DURING
+		NSRectFillList(rects, rectCount);
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+	NS_ENDHANDLER
 
 	PyObjC_FreeCArray(arrayToken, rects);
+
+	if (PyErr_Occurred()) {
+		return NULL;
+	}
+
+	Py_INCREF(Py_None);
+	return Py_None; 
+}
+
+static int
+Convert_NSCompositingOperation(PyObject* arg, void* out)
+{
+	int r;
+
+	r = PyObjC_PythonToObjC(@encode(NSCompositingOperation), arg, out);
+	if (r == -1) {
+		return 0;
+	}
+	return 1;
+}
+
+static PyObject*
+objc_NSRectFillListUsingOperation(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "rects", "count", "operation", 0 };
+	PyObject* pyList;
+	PyObject* pyCount = NULL;
+	NSRect* rects;
+	int rectCount;
+	int arrayToken;
+	NSCompositingOperation operation;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOO&", keywords, &pyList, &pyCount, Convert_NSCompositingOperation, &operation)) {
+		return NULL;
+	}
+
+	arrayToken = PyObjC_PythonToCArray(
+		@encode(NSRect), pyList, pyCount, (void**)&rects, &rectCount);
+
+	if (arrayToken == -1) return NULL;
+
+	NS_DURING
+		NSRectFillListUsingOperation(rects, rectCount, operation);
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+	NS_ENDHANDLER
+
+	PyObjC_FreeCArray(arrayToken, rects);
+
+	if (PyErr_Occurred()) {
+		return NULL;
+	}
+
+	Py_INCREF(Py_None);
+	return Py_None; 
+}
+
+static PyObject*
+objc_NSRectFillListWithColors(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "rects", "colors", "count", 0 };
+	PyObject* pyList;
+	PyObject* pyColors;
+	PyObject* pyCount = NULL;
+	NSRect* rects;
+	id* colors;
+	int rectCount;
+	int colorCount;
+	int rectToken;
+	int colorToken;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO|O", keywords, &pyList, &pyColors, &pyCount)) {
+		return NULL;
+	}
+
+	rectToken = PyObjC_PythonToCArray(
+		@encode(NSRect), pyList, pyCount, (void**)&rects, &rectCount);
+
+	if (rectToken == -1) return NULL;
+
+	colorToken = PyObjC_PythonToCArray(
+		@encode(id), pyColors, pyCount, (void**)&colors, &colorCount);
+
+	if (colorToken == -1)  {
+		PyObjC_FreeCArray(rectToken, rects);
+		return NULL;
+	}
+
+	if (colorCount != rectCount) {
+		PyErr_Format(PyExc_ValueError,
+				"Passing %d rects and %d colors",
+				rectCount, colorCount);
+		PyObjC_FreeCArray(rectToken, rects);
+		PyObjC_FreeCArray(colorToken, colors);
+		return NULL;
+	}
+		
+
+	NS_DURING
+		NSRectFillListWithColors(rects, colors, rectCount);
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+	NS_ENDHANDLER
+
+	PyObjC_FreeCArray(rectToken, rects);
+	PyObjC_FreeCArray(colorToken, colors);
+
+	if (PyErr_Occurred()) {
+		return NULL;
+	}
+
+	Py_INCREF(Py_None);
+	return Py_None; 
+}
+
+static PyObject*
+objc_NSRectFillListWithColorsUsingOperation(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "rects", "colors", "count", "operation", 0 };
+	PyObject* pyList;
+	PyObject* pyColors;
+	PyObject* pyCount = NULL;
+	NSRect* rects;
+	id* colors;
+	int rectCount;
+	int colorCount;
+	int rectToken;
+	int colorToken;
+	NSCompositingOperation operation;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOOO&", keywords, &pyList, &pyColors, &pyCount, Convert_NSCompositingOperation, &operation)) {
+		return NULL;
+	}
+
+	rectToken = PyObjC_PythonToCArray(
+		@encode(NSRect), pyList, pyCount, (void**)&rects, &rectCount);
+
+	if (rectToken == -1) return NULL;
+
+	colorToken = PyObjC_PythonToCArray(
+		@encode(id), pyColors, pyCount, (void**)&colors, &colorCount);
+
+	if (colorToken == -1)  {
+		PyObjC_FreeCArray(rectToken, rects);
+		return NULL;
+	}
+
+	if (colorCount != rectCount) {
+		PyErr_Format(PyExc_ValueError,
+				"Passing %d rects and %d colors",
+				rectCount, colorCount);
+		PyObjC_FreeCArray(rectToken, rects);
+		PyObjC_FreeCArray(colorToken, colors);
+		return NULL;
+	}
+		
+
+	NS_DURING
+		NSRectFillListWithColorsUsingOperation(rects, colors, rectCount, operation);
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+	NS_ENDHANDLER
+
+	PyObjC_FreeCArray(rectToken, rects);
+	PyObjC_FreeCArray(colorToken, colors);
+
+	if (PyErr_Occurred()) {
+		return NULL;
+	}
+
+	Py_INCREF(Py_None);
+	return Py_None; 
+}
+
+static PyObject*
+objc_NSRectFillListWithGrays(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "rects", "grays", "count", 0 };
+	PyObject* pyList;
+	PyObject* pyGrays;
+	PyObject* pyCount = NULL;
+	NSRect* rects;
+	float* grays;
+	int rectCount;
+	int grayCount;
+	int rectToken;
+	int grayToken;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO|O", keywords, &pyList, &pyGrays, &pyCount)) {
+		return NULL;
+	}
+
+	rectToken = PyObjC_PythonToCArray(
+		@encode(NSRect), pyList, pyCount, (void**)&rects, &rectCount);
+
+	if (rectToken == -1) return NULL;
+
+	grayToken = PyObjC_PythonToCArray(
+		@encode(float), pyGrays, pyCount, (void**)&grays, &grayCount);
+
+	if (grayToken == -1)  {
+		PyObjC_FreeCArray(rectToken, rects);
+		return NULL;
+	}
+
+	if (grayCount != rectCount) {
+		PyErr_Format(PyExc_ValueError,
+				"Passing %d rects and %d colors",
+				rectCount, grayCount);
+		PyObjC_FreeCArray(rectToken, rects);
+		PyObjC_FreeCArray(grayToken, grays);
+		return NULL;
+	}
+		
+
+	NS_DURING
+		NSRectFillListWithGrays(rects, grays, rectCount);
+	NS_HANDLER
+		PyObjCErr_FromObjC(localException);
+	NS_ENDHANDLER
+
+	PyObjC_FreeCArray(rectToken, rects);
+	PyObjC_FreeCArray(grayToken, grays);
+
+	if (PyErr_Occurred()) {
+		return NULL;
+	}
 
 	Py_INCREF(Py_None);
 	return Py_None; 
@@ -362,43 +593,67 @@ static PyMethodDef appkit_methods[] = {
 		"NSApplicationMain", 
 		(PyCFunction)objc_NSApplicationMain, 
 		METH_VARARGS|METH_KEYWORDS, 
-		NULL
+		"int NSApplicationMain(int argc, const char *argv[]);"
 	},
 	{ 
 		"NSApp", 
 		(PyCFunction)objc_NSApp, 
 		METH_VARARGS|METH_KEYWORDS, 
-		NULL
+		"NSApplication* NSApp(void);"
 	},
 	{ 
 		"NSCountWindows", 
 		(PyCFunction)objc_NSCountWindows, 
 		METH_VARARGS|METH_KEYWORDS, 
-		NULL
+		"void NSCountWindows(int *count);"
 	},
 	{ 
 		"NSCountWindowsForContext", 
 		(PyCFunction)objc_NSCountWindowsForContext, 
 		METH_VARARGS|METH_KEYWORDS, 
-		NULL
+		"void NSCountWindowsForContext(int context, int *count);"
 	},
 	{
 	        "NSRectFillList",
 		(PyCFunction)objc_NSRectFillList,
 		METH_VARARGS,
-		NULL
+		"void NSRectFillList(const NSRect *rects, int count);"
+	},
+	{
+	        "NSRectFillListWithColors",
+		(PyCFunction)objc_NSRectFillListWithColors,
+		METH_VARARGS,
+		"void NSRectFillListWithColors(const NSRect *rects, NSColor **colors, int count);"
+	},
+	{
+	        "NSRectFillListWithColorsUsingOperation",
+		(PyCFunction)objc_NSRectFillListWithColorsUsingOperation,
+		METH_VARARGS,
+		"void NSRectFillListWithColorsUsingOperation(const NSRect *rects, NSColor **colors, int count, NSCompositingOperation op)"
+	},
+	{
+	        "NSRectFillListWithGrays",
+		(PyCFunction)objc_NSRectFillListWithGrays,
+		METH_VARARGS,
+		"void NSRectFillListWithGrays(const NSRect *rects, const float *grays, int count);"
+	},
+	{
+	        "NSRectFillListUsingOperation",
+		(PyCFunction)objc_NSRectFillListUsingOperation,
+		METH_VARARGS,
+		"void NSRectFillListUsingOperation(const NSRect *rects, int count, NSCompositingOperation op);"
 	},
 	{
 	        "NSAvailableWindowDepths",
 		(PyCFunction)objc_NSAvailableWindowDepths,
 		METH_VARARGS,
-		NULL
+		"const NSWindowDepth *NSAvailableWindowDepths(void);"
 	},
 	{
 		"NSGetWindowServerMemory",
 		(PyCFunction)objc_NSGetWindowServerMemory,
 		METH_VARARGS,
-		NULL
+		"int NSGetWindowServerMemory(int context, int *virtualMemory, int *windowBackingMemory, NSString **windowDumpString);"
 	},
 
 	METHOD_TABLE_ENTRIES
@@ -635,7 +890,7 @@ void init_AppKit(void)
 	if (_pyobjc_install_NSBitmap() < 0) return;
 	if (_pyobjc_install_NSBitmapImageRep() < 0) return;
 	if (_pyobjc_install_NSFont() < 0) return;
-    if (_pyobjc_install_NSGraphicsContext() < 0) return;
+	if (_pyobjc_install_NSGraphicsContext() < 0) return;
 	if (_pyobjc_install_NSLayoutManager() < 0) return;
 	if (_pyobjc_install_NSMatrix() < 0) return;
 	if (_pyobjc_install_NSMovie() < 0) return;

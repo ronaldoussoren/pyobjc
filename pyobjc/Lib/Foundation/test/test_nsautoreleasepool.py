@@ -25,5 +25,15 @@ class TestNSAutoreleasePoolInteraction(unittest.TestCase):
         finally:
             del warnings.filters[0]
 
+    def testDeprecation(self):
+        import warnings
+        warnings.filterwarnings('error', category=DeprecationWarning)
+
+        try:
+            self.assertRaises(DeprecationWarning, NSAutoreleasePool.pyobjcPushPool)
+        finally:
+            del warnings.filters[0]
+
+
 if __name__ == '__main__':
     unittest.main( )
