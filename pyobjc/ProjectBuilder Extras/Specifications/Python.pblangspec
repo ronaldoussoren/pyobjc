@@ -1,5 +1,10 @@
 /**
    Python language specification.
+   
+   v0.1 by Bill Bumgarner, bbum@codefab.com, 12/16/2002 
+   		downloaded from: PyObjC: http://sourceforge.net/project/showfiles.php?group_id=14534
+   v0.2 by u.fiedler@web.de, 2.5.2003 (dmy)
+   		added: AltKeywords, CommentsCanBeNested, SingleLineComment
 */
 (
  // Python script
@@ -10,7 +15,10 @@
   BasedOn = "shell";
   SyntaxColoring = {
     IdentifierStartChars = "_";
-    /* unfortunately, PB doesn't deal gracefully w/the triple quote delimiters.  Not much we can do but hope it is fixed in the future.
+    CommentsCanBeNested = NO;
+    SingleLineComment = ("#");
+    /* unfortunately, PB doesn't deal gracefully w/the triple quote delimiters.  
+		 Not much we can do but hope it is fixed in the future.
      */
     String = (
 	      ( "\"\"\"", "\"\"\""),
@@ -50,7 +58,68 @@
 		"while",
 		"yield"
 		);
-  };
+ 		AltKeywords = (
+			"abs",
+			"apply",
+			"buffer",
+			"callable",
+			"chr",
+			"cmp",
+			"coerce",
+			"compile",
+			"complex",
+			"delattr",
+			"dict",
+			"dir",
+			"divmod",
+			"eval",
+			"execfile",
+			"file",
+			"filter",
+			"float",
+			"getattr",
+			"globals",
+			"hasattr",
+			"hash",
+			"help",
+			"hex",
+			"id",
+			"input",
+			"int",
+			"intern",
+			"isinstance",
+			"issubclass",
+			"iter",
+			"len",
+			"list",
+			"locals",
+			"long",
+			"map",
+			"max",
+			"min",
+			"oct",
+			"open",
+			"ord",
+			"pow",
+			"range",
+			"raw_input",
+			"reduce",
+			"reload",
+			"repr",
+			"round",
+			"setattr",
+			"slice",
+			"str",
+			"tuple",
+			"type",
+			"unichr",
+			"unicode",
+			"vars",
+			"xrange",
+			"zip",
+		);
+ };
 }
 )
+
 
