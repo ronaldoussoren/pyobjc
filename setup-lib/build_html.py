@@ -1,4 +1,3 @@
-import DocArticle
 import os
 import subprocess
 from distutils.dep_util import newer
@@ -24,6 +23,10 @@ def rest2HTML(irrelevant, dirName, names):
                 os.remove(anOutputPath)
 
 def _iter_paths():
+    try:
+        import DocArticle
+    except ImportError:
+        return
     yield os.path.dirname(os.path.dirname(DocArticle.__file__))
     for path in os.environ.get('PATH', '/usr/bin:/usr/local/bin').split(':'):
         yield path
