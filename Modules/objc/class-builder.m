@@ -177,6 +177,7 @@ void PyObjCClass_UnbuildClass(Class objc_class)
 	free(objc_class);
 }
 
+#if 0
 /*
  * Find the signature of 'selector' in the list of protocols.
  */
@@ -228,6 +229,7 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 	
 	return NULL;
 }
+#endif
 
 /*
  * Be smart about slots: Push them into Objective-C and leave an empty
@@ -507,13 +509,13 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			((PyObjCSelector*)value)->sel_class =
 				&new_class->class;
 
-		} else if (PyMethod_Check(value) || PyFunction_Check(value)) {
+		} else if (
+				PyMethod_Check(value) 
+			     || PyFunction_Check(value) 
+			     || PyObject_TypeCheck(value, &PyClassMethod_Type)){
+
 			PyObject* pyname;
 			char*     ocname;
-			SEL	  selector;
-			PyObjCRT_Method_t    meth;
-			int       is_class_method = 0;
-
 			pyname = key;
 			if (pyname == NULL) continue;
 
@@ -523,66 +525,30 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				continue;
 			}
 
-			selector = PyObjCSelector_DefaultSelector(ocname);
-
-			meth = class_getInstanceMethod(super_class, selector);
-			if (!meth) {
-				meth = class_getClassMethod(
-						super_class, selector);
-				if (meth) {
-					is_class_method = 1;
-				}
-			}
-
-			if (meth) {
-				/* The function overrides a method in the 
-				 * objective-C class, replace by a selector 
-				 * object.
-				 *
-				 * Get the signature through the python wrapper,
-				 * the user may have specified a more exact
-				 * signature!
-				 */
-				PyObject* super_sel = PyObjCClass_FindSelector(
-					py_superclass, selector);
-				if (!super_sel) goto error_cleanup;
-
-				value = PyObjCSelector_New(
-					value, 
-					selector, 
-					PyObjCSelector_Signature(super_sel),
-					is_class_method,
-					&new_class->class);
-				new_class->class.name = "TempValue";
-				Py_DECREF(super_sel);
-			} else {
-				char* signature;
-
-				signature = find_protocol_signature(
-					protocols, selector);
-				value = PyObjCSelector_New(
-					value, 
-					selector, 
-					signature,
-					0,
-					&new_class->class);
-			}
+			value = PyObjCSelector_FromFunction(
+					pyname,
+					value,
+					py_superclass,
+					protocols);
 			if (value == NULL) goto error_cleanup;
-				
+
+			if (!PyObjCSelector_Check(value)) {
+				Py_DECREF(value);
+				continue;
+			}
+
+			((PyObjCSelector*)value)->sel_class = &new_class->class;
+
 			if (PyDict_SetItem(class_dict, key, value) < 0) {
 				Py_DECREF(value); value = NULL;
 				goto error_cleanup;
 			}
-			Py_DECREF(value); value = NULL;
-			if (is_class_method) {
+			if (PyObjCSelector_IsClassMethod(value)) {
 				meta_method_count++;
 			} else {
 				method_count++;
 			}
-#if 0
-		} else if ((value)->ob_type == PyClassMethod_Type) {
-			/* Make a new selector object */
-#endif
+			Py_DECREF(value); value = NULL;
 		}
 	}
 
@@ -743,7 +709,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (sel->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 				meth = class_getClassMethod(super_class,
 					sel->sel_selector);
-				is_override = 1;
+				if (meth) is_override = 1;
 				lst = meta_method_list;
 			} else {
 				meth = class_getInstanceMethod(super_class,
@@ -1400,7 +1366,6 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 
 	pyself = pythonify_c_value("@", &self);
 	if (pyself == NULL) {
-		PyObjCErr_ToObjC();
 		return NULL;
 	}
 	
@@ -1411,7 +1376,6 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 	}
 	if (pymeth == NULL) {
 		Py_DECREF(pyself);
-		PyObjCErr_ToObjC();
 		return NULL;
 	}
 
@@ -1429,7 +1393,6 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 	Py_DECREF(pyself);
 
 	if (result == NULL) {
-		PyObjCErr_ToObjC();
 		return NULL;
 	}
 

@@ -5,6 +5,41 @@ import unittest
 import objc
 
 class PyOCTestTypeStr(unittest.TestCase):
+    def testSelectorSignatures(self):
+
+        self.assert_(
+            isinstance( 
+                objc.selector(lambda(x,y):1, signature="ii"),
+                objc.selector
+            )
+        )
+        self.assert_(
+            isinstance( 
+                objc.selector(lambda(x,y):1, argumentTypes="ii"),
+                objc.selector
+            )
+        )
+        self.assert_(
+            isinstance( 
+                objc.selector(lambda(x,y):1, 
+                    argumentTypes="ii", returnType="s"),
+                objc.selector
+            )
+        )
+
+        self.assertRaises(ValueError, objc.selector, lambda (x,y):1, 
+                signature="FOOBAR")
+
+        self.assertRaises(TypeError, objc.selector, lambda(x,y):1,
+                signature="@@", returnType="i")
+        self.assertRaises(TypeError, objc.selector, lambda(x,y):1,
+                signature="@@", argumentTypes="ii")
+
+        self.assertRaises(ValueError, objc.selector, lambda(x,y):1,
+                argumentTypes="iX")
+        self.assertRaises(ValueError, objc.selector, lambda(x,y):1,
+                returnType="X")
+
     def testAll(self):
         if hasattr(objc, '_C_BOOL'):
             self.assertEquals(objc._C_BOOL, "B")

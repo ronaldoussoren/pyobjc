@@ -47,9 +47,12 @@ static 	char* keywords[] = { "class_name", NULL };
 
 
 PyDoc_STRVAR(classAddMethods_doc,
-	     "classAddMethods(targetClass, methodsArray)\n"
-	     "\n"
-	     "Adds methods in methodsArray to class.   The effect is similar to how categories work.   If class already implements a method as defined in methodsArray, the original implementation will be replaced by the implementation from methodsArray.");
+     "classAddMethods(targetClass, methodsArray)\n"
+     "\n"
+     "Adds methods in methodsArray to class. The effect is similar to how \n"
+     "categories work. If class already implements a method as defined in \n"
+     "methodsArray, the original implementation will be replaced by the \n"
+     "implementation from methodsArray.");
 
 static PyObject*
 classAddMethods(PyObject* self __attribute__((__unused__)), 
@@ -101,11 +104,21 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		 * FIXME: We should support functions here, just like with
 		 * class definitions.
 		 */
-		if (!PyObjCSelector_Check(aMethod)) {
-			PyErr_SetString(PyExc_TypeError ,
-			      "All objects in methodArray must be of type "
-			      "<objc.selector>.");
-			goto cleanup_and_return_error;
+		if (PyObjCSelector_Check(aMethod)) {
+			Py_INCREF(aMethod);
+		} else {
+			aMethod = PyObjCSelector_FromFunction(
+				NULL,
+				aMethod,
+				classObject,
+				NULL);
+			if (aMethod == NULL) {
+				PyErr_SetString(PyExc_TypeError ,
+				      "All objects in methodArray must be of "
+				      "type <objc.selector>, <function>, "
+				      " <method> or <classmethod>");
+				goto cleanup_and_return_error;
+			}
 		}
 
 		/* install in methods to add */
@@ -116,16 +129,11 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 			aMethod));
 		objcMethod->method_imp = ObjC_MakeIMPForPyObjCSelector(
 			(PyObjCSelector*)aMethod);
+		Py_DECREF(aMethod);
 	}
 
 	/* add the methods */
 	PyObjCRT_ClassAddMethodList(targetClass, methodsToAdd);
-
-	/* This one shouldn't be necessary, but we get crashes without 
-	 * the next line. The crashes happen when 'targetClass' is a Python
-	 * class.
-	class_addMethods(targetClass, NULL);
-	 */
 
 	Py_INCREF(Py_None);
 	return Py_None;

@@ -48,6 +48,7 @@ char* PyObjCSelector_Signature(PyObject* obj);
 SEL   PyObjCSelector_GetSelector(PyObject* obj);
 Class PyObjCSelector_GetClass(PyObject* obj);
 int   PyObjCSelector_Required(PyObject* obj);
+int   PyObjCSelector_IsClassMethod(PyObject* obj);
 int ObjC_SignatureForSelector(char* class_name, SEL selector, char* signature);
 
 PyObject* ObjCSelect_NewFromPython(char* selector, char* signature, PyObject* callable);
@@ -60,5 +61,13 @@ PyObject* PyObjCSelector_FindNative(PyObject* self, const char* name);
 PyObject*
 PyObjCSelector_New(PyObject* callable, SEL selector, char* signature, int class_method, Class class) ;
 SEL PyObjCSelector_DefaultSelector(const char* methname);
+
+PyObject* 
+PyObjCSelector_FromFunction(
+	PyObject* pyname,
+	PyObject* callable,
+	PyObject* template_class,
+	PyObject* protocols);
+
 
 #endif /* PyObjC_SELECTOR_H */

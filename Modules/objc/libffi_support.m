@@ -421,6 +421,9 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 		isAlloc = 0;
 	}
 	Py_DECREF(arglist);
+	if (res == NULL) {
+		PyObjCErr_ToObjCWithGILState(&state);
+	}
 
 	if (!have_output) {
 		int err;

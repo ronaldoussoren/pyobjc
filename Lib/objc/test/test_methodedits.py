@@ -1,3 +1,5 @@
+# FIXME: This test suite seems to polute it's environment, other tests fail
+# when this test suite is active!
 import unittest
 import sys
 
@@ -36,51 +38,48 @@ class PurePython:
         return "<pure-py>"
 
 class TestFromObjCSuperToObjCClass(unittest.TestCase):
-    def setUp(self):
-        self.NSObjectClass = MEClass
-
     def testBasicBehavior(self):
         anInstance = Methods.new()
         self.assertEquals(anInstance.description(), "<methods>")
         self.assertEquals(anInstance.newMethod(), "<new-method>")
 
     def testDescriptionOverride(self):
-        objc.classAddMethods(self.NSObjectClass, [Methods.description])
+        objc.classAddMethods(MEClass, [Methods.description])
 
-        self.assert_(self.NSObjectClass.instancesRespondToSelector_("description"))
+        self.assert_(MEClass.instancesRespondToSelector_("description"))
 
-        newInstance = self.NSObjectClass.new()
+        newInstance = MEClass.new()
 
         self.assertEquals(newInstance.description(), "<methods>")
         self.assertEquals(preEverythingInstance.description(), "<methods>")
 
     def testNewMethod(self):
-        objc.classAddMethods(self.NSObjectClass, [Methods.newMethod])
+        objc.classAddMethods(MEClass, [Methods.newMethod])
 
-        self.assert_(self.NSObjectClass.instancesRespondToSelector_("newMethod"))
+        self.assert_(MEClass.instancesRespondToSelector_("newMethod"))
 
-        newInstance = self.NSObjectClass.new()
+        newInstance = MEClass.new()
         
         self.assertEquals(newInstance.newMethod(), "<new-method>")
         self.assertEquals(preEverythingInstance.newMethod(), "<new-method>")
 
     def testSubDescriptionOverride(self):
-        objc.classAddMethods(self.NSObjectClass, [MethodsSub.description])
+        objc.classAddMethods(MEClass, [MethodsSub.description])
 
-        self.assert_(self.NSObjectClass.instancesRespondToSelector_("description"))
+        self.assert_(MEClass.instancesRespondToSelector_("description"))
 
-        newInstance = self.NSObjectClass.new()
+        newInstance = MEClass.new()
 
         self.assertEquals(newInstance.description(), "<sub-methods>")
         self.assertEquals(preEverythingInstance.description(), "<sub-methods>")
 
     def testSubNewMethod(self):
-        objc.classAddMethods(self.NSObjectClass, [MethodsSub.newMethod, MethodsSub.newSubMethod])
+        objc.classAddMethods(MEClass, [MethodsSub.newMethod, MethodsSub.newSubMethod])
 
-        self.assert_(self.NSObjectClass.instancesRespondToSelector_("newMethod"))
-        self.assert_(self.NSObjectClass.instancesRespondToSelector_("newSubMethod"))
+        self.assert_(MEClass.instancesRespondToSelector_("newMethod"))
+        self.assert_(MEClass.instancesRespondToSelector_("newSubMethod"))
 
-        newInstance = self.NSObjectClass.new()
+        newInstance = MEClass.new()
         
         self.assertEquals(newInstance.newMethod(), "<sub-new-method>")
         self.assertEquals(preEverythingInstance.newMethod(), "<sub-new-method>")
@@ -89,20 +88,18 @@ class TestFromObjCSuperToObjCClass(unittest.TestCase):
 
 
 class TestFromPythonClassToObjCClass(unittest.TestCase):
-    def setUp(self):
-        self.NSObjectClass = objc.runtime.NSObject
 
     def testPythonSourcedMethods(self):
-        objc.classAddMethods(self.NSObjectClass, [PurePython.description,
+        objc.classAddMethods(MEClass, [PurePython.description,
                                                   PurePython.newMethod,
                                                   PurePython.purePythonMethod])
 
         
-        self.assert_(self.NSObjectClass.instancesRespondToSelector_("description"))
-        self.assert_(self.NSObjectClass.instancesRespondToSelector_("newMethod"))
-        self.assert_(self.NSObjectClass.instancesRespondToSelector_("purePythonMethod"))
+        self.assert_(MEClass.instancesRespondToSelector_("description"))
+        self.assert_(MEClass.instancesRespondToSelector_("newMethod"))
+        self.assert_(MEClass.instancesRespondToSelector_("purePythonMethod"))
 
-        newInstance = self.NSObjectClass.new()
+        newInstance = MEClass.new()
 
         self.assertEquals(newInstance.description(), "<pure>")
         self.assertEquals(newInstance.newMethod(), "<pure-new>")
@@ -112,21 +109,28 @@ class TestFromPythonClassToObjCClass(unittest.TestCase):
         self.assertEquals(preEverythingInstance.newMethod(), "<pure-new>")
         self.assertEquals(preEverythingInstance.purePythonMethod(), "<pure-py>")
 
-def suite():
-    suite = unittest.TestSuite()
-    try:
-        objc.classAddMethods
-    except:
-        print "classAddMethods() not available.  Creating empty suite."
-        return suite
-    suite.addTest(unittest.makeSuite(TestFromObjCSuperToObjCClass))
-    suite.addTest(unittest.makeSuite(TestFromPythonClassToObjCClass))
-    return suite
+    def testPythonSourcedFunctions(self):
+        # Same as testPythonSourcedMethods, but using function objects instead
+        # of method objects.
+        objc.classAddMethods(MEClass, [
+            PurePython.description.im_func,
+            PurePython.newMethod.im_func,
+            PurePython.purePythonMethod.im_func
+        ])
+        
+        self.assert_(MEClass.instancesRespondToSelector_("description"))
+        self.assert_(MEClass.instancesRespondToSelector_("newMethod"))
+        self.assert_(MEClass.instancesRespondToSelector_("purePythonMethod"))
+
+        newInstance = MEClass.new()
+
+        self.assertEquals(newInstance.description(), "<pure>")
+        self.assertEquals(newInstance.newMethod(), "<pure-new>")
+        self.assertEquals(newInstance.purePythonMethod(), "<pure-py>")
+
+        self.assertEquals(preEverythingInstance.description(), "<pure>")
+        self.assertEquals(preEverythingInstance.newMethod(), "<pure-new>")
+        self.assertEquals(preEverythingInstance.purePythonMethod(), "<pure-py>")
 
 if __name__ == '__main__':
-    try:
-        objc.classAddMethods
-    except:
-        print "classAddMethods() not available.  Aborting test."
-        sys.exit(1)
     unittest.main()
