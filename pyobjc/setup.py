@@ -99,6 +99,12 @@ if LIBFFI_SOURCES is not None:
         sys.stderr.write('\tSee Install.txt or Install.html for more information.\n')
         sys.exit(1)
     
+    if ' ' in os.path.realpath(LIBFFI_SOURCES):
+        print >>sys.stderr, "LIBFFI can not build correctly in a path that contains spaces."
+        print >>sys.stderr, "This limitation includes the entire path (all parents, etc.)"
+        print >>sys.stderr, "Move the PyObjC and libffi source to a path without spaces and build again."
+        sys.exit(1)
+
     if not os.path.exists('build'):
         os.mkdir('build')
 
