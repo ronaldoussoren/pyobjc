@@ -1,4 +1,4 @@
-import sre_parse, sre_compile
+import sre_parse, sre_compile, sre_constants
 from sre_constants import BRANCH, SUBPATTERN
 from sre import VERBOSE, MULTILINE, DOTALL
 import re
@@ -15,8 +15,12 @@ class Scanner(object):
         p = []
         for idx, token in enumerate(lexicon):
             phrase = token.pattern
-            subpattern = sre_parse.SubPattern(s,
-                [(SUBPATTERN, (idx+1, sre_parse.parse(phrase, flags)))])
+            try:
+                subpattern = sre_parse.SubPattern(s,
+                    [(SUBPATTERN, (idx+1, sre_parse.parse(phrase, flags)))])
+            except sre_constants.error:
+                print "Can't parse %s" % (token.__name__,)
+                raise
             token.regex = re.compile(phrase, flags)
             p.append(subpattern)
             self.actions.append(token)
