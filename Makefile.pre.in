@@ -113,6 +113,7 @@ MODLIBS=	_MODLIBS_
 
 VERSION=	@VERSION@
 CC=		@CC@
+CXX=		@CXX@
 LINKCC=		@LINKCC@
 SGI_ABI=	@SGI_ABI@
 OPT=		@OPT@
@@ -251,6 +252,7 @@ sedscript:	$(MAKEFILE)
 	 -e '2s%.*%# $H%p' \
 	 -e '/^VERSION=/s/^VERSION=[ 	]*\(.*\)/s%@VERSION[@]%\1%/p' \
 	 -e '/^CC=/s/^CC=[ 	]*\(.*\)/s%@CC[@]%\1%/p' \
+	 -e '/^CXX=/s/^CXX=[ 	]*\(.*\)/s%@CXX[@]%\1%/p' \
 	 -e '/^CCC=/s/^CCC=[ 	]*\(.*\)/s%#@SET_CCC[@]%CCC=\1%/p' \
 	 -e '/^LINKCC=/s/^LINKCC=[ 	]*\(.*\)/s%@LINKCC[@]%\1%/p' \
 	 -e '/^OPT=/s/^OPT=[ 	]*\(.*\)/s%@OPT[@]%\1%/p' \
