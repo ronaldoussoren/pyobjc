@@ -84,7 +84,6 @@ class AsyncPythonInterpreter(NSObject):
         self.port = default(u'AsyncPythonInterpreterInterpreterPort', 0, int)
         self.interpreterPath = default(u'AsyncPythonInterpreterInterpreterPath', u'/usr/bin/python', unicode)
         self.scriptPath = type(self).bundleForClass().pathForResource_(u'tcpinterpreter.py')
-        self.connect()
     
     def connect(self):
         #NSLog(u'connect')

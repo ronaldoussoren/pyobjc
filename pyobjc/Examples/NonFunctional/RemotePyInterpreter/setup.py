@@ -17,7 +17,7 @@ plist = dict(
             ],
             CFBundleTypeName=u'RemotePyInterpreter Session',
             CFBundleTypeRole=u'Editor',
-            NSDocumentClass=u'RemotePyInterpreter',
+            NSDocumentClass=u'RemotePyInterpreterDocument',
         ),
     ],
 )

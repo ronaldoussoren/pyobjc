@@ -7,7 +7,7 @@ from Foundation import *
 from AppKit import *
 from PyObjCTools import NibClassBuilder, AppHelper
 
-NibClassBuilder.extractClasses("PyInterpreter.nib")
+NibClassBuilder.extractClasses("RemotePyInterpreter.nib")
 
 from AsyncPyInterpreter import *
 from ConsoleReactor import *
@@ -62,43 +62,40 @@ PASSTHROUGH = (
    'moveLeft:',
 )
 
-class PyInterpreter(NibClassBuilder.AutoBaseClass):
+class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
     """
     PyInterpreter is a delegate/controller for a NSTextView,
     turning it into a full featured interactive Python interpreter.
     """
 
-    #
-    #  NSApplicationDelegate methods
-    #
-
-    def applicationDidFinishLaunching_(self, aNotification):
+    def setupTextView(self):
         self.textView.setFont_(self.font())
         self.textView.setContinuousSpellCheckingEnabled_(False)
         self.textView.setRichText_(False)
-        self.p_executeWithRedirectedIO(self.p_interp)
 
     #
     #  NIB loading protocol
     #
 
     def awakeFromNib(self):
-        self = super(PyInterpreter, self).init()
-        self.p_font = NSFont.userFixedPitchFontOfSize_(10)
-        self.p_stderrColor = NSColor.redColor()
-        self.p_stdoutColor = NSColor.blueColor()
-        self.p_codeColor = NSColor.blackColor()
-        self.p_historyLength = 50
+        self.setFont_(NSFont.userFixedPitchFontOfSize_(10))
+        self.p_colors = {
+            u'stderr': NSColor.redColor(),
+            u'stdout': NSColor.blueColor(),
+            u'code': NSColor.blackColor(),
+        }
+        self.setHistoryLength_(50)
+        self.setHistoryView_(0)
+        self.setCharacterIndexForInput_(0)
+        self.setInteracting_(False)
+        self.setAutoScroll_(True)
+        self.setSingleLineInteraction_(False)
         self.p_history = [u'']
-        self.p_historyView = 0
-        self.p_characterIndexForInput = 0
         self.p_stdin = PseudoUTF8Input(self.p_nestedRunLoopReaderUntilEOLchars_)
-        self.p_isInteracting = False
-        self.p_console = AsyncInteractiveConsole()
-        self.p_interp = self.p_console.asyncinteract(
-            write=self.writeCode_,
-        ).next
-        self.p_autoscroll = True
+
+        # XXX - should this be done later?
+        self.setupTextView()
+        self.interpreter.connect()
 
     #
     #  Modal input dialog support
@@ -115,8 +112,8 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         self.setCharacterIndexForInput_(self.lengthOfTextView())
         # change the color.. eh
         self.textView.setTypingAttributes_({
-            NSFontAttributeName:self.font(),
-            NSForegroundColorAttributeName:self.codeColor(),
+            NSFontAttributeName: self.font(),
+            NSForegroundColorAttributeName: self.colorForName_(u'code'),
         })
         while True:
             event = app.nextEventMatchingMask_untilDate_inMode_dequeue_(
@@ -124,15 +121,15 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
                 NSDate.distantFuture(),
                 NSDefaultRunLoopMode,
                 True)
-            if (event.type() == NSKeyDown) and (event.window() == window):
+            if (event.type() == NSKeyDown) and (event.window() is window):
                 eol = event.characters()
                 if eol in eolchars:
                     break
             app.sendEvent_(event)
         cl = self.currentLine()
-        if eol == '\r':
-            self.writeCode_('\n')
-        return cl+eol
+        if eol == u'\r':
+            self.writeNewLine()
+        return cl + eol
 
     #
     #  Interpreter functions
@@ -155,37 +152,34 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         self.p_executeWithRedirectedIO(self.p_executeLine_, line)
         self.p_history = filter(None, self.p_history)
         self.p_history.append(u'')
-        self.p_historyView = len(self.p_history) - 1
+        self.setHistoryView_(len(self.p_history) - 1)
 
     def p_executeLine_(self, line):
         self.p_interp()(line)
-        self.p_more = self.p_interp()
+        self.setMore_(self.p_interp())
 
     def executeInteractiveLine_(self, line):
-        self.setIsInteracting(True)
+        self.setInteracting(True)
         try:
             self.executeLine_(line)
         finally:
-            self.setIsInteracting(False)
+            self.setInteracting(False)
 
     def replaceLineWithCode_(self, s):
         idx = self.characterIndexForInput()
         ts = self.textView.textStorage()
+        s = self.formatString_forOutput_(s, u'code')
         ts.replaceCharactersInRange_withAttributedString_(
-            (idx, len(ts.mutableString())-idx), self.codeString_(s))
+            (idx, len(ts.mutableString())-idx),
+            s,
+        )
 
     #
     #  History functions
     #
 
-    def historyLength(self):
-        return self.p_historyLength
-
-    def setHistoryLength_(self, length):
-        self.p_historyLength = length
-
     def addHistoryLine_(self, line):
-        line = line.rstrip('\n')
+        line = line.rstrip(u'\n')
         if self.p_history[-1] == line:
             return False
         if not line:
@@ -215,74 +209,30 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     #  Convenience methods to create/write decorated text
     #
 
-    def p_formatString_forOutput_(self, s, name):
+    def formatString_forOutput_(self, s, name):
         return NSAttributedString.alloc().initWithString_attributes_(
             s,
             {
-                NSFontAttributeName:self.font(),
-                NSForegroundColorAttributeName:getattr(self, name+'Color')(),
+                NSFontAttributeName: self.font(),
+                NSForegroundColorAttributeName: self.colorForName_(name),
             },
         )
 
-    def p_writeString_forOutput_(self, s, name):
-        self.textView.textStorage().appendAttributedString_(getattr(self, name+'String_')(s))
-
-        window = self.textView.window()
-
-        if self.p_autoscroll:
+    def writeString_forOutput_(self, s, name):
+        s = self.formatString_forOutput_(s, name)
+        self.textView.textStorage().appendAttributedString_(s)
+        if self.isAutoscroll():
             self.textView.scrollRangeToVisible_((self.lengthOfTextView(), 0))
 
-    codeString_   = lambda self, s: self.p_formatString_forOutput_(s, 'code')
-    stderrString_ = lambda self, s: self.p_formatString_forOutput_(s, 'stderr')
-    stdoutString_ = lambda self, s: self.p_formatString_forOutput_(s, 'stdout')
-    writeCode_    = lambda self, s: self.p_writeString_forOutput_(s, 'code')
-    writeStderr_  = lambda self, s: self.p_writeString_forOutput_(s, 'stderr')
-    writeStdout_  = lambda self, s: self.p_writeString_forOutput_(s, 'stdout')
+    def writeNewLine(self):
+        self.writeString_forOutput_(u'\n', u'code')
 
-    #
-    #  Accessors
-    #
+    def colorForName_(self, name):
+        return self.p_colors[name]
 
-    def more(self):
-        return self.p_more
-
-    def font(self):
-        return self.p_font
-
-    def setFont_(self, font):
-        self.p_font = font
-
-    def stderrColor(self):
-        return self.p_stderrColor
-
-    def setStderrColor_(self, color):
-        self.p_stderrColor = color
-
-    def stdoutColor(self):
-        return self.p_stdoutColor
-
-    def setStdoutColor_(self, color):
-        self.p_stdoutColor = color
-
-    def codeColor(self):
-        return self.p_codeColor
-
-    def setStdoutColor_(self, color):
-        self.p_codeColor = color
-
-    def isInteracting(self):
-        return self.p_isInteracting
-
-    def setIsInteracting(self, v):
-        self.p_isInteracting = v
-
-    def isAutoScroll(self):
-        return self.p_autoScroll
-
-    def setAutoScroll(self, v):
-        self.p_autoScroll = v
-
-
+    def setColor_forName_(self, color, name):
+        self.p_colors[name] = color
+    
     #
     #  Convenience methods for manipulating the NSTextView
     #
@@ -294,15 +244,8 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         self.textView.scrollRangeToVisible_((idx, 0))
         self.textView.setSelectedRange_((idx, 0))
 
-    def characterIndexForInput(self):
-        return self.p_characterIndexForInput
-
     def lengthOfTextView(self):
         return len(self.textView.textStorage().mutableString())
-
-    def setCharacterIndexForInput_(self, idx):
-        self.p_characterIndexForInput = idx
-        self.moveAndScrollToIndex_(idx)
 
     #
     #  NSTextViewDelegate methods
@@ -311,11 +254,12 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, (begin, length), index):
         txt = self.textView.textStorage().mutableString()
         end = begin+length
-        while (begin>0) and (txt[begin].isalnum() or txt[begin] in '._'):
+        while (begin>0) and (txt[begin].isalnum() or txt[begin] in u'._'):
             begin -= 1
         while not txt[begin].isalnum():
             begin += 1
-        return self.p_console.recommendCompletionsFor(txt[begin:end])
+        return [], 0
+        #return self.p_console.recommendCompletionsFor(txt[begin:end])
 
     def textView_shouldChangeTextInRange_replacementString_(self, aTextView, aRange, newString):
         begin, length = aRange
@@ -323,8 +267,8 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         if begin < lastLocation:
             # no editing anywhere but the interactive line
             return False
-        newString = newString.replace('\r', '\n')
-        if '\n' in newString:
+        newString = newString.replace(u'\r', u'\n')
+        if u'\n' in newString:
             if begin != lastLocation:
                 # no pasting multiline unless you're at the end
                 # of the interactive line
@@ -333,25 +277,26 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
             #self.clearLine()
             newString = self.currentLine() + newString
             for s in newString.strip().split('\n'):
-                self.writeCode_(s+'\n')
+                self.writeString_forOutput_(s + '\n', u'code')
                 self.executeLine_(s)
             return False
         return True
 
     def textView_willChangeSelectionFromCharacterRange_toCharacterRange_(self, aTextView, fromRange, toRange):
-        return toRange
         begin, length = toRange
-        if length == 0 and begin < self.characterIndexForInput():
+        if self.singleLineInteraction() and length == 0 and begin < self.characterIndexForInput():
             # no cursor movement off the interactive line
             return fromRange
-        return toRange
+        else:
+            return toRange
 
     def textView_doCommandBySelector_(self, aTextView, aSelector):
         # deleteForward: is ctrl-d
         if self.isInteracting():
             if aSelector == 'insertNewline:':
-                self.writeCode_('\n')
+                self.writeNewLine()
             return False
+        # XXX - this is ugly
         responder = getattr(self, aSelector.replace(':','_'), None)
         if responder is not None:
             responder(aTextView)
@@ -379,8 +324,8 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     def moveToBeginningOfLineAndModifySelection_(self, sender):
         begin, length = self.textView.selectedRange()
         pos = self.characterIndexForInput()
-        if begin+length > pos:
-            self.textView.setSelectedRange_((pos, begin+length-pos))
+        if begin + length > pos:
+            self.textView.setSelectedRange_((pos, begin + length - pos))
         else:
             self.moveToBeginningOfLine_(sender)
 
@@ -391,7 +336,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
 
     def insertNewline_(self, sender):
         line = self.currentLine()
-        self.writeCode_('\n')
+        self.writeNewLine()
         self.executeInteractiveLine_(line)
 
     moveToBeginningOfParagraph_ = moveToBeginningOfLine_
@@ -400,6 +345,60 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     moveDown_ = historyDown_
     moveUp_ = historyUp_
 
+    #
+    #  Accessors
+    #
+
+    def historyLength(self):
+        return self.p_historyLength
+
+    def setHistoryLength_(self, length):
+        self.p_historyLength = length
+
+    def more(self):
+        return self.p_more
+
+    def setMore_(self, v):
+        self.p_more = v
+
+    def font(self):
+        return self.p_font
+
+    def setFont_(self, font):
+        self.p_font = font
+
+    def isInteracting(self):
+        return self.p_interacting
+
+    def setInteracting_(self, v):
+        self.p_interacting = v
+
+    def isAutoScroll(self):
+        return self.p_autoScroll
+
+    def setAutoScroll_(self, v):
+        self.p_autoScroll = v
+
+    def characterIndexForInput(self):
+        return self.p_characterIndexForInput
+
+    def setCharacterIndexForInput_(self, idx):
+        self.p_characterIndexForInput = idx
+        self.moveAndScrollToIndex_(idx)
+
+    def historyView(self):
+        return self.p_historyView
+
+    def setHistoryView_(self, v):
+        self.p_historyView = v
+
+    def singleLineInteraction(self):
+        return self.p_singleLineInteraction
+
+    def setSingleLineInteraction_(self, v):
+        self.p_singleLineInteraction = v
+    
+        
 
 if __name__ == '__main__':
     AppHelper.runEventLoop()
