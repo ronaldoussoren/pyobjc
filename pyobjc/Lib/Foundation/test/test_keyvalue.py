@@ -253,9 +253,7 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
 
     if hasattr(objc.runtime.NSObject, "willChangeValueForKey_"):
-        # We're on a system that supports KeyValueCoding observations
-        # AFAIK this is on MacOS X from 10.3
-
+        # NSKeyValueObserving is only available on Panther and beyond
         def testKVO1(self):
             o = KVOClass.alloc().init()
             o.addObserver_forKeyPath_options_context_(self, "test", 0, 0)

@@ -199,7 +199,7 @@ class OcKeyValueCoding (unittest.TestCase):
         o = KeyValueClass7.alloc().init()
         self.assertRaises(KeyError, getKey, o, "private")
 
-    def testValueForKey(self):
+    def testArrayValueForKey(self):
         o = KeyValueClass7.alloc().init()
         o.addMultiple()
 
@@ -213,7 +213,9 @@ class OcKeyValueCoding (unittest.TestCase):
 
         a = objc.runtime.NSMutableArray.array()
         a.addObject_(o)
-        b = objc.runtime.NSMutableArray.arrayWithObject_("m")
+        a.addObject_({"keyM": "5"})
+        a.addObject_(objc.runtime.NSDictionary.dictionaryWithObject_forKey_("foo", "keyM"))
+        b = objc.runtime.NSMutableArray.arrayWithObjects_("m","5", "foo", None)
         self.assertEquals(a.valueForKey_("keyM"), b)
        
         self.assertRaises(KeyError, getKey, o, "nokey")
