@@ -1,5 +1,4 @@
 #include <Python.h>
-//#include <Foundation/Foundation.h>
 #include "pyobjc.h"
 #include "objc_support.h"
 
@@ -17,14 +16,14 @@
  */
 
 static void
-ivar_dealloc(ObjCIvar* ivar)
+ivar_dealloc(PyObjCInstanceVariable* ivar)
 {
 	PyMem_Free(ivar->name);
 	ivar->ob_type->tp_free((PyObject*)ivar);
 }
 
 static PyObject*
-ivar_repr(ObjCIvar* self)
+ivar_repr(PyObjCInstanceVariable* self)
 {
 	char buf[256];
 
@@ -33,7 +32,7 @@ ivar_repr(ObjCIvar* self)
 }
 
 static PyObject*
-ivar_descr_get(ObjCIvar* self, PyObject* obj, PyObject* type)
+ivar_descr_get(PyObjCInstanceVariable* self, PyObject* obj, PyObject* type)
 {
 	IVAR var;
 	id   objc;
@@ -82,7 +81,7 @@ ivar_descr_get(ObjCIvar* self, PyObject* obj, PyObject* type)
 }
 
 static int
-ivar_descr_set(ObjCIvar* self, PyObject* obj, PyObject* value)
+ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 {
 	IVAR var;
 	id   objc;
@@ -150,7 +149,7 @@ ivar_descr_set(ObjCIvar* self, PyObject* obj, PyObject* value)
 }
 
 static int
-ivar_init(ObjCIvar* self, PyObject* args, PyObject* kwds)
+ivar_init(PyObjCInstanceVariable* self, PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { "name", "type", NULL };
 	char* name = NULL;
@@ -176,11 +175,11 @@ PyDoc_STRVAR(ivar_doc,
 "'type' is optional and should be a 1 character signature string.\n"
 );
 
-PyTypeObject ObjCIvar_Type = {
+PyTypeObject PyObjCInstanceVariable_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)             
 	0,                                           
 	"objc_ivar",                             
-	sizeof(ObjCIvar),                       
+	sizeof(PyObjCInstanceVariable),                       
 	0,                                           
 	(destructor)ivar_dealloc,               /* tp_dealloc */
 	0,                                      /* tp_print */
@@ -219,15 +218,16 @@ PyTypeObject ObjCIvar_Type = {
 	0,                           		/* tp_free */
 };
 
-PyObject* ObjCInstanceVar_New(char* name)
+PyObject* 
+PyObjCInstanceVariable_New(char* name)
 {
 	PyObject* result;
 
-	result = ObjCIvar_Type.tp_alloc(&ObjCIvar_Type, 0);
+	result = PyObjCInstanceVariable_Type.tp_alloc(&PyObjCInstanceVariable_Type, 0);
 	if (result == NULL) {
 		return NULL;
 	}
-	((ObjCIvar*)result)->name = strdup(name);
-	((ObjCIvar*)result)->type[0] = '\0';
+	((PyObjCInstanceVariable*)result)->name = strdup(name);
+	((PyObjCInstanceVariable*)result)->type[0] = '\0';
 	return result;
 }

@@ -102,7 +102,7 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-	return ObjCUnicode_New(self);
+	return PyObjCUnicode_New(self);
 }
 
 @end /* NSString (PyObjCSupport) */
@@ -1111,8 +1111,8 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 					"to encode unicode string to UTF8");
 				return -1;
 			}
-		} else if (ObjCUnicode_Check(argument)) {
-			*(id*) datum = ObjCUnicode_Extract(argument);
+		} else if (PyObjCUnicode_Check(argument)) {
+			*(id*) datum = PyObjCUnicode_Extract(argument);
 		} else if (PyUnicode_Check(argument)) {
 			PyObject* utf8 = PyUnicode_AsUTF8String(argument);
 

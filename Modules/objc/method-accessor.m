@@ -167,7 +167,7 @@ make_dict(PyObject* self, int class_method)
 				char* name;
 
 				meth = mlist->method_list + i;
-				name = pythonify_selector(meth->method_name, 
+				name = PyObjC_SELToPythonName(meth->method_name, 
 					buf, sizeof(buf));
 				
 				v = PyObject_GetAttrString(self, name);

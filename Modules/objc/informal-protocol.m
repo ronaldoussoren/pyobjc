@@ -21,14 +21,14 @@ typedef struct {
 
 	PyObject* name;
 	PyObject* selectors;
-} ObjCInformalProtocol;
+} PyObjCInformalProtocol;
 
 
 
 static void
 proto_dealloc(PyObject* object)
 {
-	ObjCInformalProtocol* self = (ObjCInformalProtocol*)object;	
+	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)object;	
 
 	Py_XDECREF(self->selectors);
 	object->ob_type->tp_free(object);
@@ -39,7 +39,7 @@ proto_repr(PyObject* object)
 {
 	char buf[1024];
 
-	ObjCInformalProtocol* self = (ObjCInformalProtocol*)object;	
+	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)object;	
 
 	snprintf(buf, sizeof(buf), "<%s %s at %p>",
 		self->ob_type->tp_name, PyString_AsString(self->name),
@@ -51,7 +51,7 @@ static PyObject*
 proto_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 {
 static	char*	keywords[] = { "name", "selectors", NULL };
-	ObjCInformalProtocol* result;
+	PyObjCInformalProtocol* result;
 	PyObject* name;
 	PyObject* selectors;
 
@@ -77,8 +77,8 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 		return NULL;
 	}
 
-	result = (ObjCInformalProtocol*)PyObject_New(
-			ObjCInformalProtocol, &ObjCInformalProtocol_Type);
+	result = (PyObjCInformalProtocol*)PyObject_New(
+			PyObjCInformalProtocol, &PyObjCInformalProtocol_Type);
 
 	result->name = name;
 	result->selectors = selectors;
@@ -88,9 +88,10 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 	return (PyObject*)result;
 }
 
-static int proto_traverse(PyObject* self, visitproc visit, void* handle)
+static int 
+proto_traverse(PyObject* self, visitproc visit, void* handle)
 {
-	ObjCInformalProtocol* me = (ObjCInformalProtocol*)self;	
+	PyObjCInformalProtocol* me = (PyObjCInformalProtocol*)self;	
 	int                   err;
 
 	err = visit(me->name, handle);
@@ -104,14 +105,14 @@ static PyMemberDef proto_members[] = {
 	{
 		"__name__",
 		T_OBJECT,
-		offsetof(ObjCInformalProtocol, name),
+		offsetof(PyObjCInformalProtocol, name),
 		READONLY,
 		NULL
 	},
 	{
 		"selectors",
 		T_OBJECT,
-		offsetof(ObjCInformalProtocol, selectors),
+		offsetof(PyObjCInformalProtocol, selectors),
 		READONLY,
 		NULL
 	},
@@ -119,11 +120,11 @@ static PyMemberDef proto_members[] = {
 	{ 0, 0, 0, 0, 0 }
 };
 
-PyTypeObject ObjCInformalProtocol_Type = {
+PyTypeObject PyObjCInformalProtocol_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)
 	0,					/* ob_size */
 	"objc.informal_protocol",		/* tp_name */
-	sizeof(ObjCInformalProtocol),		/* tp_basicsize */
+	sizeof(PyObjCInformalProtocol),		/* tp_basicsize */
 	0,					/* tp_itemsize */
 	/* methods */
 	proto_dealloc,	 			/* tp_dealloc */
@@ -170,13 +171,14 @@ PyTypeObject ObjCInformalProtocol_Type = {
  * Return NULL if no information can be found, but does not set an
  * exception.
  */
-PyObject* ObjCIPFindInfo(PyObject* obj, SEL selector)
+PyObject* 
+PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
 {
-	ObjCInformalProtocol* self = (ObjCInformalProtocol*)obj;	
+	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;	
 	int i, len;
 	PyObject* cur;
 
-	if (!ObjCInformalProtocol_Check(obj)) {
+	if (!PyObjCInformalProtocol_Check(obj)) {
 		ObjCErr_Set(PyExc_TypeError, 
 			"First argument is not an objc.informal_protocol");
 		return 0;
@@ -203,13 +205,14 @@ PyObject* ObjCIPFindInfo(PyObject* obj, SEL selector)
 /*
  * Verify that 'cls' conforms to the informal protocol
  */
-int	ObjCIPVerify(PyObject* obj, PyObject* cls)
+int	
+PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls)
 {
-	ObjCInformalProtocol* self = (ObjCInformalProtocol*)obj;	
+	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;	
 	int i, len;
 	PyObject* cur;
 
-	if (!ObjCInformalProtocol_Check(obj)) {
+	if (!PyObjCInformalProtocol_Check(obj)) {
 		ObjCErr_Set(PyExc_TypeError, 
 			"First argument is not an objc.informal_protocol");
 		return 0;

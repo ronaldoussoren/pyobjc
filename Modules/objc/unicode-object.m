@@ -12,7 +12,7 @@ typedef struct {
 	PyUnicodeObject	base;
 	PyObject*	weakrefs;
 	id		nsstr;
-} ObjCUnicodeObject;
+} PyObjCUnicodeObject;
 
 PyDoc_STRVAR(class_doc,
 	"objc.pyobjc_unicode\n"
@@ -26,8 +26,8 @@ PyDoc_STRVAR(class_doc,
 static void
 class_dealloc(PyObject* obj)
 {
-	id nsstr = ((ObjCUnicodeObject*)obj)->nsstr;
-	PyObject* weakrefs = ((ObjCUnicodeObject*)obj)->weakrefs;
+	id nsstr = ((PyObjCUnicodeObject*)obj)->nsstr;
+	PyObject* weakrefs = ((PyObjCUnicodeObject*)obj)->weakrefs;
 
 	[nsstr release];
 
@@ -38,12 +38,14 @@ class_dealloc(PyObject* obj)
 	PyUnicode_Type.tp_dealloc(obj);
 }
 
-static PyObject* ObjCUnicode_pyobjc_NSString(PyObject* self)
+static PyObject* 
+meth_nsstring(PyObject* self)
 {
-	return PyObjCObject_New(((ObjCUnicodeObject*)self)->nsstr);
+	return PyObjCObject_New(((PyObjCUnicodeObject*)self)->nsstr);
 }
 
-static PyObject* ObjCUnicode_syncNSString(ObjCUnicodeObject* self)
+static PyObject* 
+meth_syncNSString(PyObjCUnicodeObject* self)
 {
 	PyUnicodeObject  dummy;
 	const char* utf8 = [self->nsstr UTF8String];
@@ -77,13 +79,13 @@ static PyObject* ObjCUnicode_syncNSString(ObjCUnicodeObject* self)
 static PyMethodDef class_methods[] = {
 	{
 	  "nsstring",
-	  (PyCFunction)ObjCUnicode_pyobjc_NSString,
+	  (PyCFunction)meth_nsstring,
 	  METH_NOARGS,
 	  "directly access NSString instance"
 	},
 	{
 	  "syncFromNSString",
-	  (PyCFunction)ObjCUnicode_syncNSString,
+	  (PyCFunction)meth_syncNSString,
 	  METH_NOARGS,
 	  "Copy contents of the NSString to the unicode object"
 	},
@@ -97,11 +99,11 @@ class_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 	return NULL;
 }
 
-PyTypeObject ObjCUnicode_Type = {
+PyTypeObject PyObjCUnicode_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)
 	0,					/* ob_size */
 	"objc.pyobjc_unicode",			/* tp_name */
-	sizeof(ObjCUnicodeObject),		/* tp_basicsize */
+	sizeof(PyObjCUnicodeObject),		/* tp_basicsize */
 	0,			 		/* tp_itemsize */
 	/* methods */
 	class_dealloc,	 			/* tp_dealloc */
@@ -124,7 +126,7 @@ PyTypeObject ObjCUnicode_Type = {
  	0,					/* tp_traverse */
  	0,					/* tp_clear */
 	0,					/* tp_richcompare */
-	offsetof(ObjCUnicodeObject, weakrefs),	/* tp_weaklistoffset */
+	offsetof(PyObjCUnicodeObject, weakrefs),	/* tp_weaklistoffset */
 	0,					/* tp_iter */
 	0,					/* tp_iternext */
 	class_methods,				/* tp_methods */
@@ -141,16 +143,16 @@ PyTypeObject ObjCUnicode_Type = {
 	0,		        		/* tp_free */
 };
 
-/* TODO: Use proper access macros to access UnicodeObject fields */
-PyObject* ObjCUnicode_New(NSString* value)
+PyObject* 
+PyObjCUnicode_New(NSString* value)
 {
 	const char* utf8 = [value UTF8String];
 	PyUnicodeObject* tmp = (PyUnicodeObject*)PyUnicode_DecodeUTF8(utf8, strlen(utf8), "strict");
-	ObjCUnicodeObject* result;
+	PyObjCUnicodeObject* result;
 
 	if (tmp == NULL) return NULL;
 
-	result = PyObject_New(ObjCUnicodeObject, &ObjCUnicode_Type);
+	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
 	PyUnicode_AS_UNICODE(result) = PyMem_NEW(Py_UNICODE,
 		PyUnicode_GET_SIZE(tmp));
 	if (PyUnicode_AS_UNICODE(result) == NULL) {
@@ -173,12 +175,13 @@ PyObject* ObjCUnicode_New(NSString* value)
 	return (PyObject*)result;
 }
 
-NSString* ObjCUnicode_Extract(PyObject* value)
+NSString*
+PyObjCUnicode_Extract(PyObject* value)
 {
-	if (!ObjCUnicode_Check(value)) {
+	if (!PyObjCUnicode_Check(value)) {
 		PyErr_BadInternalCall();
 		return NULL;
 	}
 
-	return ((ObjCUnicodeObject*)value)->nsstr;
+	return ((PyObjCUnicodeObject*)value)->nsstr;
 }

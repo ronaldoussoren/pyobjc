@@ -10,7 +10,7 @@
 	/* Implementation for MacOS X */
 
 PyObject*
-ObjC_GetClassList(void)
+PyObjC_GetClassList(void)
 {
 	PyObject* 	result = NULL;
 	Class*		buffer = NULL;
@@ -82,7 +82,7 @@ error_cleanup:
 	 */
 
 PyObject*
-ObjC_GetClassList(void)
+PyObjC_GetClassList(void)
 {
 	PyObject* 	result = NULL;
 	Class		classid;

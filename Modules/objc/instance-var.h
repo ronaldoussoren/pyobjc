@@ -7,12 +7,12 @@ typedef struct {
 	PyObject_HEAD
 	char* name;	/* Name of the instance variable */
 	char  type[2];	/* Type of the instance variable for definition only */
-} ObjCIvar;
+} PyObjCInstanceVariable;
 
 
-extern PyTypeObject ObjCIvar_Type;
-#define ObjCIvar_Check(obj) PyObject_TypeCheck((obj), &ObjCIvar_Type)
+extern PyTypeObject PyObjCInstanceVariable_Type;
+#define PyObjCInstanceVariable_Check(obj) PyObject_TypeCheck((obj), &PyObjCInstanceVariable_Type)
 
-PyObject* ObjCInstanceVar_New(char* name);
+PyObject* PyObjCInstanceVariable_New(char* name);
 
 #endif /* OBJC_INSTANCE_VAR */
