@@ -698,20 +698,20 @@ cls_get__name__(PyObject* self, void* closure __attribute__((__unused__)))
 }
 
 static PyGetSetDef cls_getset[] = {
-        {
-                "pyobjc_classMethods",
-                (getter)cls_get_classMethods,
-                NULL,
-                cls_get_classMethods_doc,
-                0
-        },
-        {
-                "pyobjc_instanceMethods",
-                (getter)cls_get_instanceMethods,
-                NULL,
-                cls_get_instanceMethods_doc,
-                0
-        },
+		{
+				"pyobjc_classMethods",
+				(getter)cls_get_classMethods,
+				NULL,
+				cls_get_classMethods_doc,
+				0
+		},
+		{
+				"pyobjc_instanceMethods",
+				(getter)cls_get_instanceMethods,
+				NULL,
+				cls_get_instanceMethods_doc,
+				0
+		},
 	{
 		/* Access __name__ through a property: Objective-C name 
 		 * might change due to posing.
@@ -722,7 +722,7 @@ static PyGetSetDef cls_getset[] = {
 		NULL,
 		0
 	},
-        { 0, 0, 0, 0, 0 }
+		{ 0, 0, 0, 0, 0 }
 };
 
 
@@ -750,9 +750,9 @@ PyTypeObject PyObjCClass_Type = {
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT 
 		| Py_TPFLAGS_BASETYPE,		/* tp_flags */
- 	class_doc,				/* tp_doc */
- 	0,					/* tp_traverse */
- 	0,					/* tp_clear */
+	class_doc,				/* tp_doc */
+	0,					/* tp_traverse */
+	0,					/* tp_clear */
 	0,					/* tp_richcompare */
 	0,					/* tp_weaklistoffset */
 	0,					/* tp_iter */
@@ -771,11 +771,11 @@ PyTypeObject PyObjCClass_Type = {
 	0,		        		/* tp_free */
 	0,					/* tp_is_gc */
 	0,					/* tp_bases */
-        0,                                      /* tp_mro */
-        0,                                      /* tp_cache */
-        0,                                      /* tp_subclasses */
-        0,                                      /* tp_weaklist */
-        0                                       /* tp_del */
+	0,                                      /* tp_mro */
+	0,                                      /* tp_cache */
+	0,                                      /* tp_subclasses */
+	0,                                      /* tp_weaklist */
+	0                                       /* tp_del */
 };
 
 /* FIXME: objc_support.[hm] also has version of this function! */
@@ -926,8 +926,8 @@ add_class_fields(Class objc_class, PyObject* dict)
 	 * semantics.
 	 */
 	if (objc_class->ivars) {
-	    int i;
-	    struct objc_ivar *var;
+		int i;
+		struct objc_ivar *var;
 		for (i = 0; i < objc_class->ivars->ivar_count; i++) {
 			var = objc_class->ivars->ivar_list + i;
 
