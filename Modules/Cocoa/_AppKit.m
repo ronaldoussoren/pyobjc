@@ -312,7 +312,9 @@ RunXPanel(NSRunAlertPanel)
 RunXPanel(NSRunInformationalAlertPanel)
 RunXPanel(NSRunCriticalAlertPanel)
 
+#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_App_Functions.inc"
+#endif
 
 static PyMethodDef appkit_methods[] = {
 	{ 
@@ -416,9 +418,10 @@ PyDoc_STRVAR(appkit_doc,
  */
 
 
+#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_App_Enum.inc"
 #include "_App_Str.inc"
-
+#endif
 
 /*
  * Manually added, will be automatic in next version of generator script
@@ -521,7 +524,9 @@ void init_AppKit(void)
 
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_strings(d, string_table) < 0) return;
+#if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #	include "_App_Var.inc"
+#endif
 
 	/* And some troublesome definitions 
 	 * All of these found by 'grep #define *.h' in the AppKit header 
