@@ -4,11 +4,12 @@ Currently only a single function is exported: runEventLoop().
 """
 
 from AppKit import NSApplicationMain, NSApp, NSRunAlertPanel
+from Foundation import NSLog
 import sys
+import traceback
 
 
 def unexpectedErrorAlert():
-    import traceback
     exceptionInfo = traceback.format_exception_only(
         *sys.exc_info()[:2])[0].strip()
     return NSRunAlertPanel("An unexpected error has occurred",
@@ -23,15 +24,19 @@ def runEventLoop(argv=None, unexpectedErrorAlert=unexpectedErrorAlert):
     if argv is None:
         argv = sys.argv
 
-    mainFunc = NSApplicationMain
-    args = (argv,)
+    firstRun = 1
     while 1:
         try:
-            mainFunc(*args)
+            if firstRun:
+                firstRun = 0
+                NSApplicationMain(argv)
+            else:
+                NSApp().run()
         except:
+            NSLog("An exception has occured:")
             if not unexpectedErrorAlert():
                 raise
-            mainFunc = NSApp().run
-            args = ()
+            else:
+                traceback.print_exc()
         else:
             break
