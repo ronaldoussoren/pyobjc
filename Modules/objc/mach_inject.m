@@ -6,6 +6,7 @@
 	
 	************************************************************************************/
 
+#ifdef MACOSX
 #include	"mach_inject.h"
 
 #include	<mach-o/dyld.h>
@@ -182,3 +183,4 @@ machImageForPointer(
 	
 	return err_threadEntry_image_not_found;
 }
+#endif /* MACOSX */
