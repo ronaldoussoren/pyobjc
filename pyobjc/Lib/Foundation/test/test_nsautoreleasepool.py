@@ -4,11 +4,17 @@ import objc
 from Foundation import *
 
 class TestNSAutoreleasePoolInteraction( unittest.TestCase ):
+#    def testNSAutoreleasePool( self ):
+#        pool = NSAutoreleasePool.alloc().init()
+#        bar = NSMutableArray.array()
+#        pool.release()
+#        bar.addObject_( "a" ) # should still exist because of python GC
+
     def testNSAutoreleasePool( self ):
-        pool = NSAutoreleasePool.alloc().init()
+        NSAutoreleasePool.pyobjcPushPool()
         bar = NSMutableArray.array()
-        pool.release()
-        bar.addObject( "a", "b", "c" )
+        NSAutoreleasePool.pyobjcPopPool()
+        bar.addObject_( "a" ) # should still exist because of python GC
 
 def suite():
     suite = unittest.TestSuite()
@@ -17,4 +23,3 @@ def suite():
 
 if __name__ == '__main__':
     unittest.main( )
-

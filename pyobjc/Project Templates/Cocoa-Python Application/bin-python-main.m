@@ -27,12 +27,40 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
   [[NSAutoreleasePool alloc] init];
 
   const char **childArgv = alloca(sizeof(char *) * (argc + 5));
-  char **childEnvp = (char **)envp;
   NSEnumerator *bundleEnumerator = [[NSBundle allFrameworks] reverseObjectEnumerator];
   NSBundle *aBundle;
   NSBundle *mainBundle = [NSBundle mainBundle];
   NSMutableArray *bundlePaths = [NSMutableArray array];
   int i;
+  char** childEnvp;
+  char*  PYTHONPATH = NULL;
+
+  // count entries in environment and find the PYTHONPATH setting, if present
+  for (envc = 0; envp[envc] != NULL; envc++) {
+    if (strncmp(envp[envc], "PYTHONPATH=", sizeof("PYTHONPATH=")-1) == 0) {
+      PYTHONPATH=envp[envc] + sizeof("PYTHONPATH=") - 1;
+      /* No break, we also want to know how large envp is */
+    }
+  }
+
+  childEnvp = alloca(sizeof(char*) * (envc + 10)); // enough for both PYTHONPATH and the DYLD stuff
+  for (envc = 0; envp[envc] != NULL; envc ++) {
+    if (strncmp(envp[envc], "PYTHONPATH=", sizeof("PYTHONPATH=")-1) == 0) {
+      const char* s = [[[NSBundle mainBundle] resourcePath] UTF8String];
+      childEnvp[envc] = alloca(strlen(envp[envc]) + strlen(s) + 2);
+      sprintf(childEnvp[envc], "%s:%s", s, envp[envc]);
+    } else {
+      childEnvp[envc] = envp[i];
+    }
+  }
+  if (PYTHONPATH) {
+    envp[envc] = NULL;
+  } else {
+    const char* s = [[[NSBundle mainBundle] resourcePath] UTF8String];
+    childEnvp[envc] = alloca(sizeof("PYTHONPATH=") + strlen(s));
+    sprintf(childEnvp[envc], "PYTHONPATH=%s", s);
+    childEnvp[envc+1] = NULL;
+  }
 
   // if this is set, it is most likely because of PBX or because the developer is doing something....
   if ( !getenv("DYLD_FRAMEWORK_PATH") ) {
@@ -42,11 +70,6 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
     NSString *joinedPaths = [paths componentsJoinedByString: @":"];
     const char *dyldFrameworkPath = [[NSString stringWithFormat: @"DYLD_FRAMEWORK_PATH=%@", joinedPaths] UTF8String];
     const char *dyldLibraryPath = [[NSString stringWithFormat: @"DYLD_LIBRARY_PATH=%@", joinedPaths] UTF8String];
-
-    for(i=0; envp[i]; i++);
-    childEnvp = malloc( sizeof(char *) * (i+4) );
-
-    bcopy( envp, childEnvp, ( i * sizeof(char *) ) );
 
     childEnvp[i++] = (char *)dyldFrameworkPath;
     childEnvp[i++] = (char *)dyldLibraryPath;

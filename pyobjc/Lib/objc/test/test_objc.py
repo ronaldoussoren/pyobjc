@@ -49,7 +49,6 @@ class TestMethodInvocation(unittest.TestCase):
 
     def testVarargsInvocation(self):
         objc.runtime.NSArray.arrayWithObjects_("foo", "bar", None)
-        
 
 def suite():
     suite = unittest.TestSuite()

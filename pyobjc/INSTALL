@@ -12,13 +12,6 @@
 Building the Module
 ===================
 
-*** 
-*** NOTE1: On MacOS X you must build and install Python as a framework
-***	  (check Mac/OSX/README in the Python tree on how to do this).
-***
-*** NOTE2: You'll need Python 2.3 or later, Python 2.2 is NOT good enough!
-***
-
 The module uses the distutils package included with Python 2.0 and
 beyond.   This package provides a single interface for building and
 packaging the module.   To see usage documentation for the module,
@@ -38,41 +31,47 @@ The following command will build and install the pyobjc module:
 The setup.py system can also be used to create source and binary
 distribution archives automatically.
 
+Use 'sudo' to install the pyobjc module into a the Apple supplied
+python's site-packages directory on OS X 10.2 and greater:
 
-XXX Ronald: Everything below this should be updated.
+% sudo python setup.py install
 
-Demos
-=====
+If you have multiple versions of python installed on your system, the
+above will only install pyobjc for whatever version of python is the
+default on the command line.   Make sure you are installing python
+against the correct version of python.
 
-If it works and you are on NeXTSTEP (or just curious ;-) go in
-Demo/ObjC and try the examples: though very simple, they give the
-idea; both are based on NeXTSTEP' bundles, so you need that OS to
-enjoy them.
+Examples
+========
 
-The LittleButtonedWindow demo puts a window on the screen, with a
-button in it.
+The examples directory contains a number of projects that demonstrate
+various features of the PyObjC bridge. The scripts at the top level of
+the examples directory were mostly written to test a particular
+feature of the bridge (or document a bug until a fix could be found).
 
-XXX NOT UPDATED YET XXX
+CurrencyConverter and TableModel are both examples of standalone
+Cocoa-Python applications.  To build and execute 
 
-AlertPanel will put an NXAlertPanel on the screen, completely piloted
-by the Python script;
+% cd TableModel
+% python buildapp.py build
 
-Forward will attach a Python instance method as the `action' of an
-ObjC object and then that object will be asked to perform an unknown
-method on the Python object... intricated to explain, easier to see ;-)
+The WebServicesTool and TableModel2 are both examples of Cocoa-Python
+applications created via the Cocoa-Python project template found in
+the "Project Templattes" directory.  Use Project Builder to build the
+applications.
 
-ShellText is actually one of the shorter ways to build a NeXTSTEP
-application able to show in its own window its *entire* source code ;-)
+Project Templates
+=================
 
+The "Project Templates" directory contains project templates for
+project builder.  Currently, there is one project builder template;  a
+Cocoa-Python Application project template.   When installed, this adds
+a project to Project Builder's project menu that allows new Cocoa
+applications implemented entirely in Python to be created from within
+Project Builder (in the same fashion as any other project).
 
-Documentation
-=============
+To install, simply copy the project template into the Project Builder
+project templates directory (or create a symlink).
 
-The documentation of the module is contained in three LaTeX sources in
-the `Doc/' directory: if you want include them in the Library manual,
-simply add the following lines
-
-        \input{libPyObjC}
-
-near the end of the file `Doc/lib.tex', just before the inclusion of the
-index (\input{lib.ind}).
+More information on project templates can be found in the Project
+Builder documentation and/or release notes.

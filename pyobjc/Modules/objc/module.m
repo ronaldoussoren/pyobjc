@@ -7,7 +7,7 @@
 #include <Python.h>
 #include "pyobjc.h"
 #include <stddef.h>
-#include <Foundation/NSAutoReleasePool.h>
+#include <Foundation/NSAutoreleasePool.h>
 #include "objc_support.h"
 
 NSAutoreleasePool* ObjC_global_release_pool = nil;

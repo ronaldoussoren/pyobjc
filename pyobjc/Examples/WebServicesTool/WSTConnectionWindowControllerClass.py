@@ -1,3 +1,9 @@
+"""
+Instances of WSTConnectionWindowController are the controlling object
+for the document windows for the Web Services Tool application.
+
+Implements a standard toolbar.
+"""
 from AppKit import *
 from Foundation import *
 
@@ -11,14 +17,23 @@ import types
 import string
 import traceback
 
-from AppKit import NibClassBuilder
-from AppKit.NibClassBuilder import AutoBaseClass
-
 kWSTReloadContentsToolbarItemIdentifier = "WST: Reload Contents Toolbar Identifier"
-kWSTPreferencesToolbarItemIdentifier = "WST: Preferences Toolbar Identifier"
-kWSTUrlTextFieldToolbarItemIdentifier = "WST: URL Textfield Toolbar Identifier"
+"""Identifier for 'reload contents' toolbar item."""
 
-def addToolbarItem(self, anIdentifier, aLabel, aPaletteLabel, aToolTip, aTarget, anAction, anItemContent, aMenu):
+kWSTPreferencesToolbarItemIdentifier = "WST: Preferences Toolbar Identifier"
+"""Identifier for 'preferences' toolbar item."""
+
+kWSTUrlTextFieldToolbarItemIdentifier = "WST: URL Textfield Toolbar Identifier"
+"""Idnetifier for URL text field toolbar item."""
+
+def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
+                   aToolTip, aTarget, anAction, anItemContent, aMenu):
+    """
+    Adds an freshly created item to the toolber defined by
+    aController.  Makes a number of assumptions about the
+    implementation of aController.   It should be refactored into a
+    generically useful toolbar management untility.
+    """
     toolbarItem = NSToolbarItem.alloc().initWithItemIdentifier_(anIdentifier)
     toolbarItem.autorelease()
     
@@ -45,10 +60,20 @@ def addToolbarItem(self, anIdentifier, aLabel, aPaletteLabel, aToolTip, aTarget,
         menuItem.setTitle_( aMenu.title() )
         toolbarItem.setMenuFormRepresentation_(menuItem)
     
-    self._toolbarItems.setObject_forKey_(toolbarItem, anIdentifier)
+    aController._toolbarItems.setObject_forKey_(toolbarItem, anIdentifier)
+
+from AppKit import NibClassBuilder
+from AppKit.NibClassBuilder import AutoBaseClass
 
 NibClassBuilder.extractClasses( "WSTConnection" )
-class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource, NSToolbarDelegate):
+class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource,
+                                    NSToolbarDelegate):
+    """
+    As per the definition in the NIB file,
+    WSTConnectionWindowController is a subclass of
+    NSWindowController.  It acts as a NSTableView data source and
+    implements a standard toolbar.
+    """
     __slots__ = ('_toolbarItems',
         '_toolbarDefaultItemIdentifiers',
         '_toolbarAllowedItemIdentifiers',
@@ -59,11 +84,21 @@ class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource, NSToolbarD
         '_methodPrefix' )
     
     def connectionWindowController(self):
-        return WSTConnectionWindowController.alloc().init()
+        """
+        Create and return a default connection window instance.
+        """
+        return WSTConnectionWindowController.alloc().init().autorelease()
            
     def init(self):
+        """
+        Designated initializer.
+
+        Returns self (as per ObjC designated initializer definition,
+        unlike Python's __init__() method).
+        """
         self = self.initWithWindowNibName_("WSTConnection")
 
+        # assignments imply a -retain!
         self._toolbarItems = NSMutableDictionary.dictionary()
         self._toolbarDefaultItemIdentifiers = NSMutableArray.array()
         self._toolbarAllowedItemIdentifiers = NSMutableArray.array()
@@ -73,6 +108,10 @@ class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource, NSToolbarD
         return self
     
     def awakeFromNib(self):
+        """
+        Invoked when the NIB file is loaded.  Initializes the various
+        UI widgets.
+        """
         self.retain() # balanced by autorelease() in windowWillClose_
         
         self.statusTextField.setStringValue_("No host specified.")
@@ -83,9 +122,15 @@ class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource, NSToolbarD
         self.createToolbar()
         
     def windowWillClose_(self, aNotification):
+        """
+        Clean up when the document window is closed.
+        """
         self.autorelease()
 
     def createToolbar(self):
+        """
+        Creates and configures the toolbar to be used by the window.
+        """
         toolbar = NSToolbar.alloc().initWithIdentifier_("WST Connection Window").autorelease()
         toolbar.setDelegate_(self)
         toolbar.setAllowsUserCustomization_(YES)
@@ -100,6 +145,11 @@ class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource, NSToolbarD
             self.urlTextField.setStringValue_(lastURL)
         
     def createToolbarItems(self):
+        """
+        Creates all of the toolbar items that can be made available in
+        the toolbar.  The actual set of available toolbar items is
+        determined by other mechanisms (user defaults, for example).
+        """
         addToolbarItem(self, kWSTReloadContentsToolbarItemIdentifier, "Reload", "Reload", "Reload Contents", None, "reloadVisibleData:", NSImage.imageNamed_("Reload"), None)
         addToolbarItem(self, kWSTPreferencesToolbarItemIdentifier, "Preferences", "Preferences", "Show Preferences", None, "orderFrontPreferences:", NSImage.imageNamed_("Preferences"), None)
         addToolbarItem(self, kWSTUrlTextFieldToolbarItemIdentifier, "URL", "URL", "Server URL", None, None, self.urlTextField, None)
@@ -119,13 +169,30 @@ class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource, NSToolbarD
         self._toolbarAllowedItemIdentifiers.addObject_(NSToolbarCustomizeToolbarItemIdentifier)
         
     def toolbarDefaultItemIdentifiers_(self, anIdentifier):
+        """
+        Return an array of toolbar item identifiers that identify the
+        set, in order, of items that should be displayed on the
+        default toolbar.
+        """
         return self._toolbarDefaultItemIdentifiers
 
     def toolbarAllowedItemIdentifiers_(self, anIdentifier):
+        """
+        Return an array of toolbar items that may be used in the toolbar.
+        """
         return self._toolbarAllowedItemIdentifiers
         
-    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self, toolbar, itemIdentifier, flag):
-        newItem = NSToolbarItem.alloc().initWithItemIdentifier_( itemIdentifier )
+    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self,
+                                                                 toolbar,
+                                                                 itemIdentifier, flag):
+        """
+        Delegate method fired when the toolbar is about to insert an
+        item into the toolbar.  Item is identified by itemIdentifier.
+
+        Effectively makes a copy of the cached reference instance of
+        the toolbar item identified by itemIdentifier.
+        """
+        newItem = NSToolbarItem.alloc().initWithItemIdentifier_(itemIdentifier)
         item = self._toolbarItems.objectForKey_(itemIdentifier)
         
         newItem.autorelease()
@@ -149,12 +216,21 @@ class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource, NSToolbarD
         return newItem  
         
     def setStatusTextFieldMessage_(self, aMessage):
+        """
+        Sets the contents of the statusTextField to aMessage and
+        forces the fileld's contents to be redisplayed.
+        """
         if not aMessage:
             aMessage = "Displaying information about %d methods." % len(self._methods)
         self.statusTextField.setStringValue_(aMessage)
         self.statusTextField.display()
 
     def reloadVisibleData_(self, sender):
+        """
+        Reloads the list of methods and their signatures from the
+        XML-RPC server specified in the urlTextField.  Displays
+        appropriate error messages, if necessary.
+        """
         url = self.urlTextField.stringValue()
         self._methods = []
         self._methodSignatures = {}
@@ -218,6 +294,12 @@ class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource, NSToolbarD
             self.setStatusTextFieldMessage_("No URL specified.")
     
     def selectMethodAction_(self, sender):
+        """
+        When the user selects a remote method, this method displays
+        the documentation for that method as returned by the XML-RPC
+        server.  If the method's documentation has been previously
+        queried, the documentation will be retrieved from a cache.
+        """
         selectedRow = self.methodsTable.selectedRow()
         selectedMethod = self._methods[selectedRow]
         
@@ -236,9 +318,16 @@ class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource, NSToolbarD
         self.methodDescriptionTextView.setString_(methodDescription)
 
     def numberOfRowsInTableView_(self, aTableView):
+        """
+        Returns the number of methods found on the server.
+        """
         return len(self._methods)
 
     def tableView_objectValueForTableColumn_row_(self, aTableView, aTableColumn, rowIndex):
+        """
+        Returns either the raw method name or the method signature,
+        depending on if a signature had been found on the server.
+        """
         aMethod = self._methods[rowIndex]
         if self._methodSignatures.has_key(aMethod):
             return self._methodSignatures[aMethod]
@@ -247,3 +336,10 @@ class WSTConnectionWindowController(AutoBaseClass, NSTableDataSource, NSToolbarD
 
     ### adjust method decls to be in line with ObjC requirements
     connectionWindowController = selector(connectionWindowController, class_method=1)
+    """
+    Declares that the method connectionWindowController is actually a
+    class method.  This is the one piece of non-automatic glue
+    required to make this class work.   If we used a more pythonic
+    module level function to create instances of this class, this
+    could easily be eliminated.
+    """

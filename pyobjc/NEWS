@@ -5,11 +5,10 @@
 
 WHAT'S NEW:
 
-Version 2002-XX-XX (Someday):
+Version 0.8 (Dec-10-2002):
 
-- Version bumped to A.B.C
-
-- Support for the GNU runtime is even less functional than before
+- GNUStep support has been removed for lack of support.  Volunteers
+  needed.
 
 - Subclassing Objective-C classes from Python, including the addition
   of instance variables (like 'IBOutlet's)
@@ -17,7 +16,7 @@ Version 2002-XX-XX (Someday):
 - Generic support for pass-by-reference arguments
 
 - More complete Cocoa package, including wrappers for a number of 
-  C functions.
+  C functions, enumerated types, and globals.
 
 - More example code
 
@@ -28,7 +27,16 @@ Version 2002-XX-XX (Someday):
 - Documentation: See the directory 'docs'
 
 - Can build standalone Cocoa applications based entirely on Python
-without requiring that user installs anything extra.
+  without requiring that user installs anything extra (requires 10.2).
+
+- Better packaging and wrapper construction tools (borrowed from
+  MacPython).
+
+- An installer package.
+
+- Support for Project Builder based Cocoa-Python projects.
+
+- Unit tests.
 
 Version 2002-01-30 (January 30, 2002):
 

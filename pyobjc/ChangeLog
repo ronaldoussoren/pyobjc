@@ -1,3 +1,24 @@
+2002-12-08  Bill Bumgarner  <bbum@codefab.com>
+    * Examples/WebServicesTool: Added a lot of inline documentation to the
+          python code.
+    * BUGS: Removed some of the already fixed bugs.  Removed legacy
+          information that is no longer relevant.  Added new bugs. Added
+          information to existing bugs.
+	* FIXME: Edited to bring some stuff up to date.
+	* Lib/Foundation/test/test_nsautoreleasepool.py (suite): Added
+	  unittest to test NSAutoreleasePool bug workaround.
+	* Modules/Cocoa/NSAutoreleasePoolSupport.m: Added bogus push/pop
+	  workaround for NSAutoreleasePool bug.
+	* INSTALL: Rewrote a good chunk of the text.  Removed references
+	  to NeXTSTEP.hange
+	* Examples/HelloWorld.py: Reworked example a bit to match modern
+	  usage.
+	  - References classes through AppKit/Foundation, not by looking up
+        	    directly. 
+	  - Added an action method to Hello button so it does something
+	  even when sound is turned off.
+	* Modules/objc/module.m: Fixed import in module.m;  wrong case.
+
 2002-12-01  Bill Bumgarner  <bbum@codefab.com>
 	* cleaned up nsobject unittests slightly [had cruft from nsarray]
 	* added NSAutoreleasePool test
@@ -30,7 +51,6 @@
 	  whitespace
 
 2002-11-17  Bill Bumgarner  <bbum@codefab.com>
-
 	* Normalize whitespace
 	* allow extractClasses() to be called multiple times for one nib
 	  (well it was allowed, but now less double work is performed)
