@@ -61,7 +61,7 @@ imp_NSQuickDrawView_qdport(
 	PyObject* arglist = NULL;
 	PyObject* v;
 
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = PyObjCGILState_Ensure();
 
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) goto error;

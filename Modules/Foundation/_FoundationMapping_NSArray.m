@@ -201,7 +201,7 @@ imp_NSArray_sortedArrayUsingFunction_context_(id self, SEL sel,
 	int i;
 	id  returnValue;
 
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = PyObjCGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) {

@@ -6,13 +6,30 @@
 
 #include "pyobjc.h"
 
-#import <Foundation/NSString.h>
-#import <Foundation/NSDictionary.h>
+#import <Foundation/Foundation.h>
 
 PyObject* ObjCExc_error;
 PyObject* ObjCExc_noclass_error;
 PyObject* ObjCExc_internal_error;
 PyObject* PyObjCExc_NoProtocol;
+
+PyGILState_STATE PyObjCGILState_Ensure(void)
+{
+	int shouldCreateThreadPool = (PyGILState_GetThisThreadState() == NULL) ? 1 : 0;
+	PyGILState_STATE state = PyGILState_Ensure();
+	if (shouldCreateThreadPool) {
+		int err;
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		PyObject *pypool = PyObjC_IdToPython(pool);
+		PyObject *tdict = PyThreadState_GetDict();
+		assert(tdict != NULL);
+		assert(pypool != NULL);
+		err = PyDict_SetItemString(tdict, "__tstate_autoreleasepool", pypool);
+		assert(err == 0);
+		Py_DECREF(pypool);
+	}
+	return state;
+}
 
 int ObjCUtil_Init(PyObject* module)
 {
@@ -81,7 +98,7 @@ void PyObjCErr_FromObjC(NSException* localException)
 			/* -pyObject returns a borrowed reference and 
 			 * PyErr_Restore steals one from us.
 			 */
-			state = PyGILState_Ensure();
+			state = PyObjCGILState_Ensure();
 			Py_INCREF(exc_type);
 			Py_XINCREF(exc_value);
 			Py_XINCREF(exc_traceback);
@@ -92,7 +109,7 @@ void PyObjCErr_FromObjC(NSException* localException)
 		}
 	}
 
-	state = PyGILState_Ensure();
+	state = PyObjCGILState_Ensure();
 	dict = PyDict_New();
 	v = PyString_FromString(c_localException_name);
 	PyDict_SetItemString(dict, "name", v);
