@@ -100,14 +100,13 @@ is a shame.
 
 * Integrate Xcode template with py2app, somehow
 
+  (some work to this end exists in the svn sandbox)
+
 * Update or remove the Project Builder templates
 
   I prefer updating them, by rebuilding the Xcode templates in Project Builder.
 
   This would require Python 2.3 on Jaguar.
-
-XXX: ReSTedit seems to have an Xcode project that also maintains a py2app setup
-script. Bug bbum into donateing this to PyObjC.
 
 Complete Cocoa wrapping
 .......................
