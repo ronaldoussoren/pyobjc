@@ -968,7 +968,6 @@ add_class_fields(Class objc_class, PyObject* dict)
 					name,
 					descr) != 0) {
 
-				abort();
 				Py_DECREF(descr); 
 				return -1;
 			}
@@ -1015,7 +1014,6 @@ add_class_fields(Class objc_class, PyObject* dict)
 			if (PyDict_SetItemString(dict, 
 					selbuf,
 					descr) != 0) {
-				abort();
 				Py_DECREF(descr);
 				return -1;
 			}
@@ -1043,12 +1041,10 @@ add_class_fields(Class objc_class, PyObject* dict)
 
 			descr = PyObjCInstanceVariable_New(var->ivar_name);
 			if (descr == NULL) {
-				abort();
 				return -1;
 			}
 			if (PyDict_SetItemString(dict, 
 					var->ivar_name, descr) != 0) {
-				abort();
 				Py_DECREF(descr);
 				return -1;
 			}
