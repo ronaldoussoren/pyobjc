@@ -276,7 +276,7 @@ NSDraggingDestination = _objc.informal_protocol(
         _objc.selector(
             None, 
             selector='draggingEntered:',
-            signature='i@:@',
+            signature='I@:@',
             isRequired=0
         ),
         _objc.selector(
@@ -372,6 +372,8 @@ NSDraggingInfo = _objc.informal_protocol(
     ]
 )
 
+# Note: Apple's docs fro 'draggingSourceOperationMaskForLocal:' says that that
+# is the only required method in this protocol.
 NSDraggingSource = _objc.informal_protocol(
     'NSDraggingSource',
     [
@@ -379,25 +381,25 @@ NSDraggingSource = _objc.informal_protocol(
             None, 
             selector='draggedImage:beganAt:',
             signature='v@:@{_NSPoint=ff}',
-            isRequired=1
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='draggedImage:endedAt:deposited:',
             signature='v@:@{_NSPoint=ff}c',
-            isRequired=1
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='draggedImage:endedAt:operation:',
             signature='v@:@{_NSPoint=ff}i',
-            isRequired=1
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='draggedImage:movedTo:',
             signature='v@:@{_NSPoint=ff}',
-            isRequired=1
+            isRequired=0
         ),
         _objc.selector(
             None, 
@@ -409,13 +411,13 @@ NSDraggingSource = _objc.informal_protocol(
             None, 
             selector='ignoreModifierKeysWhileDragging',
             signature='c@:',
-            isRequired=1
+            isRequired=0
         ),
         _objc.selector(
             None, 
             selector='namesOfPromisedFilesDroppedAtDestination:',
             signature='@@:@',
-            isRequired=1
+            isRequired=0
         ),
     ]
 )
@@ -481,8 +483,6 @@ NSNibAwakening = _objc.informal_protocol(
             isRequired=1
         ),
     ],
-    warnIfUndeclared= 0 # There's little change of problems, and 
-                        # there's the issue of backward compatibility.
 )
 
 NSOutlineViewDelegate = _objc.informal_protocol(

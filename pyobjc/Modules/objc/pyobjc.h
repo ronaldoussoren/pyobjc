@@ -219,9 +219,10 @@ int ObjCAPI_Register(PyObject* module_dict);
 extern PyTypeObject PyObjCInformalProtocol_Type;
 #define PyObjCInformalProtocol_Check(obj) PyObject_TypeCheck(obj, &PyObjCInformalProtocol_Type)
 
-int     PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls);
+int PyObjCInformalProtocol_CheckClass(PyObject*, char*, PyObject*, PyObject*);
 PyObject* PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector);
 int PyObjCInformalProtocol_Warnings(char* name, PyObject* clsdict, PyObject* protocols);
+PyObject* PyObjCInformalProtocol_FindProtocol(SEL selector);
 
 
 /* See alloc_hack.m */

@@ -177,6 +177,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	int       len;
 	Class      objc_class = NULL;
 	Class	   super_class = NULL;
+	PyObject*  py_super_class = NULL;
 	PyObjC_class_info* info;
 	PyObject* protocols;
 	PyObject* real_bases;
@@ -216,13 +217,16 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 				"be objective-C based");
 		return NULL;
 	}
-	super_class = PyObjCClass_GetClass(v);
+	py_super_class = v;
+	super_class = PyObjCClass_GetClass(py_super_class);
 	if (super_class) {
-		PyObjCClass_CheckMethodList(v);
+		PyObjCClass_CheckMethodList(py_super_class);
 	}
 
+	/* TODO: Make list available through __pyobjc_protocols__ */
 	protocols = PyList_New(0);
 	if (protocols == NULL) return NULL;
+
 	real_bases = PyList_New(0);
 	if (real_bases == NULL) {
 		Py_DECREF(protocols);
@@ -272,14 +276,30 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
-#if 1
-	if (PyObjCInformalProtocol_Warnings(name, dict, protocols) < 0) {
-		PyObjCClass_UnbuildClass(objc_class);
-		Py_DECREF(protocols);
-		Py_DECREF(real_bases);
-		return NULL;
+	/* Verify that the class conforms to all protocols it claims to 
+	 * conform to.
+	 */
+	len = PyList_Size(protocols);
+	for (i = 0; i < len; i++) {
+		PyObject* p = PyList_GetItem(protocols, i);
+
+		if (p == NULL) {
+			PyErr_Clear();
+			continue;
+		}
+
+		if (!PyObjCInformalProtocol_Check(p)) {
+			continue;
+		}
+
+		if (!PyObjCInformalProtocol_CheckClass(
+					p, name, py_super_class, dict)) {
+			Py_DECREF(real_bases);
+			Py_DECREF(protocols);
+			PyObjCClass_UnbuildClass(objc_class);
+			return NULL;
+		}
 	}
-#endif
 
 	delmethod = PyDict_GetItemString(dict, "__del__");
 	if (delmethod == NULL) {
@@ -319,31 +339,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	args = NULL;
 	real_bases = NULL;
 
-	/* Verify that the class conforms to all protocols it claims to 
-	 * conform to.
-	 */
-	len = PyList_Size(protocols);
-	for (i = 0; i < len; i++) {
-		PyObject* p = PyList_GetItem(protocols, i);
-
-		if (p == NULL) {
-			PyErr_Clear();
-			continue;
-		}
-
-		if (PyObjCInformalProtocol_Check(p)) {
-			/* This doesn't work: Cannot dealloc 'res'! */
-			if (!PyObjCInformalProtocol_CheckClass(p, res)) {
-				/*
-				 * FIXME!
-				Py_DECREF(res);
-				 */
-				Py_DECREF(protocols);
-				PyObjCClass_UnbuildClass(objc_class);
-				return NULL;
-			}
-		}
-	}
 	
 	Py_DECREF(protocols);
 	protocols = NULL;

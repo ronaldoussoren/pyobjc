@@ -33,13 +33,18 @@ static void object_method_forwardInvocation(id self, SEL selector,
 /*
  * When we create a 'Class' we actually create the struct below. This allows
  * us to add some extra information to the class defintion.
+ *
+ * NOTE1: the meta_class field is first because poseAs: copies the class but
+ *        not the meta class (on MacOS X <= 10.2)
+ * NOTE2: That doesn't help, test_posing still crashes.
  */
 #define MAGIC 0xDEADBEEF
-#define CHECK_MAGIC(o) do { if (((struct class_wrapper*)(o))->magic != MAGIC) abort(); } while(0)
+#define CLASS_WRAPPER(cls) ((struct class_wrapper*)(cls))
+#define CHECK_MAGIC(o) do { if (CLASS_WRAPPER(o)->magic != MAGIC) abort(); } while(0)
 struct class_wrapper {
-	struct objc_class  class;
-	struct objc_class  meta_class;
-	PyObject*          python_class;
+	struct objc_class class;
+	struct objc_class meta_class;
+	PyObject* python_class;
 	unsigned int magic; 
 };
 
@@ -120,7 +125,7 @@ int PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
 
 	CHECK_MAGIC(objc_class);
 
-	if (((struct class_wrapper*)objc_class)->python_class != NULL) {
+	if (CLASS_WRAPPER(objc_class)->python_class != NULL) {
 		ObjCErr_Set(ObjCExc_internal_error,
 			"Trying to set update PythonClass of %s",
 			objc_class->name);
@@ -128,7 +133,7 @@ int PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
 	}
 
 
-	((struct class_wrapper*)objc_class)->python_class = py_class;
+	CLASS_WRAPPER(objc_class)->python_class = py_class;
 	Py_INCREF(py_class);
 
 	objc_addClass(objc_class);
@@ -143,7 +148,7 @@ int PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
  */
 void PyObjCClass_UnbuildClass(Class objc_class)
 {
-	struct class_wrapper* wrapper = (struct class_wrapper*)objc_class;
+	struct class_wrapper* wrapper = CLASS_WRAPPER(objc_class); 
 
 	if (objc_class == nil) {
 		ObjCErr_Set(ObjCExc_internal_error, 
@@ -151,7 +156,7 @@ void PyObjCClass_UnbuildClass(Class objc_class)
 		return;
 	}
 
-	CHECK_MAGIC(wrapper);
+	CHECK_MAGIC(objc_class);
 
 	if (wrapper->python_class != NULL) {
 		ObjCErr_Set(ObjCExc_internal_error,
@@ -176,6 +181,8 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 {
 	int len;
 	int i;
+	PyObject* proto;
+	PyObject* info;
 
 	if (!PyList_Check(protocols)) {
 		ObjCErr_Set(ObjCExc_internal_error,
@@ -183,23 +190,38 @@ find_protocol_signature(PyObject* protocols, SEL selector)
 		return NULL;
 	}
 
-	len = PyList_Size(protocols);
+	/* First try the explicit protocol definitions */
+	len = PyList_GET_SIZE(protocols);
 	for (i = 0; i < len; i++) {
-		PyObject* p;
-		PyObject* info;
-	
-		p = PyList_GetItem(protocols, i);
-		if (p == NULL) {
+		proto = PyList_GET_ITEM(protocols, i);
+		if (proto == NULL) {
 			PyErr_Clear();
 			continue;
 		}
-		if (!PyObjCInformalProtocol_Check(p)) continue;
+		if (!PyObjCInformalProtocol_Check(proto)) continue;
 
-		info = PyObjCInformalProtocol_FindSelector(p, selector);
+		info = PyObjCInformalProtocol_FindSelector(proto, selector);
 		if (info != NULL) {
 			return ObjCSelector_Signature(info);
 		}
 	}
+
+	/* Then check if another protocol users this selector */
+	proto = PyObjCInformalProtocol_FindProtocol(selector);
+	if (proto == NULL) {
+		PyErr_Clear();
+		return NULL;
+	}
+
+	info = PyObjCInformalProtocol_FindSelector(proto, selector);
+	if (info != NULL) {
+		if (PyList_Append(protocols, proto) < 0) {
+			return NULL;
+		}
+		Py_INCREF(proto);
+		return ObjCSelector_Signature(info);
+	}
+	
 	return NULL;
 }
 
@@ -770,7 +792,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	 * because it is impossible to remove the registration from the
 	 * objective-C runtime (at least on MacOS X).
 	 */
-	return (Class)new_class;
+	return &new_class->class;
 
 error_cleanup:
 	Py_XDECREF(py_superclass);

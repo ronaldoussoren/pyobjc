@@ -72,9 +72,15 @@ imp_NSObject_alloc(id self, SEL sel)
 int
 PyObjC_InstallAllocHack(void)
 {
-	return ObjC_RegisterMethodMapping(
+	int r;
+
+	r = ObjC_RegisterMethodMapping(
 		objc_lookUpClass("NSObject"),
 		@selector(alloc),
 		call_NSObject_alloc,
 		(IMP)imp_NSObject_alloc);
+	if (r != 0) return r;
+
+	return r;
+
 }

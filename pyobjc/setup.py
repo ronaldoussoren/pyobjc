@@ -180,7 +180,7 @@ if gs_root is None:
         #"-pedantic",
 
         "-Wno-import", 
-        "-O2", "-g",
+        "-O0", "-g",
         #"-Werror",
         ]
 

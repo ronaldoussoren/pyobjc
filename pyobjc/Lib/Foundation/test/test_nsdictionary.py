@@ -1,9 +1,21 @@
 import unittest
 import objc
+import types
 
 from Foundation import *
 
 class TestNSDictionaryInteraction(unittest.TestCase):
+    def testMethods(self):
+        for nm in dir(types.DictType):
+            if nm.startswith('__'):
+                continue
+
+            if isinstance(getattr(types.DictType, nm), (types.BuiltinFunctionType, types.FunctionType)):
+                # Skip class methods, that needs more work in the core
+                continue
+
+            self.assert_(hasattr(NSMutableDictionary, nm), "NSMutableDictionary has no method '%s'"%(nm,))
+
     def testRepeatedAllocInit(self):
         for i in range(1,1000):
             d = NSDictionary.alloc().init()

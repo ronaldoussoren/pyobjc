@@ -46,11 +46,10 @@ Version 0.10CVS (Work in progress):
   expire as soon as the last reference from Python died, *not* when the 
   Objective-C object died.
 
-- We now generate warnings if a class implements an informal protocol, but
-  doesn't declare that in its definition.
-
-  TODO: Use the protocol-list to automaticly deduce the protocols implemented
-  by a class.
+- It is no longer necessary to specify which protocols are implemented by
+  a class, this information is automaticly deduced from the list of implemented
+  methods. You'll still a runtime error if you implement some methods of a protocol
+  and one of the unimplemented methods is required.
 
 Version 0.9 (May-02-2003):
 - This version includes numerous bugfixes and improvements.

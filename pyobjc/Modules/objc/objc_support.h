@@ -309,4 +309,8 @@ extern int depythonify_c_return_value (const char *type,
 
 extern struct objc_method_list *objc_allocMethodList(int numMethods);
 
+/* This one is implemented in super-call.m, should be moved and renamed */
+extern void simplify_signature(char* signature, char* buf, size_t buflen);
+
+
 #endif /* _objc_support_H */

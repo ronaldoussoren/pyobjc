@@ -70,15 +70,14 @@ static PyObject*
 proto_new(PyTypeObject* type __attribute__((__unused__)), 
 	PyObject* args, PyObject* kwds)
 {
-static	char*	keywords[] = { "name", "selectors", "warnIfUndeclared", NULL };
+static	char*	keywords[] = { "name", "selectors", NULL };
 	PyObjCInformalProtocol* result;
 	PyObject* name;
 	PyObject* selectors;
 	int       i, len;
-	int	  warnIfUndeclared = 1;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO|i:informal_protocol",
-			keywords, &name, &selectors, &warnIfUndeclared)) { 
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO:informal_protocol",
+			keywords, &name, &selectors)) { 
 		return NULL;
 	}
 
@@ -105,36 +104,33 @@ static	char*	keywords[] = { "name", "selectors", "warnIfUndeclared", NULL };
 	result->name = name;
 	result->selectors = selectors;
 
-#if 1
-	if (warnIfUndeclared) {
-		len = PyTuple_Size(result->selectors);
-		for (i = 0; i < len; i++) {
-			if (!ObjCSelector_Check(
-					PyTuple_GET_ITEM(selectors, i))) {
-				PyErr_Format(PyExc_TypeError, 
-					"Item %d is not a selector", i);
-				Py_DECREF(result);
-				return NULL;
-			}
-		}
-
-		if (selToProtocolMapping == NULL) {
-			selToProtocolMapping = PyDict_New();
-			if (selToProtocolMapping == NULL) {
-				Py_DECREF(result);
-				return NULL;
-			}
-		}
-		for (i = 0; i < len; i++) {
-			ObjCSelector* tmp =
-				(ObjCSelector*)PyTuple_GET_ITEM(selectors, i);
-			
-			PyDict_SetItemString(selToProtocolMapping,
-				(char*)SELNAME(tmp->sel_selector),
-				name);
+	len = PyTuple_Size(result->selectors);
+	for (i = 0; i < len; i++) {
+		if (!ObjCSelector_Check(
+				PyTuple_GET_ITEM(selectors, i))) {
+			PyErr_Format(PyExc_TypeError, 
+				"Item %d is not a selector", i);
+			Py_DECREF(result);
+			return NULL;
 		}
 	}
-#endif
+
+	if (selToProtocolMapping == NULL) {
+		selToProtocolMapping = PyDict_New();
+		if (selToProtocolMapping == NULL) {
+			Py_DECREF(result);
+			return NULL;
+		}
+	}
+
+	for (i = 0; i < len; i++) {
+		ObjCSelector* tmp =
+			(ObjCSelector*)PyTuple_GET_ITEM(selectors, i);
+		
+		PyDict_SetItemString(selToProtocolMapping,
+			(char*)SELNAME(tmp->sel_selector),
+			(PyObject*)result);
+	}
 
 	Py_XINCREF(name);
 
@@ -270,11 +266,61 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector)
 	return NULL;
 }
 
+static PyObject*
+FindSelInDict(PyObject* clsdict, SEL selector)
+{
+	PyObject* values;
+	PyObject* seq;
+	int       i, len;
+
+	values = PyDict_Values(clsdict);
+	if (values == NULL) {
+		return NULL;
+	}
+
+	seq = PySequence_Fast(values, "PyDict_Values result not a sequence");
+	if (seq == NULL) {
+		return NULL;
+	}
+	
+	len = PySequence_Fast_GET_SIZE(seq);
+	for (i = 0; i < len; i++) {
+		PyObject* v = PySequence_Fast_GET_ITEM(seq, i);
+		if (!ObjCSelector_Check(v)) continue;
+		if (ObjCSelector_Selector(v) == selector) {
+			Py_DECREF(seq);
+			Py_DECREF(values);
+			return v;
+		}
+	}
+	Py_DECREF(seq);
+	Py_DECREF(values);
+	return NULL;
+}
+
+static int signaturesEqual(char* sig1, char* sig2)
+{
+	char buf1[1024];
+	char buf2[1024];
+
+	/* Return 0 if the two signatures are not equal */
+	if (strcmp(sig1, sig2) == 0) return 1;
+
+	/* For some reason compiler-generated signatures contain numbers that
+	 * are not used by the runtime. These are irrelevant for our comparison
+	 */
+	simplify_signature(sig1, buf1, sizeof(buf1));
+	simplify_signature(sig2, buf2, sizeof(buf2));
+
+	return strcmp(buf1, buf2) == 0;
+}
+
 /*
  * Verify that 'cls' conforms to the informal protocol
  */
 int	
-PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls)
+PyObjCInformalProtocol_CheckClass(
+	PyObject* obj, char* name, PyObject* super_class, PyObject* clsdict)
 {
 	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;	
 	int i, len;
@@ -286,11 +332,17 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls)
 			"First argument is not an objc.informal_protocol");
 		return 0;
 	}
-	if (!PyObjCClass_Check(cls)) {
+	if (!PyObjCClass_Check(super_class)) {
 		ObjCErr_Set(PyExc_TypeError, 
-			"Second argument is not an objc.objc_class");
+			"Third argument is not an objc.objc_class");
 		return 0;
 	}
+	if (!PyDict_Check(clsdict)) {
+		ObjCErr_Set(PyExc_TypeError, 
+			"Fourth argument is not a dict");
+		return 0;
+	}
+
 	seq = PySequence_Fast(self->selectors, "selector list not a sequence");
 	if (seq == NULL) {
 		return 0;
@@ -298,42 +350,55 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls)
 
 	len = PySequence_Fast_GET_SIZE(seq);
 	for (i = 0; i < len; i++) {
+		SEL sel;
+		PyObject* m;
+
 		cur = PySequence_Fast_GET_ITEM(seq, i);
 		if (cur == NULL) {
 			continue;
 		}
 
-		if (ObjCSelector_Check(cur)) {
-			SEL sel = ObjCSelector_Selector(cur);
-			PyObject* m;
+		if (!ObjCSelector_Check(cur)) {
+			continue;
+		}
 
-			m = PyObjCClass_FindSelector(cls, sel);
-			if (m == NULL && ObjCSelector_Required(cur)) {
+		sel = ObjCSelector_Selector(cur);
+
+		m = FindSelInDict(clsdict, sel);
+		if (m == NULL) {
+			m = PyObjCClass_FindSelector(super_class, sel);
+		}
+
+		if (m == NULL || !ObjCSelector_Check(m)) {
+			if (ObjCSelector_Required(cur)) {
 				ObjCErr_Set(PyExc_TypeError,
-					"class %s does not implement protocol "
-					"%s: no implementation for %s",
-					((PyTypeObject*)cls)->tp_name,
+					"class %s does not fully implement "
+					  "protocol %s: no implementation for %s",
+					name,
 					PyString_AsString(self->name),
 					SELNAME(sel));
-				Py_DECREF(seq);
-				return 0;
-			}
-			if (m) {
-				if (strcmp(ObjCSelector_Signature(m),
-					ObjCSelector_Signature(cur)) != 0) {
-
-					ObjCErr_Set(PyExc_TypeError,
-						"class %s does not implement "
-						"protocol %s: incorrect "
-						"signature for method %s",
-						((PyTypeObject*)cls)->tp_name,
-						PyString_AsString(self->name),
-						SELNAME(sel));
 					Py_DECREF(seq);
-					return 0;
-				}
+				return 0;
 			} else {
 				PyErr_Clear();
+			}
+		} else {
+			if (!signaturesEqual(ObjCSelector_Signature(m),
+				ObjCSelector_Signature(cur)) != 0) {
+
+				ObjCErr_Set(PyExc_TypeError,
+					"class %s does not correctly implement "
+					  "protocol %s: "
+					  "the signature for method %s is "
+					  "%s instead of %s",
+					name,
+					PyString_AsString(self->name),
+					SELNAME(sel),
+					ObjCSelector_Signature(m),
+					ObjCSelector_Signature(cur)
+				);
+				Py_DECREF(seq);
+				return 0;
 			}
 		}
 	}
@@ -341,124 +406,17 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, PyObject* cls)
 	return 1;
 }
 
-
-
-/*
- * Given the failure mode of most protocol problems it might be better to
- * just generate an exception.
- */
-int	
-PyObjCInformalProtocol_Warnings(char* name, PyObject* clsDict, PyObject* protocols)
+PyObject*
+PyObjCInformalProtocol_FindProtocol(SEL selector)
 {
-	PyObject* seq;
-	int len, i;
-	PyObject* keys;
-	int  haveWarnings = 0;
-	PyObject* protoMap;
+	if (selToProtocolMapping == NULL) return NULL;
+	PyObject* item;
 
-	if (selToProtocolMapping == NULL) return 0;
-	
-	protoMap = PyDict_New();
-	if (protoMap == NULL) {
-		return -1;
+	item = PyDict_GetItemString(selToProtocolMapping, SELNAME(selector));
+	if (item != NULL) {
+		return item;
 	}
 
-	if (!PyDict_Check(clsDict)) {
-		PyErr_SetString(PyExc_TypeError, 
-			"class dict is not a dictionary");
-		Py_DECREF(protoMap);
-		return -1;
-	}
-		
-
-	/*
-	 * protoMap will contain the protocol names as keys, this makes 
-	 * checking protocols easier.
-	 */
-	seq = PySequence_Fast(protocols, "protocol list is not a sequence");
-	if (seq == NULL) {
-		Py_DECREF(protoMap);
-		return -1;
-	}
-
-	len = PySequence_Fast_GET_SIZE(seq);
-	for (i = 0;i < len; i++) {
-		PyObjCInformalProtocol* obj =
-			(PyObjCInformalProtocol*)PySequence_Fast_GET_ITEM(
-				seq, i);
-		if (PyDict_SetItem(protoMap,  obj->name, (PyObject*)obj) < 0) {
-			Py_DECREF(seq);
-			Py_DECREF(protoMap);
-			return -1;
-		}  else {
-			Py_INCREF(obj->name);
-			Py_INCREF(obj);
-		}
-	}
-	Py_DECREF(seq);
-	seq = NULL;
-
-	/*
-	 * Actually perform the check.
-	 */
-	keys = PyDict_Keys(clsDict);
-	if (keys == NULL) {
-		Py_DECREF(protoMap);
-		return -1;
-	}
-
-	seq = PySequence_Fast(keys, "Dict keys not a sequence!?");
-	Py_DECREF(keys); keys = NULL;
-	if (seq == NULL) {
-		Py_DECREF(protoMap);
-		return -1;
-	}
-
-	len = PySequence_Fast_GET_SIZE(seq);
-	for (i = 0;i < len; i++) {
-		PyObject* o = PySequence_Fast_GET_ITEM(seq, i);
-		PyObject* p;
-		PyObject* q;
-
-		q = PyDict_GetItem(clsDict, o);
-		if (q == NULL) {
-			PyErr_Clear();
-			continue;
-		}
-
-		if (!ObjCSelector_Check(q)) {
-			continue;
-		}
-
-		p = PyDict_GetItemString(selToProtocolMapping,
-			(char*)SELNAME(((ObjCSelector*)q)->sel_selector));
-		if (p == NULL) {
-			PyErr_Clear();
-			continue;
-		}
-
-		if ((q = PyDict_GetItem(protoMap, p)) == NULL) {
-			/* Oops, we seem to be implementing a protocol
-			 * without saying it.
-			 */
-			 char buf[1024];
-
-			 snprintf(buf, sizeof(buf),
-			 	"Class %s is implementing part of protocol %s "
-				"without declaring this (method %s)",
-				name, PyString_AS_STRING(p),
-				PyString_AS_STRING(o));
-			 haveWarnings = 1;
-			 PyErr_Warn(PyObjCExc_ProtocolWarning, buf);
-			 if (PyErr_Occurred()) {
-				Py_DECREF(seq);
-			 	Py_DECREF(protoMap);
-				return -1;
-			 }
-		}
-	}
-	Py_DECREF(seq);
-
-	Py_DECREF(protoMap);
-	return 0;
+	PyErr_Clear();
+	return NULL;
 }

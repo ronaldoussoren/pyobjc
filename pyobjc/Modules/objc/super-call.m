@@ -106,7 +106,7 @@ int ObjC_RegisterMethodMapping(Class class, SEL sel,
  * do this. objc_support doesn't work correctly with (structs containing) 
  * bitfields, but neither does NSMethodSignature.
  */
-static void
+void
 simplify_signature(char* signature, char* buf, size_t buflen)
 {
 	int                i, argcount;
