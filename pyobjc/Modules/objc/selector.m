@@ -892,6 +892,7 @@ pysel_call(ObjCPythonSelector* self, PyObject* args)
 			self_arg = PyTuple_GetItem(args, 0);
 			if (!PyObjCObject_Check(self_arg) && !PyObjCClass_Check(self_arg)) {
 				PyErr_SetString(ObjCExc_error, "bad self type");
+				abort();
 				return NULL;
 			}
 		}

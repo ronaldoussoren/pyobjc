@@ -243,7 +243,6 @@ int do_slots(PyObject* super_class, PyObject* clsdict)
 	}
 
 	slots = PySequence_Fast(slot_value, "__slots__ must be a sequence");
-	Py_DECREF(slot_value);
 	if (slots == NULL) {
 		return -1;
 	}
@@ -384,9 +383,7 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	}
 
 
-	if (1) { /* FIXME */
-		first_python_gen = 1;
-
+	if (!PyObjCClass_HasPythonImplementation(py_superclass)) {
 		/* 
 		 * This class has a super_class that is pure objective-C
 		 * We'll add some instance variables and methods that are
@@ -394,6 +391,8 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		 *
 		 * See the code below the next loop.
 		 */
+		first_python_gen = 1;
+
 		ivar_count        += 0;
 		meta_method_count += 0; 
 		method_count      += 5;
@@ -433,7 +432,8 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (((PyObjCInstanceVariable*)value)->isSlot) {
 				item_size = sizeof(PyObject**);
 			} else {
-				item_size = objc_sizeof_type(((PyObjCInstanceVariable*)value)->type);
+				item_size = objc_sizeof_type(
+					((PyObjCInstanceVariable*)value)->type);
 			}
 			if (item_size == -1) goto error_cleanup;
 			ivar_size += item_size;
@@ -516,12 +516,12 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (value == NULL) goto error_cleanup;
 				
 			if (PyDict_SetItem(class_dict, key, value) < 0) {
-				//Py_DECREF(value); value = NULL;
-				//Py_DECREF(key); key = NULL;
+				Py_DECREF(value); value = NULL;
+				Py_DECREF(key); key = NULL;
 				goto error_cleanup;
 			}
 			Py_DECREF(value); value = NULL;
-			//Py_DECREF(key); key = NULL;
+			Py_DECREF(key); key = NULL;
 			method_count++;
 		}
 	}
@@ -599,12 +599,25 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			Py_DECREF(sel)
 
 
-		METH("dealloc", @selector(dealloc), "v@:", object_method_dealloc);
-		METH("respondsToSelector_", @selector(respondsToSelector:), "c@::", 
+		METH(
+			"dealloc", 
+			@selector(dealloc), 
+			"v@:", 
+			object_method_dealloc);
+		METH(
+			"respondsToSelector_", 
+			@selector(respondsToSelector:), 
+			"c@::", 
 			object_method_respondsToSelector);
-		METH("methodSignatureForSelector_", @selector(methodSignatureForSelector:), "@@::", 
+		METH(
+			"methodSignatureForSelector_", 
+			@selector(methodSignatureForSelector:), 
+			"@@::", 
 			object_method_methodSignatureForSelector);
-		METH("forwardInvocation_", @selector(forwardInvocation:), "v@:@", 
+		METH(
+			"forwardInvocation_", 
+			@selector(forwardInvocation:), 
+			"v@:@", 
 			object_method_forwardInvocation);
 #undef		METH
 	}
@@ -630,7 +643,8 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			var = ivar_list->ivar_list + ivar_list->ivar_count;
 			ivar_list->ivar_count++;
 
-			var->ivar_name = strdup(((PyObjCInstanceVariable*)value)->name);
+			var->ivar_name = strdup(
+				((PyObjCInstanceVariable*)value)->name);
 			var->ivar_offset = ivar_size;
 
 			/* XXX: Add alignment! */
@@ -675,7 +689,8 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 						sel->sel_selector);
 			} else {
 				meth->method_imp = 
-					ObjC_FindIMPForSignature(sel->sel_signature);
+					ObjC_FindIMPForSignature(
+						sel->sel_signature);
 
 			}
 
@@ -728,14 +743,6 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 	new_class->class.instance_size = ivar_size;
 	new_class->class.ivars = ivar_list;
-
-	/* Be explicit about clearing data, should not be necessary with
-	 * 'calloc'
-	 */
-#ifndef GNU_RUNTIME
-	new_class->class.cache = NULL;
-	new_class->meta_class.cache = NULL;
-#endif
 
 	new_class->class.protocols = NULL;
 	new_class->meta_class.protocols = NULL;
@@ -801,17 +808,6 @@ error_cleanup:
  *
  * These are added to the new Objective-C class by  PyObjCClass_BuildClass (but
  * only if the super_class is a 'pure' objective-C klass)
- *
- * XXXX: Text below is no longer relevant
- * The protocol for objc-python object-clusters is:
- * - +alloc calls [super alloc], then creates a new Python 'wrapper' for it
- *   (PyObjCObject_New) and sets a pointer to that wrapper object in the 
- *   correct instance variable of the new object
- * - +allocWithZone: is implemented in a simular manner.
- * - the references from the python-side to the objective-c side and back
- *   do _not_ count in the reference-count of the cluster
- * - the reference-count is stored in the python-side
- * - deallocactie doen we eerst in python en dan in objective-C
  *
  * NOTE:
  * - These functions will be used as methods, but as far as the compiler
@@ -907,13 +903,23 @@ static void object_method_dealloc(id self, SEL sel)
 {
 	struct objc_super super;
 	PyObject* obj;
+	PyObject* delmethod;
 	PyObject* cls = ((struct class_wrapper*)self->isa)->python_class;
 
-	free_ivars(self, cls);
-
-	if (PyObject_HasAttrString(cls, "__pyobjcdel__")) {
-		PyObject_CallMethod(PyObjCObject_New(self), "__pyobjcdel__", NULL);
+	delmethod = PyObjCClass_GetDelMethod(cls);
+	if (delmethod != NULL) {
+		PyObject* s = PyObjCObject_New(self);
+		obj = PyObject_CallFunction(delmethod, "O", s);
+		Py_DECREF(s);
+		if (obj == NULL) {
+			PyErr_WriteUnraisable(delmethod);
+		} else {
+			Py_DECREF(obj);
+		}
+		Py_DECREF(delmethod);
 	}
+
+	free_ivars(self, cls);
 
 	super.class = find_real_superclass(GETISA(self),
 		@selector(dealloc), class_getInstanceMethod, 

@@ -11,7 +11,7 @@ NSMutableArray = objc.lookUpClass('NSMutableArray')
 Level1Del = 0
 
 class Level1Class (NSObject):
-    def __pyobjcdel__(self):
+    def __del__(self):
         global Level1Del 
 
         Level1Del = 1
@@ -58,11 +58,6 @@ class TestRetains(unittest.TestCase):
         del c
         self.assertEquals(Level1Del, 1)
 
-
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestRetains))
-    return suite
 
 if __name__ == '__main__':
     unittest.main()

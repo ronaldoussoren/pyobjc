@@ -95,7 +95,7 @@ void ObjCErr_FromObjC(NSException* localException)
 		v = PyObjCObject_New(userInfo);
 		if (v != NULL) {
 			PyDict_SetItemString(dict, "userInfo", v);
-			//Py_DECREF(v);
+			Py_DECREF(v);
 		} else { 
 			PyErr_Clear();
 		}

@@ -167,6 +167,12 @@ object_repr(PyObjCObject* self)
 	return PyString_FromString(buffer);
 }
 
+static void
+object_del(PyObject* obj)
+{
+	/* Dummy function, we do not want the default implementation */
+}
+
 
 static void
 object_dealloc(PyObject* obj)
@@ -235,7 +241,7 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 
 static PyObject** _get_dictptr(PyObject* obj)
 {
-	int dictoffset = PyObjCClass_DictOffset(obj->ob_type);
+	int dictoffset = PyObjCClass_DictOffset((PyObject*)obj->ob_type);
 
 	if (dictoffset == 0) return NULL;
 
@@ -243,7 +249,7 @@ static PyObject** _get_dictptr(PyObject* obj)
 }
 
 static PyObject *
-ocobject_getattro(PyObject *obj, PyObject *name)
+object_getattro(PyObject *obj, PyObject *name)
 {
 	PyTypeObject *tp = obj->ob_type;
 	PyObject *descr = NULL;
@@ -289,6 +295,15 @@ ocobject_getattro(PyObject *obj, PyObject *name)
 			res = f(descr, obj, (PyObject *)obj->ob_type);
 			goto done;
 		}
+	}
+
+
+	if (strcmp(PyString_AS_STRING(name), "__del__") == 0) {
+		res = PyObjCClass_GetDelMethod((PyObject*)obj->ob_type);
+		if (res != NULL) {
+			/* TODO: bind self */	
+		}
+		goto done;
 	}
 
 	/* First try the __dict__ */
@@ -352,7 +367,7 @@ ocobject_getattro(PyObject *obj, PyObject *name)
 
 
 static int
-ocobject_setattro(PyObject *obj, PyObject *name, PyObject *value)
+object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 {
 	PyTypeObject *tp = obj->ob_type;
 	PyObject *descr;
@@ -498,8 +513,8 @@ PyObjCClassObject PyObjCObject_Type = {{
 	0,					/* tp_hash */
 	0,					/* tp_call */
 	0,					/* tp_str */
-	ocobject_getattro,			/* tp_getattro */
-	ocobject_setattro,			/* tp_setattro */
+	object_getattro,			/* tp_getattro */
+	object_setattro,			/* tp_setattro */
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE 
 		| Py_TPFLAGS_HAVE_WEAKREFS, 	/* tp_flags */
@@ -522,6 +537,14 @@ PyObjCClassObject PyObjCObject_Type = {{
 	PyType_GenericAlloc,			/* tp_alloc */
 	object_new,				/* tp_new */
 	0,		        		/* tp_free */
+	0,					/* tp_free */
+	0,					/* tp_is_gc */
+	0,					/* tp_bases */
+	0,					/* tp_mro */
+	0,					/* tp_cache */
+	0,					/* tp_subclasses */
+	0,					/* tp_weaklist */
+	(destructor)object_del				/* tp_del */
 }, 0};
 
 
