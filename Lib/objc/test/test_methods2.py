@@ -32,15 +32,24 @@ NSArray = objc.runtime.NSArray
 
 # First make sure that the pass-by-reference methods have the correct signature
 setSignature = objc.setSignatureForSelector
-setSignature("PyObjC_TestClass1", "BOOLInOutArg:", "@@:N^C")
-setSignature("PyObjC_TestClass1", "BOOLOutArg:", "v@:o^C")
-setSignature("PyObjC_TestClass1", "BOOLInArg:", "@@:n^C")
-setSignature("PyObjC_TestClass2", "callBOOLInOutArg:of:", "@@:N^C@")
-setSignature("PyObjC_TestClass2", "callBOOLOutArg:of:", "v@:o^C@")
-setSignature("PyObjC_TestClass2", "callBOOLInArg:of:", "@@:n^C@")
-setSignature("PyObjC_TestClass2", "invokeBOOLInOutArg:of:", "@@:N^C@")
-setSignature("PyObjC_TestClass2", "invokeBOOLOutArg:of:", "v@:o^C@")
-setSignature("PyObjC_TestClass2", "invokeBOOLInArg:of:", "@@:n^C@")
+setSignature("PyObjC_TestClass1", "boolInOutArg:", "@@:N^B")
+setSignature("PyObjC_TestClass1", "boolOutArg:", "v@:o^B")
+setSignature("PyObjC_TestClass1", "boolInArg:", "@@:n^B")
+setSignature("PyObjC_TestClass2", "callboolInOutArg:of:", "@@:N^B@")
+setSignature("PyObjC_TestClass2", "callboolOutArg:of:", "v@:o^B@")
+setSignature("PyObjC_TestClass2", "callboolInArg:of:", "@@:n^B@")
+setSignature("PyObjC_TestClass2", "invokeboolInOutArg:of:", "@@:N^B@")
+setSignature("PyObjC_TestClass2", "invokeboolOutArg:of:", "v@:o^B@")
+setSignature("PyObjC_TestClass2", "invokeboolInArg:of:", "@@:n^B@")
+setSignature("PyObjC_TestClass1", "BOOLInOutArg:", "@@:N^c")
+setSignature("PyObjC_TestClass1", "BOOLOutArg:", "v@:o^c")
+setSignature("PyObjC_TestClass1", "BOOLInArg:", "@@:n^c")
+setSignature("PyObjC_TestClass2", "callBOOLInOutArg:of:", "@@:N^c@")
+setSignature("PyObjC_TestClass2", "callBOOLOutArg:of:", "v@:o^c@")
+setSignature("PyObjC_TestClass2", "callBOOLInArg:of:", "@@:n^c@")
+setSignature("PyObjC_TestClass2", "invokeBOOLInOutArg:of:", "@@:N^c@")
+setSignature("PyObjC_TestClass2", "invokeBOOLOutArg:of:", "v@:o^c@")
+setSignature("PyObjC_TestClass2", "invokeBOOLInArg:of:", "@@:n^c@")
 setSignature("PyObjC_TestClass1", "charInOutArg:", "@@:N^c")
 setSignature("PyObjC_TestClass1", "charOutArg:", "v@:o^c")
 setSignature("PyObjC_TestClass1", "charInArg:", "@@:n^c")
@@ -229,6 +238,12 @@ class PyToObjC (TestCase):
 	# Test calling Objective-C from Python
 	# Simple returns from class methods
 
+	def testClsboolResult(self):
+		PyObjC_TestClass1.clsReset()
+		self.assertEquals(PyObjC_TestClass1.boolClsMethod(), YES)
+		self.assertEquals(PyObjC_TestClass1.boolClsMethod(), NO)
+
+
 	def testClsBOOLResult(self):
 		PyObjC_TestClass1.clsReset()
 		self.assertEquals(PyObjC_TestClass1.BOOLClsMethod(), YES)
@@ -372,6 +387,14 @@ class PyToObjC (TestCase):
 
 
 	# Simple returns from instance methods
+
+	def testboolResult(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		self.assertEquals(o.boolMethod(), YES)
+		self.assertEquals(o.boolMethod(), NO)
+
 
 	def testBOOLResult(self):
 		o = PyObjC_TestClass1.alloc().init()
@@ -556,6 +579,15 @@ class PyToObjC (TestCase):
 
 
 	# One argument
+
+	def testboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_(YES)
+		self.assertEquals(r, YES)
+		r = o.boolArg_(NO)
+		self.assertEquals(r, NO)
+
 
 	def testBOOLArg(self):
 		o = PyObjC_TestClass1.alloc().init()
@@ -782,6 +814,512 @@ class PyToObjC (TestCase):
 
 
 	# Two arguments
+
+	def testboolAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andboolArg_(YES, YES)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], YES)
+		r = o.boolArg_andboolArg_(YES, NO)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NO)
+		r = o.boolArg_andboolArg_(NO, YES)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], YES)
+		r = o.boolArg_andboolArg_(NO, NO)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], NO)
+
+
+	def testboolAndBOOLArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andBOOLArg_(YES, YES)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], YES)
+		r = o.boolArg_andBOOLArg_(YES, NO)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NO)
+		r = o.boolArg_andBOOLArg_(NO, YES)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], YES)
+		r = o.boolArg_andBOOLArg_(NO, NO)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], NO)
+
+
+	def testboolAndcharArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andcharArg_(YES, -128)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -128)
+		r = o.boolArg_andcharArg_(YES, 0)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andcharArg_(YES, 127)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 127)
+		r = o.boolArg_andcharArg_(NO, -128)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -128)
+		r = o.boolArg_andcharArg_(NO, 0)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andcharArg_(NO, 127)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 127)
+
+
+	def testboolAndsignedshortArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andsignedshortArg_(YES, -(1<<14))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -(1<<14))
+		r = o.boolArg_andsignedshortArg_(YES, -42)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -42)
+		r = o.boolArg_andsignedshortArg_(YES, 0)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andsignedshortArg_(YES, 42)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andsignedshortArg_(YES, 1 << 14)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1 << 14)
+		r = o.boolArg_andsignedshortArg_(NO, -(1<<14))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -(1<<14))
+		r = o.boolArg_andsignedshortArg_(NO, -42)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -42)
+		r = o.boolArg_andsignedshortArg_(NO, 0)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andsignedshortArg_(NO, 42)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andsignedshortArg_(NO, 1 << 14)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1 << 14)
+
+
+	def testboolAndsignedintArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andsignedintArg_(YES, -(1<<30))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -(1<<30))
+		r = o.boolArg_andsignedintArg_(YES, -42)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -42)
+		r = o.boolArg_andsignedintArg_(YES, 0)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andsignedintArg_(YES, 42)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andsignedintArg_(YES, 1 << 30)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1 << 30)
+		r = o.boolArg_andsignedintArg_(NO, -(1<<30))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -(1<<30))
+		r = o.boolArg_andsignedintArg_(NO, -42)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -42)
+		r = o.boolArg_andsignedintArg_(NO, 0)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andsignedintArg_(NO, 42)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andsignedintArg_(NO, 1 << 30)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testboolAndsignedlongArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andsignedlongArg_(YES, -(1<<30))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -(1<<30))
+		r = o.boolArg_andsignedlongArg_(YES, -42)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -42)
+		r = o.boolArg_andsignedlongArg_(YES, 0)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andsignedlongArg_(YES, 42)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andsignedlongArg_(YES, 1 << 30)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1 << 30)
+		r = o.boolArg_andsignedlongArg_(NO, -(1<<30))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -(1<<30))
+		r = o.boolArg_andsignedlongArg_(NO, -42)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -42)
+		r = o.boolArg_andsignedlongArg_(NO, 0)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andsignedlongArg_(NO, 42)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andsignedlongArg_(NO, 1 << 30)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testboolAndsignedlonglongArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andsignedlonglongArg_(YES, -(1L << 60))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -(1L << 60))
+		r = o.boolArg_andsignedlonglongArg_(YES, -42)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -42)
+		r = o.boolArg_andsignedlonglongArg_(YES, 0)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andsignedlonglongArg_(YES, 42)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andsignedlonglongArg_(YES, 1L << 60)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1L << 60)
+		r = o.boolArg_andsignedlonglongArg_(NO, -(1L << 60))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -(1L << 60))
+		r = o.boolArg_andsignedlonglongArg_(NO, -42)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -42)
+		r = o.boolArg_andsignedlonglongArg_(NO, 0)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andsignedlonglongArg_(NO, 42)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andsignedlonglongArg_(NO, 1L << 60)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1L << 60)
+
+
+	def testboolAndunsignedcharArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andunsignedcharArg_(YES, 0)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andunsignedcharArg_(YES, 128)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 128)
+		r = o.boolArg_andunsignedcharArg_(YES, 255)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 255)
+		r = o.boolArg_andunsignedcharArg_(NO, 0)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andunsignedcharArg_(NO, 128)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 128)
+		r = o.boolArg_andunsignedcharArg_(NO, 255)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 255)
+
+
+	def testboolAndunsignedshortArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andunsignedshortArg_(YES, 0)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andunsignedshortArg_(YES, 42)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andunsignedshortArg_(YES, 1<<14)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1<<14)
+		r = o.boolArg_andunsignedshortArg_(NO, 0)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andunsignedshortArg_(NO, 42)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andunsignedshortArg_(NO, 1<<14)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1<<14)
+
+
+	def testboolAndunsignedintArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andunsignedintArg_(YES, 0)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andunsignedintArg_(YES, 42)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andunsignedintArg_(YES, 1 << 30)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1 << 30)
+		r = o.boolArg_andunsignedintArg_(NO, 0)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andunsignedintArg_(NO, 42)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andunsignedintArg_(NO, 1 << 30)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testboolAndunsignedlongArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andunsignedlongArg_(YES, 0)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andunsignedlongArg_(YES, 42)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andunsignedlongArg_(YES, 1L << 30)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1L << 30)
+		r = o.boolArg_andunsignedlongArg_(NO, 0)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andunsignedlongArg_(NO, 42)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andunsignedlongArg_(NO, 1L << 30)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1L << 30)
+
+
+	def testboolAndunsignedlonglongArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andunsignedlonglongArg_(YES, 0)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andunsignedlonglongArg_(YES, 42)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andunsignedlonglongArg_(YES, 1L << 62)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1L << 62)
+		r = o.boolArg_andunsignedlonglongArg_(NO, 0)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = o.boolArg_andunsignedlonglongArg_(NO, 42)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = o.boolArg_andunsignedlonglongArg_(NO, 1L << 62)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1L << 62)
+
+
+	def testboolAndfloatArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andfloatArg_(YES, 0.128)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 0.128)
+		r = o.boolArg_andfloatArg_(YES, 1.0)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 1.0)
+		r = o.boolArg_andfloatArg_(YES, 42.0)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 42.0)
+		r = o.boolArg_andfloatArg_(YES, 1e10)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 1e10)
+		r = o.boolArg_andfloatArg_(NO, 0.128)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 0.128)
+		r = o.boolArg_andfloatArg_(NO, 1.0)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 1.0)
+		r = o.boolArg_andfloatArg_(NO, 42.0)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 42.0)
+		r = o.boolArg_andfloatArg_(NO, 1e10)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testboolAnddoubleArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_anddoubleArg_(YES, 0.128)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 0.128)
+		r = o.boolArg_anddoubleArg_(YES, 1.0)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 1.0)
+		r = o.boolArg_anddoubleArg_(YES, 42.0)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 42.0)
+		r = o.boolArg_anddoubleArg_(YES, 1e10)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 1e10)
+		r = o.boolArg_anddoubleArg_(NO, 0.128)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 0.128)
+		r = o.boolArg_anddoubleArg_(NO, 1.0)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 1.0)
+		r = o.boolArg_anddoubleArg_(NO, 42.0)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 42.0)
+		r = o.boolArg_anddoubleArg_(NO, 1e10)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testboolAndidArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andidArg_(YES, NSPriorDayDesignations)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NSPriorDayDesignations)
+		r = o.boolArg_andidArg_(NO, NSPriorDayDesignations)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], NSPriorDayDesignations)
+
+
+	def testboolAndcharPtrArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andcharPtrArg_(YES, "hello")
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], "hello")
+		r = o.boolArg_andcharPtrArg_(YES, "world")
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], "world")
+		r = o.boolArg_andcharPtrArg_(YES, "foobar")
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], "foobar")
+		r = o.boolArg_andcharPtrArg_(NO, "hello")
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], "hello")
+		r = o.boolArg_andcharPtrArg_(NO, "world")
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], "world")
+		r = o.boolArg_andcharPtrArg_(NO, "foobar")
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], "foobar")
+
+
+	def testboolAndNSPointArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andNSPointArg_(YES, (1, 2))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2))
+		r = o.boolArg_andNSPointArg_(YES, (3, 4))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (3, 4))
+		r = o.boolArg_andNSPointArg_(NO, (1, 2))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2))
+		r = o.boolArg_andNSPointArg_(NO, (3, 4))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (3, 4))
+
+
+	def testboolAndNSRectArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andNSRectArg_(YES, ((1, 2), (3, 4)))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = o.boolArg_andNSRectArg_(YES, ((7, 8), (9, 10)))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+		r = o.boolArg_andNSRectArg_(NO, ((1, 2), (3, 4)))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = o.boolArg_andNSRectArg_(NO, ((7, 8), (9, 10)))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+
+
+	def testboolAndstructTestStruct1Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andstructTestStruct1Arg_(YES, (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = o.boolArg_andstructTestStruct1Arg_(YES, (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = o.boolArg_andstructTestStruct1Arg_(NO, (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = o.boolArg_andstructTestStruct1Arg_(NO, (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testboolAndstructTestStruct2Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andstructTestStruct2Arg_(YES, (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = o.boolArg_andstructTestStruct2Arg_(YES, (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = o.boolArg_andstructTestStruct2Arg_(NO, (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = o.boolArg_andstructTestStruct2Arg_(NO, (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testboolAndstructTestStruct3Arg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolArg_andstructTestStruct3Arg_(YES, (1, 2))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2))
+		r = o.boolArg_andstructTestStruct3Arg_(YES, (2, 4))
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (2, 4))
+		r = o.boolArg_andstructTestStruct3Arg_(NO, (1, 2))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2))
+		r = o.boolArg_andstructTestStruct3Arg_(NO, (2, 4))
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testBOOLAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.BOOLArg_andboolArg_(YES, YES)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], YES)
+		r = o.BOOLArg_andboolArg_(YES, NO)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NO)
+		r = o.BOOLArg_andboolArg_(NO, YES)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], YES)
+		r = o.BOOLArg_andboolArg_(NO, NO)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], NO)
+
 
 	def testBOOLAndBOOLArg(self):
 		o = PyObjC_TestClass1.alloc().init()
@@ -1253,6 +1791,29 @@ class PyToObjC (TestCase):
 		r = o.BOOLArg_andstructTestStruct3Arg_(NO, (2, 4))
 		self.assertEquals(r[0], NO)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcharAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.charArg_andboolArg_(-128, YES)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], YES)
+		r = o.charArg_andboolArg_(-128, NO)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], NO)
+		r = o.charArg_andboolArg_(0, YES)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = o.charArg_andboolArg_(0, NO)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = o.charArg_andboolArg_(127, YES)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], YES)
+		r = o.charArg_andboolArg_(127, NO)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], NO)
 
 
 	def testcharAndBOOLArg(self):
@@ -1911,6 +2472,41 @@ class PyToObjC (TestCase):
 		r = o.charArg_andstructTestStruct3Arg_(127, (2, 4))
 		self.assertEquals(r[0], 127)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testsignedshortAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.signedshortArg_andboolArg_(-(1<<14), YES)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], YES)
+		r = o.signedshortArg_andboolArg_(-(1<<14), NO)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], NO)
+		r = o.signedshortArg_andboolArg_(-42, YES)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], YES)
+		r = o.signedshortArg_andboolArg_(-42, NO)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], NO)
+		r = o.signedshortArg_andboolArg_(0, YES)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = o.signedshortArg_andboolArg_(0, NO)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = o.signedshortArg_andboolArg_(42, YES)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = o.signedshortArg_andboolArg_(42, NO)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = o.signedshortArg_andboolArg_(1 << 14, YES)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], YES)
+		r = o.signedshortArg_andboolArg_(1 << 14, NO)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], NO)
 
 
 	def testsignedshortAndBOOLArg(self):
@@ -2943,6 +3539,41 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testsignedintAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.signedintArg_andboolArg_(-(1<<30), YES)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], YES)
+		r = o.signedintArg_andboolArg_(-(1<<30), NO)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], NO)
+		r = o.signedintArg_andboolArg_(-42, YES)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], YES)
+		r = o.signedintArg_andboolArg_(-42, NO)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], NO)
+		r = o.signedintArg_andboolArg_(0, YES)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = o.signedintArg_andboolArg_(0, NO)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = o.signedintArg_andboolArg_(42, YES)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = o.signedintArg_andboolArg_(42, NO)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = o.signedintArg_andboolArg_(1 << 30, YES)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], YES)
+		r = o.signedintArg_andboolArg_(1 << 30, NO)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], NO)
+
+
 	def testsignedintAndBOOLArg(self):
 		o = PyObjC_TestClass1.alloc().init()
 		self.assert_(o is not None)
@@ -3971,6 +4602,41 @@ class PyToObjC (TestCase):
 		r = o.signedintArg_andstructTestStruct3Arg_(1 << 30, (2, 4))
 		self.assertEquals(r[0], 1 << 30)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testsignedlongAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.signedlongArg_andboolArg_(-(1<<30), YES)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], YES)
+		r = o.signedlongArg_andboolArg_(-(1<<30), NO)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], NO)
+		r = o.signedlongArg_andboolArg_(-42, YES)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], YES)
+		r = o.signedlongArg_andboolArg_(-42, NO)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], NO)
+		r = o.signedlongArg_andboolArg_(0, YES)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = o.signedlongArg_andboolArg_(0, NO)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = o.signedlongArg_andboolArg_(42, YES)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = o.signedlongArg_andboolArg_(42, NO)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = o.signedlongArg_andboolArg_(1 << 30, YES)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], YES)
+		r = o.signedlongArg_andboolArg_(1 << 30, NO)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], NO)
 
 
 	def testsignedlongAndBOOLArg(self):
@@ -5003,6 +5669,41 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testsignedlonglongAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.signedlonglongArg_andboolArg_(-(1L << 60), YES)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], YES)
+		r = o.signedlonglongArg_andboolArg_(-(1L << 60), NO)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], NO)
+		r = o.signedlonglongArg_andboolArg_(-42, YES)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], YES)
+		r = o.signedlonglongArg_andboolArg_(-42, NO)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], NO)
+		r = o.signedlonglongArg_andboolArg_(0, YES)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = o.signedlonglongArg_andboolArg_(0, NO)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = o.signedlonglongArg_andboolArg_(42, YES)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = o.signedlonglongArg_andboolArg_(42, NO)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = o.signedlonglongArg_andboolArg_(1L << 60, YES)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], YES)
+		r = o.signedlonglongArg_andboolArg_(1L << 60, NO)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], NO)
+
+
 	def testsignedlonglongAndBOOLArg(self):
 		o = PyObjC_TestClass1.alloc().init()
 		self.assert_(o is not None)
@@ -6033,6 +6734,29 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testunsignedcharAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedcharArg_andboolArg_(0, YES)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedcharArg_andboolArg_(0, NO)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = o.unsignedcharArg_andboolArg_(128, YES)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedcharArg_andboolArg_(128, NO)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], NO)
+		r = o.unsignedcharArg_andboolArg_(255, YES)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedcharArg_andboolArg_(255, NO)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], NO)
+
+
 	def testunsignedcharAndBOOLArg(self):
 		o = PyObjC_TestClass1.alloc().init()
 		self.assert_(o is not None)
@@ -6689,6 +7413,29 @@ class PyToObjC (TestCase):
 		r = o.unsignedcharArg_andstructTestStruct3Arg_(255, (2, 4))
 		self.assertEquals(r[0], 255)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testunsignedshortAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedshortArg_andboolArg_(0, YES)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedshortArg_andboolArg_(0, NO)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = o.unsignedshortArg_andboolArg_(42, YES)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedshortArg_andboolArg_(42, NO)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = o.unsignedshortArg_andboolArg_(1<<14, YES)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedshortArg_andboolArg_(1<<14, NO)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], NO)
 
 
 	def testunsignedshortAndBOOLArg(self):
@@ -7349,6 +8096,29 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testunsignedintAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedintArg_andboolArg_(0, YES)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedintArg_andboolArg_(0, NO)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = o.unsignedintArg_andboolArg_(42, YES)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedintArg_andboolArg_(42, NO)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = o.unsignedintArg_andboolArg_(1 << 30, YES)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedintArg_andboolArg_(1 << 30, NO)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], NO)
+
+
 	def testunsignedintAndBOOLArg(self):
 		o = PyObjC_TestClass1.alloc().init()
 		self.assert_(o is not None)
@@ -8005,6 +8775,29 @@ class PyToObjC (TestCase):
 		r = o.unsignedintArg_andstructTestStruct3Arg_(1 << 30, (2, 4))
 		self.assertEquals(r[0], 1 << 30)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testunsignedlongAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedlongArg_andboolArg_(0, YES)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedlongArg_andboolArg_(0, NO)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = o.unsignedlongArg_andboolArg_(42, YES)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedlongArg_andboolArg_(42, NO)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = o.unsignedlongArg_andboolArg_(1L << 30, YES)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedlongArg_andboolArg_(1L << 30, NO)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], NO)
 
 
 	def testunsignedlongAndBOOLArg(self):
@@ -8665,6 +9458,29 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testunsignedlonglongAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.unsignedlonglongArg_andboolArg_(0, YES)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedlonglongArg_andboolArg_(0, NO)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = o.unsignedlonglongArg_andboolArg_(42, YES)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedlonglongArg_andboolArg_(42, NO)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = o.unsignedlonglongArg_andboolArg_(1L << 62, YES)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], YES)
+		r = o.unsignedlonglongArg_andboolArg_(1L << 62, NO)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], NO)
+
+
 	def testunsignedlonglongAndBOOLArg(self):
 		o = PyObjC_TestClass1.alloc().init()
 		self.assert_(o is not None)
@@ -9321,6 +10137,35 @@ class PyToObjC (TestCase):
 		r = o.unsignedlonglongArg_andstructTestStruct3Arg_(1L << 62, (2, 4))
 		self.assertEquals(r[0], 1L << 62)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testfloatAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.floatArg_andboolArg_(0.128, YES)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], YES)
+		r = o.floatArg_andboolArg_(0.128, NO)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], NO)
+		r = o.floatArg_andboolArg_(1.0, YES)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], YES)
+		r = o.floatArg_andboolArg_(1.0, NO)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], NO)
+		r = o.floatArg_andboolArg_(42.0, YES)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], YES)
+		r = o.floatArg_andboolArg_(42.0, NO)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], NO)
+		r = o.floatArg_andboolArg_(1e10, YES)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], YES)
+		r = o.floatArg_andboolArg_(1e10, NO)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], NO)
 
 
 	def testfloatAndBOOLArg(self):
@@ -10167,6 +11012,35 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testdoubleAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.doubleArg_andboolArg_(0.128, YES)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], YES)
+		r = o.doubleArg_andboolArg_(0.128, NO)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], NO)
+		r = o.doubleArg_andboolArg_(1.0, YES)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], YES)
+		r = o.doubleArg_andboolArg_(1.0, NO)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], NO)
+		r = o.doubleArg_andboolArg_(42.0, YES)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], YES)
+		r = o.doubleArg_andboolArg_(42.0, NO)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], NO)
+		r = o.doubleArg_andboolArg_(1e10, YES)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], YES)
+		r = o.doubleArg_andboolArg_(1e10, NO)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], NO)
+
+
 	def testdoubleAndBOOLArg(self):
 		o = PyObjC_TestClass1.alloc().init()
 		self.assert_(o is not None)
@@ -11011,6 +11885,17 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testidAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.idArg_andboolArg_(NSPriorDayDesignations, YES)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], YES)
+		r = o.idArg_andboolArg_(NSPriorDayDesignations, NO)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], NO)
+
+
 	def testidAndBOOLArg(self):
 		o = PyObjC_TestClass1.alloc().init()
 		self.assert_(o is not None)
@@ -11295,6 +12180,29 @@ class PyToObjC (TestCase):
 		r = o.idArg_andstructTestStruct3Arg_(NSPriorDayDesignations, (2, 4))
 		self.assertEquals(r[0], NSPriorDayDesignations)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcharPtrAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.charPtrArg_andboolArg_("hello", YES)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], YES)
+		r = o.charPtrArg_andboolArg_("hello", NO)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], NO)
+		r = o.charPtrArg_andboolArg_("world", YES)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], YES)
+		r = o.charPtrArg_andboolArg_("world", NO)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], NO)
+		r = o.charPtrArg_andboolArg_("foobar", YES)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], YES)
+		r = o.charPtrArg_andboolArg_("foobar", NO)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], NO)
 
 
 	def testcharPtrAndBOOLArg(self):
@@ -11955,6 +12863,23 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testNSPointAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.NSPointArg_andboolArg_((1, 2), YES)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], YES)
+		r = o.NSPointArg_andboolArg_((1, 2), NO)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], NO)
+		r = o.NSPointArg_andboolArg_((3, 4), YES)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], YES)
+		r = o.NSPointArg_andboolArg_((3, 4), NO)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], NO)
+
+
 	def testNSPointAndBOOLArg(self):
 		o = PyObjC_TestClass1.alloc().init()
 		self.assert_(o is not None)
@@ -12425,6 +13350,23 @@ class PyToObjC (TestCase):
 		r = o.NSPointArg_andstructTestStruct3Arg_((3, 4), (2, 4))
 		self.assertEquals(r[0], (3, 4))
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testNSRectAndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.NSRectArg_andboolArg_(((1, 2), (3, 4)), YES)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], YES)
+		r = o.NSRectArg_andboolArg_(((1, 2), (3, 4)), NO)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], NO)
+		r = o.NSRectArg_andboolArg_(((7, 8), (9, 10)), YES)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], YES)
+		r = o.NSRectArg_andboolArg_(((7, 8), (9, 10)), NO)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], NO)
 
 
 	def testNSRectAndBOOLArg(self):
@@ -12899,6 +13841,23 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def teststructTestStruct1AndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct1Arg_andboolArg_((1, 2, (1, 2, 3, 4, 5)), YES)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct1Arg_andboolArg_((1, 2, (1, 2, 3, 4, 5)), NO)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], NO)
+		r = o.structTestStruct1Arg_andboolArg_((9, 8, (-1, -2, -3, -4, -5)), YES)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct1Arg_andboolArg_((9, 8, (-1, -2, -3, -4, -5)), NO)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], NO)
+
+
 	def teststructTestStruct1AndBOOLArg(self):
 		o = PyObjC_TestClass1.alloc().init()
 		self.assert_(o is not None)
@@ -13371,6 +14330,23 @@ class PyToObjC (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def teststructTestStruct2AndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct2Arg_andboolArg_((1, 2, (1, 2, 3, 4, 5)), YES)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct2Arg_andboolArg_((1, 2, (1, 2, 3, 4, 5)), NO)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], NO)
+		r = o.structTestStruct2Arg_andboolArg_((9, 8, (-1, -2, -3, -4, -5)), YES)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct2Arg_andboolArg_((9, 8, (-1, -2, -3, -4, -5)), NO)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], NO)
+
+
 	def teststructTestStruct2AndBOOLArg(self):
 		o = PyObjC_TestClass1.alloc().init()
 		self.assert_(o is not None)
@@ -13841,6 +14817,23 @@ class PyToObjC (TestCase):
 		r = o.structTestStruct2Arg_andstructTestStruct3Arg_((9, 8, (-1, -2, -3, -4, -5)), (2, 4))
 		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
 		self.assertEquals(r[1], (2, 4))
+
+
+	def teststructTestStruct3AndboolArg(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.structTestStruct3Arg_andboolArg_((1, 2), YES)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct3Arg_andboolArg_((1, 2), NO)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], NO)
+		r = o.structTestStruct3Arg_andboolArg_((2, 4), YES)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], YES)
+		r = o.structTestStruct3Arg_andboolArg_((2, 4), NO)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], NO)
 
 
 	def teststructTestStruct3AndBOOLArg(self):
@@ -14317,6 +15310,15 @@ class PyToObjC (TestCase):
 
 	# Pass by reference arguments (in)
 
+	def testboolIn(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		r = o.boolInArg_(YES)
+		self.assertEquals(r, YES)
+		r = o.boolInArg_(NO)
+		self.assertEquals(r, NO)
+
+
 	def testBOOLIn(self):
 		o = PyObjC_TestClass1.alloc().init()
 		self.assert_(o is not None)
@@ -14542,6 +15544,16 @@ class PyToObjC (TestCase):
 
 
 	# Pass by reference arguments (out)
+
+	def testboolOut(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = o.boolOutArg_()
+		self.assertEquals(r, YES)
+		r = o.boolOutArg_()
+		self.assertEquals(r, NO)
+
 
 	def testBOOLOut(self):
 		o = PyObjC_TestClass1.alloc().init()
@@ -14788,6 +15800,18 @@ class PyToObjC (TestCase):
 
 
 	# Pass by reference arguments (inout)
+
+	def testboolInOut(self):
+		o = PyObjC_TestClass1.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = o.boolInOutArg_(NO)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], YES)
+		r = o.boolInOutArg_(YES)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NO)
+
 
 	def testBOOLInOut(self):
 		o = PyObjC_TestClass1.alloc().init()
@@ -15096,6 +16120,7 @@ class PyToObjC (TestCase):
 
 
 # Helper arrays
+g_bool_values = (YES, NO)
 g_BOOL_values = (YES, NO)
 g_char_values = (-128, 0, 127)
 g_signedshort_values = (-(1<<14), -42, 0, 42, 1 << 14)
@@ -15129,12 +16154,20 @@ class Python_TestClass (objc.runtime.NSObject):
 		self.counter = 0
 
 
+	def boolMethod(self):
+		if self.counter > 2: self.reset()
+		idx = self.counter
+		self.counter += 1
+		return g_bool_values[idx]
+	boolMethod = objc.selector(boolMethod, signature="B@:")
+
+
 	def BOOLMethod(self):
 		if self.counter > 2: self.reset()
 		idx = self.counter
 		self.counter += 1
 		return g_BOOL_values[idx]
-	BOOLMethod = objc.selector(BOOLMethod, signature="C@:")
+	BOOLMethod = objc.selector(BOOLMethod, signature="c@:")
 
 
 	def charMethod(self):
@@ -15289,9 +16322,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	structTestStruct3Method = objc.selector(structTestStruct3Method, signature="{_TestStruct3=ci}@:")
 
 
+	def boolArg_(self, arg):
+		return arg # return the same
+	boolArg_ = objc.selector(boolArg_, signature="@@:B")
+
+
 	def BOOLArg_(self, arg):
 		return arg # return the same
-	BOOLArg_ = objc.selector(BOOLArg_, signature="@@:C")
+	BOOLArg_ = objc.selector(BOOLArg_, signature="@@:c")
 
 
 	def charArg_(self, arg):
@@ -15389,109 +16427,224 @@ class Python_TestClass (objc.runtime.NSObject):
 	structTestStruct3Arg_ = objc.selector(structTestStruct3Arg_, signature="@@:{_TestStruct3=ci}")
 
 
+	def boolArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andboolArg_ = objc.selector(boolArg_andboolArg_, signature="@@:BB")
+
+
+	def boolArg_andBOOLArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andBOOLArg_ = objc.selector(boolArg_andBOOLArg_, signature="@@:Bc")
+
+
+	def boolArg_andcharArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andcharArg_ = objc.selector(boolArg_andcharArg_, signature="@@:Bc")
+
+
+	def boolArg_andsignedshortArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andsignedshortArg_ = objc.selector(boolArg_andsignedshortArg_, signature="@@:Bs")
+
+
+	def boolArg_andsignedintArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andsignedintArg_ = objc.selector(boolArg_andsignedintArg_, signature="@@:Bi")
+
+
+	def boolArg_andsignedlongArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andsignedlongArg_ = objc.selector(boolArg_andsignedlongArg_, signature="@@:Bl")
+
+
+	def boolArg_andsignedlonglongArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andsignedlonglongArg_ = objc.selector(boolArg_andsignedlonglongArg_, signature="@@:Bq")
+
+
+	def boolArg_andunsignedcharArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andunsignedcharArg_ = objc.selector(boolArg_andunsignedcharArg_, signature="@@:BC")
+
+
+	def boolArg_andunsignedshortArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andunsignedshortArg_ = objc.selector(boolArg_andunsignedshortArg_, signature="@@:BS")
+
+
+	def boolArg_andunsignedintArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andunsignedintArg_ = objc.selector(boolArg_andunsignedintArg_, signature="@@:BI")
+
+
+	def boolArg_andunsignedlongArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andunsignedlongArg_ = objc.selector(boolArg_andunsignedlongArg_, signature="@@:BL")
+
+
+	def boolArg_andunsignedlonglongArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andunsignedlonglongArg_ = objc.selector(boolArg_andunsignedlonglongArg_, signature="@@:BQ")
+
+
+	def boolArg_andfloatArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andfloatArg_ = objc.selector(boolArg_andfloatArg_, signature="@@:Bf")
+
+
+	def boolArg_anddoubleArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_anddoubleArg_ = objc.selector(boolArg_anddoubleArg_, signature="@@:Bd")
+
+
+	def boolArg_andidArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andidArg_ = objc.selector(boolArg_andidArg_, signature="@@:B@")
+
+
+	def boolArg_andcharPtrArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andcharPtrArg_ = objc.selector(boolArg_andcharPtrArg_, signature="@@:B*")
+
+
+	def boolArg_andNSPointArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andNSPointArg_ = objc.selector(boolArg_andNSPointArg_, signature="@@:B{_NSPoint=ff}")
+
+
+	def boolArg_andNSRectArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andNSRectArg_ = objc.selector(boolArg_andNSRectArg_, signature="@@:B{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
+
+
+	def boolArg_andstructTestStruct1Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andstructTestStruct1Arg_ = objc.selector(boolArg_andstructTestStruct1Arg_, signature="@@:B{_TestStruct1=ii[5s]}")
+
+
+	def boolArg_andstructTestStruct2Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andstructTestStruct2Arg_ = objc.selector(boolArg_andstructTestStruct2Arg_, signature="@@:B{_TestStruct2=id[5s]}")
+
+
+	def boolArg_andstructTestStruct3Arg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	boolArg_andstructTestStruct3Arg_ = objc.selector(boolArg_andstructTestStruct3Arg_, signature="@@:B{_TestStruct3=ci}")
+
+
+	def BOOLArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	BOOLArg_andboolArg_ = objc.selector(BOOLArg_andboolArg_, signature="@@:cB")
+
+
 	def BOOLArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andBOOLArg_ = objc.selector(BOOLArg_andBOOLArg_, signature="@@:CC")
+	BOOLArg_andBOOLArg_ = objc.selector(BOOLArg_andBOOLArg_, signature="@@:cc")
 
 
 	def BOOLArg_andcharArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andcharArg_ = objc.selector(BOOLArg_andcharArg_, signature="@@:Cc")
+	BOOLArg_andcharArg_ = objc.selector(BOOLArg_andcharArg_, signature="@@:cc")
 
 
 	def BOOLArg_andsignedshortArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andsignedshortArg_ = objc.selector(BOOLArg_andsignedshortArg_, signature="@@:Cs")
+	BOOLArg_andsignedshortArg_ = objc.selector(BOOLArg_andsignedshortArg_, signature="@@:cs")
 
 
 	def BOOLArg_andsignedintArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andsignedintArg_ = objc.selector(BOOLArg_andsignedintArg_, signature="@@:Ci")
+	BOOLArg_andsignedintArg_ = objc.selector(BOOLArg_andsignedintArg_, signature="@@:ci")
 
 
 	def BOOLArg_andsignedlongArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andsignedlongArg_ = objc.selector(BOOLArg_andsignedlongArg_, signature="@@:Cl")
+	BOOLArg_andsignedlongArg_ = objc.selector(BOOLArg_andsignedlongArg_, signature="@@:cl")
 
 
 	def BOOLArg_andsignedlonglongArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andsignedlonglongArg_ = objc.selector(BOOLArg_andsignedlonglongArg_, signature="@@:Cq")
+	BOOLArg_andsignedlonglongArg_ = objc.selector(BOOLArg_andsignedlonglongArg_, signature="@@:cq")
 
 
 	def BOOLArg_andunsignedcharArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andunsignedcharArg_ = objc.selector(BOOLArg_andunsignedcharArg_, signature="@@:CC")
+	BOOLArg_andunsignedcharArg_ = objc.selector(BOOLArg_andunsignedcharArg_, signature="@@:cC")
 
 
 	def BOOLArg_andunsignedshortArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andunsignedshortArg_ = objc.selector(BOOLArg_andunsignedshortArg_, signature="@@:CS")
+	BOOLArg_andunsignedshortArg_ = objc.selector(BOOLArg_andunsignedshortArg_, signature="@@:cS")
 
 
 	def BOOLArg_andunsignedintArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andunsignedintArg_ = objc.selector(BOOLArg_andunsignedintArg_, signature="@@:CI")
+	BOOLArg_andunsignedintArg_ = objc.selector(BOOLArg_andunsignedintArg_, signature="@@:cI")
 
 
 	def BOOLArg_andunsignedlongArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andunsignedlongArg_ = objc.selector(BOOLArg_andunsignedlongArg_, signature="@@:CL")
+	BOOLArg_andunsignedlongArg_ = objc.selector(BOOLArg_andunsignedlongArg_, signature="@@:cL")
 
 
 	def BOOLArg_andunsignedlonglongArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andunsignedlonglongArg_ = objc.selector(BOOLArg_andunsignedlonglongArg_, signature="@@:CQ")
+	BOOLArg_andunsignedlonglongArg_ = objc.selector(BOOLArg_andunsignedlonglongArg_, signature="@@:cQ")
 
 
 	def BOOLArg_andfloatArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andfloatArg_ = objc.selector(BOOLArg_andfloatArg_, signature="@@:Cf")
+	BOOLArg_andfloatArg_ = objc.selector(BOOLArg_andfloatArg_, signature="@@:cf")
 
 
 	def BOOLArg_anddoubleArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_anddoubleArg_ = objc.selector(BOOLArg_anddoubleArg_, signature="@@:Cd")
+	BOOLArg_anddoubleArg_ = objc.selector(BOOLArg_anddoubleArg_, signature="@@:cd")
 
 
 	def BOOLArg_andidArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andidArg_ = objc.selector(BOOLArg_andidArg_, signature="@@:C@")
+	BOOLArg_andidArg_ = objc.selector(BOOLArg_andidArg_, signature="@@:c@")
 
 
 	def BOOLArg_andcharPtrArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andcharPtrArg_ = objc.selector(BOOLArg_andcharPtrArg_, signature="@@:C*")
+	BOOLArg_andcharPtrArg_ = objc.selector(BOOLArg_andcharPtrArg_, signature="@@:c*")
 
 
 	def BOOLArg_andNSPointArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andNSPointArg_ = objc.selector(BOOLArg_andNSPointArg_, signature="@@:C{_NSPoint=ff}")
+	BOOLArg_andNSPointArg_ = objc.selector(BOOLArg_andNSPointArg_, signature="@@:c{_NSPoint=ff}")
 
 
 	def BOOLArg_andNSRectArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andNSRectArg_ = objc.selector(BOOLArg_andNSRectArg_, signature="@@:C{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
+	BOOLArg_andNSRectArg_ = objc.selector(BOOLArg_andNSRectArg_, signature="@@:c{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
 
 
 	def BOOLArg_andstructTestStruct1Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andstructTestStruct1Arg_ = objc.selector(BOOLArg_andstructTestStruct1Arg_, signature="@@:C{_TestStruct1=ii[5s]}")
+	BOOLArg_andstructTestStruct1Arg_ = objc.selector(BOOLArg_andstructTestStruct1Arg_, signature="@@:c{_TestStruct1=ii[5s]}")
 
 
 	def BOOLArg_andstructTestStruct2Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andstructTestStruct2Arg_ = objc.selector(BOOLArg_andstructTestStruct2Arg_, signature="@@:C{_TestStruct2=id[5s]}")
+	BOOLArg_andstructTestStruct2Arg_ = objc.selector(BOOLArg_andstructTestStruct2Arg_, signature="@@:c{_TestStruct2=id[5s]}")
 
 
 	def BOOLArg_andstructTestStruct3Arg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	BOOLArg_andstructTestStruct3Arg_ = objc.selector(BOOLArg_andstructTestStruct3Arg_, signature="@@:C{_TestStruct3=ci}")
+	BOOLArg_andstructTestStruct3Arg_ = objc.selector(BOOLArg_andstructTestStruct3Arg_, signature="@@:c{_TestStruct3=ci}")
+
+
+	def charArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	charArg_andboolArg_ = objc.selector(charArg_andboolArg_, signature="@@:cB")
 
 
 	def charArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	charArg_andBOOLArg_ = objc.selector(charArg_andBOOLArg_, signature="@@:cC")
+	charArg_andBOOLArg_ = objc.selector(charArg_andBOOLArg_, signature="@@:cc")
 
 
 	def charArg_andcharArg_(self, arg1, arg2):
@@ -15589,9 +16742,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	charArg_andstructTestStruct3Arg_ = objc.selector(charArg_andstructTestStruct3Arg_, signature="@@:c{_TestStruct3=ci}")
 
 
+	def signedshortArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	signedshortArg_andboolArg_ = objc.selector(signedshortArg_andboolArg_, signature="@@:sB")
+
+
 	def signedshortArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	signedshortArg_andBOOLArg_ = objc.selector(signedshortArg_andBOOLArg_, signature="@@:sC")
+	signedshortArg_andBOOLArg_ = objc.selector(signedshortArg_andBOOLArg_, signature="@@:sc")
 
 
 	def signedshortArg_andcharArg_(self, arg1, arg2):
@@ -15689,9 +16847,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	signedshortArg_andstructTestStruct3Arg_ = objc.selector(signedshortArg_andstructTestStruct3Arg_, signature="@@:s{_TestStruct3=ci}")
 
 
+	def signedintArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	signedintArg_andboolArg_ = objc.selector(signedintArg_andboolArg_, signature="@@:iB")
+
+
 	def signedintArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	signedintArg_andBOOLArg_ = objc.selector(signedintArg_andBOOLArg_, signature="@@:iC")
+	signedintArg_andBOOLArg_ = objc.selector(signedintArg_andBOOLArg_, signature="@@:ic")
 
 
 	def signedintArg_andcharArg_(self, arg1, arg2):
@@ -15789,9 +16952,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	signedintArg_andstructTestStruct3Arg_ = objc.selector(signedintArg_andstructTestStruct3Arg_, signature="@@:i{_TestStruct3=ci}")
 
 
+	def signedlongArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	signedlongArg_andboolArg_ = objc.selector(signedlongArg_andboolArg_, signature="@@:lB")
+
+
 	def signedlongArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	signedlongArg_andBOOLArg_ = objc.selector(signedlongArg_andBOOLArg_, signature="@@:lC")
+	signedlongArg_andBOOLArg_ = objc.selector(signedlongArg_andBOOLArg_, signature="@@:lc")
 
 
 	def signedlongArg_andcharArg_(self, arg1, arg2):
@@ -15889,9 +17057,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	signedlongArg_andstructTestStruct3Arg_ = objc.selector(signedlongArg_andstructTestStruct3Arg_, signature="@@:l{_TestStruct3=ci}")
 
 
+	def signedlonglongArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	signedlonglongArg_andboolArg_ = objc.selector(signedlonglongArg_andboolArg_, signature="@@:qB")
+
+
 	def signedlonglongArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	signedlonglongArg_andBOOLArg_ = objc.selector(signedlonglongArg_andBOOLArg_, signature="@@:qC")
+	signedlonglongArg_andBOOLArg_ = objc.selector(signedlonglongArg_andBOOLArg_, signature="@@:qc")
 
 
 	def signedlonglongArg_andcharArg_(self, arg1, arg2):
@@ -15989,9 +17162,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	signedlonglongArg_andstructTestStruct3Arg_ = objc.selector(signedlonglongArg_andstructTestStruct3Arg_, signature="@@:q{_TestStruct3=ci}")
 
 
+	def unsignedcharArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedcharArg_andboolArg_ = objc.selector(unsignedcharArg_andboolArg_, signature="@@:CB")
+
+
 	def unsignedcharArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	unsignedcharArg_andBOOLArg_ = objc.selector(unsignedcharArg_andBOOLArg_, signature="@@:CC")
+	unsignedcharArg_andBOOLArg_ = objc.selector(unsignedcharArg_andBOOLArg_, signature="@@:Cc")
 
 
 	def unsignedcharArg_andcharArg_(self, arg1, arg2):
@@ -16089,9 +17267,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	unsignedcharArg_andstructTestStruct3Arg_ = objc.selector(unsignedcharArg_andstructTestStruct3Arg_, signature="@@:C{_TestStruct3=ci}")
 
 
+	def unsignedshortArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedshortArg_andboolArg_ = objc.selector(unsignedshortArg_andboolArg_, signature="@@:SB")
+
+
 	def unsignedshortArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	unsignedshortArg_andBOOLArg_ = objc.selector(unsignedshortArg_andBOOLArg_, signature="@@:SC")
+	unsignedshortArg_andBOOLArg_ = objc.selector(unsignedshortArg_andBOOLArg_, signature="@@:Sc")
 
 
 	def unsignedshortArg_andcharArg_(self, arg1, arg2):
@@ -16189,9 +17372,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	unsignedshortArg_andstructTestStruct3Arg_ = objc.selector(unsignedshortArg_andstructTestStruct3Arg_, signature="@@:S{_TestStruct3=ci}")
 
 
+	def unsignedintArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedintArg_andboolArg_ = objc.selector(unsignedintArg_andboolArg_, signature="@@:IB")
+
+
 	def unsignedintArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	unsignedintArg_andBOOLArg_ = objc.selector(unsignedintArg_andBOOLArg_, signature="@@:IC")
+	unsignedintArg_andBOOLArg_ = objc.selector(unsignedintArg_andBOOLArg_, signature="@@:Ic")
 
 
 	def unsignedintArg_andcharArg_(self, arg1, arg2):
@@ -16289,9 +17477,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	unsignedintArg_andstructTestStruct3Arg_ = objc.selector(unsignedintArg_andstructTestStruct3Arg_, signature="@@:I{_TestStruct3=ci}")
 
 
+	def unsignedlongArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedlongArg_andboolArg_ = objc.selector(unsignedlongArg_andboolArg_, signature="@@:LB")
+
+
 	def unsignedlongArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	unsignedlongArg_andBOOLArg_ = objc.selector(unsignedlongArg_andBOOLArg_, signature="@@:LC")
+	unsignedlongArg_andBOOLArg_ = objc.selector(unsignedlongArg_andBOOLArg_, signature="@@:Lc")
 
 
 	def unsignedlongArg_andcharArg_(self, arg1, arg2):
@@ -16389,9 +17582,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	unsignedlongArg_andstructTestStruct3Arg_ = objc.selector(unsignedlongArg_andstructTestStruct3Arg_, signature="@@:L{_TestStruct3=ci}")
 
 
+	def unsignedlonglongArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	unsignedlonglongArg_andboolArg_ = objc.selector(unsignedlonglongArg_andboolArg_, signature="@@:QB")
+
+
 	def unsignedlonglongArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	unsignedlonglongArg_andBOOLArg_ = objc.selector(unsignedlonglongArg_andBOOLArg_, signature="@@:QC")
+	unsignedlonglongArg_andBOOLArg_ = objc.selector(unsignedlonglongArg_andBOOLArg_, signature="@@:Qc")
 
 
 	def unsignedlonglongArg_andcharArg_(self, arg1, arg2):
@@ -16489,9 +17687,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	unsignedlonglongArg_andstructTestStruct3Arg_ = objc.selector(unsignedlonglongArg_andstructTestStruct3Arg_, signature="@@:Q{_TestStruct3=ci}")
 
 
+	def floatArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	floatArg_andboolArg_ = objc.selector(floatArg_andboolArg_, signature="@@:fB")
+
+
 	def floatArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	floatArg_andBOOLArg_ = objc.selector(floatArg_andBOOLArg_, signature="@@:fC")
+	floatArg_andBOOLArg_ = objc.selector(floatArg_andBOOLArg_, signature="@@:fc")
 
 
 	def floatArg_andcharArg_(self, arg1, arg2):
@@ -16589,9 +17792,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	floatArg_andstructTestStruct3Arg_ = objc.selector(floatArg_andstructTestStruct3Arg_, signature="@@:f{_TestStruct3=ci}")
 
 
+	def doubleArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	doubleArg_andboolArg_ = objc.selector(doubleArg_andboolArg_, signature="@@:dB")
+
+
 	def doubleArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	doubleArg_andBOOLArg_ = objc.selector(doubleArg_andBOOLArg_, signature="@@:dC")
+	doubleArg_andBOOLArg_ = objc.selector(doubleArg_andBOOLArg_, signature="@@:dc")
 
 
 	def doubleArg_andcharArg_(self, arg1, arg2):
@@ -16689,9 +17897,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	doubleArg_andstructTestStruct3Arg_ = objc.selector(doubleArg_andstructTestStruct3Arg_, signature="@@:d{_TestStruct3=ci}")
 
 
+	def idArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	idArg_andboolArg_ = objc.selector(idArg_andboolArg_, signature="@@:@B")
+
+
 	def idArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	idArg_andBOOLArg_ = objc.selector(idArg_andBOOLArg_, signature="@@:@C")
+	idArg_andBOOLArg_ = objc.selector(idArg_andBOOLArg_, signature="@@:@c")
 
 
 	def idArg_andcharArg_(self, arg1, arg2):
@@ -16789,9 +18002,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	idArg_andstructTestStruct3Arg_ = objc.selector(idArg_andstructTestStruct3Arg_, signature="@@:@{_TestStruct3=ci}")
 
 
+	def charPtrArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	charPtrArg_andboolArg_ = objc.selector(charPtrArg_andboolArg_, signature="@@:*B")
+
+
 	def charPtrArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	charPtrArg_andBOOLArg_ = objc.selector(charPtrArg_andBOOLArg_, signature="@@:*C")
+	charPtrArg_andBOOLArg_ = objc.selector(charPtrArg_andBOOLArg_, signature="@@:*c")
 
 
 	def charPtrArg_andcharArg_(self, arg1, arg2):
@@ -16889,9 +18107,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	charPtrArg_andstructTestStruct3Arg_ = objc.selector(charPtrArg_andstructTestStruct3Arg_, signature="@@:*{_TestStruct3=ci}")
 
 
+	def NSPointArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	NSPointArg_andboolArg_ = objc.selector(NSPointArg_andboolArg_, signature="@@:{_NSPoint=ff}B")
+
+
 	def NSPointArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	NSPointArg_andBOOLArg_ = objc.selector(NSPointArg_andBOOLArg_, signature="@@:{_NSPoint=ff}C")
+	NSPointArg_andBOOLArg_ = objc.selector(NSPointArg_andBOOLArg_, signature="@@:{_NSPoint=ff}c")
 
 
 	def NSPointArg_andcharArg_(self, arg1, arg2):
@@ -16989,9 +18212,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	NSPointArg_andstructTestStruct3Arg_ = objc.selector(NSPointArg_andstructTestStruct3Arg_, signature="@@:{_NSPoint=ff}{_TestStruct3=ci}")
 
 
+	def NSRectArg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	NSRectArg_andboolArg_ = objc.selector(NSRectArg_andboolArg_, signature="@@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}B")
+
+
 	def NSRectArg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	NSRectArg_andBOOLArg_ = objc.selector(NSRectArg_andBOOLArg_, signature="@@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}C")
+	NSRectArg_andBOOLArg_ = objc.selector(NSRectArg_andBOOLArg_, signature="@@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}c")
 
 
 	def NSRectArg_andcharArg_(self, arg1, arg2):
@@ -17089,9 +18317,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	NSRectArg_andstructTestStruct3Arg_ = objc.selector(NSRectArg_andstructTestStruct3Arg_, signature="@@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}{_TestStruct3=ci}")
 
 
+	def structTestStruct1Arg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct1Arg_andboolArg_ = objc.selector(structTestStruct1Arg_andboolArg_, signature="@@:{_TestStruct1=ii[5s]}B")
+
+
 	def structTestStruct1Arg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	structTestStruct1Arg_andBOOLArg_ = objc.selector(structTestStruct1Arg_andBOOLArg_, signature="@@:{_TestStruct1=ii[5s]}C")
+	structTestStruct1Arg_andBOOLArg_ = objc.selector(structTestStruct1Arg_andBOOLArg_, signature="@@:{_TestStruct1=ii[5s]}c")
 
 
 	def structTestStruct1Arg_andcharArg_(self, arg1, arg2):
@@ -17189,9 +18422,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	structTestStruct1Arg_andstructTestStruct3Arg_ = objc.selector(structTestStruct1Arg_andstructTestStruct3Arg_, signature="@@:{_TestStruct1=ii[5s]}{_TestStruct3=ci}")
 
 
+	def structTestStruct2Arg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct2Arg_andboolArg_ = objc.selector(structTestStruct2Arg_andboolArg_, signature="@@:{_TestStruct2=id[5s]}B")
+
+
 	def structTestStruct2Arg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	structTestStruct2Arg_andBOOLArg_ = objc.selector(structTestStruct2Arg_andBOOLArg_, signature="@@:{_TestStruct2=id[5s]}C")
+	structTestStruct2Arg_andBOOLArg_ = objc.selector(structTestStruct2Arg_andBOOLArg_, signature="@@:{_TestStruct2=id[5s]}c")
 
 
 	def structTestStruct2Arg_andcharArg_(self, arg1, arg2):
@@ -17289,9 +18527,14 @@ class Python_TestClass (objc.runtime.NSObject):
 	structTestStruct2Arg_andstructTestStruct3Arg_ = objc.selector(structTestStruct2Arg_andstructTestStruct3Arg_, signature="@@:{_TestStruct2=id[5s]}{_TestStruct3=ci}")
 
 
+	def structTestStruct3Arg_andboolArg_(self, arg1, arg2):
+		return [ arg1, arg2 ]
+	structTestStruct3Arg_andboolArg_ = objc.selector(structTestStruct3Arg_andboolArg_, signature="@@:{_TestStruct3=ci}B")
+
+
 	def structTestStruct3Arg_andBOOLArg_(self, arg1, arg2):
 		return [ arg1, arg2 ]
-	structTestStruct3Arg_andBOOLArg_ = objc.selector(structTestStruct3Arg_andBOOLArg_, signature="@@:{_TestStruct3=ci}C")
+	structTestStruct3Arg_andBOOLArg_ = objc.selector(structTestStruct3Arg_andBOOLArg_, signature="@@:{_TestStruct3=ci}c")
 
 
 	def structTestStruct3Arg_andcharArg_(self, arg1, arg2):
@@ -17389,9 +18632,30 @@ class Python_TestClass (objc.runtime.NSObject):
 	structTestStruct3Arg_andstructTestStruct3Arg_ = objc.selector(structTestStruct3Arg_andstructTestStruct3Arg_, signature="@@:{_TestStruct3=ci}{_TestStruct3=ci}")
 
 
+	def boolInArg_(self, arg):
+		return arg
+	boolInArg_ = objc.selector(boolInArg_, signature="@@:n^B")
+
+
+	def boolOutArg_(self):
+		if (self.counter > 2): self.reset()
+		res = g_bool_values[self.counter]
+		self.counter += 1
+		return res
+	boolOutArg_ = objc.selector(boolOutArg_, signature="v@:o^B")
+
+
+	def boolInOutArg_(self, arg):
+		if (self.counter > 2): self.reset()
+		res = g_bool_values[self.counter];
+		self.counter += 1
+		return (arg, res)
+	boolInOutArg_ = objc.selector(boolInOutArg_, signature="@@:N^B")
+
+
 	def BOOLInArg_(self, arg):
 		return arg
-	BOOLInArg_ = objc.selector(BOOLInArg_, signature="@@:n^C")
+	BOOLInArg_ = objc.selector(BOOLInArg_, signature="@@:n^c")
 
 
 	def BOOLOutArg_(self):
@@ -17399,7 +18663,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		res = g_BOOL_values[self.counter]
 		self.counter += 1
 		return res
-	BOOLOutArg_ = objc.selector(BOOLOutArg_, signature="v@:o^C")
+	BOOLOutArg_ = objc.selector(BOOLOutArg_, signature="v@:o^c")
 
 
 	def BOOLInOutArg_(self, arg):
@@ -17407,7 +18671,7 @@ class Python_TestClass (objc.runtime.NSObject):
 		res = g_BOOL_values[self.counter];
 		self.counter += 1
 		return (arg, res)
-	BOOLInOutArg_ = objc.selector(BOOLInOutArg_, signature="@@:N^C")
+	BOOLInOutArg_ = objc.selector(BOOLInOutArg_, signature="@@:N^c")
 
 
 	def charInArg_(self, arg):
@@ -17813,6 +19077,22 @@ class ObjCToPy (TestCase):
 	# Test calling Python from Objective-C
 	# Simple returns from instance methods
 
+	def testcallboolResult(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		self.assertEquals(PyObjC_TestClass2.callboolMethodOf_(o), YES)
+		self.assertEquals(PyObjC_TestClass2.callboolMethodOf_(o), NO)
+
+
+	def testinvokeboolResult(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		self.assertEquals(PyObjC_TestClass2.invokeboolMethodOf_(o), YES)
+		self.assertEquals(PyObjC_TestClass2.invokeboolMethodOf_(o), NO)
+
+
 	def testcallBOOLResult(self):
 		o = Python_TestClass.alloc().init()
 		self.assert_(o is not None)
@@ -18178,6 +19458,24 @@ class ObjCToPy (TestCase):
 
 
 	# One argument
+
+	def testcallboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_of_(YES, o)
+		self.assertEquals(r, YES)
+		r = PyObjC_TestClass2.invokeboolArg_of_(NO, o)
+		self.assertEquals(r, NO)
+
+
+	def testinvokeboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_of_(YES, o)
+		self.assertEquals(r, YES)
+		r = PyObjC_TestClass2.invokeboolArg_of_(NO, o)
+		self.assertEquals(r, NO)
+
 
 	def testcallBOOLArg(self):
 		o = Python_TestClass.alloc().init()
@@ -18640,6 +19938,1024 @@ class ObjCToPy (TestCase):
 
 
 	# Two arguments
+
+	def testcallboolAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andboolArg_of_(YES, YES, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callboolArg_andboolArg_of_(YES, NO, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callboolArg_andboolArg_of_(NO, YES, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callboolArg_andboolArg_of_(NO, NO, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokeboolAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andboolArg_of_(YES, YES, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeboolArg_andboolArg_of_(YES, NO, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeboolArg_andboolArg_of_(NO, YES, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeboolArg_andboolArg_of_(NO, NO, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], NO)
+
+
+	def testcallboolAndBOOLArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andBOOLArg_of_(YES, YES, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callboolArg_andBOOLArg_of_(YES, NO, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callboolArg_andBOOLArg_of_(NO, YES, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callboolArg_andBOOLArg_of_(NO, NO, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokeboolAndBOOLArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andBOOLArg_of_(YES, YES, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeboolArg_andBOOLArg_of_(YES, NO, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeboolArg_andBOOLArg_of_(NO, YES, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeboolArg_andBOOLArg_of_(NO, NO, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], NO)
+
+
+	def testcallboolAndcharArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andcharArg_of_(YES, -128, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -128)
+		r = PyObjC_TestClass2.callboolArg_andcharArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andcharArg_of_(YES, 127, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 127)
+		r = PyObjC_TestClass2.callboolArg_andcharArg_of_(NO, -128, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -128)
+		r = PyObjC_TestClass2.callboolArg_andcharArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andcharArg_of_(NO, 127, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 127)
+
+
+	def testinvokeboolAndcharArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andcharArg_of_(YES, -128, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -128)
+		r = PyObjC_TestClass2.invokeboolArg_andcharArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andcharArg_of_(YES, 127, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 127)
+		r = PyObjC_TestClass2.invokeboolArg_andcharArg_of_(NO, -128, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -128)
+		r = PyObjC_TestClass2.invokeboolArg_andcharArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andcharArg_of_(NO, 127, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 127)
+
+
+	def testcallboolAndsignedshortArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andsignedshortArg_of_(YES, -(1<<14), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -(1<<14))
+		r = PyObjC_TestClass2.callboolArg_andsignedshortArg_of_(YES, -42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callboolArg_andsignedshortArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andsignedshortArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andsignedshortArg_of_(YES, 1 << 14, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1 << 14)
+		r = PyObjC_TestClass2.callboolArg_andsignedshortArg_of_(NO, -(1<<14), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -(1<<14))
+		r = PyObjC_TestClass2.callboolArg_andsignedshortArg_of_(NO, -42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callboolArg_andsignedshortArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andsignedshortArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andsignedshortArg_of_(NO, 1 << 14, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1 << 14)
+
+
+	def testinvokeboolAndsignedshortArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedshortArg_of_(YES, -(1<<14), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -(1<<14))
+		r = PyObjC_TestClass2.invokeboolArg_andsignedshortArg_of_(YES, -42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedshortArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedshortArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedshortArg_of_(YES, 1 << 14, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1 << 14)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedshortArg_of_(NO, -(1<<14), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -(1<<14))
+		r = PyObjC_TestClass2.invokeboolArg_andsignedshortArg_of_(NO, -42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedshortArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedshortArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedshortArg_of_(NO, 1 << 14, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1 << 14)
+
+
+	def testcallboolAndsignedintArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andsignedintArg_of_(YES, -(1<<30), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.callboolArg_andsignedintArg_of_(YES, -42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callboolArg_andsignedintArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andsignedintArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andsignedintArg_of_(YES, 1 << 30, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.callboolArg_andsignedintArg_of_(NO, -(1<<30), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.callboolArg_andsignedintArg_of_(NO, -42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callboolArg_andsignedintArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andsignedintArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andsignedintArg_of_(NO, 1 << 30, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testinvokeboolAndsignedintArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedintArg_of_(YES, -(1<<30), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.invokeboolArg_andsignedintArg_of_(YES, -42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedintArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedintArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedintArg_of_(YES, 1 << 30, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedintArg_of_(NO, -(1<<30), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.invokeboolArg_andsignedintArg_of_(NO, -42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedintArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedintArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedintArg_of_(NO, 1 << 30, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testcallboolAndsignedlongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andsignedlongArg_of_(YES, -(1<<30), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.callboolArg_andsignedlongArg_of_(YES, -42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callboolArg_andsignedlongArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andsignedlongArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andsignedlongArg_of_(YES, 1 << 30, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.callboolArg_andsignedlongArg_of_(NO, -(1<<30), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.callboolArg_andsignedlongArg_of_(NO, -42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callboolArg_andsignedlongArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andsignedlongArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andsignedlongArg_of_(NO, 1 << 30, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testinvokeboolAndsignedlongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlongArg_of_(YES, -(1<<30), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlongArg_of_(YES, -42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlongArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlongArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlongArg_of_(YES, 1 << 30, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlongArg_of_(NO, -(1<<30), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -(1<<30))
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlongArg_of_(NO, -42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlongArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlongArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlongArg_of_(NO, 1 << 30, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testcallboolAndsignedlonglongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andsignedlonglongArg_of_(YES, -(1L << 60), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -(1L << 60))
+		r = PyObjC_TestClass2.callboolArg_andsignedlonglongArg_of_(YES, -42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callboolArg_andsignedlonglongArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andsignedlonglongArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andsignedlonglongArg_of_(YES, 1L << 60, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1L << 60)
+		r = PyObjC_TestClass2.callboolArg_andsignedlonglongArg_of_(NO, -(1L << 60), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -(1L << 60))
+		r = PyObjC_TestClass2.callboolArg_andsignedlonglongArg_of_(NO, -42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.callboolArg_andsignedlonglongArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andsignedlonglongArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andsignedlonglongArg_of_(NO, 1L << 60, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1L << 60)
+
+
+	def testinvokeboolAndsignedlonglongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlonglongArg_of_(YES, -(1L << 60), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -(1L << 60))
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlonglongArg_of_(YES, -42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlonglongArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlonglongArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlonglongArg_of_(YES, 1L << 60, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1L << 60)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlonglongArg_of_(NO, -(1L << 60), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -(1L << 60))
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlonglongArg_of_(NO, -42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], -42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlonglongArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlonglongArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andsignedlonglongArg_of_(NO, 1L << 60, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1L << 60)
+
+
+	def testcallboolAndunsignedcharArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andunsignedcharArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andunsignedcharArg_of_(YES, 128, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 128)
+		r = PyObjC_TestClass2.callboolArg_andunsignedcharArg_of_(YES, 255, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 255)
+		r = PyObjC_TestClass2.callboolArg_andunsignedcharArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andunsignedcharArg_of_(NO, 128, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 128)
+		r = PyObjC_TestClass2.callboolArg_andunsignedcharArg_of_(NO, 255, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 255)
+
+
+	def testinvokeboolAndunsignedcharArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedcharArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedcharArg_of_(YES, 128, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 128)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedcharArg_of_(YES, 255, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 255)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedcharArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedcharArg_of_(NO, 128, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 128)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedcharArg_of_(NO, 255, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 255)
+
+
+	def testcallboolAndunsignedshortArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andunsignedshortArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andunsignedshortArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andunsignedshortArg_of_(YES, 1<<14, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1<<14)
+		r = PyObjC_TestClass2.callboolArg_andunsignedshortArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andunsignedshortArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andunsignedshortArg_of_(NO, 1<<14, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1<<14)
+
+
+	def testinvokeboolAndunsignedshortArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedshortArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedshortArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedshortArg_of_(YES, 1<<14, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1<<14)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedshortArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedshortArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedshortArg_of_(NO, 1<<14, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1<<14)
+
+
+	def testcallboolAndunsignedintArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andunsignedintArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andunsignedintArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andunsignedintArg_of_(YES, 1 << 30, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.callboolArg_andunsignedintArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andunsignedintArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andunsignedintArg_of_(NO, 1 << 30, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testinvokeboolAndunsignedintArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedintArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedintArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedintArg_of_(YES, 1 << 30, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1 << 30)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedintArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedintArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedintArg_of_(NO, 1 << 30, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1 << 30)
+
+
+	def testcallboolAndunsignedlongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andunsignedlongArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andunsignedlongArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andunsignedlongArg_of_(YES, 1L << 30, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1L << 30)
+		r = PyObjC_TestClass2.callboolArg_andunsignedlongArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andunsignedlongArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andunsignedlongArg_of_(NO, 1L << 30, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1L << 30)
+
+
+	def testinvokeboolAndunsignedlongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedlongArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedlongArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedlongArg_of_(YES, 1L << 30, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1L << 30)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedlongArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedlongArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedlongArg_of_(NO, 1L << 30, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1L << 30)
+
+
+	def testcallboolAndunsignedlonglongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andunsignedlonglongArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andunsignedlonglongArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andunsignedlonglongArg_of_(YES, 1L << 62, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1L << 62)
+		r = PyObjC_TestClass2.callboolArg_andunsignedlonglongArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.callboolArg_andunsignedlonglongArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.callboolArg_andunsignedlonglongArg_of_(NO, 1L << 62, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1L << 62)
+
+
+	def testinvokeboolAndunsignedlonglongArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedlonglongArg_of_(YES, 0, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedlonglongArg_of_(YES, 42, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedlonglongArg_of_(YES, 1L << 62, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], 1L << 62)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedlonglongArg_of_(NO, 0, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 0)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedlonglongArg_of_(NO, 42, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 42)
+		r = PyObjC_TestClass2.invokeboolArg_andunsignedlonglongArg_of_(NO, 1L << 62, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], 1L << 62)
+
+
+	def testcallboolAndfloatArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andfloatArg_of_(YES, 0.128, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.callboolArg_andfloatArg_of_(YES, 1.0, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.callboolArg_andfloatArg_of_(YES, 42.0, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.callboolArg_andfloatArg_of_(YES, 1e10, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 1e10)
+		r = PyObjC_TestClass2.callboolArg_andfloatArg_of_(NO, 0.128, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.callboolArg_andfloatArg_of_(NO, 1.0, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.callboolArg_andfloatArg_of_(NO, 42.0, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.callboolArg_andfloatArg_of_(NO, 1e10, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testinvokeboolAndfloatArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andfloatArg_of_(YES, 0.128, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.invokeboolArg_andfloatArg_of_(YES, 1.0, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.invokeboolArg_andfloatArg_of_(YES, 42.0, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.invokeboolArg_andfloatArg_of_(YES, 1e10, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 1e10)
+		r = PyObjC_TestClass2.invokeboolArg_andfloatArg_of_(NO, 0.128, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.invokeboolArg_andfloatArg_of_(NO, 1.0, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.invokeboolArg_andfloatArg_of_(NO, 42.0, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.invokeboolArg_andfloatArg_of_(NO, 1e10, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testcallboolAnddoubleArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_anddoubleArg_of_(YES, 0.128, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.callboolArg_anddoubleArg_of_(YES, 1.0, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.callboolArg_anddoubleArg_of_(YES, 42.0, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.callboolArg_anddoubleArg_of_(YES, 1e10, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 1e10)
+		r = PyObjC_TestClass2.callboolArg_anddoubleArg_of_(NO, 0.128, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.callboolArg_anddoubleArg_of_(NO, 1.0, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.callboolArg_anddoubleArg_of_(NO, 42.0, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.callboolArg_anddoubleArg_of_(NO, 1e10, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testinvokeboolAnddoubleArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_anddoubleArg_of_(YES, 0.128, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.invokeboolArg_anddoubleArg_of_(YES, 1.0, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.invokeboolArg_anddoubleArg_of_(YES, 42.0, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.invokeboolArg_anddoubleArg_of_(YES, 1e10, o)
+		self.assertEquals(r[0], YES)
+		self.assertAlmostEquals(r[1], 1e10)
+		r = PyObjC_TestClass2.invokeboolArg_anddoubleArg_of_(NO, 0.128, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 0.128)
+		r = PyObjC_TestClass2.invokeboolArg_anddoubleArg_of_(NO, 1.0, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 1.0)
+		r = PyObjC_TestClass2.invokeboolArg_anddoubleArg_of_(NO, 42.0, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 42.0)
+		r = PyObjC_TestClass2.invokeboolArg_anddoubleArg_of_(NO, 1e10, o)
+		self.assertEquals(r[0], NO)
+		self.assertAlmostEquals(r[1], 1e10)
+
+
+	def testcallboolAndidArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andidArg_of_(YES, NSPriorDayDesignations, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NSPriorDayDesignations)
+		r = PyObjC_TestClass2.callboolArg_andidArg_of_(NO, NSPriorDayDesignations, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], NSPriorDayDesignations)
+
+
+	def testinvokeboolAndidArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andidArg_of_(YES, NSPriorDayDesignations, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NSPriorDayDesignations)
+		r = PyObjC_TestClass2.invokeboolArg_andidArg_of_(NO, NSPriorDayDesignations, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], NSPriorDayDesignations)
+
+
+	def testcallboolAndcharPtrArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andcharPtrArg_of_(YES, "hello", o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], "hello")
+		r = PyObjC_TestClass2.callboolArg_andcharPtrArg_of_(YES, "world", o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], "world")
+		r = PyObjC_TestClass2.callboolArg_andcharPtrArg_of_(YES, "foobar", o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], "foobar")
+		r = PyObjC_TestClass2.callboolArg_andcharPtrArg_of_(NO, "hello", o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], "hello")
+		r = PyObjC_TestClass2.callboolArg_andcharPtrArg_of_(NO, "world", o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], "world")
+		r = PyObjC_TestClass2.callboolArg_andcharPtrArg_of_(NO, "foobar", o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], "foobar")
+
+
+	def testinvokeboolAndcharPtrArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andcharPtrArg_of_(YES, "hello", o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], "hello")
+		r = PyObjC_TestClass2.invokeboolArg_andcharPtrArg_of_(YES, "world", o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], "world")
+		r = PyObjC_TestClass2.invokeboolArg_andcharPtrArg_of_(YES, "foobar", o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], "foobar")
+		r = PyObjC_TestClass2.invokeboolArg_andcharPtrArg_of_(NO, "hello", o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], "hello")
+		r = PyObjC_TestClass2.invokeboolArg_andcharPtrArg_of_(NO, "world", o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], "world")
+		r = PyObjC_TestClass2.invokeboolArg_andcharPtrArg_of_(NO, "foobar", o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], "foobar")
+
+
+	def testcallboolAndNSPointArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andNSPointArg_of_(YES, (1, 2), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.callboolArg_andNSPointArg_of_(YES, (3, 4), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (3, 4))
+		r = PyObjC_TestClass2.callboolArg_andNSPointArg_of_(NO, (1, 2), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.callboolArg_andNSPointArg_of_(NO, (3, 4), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (3, 4))
+
+
+	def testinvokeboolAndNSPointArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andNSPointArg_of_(YES, (1, 2), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.invokeboolArg_andNSPointArg_of_(YES, (3, 4), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (3, 4))
+		r = PyObjC_TestClass2.invokeboolArg_andNSPointArg_of_(NO, (1, 2), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.invokeboolArg_andNSPointArg_of_(NO, (3, 4), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (3, 4))
+
+
+	def testcallboolAndNSRectArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andNSRectArg_of_(YES, ((1, 2), (3, 4)), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = PyObjC_TestClass2.callboolArg_andNSRectArg_of_(YES, ((7, 8), (9, 10)), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+		r = PyObjC_TestClass2.callboolArg_andNSRectArg_of_(NO, ((1, 2), (3, 4)), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = PyObjC_TestClass2.callboolArg_andNSRectArg_of_(NO, ((7, 8), (9, 10)), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+
+
+	def testinvokeboolAndNSRectArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andNSRectArg_of_(YES, ((1, 2), (3, 4)), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = PyObjC_TestClass2.invokeboolArg_andNSRectArg_of_(YES, ((7, 8), (9, 10)), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+		r = PyObjC_TestClass2.invokeboolArg_andNSRectArg_of_(NO, ((1, 2), (3, 4)), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], ((1, 2), (3, 4)))
+		r = PyObjC_TestClass2.invokeboolArg_andNSRectArg_of_(NO, ((7, 8), (9, 10)), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], ((7, 8), (9, 10)))
+
+
+	def testcallboolAndstructTestStruct1Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andstructTestStruct1Arg_of_(YES, (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.callboolArg_andstructTestStruct1Arg_of_(YES, (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = PyObjC_TestClass2.callboolArg_andstructTestStruct1Arg_of_(NO, (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.callboolArg_andstructTestStruct1Arg_of_(NO, (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testinvokeboolAndstructTestStruct1Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct1Arg_of_(YES, (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct1Arg_of_(YES, (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct1Arg_of_(NO, (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct1Arg_of_(NO, (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testcallboolAndstructTestStruct2Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andstructTestStruct2Arg_of_(YES, (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.callboolArg_andstructTestStruct2Arg_of_(YES, (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = PyObjC_TestClass2.callboolArg_andstructTestStruct2Arg_of_(NO, (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.callboolArg_andstructTestStruct2Arg_of_(NO, (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testinvokeboolAndstructTestStruct2Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct2Arg_of_(YES, (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct2Arg_of_(YES, (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+		r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct2Arg_of_(NO, (1, 2, (1, 2, 3, 4, 5)), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2, (1, 2, 3, 4, 5)))
+		r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct2Arg_of_(NO, (9, 8, (-1, -2, -3, -4, -5)), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (9, 8, (-1, -2, -3, -4, -5)))
+
+
+	def testcallboolAndstructTestStruct3Arg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolArg_andstructTestStruct3Arg_of_(YES, (1, 2), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.callboolArg_andstructTestStruct3Arg_of_(YES, (2, 4), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.callboolArg_andstructTestStruct3Arg_of_(NO, (1, 2), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.callboolArg_andstructTestStruct3Arg_of_(NO, (2, 4), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testinvokeboolAndstructTestStruct3Arg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct3Arg_of_(YES, (1, 2), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct3Arg_of_(YES, (2, 4), o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], (2, 4))
+		r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct3Arg_of_(NO, (1, 2), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (1, 2))
+		r = PyObjC_TestClass2.invokeboolArg_andstructTestStruct3Arg_of_(NO, (2, 4), o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallBOOLAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callBOOLArg_andboolArg_of_(YES, YES, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callBOOLArg_andboolArg_of_(YES, NO, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callBOOLArg_andboolArg_of_(NO, YES, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callBOOLArg_andboolArg_of_(NO, NO, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokeBOOLAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeBOOLArg_andboolArg_of_(YES, YES, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeBOOLArg_andboolArg_of_(YES, NO, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeBOOLArg_andboolArg_of_(NO, YES, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeBOOLArg_andboolArg_of_(NO, NO, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], NO)
+
 
 	def testcallBOOLAndBOOLArg(self):
 		o = Python_TestClass.alloc().init()
@@ -19589,6 +21905,52 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokeBOOLArg_andstructTestStruct3Arg_of_(NO, (2, 4), o)
 		self.assertEquals(r[0], NO)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallcharAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callcharArg_andboolArg_of_(-128, YES, o)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callcharArg_andboolArg_of_(-128, NO, o)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callcharArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callcharArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callcharArg_andboolArg_of_(127, YES, o)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callcharArg_andboolArg_of_(127, NO, o)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokecharAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokecharArg_andboolArg_of_(-128, YES, o)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokecharArg_andboolArg_of_(-128, NO, o)
+		self.assertEquals(r[0], -128)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokecharArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokecharArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokecharArg_andboolArg_of_(127, YES, o)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokecharArg_andboolArg_of_(127, NO, o)
+		self.assertEquals(r[0], 127)
+		self.assertEquals(r[1], NO)
 
 
 	def testcallcharAndBOOLArg(self):
@@ -20911,6 +23273,76 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokecharArg_andstructTestStruct3Arg_of_(127, (2, 4), o)
 		self.assertEquals(r[0], 127)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallsignedshortAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callsignedshortArg_andboolArg_of_(-(1<<14), YES, o)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedshortArg_andboolArg_of_(-(1<<14), NO, o)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedshortArg_andboolArg_of_(-42, YES, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedshortArg_andboolArg_of_(-42, NO, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedshortArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedshortArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedshortArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedshortArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedshortArg_andboolArg_of_(1 << 14, YES, o)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedshortArg_andboolArg_of_(1 << 14, NO, o)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokesignedshortAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokesignedshortArg_andboolArg_of_(-(1<<14), YES, o)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedshortArg_andboolArg_of_(-(1<<14), NO, o)
+		self.assertEquals(r[0], -(1<<14))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedshortArg_andboolArg_of_(-42, YES, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedshortArg_andboolArg_of_(-42, NO, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedshortArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedshortArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedshortArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedshortArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedshortArg_andboolArg_of_(1 << 14, YES, o)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedshortArg_andboolArg_of_(1 << 14, NO, o)
+		self.assertEquals(r[0], 1 << 14)
+		self.assertEquals(r[1], NO)
 
 
 	def testcallsignedshortAndBOOLArg(self):
@@ -22979,6 +25411,76 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallsignedintAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callsignedintArg_andboolArg_of_(-(1<<30), YES, o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedintArg_andboolArg_of_(-(1<<30), NO, o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedintArg_andboolArg_of_(-42, YES, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedintArg_andboolArg_of_(-42, NO, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedintArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedintArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedintArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedintArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedintArg_andboolArg_of_(1 << 30, YES, o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedintArg_andboolArg_of_(1 << 30, NO, o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokesignedintAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokesignedintArg_andboolArg_of_(-(1<<30), YES, o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedintArg_andboolArg_of_(-(1<<30), NO, o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedintArg_andboolArg_of_(-42, YES, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedintArg_andboolArg_of_(-42, NO, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedintArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedintArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedintArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedintArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedintArg_andboolArg_of_(1 << 30, YES, o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedintArg_andboolArg_of_(1 << 30, NO, o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], NO)
+
+
 	def testcallsignedintAndBOOLArg(self):
 		o = Python_TestClass.alloc().init()
 		self.assert_(o is not None)
@@ -25043,6 +27545,76 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokesignedintArg_andstructTestStruct3Arg_of_(1 << 30, (2, 4), o)
 		self.assertEquals(r[0], 1 << 30)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallsignedlongAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callsignedlongArg_andboolArg_of_(-(1<<30), YES, o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedlongArg_andboolArg_of_(-(1<<30), NO, o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedlongArg_andboolArg_of_(-42, YES, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedlongArg_andboolArg_of_(-42, NO, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedlongArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedlongArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedlongArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedlongArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedlongArg_andboolArg_of_(1 << 30, YES, o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedlongArg_andboolArg_of_(1 << 30, NO, o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokesignedlongAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokesignedlongArg_andboolArg_of_(-(1<<30), YES, o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedlongArg_andboolArg_of_(-(1<<30), NO, o)
+		self.assertEquals(r[0], -(1<<30))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedlongArg_andboolArg_of_(-42, YES, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedlongArg_andboolArg_of_(-42, NO, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedlongArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedlongArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedlongArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedlongArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedlongArg_andboolArg_of_(1 << 30, YES, o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedlongArg_andboolArg_of_(1 << 30, NO, o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], NO)
 
 
 	def testcallsignedlongAndBOOLArg(self):
@@ -27111,6 +29683,76 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallsignedlonglongAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callsignedlonglongArg_andboolArg_of_(-(1L << 60), YES, o)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedlonglongArg_andboolArg_of_(-(1L << 60), NO, o)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedlonglongArg_andboolArg_of_(-42, YES, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedlonglongArg_andboolArg_of_(-42, NO, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedlonglongArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedlonglongArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedlonglongArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedlonglongArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callsignedlonglongArg_andboolArg_of_(1L << 60, YES, o)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callsignedlonglongArg_andboolArg_of_(1L << 60, NO, o)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokesignedlonglongAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andboolArg_of_(-(1L << 60), YES, o)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andboolArg_of_(-(1L << 60), NO, o)
+		self.assertEquals(r[0], -(1L << 60))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andboolArg_of_(-42, YES, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andboolArg_of_(-42, NO, o)
+		self.assertEquals(r[0], -42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andboolArg_of_(1L << 60, YES, o)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokesignedlonglongArg_andboolArg_of_(1L << 60, NO, o)
+		self.assertEquals(r[0], 1L << 60)
+		self.assertEquals(r[1], NO)
+
+
 	def testcallsignedlonglongAndBOOLArg(self):
 		o = Python_TestClass.alloc().init()
 		self.assert_(o is not None)
@@ -29177,6 +31819,52 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallunsignedcharAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedcharArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedcharArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callunsignedcharArg_andboolArg_of_(128, YES, o)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedcharArg_andboolArg_of_(128, NO, o)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callunsignedcharArg_andboolArg_of_(255, YES, o)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedcharArg_andboolArg_of_(255, NO, o)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokeunsignedcharAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andboolArg_of_(128, YES, o)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andboolArg_of_(128, NO, o)
+		self.assertEquals(r[0], 128)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andboolArg_of_(255, YES, o)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedcharArg_andboolArg_of_(255, NO, o)
+		self.assertEquals(r[0], 255)
+		self.assertEquals(r[1], NO)
+
+
 	def testcallunsignedcharAndBOOLArg(self):
 		o = Python_TestClass.alloc().init()
 		self.assert_(o is not None)
@@ -30497,6 +33185,52 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokeunsignedcharArg_andstructTestStruct3Arg_of_(255, (2, 4), o)
 		self.assertEquals(r[0], 255)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallunsignedshortAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedshortArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedshortArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callunsignedshortArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedshortArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callunsignedshortArg_andboolArg_of_(1<<14, YES, o)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedshortArg_andboolArg_of_(1<<14, NO, o)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokeunsignedshortAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andboolArg_of_(1<<14, YES, o)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedshortArg_andboolArg_of_(1<<14, NO, o)
+		self.assertEquals(r[0], 1<<14)
+		self.assertEquals(r[1], NO)
 
 
 	def testcallunsignedshortAndBOOLArg(self):
@@ -31821,6 +34555,52 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallunsignedintAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedintArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedintArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callunsignedintArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedintArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callunsignedintArg_andboolArg_of_(1 << 30, YES, o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedintArg_andboolArg_of_(1 << 30, NO, o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokeunsignedintAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedintArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedintArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeunsignedintArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedintArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeunsignedintArg_andboolArg_of_(1 << 30, YES, o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedintArg_andboolArg_of_(1 << 30, NO, o)
+		self.assertEquals(r[0], 1 << 30)
+		self.assertEquals(r[1], NO)
+
+
 	def testcallunsignedintAndBOOLArg(self):
 		o = Python_TestClass.alloc().init()
 		self.assert_(o is not None)
@@ -33141,6 +35921,52 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokeunsignedintArg_andstructTestStruct3Arg_of_(1 << 30, (2, 4), o)
 		self.assertEquals(r[0], 1 << 30)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallunsignedlongAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedlongArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedlongArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callunsignedlongArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedlongArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callunsignedlongArg_andboolArg_of_(1L << 30, YES, o)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedlongArg_andboolArg_of_(1L << 30, NO, o)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokeunsignedlongAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andboolArg_of_(1L << 30, YES, o)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedlongArg_andboolArg_of_(1L << 30, NO, o)
+		self.assertEquals(r[0], 1L << 30)
+		self.assertEquals(r[1], NO)
 
 
 	def testcallunsignedlongAndBOOLArg(self):
@@ -34465,6 +37291,52 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallunsignedlonglongAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andboolArg_of_(1L << 62, YES, o)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callunsignedlonglongArg_andboolArg_of_(1L << 62, NO, o)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokeunsignedlonglongAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andboolArg_of_(0, YES, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andboolArg_of_(0, NO, o)
+		self.assertEquals(r[0], 0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andboolArg_of_(42, YES, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andboolArg_of_(42, NO, o)
+		self.assertEquals(r[0], 42)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andboolArg_of_(1L << 62, YES, o)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andboolArg_of_(1L << 62, NO, o)
+		self.assertEquals(r[0], 1L << 62)
+		self.assertEquals(r[1], NO)
+
+
 	def testcallunsignedlonglongAndBOOLArg(self):
 		o = Python_TestClass.alloc().init()
 		self.assert_(o is not None)
@@ -35785,6 +38657,64 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokeunsignedlonglongArg_andstructTestStruct3Arg_of_(1L << 62, (2, 4), o)
 		self.assertEquals(r[0], 1L << 62)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallfloatAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callfloatArg_andboolArg_of_(0.128, YES, o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callfloatArg_andboolArg_of_(0.128, NO, o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callfloatArg_andboolArg_of_(1.0, YES, o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callfloatArg_andboolArg_of_(1.0, NO, o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callfloatArg_andboolArg_of_(42.0, YES, o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callfloatArg_andboolArg_of_(42.0, NO, o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callfloatArg_andboolArg_of_(1e10, YES, o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callfloatArg_andboolArg_of_(1e10, NO, o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokefloatAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokefloatArg_andboolArg_of_(0.128, YES, o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokefloatArg_andboolArg_of_(0.128, NO, o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokefloatArg_andboolArg_of_(1.0, YES, o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokefloatArg_andboolArg_of_(1.0, NO, o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokefloatArg_andboolArg_of_(42.0, YES, o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokefloatArg_andboolArg_of_(42.0, NO, o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokefloatArg_andboolArg_of_(1e10, YES, o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokefloatArg_andboolArg_of_(1e10, NO, o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], NO)
 
 
 	def testcallfloatAndBOOLArg(self):
@@ -37481,6 +40411,64 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcalldoubleAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.calldoubleArg_andboolArg_of_(0.128, YES, o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.calldoubleArg_andboolArg_of_(0.128, NO, o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.calldoubleArg_andboolArg_of_(1.0, YES, o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.calldoubleArg_andboolArg_of_(1.0, NO, o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.calldoubleArg_andboolArg_of_(42.0, YES, o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.calldoubleArg_andboolArg_of_(42.0, NO, o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.calldoubleArg_andboolArg_of_(1e10, YES, o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.calldoubleArg_andboolArg_of_(1e10, NO, o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokedoubleAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokedoubleArg_andboolArg_of_(0.128, YES, o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokedoubleArg_andboolArg_of_(0.128, NO, o)
+		self.assertAlmostEquals(r[0], 0.128)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokedoubleArg_andboolArg_of_(1.0, YES, o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokedoubleArg_andboolArg_of_(1.0, NO, o)
+		self.assertAlmostEquals(r[0], 1.0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokedoubleArg_andboolArg_of_(42.0, YES, o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokedoubleArg_andboolArg_of_(42.0, NO, o)
+		self.assertAlmostEquals(r[0], 42.0)
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokedoubleArg_andboolArg_of_(1e10, YES, o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokedoubleArg_andboolArg_of_(1e10, NO, o)
+		self.assertAlmostEquals(r[0], 1e10)
+		self.assertEquals(r[1], NO)
+
+
 	def testcalldoubleAndBOOLArg(self):
 		o = Python_TestClass.alloc().init()
 		self.assert_(o is not None)
@@ -39175,6 +42163,28 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallidAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callidArg_andboolArg_of_(NSPriorDayDesignations, YES, o)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callidArg_andboolArg_of_(NSPriorDayDesignations, NO, o)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokeidAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeidArg_andboolArg_of_(NSPriorDayDesignations, YES, o)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeidArg_andboolArg_of_(NSPriorDayDesignations, NO, o)
+		self.assertEquals(r[0], NSPriorDayDesignations)
+		self.assertEquals(r[1], NO)
+
+
 	def testcallidAndBOOLArg(self):
 		o = Python_TestClass.alloc().init()
 		self.assert_(o is not None)
@@ -39751,6 +42761,52 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokeidArg_andstructTestStruct3Arg_of_(NSPriorDayDesignations, (2, 4), o)
 		self.assertEquals(r[0], NSPriorDayDesignations)
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallcharPtrAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callcharPtrArg_andboolArg_of_("hello", YES, o)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callcharPtrArg_andboolArg_of_("hello", NO, o)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callcharPtrArg_andboolArg_of_("world", YES, o)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callcharPtrArg_andboolArg_of_("world", NO, o)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callcharPtrArg_andboolArg_of_("foobar", YES, o)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callcharPtrArg_andboolArg_of_("foobar", NO, o)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokecharPtrAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokecharPtrArg_andboolArg_of_("hello", YES, o)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokecharPtrArg_andboolArg_of_("hello", NO, o)
+		self.assertEquals(r[0], "hello")
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokecharPtrArg_andboolArg_of_("world", YES, o)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokecharPtrArg_andboolArg_of_("world", NO, o)
+		self.assertEquals(r[0], "world")
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokecharPtrArg_andboolArg_of_("foobar", YES, o)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokecharPtrArg_andboolArg_of_("foobar", NO, o)
+		self.assertEquals(r[0], "foobar")
+		self.assertEquals(r[1], NO)
 
 
 	def testcallcharPtrAndBOOLArg(self):
@@ -41075,6 +44131,40 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallNSPointAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callNSPointArg_andboolArg_of_((1, 2), YES, o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callNSPointArg_andboolArg_of_((1, 2), NO, o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callNSPointArg_andboolArg_of_((3, 4), YES, o)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callNSPointArg_andboolArg_of_((3, 4), NO, o)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokeNSPointAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeNSPointArg_andboolArg_of_((1, 2), YES, o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeNSPointArg_andboolArg_of_((1, 2), NO, o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeNSPointArg_andboolArg_of_((3, 4), YES, o)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeNSPointArg_andboolArg_of_((3, 4), NO, o)
+		self.assertEquals(r[0], (3, 4))
+		self.assertEquals(r[1], NO)
+
+
 	def testcallNSPointAndBOOLArg(self):
 		o = Python_TestClass.alloc().init()
 		self.assert_(o is not None)
@@ -42025,6 +45115,40 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallNSRectAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callNSRectArg_andboolArg_of_(((1, 2), (3, 4)), YES, o)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callNSRectArg_andboolArg_of_(((1, 2), (3, 4)), NO, o)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callNSRectArg_andboolArg_of_(((7, 8), (9, 10)), YES, o)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callNSRectArg_andboolArg_of_(((7, 8), (9, 10)), NO, o)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokeNSRectAndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeNSRectArg_andboolArg_of_(((1, 2), (3, 4)), YES, o)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeNSRectArg_andboolArg_of_(((1, 2), (3, 4)), NO, o)
+		self.assertEquals(r[0], ((1, 2), (3, 4)))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokeNSRectArg_andboolArg_of_(((7, 8), (9, 10)), YES, o)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeNSRectArg_andboolArg_of_(((7, 8), (9, 10)), NO, o)
+		self.assertEquals(r[0], ((7, 8), (9, 10)))
+		self.assertEquals(r[1], NO)
+
+
 	def testcallNSRectAndBOOLArg(self):
 		o = Python_TestClass.alloc().init()
 		self.assert_(o is not None)
@@ -42973,6 +46097,42 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokeNSRectArg_andstructTestStruct3Arg_of_(((7, 8), (9, 10)), (2, 4), o)
 		self.assertEquals(r[0], ((7, 8), (9, 10)))
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallstructTestStruct1AndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct1Arg_andboolArg_of_((1, 2, (1, 2, 3, 4, 5)), YES, o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callstructTestStruct1Arg_andboolArg_of_((1, 2, (1, 2, 3, 4, 5)), NO, o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callstructTestStruct1Arg_andboolArg_of_((9, 8, (-1, -2, -3, -4, -5)), YES, o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callstructTestStruct1Arg_andboolArg_of_((9, 8, (-1, -2, -3, -4, -5)), NO, o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokestructTestStruct1AndboolArg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct1Arg_andboolArg_of_((1, 2, (1, 2, 3, 4, 5)), YES, o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokestructTestStruct1Arg_andboolArg_of_((1, 2, (1, 2, 3, 4, 5)), NO, o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokestructTestStruct1Arg_andboolArg_of_((9, 8, (-1, -2, -3, -4, -5)), YES, o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokestructTestStruct1Arg_andboolArg_of_((9, 8, (-1, -2, -3, -4, -5)), NO, o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], NO)
 
 
 	def testcallstructTestStruct1AndBOOLArg(self):
@@ -43959,6 +47119,42 @@ class ObjCToPy (TestCase):
 		self.assertEquals(r[1], (2, 4))
 
 
+	def testcallstructTestStruct2AndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct2Arg_andboolArg_of_((1, 2, (1, 2, 3, 4, 5)), YES, o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callstructTestStruct2Arg_andboolArg_of_((1, 2, (1, 2, 3, 4, 5)), NO, o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callstructTestStruct2Arg_andboolArg_of_((9, 8, (-1, -2, -3, -4, -5)), YES, o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callstructTestStruct2Arg_andboolArg_of_((9, 8, (-1, -2, -3, -4, -5)), NO, o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokestructTestStruct2AndboolArg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andboolArg_of_((1, 2, (1, 2, 3, 4, 5)), YES, o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andboolArg_of_((1, 2, (1, 2, 3, 4, 5)), NO, o)
+		self.assertEquals(r[0], (1, 2, (1, 2, 3, 4, 5)))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andboolArg_of_((9, 8, (-1, -2, -3, -4, -5)), YES, o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andboolArg_of_((9, 8, (-1, -2, -3, -4, -5)), NO, o)
+		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
+		self.assertEquals(r[1], NO)
+
+
 	def testcallstructTestStruct2AndBOOLArg(self):
 		o = Python_TestClass.alloc().init()
 		self.assert_(o is not None)
@@ -44941,6 +48137,42 @@ class ObjCToPy (TestCase):
 		r = PyObjC_TestClass2.invokestructTestStruct2Arg_andstructTestStruct3Arg_of_((9, 8, (-1, -2, -3, -4, -5)), (2, 4), o)
 		self.assertEquals(r[0], (9, 8, (-1, -2, -3, -4, -5)))
 		self.assertEquals(r[1], (2, 4))
+
+
+	def testcallstructTestStruct3AndboolArg(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callstructTestStruct3Arg_andboolArg_of_((1, 2), YES, o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callstructTestStruct3Arg_andboolArg_of_((1, 2), NO, o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.callstructTestStruct3Arg_andboolArg_of_((2, 4), YES, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callstructTestStruct3Arg_andboolArg_of_((2, 4), NO, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokestructTestStruct3AndboolArg(self):
+		if not nsinvoke_ok:
+			return
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokestructTestStruct3Arg_andboolArg_of_((1, 2), YES, o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokestructTestStruct3Arg_andboolArg_of_((1, 2), NO, o)
+		self.assertEquals(r[0], (1, 2))
+		self.assertEquals(r[1], NO)
+		r = PyObjC_TestClass2.invokestructTestStruct3Arg_andboolArg_of_((2, 4), YES, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokestructTestStruct3Arg_andboolArg_of_((2, 4), NO, o)
+		self.assertEquals(r[0], (2, 4))
+		self.assertEquals(r[1], NO)
 
 
 	def testcallstructTestStruct3AndBOOLArg(self):
@@ -45929,6 +49161,24 @@ class ObjCToPy (TestCase):
 
 	# Pass by reference arguments (in)
 
+	def testcallboolIn(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.callboolInArg_of_(YES, o)
+		self.assertEquals(r, YES)
+		r = PyObjC_TestClass2.callboolInArg_of_(NO, o)
+		self.assertEquals(r, NO)
+
+
+	def testinvokeboolIn(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		r = PyObjC_TestClass2.invokeboolInArg_of_(YES, o)
+		self.assertEquals(r, YES)
+		r = PyObjC_TestClass2.invokeboolInArg_of_(NO, o)
+		self.assertEquals(r, NO)
+
+
 	def testcallBOOLIn(self):
 		o = Python_TestClass.alloc().init()
 		self.assert_(o is not None)
@@ -46378,6 +49628,26 @@ class ObjCToPy (TestCase):
 
 
 	# Pass by reference arguments (out)
+
+	def testcallboolOut(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = PyObjC_TestClass2.callboolOutArg_of_(o)
+		self.assertEquals(r, YES)
+		r = PyObjC_TestClass2.callboolOutArg_of_(o)
+		self.assertEquals(r, NO)
+
+
+	def testinvokeboolOut(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = PyObjC_TestClass2.invokeboolOutArg_of_(o)
+		self.assertEquals(r, YES)
+		r = PyObjC_TestClass2.invokeboolOutArg_of_(o)
+		self.assertEquals(r, NO)
+
 
 	def testcallBOOLOut(self):
 		o = Python_TestClass.alloc().init()
@@ -46868,6 +50138,30 @@ class ObjCToPy (TestCase):
 
 
 	# Pass by reference arguments (out)
+
+	def testcallboolInOut(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = PyObjC_TestClass2.callboolInOutArg_of_(NO, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.callboolInOutArg_of_(YES, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NO)
+
+
+	def testinvokeboolInOut(self):
+		o = Python_TestClass.alloc().init()
+		self.assert_(o is not None)
+		o.reset()
+		r = PyObjC_TestClass2.invokeboolInOutArg_of_(NO, o)
+		self.assertEquals(r[0], NO)
+		self.assertEquals(r[1], YES)
+		r = PyObjC_TestClass2.invokeboolInOutArg_of_(YES, o)
+		self.assertEquals(r[0], YES)
+		self.assertEquals(r[1], NO)
+
 
 	def testcallBOOLInOut(self):
 		o = Python_TestClass.alloc().init()
