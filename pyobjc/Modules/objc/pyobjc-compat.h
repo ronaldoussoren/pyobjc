@@ -1,7 +1,6 @@
 #ifndef PyObjC_COMPAT_H
 #define PyObjC_COMPAT_H
 
-
 /* 
  * Compatibilty definitions 
  */

@@ -11,9 +11,6 @@
  * a subclass of NSMutableDictonary Python dictionaries can be used
  * whereever instances of NSDictionary or NSMutableDictionary are expected.
  *
- * TODO: Implement more methods of NSMutableDictionary: All methods that can
- * be efficiently mapped onto the Python C API for dictionaries.
- *
  * NOTE: We currently only proxy real 'dict' objects this way, the generic
  * PyMapping_* API is not flexible enough!
  */

@@ -1,8 +1,5 @@
 /*
  * Mapping of static items in the InterfaceBuilder framework
- * 
- * - constants 
- * - enumerations
  */
 #include <Python.h>
 

@@ -1,4 +1,5 @@
 /* Copyright (c) 1996,97,98 by Lele Gaifax.  All Rights Reserved
+ * Copyright (c) 2002, 2003 Ronald Oussoren
  *
  * This software may be used and distributed freely for any purpose
  * provided that this notice is included unchanged on any and all
@@ -153,7 +154,6 @@ PyObjCRT_SkipTypeQualifiers (const char* type)
 
 const char * 
 PyObjCRT_SkipTypeSpec (const char *type)
-
 {
 	type = PyObjCRT_SkipTypeQualifiers (type);
 
@@ -229,10 +229,13 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	default:
 		ObjCErr_Set(ObjCExc_internal_error,
 			"PyObjCRT_SkipTypeSpec: Unhandled type '%#x'", *type); 
-		abort();
 		return NULL;
 	}
 
+	/* The compiler inserts a number after the actual signature, 
+	 * this number may or may not be usefull depending on the compiler
+	 * version. We never use it.
+	 */
 	while (type && isdigit(*type)) type++;
 	return type;
 }

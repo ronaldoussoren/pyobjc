@@ -346,3 +346,13 @@ module has been hacked up to support new-style packages. It should be rewritten
 based on the Apple documentation on the layout of packages, there is no need
 to support 10.1-style packages. This new module should be donated to
 MacPython).
+
+Implement more of NSMutableDictionary in OC_PythonDictionary
+.............................................................
+
+The implementation of OC_PythonDictionary is very minimal, we should add
+additional methods in the NSMutableDictionary interface if those can be 
+implemented efficiently. The default implementation will take care of the
+methods we cannot implement efficiently.
+
+And the same is true of OC_PythonArray

@@ -38,7 +38,7 @@ def main():
     # NSApp.setDelegate_() doesn't retain it. A local variable is
     # enough here.
     delegate = AppDelegate.alloc().init()
-    NSApp.setDelegate_(delegate)
+    NSApp().setDelegate_(delegate)
 
     win = NSWindow.alloc()
     frame = ((200.0, 300.0), (250.0, 100.0))

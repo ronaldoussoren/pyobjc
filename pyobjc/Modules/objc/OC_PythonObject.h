@@ -1,4 +1,5 @@
 /* Copyright (c) 1996,97 by Lele Gaifax.  All Rights Reserved
+ * Copyright (c) 2002,2003 Ronald Oussoren.
  *
  * This software may be used and distributed freely for any purpose
  * provided that this notice is included unchanged on any and all
@@ -17,6 +18,7 @@
  *       that was removed by Ronald because no-one was using or maintaining
  *       that functionality. OC_PythonObject is now a simple proxy for plain
  *       python objects.
+ *
  */
 
 #ifndef _OC_PythonObject_H

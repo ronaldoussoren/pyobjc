@@ -1,6 +1,8 @@
 /*
  *  A boolean type for python 2.2, this is basicly a copy of boolobject.h from
  *  Python 2.3. The python license applies.
+ *
+ *  Copyright PSF.
  */
 
 /* Boolean object interface */
