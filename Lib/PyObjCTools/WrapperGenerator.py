@@ -9,9 +9,7 @@ TODO
 - Find a real parser, the DummyParser sucks...
 - Finish the implementation
   * Functions
-    | Need to specify input/output arguments (no usecase yet)
-    | Need to specify that some pointers are not "bad" (e.g. NSZone*)
-  * Method definitions
+    | Need to specify input/output arguments
   * What can we do about enums are defined using other constants that we
     don't wrap?
 - Test the output on MacOS X
@@ -22,7 +20,6 @@ TODO
 - Add documentation that explains how to wrap an existing framework,
   preferably with some examples.
 - Use this generator instead of our current CodeGenerator scripts
-- What can we do on GNUstep?
 """
 
 __all__=(
@@ -339,7 +336,16 @@ def getSelector(line):
         pos = m.end()
     return isClassMethod, "".join(selParts), types
 
+
 class DumbHeaderParser (object):
+    """
+    This is a very, very simple parser for Objective-C header files. It 
+    seems to do alright on Apple's Cocoa headers.
+
+    This class is *not* meant for reuse outside of this module. Please do
+    not use it.
+    """
+
     def __init__(self, global_variable_prefix=None, function_prefix=None, ignore_functions = (), framework_include=None, framework_link=None, opaque_pointers=()):
         self.in_interface = False
         self.in_protocol = False
