@@ -76,6 +76,9 @@ callback::
 		mysheetDidEnd = PyObjCTools.AppHelper.endSheetMethod(
 			mysheetDidEnd)
 
+Unless otherwise noted, all ``contextInfo`` arguments are passed as integers,
+not as arbitrary pointers.
+
 
 Class NSApplication
 ...................

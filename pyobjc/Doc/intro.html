@@ -28,11 +28,12 @@ Contents</title>
 <li><a href="#cocoa-for-python-programmers" id="id10" name="id10">Cocoa for Python programmers</a></li>
 <li><a href="#notes-on-specific-tasks" id="id11" name="id11">Notes on specific tasks</a><ul>
 <li><a href="#working-with-threads" id="id12" name="id12">Working with threads</a></li>
+<li><a href="#finalizers" id="id13" name="id13">Finalizers</a></li>
 </ul>
 </li>
-<li><a href="#building-applications" id="id13" name="id13">Building applications</a><ul>
-<li><a href="#pure-python-buildapp-py" id="id14" name="id14">&quot;Pure Python&quot; :  buildapp.py</a></li>
-<li><a href="#ide-approach-project-builder" id="id15" name="id15">&quot;IDE approach&quot; : Project builder</a></li>
+<li><a href="#building-applications" id="id14" name="id14">Building applications</a><ul>
+<li><a href="#pure-python-buildapp-py" id="id15" name="id15">&quot;Pure Python&quot; :  buildapp.py</a></li>
+<li><a href="#ide-approach-project-builder" id="id16" name="id16">&quot;IDE approach&quot; : Project builder</a></li>
 </ul>
 </li>
 </ul>
@@ -291,11 +292,18 @@ create new threads, but must use the python primitives instead.</p>
 thread that owns the Python GIL (that's also the reason for not being able 
 to use <code><span>NSThread</span></code> to create new threads).  This restriction will be lifted
 in a future version of PyObjC (at least when using Python 2.3).</p>
-<h2><a href="#id13" name="building-applications">Building applications</a></h2>
+<h3><a href="#id13" name="finalizers">Finalizers</a></h3>
+<p>In Python you can use the method <code><span>__del__</span></code> to clean up resources when your
+object is garbage collected. In Objective-C/Cocoa this is done with a method 
+named <code><span>dealloc</span></code>.</p>
+<p>In PyObjC you should always use the <code><span>__del__</span></code> method, the <code><span>dealloc</span></code> method
+can safely be ignored and the bridge will complain when you try to override
+this method.</p>
+<h2><a href="#id14" name="building-applications">Building applications</a></h2>
 <p>There are two different ways to build applications with PyObjC. There are no
 major advantages to using either one of them, use the one that is most 
 convenient to you.</p>
-<h3><a href="#id14" name="pure-python-buildapp-py">&quot;Pure Python&quot; :  buildapp.py</a></h3>
+<h3><a href="#id15" name="pure-python-buildapp-py">&quot;Pure Python&quot; :  buildapp.py</a></h3>
 <p>PyObjC includes a copy of the <code><span>bundlebuilder</span></code> module. This module will be
 part of the Python 2.3 MacPython release and offers a way to build
 distutils-style scripts  for building (standalone) applications.</p>
@@ -329,7 +337,7 @@ incompatible Python version.</p>
 <p>The online documentation for <code><span>bundlebuilder</span></code> contains more information on 
 building <code><span>buildapp.py</span></code> scripts and how to invoke them. There are plenty of
 example <code><span>buildapp.py</span></code> scripts in the various <a href="../Examples/00ReadMe.txt">Examples</a> subfolders.</p>
-<h3><a href="#id15" name="ide-approach-project-builder">&quot;IDE approach&quot; : Project builder</a></h3>
+<h3><a href="#id16" name="ide-approach-project-builder">&quot;IDE approach&quot; : Project builder</a></h3>
 <p>PyObjC includes a number of Project Builder templates that can be used to 
 build (standalone) applications. Those templates are used like any other
 Project Builder template. The only non-obvious detail is that you have to

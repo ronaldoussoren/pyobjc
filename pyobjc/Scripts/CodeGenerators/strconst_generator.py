@@ -9,7 +9,7 @@ import re
 import os
 from dupfile import *
 
-MATCH_RE=re.compile('NSString \*([ ]*const[ ]+)?([A-Za-z_][A-Za-z0-9_]*([ ]*,[ ]*\*[ ]*[A-Za-z_][A-Za-z0-9_]*)*);')
+MATCH_RE=re.compile(r'NSString\s*\*\s*(const\s+)?([A-Za-z_][A-Za-z0-9_]*(\s*,\s\*\s*[A-Za-z_][A-Za-z0-9_]*)*);')
 
 def entry(fp, val, ignore):
     vals = val.split(',')
