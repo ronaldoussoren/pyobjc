@@ -28,7 +28,7 @@ class FileObserver(NSObject):
         else:
             self.fileHandle.readInBackgroundAndNotify()
             if self.readCallback is not None:
-                self.readCallback(self, newData.bytes()[:])
+                self.readCallback(self, str(newData))
 
     def close(self):
         self.nc.removeObserver_(self)

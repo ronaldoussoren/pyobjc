@@ -34,6 +34,7 @@
 #include "pointer-support.h"
 #include "OC_PythonObject.h"
 #include "OC_PythonArray.h"
+#include "OC_PythonData.h"
 #include "OC_PythonDictionary.h"
 #include "method-signature.h"
 #include "objc_util.h"

@@ -7,6 +7,55 @@
 
 #include <stddef.h>
 
+/*
+ * Support for NSData/NSMutableData to have buffer API
+ *
+ */
+
+static
+int nsdata_getreadbuffer(PyObject *pyself, int segment __attribute__((unused)), void **ptrptr) {
+	NSData *self = (NSData *)PyObjCObject_GetObject(pyself);
+	assert(segment == 0);
+	if (ptrptr != NULL) {
+		*ptrptr = (void *)[self bytes];
+	}
+	return (int)[self length];
+}
+
+static
+int nsmutabledata_getwritebuffer(PyObject *pyself, int segment __attribute__((unused)), void **ptrptr) {
+	NSMutableData *self = (NSMutableData *)PyObjCObject_GetObject(pyself);
+	assert(segment == 0);
+	if (ptrptr != NULL) {
+		*ptrptr = (void *)[self mutableBytes];
+	}
+	return (int)[self length];
+}
+
+static
+int nsdata_getsegcount(PyObject *pyself, int *lenp) {
+	NSData *self = (NSData *)PyObjCObject_GetObject(pyself);
+	if (lenp != NULL) {
+		*lenp = (int)[self length];
+	}
+	return 1;
+}
+
+static PyBufferProcs nsdata_as_buffer = {
+	(getreadbufferproc)&nsdata_getreadbuffer,
+	NULL,
+	(getsegcountproc)&nsdata_getsegcount,
+	NULL
+};
+
+static PyBufferProcs nsmutabledata_as_buffer = {
+	(getreadbufferproc)&nsdata_getreadbuffer,
+	(getwritebufferproc)&nsmutabledata_getwritebuffer,
+	(getsegcountproc)&nsdata_getsegcount,
+	NULL
+};
+
+
 PyDoc_STRVAR(class_doc,
 "objc_class(name, bases, dict) -> a new Objective-C class\n"
 "\n"
@@ -1055,6 +1104,13 @@ PyObjCClass_New(Class objc_class)
 	info->useKVO = 0;
 	info->delmethod = NULL;
 	info->hasPythonImpl = 0;
+
+	/* XXX: Hack to support buffer API */
+	if (strcmp(objc_class->name, "NSData") == 0) {
+		((PyTypeObject *)result)->tp_as_buffer = &nsdata_as_buffer;
+	} else if (strcmp(objc_class->name, "NSMutableData") == 0) {
+		((PyTypeObject *)result)->tp_as_buffer = &nsmutabledata_as_buffer;
+	}
 
 	var = class_getInstanceVariable(objc_class, "__dict__");
 	if (var != NULL) {

@@ -132,7 +132,7 @@ class MyData5(NSData):
 
 
 class TestMyData (unittest.TestCase):
-    # 'initWithBytes:lenght:' and 'dataWithBytes:lenght:' have custom IMP's
+    # 'initWithBytes:length:' and 'dataWithBytes:length:' have custom IMP's
     def testData(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData, 0)
         self.assertEquals(r, ('data', 'hello world', 11))
@@ -153,6 +153,28 @@ class TestMyData (unittest.TestCase):
     def testBytesRaises(self):
         b = PyObjC_TestClass3.makeDataWithBytes_method_(MyData5, 1)
         self.assertRaises(ValueError, b.bytes)
+
+import array
+class TestBuffer(unittest.TestCase):
+    def testArray(self):
+        a = array.array('c', 'foo')
+        m = NSMutableData.dataWithData_(a)
+        self.assertEquals(a.tostring(), m[:])
+        self.assert_(objc.repythonify(a) is a)
+        a.fromstring(m)
+        self.assertEquals(a.tostring(), 'foofoo')
+        m.appendData_(a)
+        self.assertEquals(m[:], 'foofoofoo')
+        m[3:6] = 'bar'
+        self.assertEquals(m[:], 'foobarfoo')
+
+    def testBuffer(self):
+        b = buffer('foo')
+        m = NSMutableData.dataWithData_(b)
+        self.assertEquals(b[:], m[:])
+        self.assert_(objc.repythonify(b) is b)
+        self.assertEquals(buffer(m)[:], m[:])
+        
 
 if __name__ == '__main__':
     unittest.main( )

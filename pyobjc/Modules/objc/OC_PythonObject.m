@@ -114,7 +114,7 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 	if (PyUnicode_Check(argument)) {
 #ifdef PyObjC_UNICODE_FAST_PATH
 		rval = [NSString stringWithCharacters:(const unichar *)PyUnicode_AS_UNICODE(argument) length:(unsigned)PyUnicode_GET_SIZE(argument)];
-        r = 0;
+		r = 0;
 #else
 		PyObject* utf8 = PyUnicode_AsUTF8String(argument);
 		if (utf8) {
@@ -166,6 +166,15 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 			newWithPythonObject:argument];
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
+	} else if (PyObject_CheckReadBuffer(argument) && !PyString_Check(argument)) {
+		rval = [OC_PythonData
+			newWithPythonObject:argument];
+		if (rval) {
+			PyObjC_RegisterObjCProxy(argument, rval);
+			r = 0;
+		} else {
+			r = -1;
+		}
 #ifdef MACOSX
 	} else if ((rval = PyObjC_CFTypeToID(argument))) {
 		// unwrapped cf
@@ -688,7 +697,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 + (BOOL)useStoredAccessor
 {
- 	return YES;
+	return YES;
 }
 
 + (BOOL)accessInstanceVariablesDirectly;
