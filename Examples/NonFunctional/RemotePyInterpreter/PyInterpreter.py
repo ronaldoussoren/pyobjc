@@ -3,43 +3,12 @@ import traceback
 import sets
 import keyword
 import time
-from code import InteractiveConsole, softspace
-from StringIO import StringIO
-from objc import YES, NO, selector
 from Foundation import *
 from AppKit import *
 from PyObjCTools import NibClassBuilder, AppHelper
 
 NibClassBuilder.extractClasses("PyInterpreter.nib")
 
-try:
-    sys.ps1
-except AttributeError:
-    sys.ps1 = ">>> "
-try:
-    sys.ps2
-except AttributeError:
-    sys.ps2 = "... "
-
-class PseudoUTF8Output(object):
-    softspace = 0
-    def __init__(self, writemethod):
-        self._write = writemethod
-
-    def write(self, s):
-        if not isinstance(s, unicode):
-            s = s.decode('utf-8', 'replace')
-        self._write(s)
-
-    def writelines(self, lines):
-        for line in lines:
-            self.write(line)
-
-    def flush(self):
-        pass
-
-    def isatty(self):
-        return True
 
 class PseudoUTF8Input(object):
     softspace = 0
@@ -77,99 +46,6 @@ class PseudoUTF8Input(object):
 
         return rval
 
-class AsyncInteractiveConsole(InteractiveConsole):
-    lock = False
-    buffer = None
-
-    def __init__(self, *args, **kwargs):
-        InteractiveConsole.__init__(self, *args, **kwargs)
-        self.locals['__interpreter__'] = self
-
-    def asyncinteract(self, write=None, banner=None):
-        if self.lock:
-            raise ValueError, "Can't nest"
-        self.lock = True
-        if write is None:
-            write = self.write
-        cprt = u'Type "help", "copyright", "credits" or "license" for more information.'
-        if banner is None:
-            write(u"Python %s in %s\n%s\n" % (
-                sys.version,
-                NSBundle.mainBundle().objectForInfoDictionaryKey_('CFBundleName'),
-                cprt,
-            ))
-        else:
-            write(banner + '\n')
-        more = 0
-        _buff = []
-        try:
-            while True:
-                if more:
-                    prompt = sys.ps2
-                else:
-                    prompt = sys.ps1
-                write(prompt)
-                # yield the kind of prompt we have
-                yield more
-                # next input function
-                yield _buff.append
-                more = self.push(_buff.pop())
-        except:
-            self.lock = False
-            raise
-        self.lock = False
-
-    def resetbuffer(self):
-        self.lastbuffer = self.buffer
-        InteractiveConsole.resetbuffer(self)
-
-    def runcode(self, code):
-        try:
-            exec code in self.locals
-        except SystemExit:
-            raise
-        except:
-            self.showtraceback()
-        else:
-            if softspace(sys.stdout, 0):
-                print
-
-
-    def recommendCompletionsFor(self, word):
-        parts = word.split('.')
-        if len(parts) > 1:
-            # has a . so it must be a module or class or something
-            # using eval, which shouldn't normally have side effects
-            # unless there's descriptors/metaclasses doing some nasty
-            # get magic
-            objname = '.'.join(parts[:-1])
-            try:
-                obj = eval(objname, self.locals)
-            except:
-                return None, 0
-            wordlower = parts[-1].lower()
-            if wordlower == '':
-                # they just punched in a dot, so list all attributes
-                # that don't look private or special
-                prefix = '.'.join(parts[-2:])
-                check = [
-                    (prefix+_method)
-                    for _method
-                    in dir(obj)
-                    if _method[:1] != '_' and _method.lower().startswith(wordlower)
-                ]
-            else:
-                # they started typing the method name
-                check = filter(lambda s:s.lower().startswith(wordlower), dir(obj))
-        else:
-            # no dots, must be in the normal namespaces.. no eval necessary
-            check = sets.Set(dir(__builtins__))
-            check.update(keyword.kwlist)
-            check.update(self.locals)
-            wordlower = parts[-1].lower()
-            check = filter(lambda s:s.lower().startswith(wordlower), check)
-        check.sort()
-        return check, 0
 
 DEBUG_DELEGATE = 0
 PASSTHROUGH = (
@@ -186,14 +62,6 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     """
 
     #
-    #  Outlets - for documentation only
-    #
-
-    _NIBOutlets_ = (
-        (NSTextView,    'textView',         'The interpreter'),
-    )
-
-    #
     #  NSApplicationDelegate methods
     #
 
@@ -201,7 +69,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         self.textView.setFont_(self.font())
         self.textView.setContinuousSpellCheckingEnabled_(False)
         self.textView.setRichText_(False)
-        self._executeWithRedirectedIO(self._interp)
+        self.p_executeWithRedirectedIO(self.p_interp)
 
     #
     #  NIB loading protocol
@@ -209,30 +77,27 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
         self = super(PyInterpreter, self).init()
-        self._font = NSFont.userFixedPitchFontOfSize_(10)
-        self._stderrColor = NSColor.redColor()
-        self._stdoutColor = NSColor.blueColor()
-        self._codeColor = NSColor.blackColor()
-        self._historyLength = 50
-        self._history = [u'']
-        self._historyView = 0
-        self._characterIndexForInput = 0
-        self._stdin = PseudoUTF8Input(self._nestedRunLoopReaderUntilEOLchars_)
-        #self._stdin = PseudoUTF8Input(self.readStdin)
-        self._stderr = PseudoUTF8Output(self.writeStderr_)
-        self._stdout = PseudoUTF8Output(self.writeStdout_)
-        self._isInteracting = False
-        self._console = AsyncInteractiveConsole()
-        self._interp = self._console.asyncinteract(
+        self.p_font = NSFont.userFixedPitchFontOfSize_(10)
+        self.p_stderrColor = NSColor.redColor()
+        self.p_stdoutColor = NSColor.blueColor()
+        self.p_codeColor = NSColor.blackColor()
+        self.p_historyLength = 50
+        self.p_history = [u'']
+        self.p_historyView = 0
+        self.p_characterIndexForInput = 0
+        self.p_stdin = PseudoUTF8Input(self.p_nestedRunLoopReaderUntilEOLchars_)
+        self.p_isInteracting = False
+        self.p_console = AsyncInteractiveConsole()
+        self.p_interp = self.p_console.asyncinteract(
             write=self.writeCode_,
         ).next
-        self._autoscroll = True
+        self.p_autoscroll = True
 
     #
     #  Modal input dialog support
     #
 
-    def _nestedRunLoopReaderUntilEOLchars_(self, eolchars):
+    def p_nestedRunLoopReaderUntilEOLchars_(self, eolchars):
         """
         This makes the baby jesus cry.
 
@@ -266,11 +131,11 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     #  Interpreter functions
     #
 
-    def _executeWithRedirectedIO(self, fn, *args, **kwargs):
+    def p_executeWithRedirectedIO(self, fn, *args, **kwargs):
         old = sys.stdin, sys.stdout, sys.stderr
-        if self._stdin is not None:
-            sys.stdin = self._stdin
-        sys.stdout, sys.stderr = self._stdout, self._stderr
+        if self.p_stdin is not None:
+            sys.stdin = self.p_stdin
+        sys.stdout, sys.stderr = self.p_stdout, self.p_stderr
         try:
             rval = fn(*args, **kwargs)
         finally:
@@ -280,14 +145,14 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
 
     def executeLine_(self, line):
         self.addHistoryLine_(line)
-        self._executeWithRedirectedIO(self._executeLine_, line)
-        self._history = filter(None, self._history)
-        self._history.append(u'')
-        self._historyView = len(self._history) - 1
+        self.p_executeWithRedirectedIO(self.p_executeLine_, line)
+        self.p_history = filter(None, self.p_history)
+        self.p_history.append(u'')
+        self.p_historyView = len(self.p_history) - 1
 
-    def _executeLine_(self, line):
-        self._interp()(line)
-        self._more = self._interp()
+    def p_executeLine_(self, line):
+        self.p_interp()(line)
+        self.p_more = self.p_interp()
 
     def executeInteractiveLine_(self, line):
         self.setIsInteracting(True)
@@ -307,43 +172,43 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
     #
 
     def historyLength(self):
-        return self._historyLength
+        return self.p_historyLength
 
     def setHistoryLength_(self, length):
-        self._historyLength = length
+        self.p_historyLength = length
 
     def addHistoryLine_(self, line):
         line = line.rstrip('\n')
-        if self._history[-1] == line:
+        if self.p_history[-1] == line:
             return False
         if not line:
             return False
-        self._history.append(line)
-        if len(self._history) > self.historyLength():
-            self._history.pop(0)
+        self.p_history.append(line)
+        if len(self.p_history) > self.historyLength():
+            self.p_history.pop(0)
         return True
 
     def historyDown_(self, sender):
-        if self._historyView == (len(self._history) - 1):
+        if self.p_historyView == (len(self.p_history) - 1):
             return
-        self._history[self._historyView] = self.currentLine()
-        self._historyView += 1
-        self.replaceLineWithCode_(self._history[self._historyView])
+        self.p_history[self.p_historyView] = self.currentLine()
+        self.p_historyView += 1
+        self.replaceLineWithCode_(self.p_history[self.p_historyView])
         self.moveToEndOfLine_(self)
 
     def historyUp_(self, sender):
-        if self._historyView == 0:
+        if self.p_historyView == 0:
             return
-        self._history[self._historyView] = self.currentLine()
-        self._historyView -= 1
-        self.replaceLineWithCode_(self._history[self._historyView])
+        self.p_history[self.p_historyView] = self.currentLine()
+        self.p_historyView -= 1
+        self.replaceLineWithCode_(self.p_history[self.p_historyView])
         self.moveToEndOfLine_(self)
 
     #
     #  Convenience methods to create/write decorated text
     #
 
-    def _formatString_forOutput_(self, s, name):
+    def p_formatString_forOutput_(self, s, name):
         return NSAttributedString.alloc().initWithString_attributes_(
             s,
             {
@@ -352,84 +217,63 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
             },
         )
 
-    def _writeString_forOutput_(self, s, name):
+    def p_writeString_forOutput_(self, s, name):
         self.textView.textStorage().appendAttributedString_(getattr(self, name+'String_')(s))
 
         window = self.textView.window()
-        app = NSApplication.sharedApplication()
-        st = time.time()
-        now = time.time
 
-        if self._autoscroll:
+        if self.p_autoscroll:
             self.textView.scrollRangeToVisible_((self.lengthOfTextView(), 0))
 
-        while app.isRunning() and now() - st < 0.01:
-            event = app.nextEventMatchingMask_untilDate_inMode_dequeue_(
-                NSAnyEventMask,
-                NSDate.dateWithTimeIntervalSinceNow_(0.01),
-                NSDefaultRunLoopMode,
-                True)
-
-            if event is None:
-                continue
-
-            if (event.type() == NSKeyDown) and (event.window() == window):
-                chr = event.charactersIgnoringModifiers()
-                if chr == 'c' and (event.modifierFlags() & NSControlKeyMask):
-                    raise KeyboardInterrupt
-
-            app.sendEvent_(event)
-
-
-    codeString_   = lambda self, s: self._formatString_forOutput_(s, 'code')
-    stderrString_ = lambda self, s: self._formatString_forOutput_(s, 'stderr')
-    stdoutString_ = lambda self, s: self._formatString_forOutput_(s, 'stdout')
-    writeCode_    = lambda self, s: self._writeString_forOutput_(s, 'code')
-    writeStderr_  = lambda self, s: self._writeString_forOutput_(s, 'stderr')
-    writeStdout_  = lambda self, s: self._writeString_forOutput_(s, 'stdout')
+    codeString_   = lambda self, s: self.p_formatString_forOutput_(s, 'code')
+    stderrString_ = lambda self, s: self.p_formatString_forOutput_(s, 'stderr')
+    stdoutString_ = lambda self, s: self.p_formatString_forOutput_(s, 'stdout')
+    writeCode_    = lambda self, s: self.p_writeString_forOutput_(s, 'code')
+    writeStderr_  = lambda self, s: self.p_writeString_forOutput_(s, 'stderr')
+    writeStdout_  = lambda self, s: self.p_writeString_forOutput_(s, 'stdout')
 
     #
     #  Accessors
     #
 
     def more(self):
-        return self._more
+        return self.p_more
 
     def font(self):
-        return self._font
+        return self.p_font
 
     def setFont_(self, font):
-        self._font = font
+        self.p_font = font
 
     def stderrColor(self):
-        return self._stderrColor
+        return self.p_stderrColor
 
     def setStderrColor_(self, color):
-        self._stderrColor = color
+        self.p_stderrColor = color
 
     def stdoutColor(self):
-        return self._stdoutColor
+        return self.p_stdoutColor
 
     def setStdoutColor_(self, color):
-        self._stdoutColor = color
+        self.p_stdoutColor = color
 
     def codeColor(self):
-        return self._codeColor
+        return self.p_codeColor
 
     def setStdoutColor_(self, color):
-        self._codeColor = color
+        self.p_codeColor = color
 
     def isInteracting(self):
-        return self._isInteracting
+        return self.p_isInteracting
 
     def setIsInteracting(self, v):
-        self._isInteracting = v
+        self.p_isInteracting = v
 
     def isAutoScroll(self):
-        return self._autoScroll
+        return self.p_autoScroll
 
     def setAutoScroll(self, v):
-        self._autoScroll = v
+        self.p_autoScroll = v
 
 
     #
@@ -444,13 +288,13 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         self.textView.setSelectedRange_((idx, 0))
 
     def characterIndexForInput(self):
-        return self._characterIndexForInput
+        return self.p_characterIndexForInput
 
     def lengthOfTextView(self):
         return len(self.textView.textStorage().mutableString())
 
     def setCharacterIndexForInput_(self, idx):
-        self._characterIndexForInput = idx
+        self.p_characterIndexForInput = idx
         self.moveAndScrollToIndex_(idx)
 
     #
@@ -464,28 +308,28 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
             begin -= 1
         while not txt[begin].isalnum():
             begin += 1
-        return self._console.recommendCompletionsFor(txt[begin:end])
+        return self.p_console.recommendCompletionsFor(txt[begin:end])
 
     def textView_shouldChangeTextInRange_replacementString_(self, aTextView, aRange, newString):
         begin, length = aRange
         lastLocation = self.characterIndexForInput()
         if begin < lastLocation:
             # no editing anywhere but the interactive line
-            return NO
+            return False
         newString = newString.replace('\r', '\n')
         if '\n' in newString:
             if begin != lastLocation:
                 # no pasting multiline unless you're at the end
                 # of the interactive line
-                return NO
+                return False
             # multiline paste support
             #self.clearLine()
             newString = self.currentLine() + newString
             for s in newString.strip().split('\n'):
                 self.writeCode_(s+'\n')
                 self.executeLine_(s)
-            return NO
-        return YES
+            return False
+        return True
 
     def textView_willChangeSelectionFromCharacterRange_toCharacterRange_(self, aTextView, fromRange, toRange):
         return toRange
@@ -500,15 +344,15 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         if self.isInteracting():
             if aSelector == 'insertNewline:':
                 self.writeCode_('\n')
-            return NO
+            return False
         responder = getattr(self, aSelector.replace(':','_'), None)
         if responder is not None:
             responder(aTextView)
-            return YES
+            return True
         else:
             if DEBUG_DELEGATE and aSelector not in PASSTHROUGH:
                 print aSelector
-            return NO
+            return False
 
     #
     #  doCommandBySelector "posers" on the textView
