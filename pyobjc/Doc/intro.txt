@@ -365,13 +365,18 @@ you're done. The easiest way to that is to create an instance of that class
 bound to a local variable. If the thread is long-lived you may want to arrange
 for recycling the pool once in a while.
 
-There are some limitation w.r.t. threading. You cannot use ``NSThread`` to 
-create new threads, but must use the python primitives instead. 
+Threading limitiations when using Python 2.2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are some limitation w.r.t. threading when using Python 2.2. The
+combination of Python 2.3 and PyObjC is fully thread-safe.
+
+You cannot use ``NSThread`` to create new threads, but must use the python 
+primitives instead.  
 
 You must also make sure that Objective-C only makes calls to Python from a 
 thread that owns the Python GIL (that's also the reason for not being able 
-to use ``NSThread`` to create new threads).  This restriction will be lifted
-in a future version of PyObjC (at least when using Python 2.3).
+to use ``NSThread`` to create new threads).  
 
 Finalizers
 ..........
