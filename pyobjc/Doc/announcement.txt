@@ -1,0 +1,63 @@
+The 0.9 announcement message, mostly present as input for future announcements.
+
+to 
+   python-list@python.org
+   python-announce-list@python.org
+   macosx-dev@omnigroup.com
+   pyobjc-dev@sourceforge.net
+   macpython-sig@python.org
+   cocoa-dev@lists.apple.com
+
+subject: ANN: PyObjC 0.9
+
+PyObjC 0.9 is now available for download at http://pyobjc.sourceforge.net/  
+
+PyObjC is a bridge between Python and Objective-C.  It allows full
+featured Cocoa applications to be written in pure Python.  It is also
+easy to use other frameworks containing Objective-C class libraries
+from Python and to mix in Objective-C, C and C++ source.
+
+Python is a highly dynamic programming language with a shallow learning 
+curve.  It combines remarkable power with very clear syntax.
+
+The installer package includes a number of Project Builder templates for 
+easily creating new Cocoa-Python projects.  Version 0.9 also introduces 
+support for sytax coloring of Python files in Project Builder.
+
+PyObjC also supports full introspection of Objective-C classes and 
+direct invocation of Objective-C APIs from the interactive interpreter.
+
+PyObjC requires MacOS X 10.2 or later.  PyObjC works both with the Apple 
+provided Python installation in MacOS X 10.2 (and later) and with 
+MacPython 2.3b1.  Users of MacPython 2.3b1 can install PyObjC though the 
+PackageManager application.
+
+PyObjC 0.9 includes many inprovements over earlier versions and users are 
+strongly advised to upgrade.  The installer package will automatically upgrade
+prior releases.
+
+PyObjC is released with an open source license.
+
+
+on our website (News section):
+
+PyObjC 0.9 has shippped. A disk image and the sources are `available` [link]. 
+There are many new features and bugfixes, the the NEWS file [link] for details.
+
+The PyObjC installer installs a number of examples and project builder templates
+as well as some documentation into /Developer. Users of MacPython 2.3b1 [link] 
+can install this release using the PackageManager application.
+
+
+to adcnews@apple.com:
+
+subject: PyObjC 0.9 released
+
+PyObjC 0.9 provides a bridge between the Python and Objective-C
+programming languages, allowing the Python programmer
+transparent access to Objective-C-based classes and APIs.
+http://pyobjc.sourceforge.net/
+
+[ This is a variation on the 0.8 text, I've switched the roles
+  of Python and Objective-C as this seems to be more natural to
+  me ]
