@@ -1,13 +1,8 @@
 #
-# Successor of setup-app.py. Run this program from the command line like so:
+# Run this program from the command line like so:
 #
-# % python buildapp.py build
+# % python buildapp.py --link build
 #
-# It depends on two (new) modules from the Python CVS tree:
-#    Mac/Lib/bundlebuilder.py
-#    Mac/Lib/plistlib.py
-# These modules are otherwise completely standalone, they don't need any
-# Mac- or PyObjC-specific stuff.
 #
 
 from bundlebuilder import buildapp
@@ -20,8 +15,8 @@ SRC=[
 ]
 
 buildapp(
-        name = "FieldGraph",
-	mainprogram = "Main.py",
-	resources = ["English.lproj"] + SRC,
-	nibname = "MainMenu",
+    name = "FieldGraph",
+    mainprogram = "Main.py",
+    resources = ["English.lproj"] + SRC,
+    nibname = "MainMenu",
 )
