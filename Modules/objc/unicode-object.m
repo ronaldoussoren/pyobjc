@@ -67,6 +67,9 @@ meth_syncNSString(PyObjCUnicodeObject* self)
 		PyUnicode_GET_DATA_SIZE(tmp));
 
 	self->base.hash = -1;
+	if (PyUnicode_GET_SIZE(tmp) == 0) {
+		self->base.hash = 0;
+	}
 	Py_XDECREF(self->base.defenc);
 	self->base.defenc = tmp->defenc;
 	Py_XINCREF(tmp->defenc);
@@ -163,7 +166,13 @@ PyObjCUnicode_New(NSString* value)
 	PyUnicode_GET_SIZE(result) = PyUnicode_GET_SIZE(tmp);
 	memcpy((char*)PyUnicode_AS_DATA(result), PyUnicode_AS_DATA(tmp),
 		PyUnicode_GET_DATA_SIZE(tmp));
+
 	result->base.hash = -1;
+
+	if (PyUnicode_GET_SIZE(tmp) == 0) {
+		result->base.hash = 0;
+	}
+
 	result->base.defenc = tmp->defenc;
 	Py_XINCREF(tmp->defenc);
 	Py_DECREF(tmp);
