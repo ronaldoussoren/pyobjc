@@ -919,6 +919,8 @@ add_class_fields(Class objc_class, PyObject* dict)
 					continue;
 				} else if (!(((PyObjCSelector*)descr)->sel_flags & PyObjCSelector_kCLASS_METHOD)) {
 					continue;
+				} else if (PyObjCPythonSelector_Check(descr)) {
+					continue;
 				}
 			}
 
