@@ -388,10 +388,10 @@ def container_wrap(v):
     return v
 
 def container_unwrap(v, exc_type, *exc_args):
-    if v is null:
-        return None
-    elif v is None:
+    if v is None:
         raise exc_type(*exc_args)
+    elif v is null:
+        return None
     return v
 
 #
