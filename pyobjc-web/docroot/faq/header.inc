@@ -1,16 +1,16 @@
 <?
-/* $Id: header.inc,v 1.1 2002/11/12 07:41:06 bbum Exp $ */
+/* $Id: header.inc,v 1.2 2003/02/12 20:43:04 ronaldoussoren Exp $ */
 
 $section = "faq";
 $navbox = array(
   "faq/index.php", "FAQ Contents",
-  "faq/general.php", "General",
-  "faq/usage.php", "Invocation",
-  "faq/usage.php", "Usage",
-  "faq/usage.php", "Integration",
-  "faq/usage.php", "Compiling",
+  "faq/index.php", "General",
+  "faq/index.php", "Invocation",
+  "faq/index.php", "Usage",
+  "faq/index.php", "Integration",
+  "faq/index.php", "Compiling",
 );
-$printlink = "faq/faq.html";
+/*$printlink = "faq/faq.html";*/
 
 $fsroot = $root = "../";
 include $fsroot."header.inc";
