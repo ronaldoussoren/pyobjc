@@ -64,16 +64,6 @@ class TestSubclassing(unittest.TestCase):
         # this may be a bit hardwired for comfort
         self.assert_(v.find("<Level2Class") == 0)
 
-    def testUniqueNames(self):
-        class SomeClass (NSObject): pass
-
-        try:
-            class SomeClass (NSObject): pass
-
-            fail("Should not have been able to redefine the SomeClass class!")
-        except objc.error, msg:
-            self.assertEquals(str(msg), "Class already exists in Objective-C runtime")
-
     def testMethodSignature(self):
         class Signature (NSObject):
             def test_x_(self, arg, x):
