@@ -14,7 +14,7 @@ menu and run this script again.
 """
     sys.exit(1)
 
-propNames = me.properties()
+propNames = AddressBook.ABPerson.properties()
 d = {}
 for i in propNames:
     d[i] = me.valueForProperty_(i)
