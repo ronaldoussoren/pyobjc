@@ -48,7 +48,7 @@ Objective-C. The former is done by the class-method ``alloc``, while the
 latter is done by instance methods whose name customarily starts with ``init``.
 
 Objective-C code looks just like plain C code, with some easily recognizable
-Smalltalk-like extensions for the Object-Oriented parts of the language.  An
+Smalltalk-like extensions for the object-oriented parts of the language.  An
 example class declaration (usually found in ``.h`` files) and implementation
 (usually found in ``.m`` files) are listed below.  Class declarations are easily
 recognized as blocks of code between ``@interface`` and ``@end``, and similarly
@@ -91,7 +91,7 @@ Python is::
     anArray.indexOfObject_inRange_(someObject, someRange)
     
 This may be awkward and "unpythonic" at first, however this syntax is necessary
-preserve the semantics of Objective-C message dispatch.
+to preserve the semantics of Objective-C message dispatch.
 
 A class declaration::
 
@@ -250,7 +250,7 @@ it is *not* possible to have two Python modules that define a class with the
 same name.  It is conventional to choose class names with a short prefix that
 uniquely identify your project or company.  For example, Apple uses ``NS``
 as the prefix for all classes in the `Cocoa libraries`_.  Note that the ``NS``
-prefix made much more sense when it was called NeXTStep, but persists to this
+prefix made much more sense when it was called NeXTstep, but persists to this
 day for compatibility reasons.
 
 As described in `Objective-C for PyObjC users`_ the creation of Objective-C 
@@ -424,16 +424,15 @@ stores weak references to the objects return by the method
 crashes with outline views is to make sure that you model for the view uses
 subclasses of ``NSObject`` to represent the nodes in the outline view.
 
-Another gotcha is when you're manually allocating and assigning delegate(-like)
-objects: most of the time ``obj.setDelegate_()`` will *not* retain the 
-delegate, so you must keep a reference manually.
+Another gotcha is that ``obj.setDelegate_()`` often does *not* retain the
+delegate, so a reference should be maintained elsewhere.
 
 (Informal) protocols
 ....................
 
 Cocoa defines a number of formal and informal protocols that specify methods
 that should be implemented by a class if it is to be used in a specific role,
-such as the data source for an NSTableView.
+such as the data source for an ``NSTableView``.
 
 Those protocols are represented by instances of ``objc.informal_protocol``. The
 only ones that have to care about these objects are the maintainers of 
@@ -459,8 +458,8 @@ Categories
 ..........
 
 Objective-C has a mechanism for modularize a class definition, it is possible
-to add methods to an existing class in a seperate compilation unit and even
-a seperate library. This mechanism is named categories and is used to enhance
+to add methods to an existing class in a separate compilation unit and even
+a separate library. This mechanism is named categories and is used to enhance
 existing classes, for splitting classes in several parts and to document
 informal protocols.
 

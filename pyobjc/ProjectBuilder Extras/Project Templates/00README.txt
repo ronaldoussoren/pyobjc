@@ -14,6 +14,9 @@ included in the PyObjC installer package.
 Notes
 -----
 
+- PyObjC's Project Builder support is unmaintained and its use for new projects
+  is not recommended.
+
 - In all cases that involve loading frameworks or bundles, all of the classes
   in that framework or bundle can be made available by using the
   ``loadBundle()`` function in the ``objc`` module::
@@ -26,9 +29,9 @@ Notes
 
     from Foundation import *
 
-- There is risk that the pyobjc modules compiled for one version of python
+- There is risk that the PyObjC modules compiled for one version of python
   will not work with another.  Where this may be a problem is if the a
-  standalone application is packaged with the pyobjc modules compiled
+  standalone application is packaged with the PyObjC modules compiled
   against, say, the Fink or Framework builds of Python, but is then executed
   using the Apple supplied python binary.
 

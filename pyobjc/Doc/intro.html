@@ -65,7 +65,7 @@ be used as the types of arguments and the return value of methods.</p>
 Objective-C. The former is done by the class-method <code><span>alloc</span></code>, while the
 latter is done by instance methods whose name customarily starts with <code><span>init</span></code>.</p>
 <p>Objective-C code looks just like plain C code, with some easily recognizable
-Smalltalk-like extensions for the Object-Oriented parts of the language.  An
+Smalltalk-like extensions for the object-oriented parts of the language.  An
 example class declaration (usually found in <code><span>.h</span></code> files) and implementation
 (usually found in <code><span>.m</span></code> files) are listed below.  Class declarations are easily
 recognized as blocks of code between <code><span>@interface</span></code> and <code><span>@end</span></code>, and similarly
@@ -110,7 +110,7 @@ Python is:</p>
 anArray.indexOfObject_inRange_(someObject, someRange)
 </pre>
 <p>This may be awkward and &quot;unpythonic&quot; at first, however this syntax is necessary
-preserve the semantics of Objective-C message dispatch.</p>
+to preserve the semantics of Objective-C message dispatch.</p>
 <p>A class declaration:</p>
 <pre>
 @interface MyClass : MySuperClass
@@ -257,7 +257,7 @@ it is <i>not</i> possible to have two Python modules that define a class with th
 same name.  It is conventional to choose class names with a short prefix that
 uniquely identify your project or company.  For example, Apple uses <code><span>NS</span></code>
 as the prefix for all classes in the <a href="http://developer.apple.com/referencelibrary/API_Fundamentals/Cocoa-api-date.html">Cocoa libraries</a>.  Note that the <code><span>NS</span></code>
-prefix made much more sense when it was called NeXTStep, but persists to this
+prefix made much more sense when it was called NeXTstep, but persists to this
 day for compatibility reasons.</p>
 <p>As described in <a href="#objective-c-for-pyobjc-users">Objective-C for PyObjC users</a> the creation of Objective-C 
 objects is a two-stage process.  To initialize objects, you first call a
@@ -414,13 +414,12 @@ stores weak references to the objects return by the method
 <code><span>outlineView:child:ofItem:</span></code> of its data source. The easiest way to avoid
 crashes with outline views is to make sure that you model for the view uses
 subclasses of <code><span>NSObject</span></code> to represent the nodes in the outline view.</p>
-<p>Another gotcha is when you're manually allocating and assigning delegate(-like)
-objects: most of the time <code><span>obj.setDelegate_()</span></code> will <i>not</i> retain the 
-delegate, so you must keep a reference manually.</p>
+<p>Another gotcha is that <code><span>obj.setDelegate_()</span></code> often does <i>not</i> retain the
+delegate, so a reference should be maintained elsewhere.</p>
 <h3><a href="#id10" name="informal-protocols">(Informal) protocols</a></h3>
 <p>Cocoa defines a number of formal and informal protocols that specify methods
 that should be implemented by a class if it is to be used in a specific role,
-such as the data source for an NSTableView.</p>
+such as the data source for an <code><span>NSTableView</span></code>.</p>
 <p>Those protocols are represented by instances of <code><span>objc.informal_protocol</span></code>. The
 only ones that have to care about these objects are the maintainers of 
 wrappers around Objective-C frameworks: they have to keep these protocol
@@ -436,8 +435,8 @@ to create and use <i>Controller</i> objects.</p>
 expectations of Cocoa Bindings.</p>
 <h3><a href="#id12" name="categories">Categories</a></h3>
 <p>Objective-C has a mechanism for modularize a class definition, it is possible
-to add methods to an existing class in a seperate compilation unit and even
-a seperate library. This mechanism is named categories and is used to enhance
+to add methods to an existing class in a separate compilation unit and even
+a separate library. This mechanism is named categories and is used to enhance
 existing classes, for splitting classes in several parts and to document
 informal protocols.</p>
 <p>An example of a category definition:</p>
