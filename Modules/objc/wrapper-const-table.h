@@ -40,7 +40,7 @@ static inline int add_double(PyObject*d, char* name, double value)
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);
-	//Py_DECREF(v);
+	Py_DECREF(v);
 	if (res < 0) return -1;
 	return 0;
 }
@@ -54,7 +54,7 @@ static inline int add_float(PyObject*d, char* name, float value)
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);
-	//Py_DECREF(v);
+	Py_DECREF(v);
 	if (res < 0) return -1;
 	return 0;
 }
@@ -68,7 +68,7 @@ static inline int add_unsigned(PyObject*d, char* name, unsigned value)
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);
-	//Py_DECREF(v);
+	Py_DECREF(v);
 	if (res < 0) return -1;
 	return 0;
 }
@@ -82,7 +82,7 @@ static inline int add_BOOL(PyObject*d, char* name, BOOL value)
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);
-	//Py_DECREF(v);
+	Py_DECREF(v);
 	if (res < 0) return -1;
 	return 0;
 }
@@ -96,7 +96,7 @@ static inline int add_int(PyObject*d, char* name, int value)
 	if (v == NULL) return -1;
 
 	res = PyDict_SetItemString(d, name, v);
-	//Py_DECREF(v);
+	Py_DECREF(v);
 	if (res < 0) return -1;
 	return 0;
 }

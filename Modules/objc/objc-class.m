@@ -40,6 +40,8 @@ typedef struct {
 	PyObject* sel_to_py;
 	int	  method_magic;
 	int	  dictoffset;
+	PyObject* delmethod;
+	int       hasPythonImpl;
 } PyObjC_class_info;
 
 static NSMapTable* 	class_to_objc = NULL;
@@ -170,6 +172,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	PyObjC_class_info* info;
 	PyObject* protocols;
 	PyObject* real_bases;
+	PyObject* delmethod;
 	IVAR var;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:__new__",
@@ -261,6 +264,19 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
+	delmethod = PyDict_GetItemString(dict, "__del__");
+	if (delmethod == NULL) {
+		PyErr_Clear();
+	} else {
+		Py_INCREF(delmethod);
+		if (PyDict_DelItemString(dict, "__del__") < 0) {
+			PyObjCClass_UnbuildClass(objc_class);
+			Py_DECREF(protocols);
+			Py_DECREF(real_bases);
+			return NULL;
+		}
+	}
+
 
 
 
@@ -285,14 +301,9 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 	Py_DECREF(args);
-	//Py_DECREF(real_bases);
+	Py_DECREF(real_bases);
 	args = NULL;
 	real_bases = NULL;
-
-
-	//if (PyDict_DelItemString(((PyTypeObject*)res)->tp_dict, "__dict__") < 0) {
-	//	PyErr_Clear();
-	//}             
 
 	/* Verify that the class conforms to all protocols it claims to 
 	 * conform to.
@@ -339,8 +350,10 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	info->class = objc_class;
 	info->sel_to_py = PyDict_New(); 
 	info->method_magic = objc_methodlist_magic(objc_class);
-
 	info->dictoffset = 0;
+	info->delmethod = delmethod;
+	info->hasPythonImpl = 1;
+
 
 	// Initialize to parent version, not: this should not be necessary!
 	info->dictoffset = PyObjCClass_DictOffset(PyTuple_GET_ITEM(bases, 0));
@@ -705,7 +718,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 					name,
 					descr) != 0) {
 
-				//Py_DECREF(descr); 
+				Py_DECREF(descr); 
 				return -1;
 			}
 			Py_DECREF(descr); 
@@ -749,7 +762,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			if (PyDict_SetItemString(dict, 
 					selbuf,
 					descr) != 0) {
-				//Py_DECREF(descr);
+				Py_DECREF(descr);
 				return -1;
 			}
 			Py_DECREF(descr);
@@ -778,7 +791,7 @@ add_class_fields(Class objc_class, PyObject* dict)
 			}
 			if (PyDict_SetItemString(dict, 
 					var->ivar_name, descr) != 0) {
-				//Py_DECREF(descr);
+				Py_DECREF(descr);
 				return -1;
 			}
 			Py_DECREF(descr);
@@ -852,6 +865,8 @@ PyObjCClass_New(Class objc_class)
 	info->sel_to_py = PyDict_New(); 
 	info->method_magic = 0;
 	info->dictoffset = 0;
+	info->delmethod = 0;
+	info->hasPythonImpl = 0;
 
 	var = class_getInstanceVariable(objc_class, "__dict__");
 	if (var != NULL) {
@@ -1004,3 +1019,32 @@ PyObjCClass_DictOffset(PyObject* cls)
 	info = get_class_info(cls);
 	return info->dictoffset;
 }
+
+PyObject*
+PyObjCClass_GetDelMethod(PyObject* cls)
+{
+	PyObjC_class_info* info;
+	info = get_class_info(cls);
+	Py_XINCREF(info->delmethod);
+	return info->delmethod;
+}
+
+void
+PyObjCClass_SetDelMethod(PyObject* cls, PyObject* m)
+{
+	PyObjC_class_info* info;
+	info = get_class_info(cls);
+	Py_XINCREF(m);
+	Py_XDECREF(info->delmethod);
+	info->delmethod = m;
+}
+
+int
+PyObjCClass_HasPythonImplementation(PyObject* cls)
+{
+	PyObjC_class_info* info;
+	info = get_class_info(cls);
+	return info->hasPythonImpl;
+}
+
+

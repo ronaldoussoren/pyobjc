@@ -57,10 +57,14 @@ int ObjC_RegisterMethodMapping(Class class, SEL sel,
 		if (init_registry() < 0) return -1;
 	}
 
-	if (!call_to_objc || !call_to_python) {
+	if (!call_to_python) {
 		PyErr_SetString(ObjCExc_error, 
 			"ObjC_RegisterMethodMapping: all functions required");
 		return NULL;
+	}
+
+	if (!call_to_objc) {
+		call_to_objc = ObjC_FFICaller;
 	}
 
 	pyclass = PyObjCClass_New(class);

@@ -9,15 +9,6 @@
  * This file contains functions to dynamicly call objc_msgSendSuper and to
  * dynamicly create IMPs for use in Objective-C method dispatch tables. The
  * file 'register.m' contains compile-time generated equivalents of these.
- *
- * NOTES:
- * - libffi support is optionial because it is highly experimental. To avoid
- *   code duplication it is my (Ronald's) intention to move to a situation 
- *   where libffi support is required. This should also make it possible to
- *   simplify some code. 
- * - If libffi stays optional, we should refactor ObjC_FFICaller (in this file)
- *   and execute_and_pythonify_objc_method (in objc_support.m): These are
- *   almost identical.
  */
 #include "ffi.h"
 #include "pyobjc.h"
@@ -125,7 +116,7 @@ static  PyObject* array_types = NULL;
 		Py_DECREF(v);
 		return NULL;
 	}
-	//Py_DECREF(v);
+	Py_DECREF(v);
 	return type;
 }
 
@@ -206,7 +197,7 @@ static  PyObject* struct_types = NULL;
 		Py_DECREF(v);
 		return NULL;
 	}
-	//Py_DECREF(v);
+	Py_DECREF(v);
 	return type;
 }
 

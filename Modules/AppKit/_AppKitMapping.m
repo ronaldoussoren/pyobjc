@@ -218,6 +218,34 @@ imp_NSBitmapImageRep_bitmapData(id self, SEL sel)
   abort();
 }
 
+static void
+imp_NSCell_drawInteriorWithFrame_inView_(id self, SEL _sel, NSRect rect, id view)
+{
+	PyObject* result;
+	PyObject* arglist = PyTuple_New(2);
+	if (arglist == NULL)  {
+		ObjCErr_ToObjC();
+		return;
+	}
+
+	PyTuple_SET_ITEM(arglist, 0, ObjC_ObjCToPython(@encode(NSRect), &rect));
+	PyTuple_SET_ITEM(arglist, 1, ObjC_ObjCToPython(@encode(id), &view));
+
+	if (PyErr_Occurred()) {
+		ObjCErr_ToObjC();
+		return;
+	}
+
+	result = PyObjC_CallPython(self, _sel, arglist);
+	if (result == NULL) {
+		ObjCErr_ToObjC();
+		return;
+	}
+
+	Py_DECREF(result);
+}
+
+
 PyDoc_STRVAR(mapping_doc,
 	"This module registers some utility functions with the PyObjC core \n"
 	"and is not used by 'normal' python code"
@@ -274,6 +302,18 @@ void init_AppKitMapping(void)
 		PyErr_Print();
 		return;
 	}
+
+#if 0
+	if (ObjC_RegisterMethodMapping(
+			objc_lookUpClass("NSCell"), 
+			@selector(drawInteriorWithFrame:inView:),
+			NULL,
+			(IMP)imp_NSCell_drawInteriorWithFrame_inView_) < 0) {
+
+		PyErr_Print();
+		return;
+	}
+#endif
 	
 	/* register other specials */
 	pyobjc_install_NSMovie();

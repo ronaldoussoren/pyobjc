@@ -21,6 +21,7 @@
 -(void)dealloc;
 
 -(id)nextObject;
+
 @end // interface OC_PythonDictionaryEnumerator
 
 @implementation OC_PythonDictionaryEnumerator
