@@ -34,17 +34,10 @@ typedef PyObject* (*ObjC_CallFunc_t)(
 	PyObject* meth, PyObject* self, PyObject* args);
 
 extern int ObjC_RegisterMethodMapping(Class class, SEL sel, 
-	ObjC_CallFunc_t call_to_self,  /* Call method in self */
-	ObjC_CallFunc_t call_to_super, /* Call method in super */
+	ObjC_CallFunc_t     call_to_objc, 
 	IMP		    call_to_python
-		/* IMP that can be used to forward call from objective-C to
-		 * python.
-		 */
 	);
 
-/* No 'call_to_self' here, if the default is not good enough  it should be
- * enhanced.
- */
 extern int ObjC_RegisterSignatureMapping(
 	char* signature,
 	ObjC_CallFunc_t call_to_super,
@@ -52,8 +45,6 @@ extern int ObjC_RegisterSignatureMapping(
 
 extern IMP             ObjC_FindIMP(Class class, SEL sel);
 extern IMP             ObjC_FindIMPForSignature(char* signature);
-extern ObjC_CallFunc_t ObjC_FindSupercaller(Class class, SEL sel);
-extern ObjC_CallFunc_t ObjC_FindSelfCaller(Class class, SEL sel);
-extern void            ObjC_FindCaller(Class class, SEL sel, ObjC_CallFunc_t* call_self, ObjC_CallFunc_t* call_super);
+extern ObjC_CallFunc_t ObjC_FindCallFunc(Class class, SEL sel);
 
 #endif /* OBJC_SUPER_CALL_H */

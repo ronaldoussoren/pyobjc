@@ -134,7 +134,7 @@ PyObjCPointer *
 PyObjCPointer_new (void *p, const char *t)
 {
   unsigned int size = objc_sizeof_type (t);
-  const char *typeend = objc_skip_typespec (t);
+  const char *typeend = PyObjCRT_SkipTypeSpec (t);
   PyObjCPointer *self;
 
   if (size == (unsigned int)-1) {

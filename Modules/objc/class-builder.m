@@ -895,6 +895,80 @@ static id object_method_retain(id self, SEL sel)
 	return self;
 }
 
+static void
+free_ivars(id self, PyObject* cls)
+{
+	/* The code below is *very* experimental and it is even unsure if this
+	 * is the right thing to do.
+	 */
+#if 0
+	/* Free all instance variables introduced through python */
+	while (cls != NULL) {
+		Class     objcClass = PyObjCClass_GetClass(cls);
+		PyObject* clsDict = PyObject_GetAttrString(cls, "__dict__");
+		PyObject* clsValues;
+		PyObject* o;
+		int       len, i;
+
+		if (clsDict == NULL) {
+			PyErr_Print();
+			PyErr_Clear();
+			break;
+		}
+
+
+		/* Class.__dict__ is a dictproxy, which is not a dict and
+		 * therefore PyDict_Values doesn't work.
+		 */
+		clsValues = PyObject_CallMethod(clsDict, "values", NULL);
+		Py_DECREF(clsDict);
+		if (clsValues == NULL) {
+			PyErr_Print();
+			PyErr_Clear();
+			break;
+		}
+
+		len = PyList_Size(clsValues);
+		for (i = 0; i < len; i++) {
+			PyObjCInstanceVariable* iv;
+			IVAR var;
+
+			o = PyList_GET_ITEM(clsValues, i);
+
+			if (o == NULL) continue;
+			if (!PyObjCInstanceVariable_Check(o)) continue;
+		
+			iv = ((PyObjCInstanceVariable*)o);
+
+			if (iv->type[0] != '@') continue;
+
+			var = class_getInstanceVariable(objcClass, iv->name);
+			if (var == NULL) continue;
+
+			[*(id*)(((char*)self) + var->ivar_offset) release];
+			*(id*)(((char*)self) + var->ivar_offset) = NULL;
+		}
+
+		Py_DECREF(clsValues);
+
+		o = PyObject_GetAttrString(cls, "__bases__");
+		if (o == NULL) {
+			PyErr_Clear();
+			cls = NULL;
+		}  else if (PyTuple_Size(o) == 0) {
+			PyErr_Clear();
+			cls = NULL;
+		}
+
+		cls = PyTuple_GET_ITEM(o, 0);
+		if (cls == (PyObject*)&PyObjCClass_Type) {
+			cls = NULL;
+		}
+		Py_DECREF(o);
+	}
+#endif
+}
+
 /* -release */
 static void object_method_release(id self, SEL sel)
 {
@@ -925,6 +999,7 @@ static void object_method_release(id self, SEL sel)
 		 * call back to us some time later on ([NSWindow release] in
 		 * a seperator thread).
 		 */
+		free_ivars(self, (PyObject*)obj->ob_type);
 		if (PyObjC_SetPythonImplementation(self, 0) == -1) {
 		       ObjCErr_ToObjC();
 		       return;

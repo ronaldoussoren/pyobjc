@@ -491,10 +491,6 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 {
 	PyObject* pyself = self->sel_self;
 	ObjC_CallFunc_t execute = NULL;
-#if !(defined(OC_WITH_LIBFFI) && defined(OC_USE_FFI_SHORTCUTS))
-	Class     pyself_class;
-	int       is_super_call = 0;
-#endif
 	PyObject* res;
 
 	if (pyself == NULL) {
@@ -511,111 +507,15 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 		}
 	}
 
-#if !(defined(OC_WITH_LIBFFI) && defined(OC_USE_FFI_SHORTCUTS))
-	/* 
-	 * Ronald: If we use libffi we don't need this block of code, just
-	 * always using the 'super_call' code-path suffices. If it doesn't
-	 * the information in the class-proxy is incorrect and we're hosed 
-	 * anyway. 
-	 *  Not using this block of code gives a measureable speedup of the
-	 * proxy and makes the code easier to understand, especially if we
-	 * remove non-ffi support.
-	 */
-
-	/* First stab at detecting super-calls... */
-	if (!(self->sel_flags & ObjCSelector_kCLASS_METHOD)) {
-		if (PyObjCObject_Check(pyself)) {
-			pyself_class = GETISA(PyObjCObject_GetObject(pyself));
-			if (pyself_class == NULL) {
-				return NULL;
-			}
-		} else if (
-			     /* XXX: List should be synchronized with
-			      * depythonify_c_value, thats not The Right Way(tm)
-			      */
-				PyString_Check(pyself) 
-			     || PyUnicode_Check(pyself)
-			     || PyInt_Check(pyself)
-			     || PySequence_Check(pyself)
-			     || PyDict_Check(pyself)
-			     || (pyself == Py_None)
-			  ) {
-			pyself_class = NULL;	
-			
-		} else {
-			PyObject* typerepr = PyObject_Repr(pyself);
-			ObjCErr_Set(PyExc_TypeError,
-				"First argument must be an objective-C object, got %s", PyString_AS_STRING(typerepr));
-			Py_DECREF(typerepr);
-			return NULL;
-		}
-
+	if (self->sel_call_func) {
+		execute = self->sel_call_func;
 	} else {
-		if (!PyObjCClass_Check(pyself)) {
-			PyObject* typerepr = PyObject_Repr(pyself);
-			ObjCErr_Set(PyExc_TypeError,
-				"First argument must be an objective-C class, got %s", PyString_AS_STRING(typerepr));
-			Py_DECREF(typerepr);
-			return NULL;
-		}
-		pyself_class = PyObjCClass_GetClass((PyObject*)pyself);
-		if (pyself_class == NULL) {
-			return NULL;
-		}
-	}
-
-	if (pyself_class != NULL && pyself_class != self->sel_class) {
-		METHOD self_m;
-		METHOD pyself_m;
-
-		if (self->sel_flags & ObjCSelector_kCLASS_METHOD) {
-			self_m = class_getClassMethod(
-				self->sel_class, self->sel_selector);
-			pyself_m = class_getClassMethod(
-				pyself_class, self->sel_selector);
-		} else {
-			self_m = class_getInstanceMethod(
-				self->sel_class, self->sel_selector);
-			pyself_m = class_getInstanceMethod(
-				pyself_class, self->sel_selector);
-		}
-
-		if (self_m != pyself_m) {
-			/* Different implementations, must be super-call */
-			is_super_call = 1;
-		} 
-	}
-
-	if (is_super_call) {
-		if (self->sel_call_super) {
-			execute = self->sel_call_super;
-		} else {
-			execute = ObjC_FindSupercaller(self->sel_class, self->sel_selector);
-			if (execute == NULL) return NULL;
-			self->sel_call_super = execute;
-		}
-	} else {
-		if (self->sel_call_self) {
-			execute = self->sel_call_self;
-		} else {
-			execute = ObjC_FindSelfCaller(pyself_class, self->sel_selector);
-			if (execute == NULL) return NULL;
-			self->sel_call_self = execute;
-		}
-	}
-
-#else /* !OC_WITH_FFI */
-	if (self->sel_call_super) {
-		execute = self->sel_call_super;
-	} else {
-		execute = ObjC_FindSupercaller(
+		execute = ObjC_FindCallFunc(
 				self->sel_class, 
 				self->sel_selector);
 		if (execute == NULL) return NULL;
-		self->sel_call_super = execute;
+		self->sel_call_func = execute;
 	}
-
-#endif /* !OC_WITH_FFI */
 
 	if (self->sel_self && PyObjCObject_Check(self->sel_self) 
 	    && (((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED)
@@ -702,17 +602,11 @@ objcsel_descr_get(ObjCNativeSelector* meth, PyObject* obj, PyObject* class)
 	result->sel_flags = meth->sel_flags;
 	result->sel_class = meth->sel_class;
 
-	if (meth->sel_call_self == NULL || meth->sel_call_super == NULL) {
-		/*
-		 * Set these in the original, and then copy into the result,
-		 * if the method will be used more than once this is saves
-		 * us future calls to ObjC_FindCaller 
-		 */
-		ObjC_FindCaller(meth->sel_class, meth->sel_selector,
-			&meth->sel_call_self, &meth->sel_call_super);
+	if (meth->sel_call_func == NULL) {
+		meth->sel_call_func = ObjC_FindCallFunc(meth->sel_class,
+			meth->sel_selector);
 	}
-	result->sel_call_self = meth->sel_call_self;
-	result->sel_call_super = meth->sel_call_super;
+	result->sel_call_func = meth->sel_call_func;
 
 	if (meth->sel_oc_signature == NULL) {
 		meth->sel_oc_signature = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
@@ -893,8 +787,7 @@ ObjCSelector_NewNative(Class class,
 	}
 	result->sel_self = NULL;
 	result->sel_class = class;
-	result->sel_call_self = NULL;
-	result->sel_call_super = NULL;
+	result->sel_call_func = NULL;
 	result->sel_oc_signature = NULL;
 	result->sel_flags = 0;
 	if (class_method) {

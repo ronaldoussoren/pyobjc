@@ -1,11 +1,5 @@
 #!/usr/bin/env python
 
-# If true we use libffi instead of register.m
-USE_FFI = 1
-
-# It true we use libffi for normal invocations, instead of NSInvocation
-USE_FFI_SHORTCUTS = 1
-
 # Set this to the path to an extracted tree of libffi to automaticly build
 # a compatible version of libffi
 LIBFFI_SOURCES=None
@@ -80,68 +74,57 @@ if sys.version_info[0] < req_ver[0] or (
     sys.stderr.write('PyObjC: Need at least Python %s\n'%('.'.join(req_ver)))
     sys.exit(1)
 
-if USE_FFI:
-    if LIBFFI_SOURCES is not None:
-        if not os.path.isdir(LIBFFI_SOURCES):
-            sys.stderr.write(
-                'LIBFFI_SOURCES is not a directory: %s\n'%LIBFFI_SOURCES)
-            sys.stderr.write('\tSee Install.txt or Install.html for more information.\n')
+if LIBFFI_SOURCES is not None:
+    if not os.path.isdir(LIBFFI_SOURCES):
+        sys.stderr.write(
+            'LIBFFI_SOURCES is not a directory: %s\n'%LIBFFI_SOURCES)
+        sys.stderr.write('\tSee Install.txt or Install.html for more information.\n')
+        sys.exit(1)
+    
+    if not os.path.exists('build'):
+        os.mkdir('build')
+
+    if not os.path.exists('build/libffi'):
+        os.mkdir('build/libffi')
+
+    if not os.path.exists('build/libffi/BLD'):
+        os.mkdir('build/libffi/BLD')
+
+    if not os.path.exists('build/libffi/lib/libffi.a'):
+        # No pre-build version available, build it now.
+        print "Building local copy of libffi"
+
+        # Do not use a relative path for the build-tree, libtool on
+        # MacOS X doesn't like that.
+        inst_dir = os.path.join(os.getcwd(), 'build/libffi')
+        src_path = os.path.abspath(LIBFFI_SOURCES)
+
+        inst_dir = inst_dir.replace("'", "'\"'\"'")
+        src_path = src_path.replace("'", "'\"'\"'")
+
+        fd = os.popen(
+            "cd build/libffi/BLD && '%s/configure' --prefix='%s' --disable-shared --enable-static && make install"%(src_path, inst_dir), 'r')
+        for ln in fd.xreadlines():
+            sys.stdout.write(ln)
+
+        res = fd.close()
+        if res is not None:
+            sys.stderr.write('Building libffi failed [%d]\n'%(res,))
             sys.exit(1)
         
-        if not os.path.exists('build'):
-            os.mkdir('build')
+    LIBFFI_BASE='build/libffi'
 
-        if not os.path.exists('build/libffi'):
-            os.mkdir('build/libffi')
-
-        if not os.path.exists('build/libffi/BLD'):
-            os.mkdir('build/libffi/BLD')
-
-        if not os.path.exists('build/libffi/lib/libffi.a'):
-            # No pre-build version available, build it now.
-            print "Building local copy of libffi"
-
-            # Do not use a relative path for the build-tree, libtool on
-            # MacOS X doesn't like that.
-            inst_dir = os.path.join(os.getcwd(), 'build/libffi')
-            src_path = os.path.abspath(LIBFFI_SOURCES)
-
-            inst_dir = inst_dir.replace("'", "'\"'\"'")
-            src_path = src_path.replace("'", "'\"'\"'")
-
-            fd = os.popen(
-                "cd build/libffi/BLD && '%s/configure' --prefix='%s' --disable-shared --enable-static && make install"%(src_path, inst_dir), 'r')
-            for ln in fd.xreadlines():
-                sys.stdout.write(ln)
-
-            res = fd.close()
-            if res is not None:
-                sys.stderr.write('Building libffi failed [%d]\n'%(res,))
-                sys.exit(1)
-            
-        LIBFFI_BASE='build/libffi'
-
-    elif os.environ.has_key('LIBFFI_BASE'):
-        LIBFFI_BASE=os.environ['LIBFFI_BASE']
-    else:
-        LIBFFI_BASE='libffi'
-    LIBFFI_CFLAGS=[ 
-        "-DOC_WITH_LIBFFI", 
-        "-isystem", "%s/include"%LIBFFI_BASE, 
-    ]
-    LIBFFI_LDFLAGS=[ 
-        '-L%s/lib'%LIBFFI_BASE, '-lffi', 
-    ]
-    LIBFFI_SOURCEFILES=[
-        'Modules/objc/libffi_support.m',
-    ]
-
-    if USE_FFI_SHORTCUTS:
-        LIBFFI_CFLAGS.append("-DOC_USE_FFI_SHORTCUTS")
+elif os.environ.has_key('LIBFFI_BASE'):
+    LIBFFI_BASE=os.environ['LIBFFI_BASE']
 else:
-    LIBFFI_CFLAGS=[]
-    LIBFFI_LDFLAGS=[]
-    LIBFFI_SOURCEFILES=[]
+    LIBFFI_BASE='libffi'
+LIBFFI_CFLAGS=[ 
+    "-DOC_WITH_LIBFFI", 
+    "-isystem", "%s/include"%LIBFFI_BASE, 
+]
+LIBFFI_LDFLAGS=[ 
+    '-L%s/lib'%LIBFFI_BASE, '-lffi', 
+]
 
 sourceFiles = [
         "Modules/objc/objc_util.m",
@@ -161,11 +144,11 @@ sourceFiles = [
         "Modules/objc/OC_PythonObject.m",
         "Modules/objc/OC_PythonArray.m",
         "Modules/objc/OC_PythonDictionary.m",
-        "Modules/objc/register.m",
         "Modules/objc/pyobjc-api.m",
         "Modules/objc/alloc_hack.m",
         "Modules/objc/toll-free-bridging.m",
         "Modules/objc/module.m",
+        'Modules/objc/libffi_support.m',
 ]
 
 # On GNUstep we can read some configuration from the environment.
@@ -299,7 +282,7 @@ def IfFrameWork(name, packages, extensions):
 CorePackages = [ 'objc' ]
 CoreExtensions =  [
     Extension("objc._objc", 
-              sourceFiles + LIBFFI_SOURCEFILES,
+              sourceFiles,
               extra_compile_args=[
                     "-DOBJC_PARANOIA_MODE",
               ] + LIBFFI_CFLAGS + CFLAGS,

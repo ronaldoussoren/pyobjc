@@ -15,38 +15,8 @@
 #include <Foundation/Foundation.h>
 #include "pyobjc-api.h"
 
+
 static PyObject* call_NSData_dataWithBytes_length_(
-		PyObject* method, PyObject* self, PyObject* arguments)
-{
-	char*     bytes;
-	int       bytes_len;
-	int       len;
-	PyObject* result;
-	id        objc_result;
-
-	if  (PyArg_ParseTuple(arguments, "t#i", &bytes, &bytes_len, &len) < 0) {
-		return NULL;
-	}
-
-	if (bytes_len < len) {
-		PyErr_SetString(PyExc_ValueError, "Not enough bytes in data");
-		return NULL;
-	}
-
-	NS_DURING
-		objc_result = objc_msgSend(PyObjCClass_GetClass(self),
-				@selector(dataWithBytes:length:),
-				bytes, len);
-		result = ObjC_IdToPython(objc_result);
-	NS_HANDLER
-		ObjCErr_FromObjC(localException);
-		result = NULL;
-	NS_ENDHANDLER
-
-	return result;
-}
-
-static PyObject* supercall_NSData_dataWithBytes_length_(
 		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	char*     bytes;
@@ -121,53 +91,8 @@ static id imp_NSData_dataWithBytes_length_(id self, SEL sel,
 	return objc_result;
 }
 
+
 static PyObject* call_NSData_initWithBytes_length_(
-		PyObject* method, PyObject* self, PyObject* arguments)
-{
-	char*     bytes;
-	int       bytes_len;
-	int       len;
-	PyObject* result;
-	id        objc_result;
-	id	  self_obj;
-
-	if  (PyArg_ParseTuple(arguments, "t#i", &bytes, &bytes_len, &len) < 0) {
-		return NULL;
-	}
-
-	if (bytes_len < len) {
-		PyErr_SetString(PyExc_ValueError, "Not enough bytes in data");
-		return NULL;
-	}
-
-	self_obj =  PyObjCObject_GetObject(self);
-	NS_DURING
-		[self_obj retain];
-		objc_result = objc_msgSend(self_obj,
-				@selector(initWithBytes:length:),
-				bytes, len);
-		[self_obj release];
-		result = ObjC_IdToPython(objc_result);
-
-		/* XXX Ronald: If you try to use the result of 
-		 * PyObjCObject_GetObject(self) after the call to objc_msgSend 
-		 * it will crash with large enough values of len (>=32). 
-		 * Appearently the original self is recycled during the init.
-		 */
-		if (self != result) {
-			PyObjCObject_ClearObject(self);
-		}
-
-	NS_HANDLER
-		[self_obj release];
-		ObjCErr_FromObjC(localException);
-		result = NULL;
-	NS_ENDHANDLER
-
-	return result;
-}
-
-static PyObject* supercall_NSData_initWithBytes_length_(
 		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	char*     bytes;
@@ -253,33 +178,8 @@ static id imp_NSData_initWithBytes_length_(id self, SEL sel,
 	return objc_result;
 }
 
+
 static PyObject* call_NSData_bytes(PyObject* method, PyObject* self, PyObject* arguments)
-{
-  NSData *dataObject;
-  const void* bytes;
-  unsigned    bytes_len;
-  PyObject* result;
-
-  if (PyArg_ParseTuple(arguments, "") < 0) {
-    return NULL;
-  }
-
-  NS_DURING
-    dataObject = PyObjCObject_GetObject(self);
-
-    bytes = [dataObject bytes];
-    bytes_len = [dataObject length];
-
-    result = PyBuffer_FromMemory((void *)bytes, bytes_len);
-  NS_HANDLER
-    ObjCErr_FromObjC(localException);
-    result = NULL;
-  NS_ENDHANDLER
-
-  return result;
-}
-
-static PyObject* supercall_NSData_bytes(PyObject* method, PyObject* self, PyObject* arguments)
 {
   const void* bytes;
   unsigned    bytes_len;
@@ -338,33 +238,8 @@ static void *imp_NSData_bytes(id self, SEL sel)
   return NULL;
 }
 
+
 static PyObject* call_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject* arguments)
-{
-  NSMutableData *dataObject;
-  void*     bytes;
-  unsigned  bytes_len;
-  PyObject* result;
-  
-  if (PyArg_ParseTuple(arguments, "") < 0) {
-    return NULL;
-  }
-
-  NS_DURING
-    dataObject = PyObjCObject_GetObject(self);
-
-    bytes = [dataObject mutableBytes];
-    bytes_len = [dataObject length];
-
-    result = PyBuffer_FromReadWriteMemory((void *)bytes, bytes_len);
-  NS_HANDLER
-    ObjCErr_FromObjC(localException);
-    result = NULL;
-  NS_ENDHANDLER
-
-  return result;
-}
-
-static PyObject* supercall_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject* arguments)
 {
   void*     bytes;
   unsigned  bytes_len;
@@ -427,7 +302,6 @@ int __pyobjc_install_NSData(void)
   if (ObjC_RegisterMethodMapping(objc_lookUpClass("NSData"), 
 				 @selector(initWithBytes:length:),
 				 call_NSData_initWithBytes_length_,
-				 supercall_NSData_initWithBytes_length_,
 				 (IMP)imp_NSData_initWithBytes_length_) < 0 ) {
     NSLog(@"Error occurred while installing NSData method bridge (initWithBytes:length:).");
     PyErr_Print();
@@ -437,7 +311,6 @@ int __pyobjc_install_NSData(void)
   if (ObjC_RegisterMethodMapping(objc_lookUpClass("NSData"), 
 				 @selector(dataWithBytes:length:),
 				 call_NSData_dataWithBytes_length_,
-				 supercall_NSData_dataWithBytes_length_,
 				 (IMP)imp_NSData_dataWithBytes_length_) < 0 ) {
     NSLog(@"Error occurred while installing NSData method bridge (initWithBytes:length:).");
     PyErr_Print();
@@ -447,7 +320,6 @@ int __pyobjc_install_NSData(void)
   if (ObjC_RegisterMethodMapping(objc_lookUpClass("NSData"), 
 				 @selector(bytes),
 				 call_NSData_bytes,
-				 supercall_NSData_bytes,
 				 (IMP)imp_NSData_bytes) < 0 ) {
     NSLog(@"Error occurred while installing NSData method bridge (bytes).");
     PyErr_Print();
@@ -457,7 +329,6 @@ int __pyobjc_install_NSData(void)
   if (ObjC_RegisterMethodMapping(objc_lookUpClass("NSMutableData"), 
 				 @selector(mutableBytes),
 				 call_NSMutableData_mutableBytes,
-				 supercall_NSMutableData_mutableBytes,
 				 (IMP)imp_NSMutableData_mutableBytes) < 0 ) {
     NSLog(@"Error occurred while installing NSMutableData method bridge (mutableBytes).");
     PyErr_Print();

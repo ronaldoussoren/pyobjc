@@ -9,37 +9,6 @@ static PyObject*
 call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 {
 	id result = nil;
-
-	if (PyArg_ParseTuple(arguments, "") < 0) {
-		return NULL;
-	}
-
-	if (!PyObjCClass_Check(self)) {
-		PyErr_SetString(PyExc_TypeError, "Expecting class");
-		return NULL;
-	}
-
-	NS_DURING
-		result = [PyObjCClass_GetClass(self) alloc];
-	NS_HANDLER
-		ObjCErr_FromObjC(localException);
-		result = nil;
-	NS_ENDHANDLER;
-
-	if (result == nil && PyErr_Occurred()) {
-		return NULL;
-	}
-
-	if (PyObjC_HasPythonImplementation(result)) {
-		return PyObjC_GetPythonImplementation(result);
-	}
-	return PyObjCObject_NewUnitialized(result);
-}
-
-static PyObject*
-supercall_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
-{
-	id result = nil;
 	struct objc_super super;
 
 	if (PyArg_ParseTuple(arguments, "") < 0) {
@@ -108,6 +77,5 @@ PyObjC_InstallAllocHack(void)
 		objc_lookUpClass("NSObject"),
 		@selector(alloc),
 		call_NSObject_alloc,
-		supercall_NSObject_alloc,
 		(IMP)imp_NSObject_alloc);
 }
