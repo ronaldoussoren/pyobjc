@@ -663,6 +663,10 @@ Class ObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 			}
 
+			if (sel->sel_class == NULL) {
+				sel->sel_class = &new_class->class;
+			}
+
 			if (meth->method_imp == NULL) {
 				goto error_cleanup;
 			}

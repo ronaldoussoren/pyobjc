@@ -86,7 +86,7 @@ get_class_info(PyObject* class)
 		return NULL;
 	}
 	Py_DECREF(item); 
-	/* Py_INCREF(class); XXX Needed? */
+	// Py_INCREF(class); // XXX Needed?
 	return info;
 }
 

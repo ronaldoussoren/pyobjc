@@ -46,9 +46,19 @@ class TestSubclassing(unittest.TestCase):
         except objc.error, msg:
             self.assertEquals(str(msg), "Class already exists in Objective-C runtime")
 
+class TestSelectors(unittest.TestCase):
+    def testSelectorRepr(self):
+        class SelectorRepr(NSObject):
+            def foo(self):
+                pass
+
+        self.assert_(repr(SelectorRepr.foo) == '<unbound selector foo of SelectorRepr>')
+
+
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestSubclassing))
+    suite.addTest(unittest.makeSuite(TestSelectors))
     return suite
 
 if __name__ == '__main__':
