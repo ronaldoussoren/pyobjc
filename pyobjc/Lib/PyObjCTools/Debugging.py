@@ -1,3 +1,8 @@
+"""
+Debugging - logging of (unhandled) exceptions
+
+XXX: this module is undocumented
+"""
 from Foundation import NSObject, NSLog
 import objc
 import os

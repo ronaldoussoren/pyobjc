@@ -128,6 +128,44 @@ simply double-click it and choose ``Build and Run``.
   by using Twisted as it does not need threads. This one also uses
   NSController and therefore requires MacOS X 10.3.
 
+* CocoaBindings/TableModel
+
+  Shows how to fill an NSTableView using Key-Value Coding. 
+  
+  This example requires MacOS X 10.3 or later.
+
+* CocoaBindings/TableModelWithSearch
+
+  A more advanced example of Key-Value Coding. This uses a custom 
+  ``NSArrayController``.
+
+  This example requires MacOS X 10.3 or later.
+
+* PackageManager
+  
+  An implementation of the MacPython PackageManager application using
+  Cocoa.
+
+* ProgressViewPalette
+
+  A, currently non-functional, example of a palette for Interface Builder.
+
+  This example does not work at the moment, due to an incompatibility between
+  PyObjC and the way IB looks for classes.
+
+* PyDocURLProtocol
+
+  This example implements a subclass of ``NSURLProtocol`` that can be used
+  to load the pydoc documentation of a module.
+
+  It also includes a simple documentation browser using ``WebKit`` and the 
+  ``PyDocURLProtocol`` class.
+  
+* SimpleService
+
+  Shows how to implement entries for the Services menu.
+
+
 .. _`PyOpenGL`:  http://pyopengl.sourceforge.net/
 .. _`ClassBrowser`: ClassBrowser
 .. _`CurrencyConverter`: CurrencyConverter

@@ -137,4 +137,12 @@ Follow these steps:
     you would probably put up a dialog in this case. Actually, in a real application
     you would disable the "Ask iTunes" button unless iTunes was active. All that
     is left as an exercise to the reader.
-   
+ 
+A minor variation
+-----------------
+
+There a several projects that improve upon the built-in AppleScript support (or to be more precise "application scripting support"). One of those is AppScript (http://freespace.virgin.net/hamish.sanderson/appscript.html).
+
+When you have this module installed you can replace the contents of
+``ITunesCommuncation.py`` with ``src/ITunesCommunication_AppScript.py``, and
+you can skip step 15 entirely.

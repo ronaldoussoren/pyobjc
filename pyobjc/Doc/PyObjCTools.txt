@@ -16,28 +16,33 @@ start with a short overview.
 
 Utility functions for use with the ``AppKit`` module.
 
-* ``PyObjCTools.Conversion.py``
+* ``PyObjCTools.Conversion``
 
 Functions for converting between Cocoa and pure Python data structures.
 
-* ``PyObjCTools.KeyValueCoding.py``
+* ``PyObjCTools.KeyValueCoding``
 
 A python API for working with `Key-Value Coding`__. 
 
 .. __: http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i
 
-* ``PyObjCTools.NibClassBuilder.py``
+* ``PyObjCTools.NibClassBuilder``
 
 Module containing a magic super-class that can read information about the
 actual super-class and implemented actions and outlets from a NIB file.
 
-* ``PyObjCTools.pluginbuilder.py``
+* ``PyObjCTools.MachSignals``
+
+Module to make it possible to integrate signal handling into the main
+runloop.
+
+* ``PyObjCTools.pluginbuilder``
 
 Extension of ``bundlebuilder`` (XXX: Link) that allows you to build python-based
 plugin bundles, such as panes for the System Preferences application and
 screen savers.
 
-* ``PyObjCTools.Signals.py``
+* ``PyObjCTools.Signals``
 
 Module that tries to print useful information when the program gets a fatal
 exception. This module should only be used during development.
@@ -62,7 +67,7 @@ This module exports two functions that are usefull when working with the
   This function doesn't return unless it throws an exception.
 
 
-``PyObjCTools.Conversion.py``
+``PyObjCTools.Conversiony``
 .............................
 
 Functions for converting between Cocoa and pure Python data structures.

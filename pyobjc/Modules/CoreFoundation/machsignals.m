@@ -1,10 +1,21 @@
+/*
+ * Nicer signal handling, integrated into the runloop.
+ */
+
 #include <mach/mach.h>
 #include <mach/mach_error.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include "pyobjc-api.h"
 
 PyDoc_STRVAR(machsignals_doc,
-"_machsignals ...");
+	"_machsignals - signal handling integrated into the runloop\n"
+	"\n"
+	"This module exports a dictionary that contains the functions that \n"
+	"should be called when a signal is caught.\n"
+	"\n"
+	"The function 'handleSignal' installs a C signal handler that will \n"
+	"make sure our signal handler is called."
+);
 
 static mach_port_t exit_m_port       = MACH_PORT_NULL;
 static PyObject *signalmapping;
@@ -43,8 +54,10 @@ static void SIGCallback(CFMachPortRef port, void *msg, CFIndex size, void *info)
 
 static void HandleSIG(int signum)
 {
-	// Send a mach_msg to ourselves (since that is signal safe) telling us to
-    // handle a signal
+	/*
+	 * Send a mach_msg to ourselves (since that is signal safe) telling us 
+	 * to handle a signal.
+	 */
 	mach_msg_return_t msg_result;
 	mach_msg_header_t header;
 
