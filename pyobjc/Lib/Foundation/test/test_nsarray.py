@@ -15,6 +15,15 @@ class TestNSArrayInteraction( unittest.TestCase ):
 
         self.assertRaises( IndexError, x.objectAtIndex_, 100)
 
+    def testEnumeration( self ):
+        x = NSArray.arrayWithArray_([1, 2, "foo", "bar", "", "baz"])
+        y = []
+
+        for o in x:
+            y.append(o)
+
+        self.assertEquals(len(x), len(y))
+
     def testContains( self ):
         x = NSArray.arrayWithArray_( ["foo", "bar", "baz"] )
         self.assertEquals( x.count(), 3 )

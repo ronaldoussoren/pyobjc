@@ -1,3 +1,9 @@
+2003-01-16  Bill Bumgarner  <bbum@codefab.com>
+    * Lib/objc/_convenience.py: Fixed enumeratorGenerator() to test
+      nextObject against None.  This fixes a bug where an empty string in an
+      array would terminate enumeration even if there were objects after the
+      empty string.
+
 2003-01-14  Bill Bumgarner  <bbum@codefab.com>
     * Lib/AppKit/__init__.py (NSApplicationDelegate): Added
       NSApplicationDelegate definitions.

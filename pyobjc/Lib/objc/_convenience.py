@@ -187,7 +187,7 @@ CONVENIENCE_METHODS['replaceObjectsInRange:withObjectsFromArray:'] = (
 
 def enumeratorGenerator(anEnumerator):
     nextObject = anEnumerator.nextObject()
-    while (nextObject):
+    while (nextObject is not None):
         yield nextObject
         nextObject = anEnumerator.nextObject()
 
