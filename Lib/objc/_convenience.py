@@ -7,7 +7,8 @@ This module contains no user callable code.
 TODO:
 - Add external interface: Framework specific modules may want to add to this.
 """
-from _objc import setClassExtender, selector, lookUpClass, internal_error, currentBundle
+from _objc import setClassExtender, selector, lookUpClass, currentBundle
+from itertools import imap
 
 __all__ = ['CONVENIENCE_METHODS', 'CLASS_METHODS']
 
@@ -76,74 +77,72 @@ def add_convenience_methods(super_class, name, type_dict):
 
 setClassExtender(add_convenience_methods)
 
-# NOTE: the '!= 0' in the definition of the comparison function
-# is there to force conversion to type 'bool' on Python releases
-# that have such a type.
+def __getitem__objectForKey_(self, key):
+    res = self.objectForKey_(container_wrap(key))
+    return container_unwrap(res, KeyError, key)
 
-def __getitem__objectForKey(self, key):
-    res = self.objectForKey_(key)
-    if res is None:
-        raise KeyError, key
-    return res
-
-def has_key_objectForKey(self, key):
-    res = self.objectForKey_(key)
+def has_key_objectForKey_(self, key):
+    res = self.objectForKey_(container_wrap(key))
     return res is not None
 
-def get_objectForKey(self, key, dflt=None):
-    res = self.objectForKey_(key)
+def get_objectForKey_(self, key, dflt=None):
+    res = self.objectForKey_(container_wrap(key))
     if res is None:
         res = dflt
     return res
 
 CONVENIENCE_METHODS['objectForKey:'] = (
-    ('__getitem__', __getitem__objectForKey),
-    ('has_key', has_key_objectForKey),
-    ('get', get_objectForKey),
-    ('__contains__', has_key_objectForKey),
+    ('__getitem__', __getitem__objectForKey_),
+    ('has_key', has_key_objectForKey_),
+    ('get', get_objectForKey_),
+    ('__contains__', has_key_objectForKey_),
 )
+
+def __delitem__removeObjectForKey_(self, key):
+    self.removeObjectForKey_(container_wrap(key))
 
 CONVENIENCE_METHODS['removeObjectForKey:'] = (
-    ('__delitem__', lambda self, key: self.removeObjectForKey_(key)),
+    ('__delitem__', __delitem__removeObjectForKey_),
 )
 
-def dict_update(self, other):
+def update_setObject_forKey_(self, other):
+    # XXX - should this be more flexible?
     for key, value in other.items():
-        self.setObject_forKey_(value, key)
+        self[key] = value
 
-def dict_setdefault(self, key, dflt=None):
-    res = self.objectForKey_(key)
-    if res is None:
-        res = dflt
-        self.setObject_forKey_(dflt, key)
-    return res
+def setdefault_setObject_forKey_(self, key, dflt=None):
+    try:
+        return self[key]
+    except KeyError:
+        self[key] = dflt
+        return dflt
 
-def dict_pop(self, key, dflt=None):
-    res = self.objectForKey_(key)
-    if res is None:
-        if dflt is None:
-            raise KeyError, key
+def __setitem__setObject_forKey_(self, key, value):
+    self.setObject_forKey_(container_wrap(value), container_wrap(key))
+    
+def pop_setObject_forKey_(self, key, dflt=None):
+    try:
+        res = self[key]
+    except KeyError:
         res = dflt
     else:
-        self.removeObjectForKey_(key)
+        del self[key]
     return res
 
-
-def dict_popitem(self):
-    o = self.keyEnumerator().nextItem()
-    if o is None:
-        raise KeyError, "popitem on an empty dict"
-    v = self.objectForKey_(o)
-    if v is None:
-        raise KeyError, "popitem on an empty dict"
-    return (o, v)
+def popitem_setObject_forKey_(self):
+    try:
+        k = self[iter(self).next()]
+    except StopIteration:
+        raise KeyError, "popitem on an empty %s" % (type(self).__name__,)
+    else:
+        return (k, self[k])
 
 CONVENIENCE_METHODS['setObject:forKey:'] = (
-    ('__setitem__', lambda self, key, value: self.setObject_forKey_(value, key)),
-    ('update', dict_update),
-    ('setdefault', dict_setdefault),
-    ('pop', dict_pop),
-    ('popitem', dict_popitem),
+    ('__setitem__', __setitem__setObject_forKey_),
+    ('update', update_setObject_forKey_),
+    ('setdefault', setdefault_setObject_forKey_),
+    ('pop', pop_setObject_forKey_),
+    ('popitem', popitem_setObject_forKey_),
 )
 
 
@@ -152,7 +151,11 @@ CONVENIENCE_METHODS['count'] = (
 )
 
 CONVENIENCE_METHODS['containsObject:'] = (
-    ('__contains__', lambda self, elem: bool(self.containsObject_(elem))),
+    ('__contains__', lambda self, elem: bool(self.containsObject_(container_wrap(elem)))),
+)
+
+CONVENIENCE_METHODS['removeObject:'] = (
+    ('discard', lambda self, elem: self.removeObject_(container_wrap(elem))),
 )
 
 CONVENIENCE_METHODS['hash'] = (
@@ -191,105 +194,125 @@ CONVENIENCE_METHODS['length'] = (
     ('__len__', lambda self: self.length()),
 )
 
-def __getitem__objectAtIndexWithSlice(self, x, y):
-    l = len(self)
-    r = y - x
-    if r < 0:
-        return []
-    if (r - x) > l:
-        r = l - x
-    res =  self.subarrayWithRange_( (x, r) )
-    return res
-
-def __getitem__objectAtIndex(self, idx):
-    if idx < 0:
-        idx = len(self) + idx
-        if idx < 0:
-            raise IndexError, "index out of range"
-    elif idx >= len(self):
-        raise IndexError, "index out of range"
-    return self.objectAtIndex_(idx)
-
 CONVENIENCE_METHODS['addObject:'] = (
-    ( 'append', lambda self, item: self.addObject_(item) ),
+    ( 'append', lambda self, item: self.addObject_(container_wrap(item))),
 )
+
+def ensureArray(anArray):
+    if not isinstance(anArray, (NSArray, list, tuple)):
+        anArray = list(anArray)
+    return anArray
+    
+
+def extend_addObjectsFromArray_(self, anArray):
+    self.addObjectsFromArray_(ensureArray(anArray))
 
 CONVENIENCE_METHODS['addObjectsFromArray:'] = (
-    ('extend', lambda self, item: self.addObjectsFromArray_(item)),
+    ('extend', extend_addObjectsFromArray_),
 )
 
-def index_indexOfObject(self, item):
+def index_indexOfObject_(self, item):
     from Foundation import NSNotFound
-    res = self.indexOfObject_(item)
+    res = self.indexOfObject_(container_wrap(item))
     if res == NSNotFound:
-        raise ValueError, "NSArray.index(x): x not in list"
+        raise ValueError, "%s.index(x): x not in list" % (type(self).__name__,)
     return res
 
 CONVENIENCE_METHODS['indexOfObject:'] = (
-    ('index', index_indexOfObject),
+    ('index', index_indexOfObject_),
 )
+
+def insert_insertObject_atIndex_(self, idx, item):
+    idx = slice(idx, None, None).indices(len(self)).start
+    self.insertObject_atIndex_(container_wrap(item), idx)
 
 CONVENIENCE_METHODS['insertObject:atIndex:'] = (
-    ( 'insert', lambda self, idx, item: self.insertObject_atIndex_(item,idx)),
+    ( 'insert', insert_insertObject_atIndex_),
 )
+
+def __getitem__objectAtIndex_(self, idx):
+    length = len(self)
+    if isinstance(idx, slice):
+        start, stop, step = idx.indices(length)
+        #if step == 1:
+        #    m = getattr(self, 'subarrayWithRange_', None)
+        #    if m is not None:
+        #        return m((start, stop - start))
+        return [self[i] for i in xrange(start, stop, step)]
+    if idx < 0:
+        idx += length
+        if idx < 0:
+            raise IndexError, "index out of range"
+    elif idx >= length:
+        raise IndexError, "index out of range"
+    return container_unwrap(self.objectAtIndex_(idx), RuntimeError)
 
 CONVENIENCE_METHODS['objectAtIndex:'] = (
-    ('__getitem__', __getitem__objectAtIndex),
-    ('__getslice__', __getitem__objectAtIndexWithSlice),
+    ('__getitem__', __getitem__objectAtIndex_),
 )
 
-def __delslice__removeObjectAtIndex(self, x, y):
-    l = len(self)
-    r = y - x
-    if r < 0:
+def __delitem__removeObjectAtIndex_(self, idx):
+    length = len(self)
+    if isinstance(idx, slice):
+        start, stop, step = idx.indices(length)
+        if step == 1:
+            if start > stop:
+                start, stop = stop, start
+            m = getattr(self, 'removeObjectsInRange_', None)
+            if m is not None:
+                m((start, stop - start))
+                return
+        r = range(start, stop, step)
+        r.sort()
+        r.reverse()
+        for i in r:
+            self.removeObjectAtIndex_(i)
         return
-    if (r - x) > l:
-        r = l - x
-    return self.removeObjectsInRange_( (x, r) )
-
+    if idx < 0:
+        idx += length
+        if idx < 0:
+            raise IndexError, "index out of range"
+    elif idx >= length:
+        raise IndexError, "index out of range"
+    self.removeObjectAtIndex_(idx)
+    
 CONVENIENCE_METHODS['removeObjectAtIndex:'] = (
-    ('__delitem__', lambda self, index: self.removeObjectAtIndex_(index)),
-    ('__delslice__', __delslice__removeObjectAtIndex),
+    ('__delitem__', __delitem__removeObjectAtIndex_),
 )
+
+def __setitem__replaceObjectAtIndex_withObject_(self, idx, anObject):
+    length = len(self)
+    if isinstance(idx, slice):
+        start, stop, step = idx.indices(length)
+        if step == 1:
+            m = getattr(self, 'replaceObjectsInRange_withObjectsFromArray_', None)
+            if m is not None:
+                m((start, stop - start), ensureArray(anObject))
+                return
+        # XXX - implement this..
+        raise NotImplementedError
+    if idx < 0:
+        idx += length
+        if idx < 0:
+            raise IndexError, "index out of range"
+    elif idx >= length:
+        raise IndexError, "index out of range"
+    self.replaceObjectAtIndex_withObject_(idx, anObject)
 
 CONVENIENCE_METHODS['replaceObjectAtIndex:withObject:'] = (
-    ('__setitem__', lambda self, index, anObject: self.replaceObjectAtIndex_withObject_(index, anObject)),
+    ('__setitem__', __setitem__replaceObjectAtIndex_withObject_),
 )
-
-def __setslice__replaceObjectAtIndex_withObject(self, x, y, v):
-    l = len(self)
-    r = y - x
-    if r < 0:
-        return
-    if (r - x) > l:
-        r = l - x
-    return self.replaceObjectsInRange_withObjectsFromArray_( (x, r), v )
-
-CONVENIENCE_METHODS['replaceObjectsInRange:withObjectsFromArray:'] = (
-    ('__setslice__', __setslice__replaceObjectAtIndex_withObject),
-)
-
-# Mapping protocol
-
-# Mappings (e.g. like dict)
-# TODO (not all are needed or even possible):
-#   iter*, update, pop, popitem, setdefault
-# __str__ would be nice (as obj.description()),
 
 def enumeratorGenerator(anEnumerator):
-    nextObject = anEnumerator.nextObject()
-    while nextObject is not None:
-        yield nextObject
-        nextObject = anEnumerator.nextObject()
+    while True:
+        yield container_unwrap(anEnumerator.nextObject(), StopIteration)
 
 def dictItems(aDict):
     """
     NSDictionary.items()
     """
     keys = aDict.allKeys()
-    values = aDict.objectsForKeys_notFoundMarker_(keys, NSNull.null())
-    return zip(keys, values)
-
+    return zip(keys, imap(aDict.__getitem__, keys))
 
 CONVENIENCE_METHODS['allKeys'] = (
     ('keys', lambda self: self.allKeys()),
@@ -301,21 +324,24 @@ CONVENIENCE_METHODS['allValues'] = (
 )
 
 def itemsGenerator(aDict):
-    anEnumerator = aDict.keyEnumerator()
-    nextObject = anEnumerator.nextObject()
-    while nextObject is not None:
-        yield (nextObject, aDict.objectForKey_(nextObject))
-        nextObject = anEnumerator.nextObject()
+    for key in aDict:
+        yield (key, aDict[key])
+
+def __iter__objectEnumerator_keyEnumerator(self):
+    meth = getattr(self, 'keyEnumerator', None)
+    if meth is None:
+        meth = self.objectEnumerator
+    return iter(meth())
 
 CONVENIENCE_METHODS['keyEnumerator'] = (
-    ('__iter__', lambda self: enumeratorGenerator(self.keyEnumerator())),
-    ('iterkeys', lambda self: enumeratorGenerator( self.keyEnumerator())),
+    ('__iter__', __iter__objectEnumerator_keyEnumerator),
+    ('iterkeys', lambda self: iter(self.keyEnumerator())),
     ('iteritems', lambda self: itemsGenerator(self)),
 )
 
 CONVENIENCE_METHODS['objectEnumerator'] = (
-    ('__iter__', lambda self: enumeratorGenerator(self.objectEnumerator())),
-    ('itervalues', lambda self: enumeratorGenerator( self.objectEnumerator())),
+    ('__iter__', __iter__objectEnumerator_keyEnumerator),
+    ('itervalues', lambda self: iter(self.objectEnumerator())),
 )
 
 CONVENIENCE_METHODS['removeAllObjects'] = (
@@ -327,8 +353,7 @@ CONVENIENCE_METHODS['dictionaryWithDictionary:'] = (
 )
 
 CONVENIENCE_METHODS['nextObject'] = (
-    ('__iter__', lambda self: enumeratorGenerator(self)),
-    ('itervalues', lambda self: enumeratorGenerator(self)),
+    ('__iter__', enumeratorGenerator),
 )
 
 #
@@ -337,6 +362,20 @@ CONVENIENCE_METHODS['nextObject'] = (
 #
 NSDecimalNumber = lookUpClass('NSDecimalNumber')
 NSNull = lookUpClass('NSNull')
+NSArray = lookUpClass('NSArray')
+null = NSNull.null()
+
+def container_wrap(v):
+    if v is None:
+        return null
+    return v
+
+def container_unwrap(v, exc_type, *exc_args):
+    if v is null:
+        return None
+    elif v is None:
+        raise exc_type(*exc_args)
+    return v
 
 def _numberForDecimal(v):
     # make sure we have a NSDecimal type around
@@ -351,6 +390,7 @@ def _num_to_python(v):
     if isinstance(v, NSDecimalNumber):
         return _numberForDecimal(v)
     # XXX - this only works for Mac OS X
+    #       GNUstep and Mac OS X can both use objCType
     if hasattr(v, '_cfNumberType'):
         tp = v._cfNumberType()
         if tp in [ 1, 2, 3, 7, 8, 9, 10 ]:
@@ -535,13 +575,12 @@ def splitObjectsAndKeys(values):
     objects = []
     keys = []
     for i in range(0, len(values)-1, 2):
-        objects.append(values[i])
-        keys.append(values[i+1])
+        objects.append(container_wrap(values[i]))
+        keys.append(container_wrap(values[i+1]))
     return objects, keys
 
 def dictionaryWithObjectsAndKeys_(self, *values):
     objects, keys = splitObjectsAndKeys(values)
-
     return self.dictionaryWithObjects_forKeys_(objects, keys)
 
 CONVENIENCE_METHODS['dictionaryWithObjectsAndKeys:'] = (
