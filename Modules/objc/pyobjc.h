@@ -31,6 +31,17 @@
 
 #ifdef MACOSX
 
+/* On 10.1 there are no defines for the OS version. */
+#ifndef MAC_OS_X_VERSION_10_1
+#define MAC_OS_X_VERSION_10_1 1010
+#define MAC_OS_X_VERSION_MAX_ALLOWED MAC_OS_X_VERSION_10_1
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_2
+#define MAC_OS_X_VERSION_10_2 1020
+#endif
+
+
 /* On MacOS X, +signatureWithObjCTypes: is a method of NSMethodSignature,
  * but that method is not present in the header files. We add the definition
  * here to avoid warnings.

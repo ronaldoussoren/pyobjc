@@ -67,10 +67,23 @@ static SEL      sel_get_sel(PyObject* sel)
 	return ((ObjCSelector*)sel)->sel_selector;
 }
 
+static void 	fill_super(struct objc_super* super, Class cls, id receiver)
+{
+	RECEIVER(*super) = receiver;
+	super->class = cls;
+}
+
+static void 	fill_super_cls(struct objc_super* super, Class cls)
+{
+	RECEIVER(*super) = cls;
+	super->class = GETISA(cls);
+}
+
 
 
 struct pyobjc_api objc_api = {
 	PYOBJC_API_VERSION,		/* api_version */
+	sizeof(struct pyobjc_api),	/* struct_size */
 	&PyObjCClass_Type,		/* class_type */
 	(PyTypeObject*)&PyObjCObject_Type, /* object_type */
 	&ObjCSelector_Type,		/* select_type */
@@ -91,7 +104,9 @@ struct pyobjc_api objc_api = {
 	sel_get_class,			/* sel_get_class */
 	sel_get_sel,			/* sel_get_sel */
 	bool_check,			/* bool_check */
-	bool_init			/* bool_init */
+	bool_init,			/* bool_init */
+	fill_super,			/* fill_super */
+	fill_super_cls			/* fill_super_cls*/
 };
 
 int ObjCAPI_Register(PyObject* module_dict)

@@ -10,6 +10,9 @@
  *         ~/Scripts/CodeGenerators.
  *
  */
+
+#import <Foundation/NSString.h>
+
 struct inttable {
 	char* 	name;
 	int	value;

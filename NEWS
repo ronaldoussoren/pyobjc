@@ -5,6 +5,14 @@
 
 WHAT'S NEW:
 
+Version 0.10CVS (Work in progress):
+- Support for MacOS X 10.1
+  It is now possible to build PyObjC on MacOS X 10.1, with full access to 
+  the Cocoa API's on that platform.
+
+- TODO: All suppport for non-FFI builds has been removed.
+
+
 Version 0.9 (May-02-2003):
 - This version includes numerous bugfixes and improvements.
 

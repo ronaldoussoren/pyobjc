@@ -10,11 +10,12 @@
 #include <Python.h>
 #import <Foundation/Foundation.h>
 #import <Foundation/NSDebug.h>
+
 #ifdef MACOSX
 #include <pymactoolbox.h>
 #endif
+
 #include "pyobjc-api.h"
-#include "objc_support.h"
 #include "wrapper-const-table.h"
 
 /** Functions */
@@ -23,11 +24,6 @@
 #include "_Fnd_Functions.GNUstep.inc"
 
 #else /* !GNUSTEP */
-
-#ifndef MAC_OS_X_VERSION_10_2
-#define MAC_OS_X_VERSION_10_2 102000
-#define MAC_OS_X_VERSION_MAX_ALLOWED 101000
-#endif
 
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #include "_Fnd_Functions.inc"
@@ -259,6 +255,8 @@ void init_Foundation(void)
 #else /* !GNUSTEP */
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #	include "_Fnd_Var.inc"
+#else
+#	include "_Fnd_Var.10.1.inc"
 #endif
 #endif /* !GNUSTEP */
     

@@ -59,16 +59,18 @@ classAddMethods(PyObject* self, PyObject* args, PyObject* keywds)
   static 	char* kwlist[] = { "targetClass", "methodsArray", NULL };
   PyObject* classObject = NULL;
   PyObject* methodsArray = NULL;
+  Class targetClass;
+  int methodCount;
+  int methodIndex;
+  struct objc_method_list *methodsToAdd;
 
   if (!PyArg_ParseTupleAndKeywords(args, keywds, "OO:classAddMethods", kwlist,
 				   &classObject, &methodsArray)) {
     return NULL;
   }
 
-  Class targetClass = PyObjCClass_GetClass(classObject);
-  int methodCount = PyList_Size(methodsArray);
-  int methodIndex;
-  struct objc_method_list *methodsToAdd;
+  targetClass  = PyObjCClass_GetClass(classObject);
+  methodCount  = PyList_Size(methodsArray);
 
   if (methodCount == 0) {
     Py_INCREF(Py_None);
@@ -85,6 +87,7 @@ classAddMethods(PyObject* self, PyObject* args, PyObject* keywds)
   
   for (methodIndex = 0; methodIndex < methodCount; methodIndex++) {
     PyObject* aMethod = PyList_GetItem(methodsArray, methodIndex);
+    struct objc_method *objcMethod;
 
     // check
     if (!ObjCSelector_Check(aMethod)) {
@@ -94,7 +97,7 @@ classAddMethods(PyObject* self, PyObject* args, PyObject* keywds)
     }
 
     // install in methods to add
-    struct objc_method *objcMethod = &methodsToAdd->method_list[methodIndex];
+    objcMethod = &methodsToAdd->method_list[methodIndex];
     objcMethod->method_name = ObjCSelector_Selector(aMethod);
 
     objcMethod->method_types = strdup(ObjCSelector_Signature(aMethod));

@@ -8,15 +8,13 @@
  * - global functions (TODO)
  */
 #include <Python.h>
+#include "pyobjc-api.h"
+#include "wrapper-const-table.h"
 
 #import <AppKit/AppKit.h>
 #import <AppKit/NSGraphics.h>
-#ifndef GNUSTEP
 
-#ifndef MAC_OS_X_VERSION_10_2
-#define MAC_OS_X_VERSION_10_2 102000
-#define MAC_OS_X_VERSION_MAX_ALLOWED 101000
-#endif
+#ifndef GNUSTEP
 
 #if MAC_OS_X_VERSION_10_2 <= MAC_OS_X_VERSION_MAX_ALLOWED
 #import <AppKit/NSAccessibility.h>
@@ -25,13 +23,6 @@
 #import <AppKit/NSTypesetter.h>
 #endif
 
-#include "pyobjc-api.h"
-#include "objc_support.h"
-#include "OC_PythonObject.h"
-#include "wrapper-const-table.h"
-#ifndef GNU_RUNTIME
-#include <objc/objc-runtime.h>
-#endif
 
 /** Functions */
 

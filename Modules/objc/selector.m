@@ -666,11 +666,6 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			}
 		}
 				
-
-#ifdef OC_ADJUST_REFCOUNTS
-	/* There are some issues with this code, Bill doesn't like it while
-	 * Ronald does.
-	 */
 		if (self->sel_flags & ObjCSelector_kDONATE_REF) {
 			/* Ownership transfered to us, but 'execute' method has
 			 * increased retainCount, the retainCount is now one 
@@ -679,7 +674,6 @@ objcsel_call(ObjCNativeSelector* self, PyObject* args)
 			id obj = PyObjCObject_GetObject(res);
 			[obj release];
 		}
-#endif
 	}
 	return res;
 }
@@ -722,6 +716,7 @@ objcsel_descr_get(ObjCNativeSelector* meth, PyObject* obj, PyObject* class)
 
 	if (meth->sel_oc_signature == NULL) {
 		meth->sel_oc_signature = [NSMethodSignature signatureWithObjCTypes:meth->sel_signature];
+		[meth->sel_oc_signature retain];
 	}
 	result->sel_oc_signature = meth->sel_oc_signature;
 	[result->sel_oc_signature retain];
