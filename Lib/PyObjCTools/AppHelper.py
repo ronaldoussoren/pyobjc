@@ -54,7 +54,7 @@ def runConsoleEventLoop(argv=None, installInterrupt=True):
         installMachInterrupt()
     NSRunLoop.currentRunLoop().run()
 
-def runEventLoop(argv=None, unexpectedErrorAlert=unexpectedErrorAlert, installInterrupt=True):
+def runEventLoop(argv=None, unexpectedErrorAlert=unexpectedErrorAlert, installInterrupt=False):
     """Run the event loop, ask the user if we should continue if an
     exception is caught. Use this function instead of NSApplicationMain().
     """
