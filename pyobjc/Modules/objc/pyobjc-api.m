@@ -118,7 +118,8 @@ struct pyobjc_api objc_api = {
     PyObjCSelector_Convert, /* pyobjcselector_convert */
     PyObjCClass_Convert,    /* pyobjcclass_convert */
     PyObjC_ConvertBOOL,     /* pyobjc_convertbool */
-    PyObjC_ConvertChar      /* pyobjc_convertchar */
+    PyObjC_ConvertChar,     /* pyobjc_convertchar */
+	PyObjCObject_New		/* pyobjc_object_new */
 };
 
 int PyObjCAPI_Register(PyObject* module)

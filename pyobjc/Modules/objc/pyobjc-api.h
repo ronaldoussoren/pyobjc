@@ -132,8 +132,9 @@
  * - Version 10 changes the signature of PyObjCRT_SimplifySignature
  * - Version 11 adds PyObjCObject_Convert, PyObjCSelector_Convert,
      PyObjCClass_Convert, PyObjC_ConvertBOOL, and PyObjC_ConvertChar
+ * - Version 12 adds PyObjCObject_New
  */
-#define PYOBJC_API_VERSION 11
+#define PYOBJC_API_VERSION 12
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -272,6 +273,9 @@ struct pyobjc_api {
 
 	/* PyObjC_ConvertChar */
 	int (*pyobjc_convertchar)(PyObject*,void*);
+
+	/* PyObjCObject_New */
+	PyObject* (*pyobjc_object_new)(id);
 };
 
 #ifndef PYOBJC_BUILD
@@ -324,6 +328,7 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCClass_Convert (PyObjC_API->pyobjcselector_convert)
 #define PyObjC_ConvertBOOL (PyObjC_API->pyobjc_convertbool)
 #define PyObjC_ConvertChar (PyObjC_API->pyobjc_convertchar)
+#define PyObjCObject_New (PyObjC_API->pyobjc_object_new)
 
 #ifndef PYOBJC_METHOD_STUB_IMPL
 
