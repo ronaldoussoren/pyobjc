@@ -10,9 +10,6 @@
 #include <objc/objc-runtime.h>
 #include "pyobjc-api.h"
 
-#include "_Fnd_NSCoder.inc"
-#include "_Fnd_NSData.inc"
-
 PyDoc_STRVAR(mapping_doc,
 	"This module registers some utility functions with the PyObjC core \n"
 	"and is not used by 'normal' python code"
@@ -21,6 +18,9 @@ PyDoc_STRVAR(mapping_doc,
 static PyMethodDef mapping_methods[] = {
 	{ 0, 0, 0, 0 }
 };
+
+#include "_FoundationMapping_NSData.m"
+#include "_FoundationMapping_NSCoder.m"
 
 void init_FoundationMapping(void)
 {
@@ -37,29 +37,7 @@ void init_FoundationMapping(void)
 		return;
 	}
 
-	if (ObjC_RegisterMethodMapping(
-			objc_lookUpClass("NSCoder"), 
-			@selector(encodeArrayOfObjCType:count:at:),
-			call_NSCoder_encodeArrayOfObjCType_count_at_,
-			supercall_NSCoder_encodeArrayOfObjCType_count_at_,
-			(IMP)imp_NSCoder_encodeArrayOfObjCType_count_at_) < 0) {
-
-		printf("Python error1\n");
-		PyErr_Print();
-		return;
-	}
-	if (ObjC_RegisterMethodMapping(
-			objc_lookUpClass("NSCoder"), 
-			@selector(encodeValueOfObjCType:at:),
-			call_NSCoder_encodeValueOfObjCType_at_,
-			supercall_NSCoder_encodeValueOfObjCType_at_,
-			(IMP)imp_NSCoder_encodeValueOfObjCType_at_) < 0) {
-
-		printf("Python error1\n");
-		PyErr_Print();
-		return;
-	}
-
+	if (__pyobjc_install_NSCoder()) return;
 	if (__pyobjc_install_NSData()) return;
 	
 	if (PyErr_Occurred()) {

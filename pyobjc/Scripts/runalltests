@@ -18,6 +18,7 @@ def perform_some_tests(dummy, dirname, fnames):
 
 	for nm in fnames:
                 if not nm.startswith('test_'): continue
+                if not nm.endswith('.py'): continue
 		path = os.path.join(dirname, nm)
 		print "-- Running '%s'"%path
 		os.system("'%s' '%s'"%(sys.executable, path))
