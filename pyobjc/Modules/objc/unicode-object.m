@@ -176,7 +176,7 @@ PyTypeObject PyObjCUnicode_Type = {
 	0,					/* tp_iternext */
 	class_methods,				/* tp_methods */
 	0,					/* tp_members */
-	0,					/* tp_getset */
+	nsstring_getseters,	/* tp_getset */
 	&PyUnicode_Type,			/* tp_base */
 	0,					/* tp_dict */
 	0,					/* tp_descr_get */
