@@ -329,6 +329,7 @@ def __truediv__CFNumber(numA, numB):
 def __xor__CFNumber(numA, numB):
     return _num_to_python(numA)  ^ _num_to_python(numB)
 
+
 CONVENIENCE_METHODS['_cfNumberType'] = (
     ('__abs__', __abs__CFNumber),
     ('__add__', __add__CFNumber),
@@ -368,6 +369,11 @@ CONVENIENCE_METHODS['_cfNumberType'] = (
     ('__truediv__', __truediv__CFNumber),
     ('__xor__', __xor__CFNumber),
 )
+
+CONVENIENCE_METHODS['boolValue'] = (
+    ('__nonzero__', lambda (self): self.boolValue() != 0),
+)
+
 
 #
 # Special wrappers for a number of varargs functions (constructors)
