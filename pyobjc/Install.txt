@@ -39,7 +39,7 @@ The following command will build and install the PyObjC package::
 The setup.py system can also be used to create source and binary
 distribution archives automatically.
 
-Use ``sudo`` to install the PyObjC package into a the Apple supplied
+Use ``sudo`` to install the PyObjC package into the Apple supplied
 Python's site-packages directory on OS X 10.2 and greater:
 
 % sudo python setup.py install
