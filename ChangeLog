@@ -1,3 +1,7 @@
+2003-03-09  Bill Bumgarner  <bbum@codefab.com>
+    * Lib/Foundation/__init__.py: Added declarations for all of the informal
+      protocols in Foundation.
+
 2003-02-28  Bill Bumgarner  <bbum@codefab.com>
     * Lib/AppKit/__init__.py: Added three (void) methods to
     NSTableViewDelegate and added NSOutlineViewDelegate.
