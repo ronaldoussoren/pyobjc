@@ -664,6 +664,31 @@ static char* keywords[] = { "name", NULL };
 	return NULL;
 }
 
+PyDoc_STRVAR(PyObjC_loadBundleVariables_doc, 
+	"loadBundleVariables(bundle, module_globals, variableInfo, "
+	"skip_undefined=True)\n"
+	"\n"
+	"Load the specified variables in the bundle. If skip_undefined is \n"
+	"True, variables that are not present in the bundle are skipped, \n"
+	"otherwise this method raises objc.error when a variable cannot be \n"
+	"found.\n"
+	"\n"
+	"variableInfo is a list of (name, type) pairs. The type is the \n"
+	"Objective-C type specifier for the variable type.");
+PyDoc_STRVAR(PyObjC_loadBundleFunctions_doc,
+	"loadBundleFunctions(bundle, module_globals, functionInfo, "
+	"skip_undefined=True)\n"
+	"\n"
+	"Load the specified functions in the bundle. If skip_undefined is \n"
+	"True, variables that are not present in the bundle are skipped, \n"
+	"otherwise this method raises objc.error when a variable cannot be \n"
+	"found.\n"
+	"\n"    
+	"variableInfo is a list of (name, signature, doc) triples. \n"
+	"The signature is the Objective-C type specifier for the function \n"
+	"signature.");
+
+
 static PyMethodDef mod_methods[] = {
 	{
 	  "splitSignature",
@@ -698,6 +723,10 @@ static PyMethodDef mod_methods[] = {
 #endif
 	{ "enableThreading", (PyCFunction)enableThreading, METH_NOARGS, enableThreading_doc },
 	{ "protocolNamed", (PyCFunction)protocolNamed, METH_VARARGS|METH_KEYWORDS, protocolNamed_doc },
+	{ "loadBundleVariables", (PyCFunction)PyObjC_loadBundleVariables,
+		METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleVariables_doc },
+	{ "loadBundleFunctions", (PyCFunction)PyObjC_loadBundleFunctions,
+		METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleFunctions_doc },
 
 	{ 0, 0, 0, 0 } /* sentinel */
 };
@@ -798,6 +827,7 @@ init_objc(void)
 	PyDict_SetItemString(d, "selector", (PyObject*)&PyObjCSelector_Type);
 	PyDict_SetItemString(d, "ivar", (PyObject*)&PyObjCInstanceVariable_Type);
 	PyDict_SetItemString(d, "informal_protocol", (PyObject*)&PyObjCInformalProtocol_Type);
+	PyDict_SetItemString(d, "function", (PyObject*)&PyObjCFunc_Type);
 	PyDict_SetItemString(d, "IMP", (PyObject*)&PyObjCIMP_Type);
 	PyDict_SetItemString(d, "YES", PyObjCBool_FromLong(1));
 	PyDict_SetItemString(d, "NO", PyObjCBool_FromLong(0));

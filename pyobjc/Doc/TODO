@@ -219,13 +219,6 @@ The CurrentConvertor example should be removed, this should be the same as the
 final step of the tutorial. It isn't at the moment because additional cruft in
 the example.
 
-* addressbook.py
-  Cleanup, maybe transform this into a usefull utility (import/export from/to
-  CSV springs to mind).
-
-* autoreadme.py
-  Add documentation
-
 * dictionary.py
   Should be a unittest, and should be added to the (non-existing) manual
 

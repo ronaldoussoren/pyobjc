@@ -154,9 +154,9 @@ imp_repr(PyObjCIMPObject* self)
 	char buf[256];
 
 	snprintf(buf, sizeof(buf), 
-		"<IMP %s at %p>",
+		"<IMP %s at %p for %p>",
 		PyObjCRT_SELName(self->selector),
-		self);
+		self, self->imp);
 	return PyString_FromString(buf);
 }
 
