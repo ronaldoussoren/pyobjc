@@ -29,7 +29,6 @@ else:
             u"/System/Library/Frameworks/WebKit.framework",
         ),
     )
-_objc.recycleAutoreleasePool()
 
 import protocols  # no need to export these, just register with PyObjC
 
