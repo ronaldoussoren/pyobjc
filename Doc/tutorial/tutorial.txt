@@ -15,11 +15,10 @@ To follow the tutorial you need:
  * py2app 0.1.6 or later (included in the binary installer for PyObjC)
  * Python 2.3 or later (note: PyObjC is NOT compatible with MacPython-OS9)
  * Mac OS X 10.2 or later
+ * Xcode Tools (was Developer Tools for Mac OS X 10.2)
 
-In addition you need Interface Builder to create your user interface. 
-Interface Builder is not included in Mac OS X by default, but it is part of 
-Apple's free Xcode Tools (was Developer Tools prior to Mac OS X 10.3).  See
-`Getting the Xcode Tools`_.
+If you do not have a ``/Developer`` folder, then you do not have Xcode Tools
+installed.  See `Getting the Xcode Tools`_.
 
 .. _`Getting the Xcode Tools`: http://developer.apple.com/tools/download/
 
