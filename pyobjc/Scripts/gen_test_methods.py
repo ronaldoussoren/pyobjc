@@ -79,6 +79,16 @@ struct TestStruct3 {
     char ch;
     int  i;
 };
+
+struct TestStruct4 {
+    char ch;
+    long long l;
+};
+
+struct TestStruct5 {
+    char ch;
+    double d;
+};
 """
 
 OBJC_FOOTER="""\
@@ -203,6 +213,8 @@ TYPES.extend([
     ('struct TestStruct1', '{_TestStruct1=ii[5s]}', ((1,2,(1,2,3,4,5)), (9,8,(-1,-2,-3,-4,-5)))),
     ('struct TestStruct2', '{_TestStruct2=id[5s]}', ((1,2,(1,2,3,4,5)), (9,8,(-1,-2,-3,-4,-5)))),
     ('struct TestStruct3', '{_TestStruct3=ci}', ((1,2), (2,4))),
+    ('struct TestStruct4', '{_TestStruct4=cq}', ((1,500000), (2,4))),
+    ('struct TestStruct5', '{_TestStruct5=cd}', ((1,2.0), (2,4.0))),
 ])
 
 
