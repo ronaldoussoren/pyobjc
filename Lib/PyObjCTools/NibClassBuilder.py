@@ -267,37 +267,37 @@ class NibInfo(object):
         writer.dedent()
 
     def _printClass(self, writer, clsInfo):
-            nibs = clsInfo.nibs
-            if len(nibs) > 1:
-                nibs[-2] = nibs[-2] + " and " + nibs[-1]
-                del nibs[-1]
-            nibs = ", ".join(nibs)
-            writer.writeln("# class defined in %s" % nibs)
-            writer.writeln("class %s(NibClassBuilder.AutoBaseClass):" % clsInfo.name)
-            writer.indent()
-            writer.writeln("# the actual base class is %s" % clsInfo.super)
-            outlets = clsInfo.outlets
-            actions = clsInfo.actions
-            if outlets:
-                writer.writeln("# The following outlets are added to the class:")
-                outlets.sort()
-                for o in outlets:
-                        writer.writeln("# %s" % o)
-                writer.writeln()
-            if not actions:
-                writer.writeln("pass")
-                writer.writeln()
-            else:
-                if actions:
-                    actions.sort()
-                    for a in actions:
-                        writer.writeln("def %s(self, sender):" % a)
-                        writer.indent()
-                        writer.writeln("pass")
-                        writer.dedent()
-                    writer.writeln()
+        nibs = clsInfo.nibs
+        if len(nibs) > 1:
+            nibs[-2] = nibs[-2] + " and " + nibs[-1]
+            del nibs[-1]
+        nibs = ", ".join(nibs)
+        writer.writeln("# class defined in %s" % nibs)
+        writer.writeln("class %s(NibClassBuilder.AutoBaseClass):" % clsInfo.name)
+        writer.indent()
+        writer.writeln("# the actual base class is %s" % clsInfo.super)
+        outlets = clsInfo.outlets
+        actions = clsInfo.actions
+        if outlets:
+            writer.writeln("# The following outlets are added to the class:")
+            outlets.sort()
+            for o in outlets:
+                writer.writeln("# %s" % o)
             writer.writeln()
-            writer.dedent()
+        if not actions:
+            writer.writeln("pass")
+            writer.writeln()
+        else:
+            if actions:
+                actions.sort()
+                for a in actions:
+                    writer.writeln("def %s(self, sender):" % a)
+                    writer.indent()
+                    writer.writeln("pass")
+                    writer.dedent()
+                writer.writeln()
+        writer.writeln()
+        writer.dedent()
 
 
 def _frameworkForClass(className):

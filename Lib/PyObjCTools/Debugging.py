@@ -71,7 +71,7 @@ class PyObjCDebuggingDelegate(NSObject):
         self = super(PyObjCDebuggingDelegate, self).init()
         self.setVerbosity_(DEFAULTVERBOSITY)
         return self
-    
+
     def initWithVerbosity_(self, verbosity):
         self = self.init()
         self.setVerbosity_(verbosity)

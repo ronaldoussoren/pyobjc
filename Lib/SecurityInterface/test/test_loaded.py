@@ -1,5 +1,5 @@
 """
-SecurityInterface doesn't add 'interesting' behaviour, just check that the 
+SecurityInterface doesn't add 'interesting' behaviour, just check that the
 module loaded correctly.
 """
 
@@ -13,9 +13,9 @@ if os.path.exists('/System/Library/Frameworks/SecurityInterface.framework'):
 
     class SITest (unittest.TestCase):
         def testClasses(self):
-            # Check that we loaded the SecurityInterface framework by looking 
+            # Check that we loaded the SecurityInterface framework by looking
             # for a class that should exist
-            import SecurityInterface 
+            import SecurityInterface
 
             self.assert_(hasattr(SecurityInterface, 'SFAuthorizationView'))
             self.assert_(hasattr(SecurityInterface, 'SFAuthorizationView'))

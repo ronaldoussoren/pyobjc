@@ -83,7 +83,7 @@ def pythonCollectionFromPropertyList(aCollection, conversionHelper=None):
         elif objCType is 'b': return aCollection.boolValue()
         elif objCType is 'q': return aCollection.longLongValue()
         raise TypeError, "Type '%s' encountered within an instance of the NSValue class." % type(objCType)
-    elif isinstance(aCollection, (str, unicode)): 
+    elif isinstance(aCollection, (str, unicode)):
         return aCollection
     elif isinstance(aCollection, (int, float, long)):
         return aCollection
