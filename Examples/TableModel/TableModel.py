@@ -1,8 +1,20 @@
-from Foundation import NSObject
-from AppKit import NSApplicationMain
+"""TableModel.py -- Minimal example showing how to use an NSTableView.
+
+To build the demo program, run this line in Terminal.app:
+
+    $ python buildapp.py --link build
+
+This creates a directory "build" containing TableModel.app. (The --link option
+causes the files to be symlinked to the .app bundle instead of copied. This
+means you don't have to rebuild the app if you edit the sources or nibs.)
+"""
+
+# Or rather, this app shows how to create an object conforming to the
+# NSTableDataSource protocol.  The model object is connected to the table view
+# in the nib, both as the delegate and the data source.  The table view will
+# ask our object for data; it controls us, not the other way around.
+
 from PyObjCTools import NibClassBuilder, AppHelper
-from objc import selector
-import sys
 
 NibClassBuilder.extractClasses("MainMenu")
 
@@ -20,6 +32,7 @@ class PyModel(NibClassBuilder.AutoBaseClass):
         #self.tableView.setDoubleAction_(self.doubleClick_)
 
     def init(self):
+        print "XXX"
         self.rowcount = ROWCOUNT
         return self
 
@@ -44,7 +57,6 @@ class PyModel(NibClassBuilder.AutoBaseClass):
 
     # delegate methods
     def tableView_shouldSelectRow_(self, aTableView, rowIndex):
-        print "shouldSelectRow_", rowIndex
         # only allow odd rows to be selected
         return rowIndex % 2
 
