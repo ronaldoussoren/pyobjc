@@ -83,7 +83,7 @@ class PyDEPythonDocument (NibClassBuilder.AutoBaseClass):
 
     def guessEncoding(self, text):
         """
-        Return the encoding for a python source file 
+        Return the encoding for a python source file
 
         The default is ASCII, but that can be changed using a PEP-263 cookie
         """

@@ -63,7 +63,7 @@ class PyDETextView(NSTextView):
         self.superview().superview().setHasHorizontalScroller_(True)
 
         # And to make that useable we make our textContainer a fixed, large
-        # width. 
+        # width.
         self.textContainer().setWidthTracksTextView_(False)
         self.textContainer().setContainerSize_((1000000, 1000000))
 
