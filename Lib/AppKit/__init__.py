@@ -1016,4 +1016,6 @@ NSApplicationDelegate = _objc.informal_protocol(
     ]
 )
 
-# TODO: NSWindowScripting
+# TODO:
+# NSWindowScripting
+# NSTextViewDelegate
