@@ -48,7 +48,7 @@ static PyObject* unregister_proxy_func(PyObject* self, PyObject* args)
 
 
 	if (!PyArg_ParseTuple(args, "O:unregister_proxy", &weakref)) {
-		printf("Bad call to unregister proxy\n");
+		PyErr_BadInternalCall();
 		return NULL;
 	}
 
@@ -87,6 +87,7 @@ find_existing_proxy(id objc_obj)
 
 	v = PyWeakref_GetObject(v);
 	if (v) {
+		OC_CheckRevive(v);
 		Py_INCREF(v);
 	}
 
@@ -273,6 +274,11 @@ PyObject* ObjCObject_New(id objc_object)
 	if (res == NULL) {
 		return NULL;
 	}
+
+	/* This should be in the tp_alloc for the new class, but 
+	 * adding a tp_alloc to ObjCClass_Type doesn't seem to help
+	 */
+	ObjCClass_CheckMethodList((PyObject*)res->ob_type);
 	
 	((ObjCObject*)res)->weak_refs = NULL;
 	((ObjCObject*)res)->objc_object = objc_object;

@@ -216,9 +216,18 @@ void ObjCErr_ToObjC(void)
 		userInfo:userInfo];
 
 	Py_DECREF(repr);
-	Py_DECREF(exc_type);
-	Py_XDECREF(exc_value);
-	Py_XDECREF(exc_traceback);
+
+	if (ObjC_VerboseLevel) {
+
+		PyErr_Restore(exc_type, exc_value , exc_traceback);
+		NSLog(@"PyObjC: Converting exception to Objective-C:");
+		PyErr_Print();
+	} else {
+
+		Py_DECREF(exc_type);
+		Py_XDECREF(exc_value);
+		Py_XDECREF(exc_traceback);
+	}
 
 	[val raise];
 }
@@ -267,6 +276,125 @@ int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict)
 		Py_DECREF(args);
 		return -1;
 	}
+	Py_DECREF(args);
+
+	return 0;
+}
+
+/* 
+ * Update the convenience methods. We can't just change the type dict here,
+ * because the type doesn't pick up new '__' methods  (like __getitem__) 
+ * that way.
+ */
+int ObjC_UpdateConvenienceMethods(PyObject* cls)
+{
+	PyObject* super_class;
+	PyObject* name;
+	PyObject* res;
+	PyObject* args;
+	Class     objc_cls;
+	PyObject* dict;
+	PyObject* keys;
+	int       i, len;
+	
+
+	if (ObjC_class_extender == NULL || cls == nil) return 0;
+
+	objc_cls = ObjCClass_GetClass(cls);
+
+	if (objc_cls->super_class == nil) {
+		super_class = Py_None;
+		Py_INCREF(super_class);
+	} else {
+		super_class = ObjCClass_New(objc_cls->super_class);
+		if (super_class == NULL) {
+			return -1;
+		}
+	}
+
+	name = PyString_FromString(objc_cls->name);
+	if (name == NULL) {
+		Py_DECREF(super_class);
+		return -1;
+	}
+
+	dict = /*PyDict_Copy*/(((PyTypeObject*)cls)->tp_dict);
+	Py_INCREF(dict);
+	if (dict == NULL) {
+		Py_DECREF(super_class);
+		Py_DECREF(name);
+		return -1;
+	}
+
+	args = PyTuple_New(3);
+	if (args == NULL) {
+		Py_DECREF(super_class);
+		Py_DECREF(name);
+		Py_DECREF(dict);
+		return -1;
+	}
+
+	PyTuple_SET_ITEM(args, 0, super_class);
+	PyTuple_SET_ITEM(args, 1, name);
+	PyTuple_SET_ITEM(args, 2, dict);
+
+	res = PyObject_CallObject(ObjC_class_extender, args);
+	if (res == NULL) {
+		Py_DECREF(args);
+		return -1;
+	}
+
+	keys = PyDict_Keys(dict);
+	if (keys == NULL) {
+		Py_DECREF(args);
+		return -1;
+	}
+
+	len = PySequence_Length(keys);
+	if (len == -1) {
+		Py_DECREF(keys);
+		Py_DECREF(args);
+		return -1;
+	}
+	for (i = 0; i < len; i++) {
+		PyObject* k = PySequence_GetItem(keys, i);
+		PyObject* v;
+		char*     n;
+		
+		if (k == NULL) {
+			PyErr_Clear();
+			continue;
+		}
+
+		if (!PyString_Check(k)) {
+			Py_DECREF(k);
+			continue;
+		}
+		n = PyString_AS_STRING(k);
+		if (n[0] != '_' || n[1] != '_') {
+			Py_DECREF(k);
+			continue;
+		}
+		if (	   strcmp(n, "__dict__") == 0 
+			|| strcmp(n, "__bases__") == 0) {
+
+			Py_DECREF(k);
+			continue;
+		}
+
+		v = PyDict_GetItem(dict, k);
+		if (v == NULL) {
+			Py_DECREF(k);
+			continue;
+		}
+		if (PyObject_SetAttr(cls, k, v) == -1) {
+			Py_DECREF(k);
+			continue;
+		}
+		Py_DECREF(k);
+	}	
+
+
 	Py_DECREF(args);
 
 	return 0;
