@@ -16,7 +16,7 @@
 
 -initWithPythonObject:(PyObject*)v;
 {
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = PyObjCGILState_Ensure();
 	value = v;
 
 	if (PyString_Check(value)) {
@@ -71,7 +71,7 @@
 	PyGILState_STATE state;
 
 	CFRelease(stringValue);
-	state = PyGILState_Ensure();
+	state = PyObjCGILState_Ensure();
 	Py_XDECREF(value);
 	Py_XDECREF(_internalRep);
 	PyGILState_Release(state);

@@ -138,7 +138,7 @@ imp_NSDictionary_initWithObjects_forKeys_count_(
 	PyObject* v;
 	int i;
 
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = PyObjCGILState_Ensure();
 
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) goto error;
@@ -311,7 +311,7 @@ imp_NSDictionary_dictionaryWithObjects_forKeys_count_(
 	PyObject* v;
 	int i;
 
-	PyGILState_STATE state = PyGILState_Ensure();
+	PyGILState_STATE state = PyObjCGILState_Ensure();
 
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) goto error;

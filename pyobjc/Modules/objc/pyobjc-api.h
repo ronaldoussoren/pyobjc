@@ -11,7 +11,7 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
- * $Id: pyobjc-api.h,v 1.29 2004/04/05 09:13:53 ronaldoussoren Exp $
+ * $Id: pyobjc-api.h,v 1.30 2004/04/06 00:34:45 etrepum Exp $
  */
 
 #include <Python.h>
@@ -51,7 +51,7 @@ static inline void PyGILState_Release(
 #define PyObjC_BEGIN_WITH_GIL \
 	{ \
 		PyGILState_STATE _GILState; \
-		_GILState = PyGILState_Ensure(); 
+		_GILState = PyObjCGILState_Ensure(); 
 
 #define PyObjC_GIL_FORWARD_EXC() \
 		do { \
@@ -150,7 +150,7 @@ static inline void PyGILState_Release(
  *	PyObjC_RegisterSignatureMapping and PyObjCUnsupportedMethod_IMP,
  *      adds PyObjC_RegisterStructType and removes PyObjC_CallPython
  * - Version 6 adds PyObjCIMP_Type, PyObjCIMP_GetIMP and PyObjCIMP_GetSelector
- * - Version 7 adds PyObjCErr_AsExc
+ * - Version 7 adds PyObjCErr_AsExc, PyObjCGILState_Ensure
  */
 #define PYOBJC_API_VERSION 7
 
@@ -277,6 +277,8 @@ struct pyobjc_api {
     /* PyObjCErr_AsExc */
     NSException* (*err_python_to_nsexception)(void);
 
+    /* PyObjCGILState_Ensure */
+    PyGILState_STATE (*gilstate_ensure)(void);
 };
 
 
@@ -326,6 +328,7 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjC_RegisterStructType   (PyObjC_API->register_struct)
 #define PyObjCIMP_GetIMP   (PyObjC_API->imp_get_imp)
 #define PyObjCIMP_GetSelector   (PyObjC_API->imp_get_sel)
+#define PyObjCGILState_Ensure (PyObjC_API->gilstate_ensure)
 
 
 /* XXX: Check if we can use the following function in the bridge itself,

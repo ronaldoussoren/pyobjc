@@ -116,7 +116,8 @@ struct pyobjc_api objc_api = {
 	&PyObjCIMP_Type,		/* imp_type */
 	PyObjCIMP_GetIMP,		/* imp_get_imp */
 	PyObjCIMP_GetSelector,		/* imp_get_sel */
-	PyObjCErr_AsExc             /* err_python_to_nsexception */
+	PyObjCErr_AsExc,		/* err_python_to_nsexception */
+	PyObjCGILState_Ensure		/* gilstate_ensure */
 };
 
 int ObjCAPI_Register(PyObject* module_dict)
