@@ -34,7 +34,8 @@
 #include "pyobjc-api.h"
 #include "pymactoolbox.h"
 
-static PyObject* call_NSAppleEventDescriptor_initWithDescriptorType_bytes_length_(
+static PyObject* 
+call_NSAppleEventDescriptor_initWithDescriptorType_bytes_length_(
 	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	char*     bytes;
@@ -81,7 +82,8 @@ static PyObject* call_NSAppleEventDescriptor_initWithDescriptorType_bytes_length
 	return result;
 }
 
-static PyObject* call_NSAppleEventDescriptor_descriptorWithDescriptorType_bytes_length_(
+static PyObject* 
+call_NSAppleEventDescriptor_descriptorWithDescriptorType_bytes_length_(
         PyObject* method, PyObject* self, PyObject* arguments)
 {
 	char*     bytes;

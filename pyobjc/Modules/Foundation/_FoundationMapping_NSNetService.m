@@ -96,7 +96,7 @@ makesockaddr(struct sockaddr *addr, int addrlen)
 }
 
 static PyObject* call_NSNetService_addresses(
-		PyObject* method, PyObject* self, PyObject* arguments)
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;

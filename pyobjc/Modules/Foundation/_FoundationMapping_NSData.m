@@ -27,7 +27,8 @@
 #include "pyobjc-api.h"
 
 
-static PyObject* call_NSData_dataWithBytes_length_(
+static PyObject* 
+call_NSData_dataWithBytes_length_(
 		PyObject* method, PyObject* self, PyObject* arguments)
 {
 	char*     bytes;
@@ -64,52 +65,62 @@ static PyObject* call_NSData_dataWithBytes_length_(
 }
 
 
-static id imp_NSData_dataWithBytes_length_(id self, SEL sel,
-		char* data, unsigned len)
+static void 
+imp_NSData_dataWithBytes_length_(
+	void* cif __attribute__((__unused__)), 
+	void* resp, 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	char* data = *(char**)args[2];
+	unsigned len = *(unsigned*)args[3];
+	id* pretval = (id*)resp;
+
 	PyObject* result;
-	PyObject* arglist;
-	id        objc_result;
+	PyObject* arglist = NULL;
+	PyObject* v;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
-	arglist = PyTuple_New(2);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	arglist = PyTuple_New(3);
+	if (arglist == NULL) goto error;
 
-	PyTuple_SetItem(arglist, 0, PyString_FromStringAndSize(data, len));
-	PyTuple_SetItem(arglist, 1, PyInt_FromLong(len));
+	v = PyObjC_IdToPython(self);
+	if (v == NULL) goto error;
+	PyTuple_SetItem(arglist, 0, v); 
 
-	if (PyErr_Occurred()) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	v = PyString_FromStringAndSize(data, len);
+	if (v == NULL) goto error;
+	PyTuple_SetItem(arglist, 1, v); 
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	v = PyInt_FromLong(len);
+	if (v == NULL) goto error;
+	PyTuple_SetItem(arglist, 2, v); 
 
-	objc_result = PyObjC_PythonToId(result);
+
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
+
+	*pretval = PyObjC_PythonToId(result);
 	Py_DECREF(result);
 
-	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (*pretval == nil && PyErr_Occurred()) goto error;
 
 	PyGILState_Release(state);
-	return objc_result;
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	PyObjCErr_ToObjCWithGILState(&state);
+	*pretval = nil;
 }
 
 
 static PyObject* call_NSData_initWithBytes_length_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	char*     bytes;
 	int       bytes_len;
@@ -154,51 +165,61 @@ static PyObject* call_NSData_initWithBytes_length_(
 }
 
 
-static id imp_NSData_initWithBytes_length_(id self, SEL sel,
-		char* data, unsigned len)
+static void
+imp_NSData_initWithBytes_length_(
+	void* cif __attribute__((__unused__)), 
+	void* resp, 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	char* data = *(char**)args[2];
+	unsigned len = *(unsigned*)args[3];
+	id* pretval = (id*)resp;
+
 	PyObject* result;
-	PyObject* arglist;
-	id        objc_result;
+	PyObject* v;
+	PyObject* arglist = NULL;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
-	arglist = PyTuple_New(2);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	arglist = PyTuple_New(3);
+	if (arglist == NULL) goto error;
 
-	PyTuple_SetItem(arglist, 0, PyString_FromStringAndSize(data, len));
-	PyTuple_SetItem(arglist, 1, PyInt_FromLong(len));
+	v = PyObjC_IdToPython(self);
+	if (v == NULL) goto error;
+	PyTuple_SetItem(arglist, 0, v); 
 
-	if (PyErr_Occurred()) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	v = PyString_FromStringAndSize(data, len);
+	if (v == NULL) goto error;
+	PyTuple_SetItem(arglist, 1, v); 
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	v = PyInt_FromLong(len);
+	if (v == NULL) goto error;
+	PyTuple_SetItem(arglist, 2, v); 
 
-	objc_result = PyObjC_PythonToId(result);
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
+
+	*pretval = PyObjC_PythonToId(result);
 	Py_DECREF(result);
 
-	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (*pretval == nil && PyErr_Occurred()) goto error;
+
 	PyGILState_Release(state);
-	return objc_result;
+	return;
+
+error:
+	*pretval = nil;
+	Py_XDECREF(arglist);
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
 
 static PyObject* call_NSData_bytes(
-		PyObject* method, PyObject* self, PyObject* arguments)
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	const void* bytes;
 	unsigned    bytes_len;
@@ -228,44 +249,73 @@ static PyObject* call_NSData_bytes(
 	return result;
 }
 
-static void *imp_NSData_bytes(id self, SEL sel)
+static void 
+imp_NSData_bytes(
+	void* cif __attribute__((__unused__)), 
+	void* resp, 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	void** pretval = (void**)resp;
+
 	PyObject* result;
+	PyObject* arglist = NULL;
+	PyObject* v;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
-	result = PyObjC_CallPython(self, sel, NULL, NULL);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return NULL;
-	}
+	arglist = PyTuple_New(1);
+	if (arglist == NULL) goto error;
+
+	v = PyObjC_IdToPython(self);
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 0, v);
+
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
 
 	if (result == Py_None) {
+		*pretval = NULL;
 		Py_DECREF(result);
-		PyGILState_Release(state);
-		return NULL;
+		return;
 	}
 
 	if (PyBuffer_Check(result)) {
+		/* XXX: Is this correct?? */
 		const void *p;
 		int len;
 		if (PyObject_AsReadBuffer(result, &p, &len) == -1) {
-			PyObjCErr_ToObjCWithGILState(&state);
-			return NULL;
+			goto error;
 		}
 		Py_DECREF(result);
 		PyGILState_Release(state);
-		return (void *)p;
+		*pretval =  (void *)p;
+		return;
+	} else if (PyString_Check(result)) {
+		/* XXX: Is this correct */
+		void* p;
+
+		p = PyString_AsString(result);
+		*pretval = (void*)p;
+		return;
 	}
 
 	PyErr_SetString(PyExc_ValueError, "No idea what to do with result.");
+	goto error;
+
+error:
+	Py_XDECREF(arglist);
 	PyObjCErr_ToObjCWithGILState(&state);
-	return NULL;
+	*pretval = NULL;
 }
 
 
-static PyObject* call_NSMutableData_mutableBytes(
-		PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSMutableData_mutableBytes(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	void*     bytes;
 	unsigned  bytes_len;
@@ -294,38 +344,63 @@ static PyObject* call_NSMutableData_mutableBytes(
 	return result;
 }
 
-static void *imp_NSMutableData_mutableBytes(id self, SEL sel)
+static void
+imp_NSMutableData_mutableBytes(
+	void* cif __attribute__((__unused__)), 
+	void* resp, 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	void** pretval = (void**)resp;
 	PyObject* result;
+	PyObject* arglist = NULL;
+	PyObject* v;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
-	result = PyObjC_CallPython(self, sel, NULL, NULL);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return NULL;
-	}
+	arglist = PyTuple_New(1);
+	if (arglist == NULL) goto error;
+
+	v = PyObjC_IdToPython(self);
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 0, v);
+
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
 
 	if (result == Py_None) {
 		Py_DECREF(result);
-		PyGILState_Release(state);
-		return NULL;
+		goto error;
+	}
+
+	if (result == Py_None) {
+		*pretval = NULL;
+		Py_DECREF(result);
+		return;
 	}
 
 	if (PyBuffer_Check(result)) {
+		/* XXX: Is this correct? */
 		void *p;
 		int len;
-		if (PyObject_AsWriteBuffer(result, &p, &len) == -1) {
-			PyObjCErr_ToObjCWithGILState(&state);
-			return NULL;
-		}
+		if (PyObject_AsWriteBuffer(result, &p, &len) == -1) goto error;
 		Py_DECREF(result);
-		return (void *)p;
+		*pretval = (void *)p;
+		return;
 	}
 
 	PyErr_SetString(PyExc_ValueError, "No idea what to do with result.");
 	PyObjCErr_ToObjCWithGILState(&state);
-	return NULL;
+	*pretval = NULL;
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	*pretval = NULL;
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
 static int 
@@ -339,21 +414,21 @@ _pyobjc_install_NSData(void)
 		if (PyObjC_RegisterMethodMapping(classNSData, 
 				 @selector(initWithBytes:length:),
 				 call_NSData_initWithBytes_length_,
-				 (IMP)imp_NSData_initWithBytes_length_) < 0 ) {
+				 imp_NSData_initWithBytes_length_) < 0 ) {
 			return -1;
 		}
 
 		if (PyObjC_RegisterMethodMapping(classNSData, 
 				 @selector(dataWithBytes:length:),
 				 call_NSData_dataWithBytes_length_,
-				 (IMP)imp_NSData_dataWithBytes_length_) < 0 ) {
+				 imp_NSData_dataWithBytes_length_) < 0 ) {
 			return -1;
 		}
   
 		if (PyObjC_RegisterMethodMapping(classNSData, 
 				 @selector(bytes),
 				 call_NSData_bytes,
-				 (IMP)imp_NSData_bytes) < 0 ) {
+				 imp_NSData_bytes) < 0 ) {
 			return -1;
 		}
 
@@ -371,7 +446,7 @@ _pyobjc_install_NSData(void)
 		if (PyObjC_RegisterMethodMapping(classNSMutableData, 
 				@selector(mutableBytes),
 				call_NSMutableData_mutableBytes,
-				(IMP)imp_NSMutableData_mutableBytes) < 0 ) {
+				imp_NSMutableData_mutableBytes) < 0 ) {
 			return -1;
 		}
 	}

@@ -56,13 +56,6 @@ the same functionality can be accessed by using the object-oriented interface.
 AppKit framework
 ----------------
 
-``NSPoint`` is a tuple of 2 floats, or use ``AppKit.NSMakePoint(x, y)``.
-
-``NSSize`` is a tuple of 2 floats, or use ``AppKit.NSMakeSize(h, w)``.
-
-``NSRect`` is a tuple of an ``NSPoint`` and an ``NSSize``, or 
-use ``AppKit.NSMakeRect(x, y, h, w)``.
-
 The callback methods for the NSSheet API's have a non-default signature
 and no fixed name. You should therefore explicitly specify the signature. This
 is done by calling the ``endSheetMethod`` function after defining your
@@ -267,6 +260,10 @@ The ``-forward::`` method is not supported. It's functionality can be accessed
 using the python function ``apply``. The ``performv::`` method is also not
 supported, with a simular work-around.
 
+Structs are wrapped using a struct-like type. They can be accessed using the
+field-names from Objective-C, or you can access them as sequences. Accessing
+them as sequences is necessary for backward compatibility and is depericated.
+
 Class ``NSArray``
 .................
 
@@ -373,6 +370,19 @@ Class ``NSData``
   Use ``bytes`` instead, and then use subscripting to get the
   desired range.
 
+Class ``NSDecimalNumber`` and the ``NSDecimal`` type
+....................................................
+
+NSDecimal is wrapped by a Python type. This type does not (yet) support
+mathematical operators, but does support explicit conversion to and from
+Python numbers. 
+
+Creating an ``NSDecimal`` instance: ``NSDecimal(value)`` or 
+``NSDecimal(mantisssa, exponent, isNegative)``.  ``Value`` can be a string,
+int or long (not a float because of the representation issues for floats).
+
+Converting an ``NSDecimal`` to a float or int: ``aDecimal.as_int()`` and
+``aDecimal.as_float``.
 
 Class ``NSDictionary``
 ......................

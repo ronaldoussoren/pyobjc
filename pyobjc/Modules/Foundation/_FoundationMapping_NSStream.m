@@ -19,11 +19,11 @@
 #include "pyobjc-api.h"
 
 static PyObject* call_NSOutputStream_write_maxLength_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	void*		bytes;
-	int			bytes_len;
-	PyObject*	result;
+	int		bytes_len;
+	PyObject* volatile	result;
 	struct objc_super super;
 
 	if (!PyArg_ParseTuple(arguments, "s#", &bytes, &bytes_len)) {
@@ -49,7 +49,7 @@ static PyObject* call_NSOutputStream_write_maxLength_(
 
 
 static PyObject* call_NSInputStream_read_maxLength_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	int   bytes_len;
 	int	  bytes_read;
@@ -89,7 +89,7 @@ static PyObject* call_NSInputStream_read_maxLength_(
 }
 
 static PyObject* call_NSInputStream_getBytes_length_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	const void* bytes;
 	unsigned    bytes_len;

@@ -39,18 +39,11 @@ NOTE: Loading the testcases takes some time.
 Expected runtime warnings:
 YYYY-MM-DD HH:MM:SS.SSS python[PID] *** -[NSBitmapImageRep init]: selector not recognized
 YYYY-MM-DD HH:MM:SS.SSS python[PID] *** _NSAutoreleaseNoPool(): Object 0xABCDEFG of class NSInvocation autoreleased with no pool in place - just leaking
+(Both should occur exactly once)
 
 Expected test failures:
-- ERROR: testPythonSourcedMethods
-  This is a limitation of the current bridge
-
 - FAIL: test_CheckNSInvoke (objc.test.test_ctests.CTests)
-  This checks for a bug in Cocoa 
-
-- ERROR: testClassAndInstance
-- ERROR: testClassAndInstanceInstanceOverride 
-- ERROR: testClassAndInstanceSubclass
-  PyObjC does not support these semantics yet
+  This checks for a bug in Cocoa on MacOS X 10.2, 10.3
 """%(objc.__version__)
 
 def recursiveGlob(root, pathPattern):

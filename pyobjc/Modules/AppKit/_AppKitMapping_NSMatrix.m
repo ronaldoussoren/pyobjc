@@ -56,8 +56,9 @@ SortHelperFunc(id arg1, id arg2, void* opaque)
 	return res;
 }
 
-static PyObject* call_NSMatrix_sortUsingFunction_context_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSMatrix_sortUsingFunction_context_(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;

@@ -19,29 +19,31 @@
  * will be part of the pyobjc package.
  */
 
-extern PyObject* ObjC_CallSuper(PyObject* meth, 
-					PyObject* self, PyObject* args);
-extern PyObject* ObjC_CallSelf(PyObject* meth, 
-					PyObject* self, PyObject* args);
-
 /* Registration database that allows overriding of the function used to
  * forward a call from python to objective-C
  */
+extern int PyObjC_MappingCount;
+
 typedef PyObject* (*ObjC_CallFunc_t)(
 	PyObject* meth, PyObject* self, PyObject* args);
 
-extern int PyObjC_RegisterMethodMapping(Class class, SEL sel, 
-	ObjC_CallFunc_t     call_to_objc, 
-	IMP		    call_to_python
+extern int PyObjC_RegisterMethodMapping(
+	Class class, 
+	SEL sel, 
+	ObjC_CallFunc_t call_to_objc, 
+	PyObjCFFI_ClosureFunc call_to_python
 	);
 
 extern int PyObjC_RegisterSignatureMapping(
 	char* signature,
 	ObjC_CallFunc_t call_to_super,
-	IMP		call_to_python);
+	PyObjCFFI_ClosureFunc call_to_python);
 
-extern IMP             ObjC_FindIMP(Class class, SEL sel);
-extern IMP             ObjC_FindIMPForSignature(char* signature);
 extern ObjC_CallFunc_t ObjC_FindCallFunc(Class class, SEL sel);
+extern IMP PyObjC_MakeIMP(Class class, PyObject* sel, PyObject* imp);
+
+extern void PyObjCUnsupportedMethod_IMP(ffi_cif*, void*, void**, void*);
+extern PyObject* PyObjCUnsupportedMethod_Caller(PyObject*, PyObject*, PyObject*);
+
 
 #endif /* OBJC_SUPER_CALL_H */

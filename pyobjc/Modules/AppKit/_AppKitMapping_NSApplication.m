@@ -11,7 +11,9 @@ typedef struct SessionWrapper {
 } SessionWrapper;
 
 static PyObject* 
-Session_pointer_get(SessionWrapper* self, void* closure __attribute__((__unused__)))
+Session_pointer_get(
+	SessionWrapper* self, 
+	void* closure __attribute__((__unused__)))
 {
 	return PyInt_FromLong((long)self->ptr);
 }

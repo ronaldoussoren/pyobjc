@@ -24,19 +24,46 @@ static char* dont_override_methods[] = {
 };
 
 /* Special methods for Python subclasses of Objective-C objects */
-static void object_method_dealloc(id self, SEL sel);
-static BOOL object_method_respondsToSelector(id self, SEL selector, 
-	SEL aSelector);
-static NSMethodSignature*  object_method_methodSignatureForSelector(id self, 
-	SEL selector, SEL aSelector);
-static void object_method_forwardInvocation(id self, SEL selector, 
-	NSInvocation* invocation);
-static id object_method_storedValueForKey_(id self, SEL _meth, NSString* key);
-static id object_method_valueForKey_(id self, SEL _meth, NSString* key);
-static void object_method_takeStoredValue_forKey_(id self, SEL _meth, 
-	id value, NSString* key);
-static void object_method_takeValue_forKey_(id self, SEL _meth, 
-	id vlaue, NSString* key);
+static void object_method_dealloc(
+		ffi_cif* cif,
+		void* retval,
+		void** args,
+		void* userarg);
+static void object_method_respondsToSelector(
+		ffi_cif* cif,
+		void* retval,
+		void** args,
+		void* userarg);
+static void object_method_methodSignatureForSelector(
+		ffi_cif* cif,
+		void* retval,
+		void** args,
+		void* userarg);
+static void object_method_forwardInvocation(
+		ffi_cif* cif,
+		void* retval,
+		void** args,
+		void* userarg);
+static void object_method_storedValueForKey_(
+		ffi_cif* cif,
+		void* retval,
+		void** args,
+		void* userarg);
+static void object_method_valueForKey_(
+		ffi_cif* cif,
+		void* retval,
+		void** args,
+		void* userarg);
+static void object_method_takeStoredValue_forKey_(
+		ffi_cif* cif,
+		void* retval,
+		void** args,
+		void* userarg);
+static void object_method_takeValue_forKey_(
+		ffi_cif* cif,
+		void* retval,
+		void** args,
+		void* userarg);
 
 
 /*
@@ -60,62 +87,14 @@ struct class_wrapper {
 #define IDENT_CHARS "ABCDEFGHIJKLMNOPQSRTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789"
 
 /*
- * This function finds the superclass of the class where 'selector' is
- * overridden using 'currentImp'.
- *
- * This is needed to call the correct superclass implementation in case 
- * of multiple layers of subclassing in Python. If we don't find the 'real'
- * superclass, a call to 
- *   'objc_msgSendSuper({ self->isa->super_class, self }, ...)' will just 
- * transfer back to 'currentImp' if the method was called from a subclass (e.g.
- * if 'currentImp' is the IMP for the superclass of 'self->isa' instead of the
- * one from 'self'.
- *
- * The 'right' way to do this is by building closures (if done correctly it
- * would at least be faster) using libffi.
- */
-static Class find_real_superclass(Class startAt, SEL selector, 
-		PyObjCRT_Method_t (*find_method)(Class, SEL), IMP currentImp)
-{
-	PyObjCRT_Method_t m;
-	Class  cur;
-
-	cur = startAt;
-	m = find_method(cur, selector);
-
-	/* Skip to class containing this function */
-	while (m == NULL || m->method_imp != currentImp) {
-		cur = cur->super_class;
-		if (!cur) {
-			Py_FatalError("PyObjC: find_real_superclass "
-				"cannot find SEL in class hierarchy");
-		}
-		m = find_method(cur, selector);
-	}
-
-	/* Skip all classes containing this function */
-	while (m != NULL && m->method_imp == currentImp) {
-		cur = cur->super_class;
-		if (!cur) {
-			Py_FatalError("PyObjC: find_real_superclass "
-				"reached top of class hierarchy");
-		}
-		m = find_method(cur, selector);
-	}
-
-	/* We found the 'real' superclass */
-	return cur;
-}
-
-
-/*
  * Last step of the construction a python subclass of an objective-C class.
  *
  * Set reference to the python half in the objective-C half of the class.
  *
  * Return 0 on success, -1 on failure.
  */
-int PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
+int 
+PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
 {
 	if (objc_class == nil) {
 		ObjCErr_Set(ObjCExc_internal_error, 
@@ -154,7 +133,8 @@ int PyObjCClass_SetClass(Class objc_class, PyObject* py_class)
  * Due to technical restrictions it is not allowed to unbuild a class that
  * is already registered with the Objective-C runtime.
  */
-void PyObjCClass_UnbuildClass(Class objc_class)
+void 
+PyObjCClass_UnbuildClass(Class objc_class)
 {
 	struct class_wrapper* wrapper = CLASS_WRAPPER(objc_class); 
 
@@ -349,7 +329,8 @@ do_slots(PyObject* super_class, PyObject* clsdict)
  *   oops this doesn't work, rewrite class, reload and continue testing in
  *   the running app)
  */
-Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
+Class 
+PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				char* name, PyObject* class_dict)
 {
 	PyObject*                key_list = NULL;
@@ -603,17 +584,24 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		 
 		PyObjCRT_Method_t meth;
 		PyObject* sel;
+		IMP closure;
+		PyObjCMethodSignature* methinfo;
 
 #		define METH(pyname, selector, types, imp) 		\
+		        methinfo = PyObjCMethodSignature_FromSignature(types); \
+			if (methinfo == NULL) goto error_cleanup; \
+			closure = PyObjCFFI_MakeClosure(methinfo, imp, \
+					super_class); \
+			PyObjCMethodSignature_Free(methinfo); \
+			if (closure == NULL) goto error_cleanup; \
 			meth = method_list->method_list + 		\
 				method_list->method_count++;		\
-			PyObjCRT_InitMethod(meth, selector, types, (IMP)imp); \
+			PyObjCRT_InitMethod(meth, selector, types, (IMP)closure); \
 			sel = PyObjCSelector_NewNative(&new_class->class, \
 				selector,  types, 0);			\
 			if (sel == NULL) goto error_cleanup;		\
 			PyDict_SetItemString(class_dict, pyname, sel);	\
 			Py_DECREF(sel)
-
 
 		METH(
 			"dealloc", 
@@ -728,21 +716,18 @@ Class PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 					meth, 
 					sel->sel_selector, 
 					sel->sel_signature,
-					ObjC_FindIMP(super_class, 
-						sel->sel_selector));
+					PyObjC_MakeIMP(super_class, value, value)
+				);
 			} else {
 				PyObjCRT_InitMethod(
 					meth, 
 					sel->sel_selector, 
 					sel->sel_signature,
-					ObjC_FindIMPForSignature(
-						sel->sel_signature));
+					PyObjC_MakeIMP(nil, value, value)
+				);
 			}
 
-			if (meth->method_imp == (IMP)PyObjCUnsupportedMethod_IMP) {
-				PyErr_Format(PyExc_TypeError,
-					"Cannot override %s from Python",
-					PyObjCRT_SELName(sel->sel_selector));
+			if (meth->method_imp == NULL) {
 				goto error_cleanup;
 			}
 
@@ -932,14 +917,23 @@ free_ivars(id self, PyObject* cls)
 }
 
 /* -dealloc */
-static void object_method_dealloc(id self, SEL sel __attribute__((__unused__)))
+static void 
+object_method_dealloc(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* retval __attribute__((__unused__)),
+		void** args,
+		void* userdata)
 {
+	id self = *(id*)(args[0]);
+	SEL _meth = *(SEL*)(args[1]);
+
 	struct objc_super super;
 	PyObject* obj;
 	PyObject* delmethod;
 	PyObject* cls;
 	PyObject* ptype, *pvalue, *ptraceback;
 	PyGILState_STATE state = PyGILState_Ensure();
+
 
 	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
@@ -967,80 +961,93 @@ static void object_method_dealloc(id self, SEL sel __attribute__((__unused__)))
 
 	PyErr_Restore(ptype, pvalue, ptraceback);
 
-	super.class = find_real_superclass(GETISA(self),
-		@selector(dealloc), class_getInstanceMethod, 
-		(IMP)object_method_dealloc);
+	super.class = (Class)userdata;
 	RECEIVER(super) = self;
 
 	PyGILState_Release(state);
-	objc_msgSendSuper(&super, @selector(dealloc)); 
+	objc_msgSendSuper(&super, _meth);
 }
 
 /* -respondsToSelector: */
-static BOOL 
-object_method_respondsToSelector(id self, SEL selector, SEL aSelector)
+static void 
+object_method_respondsToSelector(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* retval,
+		void** args,
+		void* userdata)
 {
+	id self = *(id*)args[0];
+	SEL _meth = *(SEL*)args[1];
+	SEL aSelector = *(SEL*)args[2];
+	int* pres = (int*)retval; // Actually BOOL.
+
 	struct objc_super super;
-	BOOL              res;
-        PyObject*         pyself;
-	PyObject*         pymeth;
+        PyObject* pyself;
+	PyObject* pymeth;
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	/* First check if we respond */
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
-		return NO;
+		*pres = NO;
+		return;
 	}
 	pymeth = PyObjCObject_FindSelector(pyself, aSelector);
 	Py_DECREF(pyself);
 	if (pymeth) {
-		res = YES;
+		*pres = YES;
 
 		if (PyObjCSelector_Check(pymeth) && (((PyObjCSelector*)pymeth)->sel_flags & PyObjCSelector_kCLASS_METHOD)) {
-			res = NO;	
+			*pres = NO;	
 		}
 			
 		Py_DECREF(pymeth);
 		PyGILState_Release(state);
-		return res;
+		return;
 	}
 	PyErr_Clear();
 
 	/* Check superclass */
-	super.class = find_real_superclass(GETISA(self),
-			selector, class_getInstanceMethod, 
-			(IMP)object_method_respondsToSelector);
+	super.class = (Class)userdata;
 	RECEIVER(super) = self;
 
 	PyGILState_Release(state);
-	res = (int)objc_msgSendSuper(&super, selector, aSelector);
-	return res;
+	*pres = (int)objc_msgSendSuper(&super, _meth, aSelector);
+	return;
 }
 
 /* -methodSignatureForSelector */
-static NSMethodSignature*  
-object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
+static void
+object_method_methodSignatureForSelector(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* retval,
+		void** args,
+		void* userdata)
 {
-	NSMethodSignature* result = nil;
+	id self = *(id*)args[0];
+	SEL _meth = *(SEL*)args[1];
+	SEL aSelector = *(SEL*)args[2];
+
 	struct objc_super  super;
         PyObject*          pyself;
 	PyObject*          pymeth;
+	NSMethodSignature** presult = (NSMethodSignature**)retval;
 	PyGILState_STATE state;
 
-	super.class = find_real_superclass(
-			GETISA(self), 
-			selector, class_getInstanceMethod, 
-			(IMP)object_method_methodSignatureForSelector);
+	*presult = nil;
+
+
+	super.class = (Class)userdata;
 	RECEIVER(super) = self;
 
 	NS_DURING
-		result = objc_msgSendSuper(&super, selector, aSelector);
+		*presult = objc_msgSendSuper(&super, _meth, aSelector);
 	NS_HANDLER
-		result = nil;
+		*presult = nil;
 	NS_ENDHANDLER
 
-	if (result != nil) {
-		return result;
+	if (*presult != nil) {
+		return;
 	}
 
 	state = PyGILState_Ensure();
@@ -1048,29 +1055,44 @@ object_method_methodSignatureForSelector(id self, SEL selector, SEL aSelector)
 	pyself = PyObjCObject_New(self);
 	if (pyself == NULL) {
 		PyErr_Clear();
-		return nil;
+		return;
 	}
 
 	pymeth = PyObjCObject_FindSelector(pyself, aSelector);
 	if (!pymeth) {
 		Py_DECREF(pyself);
 		PyErr_Clear();
-		return nil;
+		return;
 	}
 
-	result =  [NSMethodSignature signatureWithObjCTypes:(
-		  	(PyObjCSelector*)pymeth)->sel_signature];
+	NS_DURING
+		*presult =  [NSMethodSignature signatureWithObjCTypes:(
+				(PyObjCSelector*)pymeth)->sel_signature];
+	NS_HANDLER
+		Py_DECREF(pymeth);
+		Py_DECREF(pyself);
+		PyGILState_Release(state);
+		[localException raise];
+	NS_ENDHANDLER
+
 	Py_DECREF(pymeth);
 	Py_DECREF(pyself);
 	PyGILState_Release(state);
-	return result;
 }
 
 /* -forwardInvocation: */
 static void
-object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
+object_method_forwardInvocation(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* retval __attribute__((__unused__)),
+		void** args,
+		void* userdata)
 {
-	PyObject*	args;
+	id self = *(id*)args[0];
+	SEL _meth = *(SEL*)args[1];
+	NSInvocation* invocation = *(NSInvocation**)args[2];
+
+	PyObject*	arglist;
 	PyObject* 	result;
 	PyObject*       v;
 	int		isAlloc;
@@ -1103,13 +1125,10 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		Py_XDECREF(pymeth);
 		Py_XDECREF(pyself);
 
-		super.class = find_real_superclass(
-				GETISA(self), 
-				selector, class_getInstanceMethod, 
-				(IMP)object_method_forwardInvocation);
+		super.class = (Class)userdata;
 		RECEIVER(super) = self;
 		PyGILState_Release(state);
-		objc_msgSendSuper(&super, selector, invocation);
+		objc_msgSendSuper(&super, _meth, invocation);
 		return;
 	}
 
@@ -1121,18 +1140,18 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 	Py_XDECREF(pyself);
 	Py_XDECREF(pymeth);
 
-	args = PyList_New(1);
-	if (args == NULL) {
+	arglist = PyList_New(1);
+	if (arglist == NULL) {
 		PyObjCMethodSignature_Free(signature);
 		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
 
-	i = PyList_SetItem(args, 0, pythonify_c_value(
+	i = PyList_SetItem(arglist, 0, pythonify_c_value(
 					signature->argtype[0],
 					(void*)&self));
 	if (i < 0) {
-		Py_DECREF(args);
+		Py_DECREF(arglist);
 		PyObjCMethodSignature_Free(signature);
 		PyObjCErr_ToObjCWithGILState(&state);
 		return;
@@ -1143,7 +1162,7 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		arglen = PyObjCRT_SizeOfType(type);
 
 		if (arglen == -1) {
-			Py_DECREF(args);
+			Py_DECREF(arglist);
 			PyObjCMethodSignature_Free(signature);
 			PyObjCErr_ToObjCWithGILState(&state);
 			return;
@@ -1176,32 +1195,32 @@ object_method_forwardInvocation(id self, SEL selector, NSInvocation* invocation)
 		}
 
 		if (v == NULL) {
-			Py_DECREF(args);
+			Py_DECREF(arglist);
 			PyObjCMethodSignature_Free(signature);
 			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
 
-		if (PyList_Append(args, v) < 0) {
-			Py_DECREF(args);
+		if (PyList_Append(arglist, v) < 0) {
+			Py_DECREF(arglist);
 			PyObjCMethodSignature_Free(signature);
 			PyObjCErr_ToObjCWithGILState(&state);
 			return;
 		}
 	}
 
-	v = PyList_AsTuple(args);
+	v = PyList_AsTuple(arglist);
 	if (v == NULL) {
-		Py_DECREF(args);
+		Py_DECREF(arglist);
 		PyObjCMethodSignature_Free(signature);
 		PyObjCErr_ToObjCWithGILState(&state);
 		return;
 	}
-	Py_DECREF(args);
-	args = v;
+	Py_DECREF(arglist);
+	arglist = v;
 
-	result = PyObjC_CallPython(self, [invocation selector], args, &isAlloc);
-	Py_DECREF(args);
+	result = PyObjC_CallPython(self, [invocation selector], arglist, &isAlloc);
+	Py_DECREF(arglist);
 	if (result == NULL) {
 		PyObjCMethodSignature_Free(signature);
 		PyObjCErr_ToObjCWithGILState(&state);
@@ -1404,6 +1423,12 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 		return NULL;
 	}
 
+	if (ObjCNativeSelector_Check(pymeth)) {
+		printf("-- %s --\n", PyObject_REPR(PyObject_GetAttrString(pyself, "__class__")));
+		printf("-- %s --\n", PyObject_REPR(pymeth));
+		abort();
+	}
+
 	if (NULL != ((PyObjCSelector*)pymeth)->sel_self) {
 		/* The selector is a bound selector, we didn't expect that...*/
 		PyObject* arg_self;
@@ -1428,9 +1453,9 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 	}
 
 	if (isAlloc != NULL) {
-		*isAlloc = ((PyObjCSelector*)pymeth)->sel_flags;
-		*isAlloc = (*isAlloc & PyObjCSelector_kDONATE_REF) != 0;
+		*isAlloc = PyObjCSelector_DonatesRef(pymeth);
 	}
+
 
 	result = PyObject_Call(pymeth, arglist, NULL);
 	Py_DECREF(arglist);
@@ -1699,121 +1724,148 @@ setAccessor(id self, NSString* key, id value)
 	return -1;
 }
 
-static id
-object_method_storedValueForKey_(id self, SEL _meth, NSString* key)
+static void
+object_method_storedValueForKey_(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* retval,
+		void** args,
+		void* userdata)
 {
-	id result;
+	id self = *(id*)args[0];
+	SEL _meth = *(SEL*)args[1];
+	NSString* key = *(NSString**)args[2];
+
+	id* presult = (id*)retval;
 	int r;
 	struct objc_super super;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	r = getAccessor(self, [NSString stringWithFormat: @"get_%@", key], 
-		&result);
+		presult);
 	if (r == 0) {
 		PyGILState_Release(state);
-		return result;
+		return;
 	}
 
-	r = getAttribute(self, key, &result);
+	r = getAttribute(self, key, presult);
 	if (r == 0) {
 		PyGILState_Release(state);
-		return result;
+		return;
 	}
 
 
 	r = getAccessor(self, [NSString stringWithFormat: @"_get_%@", key], 
-		&result);
+		presult);
 	if (r == 0) {
 		PyGILState_Release(state);
-		return result;
+		return;
 	}
 
 	r = getAttribute(self, [NSString stringWithFormat: @"_%@", key], 
-		&result);
+		presult);
 	if (r == 0) {
 		PyGILState_Release(state);
-		return result;
+		return;
 	}
 	PyGILState_Release(state);
 
 	/* Call super */
-	super.class = find_real_superclass(
-		GETISA(self),
-		_meth,
-		class_getInstanceMethod,
-		(IMP)object_method_storedValueForKey_);
+	super.class = (Class)userdata;
 	RECEIVER(super) = self;
-	return objc_msgSendSuper(&super, _meth, key);
+	*presult = objc_msgSendSuper(&super, _meth, key);
 }
 
-static id
-object_method_valueForKey_(id self, SEL _meth, NSString* key)
+static void
+object_method_valueForKey_(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* retval,
+		void** args,
+		void* userdata)
 {
-	id result;
+	id self = *(id*)args[0];
+	SEL _meth = *(SEL*)args[1];
+	NSString* key = *(NSString**)args[2];
+
+	id* presult = (id*)retval;
 	int r;
 	struct objc_super super;
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	r = getAccessor(self, [NSString stringWithFormat: @"get_%@", key], 
-		&result);
+		presult);
 	if (r == 0) {
 		PyGILState_Release(state);
-		return result;
+		return;
 	}
 
-	r = getAttribute(self, key, &result);
+	r = getAccessor(self, [NSString stringWithFormat: @"get%@", [key capitalizedString]], presult);
 	if (r == 0) {
 		PyGILState_Release(state);
-		return result;
+		return;
 	}
 
+	r = getAttribute(self, key, presult);
+	if (r == 0) {
+		PyGILState_Release(state);
+		return;
+	}
 
 	r = getAccessor(self, [NSString stringWithFormat: @"_get_%@", key], 
-		&result);
+		presult);
 	if (r == 0) {
 		PyGILState_Release(state);
-		return result;
+		return;
+	}
+
+	r = getAccessor(self, [NSString stringWithFormat: @"_get%@", [key capitalizedString]], presult);
+	if (r == 0) {
+		PyGILState_Release(state);
+		return;
 	}
 
 	r = getAccessor(self, [NSString stringWithFormat: @"%@", key], 
-		&result);
+		presult);
 	if (r == 0) {
 		PyGILState_Release(state);
-		return result;
+		return;
 	}
 
 	r = getAccessor(self, [NSString stringWithFormat: @"_%@", key], 
-		&result);
+		presult);
 	if (r == 0) {
 		PyGILState_Release(state);
-		return result;
+		return;
 	}
 
 	r = getAttribute(self, [NSString stringWithFormat: @"_%@", key], 
-		&result);
+		presult);
 	if (r == 0) {
 		PyGILState_Release(state);
-		return result;
+		return;
 	}
 
 
 	/* Call super */
 	PyGILState_Release(state);
-	super.class = find_real_superclass(
-		GETISA(self),
-		_meth,
-		class_getInstanceMethod,
-		(IMP)object_method_valueForKey_);
+	super.class = (Class)userdata;
 	RECEIVER(super) = self;
-	result = objc_msgSendSuper(&super, _meth, key);
-	return result;
+	*presult = objc_msgSendSuper(&super, _meth, key);
 }
 
 
 static void
-object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* key)
+object_method_takeStoredValue_forKey_(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* retval __attribute__((__unused__)),
+		void** args,
+		void* userdata)
 {
+	id self = *(id*)args[0];
+	SEL _meth = *(SEL*)args[1];
+	id value = *(id*)args[2];
+	NSString* key = *(NSString**)args[3];
+
 	struct objc_super super;
 	int r;
 	PyGILState_STATE state = PyGILState_Ensure();
@@ -1910,11 +1962,7 @@ object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* ke
 
 	/* Call super */
 	NS_DURING
-		super.class = find_real_superclass(
-			GETISA(self),
-			_meth,
-			class_getInstanceMethod,
-			(IMP)object_method_takeStoredValue_forKey_);
+		super.class = (Class)userdata;
 		RECEIVER(super) = self;
 		(void)objc_msgSendSuper(&super, _meth, value, key);
 		PyGILState_Release(state);
@@ -1952,8 +2000,17 @@ object_method_takeStoredValue_forKey_(id self, SEL _meth, id value, NSString* ke
 }
 
 static void
-object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
+object_method_takeValue_forKey_(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* retval __attribute__((__unused__)),
+		void** args,
+		void* userdata)
 {
+	id self = *(id*)args[0];
+	SEL _meth = *(SEL*)args[1];
+	id value = *(id*)args[2];
+	NSString* key = *(NSString**)args[3];
+
 	struct objc_super super;
 	int r;
 	PyGILState_STATE state = PyGILState_Ensure();
@@ -2051,11 +2108,7 @@ object_method_takeValue_forKey_(id self, SEL _meth, id value, NSString* key)
 
 	/* Call super */
 	NS_DURING
-		super.class = find_real_superclass(
-			GETISA(self),
-			_meth,
-			class_getInstanceMethod,
-			(IMP)object_method_takeValue_forKey_);
+		super.class = (Class)userdata;
 		RECEIVER(super) = self;
 		(void)objc_msgSendSuper(&super, _meth, value, key);
 		PyGILState_Release(state);

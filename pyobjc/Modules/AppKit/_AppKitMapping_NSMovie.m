@@ -11,8 +11,9 @@
 
 #include "pymactoolbox.h"
 
-static PyObject* call_NSMovie_QTMovie(
-		PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSMovie_QTMovie(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -44,42 +45,53 @@ static PyObject* call_NSMovie_QTMovie(
 	return result;
 }
 
-static void* imp_NSMovie_QTMovie(id self, SEL sel)
+static void 
+imp_NSMovie_QTMovie(
+	void* cif __attribute__((__unused__)), 
+	void* resp, 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	Movie* pretval = (Movie*)resp;
+
 	PyObject* result;
-	PyObject* arglist;
-	Movie    objc_result;
+	PyObject* arglist = NULL;
+	PyObject* v;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
-	arglist = PyTuple_New(0);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	arglist = PyTuple_New(1);
+	if (arglist == NULL) goto error;
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	v = PyObjC_IdToPython(self);
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 0, v);
 
-	MovieObj_Convert(result, &objc_result);
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
+
+	MovieObj_Convert(result, pretval);
 	Py_DECREF(result);
 
-	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (PyErr_Occurred()) goto error;
 	
 	PyGILState_Release(state);
-	return objc_result;
+	return;
+
+
+error:
+	Py_XDECREF(arglist);
+	*pretval = NULL;
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
 
-static PyObject* call_NSMovie_initWithMovie_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSMovie_initWithMovie_(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;
@@ -106,43 +118,49 @@ static PyObject* call_NSMovie_initWithMovie_(
 	return result;
 }
 
-static id imp_NSMovie_initWithMovie_(id self, SEL sel, void* movie)
+static void 
+imp_NSMovie_initWithMovie_(
+	void* cif __attribute__((__unused__)), 
+	void* resp, 
+	void** args, 
+	void* callable)
 {
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	Movie movie = *(Movie*)args[2];
+	id* pretval = (id*)resp;
+
 	PyObject* result;
-	PyObject* arglist;
-	id        objc_result;
+	PyObject* arglist = NULL;
+	PyObject* v;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(1);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (arglist == NULL) goto error;
+
+	v = PyObjC_IdToPython(self);
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 0, v);
 	
-	PyTuple_SET_ITEM(arglist, 0, MovieObj_New(movie));
-	if (PyErr_Occurred()) {
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	v = MovieObj_New(movie);
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 1, v);
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
 
-	objc_result = PyObjC_PythonToId(result);
-
-	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	*pretval = PyObjC_PythonToId(result);
+	if (*pretval == nil && PyErr_Occurred()) goto error;
 
 	PyGILState_Release(state);
-	return objc_result;
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	*pretval = nil;
+	PyObjCErr_ToObjCWithGILState(&state);
 }
 
 
@@ -152,20 +170,16 @@ _pyobjc_install_NSMovie(void)
 	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSMovie"), 
 		@selector(QTMovie),
 		call_NSMovie_QTMovie,
-		(IMP)imp_NSMovie_QTMovie) < 0 ) {
+		imp_NSMovie_QTMovie) < 0 ) {
 
-		NSLog(@"Error occurred while installing NSMovie method bridge (QTMovie).");
-		PyErr_Print();
 		return -1;
 	}
 
 	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSMovie"), 
 		@selector(initWithMovie:),
 		call_NSMovie_initWithMovie_,
-		(IMP)imp_NSMovie_initWithMovie_) < 0 ) {
+		imp_NSMovie_initWithMovie_) < 0 ) {
 
-		NSLog(@"Error occurred while installing NSMovie method bridge (initWithMovie_).");
-		PyErr_Print();
 		return -1;
 	}
 

@@ -1,15 +1,11 @@
 //
 //  bin-python-main.m
-//  Web Services Tool
-//
-//  Created by Bill Bumgarner on 10/10/2002.
-//  Copyright (c) 2002 The PyObjC Project. All rights reserved.
 //
 
 /*
  This main file uses execve() to transfer control of execution to the standard command line python interpreter.   As such, compiled classes in the project will not actually be linked into the runtime as execve() effectively overlays the existing process with the process being called -- in this case the python command line tool.
 
- To use compiled classes with this main, create a separate bundle target and load the bundle in the Main.py file.
+ To use compiled classes with this main, create a separate bundle target and load the bundle in the main python file.  The main python file should be in Resources and should be named "__main__.py", "__realmain__.py" or "Main.py".
 
  This style of execution works with the Apple provided version of Python.
  */
@@ -21,24 +17,38 @@
 
 int pyobjc_main(int argc, char * const *argv, char * const *envp)
 {
-    // The autorelease pool is not released on purpose.   The call to execve() destroys the
-    // calling process entirely and, as such, memory management in the traditional sense
-    // is not necessary (and not doing so avoids potential bugs associated with releasing
-    // the pool prior to the call to execve).
-    [[NSAutoreleasePool alloc] init];
-
-    const char **childArgv = alloca(sizeof(char *) * (argc + 5));
-    NSEnumerator *bundleEnumerator = [[NSBundle allFrameworks] reverseObjectEnumerator];
-    NSBundle *aBundle;
-    NSBundle *mainBundle = [NSBundle mainBundle];
-    NSMutableArray *bundlePaths = [NSMutableArray array];
+    // The autorelease pool is not released on purpose.   The call to execve() 
+    // destroys the calling process entirely and, as such, memory management 
+    // in the traditional sense is not necessary (and not doing so avoids 
+    // potential bugs associated with releasing the pool prior to the call to 
+    // execve).
+    const char** childArgv;
+    NSEnumerator* bundleEnumerator;
+    NSBundle* aBundle;
+    NSBundle* mainBundle;
+    NSMutableArray* bundlePaths;
     int i;
     int envc;
     char** childEnvp;
     char*  PYTHONPATH = NULL;
+    const char *pythonPathInWrapper;
+    NSString *pythonBinPath;
+    const char *pythonBinPathPtr; 
+    NSArray *possibleMains;
+    NSEnumerator * possibleMainsEnumerator;
+    NSString *mainPyPath;
+    NSString *nextFileName;
+    const char * mainPyPathPtr;
+
+    [[NSAutoreleasePool alloc] init];
+
+    childArgv = alloca(sizeof(char *) * (argc + 5));
+    bundleEnumerator = [[NSBundle allFrameworks] reverseObjectEnumerator];
+    mainBundle = [NSBundle mainBundle];
+    bundlePaths = [NSMutableArray array];
 
     // set up paths to be prepended to the PYTHONPATH
-    const char *pythonPathInWrapper = [[NSString stringWithFormat: @"%@:%@",
+    pythonPathInWrapper = [[NSString stringWithFormat: @"%@:%@",
         [[NSBundle mainBundle] resourcePath],
         [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: @"PyObjC"]] UTF8String];
 
@@ -101,13 +111,13 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
     childEnvp[envc++] = NULL;
 
     // figure out which python interpreter to use
-    NSString *pythonBinPath = [[NSUserDefaults standardUserDefaults] stringForKey: @"PythonBinPath"];
+    pythonBinPath = [[NSUserDefaults standardUserDefaults] stringForKey: @"PythonBinPath"];
     pythonBinPath = pythonBinPath ? pythonBinPath : @"/usr/bin/python";
 
-    const char *pythonBinPathPtr = [pythonBinPath UTF8String];
+    pythonBinPathPtr = [pythonBinPath UTF8String];
 
     // find main python file.  __main__.py seems to be a standard.
-    NSArray *possibleMains = [NSArray arrayWithObjects:
+    possibleMains = [NSArray arrayWithObjects:
         @"__main__.py",
         @"__main__.pyc",
         @"__main__.pyo",
@@ -118,9 +128,7 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
         @"Main.pyc",
         @"Main.pyo",
         nil];
-    NSEnumerator *possibleMainsEnumerator = [possibleMains objectEnumerator];
-    NSString *mainPyPath;
-    NSString *nextFileName;
+    possibleMainsEnumerator = [possibleMains objectEnumerator];
 
     while (nextFileName = [possibleMainsEnumerator nextObject]) {
         mainPyPath = [mainBundle pathForResource: nextFileName ofType: nil];
@@ -131,7 +139,7 @@ int pyobjc_main(int argc, char * const *argv, char * const *envp)
     if ( !mainPyPath )
         [NSException raise: NSInternalInconsistencyException
                     format: @"%s:%d pyobjc_main() Failed to find one of %@ in app wrapper.  Exiting.", __FILE__, __LINE__, possibleMains];
-    const char *mainPyPathPtr = [mainPyPath UTF8String];
+    mainPyPathPtr = [mainPyPath UTF8String];
 
     // construct argv for the child
 

@@ -4,6 +4,22 @@ import objc
 from Foundation import *
 
 class TestNSObjectInteraction(unittest.TestCase):
+    def testCallingInstanceMethodWithClassSelf(self):
+        self.assertRaises(TypeError, NSObject.description, NSObject)
+        self.assertRaises(TypeError, NSObject.description, "hello")
+
+    def testNSObjectClassMethod(self):
+        # Check that -class is accesible as 'class__' and 'class' (the latter
+        # only through getattr because it is a Python keyword)
+        self.assert_(hasattr(NSObject, 'class__'))
+        self.assert_(isinstance(NSObject.class__, objc.selector))
+        o = NSObject.alloc().init()
+        self.assert_(o.class__() is o.__class__)
+
+        self.assert_(hasattr(NSObject, 'class'))
+        self.assert_(isinstance(getattr(NSObject, 'class'), objc.selector))
+        self.assert_(getattr(o, 'class')() is o.__class__)
+
     def testNSObjectClass(self):
         self.assert_( NSObject.instancesRespondToSelector_( "description" ), "NSObject class claims it doesn't respond to a selector that it does." )
         self.assert_( hasattr(NSObject, "description"), "NSObject class claims it doesn't respond to a selector that it does." )

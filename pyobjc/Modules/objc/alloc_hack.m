@@ -1,6 +1,5 @@
 /*
- * The default processing doesn't work for some calls to alloc. Therefore
- * we install custom handlers for these calls.
+ * alloc_hack.m -- Implementation of alloc_hack.h
  */
 #include "pyobjc.h"
 
@@ -21,7 +20,7 @@ call_NSObject_alloc(PyObject* method,
 	}
 
 	RECEIVER(super) = (id)PyObjCClass_GetClass(self);
-	super.class = PyObjCSelector_GetClass(method); //GETISA((Class)(RECEIVER(super)));
+	super.class = PyObjCSelector_GetClass(method); 
 	super.class = GETISA(super.class);
 
 	NS_DURING
@@ -39,35 +38,45 @@ call_NSObject_alloc(PyObject* method,
 	return PyObjCObject_NewUnitialized(result);
 }
 
-static id 
-imp_NSObject_alloc(id self, SEL sel)
+static void 
+imp_NSObject_alloc(
+	ffi_cif* cif __attribute__((__unused__)), 
+	void* resp, 
+	void** args __attribute__((__unused__)), 
+	void* callable)
 {
-	id objc_result;
 	int err;
-	PyObject* arglist;
-	PyObject* result;
+	PyObject* arglist = NULL;
+	PyObject* v = NULL;
+	PyObject* result = NULL;
 
-	arglist = PyTuple_New(0);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjC();
-		return nil;
-	}
+	PyGILState_STATE state = PyGILState_Ensure();
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	if (result == NULL) {
-		PyObjCErr_ToObjC();
-		return nil;
-	}
+	arglist = PyTuple_New(1);
+	if (arglist == NULL) goto error;
 
-	err = depythonify_c_value("@", result, &objc_result);
-	Py_DECREF(result);
-	if (err == -1) {
-		return NULL;
-	}
+	v = PyObjC_IdToPython(*(id*)args[0]);
+	if (v == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 0, v);
+	v = NULL;
 
-	return objc_result;
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	if (result == NULL) goto error;
+
+	Py_DECREF(arglist); arglist = NULL;
+
+	err = depythonify_c_value("@", result, resp);
+	Py_DECREF(result); result = NULL;
+	if (err == -1) goto error;
+
+	PyGILState_Release(state);
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	PyObjCErr_ToObjCWithGILState(&state);
+	return;
 }
-
 
 int
 PyObjC_InstallAllocHack(void)
@@ -78,7 +87,7 @@ PyObjC_InstallAllocHack(void)
 		PyObjCRT_LookUpClass("NSObject"),
 		@selector(alloc),
 		call_NSObject_alloc,
-		(IMP)imp_NSObject_alloc);
+		imp_NSObject_alloc);
 	if (r != 0) return r;
 
 	return r;

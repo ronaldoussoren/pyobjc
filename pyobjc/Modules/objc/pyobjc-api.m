@@ -76,40 +76,6 @@ static void 	fill_super_cls(struct objc_super* super, Class cls, Class self)
 	super->class = GETISA(cls);
 }
 
-id  
-PyObjCUnsupportedMethod_IMP(id self, SEL selector)
-{
-	NSLog(@"Implementing %s from Python is not supported for %@",
-		PyObjCRT_SELName(selector), self);
-
-	[NSException raise:NSInvalidArgumentException
-		format:@"Implementing %s from Python is not supported for %@",
-			self, PyObjCRT_SELName(selector)];
-	return nil;
-}
-
-static PyObject* 
-unsupported_method_caller(PyObject* meth, PyObject* self, PyObject* 
-	args __attribute__((__unused__)))
-{
-	PyObject* repr;
-
-	repr = PyObject_Repr(self);
-	if (repr == NULL) return NULL;
-	if (!PyString_Check(repr)) {
-		PyErr_SetString(PyExc_RuntimeError, 
-			"repr() didn't return a string");
-		return NULL;
-	}
-
-	ObjCErr_Set(PyExc_TypeError,
-		"Cannot call %s on %s from Python",
-		PyObjCRT_SELName(PyObjCSelector_GetSelector(meth)),
-		PyString_AS_STRING(repr));
-	Py_DECREF(repr);
-	return NULL;
-}
-
 
 struct pyobjc_api objc_api = {
 	PYOBJC_API_VERSION,		/* api_version */
@@ -117,8 +83,8 @@ struct pyobjc_api objc_api = {
 	&PyObjCClass_Type,		/* class_type */
 	(PyTypeObject*)&PyObjCObject_Type, /* object_type */
 	&PyObjCSelector_Type,		/* select_type */
-	PyObjC_RegisterMethodMapping,	/* register_method_mapping */
-	PyObjC_RegisterSignatureMapping,	/* register_signature_mapping */
+	(RegisterMethodMappingFunctionType*)PyObjC_RegisterMethodMapping,	/* register_method_mapping */
+	(int (*)(char*, PyObject *(*)(PyObject*, PyObject*, PyObject*), void (*)(void*, void*, void**, void*)))PyObjC_RegisterSignatureMapping,	/* register_signature_mapping */
 	PyObjCObject_GetObject,		/* obj_get_object */
 	PyObjCObject_ClearObject,		/* obj_clear_object */
 	PyObjCClass_GetClass,		/* cls_get_class */
@@ -129,7 +95,6 @@ struct pyobjc_api objc_api = {
 	PyObjCErr_ToObjC,			/* err_python_to_objc */
 	depythonify_c_value,		/* py_to_objc */
 	pythonify_c_value,		/* objc_to_python */
-	PyObjC_CallPython,		/* call_to_python */
 	PyObjCRT_SizeOfType,		/* sizeof_type */
 	sel_get_class,			/* sel_get_class */
 	sel_get_sel,			/* sel_get_sel */
@@ -138,15 +103,16 @@ struct pyobjc_api objc_api = {
 	fill_super,			/* fill_super */
 	fill_super_cls,			/* fill_super_cls*/
 	PyObjCPointerWrapper_Register,	/* register_pointer_wrapper */
-	(IMP)PyObjCUnsupportedMethod_IMP, /* unsupported_method_imp */
-	unsupported_method_caller,	/* unsupported_method_caller */
+	(void(*)(void*,void*,void**,void*))PyObjCUnsupportedMethod_IMP,    /* unsupported_method_imp */
+	PyObjCUnsupportedMethod_Caller, /* unsupported_method_caller */
 	PyObjCErr_ToObjCWithGILState,	/* objc_err_to_objc_gil */
 	PyObjCRT_AlignOfType,		/* alignof_type */
 	PyObjCRT_SELName,		/* selname */
 	PyObjCRT_SimplifySignature,	/* simplify_sig */
 	PyObjC_FreeCArray,		/* free_c_array */
 	PyObjC_PythonToCArray,		/* py_to_c_array */
-	PyObjC_CArrayToPython		/* c_array_to_py */
+	PyObjC_CArrayToPython,		/* c_array_to_py */
+	PyObjC_RegisterStructType	/* register_struct */
 };
 
 int ObjCAPI_Register(PyObject* module_dict)

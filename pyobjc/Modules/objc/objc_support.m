@@ -164,7 +164,7 @@ PyObjCRT_SkipTypeQualifiers (const char* type)
 	       *type == _C_ONEWAY) {
 			type++;
 	}
-	while (isdigit(*type)) type++;
+	while (*type && isdigit(*type)) type++;
 	return type;
 }
 
@@ -253,7 +253,7 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	 * this number may or may not be usefull depending on the compiler
 	 * version. We never use it.
 	 */
-	while (type && isdigit(*type)) type++;
+	while (type && *type && isdigit(*type)) type++;
 	return type;
 }
 
@@ -341,7 +341,7 @@ PyObjCRT_AlignOfType (const char *type)
 			int have_align = 0;
 			int align = 0;
 
-			while (*type != _C_STRUCT_E) {
+			while (type != NULL && *type != _C_STRUCT_E) {
 				if (have_align) {
 					align = MAX(align, 
 					   PyObjC_EmbeddedAlignOfType(type));
@@ -351,6 +351,7 @@ PyObjCRT_AlignOfType (const char *type)
 				}
 				type = PyObjCRT_SkipTypeSpec(type);
 			}
+			if (type == NULL) return -1;
 			return align;
 		} else {
 			return __alignof__ (fooalign);
@@ -552,19 +553,37 @@ static PyObject *
 pythonify_c_struct (const char *type, void *datum)
 {
 	PyObject *ret;
-	unsigned int nitems, offset, itemidx;
+	unsigned int offset, itemidx;
 	const char *item;
 	int have_align = 0, align;
+	int haveTuple;
+	const char* type_start = type;
+	const char* type_end = PyObjCRT_SkipTypeSpec(type);
 
-	while (*type != _C_STRUCT_E && *type++ != '='); /* skip "<name>=" */
-	for (item=type, nitems=0; 
-			*item != _C_STRUCT_E; 
-			item = PyObjCRT_SkipTypeSpec (item)){
-		nitems++;
+	/* The compiler adds useless digits at the end of the signature */
+	while (type_end != type_start+1 && type_end[-1] != _C_STRUCT_E) {
+		type_end--;
 	}
 
-	ret = PyTuple_New (nitems);
-	if (!ret) return NULL;
+	while (*type != _C_STRUCT_E && *type++ != '=') {
+		/* skip "<name>=" */
+	}
+
+	haveTuple = 0;
+	ret = PyObjC_CreateRegisteredStruct(type_start, type_end-type_start);
+	if (ret == NULL) {
+		int nitems;
+
+		for (item=type, nitems=0; 
+				*item != _C_STRUCT_E; 
+				item = PyObjCRT_SkipTypeSpec (item)){
+			nitems++;
+		}
+
+		haveTuple = 1;
+		ret = PyTuple_New (nitems);
+		if (!ret) return NULL;
+	}
 
 	for (item=type, offset=itemidx=0; 
 			*item != _C_STRUCT_E; 
@@ -583,7 +602,17 @@ pythonify_c_struct (const char *type, void *datum)
 		pyitem = pythonify_c_value (item, ((char*)datum)+offset);
 
 		if (pyitem) {
-			PyTuple_SET_ITEM (ret, itemidx, pyitem);
+			if (haveTuple) {
+				PyTuple_SET_ITEM (ret, itemidx, pyitem);
+			} else {
+				int r;
+				r = PySequence_SetItem(ret, itemidx, pyitem);
+				Py_DECREF(pyitem);
+				if (r == -1) {
+					Py_DECREF(ret);
+					return NULL;
+				}
+			}
 		} else {
 			Py_DECREF(ret);
 			return NULL;
@@ -701,6 +730,7 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
 		itemidx++;
 		offset += PyObjCRT_SizeOfType (type);
 	}
+	Py_DECREF(seq);
 	return 0;
 }
 

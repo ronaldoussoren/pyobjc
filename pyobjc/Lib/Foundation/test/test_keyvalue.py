@@ -260,7 +260,6 @@ class PyKeyValueCoding (unittest.TestCase):
             o = KVOClass.alloc().init()
             o.addObserver_forKeyPath_options_context_(self, "test", 0, 0)
             o.removeObserver_forKeyPath_(self, "test")
-            o.retain()
 
         def testKVO2(self):
             """

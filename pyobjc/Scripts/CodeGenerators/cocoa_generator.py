@@ -224,18 +224,18 @@ if FOUNDATION_HDRS is not None:
             'NSDivideRect(',
 
             # NSDecimal support, should wrap type
-            'NSDecimalCopy(',
-            'NSDecimalCompact(',
-            'NSDecimalCompare(',
-            'NSDecimalRound(',
-            'NSDecimalNormalize(',
-            'NSDecimalAdd(',
-            'NSDecimalSubtract(',
-            'NSDecimalMultiply(',
-            'NSDecimalDivide(',
-            'NSDecimalPower(',
-            'NSDecimalMultiplyByPowerOf10(',
-            'NSDecimalString(',
+            #'NSDecimalCopy(',
+            #'NSDecimalCompact(',
+            #'NSDecimalCompare(',
+            #'NSDecimalRound(',
+            #'NSDecimalNormalize(',
+            #'NSDecimalAdd(',
+            #'NSDecimalSubtract(',
+            #'NSDecimalMultiply(',
+            #'NSDecimalDivide(',
+            #'NSDecimalPower(',
+            #'NSDecimalMultiplyByPowerOf10(',
+            #'NSDecimalString(',
 
             # Zones might be usefull someday
             'NSCreateZone(',
@@ -247,13 +247,12 @@ if FOUNDATION_HDRS is not None:
             'NSZoneCalloc(',
             'NSZoneRealloc(',
             'NSZoneFree(',
-
+            'NSDefaultMallocZone(',
 
             # TODO
             'NSUncaughtExceptionHandler(',
             'NSSetUncaughtExceptionHandler(',
             'NSGetUncaughtExceptionHandler(',
-            'NSDefaultMallocZone(',
         )
 
         func_collector.generate(
@@ -308,6 +307,13 @@ if FOUNDATION_HDRS is not None:
         func_builder.FUNC_MAP['NSBeginCriticalAlertSheet'] = BeginSheetMapper
 
         fd = dupfile('build/codegen/_Fnd_Functions.inc', 'w')
+
+        func_builder.SIMPLE_TYPES['NSDecimal*'] = (
+                '\tresult = Decimal_New(%(varname)s);\n\tif (result == NULL) return NULL;',
+                'O&',
+                'Decimal_Convert, &%(varname)s'
+            )
+
         structs = ['NSPoint', 'NSSize', 'NSRect', 'NSRange', 'NSSwappedFloat', 'NSSwappedDouble']
         for s in structs:
             func_builder.SIMPLE_TYPES[s] = (
@@ -378,21 +384,20 @@ if APPKIT_HDRS is not None:
             'NSAvailableWindowDepths(',
             'NSRectFillList(',
             'NSGetWindowServerMemory(',
-
-
-            #TODO:
-            'NSBestDepth (',
-            'NSAvailableWindowDepths (',
+            'NSDrawTiledRects(',
+            'NSDrawColorTiledRects(',
             'NSRectFillListWithGrays(',
             'NSRectFillListWithColors(',
             'NSRectFillListUsingOperation(',
             'NSRectFillListWithColorsUsingOperation(',
             'NSRectClipList(',
-            'NSDrawTiledRects(',
-            'NSDrawBitmap(',
             'NSWindowList(',
             'NSWindowListForContext(',
-            'NSDrawColorTiledRects(',
+            'NSBestDepth (',
+            'NSAvailableWindowDepths (',
+
+            #TODO:
+            'NSDrawBitmap(',
         )
 
         if VER == "MacOS X 10.1":

@@ -591,7 +591,7 @@ PyObjCClassObject PyObjCObject_Type = {
      0,					/* name */
      0,					/* slots */
    }
-   , 0, 0, 0, 0, 0, 0
+   , 0, 0, 0, 0, 0, 0, 0
 #else
    }
 #endif

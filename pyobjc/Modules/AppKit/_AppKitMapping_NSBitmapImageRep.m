@@ -11,8 +11,9 @@
 #include <Foundation/Foundation.h>
 #include "pyobjc-api.h"
 
-static PyObject* call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
-		PyObject* method, PyObject* self, PyObject* arguments)
+static PyObject* 
+call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
+	PyObject* method, PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	struct objc_super super;

@@ -16,6 +16,7 @@
 #include "wrapper-const-table.h"
 
 #include "NSAutoreleasePoolSupport.m"
+#include "decimals.m"
 
 #include "_Fnd_Functions.inc"
 
@@ -25,7 +26,11 @@
 PyDoc_STRVAR(objc_NSFileTypeForHFSTypeCode_doc,
 	"NSString *NSFileTypeForHFSTypeCode(OSType hfsTypeCode);");
 
-static PyObject* objc_NSFileTypeForHFSTypeCode(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* 
+objc_NSFileTypeForHFSTypeCode(
+	PyObject* self __attribute__((__unused__)), 
+	PyObject* args, 
+	PyObject* kwds)
 {
 static	char* keywords[] = { "hfsTypeCode", NULL };
 	PyObject*  result;
@@ -59,8 +64,11 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 PyDoc_STRVAR(objc_NSHFSTypeCodeFromFileType_doc,
 		"OSType NSHFSTypeCodeFromFileType(NSString *fileType);");
 
-static PyObject* objc_NSHFSTypeCodeFromFileType(PyObject* self __attribute__((__unused__)), 
-		PyObject* args, PyObject* kwds)
+static PyObject* 
+objc_NSHFSTypeCodeFromFileType(
+	PyObject* self __attribute__((__unused__)), 
+	PyObject* args, 
+	PyObject* kwds)
 {
 static	char* keywords[] = { "hfsTypeCode", NULL };
 	NSString*  fileType;
@@ -101,8 +109,11 @@ NSRect_Convert(PyObject* value, void* prect)
 PyDoc_STRVAR(NSDivideRect_doc,
 	"NSDivideRect(inRect, amount, edge) -> (slice, remainder)");
 
-static PyObject* objc_NSDivideRect(PyObject* self __attribute__((__unused__)), 
-		PyObject* args, PyObject* kwds)
+static PyObject* 
+objc_NSDivideRect(
+	PyObject* self __attribute__((__unused__)), 
+	PyObject* args, 
+	PyObject* kwds)
 {
 static	char* keywords[] = { "inRect", "amount", "edge", NULL };
 	NSRect inRect;
@@ -179,7 +190,8 @@ PyDoc_STRVAR(foundation_doc,
 #include "_Fnd_Enum.inc"
 #include "_Fnd_Str.inc"
 
-static inline int add_NSPoint(PyObject* d, char* name, NSPoint value)
+static inline int 
+add_NSPoint(PyObject* d, char* name, NSPoint value)
 {
         int res;
 	PyObject* v;
@@ -192,7 +204,8 @@ static inline int add_NSPoint(PyObject* d, char* name, NSPoint value)
 	return 0;
 }
 
-static inline int add_NSSize(PyObject* d, char* name, NSSize value)
+static inline int 
+add_NSSize(PyObject* d, char* name, NSSize value)
 {
         int res;
 	PyObject* v;
@@ -205,7 +218,8 @@ static inline int add_NSSize(PyObject* d, char* name, NSSize value)
 	return 0;
 }
 
-static inline int add_NSRect(PyObject* d, char* name, NSRect value)
+static inline int 
+add_NSRect(PyObject* d, char* name, NSRect value)
 {
         int res;
 	PyObject* v;
@@ -266,59 +280,53 @@ static PyObject* call_objWithObjects_count_(
 	return result;
 }
 
-static id imp_objWithObjects_count_(id self, SEL sel, id* objects, int count)
+static void 
+imp_objWithObjects_count_(void* cif __attribute__((__unused__)), void* resp, void** args, void* callable)
 {
-	PyObject* result;
-	PyObject* arglist;
-	PyObject* v;
-	id  returnValue;
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	id* objects = *(id**)args[2];
+	int count = *(int*)args[3];
+	id* preturnValue = (id*)resp;
+
+	PyObject* result = NULL;
+	PyObject* arglist = NULL;
+	PyObject* v = NULL;
+
+	*preturnValue = nil;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (arglist == NULL) goto error;
 
 	v = PyObjC_IdToPython(self);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 0, v);
 
 	v = PyObjC_CArrayToPython(@encode(id), objects, count);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 1, v);
 
 	v = PyInt_FromLong(count);
-	if (v == NULL) {	
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 2,  v);
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	result = PyObject_Call((PyObject*)callable, arglist, NULL); 
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
 
-	returnValue = PyObjC_PythonToId(result);
+	*preturnValue = PyObjC_PythonToId(result);
 	Py_DECREF(result);
-	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (PyErr_Occurred()) goto error;
+
 	PyGILState_Release(state);
-	return returnValue;
+	return;
+
+error:
+	Py_XDECREF(arglist);
+	PyObjCErr_ToObjCWithGILState(&state);
+	*preturnValue = nil;
 }
 
 
@@ -370,59 +378,50 @@ static PyObject* call_clsWithObjects_count_(
 	return result;
 }
 
-static id imp_clsWithObjects_count_(id self, SEL sel, id* objects, int count)
+static void 
+imp_clsWithObjects_count_(void* cif __attribute__((__unused__)), void* resp, void** args, void* callable)
 {
-	PyObject* result;
-	PyObject* arglist;
-	PyObject* v;
-	id  returnValue;
+	id self = *(id*)args[0];
+	//SEL _meth = *(SEL*)args[1];
+	id* objects = *(id**)args[2];
+	int count = *(int*)args[3];
+	id* preturnValue = (id*)resp;
+
+	PyObject* result = NULL;
+	PyObject* arglist = NULL;
+	PyObject* v = NULL;
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
-	if (arglist == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (arglist == NULL) goto error;
 
 	v = PyObjC_IdToPython(self);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 0, v);
 
 	v = PyObjC_CArrayToPython(@encode(id), objects, count);
-	if (v == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
-
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 1, v);
 
 	v = PyInt_FromLong(count);
-	if (v == NULL) {	
-		Py_DECREF(arglist);
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (v == NULL) goto error;
 	PyTuple_SET_ITEM(arglist, 2,  v);
 
-	result = PyObjC_CallPython(self, sel, arglist, NULL);
-	Py_DECREF(arglist);
-	if (result == NULL) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	result = PyObject_Call((PyObject*)callable, arglist, NULL);
+	Py_DECREF(arglist); arglist = NULL;
+	if (result == NULL) goto error;
 
-	returnValue = PyObjC_PythonToId(result);
+	*preturnValue = PyObjC_PythonToId(result);
 	Py_DECREF(result);
-	if (PyErr_Occurred()) {
-		PyObjCErr_ToObjCWithGILState(&state);
-		return nil;
-	}
+	if (PyErr_Occurred()) goto error;
 	PyGILState_Release(state);
-	return returnValue;
+	return;
+
+
+error:
+	Py_XDECREF(arglist);
+	PyObjCErr_ToObjCWithGILState(&state);
+	*preturnValue = nil;
 }
 
 
@@ -435,6 +434,7 @@ static id imp_clsWithObjects_count_(id self, SEL sel, id* objects, int count)
 #include "_FoundationMapping_NSArray.m"
 #include "_FoundationMapping_NSCoder.m"
 #include "_FoundationMapping_NSData.m"
+#include "_FoundationMapping_NSDecimalNumber.m"
 #include "_FoundationMapping_NSDictionary.m"
 #include "_FoundationMapping_NSIndexSet.m"
 #include "_FoundationMapping_NSMutableArray.m"
@@ -444,12 +444,92 @@ static id imp_clsWithObjects_count_(id self, SEL sel, id* objects, int count)
 #include "_FoundationMapping_NSString.m"
 #include "_FoundationMapping_NSStream.m"
 
+static const char* NSPoint_name = "Foundation.NSPoint";
+static const char* NSPoint_doc = "struct NSPoint(x, y)";
+static const char* NSPoint_fields[] = {
+	"x",
+	"y"
+};
+
+static const char* NSSize_name = "Foundation.NSSize";
+static const char* NSSize_doc = "struct NSSize(width, height)";
+static const char* NSSize_fields[] = {
+	"width",
+	"height"
+};
+
+static const char* NSRange_name = "Foundation.NSRange";
+static const char* NSRange_doc = "struct NSRange(location, length)";
+static const char* NSRange_fields[] = {
+	"location",
+	"length"
+};
+
+static const char* NSRect_name = "Foundation.NSRect";
+static const char* NSRect_doc = "struct NSRect(origin, size)";
+static const char* NSRect_fields[] = {
+	"origin",
+	"size",
+	NULL
+};
+
+/* A special init method for rects, this sets a different default value
+ * for the fields, makes the type more convenient to use.
+ */
+static int 
+NSRect_init(PyObject* self, PyObject* args, PyObject* kwds)
+{
+	PyObject* origin = NULL;
+	PyObject* size  = NULL;
+	int r;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OO", 
+				(char**)NSRect_fields, &origin, &size)) {
+		return -1;
+	}
+
+	if (origin == NULL) {
+		NSPoint aPoint = { 0, 0 };
+		origin = PyObjC_ObjCToPython(@encode(NSPoint), &aPoint);
+		if (origin == NULL) return -1;
+	} else {
+		Py_INCREF(origin);
+	}
+
+	if (size == NULL) {
+		NSSize aSize = { 0, 0 };
+		size = PyObjC_ObjCToPython(@encode(NSSize), &aSize);
+		if (size == NULL) {
+			Py_DECREF(origin);
+			return -1;
+		}
+	} else {
+		Py_INCREF(size);
+	}
+
+	r = PyObject_SetAttrString(self, "origin", origin);
+	if (r == -1)  {
+		Py_DECREF(origin);
+		Py_DECREF(size);
+		return -1;
+	}
+	r = PyObject_SetAttrString(self, "size", size);
+	if (r == -1)  {
+		Py_DECREF(origin);
+		Py_DECREF(size);
+		return -1;
+	}
+	Py_DECREF(origin);
+	Py_DECREF(size);
+
+	return 0;
+}
 
 void init_Foundation(void);
 
 void init_Foundation(void)
 {
-	PyObject *m, *d;
+	PyObject *m, *d, *v;
 	CFBundleRef bundle;
 
 	m = Py_InitModule4("_Foundation", foundation_methods, foundation_doc, 
@@ -480,7 +560,29 @@ void init_Foundation(void)
 #	include "_Fnd_Var.inc"
     
 	/* Add manual registrations below */
+	v = PyObjC_RegisterStructType(@encode(NSPoint),
+			NSPoint_name, NSPoint_doc, NULL, 2, NSPoint_fields);
+	if (v == NULL) return;
+	PyDict_SetItemString(d, "NSPoint", v);
+	Py_DECREF(v);
 
+	v = PyObjC_RegisterStructType(@encode(NSSize),
+			NSSize_name, NSSize_doc, NULL, 2, NSSize_fields);
+	if (v == NULL) return;
+	PyDict_SetItemString(d, "NSSize", v);
+	Py_DECREF(v);
+
+	v = PyObjC_RegisterStructType(@encode(NSRange),
+			NSRange_name, NSRange_doc, NULL, 2, NSRange_fields);
+	if (v == NULL) return;
+	PyDict_SetItemString(d, "NSRange", v);
+	Py_DECREF(v);
+
+	v = PyObjC_RegisterStructType(@encode(NSRect),
+			NSRect_name, NSRect_doc, NSRect_init, 2, NSRect_fields);
+	if (v == NULL) return;
+	PyDict_SetItemString(d, "NSRect", v);
+	Py_DECREF(v);
 
 	/* Install wrappers for difficult methods */
 #ifdef MACOSX
@@ -490,6 +592,7 @@ void init_Foundation(void)
 	if (_pyobjc_install_NSArray() != 0) return;
 	if (_pyobjc_install_NSCoder() != 0) return;
 	if (_pyobjc_install_NSData() != 0) return;
+	if (_pyobjc_install_NSDecimalNumber() != 0) return;
 	if (_pyobjc_install_NSDictionary() != 0) return;
 	if (_pyobjc_install_NSIndexSet() != 0) return;
 	if (_pyobjc_install_NSMutableArray() != 0) return;
@@ -498,4 +601,5 @@ void init_Foundation(void)
 	if (_pyobjc_install_NSSet() != 0) return;
 	if (_pyobjc_install_NSString() != 0) return;
 	if (_pyobjc_install_NSStream() != 0) return;
+	if (install_decimal(m) != 0) return;
 }

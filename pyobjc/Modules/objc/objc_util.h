@@ -9,10 +9,6 @@ extern PyObject* ObjCExc_internal_error;
 
 int ObjCUtil_Init(PyObject* module);
 
-extern PyObject* ObjC_class_extender;
-int ObjC_AddConvenienceMethods(Class cls, PyObject* type_dict);
-int  ObjC_UpdateConvenienceMethods(PyObject* cls);
-
 void ObjCErr_Set(PyObject* exc, char* fmt, ...);
 void PyObjCErr_FromObjC(NSException* localException);
 void PyObjCErr_ToObjC(void);
@@ -34,5 +30,6 @@ extern NSMapTableValueCallBacks ObjC_PointerValueCallBacks;
 void    PyObjC_FreeCArray(int, void*);
 int     PyObjC_PythonToCArray(const char*, PyObject*, PyObject*, void**, int*);
 PyObject* PyObjC_CArrayToPython(const char*, void*, int);
+int     PyObjC_IsPythonKeyword(const char* word);
 
 #endif /* OBJC_UTIL */
