@@ -26,7 +26,7 @@ NSMapTableKeyCallBacks PyObjC_ClassToNSBundleTable_KeyCallBacks = {
 	NULL, // no need to retain classes
 	NULL, // no need to release classes
 	NULL, // generic description
-	NULL // not a key
+	NULL  // not a key
 };
 
 static
@@ -41,8 +41,15 @@ NSMapTableValueCallBacks PyObjC_ClassToNSBundle_ValueCallBacks = {
 {
 	static NSBundle* mainBundle = nil;
 	static NSMapTable* bundleCache = nil;
-	if (!mainBundle) mainBundle = [[NSBundle mainBundle] retain];
-	if (!bundleCache) bundleCache = NSCreateMapTable(PyObjC_ClassToNSBundleTable_KeyCallBacks, PyObjC_ClassToNSBundle_ValueCallBacks, PYOBJC_EXPECTED_CLASS_COUNT);
+	if (!mainBundle) {
+		mainBundle = [[NSBundle mainBundle] retain];
+	}
+	if (!bundleCache) {
+		bundleCache = NSCreateMapTable(PyObjC_ClassToNSBundleTable_KeyCallBacks, PyObjC_ClassToNSBundle_ValueCallBacks, PYOBJC_EXPECTED_CLASS_COUNT);
+	}
+	if (!aClass) {
+		return mainBundle;
+	}
 	id rval = (id)NSMapGet(bundleCache, (const void *)aClass);
 	if (rval) {
 		return rval;
