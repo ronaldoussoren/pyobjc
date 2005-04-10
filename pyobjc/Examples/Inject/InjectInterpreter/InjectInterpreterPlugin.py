@@ -5,6 +5,7 @@ import keyword
 import time
 from code import InteractiveConsole, softspace
 from StringIO import StringIO
+import objc
 from objc import YES, NO, selector
 from Foundation import *
 from AppKit import *
@@ -556,3 +557,5 @@ PyInterpreterBootstrap.alloc().init().performSelectorOnMainThread_withObject_wai
     myBundle,
     False,
 )
+
+objc.removeAutoreleasePool()

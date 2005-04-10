@@ -82,3 +82,5 @@ class IDNSnitch(NSObject):
 
 idnSnitch = IDNSnitch.alloc().init()
 idnSnitch.performSelectorOnMainThread_withObject_waitUntilDone_('startIDNSnitch:', None, True)
+
+objc.removeAutoreleasePool()

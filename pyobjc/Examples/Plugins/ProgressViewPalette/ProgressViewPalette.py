@@ -77,3 +77,5 @@ class ProgressCell(objc.Category(ProgressCell)):
 def ibMatchPrototype_(self, prototype):
     super(ProgressCell, self).ibMatchPrototype_(prototype)
     self.setPercentageIncrement_(prototype.percentageIncrement())
+
+objc.removeAutoreleasePool()

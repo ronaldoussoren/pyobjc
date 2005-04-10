@@ -31,3 +31,5 @@ class SillyBalls (NibClassBuilder.AutoBaseClass):
 
         # draw a new ball.
         path.fill()
+
+objc.removeAutoreleasePool()

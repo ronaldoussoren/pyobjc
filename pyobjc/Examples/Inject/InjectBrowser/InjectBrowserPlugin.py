@@ -13,6 +13,7 @@ See also the iClass demo.
 """
 
 from PyObjCTools import NibClassBuilder, AppHelper
+import objc
 from objc import getClassList, objc_object
 from Foundation import *
 from AppKit import *
@@ -114,3 +115,5 @@ ClassBrowserBootstrap.alloc().init().performSelectorOnMainThread_withObject_wait
     myBundle,
     False,
 )
+
+objc.removeAutoreleasePool()
