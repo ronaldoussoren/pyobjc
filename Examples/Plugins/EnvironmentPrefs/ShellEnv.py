@@ -225,3 +225,5 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
             None,
             0,
             message)
+
+objc.removeAutoreleasePool()

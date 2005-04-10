@@ -315,6 +315,33 @@ cleanup_and_return_error:
 }
 
 
+PyDoc_STRVAR(remove_autorelease_pool_doc,
+  "removeAutoreleasePool()\n"
+  "\n"
+  "This removes the global NSAutoreleasePool.  You should do this\n"
+  "at the end of a plugin's initialization script.\n");
+static PyObject*
+remove_autorelease_pool(PyObject* self __attribute__((__unused__)),
+	PyObject* args, PyObject* kwds)
+{
+	static char* keywords[] = { NULL };
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "", keywords)) {
+		return NULL;
+	}
+
+	PyObjC_DURING
+		[global_release_pool release];
+		global_release_pool = nil;
+	PyObjC_HANDLER
+		PyObjCErr_FromObjC(localException);
+	PyObjC_ENDHANDLER
+
+	if (PyErr_Occurred()) return NULL;
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
 PyDoc_STRVAR(recycle_autorelease_pool_doc,
   "recycleAutoreleasePool()\n"
   "\n"
@@ -1187,6 +1214,7 @@ static PyMethodDef mod_methods[] = {
 	{ "setClassExtender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
 	{ "setSignatureForSelector", (PyCFunction)set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
 	{ "recycleAutoreleasePool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
+	{ "removeAutoreleasePool", (PyCFunction)remove_autorelease_pool, METH_VARARGS|METH_KEYWORDS, remove_autorelease_pool_doc },
 	{ "setNSNumberWrapper", (PyCFunction)setNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, setNSNumberWrapper_doc },
 	{ "getNSNumberWrapper", (PyCFunction)getNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, getNSNumberWrapper_doc },
 	{ "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
@@ -1275,10 +1303,7 @@ init_objc(void)
 {
 	PyObject *m, *d;
 
-	/* Allocate an auto-release pool for our own use, this avoids numerous
-	 * warnings during startup of a python script.
-	 */
-	global_release_pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *initReleasePool = [[NSAutoreleasePool alloc] init];
 	[OC_NSBundleHack installBundleHack];
 
 	PyObjCClass_DefaultModule = PyString_FromString("objc");
@@ -1377,4 +1402,9 @@ init_objc(void)
 #endif /* MACOSX */
 
 	PyEval_InitThreads();
+	[initReleasePool release];
+	/* Allocate an auto-release pool for our own use, this avoids numerous
+	 * warnings during startup of a python script.
+	 */
+	global_release_pool = [[NSAutoreleasePool alloc] init];
 }
