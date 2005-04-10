@@ -7,6 +7,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3.1 (2005-04-??)
 --------------------------
 
+- Synchronize implementation of ``objc.inject`` with mach_* 1.1.
+  Now injects on main thread by default, takes third useMainThread
+  argument to change this behavior.
+
 - Fixed bug in the NSBundle hack that caused a NULL pointer to be
   dereferenced if looking up a non-existent class using NSBundle API.
 
