@@ -944,7 +944,7 @@ EventLoopTimerEntry(EventLoopTimerRef inTimer __attribute__((__unused__)), pyjec
 }
 
 PyDoc_STRVAR(inject_doc,
-"inject(pid, bundle)\n"
+"inject(pid, bundle, useMainThread=True)\n"
 "\n"
 "Loads the given MH_BUNDLE in the target process identified by pid\n");
 
