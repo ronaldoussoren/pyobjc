@@ -115,7 +115,7 @@ if gs_root is None:
         #"-fast", "-fPIC",
         ]
 
-    OBJC_LDFLAGS = frameworks('Foundation')
+    OBJC_LDFLAGS = frameworks('Foundation', 'Carbon')
     CF_LDFLAGS = frameworks('CoreFoundation', 'Foundation')
     FND_LDFLAGS = frameworks('CoreFoundation', 'Foundation')
     APPKIT_LDFLAGS = frameworks('CoreFoundation', 'AppKit')

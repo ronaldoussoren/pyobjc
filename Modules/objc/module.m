@@ -20,9 +20,8 @@
 #include <mach-o/dyld.h>
 #include <pthread.h>
 #include "mach_inject.h"
+#include <Carbon/Carbon.h>
 
-#define PYJECT_MACH_THREAD_STACK_SIZE 64 * 1024
-#define PYJECT_PTHREAD_STACK_SIZE 188 * 1024
 #define PYJECT_LINKOPTIONS (NSLINKMODULE_OPTION_BINDNOW | \
 	NSLINKMODULE_OPTION_RETURN_ON_ERROR | \
 	NSLINKMODULE_OPTION_PRIVATE)
@@ -839,9 +838,67 @@ static char* keywords[] = { "value", 0 };
 
 #ifdef MAC_OS_X_VERSION_10_3
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
+
+typedef struct {
+	ptrdiff_t codeOffset;
+	int useMainThread;
+	char bundlePath[1];
+} pyject_param;
+
+static void INJECT_ENTRY(ptrdiff_t codeOffset, pyject_param *param, size_t paramSize);
+static void *pthread_entry(pyject_param *param);
+static pascal void EventLoopTimerEntry(EventLoopTimerRef inTimer, pyject_param *param);
+
+static void
+INJECT_ENTRY(ptrdiff_t codeOffset, pyject_param *param, size_t paramSize __attribute__((__unused__))) {
+	assert(param);
+	param->codeOffset = codeOffset;
+
+	pthread_attr_t attr;
+	pthread_attr_init(&attr);
+
+	int policy;
+	pthread_attr_getschedpolicy( &attr, &policy );
+	pthread_attr_setdetachstate( &attr, PTHREAD_CREATE_DETACHED );
+	pthread_attr_setinheritsched( &attr, PTHREAD_EXPLICIT_SCHED );
+	
+	struct sched_param sched;
+	sched.sched_priority = sched_get_priority_max( policy );
+	pthread_attr_setschedparam( &attr, &sched );
+
+
+	pthread_t thread;
+	pthread_create( &thread,
+					&attr,
+					(void* (*)(void*))((long)pthread_entry + codeOffset),
+					(void*) param );
+	pthread_attr_destroy(&attr);
+
+	thread_suspend(mach_thread_self());
+}
+
+
 static void *
-pyject_pthread_entry_point(void *param) {
-	char *pathname = (char *)param;
+pthread_entry(pyject_param *param) {
+	assert(param);
+
+	EventLoopTimerProcPtr proc = (EventLoopTimerProcPtr)EventLoopTimerEntry;
+	proc += param->codeOffset;
+
+	if (param->useMainThread) {
+		EventLoopTimerUPP upp = NewEventLoopTimerUPP(proc);
+		InstallEventLoopTimer(GetMainEventLoop(), 0, 0, upp, (void*)param, NULL);
+	} else {
+		proc(NULL, param);
+	}
+
+	return NULL;
+}
+
+static
+pascal void
+EventLoopTimerEntry(EventLoopTimerRef inTimer __attribute__((__unused__)), pyject_param *param) {
+	char *pathname = param->bundlePath;
 	NSObjectFileImageReturnCode rc;
 	NSObjectFileImage image;
 	NSModule newModule;
@@ -882,23 +939,7 @@ pyject_pthread_entry_point(void *param) {
 		}
 	}
 	if (errString) {
-		printf("%s\n", errString);
-	}
-	return NULL;
-}
-
-static void
-pyject_mach_entry_point(ptrdiff_t codeOffset, void *paramBlock, size_t paramSize __attribute__((__unused__))) {
-	pthread_attr_t attr;
-	pthread_t tid;
-	pthread_attr_init(&attr);
-	pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
-	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-	pthread_attr_setstacksize(&attr, PYJECT_PTHREAD_STACK_SIZE);
-	pthread_create(&tid, &attr, (void*)((char*)&pyject_pthread_entry_point+codeOffset), (void *)paramBlock);
-	pthread_attr_destroy(&attr);
-	while (1) {
-		sleep(3600);
+		fprintf(stderr, "%s\n", errString);
 	}
 }
 
@@ -909,16 +950,24 @@ PyDoc_STRVAR(inject_doc,
 
 static PyObject*
 pyject_inject(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds) {
-	static char *keywords[] = { "pid", "bundle", NULL };
+	static char *keywords[] = { "pid", "bundle", "useMainThread", NULL };
 	int pid;
 	char *bundle;
+	int bundle_len;
+	int useMainThread = 1;
+	size_t size;
 	mach_error_t e;
+	pyject_param *params;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "is:inject", keywords, &pid, &bundle)) {
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "is#|i:inject", keywords, &pid, &bundle, &bundle_len, &useMainThread)) {
 		return NULL;
 	}
-
-	e = mach_inject(&pyject_mach_entry_point, bundle, strlen(bundle), pid, PYJECT_MACH_THREAD_STACK_SIZE);
+	size = sizeof(pyject_param) + bundle_len;
+	params = malloc(size);
+	params->useMainThread = useMainThread;
+	memcpy(params->bundlePath, bundle, bundle_len);
+	params->bundlePath[bundle_len] = '\0';
+	e = mach_inject((mach_inject_entry)INJECT_ENTRY, params, size, pid, 0);
 
 	Py_INCREF(Py_None);
 	return Py_None;
