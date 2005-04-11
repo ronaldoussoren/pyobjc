@@ -19,7 +19,6 @@
 #include "pyobjc-api.h"
 #include "wrapper-const-table.h"
 
-#include "NSAutoreleasePoolSupport.m"
 #include "decimals.m"
 
 #include "_Fnd_Functions.inc"
