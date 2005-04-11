@@ -7,6 +7,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3.1 (2005-04-??)
 --------------------------
 
+- Removed NSAutoreleasePool category hack that has been deprecated for
+  quite some time.
+
 - New ``objc.removeAutoreleasePool`` function that will remove
   PyObjC's global NSAutoreleasePool, which is particularly useful
   for plugins.
