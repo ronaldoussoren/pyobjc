@@ -14,7 +14,8 @@ PyObjC NEWS</title>
 <li><code><span>objc.inject</span></code> now injects on main thread by default,
 takes third useMainThread argument to change this behavior.
 Effectively a complete rewrite which should be more correct
-and stable, also synchronized with mach_* 1.1.</li>
+and stable, also synchronized with mach_* 1.1.
+XXX: Still doesn't work with Darwin 8!</li>
 <li>Removed NSAutoreleasePool category hack that has been deprecated for
 quite some time.</li>
 <li>New <code><span>objc.removeAutoreleasePool</span></code> function that will remove

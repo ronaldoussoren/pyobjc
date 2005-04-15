@@ -2,6 +2,7 @@ import os
 import sys
 import shutil
 from distutils.cmd import Command
+from distutils.util import get_platform
 from distutils.errors import *
 from pyobjc_setup_utils import runtasks
 
@@ -27,7 +28,7 @@ class build_libffi(Command):
                 print >>sys.stderr, "\tSee Install.txt or Install.html for more information."
                 raise DistutilsFileError('LIBFFI_SOURCES is not a directory')
             build_base = os.path.abspath(self.reinitialize_command('build').build_base)
-            base = self.libffi_base = os.path.join(build_base, 'libffi')
+            base = self.libffi_base = os.path.join(build_base, 'libffi.' + get_platform())
             self.cflags = ["-isystem", os.path.join(base, "include")]
             extra = os.path.join(base, 'lib', 'gcc', 'include', 'libffi')
             if os.path.exists(extra):
