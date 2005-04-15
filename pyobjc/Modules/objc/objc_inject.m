@@ -1,4 +1,6 @@
 #include "objc_inject.h"
+#ifdef MAC_OS_X_VERSION_10_3
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
 #include "mach_inject.h"
 #include <string.h>
 #include <libc.h>
@@ -406,3 +408,6 @@ objc_inject(pid_t pid, int use_main_thread, char *bundlePath, char *systemPath, 
 	}
 	return 0;
 }
+
+#endif /* MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3 */
+#endif /* MAC_OS_X_VERSION_10_3 */
