@@ -11,29 +11,5 @@ class TestNSAutoreleasePoolInteraction(unittest.TestCase):
         pool.release()
         bar.addObject_( u"a" ) # should still exist because of python GC
 
-    def testNSAutoreleasePool(self):
-
-        # The actual test will issue a DeprecationWarning, the warnings code
-        # below surpresses that warning.
-        import warnings
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            NSAutoreleasePool.pyobjcPushPool()
-            bar = NSMutableArray.array()
-            NSAutoreleasePool.pyobjcPopPool()
-            bar.addObject_( u"a" ) # should still exist because of python GC
-        finally:
-            del warnings.filters[0]
-
-    def testDeprecation(self):
-        import warnings
-        warnings.filterwarnings('error', category=DeprecationWarning)
-
-        try:
-            self.assertRaises(DeprecationWarning, NSAutoreleasePool.pyobjcPushPool)
-        finally:
-            del warnings.filters[0]
-
-
 if __name__ == '__main__':
     unittest.main( )
