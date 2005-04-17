@@ -8,9 +8,10 @@ AutoBaseClass mechanism provided by the NibClassBuilder.
 
 from Foundation import *
 from AppKit import *
-from PyObjCTools import NibClassBuilder
+from PyObjCTools import NibClassBuilder, AppHelper
 from twisted.internet import reactor
-from twisted.python import log
+
+from WSTConnectionWindowControllerClass import WSTConnectionWindowController
 
 # Make NibClassBuilder aware of the classes in the main NIB file.
 NibClassBuilder.extractClasses( "MainMenu" )
@@ -33,32 +34,19 @@ class WSTApplicationDelegate(NibClassBuilder.AutoBaseClass):
         (In this case, it is largely moot due to the implementation of
         applicationDidFinishLaunching_().
         """
-        from WSTConnectionWindowControllerClass import WSTConnectionWindowController
-        WSTConnectionWindowController.connectionWindowController().showWindow_(sender)
+        WSTConnectionWindowController.connectionWindowController().showWindow_(
+            sender)
 
-    def iterateReactor_(self, iterateFunc):
-        try:
-            iterateFunc()
-        except:
-            log.err()
-
-    def reactorDone(self):
-        NSApplication.sharedApplication().terminate_(self)
-        
     def applicationShouldTerminate_(self, sender):
         if reactor.running:
             reactor.stop()
             return False
         return True
     
-    def reactorNotification_(self, iterateFunc):
-        pool = NSAutoreleasePool.alloc().init()
-        self.performSelectorOnMainThread_withObject_waitUntilDone_('iterateReactor:', iterateFunc, False)
-        del pool
-    
     def applicationDidFinishLaunching_(self, aNotification):
         """Create and display a new connection window
         """
-        reactor.interleave(self.reactorNotification_)
-        reactor.addSystemEventTrigger('after', 'shutdown', self.reactorDone)
+        reactor.interleave(AppHelper.callAfter)
+        reactor.addSystemEventTrigger(
+            'after', 'shutdown', AppHelper.stopEventLoop)
         self.newConnectionAction_(None)

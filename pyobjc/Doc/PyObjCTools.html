@@ -52,13 +52,22 @@ exception. This module should only be used during development.</p>
 <p>Used by the PyObjC Xcode templates to derive py2app options from an Xcode
 project file.</p>
 <h2><a name="pyobjctools-apphelper"><code><span>PyObjCTools.AppHelper</span></code></a></h2>
-<p>This module exports two functions that are useful when working with the
-<code><span>AppKit</span></code> framework.</p>
+<p>This module exports functions that are useful when working with the
+<code><span>AppKit</span></code> framework (or more generally, run loops).</p>
 <ul>
+<li><code><span>callAfter(func,</span> <span>*args,</span> <span>**kwargs)</span> <span>-&gt;</span> <span>None</span></code><p>Call a function on the main thread.  Returns immediately.</p>
+</li>
+<li><code><span>callLater(delay,</span> <span>func,</span> <span>*args,</span> <span>**kwargs)</span> <span>-&gt;</span> <span>None</span></code><p>Call a function on the main thread after a delay.  Returns immediately.</p>
+</li>
 <li><code><span>endSheetMethod(method)</span> <span>-&gt;</span> <span>selector</span></code><p>Convert a method to a form that is suitable to use as the delegate callback
 for sheet methods.</p>
 </li>
-<li><code><span>runEventLoop(argv=None,</span> <span>unexpectedErrorAlert=unexpectedErrorAlert)</span> <span>-&gt;</span> <span>None</span></code><p>Run the event loop using <code><span>NSApplicationMain</span></code> and ask the user if we should
+<li><code><span>stopEventLoop()</span> <span>-&gt;</span> <span>None</span></code><p>Stops the event loop (if started by <code><span>runConsoleEventLoop</span></code>) or sends the
+<code><span>NSApplication</span></code> a <code><span>terminate:</span></code> message.</p>
+</li>
+<li><code><span>runConsoleEventLoop(argv=None,</span> <span>installInterrupt=False,</span> <span>mode=NSDefaultRunLoopMode)</span> <span>-&gt;</span> <span>None</span></code><p>Run a <code><span>NSRunLoop</span></code> in a stoppable way (with <code><span>stopEventLoop</span></code>).</p>
+</li>
+<li><code><span>runEventLoop(argv=None,</span> <span>unexpectedErrorAlert=unexpectedErrorAlert,</span> <span>installInterrupt=None,</span> <span>pdb=None,</span> <span>main=NSApplicationMain)</span> <span>-&gt;</span> <span>None</span></code><p>Run the event loop using <code><span>NSApplicationMain</span></code> and ask the user if we should
 continue if an exception is caught.</p>
 <p>This function doesn't return unless it throws an exception.</p>
 </li>
