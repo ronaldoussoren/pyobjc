@@ -23,8 +23,6 @@ from objc import IBOutlet
 from objc import selector
 from objc import YES, NO
 
-import twisted.internet.cfreactor
-reactor = twisted.internet.cfreactor.install()
 from twisted.internet import defer
 from twisted.web.xmlrpc import Proxy
 
@@ -134,15 +132,11 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         self.progressIndicator.setDisplayedWhenStopped_(NO)
 
         self.createToolbar()
-        # Start the CFReactor if it's not already going
-        if not reactor.running:
-            reactor.run()
 
     def windowWillClose_(self, aNotification):
         """
         Clean up when the document window is closed.
         """
-        reactor.stop()
         self.autorelease()
 
     def createToolbar(self):
