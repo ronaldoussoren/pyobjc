@@ -5,9 +5,11 @@ Exported functions:
 * runConsoleEventLoop - run NSRunLoop.run() in a stoppable manner
 * stopEventLoop - stops the event loop or terminates the application
 * endSheetMethod - set correct signature for NSSheet callbacks
+* callAfter - call a function on the main thread (async)
+* callLater - call a function on the main thread after a delay (async)
 """
 
-__all__ = ( 'runEventLoop', 'runConsoleEventLoop', 'stopEventLoop', 'endSheetMethod' )
+__all__ = ( 'runEventLoop', 'runConsoleEventLoop', 'stopEventLoop', 'endSheetMethod', 'callAfter', 'callLater' )
 
 from AppKit import *
 from Foundation import *
@@ -16,7 +18,43 @@ import sys
 import traceback
 import objc
 
+class PyObjCAppHelperCaller(NSObject):
+    
+    def initWithArgs_(self, args):
+        self = self.init()
+        self.args = args
+        return self
+
+    def callAfter_(self, sender):
+        self.performSelectorOnMainThread_withObject_waitUntilDone_(
+            self.call_, self.args, False)
+
+    def callLater_(self, delay):
+        self.performSelector_withObject_afterDelay_(
+            self.callAfter_, None, delay)
+    
+    def call_(self, (func, args, kwargs)):
+        func(*args, **kwargs)
+
+
+def callAfter(func, *args, **kwargs):
+    """call a function on the main thread (async)"""
+    pool = NSAutoreleasePool.alloc().init()
+    obj = PyObjCAppHelperCaller.alloc().initWithArgs_((func, args, kwargs))
+    obj.callAfter_(None)
+    del obj
+    del pool
+
+def callLater(delay, func, *args, **kwargs):
+    """call a function on the main thread after a delay (async)"""
+    pool = NSAutoreleasePool.alloc().init()
+    obj = PyObjCAppHelperCaller.alloc().initWithArgs_((func, args, kwargs))
+    obj.callLater_(delay)
+    del obj
+    del pool
+    
 class PyObjCAppHelperApplicationActivator(NSObject):
+
     def activateNow_(self, aNotification):
         NSApp().activateIgnoringOtherApps_(True)
 
@@ -147,7 +185,7 @@ def runConsoleEventLoop(argv=None, installInterrupt=False, mode=NSDefaultRunLoop
 RAISETHESE = (SystemExit, MemoryError, KeyboardInterrupt)
 
 
-def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pdb=None):
+def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pdb=None, main=NSApplicationMain):
     """Run the event loop, ask the user if we should continue if an
     exception is caught. Use this function instead of NSApplicationMain().
     """
@@ -194,7 +232,7 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pd
                     firstRun = False
                     if installInterrupt:
                         installMachInterrupt()
-                    NSApplicationMain(argv)
+                    main(argv)
                 else:
                     NSApp().run()
             except RAISETHESE:
