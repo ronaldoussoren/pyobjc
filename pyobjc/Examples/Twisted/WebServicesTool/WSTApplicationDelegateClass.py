@@ -6,7 +6,11 @@ All outlets and the base class are automatically derived at runtime by the
 AutoBaseClass mechanism provided by the NibClassBuilder.
 """
 
+from Foundation import *
+from AppKit import *
 from PyObjCTools import NibClassBuilder
+from twisted.internet import reactor
+from twisted.python import log
 
 # Make NibClassBuilder aware of the classes in the main NIB file.
 NibClassBuilder.extractClasses( "MainMenu" )
@@ -32,7 +36,29 @@ class WSTApplicationDelegate(NibClassBuilder.AutoBaseClass):
         from WSTConnectionWindowControllerClass import WSTConnectionWindowController
         WSTConnectionWindowController.connectionWindowController().showWindow_(sender)
 
+    def iterateReactor_(self, iterateFunc):
+        try:
+            iterateFunc()
+        except:
+            log.err()
+
+    def reactorDone(self):
+        NSApplication.sharedApplication().terminate_(self)
+        
+    def applicationShouldTerminate_(self, sender):
+        if reactor.running:
+            reactor.stop()
+            return False
+        return True
+    
+    def reactorNotification_(self, iterateFunc):
+        pool = NSAutoreleasePool.alloc().init()
+        self.performSelectorOnMainThread_withObject_waitUntilDone_('iterateReactor:', iterateFunc, False)
+        del pool
+    
     def applicationDidFinishLaunching_(self, aNotification):
         """Create and display a new connection window
         """
+        reactor.interleave(self.reactorNotification_)
+        reactor.addSystemEventTrigger('after', 'shutdown', self.reactorDone)
         self.newConnectionAction_(None)

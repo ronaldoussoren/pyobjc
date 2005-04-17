@@ -24,11 +24,13 @@ b.bum
 bbum@codefab.com
 
 This application has been modified for Twisted.  It demonstrates:
-- using Twisted in a Cocoa app with the cfreactor
+- using Twisted in a Cocoa app with the threadedselectreactor
 - how to write responsive single-threaded network applications
+- note that you will need Twisted 2.x, where x > 0.  Currently, this
+  is only available from svn, at revision 13576 or later.
 
 To run the demo:
-python buildapp.py build
-open build/Web\ Services\ Tool.app
+python setup.py py2app
+open dist/Web\ Services\ Tool.app
 
 bob@redivi.com
