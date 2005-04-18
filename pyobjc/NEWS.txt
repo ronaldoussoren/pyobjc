@@ -7,17 +7,21 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3.1 (2005-04-??)
 --------------------------
 
-- Fixed a stupid CFBundleRef reference counting bug in
+- New ``WebKitInterpreter`` example in ``Examples/Plugins``,
+  Uses the new WebKit Cocoa plugin API available in Safari 1.3
+  and later to embed a PyInterpreter in the browser.
+
+- Fixed a stupid ``CFBundleRef`` reference counting bug in
   Foundation._Foundation.  Symptom of this is usually crashing
   after having loaded a PyObjC-based plugin into an Obj-C app.
 
-- New PyObjCTools.AppHelper functions: callAfter and callLater,
-  conveniences for calling Python functions on the main thread
-  as soon as possible, or after a delay.
+- New ``PyObjCTools.AppHelper`` functions: ``callAfter`` and
+  ``callLater``, conveniences for calling Python functions on
+  the main thread as soon as possible, or after a delay.
 
-- Twisted examples changed to use threadedselectreactor instead
-  of cfreactor.  cfreactor is deprecated.  Needs Twisted newer
-  than 2.0 (currently svn r13575 or later).
+- Twisted examples changed to use ``threadedselectreactor``
+  instead of ``cfreactor``.  ``cfreactor`` is deprecated.
+  Needs Twisted newer than 2.0 (currently svn r13575 or later).
 
 - ``objc.inject`` now injects on main thread by default,
   takes third useMainThread argument to change this behavior.

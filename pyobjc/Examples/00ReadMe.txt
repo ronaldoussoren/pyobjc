@@ -473,6 +473,12 @@ Mac OS X 10.3 and later.
 
 .. __: Plugins/SillyBallsSaver
 
+* `WebKitInterpreter`__
+  
+  Uses the new WebKit Cocoa plugin API available in Safari 1.3
+  and later to embed a PyInterpreter in the browser.
+
+.. __: Plugins/WebKitInterpreter
 
 Twisted Integration
 -------------------
