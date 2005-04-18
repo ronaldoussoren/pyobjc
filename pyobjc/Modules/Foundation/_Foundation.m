@@ -615,7 +615,7 @@ void init_Foundation(void)
 
 
 #ifdef MACOSX
-	CFRelease(bundle);
+	// CFRelease(bundle);
 #endif
 
 
