@@ -22,7 +22,7 @@ import iTunes
 # Since the NIB files are in the application, NOT the plugin, we
 # need to specify this explicitly.  Typicaly, NIB files would be in the
 # plugins.
-NibClassBuilder.extractClasses("CDInfoDocument" bundle=NSBundle.mainBundle())
+NibClassBuilder.extractClasses("CDInfoDocument", bundle=NSBundle.mainBundle())
 
 class ITunesCommunication(NibClassBuilder.AutoBaseClass):
     def init(self):

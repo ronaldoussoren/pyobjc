@@ -86,7 +86,8 @@ Follow these steps:
 
 10. Add ``dist/ITunesCommunication.plugin`` to the Resources folder in your
     Xcode project.  You can do this by ctrl-clicking the Resources folder
-    and choosing "Add Existing Files...".
+    and choosing "Add Existing Files...".  Make sure to choose
+    "Create Folder References for any added folders".
 
 11. Open ``main.m``, it is in the "Other Sources" folder in your Xcode
     project, and change the main(...) function to the following::
