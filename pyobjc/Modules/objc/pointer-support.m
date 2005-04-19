@@ -40,6 +40,24 @@ struct wrapper {
 static struct wrapper* items = 0;
 static int item_count = 0;
 
+static struct wrapper*
+FindWrapper(const char* signature)
+{
+	int i;
+	int len;
+
+	len = strlen(signature);
+
+	for (i = 0; i < item_count; i++) {
+		if (strncmp(signature, items[i].signature, items[i].offset) == 0) {
+			if (signature[1] != _C_STRUCT_B || signature[items[i].offset] == '=' || signature[items[i].offset] == _C_STRUCT_E) {
+				return items + i;
+			}
+		}
+	}
+	return NULL;
+}
+
 int 
 PyObjCPointerWrapper_Register(
 	const char* signature,
@@ -49,6 +67,18 @@ PyObjCPointerWrapper_Register(
 	) 
 {
 	struct wrapper* value;
+
+	/*
+	 * Check if we already have a wrapper, if so replace that.
+	 * This makes it possible to replace a default wrapper by something
+	 * better.
+	 */
+	value = FindWrapper(signature);
+	if (value != NULL) {
+		value->pythonify = pythonify;
+		value->depythonify = depythonify;
+		return 0;
+	}
 
 	if (items == NULL) {
 		items = PyMem_Malloc(sizeof(struct wrapper));
@@ -94,23 +124,6 @@ PyObjCPointerWrapper_Register(
 	return 0;
 }
 
-static struct wrapper*
-FindWrapper(const char* signature)
-{
-	int i;
-	int len;
-
-	len = strlen(signature);
-
-	for (i = 0; i < item_count; i++) {
-		if (strncmp(signature, items[i].signature, items[i].offset) == 0) {
-			if (signature[1] != _C_STRUCT_B || signature[items[i].offset] == '=' || signature[items[i].offset] == _C_STRUCT_E) {
-				return items + i;
-			}
-		}
-	}
-	return NULL;
-}
 
 
 PyObject* 
