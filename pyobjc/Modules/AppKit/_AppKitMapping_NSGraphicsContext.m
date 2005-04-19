@@ -13,56 +13,41 @@
 
 #include <ApplicationServices/ApplicationServices.h>
 
-static PyObject*
-call_NSGraphicsContext_graphicsPort(
-    PyObject* method, PyObject* self, PyObject* arguments)
+static int
+py_to_CG(PyObject* obj __attribute__((__unused__)), void* output __attribute__((__unused__)))
 {
+	PyErr_SetString(PyExc_TypeError,  "cannot convert to CGContextRef yet");
+	return -1;
+}
+
+static PyObject*
+CG_to_py(void* cgValue)
+{
+static	PyObject* pyCGContextPtr = NULL;
 	PyObject* pyCoreGraphicsModule;
-	PyObject* pyCGContextPtr;
 	PyObject* sillySwigThing;
-	CGContextRef res;
 	char ptrString[9];
-	struct objc_super super;
 	PyObject* retVal;
 
-	if (!PyArg_ParseTuple(arguments, "")) {
-		return NULL;
-	}
-
-	if ((pyCoreGraphicsModule = PyImport_ImportModule("CoreGraphics")) == NULL ) {
-		return 0;
-	}
-	pyCGContextPtr = PyObject_GetAttrString(pyCoreGraphicsModule, "CGContextPtr");
-	Py_DECREF(pyCoreGraphicsModule);
 	if (pyCGContextPtr == NULL) {
-		return 0;
+		if ((pyCoreGraphicsModule = PyImport_ImportModule("CoreGraphics")) == NULL ) {
+			return NULL;
+		}
+		pyCGContextPtr = PyObject_GetAttrString(pyCoreGraphicsModule, "CGContextPtr");
+		Py_DECREF(pyCoreGraphicsModule);
+		if (pyCGContextPtr == NULL) {
+			return NULL;
+		}
 	}
 
-	PyObjC_DURING
-		PyObjC_InitSuper(&super,
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
-
-		res = (CGContextRef)objc_msgSendSuper(&super, 
-				@selector(graphicsPort));
-	PyObjC_HANDLER
-		PyObjCErr_FromObjC(localException);
-		res = NULL;
-	PyObjC_ENDHANDLER
-
-	if (res == NULL && PyErr_Occurred()) {
-		Py_DECREF(pyCGContextPtr);
-		return NULL;
-	}
-
-	sprintf(ptrString, "%08x", (unsigned int)res);
+	sprintf(ptrString, "%08x", (unsigned int)cgValue);
 	sillySwigThing = PyString_FromFormat("_%s_CGContextRef", ptrString);
 	retVal = PyObject_CallFunctionObjArgs(
 			pyCGContextPtr, sillySwigThing, NULL);
 	Py_DECREF(sillySwigThing);
-	Py_DECREF(pyCGContextPtr);
 	return retVal;
 }
+
 #endif
 
 static int 
@@ -85,10 +70,10 @@ _pyobjc_install_NSGraphicsContext(void)
 	}
 
 #ifdef MACOSX
-	if (PyObjC_RegisterMethodMapping(objc_lookUpClass("NSGraphicsContext"), 
-		@selector(graphicsPort),
-		call_NSGraphicsContext_graphicsPort,
-		PyObjCUnsupportedMethod_IMP) < 0 ) {
+	if (PyObjCPointerWrapper_Register(
+		@encode(CGContextRef),
+		CG_to_py,
+		py_to_CG) == -1) {
 
 		return -1;
 	}

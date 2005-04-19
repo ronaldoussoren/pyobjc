@@ -117,3 +117,4 @@ setSignatureForSelector("NSOpenGLPixelFormat", "getValues:forAttribute:forVirtua
 setSignatureForSelector("NSSavePanel", "gotoSheetDidEnd:returnCode:contextInfo:", "v16@4:8@12i16i20")
 setSignatureForSelector("NSNavFilepathInputController", "sheetDidEnd:returnCode:contextInfo:", "v16@4:8@12i16i20")
 setSignatureForSelector("NSNavFilepathInputController", "beginSheetForSavePanel:withFilepath:didEndSelector:contextInfo:", 'v@:@@:i')
+setSignatureForSelector("NSGraphicsContext", "graphicsPort", "^{CGContext=}@:")
