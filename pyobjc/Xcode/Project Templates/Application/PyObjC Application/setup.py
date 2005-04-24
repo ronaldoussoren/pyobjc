@@ -39,7 +39,7 @@ import py2app
 import os
 import sys
 
-os.chdir(os.path.dirname(__file__))
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 from PyObjCTools import XcodeSupport
 
