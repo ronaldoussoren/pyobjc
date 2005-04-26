@@ -112,6 +112,9 @@
 	if (depythonify_c_value(@encode(id), v, datum) == -1) {
 		return -1;
 	}
+	if (*datum == nil) {
+		*datum = [NSNull null];
+	}
 	return 0;
 }
 

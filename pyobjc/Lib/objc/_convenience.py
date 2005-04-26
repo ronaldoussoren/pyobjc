@@ -6,6 +6,16 @@ This module contains no user callable code.
 
 TODO:
 - Add external interface: Framework specific modules may want to add to this.
+
+- These are candidates for implementation:
+
+    >>> from Foundation import *
+    >>> set(dir(list)) - set(dir(NSMutableArray))
+    set(['__delslice__', '__imul__', '__getslice__', '__setslice__',
+        '__iadd__', '__mul__', '__add__', '__rmul__'])
+    >>> set(dir(dict)) - set(dir(NSMutableDictionary))
+    set(['__cmp__'])
+
 """
 from _objc import setClassExtender, selector, lookUpClass, currentBundle, repythonify
 from itertools import imap
@@ -171,7 +181,7 @@ CONVENIENCE_METHODS['containsObject:'] = (
 )
 
 CONVENIENCE_METHODS['removeObject:'] = (
-    ('discard', lambda self, elem: self.removeObject_(container_wrap(elem))),
+    ('remove', lambda self, elem: self.removeObject_(container_wrap(elem))),
 )
 
 CONVENIENCE_METHODS['hash'] = (
@@ -211,7 +221,19 @@ CONVENIENCE_METHODS['length'] = (
 )
 
 CONVENIENCE_METHODS['addObject:'] = (
-    ( 'append', lambda self, item: self.addObject_(container_wrap(item))),
+    ('append', lambda self, item: self.addObject_(container_wrap(item))),
+)
+
+def reverse_exchangeObjectAtIndex_withObjectAtIndex_(self):
+    begin = 0
+    end = len(self) - 1
+    while begin < end:
+        self.exchangeObjectAtIndex_withObjectAtIndex_(begin, end)
+        begin += 1
+        end -= 1
+
+CONVENIENCE_METHODS['exchangeObjectAtIndex:withObjectAtIndex:'] = (
+    ('reverse', reverse_exchangeObjectAtIndex_withObjectAtIndex_),
 )
 
 def ensureArray(anArray):
@@ -292,7 +314,20 @@ def __delitem__removeObjectAtIndex_(self, idx):
         raise IndexError, "index out of range"
     self.removeObjectAtIndex_(idx)
     
+def pop_removeObjectAtIndex_(self, idx=-1):
+    length = len(self)
+    if length <= 0:
+        raise IndexError("pop from empty list")
+    elif idx >= length or (idx + length) < 0:
+        raise IndexError("pop index out of range")
+    elif idx < 0:
+        idx += length
+    rval = self[idx]
+    self.removeObjectAtIndex_(idx)
+    return rval
+
 CONVENIENCE_METHODS['removeObjectAtIndex:'] = (
+    ('pop', pop_removeObjectAtIndex_),
     ('__delitem__', __delitem__removeObjectAtIndex_),
 )
 
@@ -358,6 +393,10 @@ CONVENIENCE_METHODS['keyEnumerator'] = (
 CONVENIENCE_METHODS['objectEnumerator'] = (
     ('__iter__', __iter__objectEnumerator_keyEnumerator),
     ('itervalues', lambda self: iter(self.objectEnumerator())),
+)
+
+CONVENIENCE_METHODS['reverseObjectEnumerator'] = (
+    ('__reversed__', lambda self: iter(self.reverseObjectEnumerator())),
 )
 
 CONVENIENCE_METHODS['removeAllObjects'] = (
@@ -453,6 +492,20 @@ def dictionaryWithObjectsAndKeys_(self, *values):
 CONVENIENCE_METHODS['dictionaryWithObjectsAndKeys:'] = (
     ('dictionaryWithObjectsAndKeys_',
       selector(dictionaryWithObjectsAndKeys_, signature='@@:@',isClassMethod=1)),
+)
+
+def fromkeys_dictionaryWithObjects_forKeys_(cls, keys, values=None):
+    if not isinstance(keys, (list, tuple)):
+        keys = list(keys)
+    if values is None:
+        values = (None,) * len(keys)
+    elif not isinstance(values, (list, tuple)):
+        values = list(values)
+    return cls.dictionaryWithObjects_forKeys_(values, keys)
+
+CONVENIENCE_METHODS['dictionaryWithObjects:forKeys:'] = (
+    ('fromkeys',
+        classmethod(fromkeys_dictionaryWithObjects_forKeys_)),
 )
 
 def initWithObjectsAndKeys_(self, *values):
