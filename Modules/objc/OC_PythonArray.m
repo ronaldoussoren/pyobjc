@@ -74,6 +74,9 @@
 	
 	PyObjC_END_WITH_GIL
 
+	if (!result) {
+		result = [NSNull null];
+	}
 	return result;
 }
 

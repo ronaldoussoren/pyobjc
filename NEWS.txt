@@ -7,6 +7,13 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3.1 (2005-04-??)
 --------------------------
 
+- More conveniences for ``list``-like and ``dict``-like
+  objects: ``__reversed__``, ``reverse``, ``pop``,
+  ``remove``, ``fromkeys``.
+
+- ``OC_PythonDictionary`` and ``OC_PythonArray`` now return
+  ``NSNull`` as appropriate.
+
 - New ``WebKitInterpreter`` example in ``Examples/Plugins``,
   Uses the new WebKit Cocoa plugin API available in Safari 1.3
   and later to embed a PyInterpreter in the browser.
