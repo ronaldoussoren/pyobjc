@@ -180,10 +180,6 @@ CONVENIENCE_METHODS['containsObject:'] = (
     ('__contains__', lambda self, elem: bool(self.containsObject_(container_wrap(elem)))),
 )
 
-CONVENIENCE_METHODS['removeObject:'] = (
-    ('remove', lambda self, elem: self.removeObject_(container_wrap(elem))),
-)
-
 CONVENIENCE_METHODS['hash'] = (
     ('__hash__', lambda self: self.hash()),
 )
@@ -326,7 +322,12 @@ def pop_removeObjectAtIndex_(self, idx=-1):
     self.removeObjectAtIndex_(idx)
     return rval
 
+def remove_removeObjectAtIndex_(self, obj):
+    idx = self.index(obj)
+    self.removeObjectAtIndex_(idx)
+
 CONVENIENCE_METHODS['removeObjectAtIndex:'] = (
+    ('remove', remove_removeObjectAtIndex_),
     ('pop', pop_removeObjectAtIndex_),
     ('__delitem__', __delitem__removeObjectAtIndex_),
 )
