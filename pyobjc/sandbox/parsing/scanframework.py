@@ -140,6 +140,7 @@ def makeInit(framework, out):
     types = {
         'id': 'objc._C_ID',
         'NSString *': 'objc._C_ID',
+        'NSString*': 'objc._C_ID',
         'double': 'objc._C_DBL',
     }
     ignores = set([
