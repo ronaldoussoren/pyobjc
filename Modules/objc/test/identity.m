@@ -42,6 +42,7 @@
 	} else {
 		[storedObject release];
 	}
+    [super dealloc];
 }
 
 -(NSObject*)storedObject

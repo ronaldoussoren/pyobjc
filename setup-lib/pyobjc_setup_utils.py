@@ -1,5 +1,6 @@
 import sys
 from subprocess import Popen, PIPE
+from distutils.errors import DistutilsExecError
 def runtasks(taskName, *commands, **kw):
     print "Performing task: %s" % (taskName,)
     for cmd in commands:

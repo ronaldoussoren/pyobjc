@@ -306,6 +306,20 @@ NSDeprecatedKeyValueCoding = _objc.informal_protocol(
             signature='v@:@@',
             isRequired=0,
         ),
+# (id)storedValueForKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='storedValueForKey:',
+            signature='@@:@',
+            isRequired=0,
+        ),
+# (void)takeStoredValue:(id)value forKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='takeStoredValue:forKey:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
 # (void)takeValue:(id)value forKey:(NSString *)key
         _objc.selector(
             None,
@@ -332,6 +346,14 @@ NSDeprecatedKeyValueCoding = _objc.informal_protocol(
             None,
             selector='unableToSetNilForKey:',
             signature='v@:@',
+            isRequired=0,
+        ),
+# (BOOL)useStoredAccessor
+        _objc.selector(
+            None,
+            selector='useStoredAccessor',
+            signature='c@:',
+            isClassMethod=1,
             isRequired=0,
         ),
 # (NSDictionary *)valuesForKeys:(NSArray *)keys
@@ -377,6 +399,26 @@ NSDistributedObjects = _objc.informal_protocol(
     ]
 )
 
+NSErrorRecoveryAttempting = _objc.informal_protocol(
+    "NSErrorRecoveryAttempting",
+    [
+# (BOOL)attemptRecoveryFromError:(NSError *)error optionIndex:(unsigned int)recoveryOptionIndex
+        _objc.selector(
+            None,
+            selector='attemptRecoveryFromError:optionIndex:',
+            signature='c@:@I',
+            isRequired=0,
+        ),
+# (void)attemptRecoveryFromError:(NSError *)error optionIndex:(unsigned int)recoveryOptionIndex delegate:(id)delegate didRecoverSelector:(SEL)didRecoverSelector contextInfo:(void *)contextInfo
+        _objc.selector(
+            None,
+            selector='attemptRecoveryFromError:optionIndex:delegate:didRecoverSelector:contextInfo:',
+            signature='v@:@I@:^v',
+            isRequired=0,
+        ),
+    ]
+)
+
 NSKeyValueCoding = _objc.informal_protocol(
     "NSKeyValueCoding",
     [
@@ -386,6 +428,13 @@ NSKeyValueCoding = _objc.informal_protocol(
             selector='accessInstanceVariablesDirectly',
             signature='c@:',
             isClassMethod=1,
+            isRequired=0,
+        ),
+# (NSDictionary *)dictionaryWithValuesForKeys:(NSArray *)keys
+        _objc.selector(
+            None,
+            selector='dictionaryWithValuesForKeys:',
+            signature='@@:@',
             isRequired=0,
         ),
 # (NSMutableArray *)mutableArrayValueForKey:(NSString *)key
@@ -399,6 +448,20 @@ NSKeyValueCoding = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='mutableArrayValueForKeyPath:',
+            signature='@@:@',
+            isRequired=0,
+        ),
+# (NSMutableSet *)mutableSetValueForKey:(NSString *)key
+        _objc.selector(
+            None,
+            selector='mutableSetValueForKey:',
+            signature='@@:@',
+            isRequired=0,
+        ),
+# (NSMutableSet *)mutableSetValueForKeyPath:(NSString *)keyPath
+        _objc.selector(
+            None,
+            selector='mutableSetValueForKeyPath:',
             signature='@@:@',
             isRequired=0,
         ),
@@ -435,28 +498,6 @@ NSKeyValueCoding = _objc.informal_protocol(
             None,
             selector='setValuesForKeysWithDictionary:',
             signature='v@:@',
-            isRequired=0,
-        ),
-# (id)storedValueForKey:(NSString *)key
-        _objc.selector(
-            None,
-            selector='storedValueForKey:',
-            signature='@@:@',
-            isRequired=0,
-        ),
-# (void)takeStoredValue:(id)value forKey:(NSString *)key
-        _objc.selector(
-            None,
-            selector='takeStoredValue:forKey:',
-            signature='v@:@@',
-            isRequired=0,
-        ),
-# (BOOL)useStoredAccessor
-        _objc.selector(
-            None,
-            selector='useStoredAccessor',
-            signature='c@:',
-            isClassMethod=1,
             isRequired=0,
         ),
 # (BOOL)validateValue:(id *)ioValue forKey:(NSString *)inKey error:(NSError **)outError
@@ -500,7 +541,7 @@ NSKeyValueCoding = _objc.informal_protocol(
 NSKeyValueObserverNotification = _objc.informal_protocol(
     "NSKeyValueObserverNotification",
     [
-# (void)didChange:(NSKeyValueChange)change valuesAtIndexes:(NSIndexSet *)indexes forKey:(NSString *)key
+# (void)didChange:(NSKeyValueChange)changeKind valuesAtIndexes:(NSIndexSet *)indexes forKey:(NSString *)key
         _objc.selector(
             None,
             selector='didChange:valuesAtIndexes:forKey:',
@@ -514,7 +555,14 @@ NSKeyValueObserverNotification = _objc.informal_protocol(
             signature='v@:@',
             isRequired=0,
         ),
-# (void)willChange:(NSKeyValueChange)change valuesAtIndexes:(NSIndexSet *)indexes forKey:(NSString *)key
+# (void)didChangeValueForKey:(NSString *)key withSetMutation:(NSKeyValueSetMutationKind)mutationKind usingObjects:(NSSet *)objects
+        _objc.selector(
+            None,
+            selector='didChangeValueForKey:withSetMutation:usingObjects:',
+            signature='v@:@i@',
+            isRequired=0,
+        ),
+# (void)willChange:(NSKeyValueChange)changeKind valuesAtIndexes:(NSIndexSet *)indexes forKey:(NSString *)key
         _objc.selector(
             None,
             selector='willChange:valuesAtIndexes:forKey:',
@@ -526,6 +574,13 @@ NSKeyValueObserverNotification = _objc.informal_protocol(
             None,
             selector='willChangeValueForKey:',
             signature='v@:@',
+            isRequired=0,
+        ),
+# (void)willChangeValueForKey:(NSString *)key withSetMutation:(NSKeyValueSetMutationKind)mutationKind usingObjects:(NSSet *)objects
+        _objc.selector(
+            None,
+            selector='willChangeValueForKey:withSetMutation:usingObjects:',
+            signature='v@:@i@',
             isRequired=0,
         ),
     ]
@@ -644,6 +699,14 @@ NSKeyedArchiverDelegate = _objc.informal_protocol(
 NSKeyedArchiverObjectSubstitution = _objc.informal_protocol(
     "NSKeyedArchiverObjectSubstitution",
     [
+# (NSArray *)classFallbacksForKeyedArchiver
+        _objc.selector(
+            None,
+            selector='classFallbacksForKeyedArchiver',
+            signature='@@:',
+            isClassMethod=1,
+            isRequired=0,
+        ),
 # (Class)classForKeyedArchiver
         _objc.selector(
             None,
@@ -769,6 +832,26 @@ NSMainThreadPerformAdditions = _objc.informal_protocol(
     ]
 )
 
+NSMetadataQueryDelegate = _objc.informal_protocol(
+    "NSMetadataQueryDelegate",
+    [
+# (id)metadataQuery:(NSMetadataQuery *)query replacementObjectForResultObject:(NSMetadataItem *)result
+        _objc.selector(
+            None,
+            selector='metadataQuery:replacementObjectForResultObject:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (id)metadataQuery:(NSMetadataQuery *)query replacementValueForAttribute:(NSString *)attrName value:(id)attrValue
+        _objc.selector(
+            None,
+            selector='metadataQuery:replacementValueForAttribute:value:',
+            signature='@@:@@@',
+            isRequired=0,
+        ),
+    ]
+)
+
 NSMutableCopying = _objc.informal_protocol(
     "NSMutableCopying",
     [
@@ -854,6 +937,20 @@ NSNetServiceDelegateMethods = _objc.informal_protocol(
             signature='v@:@@',
             isRequired=0,
         ),
+# (void)netService:(NSNetService *)sender didUpdateTXTRecordData:(NSData *)data
+        _objc.selector(
+            None,
+            selector='netService:didUpdateTXTRecordData:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (void)netServiceDidPublish:(NSNetService *)sender
+        _objc.selector(
+            None,
+            selector='netServiceDidPublish:',
+            signature='v@:@',
+            isRequired=0,
+        ),
 # (void)netServiceDidResolveAddress:(NSNetService *)sender
         _objc.selector(
             None,
@@ -892,14 +989,14 @@ NSObjCTypeSerializationCallBack = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='deserializeObjectAt:ofObjCType:fromData:atCursor:',
-            signature='v@:^@*@^I',
+            signature='v@:^@r*@^I',
             isRequired=0,
         ),
 # (void)serializeObjectAt:(id *)object ofObjCType:(const char *)type intoData:(NSMutableData *)data
         _objc.selector(
             None,
             selector='serializeObjectAt:ofObjCType:intoData:',
-            signature='v@:^@*@',
+            signature='v@:^@r*@',
             isRequired=0,
         ),
     ]
@@ -1477,6 +1574,13 @@ NSURLDownloadDelegate = _objc.informal_protocol(
             signature='c@:@@',
             isRequired=0,
         ),
+# (void)download:(NSURLDownload *)download willResumeWithResponse:(NSURLResponse *)response fromByte:(long long)startingByte
+        _objc.selector(
+            None,
+            selector='download:willResumeWithResponse:fromByte:',
+            signature='v@:@@q',
+            isRequired=0,
+        ),
 # (NSURLRequest *)download:(NSURLDownload *)download willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
         _objc.selector(
             None,
@@ -1749,3 +1853,4 @@ NSXMLParserDelegateEventAdditions = _objc.informal_protocol(
         ),
     ]
 )
+

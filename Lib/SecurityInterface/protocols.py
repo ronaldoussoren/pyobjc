@@ -42,3 +42,30 @@ SFAuthorizationViewDelegate = _objc.informal_protocol(
         ),
     ]
 )
+
+SFCertificatePanelDelegate = _objc.informal_protocol(
+    "SFCertificatePanelDelegate",
+    [
+# (BOOL)certificatePanelShowHelp:(SFCertificatePanel *)sender
+        _objc.selector(
+            None,
+            selector='certificatePanelShowHelp:',
+            signature='c@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+SFChooseIdentityPanelDelegate = _objc.informal_protocol(
+    "SFChooseIdentityPanelDelegate",
+    [
+# (BOOL)chooseIdentityPanelShowHelp:(SFChooseIdentityPanel *)sender
+        _objc.selector(
+            None,
+            selector='chooseIdentityPanelShowHelp:',
+            signature='c@:@',
+            isRequired=0,
+        ),
+    ]
+)
+

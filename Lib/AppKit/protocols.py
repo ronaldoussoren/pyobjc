@@ -92,6 +92,19 @@ NSAccessibility = _objc.informal_protocol(
     ]
 )
 
+NSAccessibilityAdditions = _objc.informal_protocol(
+    "NSAccessibilityAdditions",
+    [
+# (BOOL)accessibilitySetOverrideValue:(id)value forAttribute:(NSString *)attribute
+        _objc.selector(
+            None,
+            selector='accessibilitySetOverrideValue:forAttribute:',
+            signature='c@:@@',
+            isRequired=0,
+        ),
+    ]
+)
+
 NSAlertDelegate = _objc.informal_protocol(
     "NSAlertDelegate",
     [
@@ -99,6 +112,47 @@ NSAlertDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='alertShowHelp:',
+            signature='c@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSAnimationDelegate = _objc.informal_protocol(
+    "NSAnimationDelegate",
+    [
+# (void)animation:(NSAnimation*)animation didReachProgressMark:(NSAnimationProgress)progress
+        _objc.selector(
+            None,
+            selector='animation:didReachProgressMark:',
+            signature='v@:@f',
+            isRequired=0,
+        ),
+# (float)animation:(NSAnimation*)animation valueForProgress:(NSAnimationProgress)progress
+        _objc.selector(
+            None,
+            selector='animation:valueForProgress:',
+            signature='f@:@f',
+            isRequired=0,
+        ),
+# (void)animationDidEnd:(NSAnimation*)animation
+        _objc.selector(
+            None,
+            selector='animationDidEnd:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)animationDidStop:(NSAnimation*)animation
+        _objc.selector(
+            None,
+            selector='animationDidStop:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (BOOL)animationShouldStart:(NSAnimation*)animation
+        _objc.selector(
+            None,
+            selector='animationShouldStart:',
             signature='c@:@',
             isRequired=0,
         ),
@@ -148,6 +202,20 @@ NSApplicationDelegate = _objc.informal_protocol(
             None,
             selector='application:printFiles:',
             signature='v@:@@',
+            isRequired=0,
+        ),
+# (NSApplicationPrintReply)application:(NSApplication *)application printFiles:(NSArray *)fileNames withSettings:(NSDictionary *)printSettings showPrintPanels:(BOOL)showPrintPanels
+        _objc.selector(
+            None,
+            selector='application:printFiles:withSettings:showPrintPanels:',
+            signature='i@:@@@c',
+            isRequired=0,
+        ),
+# (NSError *)application:(NSApplication *)application willPresentError:(NSError *)error
+        _objc.selector(
+            None,
+            selector='application:willPresentError:',
+            signature='@@:@@',
             isRequired=0,
         ),
 # (NSMenu *)applicationDockMenu:(NSApplication *)sender
@@ -708,6 +776,19 @@ NSControlSubclassNotifications = _objc.informal_protocol(
     ]
 )
 
+NSDatePickerCellDelegate = _objc.informal_protocol(
+    "NSDatePickerCellDelegate",
+    [
+# (void)datePickerCell:(NSDatePickerCell *)aDatePickerCell validateProposedDateValue:(NSDate **)proposedDateValue timeInterval:(NSTimeInterval *)proposedTimeInterval
+        _objc.selector(
+            None,
+            selector='datePickerCell:validateProposedDateValue:timeInterval:',
+            signature='v@:@^@^d',
+            isRequired=0,
+        ),
+    ]
+)
+
 NSDraggingDestination = _objc.informal_protocol(
     "NSDraggingDestination",
     [
@@ -758,6 +839,13 @@ NSDraggingDestination = _objc.informal_protocol(
             None,
             selector='prepareForDragOperation:',
             signature='c@:@',
+            isRequired=0,
+        ),
+# (BOOL)wantsPeriodicDraggingUpdates
+        _objc.selector(
+            None,
+            selector='wantsPeriodicDraggingUpdates',
+            signature='c@:',
             isRequired=0,
         ),
     ]
@@ -965,6 +1053,13 @@ NSEditor = _objc.informal_protocol(
             signature='c@:',
             isRequired=0,
         ),
+# (void)commitEditingWithDelegate:(id)delegate didCommitSelector:(SEL)didCommitSelector contextInfo:(void *)contextInfo
+        _objc.selector(
+            None,
+            selector='commitEditingWithDelegate:didCommitSelector:contextInfo:',
+            signature='v@:@:^v',
+            isRequired=0,
+        ),
 # (void)discardEditing
         _objc.selector(
             None,
@@ -1048,7 +1143,7 @@ NSGlyphStorage = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='insertGlyphs:length:forStartingGlyphAtIndex:characterIndex:',
-            signature='v@:^IIII',
+            signature='v@:^rIIII',
             isRequired=0,
         ),
 # (unsigned int)layoutOptions
@@ -1283,6 +1378,13 @@ NSKeyValueBindingCreation = _objc.informal_protocol(
             None,
             selector='exposedBindings',
             signature='@@:',
+            isRequired=0,
+        ),
+# (NSDictionary *)infoForBinding:(NSString *)binding
+        _objc.selector(
+            None,
+            selector='infoForBinding:',
+            signature='@@:@',
             isRequired=0,
         ),
 # (void)unbind:(NSString *)binding
@@ -1772,6 +1874,13 @@ NSOutlineViewDataSource = _objc.informal_protocol(
             signature='@@:@@',
             isRequired=0,
         ),
+# (NSArray *)outlineView:(NSOutlineView *)olv namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination forDraggedItems:(NSArray *)items
+        _objc.selector(
+            None,
+            selector='outlineView:namesOfPromisedFilesDroppedAtDestination:forDraggedItems:',
+            signature='@@:@@@',
+            isRequired=0,
+        ),
 # (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
         _objc.selector(
             None,
@@ -1841,6 +1950,13 @@ NSOutlineViewDelegate = _objc.informal_protocol(
             signature='v@:@@',
             isRequired=0,
         ),
+# (float)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
+        _objc.selector(
+            None,
+            selector='outlineView:heightOfRowByItem:',
+            signature='f@:@@',
+            isRequired=0,
+        ),
 # (void)outlineView:(NSOutlineView *)outlineView mouseDownInHeaderOfTableColumn:(NSTableColumn *)tableColumn
         _objc.selector(
             None,
@@ -1881,6 +1997,13 @@ NSOutlineViewDelegate = _objc.informal_protocol(
             None,
             selector='outlineView:shouldSelectTableColumn:',
             signature='c@:@@',
+            isRequired=0,
+        ),
+# (NSString *)outlineView:(NSOutlineView *)ov toolTipForCell:(NSCell *)cell rect:(NSRectPointer)rect tableColumn:(NSTableColumn *)tc item:(id)item mouseLocation:(NSPoint)mouseLocation
+        _objc.selector(
+            None,
+            selector='outlineView:toolTipForCell:rect:tableColumn:item:mouseLocation:',
+            signature='@@:@@^{_NSRect={_NSPoint=ff}{_NSSize=ff}}@@{_NSPoint=ff}',
             isRequired=0,
         ),
 # (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
@@ -2245,6 +2368,13 @@ NSTableDataSource = _objc.informal_protocol(
             signature='c@:@@ii',
             isRequired=0,
         ),
+# (NSArray *)tableView:(NSTableView *)tv namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination forDraggedRowsWithIndexes:(NSIndexSet *)indexSet
+        _objc.selector(
+            None,
+            selector='tableView:namesOfPromisedFilesDroppedAtDestination:forDraggedRowsWithIndexes:',
+            signature='@@:@@@',
+            isRequired=0,
+        ),
 # (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row
         _objc.selector(
             None,
@@ -2280,6 +2410,13 @@ NSTableDataSource = _objc.informal_protocol(
             signature='c@:@@@',
             isRequired=0,
         ),
+# (BOOL)tableView:(NSTableView *)tv writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard*)pboard
+        _objc.selector(
+            None,
+            selector='tableView:writeRowsWithIndexes:toPasteboard:',
+            signature='c@:@@@',
+            isRequired=0,
+        ),
     ]
 )
 
@@ -2305,6 +2442,13 @@ NSTableViewDelegate = _objc.informal_protocol(
             None,
             selector='tableView:didDragTableColumn:',
             signature='v@:@@',
+            isRequired=0,
+        ),
+# (float)tableView:(NSTableView *)tableView heightOfRow:(int)row
+        _objc.selector(
+            None,
+            selector='tableView:heightOfRow:',
+            signature='f@:@i',
             isRequired=0,
         ),
 # (void) tableView:(NSTableView*)tableView mouseDownInHeaderOfTableColumn:(NSTableColumn *)tableColumn
@@ -2333,6 +2477,13 @@ NSTableViewDelegate = _objc.informal_protocol(
             None,
             selector='tableView:shouldSelectTableColumn:',
             signature='c@:@@',
+            isRequired=0,
+        ),
+# (NSString *)tableView:(NSTableView *)tv toolTipForCell:(NSCell *)cell rect:(NSRectPointer)rect tableColumn:(NSTableColumn *)tc row:(int)row mouseLocation:(NSPoint)mouseLocation
+        _objc.selector(
+            None,
+            selector='tableView:toolTipForCell:rect:tableColumn:row:mouseLocation:',
+            signature='@@:@@^{_NSRect={_NSPoint=ff}{_NSSize=ff}}@i{_NSPoint=ff}',
             isRequired=0,
         ),
 # (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(int)row
@@ -2707,11 +2858,32 @@ NSTextViewDelegate = _objc.informal_protocol(
             signature='c@:@{_NSRange=II}@',
             isRequired=0,
         ),
+# (BOOL)textView:(NSTextView *)textView shouldChangeTextInRanges:(NSArray *)affectedRanges replacementStrings:(NSArray *)replacementStrings
+        _objc.selector(
+            None,
+            selector='textView:shouldChangeTextInRanges:replacementStrings:',
+            signature='c@:@@@',
+            isRequired=0,
+        ),
+# (NSDictionary *)textView:(NSTextView *)textView shouldChangeTypingAttributes:(NSDictionary *)oldTypingAttributes toAttributes:(NSDictionary *)newTypingAttributes
+        _objc.selector(
+            None,
+            selector='textView:shouldChangeTypingAttributes:toAttributes:',
+            signature='@@:@@@',
+            isRequired=0,
+        ),
 # (NSRange)textView:(NSTextView *)textView willChangeSelectionFromCharacterRange:(NSRange)oldSelectedCharRange toCharacterRange:(NSRange)newSelectedCharRange
         _objc.selector(
             None,
             selector='textView:willChangeSelectionFromCharacterRange:toCharacterRange:',
             signature='{_NSRange=II}@:@{_NSRange=II}{_NSRange=II}',
+            isRequired=0,
+        ),
+# (NSArray *)textView:(NSTextView *)textView willChangeSelectionFromCharacterRanges:(NSArray *)oldSelectedCharRanges toCharacterRanges:(NSArray *)newSelectedCharRanges
+        _objc.selector(
+            None,
+            selector='textView:willChangeSelectionFromCharacterRanges:toCharacterRanges:',
+            signature='@@:@@@',
             isRequired=0,
         ),
 # (NSString *)textView:(NSTextView *)textView willDisplayToolTip:(NSString *)tooltip forCharacterAtIndex:(unsigned)characterIndex
@@ -2754,6 +2926,158 @@ NSTextViewDelegate = _objc.informal_protocol(
             None,
             selector='undoManagerForTextView:',
             signature='@@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSTokenFieldCellDelegate = _objc.informal_protocol(
+    "NSTokenFieldCellDelegate",
+    [
+# (NSArray *)tokenFieldCell:(NSTokenFieldCell *)tokenFieldCell completionsForSubstring:(NSString *)substring indexOfToken:(int)tokenIndex indexOfSelectedItem: (int *)selectedIndex
+        _objc.selector(
+            None,
+            selector='tokenFieldCell:completionsForSubstring:indexOfToken:indexOfSelectedItem:',
+            signature='@@:@@i^i',
+            isRequired=0,
+        ),
+# (NSString *)tokenFieldCell:(NSTokenFieldCell *)tokenFieldCell displayStringForRepresentedObject:(id)representedObject
+        _objc.selector(
+            None,
+            selector='tokenFieldCell:displayStringForRepresentedObject:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (NSString *)tokenFieldCell:(NSTokenFieldCell *)tokenFieldCell editingStringForRepresentedObject:(id)representedObject
+        _objc.selector(
+            None,
+            selector='tokenFieldCell:editingStringForRepresentedObject:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (BOOL)tokenFieldCell:(NSTokenFieldCell *)tokenFieldCell hasMenuForRepresentedObject:(id)representedObject
+        _objc.selector(
+            None,
+            selector='tokenFieldCell:hasMenuForRepresentedObject:',
+            signature='c@:@@',
+            isRequired=0,
+        ),
+# (NSMenu *)tokenFieldCell:(NSTokenFieldCell *)tokenFieldCell menuForRepresentedObject:(id)representedObject
+        _objc.selector(
+            None,
+            selector='tokenFieldCell:menuForRepresentedObject:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (NSArray *)tokenFieldCell:(NSTokenFieldCell *)tokenFieldCell readFromPasteboard:(NSPasteboard *)pboard
+        _objc.selector(
+            None,
+            selector='tokenFieldCell:readFromPasteboard:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (id)tokenFieldCell:(NSTokenFieldCell *)tokenFieldCell representedObjectForEditingString: (NSString *)editingString
+        _objc.selector(
+            None,
+            selector='tokenFieldCell:representedObjectForEditingString:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (NSArray *)tokenFieldCell:(NSTokenFieldCell *)tokenFieldCell shouldAddObjects:(NSArray *)tokens atIndex:(unsigned)index
+        _objc.selector(
+            None,
+            selector='tokenFieldCell:shouldAddObjects:atIndex:',
+            signature='@@:@@I',
+            isRequired=0,
+        ),
+# (NSTokenStyle)tokenFieldCell:(NSTokenFieldCell *)tokenFieldCell styleForRepresentedObject:(id)representedObject
+        _objc.selector(
+            None,
+            selector='tokenFieldCell:styleForRepresentedObject:',
+            signature='i@:@@',
+            isRequired=0,
+        ),
+# (BOOL)tokenFieldCell:(NSTokenFieldCell *)tokenFieldCell writeRepresentedObjects:(NSArray *)objects toPasteboard:(NSPasteboard *)pboard
+        _objc.selector(
+            None,
+            selector='tokenFieldCell:writeRepresentedObjects:toPasteboard:',
+            signature='c@:@@@',
+            isRequired=0,
+        ),
+    ]
+)
+
+NSTokenFieldDelegate = _objc.informal_protocol(
+    "NSTokenFieldDelegate",
+    [
+# (NSArray *)tokenField:(NSTokenField *)tokenField completionsForSubstring:(NSString *)substring indexOfToken:(int)tokenIndex indexOfSelectedItem: (int *)selectedIndex
+        _objc.selector(
+            None,
+            selector='tokenField:completionsForSubstring:indexOfToken:indexOfSelectedItem:',
+            signature='@@:@@i^i',
+            isRequired=0,
+        ),
+# (NSString *)tokenField:(NSTokenField *)tokenField displayStringForRepresentedObject:(id)representedObject
+        _objc.selector(
+            None,
+            selector='tokenField:displayStringForRepresentedObject:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (NSString *)tokenField:(NSTokenField *)tokenField editingStringForRepresentedObject:(id)representedObject
+        _objc.selector(
+            None,
+            selector='tokenField:editingStringForRepresentedObject:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (BOOL)tokenField:(NSTokenField *)tokenField hasMenuForRepresentedObject:(id)representedObject
+        _objc.selector(
+            None,
+            selector='tokenField:hasMenuForRepresentedObject:',
+            signature='c@:@@',
+            isRequired=0,
+        ),
+# (NSMenu *)tokenField:(NSTokenField *)tokenField menuForRepresentedObject:(id)representedObject
+        _objc.selector(
+            None,
+            selector='tokenField:menuForRepresentedObject:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (NSArray *)tokenField:(NSTokenField *)tokenField readFromPasteboard:(NSPasteboard *)pboard
+        _objc.selector(
+            None,
+            selector='tokenField:readFromPasteboard:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (id)tokenField:(NSTokenField *)tokenField representedObjectForEditingString: (NSString *)editingString
+        _objc.selector(
+            None,
+            selector='tokenField:representedObjectForEditingString:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (NSArray *)tokenField:(NSTokenField *)tokenField shouldAddObjects:(NSArray *)tokens atIndex:(unsigned)index
+        _objc.selector(
+            None,
+            selector='tokenField:shouldAddObjects:atIndex:',
+            signature='@@:@@I',
+            isRequired=0,
+        ),
+# (NSTokenStyle)tokenField:(NSTokenField *)tokenField styleForRepresentedObject:(id)representedObject
+        _objc.selector(
+            None,
+            selector='tokenField:styleForRepresentedObject:',
+            signature='i@:@@',
+            isRequired=0,
+        ),
+# (BOOL)tokenField:(NSTokenField *)tokenField writeRepresentedObjects:(NSArray *)objects toPasteboard:(NSPasteboard *)pboard
+        _objc.selector(
+            None,
+            selector='tokenField:writeRepresentedObjects:toPasteboard:',
+            signature='c@:@@@',
             isRequired=0,
         ),
     ]
@@ -2951,6 +3275,13 @@ NSWindowNotifications = _objc.informal_protocol(
             signature='v@:@',
             isRequired=0,
         ),
+# (void)windowDidChangeScreenProfile:(NSNotification *)notification
+        _objc.selector(
+            None,
+            selector='windowDidChangeScreenProfile:',
+            signature='v@:@',
+            isRequired=0,
+        ),
 # (void)windowDidDeminiaturize:(NSNotification *)notification
         _objc.selector(
             None,
@@ -3044,3 +3375,4 @@ NSWindowNotifications = _objc.informal_protocol(
         ),
     ]
 )
+
