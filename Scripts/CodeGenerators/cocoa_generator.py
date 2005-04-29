@@ -57,6 +57,8 @@ if sys.platform == "darwin":
     APPKITSCRIPTING_HDRS=pathjoin(FRAMEWORKS, "AppKitScripting.framework", "Headers")
     AUTOMATOR_HDRS=pathjoin(FRAMEWORKS, "Automator.framework", "Headers")
     COREDATA_HDRS=pathjoin(FRAMEWORKS, "CoreData.framework", "Headers")
+    DISCRECORDING_HDRS=pathjoin(FRAMEWORKS, "DiscRecording.framework", "Headers")
+    DISCRECORDINGUI_HDRS=pathjoin(FRAMEWORKS, "DiscRecordingUI.framework", "Headers")
     SYNCSERVICES_HDRS=pathjoin(FRAMEWORKS, "SyncServices.framework", "Headers")
     XGRIDFOUNDATION_HDRS=pathjoin(FRAMEWORKS, "XgridFoundation.framework", "Headers")
 
@@ -110,6 +112,8 @@ else:
     APPKITSCRIPTING_HDRS=None
     AUTOMATOR_HDRS=None
     COREDATA_HDRS=None
+    DISCRECORDING_HDRS=None
+    DISCRECORDINGUI_HDRS=None
     SYNCSERVICES_HDRS=None
     XGRIDFOUNDATION_HDRS=None
 
@@ -596,6 +600,26 @@ if COREDATA_HDRS is not None:
 
     strconst_generator.generate(COREDATA_HDRS,
                                 'build/codegen/_CoreData_Str.inc',
+                                ignore=())
+
+if DISCRECORDING_HDRS is not None:
+    enum_generator.generate(
+            DISCRECORDING_HDRS,
+            'build/codegen/_DiscRecording_Enum.inc',
+                ignore_files=[])
+
+    strconst_generator.generate(DISCRECORDING_HDRS,
+                                'build/codegen/_DiscRecording_Str.inc',
+                                ignore=())
+
+if DISCRECORDINGUI_HDRS is not None:
+    enum_generator.generate(
+            DISCRECORDINGUI_HDRS,
+            'build/codegen/_DiscRecordingUI_Enum.inc',
+                ignore_files=[])
+
+    strconst_generator.generate(DISCRECORDINGUI_HDRS,
+                                'build/codegen/_DiscRecordingUI_Str.inc',
                                 ignore=())
 
 if SYNCSERVICES_HDRS is not None:

@@ -237,6 +237,8 @@ AppleScriptKitDepends = dict(depends=INCFILES)
 AppKitScriptingDepends = dict(depends=INCFILES)
 AutomatorDepends = dict(depends=INCFILES)
 CoreDataDepends = dict(depends=INCFILES)
+DiscRecordingDepends = dict(depends=INCFILES)
+DiscRecordingUIDepends = dict(depends=INCFILES)
 SyncServicesDepends = dict(depends=INCFILES)
 XgridFoundationDepends = dict(depends=INCFILES)
 
@@ -400,6 +402,36 @@ CoreDataPackages, CoreDataExtensions = \
                       ),
         ], headername="CoreData.h")
 
+DiscRecordingPackages, DiscRecordingExtensions = \
+        IfFrameWork('DiscRecording.framework', [ 'DiscRecording' ], [
+            Extension('DiscRecording._DiscRecording',
+                      [ 'Modules/DiscRecording/_DiscRecording.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=frameworks(
+                        'DiscRecording',
+                        'Foundation'
+                      ),
+                      **DiscRecordingDepends
+                      ),
+        ], headername="DiscRecording.h")
+
+DiscRecordingUIPackages, DiscRecordingUIExtensions = \
+        IfFrameWork('DiscRecordingUI.framework', [ 'DiscRecordingUI' ], [
+            Extension('DiscRecordingUI._DiscRecordingUI',
+                      [ 'Modules/DiscRecordingUI/_DiscRecordingUI.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=frameworks(
+                        'DiscRecordingUI',
+                        'Foundation'
+                      ),
+                      **DiscRecordingUIDepends
+                      ),
+        ], headername="DiscRecordingUI.h")
+
 SyncServicesPackages, SyncServicesExtensions = \
         IfFrameWork('SyncServices.framework', [ 'SyncServices' ], [
             Extension('SyncServices._SyncServices',
@@ -491,6 +523,8 @@ packages = (
     AppKitScriptingPackages +
     AutomatorPackages +
     CoreDataPackages +
+    DiscRecordingPackages +
+    DiscRecordingUIPackages +
     SyncServicesPackages +
     XgridFoundationPackages +
 
@@ -554,6 +588,8 @@ dist = setup(
        + AppKitScriptingExtensions
        + AutomatorExtensions
        + CoreDataExtensions
+       + DiscRecordingExtensions
+       + DiscRecordingUIExtensions
        + SyncServicesExtensions
        + XgridFoundationExtensions
 
