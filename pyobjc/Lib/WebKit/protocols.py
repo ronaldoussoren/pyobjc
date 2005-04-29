@@ -2,6 +2,59 @@
 import objc as _objc
 
 
+DOMEventListener = _objc.informal_protocol(
+    "DOMEventListener",
+    [
+# (void)handleEvent:(DOMEvent *)event
+        _objc.selector(
+            None,
+            selector='handleEvent:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+DOMEventTarget = _objc.informal_protocol(
+    "DOMEventTarget",
+    [
+# (void)addEventListener:(NSString *)type :(id <DOMEventListener>)listener :(BOOL)useCapture
+        _objc.selector(
+            None,
+            selector='addEventListener:id',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (BOOL)dispatchEvent:(DOMEvent *)event
+        _objc.selector(
+            None,
+            selector='dispatchEvent:',
+            signature='c@:@',
+            isRequired=0,
+        ),
+# (void)removeEventListener:(NSString *)type :(id <DOMEventListener>)listener :(BOOL)useCapture
+        _objc.selector(
+            None,
+            selector='removeEventListener:id',
+            signature='v@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+DOMNodeFilter = _objc.informal_protocol(
+    "DOMNodeFilter",
+    [
+# (short)acceptNode:(DOMNode *)n
+        _objc.selector(
+            None,
+            selector='acceptNode:',
+            signature='s@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
 WebDocumentRepresentation = _objc.informal_protocol(
     "WebDocumentRepresentation",
     [
@@ -259,6 +312,33 @@ WebFrameLoadDelegate = _objc.informal_protocol(
             signature='v@:@@d@@',
             isRequired=0,
         ),
+# (void)webView:(WebView *)webView windowScriptObjectAvailable:(WebScriptObject *)windowScriptObject
+        _objc.selector(
+            None,
+            selector='webView:windowScriptObjectAvailable:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+    ]
+)
+
+WebJavaPlugIn = _objc.informal_protocol(
+    "WebJavaPlugIn",
+    [
+# (jvalue)webPlugInCallJava:(jobject)object isStatic:(BOOL)isStatic returnType:(WebJNIReturnType)returnType method:(jmethodID)method arguments:(jvalue*)args callingURL:(NSURL *)url exceptionDescription:(NSString **)exceptionString
+        _objc.selector(
+            None,
+            selector='webPlugInCallJava:isStatic:returnType:method:arguments:callingURL:exceptionDescription:',
+            signature='(jvalue=CcSsiqfd^{_jobject})@:^{_jobject=}ci^{_jmethodID=}^(jvalue=CcSsiqfd^{_jobject})@^@',
+            isRequired=0,
+        ),
+# (jobject)webPlugInGetApplet
+        _objc.selector(
+            None,
+            selector='webPlugInGetApplet',
+            signature='^{_jobject=}@:',
+            isRequired=0,
+        ),
     ]
 )
 
@@ -277,6 +357,102 @@ WebOpenPanelResultListener = _objc.informal_protocol(
             None,
             selector='chooseFilename:',
             signature='v@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+WebPlugIn = _objc.informal_protocol(
+    "WebPlugIn",
+    [
+# (id)objectForWebScript
+        _objc.selector(
+            None,
+            selector='objectForWebScript',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (void)webPlugInDestroy
+        _objc.selector(
+            None,
+            selector='webPlugInDestroy',
+            signature='v@:',
+            isRequired=0,
+        ),
+# (void)webPlugInInitialize
+        _objc.selector(
+            None,
+            selector='webPlugInInitialize',
+            signature='v@:',
+            isRequired=0,
+        ),
+# (void)webPlugInSetIsSelected:(BOOL)isSelected
+        _objc.selector(
+            None,
+            selector='webPlugInSetIsSelected:',
+            signature='v@:c',
+            isRequired=0,
+        ),
+# (void)webPlugInStart
+        _objc.selector(
+            None,
+            selector='webPlugInStart',
+            signature='v@:',
+            isRequired=0,
+        ),
+# (void)webPlugInStop
+        _objc.selector(
+            None,
+            selector='webPlugInStop',
+            signature='v@:',
+            isRequired=0,
+        ),
+    ]
+)
+
+WebPlugInContainer = _objc.informal_protocol(
+    "WebPlugInContainer",
+    [
+# (WebFrame *)webFrame
+        _objc.selector(
+            None,
+            selector='webFrame',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (void)webPlugInContainerLoadRequest:(NSURLRequest *)request inFrame:(NSString *)target
+        _objc.selector(
+            None,
+            selector='webPlugInContainerLoadRequest:inFrame:',
+            signature='v@:@@',
+            isRequired=0,
+        ),
+# (NSColor *)webPlugInContainerSelectionColor
+        _objc.selector(
+            None,
+            selector='webPlugInContainerSelectionColor',
+            signature='@@:',
+            isRequired=0,
+        ),
+# (void)webPlugInContainerShowStatus:(NSString *)message
+        _objc.selector(
+            None,
+            selector='webPlugInContainerShowStatus:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+    ]
+)
+
+WebPlugInViewFactory = _objc.informal_protocol(
+    "WebPlugInViewFactory",
+    [
+# (NSView *)plugInViewWithArguments:(NSDictionary *)arguments
+        _objc.selector(
+            None,
+            selector='plugInViewWithArguments:',
+            signature='@@:@',
+            isClassMethod=1,
             isRequired=0,
         ),
     ]
@@ -412,6 +588,65 @@ WebResourceLoadDelegate = _objc.informal_protocol(
     ]
 )
 
+WebScripting = _objc.informal_protocol(
+    "WebScripting",
+    [
+# (void)finalizeForWebScript
+        _objc.selector(
+            None,
+            selector='finalizeForWebScript',
+            signature='v@:',
+            isRequired=0,
+        ),
+# (id)invokeDefaultMethodWithArguments:(NSArray *)args
+        _objc.selector(
+            None,
+            selector='invokeDefaultMethodWithArguments:',
+            signature='@@:@',
+            isRequired=0,
+        ),
+# (id)invokeUndefinedMethodFromWebScript:(NSString *)name withArguments:(NSArray *)args
+        _objc.selector(
+            None,
+            selector='invokeUndefinedMethodFromWebScript:withArguments:',
+            signature='@@:@@',
+            isRequired=0,
+        ),
+# (BOOL)isKeyExcludedFromWebScript:(const char *)name
+        _objc.selector(
+            None,
+            selector='isKeyExcludedFromWebScript:',
+            signature='c@:r*',
+            isClassMethod=1,
+            isRequired=0,
+        ),
+# (BOOL)isSelectorExcludedFromWebScript:(SEL)aSelector
+        _objc.selector(
+            None,
+            selector='isSelectorExcludedFromWebScript:',
+            signature='c@::',
+            isClassMethod=1,
+            isRequired=0,
+        ),
+# (NSString *)webScriptNameForKey:(const char *)name
+        _objc.selector(
+            None,
+            selector='webScriptNameForKey:',
+            signature='@@:r*',
+            isClassMethod=1,
+            isRequired=0,
+        ),
+# (NSString *)webScriptNameForSelector:(SEL)aSelector
+        _objc.selector(
+            None,
+            selector='webScriptNameForSelector:',
+            signature='@@::',
+            isClassMethod=1,
+            isRequired=0,
+        ),
+    ]
+)
+
 WebUIDelegate = _objc.informal_protocol(
     "WebUIDelegate",
     [
@@ -427,6 +662,20 @@ WebUIDelegate = _objc.informal_protocol(
             None,
             selector='webView:createWebViewWithRequest:',
             signature='@@:@@',
+            isRequired=0,
+        ),
+# (unsigned)webView:(WebView *)webView dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+        _objc.selector(
+            None,
+            selector='webView:dragDestinationActionMaskForDraggingInfo:',
+            signature='I@:@@',
+            isRequired=0,
+        ),
+# (unsigned)webView:(WebView *)webView dragSourceActionMaskForPoint:(NSPoint)point
+        _objc.selector(
+            None,
+            selector='webView:dragSourceActionMaskForPoint:',
+            signature='I@:@{_NSPoint=ff}',
             isRequired=0,
         ),
 # (void)webView:(WebView *)sender makeFirstResponder:(NSResponder *)responder
@@ -513,6 +762,34 @@ WebUIDelegate = _objc.informal_protocol(
             signature='v@:@c',
             isRequired=0,
         ),
+# (BOOL)webView:(WebView *)webView shouldPerformAction:(SEL)action fromSender:(id)sender
+        _objc.selector(
+            None,
+            selector='webView:shouldPerformAction:fromSender:',
+            signature='c@:@:@',
+            isRequired=0,
+        ),
+# (BOOL)webView:(WebView *)webView validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item defaultValidation:(BOOL)defaultValidation
+        _objc.selector(
+            None,
+            selector='webView:validateUserInterfaceItem:defaultValidation:',
+            signature='c@:@@c',
+            isRequired=0,
+        ),
+# (void)webView:(WebView *)webView willPerformDragDestinationAction:(WebDragDestinationAction)action forDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+        _objc.selector(
+            None,
+            selector='webView:willPerformDragDestinationAction:forDraggingInfo:',
+            signature='v@:@i@',
+            isRequired=0,
+        ),
+# (void)webView:(WebView *)webView willPerformDragSourceAction:(WebDragSourceAction)action fromPoint:(NSPoint)point withPasteboard:(NSPasteboard *)pasteboard
+        _objc.selector(
+            None,
+            selector='webView:willPerformDragSourceAction:fromPoint:withPasteboard:',
+            signature='v@:@i{_NSPoint=ff}@',
+            isRequired=0,
+        ),
 # (BOOL)webViewAreToolbarsVisible:(WebView *)sender
         _objc.selector(
             None,
@@ -592,3 +869,115 @@ WebUIDelegate = _objc.informal_protocol(
         ),
     ]
 )
+
+WebViewEditingDelegate = _objc.informal_protocol(
+    "WebViewEditingDelegate",
+    [
+# (NSUndoManager *)undoManagerForWebView:(WebView *)webView
+        _objc.selector(
+            None,
+            selector='undoManagerForWebView:',
+            signature='@@:@',
+            isRequired=0,
+        ),
+# (BOOL)webView:(WebView *)webView doCommandBySelector:(SEL)selector
+        _objc.selector(
+            None,
+            selector='webView:doCommandBySelector:',
+            signature='c@:@:',
+            isRequired=0,
+        ),
+# (BOOL)webView:(WebView *)webView shouldApplyStyle:(DOMCSSStyleDeclaration *)style toElementsInDOMRange:(DOMRange *)range
+        _objc.selector(
+            None,
+            selector='webView:shouldApplyStyle:toElementsInDOMRange:',
+            signature='c@:@@@',
+            isRequired=0,
+        ),
+# (BOOL)webView:(WebView *)webView shouldBeginEditingInDOMRange:(DOMRange *)range
+        _objc.selector(
+            None,
+            selector='webView:shouldBeginEditingInDOMRange:',
+            signature='c@:@@',
+            isRequired=0,
+        ),
+# (BOOL)webView:(WebView *)webView shouldChangeSelectedDOMRange:(DOMRange *)currentRange toDOMRange:(DOMRange *)proposedRange affinity:(NSSelectionAffinity)selectionAffinity stillSelecting:(BOOL)flag
+        _objc.selector(
+            None,
+            selector='webView:shouldChangeSelectedDOMRange:toDOMRange:affinity:stillSelecting:',
+            signature='c@:@@@ic',
+            isRequired=0,
+        ),
+# (BOOL)webView:(WebView *)webView shouldChangeTypingStyle:(DOMCSSStyleDeclaration *)currentStyle toStyle:(DOMCSSStyleDeclaration *)proposedStyle
+        _objc.selector(
+            None,
+            selector='webView:shouldChangeTypingStyle:toStyle:',
+            signature='c@:@@@',
+            isRequired=0,
+        ),
+# (BOOL)webView:(WebView *)webView shouldDeleteDOMRange:(DOMRange *)range
+        _objc.selector(
+            None,
+            selector='webView:shouldDeleteDOMRange:',
+            signature='c@:@@',
+            isRequired=0,
+        ),
+# (BOOL)webView:(WebView *)webView shouldEndEditingInDOMRange:(DOMRange *)range
+        _objc.selector(
+            None,
+            selector='webView:shouldEndEditingInDOMRange:',
+            signature='c@:@@',
+            isRequired=0,
+        ),
+# (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
+        _objc.selector(
+            None,
+            selector='webView:shouldInsertNode:replacingDOMRange:givenAction:',
+            signature='c@:@@@i',
+            isRequired=0,
+        ),
+# (BOOL)webView:(WebView *)webView shouldInsertText:(NSString *)text replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
+        _objc.selector(
+            None,
+            selector='webView:shouldInsertText:replacingDOMRange:givenAction:',
+            signature='c@:@@@i',
+            isRequired=0,
+        ),
+# (void)webViewDidBeginEditing:(NSNotification *)notification
+        _objc.selector(
+            None,
+            selector='webViewDidBeginEditing:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)webViewDidChange:(NSNotification *)notification
+        _objc.selector(
+            None,
+            selector='webViewDidChange:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)webViewDidChangeSelection:(NSNotification *)notification
+        _objc.selector(
+            None,
+            selector='webViewDidChangeSelection:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)webViewDidChangeTypingStyle:(NSNotification *)notification
+        _objc.selector(
+            None,
+            selector='webViewDidChangeTypingStyle:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+# (void)webViewDidEndEditing:(NSNotification *)notification
+        _objc.selector(
+            None,
+            selector='webViewDidEndEditing:',
+            signature='v@:@',
+            isRequired=0,
+        ),
+    ]
+)
+

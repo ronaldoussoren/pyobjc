@@ -23,6 +23,24 @@ SPECIALS['AppKit'] = {
 ALTMAIN={
     'SecurityInterface':'SFAuthorizationView',
     'ExceptionHandling':'NSExceptionHandler',
+    'AppleScriptKit':'ASKPluginObject',
+}
+
+EXTRASTUFF={
+    "WebKit":"#import <WebKit/WebKit.h>\n#import <WebKit/WebJavaPlugIn.h>",
+    "Automator":"#import <Cocoa/Cocoa.h>",
+    "SecurityInterface":"\n".join(
+        ["#import <SecurityInterface/%s>" % (s,) for s in 
+            """
+            SFAuthorizationView.h
+            SFCertificatePanel.h
+            SFCertificateTrustPanel.h
+            SFCertificateView.h
+            SFChooseIdentityPanel.h
+            SFKeychainSavePanel.h
+            SFKeychainSettingsPanel.h
+            """.split()
+        ]),
 }
 
 for framework in [
@@ -37,11 +55,14 @@ for framework in [
     genProtocols(path, protfile, SPECIALS.get(framework, {}))
 
 # Optional frameworks
-for framework in ["WebKit", "ExceptionHandling", "SecurityInterface"]:
+for framework in [
+        "WebKit", "ExceptionHandling", "SecurityInterface", "AppleScriptKit",
+        "AppKitScripting", "Automator", "CoreData", "XgridFoundation",
+        ]:
     path = "/System/Library/Frameworks/%s.framework" % framework
     protfile = file(os.path.join(libdir, framework, "protocols.py"), "w")
 
     if not os.path.exists(path): continue
 
     print "generating protocols for", framework
-    genProtocols(path, protfile, SPECIALS.get(framework, {}), ALTMAIN.get(framework, None))
+    genProtocols(path, protfile, SPECIALS.get(framework, {}), ALTMAIN.get(framework, None), EXTRASTUFF.get(framework, ""))

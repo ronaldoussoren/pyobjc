@@ -35,22 +35,31 @@ if sys.platform == "darwin":
     VER = 'MacOS X ' + '.'.join(VER.split('.')[:2])
 
     FRAMEWORKS="/System/Library/Frameworks"
+    def pathjoin(*args):
+        res = os.path.join(*args)
+        if not os.path.exists(res):
+            return None
+        return res
 
-    ADDRESSBOOK_HDRS=os.path.join(FRAMEWORKS, "AddressBook.framework", "Headers")
-    APPKIT_HDRS=os.path.join(FRAMEWORKS, "AppKit.framework", "Headers")
-    FOUNDATION_HDRS=os.path.join(FRAMEWORKS, "Foundation.framework", "Headers")
+    ADDRESSBOOK_HDRS=pathjoin(FRAMEWORKS, "AddressBook.framework", "Headers")
+    APPKIT_HDRS=pathjoin(FRAMEWORKS, "AppKit.framework", "Headers")
+    FOUNDATION_HDRS=pathjoin(FRAMEWORKS, "Foundation.framework", "Headers")
     FOUNDATION_FUNCTION_PREFIX="FOUNDATION_EXPORT"
     FOUNDATION_INLINE_PREFIX='FOUNDATION_STATIC_INLINE'
     FOUNDATION_VAR_PREFIX="FOUNDATION_EXPORT"
 
-    IB_HDRS=os.path.join(FRAMEWORKS, "InterfaceBuilder.framework", "Headers")
-    PREFPANES_HDRS=os.path.join(FRAMEWORKS, "PreferencePanes.framework", "Headers")
-    SECINT_HDRS=os.path.join(FRAMEWORKS, "SecurityInterface.framework", "Headers")
-    if not os.path.exists(SECINT_HDRS):
-        SECINT_HDRS=None
+    IB_HDRS=pathjoin(FRAMEWORKS, "InterfaceBuilder.framework", "Headers")
+    PREFPANES_HDRS=pathjoin(FRAMEWORKS, "PreferencePanes.framework", "Headers")
+    SECINT_HDRS=pathjoin(FRAMEWORKS, "SecurityInterface.framework", "Headers")
 
-    WEBKIT_HDRS=os.path.join(FRAMEWORKS, "WebKit.framework", "Headers")
-    EXCHND_HDRS=os.path.join(FRAMEWORKS, "ExceptionHandling.framework", "Headers")
+    WEBKIT_HDRS=pathjoin(FRAMEWORKS, "WebKit.framework", "Headers")
+    APPLESCRIPTKIT_HDRS=pathjoin(FRAMEWORKS, "AppleScriptKit.framework", "Headers")
+    APPKITSCRIPTING_HDRS=pathjoin(FRAMEWORKS, "AppKitScripting.framework", "Headers")
+    AUTOMATOR_HDRS=pathjoin(FRAMEWORKS, "Automator.framework", "Headers")
+    COREDATA_HDRS=pathjoin(FRAMEWORKS, "CoreData.framework", "Headers")
+    XGRIDFOUNDATION_HDRS=pathjoin(FRAMEWORKS, "XgridFoundation.framework", "Headers")
+
+    EXCHND_HDRS=pathjoin(FRAMEWORKS, "ExceptionHandling.framework", "Headers")
 
 else:
     # This is probably incorrect, and was added to help a future
@@ -96,6 +105,13 @@ else:
     if not os.path.exists(SECINT_HDRS):
         SECINT_HDRS=None
 
+    APPLESCRIPTKIT_HDRS=None
+    APPKITSCRIPTING_HDRS=None
+    AUTOMATOR_HDRS=None
+    COREDATA_HDRS=None
+    XGRIDFOUNDATION_HDRS=None
+
+
 
 if not os.path.isdir('Modules'):
     print "Run me from the root of the PyObjC source tree"
@@ -121,7 +137,8 @@ def filterAddressBookHeaders(fn):
 if FOUNDATION_HDRS is not None:
     enum_generator.generate(
             FOUNDATION_HDRS,
-            'build/codegen/_Fnd_Enum.inc')
+            'build/codegen/_Fnd_Enum.inc',
+            ignore_files=['NSCompatibility.h', 'NSSerialization.h', 'NSUtilities.h'])
     strconst_generator.generate(
             FOUNDATION_HDRS,
             'build/codegen/_Fnd_Str.inc',
@@ -538,6 +555,58 @@ if WEBKIT_HDRS is not None:
                                 ignore=('WebElementImageAltStringKey',
                                         'WebPreferencesChangedNotification')
     )
+
+if APPLESCRIPTKIT_HDRS is not None:
+    enum_generator.generate(
+            APPLESCRIPTKIT_HDRS,
+            'build/codegen/_AppleScriptKit_Enum.inc',
+                ignore_files=[])
+
+    strconst_generator.generate(APPLESCRIPTKIT_HDRS,
+                                'build/codegen/_AppleScriptKit_Str.inc',
+                                ignore=())
+
+if APPKITSCRIPTING_HDRS is not None:
+    enum_generator.generate(
+            APPKITSCRIPTING_HDRS,
+            'build/codegen/_AppKitScripting_Enum.inc',
+                ignore_files=[])
+
+    strconst_generator.generate(APPKITSCRIPTING_HDRS,
+                                'build/codegen/_AppKitScripting_Str.inc',
+                                ignore=())
+
+if AUTOMATOR_HDRS is not None:
+    enum_generator.generate(
+            AUTOMATOR_HDRS,
+            'build/codegen/_Automator_Enum.inc',
+                ignore_files=[])
+
+    strconst_generator.generate(AUTOMATOR_HDRS,
+                                'build/codegen/_Automator_Str.inc',
+                                ignore=())
+
+if COREDATA_HDRS is not None:
+    enum_generator.generate(
+            COREDATA_HDRS,
+            'build/codegen/_CoreData_Enum.inc',
+                ignore_files=[])
+
+    strconst_generator.generate(COREDATA_HDRS,
+                                'build/codegen/_CoreData_Str.inc',
+                                ignore=())
+
+if XGRIDFOUNDATION_HDRS is not None:
+    enum_generator.generate(
+            XGRIDFOUNDATION_HDRS,
+            'build/codegen/_XgridFoundation_Enum.inc',
+                ignore_files=[])
+
+    strconst_generator.generate(XGRIDFOUNDATION_HDRS,
+                                'build/codegen/_XgridFoundation_Str.inc',
+                                ignore=())
+
+
 
 if EXCHND_HDRS is not None:
     enum_generator.generate(

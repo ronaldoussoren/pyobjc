@@ -95,6 +95,7 @@ def parseHeader(headerPath):
 
 
 template = r"""
+%s
 #import <%s/%s.h>
 #include <stdio.h>
 
@@ -110,7 +111,7 @@ int main() {
 tempSource = "_makeTypeCodes.m"
 tempExecutable = "_makeTypeCodes"
 
-def makeTypeCodes(frameworkName, types, frameworkMain=None):
+def makeTypeCodes(frameworkName, types, frameworkMain=None, extraStuff=""):
     if frameworkMain is None:
         frameworkMain = frameworkName
     lines = []
@@ -119,7 +120,7 @@ def makeTypeCodes(frameworkName, types, frameworkMain=None):
     for tp in keys:
         lines.append("m = @encode(%s);" % tp)
         lines.append(r'printf("%%s %s\n", m);' % tp)
-    source = template % (frameworkName, frameworkMain, "\n    ".join(lines))
+    source = template % (extraStuff, frameworkName, frameworkMain, "\n    ".join(lines))
     file(tempSource, "w").write(source)
     if os.system("cc -o %s %s" % (tempExecutable, tempSource)):
         assert 0, "compile failed"
@@ -134,7 +135,7 @@ def makeTypeCodes(frameworkName, types, frameworkMain=None):
     os.remove(tempExecutable)
 
 
-def genProtocols(frameworkPath, outFile=None, specials={}, frameworkMain=None):
+def genProtocols(frameworkPath, outFile=None, specials={}, frameworkMain=None, extraStuff=""):
     """Generate protocol definitions for a framework. If outFile is None,
     the generated Python code will be printed to sys.stdout.
     """
@@ -155,7 +156,7 @@ def genProtocols(frameworkPath, outFile=None, specials={}, frameworkMain=None):
             for sel, types, line, isClass in selectors:
                 for tp in types:
                     allTypes[tp] = 0
-    makeTypeCodes(frameworkName, allTypes, frameworkMain)
+    makeTypeCodes(frameworkName, allTypes, frameworkMain, extraStuff=extraStuff)
     protocols = allProtocols.items()
     protocols.sort()
     print >> outFile, "# generated from %r" % frameworkPath

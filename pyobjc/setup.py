@@ -233,6 +233,11 @@ ExceptionHandlingDepends = dict(depends=INCFILES)
 PrefPanesDepends = dict(depends=INCFILES)
 InterfaceBuilderDepends = dict(depends=INCFILES)
 WebKitDepends = dict(depends=INCFILES)
+AppleScriptKitDepends = dict(depends=INCFILES)
+AppKitScriptingDepends = dict(depends=INCFILES)
+AutomatorDepends = dict(depends=INCFILES)
+CoreDataDepends = dict(depends=INCFILES)
+XgridFoundationDepends = dict(depends=INCFILES)
 
 FoundationPackages, FoundationExtensions = \
         IfFrameWork('Foundation.framework', [ 'Foundation' ], [
@@ -364,6 +369,83 @@ WebKitPackages, WebKitExtensions = \
                       ),
         ], headername="WebKit.h")
 
+XgridFoundationPackages, XgridFoundationExtensions = \
+        IfFrameWork('XgridFoundation.framework', [ 'XgridFoundation' ], [
+            Extension('XgridFoundation._XgridFoundation',
+                      [ 'Modules/XgridFoundation/_XgridFoundation.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=frameworks(
+                        'XgridFoundation',
+                        'Foundation'
+                      ),
+                      **XgridFoundationDepends
+                      ),
+        ], headername="XgridFoundation.h")
+
+CoreDataPackages, CoreDataExtensions = \
+        IfFrameWork('CoreData.framework', [ 'CoreData' ], [
+            Extension('CoreData._CoreData',
+                      [ 'Modules/CoreData/_CoreData.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=frameworks(
+                        'CoreData',
+                        'Foundation'
+                      ),
+                      **CoreDataDepends
+                      ),
+        ], headername="CoreData.h")
+
+AutomatorPackages, AutomatorExtensions = \
+        IfFrameWork('Automator.framework', [ 'Automator' ], [
+            Extension('Automator._Automator',
+                      [ 'Modules/Automator/_Automator.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=frameworks(
+                        'Automator',
+                        'Foundation'
+                      ),
+                      **AutomatorDepends
+                      ),
+        ], headername="Automator.h")
+
+AppKitScriptingPackages, AppKitScriptingExtensions = \
+        IfFrameWork('AppKitScripting.framework', [ 'AppKitScripting' ], [
+            Extension('AppKitScripting._AppKitScripting',
+                      [ 'Modules/AppKitScripting/_AppKitScripting.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=frameworks(
+                        'AppKitScripting',
+                        'Foundation'
+                      ),
+                      **AppKitScriptingDepends
+                      ),
+        ], headername="AppKitScripting.h")
+
+
+AppleScriptKitPackages, AppleScriptKitExtensions = \
+        IfFrameWork('AppleScriptKit.framework', [ 'AppleScriptKit' ], [
+            Extension('AppleScriptKit._AppleScriptKit',
+                      [ 'Modules/AppleScriptKit/_AppleScriptKit.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=frameworks(
+                        'AppleScriptKit',
+                        'Foundation'
+                      ),
+                      **AppleScriptKitDepends
+                      ),
+        ], headername="ASKPluginObject.h")
+
+
 
 def package_version():
     fp = open('Modules/objc/pyobjc.h', 'r')
@@ -388,6 +470,13 @@ packages = (
     MessagePackages +
     SecurityInterfacePackages +
     ExceptionHandlingPackages +
+    # Mac OS X 10.4
+    AppleScriptKitPackages +
+    AppKitScriptingPackages +
+    AutomatorPackages +
+    CoreDataPackages +
+    XgridFoundationPackages +
+
     [
         'PyObjCTools',
         'PyObjCTools.XcodeSupport',
@@ -443,6 +532,13 @@ dist = setup(
        + ExceptionHandlingExtensions
        + CoreFoundationExtensions
        + WebKitExtensions
+       # Mac OS X 10.4
+       + AppleScriptKitExtensions
+       + AppKitScriptingExtensions
+       + AutomatorExtensions
+       + CoreDataExtensions
+       + XgridFoundationExtensions
+
     ),
     packages = packages,
     package_dir = package_dir,
