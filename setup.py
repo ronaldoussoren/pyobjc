@@ -237,6 +237,7 @@ AppleScriptKitDepends = dict(depends=INCFILES)
 AppKitScriptingDepends = dict(depends=INCFILES)
 AutomatorDepends = dict(depends=INCFILES)
 CoreDataDepends = dict(depends=INCFILES)
+SyncServicesDepends = dict(depends=INCFILES)
 XgridFoundationDepends = dict(depends=INCFILES)
 
 FoundationPackages, FoundationExtensions = \
@@ -399,6 +400,21 @@ CoreDataPackages, CoreDataExtensions = \
                       ),
         ], headername="CoreData.h")
 
+SyncServicesPackages, SyncServicesExtensions = \
+        IfFrameWork('SyncServices.framework', [ 'SyncServices' ], [
+            Extension('SyncServices._SyncServices',
+                      [ 'Modules/SyncServices/_SyncServices.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=frameworks(
+                        'SyncServices',
+                        'Foundation'
+                      ),
+                      **SyncServicesDepends
+                      ),
+        ], headername="SyncServices.h")
+
 AutomatorPackages, AutomatorExtensions = \
         IfFrameWork('Automator.framework', [ 'Automator' ], [
             Extension('Automator._Automator',
@@ -475,6 +491,7 @@ packages = (
     AppKitScriptingPackages +
     AutomatorPackages +
     CoreDataPackages +
+    SyncServicesPackages +
     XgridFoundationPackages +
 
     [
@@ -537,6 +554,7 @@ dist = setup(
        + AppKitScriptingExtensions
        + AutomatorExtensions
        + CoreDataExtensions
+       + SyncServicesExtensions
        + XgridFoundationExtensions
 
     ),
