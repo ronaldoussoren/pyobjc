@@ -57,6 +57,7 @@ if sys.platform == "darwin":
     APPKITSCRIPTING_HDRS=pathjoin(FRAMEWORKS, "AppKitScripting.framework", "Headers")
     AUTOMATOR_HDRS=pathjoin(FRAMEWORKS, "Automator.framework", "Headers")
     COREDATA_HDRS=pathjoin(FRAMEWORKS, "CoreData.framework", "Headers")
+    SYNCSERVICES_HDRS=pathjoin(FRAMEWORKS, "SyncServices.framework", "Headers")
     XGRIDFOUNDATION_HDRS=pathjoin(FRAMEWORKS, "XgridFoundation.framework", "Headers")
 
     EXCHND_HDRS=pathjoin(FRAMEWORKS, "ExceptionHandling.framework", "Headers")
@@ -109,6 +110,7 @@ else:
     APPKITSCRIPTING_HDRS=None
     AUTOMATOR_HDRS=None
     COREDATA_HDRS=None
+    SYNCSERVICES_HDRS=None
     XGRIDFOUNDATION_HDRS=None
 
 
@@ -595,6 +597,17 @@ if COREDATA_HDRS is not None:
     strconst_generator.generate(COREDATA_HDRS,
                                 'build/codegen/_CoreData_Str.inc',
                                 ignore=())
+
+if SYNCSERVICES_HDRS is not None:
+    enum_generator.generate(
+            SYNCSERVICES_HDRS,
+            'build/codegen/_SyncServices_Enum.inc',
+                ignore_files=[])
+
+    strconst_generator.generate(SYNCSERVICES_HDRS,
+                                'build/codegen/_SyncServices_Str.inc',
+                                ignore=())
+
 
 if XGRIDFOUNDATION_HDRS is not None:
     enum_generator.generate(
