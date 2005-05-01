@@ -41,6 +41,8 @@ void init_CoreData(void)
 		return;
 	}
 
+#	include "_CoreData_Var.inc"	
+
 	bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.CoreData"));
 
 	if (register_ints(d, enum_table) < 0) return;

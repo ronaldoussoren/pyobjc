@@ -41,7 +41,11 @@ void init_SyncServices(void)
 		return;
 	}
 
-	bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.SyncServices"));
+	bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.syncservices"));
+	if (bundle == NULL) {
+		PyErr_SetString(PyExc_RuntimeError, "cannot open SyncServices.framework");
+		return;
+	}
 
 	if (register_ints(d, enum_table) < 0) return;
 	if (register_variableList(d, bundle, string_table, 
