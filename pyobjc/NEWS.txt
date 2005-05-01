@@ -21,6 +21,11 @@ Version 1.3.1 (2005-04-??)
 
   Documentation and tests not yet written.
 
+- Add a CoreData example: a python version of the OutlineEditor example
+  from Apple.
+
+  TODO: compile the .xcdatamodel file.
+
 - More conveniences for ``list``-like and ``dict``-like
   objects: ``__reversed__``, ``reverse``, ``pop``,
   ``remove``, ``fromkeys``.

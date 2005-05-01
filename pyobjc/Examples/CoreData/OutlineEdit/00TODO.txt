@@ -1,0 +1,2 @@
+- MyDocument.mom is a generated file, I (ronald) do not yet know how to
+  create this from MyDocument.xcdatamodel
