@@ -63,6 +63,7 @@ if sys.platform == "darwin":
     XGRIDFOUNDATION_HDRS=pathjoin(FRAMEWORKS, "XgridFoundation.framework", "Headers")
 
     EXCHND_HDRS=pathjoin(FRAMEWORKS, "ExceptionHandling.framework", "Headers")
+    QTKIT_HDRS=pathjoin(FRAMEWORKS, "QTKit.framework", "Headers")
 
 else:
     # This is probably incorrect, and was added to help a future
@@ -116,6 +117,7 @@ else:
     DISCRECORDINGUI_HDRS=None
     SYNCSERVICES_HDRS=None
     XGRIDFOUNDATION_HDRS=None
+    QTKIT_HDRS=None
 
 
 
@@ -195,6 +197,8 @@ if FOUNDATION_HDRS is not None:
 
 
         # List of functions that are not usefull from Python:
+        "NSAllocateCollectable",
+        "NSReallocateCollectable",
         'NSFrameAddress(',
         'NSReturnAddress(',
         'NSRecordAllocationEvent(',
@@ -453,7 +457,7 @@ if APPKIT_HDRS is not None:
     func_builder.FUNC_MAP['NSShowAnimationEffect'] = BeginSheetMapper
 
     fd = dupfile('build/codegen/_App_Functions.inc', 'w')
-    structs = ['NSAffineTransformStruct', 'NSRect', 'NSPoint']
+    structs = ['NSAffineTransformStruct', 'NSRect', 'NSPoint', 'NSSize']
     for s in structs:
         func_builder.SIMPLE_TYPES[s] = (
             '\tresult = PyObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,
@@ -503,9 +507,11 @@ if APPKIT_HDRS is not None:
         'NSTIFFCompression', 'NSTitlePosition', 'NSToolbarDisplayMode',
         'NSToolTipTag', 'NSTrackingRectTag', 'NSUsableScrollerParts',
         'NSWindingRule', 'NSWindowDepth', 'NSWindowOrderingMode',
+        'NSAnimationEffect',
         ]:
         func_builder.TYPE_ALIASES[arg] = 'int'
 
+    func_builder.ID_MAP['NSGlyph*'] = 'id'
 
     fd.write('typedef void* PYOBJC_VOIDPTR;\n')
     funcs = func_builder.process_list(fd, file('build/codegen/AppKit.prototypes'))
@@ -593,13 +599,78 @@ if AUTOMATOR_HDRS is not None:
                                 ignore=())
 
 if COREDATA_HDRS is not None:
+    COREDATA_VAR_PREFIX='COREDATA_EXTERN'
+    COREDATA_IGNORE_LIST=()
     enum_generator.generate(
             COREDATA_HDRS,
             'build/codegen/_CoreData_Enum.inc',
                 ignore_files=[])
 
+    var_generator.generate(
+            COREDATA_HDRS,
+            'build/codegen/_CoreData_Var.inc',
+            COREDATA_VAR_PREFIX,
+            COREDATA_IGNORE_LIST)
+
     strconst_generator.generate(COREDATA_HDRS,
                                 'build/codegen/_CoreData_Str.inc',
+                                ignore=())
+
+if QTKIT_HDRS is not None:
+    QTKIT_VAR_PREFIX='QTKIT_EXTERN'
+    QTKIT_FUNCTION_PREFIX='QTKIT_EXTERN'
+    QTKIT_IGNORE_LIST=()
+    enum_generator.generate(
+            QTKIT_HDRS,
+            'build/codegen/_QTKit_Enum.inc',
+                ignore_files=[])
+
+    var_generator.generate(
+            QTKIT_HDRS,
+            'build/codegen/_QTKit_Var.inc',
+            QTKIT_VAR_PREFIX,
+            QTKIT_IGNORE_LIST)
+
+    func_collector.generate(
+            QTKIT_HDRS,
+            'build/codegen/QTKit.prototypes',
+            QTKIT_FUNCTION_PREFIX,
+            QTKIT_IGNORE_LIST)
+
+    fd = dupfile('build/codegen/_QTKit_Functions.inc', 'w')
+
+    func_builder.ID_MAP['NSTimeInterval*'] = 'id'
+
+    structs = ['QTTime', 'QTTimeRange', 'TimeRecord']
+    if sys.platform == 'darwin':
+        structs.append('NSTimeInterval')
+    for s in structs:
+        func_builder.SIMPLE_TYPES[s] = (
+            '\tresult = PyObjC_ObjCToPython(@encode(%s), (void*)&%%(varname)s); \n\tif (result == NULL) return NULL;'%s,
+            'O&',
+            'convert_%s, &%%(varname)s'%s
+        )
+        fd.write('''\
+
+    static inline int convert_%(type)s(PyObject* object, void* pvar)
+    {
+            int err;
+
+            err = PyObjC_PythonToObjC(@encode(%(type)s), object, pvar);
+            if (err == -1) {
+                    return 0;
+            }
+            return 1;
+    }
+    '''%{'type': s })
+    func_builder.TYPE_ALIASES['OSType'] = 'int'
+    funcs = func_builder.process_list(fd , file('build/codegen/QTKit.prototypes'))
+    func_builder.gen_method_table_entries(fd, funcs)
+    fd.close()
+
+
+    strconst_generator.generate(QTKIT_HDRS,
+                                'build/codegen/_QTKit_Str.inc',
                                 ignore=())
 
 if DISCRECORDING_HDRS is not None:

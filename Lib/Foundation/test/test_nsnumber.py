@@ -136,11 +136,13 @@ class TestNSNumber( unittest.TestCase ):
         self.assert_(isinstance(n, int))
         self.assert_(isinstance(n, NSNumber))
 
-        n = NSNumber.numberWithLongLong_(10)
+        n = NSNumber.numberWithLongLong_(sys.maxint * 1024L)
+        self.assertEquals(n, sys.maxint * 1024L)
         self.assert_(isinstance(n, long))
         self.assert_(isinstance(n, NSNumber))
 
-        n = NSNumber.numberWithUnsignedLongLong_(10)
+        n = NSNumber.numberWithUnsignedLongLong_(sys.maxint + 100)
+        self.assertEquals(n, sys.maxint + 100)
         self.assert_(isinstance(n, long))
         self.assert_(isinstance(n, NSNumber))
 

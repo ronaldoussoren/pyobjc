@@ -14,7 +14,7 @@ attribute_const=re.compile(r'__attribute__\s*\(\(_?_?const_?_?\)\)')
 
 def process_file(outfp, filename, match_prefix='', ignore_list=()):
 
-    MATCH_RE=re.compile('%(match_prefix)s(.+\s+.+\([^);{]+\)\s*(?:[;{]|$))'%{
+    MATCH_RE=re.compile('%(match_prefix)s(.+\s+.+\([^);{]+\))\s*(?:AVAILABLE_MAC_OS_X_VERSION_10_\d_AND_LATER\s*)?(?:[;{]|$)'%{
             'match_prefix':match_prefix, 'IDENT':IDENT})
 
     fp = open(filename, 'r')

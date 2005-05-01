@@ -31,6 +31,8 @@ import types
 # Types that are also simple values (mostly enums)
 TYPE_ALIASES={}
 
+ID_MAP={}
+
 # Varargs functions to be treated like normal functions
 IGNORE_VARARGS = []
 
@@ -62,11 +64,13 @@ def is_id(typestr):
     # Remove protocol 'declarations' (id <NSObject, NSString>)
     typestr = PROT_MATCHER.sub('', typestr).strip()
 
-
     if typestr == 'id':
         return 1
     elif typestr[-1] != '*':
         return 0
+
+    if typestr in ID_MAP:
+        return 1
 
     if objc != None:
         try:

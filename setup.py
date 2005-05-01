@@ -241,6 +241,7 @@ DiscRecordingDepends = dict(depends=INCFILES)
 DiscRecordingUIDepends = dict(depends=INCFILES)
 SyncServicesDepends = dict(depends=INCFILES)
 XgridFoundationDepends = dict(depends=INCFILES)
+QTKitDepends = dict(depends=INCFILES)
 
 FoundationPackages, FoundationExtensions = \
         IfFrameWork('Foundation.framework', [ 'Foundation' ], [
@@ -462,6 +463,21 @@ AutomatorPackages, AutomatorExtensions = \
                       ),
         ], headername="Automator.h")
 
+QTKitPackages, QTKitExtensions = \
+        IfFrameWork('QTKit.framework', [ 'QTKit' ], [
+            Extension('QTKit._QTKit',
+                      [ 'Modules/QTKit/_QTKit.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=frameworks(
+                        'QTKit',
+                        'Foundation'
+                      ),
+                      **QTKitDepends
+                      ),
+        ], headername="QTKit.h")
+
 AppKitScriptingPackages, AppKitScriptingExtensions = \
         IfFrameWork('AppKitScripting.framework', [ 'AppKitScripting' ], [
             Extension('AppKitScripting._AppKitScripting',
@@ -527,6 +543,7 @@ packages = (
     DiscRecordingUIPackages +
     SyncServicesPackages +
     XgridFoundationPackages +
+    QTKitPackages +
 
     [
         'PyObjCTools',
@@ -587,6 +604,7 @@ dist = setup(
        + AppleScriptKitExtensions
        + AppKitScriptingExtensions
        + AutomatorExtensions
+       + QTKitExtensions
        + CoreDataExtensions
        + DiscRecordingExtensions
        + DiscRecordingUIExtensions
