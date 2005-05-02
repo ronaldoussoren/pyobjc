@@ -6,6 +6,8 @@ Usage:
 """
 from distutils.core import setup
 import py2app
+import os
+
 
 plist = dict(
     NSMainNibFile="MainMenu",
@@ -41,7 +43,12 @@ plist = dict(
     ],
 )
 
+# XXX: This should be hidden in a helper module
+compiler='/Library/Application Support/Apple/Developer Tools/Plug-ins/XDCoreDataModel.xdplugin/Contents/Resources/momc'
+os.system("'%s' MyDocument.xcdatamodel MyDocument.mom"%(compiler,))
+
 setup(
+    name='PyOutlineEdit',
     app=["main.py"],
     data_files=["English.lproj", 'MyDocument.mom'],
     options=dict(py2app=dict(plist=plist)),
