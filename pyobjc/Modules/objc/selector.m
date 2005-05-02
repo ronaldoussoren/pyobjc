@@ -171,6 +171,26 @@ base_signature(PyObjCSelector* self, void* closure __attribute__((__unused__)))
 	return PyString_FromString(self->sel_signature);
 }
 
+static int
+base_signature_setter(PyObjCNativeSelector* self, PyObject* newVal, void* closure __attribute__((__unused__)))
+{
+	char* t;
+	if (!PyString_Check(newVal)) {
+		PyErr_SetString(PyExc_TypeError, "signature must be string");
+		return -1;
+	}
+
+	t = PyObjCUtil_Strdup(PyString_AsString(newVal));
+	if (t == NULL) {
+		PyErr_NoMemory();
+		return -1;
+	}
+
+	PyMem_Free(self->sel_signature);
+	self->sel_signature = t;
+	return 0;
+}
+
 PyDoc_STRVAR(base_selector_doc, "Objective-C name for the method");
 static PyObject*
 base_selector(PyObjCSelector* self, void* closure __attribute__((__unused__)))
@@ -286,7 +306,7 @@ static PyGetSetDef base_getset[] = {
 	{ 
 		"signature", 
 		(getter)base_signature, 
-		0,
+		(setter)base_signature_setter,
 		base_signature_doc, 
 		0
 	},

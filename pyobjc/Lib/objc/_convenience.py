@@ -17,7 +17,7 @@ TODO:
     set(['__cmp__'])
 
 """
-from _objc import setClassExtender, selector, lookUpClass, currentBundle, repythonify
+from _objc import setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature
 from itertools import imap
 
 __all__ = ['CONVENIENCE_METHODS', 'CLASS_METHODS']
@@ -72,6 +72,12 @@ def _add_convenience_methods(super_class, name, type_dict):
 
         if sel.selector == "alloc" or sel.selector == "allocWithZone:":
             sel.isAlloc = 1
+
+        if sel.selector.endswith(':error:'):
+            sigParts = splitSignature(sel.signature)
+            if sigParts[-1] == '^@':
+                sigParts = sigParts[:-1] + ('o^@',)
+                sel.signature = ''.join(sigParts)
 
         if sel.selector in ( 'copy', 'copyWithZone:',
                       'mutableCopy', 'mutableCopyWithZone:'):
