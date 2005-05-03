@@ -54,7 +54,6 @@ if sys.platform == "darwin":
 
     WEBKIT_HDRS=pathjoin(FRAMEWORKS, "WebKit.framework", "Headers")
     APPLESCRIPTKIT_HDRS=pathjoin(FRAMEWORKS, "AppleScriptKit.framework", "Headers")
-    APPKITSCRIPTING_HDRS=pathjoin(FRAMEWORKS, "AppKitScripting.framework", "Headers")
     AUTOMATOR_HDRS=pathjoin(FRAMEWORKS, "Automator.framework", "Headers")
     COREDATA_HDRS=pathjoin(FRAMEWORKS, "CoreData.framework", "Headers")
     DISCRECORDING_HDRS=pathjoin(FRAMEWORKS, "DiscRecording.framework", "Headers")
@@ -110,7 +109,6 @@ else:
         SECINT_HDRS=None
 
     APPLESCRIPTKIT_HDRS=None
-    APPKITSCRIPTING_HDRS=None
     AUTOMATOR_HDRS=None
     COREDATA_HDRS=None
     DISCRECORDING_HDRS=None
@@ -576,16 +574,6 @@ if APPLESCRIPTKIT_HDRS is not None:
 
     strconst_generator.generate(APPLESCRIPTKIT_HDRS,
                                 'build/codegen/_AppleScriptKit_Str.inc',
-                                ignore=())
-
-if APPKITSCRIPTING_HDRS is not None:
-    enum_generator.generate(
-            APPKITSCRIPTING_HDRS,
-            'build/codegen/_AppKitScripting_Enum.inc',
-                ignore_files=[])
-
-    strconst_generator.generate(APPKITSCRIPTING_HDRS,
-                                'build/codegen/_AppKitScripting_Str.inc',
                                 ignore=())
 
 if AUTOMATOR_HDRS is not None:
