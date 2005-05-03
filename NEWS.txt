@@ -10,7 +10,6 @@ Version 1.3.1 (2005-04-??)
 - First stab at wrapping some Tiger frameworks:
 
   - ``AppleScriptKit``
-  - ``AppKitScripting``
   - ``Automator``
   - ``CoreData``
   - ``DiscRecording``

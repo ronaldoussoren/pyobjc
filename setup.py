@@ -234,7 +234,6 @@ PrefPanesDepends = dict(depends=INCFILES)
 InterfaceBuilderDepends = dict(depends=INCFILES)
 WebKitDepends = dict(depends=INCFILES)
 AppleScriptKitDepends = dict(depends=INCFILES)
-AppKitScriptingDepends = dict(depends=INCFILES)
 AutomatorDepends = dict(depends=INCFILES)
 CoreDataDepends = dict(depends=INCFILES)
 DiscRecordingDepends = dict(depends=INCFILES)
@@ -478,22 +477,6 @@ QTKitPackages, QTKitExtensions = \
                       ),
         ], headername="QTKit.h")
 
-AppKitScriptingPackages, AppKitScriptingExtensions = \
-        IfFrameWork('AppKitScripting.framework', [ 'AppKitScripting' ], [
-            Extension('AppKitScripting._AppKitScripting',
-                      [ 'Modules/AppKitScripting/_AppKitScripting.m' ],
-                      extra_compile_args=[
-                        '-IModules/objc',
-                      ] + CFLAGS,
-                      extra_link_args=frameworks(
-                        'AppKitScripting',
-                        'Foundation'
-                      ),
-                      **AppKitScriptingDepends
-                      ),
-        ], headername="AppKitScripting.h")
-
-
 AppleScriptKitPackages, AppleScriptKitExtensions = \
         IfFrameWork('AppleScriptKit.framework', [ 'AppleScriptKit' ], [
             Extension('AppleScriptKit._AppleScriptKit',
@@ -536,7 +519,6 @@ packages = (
     ExceptionHandlingPackages +
     # Mac OS X 10.4
     AppleScriptKitPackages +
-    AppKitScriptingPackages +
     AutomatorPackages +
     CoreDataPackages +
     DiscRecordingPackages +
@@ -602,7 +584,6 @@ dist = setup(
        + WebKitExtensions
        # Mac OS X 10.4
        + AppleScriptKitExtensions
-       + AppKitScriptingExtensions
        + AutomatorExtensions
        + QTKitExtensions
        + CoreDataExtensions
