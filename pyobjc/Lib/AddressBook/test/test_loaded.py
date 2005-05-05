@@ -3,7 +3,7 @@ AddressBook doesn't add 'interesting' behaviour, just check that the
 module loaded correctly.
 """
 
-import unittest
+import unittest, sys, os
 import objc
 
 class ABTest (unittest.TestCase):
@@ -18,6 +18,12 @@ class ABTest (unittest.TestCase):
 
         self.assertEquals(AddressBook.kABMultiDictionaryProperty, 262)
         self.assertEquals(AddressBook.kABPhoneMainLabel, '_$!<Main>!$_')
+
+        # 10.3 and later
+        if sys.platform == 'darwin' and os.uname()[2] >= '7.':
+            self.assert_(hasattr(AddressBook, 'kABShowAsMask'))
+            self.assert_(isinstance(AddressBook.kABShowAsMask, (int, long)))
+        
 
     def testClasses(self):
         import AddressBook
