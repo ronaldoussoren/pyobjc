@@ -404,8 +404,13 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			/* FALL THROUGH */
 		case _C_IN: case _C_CONST:
 			if (argtype[1] == _C_PTR) {
-				v = pythonify_c_value(argtype+2, 
+				if (*(void**)args[i+argOffset]) {
+					v = pythonify_c_value(argtype+2, 
 						*(void**)args[i+argOffset]);
+				} else {
+					v = PyObjC_NULL;
+					Py_INCREF(v);
+				}
 			} else {
 				v = pythonify_c_value(argtype+1, 
 						args[i+argOffset]);
@@ -815,6 +820,7 @@ int PyObjCFFI_ParseArguments(
 	void* arg;
 
 	for (i = argOffset; i < methinfo->nargs; i++) {
+
 		int error;
 		PyObject *argument;
 		const char *argtype = methinfo->argtype[i];
@@ -870,14 +876,21 @@ int PyObjCFFI_ParseArguments(
 
 				if (argtype[1] == _C_PTR) {
 					/* Allocate space and encode */
-					argbuf_cur = align(argbuf_cur, PyObjCRT_AlignOfType(argtype+2)); 
-					arg = argbuf + argbuf_cur;
-					argbuf_cur += PyObjCRT_SizeOfType(argtype+2);
-					byref[i] = arg;
-	  				error = depythonify_c_value (
-						argtype+2, 
-						argument, 
-						arg);
+
+					if (argument == PyObjC_NULL) {
+						byref[i] = NULL;
+						error = 0;
+
+					} else {
+						argbuf_cur = align(argbuf_cur, PyObjCRT_AlignOfType(argtype+2)); 
+						arg = argbuf + argbuf_cur;
+						argbuf_cur += PyObjCRT_SizeOfType(argtype+2);
+						byref[i] = arg;
+						error = depythonify_c_value (
+							argtype+2, 
+							argument, 
+							arg);
+					}
 
 					arglist[i] = &ffi_type_pointer;
 					values[i] = byref + i;
@@ -988,7 +1001,13 @@ PyObjCFFI_BuildResult(
 			case _C_OUT:
 				if (argtype[1] == _C_PTR) {
 					arg = byref[i];
-					v = pythonify_c_value(argtype+2, arg);
+
+					if (arg == NULL) {
+						v = PyObjC_NULL;
+						Py_INCREF(v);
+					} else {
+						v = pythonify_c_value(argtype+2, arg);
+					}
 					if (!v) goto error_cleanup;
 
 					if (result != NULL) {

@@ -147,6 +147,11 @@ PyObjCPointerWrapper_FromPython(
 	struct wrapper* item;
 	int r;
 
+	if (value == PyObjC_NULL) {
+		*(void**)datum = NULL;
+		return 0;
+	}
+
 	item = FindWrapper(type);
 	if (item == NULL) {
 		return -1;

@@ -107,6 +107,10 @@ PyObject* PyObjC_IDToCFType(id argument);
 PyObject* PyObjCCreateOpaquePointerType(const char* name, 
 		const char* typestr, const char* docstr);
 
+/* objc-NULL.m */
+extern PyObject* PyObjC_NULL;
+extern PyObject* PyObjCInitNULL(void);
+
 #endif
 
 #define PyObjCErr_InternalError() \

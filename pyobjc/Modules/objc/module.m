@@ -1178,7 +1178,7 @@ void init_objc(void);
 void 
 init_objc(void)
 {
-	PyObject *m, *d;
+	PyObject *m, *d, *v;
 
 	NSAutoreleasePool *initReleasePool = [[NSAutoreleasePool alloc] init];
 	[OC_NSBundleHack installBundleHack];
@@ -1206,6 +1206,7 @@ init_objc(void)
 
 	d = PyModule_GetDict(m);
 	/* use PyDict_SetItemString for the retain, non-heap types can't be dealloc'ed */
+
 	PyDict_SetItemString(d, "objc_class", (PyObject*)&PyObjCClass_Type);
 	PyDict_SetItemString(d, "objc_object", (PyObject*)&PyObjCObject_Type);
 	PyDict_SetItemString(d, "pyobjc_unicode", (PyObject*)&PyObjCUnicode_Type);
@@ -1215,6 +1216,15 @@ init_objc(void)
 	PyDict_SetItemString(d, "formal_protocol", (PyObject*)&PyObjCFormalProtocol_Type);
 	PyDict_SetItemString(d, "function", (PyObject*)&PyObjCFunc_Type);
 	PyDict_SetItemString(d, "IMP", (PyObject*)&PyObjCIMP_Type);
+
+	v = PyObjCInitNULL();
+	if (v == NULL) return;
+
+	if (PyDict_SetItemString(d, "NULL", v) < 0) {
+		Py_DECREF(v);
+		return;
+	}
+	Py_DECREF(v);
 
 	if (PyObjCUtil_Init(m) < 0) return;
 	if (PyObjCAPI_Register(m) < 0) return;
