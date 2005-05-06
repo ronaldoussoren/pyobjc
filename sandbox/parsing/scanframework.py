@@ -121,17 +121,67 @@ def do_enum(enum):
         if isinstance(token, EnumValueMember):
             name = token['name']
             value = token['value']
-            i = int(value) + 1
+
+            try:
+                i = int(value)
+            except ValueError:
+                i = (value, 0)
+
             yield '\n%s = %s' % (name, value)
         elif isinstance(token, EnumBareMember):
             name = token['name']
-            i += 1
-            value = i
-            yield '\n%s = %s' % (name, value)
+            if isinstance(i, tuple):
+                i = (i[0], i[1] + 1)
+                yield '\n%s = %s + %s'%(name, i[0], i[1])
+
+            else:
+                i += 1
+                value = i
+                yield '\n%s = %s' % (name, value)
         elif isinstance(token, (EnumEnd, NamedEnumEnd)):
             yield '\n'
         elif isinstance(token, SingleLineComment):
             yield ' # ' + token['comment']
+
+def do_struct(token, types, structs):
+    externalname = token.matches()[-1]['name']
+    structname = token['structname']
+    body = token.matches()[:-1]
+    fieldnames = []
+    elems = [
+        'objc._C_STRUCT_B',
+    ]
+    if structname:
+        elems.append('"%s"'%(structname,))
+    if body:
+        elems.append('"="')
+        for tk in body:
+            if isinstance(tk, StructMember):
+                tp = tk['type']
+                nm = tk['name']
+                nm = [ n.strip() for n in nm.split(',') ]
+                fieldnames.extend(nm)
+
+                try:
+                    etp = types[tp]
+                except KeyError:
+                    print "Ignore hard struct"
+                    return
+
+                elems.extend([types[tp]]*len(nm))
+
+            elif isinstance(tk, NestedStructMember):
+                print "Ignore hard struct"
+                return
+        
+    elems.append('objc._C_STRUCT_E')
+    encoded = "''.join(("+ ', '.join(elems) + ",))"
+    types[externalname] = '_%s_encoded'%(externalname,)
+
+    structs.append('_%s_encoded = %s\n'%(externalname, encoded))
+    structs.append('%s = objc.createStructType("%s", _%s_encoded, %s, "")\n'%(
+        externalname, externalname, externalname, fieldnames))
+
 
 def makeInit(framework, out):
     framework_name = filter(None, os.path.split(framework))[0]
@@ -141,6 +191,27 @@ def makeInit(framework, out):
         'id': 'objc._C_ID',
         'NSString *': 'objc._C_ID',
         'NSString*': 'objc._C_ID',
+
+        'char': 'objc._C_CHR',
+        'unsigned char': 'objc._C_UCHR',
+
+        'int': 'objc._C_INT',
+        'signed int': 'objc._C_INT',
+        'unsigned int': 'objc._C_UINT',
+
+        'short': 'objc._C_SHT',
+        'signed short': 'objc._C_SHT',
+        'unsigned short': 'objc._C_USHT',
+
+        'long': 'objc._C_LNG',
+        'signed long': 'objc._C_LNG',
+        'unsigned long': 'objc._C_ULNG',
+
+        'long long': 'objc._C_LNGLNG',
+        'signed long long': 'objc._C_LNGLNG',
+        'unsigned long long': 'objc._C_ULNGLNG',
+
+        'float': 'objc._C_FLT',
         'double': 'objc._C_DBL',
     }
     ignores = set([
@@ -150,13 +221,20 @@ def makeInit(framework, out):
         CPPCrap,
         ForwardClassReference,
         Interface,
+        UninterestingStruct, # XXX: Not sure about this
     ])
     dependencies = set()
     globthings = []
     enums = []
+    simple_defines=[]
     imports = []
+    structs = []
     for token in ifilter(None, f.scanframework(framework)):
         if isinstance(token, GlobalThing):
+            if token['type'] not in types:
+                print 'ignore', token
+                continue
+
             globthings.append('        (%r, %s),\n' % (unicode(token['name']), types[token['type']]))
         elif isinstance(token, (Enum, NamedEnum)):
             for s in do_enum(token):
@@ -166,6 +244,51 @@ def makeInit(framework, out):
             if dep and dep not in dependencies:
                 dependencies.add(dep)
                 imports.append('\ntry:\n    from %s import *\nexcept ImportError:\n    pass\n' % (dep,))
+        elif isinstance(token, SimpleDefine):
+            simple_defines.append('%s=%s\n'%(token['name'], token['value']))
+
+        
+        elif isinstance(token, NamedStruct):
+            # Dunno how to wrap C unions
+            do_struct(token, types, structs)
+
+        elif isinstance(token, UninterestingTypedef):
+            ptr = 0
+            body = token['body'].split()
+            if len(body) == 2:
+                alias, target = body
+                while alias[-1] == '*':
+                    alias = alias[:-1]
+                    ptr += 1
+                while target[0] == '*':
+                    target = target[1:]
+                    ptr += 1
+                if alias in types:
+                    if ptr == 1:
+                        prefix = 'objc._C_PTR+'
+                    elif ptr > 1:
+                        prefix = '(objc._C_PTR*%s)+'%(ptr,)
+                    else:
+                        prefix = ''
+                    types[target] = prefix + types[alias]
+
+
+        elif isinstance(token, Protocol):
+            # TODO: generate informal-protocol definition
+            pass
+
+        elif isinstance(token, MacroDefine):
+            # What can we do for these?
+            pass
+
+        elif isinstance(token, ExportFunction):
+            # XXX
+            pass
+
+        elif isinstance(token, StaticInlineFunction):
+            # TODO: emit wrapper inside a C file.
+            pass
+
         else:
             if type(token) not in ignores:
                 print token
@@ -175,6 +298,10 @@ def makeInit(framework, out):
     out.writelines(imports)
     print >>out, '\n# Enumerations'
     out.writelines(enums)
+    print >>out, '\n# Simple defines'
+    out.writelines(simple_defines)
+    print >>out, '\n# struct definitions'
+    out.writelines(structs)
     bundle_variables = ''.join(globthings)
     print >>out, """
 

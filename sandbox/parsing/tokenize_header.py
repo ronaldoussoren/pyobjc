@@ -206,7 +206,7 @@ class MacroDefine(Token):
     pattern = pattern(r'''
     \#\s*define\s*
         (?P<name>%(IDENTIFIER)s)
-        \s*\(
+        \(
             (?P<args>
                 (\s*%(IDENTIFIER)s\s*,)*
                 (\s*%(IDENTIFIER)s\s*)?
@@ -277,8 +277,8 @@ class EnumValueMember(Token):
     \s*(?P<name>%(IDENTIFIER)s)
     \s*=
     \s*(?P<value>(
-        %(INTEGER)s
-        | %(HEX)s
+        %(HEX)s
+        | %(INTEGER)s
         | %(CHARS)s
         | %(IDENTIFIER)s
         ))
@@ -308,6 +308,7 @@ class NamedEnum(ScanningToken):
     ''')
     endtoken = NamedEnumEnd
     lexicon = [
+        CompilerDirective,
         InsignificantWhitespace,
         BlockComment,
         SingleLineComment,
@@ -369,21 +370,85 @@ class Struct(Token):
     };
     ''')
 
-class NamedStruct(Token):
-    # XXX handle comments? need its own internal parser?
+class NamedStructEnd(Token):
     pattern = pattern(r'''
-    typedef
-    \s+(struct|union)
-    \s*(?P<structname>%(IDENTIFIER)s)?
-    \s*
-    {
-    (?P<body>%(BRACES)s)
-    }
-    \s*%(IDENTIFIER)s
+    \s*}
+    \s*(?P<name>%(IDENTIFIER)s)
     (\s*%(AVAILABLE)s)?
     \s*;
     ''')
     example = example(r'''
+        } FooBarBazWible;
+        } FooBar AVAILABLE_MAC_OS_X_10_3_AND_LATER;
+    ''')
+
+class NestedStructMember(Token):
+    pattern = pattern(r'''
+    \s*union\s+(?P<structname>%(IDENTIFIER)s)?
+    \s*{\s*
+        (?P<body>[^}]*)
+    }\s+(?P<name>%(IDENTIFIER)s)\s*;
+    ''')
+    example=example('''
+    union {
+        int a;
+        int b;
+    } c;
+    union foo {
+        int my;
+        int thy;
+    } foo;
+    ''')
+
+class StructMember(Token):
+    pattern = pattern(r'''
+    (const\s+)?
+    (?P<type>%(IDENTIFIER)s%(INDIRECTION)s*)
+    \s*(const\s+)?
+    (?P<name>
+        %(IDENTIFIER)s
+        (
+            \s*,\s*
+            %(INDIRECTION)s*
+            \s*(const\s+)?
+            %(IDENTIFIER)s
+        )*
+    )
+    (?:\s*\[\s*\]\s*|\b)
+    (
+        (\s*//(?P<comment>[^\n]*)(\n|$))?
+        (?:\s+%(AVAILABLE)s)
+    )?
+    ;
+    ''')
+    example = example(r'''
+    const double FooBar;
+    const NSString *foo;
+    NSString *foo;
+    NSString* const foo;
+    NSString* const foo // argh a comment
+        AVAILABLE_SOMEWHERE;
+    NSString * const Foo;
+    CFStringRef cfFoo AVAILABLE_MAC_OSX_10_8;
+    const char foosball[] AVAILABLE_NEVER;
+    ''')
+
+class NamedStruct(ScanningToken):
+    # XXX handle comments? need its own internal parser?
+    pattern = pattern(r'''
+    typedef
+    \s+(?P<structtype>(struct|union))
+    \s*(?P<structname>%(IDENTIFIER)s)?
+    \s*{\s*
+    ''')
+    endtoken = NamedStructEnd
+    lexicon = [
+        CompilerDirective,
+        NestedStructMember,
+        StructMember,
+    ]
+    example = example(r'''
+    typedef struct { } NSEmptyStruct;
     typedef struct {unsigned long v;} NSSwappedFloat;
     typedef struct { int bar; } FooBar;
     typedef struct {
@@ -411,6 +476,7 @@ class Enum(ScanningToken):
     ''')
     endtoken = EnumEnd
     lexicon = [
+        CompilerDirective,
         InsignificantWhitespace,
         BlockComment,
         SingleLineComment,
