@@ -98,6 +98,11 @@ class NSLogTest (unittest.TestCase):
             data = self.stopCaptureStderr()
             self.assert_("This is a test %@" in data, data)
 
+    def testSpotlight(self):
+        if hasattr(Foundation, 'NSMetadataQuery'):
+            self.assert_(hasattr(Foundation, 'NSMetadataQueryDidFinishGatheringNotification'))
+            self.assert_(isinstance(Foundation.NSMetadataQueryDidFinishGatheringNotification, unicode))
+
 
 if __name__ == "__main__":
     unittest.main()
