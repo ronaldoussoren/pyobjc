@@ -12,7 +12,7 @@ from dupfile import *
 
 ON_OSX= (sys.platform == "darwin")
 
-MATCH_RE=re.compile(r'NSString\s*\*\s*(const\s+)?([A-Za-z_][A-Za-z0-9_]*(\s*,\s*\*\s*[A-Za-z_][A-Za-z0-9_]*)*)(\s+AVAILABLE_\w+)?;')
+MATCH_RE=re.compile(r'NSString\s*\*\s*(const\s+)?([A-Za-z_][A-Za-z0-9_]*(\s*,\s*\*\s*[A-Za-z_][A-Za-z0-9_]*)*)(\s+AVAILABLE_\w+)?(\s+NSMQA1)?;')
 
 def entry(fp, val, ignore):
     vals = val.split(',')
