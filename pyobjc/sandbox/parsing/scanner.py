@@ -125,13 +125,19 @@ class ScanningToken(Token):
         if self.endtoken in self.lexicon:
             raise ValueError, "endtoken is present in lexicon"
         end = match.end()
+
+        if self.regex is not None:
+            self.match = self.regex.match(match.string, *match.span())
+        else:
+            self.match = match
+
         if self.scanner is None:
             lex = [self.endtoken]
             lex.extend(self.lexicon)
             self.scanner = Scanner(lex)
 
         scanner = self.scanner.iterscan(match.string, dead=self.dead, idx=end)
-        matches = self._matches = []
+        matches = self._matches = [ ]
         for match in scanner:
             if match is None:
                 continue
