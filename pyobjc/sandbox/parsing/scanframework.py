@@ -157,7 +157,7 @@ def do_struct(token, types, structs):
         elems.append('"="')
         for tk in body:
             if isinstance(tk, StructMember):
-                tp = tk['type']
+                tp = normalize_whitespace(tk['type'])
                 nm = tk['name']
                 nm = [ n.strip() for n in nm.split(',') ]
                 fieldnames.extend(nm)
@@ -165,13 +165,13 @@ def do_struct(token, types, structs):
                 try:
                     etp = types[tp]
                 except KeyError:
-                    print "Ignore hard struct"
+                    print "Ignore hard struct", token
                     return
 
                 elems.extend([types[tp]]*len(nm))
 
             elif isinstance(tk, NestedStructMember):
-                print "Ignore hard struct"
+                print "Ignore hard struct", token
                 return
         
     elems.append('objc._C_STRUCT_E')
@@ -182,6 +182,12 @@ def do_struct(token, types, structs):
     structs.append('%s = objc.createStructType("%s", _%s_encoded, %s, "")\n'%(
         externalname, externalname, externalname, fieldnames))
 
+def normalize_whitespace(value):
+    value = value.replace('\t', ' ')
+    while '  ' in value:
+        value = value.replace('  ', ' ')
+    return value
+
 
 def makeInit(framework, out):
     framework_name = filter(None, os.path.split(framework))[0]
@@ -191,6 +197,7 @@ def makeInit(framework, out):
         'id': 'objc._C_ID',
         'NSString *': 'objc._C_ID',
         'NSString*': 'objc._C_ID',
+        'CFStringRef': 'objc._C_ID',
 
         'char': 'objc._C_CHR',
         'unsigned char': 'objc._C_UCHR',
@@ -219,8 +226,6 @@ def makeInit(framework, out):
         BlockComment,
         SingleLineComment,
         CPPCrap,
-        ForwardClassReference,
-        Interface,
         UninterestingStruct, # XXX: Not sure about this
     ])
     dependencies = set()
@@ -231,11 +236,12 @@ def makeInit(framework, out):
     structs = []
     for token in ifilter(None, f.scanframework(framework)):
         if isinstance(token, GlobalThing):
-            if token['type'] not in types:
+            tp = normalize_whitespace(token['type'])
+            if tp not in types:
                 print 'ignore', token
                 continue
 
-            globthings.append('        (%r, %s),\n' % (unicode(token['name']), types[token['type']]))
+            globthings.append('        (%r, %s),\n' % (unicode(token['name']), types[tp]))
         elif isinstance(token, (Enum, NamedEnum)):
             for s in do_enum(token):
                 enums.append(s)
@@ -276,6 +282,11 @@ def makeInit(framework, out):
         elif isinstance(token, Protocol):
             # TODO: generate informal-protocol definition
             pass
+
+        elif isinstance(token, (Interface, ForwardClassReference)):
+            # Class definition: make the type known to the type table
+            types[token['name'] + '*'] = types['id']
+            types[token['name'] + ' *'] = types['id']
 
         elif isinstance(token, MacroDefine):
             # What can we do for these?
