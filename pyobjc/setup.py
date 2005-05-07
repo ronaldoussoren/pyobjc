@@ -241,6 +241,7 @@ DiscRecordingUIDepends = dict(depends=INCFILES)
 SyncServicesDepends = dict(depends=INCFILES)
 XgridFoundationDepends = dict(depends=INCFILES)
 QTKitDepends = dict(depends=INCFILES)
+QuartzDepends = dict(depends=INCFILES)
 
 FoundationPackages, FoundationExtensions = \
         IfFrameWork('Foundation.framework', [ 'Foundation' ], [
@@ -477,6 +478,21 @@ QTKitPackages, QTKitExtensions = \
                       ),
         ], headername="QTKit.h")
 
+QuartzPackages, QuartzExtensions = \
+        IfFrameWork('Quartz.framework', [ 'Quartz' ], [
+            Extension('Quartz._Quartz',
+                      [ 'Modules/Quartz/_Quartz.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=frameworks(
+                        'Quartz',
+                        'Foundation'
+                      ),
+                      **QuartzDepends
+                      ),
+        ], headername="Quartz.h")
+
 AppleScriptKitPackages, AppleScriptKitExtensions = \
         IfFrameWork('AppleScriptKit.framework', [ 'AppleScriptKit' ], [
             Extension('AppleScriptKit._AppleScriptKit',
@@ -526,6 +542,7 @@ packages = (
     SyncServicesPackages +
     XgridFoundationPackages +
     QTKitPackages +
+    QuartzPackages +
 
     [
         'PyObjCTools',
@@ -586,6 +603,7 @@ dist = setup(
        + AppleScriptKitExtensions
        + AutomatorExtensions
        + QTKitExtensions
+       + QuartzExtensions
        + CoreDataExtensions
        + DiscRecordingExtensions
        + DiscRecordingUIExtensions
