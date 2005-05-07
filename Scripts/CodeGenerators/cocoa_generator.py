@@ -63,6 +63,9 @@ if sys.platform == "darwin":
 
     EXCHND_HDRS=pathjoin(FRAMEWORKS, "ExceptionHandling.framework", "Headers")
     QTKIT_HDRS=pathjoin(FRAMEWORKS, "QTKit.framework", "Headers")
+    QUARTZ_HDRS=pathjoin(FRAMEWORKS, "Quartz.framework", "Headers")
+    QUARTZ2_HDRS=pathjoin(FRAMEWORKS, "Quartz.framework", "Frameworks", "QuartzComposer.framework", "Headers")
+    QUARTZ3_HDRS=pathjoin(FRAMEWORKS, "Quartz.framework", "Frameworks", "PDFKit.framework", "Headers")
 
 else:
     # This is probably incorrect, and was added to help a future
@@ -116,6 +119,9 @@ else:
     SYNCSERVICES_HDRS=None
     XGRIDFOUNDATION_HDRS=None
     QTKIT_HDRS=None
+    QUARTZ_HDRS=None
+    QUARTZ2_HDRS=None
+    QUARTZ3_HDRS=None
 
 
 
@@ -723,3 +729,23 @@ if SECINT_HDRS is not None:
     strconst_generator.generate(
             SECINT_HDRS,
             'build/codegen/_SecInt_Str.inc')
+
+if QUARTZ_HDRS is not None:
+    enum_generator.generate(
+            QUARTZ_HDRS,
+            'build/codegen/_Quartz_Enum.inc', emit_imports=0, emit_footer=0)
+    enum_generator.generate(
+            QUARTZ2_HDRS,
+            'build/codegen/_Quartz2_Enum.inc', emit_imports=0, emit_header=0, emit_footer=0)
+    enum_generator.generate(
+            QUARTZ3_HDRS,
+            'build/codegen/_Quartz3_Enum.inc', emit_imports=0, emit_header=0)
+    strconst_generator.generate(
+            QUARTZ_HDRS,
+            'build/codegen/_Quartz_Str.inc', emit_footer=0)
+    strconst_generator.generate(
+            QUARTZ2_HDRS,
+            'build/codegen/_Quartz2_Str.inc', emit_header=0, emit_footer=0)
+    strconst_generator.generate(
+            QUARTZ3_HDRS,
+            'build/codegen/_Quartz3_Str.inc', emit_header=0)

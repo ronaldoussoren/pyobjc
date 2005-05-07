@@ -80,7 +80,8 @@ def process_file(outfp, filename, ignore):
             entry(outfp, ident, ignore)
 
 
-def generate(dirname, fn = None, ignore=(), filter = lambda x: 1):
+def generate(dirname, fn = None, ignore=(), filter = lambda x: 1,
+            emit_header=1, emit_footer=1):
     if not os.path.exists(dirname): return
 
     if fn:
@@ -90,19 +91,22 @@ def generate(dirname, fn = None, ignore=(), filter = lambda x: 1):
         fp = sys.stdout
         del sys
 
-    fp.write("/*\n")
-    fp.write(" * String constants. This file is generated from files in\n")
-    fp.write(" * %s\n"%dirname)
-    fp.write(" */\n")
-    fp.write("static struct vartable string_table[] = {\n")
+    if emit_header:
+        fp.write("/*\n")
+        fp.write(" * String constants. This file is generated from files in\n")
+        fp.write(" * %s\n"%dirname)
+        fp.write(" */\n")
+        fp.write("static struct vartable string_table[] = {\n")
     fnames = [ os.path.join(dirname, fn)
                         for fn in os.listdir(dirname)
                         if fn.endswith('.h') and filter(fn) ]
     fnames.sort()
     for f in fnames:
         process_file(fp, f, ignore)
-    fp.write("\t{0, 0} /* Sentinel */\n")
-    fp.write("};\n")
+
+    if emit_footer:
+        fp.write("\t{0, 0} /* Sentinel */\n")
+        fp.write("};\n")
 
 if __name__ == "__main__":
     import sys

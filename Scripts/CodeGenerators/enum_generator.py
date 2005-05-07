@@ -103,7 +103,7 @@ def process_file(outfp, filename):
                 entry(outfp, ident)
 
 
-def generate(dirname, fn = None, filter = lambda x: 1, ignore_files=()):
+def generate(dirname, fn = None, filter = lambda x: 1, ignore_files=(), emit_imports=1, emit_header=1, emit_footer=1):
     if not os.path.exists(dirname): return
 
     if fn:
@@ -115,21 +115,26 @@ def generate(dirname, fn = None, filter = lambda x: 1, ignore_files=()):
                         for fn in os.listdir(dirname)
                         if fn.endswith('.h') and filter(fn) ]
     fnames.sort()
-    for fname in fnames:
-        fmwkname = os.path.dirname(os.path.dirname(fname))
-        if fmwkname.endswith('.framework'):
-            fp.write("#import <%s/%s>\n" % (os.path.splitext(os.path.basename(fmwkname))[0], os.path.basename(fname)))
-    fp.write("/*\n")
-    fp.write(" * Enumeration constants. This file is generated from files in\n")
-    fp.write(" * %s\n"%dirname)
-    fp.write(" */\n")
-    fp.write("static struct inttable enum_table[] = {\n")
+    if emit_imports:
+        for fname in fnames:
+            fmwkname = os.path.dirname(os.path.dirname(fname))
+            if fmwkname.endswith('.framework'):
+                fp.write("#import <%s/%s>\n" % (os.path.splitext(os.path.basename(fmwkname))[0], os.path.basename(fname)))
+
+    if emit_header:
+        fp.write("/*\n")
+        fp.write(" * Enumeration constants. This file is generated from files in\n")
+        fp.write(" * %s\n"%dirname)
+        fp.write(" */\n")
+        fp.write("static struct inttable enum_table[] = {\n")
     for f in fnames:
         if os.path.basename(f) in ignore_files:
             continue
         process_file(fp, f)
-    fp.write("\t{0, 0, 0} /* Sentinel */\n")
-    fp.write("};\n")
+
+    if emit_footer:
+        fp.write("\t{0, 0, 0} /* Sentinel */\n")
+        fp.write("};\n")
     fp.close()
 
 if __name__ == "__main__":
