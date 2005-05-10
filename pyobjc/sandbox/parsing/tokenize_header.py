@@ -76,15 +76,22 @@ class CPPCrap(Token):
     ''')
 
 class BlockComment(Token):
+    # Note: we use non-greedy matching instead of spelling out that the
+    # contents of a comment cannot contain '*/' because we ran into 
+    # limitation of the regexp-engine when parsing files with very big
+    # comments, such as in SystemConfiguration.framework
     pattern = pattern(r'''
     \/\*
-    (?P<comment>([^*]|\*(?!/))*)
+    (?P<comment>.*?)
     \*\/
     ''')
     example = example('''
     /*************\t\tThis is an annoying one\t\t**********/
     /* this is a block comment */
     ''')
+    # The really nasty one is this:
+    # /* foo \*/ bar */
+    # Don't worry about it until we see this in real headers
 
 class SingleLineComment(Token):
     pattern = pattern(r'//(?P<comment>[^\n]*)(\n|$)')
@@ -382,9 +389,22 @@ class NamedStructEnd(Token):
         } FooBar AVAILABLE_MAC_OS_X_10_3_AND_LATER;
     ''')
 
+
+class FunctionStructMember(Token):
+    pattern = pattern(r'''
+    \s*(?P<returns>%(IDENTIFIER)s%(INDIRECTION)s*)
+    \s*\(\s*\*\s*%(IDENTIFIER)s\s*\)
+    \(
+        (?P<args>\s*[^)]*)
+    \);
+    ''')
+    example = example(r'''
+        void* (*pfunc)(int, float);
+    ''')
+
 class NestedStructMember(Token):
     pattern = pattern(r'''
-    \s*union\s+(?P<structname>%(IDENTIFIER)s)?
+    \s*(union|struct)\s+(?P<structname>%(IDENTIFIER)s)?
     \s*{\s*
         (?P<body>[^}]*)
     }\s+(?P<name>%(IDENTIFIER)s)\s*;
@@ -398,6 +418,10 @@ class NestedStructMember(Token):
         int my;
         int thy;
     } foo;
+    struct {
+        int foo;
+        int bar;
+    } bar;
     ''')
 
 class StructMember(Token):
@@ -445,6 +469,7 @@ class NamedStruct(ScanningToken):
     lexicon = [
         CompilerDirective,
         NestedStructMember,
+        FunctionStructMember,
         StructMember,
     ]
     example = example(r'''
@@ -466,6 +491,9 @@ class NamedStruct(ScanningToken):
         } foo;
         int bar;
     } FooBarStruct;
+    typedef struct {
+        int (*pfunc)(void);
+    } FunctionStruct;
     ''')
  
 class Enum(ScanningToken):
@@ -497,70 +525,106 @@ class Enum(ScanningToken):
     ''')
 
 class FunctionEnd(Token):
-    # XXX - UNUSED
     pattern = pattern(r'''
     \)
+    (\s*(?P<available>%(AVAILABLE)s))?
     \s*;
     ''')
     example = example(r'''
     );
     )  ;
+    ) AVAILABLE_SOMEHOW;
     ''')
 
 class FunctionParameter(Token):
-    # XXX - UNUSED
     pattern = pattern(r'''
-    (%(IDENTIFIER)s\s*)+
-    \s*%(INDIRECTION)s
-    \s*%(IDENTIFIER)s?
-    \s*,?\s*
+    \s*(?P<type>
+        (%(KEYWORD)s\s*)*
+        %(IDENTIFIER)s\s*
+        (%(INDIRECTION)s|\s+%(KEYWORD)s)*
+        \s*
+        (?<=\*|\s)
+    )\s*
+    (?P<name>%(IDENTIFIER)s\s*)?\s*,?\s*
     ''')
     example = example(r'''
+    NSString* foo
     NSString *foo, NSString *bar
     ''')
 
-#class ExportFunction(ScanningToken):
-#    pattern = pattern(r'''
-#    %(EXPORT)s
-#    \s*(?P<returns>%(IDENTIFIER)s%(INDIRECTION)s*)
-#    \s*%(IDENTIFIER)s
-#    \s*\(
-#    ''')
-#    endtoken = FunctionEnd
-#    lexicon = [
-#        InsignificantWhitespace,
-#        FunctionParameter,
-#    ]
-#    example = example(r'''
-#    FOUNDATION_EXPORT SomeResult **SomeName(const Foo *, const Foo *Bar);
-#    FOUNDATION_EXPORT SomeResult SomeName(int,float);
-#    ''')
-
-class ExportFunction(Token):
-    # XXX handle comments? need its own internal parser?
+class ExportVoidFunction (Token):
     pattern = pattern(r'''
     %(EXPORT)s?
     \s*(?P<returns>
-        (%(KEYWORD)s\s*)*
+        (%(KEYWORD)s(\s+%(KEYWORD)s)*)?
         %(IDENTIFIER)s
         (%(INDIRECTION)s|\s+%(KEYWORD)s)*
     )
     (\s*(?P<protocols>%(PROTOCOLS)s))?
+    \s*(\s%(IDENTIFIER)s\s)?
+    \s*(\/\*.*?\*\/)?
+    \s*(?P<name>%(IDENTIFIER)s)
+    \s*\(\s*void\s*\)
+    (\s*(?P<available>%(AVAILABLE)s))?;''')
+
+
+class ExportFunction(ScanningToken):
+    pattern = pattern(r'''
+    %(EXPORT)s?
+    \s*(?P<returns>
+        (%(KEYWORD)s(\s+%(KEYWORD)s)*)?
+        %(IDENTIFIER)s
+        (%(INDIRECTION)s|\s+%(KEYWORD)s)*
+    )
+    (\s*(?P<protocols>%(PROTOCOLS)s))?
+    \s*(\s%(IDENTIFIER)s\s)?
+    \s*(\/\*.*?\*\/)?
     \s*(?P<name>%(IDENTIFIER)s)
     \s*\(
-        (?P<args>\s*[^)]*)
-    \s*\)
-    (\s*(?P<available>%(AVAILABLE)s))?
-    \s*;
     ''')
+    #(\s*\/\*.*?\*\/\s*)?
+    endtoken = FunctionEnd
+    lexicon = [
+        InsignificantWhitespace,
+        FunctionParameter,
+    ]
     example = example(r'''
+    extern NSString *ABLocalizedPropertyOrLabel(NSString *propertyOrLabel);
     APPKIT_EXTERN NSString *NSSomething(NSString *arg, NSString *arg)
         AVAILABLE_SOMEWHERE;
     FOUNDATION_EXPORT void *NSSomething(unsigned long arg, unsigned long arg) AVAILABLE_SOMEWHERE;
     FOUNDATION_EXPORT SomeResult <NSObject> SomeName(const Foo *, const Foo *Bar);
     FOUNDATION_EXPORT SomeResult **SomeName(const Foo *, const Foo *Bar);
     FOUNDATION_EXPORT SomeResult SomeName(int,float);
+    NPError NP_LOADSS   NP_New(void);
+    CFArrayRef /* of SCFoo's */ SCNetworkInterfaceCopyAll    (void) AVALABLE_FOO;
     ''')
+
+#!# class ExportFunction(Token):
+#!#     # XXX handle comments? need its own internal parser?
+#!#     pattern = pattern(r'''
+#!#     %(EXPORT)s?
+#!#     \s*(?P<returns>
+#!#         (%(KEYWORD)s\s*)*
+#!#         %(IDENTIFIER)s
+#!#         (%(INDIRECTION)s|\s+%(KEYWORD)s)*
+#!#     )
+#!#     (\s*(?P<protocols>%(PROTOCOLS)s))?
+#!#     \s*(?P<name>%(IDENTIFIER)s)
+#!#     \s*\(
+#!#         (?P<args>\s*[^)]*)
+#!#     \s*\)
+#!#     (\s*(?P<available>%(AVAILABLE)s))?
+#!#     \s*;
+#!#     ''')
+#!#     example = example(r'''
+#!#     APPKIT_EXTERN NSString *NSSomething(NSString *arg, NSString *arg)
+#!#         AVAILABLE_SOMEWHERE;
+#!#     FOUNDATION_EXPORT void *NSSomething(unsigned long arg, unsigned long arg) AVAILABLE_SOMEWHERE;
+#!#     FOUNDATION_EXPORT SomeResult <NSObject> SomeName(const Foo *, const Foo *Bar);
+#!#     FOUNDATION_EXPORT SomeResult **SomeName(const Foo *, const Foo *Bar);
+#!#     FOUNDATION_EXPORT SomeResult SomeName(int,float);
+#!#     ''')
 
 class StaticInlineFunction(Token):
     # XXX need to figure out how to find a close brace
@@ -612,14 +676,15 @@ LEXICON = [
     Enum,
     NamedStruct,
     Struct,
-    ExportFunction,
-    StaticInlineFunction,
-    UninterestingTypedef,
-    UninterestingStruct,
     MacroDefine,
     CPPDecls,
     CPPCrap,
     CompilerDirective,
+    StaticInlineFunction,
+    ExportVoidFunction,
+    ExportFunction,
+    UninterestingTypedef,
+    UninterestingStruct,
 ]
 
 if __name__ == '__main__':
@@ -627,6 +692,7 @@ if __name__ == '__main__':
     import re
     import sys
     frameworks = """
+    SystemConfiguration
     AddressBook
     AppKit
     ExceptionHandling
@@ -650,9 +716,9 @@ if __name__ == '__main__':
     SecurityInterface
     System
     SystemConfiguration
-    #Security
-    #Carbon
-    #CoreServices
+    Security
+    Carbon
+    CoreServices
     """.split()
     files = sys.argv[1:]
     if not files:
