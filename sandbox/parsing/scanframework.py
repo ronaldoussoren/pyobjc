@@ -1,3 +1,16 @@
+# TODO
+# - documentation
+# - scan other frameworks for type definitions
+#   (fall back to compiling test programs if all else fails)
+# - generate wrappers for 'static inline' functions
+# - parse protocols and categories -> generate informal_protocol definitions
+# - deal with embedded frameworks
+# - add hinting facility: which definitions should not be wrapped, hints
+#   about input/output arguments, ... . 
+# - compare results of scanframeworks with those of the 'old' generator
+#   scripts
+# - test, test and even more testing
+# - integrate into build process
 import os
 try:
     set
@@ -102,16 +115,11 @@ class FrameworkScanner(object):
             pdb.Pdb().set_trace()
         return self._scanner.iterscan(file(fn).read(), dead=deadraise)
 
-class EnumCollector(object):
-    def __init__(self):
-        self.seen = []
-        self.code = []
-
-    def add(self, enum):
-        value = -1
-        for token in enum.matches():
-            if isinstance(token, EnumValueMember):
-                value = token['value']
+def contains_instances_of(iterator, types):
+    for i in iterator:
+        if isinstance(i, types):
+            return True
+    return False
 
 def do_enum(enum):
     if isinstance(enum, NamedEnum):
@@ -165,7 +173,6 @@ def do_struct(token, types, structs):
                 try:
                     etp = types[tp]
                 except KeyError:
-                    print "Ignore hard struct", token
                     return
 
                 elems.extend([types[tp]]*len(nm))
@@ -183,11 +190,51 @@ def do_struct(token, types, structs):
         externalname, externalname, externalname, fieldnames))
 
 def normalize_whitespace(value):
-    value = value.replace('\t', ' ')
+    value = value.strip().replace('\t', ' ')
     while '  ' in value:
         value = value.replace('  ', ' ')
     return value
 
+def do_function(token, types, functions):
+    returns = normalize_whitespace(token['returns'])
+    name = token['name'].strip()
+
+    if isinstance(token, ExportVoidFunction):
+        if returns in types:
+            functions.append("\n        (%r, %s, '%s %s(void)'),"%(
+                    name, 
+                    types[returns],
+                    returns.replace(' *', '*'), name))
+        else:
+            print "Ignore function %s (retval) %r"%(name, returns)
+        return
+
+    if returns not in types and returns != 'void':
+        print "Ignore function %s (retval) %r"%(name, returns)
+        return
+
+    arglist = []
+    if returns == 'void':
+        argtypes = ['_objc._C_VOID',]
+    else:
+        argtypes = [types[returns],]
+
+    for arg in token.matches()[:-1]:
+        tp = normalize_whitespace(arg['type'])
+        nm = arg['name']
+        if nm is None:
+            arglist.append('%s'%(tp.replace(' *', '*'),))
+        else:
+            nm = nm.strip()
+            arglist.append('%s %s'%(tp.replace(' *', '*'), nm))
+        if tp not in types:
+            print 'Ignore function %s (arg) nm: %r, tp: %r'%(name, nm, tp)
+            return
+        argtypes.append(types[tp])
+
+    encoded = "''.join(("+ ', '.join(argtypes) + ",))"
+    functions.append("\n        (%r, %s, '%s %s(%s)'),"%(
+        name, encoded, returns.replace(' *', '*'), name, ', '.join(arglist)))
 
 def makeInit(framework, out):
     framework_name = filter(None, os.path.split(framework))[0]
@@ -198,13 +245,18 @@ def makeInit(framework, out):
         'NSString *': 'objc._C_ID',
         'NSString*': 'objc._C_ID',
         'CFStringRef': 'objc._C_ID',
+        'SEL': 'objc._C_SEL',
+        'BOOL': 'objc._C_BOOL',
+        'Class': 'objc._C_CLS',
 
         'char': 'objc._C_CHR',
         'unsigned char': 'objc._C_UCHR',
 
         'int': 'objc._C_INT',
         'signed int': 'objc._C_INT',
+        'signed': 'objc._C_INT',
         'unsigned int': 'objc._C_UINT',
+        'unsigned': 'objc._C_UINT',
 
         'short': 'objc._C_SHT',
         'signed short': 'objc._C_SHT',
@@ -226,7 +278,10 @@ def makeInit(framework, out):
         BlockComment,
         SingleLineComment,
         CPPCrap,
-        UninterestingStruct, # XXX: Not sure about this
+
+        # Stuff below here might be interesting
+        UninterestingStruct, 
+        MacroDefine,
     ])
     dependencies = set()
     globthings = []
@@ -234,15 +289,24 @@ def makeInit(framework, out):
     simple_defines=[]
     imports = []
     structs = []
+    functions = []
     for token in ifilter(None, f.scanframework(framework)):
         if isinstance(token, GlobalThing):
+
+            # Skip private variables
+            if token['name'][0] == '_': continue
+
             tp = normalize_whitespace(token['type'])
             if tp not in types:
                 print 'ignore', token
                 continue
 
-            globthings.append('        (%r, %s),\n' % (unicode(token['name']), types[tp]))
+            globthings.append('\n        (%r, %s),' % (unicode(token['name']), types[tp]))
         elif isinstance(token, (Enum, NamedEnum)):
+            if isinstance(token, NamedEnum):
+                nm = token.matches()[-1]['name'].strip()
+                types[nm] = types['int']
+
             for s in do_enum(token):
                 enums.append(s)
         elif isinstance(token, Dependency):
@@ -255,7 +319,11 @@ def makeInit(framework, out):
 
         
         elif isinstance(token, NamedStruct):
-            # Dunno how to wrap C unions
+
+            # Skip structs containing function pointers, those cannot be
+            # wrapped automaticly (yet?)
+            if contains_instances_of(token.matches(), FunctionStructMember): continue
+
             do_struct(token, types, structs)
 
         elif isinstance(token, UninterestingTypedef):
@@ -280,7 +348,8 @@ def makeInit(framework, out):
 
 
         elif isinstance(token, Protocol):
-            # TODO: generate informal-protocol definition
+            # TODO: generate informal-protocol definition. 
+            # Need to enhance the tokenizer for that
             pass
 
         elif isinstance(token, (Interface, ForwardClassReference)):
@@ -288,13 +357,8 @@ def makeInit(framework, out):
             types[token['name'] + '*'] = types['id']
             types[token['name'] + ' *'] = types['id']
 
-        elif isinstance(token, MacroDefine):
-            # What can we do for these?
-            pass
-
-        elif isinstance(token, ExportFunction):
-            # XXX
-            pass
+        elif isinstance(token, (ExportFunction, ExportVoidFunction)):
+            do_function(token, types, functions)
 
         elif isinstance(token, StaticInlineFunction):
             # TODO: emit wrapper inside a C file.
@@ -314,6 +378,7 @@ def makeInit(framework, out):
     print >>out, '\n# struct definitions'
     out.writelines(structs)
     bundle_variables = ''.join(globthings)
+    bundle_functions = ''.join(functions)
     print >>out, """
 
 def _initialize():
@@ -322,8 +387,10 @@ def _initialize():
     p = objc.pathForFramework(%(framework_path)r)
     objc.loadBundle(%(framework_name)r, globals(), bundle_path=p)
     b = NSBundle.bundleWithPath_(p)
-    objc.loadBundleVariables(b, globals(), [
-%(bundle_variables)s
+    objc.loadBundleVariables(b, globals(), [%(bundle_variables)s
+    ])
+
+    objc.loadBundleFunctions(b, globals(), [%(bundle_functions)s
     ])
 
     # XXX - hack to fix-up NSError** args
