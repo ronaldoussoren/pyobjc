@@ -371,12 +371,18 @@ def makeInit(framework, out):
                 pdb.Pdb().set_trace()
     print >>out, '# Imports'
     out.writelines(imports)
-    print >>out, '\n# Enumerations'
-    out.writelines(enums)
-    print >>out, '\n# Simple defines'
-    out.writelines(simple_defines)
-    print >>out, '\n# struct definitions'
-    out.writelines(structs)
+    if enums:
+        print >>out, '\n# Enumerations'
+        out.writelines(enums)
+
+    if simple_defines:
+        print >>out, '\n# Simple defines'
+        out.writelines(simple_defines)
+
+    if structs:
+        print >>out, '\n# struct definitions'
+        out.writelines(structs)
+
     bundle_variables = ''.join(globthings)
     bundle_functions = ''.join(functions)
     print >>out, """
@@ -386,32 +392,27 @@ def _initialize():
     import objc
     p = objc.pathForFramework(%(framework_path)r)
     objc.loadBundle(%(framework_name)r, globals(), bundle_path=p)
+    """ % locals()
+
+    if bundle_variables or bundle_functions:
+        print >>out, """\
     b = NSBundle.bundleWithPath_(p)
+"""
+
+    if bundle_variables:
+        print >>out, """\
     objc.loadBundleVariables(b, globals(), [%(bundle_variables)s
     ])
+""" % locals()
 
+    if bundle_functions:
+        print >>out, """\
     objc.loadBundleFunctions(b, globals(), [%(bundle_functions)s
     ])
-
-    # XXX - hack to fix-up NSError** args
-    #for cls in globals().values():
-    #    if not isinstance(cls, objc.objc_class):
-    #        continue
-    #    for selname in dir(cls):
-    #        if selname.startswith('_'):
-    #            continue
-    #        o = getattr(cls, selname, None)
-    #        if not isinstance(o, objc.selector):
-    #            continue
-    #        if o.selector.endswith(':error:') and o.signature.endswith('^@'):
-    #            if o.signature[-3] in 'onN':
-    #                continue
-    #            sel = objc.selector(None,
-    #                selector=o.selector,
-    #                o.signature[:-2] + 'n^@')
-    #            setattr(cls, selname, sel)
+""" % locals()
+    print >>out, """
 _initialize()
-    """ % locals()
+"""
 
 def makeWrapper(fmwk):
     try:
