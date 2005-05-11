@@ -61,6 +61,11 @@ try:
 except ImportError:
     pass
 
+try:
+    import CoreData
+except ImportError:
+    pass
+
 PTRSIG={}
 
 

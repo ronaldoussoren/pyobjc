@@ -10,11 +10,11 @@ Python classes and Objective-C code</title>
 <h2>Python classes and Objective-C code</h2>
 <!-- This file is formatted using the rules for reStructuredText -->
 <!-- Version 0.2 -->
-<h2><a name="introduction">Introduction</a></h2>
+<h2><a>Introduction</a></h2>
 <p>PyObjC is a proxy between Objective-C and Python and allows access to Python
 classes from Objective-C and vice versa.  PyObjC also allows you to subclass
 Objective-C classes from Python.</p>
-<h2><a name="accessing-python-objects-from-objective-c">Accessing Python objects from Objective-C</a></h2>
+<h2><a>Accessing Python objects from Objective-C</a></h2>
 <p>All Python objects can be accessed from Objective-C through proxy objects. 
 Whenever a Python object crosses the line from Python to Objective-C a proxy
 object is created (of class <code><span>OC_PythonObject</span></code>, a subclass of <code><span>NSProxy</span></code>).
@@ -47,13 +47,13 @@ This allows you to use instances of classes such as <code><span>buffer</span></c
 </ul>
 <p>The special cases allow for more transparent bridging between Python and
 Objective-C.</p>
-<h2><a name="accessing-objective-c-objects-from-python">Accessing Objective-C objects from Python</a></h2>
+<h2><a>Accessing Objective-C objects from Python</a></h2>
 <p>Objective-C objects are accessed through proxy objects that forward method
 calls from Python to Objective-C.  All proxy objects are instances of 
 <code><span>objc.objc_object</span></code>, or a subclass of this class.</p>
 <p>See the section 'Method protocol' for a description of how PyObjC translates 
 between Python and Objective-C method calls.</p>
-<h2><a name="accessing-objective-c-classes-from-python">Accessing Objective-C classes from Python</a></h2>
+<h2><a>Accessing Objective-C classes from Python</a></h2>
 <p>Objective-C classes are also accessed through proxy objects, but those are
 subclasses of <code><span>objc.objc_class</span></code>.  The proxies for Objective-C classes are 
 classes in Python.</p>
@@ -122,7 +122,7 @@ class MyClass (NSObject):
 
 # ...
 </pre>
-<h2><a name="method-protocol">Method protocol</a></h2>
+<h2><a>Method protocol</a></h2>
 <p>There is a straightforward translation from Objective-C method names to
 Python method names: Concatenate all parts of the Objective-C method name
 (without any whitespace) and then replace all colons by underscores.</p>

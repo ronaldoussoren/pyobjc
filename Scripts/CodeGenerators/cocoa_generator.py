@@ -66,6 +66,7 @@ if sys.platform == "darwin":
     QUARTZ_HDRS=pathjoin(FRAMEWORKS, "Quartz.framework", "Headers")
     QUARTZ2_HDRS=pathjoin(FRAMEWORKS, "Quartz.framework", "Frameworks", "QuartzComposer.framework", "Headers")
     QUARTZ3_HDRS=pathjoin(FRAMEWORKS, "Quartz.framework", "Frameworks", "PDFKit.framework", "Headers")
+    OSAKIT_HDRS=pathjoin(FRAMEWORKS, "OSAKit.framework", "Headers")
 
 else:
     # This is probably incorrect, and was added to help a future
@@ -119,6 +120,7 @@ else:
     SYNCSERVICES_HDRS=None
     XGRIDFOUNDATION_HDRS=None
     QTKIT_HDRS=None
+    OSAKIT_HDRS=None
     QUARTZ_HDRS=None
     QUARTZ2_HDRS=None
     QUARTZ3_HDRS=None
@@ -729,6 +731,14 @@ if SECINT_HDRS is not None:
     strconst_generator.generate(
             SECINT_HDRS,
             'build/codegen/_SecInt_Str.inc')
+
+if OSAKIT_HDRS is not None:
+    enum_generator.generate(
+            OSAKIT_HDRS,
+            'build/codegen/_OSAKit_Enum.inc')
+    strconst_generator.generate(
+            OSAKIT_HDRS,
+            'build/codegen/_OSAKit_Str.inc')
 
 if QUARTZ_HDRS is not None:
     enum_generator.generate(

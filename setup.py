@@ -242,6 +242,7 @@ SyncServicesDepends = dict(depends=INCFILES)
 XgridFoundationDepends = dict(depends=INCFILES)
 QTKitDepends = dict(depends=INCFILES)
 QuartzDepends = dict(depends=INCFILES)
+OSAKitDepends = dict(depends=INCFILES)
 
 FoundationPackages, FoundationExtensions = \
         IfFrameWork('Foundation.framework', [ 'Foundation' ], [
@@ -493,6 +494,21 @@ QuartzPackages, QuartzExtensions = \
                       ),
         ], headername="Quartz.h")
 
+OSAKitPackages, OSAKitExtensions = \
+        IfFrameWork('OSAKit.framework', [ 'OSAKit' ], [
+            Extension('OSAKit._OSAKit',
+                      [ 'Modules/OSAKit/_OSAKit.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=frameworks(
+                        'OSAKit',
+                        'Foundation'
+                      ),
+                      **OSAKitDepends
+                      ),
+        ], headername="OSAKit.h")
+
 AppleScriptKitPackages, AppleScriptKitExtensions = \
         IfFrameWork('AppleScriptKit.framework', [ 'AppleScriptKit' ], [
             Extension('AppleScriptKit._AppleScriptKit',
@@ -543,6 +559,7 @@ packages = (
     XgridFoundationPackages +
     QTKitPackages +
     QuartzPackages +
+    OSAKitPackages +
 
     [
         'PyObjCTools',
@@ -604,6 +621,7 @@ dist = setup(
        + AutomatorExtensions
        + QTKitExtensions
        + QuartzExtensions
+       + OSAKitExtensions
        + CoreDataExtensions
        + DiscRecordingExtensions
        + DiscRecordingUIExtensions
