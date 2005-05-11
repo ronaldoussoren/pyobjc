@@ -21,14 +21,12 @@ static mach_port_t exit_m_port       = MACH_PORT_NULL;
 static PyObject *signalmapping;
 
 
-static void SIGCallback(CFMachPortRef port, void *msg, CFIndex size, void *info)
+static void
+SIGCallback(CFMachPortRef port __attribute__((__unused__)), void *msg, CFIndex size __attribute__((__unused__)), void *info __attribute__((__unused__)))
 {
 	PyObject *tmp;
 	PyObject *callable;
 	int signum;
-	(void)port;     // Unused
-	(void)size;     // Unused
-	(void)info;     // Unused
 	// this is abuse of msgh_id
 	signum = ((mach_msg_header_t*)msg)->msgh_id;
 	if (!signalmapping) {
@@ -41,17 +39,21 @@ static void SIGCallback(CFMachPortRef port, void *msg, CFIndex size, void *info)
 
 		callable = PyDict_GetItem(signalmapping, tmp);
 		Py_DECREF(tmp);
-		if (!callable) break;
+		if (!callable) {
+            tmp = NULL;
+            break;
+        }
 
 		tmp = PyObject_CallFunction(callable, "i", signum);
 		Py_XDECREF(tmp);
 	} while (0);
-	if (PyErr_Occurred())
+	if (!tmp)
 		PyObjC_GIL_FORWARD_EXC();
 	PyObjC_END_WITH_GIL
 }
 
-static void HandleSIG(int signum)
+static void
+HandleSIG(int signum)
 {
 	/*
 	 * Send a mach_msg to ourselves (since that is signal safe) telling us 
@@ -98,14 +100,16 @@ static PyMethodDef machsignals_methods[] = {
 	{
 		"handleSignal",
 		(PyCFunction)machsignals_handleSignal,
-		METH_VARARGS,
+		METH_VARARGS|METH_KEYWORDS,
 		machsignals_handleSignal_doc
 	},
 	{ 0, 0, 0, 0}
 };
 
 void init_machsignals(void);
-void init_machsignals(void) {
+void
+init_machsignals(void)
+{
 	PyObject *m;
 	PyObject *d;
 	CFMachPortRef e_port;
