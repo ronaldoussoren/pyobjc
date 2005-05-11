@@ -803,7 +803,7 @@ PyDoc_STRVAR(PyObjC_loadBundleFunctions_doc,
 	"otherwise this method raises objc.error when a variable cannot be \n"
 	"found.\n"
 	"\n"    
-	"variableInfo is a list of (name, signature, doc) triples. \n"
+	"functionInfo is a list of (name, signature, doc) triples. \n"
 	"The signature is the Objective-C type specifier for the function \n"
 	"signature.");
 
