@@ -19,6 +19,8 @@
 	NSLINKMODULE_OPTION_RETURN_ON_ERROR | \
 	NSLINKMODULE_OPTION_PRIVATE)
 
+#define TRAP() __asm__ ("trap")
+
 typedef struct {
 	task_port_t target_task;
 	struct mach_header *mh;
@@ -28,11 +30,22 @@ typedef struct {
 	unsigned long func_lookup_ptr;
 } target_mach_header;
 
+static void *INJECT_pthread_entry(void *p);
+static void INJECT_test_func(void);
+static pascal void INJECT_EventLoopTimerEntry(EventLoopTimerRef inTimer, void *p);
 
 #define DEFWRAP(func) __typeof__(&func) func
 typedef struct {
+    /* internal */
+    DEFWRAP(INJECT_pthread_entry);
+    DEFWRAP(INJECT_test_func);
+    DEFWRAP(INJECT_EventLoopTimerEntry);
 	/* dyld bootstrap */
 	DEFWRAP(_dyld_func_lookup);
+    DEFWRAP(_dyld_image_count);
+    DEFWRAP(_dyld_get_image_vmaddr_slide);
+    DEFWRAP(_dyld_get_image_header);
+    DEFWRAP(_dyld_get_image_name);
 	/* dyld funcs */
 	DEFWRAP(NSAddImage);
 	DEFWRAP(NSLookupSymbolInImage);
@@ -61,7 +74,6 @@ typedef struct {
 #undef DEFWRAP
 
 typedef struct {
-	ptrdiff_t codeOffset;
 	unsigned long funcLookupPtr;
 	func_wrappers f;
 	int useMainThread;
@@ -74,8 +86,6 @@ typedef struct {
 
 /* functions */
 static void INJECT_ENTRY(ptrdiff_t codeOffset, objc_inject_param *param, size_t paramSize);
-static void *INJECT_pthread_entry(objc_inject_param *param);
-static pascal void INJECT_EventLoopTimerEntry(EventLoopTimerRef inTimer, objc_inject_param *param);
 static target_mach_header *get_target_mach_header(target_mach_header *th);
 static target_mach_header *calculate_header(target_mach_header *th);
 static kern_return_t dispose_target_mach_header(target_mach_header *th);
@@ -226,20 +236,55 @@ dispose_target_mach_header(target_mach_header *th) {
 
 /* Runs from injectee */
 static void
+INJECT_test_func(void) {
+}
+
+static void
 INJECT_ENTRY(ptrdiff_t codeOffset, objc_inject_param *param, size_t paramSize __attribute__((__unused__))) {
 	func_wrappers *f = &param->f;
-	const struct mach_header *mh;
-	param->codeOffset = codeOffset;
+#define CODE_SHIFT(func) f->func = (void *)(((char *)f->func) + codeOffset)
+    CODE_SHIFT(INJECT_pthread_entry);
+    CODE_SHIFT(INJECT_test_func);
+    CODE_SHIFT(INJECT_EventLoopTimerEntry);
+#undef CODE_SHIFT
+    f->INJECT_test_func();
 	f->_dyld_func_lookup = *((__typeof__(&f->_dyld_func_lookup))param->funcLookupPtr);
 	/* dyld */
-#define DYLD_WRAP(func) f->_dyld_func_lookup("__dyld_"#func, (unsigned long *)&f->func)
+#define DYLD_WRAP(func) f->_dyld_func_lookup("_"#func, (void **)&f->func)
+    DYLD_WRAP(_dyld_image_count);
+    DYLD_WRAP(_dyld_get_image_vmaddr_slide);
+    DYLD_WRAP(_dyld_get_image_header);
+    DYLD_WRAP(_dyld_get_image_name);
+#undef DYLD_WRAP
+#define DYLD_WRAP(func) f->_dyld_func_lookup("__dyld_"#func, (void **)&f->func)
 	DYLD_WRAP(NSAddImage);
 	DYLD_WRAP(NSLookupSymbolInImage);
 	DYLD_WRAP(NSAddressOfSymbol);
 #undef DYLD_WRAP
-#define IMAGE_WRAP(func) f->func = f->NSAddressOfSymbol(f->NSLookupSymbolInImage(mh, "_" # func, NSLOOKUPSYMBOLINIMAGE_OPTION_BIND))
+
+    // my kingdom for strcmp
+    uint32_t img_index;
+    uint32_t img_count = f->_dyld_image_count();
+    for (img_index = 0; img_index < img_count; img_index++) {
+        char *a = (char *)&param->stringTable[param->systemPathOffset];
+        char *b = (char *)f->_dyld_get_image_name(img_index);
+        while (*a != '\0' && *b != '\0' && *a == *b) {
+            a++;
+            b++;
+        }
+        if (*a == '\0' && *b == '\0') {
+            break;
+        }
+    }
+    if (img_index == img_count) {
+        // libSystem not found!
+        TRAP();
+    }
+    intptr_t slide = f->_dyld_get_image_vmaddr_slide(img_index);
+
+
+#define IMAGE_WRAP(func) f->func = (void *)(((char *)f->func) + slide)
 	/* libSystem */
-	mh = f->NSAddImage((const char *)&param->stringTable[param->systemPathOffset], NSADDIMAGE_OPTION_RETURN_ONLY_IF_LOADED);
 	IMAGE_WRAP(NSCreateObjectFileImageFromFile);
 	IMAGE_WRAP(NSLinkModule);
 	IMAGE_WRAP(NSLinkEditError);
@@ -257,7 +302,6 @@ INJECT_ENTRY(ptrdiff_t codeOffset, objc_inject_param *param, size_t paramSize __
 	IMAGE_WRAP(mach_thread_self);
 #undef IMAGE_WRAP
 
-	//f->printf("bootstrapping...\n");
 	pthread_attr_t attr;
 	f->pthread_attr_init(&attr);
 	
@@ -272,22 +316,23 @@ INJECT_ENTRY(ptrdiff_t codeOffset, objc_inject_param *param, size_t paramSize __
 			
 		
 	pthread_t thread; 
-	f->pthread_create( &thread,
+	pthread_create( &thread,
 					&attr,
-					(void* (*)(void*))((long)INJECT_pthread_entry + codeOffset),
+                    f->INJECT_pthread_entry,
 					(void*) param );
 	f->pthread_attr_destroy(&attr);
 			
-	//f->printf("suspending...\n");
 	f->thread_suspend(f->mach_thread_self());
 }   
 
 
 /* Runs from injectee */
 static void *
-INJECT_pthread_entry(objc_inject_param *param) {
+INJECT_pthread_entry(void *p) {
+    objc_inject_param *param = (objc_inject_param *)p;
 	func_wrappers *f = &param->f;
-	EventLoopTimerProcPtr proc = (EventLoopTimerProcPtr)(((char *)INJECT_EventLoopTimerEntry) + param->codeOffset);
+	EventLoopTimerProcPtr proc = (EventLoopTimerProcPtr)f->INJECT_EventLoopTimerEntry;
+
 	//f->printf("in pthread\n");
 	//f->printf("proc: %p\n", proc);
 					
@@ -302,7 +347,7 @@ INJECT_pthread_entry(objc_inject_param *param) {
 		EventLoopTimerUPP upp = f->NewEventLoopTimerUPP(proc);
 		f->InstallEventLoopTimer(f->GetMainEventLoop(), 0, 0, upp, (void*)param, NULL);
 	} else {
-		proc(NULL, param);
+		proc(NULL, (void *)param);
 	}
 
 	return NULL;
@@ -311,7 +356,8 @@ INJECT_pthread_entry(objc_inject_param *param) {
 
 /* Runs from injectee */
 static pascal void
-INJECT_EventLoopTimerEntry(EventLoopTimerRef inTimer __attribute__((__unused__)), objc_inject_param *param) {
+INJECT_EventLoopTimerEntry(EventLoopTimerRef inTimer __attribute__((__unused__)), void *p) {
+    objc_inject_param *param = (objc_inject_param *)p;
 	func_wrappers *f = &param->f;
 	char *pathname = &param->stringTable[param->bundlePathOffset];
 	NSObjectFileImageReturnCode rc;
@@ -353,12 +399,12 @@ INJECT_EventLoopTimerEntry(EventLoopTimerRef inTimer __attribute__((__unused__))
 			const char *fileName, *moreErrorStr;
 			NSLinkEditErrors c;
 			f->NSLinkEditError( &c, &errNo, &fileName, &moreErrorStr );
-			snprintf(errBuf, sizeof(errBuf), "Failure linking new module: %s: %s", fileName, moreErrorStr);
+			f->snprintf(errBuf, sizeof(errBuf), "Failure linking new module: %s: %s", fileName, moreErrorStr);
 			errString = errBuf;
 		}
 	}
 	if (errString) {
-		printf("%s\n", errString);
+		f->printf("%s\n", errString);
 	}
 }
 
@@ -367,6 +413,10 @@ INJECT_EventLoopTimerEntry(EventLoopTimerRef inTimer __attribute__((__unused__))
 int
 objc_inject(pid_t pid, int use_main_thread, char *bundlePath, char *systemPath, char *carbonPath) {
 	target_mach_header th;
+    intptr_t slide;
+    uint32_t img_index;
+    uint32_t img_count;
+    const struct mach_header *mh;
 	objc_inject_param *param;
 	mach_error_t err;
 	unsigned int bundle_offset = 0;
@@ -400,6 +450,42 @@ objc_inject(pid_t pid, int use_main_thread, char *bundlePath, char *systemPath, 
 	strcpy(&param->stringTable[system_offset], systemPath);
 	strcpy(&param->stringTable[carbon_offset], carbonPath);
 	dispose_target_mach_header(&th);
+
+	mh = NSAddImage((const char *)&param->stringTable[param->systemPathOffset], NSADDIMAGE_OPTION_RETURN_ONLY_IF_LOADED);
+    img_count = _dyld_image_count();
+    for (img_index = 0; img_index < img_count; img_index++) {
+        if (_dyld_get_image_header(img_index) == mh) {
+            break;
+        }
+    }
+    if (img_index == img_count) {
+        free(param);
+        //fprintf(stderr, "couldn't find libSystem's index\n");
+        return -1;
+    }
+    slide = _dyld_get_image_vmaddr_slide(img_index);
+#define IMAGE_WRAP(func) param->f.func = (__typeof__(&func))(((char *)&func) - slide)
+	IMAGE_WRAP(NSCreateObjectFileImageFromFile);
+	IMAGE_WRAP(NSLinkModule);
+	IMAGE_WRAP(NSLinkEditError);
+    IMAGE_WRAP(printf);
+    IMAGE_WRAP(snprintf);
+	IMAGE_WRAP(pthread_attr_init);
+	IMAGE_WRAP(pthread_attr_getschedpolicy);
+	IMAGE_WRAP(pthread_attr_setdetachstate);
+	IMAGE_WRAP(pthread_attr_setinheritsched);
+	IMAGE_WRAP(sched_get_priority_max);
+	IMAGE_WRAP(pthread_attr_setschedparam);
+	IMAGE_WRAP(pthread_create);
+	IMAGE_WRAP(pthread_attr_destroy);
+	IMAGE_WRAP(thread_suspend);
+	IMAGE_WRAP(mach_thread_self);
+
+    slide = 0;
+    IMAGE_WRAP(INJECT_pthread_entry);
+    IMAGE_WRAP(INJECT_test_func);
+    IMAGE_WRAP(INJECT_EventLoopTimerEntry);
+#undef IMAGE_WRAP
 	err = mach_inject((mach_inject_entry)INJECT_ENTRY, param, size, pid, 0);
 	free(param);
 	if (err) {
