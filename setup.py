@@ -84,7 +84,7 @@ if gs_root is None:
         "-no-cpp-precomp",
         "-Wno-long-double",
         "-g",
-        "-O0",
+        #"-O0",
 
         # Loads of warning flags
         "-Wall", "-Wstrict-prototypes", "-Wmissing-prototypes",
@@ -559,7 +559,8 @@ packages = (
     XgridFoundationPackages +
     QTKitPackages +
     QuartzPackages +
-    OSAKitPackages +
+    # XXX: Ronald forgot to check this in
+    # OSAKitPackages +
 
     [
         'PyObjCTools',
@@ -621,7 +622,8 @@ dist = setup(
        + AutomatorExtensions
        + QTKitExtensions
        + QuartzExtensions
-       + OSAKitExtensions
+       # XXX: Ronald forgot to check this in
+       # + OSAKitExtensions
        + CoreDataExtensions
        + DiscRecordingExtensions
        + DiscRecordingUIExtensions
