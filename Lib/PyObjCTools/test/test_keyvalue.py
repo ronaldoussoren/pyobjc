@@ -78,13 +78,13 @@ class KeyValueClass7 (NSObject):
     def getKey1(self):
         return 1
 
-    def get_key2(self):
+    def key2(self):
         return 2
 
-    def setKey4(self, value):
+    def setKey4_(self, value):
         self._key4 = value * 4
 
-    def set_key5(self, value):
+    def setKey5_(self, value):
         self.key5 = value * 5
 
     def keyM(self):

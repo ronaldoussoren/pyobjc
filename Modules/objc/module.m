@@ -926,13 +926,17 @@ protocolsForProcess(PyObject* self __attribute__((__unused__)))
 	uint32_t image_count, image_index;
 	image_count = _dyld_image_count();
 	for (image_index = 0; image_index < image_count; image_index++) {
-		uint32_t size;
+		uint32_t size = 0;
 		const struct mach_header *mh = _dyld_get_image_header(image_index);
-		ProtocolTemplate *protos = (ProtocolTemplate*)getsectdatafromheader(mh, SEG_OBJC, "__protocol", &size);
+        intptr_t slide = _dyld_get_image_vmaddr_slide(image_index);
+		ProtocolTemplate *protos = (ProtocolTemplate*)(
+            ((char *)getsectdatafromheader(mh, SEG_OBJC, "__protocol", &size)) +
+            slide);
 		uint32_t nprotos = size / sizeof(ProtocolTemplate);
 		uint32_t i;
 		for (i = 0; i < nprotos; i++) {
-			PyObject *protocol = PyObjCFormalProtocol_ForProtocol((Protocol *)&protos[i]);
+            Protocol *p = (Protocol *)&protos[i];
+			PyObject *protocol = PyObjCFormalProtocol_ForProtocol(p);
 			if (protocol == NULL) {
 				Py_DECREF(protocols);
 				return NULL;

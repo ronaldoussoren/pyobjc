@@ -7,10 +7,6 @@
 
 #import <Foundation/NSInvocation.h>
 
-#if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-#import <Foundation/NSKeyValueObserving.h>
-#endif
-
 /* Special methods for Python subclasses of Objective-C objects */
 static void object_method_dealloc(
 		ffi_cif* cif,
@@ -32,22 +28,12 @@ static void object_method_forwardInvocation(
 		void* retval,
 		void** args,
 		void* userarg);
-static void object_method_storedValueForKey_(
-		ffi_cif* cif,
-		void* retval,
-		void** args,
-		void* userarg);
 static void object_method_valueForKey_(
 		ffi_cif* cif,
 		void* retval,
 		void** args,
 		void* userarg);
-static void object_method_takeStoredValue_forKey_(
-		ffi_cif* cif,
-		void* retval,
-		void** args,
-		void* userarg);
-static void object_method_takeValue_forKey_(
+static void object_method_setValue_forKey_(
 		ffi_cif* cif,
 		void* retval,
 		void** args,
@@ -744,7 +730,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			"storedValueForKey_",
 			@selector(storedValueForKey:),
 			"@@:@",
-			object_method_storedValueForKey_);
+			object_method_valueForKey_);
 		METH(
 			"valueForKey_",
 			@selector(valueForKey:),
@@ -754,17 +740,17 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			"takeStoredValue_forKey_",
 			@selector(takeStoredValue:forKey:),
 			"v@:@@",
-			object_method_takeStoredValue_forKey_);
+			object_method_setValue_forKey_);
 		METH(
 			"takeValue_forKey_",
 			@selector(takeValue:forKey:),
 			"v@:@@",
-			object_method_takeValue_forKey_);
+			object_method_setValue_forKey_);
 		METH(
 			"setValue_forKey_",
 			@selector(setValue:forKey:),
 			"v@:@@",
-			object_method_takeValue_forKey_);
+			object_method_setValue_forKey_);
 
 		if (!have_intermediate && [super_class instancesRespondToSelector:@selector(copyWithZone:)]) {
 			if (copyWithZone_signature[0] == '\0') {
@@ -1697,328 +1683,6 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 	return result;
 }
 
-/*
- * Suppport for key-value encoding for Python/ObjC hybrids.
- * 
- * NOTE: This implementation is likely to change, which probably will have
- * user-visible effects.
- *
- * We check python-specific ways to read/write attributes, and then defer
- * to the super-class implementation. This seems to be the best way to 
- * play nice with when subclassing arbitrary Objective-C classes.
- */
-
-static int
-getAttribute(id self, NSString* key, id* result)
-{
-	PyObject* cls = PyObjCClass_New(GETISA(self));
-	PyObject* val;
-	PyObject* att;
-	PyObject* dict;
-	int dictoffset;
-	int r;
-	id  tmpVal;
-
-	dictoffset = PyObjCClass_DictOffset(cls);
-	if (dictoffset != 0) {
-		PyObject** dictptr = (PyObject**)(((char*)self) + dictoffset);
-		if (*dictptr != NULL) {
-			val = PyDict_GetItemString(*dictptr, 
-				(char*)[key cString]);
-			if (val == NULL) {
-				PyErr_Clear();
-			} else {
-				tmpVal = nil;
-				r = depythonify_c_value(
-					@encode(id), val, (void*)&tmpVal);
-				if (r == -1) {
-					PyErr_Clear();
-				}
-				*result = tmpVal;
-				return r;
-			}
-		}
-	}
-
-	/* 
-	 * Maybe this is a descriptor object, check if there is a
-	 * non-method attribute in the class
-	 */
-	att = PyObject_GetAttrString(cls, (char*)[key cString]);
-	if (att == NULL) {
-		PyErr_Clear();
-	} else {
-		if (!PyObjCSelector_Check(att)) {
-			PyObject* ps;
-
-			Py_DECREF(att);
-
-			ps = PyObjCObject_New(self);
-			if (ps == NULL) {
-				PyErr_Clear();
-				return -1;
-			}
-
-			val = PyObject_GetAttrString(
-				ps,
-				(char*)[key cString]);
-			Py_DECREF(ps);
-			if (val == NULL) {
-				PyErr_Clear();
-				return -1;
-			} else {
-				r = depythonify_c_value(@encode(id),
-					val, result);
-				Py_DECREF(val);
-				if (r == -1) {
-					PyErr_Clear();
-				}
-				return r;
-			}
-		} 
-		Py_DECREF(att);
-	}
-
-	/* Check for properties, data properties won't be found using
-	 * getattr(cls, propname).
-	 */
-	dict = PyObject_GetAttrString(cls, "__dict__");
-	if (dict == NULL) {
-		PyErr_Clear();
-	} else {
-		/* Class __dict__ need not be an actual dict! */
-		att = PyMapping_GetItemString(dict, (char*)[key cString]);
-		if (att == NULL) {
-			PyErr_Clear();
-		} else if (!PyObjCSelector_Check(att)) {
-			PyObject* ps = PyObjCObject_New(self);
-			if (ps == NULL) {
-				PyErr_Clear();
-				return -1;
-			}
-			val = PyObject_GetAttrString(
-				ps,
-				(char*)[key cString]);
-			Py_DECREF(ps);
-			if (val == NULL) {
-				PyErr_Clear();
-				return -1;
-			} else {
-				r = depythonify_c_value(@encode(id),
-					val, result);
-				Py_DECREF(val);
-				if (r == -1) {
-					PyErr_Clear();
-				}
-				return r;
-			}
-		} 
-	}
-	return -1;
-}
-
-static int
-getAccessor(id self, NSString* key, id* result)
-{
-	PyObject* cls = PyObjCClass_New(GETISA(self));
-	PyObject* val;
-	PyObject* att;
-	int r;
-
-	att = PyObject_GetAttrString(cls, (char*)[key cString]);
-	if (att == NULL) {
-		PyErr_Clear();
-	} else {
-		if (PyObjCSelector_Check(att) 
-				|| PyFunction_Check(att) 
-				|| PyMethod_Check(att)) {
-			PyObject* ps;
-
-			Py_DECREF(att);
-
-			ps = PyObjCObject_New(self);
-			if (ps == NULL) {
-				PyErr_Clear();
-				return -1;
-			}
-
-			val = PyObject_CallMethod(
-				ps,
-				(char*)[key cString],
-				NULL);
-			Py_DECREF(ps);
-			if (val == NULL) {
-				PyErr_Clear();
-				return -1;
-			} else {
-				r = depythonify_c_value(@encode(id),
-					val, result);
-				if (r == -1) {
-					PyErr_Clear();
-				}
-				return r;
-			}
-		} 
-		Py_DECREF(att);
-	}
-
-	return -1;
-}
-
-/* 
- * Support for NSKeyValueObserving on MacOS X 10.3 and later.
- *
- * XXX: It's probably better to detect this at runtime.
- * XXX2: This is copied in objc-object.m
- */
-#if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-#   define WILL_CHANGE(self, key) [(NSObject*)(self) willChangeValueForKey:(key)]	
-#   define DID_CHANGE(self, key) [(NSObject*)(self) didChangeValueForKey:(key)]	
-#else
-#   define WILL_CHANGE(self, key) ((void)0)
-#   define DID_CHANGE(self, key) ((void)0)
-#endif
-
-
-static int
-setAttribute(id self, NSString* key, id value)
-{
-	PyObject* cls = PyObjCClass_New(GETISA(self));
-	PyObject* val;
-	PyObject* att;
-	int dictoffset;
-	int r;
-
-	dictoffset = PyObjCClass_DictOffset(cls);
-	if (dictoffset != 0) {
-		PyObject** dictptr = (PyObject**)(((char*)self) + dictoffset);
-		if (*dictptr != NULL && PyDict_GetItemString(
-				*dictptr, (char*)[key cString]) != NULL) {
-
-			val = pythonify_c_value(@encode(id), &value);
-			if (val == NULL) {
-				return 0;
-			}
-
-
-			WILL_CHANGE(self, key);
-			r = PyDict_SetItemString(*dictptr, 
-				(char*)[key cString], val);
-			DID_CHANGE(self, key);
-
-			Py_DECREF(val);
-			return 0;
-		}
-	}
-
-	/* 
-	 * Maybe this is a descriptor object, check if there is a
-	 * non-method attribute in the class
-	 */
-	att = PyObject_GetAttrString(cls, (char*)[key cString]);
-	if (att == NULL) {
-		PyErr_Clear();
-	} else {
-		if (!PyObjCSelector_Check(att)) {
-			Py_DECREF(att);
-
-			val = pythonify_c_value(@encode(id), &value);
-			if (val == NULL) {
-				return 0;
-			}
-
-			WILL_CHANGE(self, key);
-			r = PyObject_SetAttrString(
-				PyObjCObject_New(self),
-				(char*)[key cString], val);
-			DID_CHANGE(self, key);
-			Py_DECREF(val);
-			return 0;
-		}
-		Py_DECREF(att);
-	}
-
-	return -1;
-}
-
-static int
-setAccessor(id self, NSString* key, id value)
-{
-	PyObject* cls = PyObjCClass_New(GETISA(self));
-	PyObject* val;
-	PyObject* att;
-
-	att = PyObject_GetAttrString(cls, (char*)[key cString]);
-	if (att == NULL) {
-		PyErr_Clear();
-	} else {
-		if (PyObjCSelector_Check(att) 
-				|| PyFunction_Check(att) 
-				|| PyMethod_Check(att)) {
-
-			Py_DECREF(att);
-
-			val = pythonify_c_value(@encode(id), &value);
-			if (val == NULL) {
-				return 0;
-			}
-
-			WILL_CHANGE(self, key);
-			att = PyObject_CallMethod(
-				PyObjCObject_New(self),
-				(char*)[key cString], "O", val);
-			DID_CHANGE(self, key);
-			Py_XDECREF(att);
-			Py_DECREF(val);
-			return 0;
-		}
-		Py_DECREF(att);
-	}
-
-	return -1;
-}
-
-static void
-object_method_storedValueForKey_(
-		ffi_cif* cif __attribute__((__unused__)),
-		void* retval,
-		void** args,
-		void* userdata)
-{
-	id self = *(id*)args[0];
-	SEL _meth = *(SEL*)args[1];
-	NSString* key = *(NSString**)args[2];
-
-	id* presult = (id*)retval;
-	int r;
-	struct objc_super super;
-
-	PyGILState_STATE state = PyGILState_Ensure();
-
-#define TRY_GETMETHOD(method, format, keyexp) { \
-	r = method(self, \
-			[NSString stringWithFormat: format, keyexp], presult); \
-	if (r == 0) { \
-		PyGILState_Release(state); \
-		return; \
-	} \
-}
-
-	TRY_GETMETHOD(getAccessor, @"get_%@", key);
-	TRY_GETMETHOD(getAttribute, @"%@", key);
-	TRY_GETMETHOD(getAccessor, @"_get_%@", key);
-	TRY_GETMETHOD(getAttribute, @"_%@", key);
-
-#undef TRY_GETMETHOD
-
-	PyGILState_Release(state);
-
-	/* Call super */
-	super.class = (Class)userdata;
-	RECEIVER(super) = self;
-	*presult = objc_msgSendSuper(&super, _meth, key);
-}
-
 static void
 object_method_valueForKey_(
 		ffi_cif* cif __attribute__((__unused__)),
@@ -2026,179 +1690,85 @@ object_method_valueForKey_(
 		void** args,
 		void* userdata)
 {
-	// XXX - THIS METHOD IS TOTALLY INCORRECT!  FIX FOR 1.3!
-	//       See <Foundation/NSKeyValueCoding.h>
+	// This method does the following:
+	//     - Checks super implementation
+	//     - if [[self class] accessInstanceVariablesDirectly]
+	//         - Checks for attribute key
+	//         - Checks for attribute _key
 	int r;
 	id self = *(id*)args[0];
 	SEL _meth = *(SEL*)args[1];
 	NSString* key = *(NSString**)args[2];
 
-	id* presult = (id*)retval;
 	struct objc_super super;
-	PyGILState_STATE state = PyGILState_Ensure();
 
-#define TRY_GETMETHOD(method, format, keyexp) { \
-	r = method(self, \
-			[NSString stringWithFormat: format, keyexp], presult); \
-	if (r == 0) { \
-		PyGILState_Release(state); \
-		return; \
-	} \
-}
-
-	TRY_GETMETHOD(getAccessor, @"get_%@", key);
-	TRY_GETMETHOD(getAccessor, @"get%@", [key capitalizedString]);
-	TRY_GETMETHOD(getAttribute, @"%@", key);
-	TRY_GETMETHOD(getAccessor, @"_get_%@", key);
-	TRY_GETMETHOD(getAccessor, @"_get%@", [key capitalizedString]);
-	TRY_GETMETHOD(getAccessor, @"%@", key);
-	TRY_GETMETHOD(getAccessor, @"_%@", key);
-	TRY_GETMETHOD(getAttribute, @"_%@", key);
-
-#undef TRY_GETMETHOD
-	
-	/* Call super */
-	PyGILState_Release(state);
-	super.class = (Class)userdata;
-	RECEIVER(super) = self;
-	*presult = objc_msgSendSuper(&super, _meth, key);
-}
-
-
-static void
-object_method_takeStoredValue_forKey_(
-		ffi_cif* cif __attribute__((__unused__)),
-		void* retval __attribute__((__unused__)),
-		void** args,
-		void* userdata)
-{
-	id self = *(id*)args[0];
-	SEL _meth = *(SEL*)args[1];
-	id value = *(id*)args[2];
-	NSString* key = *(NSString**)args[3];
-
-	struct objc_super super;
-	int r;
-	PyGILState_STATE state = PyGILState_Ensure();
-
-
-#define TRY_SETMETHOD(method, format, keyexp) { \
-	r = method(self, \
-		[NSString stringWithFormat:format, keyexp], value); \
-	if (r == 0) { \
-		if (PyErr_Occurred()) { \
-			PyErr_Clear(); \
-			PyGILState_Release(state); \
-			[[NSException \
-				exceptionWithName:@"NSUnknownKeyException" \
-				reason:key userInfo:nil] raise]; \
-			return; \
-		} \
-		PyGILState_Release(state); \
-		return; \
-	} \
-}
-
-	TRY_SETMETHOD(setAccessor, @"set_%@", key);
-	TRY_SETMETHOD(setAccessor, @"set%@", [key capitalizedString]);
-	TRY_SETMETHOD(setAttribute, @"%@", key);
-	TRY_SETMETHOD(setAccessor, @"_set_%@", key);
-	TRY_SETMETHOD(setAccessor, @"_set%@", [key capitalizedString]);
-	TRY_SETMETHOD(setAttribute, @"_%@", key);
-
-#undef TRY_SETMETHOD
-
-	/* Call super */
-	PyGILState_Release(state);
+	// First check super
 	NS_DURING
 		super.class = (Class)userdata;
 		RECEIVER(super) = self;
-		(void)objc_msgSendSuper(&super, _meth, value, key);
+		*((id *)retval) = (id)objc_msgSendSuper(&super, _meth, key);
 	NS_HANDLER
 		/* Parent doesn't know the key, try to create in the 
 		 * python side, just like for plain python objects.
 		 */
-		if ([[localException name] isEqual:@"NSUnknownKeyException"]
+		if (([[localException name] isEqual:@"NSUnknownKeyException"]
 #ifndef MACOSX
 			/* This test is necessary on GNUstep */
 			|| [[localException name] isEqual:@"NSInvalidArgumentException"]
 #endif
-			) {
+		) && [[self class] accessInstanceVariablesDirectly]) {
 
-			PyObject* selfObj;
-			PyObject* val;
-
-			state = PyGILState_Ensure();
-			selfObj = PyObjCObject_New(self);
-			val = pythonify_c_value(@encode(id), &value);
-			if (val == NULL) {
-				PyErr_Clear();
-				PyGILState_Release(state);
-				[localException raise];
-			}
-
-			r = PyObject_SetAttrString(selfObj, 
-				(char*)[key cString],
-				val);
-			Py_DECREF(val);
+			PyGILState_STATE state = PyGILState_Ensure();
+			PyObject* selfObj = PyObjCObject_New(self);
+			PyObject *res = NULL;
+			r = -1;
+			do {
+				res = PyObject_GetAttrString(selfObj, (char *)[key UTF8String]);
+				if (res == NULL) {
+					PyErr_Clear();
+					res = PyObject_GetAttrString(selfObj, (char *)[[@"_" stringByAppendingString:key] UTF8String]);
+					if (res == NULL) {
+						break;
+					}
+				}
+				r = depythonify_c_value(@encode(id), res, retval);
+			} while (0);
 			Py_DECREF(selfObj);
+			Py_XDECREF(res);
 			if (r == -1) {
 				PyErr_Clear();
 				PyGILState_Release(state);
 				[localException raise];
 			}
 			PyGILState_Release(state);
-				
 		} else {
 			[localException raise];
 		}
 	NS_ENDHANDLER
+
 }
 
+
 static void
-object_method_takeValue_forKey_(
+object_method_setValue_forKey_(
 		ffi_cif* cif __attribute__((__unused__)),
 		void* retval __attribute__((__unused__)),
 		void** args,
 		void* userdata)
 {
+	// This method does the following:
+	//     - Checks super implementation
+	//     - if [[self class] accessInstanceVariablesDirectly]
+	//	       - Checks for attribute _key and sets if present
+	//		   - Sets attribute key
+	int r;
+	struct objc_super super;
 	id self = *(id*)args[0];
 	SEL _meth = *(SEL*)args[1];
 	id value = *(id*)args[2];
 	NSString* key = *(NSString**)args[3];
 
-	struct objc_super super;
-	int r;
-	PyGILState_STATE state = PyGILState_Ensure();
-
-#define TRY_SETMETHOD(method, format, keyexp) { \
-	r = method(self, \
-		[NSString stringWithFormat:format, keyexp], value); \
-	if (r == 0) { \
-		if (PyErr_Occurred()) { \
-			PyErr_Clear(); \
-			PyGILState_Release(state); \
-			[[NSException \
-				exceptionWithName:@"NSUnknownKeyException" \
-				reason:key userInfo:nil] raise]; \
-			return; \
-		} \
-		PyGILState_Release(state); \
-		return; \
-	} \
-}
-
-	TRY_SETMETHOD(setAccessor, @"set_%@", key);
-	TRY_SETMETHOD(setAccessor, @"set%@", [key capitalizedString]);
-	TRY_SETMETHOD(setAttribute, @"%@", key);
-	TRY_SETMETHOD(setAccessor, @"_set_%@", key);
-	TRY_SETMETHOD(setAccessor, @"_set%@", [key capitalizedString]);
-	TRY_SETMETHOD(setAttribute, @"_%@", key);
-
-#undef TRY_SETMETHOD
-
-	/* Call super */
-	PyGILState_Release(state);
+	// First check super
 	NS_DURING
 		super.class = (Class)userdata;
 		RECEIVER(super) = self;
@@ -2207,35 +1777,45 @@ object_method_takeValue_forKey_(
 		/* Parent doesn't know the key, try to create in the 
 		 * python side, just like for plain python objects.
 		 */
-		if ([[localException name] isEqual:@"NSUnknownKeyException"] 
+		if (([[localException name] isEqual:@"NSUnknownKeyException"]
 #ifndef MACOSX
-				/* This test is necessary on GNUstep */
-				|| [[localException name] isEqual:@"NSInvalidArgumentException"]
+			/* This test is necessary on GNUstep */
+			|| [[localException name] isEqual:@"NSInvalidArgumentException"]
 #endif
-				) {
-			PyObject* selfObj;
-			PyObject* val;
-			state = PyGILState_Ensure();
-			selfObj = PyObjCObject_New(self);
-			val = pythonify_c_value(@encode(id), &value);
+		) && [[self class] accessInstanceVariablesDirectly]) {
+
+			PyGILState_STATE state = PyGILState_Ensure();
+			PyObject* val = pythonify_c_value(@encode(id), &value);
 			if (val == NULL) {
 				PyErr_Clear();
 				PyGILState_Release(state);
 				[localException raise];
 			}
-
-			r = PyObject_SetAttrString(selfObj, 
-				(char*)[key cString],
-				val);
-			Py_DECREF(val);
+			PyObject* res = NULL;
+			PyObject* selfObj = PyObjCObject_New(self);
+			r = -1;
+			do {
+				char *rawkey = (char *)[[@"_" stringByAppendingString:key] UTF8String];
+				res = PyObject_GetAttrString(selfObj, rawkey);
+				if (res != NULL) {
+					r = PyObject_SetAttrString(selfObj, rawkey, val);
+					if (r != -1) {
+						break;
+					}
+				}
+				PyErr_Clear();
+				rawkey = (char *)[key UTF8String];
+				r = PyObject_SetAttrString(selfObj, rawkey, val);
+			} while (0);
 			Py_DECREF(selfObj);
+			Py_DECREF(val);
+			Py_XDECREF(res);
 			if (r == -1) {
 				PyErr_Clear();
 				PyGILState_Release(state);
 				[localException raise];
 			}
 			PyGILState_Release(state);
-				
 		} else {
 			[localException raise];
 		}
