@@ -7,6 +7,11 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3.1 (2005-04-??)
 --------------------------
 
+- Key-Value Coding of Python objects should act like Objective-C now.
+  Previously, its capitalization method didn't match Objective-C's, it
+  wouldn't use setter accessors with an underscore postfix, and it
+  generally didn't behave as documented.
+
 - The formal protocol list should be more complete.  A new 
   ``objc.protocolsForProcess()`` enumerates over all mach
   headers and returns all of the protocols defined in the expected

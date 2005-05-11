@@ -40,6 +40,9 @@ else:
     SETVALUEFORKEY = 'takeValue_forKey_'
     SETVALUEFORKEYPATH = 'takeValue_forKeyPath_'
 
+def keyCaps(s):
+    return s[:1].capitalize() + s[1:]
+
 def getKey(obj, key):
     """
     Get the attribute referenced by 'key'. The key is used
@@ -48,7 +51,8 @@ def getKey(obj, key):
     The following attributes and accesors at tried (in this order):
     - Accessor 'getKey'
     - Accesoor 'get_key'
-    - Attribute or accessor 'key'
+    - Accessor or attribute 'key'
+    - Accessor or attribute 'isKey'
     - Attribute '_key'
 
     If none of these exist, raise KeyError
@@ -63,7 +67,7 @@ def getKey(obj, key):
 
 
     try:
-        m = getattr(obj, "get" + key.capitalize())
+        m = getattr(obj, "get" + keyCaps(key))
     except AttributeError:
         pass
     else:
@@ -76,40 +80,30 @@ def getKey(obj, key):
     else:
         return m()
 
-    try:
-        m = getattr(obj, key)
+    for keyName in (key, "is" + keyCaps(key)):
+        try:
+            m = getattr(obj, keyName)
+        except AttributeError:
+            continue
 
-        if isinstance(m, types.MethodType):
-            if m.im_self is obj:
-                return m()
-            else:
-                return m
+        if isinstance(m, types.MethodType) and m.im_self is obj:
+            return m()
 
         elif isinstance(m, types.BuiltinMethodType):
             # Can't access the bound self of methods of builtin classes :-(
             return m()
 
-        elif isinstance(m, objc.selector):
-            if m.self is obj:
-                return m()
-            else:
-                return m
+        elif isinstance(m, objc.selector) and m.self is obj:
+            return m()
+
         else:
             return m
-
-    except AttributeError:
-        pass
 
     try:
-        m = getattr(obj, "_" + key)
-        if isinstance(m, types.MethodType):
-            return m()
-        else:
-            return m
+        return getattr(obj, "_" + key)
     except AttributeError:
-        pass
+        raise KeyError, "Key %s does not exist" % (key,)
 
-    raise KeyError, "Key %s does not exist"%(key,)
 
 def setKey(obj, key, value):
     """
@@ -117,6 +111,7 @@ def setKey(obj, key, value):
     to build the name of an attribute, or attribute accessor method.
 
     The following attributes and accessors are tried (in this order):
+    - Accessor 'setKey_'
     - Accessor 'setKey'
     - Accessor 'set_key'
     - Attribute '_key'
@@ -126,25 +121,21 @@ def setKey(obj, key, value):
     """
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
         try:
-            return getattr(obj, SETVALUEFORKEY)(value, key)
+            getattr(obj, SETVALUEFORKEY)(value, key)
+            return
         except ValueError, msg:
             raise KeyError, str(msg)
 
-    try:
-        m = getattr(obj, 'set' + key.capitalize())
-    except AttributeError:
-        pass
-    else:
-        m(value)
-        return
-
-    try:
-        m = getattr(obj, 'set_' + key)
-    except AttributeError:
-        pass
-    else:
-        m(value)
-        return
+    aBase = 'set' + keyCaps(key)
+    for accessor in (aBase + '_', aBase, 'set_' + key):
+        m = getattr(obj, accessor, None)
+        if m is None:
+            continue
+        try:
+            m(value)
+            return
+        except TypeError:
+            pass
 
     try:
         o = getattr(obj, "_" + key)
@@ -157,7 +148,7 @@ def setKey(obj, key, value):
     try:
         setattr(obj, key, value)
     except AttributeError:
-        raise KeyError, "Key %s does not exist"%(key,)
+        raise KeyError, "Key %s does not exist" % (key,)
 
 def getKeyPath(obj, keypath):
     """
