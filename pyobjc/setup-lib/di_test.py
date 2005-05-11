@@ -26,13 +26,15 @@ def recursiveGlob(root, pathPattern):
     return result
         
 
-def importExternalTestCases(pathPattern="test_*.py", root="."):
+def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
     """
     Import all unittests in the PyObjC tree starting at 'root'
     """
 
     testFiles = recursiveGlob(root, pathPattern)
     testModules = map(lambda x:x[len(root)+1:-3].replace('/', '.'), testFiles)
+    if package is not None:
+        testModules = [(package + '.' + m) for m in testModules]
 
     suites = []
    
@@ -57,10 +59,11 @@ class cmd_test (install_lib):
         ('no-include-gui-tests', None, 'don\'t include GUI related tests'),
         ('test-installed', None, 'test build tree'),
         ('no-test-installed', None, 'test installed PyObjC'),
+        ('package=', None, 'test package (default is all)'),
     ]
 
     boolean_options = install_lib.boolean_options + ['include-gui-tests']
-    negative_opt = { 
+    negative_opt = {
         'no-include-gui-tests': 'include-gui-tests',
         'no-test-installed': 'test-installed',
     }
@@ -71,6 +74,7 @@ class cmd_test (install_lib):
         self.verbosity = 1
         self.include_gui_tests = None
         self.test_installed = None
+        self.package = None
 
     def finalize_options(self):
         install_lib.finalize_options(self)
@@ -92,6 +96,11 @@ class cmd_test (install_lib):
         # Run the tests
         self.test()
 
+    def get_test_dir(self):
+        if self.package is None:
+            return self.build_dir
+        return os.path.join(self.build_dir, self.package.replace('.', '/'))
+    
     def test (self):
         if not os.path.isdir(self.build_dir):
             self.warn("'%s' does not exist -- cannot test" %
@@ -106,11 +115,12 @@ class cmd_test (install_lib):
         if self.test_installed:
             sys.path.insert(0, self.build_dir)
         try:
-            plain_suite = importExternalTestCases("test_*.py", self.build_dir)
+            plain_suite = importExternalTestCases("test_*.py",
+                self.get_test_dir(), package=self.package)
             
             if self.include_gui_tests:
-                gui_suite = importExternalTestCases("guitest_*.py", 
-                        self.build_dir)
+                gui_suite = importExternalTestCases("guitest_*.py",
+                    self.get_test_dir(), package=self.package)
                 suite = unittest.TestSuite((plain_suite, gui_suite))
             else:
                 suite = unittest.TestSuite((plain_suite,))

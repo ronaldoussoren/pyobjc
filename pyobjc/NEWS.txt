@@ -4,7 +4,7 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 1.3.1 (2005-04-??)
+Version 1.3.5 (2005-05-??)
 --------------------------
 
 - Key-Value Coding of Python objects should act like Objective-C now.

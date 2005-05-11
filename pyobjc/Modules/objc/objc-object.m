@@ -10,17 +10,31 @@
 /* 
  * Support for NSKeyValueObserving on MacOS X 10.3 and later.
  *      
- * XXX: It's probably better to detect this at runtime.
- * XXX2: This is copied from class-builder.m
  */     
-#if defined(MACOSX) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-#   define WILL_CHANGE(self, key) [(NSObject*)(self) willChangeValueForKey:(key)]   
-#   define DID_CHANGE(self, key) [(NSObject*)(self) didChangeValueForKey:(key)] 
-#else   
-#   define WILL_CHANGE(self, key) ((void)0)
-#   define DID_CHANGE(self, key) ((void)0)
-#endif  
-        
+static BOOL
+_UseKVO(void)
+{           
+	static int _checkedKVO = 0;
+	if (_checkedKVO == 0) {
+		if ([NSObject respondsToSelector:@selector(willChangeValueForKey:)] &&
+			[NSObject respondsToSelector:@selector(didChangeValueForKey:)]) {
+			_checkedKVO = 1; 
+		} else {
+			_checkedKVO = -1;
+		}
+	}           
+	return (_checkedKVO == 1);
+}           
+			
+#define WILL_CHANGE(self, key) \
+	do { \
+		if (_UseKVO()) [(NSObject*)(self) willChangeValueForKey:(key)]; \
+	} while (0)
+
+#define DID_CHANGE(self, key) \
+	do { \
+		if (_UseKVO()) [(NSObject*)(self) didChangeValueForKey:(key)]; \
+	} while (0) 
 
 static PyObject*
 object_new(

@@ -433,6 +433,7 @@ if PyObjCTest_KeyValueObserver is not None:
             o = PyObjCTest_KeyValueObserver.alloc().initWithInstanceOfClass_withKey_(PyObjC_TestKeyValueSource, u"foobar")
             self.assertEquals(o.getValue(), u"Hello world")
 
+    global DEALLOCS
     DEALLOCS = 0
 
     class PyObjCTestObserved1 (NSObject):
@@ -494,6 +495,7 @@ if PyObjCTest_KeyValueObserver is not None:
         def testAutomaticObserving(self):
             observer = PyObjCTestObserver.alloc().init()
             o = PyObjCTestObserved2.alloc().init()
+            pool = NSAutoreleasePool.alloc().init()
 
             self.assertEquals(o.foo, None)
             self.assertEquals(o.bar, None)
@@ -528,6 +530,7 @@ if PyObjCTest_KeyValueObserver is not None:
                 (u'foo', o, { u'kind': 1, u'new': u'xxx', u'old': u'foo' }, 0))
 
             del observer
+            del pool
 
             before = DEALLOCS
             del o
