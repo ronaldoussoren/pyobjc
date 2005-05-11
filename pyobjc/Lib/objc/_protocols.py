@@ -17,6 +17,11 @@ def protocolNamed(name):
         return PROTOCOL_CACHE[name]
     except KeyError:
         pass
+    for p in _objc.protocolsForProcess():
+        pname = p.__name__
+        PROTOCOL_CACHE.setdefault(pname, p)
+        if pname == name:
+            return p
     for cls in _objc.getClassList():
         for p in _objc.protocolsForClass(cls):
             pname = p.__name__

@@ -16,6 +16,17 @@
 
 #include "objc_inject.h"
 
+#ifdef MACOSX
+#import <mach-o/dyld.h>
+#import <mach-o/getsect.h>
+#import <mach-o/loader.h>
+#import <objc/Protocol.h>
+
+#define OBJC_PROTOCOL_PTR ProtocolTemplate*
+#define OBJC_PROTOCOL_DEREF .
+typedef struct _ProtocolTemplate { @defs(Protocol) } ProtocolTemplate;	
+#endif
+
 int PyObjC_VerboseLevel = 0;
 PyObject* PyObjCClass_DefaultModule = NULL;
 PyObject* PyObjC_NSNumberWrapper = NULL;
@@ -158,12 +169,12 @@ lookUpClass(PyObject* self __attribute__((__unused__)),
 
 
 PyDoc_STRVAR(classAddMethods_doc,
-     "classAddMethods(targetClass, methodsArray)\n"
-     "\n"
-     "Adds methods in methodsArray to class. The effect is similar to how \n"
-     "categories work. If class already implements a method as defined in \n"
-     "methodsArray, the original implementation will be replaced by the \n"
-     "implementation from methodsArray.");
+	 "classAddMethods(targetClass, methodsArray)\n"
+	 "\n"
+	 "Adds methods in methodsArray to class. The effect is similar to how \n"
+	 "categories work. If class already implements a method as defined in \n"
+	 "methodsArray, the original implementation will be replaced by the \n"
+	 "implementation from methodsArray.");
 
 static PyObject*
 classAddMethods(PyObject* self __attribute__((__unused__)), 
@@ -642,8 +653,8 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		bundle = [NSBundle bundleWithIdentifier:bundle_identifier];
 #else  /* !MACOSX */
 		/* GNUstep doesn't seem to support ``bundleWithIdentifier:``
-           but it could be emulated by enumerating allFrameworks and
-           allBundles.. */
+		   but it could be emulated by enumerating allFrameworks and
+		   allBundles.. */
 		PyErr_SetString(PyExc_RuntimeError,
 			"The 'bundle_identifier' argument is only supported "
 			"on MacOS X");
@@ -898,6 +909,44 @@ enableThreading(PyObject* self __attribute__((__unused__)))
 	return Py_None;
 }
 
+PyDoc_STRVAR(protocolsForProcess_doc,
+	"protocolsForProcess() -> [Protocols]\n"
+	"\n"
+	"Returns a list of Protocol objects that the class claims\n"
+	"to implement directly."
+);
+static PyObject*
+protocolsForProcess(PyObject* self __attribute__((__unused__)))
+{
+	PyObject *protocols = PyList_New(0);
+	if (protocols == NULL) {
+		return NULL;
+	}
+#ifdef MACOSX
+	uint32_t image_count, image_index;
+	image_count = _dyld_image_count();
+	for (image_index = 0; image_index < image_count; image_index++) {
+		uint32_t size;
+		const struct mach_header *mh = _dyld_get_image_header(image_index);
+		ProtocolTemplate *protos = (ProtocolTemplate*)getsectdatafromheader(mh, SEG_OBJC, "__protocol", &size);
+		uint32_t nprotos = size / sizeof(ProtocolTemplate);
+		uint32_t i;
+		for (i = 0; i < nprotos; i++) {
+			PyObject *protocol = PyObjCFormalProtocol_ForProtocol((Protocol *)&protos[i]);
+			if (protocol == NULL) {
+				Py_DECREF(protocols);
+				return NULL;
+			}
+			PyList_Append(protocols, protocol);
+			Py_DECREF(protocol);
+		}
+	}
+#else
+#endif
+	return protocols;
+}
+
+
 PyDoc_STRVAR(protocolsForClass_doc,
 	"protocolsForClass(cls) -> [Protocols]\n"
 	"\n"
@@ -1104,6 +1153,7 @@ static PyMethodDef mod_methods[] = {
 	{ "allocateBuffer", (PyCFunction)allocateBuffer, METH_VARARGS|METH_KEYWORDS, allocateBuffer_doc },
 	{ "enableThreading", (PyCFunction)enableThreading, METH_NOARGS, enableThreading_doc },
 	{ "protocolsForClass", (PyCFunction)protocolsForClass, METH_VARARGS|METH_KEYWORDS, protocolsForClass_doc },
+	{ "protocolsForProcess", (PyCFunction)protocolsForProcess, METH_NOARGS, protocolsForProcess_doc },
 #ifdef MACOSX
 	{ "CFToObject", (PyCFunction)objc_CFToObject, METH_VARARGS|METH_KEYWORDS, objc_CFToObject_doc },
 	{ "ObjectToCF", (PyCFunction)objc_ObjectToCF, METH_VARARGS|METH_KEYWORDS, objc_ObjectToCF_doc },
@@ -1238,7 +1288,7 @@ init_objc(void)
 	 * add that seperately to avoid distributing pyobjc-api.h for now 
 	 */
 	{
-		PyObject* v = PyCObject_FromVoidPtr((void*)(PyObjCClass_GetClass), NULL);
+		v = PyCObject_FromVoidPtr((void*)(PyObjCClass_GetClass), NULL);
 		if (v == NULL) return;
 
 		PyModule_AddObject(m, "__C_GETCLASS__", v);
