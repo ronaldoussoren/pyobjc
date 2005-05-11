@@ -7,6 +7,15 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3.1 (2005-04-??)
 --------------------------
 
+- The formal protocol list should be more complete.  A new 
+  ``objc.protocolsForProcess()`` enumerates over all mach
+  headers and returns all of the protocols defined in the expected
+  place.  This fixes the scenario where an application defines a
+  protocol (i.e. for plugins) but does not define any classes that
+  conform to that protocol.  In that case, the protocol would
+  reside in the mach header but would not be reachable by
+  iterating over all classes.
+
 - You can now pass the special value ``objc.NULL`` as the value
   for 'in' and 'inout' arguments. This tells the bridge to pass
   a NULL pointer to the Objective-C method, instead of a pointer
@@ -61,7 +70,6 @@ Version 1.3.1 (2005-04-??)
   takes third useMainThread argument to change this behavior.
   Effectively a complete rewrite which should be more correct
   and stable, also synchronized with mach_* 1.1.
-  XXX: Still doesn't work with Darwin 8!
 
 - Removed NSAutoreleasePool category hack that has been deprecated for
   quite some time.
