@@ -33,6 +33,7 @@ Version 1.3.5 (2005-05-??)
   - ``CoreData``
   - ``DiscRecording``
   - ``DiscRecordingUI``
+  - ``OSAKit``
   - ``Quartz``
   - ``QTKit``
   - ``SyncServices``
@@ -42,8 +43,6 @@ Version 1.3.5 (2005-05-??)
 
 - Add a CoreData example: a python version of the OutlineEditor example
   from Apple.
-
-  TODO: compile the .xcdatamodel file.
 
 - If the selector name ends with ':error:' and the last argument is a pointer
   to an object, the argument is now assumed to be an output argument.
