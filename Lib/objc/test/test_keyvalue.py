@@ -20,6 +20,8 @@ class KeyValueClass2 (object):
     def __init__(self):
         self.key3 = 3
         self._key4 = u"4"
+        self._pythonConvention = u'BAD'
+        self._pythonConventionValue = u'GOOD'
         self.__private = u'private'
 
     def addMultiple(self):
@@ -28,6 +30,12 @@ class KeyValueClass2 (object):
         self.multiple.level2.level3 = KeyValueClass2()
         self.multiple.level2.level3.keyA = u"hello"
         self.multiple.level2.level3.keyB = u"world"
+
+    def pythonConvention(self):
+        return self._pythonConventionValue
+
+    def setPythonConvention_(self, value):
+        self._pythonConventionValue = value
 
     def getKey1(self):
         return 1
@@ -77,6 +85,7 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"key3"), 3)
         self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"key4"), u"4")
         self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"multiple"), o.multiple)
+        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"pythonConvention"), u'GOOD')
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, DO_VALUEFORKEY, o, u"nokey")
 
@@ -321,6 +330,20 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
     # 'takeValue:forKey: u', test these as wel.
 
     class PyKeyValueCoding_10_3 (unittest.TestCase):
+        def testPythonConvention(self):
+            o = KeyValueClass2()
+
+            self.assertEquals(o._pythonConvention, u'BAD')
+            self.assertEquals(o.pythonConvention(), u'GOOD')
+            self.assertEquals(o._pythonConventionValue, u'GOOD')
+            self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"pythonConvention"), u'GOOD')
+            STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, u'pythonConvention', u'CHANGED')
+            self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"pythonConvention"), u'CHANGED')
+            self.assertEquals(o._pythonConvention, u'BAD')
+            self.assertEquals(o.pythonConvention(), u'CHANGED')
+            self.assertEquals(o._pythonConventionValue, u'CHANGED')
+
+
         def testSetValueForKey(self):
             o = KeyValueClass2()
 
