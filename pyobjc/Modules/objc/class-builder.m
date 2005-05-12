@@ -42,10 +42,10 @@ _UseKVO(NSObject *self, NSString *key, int isSet)
 		return YES;
 	}
 	intptr_t setofs = (intptr_t)var->ivar_offset;
-	NSMutableDict **dictPtr = (NSMutableDict **)(((char *)self) + setofs);
-	NSMutableDict *kvoDict = *dictPtr;
+	NSMutableDictionary **dictPtr = (NSMutableDictionary **)(((char *)self) + setofs);
+	NSMutableDictionary *kvoDict = *dictPtr;
 	if (!kvoDict) {
-		kvoDict = *setPtr = [[NSMutableDict alloc] initWithCapacity:0];
+		kvoDict = *dictPtr = [[NSMutableDictionary alloc] initWithCapacity:0];
 	}   
 	if (isSet) {
 		int setCount = [(NSNumber *)[kvoDict objectForKey:key] intValue] + 1;
