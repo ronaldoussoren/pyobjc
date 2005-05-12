@@ -97,7 +97,6 @@ typedef struct {
 	int hasPythonImpl;
 	int generation;
 	int useKVO;
-	int keysetoffset;
 } PyObjCClassObject;
 
 extern PyObject* PyObjCClass_DefaultModule;
@@ -109,7 +108,6 @@ int PyObjCClass_IsSubClass(Class child, Class parent);
 int ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
 void PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
 int PyObjCClass_DictOffset(PyObject* cls);
-int PyObjCClass_KeySetOffset(PyObject* cls);
 PyObject* PyObjCClass_GetDelMethod(PyObject* cls);
 void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
 int  PyObjCClass_HasPythonImplementation(PyObject* cls);

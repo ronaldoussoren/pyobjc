@@ -7,6 +7,59 @@
 
 #import <Foundation/NSInvocation.h>
 
+// XXX: Copied from objc-object.m
+static int
+_KVOHackLevel(void) {
+	static int _checkedKVO = 0;
+	if (_checkedKVO == 0) {
+		if ([NSObject instancesRespondToSelector:@selector(willChangeValueForKey:)] &&
+			[NSObject instancesRespondToSelector:@selector(didChangeValueForKey:)]) {
+			_checkedKVO = 1;
+			if ([NSObject instancesRespondToSelector:@selector(willChangeValueForKey:withSetMutation:usingObjects:)]) {
+				_checkedKVO = 2;
+			}
+		} else {
+			_checkedKVO = -1;
+		}
+	}
+	return _checkedKVO;
+}
+
+static BOOL
+_UseKVO(NSObject *self, NSString *key, int isSet)
+{           
+	int _checkedKVO = _KVOHackLevel();
+	if (_checkedKVO == -1) {
+		return NO;
+	} else if (_checkedKVO == 2) {
+		return YES;
+	}
+	// Hacks for Panther so that you don't get nested observations
+	PyObjCRT_Ivar_t var;
+	var = class_getInstanceVariable([self class], "__pyobjc_kvo_stack__");
+	if (!var) {
+		return YES;
+	}
+	intptr_t setofs = (intptr_t)var->ivar_offset;
+	NSMutableSet **setPtr = (NSMutableSet **)(((char *)self) + setofs);
+	NSMutableSet *kvoSet = *setPtr;
+	if (!kvoSet) {
+		kvoSet = *setPtr = [[NSMutableSet alloc] initWithCapacity:0];
+	}   
+	if (isSet) {
+		if ([kvoSet containsObject:key]) {
+			return NO;
+		}   
+		[kvoSet addObject:key];
+	} else {
+		if (![kvoSet containsObject:key]) {
+			return NO;
+		}
+		[kvoSet removeObject:key];
+	}
+	return YES;
+}
+
 /* Special methods for Python subclasses of Objective-C objects */
 static void object_method_dealloc(
 		ffi_cif* cif,
@@ -34,6 +87,11 @@ static void object_method_valueForKey_(
 		void** args,
 		void* userarg);
 static void object_method_setValue_forKey_(
+		ffi_cif* cif,
+		void* retval,
+		void** args,
+		void* userarg);
+static void object_method_willOrDidChangeValueForKey_(
 		ffi_cif* cif,
 		void* retval,
 		void** args,
@@ -751,6 +809,18 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			@selector(setValue:forKey:),
 			"v@:@@",
 			object_method_setValue_forKey_);
+		if (_KVOHackLevel() == 1) {
+			METH(
+				"willChangeValueForKey_",
+				@selector(willChangeValueForKey:),
+				"v@:@",
+				object_method_willOrDidChangeValueForKey_);
+			METH(
+				"didChangeValueForKey_",
+				@selector(didChangeValueForKey:),
+				"v@:@",
+				object_method_willOrDidChangeValueForKey_);
+		}
 
 		if (!have_intermediate && [super_class instancesRespondToSelector:@selector(copyWithZone:)]) {
 			if (copyWithZone_signature[0] == '\0') {
@@ -1748,6 +1818,24 @@ object_method_valueForKey_(
 
 }
 
+
+static void object_method_willOrDidChangeValueForKey_(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* retval __attribute__((__unused__)),
+		void** args,
+		void* userdata) {
+	struct objc_super super;
+	id self = *(id*)args[0];
+	SEL _meth = *(SEL*)args[1];
+	NSString* key = *(NSString**)args[2];
+	int isSet = (_meth == @selector(willChangeValueForKey:));
+
+	if (_UseKVO(self, key, isSet)) {
+		super.class = (Class)userdata;
+		RECEIVER(super) = self;
+		(void)objc_msgSendSuper(&super, _meth, key);
+	}
+}
 
 static void
 object_method_setValue_forKey_(

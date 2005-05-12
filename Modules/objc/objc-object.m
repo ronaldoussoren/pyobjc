@@ -11,9 +11,10 @@
  * Support for NSKeyValueObserving on MacOS X 10.3 and later.
  *      
  */     
-static BOOL
-_UseKVO(PyObject *tp, NSObject *self, NSString *key, int isSet)
-{           
+
+// XXX: Copied to class-builder.m
+static int
+_KVOHackLevel(void) {
 	static int _checkedKVO = 0;
 	if (_checkedKVO == 0) {
 		if ([NSObject instancesRespondToSelector:@selector(willChangeValueForKey:)] &&
@@ -26,45 +27,29 @@ _UseKVO(PyObject *tp, NSObject *self, NSString *key, int isSet)
 			_checkedKVO = -1;
 		}
 	}           
+	return _checkedKVO;
+}
+
+static BOOL
+_UseKVO(NSString *key)
+{           
+	int _checkedKVO = _KVOHackLevel();
 	if (_checkedKVO == -1 || [key characterAtIndex:0] == (unichar)'_') {
 		return NO;
-	} else if (_checkedKVO == 2) {
-		return YES;
 	}
-	intptr_t setofs = (intptr_t)PyObjCClass_KeySetOffset(tp);
-	if (setofs == 0) {
-		return YES;
-	}
-	// Hacks for Panther so that you don't get nested observations
-	NSMutableSet **setPtr = (NSMutableSet **)(((char *)self) + setofs);
-	NSMutableSet *kvoSet = *setPtr;
-	if (!kvoSet) {
-		kvoSet = *setPtr = [[NSMutableSet alloc] initWithCapacity:0];
-	}
-	if (isSet) {
-		if ([kvoSet containsObject:key]) {
-			return NO;
-		}
-		[kvoSet addObject:key];
-	} else {
-		if (![kvoSet containsObject:key]) {
-			return NO;
-		}
-		[kvoSet removeObject:key];
-	}
-	return YES;
+    return YES;
 }           
 			
 #define WILL_CHANGE(tp, self, key) \
 	do { \
-		if (_UseKVO((PyObject *)tp, (NSObject *)self, (NSString *)key, 1)) { \
+		if (_UseKVO(key)) { \
 			[(NSObject*)(self) willChangeValueForKey:(key)]; \
 		} \
 	} while (0)
 
 #define DID_CHANGE(tp, self, key) \
 	do { \
-		if (_UseKVO((PyObject *)tp, (NSObject *)self, (NSString *)key, 0)) { \
+		if (_UseKVO(key)) { \
 			[(NSObject*)(self) didChangeValueForKey:(key)]; \
 		} \
 	} while (0) 
@@ -628,7 +613,7 @@ PyObjCClassObject PyObjCObject_Type = {
      { 0, 0, 0, 0 },			/* as_buffer */
      0,					/* name */
      0,					/* slots */
-   }, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   }, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
 /*
