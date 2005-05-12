@@ -30,30 +30,21 @@ _KVOHackLevel(void) {
 	return _checkedKVO;
 }
 
-static BOOL
-_UseKVO(NSString *key)
+static void
+_UseKVO(NSObject *self, NSString *key, int willChange)
 {           
-	int _checkedKVO = _KVOHackLevel();
-	if (_checkedKVO == -1 || [key characterAtIndex:0] == (unichar)'_') {
-		return NO;
-	}
-    return YES;
+    PyObjC_DURING
+        int _checkedKVO = _KVOHackLevel();
+        if (_checkedKVO == -1 || [key characterAtIndex:0] == (unichar)'_') {
+        } else if (willChange) {
+            [self willChangeValueForKey:key];
+        } else {
+            [self didChangeValueForKey:key];
+        }
+    PyObjC_HANDLER
+    PyObjC_ENDHANDLER
 }           
 			
-#define WILL_CHANGE(tp, self, key) \
-	do { \
-		if (_UseKVO(key)) { \
-			[(NSObject*)(self) willChangeValueForKey:(key)]; \
-		} \
-	} while (0)
-
-#define DID_CHANGE(tp, self, key) \
-	do { \
-		if (_UseKVO(key)) { \
-			[(NSObject*)(self) didChangeValueForKey:(key)]; \
-		} \
-	} while (0) 
-
 static PyObject*
 object_new(
 	PyTypeObject*  type __attribute__((__unused__)),
@@ -377,9 +368,9 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	PyObject *descr;
 	descrsetfunc f;
 	PyObject** dictptr;
-	int res = -1;
+	int res;
 	id obj_inst;
-	NSString *obj_name = nil;
+	NSString *obj_name;
 	
 	if (!PyString_Check(name)) {
 #ifdef Py_USING_UNICODE
@@ -409,13 +400,15 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 		     "Cannot set '%s.400s' on NIL '%.50s' object",
 		     PyString_AS_STRING(name),
 		     tp->tp_name);
-		goto done;
+		Py_DECREF(name);
+		return -1;
 	}
 
+	obj_name = nil;
 	if (((PyObjCClassObject*)tp)->useKVO) {
 		if ((PyObjCObject_GetFlags(obj) & PyObjCObject_kUNINITIALIZED) == 0) {
 			obj_name = [NSString stringWithCString:PyString_AS_STRING(name)];
-			WILL_CHANGE(tp, obj_inst, obj_name);
+            _UseKVO((NSObject *)obj_inst, obj_name, 1);
 		}
 	}
 	descr = _type_lookup(tp, name);
@@ -437,8 +430,10 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 		
 		if (dict == NULL && value != NULL) {
 			dict = PyDict_New();
-			if (dict == NULL)
+			if (dict == NULL) {
+				res = -1;
 				goto done;
+			}
 			
 			*dictptr = dict;
 		}
@@ -464,15 +459,17 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 		PyErr_Format(PyExc_AttributeError,
 			     "'%.50s' object has no attribute '%.400s'",
 			     tp->tp_name, PyString_AS_STRING(name));
+		res = -1;
 		goto done;
 	}
 
 	PyErr_Format(PyExc_AttributeError,
 		     "'%.50s' object attribute '%.400s' is read-only",
 		     tp->tp_name, PyString_AS_STRING(name));
+	res = -1;
   done:
 	if (obj_inst && obj_name) {
-		DID_CHANGE(tp, obj_inst, obj_name);
+        _UseKVO((NSObject *)obj_inst, obj_name, 0);
 	}
 	Py_DECREF(name);
 	return res;

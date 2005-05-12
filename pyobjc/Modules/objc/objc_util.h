@@ -26,6 +26,9 @@ char* PyObjCUtil_Strdup(const char* value);
 extern NSMapTableKeyCallBacks PyObjCUtil_PointerKeyCallBacks;
 extern NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks;
 
+extern NSMapTableKeyCallBacks PyObjCUtil_ObjCIdentityKeyCallBacks;
+extern NSMapTableValueCallBacks PyObjCUtil_ObjCValueCallBacks;
+
 void    PyObjC_FreeCArray(int, void*);
 int     PyObjC_PythonToCArray(const char*, PyObject*, PyObject*, void**, int*);
 PyObject* PyObjC_CArrayToPython(const char*, void*, int);
