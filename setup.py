@@ -559,8 +559,7 @@ packages = (
     XgridFoundationPackages +
     QTKitPackages +
     QuartzPackages +
-    # XXX: Ronald forgot to check this in
-    # OSAKitPackages +
+    OSAKitPackages +
 
     [
         'PyObjCTools',
@@ -622,8 +621,7 @@ dist = setup(
        + AutomatorExtensions
        + QTKitExtensions
        + QuartzExtensions
-       # XXX: Ronald forgot to check this in
-       # + OSAKitExtensions
+       + OSAKitExtensions
        + CoreDataExtensions
        + DiscRecordingExtensions
        + DiscRecordingUIExtensions
