@@ -435,7 +435,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	info->method_magic = objc_methodlist_magic(objc_class);
 	info->dictoffset = 0;
 	info->useKVO = 0;
-    info->keysetoffset = 0;
 	info->delmethod = delmethod;
 	info->hasPythonImpl = 1;
 
@@ -449,11 +448,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	useKVOObj = PyDict_GetItemString(dict, "__useKVO__");
 	if (useKVOObj != NULL) {
 		info->useKVO = PyObject_IsTrue(useKVOObj);
-	}
-
-	var = class_getInstanceVariable(objc_class, "__pyobjc_kvo_stack__");
-	if (var != NULL) {
-		info->keysetoffset = var->ivar_offset;
 	}
 
 	Py_INCREF(res);
@@ -1280,13 +1274,6 @@ PyObjCClass_IsSubClass(Class child, Class parent)
 	}
 	return 0;
 }
-
-int
-PyObjCClass_KeySetOffset(PyObject* cls)
-{
-	return ((PyObjCClassObject*)cls)->keysetoffset;
-}
-
 
 int
 PyObjCClass_DictOffset(PyObject* cls)
