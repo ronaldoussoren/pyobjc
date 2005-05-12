@@ -17,7 +17,7 @@ TODO:
     set(['__cmp__'])
 
 """
-from _objc import setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature
+from _objc import setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature, ivar
 from itertools import imap
 
 __all__ = ['CONVENIENCE_METHODS', 'CLASS_METHODS']
@@ -26,6 +26,17 @@ CONVENIENCE_METHODS = {}
 CLASS_METHODS = {}
 
 NSObject = lookUpClass('NSObject')
+
+HAS_KVO = NSObject.instancesRespondToSelector_('willChangeValueForKey:')
+# This is a crappy way to test, but we need to check.
+# Panther's implementation sends multiple observations for the following:
+#
+#  [self willChangeValueForKey:key];
+#  [self willChangeValueForKey:key];
+#  [self didChangeValueForKey:key];
+#  [self didChangeValueForKey:key];
+#
+HAS_PANTHER_KVO = not NSObject.instancesRespondToSelector_('willChangeValueForKey:withSetMutation:usingObjects:')
 
 def add_convenience_methods(super_class, name, type_dict):
     try:
@@ -55,11 +66,14 @@ def _add_convenience_methods(super_class, name, type_dict):
             def bundleForClass(cls):
                 return cb
             type_dict['bundleForClass'] = selector(bundleForClass, isClassMethod=True)
-            if '__useKVO__' not in type_dict:
+            if HAS_KVO and '__useKVO__' not in type_dict:
                 if not (
                         'willChangeValueForKey_' in type_dict
                         or 'didChangeValueForKey_' in type_dict):
-                    type_dict['__useKVO__'] = issubclass(super_class, NSObject)
+                    useKVO = issubclass(super_class, NSObject)
+                    type_dict['__useKVO__'] = useKVO
+                    if useKVO and HAS_PANTHER_KVO:
+                        type_dict['__pyobjc_kvo_stack__'] = ivar('__pyobjc_kvo_stack__')
         if '__bundle_hack__' in type_dict:
             import warnings
             warnings.warn(
