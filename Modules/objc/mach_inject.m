@@ -94,10 +94,10 @@ mach_inject(
 	if( !err ) {
 		//assert( (void*)threadEntry >= image && (void*)threadEntry <= (image+imageSize) );
 		ASSERT_CAST( void*, threadEntry );
-		threadEntryOffset = ((void*) threadEntry) - image;
+		threadEntryOffset = ((char*) threadEntry) - (char*)image;
 		
 		ASSERT_CAST( void*, remoteCode );
-		imageOffset = ((void*) remoteCode) - image;
+		imageOffset = ((char*) remoteCode) - (char*)image;
 	}
 	
 	//	Allocate the thread.

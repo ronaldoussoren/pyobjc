@@ -263,7 +263,7 @@ call_NSObject_retain(PyObject* method,
 	IMP anIMP;
 	Class aClass;
 	SEL volatile aSel;
-	id retval;
+	volatile id retval = nil;
 
 	if (PyArg_ParseTuple(arguments, "") < 0) {
 		return NULL;

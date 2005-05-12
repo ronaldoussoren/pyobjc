@@ -20,4 +20,10 @@ PyObject* PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector, int i
 int PyObjCInformalProtocol_Warnings(char* name, PyObject* clsdict, PyObject* protocols);
 PyObject* PyObjCInformalProtocol_FindProtocol(SEL selector);
 
+/* TODO: rename */
+PyObject* findSelInDict(PyObject* clsdict, SEL selector);
+int signaturesEqual(char* sig1, char* sig2);
+
+
+
 #endif /* PyObjC_INFORMAL_PROTOCOL_H */

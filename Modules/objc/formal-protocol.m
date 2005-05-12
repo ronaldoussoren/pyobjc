@@ -162,7 +162,7 @@ static	char*	keywords[] = { "name", "supers", "selectors", NULL };
 		theProtocol->protocol_list->list[i] = NULL;
 	}
 
-	if (numInstance != NULL) {
+	if (numInstance != 0) {
 		theProtocol->instance_methods = malloc(
 			sizeof(struct objc_method_description_list) +
 			(1+numInstance)  * sizeof(struct objc_method_description));
@@ -172,7 +172,7 @@ static	char*	keywords[] = { "name", "supers", "selectors", NULL };
 		}
 		theProtocol->instance_methods->count = 0;
 	}
-	if (numClass != NULL) {
+	if (numClass != 0) {
 		theProtocol->class_methods = malloc(
 			sizeof(struct objc_method_description_list) + 
 			(1+numClass)  * sizeof(struct objc_method_description));
@@ -490,38 +490,6 @@ PyObjCFormalProtocol_FindSelectorSignature(PyObject* object, SEL selector, int i
 	}
 	return NULL;
 }
-
-static int 
-signaturesEqual(char* sig1, char* sig2)
-{
-	char buf1[1024];
-	char buf2[1024];
-	int r;
-
-	/* Return 0 if the two signatures are not equal */
-	if (strcmp(sig1, sig2) == 0) return 1;
-
-	/* For some reason compiler-generated signatures contain numbers that
-	 * are not used by the runtime. These are irrelevant for our comparison
-	 */
-	r = PyObjCRT_SimplifySignature(sig1, buf1, sizeof(buf1));
-	if (r == -1) { 
-		return 0; 
-	}
-
-	r = PyObjCRT_SimplifySignature(sig2, buf2, sizeof(buf2));
-	if (r == -1) { 
-		return 0; 
-	}
-
-
-	return strcmp(buf1, buf2) == 0;
-}
-
-
-extern PyObject* findSelInDict(PyObject* clsdict, SEL selector);
-extern int signaturesEqual(char* sig1, char* sig2);
-
 
 static int
 do_verify(
