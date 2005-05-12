@@ -62,8 +62,6 @@ extern PyObject* PyObjC_ClassExtender;
  * @field generation   The value of PyObjC_MappingCount at the last time
  *                     the method-list was updated.
  * @field useKVO    should the class implement automatic KVO notifications?
- * @field keysetoffset Offset of the NSMutableSet used to keep track of
- *                     notifications on Panther
  *
  * @discussion
  *      This struct is the type-object for on Objective-C class. It stores
