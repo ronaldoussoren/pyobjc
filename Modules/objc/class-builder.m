@@ -35,17 +35,19 @@ _UseKVO(NSObject *self, NSString *key, int isSet)
 	} else if (_checkedKVO == 2) {
 		return YES;
 	}
-	// Hacks for Panther so that you don't get nested observations
-	PyObjCRT_Ivar_t var;
-	var = class_getInstanceVariable([self class], "__pyobjc_kvo_stack__");
-	if (!var) {
-		return YES;
+	static NSMapTable* kvo_stack = nil;
+	if (kvo_stack == nil) {
+		kvo_stack = NSCreateMapTable(
+			PyObjCUtil_ObjCIdentityKeyCallBacks,
+			PyObjCUtil_ObjCValueCallBacks,
+			0);
 	}
-	intptr_t setofs = (intptr_t)var->ivar_offset;
-	NSMutableDictionary **dictPtr = (NSMutableDictionary **)(((char *)self) + setofs);
-	NSMutableDictionary *kvoDict = *dictPtr;
+	// Hacks for Panther so that you don't get nested observations
+	NSMutableDictionary *kvoDict = (NSMutableDictionary *)NSMapGet(kvo_stack, (const void *)self);
 	if (!kvoDict) {
-		kvoDict = *dictPtr = [[NSMutableDictionary alloc] initWithCapacity:0];
+		kvoDict = [[NSMutableDictionary alloc] initWithCapacity:0];
+		NSMapInsert(kvo_stack, (const void *)self, (const void *)kvoDict);
+		[kvoDict release];
 	}   
 	if (isSet) {
 		int setCount = [(NSNumber *)[kvoDict objectForKey:key] intValue] + 1;
@@ -57,11 +59,16 @@ _UseKVO(NSObject *self, NSString *key, int isSet)
 		}
 	} else {
 		int setCount = [(NSNumber *)[kvoDict objectForKey:key] intValue] - 1;
-		n = [[NSNumber alloc] initWithInt:setCount];
-		[kvoDict setValue:n forKey:key];
-		[n release];
 		if (setCount != 0) {
+			n = [[NSNumber alloc] initWithInt:setCount];
+			[kvoDict setValue:n forKey:key];
+			[n release];
 			return NO;
+		} else {
+			[kvoDict removeObjectForKey:key];
+			if (![kvoDict count]) {
+				NSMapRemove(kvo_stack, (const void *)self);
+			}
 		}
 	}
 	return YES;
@@ -559,18 +566,6 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		protocol_list->count = cur_protocol;
 	}
 	
-
-	key_list = PyDict_Keys(class_dict);
-	if (key_list == NULL) {
-		goto error_cleanup;
-	}
-
-	key_count = PyList_Size(key_list);
-	if (PyErr_Occurred()) {
-		Py_DECREF(key_list);
-		goto error_cleanup;
-	}
-
 	if (!PyObjCClass_HasPythonImplementation(py_superclass)) {
 		/* 
 		 * This class has a super_class that is pure objective-C
@@ -584,6 +579,22 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		ivar_count        += 0;
 		meta_method_count += 0; 
 		method_count      += 10;
+		
+		if (_KVOHackLevel() == 1) {
+			method_count      += 2;
+		}
+	}
+
+
+	key_list = PyDict_Keys(class_dict);
+	if (key_list == NULL) {
+		goto error_cleanup;
+	}
+
+	key_count = PyList_Size(key_list);
+	if (PyErr_Occurred()) {
+		Py_DECREF(key_list);
+		goto error_cleanup;
 	}
 
 	/* Allocate the class as soon as possible, for new selector objects */
@@ -1826,7 +1837,8 @@ object_method_valueForKey_(
 }
 
 
-static void object_method_willOrDidChangeValueForKey_(
+static void
+object_method_willOrDidChangeValueForKey_(
 		ffi_cif* cif __attribute__((__unused__)),
 		void* retval __attribute__((__unused__)),
 		void** args,
@@ -1863,8 +1875,16 @@ object_method_setValue_forKey_(
 	id value = *(id*)args[2];
 	NSString* key = *(NSString**)args[3];
 
-	// First check super
+	// Set up a KVO stack so you only get one notification from this
 	NS_DURING
+		if (_KVOHackLevel() == 1) {
+			[self willChangeValueForKey:key];
+		}
+	NS_HANDLER
+	NS_ENDHANDLER
+
+	NS_DURING
+		// First check super
 		super.class = (Class)userdata;
 		RECEIVER(super) = self;
 		(void)objc_msgSendSuper(&super, _meth, value, key);
@@ -1884,6 +1904,10 @@ object_method_setValue_forKey_(
 			if (val == NULL) {
 				PyErr_Clear();
 				PyGILState_Release(state);
+				// Pop the KVO stack
+                if (_KVOHackLevel() == 1) {
+                    [self didChangeValueForKey:key];
+                }
 				[localException raise];
 			}
 			PyObject* res = NULL;
@@ -1908,11 +1932,23 @@ object_method_setValue_forKey_(
 			if (r == -1) {
 				PyErr_Clear();
 				PyGILState_Release(state);
+				// Pop the KVO stack
+                if (_KVOHackLevel() == 1) {
+                    [self didChangeValueForKey:key];
+                }
 				[localException raise];
 			}
 			PyGILState_Release(state);
 		} else {
+			// Pop the KVO stack
+            if (_KVOHackLevel() == 1) {
+                [self didChangeValueForKey:key];
+            }
 			[localException raise];
 		}
 	NS_ENDHANDLER
+	// Pop the KVO stack
+    if (_KVOHackLevel() == 1) {
+        [self didChangeValueForKey:key];
+    }
 }

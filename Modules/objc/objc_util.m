@@ -13,6 +13,7 @@ PyObject* PyObjCExc_NoSuchClassError;
 PyObject* PyObjCExc_InternalError;
 PyObject* PyObjCExc_UnInitDeallocWarning;
 
+
 int 
 PyObjCUtil_Init(PyObject* module)
 {
@@ -287,6 +288,32 @@ NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks = {
 	NULL,
 	NULL,
 };
+
+static void
+nsmaptable_objc_retain(NSMapTable *table __attribute__((__unused__)), const void *datum) {
+	[(id)datum retain];
+}
+
+static void
+nsmaptable_objc_release(NSMapTable *table __attribute__((__unused__)), void *datum) {
+	[(id)datum release];
+}
+
+NSMapTableKeyCallBacks PyObjCUtil_ObjCIdentityKeyCallBacks = {
+	NULL,
+	NULL,
+	&nsmaptable_objc_retain,
+	&nsmaptable_objc_release,
+	NULL,
+	NULL,
+};
+
+NSMapTableValueCallBacks PyObjCUtil_ObjCValueCallBacks = {
+	&nsmaptable_objc_retain,
+	&nsmaptable_objc_release,
+	NULL  // generic description
+};
+
 
 #define SHOULD_FREE 0
 #define SHOULD_IGNORE 1
