@@ -12,28 +12,61 @@
  *      
  */     
 static BOOL
-_UseKVO(void)
+_UseKVO(PyObject *tp, NSObject *self, NSString *key, int isSet)
 {           
 	static int _checkedKVO = 0;
 	if (_checkedKVO == 0) {
-		if ([NSObject respondsToSelector:@selector(willChangeValueForKey:)] &&
-			[NSObject respondsToSelector:@selector(didChangeValueForKey:)]) {
+		if ([NSObject instancesRespondToSelector:@selector(willChangeValueForKey:)] &&
+			[NSObject instancesRespondToSelector:@selector(didChangeValueForKey:)]) {
 			_checkedKVO = 1; 
+			if ([NSObject instancesRespondToSelector:@selector(willChangeValueForKey:withSetMutation:usingObjects:)]) {
+				_checkedKVO = 2;
+			}
 		} else {
 			_checkedKVO = -1;
 		}
 	}           
-	return (_checkedKVO == 1);
+	if (_checkedKVO == -1 || [key characterAtIndex:0] == (unichar)'_') {
+		return NO;
+	} else if (_checkedKVO == 2) {
+		return YES;
+	}
+	intptr_t setofs = (intptr_t)PyObjCClass_KeySetOffset(tp);
+	if (setofs == 0) {
+		return YES;
+	}
+	// Hacks for Panther so that you don't get nested observations
+	NSMutableSet **setPtr = (NSMutableSet **)(((char *)self) + setofs);
+	NSMutableSet *kvoSet = *setPtr;
+	if (!kvoSet) {
+		kvoSet = *setPtr = [[NSMutableSet alloc] initWithCapacity:0];
+	}
+	if (isSet) {
+		if ([kvoSet containsObject:key]) {
+			return NO;
+		}
+		[kvoSet addObject:key];
+	} else {
+		if (![kvoSet containsObject:key]) {
+			return NO;
+		}
+		[kvoSet removeObject:key];
+	}
+	return YES;
 }           
 			
-#define WILL_CHANGE(self, key) \
+#define WILL_CHANGE(tp, self, key) \
 	do { \
-		if (_UseKVO()) [(NSObject*)(self) willChangeValueForKey:(key)]; \
+		if (_UseKVO((PyObject *)tp, (NSObject *)self, (NSString *)key, 1)) { \
+			[(NSObject*)(self) willChangeValueForKey:(key)]; \
+		} \
 	} while (0)
 
-#define DID_CHANGE(self, key) \
+#define DID_CHANGE(tp, self, key) \
 	do { \
-		if (_UseKVO()) [(NSObject*)(self) didChangeValueForKey:(key)]; \
+		if (_UseKVO((PyObject *)tp, (NSObject *)self, (NSString *)key, 0)) { \
+			[(NSObject*)(self) didChangeValueForKey:(key)]; \
+		} \
 	} while (0) 
 
 static PyObject*
@@ -397,7 +430,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	if (((PyObjCClassObject*)tp)->useKVO) {
 		if ((PyObjCObject_GetFlags(obj) & PyObjCObject_kUNINITIALIZED) == 0) {
 			obj_name = [NSString stringWithCString:PyString_AS_STRING(name)];
-			WILL_CHANGE(obj_inst, obj_name);
+			WILL_CHANGE(tp, obj_inst, obj_name);
 		}
 	}
 	descr = _type_lookup(tp, name);
@@ -454,7 +487,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 		     tp->tp_name, PyString_AS_STRING(name));
   done:
 	if (obj_inst && obj_name) {
-		DID_CHANGE(obj_inst, obj_name);
+		DID_CHANGE(tp, obj_inst, obj_name);
 	}
 	Py_DECREF(name);
 	return res;
@@ -595,7 +628,7 @@ PyObjCClassObject PyObjCObject_Type = {
      { 0, 0, 0, 0 },			/* as_buffer */
      0,					/* name */
      0,					/* slots */
-   }, 0, 0, 0, 0, 0, 0, 0, 0
+   }, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
 /*
