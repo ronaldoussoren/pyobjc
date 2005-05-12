@@ -30,7 +30,7 @@ void init_OSAKit(void);
 
 void init_OSAKit(void)
 {
-	PyObject *m, *d, *v;
+	PyObject *m, *d;
 	CFBundleRef bundle;
 
 	m = Py_InitModule4("_OSAKit", ib_methods, 
