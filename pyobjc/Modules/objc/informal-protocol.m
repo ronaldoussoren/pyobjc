@@ -259,7 +259,6 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector, int isClassMeth
 	return NULL;
 }
 
-/* XXX: Make public */
 PyObject*
 findSelInDict(PyObject* clsdict, SEL selector)
 {
