@@ -29,6 +29,7 @@ static BOOL
 _UseKVO(NSObject *self, NSString *key, int isSet)
 {           
 	int _checkedKVO = _KVOHackLevel();
+	NSNumber *n;
 	if (_checkedKVO == -1) {
 		return NO;
 	} else if (_checkedKVO == 2) {
@@ -41,21 +42,27 @@ _UseKVO(NSObject *self, NSString *key, int isSet)
 		return YES;
 	}
 	intptr_t setofs = (intptr_t)var->ivar_offset;
-	NSMutableSet **setPtr = (NSMutableSet **)(((char *)self) + setofs);
-	NSMutableSet *kvoSet = *setPtr;
-	if (!kvoSet) {
-		kvoSet = *setPtr = [[NSMutableSet alloc] initWithCapacity:0];
+	NSMutableDict **dictPtr = (NSMutableDict **)(((char *)self) + setofs);
+	NSMutableDict *kvoDict = *dictPtr;
+	if (!kvoDict) {
+		kvoDict = *setPtr = [[NSMutableDict alloc] initWithCapacity:0];
 	}   
 	if (isSet) {
-		if ([kvoSet containsObject:key]) {
-			return NO;
-		}   
-		[kvoSet addObject:key];
-	} else {
-		if (![kvoSet containsObject:key]) {
+		int setCount = [(NSNumber *)[kvoDict objectForKey:key] intValue] + 1;
+		n = [[NSNumber alloc] initWithInt:setCount];
+		[kvoDict setValue:n forKey:key];
+		[n release];
+		if (setCount != 1) {
 			return NO;
 		}
-		[kvoSet removeObject:key];
+	} else {
+		int setCount = [(NSNumber *)[kvoDict objectForKey:key] intValue] - 1;
+		n = [[NSNumber alloc] initWithInt:setCount];
+		[kvoDict setValue:n forKey:key];
+		[n release];
+		if (setCount != 0) {
+			return NO;
+		}
 	}
 	return YES;
 }
