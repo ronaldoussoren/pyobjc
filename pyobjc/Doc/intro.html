@@ -5,6 +5,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
 An introduction to PyObjC</title>
+<title>
+Contents</title>
 </head>
 <body>
 <h2>An introduction to PyObjC</h2>
@@ -12,41 +14,40 @@ An introduction to PyObjC</title>
 :contact: pyobjc-dev@lists.sourceforge.net
 :URL: http://pyobjc.sourceforge.net/
 :copyright: 2003-2005 The PyObjC Project -->
-<table border="1" width="80%" align="center"><tbody><tr><td><i><center>Contents</center></i><br />
+<h2>Contents</h2>
 <ul>
-<li><a href="#preface">Preface</a></li>
-<li><a href="#objective-c-for-pyobjc-users">Objective-C for PyObjC users</a></li>
-<li><a href="#overview-of-the-bridge">Overview of the bridge</a><ul>
-<li><a href="#classes">Classes</a></li>
-<li><a href="#messages-and-functions">Messages and Functions</a></li>
-<li><a href="#reference-counting">Reference counting</a></li>
-<li><a href="#protocols">Protocols</a></li>
-<li><a href="#cocoa-bindings">Cocoa Bindings</a></li>
-<li><a href="#categories">Categories</a></li>
+<li><a href="#preface" id="id6" name="id6">Preface</a></li>
+<li><a href="#objective-c-for-pyobjc-users" id="id7" name="id7">Objective-C for PyObjC users</a></li>
+<li><a href="#overview-of-the-bridge" id="id8" name="id8">Overview of the bridge</a><ul>
+<li><a href="#classes" id="id9" name="id9">Classes</a></li>
+<li><a href="#messages-and-functions" id="id10" name="id10">Messages and Functions</a></li>
+<li><a href="#reference-counting" id="id11" name="id11">Reference counting</a></li>
+<li><a href="#protocols" id="id12" name="id12">Protocols</a></li>
+<li><a href="#cocoa-bindings" id="id13" name="id13">Cocoa Bindings</a></li>
+<li><a href="#categories" id="id14" name="id14">Categories</a></li>
 </ul>
 </li>
-<li><a href="#cocoa-for-python-programmers">Cocoa for Python programmers</a></li>
-<li><a href="#notes-on-specific-tasks">Notes on specific tasks</a><ul>
-<li><a href="#working-with-threads">Working with threads</a></li>
-<li><a href="#finalizers">Finalizers</a></li>
-<li><a href="#copying">Copying</a></li>
+<li><a href="#cocoa-for-python-programmers" id="id15" name="id15">Cocoa for Python programmers</a></li>
+<li><a href="#notes-on-specific-tasks" id="id16" name="id16">Notes on specific tasks</a><ul>
+<li><a href="#working-with-threads" id="id17" name="id17">Working with threads</a></li>
+<li><a href="#finalizers" id="id18" name="id18">Finalizers</a></li>
+<li><a href="#copying" id="id19" name="id19">Copying</a></li>
 </ul>
 </li>
-<li><a href="#building-applications">Building applications</a><ul>
-<li><a href="#py2app-setup-py">&quot;py2app&quot; :  setup.py</a></li>
-<li><a href="#ide-approach-xcode">&quot;IDE approach&quot; : Xcode</a></li>
+<li><a href="#building-applications" id="id20" name="id20">Building applications</a><ul>
+<li><a href="#py2app-setup-py" id="id21" name="id21">&quot;py2app&quot; :  setup.py</a></li>
+<li><a href="#ide-approach-xcode" id="id22" name="id22">&quot;IDE approach&quot; : Xcode</a></li>
 </ul>
 </li>
 </ul>
-</td></tr></tbody></table>
-<h2><a href="#id6">Preface</a></h2>
-<p>PyObjC is a bridge between Python and Objective-C.  It allows you to write 
-Python scripts that use and extend existing Objective-C class libraries, 
+<h2><a href="#id6" name="preface">Preface</a></h2>
+<p>PyObjC is a bridge between Python and Objective-C.  It allows Python 
+scripts to use and extend existing Objective-C class libraries;
 most importantly the <a href="http://developer.apple.com/referencelibrary/API_Fundamentals/Cocoa-api-date.html">Cocoa libraries</a> by <a href="http://www.apple.com/">Apple</a>.</p>
 <p>This document describes how to use Objective-C class libraries from Python
 scripts and how to interpret the documentation of those libraries from the 
 point of view of a Python programmer.</p>
-<h2><a href="#id7">Objective-C for PyObjC users</a></h2>
+<h2><a href="#id7" name="objective-c-for-pyobjc-users">Objective-C for PyObjC users</a></h2>
 <p>It is recommended that you take the time to understand a little bit about
 Objective-C before jumping into PyObjC development.  The class libraries
 that you will be using from Cocoa are not documented in Python, and their
@@ -105,7 +106,7 @@ the selector.  The message:</p>
 <dd><p><code><span>someObject</span></code>, <code><span>someRange</span></code></p>
 </dd>
 </dl>
-<p>As you'll see later, the straightforward translation of such a message to
+<p>As documented later, the straightforward translation of such a message to
 Python is:</p>
 <pre>
 anArray.indexOfObject_inRange_(someObject, someRange)
@@ -238,15 +239,15 @@ bridge, so any such attempt will raise an <code><span>AttributeError</span></cod
 <ul>
 <li><a href="http://developer.apple.com/documentation/Cocoa/Conceptual/ObjectiveC/index.html">The Objective-C Programming Language</a> at <a href="http://www.apple.com/">Apple</a>.</li>
 </ul>
-<h2><a href="#id8">Overview of the bridge</a></h2>
-<h3><a href="#id9">Classes</a></h3>
+<h2><a href="#id8" name="overview-of-the-bridge">Overview of the bridge</a></h2>
+<h3><a href="#id9" name="classes">Classes</a></h3>
 <p>Objective-C classes are visible as (new-style) Python classes and can be 
 subclassed just like normal Python classes.  All the usual introspection
 mechanisms work as well, as do <code><span>__slots__</span></code> and descriptors.  The major 
 differences between normal Python classes and Objective-C classes are the way 
 that instances are created and initialized, and the fact that Objective-C
 selectors look strange when translated to Python methods.</p>
-<p>You can use multiple inheritance when subclassing an Objective-C class, so
+<p>Multiple inheritance may be used when subclassing an Objective-C class, so
 long as the Objective-C class is the first base class and there is only one
 Objective-C base class.  The Objective-C runtime does not support multiple
 inheritance.  These mix-in classes should not contain different
@@ -261,12 +262,12 @@ as the prefix for all classes in the <a href="http://developer.apple.com/referen
 prefix made much more sense when it was called NeXTstep, but persists to this
 day for compatibility reasons.</p>
 <p>As described in <a href="#objective-c-for-pyobjc-users">Objective-C for PyObjC users</a> the creation of Objective-C 
-objects is a two-stage process.  To initialize objects, you first call a
+objects is a two-stage process.  To initialize objects, first call a
 class method to allocate the memory (typically <code><span>alloc</span></code>), and then call an
 initializer (typically starts with <code><span>init</span></code>).  Some classes have class methods
 which perform this behind the scenes, especially classes that create cached,
 immutable, or singleton instances.</p>
-<h3><a href="#id10">Messages and Functions</a></h3>
+<h3><a href="#id10" name="messages-and-functions">Messages and Functions</a></h3>
 <p>Objective-C methods are bridged to Python methods.  Because Objective-C
 message dispatch syntax can not be translated directly to Python, a few
 simple translations must take place.  The rules for these translations are:</p>
@@ -284,7 +285,7 @@ simple translations must take place.  The rules for these translations are:</p>
 </ul>
 </blockquote>
 </li>
-<li>Use this translated selector as you would a normal Python method.
+<li>Use this translated selector as a normal Python method.
 The arguments must be passed in the same order, and the number of
 arguments passed will normally be equal to the number of underscores
 in the method name; exceptions to this rule and the behavior of &quot;result&quot;
@@ -352,28 +353,28 @@ selector named <code><span>getNumberOfRows:columns:</span></code> with the follo
 <pre>
 (void)getNumberOfRows:(int *)rowCount columns:(int *)columnCount
 </pre>
-<p>You use this method in python like this:</p>
+<p>This method is used from Python like this:</p>
 <pre>
 rowCount, columnCount = matrix.getNumberOfRows_columns_()
 </pre>
 <p>When a function or method has an array of values and the length of that array
-as arguments, you can pass <code><span>None</span></code> as the length.  The length of the sequence
-that is used for the array of values is passed to Objective-C as the length
-argument.</p>
+as arguments, <code><span>None</span></code> may be passed as the length to specify that the length
+of the given sequence should be used.</p>
 <p>Python's <code><span>array.array</span></code> type may be used to represent a C array if the
 typestr and size match what is expected by the selector.  Numeric, numarray,
-and other third party array types are not supported in PyObjC 1.3.</p>
-<p>When you define methods in a subclass of an Objective-C class, the bridge has
-to tell the Objective-C runtime what the signature of those methods is.  The
-basic rule is that all arguments as well as the return value are objects (just
-like with normal Python methods).  The bridge will automatically pick a better 
-signature when it has more information available.  Specifically, if you 
-override an existing method the bridge will assume you want to use the same
-method signature.  Furthermore, if you implement a method in an (informal)
+and other third party array types are not supported in PyObjC 1.3.5.</p>
+<p>When defining methods in an Objective-C subclass, the bridge must provide
+type signatures for each method to the Objective-C runtime.  The default
+type signature is for all arguments as well as the return value to be objects (just
+like with normal Python methods).  If there is no return statement in the implementation,
+then the return value will be void.  The bridge will automatically pick a better 
+signature when it has more information available.  Specifically, a method overrides 
+an existing method, the bridge will assume you want to use the same
+method signature.  Furthermore, if the method is implemented in an (informal)
 protocol known to the bridge it will use the signature from the corresponding
 method in that signature.</p>
-<p>The end result is that you rarely have to add information about the
-signature of methods.  For the two most common cases where this is necessary,
+<p>The end result is that it is rarely necessary to explicitly add information about
+the signature of methods.  For the two most common cases where this is necessary,
 we have provided convenience decorators (used like <code><span>staticmethod</span></code> or
 <code><span>classmethod</span></code>):</p>
 <dl>
@@ -390,13 +391,23 @@ accessor.</p>
 <code><span>objc</span></code> module for the arguments you can use with this function.  It is
 normally used like this:</p>
 <pre>
-class MyObject (NSObject):
+class MyObject(NSObject):
+
+        # -(void)someMethod:(float)arg
         def someMethod_(self, arg):
                 pass
 
-        someMethod_ = objc.selector(someMethod_, ...)
+        someMethod_ = objc.selector(someMethod_, signature='v@:f')
 </pre>
-<h3><a href="#id11">Reference counting</a></h3>
+<p>From Python 2.4, there is a decorator for this purpose:</p>
+<pre>
+class MyObject(NSObject):
+
+        @objc.signature('v@:f')
+        def someMethod_(self, arg):
+                pass
+</pre>
+<h3><a href="#id11" name="reference-counting">Reference counting</a></h3>
 <p>The <a href="http://developer.apple.com/referencelibrary/API_Fundamentals/Cocoa-api-date.html">Cocoa libraries</a>, and most (if not all) other class libraries for 
 Objective-C use explicit reference counting to manage memory.  The methods
 <code><span>retain</span></code>, <code><span>release</span></code> and <code><span>autorelease</span></code> are used to manage these 
@@ -428,7 +439,7 @@ crashes with outline views is to make sure that you model for the view uses
 subclasses of <code><span>NSObject</span></code> to represent the nodes in the outline view.</p>
 <p>Another gotcha is that <code><span>obj.setDelegate_()</span></code> often does <i>not</i> retain the
 delegate, so a reference should be maintained elsewhere.</p>
-<h3><a href="#id12">Protocols</a></h3>
+<h3><a href="#id12" name="protocols">Protocols</a></h3>
 <p>Cocoa defines a number of formal and informal protocols that specify methods
 that should be implemented by a class if it is to be used in a specific role,
 such as the data source for an <code><span>NSTableView</span></code>.</p>
@@ -440,12 +451,12 @@ have to keep these protocol wrappers up-to-date.</p>
 objects to add the right method signatures to methods, and to warn about
 classes that partially implement a protocol.</p>
 <p>See <a href="protocols.html">PyObjC protocol support</a> for more information.</p>
-<h3><a href="#id13">Cocoa Bindings</a></h3>
+<h3><a href="#id13" name="cocoa-bindings">Cocoa Bindings</a></h3>
 <p>In Mac OS X 10.3 Apple introduced <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaBindings/">Cocoa Bindings</a>, a method to make it easier
 to create and use <i>Controller</i> objects using <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueObserving/">Key-Value Observing</a> and
 <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/">Key-Value Coding</a>.  In order to create accessors compatible with this, you
 must use <code><span>objc.accessor</span></code> to create an appropriate selector descriptor.</p>
-<h3><a href="#id14">Categories</a></h3>
+<h3><a href="#id14" name="categories">Categories</a></h3>
 <p>Objective-C has a mechanism for modularize a class definition, it is possible
 to add methods to an existing class in a separate compilation unit and even
 a separate library.  This mechanism is named categories and is used to enhance
@@ -470,14 +481,14 @@ objc.classAddMethods(NSObject, [objectFootprint])
 <p>This is not very clear, PyObjC therefore also provides the following 
 mechanism, implemented on top of <code><span>objc.classAddMethods</span></code>:</p>
 <pre>
-class NSObject (objc.Category(NSObject)):
+class NSObject(objc.Category(NSObject)):
         def objectFootprint(self):
                 pass
 </pre>
 <p>To make it clear that <code><span>objc.Category</span></code> performs a special task the name in
 the class definition must be the same as the <code><span>__name__</span></code> of the argument
 to <code><span>objc.Category</span></code>.</p>
-<h2><a href="#id15">Cocoa for Python programmers</a></h2>
+<h2><a href="#id15" name="cocoa-for-python-programmers">Cocoa for Python programmers</a></h2>
 <p>Cocoa frameworks are mapped onto Python packages with the same name; that is
 the classes, constants and functions from the AppKit framework are available
 after you import <code><span>AppKit</span></code> in your Python script.</p>
@@ -505,41 +516,65 @@ Python.  The <a href="../Examples/00ReadMe.html">PyObjC Example index</a> contai
 <li><a href="http://www.stepwise.com/">stepwise.com</a></li>
 <li>Your local bookstore or library</li>
 </ul>
-<h2><a href="#id16">Notes on specific tasks</a></h2>
-<h3><a href="#id17">Working with threads</a></h3>
-<p>When you create a thread and want to use PyObjC from that thread you will
-have to create an <code><span>NSAutoreleasePool</span></code> in that thread and clean it up when
-you're done.  The easiest way to that is to create an instance of that class
-bound to a local variable.  If the thread is long-lived you may want to arrange
-for recycling the pool once in a while.</p>
-<h3><a href="#id18">Finalizers</a></h3>
-<p>In Python you can use the method <code><span>__del__</span></code> to clean up resources when your
-object is garbage collected.  In Objective-C/Cocoa this is done with a method 
-named <code><span>dealloc</span></code>.</p>
-<p>In Python subclasses of Objective-C classes you can use either convention.  You
-should pick one convention for your own code, the order in which <code><span>__del__</span></code>
-and <code><span>dealloc</span></code> methods are called is undefined.</p>
-<h3><a href="#id19">Copying</a></h3>
-<p>It is possible to implement the <code><span>NSCopying</span></code> protocol in your classes.  Some
-care must be taken when you inherit from a class that already implements 
-that protocol.</p>
-<p>Some classes copy the template object manually, you'll have to copy your 
-own fields manually in that case.  Other classes use a convenience function
-that creates the copy.  In that case you wont have to copy your own fields.
-However, the fields in the copy will rever to the same objects as the 
-fields in the original (that is, the copy will share some state with the
-original).  This is no problem when the fields rever to immutable values (such
-as integers), but is probably not what you want when the fields rever to
-mutable values (such as lists).</p>
+<h2><a href="#id16" name="notes-on-specific-tasks">Notes on specific tasks</a></h2>
+<h3><a href="#id17" name="working-with-threads">Working with threads</a></h3>
+<p>Most of Cocoa, and thus PyObjC, requires an <code><span>NSAutoreleasePool</span></code> in order to function
+properly.  PyObjC does this automatically on the first thread it is imported from,
+but other threads will require explicit <code><span>NSAutoreleasePool</span></code> management.  The following
+practice for working with <code><span>NSAutoreleasePool</span></code> is recommended:</p>
+<pre>
+pool = NSAutoreleasePool.alloc().init()
+...
+del pool
+</pre>
+<p>Typically this will be done at the beginning and end of the thread.  It is important
+to use <code><span>del</span></code> before rebinding the <code><span>pool</span></code> local to another <code><span>NSAutoreleasePool</span></code>
+instance, otherwise it will not have the intended effect.</p>
+<p>For long running threads and tight loops, it can also be useful to use this pattern
+in the body of the loop in order to optimize memory usage.  For example, <code><span>NSRunLoop</span></code>
+will be create a new <code><span>NSAutoreleasePool</span></code> at the beginning of each run loop iteration
+and release it at the end.</p>
+<h3><a href="#id18" name="finalizers">Finalizers</a></h3>
+<p>In normal Python, there are two methods for writing finalizers: implementing
+<code><span>__del__</span></code>, and using <code><span>weakref.ref</span></code> callbacks.  Generally, <code><span>__del___</span></code> is
+discouraged as it does not allow the object to participate in cyclic garbage
+collection and create uncollectible garbage if not implemented properly.
+<code><span>weakref.ref</span></code> callbacks avoid this restriction as they do not provide a real
+reference to the object.</p>
+<p>In Objective-C, there is no cyclic garbage collection, so all Objective-C
+objects (including subclasses from Python) are already subject to these
+restrictions.  When subclassing an Objective-C class, you may implement
+<code><span>dealloc</span></code> or <code><span>__del__</span></code>.  If you implement <code><span>dealloc</span></code>, ensure that
+you call the super <code><span>dealloc</span></code> at the end.  If you implement both 
+<code><span>__del__</span></code> and <code><span>dealloc</span></code>, the order in which they are called is
+undefined.</p>
+<p>It is not currently possible to create a <code><span>weakref.ref</span></code> for any Objective-C
+object.  It is probably technically possible to do, but tricky, so it
+may eventually be implemented in a future version of PyObjC (especially
+if a future Objective-C runtime supports it).</p>
+<h3><a href="#id19" name="copying">Copying</a></h3>
+<p>It is possible for a Python subclass of an Objective-C class to implement
+the <code><span>NSCopying</span></code> protocol.  Some care must be taken when the superclass
+already implements the protocol.</p>
+<p>Some <code><span>NSCopying</span></code> compliant Objective-C classes copy the template object
+manually.  In those cases the Python subclass must also copy the additional
+ivars manually.</p>
+<p>Other <code><span>NSCopying</span></code> compliant Objective-C classes use a convenience function
+that creates a shallow copy of the object and all of its ivars.  In those
+cases the Python subclass will not have to explicitly copy all of the ivars.
+However, the ivars in the copy will refer to the same objects as the original,
+and will thus share some state.  As with shallow copies in Python, if any of
+the ivars refer to mutable objects (<code><span>list</span></code>, <code><span>dict</span></code>, etc.) it may be
+desirable to explicitly make shallow or deep copies of the mutable ivars.</p>
 <p>NOTE: PyObjC might introduce a helper class when you inherit from a class
-that implements <code><span>NSCopying</span></code>.  You should not rely on the existance of this
-class.</p>
-<p>NOTE2: You shouldn't assign to <code><span>SomeClass.copyWithZone_</span></code> unless that class
-already implements <code><span>copyWithZone:</span></code>.  If you do you may end up with seemingly
-random memory coruption.</p>
-<h2><a href="#id20">Building applications</a></h2>
+that implements <code><span>NSCopying</span></code> as an internal implementation detail.
+External code should not rely on the existance of this class.</p>
+<p>NOTE2: <code><span>SomeClass.copyWithZone_</span></code> should not be implemented unless a
+superclass already implements <code><span>copyWithZone:</span></code>, or else the behavior
+will be undefined (memory corruption, crashes, etc.).</p>
+<h2><a href="#id20" name="building-applications">Building applications</a></h2>
 <p>There are two different recommended ways to build applications with PyObjC.</p>
-<h3><a href="#id21">&quot;py2app&quot; :  setup.py</a></h3>
+<h3><a href="#id21" name="py2app-setup-py">&quot;py2app&quot; :  setup.py</a></h3>
 <p>The PyObjC installer includes a copy of the <code><span>py2app</span></code> package.  This package
 offers a way to build distutils scripts for building (standalone)
 applications and plugin bundles.</p>
@@ -574,7 +609,7 @@ following command to see the list of options:</p>
 <pre>
 python setup.py py2app --help
 </pre>
-<h3><a href="#id22">&quot;IDE approach&quot; : Xcode</a></h3>
+<h3><a href="#id22" name="ide-approach-xcode">&quot;IDE approach&quot; : Xcode</a></h3>
 <p>PyObjC includes a number of Xcode templates that can be used to 
 develop applications, using the same underlying functionality that
 is in py2app.  These templates are used like any other Xcode template,

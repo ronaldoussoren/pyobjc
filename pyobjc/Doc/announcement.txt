@@ -8,9 +8,9 @@ to
    pythonmac-sig@python.org
    cocoa-dev@lists.apple.com
 
-subject: ANN: PyObjC 1.3.1
+subject: ANN: PyObjC 1.3.5
 
-PyObjC 1.3.1 is now available for download at http://pyobjc.sourceforge.net/  
+PyObjC 1.3.5 is now available for download at http://pyobjc.sourceforge.net/  
 
 PyObjC is a bridge between Python and Objective-C.  It allows full
 featured Cocoa applications to be written in pure Python.  It is also
@@ -28,13 +28,13 @@ and plugins.
 PyObjC also supports full introspection of Objective-C classes and 
 direct invocation of Objective-C APIs from the interactive interpreter.
 
-PyObjC requires Mac OS X 10.2 or later and Python 2.3 or later.  PyObjC works 
-with the Apple provided Python installation in Mac OS X 10.3 (and later),
+PyObjC requires Mac OS X 10.2 or later and Python 2.3 or later.  PyObjC
+works with the Apple provided Python installation in Mac OS X 10.3 (and later),
 MacPython 2.3, and MacPython 2.4.
 
 This release features several bugfixes, improved documentation, new Xcode
-templates, and many major enhancements.  See the news file at 
-http://pyobjc.sourceforge.net/NEWS-1.3.txt for more information.
+templates, Tiger support and many major enhancements.  See the news file at 
+http://pyobjc.sourceforge.net/NEWS-1.3.5.txt for more information.
 
 PyObjC is released with an open source license (MIT style).
 

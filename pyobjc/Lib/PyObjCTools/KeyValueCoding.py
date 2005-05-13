@@ -24,14 +24,17 @@ a Cocoa GUI layer.
 See the Cocoa documentation on the Apple developer website for more
 information on Key-Value coding. The protocol is basicly used to enable
 weaker coupling between the view and model layers.
-
-TODO: Add unittests (in test/test_keyvalue.py)
 """
 
 __all__ = ("getKey", "setKey", "getKeyPath", "setKeyPath")
 
 import objc
 import types
+from itertools import imap
+try:
+    set
+except NameError:
+    from sets import Set as set
 
 if objc.lookUpClass('NSObject').alloc().init().respondsToSelector_('setValue:forKey:'):
     SETVALUEFORKEY = 'setValue_forKey_'
@@ -43,12 +46,79 @@ else:
 def keyCaps(s):
     return s[:1].capitalize() + s[1:]
 
+class ArrayOperators(object):
+    def avg(self, obj, segments):
+        path = u'.'.join(segments)
+        lst = getKeyPath(obj, path)
+        count = len(lst)
+        if count == 0:
+            return 0.0
+        # XXX: Use a more accurate algorithm
+        return sum(imap(float, lst), 0.0) / count
+    
+    def count(self, obj, segments):
+        return len(obj)
+    
+    def distinctUnionOfArrays(self, obj, segments):
+        path = u'.'.join(segments)
+        rval = []
+        s = set()
+        lists = getKeyPath(obj, path)
+        for lst in lists:
+            for item in lst:
+                if item in s:
+                    continue
+                rval.append(item)
+                s.add(item)
+        return rval
+
+    def distinctUnionOfObjects(self, obj, segments):
+        path = u'.'.join(segments)
+        rval = []
+        s = set()
+        lst = getKeyPath(obj, path)
+        for item in lst:
+            if item in s:
+                continue
+            rval.append(item)
+            s.add(item)
+        return rval
+        
+    def max(self, obj, segments):
+        path = u'.'.join(segments)
+        return max(getKeyPath(obj, path))
+    
+    def min(self, obj, segments):
+        path = u'.'.join(segments)
+        return min(getKeyPath(obj, path))
+    
+    def sum(self, obj, segments):
+        path = u'.'.join(segments)
+        lst = getKeyPath(obj, path)
+        # XXX: Use a more accurate algorithm
+        return sum(imap(float, lst), 0.0)
+
+    def unionOfArrays(self, obj, segments):
+        path = u'.'.join(segments)
+        rval = []
+        lists = getKeyPath(obj, path)
+        for lst in lists:
+            rval.extend(lst)
+        return rval
+
+    def unionOfObjects(self, obj, segments):
+        path = u'.'.join(segments)
+        return getKeyPath(obj, path)
+
+arrayOperators = ArrayOperators()
+
 def getKey(obj, key):
     """
     Get the attribute referenced by 'key'. The key is used
     to build the name of an attribute, or attribute accessor method.
 
-    The following attributes and accesors at tried (in this order):
+    The following attributes and accesors are tried (in this order):
+
     - Accessor 'getKey'
     - Accesoor 'get_key'
     - Accessor or attribute 'key'
@@ -57,6 +127,8 @@ def getKey(obj, key):
 
     If none of these exist, raise KeyError
     """
+    if obj is None:
+        return None
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
         try:
             return obj.valueForKey_(key)
@@ -64,7 +136,23 @@ def getKey(obj, key):
             # This is not entirely correct, should check if this
             # is the right kind of ValueError before translating
             raise KeyError, str(msg)
+    
+    # check for dict-like objects
+    getitem = getattr(obj, '__getitem__', None)
+    if getitem is not None:
+        try:
+            return getitem(key)
+        except (KeyError, IndexError, TypeError):
+            pass
 
+    # check for array-like objects
+    if not isinstance(obj, basestring):
+        try:
+            itr = iter(obj)
+        except TypeError:
+            pass
+        else:
+            return [getKey(obj, key) for obj in itr]
 
     try:
         m = getattr(obj, "get" + keyCaps(key))
@@ -119,6 +207,8 @@ def setKey(obj, key, value):
 
     Raises KeyError if the key doesn't exist.
     """
+    if obj is None:
+        return
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
         try:
             getattr(obj, SETVALUEFORKEY)(value, key)
@@ -155,12 +245,22 @@ def getKeyPath(obj, keypath):
     Get the value for the keypath. Keypath is a string containing a
     path of keys, path elements are seperated by dots.
     """
+    if obj is None:
+        return None
+        
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
         return obj.valueForKeyPath_(keypath)
 
     elements = keypath.split('.')
     cur = obj
-    for e in elements:
+    elemiter = iter(elements)
+    for e in elemiter:
+        if e[:1] == u'@':
+            try:
+                oper = getattr(arrayOperators, e[1:])
+            except AttributeError:
+                raise KeyError, "Array operator %s not implemented" % (e,)
+            return oper(cur, elemiter)
         cur = getKey(cur, e)
     return cur
 
@@ -169,6 +269,9 @@ def setKeyPath(obj, keypath, value):
     Set the value at 'keypath'. The keypath is a string containing a
     path of keys, seperated by dots.
     """
+    if obj is None:
+        return
+        
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
         return getattr(obj, SETVALUEFORKEYPATH)(value, keypath)
 
@@ -179,6 +282,7 @@ def setKeyPath(obj, keypath, value):
 
     return setKey(cur, elements[-1], value)
 
+        
 class kvc(object):
     def __init__(self, obj):
         self.__pyobjc_object__ = obj

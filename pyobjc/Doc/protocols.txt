@@ -13,23 +13,34 @@ protocols::
 	-(int)doesIt;
 	@end
 
-Informal protocols on the other hand are purely documentation, the Objective-C 
-compiler doesn't know about them.  For end users the main difference between
-formal and informal protocols is that you have to declare that you implement a
-formal protocol and that formal protocols do not have optional methods.
+Conforming to a formal protocol requires the interface of a class to explicitly
+declare that it implements that protocol, and the implementation must implement
+all methods of the protocol.
+
+Informal protocols are defined as categories on NSObject with no implementation::
+
+	@interface NSObject(FooDelegate)
+	-(void)optionalFooDelegateMethod;
+	@end
+
+Conforming to an informal protocol is much like conforming to a protocol in Python,
+the class simply implements the methods as documented.  In most cases, informal
+protocols are comprised entirely of optional methods (i.e. NSApplicationDelegate)
+and a check is made (i.e. ``-[NSObject respondsToSelector:]``) before sending
+the message to the target.
 
 Informal protocols and PyObjC
 -----------------------------
 
-PyObjC does have an explicit representation for informal protocols.  This makes
+PyObjC has an explicit representation for informal protocols.  This makes
 it possible to use the protocol description to provide better error messages and
 to automaticly deduce the method signatures for classes that implement an
 informal protocol.
 
 Informal protocols are represented using instances of 
 ``objc.informal_protocol``.  These instances are automaticly added to a
-registry, therefore it is not necessary to declare that you implement an
-informal protocol.
+registry used by the class builder, so it is not necessary to explicitly
+state that a class implements an informal protocol.
 
 Formal protocols and PyObjC
 ---------------------------
@@ -37,22 +48,29 @@ Formal protocols and PyObjC
 PyObjC also has an explicit representation for formal protocols. 
 
 Formal protocols are represented as instances of ``objc.formal_protocol``. 
-Unlike informal protocols you have to declare that you implement a formal 
-protocol to get all features of formal protocols.  However, all formal
-protocols in Cocoa are also described using ``objc.informal_protocol`` objects.
+Unlike informal protocols, it is necessary to explicitly declare
+conformance to formal protocols.  However, all formal protocols in Cocoa
+are also described using ``objc.informal_protocol`` objects.
 
 XXX: is this necessary? we could also use the same strategy as for informal
 protocols, and drop the informal_protocol wrappers for formal protocols.
 
-You can declare that you implement a formal protocol by using the protocol as
-a mix-in::
+Declaring conformance to a formal protocol is done by using the formal protocol
+as a mix-in, and by implementing its methods::
 
-	class MyLockingObject (NSObject, NSLocking):
-		def lock(self): pass
-		def unlock(self): pass
+	NSLocking = objc.protocolNamed('NSLocking')
 
-The class now formally implements the ``NSLocking`` protocol, you can check
-this using the Objective-C introspection methods::
+	class MyLockingObject(NSObject, NSLocking):
+		def lock(self):
+			pass
+
+		def unlock(self):
+			pass
+
+XXX: Change this example when the pyobjc_classMethods hack is no longer necessary.
+
+The class now formally implements the ``NSLocking`` protocol, this can be
+verified using the Objective-C introspection methods::
 
 	>>> MyLockingObject.pyobjc_classMethods.conformsToProtocol_(NSLocking)
 	1

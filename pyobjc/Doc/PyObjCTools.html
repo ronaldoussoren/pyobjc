@@ -95,20 +95,19 @@ explained <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/Key
 <p>This module provides a Python interface to some of that functionality. The
 interface is modeled on the <code><span>getattr</span></code> and <code><span>setattr</span></code> functions.</p>
 <ul>
-<li><code><span>getKey(object,</span> <span>key)</span> <span>-&gt;</span> <span>value</span></code><p>Find the value for <code><span>key</span></code>. Raises <code><span>KeyError</span></code> if the key is not a valid
-attribute of the object.</p>
-<p>To find the value of a key the following values are tried for a key named
-<code><span>key</span></code> (first match wins):</p>
+<li><code><span>getKey(object,</span> <span>key)</span> <span>-&gt;</span> <span>value</span></code><blockquote>
+<p>Get the attribute referenced by 'key'. The key is used
+to build the name of an attribute, or attribute accessor method.</p>
+<p>The following attributes and accesors are tried (in this order):</p>
 <ul>
-<li>the return value of <code><span>object.get_key()</span></code></li>
-<li>the return value of <code><span>object.getKey()</span></code></li>
-<li>the return value of <code><span>object._get_key()</span></code></li>
-<li>the return value of <code><span>object._getKey()</span></code></li>
-<li>the value of the attribute <code><span>key</span></code>, or the value of <code><span>object.key()</span></code> if
-<code><span>object.key</span></code> is a method.</li>
-<li>the value of the attribute <code><span>_key</span></code>, or the vale of <code><span>object._key()</span></code> if
-<code><span>object._key</span></code> is a method.</li>
+<li>Accessor 'getKey'</li>
+<li>Accesoor 'get_key'</li>
+<li>Accessor or attribute 'key'</li>
+<li>Accessor or attribute 'isKey'</li>
+<li>Attribute '_key'</li>
 </ul>
+<p>If none of these exist, raise KeyError</p>
+</blockquote>
 </li>
 <li><code><span>getKeyPath(object,</span> <span>keypath)</span> <span>-&gt;</span> <span>value</span></code><p>Like <code><span>getKey</span></code> but using a key path. The <code><span>keypath</span></code> is a sequence of keys
 separated by dots. It calls <code><span>getKey</span></code> to follow the path and returns the

@@ -2,6 +2,8 @@
 GNUstep support in PyObjC
 =========================
 
+**WARNING**: GNUStep support is broken.  If you would like to help, let us know.
+
 PyObjC has limited support for GNUstep, the 'objc' and 'Foundation' packages
 build and pass some, but by far not all, unittests.  More work is needed to
 make the GNUstep port as stable as the Mac OS X "port".

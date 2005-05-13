@@ -14,7 +14,7 @@ import objc
 import unittest
 from objc.test import ctests
 from Foundation import *
-
+import datetime
 
 class KeyValueClass5 (object):
     def __init__(self):
@@ -366,6 +366,247 @@ class TestPythonSubOverObjC(AbstractKVCodingTest, unittest.TestCase):
             getKeyPath( self.path, u"overDirectHead.indirectString"))
         self.assertEquals(IndirectString,
             getKeyPath( self.path, u"overIndirectHead.indirectString"))
+
+class Account(object):
+    def __init__(self, **kw):
+        self.__dict__.update(kw)
+
+class Transaction(object):
+    def __init__(self, **kw):
+        self.__dict__.update(kw)
+        
+class PyObjCAccount(NSObject):
+    openingBalance = objc.ivar('openingBalance', 'd')
+    name = objc.ivar('name')
+    notes = objc.ivar('notes')
+    transactions = objc.ivar('transactions')
+
+    def __new__(cls, **kw):
+        self = cls.alloc().init()
+        for k, v in kw.iteritems():
+            setattr(self, k, v)
+        return self
+        
+class PyObjCTransaction(NSObject):
+    referenceNumber = objc.ivar('referenceNumber', 'I')
+    amount = objc.ivar('amount', 'd')
+    payee = objc.ivar('payee')
+    date = objc.ivar('date')
+    category = objc.ivar('category')
+    reconciled = objc.ivar(objc._C_BOOL)
+
+    def __new__(cls, **kw):
+        self = cls.alloc().init()
+        for k, v in kw.iteritems():
+            setattr(self, k, v)
+        return self
+
+def makeAccounts(Account, Transaction):
+    return [
+        Account(
+            openingBalance=10.0,
+            name=u'Alice',
+            notes=u'Alice notes',
+            transactions=[
+                Transaction(
+                    referenceNumber=1,
+                    amount=20.0,
+                    payee=u'Bob',
+                    date=datetime.date(2005, 1, 1),
+                    category=u'Tacos',
+                    reconciled=True,
+                ),
+                Transaction(
+                    referenceNumber=2,
+                    amount=14.50,
+                    payee=u'George',
+                    date=datetime.date(2005, 1, 2),
+                    category=u'Bagels',
+                    reconciled=True,
+                ),
+                Transaction(
+                    referenceNumber=3,
+                    amount=250,
+                    payee=u'Bill',
+                    date=datetime.date(2005, 1, 3),
+                    category=u'Tequila',
+                    reconciled=True,
+                ),
+            ],
+        ),
+        Account(
+            openingBalance=10.0,
+            name=u'Bob',
+            notes=u'Bob notes',
+            transactions=[
+                Transaction(
+                    referenceNumber=4,
+                    amount=25.0,
+                    payee=u'Alice',
+                    date=datetime.date(2005, 1, 4),
+                    category=u'Beer',
+                    reconciled=True,
+                ),
+                Transaction(
+                    referenceNumber=5,
+                    amount=60.0,
+                    payee=u'George',
+                    date=datetime.date(2005, 1, 5),
+                    category=u'Book',
+                    reconciled=True,
+                ),
+                Transaction(
+                    referenceNumber=6,
+                    amount=250,
+                    payee=u'Bill',
+                    date=datetime.date(2005, 1, 6),
+                    category=u'Tequila',
+                    reconciled=True,
+                ),
+            ],
+        ),
+    ]
+
+
+class TestArrayOperators(unittest.TestCase):
+    def setUp(self):
+        self.accounts = makeAccounts(Account, Transaction)    
+    def testCount(self):
+        self.assertEquals(
+            getKeyPath(self, u'accounts.@count'), 2)
+        self.assertEquals(
+            getKeyPath(self, u'accounts.transactions.@count'), 2)
+        self.assertEquals(
+            getKeyPath(self.accounts, u'@count'), 2)
+        self.assertEquals(
+            getKeyPath(self.accounts[0], u'transactions.@count'), 3)
+        self.assertEquals(
+            getKeyPath(self.accounts[1], u'transactions.@count'), 3)
+
+    def testDistinctUnionOfArrays(self):
+        self.assertEquals(
+            getKeyPath(
+                self.accounts,
+                u'@distinctUnionOfArrays.transactions.payee'),
+            [u'Bob', u'George', u'Bill', u'Alice'])
+        self.assertEquals(
+            getKeyPath(
+                self.accounts,
+                u'@distinctUnionOfArrays.transactions.referenceNumber'),
+            [1, 2, 3, 4, 5, 6])
+        self.assertEquals(
+            getKeyPath(
+                self.accounts,
+                u'@distinctUnionOfArrays.transactions.category'),
+            [u'Tacos', u'Bagels', u'Tequila', u'Beer', u'Book'])
+    
+    def testDistinctUnionOfObjects(self):
+        alice = self.accounts[0]
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@distinctUnionOfObjects.payee'),
+            [u'Bob', u'George', u'Bill'])
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@distinctUnionOfObjects.referenceNumber'),
+            [1, 2, 3])
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@distinctUnionOfObjects.reconciled'),
+            [True])
+
+    def testMax(self):
+        alice = self.accounts[0]
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@max.date'),
+            datetime.date(2005, 1, 3))
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@max.referenceNumber'),
+            3)
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@max.amount'),
+            250)
+            
+    def testMin(self):
+        alice = self.accounts[0]
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@min.date'),
+            datetime.date(2005, 1, 1))
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@min.referenceNumber'),
+            1)
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@min.amount'),
+            14.50)
+
+    def testSum(self):
+        alice = self.accounts[0]
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@sum.amount'),
+            20 + 14.50 + 250)
+        bob = self.accounts[1]
+        self.assertEquals(
+            getKeyPath(
+                bob,
+                u'transactions.@sum.amount'),
+            25 + 60 + 250)
+    
+    def testUnionOfArrays(self):
+        self.assertEquals(
+            getKeyPath(
+                self.accounts,
+                u'@unionOfArrays.transactions.payee'),
+            [u'Bob', u'George', u'Bill', u'Alice', u'George', u'Bill'])
+        self.assertEquals(
+            getKeyPath(
+                self.accounts,
+                u'@unionOfArrays.transactions.referenceNumber'),
+            [1, 2, 3, 4, 5, 6])
+        self.assertEquals(
+            getKeyPath(
+                self.accounts,
+                u'@unionOfArrays.transactions.category'),
+            [u'Tacos', u'Bagels', u'Tequila', u'Beer', u'Book', u'Tequila'])
+    
+    def testUnionOfObjects(self):
+        alice = self.accounts[0]
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@unionOfObjects.payee'),
+            [u'Bob', u'George', u'Bill'])
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@unionOfObjects.referenceNumber'),
+            [1, 2, 3])
+        self.assertEquals(
+            getKeyPath(
+                alice,
+                u'transactions.@unionOfObjects.reconciled'),
+            [True, True, True])
+
+class TestPyObjCArrayOperators(TestArrayOperators):
+    def setUp(self):
+        self.accounts = makeAccounts(PyObjCAccount, PyObjCTransaction)
+
 
 if __name__ == "__main__":
     unittest.main()

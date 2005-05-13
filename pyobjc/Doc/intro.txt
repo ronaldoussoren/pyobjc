@@ -13,8 +13,8 @@ An introduction to PyObjC
 Preface
 -------
 
-PyObjC is a bridge between Python and Objective-C.  It allows you to write 
-Python scripts that use and extend existing Objective-C class libraries, 
+PyObjC is a bridge between Python and Objective-C.  It allows Python 
+scripts to use and extend existing Objective-C class libraries;
 most importantly the `Cocoa libraries`_ by `Apple`_.
 
 This document describes how to use Objective-C class libraries from Python
@@ -86,7 +86,7 @@ Selector:
 Arguments:
     ``someObject``, ``someRange``
 
-As you'll see later, the straightforward translation of such a message to
+As documented later, the straightforward translation of such a message to
 Python is::
 
     anArray.indexOfObject_inRange_(someObject, someRange)
@@ -238,7 +238,7 @@ differences between normal Python classes and Objective-C classes are the way
 that instances are created and initialized, and the fact that Objective-C
 selectors look strange when translated to Python methods.
 
-You can use multiple inheritance when subclassing an Objective-C class, so
+Multiple inheritance may be used when subclassing an Objective-C class, so
 long as the Objective-C class is the first base class and there is only one
 Objective-C base class.  The Objective-C runtime does not support multiple
 inheritance.  These mix-in classes should not contain different
@@ -255,7 +255,7 @@ prefix made much more sense when it was called NeXTstep, but persists to this
 day for compatibility reasons.
 
 As described in `Objective-C for PyObjC users`_ the creation of Objective-C 
-objects is a two-stage process.  To initialize objects, you first call a
+objects is a two-stage process.  To initialize objects, first call a
 class method to allocate the memory (typically ``alloc``), and then call an
 initializer (typically starts with ``init``).  Some classes have class methods
 which perform this behind the scenes, especially classes that create cached,
@@ -277,7 +277,7 @@ simple translations must take place.  The rules for these translations are:
     - ``class`` translates to ``class__``
     - ``raise`` translates to ``raise__``
 
-3. Use this translated selector as you would a normal Python method.
+3. Use this translated selector as a normal Python method.
    The arguments must be passed in the same order, and the number of
    arguments passed will normally be equal to the number of underscores
    in the method name; exceptions to this rule and the behavior of "result"
@@ -346,31 +346,31 @@ selector named ``getNumberOfRows:columns:`` with the following signature::
 
    (void)getNumberOfRows:(int *)rowCount columns:(int *)columnCount
 
-You use this method in python like this::
+This method is used from Python like this::
 
    rowCount, columnCount = matrix.getNumberOfRows_columns_()
 
 When a function or method has an array of values and the length of that array
-as arguments, you can pass ``None`` as the length.  The length of the sequence
-that is used for the array of values is passed to Objective-C as the length
-argument. 
+as arguments, ``None`` may be passed as the length to specify that the length
+of the given sequence should be used.
 
 Python's ``array.array`` type may be used to represent a C array if the
 typestr and size match what is expected by the selector.  Numeric, numarray,
-and other third party array types are not supported in PyObjC 1.3.
+and other third party array types are not supported in PyObjC 1.3.5.
 
-When you define methods in a subclass of an Objective-C class, the bridge has
-to tell the Objective-C runtime what the signature of those methods is.  The
-basic rule is that all arguments as well as the return value are objects (just
-like with normal Python methods).  The bridge will automatically pick a better 
-signature when it has more information available.  Specifically, if you 
-override an existing method the bridge will assume you want to use the same
-method signature.  Furthermore, if you implement a method in an (informal)
+When defining methods in an Objective-C subclass, the bridge must provide
+type signatures for each method to the Objective-C runtime.  The default
+type signature is for all arguments as well as the return value to be objects (just
+like with normal Python methods).  If there is no return statement in the implementation,
+then the return value will be void.  The bridge will automatically pick a better 
+signature when it has more information available.  Specifically, a method overrides 
+an existing method, the bridge will assume you want to use the same
+method signature.  Furthermore, if the method is implemented in an (informal)
 protocol known to the bridge it will use the signature from the corresponding
 method in that signature.
 
-The end result is that you rarely have to add information about the
-signature of methods.  For the two most common cases where this is necessary,
+The end result is that it is rarely necessary to explicitly add information about
+the signature of methods.  For the two most common cases where this is necessary,
 we have provided convenience decorators (used like ``staticmethod`` or
 ``classmethod``):
 
@@ -386,11 +386,22 @@ For complete control of the mapping to Objective-C you can use the function
 ``objc`` module for the arguments you can use with this function.  It is
 normally used like this::
 
-	class MyObject (NSObject):
+	class MyObject(NSObject):
+
+		# -(void)someMethod:(float)arg
 		def someMethod_(self, arg):
 			pass
 
-		someMethod_ = objc.selector(someMethod_, ...)
+		someMethod_ = objc.selector(someMethod_, signature='v@:f')
+
+From Python 2.4, there is a decorator for this purpose::
+
+	class MyObject(NSObject):
+
+		@objc.signature('v@:f')
+		def someMethod_(self, arg):
+			pass
+
 
 Reference counting
 ..................
@@ -497,7 +508,7 @@ Python::
 This is not very clear, PyObjC therefore also provides the following 
 mechanism, implemented on top of ``objc.classAddMethods``::
 
-	class NSObject (objc.Category(NSObject)):
+	class NSObject(objc.Category(NSObject)):
 		def objectFootprint(self):
 			pass
 
@@ -559,46 +570,73 @@ Notes on specific tasks
 Working with threads
 ....................
 
-When you create a thread and want to use PyObjC from that thread you will
-have to create an ``NSAutoreleasePool`` in that thread and clean it up when
-you're done.  The easiest way to that is to create an instance of that class
-bound to a local variable.  If the thread is long-lived you may want to arrange
-for recycling the pool once in a while.
+Most of Cocoa, and thus PyObjC, requires an ``NSAutoreleasePool`` in order to function
+properly.  PyObjC does this automatically on the first thread it is imported from,
+but other threads will require explicit ``NSAutoreleasePool`` management.  The following
+practice for working with ``NSAutoreleasePool`` is recommended::
+
+	pool = NSAutoreleasePool.alloc().init()
+	...
+	del pool
+
+Typically this will be done at the beginning and end of the thread.  It is important
+to use ``del`` before rebinding the ``pool`` local to another ``NSAutoreleasePool``
+instance, otherwise it will not have the intended effect.
+
+For long running threads and tight loops, it can also be useful to use this pattern
+in the body of the loop in order to optimize memory usage.  For example, ``NSRunLoop``
+will be create a new ``NSAutoreleasePool`` at the beginning of each run loop iteration
+and release it at the end.
 
 Finalizers
 ..........
 
-In Python you can use the method ``__del__`` to clean up resources when your
-object is garbage collected.  In Objective-C/Cocoa this is done with a method 
-named ``dealloc``. 
+In normal Python, there are two methods for writing finalizers: implementing
+``__del__``, and using ``weakref.ref`` callbacks.  Generally, ``__del___`` is
+discouraged as it does not allow the object to participate in cyclic garbage
+collection and create uncollectible garbage if not implemented properly.
+``weakref.ref`` callbacks avoid this restriction as they do not provide a real
+reference to the object.
 
-In Python subclasses of Objective-C classes you can use either convention.  You
-should pick one convention for your own code, the order in which ``__del__``
-and ``dealloc`` methods are called is undefined.
+In Objective-C, there is no cyclic garbage collection, so all Objective-C
+objects (including subclasses from Python) are already subject to these
+restrictions.  When subclassing an Objective-C class, you may implement
+``dealloc`` or ``__del__``.  If you implement ``dealloc``, ensure that
+you call the super ``dealloc`` at the end.  If you implement both 
+``__del__`` and ``dealloc``, the order in which they are called is
+undefined.
+
+It is not currently possible to create a ``weakref.ref`` for any Objective-C
+object.  It is probably technically possible to do, but tricky, so it
+may eventually be implemented in a future version of PyObjC (especially
+if a future Objective-C runtime supports it).
 
 Copying
 .......
 
-It is possible to implement the ``NSCopying`` protocol in your classes.  Some
-care must be taken when you inherit from a class that already implements 
-that protocol. 
+It is possible for a Python subclass of an Objective-C class to implement
+the ``NSCopying`` protocol.  Some care must be taken when the superclass
+already implements the protocol. 
 
-Some classes copy the template object manually, you'll have to copy your 
-own fields manually in that case.  Other classes use a convenience function
-that creates the copy.  In that case you wont have to copy your own fields.
-However, the fields in the copy will rever to the same objects as the 
-fields in the original (that is, the copy will share some state with the
-original).  This is no problem when the fields rever to immutable values (such
-as integers), but is probably not what you want when the fields rever to
-mutable values (such as lists).
+Some ``NSCopying`` compliant Objective-C classes copy the template object
+manually.  In those cases the Python subclass must also copy the additional
+ivars manually.
+
+Other ``NSCopying`` compliant Objective-C classes use a convenience function
+that creates a shallow copy of the object and all of its ivars.  In those
+cases the Python subclass will not have to explicitly copy all of the ivars.
+However, the ivars in the copy will refer to the same objects as the original,
+and will thus share some state.  As with shallow copies in Python, if any of
+the ivars refer to mutable objects (``list``, ``dict``, etc.) it may be
+desirable to explicitly make shallow or deep copies of the mutable ivars.
 
 NOTE: PyObjC might introduce a helper class when you inherit from a class
-that implements ``NSCopying``.  You should not rely on the existance of this
-class.
+that implements ``NSCopying`` as an internal implementation detail.
+External code should not rely on the existance of this class.
 
-NOTE2: You shouldn't assign to ``SomeClass.copyWithZone_`` unless that class
-already implements ``copyWithZone:``.  If you do you may end up with seemingly
-random memory coruption.
+NOTE2: ``SomeClass.copyWithZone_`` should not be implemented unless a
+superclass already implements ``copyWithZone:``, or else the behavior
+will be undefined (memory corruption, crashes, etc.).
 
 Building applications
 ---------------------

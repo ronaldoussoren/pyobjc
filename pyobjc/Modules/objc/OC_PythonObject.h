@@ -60,6 +60,12 @@
 - (NSMethodSignature *) methodSignatureForSelector:(SEL) selector;
 - (void) doesNotRecognizeSelector:(SEL) aSelector;
 
+/* NSObject protocol */
+- (unsigned)hash;
+- (BOOL)isEqual:(id)anObject;
+/* NSObject methods */
+- (NSComparisonResult)compare:(id)other;
+
 /* Key-Value Coding support */
 + (BOOL)useStoredAccessor;
 + (BOOL)accessInstanceVariablesDirectly;

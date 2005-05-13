@@ -965,4 +965,83 @@ static  PyObject* setKeyFunc = NULL;
 }
 #endif
 
+/* NSObject protocol */
+- (unsigned)hash
+{
+    PyObjC_BEGIN_WITH_GIL
+        int rval;
+        rval = PyObject_Hash([self pyObject]);
+        if (rval == -1) {
+            PyErr_Clear();
+            rval = (int)[self pyObject];
+        }
+        PyObjC_GIL_RETURN((unsigned)rval);
+    PyObjC_END_WITH_GIL
+}
+
+- (BOOL)isEqual:(id)anObject
+{
+    if (anObject == nil) {
+        return NO;
+    } else if (self == anObject) {
+        return YES;
+    }
+    PyObjC_BEGIN_WITH_GIL
+        PyObject *otherPyObject = PyObjC_IdToPython(anObject);
+        if (otherPyObject == NULL) {
+            PyErr_Clear();
+            PyObjC_GIL_RETURN(NO);
+        }
+        if (otherPyObject == [self pyObject]) {
+            PyObjC_GIL_RETURN(YES);
+        }
+        switch (PyObject_RichCompareBool([self pyObject], otherPyObject, Py_EQ)) {
+            case -1:
+                PyErr_Clear();
+            case 0:
+                PyObjC_GIL_RETURN(NO);
+                break;
+            default:
+                PyObjC_GIL_RETURN(YES);
+        }
+    PyObjC_END_WITH_GIL
+}
+
+/* NSObject methods */
+- (NSComparisonResult)compare:(id)other
+{
+    if (other == nil) {
+        [NSException raise: NSInvalidArgumentException
+                    format: @"nil argument"];
+    } else if (self == other) {
+        return NSOrderedSame;
+    }
+    PyObjC_BEGIN_WITH_GIL
+        PyObject *otherPyObject = PyObjC_IdToPython(other);
+        if (otherPyObject == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+        if (otherPyObject == [self pyObject]) {
+            PyObjC_GIL_RETURN(NSOrderedSame);
+        }
+        int r;
+        if (PyObject_Cmp([self pyObject], otherPyObject, &r) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+        NSComparisonResult rval;
+        switch (r) {
+            case -1:
+                rval = NSOrderedAscending;
+                break;
+            case 0:
+                rval = NSOrderedSame;
+                break;
+            default:
+                rval = NSOrderedDescending;
+        }
+        PyObjC_GIL_RETURN(rval);
+    PyObjC_END_WITH_GIL
+}
+
+
 @end /* OC_PythonObject class implementation */

@@ -1,4 +1,4 @@
-__all__ = ['inject']
+__all__ = ['inject', 'signature']
 
 import os
 import sys
@@ -25,3 +25,20 @@ def inject(pid, bundle, useMainThread=True):
         useMainThread,
         *paths
     )
+
+def signature(signature, **kw):
+    """
+    A Python method decorator that allows easy specification
+    of Objective-C selectors.
+
+    Usage::
+        
+        @objc.signature('i@:if')
+        def methodWithX_andY_(self, x, y):
+            return 0
+    """
+    from _objc import selector
+    kw['signature'] = signature
+    def makeSignature(func):
+        return selector(func, **kw)
+    return makeSignature
