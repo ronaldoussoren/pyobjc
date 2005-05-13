@@ -35,6 +35,25 @@ int PyObjC_StrBridgeEnabled = 1;
 
 static NSAutoreleasePool* global_release_pool = nil;
 
+@interface OC_NSAutoreleasePoolCollector: NSObject
+{}
++(void)newAutoreleasePool;
+@end
+@implementation OC_NSAutoreleasePoolCollector
++(void)newAutoreleasePool
+{
+	self = [[self alloc] init];
+	global_release_pool = [[NSAutoreleasePool alloc] init];
+	(void)[self autorelease];
+}
+
+-(void)dealloc
+{
+	global_release_pool = nil;
+	[super dealloc];
+}
+@end
+
 PyDoc_STRVAR(pyobjc_id_doc,
   "pyobjc_id(obj) -> int\n"
   "\n"
@@ -358,7 +377,7 @@ recycle_autorelease_pool(PyObject* self __attribute__((__unused__)),
 
 	PyObjC_DURING
 		[global_release_pool release];
-		global_release_pool = [[NSAutoreleasePool alloc] init];
+		[OC_NSAutoreleasePoolCollector newAutoreleasePool];
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 	PyObjC_ENDHANDLER
@@ -1347,5 +1366,5 @@ init_objc(void)
 	/* Allocate an auto-release pool for our own use, this avoids numerous
 	 * warnings during startup of a python script.
 	 */
-	global_release_pool = [[NSAutoreleasePool alloc] init];
+	[OC_NSAutoreleasePoolCollector newAutoreleasePool];
 }

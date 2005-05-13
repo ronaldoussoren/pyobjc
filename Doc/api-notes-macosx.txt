@@ -11,64 +11,68 @@ TODO: Add documentation about weak linking (see intro.txt).
 Introduction
 ------------
 
-This document describes the restrictions w.r.t. supported APIs and classes
-on Mac OS X. In general you can use classes and global functions just like
-in Objective-C (e.g. the Apple developer documentation applies), but in some
-cases there are special considerations.
+This document describes the restrictions with regard to supported APIs and
+classes on Mac OS X.  In general, classes and global functions are used just
+as they are in Objective-C (e.g. the Apple developer documentation applies),
+but in some cases there are special considerations.
 
-We also do not provide access to global functions that are not useful for
-Python programs, those functions are listed below.
+Global functions that are not useful for Python programs are not callable from
+Python, as listed below.
 
-This document lists the exceptions to the basic rules. If a method uses pointers
+This document lists the exceptions to the basic rules.  If a method uses pointers
 to return additional values, the Python wrapper for that method returns a tuple
-containing the original return value and the additional values. You don't have
-to pass values for those arguments, unless the method uses the values you
-pass in.
+containing the original return value and the additional values.  It is not necessary
+to provide values for pointer arguments unless their initial value is used by the
+method.  Additionally, ``objc.NULL`` can be passed to denote that these arguments
+should be ``NULL`` rather than a pointer to allocated memory.
 
 This document is targeted at the latest supported version of Mac OS X (currently
-Mac OS X 10.3.x); unless specifically noted the same restrictions apply to 
-earlier versions of Mac OS X. Earlier versions of the OS have less extensive
-APIs, PyObjC does *not* provide a compatibility layer.
-
-Frameworks not listed below are not wrapped by PyObjC, they can still be
-accessed although without access to constants and global functions defined
-by those frameworks.
+Mac OS X 10.4.x).  Unless specifically noted, the same restrictions apply to 
+earlier versions of Mac OS X.  Earlier versions of Mac OS X have less extensive
+APIs, and PyObjC does *not* provide a compatibility layer except when necessary
+to support its own operation.
 
 This document is not entirely complete, but does cover the most used APIs.
 Classes not mentioned in this document may very well work properly.
 
+Frameworks that do not have PyObjC wrappers can be loaded at runtime using
+the ``objc.loadBundle``, ``objc.loadBundleFunctions`` and
+``objc.loadBundleVariables`` functions.  In a future version of PyObjC,
+there will be an Objective-C header parser that can be used to automate this
+process and to generate wrappers.
+
 Core Objective-C runtime
 ------------------------
-
-Class Protocol
-..............
-
-* ``descriptionForClassMethod:``, ``descriptionForInstanceMethod``
-
-  These methods are not supported. Protocols are hardly ever used explicitly
-  in Cocoa therefore this should not be a problem.
 
 Addressbook framework
 ---------------------
 
-We do not provide access to the global functions in this framework, because
-the same functionality can be accessed by using the object-oriented interface.
+The global functions in this framework are not wrapped, as the same 
+functionality can be accessed by using the object-oriented interface.
 
 AppKit framework
 ----------------
 
-The callback methods for the NSSheet API's have a non-default signature
+The callback methods for the ``NSSheet`` API's have a non-default signature
 and no fixed name. You should therefore explicitly specify the signature. This
 is done by calling the ``endSheetMethod`` function after defining your
 callback::
 	
-	class MYClass (NSObject):
-		def mysheetDidEnd(self, panel, returnCode, contextInfo):
+	class MyClass(NSObject):
+		def mySheetDidEnd(self, panel, returnCode, contextInfo):
 			""" Actual implementation goes here """
 			pass
 
-		mysheetDidEnd = PyObjCTools.AppHelper.endSheetMethod(
-			mysheetDidEnd)
+		mySheetDidEnd = PyObjCTools.AppHelper.endSheetMethod(
+			mySheetDidEnd)
+
+In Python 2.4, this may be written using a decorator as such::
+
+	class MyClass(NSObject):
+		@PyObjCTools.AppHelper.endSheetMethod
+		def mySheetDidEnd(self, panel, returnCode, contextInfo):
+			""" Actual implementation goes here """
+			pass
 
 Unless otherwise noted, all ``contextInfo`` arguments are passed as integers,
 not as arbitrary pointers.
@@ -77,9 +81,8 @@ not as arbitrary pointers.
 Class NSApplication
 ...................
 
-``NSModalSession`` objects are wrapped as opaque values. You can check if
-two wrapper objects refer to the same session object by comparing their
-``ptr`` attributes.
+``NSModalSession`` objects are wrapped as opaque values.  Two wrapper objects
+refer to the same session object if their ``ptr`` attributes are equal.
 
 Class NSBezierPath
 ..................
@@ -179,7 +182,7 @@ Class ``NSMovie``
 .................
 
 The return value of ``QTMovie`` and the sole argument of ``initWithMovie:``
-are QT.Movie objects. Using these methods requires the use of MacPython 2.3.
+are ``Carbon.Qt.Movie`` objects.
 
 Class ``NSOpenGLContext``
 .........................
@@ -212,8 +215,7 @@ Class ``NSQuickDrawView``
 
 * ``qdPort``
 
-  This method returns an instance of type Carbon.QuickDraw. This 
-  requires MacPython.
+  This method returns an instance of type ``Carbon.Qd.GrafPort``.
 
 Class ``NSSimpleHorizontalTypesetter``
 ......................................
@@ -257,19 +259,15 @@ NOTE: The list below is mostly based on scripts that find methods that can
 not be automatically handled by the bridge. We have not yet performed a manual
 search for such methods in the Cocoa documentation.
 
-The ``-forward::`` and ``performv::`` methods are not supported.  You can
-work-around this using normal Python function invocation.
+The ``-forward::`` and ``performv::`` methods are not supported.  Normal Python
+function invocation can be used instead.
 
-Structs are wrapped using a struct-like type. They can be accessed using the
-field-names from Objective-C, or you can access them as sequences. Accessing
-them as sequences is necessary for backward compatibility and is deprecated.
+Structs are wrapped using a struct-like type.  Struct members can be accessed
+using the field names as attributes, or they can be accessed as sequences for
+backwards compatibility.
 
 Class ``NSArray``
 .................
-
-* ``initWithObjects:``, ``arrayWithObjects:``
-
-  These methods are not supported, use ``initWithArray:`` instead.
 
 * ``getObjects:``
 
@@ -283,8 +281,8 @@ Class ``NSArray``
 
 * ``sortedArrayUsingFunction:context:`` and ``sortedArrayUsingFunction:context:hint``
 
-  These methods can be called from Python, but you cannot override them
-  from Python. This limitation will be lifted in a future version of PyObjC.
+  These methods can be called from Python, but Python can not override them.
+  This limitation will be lifted in a future version of PyObjC.
 
   The ``context`` can be an arbitrary python object.
 
@@ -295,15 +293,17 @@ Class ``NSArray``
 Class ``NSAutoreleasePool``
 ...........................
 
-The bridge automatically manages reference counts for you, but you're still 
+The bridge automatically manages reference counts for you, but it is still 
 required to make an autorelease pool available. 
 
-In simple, single-threaded GUI programs you don't have to do anything for this,
-because NSRunLoop does this for you and PyObjC creates an initial pool for the
-main thread.
+In single-threaded programs that use ``NSRunLoop`` or are not long-lived,
+it is not necessary to explicitly manage ``NSAutoreleasePool``, as
+``NSRunLoop`` will push and pop one for each iteration, and PyObjC creates
+a ``NSAutoreleasePool`` in the thread it is imported in.
 
-If you create lots of Cocoa objects in a loop it can be useful to manually create
-a pool to reclaim memory as soon as possible. The proper idiom for this is::
+When creating a large amount of objects in a loop, it may be useful to
+manually create a pool to reclaim memory as soon as possible. The proper
+idiom for this is::
 
 	while <test>:
 		pool = NSAutoreleasePool.alloc().init()
@@ -312,13 +312,19 @@ a pool to reclaim memory as soon as possible. The proper idiom for this is::
 
 		del pool
 
-That is, you *must* ensure that the previous pool is deallocated before you create
-a new one, the code below will silently leak memory::
+The previous pool *must* be deallocated before a new one is
+created.  For example, the code below will *silently leak memory*::
 
 	while <test>:
+                # This pool is allocated BEFORE the previous is
+                # garbage collected, so the stack grows!
 		pool = NSAutoreleasePool.alloc().init()
 
 		# ... Do work here ...
+
+In threads other than the main thread, as with Objective-C applications, it
+is necessary to create an ``NSAutoreleasePool`` as soon as possible before
+using other Objective-C objects.
 
 Class ``NSCoder``
 .................
@@ -332,12 +338,12 @@ This limitation will be lifted in a future version of the bridge.
 
 * ``decodeValuesOfObjCType:``
 
-  Use multiple calls to ``decodeValueOfObjCType:at:`` instead. Note that
-  that won't work if your trying to read back data that was written using
+  Use multiple calls to ``decodeValueOfObjCType:at:`` instead.
+  Note that this will not read back data that was written using
   ``encodeValuesOfObjCType:``.
 
 The method ``decodeBytesWithoutReturnedLength:`` is not supported, use 
-``decodeBytesWithReturnedLength:`` instead. It is not possible to safely
+``decodeBytesWithReturnedLength:`` instead.  It is not possible to safely
 represent the return value of this method in Python.
 
 
@@ -389,6 +395,7 @@ are wrapped as an NSData subclass.
   This is a deprecated method, see Apple documentation.
 
 * ``getBytes:``, ``getBytes:length:``, ``getBytes:range:``
+
   Use ``bytes`` instead, and then use subscripting to get the
   desired range.
 
@@ -416,7 +423,9 @@ Class ``NSException``
 * ``raise:format:``, ``raise:format:arguments:``
 
   These methods are not supported because they accept a variable number of
-  arguments. Use Python's ``%`` operator to format the message.
+  arguments.  Use Python's ``%`` operator to format the message.  A future
+  version of PyObjC may be able to parse format strings and do the right
+  thing.
 
 Class ``NSFault``
 .................
@@ -436,10 +445,11 @@ Class ``NSIndexSet``
 Class ``NSInvocation``
 ......................
 
-In some versions of Mac OS X, NSInvocation doesn't work properly with structs
-that contain padding. Such structs are not used in the Mac OS X API, but may
-be present in 3th party code. This leads to problems when ``forwardInvocation:``
-is used to call a method that has such a struct as one of its arguments.
+In some versions of Mac OS X, ``NSInvocation`` doesn't work properly with structs
+that contain padding for alignment.  Such structs are not used in the Mac OS X API,
+but may be present in 3rd party code.  This leads to problems when
+``forwardInvocation:`` is used to call a method that has such a struct as one of
+its arguments.
 
 Class ``NSMutableArray``
 ........................
@@ -447,9 +457,9 @@ Class ``NSMutableArray``
 * ``sortUsingFunction:context:``, ``sortUsingFunction:context:range:``
 
   Calling this method from Python is supported, overriding it in a subclass
-  is not. This limitation will be fixed in a later version of PyObjC.
+  is not.  This limitation will be fixed in a later version of PyObjC.
 
-  The ``context`` can be an arbitrary python object.
+  The ``context`` can be an arbitrary Python object.
 
 Class ``NSMutableString``
 .........................
@@ -487,10 +497,11 @@ Class ``NSObject``
 
 * ``methodForSelector:``, ``instanceMethodForSelector:``
 
-  These methods return instances of objc.IMP. The major difference with
-  Objective-C is that you don't have to, or even can, pass the selector to
-  the IMP. In other words, the interface is the same as for unbound
-  instance methods: you have to pass ``self`` and the method arguments.
+  These methods return instances of ``objc.IMP``.  The major difference from
+  Objective-C is that the selector argument is omitted.  In other words,
+  using an ``objc.IMP`` is the same as using an unbound selector; ``self``
+  must be passed explicitly as the first argument, and the other arguments
+  are passed as usual.
 
   WARNING: This interface is experimental and might change in a future version
   of PyObjC.
@@ -504,31 +515,23 @@ Class ``NSScriptObjectSpecifier``
   to avoid leaking the returned buffer, as we cannot return a pointer to an
   internal data-structure.
 
-Class ``NSSet``
-...............
-
-* ``initWithObjects:``, ``setWithObjects:``
-
-  This method is not supported, use ``initWithArray:`` instead.
-
-
 Class ``NSString``
 ..................
 
-Objective-C strings are usually represented as instances of a subclass of
+Objective-C strings are represented as instances of a subclass of
 the Python type ``unicode``.  Since Python ``unicode`` objects are immutable,
 working with ``NSMutableString`` can be tricky.  If you need to update the
 Python representation of the string, use ``aString.self()``, which will be a
-new string.
+new Python proxy for the same ``NSMutableString`` instance.
 
 * ``initWithCharactersNoCopy:length:freeWhenDone:`` 
 
-  This method is unsupported because we cannot guarantee that the buffer will
+  This method is unsupported because we can not guarantee that the buffer will
   be available as long as the string is. Use ``initWithCharacters:`` instead.
 
 * ``getCharacters:`` and ``getCharacters:range:``
 
-  These methods are not supported at the moment. This limitation will be lifted
+  These methods are not supported at the moment.  This limitation will be lifted
   in a future version of the bridge.
 
 * ``getCString:maxLength:range:remainingRange:`` and ``getCString:maxLength:``
@@ -540,14 +543,16 @@ new string.
 * ``getCString:``
 
   This method is not supported. Use ``getCString:maxLength:`` instead (using
-  the length of the string as the maximum length). This limitation will be
+  the length of the string as the maximum length).  This limitation will be
   lifted in a future version of the bridge.
  
 * ``stringWithFormat:``, ``initWithFormat:``, ``initWithFormat:locale:``,
   ``stringByAppendingFormat:``
 
   These methods are not supported because they accept a variable number of 
-  arguments. Use Python's ``%`` operator to format strings.
+  arbitrarily typed arguments.  Use Python's ``%`` operator to format strings.
+  A future version of PyObjC may be able to parse format strings and do the
+  right thing here.
 
 * ``initWithFormat:arguments:``, ``initWithFormat:locale:arguments:``
 
@@ -563,11 +568,8 @@ those threads.
 
 * ``detachNewThreadSelector:toTarget:withObject:``
 
-  Make sure that you've either created a thread from Python using the 
-  ``thread`` or ``threading`` module, or called ``objc.enableThreading`` before
-  using this API. This is necessary to enable threading in the Python 
-  interpreter. We don't do this by default because this has a negative 
-  performance impact.
+  As with Objective-C, make sure to create an ``NSAutoreleasePool`` in this
+  the detached thread.
 
 InterfaceBuilder framework
 --------------------------
@@ -622,17 +624,3 @@ This framework seems to define useful classes like ``NSAuthorization`` and
 a hard signature.
 
 The only documented class, ``NSPreferencePane``, is fully supported.
-
-ScreenSaver framework
----------------------
-
-Class ``ScreenSaverDefaults``
-.............................
-
-This class is fully supported.
-
-Class ``ScreenSaverView``
-.........................
-
-This class is fully supported.
-

@@ -124,25 +124,18 @@ interface is modeled on the ``getattr`` and ``setattr`` functions.
 
 * ``getKey(object, key) -> value``
 
-  Find the value for ``key``. Raises ``KeyError`` if the key is not a valid
-  attribute of the object.
+    Get the attribute referenced by 'key'. The key is used
+    to build the name of an attribute, or attribute accessor method.
 
-  To find the value of a key the following values are tried for a key named
-  ``key`` (first match wins):
+    The following attributes and accesors are tried (in this order):
 
-  - the return value of ``object.get_key()``
+    - Accessor 'getKey'
+    - Accesoor 'get_key'
+    - Accessor or attribute 'key'
+    - Accessor or attribute 'isKey'
+    - Attribute '_key'
 
-  - the return value of ``object.getKey()``
-
-  - the return value of ``object._get_key()``
-
-  - the return value of ``object._getKey()``
-
-  - the value of the attribute ``key``, or the value of ``object.key()`` if
-    ``object.key`` is a method.
-
-  - the value of the attribute ``_key``, or the vale of ``object._key()`` if
-    ``object._key`` is a method.
+    If none of these exist, raise KeyError
 
 * ``getKeyPath(object, keypath) -> value``
 

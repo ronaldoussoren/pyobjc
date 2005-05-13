@@ -5,10 +5,10 @@ historic interest. Sometime we'll convert this into a more interesting read.
 
 
 If you are reading this from the PyObjC disk image that contains the Installer
-package, simply Install the package and look in /Developer/Examples/PyObjC.
+package, simply Install the package and look in /Developer/Python/PyObjC/Examples
 
-Documentation is pretty imcomplete at the moment, look in 
-/Developer/Documentation/PyObjC for the documentation we have.
+Documentation is pretty incomplete at the moment, look in 
+/Developer/Python/PyObjC/Documentation for the documentation we have.
 
 The PyObjC package provides the glue needed to interface the Python interpreter with the Objective-C language. The 'objc' module makes Objective-C objects and classes available as first-class Python citizens, it is not only possible to use Objective-C objects but you can also subclass Objective-C classes.
 

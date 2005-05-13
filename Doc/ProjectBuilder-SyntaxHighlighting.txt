@@ -7,6 +7,8 @@ Project Builder Python Support
 :Date: 12/16/2002
 
 .. WARNING::
+   Project Builder support is not maintained in PyObjC, is likely
+   out of date, and is not guaranteed to work at all.
    None of this is documented or supported by **Apple**.  Don't ask **Apple** for
    support and don't blame me if something breaks.  A lot could break as
    **Project Builder** stores a tremendous amount of highly dynamic information in

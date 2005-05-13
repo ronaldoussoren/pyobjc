@@ -10,8 +10,8 @@ Introduction
 ------------
 
 PyObjC is a proxy between Objective-C and Python and allows access to Python
-classes from Objective-C and vice versa.  PyObjC also allows you to subclass
-Objective-C classes from Python. 
+classes from Objective-C and vice versa.  PyObjC also allows Python to subclass
+Objective-C classes, and these subclasses will be natively visible to both runtimes.
 
 Accessing Python objects from Objective-C
 -----------------------------------------
@@ -31,29 +31,30 @@ A number of Python types/classes are treated specially:
   ``NSNumber`` instances.  Their identity is not preserved across the bridge.
 
 - Python ``str`` is proxied using ``OC_PythonString``, a subclass of
-  ``NSString``.  You may use a Python ``str`` anywhere a ``NSString`` is
-  expected, but you should use ``unicode`` whenever possible.
+  ``NSString``.  A Python ``str`` may be used anywhere a ``NSString`` is
+  expected, but ``unicode`` should be used whenever possible.
   ``OC_PythonString`` will use the default encoding of ``NSString``, which is
   normally MacRoman but could be something else.
 
 - Python ``unicode`` is proxied using ``OC_PythonUnicode``, a subclass of
-  ``NSString``.  You may use a Python ``unicode`` anywhere a ``NSString``
+  ``NSString``.  A Python ``unicode`` may be used anywhere a ``NSString``
   is expected.
 
 - Python ``dict`` is proxied using ``OC_PythonDictionary``, a subclass of
-  ``NSMutableDictionary``.  This allows you to use a Python ``dict``
-  everywhere where an ``NSDictionary`` is expected.
+  ``NSMutableDictionary``.  A Python ``dict`` may be used anywhere 
+  an ``NSDictionary`` is expected.
 
 - Python ``list`` and ``tuple`` are proxied using ``OC_PythonArray``, a
-  subclass of ``NSMutableArray``.  This allows you to use a Python ``list``
-  or ``tuple`` everywhere where an ``NSArray`` is expected.
+  subclass of ``NSMutableArray``.  Python ``list`` or ``tuple`` objects
+  may be used anywhere an ``NSArray`` is expected.
 
 - Python objects that implement the Python buffer API, except for ``str``
   and ``unicode``, are proxied using ``OC_PythonData``, a ``NSData`` subclass.
-  This allows you to use instances of classes such as ``buffer``,
-  ``array.array``, ``mmap.mmap``, etc. anywhere ``NSData`` is expected.
+  Objects that implement the Python buffer API such as ``buffer``,
+  ``array.array``, ``mmap.mmap``, etc. may be used anywhere a ``NSData`` is
+  expected.
 
-The special cases allow for more transparent bridging between Python and
+These special cases allow for more transparent bridging between Python and
 Objective-C.
 
 Accessing Objective-C objects from Python
@@ -74,7 +75,7 @@ subclasses of ``objc.objc_class``.  The proxies for Objective-C classes are
 classes in Python. 
 
 Instances are created by calling allocator class methods (like ``+alloc`` or
-factory methods).  Objective-C instances cannot be created by using the class
+factory methods).  Objective-C instances can not be created by using the class
 as a factory function.
 
 It is possible to create subclasses from Objective-C classes using the normal
@@ -109,17 +110,18 @@ does conform to the protocol.  Formal protocols can be created by using
 
 A subclass of an Objective-C (proxy) class is not only a Python class, but also
 an Objective-C class.  This means that it is possible to create instances of 
-these classes from Objective-C using normal Objective-C syntax, although you
-must locate the class using the function ``objc_lookUpClass`` (e.g. defining
-``@class MyPythonClass`` will not work).  One of the results of this feature
-is that these classes can be used to implement classes that are defined in
-Interface Builder NIB files.
+these classes from Objective-C using normal Objective-C syntax, although the
+class must be located using the function ``NSClassFromString`` or equivalent
+(e.g. defining``@class MyPythonClass`` will not work).  One of the results of
+this feature is that these classes can be used to implement classes that are
+defined in Interface Builder NIB files.
 
-Like Python classes, Objective-C classes can have instance variables.  If you
-define new instance variables in the Python subclass they will only be visible
-in Python, and not in Objective-C.  This means that normal Python instance
-variables cannot be used as 'outlets' in interface builder.  Those can be 
-defined using special properties: ``objc.ivar`` or ``objc.IBOutlet``.
+Like Python classes, Objective-C classes can have instance variables.  Normal
+Python instance variables in a Python subclass will only be visible from Python,
+and not Objective-C (except when using Key-Value Coding).  This means that
+normal Python instance variables can not be used as outlets in Interface Builder.
+Objective-C visible instance variables can be defined using special properties:
+``objc.ivar`` and ``objc.IBOutlet``.
 
 The Objective-C class::
 
@@ -134,9 +136,9 @@ The Objective-C class::
   // ...
   @end // MyClass
 
-can be defined in Python like this::
+The Python equivalent::
 
-  class MyClass (NSObject):
+  class MyClass(NSObject):
     my_outlet1 = objc.IBOutlet('my_outlet1')
     my_outlet2 = objc.IBOutlet('my_outlet2')
     my_ivar = objc.ivar('my_ivar')
@@ -156,8 +158,8 @@ Examples::
   (void)myAction:(id)sender	<->	def myAction_(self, sender)
   method:(int)x andY:y		<->	def method_andY_(self, x, y)
 
-As can be seen in the examples above, Objective-C allows you to specify
-the types of arguments and the return value, while this is not possible in
+As can be seen in the examples above, Objective-C allows explicit specification
+of the types of arguments and the return value, while this is not possible in
 Python.  This is not a problem when calling existing Objective-C methods, 
 because PyObjC will automatically read the needed information from the 
 Objective-C runtime, but it can be a problem when defining new Objective-C
@@ -165,7 +167,7 @@ methods in Python.
 
 PyObjC therefore provides a function to define the signature of a python method
 in subclasses of Objective-C classes.  This function, objc.selector, should be
-used whenever you define a method that does not extend or override an existing
+used whenever defining a method that does not extend or override an existing
 Objective-C method in the superclass. 
 
 The following Objective-C class::
@@ -177,31 +179,44 @@ The following Objective-C class::
 	-(int)methodWithX:(int)x andY:(float)y;
 	-(void)myAction:(id)sender;
 
-can be defined in Python like this:
+can be defined in Python like this::
 
-::
-
-	class MyClass (NSObject):
+	class MyClass(NSObject):
 
 		def methodWithX_andY_(self, x, y):
-			pass
+			return 0
 
-		methodWithX_and_Y_ = selector(methodWithX_andY_,
+		methodWithX_andY_ = objc.selector(methodWithX_andY_,
 			signature='i@:if')
 
 		def myAction_(self, sender):
 			pass
 
-		myAction_ = selector(myAction_,
+		myAction_ = objc.selector(myAction_,
 			signature='v@:')
 
+
+In Python 2.4, it is also possible to write this example as such::
+
+	class MyClass(NSObject):
+	
+		@objc.signature('i@:if')
+		def methodWithX_andY_(self, x, y):
+			return 0
+
+		@objc.signature('v@:')
+		def myAction_(self, sender):
+			pass
+
 The explicit selectors don't really help to increase readability, especially
-given the cryptic signature strings.  It is therefore advisable to use other
+given the cryptic type signature strings.  It is therefore advisable to use other
 methods to define the signature if possible, the most likely way to do this
 is by using existing ``objc.informal_protocol`` definitions (like 
 ``AppKit.NSOutlineViewDataSource``). 
 
-There is one instance where you don't have to define the signature: The default
-signature is for a method that returns and object and where all arguments are
-also objects.  Functions that do not use a "return" statement will have
-a default signature that returns void, to better support Key-Value Coding.
+Unless explicitly specified as above, or defined by a superclass or protocol,
+PyObjC creates a default signature with an object return value, and object
+arguments.  If no return statement is in the function, then the return value
+is ``void``, such as the above ``myAction_``.  Fortunately, these cases cover
+most usage of PyObjC, so it is not often necessary to explicitly define selectors
+as above.
