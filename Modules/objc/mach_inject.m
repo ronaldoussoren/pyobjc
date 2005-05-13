@@ -178,7 +178,7 @@ machImageForPointer(
 																	SECT_TEXT );
 		long start = section->addr + _dyld_get_image_vmaddr_slide( imageIndex );
 		long stop = start + section->size;
-		if( p >= start && p <= stop ) {
+		if( p >= (unsigned long)start && p <= (unsigned long)stop ) {
 			//	It is truely insane we have to stat() the file system in order
 			//	to discover the size of an in-memory data structure.
 			const char *imageName = _dyld_get_image_name( imageIndex );
