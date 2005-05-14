@@ -28,7 +28,7 @@ setSignatureForSelector("NSFileManager", "fileExistsAtPath:isDirectory:", "c0@4:
 setSignatureForSelector("NSArray", "getObject:atIndex:", "c@:o^@I")
 setSignatureForSelector("NSCalendarDate", "years:months:days:hours:minutes:seconds:sinceDate:", "v@:o^io^io^io^io^io^i@")
 setSignatureForSelector("NSPropertyListSerialization", "dataFromPropertyList:format:errorDescription:", "@@:@io^@")
-setSignatureForSelector("NSPropertyListSerialization", "propertyListFromData:mutabilityOption:format:errorDescription:", "@@:@iN^io^@")
+setSignatureForSelector("NSPropertyListSerialization", "propertyListFromData:mutabilityOption:format:errorDescription:", "@@:@io^io^@")
 setSignatureForSelector("NSAppleScript", "_initWithContentsOfFile:error:", "@@:@o^@")
 setSignatureForSelector("NSAppleScript", "_initWithData:error:", "@@:@o^@")
 setSignatureForSelector("NSAppleScript", "compileAndReturnError:", "c@:o^@")
