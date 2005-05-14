@@ -5,8 +5,9 @@ from textwrap import dedent
 SUBPATTERNS = dict(
     AVAILABLE=r'([A-Z][A-Z0-9_]+)',
     PROTOCOLS=r'(<[^>]+>)',
-    KEYWORD=r'((double|float|int|unsigned|long|char|extern|volatile|void|inline|__(\w+?)__|const|typedef|static|const))',
-    IDENTIFIER=r'([A-Za-z_]\w*)',
+    TYPE_KEYWORD=r'((unsigned|long|char|volatile|inline|__(\w+?)__|const))',
+    KEYWORD=r'((double|float|int|unsigned|long|char|extern|volatile|void|inline|__(\w+?)__|const|typedef|static))',
+    IDENTIFIER=r'((?!const|volatile)[A-Za-z_]\w*)',
     SIZEOF=r'(sizeof\(([^)]+)\))',
     DECIMAL=r'([+\-]?((\.\d+)|(\d+(\.\d*)?))([eE]\d+)?[fF]?)',
     INTEGER=r'([+\-]?\d+[uU]?[lL]?)',
@@ -16,7 +17,7 @@ SUBPATTERNS = dict(
     HEX=r'(0[xX][0-9a-fA-F]+[lL]?)',
     EXTERN=r'((([A-Z-a-z_]\w*?_)?(EXTERN|EXPORT)|extern))',
     EXPORT=r'((([A-Z-a-z_]\w*?_)?(EXPORT|EXTERN)|extern))',
-    STATIC_INLINE=r'((([A-Z-a-z_]\w*?_)?INLINE|static\sinline|static\s__inline__))',
+    STATIC_INLINE=r'((([A-Z-a-z_]\w*?_)?INLINE|static\s+inline|static\s+__inline__))',
     BRACES=r'(([^\n}]*|([^}][^\n]*\n)*))',
     INDIRECTION=r'(\s*\*)',
     BOL=r'(\s*^\s*)',
@@ -96,6 +97,21 @@ class BlockComment(Token):
 class SingleLineComment(Token):
     pattern = pattern(r'//(?P<comment>[^\n]*)(\n|$)')
     example = example(r'// this is a single line comment')
+
+class OpaqueNamedStruct (Token):
+    pattern = pattern(r'''
+    typedef\s+struct\s+
+    (?P<label>%(IDENTIFIER)s)\s*
+    (?P<indirection>(\s|\*))
+    \s*
+    (?P<name>%(IDENTIFIER)s)\s*
+    ;
+    ''')
+    
+    example = example('''
+    typedef struct _Foo Foo;
+    typedef struct _Bar *BarRef;
+    ''')
 
 class UninterestingTypedef(Token):
     pattern = pattern(r'''
@@ -539,30 +555,35 @@ class FunctionEnd(Token):
 class FunctionParameter(Token):
     pattern = pattern(r'''
     \s*(?P<type>
-        (%(KEYWORD)s\s*)*
+        (%(KEYWORD)s\s+)*
         %(IDENTIFIER)s\s*
         (%(INDIRECTION)s|\s+%(KEYWORD)s)*
         \s*
         (?<=\*|\s)
     )\s*
-    (?P<name>%(IDENTIFIER)s\s*)?\s*,?\s*
+    (?P<name>%(IDENTIFIER)s\s*)?\s*,?
     ''')
     example = example(r'''
     NSString* foo
     NSString *foo, NSString *bar
+    CFDataRef ref
     ''')
+
+class FunctionElipsisParameter (Token):
+    pattern = pattern(r'''\s*\.\.\.\s*''')
+    example = example(r'''...''')
 
 class ExportVoidFunction (Token):
     pattern = pattern(r'''
     %(EXPORT)s?
     \s*(?P<returns>
-        (%(KEYWORD)s(\s+%(KEYWORD)s)*)?
-        %(IDENTIFIER)s
-        (%(INDIRECTION)s|\s+%(KEYWORD)s)*
+        (%(TYPE_KEYWORD)s(\s+%(TYPE_KEYWORD)s)*)??
+        \s*%(IDENTIFIER)s
+        ((\s|\*)(\s*(\*|%(KEYWORD)s))*\s*(?<=\s|\*))?
     )
-    (\s*(?P<protocols>%(PROTOCOLS)s))?
-    \s*(\s%(IDENTIFIER)s\s)?
-    \s*(\/\*.*?\*\/)?
+    (\s*(?P<protocols>%(PROTOCOLS)s)\s*)?
+    \s*(\/\*.*?\*\/)?\s*
+    (\s%(IDENTIFIER)s\s)?
     \s*(?P<name>%(IDENTIFIER)s)
     \s*\(\s*void\s*\)
     (\s*(?P<available>%(AVAILABLE)s))?;''')
@@ -572,20 +593,20 @@ class ExportFunction(ScanningToken):
     pattern = pattern(r'''
     %(EXPORT)s?
     \s*(?P<returns>
-        (%(KEYWORD)s(\s+%(KEYWORD)s)*)?
-        %(IDENTIFIER)s
-        (%(INDIRECTION)s|\s+%(KEYWORD)s)*
+        (%(TYPE_KEYWORD)s(\s+%(TYPE_KEYWORD)s)*)??
+        \s*%(IDENTIFIER)s
+        ((\s|\*)(\s*(\*|%(KEYWORD)s))*\s*(?<=\s|\*))?
     )
-    (\s*(?P<protocols>%(PROTOCOLS)s))?
-    \s*(\s%(IDENTIFIER)s\s)?
-    \s*(\/\*.*?\*\/)?
+    (\s*(?P<protocols>%(PROTOCOLS)s)\s*)?
+    \s*(\/\*.*?\*\/)?\s*
+    (\s%(IDENTIFIER)s\s)?
     \s*(?P<name>%(IDENTIFIER)s)
     \s*\(
     ''')
-    #(\s*\/\*.*?\*\/\s*)?
     endtoken = FunctionEnd
     lexicon = [
         InsignificantWhitespace,
+        FunctionElipsisParameter,
         FunctionParameter,
     ]
     example = example(r'''
@@ -596,8 +617,10 @@ class ExportFunction(ScanningToken):
     FOUNDATION_EXPORT SomeResult <NSObject> SomeName(const Foo *, const Foo *Bar);
     FOUNDATION_EXPORT SomeResult **SomeName(const Foo *, const Foo *Bar);
     FOUNDATION_EXPORT SomeResult SomeName(int,float);
-    NPError NP_LOADSS   NP_New(void);
     CFArrayRef /* of SCFoo's */ SCNetworkInterfaceCopyAll    (void) AVALABLE_FOO;
+    CF_EXPORT
+    const UInt8 *CFDataGetBytePtr(CFDataRef theData);
+    NPError NP_LOADSS   NP_New(void);
     ''')
 
 #!# class ExportFunction(Token):
@@ -680,10 +703,11 @@ LEXICON = [
     CPPDecls,
     CPPCrap,
     CompilerDirective,
+    OpaqueNamedStruct,
+    UninterestingTypedef,
     StaticInlineFunction,
     ExportVoidFunction,
     ExportFunction,
-    UninterestingTypedef,
     UninterestingStruct,
 ]
 
