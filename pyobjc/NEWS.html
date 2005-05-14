@@ -11,6 +11,17 @@ PyObjC NEWS</title>
 <p>An overview of the relevant changes in new, and older, releases.</p>
 <h2><a name="version-1-3-5-2005-05">Version 1.3.5 (2005-05-??)</a></h2>
 <ul>
+<li><code><span>PyObjCTools.Conversion</span></code> functions now support all property list
+types with the following conversions:<ul>
+<li>NSData &lt;-&gt; buffer</li>
+<li>NSDecimalNumber &lt;-&gt; decimal.Decimal (if present)</li>
+<li>NSDate &lt;-&gt; datetime.datetime</li>
+</ul>
+<p>New <code><span>toPythonDecimal</span></code>, <code><span>fromPythonDecimal</span></code> functions which convert
+between NSDecimalNumber and decimal.Decimal using an intermediate string.</p>
+<p>New <code><span>serializePropertyList</span></code> and <code><span>deserializePropertyList</span></code> functions
+which serialize (Objective-C) property lists to and from NSData.</p>
+</li>
 <li><code><span>OC_PythonObject</span></code>, the proxy for Python objects that do not have
 an Objective-C superclass and are not otherwise special-cased, now
 act slightly more like typical Objective-C objects (supporting
