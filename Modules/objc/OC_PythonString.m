@@ -38,12 +38,25 @@
 
 -(id)__realObject__
 {
+	static int supportsNoCopy = -1;
+	if (supportsNoCopy == -1) {
+		supportsNoCopy = (int)[NSString instancesRespondToSelector:@selector(initWithBytesNoCopy:length:encoding:freeWhenDone:)];
+	}
 	if (!realObject) {
-		realObject = [[NSString alloc]
-			initWithBytesNoCopy:PyString_AS_STRING(value)
-						 length:(unsigned)PyString_GET_SIZE(value)
-					   encoding:[NSString defaultCStringEncoding]
-				   freeWhenDone:NO];
+		if (supportsNoCopy) {
+			// Mac OS X 10.3+
+			realObject = [[NSString alloc]
+				initWithBytesNoCopy:PyString_AS_STRING(value)
+							 length:(unsigned)PyString_GET_SIZE(value)
+						   encoding:[NSString defaultCStringEncoding]
+					   freeWhenDone:NO];
+		} else {
+			// Mac OS X 10.2
+			realObject = [[NSString alloc]
+			    initWithBytes:PyString_AS_STRING(value)
+		  	           length:(unsigned)PyString_GET_SIZE(value)
+			         encoding:[NSString defaultCStringEncoding]];
+		}
 	}
 	return realObject;
 }
