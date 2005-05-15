@@ -46,6 +46,28 @@ else:
 def keyCaps(s):
     return s[:1].capitalize() + s[1:]
 
+# From http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/393090
+# Title: Binary floating point summation accurate to full precision
+# Version no: 2.2
+
+def msum(iterable):
+    "Full precision summation using multiple floats for intermediate values"
+    # sorted, non-overlapping partial sums
+    partials = []
+    for x in iterable:
+        i = 0
+        for y in partials:
+            if abs(x) < abs(y):
+                x, y = y, x
+            hi = x + y
+            lo = y - (hi - x)
+            if lo:
+                partials[i] = lo
+                i += 1
+            x = hi
+        partials[i:] = [x]
+    return sum(partials, 0.0)
+
 class ArrayOperators(object):
     def avg(self, obj, segments):
         path = u'.'.join(segments)
@@ -53,8 +75,7 @@ class ArrayOperators(object):
         count = len(lst)
         if count == 0:
             return 0.0
-        # XXX: Use a more accurate algorithm
-        return sum(imap(float, lst), 0.0) / count
+        return msum(imap(float, lst)) / count
     
     def count(self, obj, segments):
         return len(obj)
@@ -95,8 +116,7 @@ class ArrayOperators(object):
     def sum(self, obj, segments):
         path = u'.'.join(segments)
         lst = getKeyPath(obj, path)
-        # XXX: Use a more accurate algorithm
-        return sum(imap(float, lst), 0.0)
+        return msum(imap(float, lst))
 
     def unionOfArrays(self, obj, segments):
         path = u'.'.join(segments)
