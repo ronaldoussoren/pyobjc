@@ -10,6 +10,7 @@ int PyObjCPointerWrapper_Register(
 	const char*, PyObjCPointerWrapper_ToPythonFunc pythonify,
 	PyObjCPointerWrapper_FromPythonFunc depythonify);
 
+int PyObjCPointerWrapper_RegisterCF(const char*);
 PyObject* PyObjCPointerWrapper_ToPython(const char*, void*);
 
 int PyObjCPointerWrapper_FromPython(const char*, PyObject*, void*);

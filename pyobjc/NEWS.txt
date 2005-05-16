@@ -7,6 +7,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3.5 (2005-05-??)
 --------------------------
 
+- New ``objc.RegisterCFSignature`` used to register ``CFTypeRef``-like
+  signatures with the runtime.
+
 - ``PyObjCTools.Conversion`` functions now support all property list
   types with the following conversions:
 
