@@ -1,6 +1,32 @@
 from scanner import *
 from textwrap import dedent
+import re
 
+TYP_PTR = re.compile(r'\s+\*')
+SPACE_NORMALIZE = re.compile(r'\s+')
+
+#type mapping 'const unsigned char *   ConstStringPtr' -> 'unsigned char* ConstStringPtr'
+#type mapping 'unsigned char           Str255[256]' -> 'unsigned char Str255[256]'
+#type mapping 'const unsigned char *   ConstStr255Param' -> 'unsigned char* ConstStr255Param'
+def normalize_type(typ, _memoize={}):
+    try:
+        return _memoize[typ]
+    except KeyError:
+        pass
+    orig = typ
+    # XXX: Technically const could be turned into objc._C_CONST but
+    #      I can't imagine how that would make a difference.
+    for skip in ('const',):
+        if typ.startswith(skip + ' '):
+            typ = typ[len(skip)+1:]
+        typ = typ.replace(' ' + skip + ' ', ' ')
+    typ = TYP_PTR.sub('*', typ)
+    typ = SPACE_NORMALIZE.sub(' ', typ)
+    typ = typ.strip()
+    #if orig != typ:
+    #    print 'type mapping %r -> %r' % (orig, typ)
+    _memoize[orig] = typ
+    return typ
 
 SUBPATTERNS = dict(
     AVAILABLE=r'([A-Z][A-Z0-9_]+)',
@@ -10,11 +36,11 @@ SUBPATTERNS = dict(
     IDENTIFIER=r'((?!const|volatile)[A-Za-z_]\w*)',
     SIZEOF=r'(sizeof\(([^)]+)\))',
     DECIMAL=r'([+\-]?((\.\d+)|(\d+(\.\d*)?))([eE]\d+)?[fF]?)',
-    INTEGER=r'([+\-]?\d+[uU]?[lL]?)',
+    INTEGER=r'([+\-]?\d+[uU]?[lL]?[lL]?)',
     CHARS=r"('([^\\'\n]|\\')*')",
     STRING=r'("([^\\"\n]|\\")*")',
     CFSTRING=r'(CFSTR\("([^\\"\n]|\\")*"\))',
-    HEX=r'(0[xX][0-9a-fA-F]+[lL]?)',
+    HEX=r'(0[xX][0-9a-fA-F]+[uU]?[lL]?)',
     EXTERN=r'((([A-Z-a-z_]\w*?_)?(EXTERN|EXPORT)|extern))',
     EXPORT=r'((([A-Z-a-z_]\w*?_)?(EXPORT|EXTERN)|extern))',
     STATIC_INLINE=r'((([A-Z-a-z_]\w*?_)?INLINE|static\s+inline|static\s+__inline__))',
@@ -22,7 +48,12 @@ SUBPATTERNS = dict(
     INDIRECTION=r'(\s*\*)',
     BOL=r'(\s*^\s*)',
     EOL=r'(\s*$\n?)',
+    OPERATORS=r'(\||\+|-|\*|&|>>|<<|\^)',
 )
+
+WEIRD_INTEGER = re.compile(r'(0[xX][0-9a-fA-F]+|[0-9]+)[uUlL]+')
+def cleanup_text(s):
+    return WEIRD_INTEGER.sub(r'\1L', s.replace('\t', '        '))
 
 def deadspace(string, begin, end):
     return 'NO MATCH FOR [%d:%d] %r' % (begin, end, string[begin:end])
@@ -100,9 +131,9 @@ class SingleLineComment(Token):
 
 class OpaqueNamedStruct (Token):
     pattern = pattern(r'''
-    typedef\s+struct\s+
+    typedef\s+(?P<const>const\s+)?struct\s+
     (?P<label>%(IDENTIFIER)s)\s*
-    (?P<indirection>(\s|\*))
+    (?P<indirection>(\s|\*)+)
     \s*
     (?P<name>%(IDENTIFIER)s)\s*
     ;
@@ -189,9 +220,7 @@ class StringImport(Token):
     example = example('#import "Foo/Bar.h"')
 
 class SimpleDefine(Token):
-    # XXX foo << bar
-    # XXX foo | bar | baz
-    # XXX ((type)foo)
+    #XXX ((type)foo)
     pattern = pattern(r'''
     \#\s*define\s*
         (?P<name>%(IDENTIFIER)s)\s+
@@ -202,11 +231,15 @@ class SimpleDefine(Token):
                     %(CFSTRING)s
                     | %(CHARS)s
                     | %(STRING)s
-                    | %(HEX)s
-                    | %(DECIMAL)s
-                    | %(INTEGER)s
                     | %(SIZEOF)s
-                    | %(IDENTIFIER)s
+                    | %(DECIMAL)s
+                    | (
+                        %(HEX)s
+                        | %(INTEGER)s
+                        | %(IDENTIFIER)s
+                        | %(OPERATORS)s
+                        | [ \t]+
+                      )+
                 )
             )
         \)?
@@ -215,6 +248,10 @@ class SimpleDefine(Token):
         )
     ''')
     example = example(r'''
+    #define foo bar | baz
+    #define foo bar << 1234
+    #define foo (bar | baz)
+    #define foo (bar | 0xFFF)
     #define foo 'foo!'
     #define foo bar
     #define foo 0x200
@@ -225,6 +262,25 @@ class SimpleDefine(Token):
     #define foo (8)
     ''')
     
+class FunctionCallDefine(Token):
+    pattern = pattern(r'''
+    \#\s*define\s*
+        (?P<name>%(IDENTIFIER)s)
+        [ \t]*
+        (?P<body>
+            %(IDENTIFIER)s
+            [ \t]*
+            \(
+                [^)]*
+            \)
+            [ \t]*
+        )
+    (\n|$)
+    ''')
+    example = example(r'''
+    #define IUnknownUUID CFUUIDGetConstantUUIDWithBytes(NULL, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46)
+    ''')
+
 class MacroDefine(Token):
     pattern = pattern(r'''
     \#\s*define\s*
@@ -300,14 +356,24 @@ class EnumValueMember(Token):
     \s*(?P<name>%(IDENTIFIER)s)
     \s*=
     \s*(?P<value>(
-        %(HEX)s
-        | %(INTEGER)s
-        | %(CHARS)s
-        | %(IDENTIFIER)s
+        \(?
+        (
+            %(CHARS)s
+            | (
+                %(HEX)s
+                | %(INTEGER)s
+                | %(IDENTIFIER)s
+                | %(OPERATORS)s
+                | \s+
+              )+
+        )
+        \)?
         ))
     \s*,?
     ''')
     example = example(r'''
+    NSXMLNodePreserveQuotes = (NSXMLNodeUseSingleQuotes | NSXMLNodeUseDoubleQuotes),
+    NSXMLNodePreserveCharacterReferences = 1 << 27,
     Foo = 12,
     Foo = 2
     ''')
@@ -692,6 +758,7 @@ LEXICON = [
     Protocol,
     AngleImport,
     StringImport,
+    FunctionCallDefine,
     SimpleDefine,
     GlobalThing,
     ForwardClassReference,
