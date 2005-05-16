@@ -38,6 +38,7 @@ static NSAutoreleasePool* global_release_pool = nil;
 @interface OC_NSAutoreleasePoolCollector: NSObject
 {}
 +(void)newAutoreleasePool;
++(void)targetForBecomingMultiThreaded:(id)sender;
 @end
 @implementation OC_NSAutoreleasePoolCollector
 +(void)newAutoreleasePool
@@ -52,6 +53,12 @@ static NSAutoreleasePool* global_release_pool = nil;
 	global_release_pool = nil;
 	[super dealloc];
 }
+
++(void)targetForBecomingMultiThreaded:(id)sender
+{
+    [sender self];
+}
+
 @end
 
 PyDoc_STRVAR(pyobjc_id_doc,
@@ -1392,6 +1399,9 @@ init_objc(void)
 #endif /* MACOSX */
 
 	PyEval_InitThreads();
+	if (![NSThread isMultiThreaded]) {
+		[NSThread detachNewThreadSelector:@selector(targetForBecomingMultiThreaded:) toTarget:[OC_NSAutoreleasePoolCollector class] withObject:nil];
+	}
 	[initReleasePool release];
 	/* Allocate an auto-release pool for our own use, this avoids numerous
 	 * warnings during startup of a python script.

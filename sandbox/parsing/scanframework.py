@@ -29,6 +29,13 @@ from textwrap import dedent
 from itertools import imap
 import re
 
+TYPES_HEADER = """
+try:
+    set
+except NameError:
+    from sets import Set as set
+TYPES = """
+
 # From searching Xcode for toll free
 TOLL_FREE = [
     # NSObject
@@ -92,7 +99,8 @@ class cleanfile(file):
 
 class typedict(object):
     def __init__(self):
-        self.dct = {}
+        self.headers = set()
+        self.dct = {'%% HEADERS %%': self.headers}
         
     def update(self, dct):
         if not isinstance(dct, dict):
@@ -109,7 +117,19 @@ class typedict(object):
     def __contains__(self, key):
         return normalize_type(key) in self.dct
 
+    def addHeader(self, header):
+        if header in self.headers:
+            return False
+        self.headers.add(header)
+
     def __setitem__(self, key, item):
+        # allow updates from a type hint file
+        if key == '%% HEADERS %%':
+            try:
+                self.dct[key].update(item)
+            except KeyError:
+                self.dct[key] = set(item)
+            return
         key = normalize_type(key)
         self.dct[key] = item
         print '[type] %s -> %s' % (key, item)
@@ -562,6 +582,8 @@ def extractTypes(framework, types, dependencies):
 
     This function only parses type definitions and updates the type table.
     """
+    if not types.addHeader(framework):
+        return
     print "[extractTypes]", framework
     f = FrameworkScanner()
 
@@ -785,18 +807,18 @@ def _initialize():
     """ % locals()
 
     if bundle_variables or bundle_functions:
-        print >>out, """\
+        print >>out, """
     b = objc.lookUpClass('NSBundle').bundleWithPath_(p)
 """
 
     if bundle_variables:
-        print >>out, """\
+        print >>out, """
     objc.loadBundleVariables(b, globals(), [%(bundle_variables)s
     ])
 """ % locals()
 
     if bundle_functions:
-        print >>out, """\
+        print >>out, """
     objc.loadBundleFunctions(b, globals(), [%(bundle_functions)s
     ])
 """ % locals()
@@ -812,9 +834,8 @@ def makeWrapper(fmwk, hinter, types):
         pass
     makeInit(fmwk, cleanfile(os.path.join(fmwk, '__init__.py'), 'w'), hinter, types)
     typesfile = file(os.path.join(fmwk, '_types.py'), 'w')
-    typesfile.write('TYPES = ')
+    typesfile.write(TYPES_HEADER)
     pprint.pprint(types.dct, typesfile)
-    print >>typesfile, ''
 
 if __name__ == '__main__':
     types = typedict()
