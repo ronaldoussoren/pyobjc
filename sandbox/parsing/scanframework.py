@@ -19,12 +19,104 @@ try:
     set
 except NameError:
     from sets import Set as set
+import pprint
 import glob
 import sys
 from tokenize_header import *
 from macholib.dyld import framework_find
 from itertools import *
 from textwrap import dedent
+from itertools import imap
+import re
+
+# From searching Xcode for toll free
+TOLL_FREE = [
+    # NSObject
+    'CFType',
+    # NSArray
+    'CFArray', 'CFMutableArray',
+    # NSCharacterSet
+    'CFCharacterSet', 'CFMutableCharacterSet',
+    # NSData
+    'CFData', 'CFMutableData',
+    # NSDate
+    'CFDate',
+    # NSDictionary
+    'CFDictionary', 'CFMutableDictionary'
+    # NSTimer
+    'CFRunLoopTimer',
+    # NSSet
+    'CFSet', 'CFMutableSet',
+    # NSString
+    'CFString', 'CFMutableString',
+    # NSURL
+    'CFURL',
+    # NSTimeZone
+    'CFTimeZone',
+    # NSInputStream, NSOutputStream
+    'CFReadStream', 'CFWriteStream',
+    # NSLocale
+    'CFLocale',
+    # NSNumber
+    'CFNumber',
+    # NSAttributedString
+    'CFAttributedString', 'CFMutableAttributedString',
+    # NSNumberFormatter
+    'CFNumberFormatter',
+    # NSTimer
+    'CFRunLoopTimer',
+    # NSCalendar 
+    'CFCalendar',
+    # NSDateFormatter
+    'CFDateFormatter',
+
+    # ABSearchElement, ABRecord
+    'ABSearchElement', 'ABRecord',
+    # ABMutableMultiValue, ABMultiValue
+    'ABMutableMultiValue', 'ABMultiValue'
+    # ABGroup
+    'ABGroup',
+    # ABAddressBook
+    'ABAddressBook',
+    # ABPerson
+    'ABPerson',
+    
+]
+
+class cleanfile(file):
+    def write(self, s):
+        file.write(self, cleanup_text(s))
+
+    def writelines(self, lines):
+        file.writelines(self, imap(cleanup_text, lines))
+
+class typedict(object):
+    def __init__(self):
+        self.dct = {}
+        
+    def update(self, dct):
+        if not isinstance(dct, dict):
+            dct = dict(dct)
+        for k,v in dct.iteritems():
+            self[k] = v
+            
+    def __len__(self):
+        return len(self.dct)
+
+    def __iter__(self):
+        return iter(self.dct)
+
+    def __contains__(self, key):
+        return normalize_type(key) in self.dct
+
+    def __setitem__(self, key, item):
+        key = normalize_type(key)
+        self.dct[key] = item
+        print '[type] %s -> %s' % (key, item)
+
+    def __getitem__(self, key):
+        key = normalize_type(key)
+        return self.dct[key]
 
 class Hinter (object):
     """
@@ -35,17 +127,24 @@ class Hinter (object):
     cannot be deduced from the header files, don't use the hinter to
     work around limitations in the scanner!
     """
-    def __init__(self, path):
+    def __init__(self, path, types):
         self._globals = {}
+        self._types = types
         execfile(path, self._globals)
     
         self._ignores = self._globals.get('IGNORES', {})
         self._ignorefunc = self._globals.get('should_ignore', None)
 
+        update_types = self._globals.get('update_types', None)
+        if update_types is not None:
+            update_types(types)
+        types.update(self._globals.get('TYPES', {}))
+
     def should_ignore(self, name):
         if name in self._ignores:
             return True
         elif self._ignorefunc is not None and self._ignorefunc(name):
+            self._ignores[name] = 'ignored by hinter'
             return True
 
         return False
@@ -180,6 +279,7 @@ class FrameworkScanner(object):
             print
             import pdb
             pdb.Pdb().set_trace()
+        print "scanning:", fn
         return self._scanner.iterscan(file(fn).read(), dead=deadraise)
 
 def contains_instances_of(iterator, types):
@@ -232,19 +332,38 @@ def do_enum(enum):
 def do_opaque_struct(token, types, opaque_pointers, hinter):
     name = token['name']
     tag = token['label']
-    indirect = token['indirection'].strip() == '*'
+    const = token['const']
+    indirect = normalize_type(token['indirection'])
 
+    if name in types:
+        return
+
+    print '[OPAQUE STRUCT] %(name)s %(label)s %(indirection)s' % token
+ 
     if hinter is not None and hinter.should_ignore(name):
         return
 
-    encoded = 'objc._C_PTR + objc._C_STRUCT_B + %r + objc._C_STRUCT_E'%(tag,)
-    types[name +  '*'] = encoded
+    if const:
+        const = 'objc._C_CONST + '
+    else:
+        const = ''
+    encoded = ('objc._C_PTR + ' * len(indirect)) + const + 'objc._C_STRUCT_B + %r + objc._C_STRUCT_E'%(tag,)
+    types[name] = encoded
 
     if not indirect:
+        encoded = 'objc._C_PTR + ' + encoded
+        types[name+'*'] = encoded
         name += 'Ptr'
 
-    opaque_pointers.append(
-        '%(name)s = objc.createOpaquePointerType(%(name)r, %(encoded)r, "typedef struct %(tag)s* %(name)s")\n'% locals() )
+    # This should be good enough to match CF types but hopefully nothing else
+    # Unfortunately, not all CF types can be used as Objective-C types, so
+    # we wrap them with CF stuff
+    if name.endswith('Ref') and tag.startswith('__') and indirect == '*':
+        opaque_pointers.append(
+            '# %(name)s\nobjc.RegisterCFSignature(%(encoded)s)\n' % locals())
+    else:
+        opaque_pointers.append(
+            '%(name)s = objc.createOpaquePointerType(%(name)r, %(encoded)r, "typedef struct %(tag)s* %(name)s")\n'% locals() )
 
 
 def do_struct(token, types, structs, hinter):
@@ -256,7 +375,7 @@ def do_struct(token, types, structs, hinter):
 
     if hinter is not None and hinter.should_ignore(externalname):
         return
-
+    
     structname = token['structname']
     body = token.matches()[:-1]
     fieldnames = []
@@ -294,10 +413,13 @@ def do_struct(token, types, structs, hinter):
 
     doc = 'typedef struct {\n%s\n} %s;'%('\n'.join(fields), externalname)
 
-    structs.append('_%s_encoded = %s\n'%(externalname, encoded))
+    structdef = '_%s_encoded = %s\n' % (externalname, encoded)
+    print '[STRUCT]', structdef.strip()
+    structs.append(structdef)
 
     if hinter is not None and not hinter.should_create_struct_wrapper(
             externalname, fieldnames, fields):
+        print '[STRUCT] SKIPPING %s' % (externalname,)
         return
 
     structs.append('%s = objc.createStructType("%s", _%s_encoded, %s, %r)\n'%(
@@ -407,12 +529,16 @@ def do_uninteresting_typedef(token, types):
     ptr = 0
     body = token['body'].split()
 
-    alias = ' '.join(body[:-1])
+    alias = normalize_type(' '.join(body[:-1]))
     target = body[-1]
+
+    if target in types:
+        return
 
     if hinter is not None and hinter.should_ignore(target):
         return
 
+   
     while alias[-1] == '*':
         alias = alias[:-1]
         ptr += 1
@@ -428,7 +554,7 @@ def do_uninteresting_typedef(token, types):
             prefix = ''
         types[target] = prefix + types[alias]
     else:
-        print "Ignore simple typedef: %s"%(target,)
+        print "Ignore simple typedef: %s -> %s"%(target, alias)
 
 def extractTypes(framework, types, dependencies):
     """
@@ -436,6 +562,7 @@ def extractTypes(framework, types, dependencies):
 
     This function only parses type definitions and updates the type table.
     """
+    print "[extractTypes]", framework
     f = FrameworkScanner()
 
     for token in ifilter(None, f.scanframework(framework)):
@@ -460,23 +587,26 @@ def extractTypes(framework, types, dependencies):
             do_uninteresting_typedef(token, types)
 
         elif isinstance(token, (Interface, ForwardClassReference)):
-            types[token['name'] + '*'] = types['id']
+            for name in token['name'].split(','):
+                types[name.strip() + '*'] = types['id']
 
-def makeInit(framework, out, hinter = None):
+def makeInit(framework, out, hinter = None, types=None):
     framework_name = filter(None, os.path.split(framework))[0]
     framework_path = unicode(os.path.dirname(framework_find(framework_name)), sys.getfilesystemencoding())
     f = FrameworkScanner()
-    types = {
+    if types is None:
+        types = typedict()
+
+    types.update({
         'id': 'objc._C_ID',
-        'NSString *': 'objc._C_ID',
-        'NSString*': 'objc._C_ID',
-        'CFStringRef': 'objc._C_ID',
+
         'SEL': 'objc._C_SEL',
         'BOOL': 'objc._C_NSBOOL',
         'bool': 'objc._C_BOOL',
         'Class': 'objc._C_CLASS',
 
         'char': 'objc._C_CHR',
+        'signed char': 'objc._C_CHR',
         'unsigned char': 'objc._C_UCHR',
 
         'int': 'objc._C_INT',
@@ -501,7 +631,19 @@ def makeInit(framework, out, hinter = None):
         'double': 'objc._C_DBL',
         
         'char*': 'objc._C_CHARPTR',
-    }
+
+        'void': 'objc._C_VOID',
+
+    })
+
+    for name in TOLL_FREE:
+        types[name+'Ref'] = 'objc._C_ID'
+
+    types.update({
+        'OSType': 'objc._C_UINT',
+        'LangCode': 'objc._C_SHT',
+        'RegionCode': 'objc._C_SHT',
+    })
 
     # Some aliases
     # XXX: need to improve this script, this information can be 
@@ -514,7 +656,6 @@ def makeInit(framework, out, hinter = None):
     types['uint32_t'] = types['unsigned long']
     types['int64_t'] = types['long long']
     types['uint64_t'] = types['unsigned long long']
-    types['const char*'] = types['char*']
 
     ignores = set([
         CompilerDirective,
@@ -523,8 +664,9 @@ def makeInit(framework, out, hinter = None):
         CPPCrap,
 
         # Stuff below here might be interesting
-        UninterestingStruct, 
+        UninterestingStruct,
         MacroDefine,
+        FunctionCallDefine,
     ])
     dependencies = set()
     globthings = []
@@ -583,11 +725,20 @@ def makeInit(framework, out, hinter = None):
         elif isinstance(token, Protocol):
             # TODO: generate informal-protocol definition. 
             # Need to enhance the tokenizer for that
+            #
+            # XXX: It can basically be assumed that the
+            #      protocol can be found in the framework
+            #      if the protocol is defined in a header
+            #      so objc.protocolNamed(name) should work.
+            #      Also note that putting them in the namespace
+            #      would be bad because many of them conflict
+            #      with class names.  i.e. NSObject!
             pass
 
         elif isinstance(token, (Interface, ForwardClassReference)):
             # Class definition: make the type known to the type table
-            types[token['name'] + '*'] = types['id']
+            for name in token['name'].split(','):
+                types[name.strip() + '*'] = types['id']
 
         elif isinstance(token, (ExportFunction, ExportVoidFunction)):
             do_function(token, types, functions, hinter)
@@ -654,25 +805,33 @@ _initialize()
 del objc
 """
 
-def makeWrapper(fmwk, hinter):
+def makeWrapper(fmwk, hinter, types):
     try:
         os.makedirs(fmwk)
     except OSError:
         pass
-    makeInit(fmwk, file(os.path.join(fmwk, '__init__.py'), 'w'), hinter)
+    makeInit(fmwk, cleanfile(os.path.join(fmwk, '__init__.py'), 'w'), hinter, types)
+    typesfile = file(os.path.join(fmwk, '_types.py'), 'w')
+    typesfile.write('TYPES = ')
+    pprint.pprint(types.dct, typesfile)
+    print >>typesfile, ''
 
 if __name__ == '__main__':
+    types = typedict()
     if len(sys.argv) == 1:
         fmwk = 'PreferencePanes'
         hinter = None
     elif len(sys.argv) == 2:
         fmwk = sys.argv[1]
         hinter = None
-    elif len(sys.argv) == 3:
+    elif len(sys.argv) >= 3:
         fmwk = sys.argv[1]
-        hinter = Hinter(sys.argv[2])
+        # bring in 3rd party types first
+        for fn in sys.argv[3:]:
+            Hinter(fn, types)
+        hinter = Hinter(sys.argv[2], types)
     else:
-        print >> sys.stderr, "Usage: scanframeworks [Framework [hinter]]"
+        print >> sys.stderr, "Usage: scanframeworks [Framework [hinter [typemap...]]]"
         sys.exit(1)
 
-    makeWrapper(fmwk, hinter)
+    makeWrapper(fmwk, hinter, types)
