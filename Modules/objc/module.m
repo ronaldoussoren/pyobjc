@@ -826,6 +826,35 @@ PyDoc_STRVAR(PyObjC_loadBundleFunctions_doc,
 	"The signature is the Objective-C type specifier for the function \n"
 	"signature.");
 
+PyDoc_STRVAR(objc_RegisterCFSignature_doc,
+	"RegisterCFSignature(signature) -> None\n"
+	"\n"
+	"Register a type signature as a CoreFoundation type"
+);
+static PyObject*
+objc_RegisterCFSignature(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static  char* keywords[] = { "signature", 0 };
+	char *signature;
+	int res;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds,
+			"s:RegisterCFSignature", keywords,
+			&signature)) {
+		return NULL;
+	}
+
+	signature = PyObjCUtil_Strdup(signature);
+	res = PyObjCPointerWrapper_RegisterCF((const char *)signature);
+	if (res == -1) {
+		return NULL;
+	}
+	
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
+
 PyDoc_STRVAR(objc_CFToObject_doc,
 	"CFToObject(cfObject) -> objCObject\n"
 	"\n"
@@ -1178,6 +1207,7 @@ static PyMethodDef mod_methods[] = {
 	{ "protocolsForClass", (PyCFunction)protocolsForClass, METH_VARARGS|METH_KEYWORDS, protocolsForClass_doc },
 	{ "protocolsForProcess", (PyCFunction)protocolsForProcess, METH_NOARGS, protocolsForProcess_doc },
 #ifdef MACOSX
+	{ "RegisterCFSignature", (PyCFunction)objc_RegisterCFSignature, METH_VARARGS|METH_KEYWORDS, objc_RegisterCFSignature_doc },
 	{ "CFToObject", (PyCFunction)objc_CFToObject, METH_VARARGS|METH_KEYWORDS, objc_CFToObject_doc },
 	{ "ObjectToCF", (PyCFunction)objc_ObjectToCF, METH_VARARGS|METH_KEYWORDS, objc_ObjectToCF_doc },
 	{ "loadBundleVariables", (PyCFunction)PyObjC_loadBundleVariables,

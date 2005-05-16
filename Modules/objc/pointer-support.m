@@ -40,6 +40,23 @@ struct wrapper {
 static struct wrapper* items = 0;
 static int item_count = 0;
 
+static int find_offset(const char* signature) {
+	/* XXX:
+	 * I don't know what the heck this was supposed to do
+	 */
+#if 0
+	if (signature[1] == _C_STRUCT_B) {
+		int o1, o2;
+
+		o1 = strchr(signature, _C_STRUCT_E) - signature;
+		o2 = strchr(signature, '=') - signature;
+
+		return (o1 < o2) ? o1 : o2;
+	}
+#endif
+	return strlen(signature);
+}
+
 static struct wrapper*
 FindWrapper(const char* signature)
 {
@@ -50,9 +67,13 @@ FindWrapper(const char* signature)
 
 	for (i = 0; i < item_count; i++) {
 		if (strncmp(signature, items[i].signature, items[i].offset) == 0) {
+			return &items[i];
+			/* XXX: What was this supposed to do? */
+#if 0
 			if (signature[1] != _C_STRUCT_B || signature[items[i].offset] == '=' || signature[items[i].offset] == _C_STRUCT_E) {
-				return items + i;
+				return &items[i];
 			}
+#endif
 		}
 	}
 	return NULL;
@@ -73,6 +94,9 @@ PyObjCPointerWrapper_Register(
 	 * This makes it possible to replace a default wrapper by something
 	 * better.
 	 */
+	if (signature == NULL) {
+		return -1;
+	}
 	value = FindWrapper(signature);
 	if (value != NULL) {
 		value->pythonify = pythonify;
@@ -103,20 +127,7 @@ PyObjCPointerWrapper_Register(
 	value = items + (item_count-1);
 
 	value->signature = signature;
-	if (signature[1] == _C_STRUCT_B) {
-		int o1, o2;
-
-		o1 = strchr(signature, _C_STRUCT_E) - signature;
-		o2 = strchr(signature, '=') - signature;
-
-		if (o1 < o2) {
-			value->offset = o1;
-		} else {
-			value->offset = o2;
-		}
-	} else {
-		value->offset = strlen(signature);
-	}
+	value->offset = find_offset(signature);
 
 	value->pythonify = pythonify;
 	value->depythonify = depythonify;
@@ -199,6 +210,12 @@ py_to_CF(PyObject* obj, void* output)
 	return 0;
 }
 
+int PyObjCPointerWrapper_RegisterCF(const char *signature) {
+	return PyObjCPointerWrapper_Register(signature, 
+		(PyObjCPointerWrapper_ToPythonFunc)&CF_to_py, 
+		(PyObjCPointerWrapper_FromPythonFunc)&py_to_CF);
+}
+
 
 #endif
 
@@ -210,31 +227,21 @@ PyObjCPointerWrapper_Init(void)
 	int r = 0;
 
 #ifdef MACOSX
-	r = PyObjCPointerWrapper_Register(@encode(CFURLRef), 
-		(PyObjCPointerWrapper_ToPythonFunc)CF_to_py, 
-		(PyObjCPointerWrapper_FromPythonFunc)py_to_CF);
+	r = PyObjCPointerWrapper_RegisterCF(@encode(CFURLRef)); 
 	if (r == -1) return -1;
 
-	r = PyObjCPointerWrapper_Register(@encode(CFSetRef), 
-		(PyObjCPointerWrapper_ToPythonFunc)CF_to_py, 
-		(PyObjCPointerWrapper_FromPythonFunc)py_to_CF);
+	r = PyObjCPointerWrapper_RegisterCF(@encode(CFSetRef)); 
 	if (r == -1) return -1;
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_2
-	r = PyObjCPointerWrapper_Register(@encode(CFNetServiceRef), 
-		(PyObjCPointerWrapper_ToPythonFunc)CF_to_py, 
-		(PyObjCPointerWrapper_FromPythonFunc)py_to_CF);
+	r = PyObjCPointerWrapper_RegisterCF(@encode(CFNetServiceRef)); 
 	if (r == -1) return -1;
 #endif
 
-	r = PyObjCPointerWrapper_Register(@encode(CFReadStreamRef), 
-		(PyObjCPointerWrapper_ToPythonFunc)CF_to_py, 
-		(PyObjCPointerWrapper_FromPythonFunc)py_to_CF);
+	r = PyObjCPointerWrapper_RegisterCF(@encode(CFReadStreamRef)); 
 	if (r == -1) return -1;
 
-	r = PyObjCPointerWrapper_Register(@encode(CFRunLoopRef), 
-		(PyObjCPointerWrapper_ToPythonFunc)CF_to_py, 
-		(PyObjCPointerWrapper_FromPythonFunc)py_to_CF);
+	r = PyObjCPointerWrapper_RegisterCF(@encode(CFRunLoopRef)); 
 	if (r == -1) return -1;
 
 #endif
