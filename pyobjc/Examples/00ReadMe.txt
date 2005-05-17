@@ -375,6 +375,22 @@ later.
 
 .. _`ToDos`: CocoaBindings/ToDos
 
+CoreData
+--------
+
+The directory `CoreData`__ contains a number of examples
+that use the CoreData framework. This framework is available
+in MacOS X 10.4 and later.
+
+.. __: CoreData
+
+* `OutlineEdit`__
+
+  A python version of the OutlineEdit example that's included with
+  Xcode 2.0.
+
+.. __: CoreData/OutlineEdit
+
 Foundation
 ----------
 
@@ -418,12 +434,12 @@ examples require Mac OS X 10.3 or later.
 
 .. _`InjectInterpreter`: Inject/InjectInterpreter
 
-* `ClassBrowser`_:
+* `InjectBrowser`_:
 
   Shows how to inject an in-process Python class browser into another
   process.  Based on the AppKit ClassBrowser example.
 
-.. _`ClassBrowser`: Inject/ClassBrowser
+.. _`InjectBrowser`: Inject/ClassBrowser
 
 
 OpenGL
@@ -460,12 +476,11 @@ Mac OS X 10.3 and later.
 
 .. __: Plugins/EnvironmentPrefs
 
-* `PrefPane`__
+* `ProgressViewPalette`__
 
-  Demonstrates how to write an ``NSPreferencePane``, for use in the
-  System Preferences application.
+  A simple InterfaceBuilder palette written in Python.
 
-.. __: Plugins/PrefPane
+.. __: Plugins/ProgressViewPalette
 
 * `SillyBallsSaver`__
 
