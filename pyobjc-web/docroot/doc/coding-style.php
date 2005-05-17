@@ -36,28 +36,26 @@
 </div>
 <div class="section" id="introduction">
 <h3><a class="toc-backref" href="#id1" name="introduction">Introduction</a></h3>
-<p>This document describes the coding style for PyObjC. Please use this style for
+<p>This document describes the coding style for PyObjC.  Please use this style for
 new code and try apply this style to existing code while working on it.</p>
 <p>The management summary: 4-space indents in Python code, 1-TAB indents in C
 code.</p>
 </div>
 <div class="section" id="python-code">
 <h3><a class="toc-backref" href="#id2" name="python-code">Python code</a></h3>
-<p>The coding style for core Python is used (see <a class="reference" href="http://www.python.org/peps/pep-0008.txt">PEP 8</a>). For consistency with
+<p>The coding style for core Python is used (see <a class="reference" href="http://www.python.org/peps/pep-0008.txt">PEP 8</a>).  For consistency with
 Cocoa we use mixed-case identifiers (like <tt class="docutils literal"><span class="pre">lookUpClass</span></tt>).</p>
 <p>PyObjC extensions to Apple frameworks should be clearly marked as such, 
-preferably by prefixing names with <tt class="docutils literal"><span class="pre">PyObjC</span></tt> or <tt class="docutils literal"><span class="pre">pyobjc</span></tt>. This should make it
-clear to users where they should look for documentation of an item: The Apple
-documentation or ours.</p>
-<p>The entire <tt class="docutils literal"><span class="pre">objc</span></tt> module is an &quot;extension&quot; and all items exported from that
-module should be documented in our documentation.</p>
+preferably by prefixing names with <tt class="docutils literal"><span class="pre">PyObjC</span></tt> or <tt class="docutils literal"><span class="pre">pyobjc</span></tt>.  This should make
+it clear to users where they should look for documentation of an item: The
+Apple documentation or ours.</p>
 </div>
 <div class="section" id="c-code">
 <h3><a class="toc-backref" href="#id3" name="c-code">C code</a></h3>
-<p>The coding style for core Python is used (see <a class="reference" href="http://www.python.org/peps/pep-0007.txt">PEP 7</a>). We use <tt class="docutils literal"><span class="pre">PyObjC</span></tt> 
+<p>The coding style for core Python is used (see <a class="reference" href="http://www.python.org/peps/pep-0007.txt">PEP 7</a>).  We use <tt class="docutils literal"><span class="pre">PyObjC</span></tt> 
 instead of <tt class="docutils literal"><span class="pre">Py</span></tt> as the prefix for globally visible symbols.</p>
 <p>All (Objective-)C files in <tt class="docutils literal"><span class="pre">Modules/objc/</span></tt> should include <tt class="docutils literal"><span class="pre">&quot;pyobjc.h&quot;</span></tt> as
-their first include. The (Objective-)C files in the wrappers for frameworks
+their first include.  The (Objective-)C files in the wrappers for frameworks
 should include <tt class="docutils literal"><span class="pre">&quot;pyobjc-api.h&quot;</span></tt> and should not use other include-files in
 <tt class="docutils literal"><span class="pre">Modules/objc</span></tt> other than <tt class="docutils literal"><span class="pre">pyobjc-api.h</span></tt> and <tt class="docutils literal"><span class="pre">wrapper-const-table.h</span></tt>.</p>
 </div>

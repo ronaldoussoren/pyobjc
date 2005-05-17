@@ -38,7 +38,7 @@ include $fsroot."news/news.inc";
 <h1>Status</h1>
 
 <p>
-<a href="software/index.php">PyObjC 1.2</a> was released on 29 December 2004.  See the <a href="doc/news.php">NEWS</a> for details.
+<a href="software/index.php">PyObjC 1.3.5</a> was released on 19 May 2005.  See the <a href="doc/news.php">NEWS</a> for details.
 </p>
 
 <h1>Platform support</h1>
@@ -51,7 +51,7 @@ There is limited support for <a href="http://www.gnustep.org/">GNUstep</a>,
 most of the unittests pass on GNUstep on Linux/ix86. However, we do still have
 some serious problems with real scripts.
 <P>
-Contact <a href="mailto:pyobjc-dev@lists.sourceforge.net">the mailinglist</a> if you want to help out with GNUstep or MacOS X 10.1 support.
+Contact <a href="mailto:pyobjc-dev@lists.sourceforge.net">the mailinglist</a> if you want to help out with GNUstep support.
 
 <h1>Resources</h1>
 

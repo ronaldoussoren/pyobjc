@@ -198,6 +198,8 @@ alt=""></td></tr>
 </table>
 <P>We're hosted on:<BR>
 <A href="http://sourceforge.net"> <IMG src="http://sourceforge.net/sflogo.php?group_id=14534&type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></A>
+<P>Subversion hosting<BR>
+<A href="http://www.red-bean.com/"><IMG src="http://www.red-bean.com/images/bean-brought.jpg" width="100"></A>
 <? /* end navigation column */ ?>
 
 </td><td align="left" width="100%">

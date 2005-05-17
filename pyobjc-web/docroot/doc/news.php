@@ -7,6 +7,384 @@
 ?>
 <h1 class="title">PyObjC NEWS</h1>
 <p>An overview of the relevant changes in new, and older, releases.</p>
+<div class="section" id="version-1-3-5-2005-05">
+<h3><a name="version-1-3-5-2005-05">Version 1.3.5 (2005-05-??)</a></h3>
+<ul>
+<li><p class="first">Importing objc now ensures that Foundation is multi-threaded, previously
+it only ensured that Python was.</p>
+</li>
+<li><p class="first">New <tt class="docutils literal"><span class="pre">objc.RegisterCFSignature</span></tt> used to register <tt class="docutils literal"><span class="pre">CFTypeRef</span></tt>-like
+signatures with the runtime.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">PyObjCTools.Conversion</span></tt> functions now support all property list
+types with the following conversions:</p>
+<ul class="simple">
+<li>NSData &lt;-&gt; buffer</li>
+<li>NSDecimalNumber &lt;-&gt; decimal.Decimal (if present)</li>
+<li>NSDate &lt;-&gt; datetime.datetime</li>
+</ul>
+<p>New <tt class="docutils literal"><span class="pre">toPythonDecimal</span></tt>, <tt class="docutils literal"><span class="pre">fromPythonDecimal</span></tt> functions which convert
+between NSDecimalNumber and decimal.Decimal using an intermediate string.</p>
+<p>New <tt class="docutils literal"><span class="pre">serializePropertyList</span></tt> and <tt class="docutils literal"><span class="pre">deserializePropertyList</span></tt> functions
+which serialize (Objective-C) property lists to and from NSData.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">OC_PythonObject</span></tt>, the proxy for Python objects that do not have
+an Objective-C superclass and are not otherwise special-cased, now
+act slightly more like typical Objective-C objects (supporting
+<tt class="docutils literal"><span class="pre">-isEqual:</span></tt>, <tt class="docutils literal"><span class="pre">-hash</span></tt>, and <tt class="docutils literal"><span class="pre">-compare:</span></tt>).  This allows them
+to work with Key-Value Coding if they are contained by an Objective-C
+object, among other things.</p>
+</li>
+<li><p class="first">New objc.signature decorator that allows easier specification of
+objc.selector wrappers for functions when using Python 2.4:</p>
+<pre class="literal-block">
+&#64;objc.signature('i&#64;:if')
+def methodWithX_andY_(self, x, y):
+    return 0
+</pre>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">PyObjCTools.KeyValueCoding.getKeyPath</span></tt> now supports all of the
+Array Operators supported by Mac OS X 10.4.</p>
+</li>
+<li><p class="first">Key-Value Coding of Python objects (whether or not using an Objective-C
+base class) should act like Objective-C now.  In previous versions
+there were inconsistencies with the use of capitalization, the
+underscore postfix in setters, and Key-Value Observation.</p>
+</li>
+<li><p class="first">The formal protocol list is now complete.  A new internal function, 
+<tt class="docutils literal"><span class="pre">objc.protocolsForProcess()</span></tt> enumerates over all mach
+headers and returns all of the protocols defined in the expected
+place.  This fixes the scenario where an application uses a
+protocol but does not define any classes that
+conform to that protocol (i.e. to check plugin conformity).
+Previously it was not possible to reach these protocols simply by
+walking over all of the classes.</p>
+</li>
+<li><p class="first">A special value, <tt class="docutils literal"><span class="pre">objc.NULL</span></tt>, may now be passed in the place
+of 'in' and 'inout' arguments.  This tells the bridge to pass
+a NULL pointer to the Objective-C method, instead of a pointer
+to the value.  The return value will still be a tuple of the
+expected size.</p>
+</li>
+<li><p class="first">Some of the new Tiger frameworks now have wrappers:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">AppleScriptKit</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Automator</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CoreData</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DiscRecording</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DiscRecordingUI</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">OSAKit</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Quartz</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">QTKit</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SyncServices</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">XgridFoundation</span></tt></li>
+</ul>
+<p>Documentation and tests not yet written.</p>
+</li>
+<li><p class="first">New <tt class="docutils literal"><span class="pre">OutlineEditor</span></tt> example in <tt class="docutils literal"><span class="pre">Examples/CoreData</span></tt>,
+it is a Python version of the identically named Apple example.</p>
+</li>
+<li><p class="first">The last argument of selectors that end with ':error:' is now
+assumed to be 'out' if its type is an object pointer.</p>
+</li>
+<li><p class="first">More conveniences for <tt class="docutils literal"><span class="pre">list</span></tt>-like and <tt class="docutils literal"><span class="pre">dict</span></tt>-like
+objects: <tt class="docutils literal"><span class="pre">__reversed__</span></tt>, <tt class="docutils literal"><span class="pre">reverse</span></tt>, <tt class="docutils literal"><span class="pre">pop</span></tt>,
+<tt class="docutils literal"><span class="pre">remove</span></tt>, <tt class="docutils literal"><span class="pre">fromkeys</span></tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">OC_PythonDictionary</span></tt> and <tt class="docutils literal"><span class="pre">OC_PythonArray</span></tt> now return
+<tt class="docutils literal"><span class="pre">NSNull</span></tt> to Objective-C callers as appropriate.</p>
+</li>
+<li><p class="first">New <tt class="docutils literal"><span class="pre">WebKitInterpreter</span></tt> example in <tt class="docutils literal"><span class="pre">Examples/Plugins</span></tt>.
+Uses the new WebKit Cocoa plugin API available in Safari 1.3
+and later to embed a PyInterpreter in the browser.</p>
+</li>
+<li><p class="first">Fixed a <tt class="docutils literal"><span class="pre">CFBundleRef</span></tt> reference counting bug in
+<tt class="docutils literal"><span class="pre">Foundation._Foundation</span></tt>.  The symptom of this is usually
+a crashing application after having loaded a PyObjC-based
+plugin into an otherwise Objective-C app.</p>
+</li>
+<li><p class="first">New <tt class="docutils literal"><span class="pre">PyObjCTools.AppHelper</span></tt> functions: <tt class="docutils literal"><span class="pre">callAfter</span></tt> and
+<tt class="docutils literal"><span class="pre">callLater</span></tt>, conveniences for calling Python functions on
+the main thread as soon as possible, or after a delay.</p>
+</li>
+<li><p class="first">Twisted examples changed to use <tt class="docutils literal"><span class="pre">threadedselectreactor</span></tt>
+instead of <tt class="docutils literal"><span class="pre">cfreactor</span></tt>.  <tt class="docutils literal"><span class="pre">cfreactor</span></tt> is deprecated.
+Needs Twisted newer than 2.0 (svn r13575 or later).</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">objc.inject</span></tt> now injects on main thread by default,
+and takes an optional third <tt class="docutils literal"><span class="pre">useMainThread</span></tt> argument
+to change this behavior.  This is a complete rewrite
+which should be correct, stable, Tiger compatible,
+and synchronized with mach_* 1.1.</p>
+</li>
+<li><p class="first">Removed an <tt class="docutils literal"><span class="pre">NSAutoreleasePool</span></tt> category hack that has
+been deprecated for quite some time.</p>
+</li>
+<li><p class="first">New <tt class="docutils literal"><span class="pre">objc.removeAutoreleasePool</span></tt> function that will remove
+PyObjC's global <tt class="docutils literal"><span class="pre">NSAutoreleasePool</span></tt>, which may be useful
+for plugins.</p>
+</li>
+<li><p class="first">Fixed bug in the <tt class="docutils literal"><span class="pre">NSBundle</span></tt> hack that caused a <tt class="docutils literal"><span class="pre">NULL</span></tt>
+pointer dereference if looking up a non-existent class using
+<tt class="docutils literal"><span class="pre">NSBundle</span></tt> API.</p>
+</li>
+<li><p class="first">Added <tt class="docutils literal"><span class="pre">OC_PythonUnicode</span></tt> and <tt class="docutils literal"><span class="pre">OC_PythonString</span></tt> classes that
+preserve the identity of <tt class="docutils literal"><span class="pre">str</span></tt> and <tt class="docutils literal"><span class="pre">unicode</span></tt> objects across
+the bridge.  The bridge for <tt class="docutils literal"><span class="pre">str</span></tt> now uses the default
+encoding of <tt class="docutils literal"><span class="pre">NSString</span></tt>, rather than <tt class="docutils literal"><span class="pre">sys.getdefaultencoding()</span></tt>
+from Python.  For Mac OS X, this is typically MacRoman.  The reason
+for this is that not all Python <tt class="docutils literal"><span class="pre">str</span></tt> instances could cross the
+bridge at all previously.  <tt class="docutils literal"><span class="pre">objc.setStrBridgeEnabled(False)</span></tt> will
+still trigger warnings, if you are attempting to track down an
+encoding bug.  However, the symptoms of the bug will be incorrectly
+encoded text, not an exception.</p>
+</li>
+<li><p class="first">New Xcode project template &quot;PyObjC Mixed Application&quot; that is
+a py2app based Python application that loads an Objective-C
+plug-in built as a separate target.</p>
+</li>
+<li><p class="first">New py2app based Xcode templates &quot;PyObjC Application&quot; and
+&quot;PyObjC Document-based Application&quot;, these replace the
+older &quot;Cocoa-Python Application&quot; and 
+&quot;Cocoa-Python Document-based Application&quot; respectively.</p>
+</li>
+<li><p class="first">New <tt class="docutils literal"><span class="pre">InjectBrowser</span></tt> example in <tt class="docutils literal"><span class="pre">Examples/Inject</span></tt> that demonstrates
+injection of the <tt class="docutils literal"><span class="pre">ClassBrowser</span></tt> example into another application using
+<tt class="docutils literal"><span class="pre">objc.inject</span></tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">NSData</span></tt> and <tt class="docutils literal"><span class="pre">NSMutableData</span></tt> instances now support the Python buffer
+protocol.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">NSData</span></tt> instances now support a convenience API that allow them to
+act like a <tt class="docutils literal"><span class="pre">buffer</span></tt> instance for <tt class="docutils literal"><span class="pre">str()</span></tt> and slicing.</p>
+</li>
+<li><p class="first">Objects that support the Python buffer protocol, such as <tt class="docutils literal"><span class="pre">buffer</span></tt> and
+<tt class="docutils literal"><span class="pre">array.array</span></tt> (but not <tt class="docutils literal"><span class="pre">str</span></tt> or <tt class="docutils literal"><span class="pre">unicode</span></tt>) are now bridged as
+<tt class="docutils literal"><span class="pre">NSData</span></tt> subclasses.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="version-1-3-2005-03-31">
+<h3><a name="version-1-3-2005-03-31">Version 1.3 (2005-03-31)</a></h3>
+<ul>
+<li><p class="first">New <tt class="docutils literal"><span class="pre">objc.pyobjc_id</span></tt> function that returns a the id of the underlying
+NSObject as an integer.  (Python wrapper objects are often made on the
+fly, meaning <tt class="docutils literal"><span class="pre">id(obj)</span></tt> is not constant during the lifetime of the
+object.)</p>
+</li>
+<li><p class="first">The bridge now maintains object identity across the bridge
+in both directions. Previous versions of the bridge only did this when
+bridging from Objective-C to Python.</p>
+<p>Exceptions: <tt class="docutils literal"><span class="pre">NSString</span></tt> and <tt class="docutils literal"><span class="pre">NSNumber</span></tt> do not have unique proxies.  These
+types are converted to subclasses of Python types as appropriate, so they
+can not have unique proxies.  The identity of the original Objective-C
+object is maintained by these subclasses, but there may be many Python
+&quot;value proxies&quot; for a single Objective-C object.</p>
+<p>Any Python object that is proxied using the <tt class="docutils literal"><span class="pre">__pyobjc_object__</span></tt>
+interface will only get a unique proxy if the <tt class="docutils literal"><span class="pre">__pyobjc_object__</span></tt>
+method implements that feature.</p>
+</li>
+<li><p class="first">New <tt class="docutils literal"><span class="pre">objc.protocolsForClass</span></tt> function that returns a list of protocols
+that the class directly claims to conform to.</p>
+</li>
+<li><p class="first">PyObjC classes can now declare that they implement formal protocols,
+for example:</p>
+<pre class="literal-block">
+class MyLockingClass(NSObject, objc.protocolNamed('NSLocking')):
+    # implementation
+    pass
+</pre>
+<p>It is also possible to define new protocols:</p>
+<pre class="literal-block">
+MyProtocol = objc.formal_protocol(&quot;MyProtocol&quot;, None, [
+   selector(None, selector='mymethod', signature='v&#64;:'),
+])
+</pre>
+<p>All formal protocols are instances of <tt class="docutils literal"><span class="pre">objc.formal_protocol</span></tt>.</p>
+</li>
+<li><p class="first">PyObjCTools.KeyValueCoding has a new <tt class="docutils literal"><span class="pre">kvc</span></tt> class that allows
+Pythonic Key-Value Coding.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">__getitem__</span></tt> is mapped to <tt class="docutils literal"><span class="pre">valueForKeyPath:</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">__setitem__</span></tt> is mapped to <tt class="docutils literal"><span class="pre">setValue:forKeyPath:</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">__getattr__</span></tt> is mapped to <tt class="docutils literal"><span class="pre">valueForKey:</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">__setattr__</span></tt> is mapped to <tt class="docutils literal"><span class="pre">setValue:forKey:</span></tt></li>
+</ul>
+<p>The <tt class="docutils literal"><span class="pre">kvc</span></tt> class uses <tt class="docutils literal"><span class="pre">__pyobjc_object__</span></tt>, so it may cross the bridge
+as the wrapped object.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">NSNumber</span></tt> instances are bridged to a <tt class="docutils literal"><span class="pre">float</span></tt>, <tt class="docutils literal"><span class="pre">long</span></tt>, or <tt class="docutils literal"><span class="pre">int</span></tt>
+subclass that uses <tt class="docutils literal"><span class="pre">__pyobjc_object__</span></tt>.  
+<tt class="docutils literal"><span class="pre">NSDecimal</span></tt> is converted to <tt class="docutils literal"><span class="pre">NSDecimalNumber</span></tt> when used as an object,
+<tt class="docutils literal"><span class="pre">NSDecimalNumber</span></tt> is not bridged to <tt class="docutils literal"><span class="pre">NSDecimal</span></tt> because the latter is
+a mutable type.</p>
+</li>
+<li><p class="first">The Python to Objective-C bridge now looks for a <tt class="docutils literal"><span class="pre">__pyobjc_object__</span></tt> 
+attribute to get a PyObjC object from a Python object.</p>
+</li>
+<li><p class="first">New IDNSnitch example in Inject that demonstrates how to write an
+monitor for the launch of another application,
+use <tt class="docutils literal"><span class="pre">objc.inject</span></tt> to load code into a target process,
+and override the implementation of an existing method but still
+call back into the original implementation (method swizzling).</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">objc.IMP</span></tt> should do the right thing now.  This type is returned
+by <tt class="docutils literal"><span class="pre">+[NSObject</span> <span class="pre">methodForSelector:]</span></tt> and
+<tt class="docutils literal"><span class="pre">+[NSObject</span> <span class="pre">instanceMethodForSelector:]</span></tt></p>
+</li>
+<li><p class="first">New ToDos example in CocoaBindings that demonstrates how to use
+two array controllers for the same data, and how to use value
+transformers to alter the color of text.  Originally from
+&quot;Cocoa Bindings Examples and Hints&quot;, converted to PyObjC by u.fiedler.</p>
+</li>
+<li><p class="first">New Bookmarks example in CocoaBindings that demonstrates how to
+subclass <tt class="docutils literal"><span class="pre">NSArrayController</span></tt> to implement the <tt class="docutils literal"><span class="pre">NSTableView</span></tt>
+delegate drag and drop protocol, including copying of objects between
+documents and accepting URL drops from other applications.  Also
+demonstrates re-ordering of the content array.  Originally from
+&quot;Cocoa Bindings Examples and Hints&quot;, converted to PyObjC by u.fiedler.</p>
+</li>
+<li><p class="first">New FilteringController example in CocoaBindings that demonstrates
+how to subclass <tt class="docutils literal"><span class="pre">NSArrayController</span></tt> to implement filtering
+of a <tt class="docutils literal"><span class="pre">NSTableView</span></tt>.  Also demonstrates the use of indexed accessors.
+Originally from &quot;Cocoa Bindings Examples and Hints&quot;, converted to PyObjC
+by u.fiedler.</p>
+</li>
+<li><p class="first">New ControlledPreferences example in CocoaBindings that demonstrates
+how to use Cocoa Bindings to simplify storing and retrieving user
+preferences.  Originally from &quot;Cocoa Bindings Examples and Hints&quot;,
+converted to PyObjC by u.fiedler.</p>
+</li>
+<li><p class="first">New TemperatureTransformer example in CocoaBindings that demonstrates
+how to use NSValueTransfomers with PyObjC.  Based on Apple's
+&quot;Cocoa: Value Transformers&quot; documentation, converted to PyObjC
+by u.fiedler.</p>
+</li>
+<li><p class="first">New CurrencyConvBindings example in CocoaBindings that demonstrates
+a Cocoa Bindings enabled version of the CurrencyConverter example.
+Converted to PyObjC by u.fiedler from the example in Apple's
+&quot;Introduction to Developing Cocoa Applications Using Bindings&quot;.</p>
+</li>
+<li><p class="first">New ManualBindings example in CocoaBindings that demonstrates how
+to develop programmatic bindings from a PyObjC application.
+Converted to PyObjC by u.fiedler from the &quot;Cocoa Bindings and Hints&quot;
+example of the same name.</p>
+</li>
+<li><p class="first">New HotKeyPython example in AppKit that demonstrates how to use
+Carbon global hot keys from a PyObjC application.  Also demonstrates
+how to use a NSApplication subclass.</p>
+</li>
+<li><p class="first">Key-Value Observing support is now automatic in Python classes that
+descend from <tt class="docutils literal"><span class="pre">NSObject</span></tt>, unless they implement a custom
+<tt class="docutils literal"><span class="pre">willChangeValueForKey:</span></tt>, <tt class="docutils literal"><span class="pre">didChangeValueForKey:</span></tt>, or
+<tt class="docutils literal"><span class="pre">__useKVO__</span></tt> is not True.  This allows <tt class="docutils literal"><span class="pre">self.foo</span> <span class="pre">=</span> <span class="pre">1</span></tt> to
+automatically trigger notifications.  This works in all cases,
+whether <tt class="docutils literal"><span class="pre">foo</span></tt> is a <tt class="docutils literal"><span class="pre">property</span></tt>, <tt class="docutils literal"><span class="pre">ivar</span></tt>, or just in the
+<tt class="docutils literal"><span class="pre">__dict__</span></tt>.</p>
+</li>
+<li><p class="first">New Inject folder in Examples, with an InjectInterpreter
+example that will inject a GUI Python interpreter into any process.</p>
+</li>
+<li><p class="first">New <tt class="docutils literal"><span class="pre">objc.inject()</span></tt> function for Mac OS X 10.3 and later,
+allows an arbitrary bundle to be loaded into another process
+using mach_inject.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">objc.classAddMethods</span></tt> now recognizes and supports
+classmethods.</p>
+</li>
+<li><p class="first">GC is now correctly implemented for struct wrappers.</p>
+</li>
+<li><p class="first">The <tt class="docutils literal"><span class="pre">NSNumber</span></tt> bridge has been removed, now you will get
+<tt class="docutils literal"><span class="pre">NSNumber</span></tt> instances across the bridge instead of a
+Python representation.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">PyObjCTools.AppHelper.runEventLoop()</span></tt> will now bring your
+application to the front at startup when using pdb
+mode for convenience.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">objc.loadBundle()</span></tt> no longer filters the class list.  This
+solves a few potential issues and shaves off about 1/3rd of
+the overhead of <tt class="docutils literal"><span class="pre">python</span> <span class="pre">-c</span> <span class="pre">&quot;import</span> <span class="pre">AppKit&quot;</span></tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">PyObjCTools.AppHelper.runEventLoop()</span></tt> no longer breaks on
+pure Objective-C exceptions.  Most exceptions of this variety
+are more like warnings, and there is nothing that can be done
+them anyway.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">PyObjCTools.AppHelper.runEventLoop()</span></tt> now installs the
+interrupt handler and verbose exception logging when using pdb,
+either explicitly or by the USE_PDB environment variable.</p>
+</li>
+<li><p class="first">There is now a fast path for the <tt class="docutils literal"><span class="pre">NSString</span></tt>/<tt class="docutils literal"><span class="pre">unicode</span></tt>
+bridge when <tt class="docutils literal"><span class="pre">Py_UNICODE_SIZE</span></tt> is 2.  This is the default
+setting for Python.</p>
+</li>
+<li><p class="first">The default selector signature will have a void return value
+unless a &quot;return&quot; statement with an argument is used in the
+bytecode.  In that case, it will default to an object return
+value.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">__bundle_hack__</span></tt> is no longer necessary, py2app now sets
+a different environment variable to the current plugin during
+execution, and a hack is installed to <tt class="docutils literal"><span class="pre">NSBundle</span></tt> so that classes
+may respond to requests for their bundle with the <tt class="docutils literal"><span class="pre">+bundleForClass</span></tt>
+method.  The class builder adds a default implementation of this to
+Python classes if this environment variable is set.</p>
+</li>
+<li><p class="first">Added <tt class="docutils literal"><span class="pre">objc.currentBundle()</span></tt>, which is equivalent to
+<tt class="docutils literal"><span class="pre">NSBundle.mainBundle()</span></tt> except after loading a plug-in.
+Makes it easier to load nib files.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">PyObjCTools.NibClassBuilder.extractClasses()</span></tt> now uses
+<tt class="docutils literal"><span class="pre">objc.currentBundle()</span></tt> instead of <tt class="docutils literal"><span class="pre">NSBundle.mainBundle()</span></tt>.  This
+makes plugins less of a hassle to develop and allows identical code
+to be used for application or plugin development.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">objc.registerPlugin()</span></tt> and <tt class="docutils literal"><span class="pre">objc.pluginBundle()</span></tt> are now deprecated
+as they are no longer useful.</p>
+</li>
+<li><p class="first">It is now possible to subclass a class that implements <tt class="docutils literal"><span class="pre">copyWithZone:</span></tt>
+without setting <tt class="docutils literal"><span class="pre">__slots__</span></tt> to <tt class="docutils literal"><span class="pre">()</span></tt>.</p>
+</li>
+<li><p class="first">It is now possible to override <tt class="docutils literal"><span class="pre">dealloc</span></tt>. It is still possible to
+define <tt class="docutils literal"><span class="pre">__del__</span></tt>.</p>
+</li>
+<li><p class="first">As an experimental feature it is also possible to override <tt class="docutils literal"><span class="pre">retain</span></tt> and
+<tt class="docutils literal"><span class="pre">release</span></tt>. Note it almost never a good idea to do this (even when you're
+programming in Objective-C and much more so in Python).</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">poseAsClass:</span></tt> can be used, although it is not very useful in python, use
+categories instead.</p>
+<p>A major issue with <tt class="docutils literal"><span class="pre">poseAsClass:</span></tt> is that existing references to the old
+version of the class won't be changed to point to the new class.</p>
+</li>
+<li><p class="first">It is now possible to access all instance variables of a class using
+the functions <tt class="docutils literal"><span class="pre">objc.listInstanceVariables(aClassOrInstance)</span></tt>,
+<tt class="docutils literal"><span class="pre">objc.getInstanceVariable(obj,</span> <span class="pre">name)</span></tt> and 
+<tt class="docutils literal"><span class="pre">objc.setInstanceVariable(obj,</span> <span class="pre">name,</span> <span class="pre">value</span> <span class="pre">[,</span> <span class="pre">updateRefCount])</span></tt>.</p>
+<p>The last argument of <tt class="docutils literal"><span class="pre">setInstanceVariable</span></tt> is required when the instance
+variable is an object. If it is true the bridge will update reference counts,
+otherwise it won't.</p>
+</li>
+<li><p class="first">All wrappers for opaque pointers (such as <tt class="docutils literal"><span class="pre">NSZone*</span></tt>) now have the same
+interface and share a single implementation. This decreases code-size and
+makes it easier to add new wrappers.  A new feature is a <tt class="docutils literal"><span class="pre">__typestr__</span></tt>
+attribute on the type object, this contains the encoded Objective-C type
+of the pointer.</p>
+<p>A function for creating new wrappers is exposed to python, as 
+<tt class="docutils literal"><span class="pre">objc.createOpaquePointerType(name,</span> <span class="pre">typestr,</span> <span class="pre">doc)</span></tt>.  The same function is 
+also exposed in the C-API.</p>
+</li>
+<li><p class="first">Wrappers for C-structs how have a <tt class="docutils literal"><span class="pre">__typestr__</span></tt> attribute on their type.
+This attribute contains the encoded Objective-C type of the struct.</p>
+<p>The default <tt class="docutils literal"><span class="pre">__init__</span></tt> for struct-wrappers now initializes fields with an 
+appropriate default value, instead of <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+<p>New wrappers can now be created from Python using the function
+<tt class="docutils literal"><span class="pre">objc.createStructType(name,</span> <span class="pre">typestr,</span> <span class="pre">fieldnames,</span> <span class="pre">doc)</span></tt>. The same
+function is also exposed in the C API (and has been for a while).</p>
+</li>
+</ul>
+</div>
 <div class="section" id="version-1-2-2004-12-29">
 <h3><a name="version-1-2-2004-12-29">Version 1.2 (2004-12-29)</a></h3>
 <ul>

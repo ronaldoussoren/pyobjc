@@ -44,24 +44,42 @@ during development.</p>
 </ul>
 <p>Module that tries to print useful information when the program gets a fatal
 exception. This module should only be used during development.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">PyObjCTools.XcodeSupport</span></tt></li>
+</ul>
+<p>Used by the PyObjC Xcode templates to derive py2app options from an Xcode
+project file.</p>
 <div class="section" id="pyobjctools-apphelper">
 <h3><a name="pyobjctools-apphelper"><tt class="docutils literal"><span class="pre">PyObjCTools.AppHelper</span></tt></a></h3>
-<p>This module exports two functions that are useful when working with the
-<tt class="docutils literal"><span class="pre">AppKit</span></tt> framework.</p>
+<p>This module exports functions that are useful when working with the
+<tt class="docutils literal"><span class="pre">AppKit</span></tt> framework (or more generally, run loops).</p>
 <ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">callAfter(func,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>
+<p>Call a function on the main thread.  Returns immediately.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">callLater(delay,</span> <span class="pre">func,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>
+<p>Call a function on the main thread after a delay.  Returns immediately.</p>
+</li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">endSheetMethod(method)</span> <span class="pre">-&gt;</span> <span class="pre">selector</span></tt></p>
 <p>Convert a method to a form that is suitable to use as the delegate callback
 for sheet methods.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">runEventLoop(argv=None,</span> <span class="pre">unexpectedErrorAlert=unexpectedErrorAlert)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>
+<li><p class="first"><tt class="docutils literal"><span class="pre">stopEventLoop()</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>
+<p>Stops the event loop (if started by <tt class="docutils literal"><span class="pre">runConsoleEventLoop</span></tt>) or sends the
+<tt class="docutils literal"><span class="pre">NSApplication</span></tt> a <tt class="docutils literal"><span class="pre">terminate:</span></tt> message.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">runConsoleEventLoop(argv=None,</span> <span class="pre">installInterrupt=False,</span> <span class="pre">mode=NSDefaultRunLoopMode)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>
+<p>Run a <tt class="docutils literal"><span class="pre">NSRunLoop</span></tt> in a stoppable way (with <tt class="docutils literal"><span class="pre">stopEventLoop</span></tt>).</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">runEventLoop(argv=None,</span> <span class="pre">unexpectedErrorAlert=unexpectedErrorAlert,</span> <span class="pre">installInterrupt=None,</span> <span class="pre">pdb=None,</span> <span class="pre">main=NSApplicationMain)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></tt></p>
 <p>Run the event loop using <tt class="docutils literal"><span class="pre">NSApplicationMain</span></tt> and ask the user if we should
 continue if an exception is caught.</p>
 <p>This function doesn't return unless it throws an exception.</p>
 </li>
 </ul>
 </div>
-<div class="section" id="pyobjctools-conversiony">
-<h3><a name="pyobjctools-conversiony"><tt class="docutils literal"><span class="pre">PyObjCTools.Conversiony</span></tt></a></h3>
+<div class="section" id="pyobjctools-conversion">
+<h3><a name="pyobjctools-conversion"><tt class="docutils literal"><span class="pre">PyObjCTools.Conversion</span></tt></a></h3>
 <p>Functions for converting between Cocoa and pure Python data structures.</p>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">propertyListFromPythonCollection(pyCol,</span> <span class="pre">conversionHelper=None)</span> <span class="pre">-&gt;</span> <span class="pre">ocCol</span></tt></p>
@@ -89,20 +107,19 @@ explained <a class="reference" href="http://developer.apple.com/documentation/Co
 interface is modeled on the <tt class="docutils literal"><span class="pre">getattr</span></tt> and <tt class="docutils literal"><span class="pre">setattr</span></tt> functions.</p>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">getKey(object,</span> <span class="pre">key)</span> <span class="pre">-&gt;</span> <span class="pre">value</span></tt></p>
-<p>Find the value for <tt class="docutils literal"><span class="pre">key</span></tt>. Raises <tt class="docutils literal"><span class="pre">KeyError</span></tt> if the key is not a valid
-attribute of the object.</p>
-<p>To find the value of a key the following values are tried for a key named
-<tt class="docutils literal"><span class="pre">key</span></tt> (first match wins):</p>
+<blockquote>
+<p>Get the attribute referenced by 'key'. The key is used
+to build the name of an attribute, or attribute accessor method.</p>
+<p>The following attributes and accesors are tried (in this order):</p>
 <ul class="simple">
-<li>the return value of <tt class="docutils literal"><span class="pre">object.get_key()</span></tt></li>
-<li>the return value of <tt class="docutils literal"><span class="pre">object.getKey()</span></tt></li>
-<li>the return value of <tt class="docutils literal"><span class="pre">object._get_key()</span></tt></li>
-<li>the return value of <tt class="docutils literal"><span class="pre">object._getKey()</span></tt></li>
-<li>the value of the attribute <tt class="docutils literal"><span class="pre">key</span></tt>, or the value of <tt class="docutils literal"><span class="pre">object.key()</span></tt> if
-<tt class="docutils literal"><span class="pre">object.key</span></tt> is a method.</li>
-<li>the value of the attribute <tt class="docutils literal"><span class="pre">_key</span></tt>, or the vale of <tt class="docutils literal"><span class="pre">object._key()</span></tt> if
-<tt class="docutils literal"><span class="pre">object._key</span></tt> is a method.</li>
+<li>Accessor 'getKey'</li>
+<li>Accesoor 'get_key'</li>
+<li>Accessor or attribute 'key'</li>
+<li>Accessor or attribute 'isKey'</li>
+<li>Attribute '_key'</li>
 </ul>
+<p>If none of these exist, raise KeyError</p>
+</blockquote>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">getKeyPath(object,</span> <span class="pre">keypath)</span> <span class="pre">-&gt;</span> <span class="pre">value</span></tt></p>
 <p>Like <tt class="docutils literal"><span class="pre">getKey</span></tt> but using a key path. The <tt class="docutils literal"><span class="pre">keypath</span></tt> is a sequence of keys
@@ -138,9 +155,9 @@ the path up to the last item, and then <tt class="docutils literal"><span class=
 nibs. To add the classes from a nib to this set, use the <tt class="docutils literal"><span class="pre">extractClasses()</span></tt>
 function. It can be called in two ways:</p>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">extractClasses(nibName,</span> <span class="pre">bundle=&lt;main-bundle&gt;)</span></tt></p>
+<li><p class="first"><tt class="docutils literal"><span class="pre">extractClasses(nibName,</span> <span class="pre">bundle=&lt;current-bundle&gt;)</span></tt></p>
 <p>This finds the nib by name from a bundle. If no bundle
-if given, the main bundle is searched.</p>
+if given, the <tt class="docutils literal"><span class="pre">objc.currentBundle()</span></tt> is searched.</p>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">extractClasses(path=pathToNib)</span></tt></p>
 <p>This uses an explicit path to a nib.</p>

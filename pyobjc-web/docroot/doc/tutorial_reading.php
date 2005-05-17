@@ -55,12 +55,12 @@ customary to name it as if it represented the document (without &quot;Controller
 Note that the MVC paradigm is not specific to Cocoa and can be used with almost
 any GUI toolkit, but Cocoa is explicitly designed for this paradigm.</p>
 <p>You should have an MVC trio for every distinct unit of information in your
-program.  In case of a simple dialog-style application such as Currency Converter
-you will have one such trio.  Most applications, however, will have at least
-two: one for the application itself and one for the &quot;documents&quot; the application
-handles.  These may be real documents (i.e. files), but a document can be more
-abstract.  For example, if your application does scientific simulations that
-run in separate windows, each simulation could be a document.</p>
+program.  In case of a simple dialog-style application such as Currency
+Converter you will have one such trio.  Most applications, however, will have
+at least two: one for the application itself and one for the &quot;documents&quot; the
+application handles.  These may be real documents (i.e. files), but a document
+can be more abstract.  For example, if your application does scientific
+simulations that run in separate windows, each simulation could be a document.</p>
 </div>
 <div class="section" id="the-nib-file">
 <h3><a name="the-nib-file">The NIB file</a></h3>
@@ -136,48 +136,52 @@ the instance of <tt class="docutils literal"><span class="pre">NSApplication</sp
 application, so the MVC trio for the conversion window are in here too.  These
 are named <tt class="docutils literal"><span class="pre">Converter</span></tt>, <tt class="docutils literal"><span class="pre">Window</span></tt> and <tt class="docutils literal"><span class="pre">ConverterController</span></tt> respectively.</p>
 <p>Let us have a look at the <tt class="docutils literal"><span class="pre">ConverterController</span></tt> object by double clicking it.
-The &quot;MainMenu.nib&quot; window goes to the &quot;Classes&quot; tab, and an info window shows up.
-In the &quot;MainMenu.nib&quot; window the <tt class="docutils literal"><span class="pre">ConverterController</span></tt> class is selected, and
-you can see it is a subclass of <tt class="docutils literal"><span class="pre">NSObject</span></tt>.  Having the same name for the class
-and the instance is common in Cocoa programs, the main exception being the File
-Owner object.</p>
-<p>The info window shows more information on the <tt class="docutils literal"><span class="pre">ConverterController</span></tt> class.  It
-should pop open to the &quot;attributes&quot; page.  In the &quot;Outlets&quot; tab you see that instances
-of this class have four attributes, <tt class="docutils literal"><span class="pre">converter</span></tt>, <tt class="docutils literal"><span class="pre">rateField</span></tt>, <tt class="docutils literal"><span class="pre">dollarField</span></tt>
-and <tt class="docutils literal"><span class="pre">totalField</span></tt>.  In any instance of <tt class="docutils literal"><span class="pre">ConverterController</span></tt> you can connect these
-to other objects, as we shall see below.  The &quot;Actions&quot; tab shows that there are two
-methods <tt class="docutils literal"><span class="pre">convert:</span></tt> and <tt class="docutils literal"><span class="pre">invertRate:</span></tt>, and again you can arrange for these to
-be called on instances of your <tt class="docutils literal"><span class="pre">ConverterController</span></tt> on certain events by
-making connections.</p>
-<p>So let us now look at the connections for our <tt class="docutils literal"><span class="pre">ConverterController</span></tt> <em>instance</em>.  Select
-the &quot;Instances&quot; tab in the main window, select <tt class="docutils literal"><span class="pre">ConverterController</span></tt> and set the info
-window to show &quot;Connections&quot;.  You now see all the outlets defined in the class.
-Select one, and in the lower half of the info window you will see which object it connects
-to.  Moreover, a blue line will also link the object representations in the main window and
+The &quot;MainMenu.nib&quot; window goes to the &quot;Classes&quot; tab, and an info window shows
+up.  In the &quot;MainMenu.nib&quot; window the <tt class="docutils literal"><span class="pre">ConverterController</span></tt> class is
+selected, and you can see it is a subclass of <tt class="docutils literal"><span class="pre">NSObject</span></tt>.  Having the same
+name for the class and the instance is common in Cocoa programs, the main
+exception being the File Owner object.</p>
+<p>The info window shows more information on the <tt class="docutils literal"><span class="pre">ConverterController</span></tt> class.
+It should pop open to the &quot;attributes&quot; page.  In the &quot;Outlets&quot; tab you see that
+instances of this class have four attributes, <tt class="docutils literal"><span class="pre">converter</span></tt>, <tt class="docutils literal"><span class="pre">rateField</span></tt>,
+<tt class="docutils literal"><span class="pre">dollarField</span></tt> and <tt class="docutils literal"><span class="pre">totalField</span></tt>.  In any instance of <tt class="docutils literal"><span class="pre">ConverterController</span></tt>
+you can connect these to other objects, as we shall see below.  The &quot;Actions&quot;
+tab shows that there are two methods <tt class="docutils literal"><span class="pre">convert:</span></tt> and <tt class="docutils literal"><span class="pre">invertRate:</span></tt>, and
+again you can arrange for these to be called on instances of your
+<tt class="docutils literal"><span class="pre">ConverterController</span></tt> on certain events by making connections.</p>
+<p>So let us now look at the connections for our <tt class="docutils literal"><span class="pre">ConverterController</span></tt>
+<em>instance</em>.  Select the &quot;Instances&quot; tab in the main window, select
+<tt class="docutils literal"><span class="pre">ConverterController</span></tt> and set the info window to show &quot;Connections&quot;.  You 
+now see all the outlets defined in the class.  Select one, and in the lower 
+half of the info window you will see which object it connects to.  Moreover, a 
+blue line will also link the object representations in the main window and
 in the dialog preview window.</p>
-<p>Finding out who calls your <tt class="docutils literal"><span class="pre">convert:</span></tt> method is more difficult, though, with this view.
-But, if you select the &quot;Convert&quot; button in the dialog you will see that its <tt class="docutils literal"><span class="pre">target</span></tt>
-action will go to the <tt class="docutils literal"><span class="pre">ConverterController.convert_</span></tt> method.</p>
-<p>Luckily there is a way to find such incoming connections without reverting to guessing.
-For instance, you will be hard put to find who, if anyone, calls 
-<tt class="docutils literal"><span class="pre">ConverterController.invertRate_</span></tt>.  The solution: go to the &quot;MainMenu.nib&quot; window and
-look at the top of the vertical scrollbar.  There are two little icons there, one with
-lines and one with squares, with the squares being highlighted.  Press it.  The view will change
-to a scrollable list with objects in the left column and an indication of connections
-in the right column.  You can now see our ConverterController object has four
-outgoing connections (the ones we found earlier) and two incoming connections.  Click
-on the incoming connections icon.  The view will change again and ConverterController
-will probably scroll out of sight.  Locate it, and see that there are two lines
+<p>Finding out who calls your <tt class="docutils literal"><span class="pre">convert:</span></tt> method is more difficult, though, with
+this view.  But, if you select the &quot;Convert&quot; button in the dialog you will see
+that its <tt class="docutils literal"><span class="pre">target</span></tt> action will go to the <tt class="docutils literal"><span class="pre">ConverterController.convert_</span></tt>
+method.</p>
+<p>Luckily there is a way to find such incoming connections without reverting to
+guessing.  For instance, you will be hard put to find who, if anyone, calls 
+<tt class="docutils literal"><span class="pre">ConverterController.invertRate_</span></tt>.  The solution: go to the &quot;MainMenu.nib&quot;
+window and look at the top of the vertical scrollbar.  There are two little
+icons there, one with lines and one with squares, with the squares being
+highlighted.  Press it.  The view will change to a scrollable list with objects 
+in the left column and an indication of connections in the right column.  You
+can now see our ConverterController object has four outgoing connections (the
+ones we found earlier) and two incoming connections.  Click on the incoming
+connections icon.  The view will change again and ConverterController will
+probably scroll out of sight.  Locate it, and see that there are two lines
 going out of the ConverterController object.  One goes to <tt class="docutils literal"><span class="pre">NSButton(Convert)</span></tt>
-and is labeled <tt class="docutils literal"><span class="pre">convert:</span></tt>, we knew about that already.  The other one goes to an
-object <tt class="docutils literal"><span class="pre">NSMenuItem(Invert</span> <span class="pre">Exchange</span> <span class="pre">Rate)</span></tt> and is labeled <tt class="docutils literal"><span class="pre">invertRate:</span></tt>, so that
-is where calls to <tt class="docutils literal"><span class="pre">invertRate:</span></tt> come from.  And if you look at where this
-<tt class="docutils literal"><span class="pre">NSMenuItem</span></tt> sits in the object hierarchy you find that it is an entry in the
-&quot;Edit&quot; menu in the menubar.</p>
+and is labeled <tt class="docutils literal"><span class="pre">convert:</span></tt>, we knew about that already.  The other one goes to
+an object <tt class="docutils literal"><span class="pre">NSMenuItem(Invert</span> <span class="pre">Exchange</span> <span class="pre">Rate)</span></tt> and is labeled <tt class="docutils literal"><span class="pre">invertRate:</span></tt>,
+so that is where calls to <tt class="docutils literal"><span class="pre">invertRate:</span></tt> come from.  And if you look at where
+this <tt class="docutils literal"><span class="pre">NSMenuItem</span></tt> sits in the object hierarchy you find that it is an entry
+in the &quot;Edit&quot; menu in the menubar.</p>
 </div>
 <div class="section" id="examining-an-apple-example">
 <h3><a name="examining-an-apple-example">Examining an Apple example</a></h3>
-<p>This section remains to be written.  Contributions will be gratefully accepted :-)</p>
+<p>This section remains to be written.  Contributions will be gratefully accepted
+:-)</p>
 </div>
 </div>
 <?

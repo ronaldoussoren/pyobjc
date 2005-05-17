@@ -15,7 +15,7 @@
 <div class="section" id="methods">
 <h3><a name="methods">Methods</a></h3>
 <p>Classes are scanned for methods when the Python wrapper for a class is created.
-We then create Python wrappers for those methods. This way users can use the
+We then create Python wrappers for those methods.  This way users can use the
 normal Python introspection methods to check which methods are available.</p>
 <p>There are several occasions when these method tables are rescanned, because
 classes can grow new methods when categories are loaded into the runtime.
@@ -81,35 +81,43 @@ object ownership to the caller.  For all other objects you have to call
 methods, such as <tt class="docutils literal"><span class="pre">[NSString</span> <span class="pre">stringWithCString:&quot;bla&quot;]</span></tt>!</p>
 <p>When programming Cocoa in Python, you rarely need to worry about
 reference counts: the <tt class="docutils literal"><span class="pre">objc</span></tt> module makes this completely transparent to
-user.  This is mostly implemented in <tt class="docutils literal"><span class="pre">[de]pythonify_c_value</span></tt>. Additonal
+user.  This is mostly implemented in <tt class="docutils literal"><span class="pre">[de]pythonify_c_value</span></tt>.  Additonal
 code is needed when calling methods that transfer ownership of their return
 value (as described above) and when updating a instance variable in an
-Objective-C object (retain new and release old, in that order). Both are
+Objective-C object (retain new and release old, in that order).  Both are
 implemented.</p>
 </div>
 <div class="section" id="strings">
 <h3><a name="strings">Strings</a></h3>
-<p>Python <tt class="docutils literal"><span class="pre">unicode</span></tt> instances are automatically converted to <tt class="docutils literal"><span class="pre">NSString</span></tt> and
-back.  An <tt class="docutils literal"><span class="pre">NSString</span></tt> is represented in Python as a subtype of <tt class="docutils literal"><span class="pre">unicode</span></tt>:
+<p>Python <tt class="docutils literal"><span class="pre">unicode</span></tt> instances are proxied by the <tt class="docutils literal"><span class="pre">OC_PythonUnicode</span></tt> subclass
+of <tt class="docutils literal"><span class="pre">NSString</span></tt>.  This is a proxy, and will maintain the identity of the
+original <tt class="docutils literal"><span class="pre">unicode</span></tt> instance.</p>
+<p><tt class="docutils literal"><span class="pre">NSString</span></tt> instances are represented in Python as a subtype of <tt class="docutils literal"><span class="pre">unicode</span></tt>:
 <tt class="docutils literal"><span class="pre">objc.pyobjc_unicode</span></tt>.  This performs a conversion, because Python's
 <tt class="docutils literal"><span class="pre">unicode</span></tt> type is immutable, but it also maintains a <em>reference</em> to the
-original <tt class="docutils literal"><span class="pre">NSString</span></tt>.  Currently, the conversion is done using UTF-8 for
-exchange, because the internal representation of <tt class="docutils literal"><span class="pre">unicode</span></tt> is dependent on
-compile time settings.</p>
-<p>The original, unwrapped, <tt class="docutils literal"><span class="pre">NSString</span></tt> instance is accessible from Python
-with the <tt class="docutils literal"><span class="pre">nsstring()</span></tt> method of <tt class="docutils literal"><span class="pre">objc.pyobjc_unicode</span></tt>, primarily used
-to access an updated copy of an <tt class="docutils literal"><span class="pre">NSMutableString</span></tt>'s contents.  Since
-PyObjC 1.2, <tt class="docutils literal"><span class="pre">NSString</span></tt> and <tt class="docutils literal"><span class="pre">NSMutableString</span></tt> methods are available from
-the <tt class="docutils literal"><span class="pre">objc.pyobjc_unicode</span></tt> object, though they do not show up via Python's
-introspection mechanisms.</p>
-<p>For legacy and convenience, Python <tt class="docutils literal"><span class="pre">str</span></tt> instances are automatically coerced
-to <tt class="docutils literal"><span class="pre">unicode</span></tt> when they cross the bridge using the same mechanism that
-automatically converts from <tt class="docutils literal"><span class="pre">str</span></tt> to <tt class="docutils literal"><span class="pre">unicode</span></tt> (using 
-<tt class="docutils literal"><span class="pre">sys.getdefaultencoding()</span></tt>).  This automatic conversion can cause terrible
-things to happen at runtime that are hard to test for, so you may enable an
-<tt class="docutils literal"><span class="pre">objc.PyObjCStrBridgeWarning</span></tt> at each coercion attempt by calling
-<tt class="docutils literal"><span class="pre">objc.setStrBridgeEnabled(False)</span></tt>.  To promote this warning to an exception,
-see the documentation for the <tt class="docutils literal"><span class="pre">warnings</span></tt> module in the standard library.</p>
+original <tt class="docutils literal"><span class="pre">NSString</span></tt>.  <tt class="docutils literal"><span class="pre">NSString</span></tt> and <tt class="docutils literal"><span class="pre">NSMutableString</span></tt> methods are
+available from the <tt class="docutils literal"><span class="pre">objc.pyobjc_unicode</span></tt> object, though they do not show up
+via Python's introspection mechanisms.  In order to get the latest Python
+representation of a <tt class="docutils literal"><span class="pre">NSMutableString</span></tt>, use the return value of its <tt class="docutils literal"><span class="pre">self()</span></tt>
+method.</p>
+<p>Python <tt class="docutils literal"><span class="pre">str</span></tt> instances are proxied by the <tt class="docutils literal"><span class="pre">OC_PythonString</span></tt> subclass of
+<tt class="docutils literal"><span class="pre">NSString</span></tt>.  This is a proxy, and will maintain the identity of the
+original <tt class="docutils literal"><span class="pre">str</span></tt> instance.  <tt class="docutils literal"><span class="pre">OC_PythonString</span></tt> will use the default encoding
+of <tt class="docutils literal"><span class="pre">NSString</span></tt>, so its results might be surprising if you are using non-ASCII
+text.  It is recommended that you use <tt class="docutils literal"><span class="pre">unicode</span></tt> whenever possible.  In order
+to help you determine where you are not using <tt class="docutils literal"><span class="pre">unicode</span></tt>, it is possible
+to trigger an <tt class="docutils literal"><span class="pre">objc.PyObjCStrBridgeWarning</span></tt> warning whenever a <tt class="docutils literal"><span class="pre">str</span></tt>
+instance crosses the bridge:</p>
+<pre class="literal-block">
+import objc
+objc.setStrBridgeEnabled(False)
+</pre>
+<p>To promote these to an exception, do the following:</p>
+<pre class="literal-block">
+import objc
+import warnings
+warnings.filterwarnings('error', objc.PyObjCStrBridgeWarning)
+</pre>
 </div>
 </div>
 <?

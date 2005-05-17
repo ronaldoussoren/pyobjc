@@ -22,7 +22,9 @@
 </table>
 <div class="warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">None of this is documented or supported by <strong>Apple</strong>.  Don't ask <strong>Apple</strong> for
+<p class="last">Project Builder support is not maintained in PyObjC, is likely
+out of date, and is not guaranteed to work at all.
+None of this is documented or supported by <strong>Apple</strong>.  Don't ask <strong>Apple</strong> for
 support and don't blame me if something breaks.  A lot could break as
 <strong>Project Builder</strong> stores a tremendous amount of highly dynamic information in
 both the user defaults and within project files.</p>

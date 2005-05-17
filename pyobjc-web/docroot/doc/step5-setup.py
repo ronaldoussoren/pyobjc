@@ -3,5 +3,5 @@ import py2app
 
 setup(
     app=['CurrencyConverter.py'],
-    data_files=['English.lproj'],
+    data_files=['MainMenu.nib'],
 )

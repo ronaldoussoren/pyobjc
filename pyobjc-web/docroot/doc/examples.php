@@ -81,6 +81,12 @@ compatible with Objective-C plists.</p>
 </li>
 </ul>
 <ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Scripts/stdinreader.py">stdinreader.py</a></p>
+<p>Demonstrates how to write a console runloop based application that uses
+<tt class="docutils literal"><span class="pre">NSFileHandle</span></tt> to read stdin asynchronously.</p>
+</li>
+</ul>
+<ul>
 <li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Scripts/subclassing-objective-c.py">subclassing-objective-c.py</a></p>
 <p>A doctest that demonstrates the subclassing of an Objective-C class from
 Python.  Note that it is typically discouraged to define a <tt class="docutils literal"><span class="pre">__del__</span></tt>
@@ -140,6 +146,12 @@ makes use of <tt class="docutils literal"><span class="pre">NSBezierPaths</span>
 as well as a <tt class="docutils literal"><span class="pre">setup.py</span></tt> script.</p>
 <p>The application calculates the field pattern and RMS field of an antenna 
 array with up to three elements.</p>
+</li>
+</ul>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/AppKit/HotKeyPYthon">HotKeyPython</a></p>
+<p>Demonstrates how to use Carbon global hot keys from a PyObjC application.
+Also demonstrates how to use a <tt class="docutils literal"><span class="pre">NSApplication</span></tt> subclass.</p>
 </li>
 </ul>
 <ul>
@@ -211,6 +223,64 @@ toolbar as well as how to use multi-threading.  Contains a
 Key-Value Coding and Cocoa Bindings. These scripts require Mac OS X 10.3 or
 later.</p>
 <ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/CocoaBindings/Bookmarks">Bookmarks</a></p>
+<p>Shows custom array controller that implements table view data
+source methods to support drag and drop, including copying
+objects from one window to another, drop of URLs, and 
+re-ordering of the content array.</p>
+<p>Originally from <a class="reference" href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/CocoaBindings/ControlledPreferences">ControlledPreferences</a></p>
+<p>Demonstrates how to use Cocoa Bindings to simplify storing and
+retrieving user preferences.  Also demonstrates how to use an
+<tt class="docutils literal"><span class="pre">NSValueTransformer</span></tt> to archive/unarchive a non-property-list
+type automatically (<tt class="docutils literal"><span class="pre">NSColor</span></tt>, in this case).</p>
+<p>Originally from <a class="reference" href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/CocoaBindings/CurrencyConvBinding">CurrencyConvBinding</a></p>
+<p>A rewrite of <a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/AppKit/CurrencyConverter">CurrencyConverter</a> using Cocoa Bindings.</p>
+<p>Originally from
+<a class="reference" href="http://developer.apple.com/documentation/Cocoa/Conceptual/CurrencyConverterBindings/index.html">Introduction to Developing Cocoa Applications Using Bindings</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/CocoaBindings/FilteringController">FilteringController</a></p>
+<p>Demonstrates how to subclass <tt class="docutils literal"><span class="pre">NSArrayController</span></tt> to implement filtering
+of a <tt class="docutils literal"><span class="pre">NSTableView</span></tt>.  Also demonstrates the use of indexed accessors.</p>
+<p>Originally from <a class="reference" href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/CocoaBindings/GraphicsBindings">GraphicsBindings</a></p>
+<blockquote>
+<p>Shows the use of a custom controller, a value transformer, and two custom
+bindings-enabled views. One view is a control that allows you to set the
+angle and offset of a shadow; the other view observes and displays a
+collection of graphic objects.</p>
+</blockquote>
+<p>Originally from <a class="reference" href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/CocoaBindings/ManualBindings">ManualBindings</a></p>
+<p>A simple example that illustrates establishing bindings
+programmatically, including a number of options such as validation
+and an array operator, and indexed accessor methods. A custom model
+object implements custom validation method.</p>
+<p>Originally from <a class="reference" href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
 <li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/CocoaBindings/TableModel">TableModel</a></p>
 <p>Shows how to fill an <tt class="docutils literal"><span class="pre">NSTableView</span></tt> using Key-Value Coding.  Contains
 contains an <tt class="docutils literal"><span class="pre">Xcode</span></tt> project as well as a <tt class="docutils literal"><span class="pre">setup.py</span></tt> script.</p>
@@ -221,6 +291,76 @@ contains an <tt class="docutils literal"><span class="pre">Xcode</span></tt> pro
 <p>A more advanced example of Key-Value Coding. This uses a custom 
 <tt class="docutils literal"><span class="pre">NSArrayController</span></tt>.  Contains contains an <tt class="docutils literal"><span class="pre">Xcode</span></tt> project
 as well as a <tt class="docutils literal"><span class="pre">setup.py</span></tt> script.</p>
+</li>
+</ul>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/CocoaBindings/TemperatureTransformer">TemperatureTransformer</a></p>
+<p>An example that uses <tt class="docutils literal"><span class="pre">NSValueTransformer</span></tt> to convert between Celsius
+and Fahrenheit.</p>
+<p>Based on Apple's <a class="reference" href="http://developer.apple.com/documentation/Cocoa/Conceptual/ValueTransformers/index.html">Value Transformers</a> documentation,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/CocoaBindings/ToDos">ToDos</a></p>
+<p>Shows two array controllers, one to manage the contents of a table
+view, the other to manage a pop-up menu in a table column. Also 
+shows two value transformers to alter the color of text.</p>
+<p>Originally from <a class="reference" href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="coredata">
+<h3><a name="coredata">CoreData</a></h3>
+<p>The directory <a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/CoreData">CoreData</a> contains a number of examples
+that use the CoreData framework. This framework is available
+in MacOS X 10.4 and later.</p>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/CoreData/OutlineEdit">OutlineEdit</a></p>
+<p>A python version of the OutlineEdit example that's included with
+Xcode 2.0.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="foundation">
+<h3><a name="foundation">Foundation</a></h3>
+<p>The directory <a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/#foundation">Foundation</a> contains a number of examples
+that use only Foundation facilities.</p>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Foundation/simple-kvo.py">simple-kvo.py</a></p>
+<p>Demonstrates the use of Key-Value Observing from a simple
+script, without a runloop.  Requires Mac OS X 10.3 or later.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="inject">
+<h3><a name="inject">Inject</a></h3>
+<p>The directory <a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Inject">Inject</a> contains a number of examples that use the
+<tt class="docutils literal"><span class="pre">objc.inject</span></tt> facility to inject code into another process.  These
+examples require Mac OS X 10.3 or later.</p>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Inject/IDNSnitch">IDNSnitch</a></p>
+<p>A proof of concept <a class="reference" href="http://bob.pythonmac.org/archives/2005/02/07/idn-spoofing-defense-for-safari/">IDN spoofing defense</a> for Safari (tested with
+v1.2.4 on Mac OS X 10.3.8).  Demonstrates how to write an application
+that detects the launch of another application by bundle identifier,
+how to use <tt class="docutils literal"><span class="pre">objc.inject</span></tt> to load code into another application,
+how to override the implementation of an existing class but still
+call back into the original implementation, and how to reduce the
+size of such an application/plugin combination by using symlinks
+to share object files (the PyObjC extensions in this case).</p>
+</li>
+</ul>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Inject/InjectInterpreter">InjectInterpreter</a>:</p>
+<p>Shows how to inject an in-process Python interpreter into another
+process.  Based on the AppKit PyInterpreter example.</p>
+</li>
+</ul>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Inject/ClassBrowser">InjectBrowser</a>:</p>
+<p>Shows how to inject an in-process Python class browser into another
+process.  Based on the AppKit ClassBrowser example.</p>
 </li>
 </ul>
 </div>
@@ -248,14 +388,19 @@ for the current user. It also is a simple example of a localized application.</p
 </li>
 </ul>
 <ul>
-<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Plugins/PrefPane">PrefPane</a></p>
-<p>Demonstrates how to write an <tt class="docutils literal"><span class="pre">NSPreferencePane</span></tt>, for use in the
-System Preferences application.</p>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Plugins/ProgressViewPalette">ProgressViewPalette</a></p>
+<p>A simple InterfaceBuilder palette written in Python.</p>
 </li>
 </ul>
 <ul>
 <li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Plugins/SillyBallsSaver">SillyBallsSaver</a></p>
 <p>A simple screensaver written in Python.</p>
+</li>
+</ul>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Plugins/WebKitInterpreter">WebKitInterpreter</a></p>
+<p>Uses the new WebKit Cocoa plugin API available in Safari 1.3
+and later to embed a PyInterpreter in the browser.</p>
 </li>
 </ul>
 </div>

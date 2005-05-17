@@ -7,14 +7,14 @@
 ?>
 <h1 class="title">Tutorial - Adding Python code to an existing ObjC application</h1>
 <p>In this tutorial we are going to take an existing ObjC application and
-add Python and PyObjC to it. One of the reasons why you may want to do
+add Python and PyObjC to it.  One of the reasons why you may want to do
 this is because some things are much simpler in Python than in ObjC, mainly
 due to the rich library Python has.</p>
 <p>To follow the tutorial you need:</p>
 <blockquote>
 <ul class="simple">
-<li>PyObjC 1.2</li>
-<li>py2app 0.1.6 or later (included in the binary installer for PyObjC)</li>
+<li>PyObjC 1.3.1</li>
+<li>py2app 0.2 or later (included in the binary installer for PyObjC)</li>
 <li>Python 2.3 or later (note: PyObjC is NOT compatible with MacPython-OS9)</li>
 <li>Mac OS X 10.3 or later</li>
 <li>Xcode Tools</li>
@@ -25,10 +25,10 @@ installed.  See <a class="reference" href="http://developer.apple.com/tools/down
 <p>The application we are going to modify is Apple's SimpleComboBox example.
 This example shows you how to use combo boxes, but that is not what interests
 us right now: the application pretends to be a database application that allows
-you to keep notes (such as track list) for your CD collection. With such an
+you to keep notes (such as track list) for your CD collection.  With such an
 application it feels silly that even though you want to type notes on
 the CD you are currently playing in iTunes you still have to retype
-album title, artist and genre. This is what we are going to fix: we
+album title, artist and genre.  This is what we are going to fix: we
 are going to add a button &quot;ask iTunes&quot;, which will use Python's
 AppleScript support to ask iTunes about the currently playing track
 and fill in the fields for you.</p>
@@ -47,8 +47,8 @@ From this point on, all shell commands take place from this
 <ol class="arabic" start="2">
 <li><p class="first">Open it in Xcode, build it, and see what it does.</p>
 </li>
-<li><p class="first">Open <tt class="docutils literal"><span class="pre">CDInfoDocument.nib</span></tt>. Select the Class View, <tt class="docutils literal"><span class="pre">NSObject</span></tt>, subclass
-as <tt class="docutils literal"><span class="pre">ITunesCommunication</span></tt>. Give the class an <tt class="docutils literal"><span class="pre">askITunes:</span></tt> action.
+<li><p class="first">Open <tt class="docutils literal"><span class="pre">CDInfoDocument.nib</span></tt>.  Select the Class View, <tt class="docutils literal"><span class="pre">NSObject</span></tt>, subclass
+as <tt class="docutils literal"><span class="pre">ITunesCommunication</span></tt>.  Give the class an <tt class="docutils literal"><span class="pre">askITunes:</span></tt> action.
 Instantiate the class as object <tt class="docutils literal"><span class="pre">ITunesCommunication</span></tt>.  This wll be the
 class that we write in Python.</p>
 </li>
@@ -93,7 +93,8 @@ not work on other machines.</p>
 </li>
 <li><p class="first">Add <tt class="docutils literal"><span class="pre">dist/ITunesCommunication.plugin</span></tt> to the Resources folder in your
 Xcode project.  You can do this by ctrl-clicking the Resources folder
-and choosing &quot;Add Existing Files...&quot;.</p>
+and choosing &quot;Add Existing Files...&quot;.  Make sure to choose
+&quot;Create Folder References for any added folders&quot;.</p>
 </li>
 <li><p class="first">Open <tt class="docutils literal"><span class="pre">main.m</span></tt>, it is in the &quot;Other Sources&quot; folder in your Xcode
 project, and change the main(...) function to the following:</p>
@@ -113,18 +114,18 @@ int main(int argc, const char *argv[]) {
 that our ITunesCommunication plugin is loaded before the nib
 files.</p>
 </li>
-<li><p class="first">Build and run. When you press the &quot;Ask iTunes&quot; the &quot;CD Title&quot; and
+<li><p class="first">Build and run.  When you press the &quot;Ask iTunes&quot; the &quot;CD Title&quot; and
 &quot;Band Name&quot; fields will be filled with one of the best albums of the last
 few years :-)</p>
 </li>
-<li><p class="first">Now we need to make the program talk to iTunes. The current MacPython
+<li><p class="first">Now we need to make the program talk to iTunes.  The current MacPython
 interface to the Open Scripting Architecture requires an extra step when
 compared to AppleScript: you need to manually generate a Python package
-that wraps all the AppleScript terminology for an application. To make
+that wraps all the AppleScript terminology for an application.  To make
 matters more complicated iTunes is one of those special cases where the
 standard way to generate this package (start the application, ask it for
 its terminology) does not work, so we have to actually look into the
-bowels of <tt class="docutils literal"><span class="pre">iTunes.app</span></tt>. This leads to the following hefty command line
+bowels of <tt class="docutils literal"><span class="pre">iTunes.app</span></tt>.  This leads to the following hefty command line
 which you should run in the <tt class="docutils literal"><span class="pre">SimpleComboBoxPlus</span></tt> directory:</p>
 <pre class="literal-block">
 $ cd SimpleComboBoxPlus
@@ -134,12 +135,12 @@ $ pythonw -c &quot;from gensuitemodule import main;main()&quot; \
 </pre>
 </li>
 <li><p class="first">Finally, add the code to <tt class="docutils literal"><span class="pre">ITunesCommunication.py</span></tt> to actually communicate
-with iTunes. We cop out and copy it from <tt class="docutils literal"><span class="pre">src/ITunesCommunication_2.py</span></tt>.</p>
+with iTunes.  We cop out and copy it from <tt class="docutils literal"><span class="pre">src/ITunesCommunication_2.py</span></tt>.</p>
 </li>
-<li><p class="first">Build and run. If you press the button when iTunes is playing the Title
-and Band names will be filled, otherwise they will be cleared. In a real
+<li><p class="first">Build and run.  If you press the button when iTunes is playing the Title
+and Band names will be filled, otherwise they will be cleared.  In a real
 application you would disable the &quot;Ask iTunes&quot; button unless iTunes was
-active. All that is left as an exercise to the reader.</p>
+active.  All that is left as an exercise to the reader.</p>
 </li>
 <li><p class="first">To make this application redistributable, perform the following commands
 to make the plugin redistributable:</p>
@@ -154,7 +155,7 @@ mode, and rebuild.</p>
 <div class="section" id="a-minor-variation">
 <h3><a name="a-minor-variation">A minor variation</a></h3>
 <p>There a several projects that improve upon the built-in AppleScript support
-(or to be more precise &quot;application scripting support&quot;). One of those is
+(or to be more precise &quot;application scripting support&quot;).  One of those is
 <a class="reference" href="http://freespace.virgin.net/hamish.sanderson/appscript.html">AppScript</a>.</p>
 <p>When you have this module installed you can replace the contents of
 <tt class="docutils literal"><span class="pre">ITunesCommuncation.py</span></tt> with <tt class="docutils literal"><span class="pre">src/ITunesCommunication_AppScript.py</span></tt>,
