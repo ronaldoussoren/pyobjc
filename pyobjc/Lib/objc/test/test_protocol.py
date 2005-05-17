@@ -2,10 +2,15 @@ import unittest
 import objc
 import warnings
 
-from objc.test.protocol import OC_TestProtocol
-
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass('NSObject')
+
+# XXX : This is a really dumb way to detect < 10.3
+if not NSObject.instancesRespondToSelector_('setValue:forKey:'):
+    # Defining protocols in an MH_BUNDLE makes < 10.3 explode
+    OC_TestProtocol = None
+else:
+    from objc.test.protocol import OC_TestProtocol
 
 MyProto = objc.informal_protocol("MyProto", (
     objc.selector(None, selector="testMethod", signature="I@:", isRequired=1),
@@ -56,49 +61,55 @@ MyClassProtocol = objc.formal_protocol("MyClassProtocol", None, [
     objc.selector(None, selector="aClassOne:", signature="@@:i", isClassMethod=1),
 ])
 
+if OC_TestProtocol is not None:
+
+    class TestFormalOCProtocols(unittest.TestCase):
+        
+        def testImplementFormalProtocol(self):
+
+            class MyClassNotImplementingProtocol(NSObject):
+                pass
+
+            self.assert_(not MyClassNotImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+
+            try:
+                class MyClassNotAlsoImplementingProtocol(NSObject, OC_TestProtocol):
+                    def method1(self): pass
+
+                self.fail()
+            except TypeError:
+                pass
+
+            class MyClassImplementingProtocol(NSObject, OC_TestProtocol):
+                def method1(self): pass
+                def method2_(self, a): pass
+
+            self.assert_(MyClassImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+
+
+
+            # The PyObjC implementation of formal protocols is slightly looser
+            # than Objective-C itself: you can inherit part of the protocol
+            # from the superclass.
+            # XXX: not really: you won't inherit the right signatures by default
+
+            class MyClassImplementingHalfOfProtocol(NSObject):
+                    def method1(self): pass
+                    method1 = objc.selector(method1, signature='i@:')
+
+            self.assert_(not MyClassImplementingHalfOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+
+            class MyClassImplementingAllOfProtocol(MyClassImplementingHalfOfProtocol, OC_TestProtocol):
+                    def method2_(self, v): pass
+
+            self.assert_(MyClassImplementingAllOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+
+
+
+
 class TestFormalProtocols (unittest.TestCase):
     # Implement unittests for formal protocols here.
     #
-
-    def testImplementFormalProtocol(self):
-
-        class MyClassNotImplementingProtocol(NSObject):
-            pass
-
-        self.assert_(not MyClassNotImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
-
-        try:
-            class MyClassNotAlsoImplementingProtocol(NSObject, OC_TestProtocol):
-                def method1(self): pass
-
-            self.fail()
-        except TypeError:
-            pass
-
-        class MyClassImplementingProtocol(NSObject, OC_TestProtocol):
-            def method1(self): pass
-            def method2_(self, a): pass
-
-        self.assert_(MyClassImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
-
-
-
-        # The PyObjC implementation of formal protocols is slightly looser
-        # than Objective-C itself: you can inherit part of the protocol
-        # from the superclass.
-        # XXX: not really: you won't inherit the right signatures by default
-
-        class MyClassImplementingHalfOfProtocol(NSObject):
-                def method1(self): pass
-                method1 = objc.selector(method1, signature='i@:')
-
-        self.assert_(not MyClassImplementingHalfOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
-
-        class MyClassImplementingAllOfProtocol(MyClassImplementingHalfOfProtocol, OC_TestProtocol):
-                def method2_(self, v): pass
-
-        self.assert_(MyClassImplementingAllOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
-
 
     def testImplementAnotherObject(self):
         anObject = NSObject.alloc().init()
