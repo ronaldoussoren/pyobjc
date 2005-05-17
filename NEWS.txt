@@ -7,7 +7,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3.5 (2005-05-??)
 --------------------------
 
-- Importing objc now ensure that Foundation is multi-threaded, previously
+- Importing objc now ensures that Foundation is multi-threaded, previously
   it only ensured that Python was.
 
 - New ``objc.RegisterCFSignature`` used to register ``CFTypeRef``-like
