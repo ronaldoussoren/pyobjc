@@ -29,9 +29,8 @@ from Python and to mix in Objective-C, C and C++ source.
 Python is a highly dynamic programming language with a shallow learning
 curve.  It combines remarkable power with very clear syntax.
 
-The installer package installs a number of Project Builder templates for
-easily creating new Cocoa-Python projects, as well as support for syntax
-coloring of Python files in Project Builder.
+The installer package installs a number of Xcode templates for
+easily creating new Cocoa-Python projects.
 
 PyObjC also supports full introspection of Objective-C classes and
 direct invocation of Objective-C APIs from the interactive interpreter.
@@ -648,7 +647,7 @@ if 'install' in sys.argv:
     Installing PyObjC with "setup.py install" *does not* install the following:
     
     - py2app (bdist_mpkg, modulegraph, altgraph, ...) and its tools
-    - Xcode or Project Builder templates
+    - Xcode templates
     - Documentation
     - Example code
 

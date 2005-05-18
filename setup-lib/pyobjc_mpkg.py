@@ -24,13 +24,6 @@ SCHEME_REMOVE = dict(
     documentation = ['.'],
     # Remove old nibclassbuilder
     scripts = ['nibclassbuilder'],
-    # Remove old Project Builder templates
-    pbx = [
-        'ProjectBuilder Extras/Cocoa-Python Application',
-        'ProjectBuilder Extras/Cocoa-Python Document-based Application',
-        'ProjectBuilder Extras/Cocoa-Python-ObjC Application',
-        'ProjectBuilder Extras/Cocoa-Python-ObjC Document-based Application',
-    ],
     # Remove old Xcode templates
     xcode = [
         'File Templates/Cocoa/Python NIB class.pbfiletemplate',
@@ -42,11 +35,6 @@ SCHEME_REMOVE = dict(
 )
 
 CUSTOM_SCHEMES = dict(
-    pbx=(
-        u'(Optional) Project Builder File and Project templates for PyObjC',
-        '/Developer/ProjectBuilder Extras',
-        'ProjectBuilder Extras',
-    ),
     xcode=(
         u'(Optional) Xcode File and Project templates for PyObjC',
         '/Library/Application Support/Apple/Developer Tools',
@@ -78,8 +66,6 @@ class pyobjc_bdist_mpkg(_bdist_mpkg):
         schemes = CUSTOM_SCHEMES.copy()
         if self.macosx_version < LooseVersion('10.3'):
             del schemes['xcode']
-        else:
-            del schemes['pbx']
         for scheme, (description, prefix, source) in schemes.iteritems():
             self.scheme_descriptions[scheme] = description
             self.scheme_map[scheme] = prefix
