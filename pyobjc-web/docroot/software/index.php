@@ -14,6 +14,7 @@ include "header.inc";
 <li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.5-py2.3-macosx10.3.zip?download">PyObjC 1.3.5 installer package for Python 2.3 on Mac OS X 10.3</a>
 <li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.5-py2.4-macosx10.3.zip?download">PyObjC 1.3.5 installer package for Python 2.4.1 on Mac OS X 10.3</a>
 <li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.5-py2.3-macosx10.4.zip?download">PyObjC 1.3.5 installer package for Python 2.3 on Mac OS X 10.4</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.5-py2.4-macosx10.4.zip?download">PyObjC 1.3.5 installer package for Python 2.4.1 on Mac OS X 10.4</a>
 <li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.5.tar.gz?download">PyObjC 1.3.5 source release (a compressed tar archive)</a>
 </ul>
 
