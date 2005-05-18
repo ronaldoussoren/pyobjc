@@ -11,9 +11,10 @@ include "header.inc";
 <h2>Stable release</h2>
 
 <ul>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2-python2.3-macosx10.2.dmg?download">PyObjC 1.2 installer package for MacPython 2.3 (MacOS X 10.2)</a>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2-python2.3-macosx10.3.dmg?download">PyObjC 1.2 installer package for Apple's Python (MacOS X 10.3)</a>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.2.tar.gz?download">PyObjC 1.2 source release (a compressed tar archive)</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.5-python2.3-macosx10.3.zip?download">PyObjC 1.3.5 installer package for Python 2.3 on Mac OS X 10.3</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.5-python2.4-macosx10.3.zip?download">PyObjC 1.3.5 installer package for Python 2.4.1 on Mac OS X 10.3</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.5-python2.3-macosx10.4.zip?download">PyObjC 1.3.5 installer package for Python 2.4.1 on Mac OS X 10.4</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.5.tar.gz?download">PyObjC 1.2 source release (a compressed tar archive)</a>
 </ul>
 
 <p>Older releases are available in the <a href="http://sourceforge.net/project/showfiles.php?group_id=14534">Files section of our SourceForge project</a>.
