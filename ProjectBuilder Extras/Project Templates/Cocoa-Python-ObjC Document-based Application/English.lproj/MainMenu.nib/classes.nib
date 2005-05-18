@@ -1,8 +1,0 @@
-{
-    IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = HueView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
-        {CLASS = MyAppDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
-    ); 
-    IBVersion = 1; 
-}
