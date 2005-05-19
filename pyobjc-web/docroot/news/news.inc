@@ -3,8 +3,8 @@
 ?>
 <span class="news_date">2005-05-19: </span><span class="news_headline">PyObjC 1.3.6 released</span><?php gray_line(); ?>
   <p>
-Just after the release of PyObjC 1.3.5 we noticed a bug in the core, and one
-of the examples was non-functional.
+Just after the release of PyObjC 1.3.5 we noticed a bug in the core that made
+most plugins unusable, and one of the examples was non-functional. See the <a href="<?print $root; ?>NEWS-1.3.5.txt">NEWS file</a> for more information.
   <p>
 All users of PyObjC 1.3.5 are advised to update immediately.
   <p>
