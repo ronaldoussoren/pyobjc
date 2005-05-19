@@ -91,15 +91,6 @@ be enhanced.
 Unless somebody actually starts working on this GNUstep support will slowly
 fade away.
 
-Project templates
-.................
-
-* Update or remove the Project Builder templates
-
-  I prefer updating them, by rebuilding the Xcode templates in Project Builder.
-
-  This would require Python 2.3 on Jaguar.
-
 Complete Cocoa wrapping
 .......................
 
