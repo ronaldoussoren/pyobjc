@@ -21,24 +21,23 @@ Contents</title>
 <li><a href="#less-important-items" id="id6" name="id6">Less important items</a><ul>
 <li><a href="#refactor-some-parts-of-the-bridge" id="id7" name="id7">Refactor some parts of the bridge</a></li>
 <li><a href="#support-for-gnustep" id="id8" name="id8">Support for GNUstep</a></li>
-<li><a href="#project-templates" id="id9" name="id9">Project templates</a></li>
-<li><a href="#complete-cocoa-wrapping" id="id10" name="id10">Complete Cocoa wrapping</a></li>
-<li><a href="#pickle-support" id="id11" name="id11">Pickle support</a></li>
-<li><a href="#nscoder-support" id="id12" name="id12">NSCoder support</a></li>
-<li><a href="#known-issues" id="id13" name="id13">Known issues</a></li>
-<li><a href="#code-cleanup" id="id14" name="id14">Code cleanup</a></li>
-<li><a href="#cleanup-examples" id="id15" name="id15">Cleanup Examples</a></li>
-<li><a href="#performance-tuning-testing" id="id16" name="id16">Performance tuning/testing</a></li>
-<li><a href="#add-freelists" id="id17" name="id17">Add freelists</a></li>
-<li><a href="#links-to-apple-documentation" id="id18" name="id18">Links to Apple documentation</a></li>
-<li><a href="#implement-more-of-nsmutabledictionary-in-oc-pythondictionary" id="id19" name="id19">Implement more of NSMutableDictionary in OC_PythonDictionary</a></li>
-<li><a href="#clean-up-oc-pythonobject" id="id20" name="id20">Clean up OC_PythonObject</a></li>
-<li><a href="#rewrite-scripts-find-raw-pointers-py" id="id21" name="id21">Rewrite scripts/find-raw-pointers.py</a></li>
-<li><a href="#finish-refactoring-of-the-code-generator-scripts" id="id22" name="id22">Finish refactoring of the code-generator scripts</a></li>
-<li><a href="#setup-py-cleanup" id="id23" name="id23">setup.py cleanup</a></li>
-<li><a href="#nsset-vs-set" id="id24" name="id24">NSSet vs set</a></li>
-<li><a href="#python-2-4" id="id25" name="id25">Python 2.4</a></li>
-<li><a href="#nslog-stringwithformat" id="id26" name="id26">NSLog, stringWithFormat, ...</a></li>
+<li><a href="#complete-cocoa-wrapping" id="id9" name="id9">Complete Cocoa wrapping</a></li>
+<li><a href="#pickle-support" id="id10" name="id10">Pickle support</a></li>
+<li><a href="#nscoder-support" id="id11" name="id11">NSCoder support</a></li>
+<li><a href="#known-issues" id="id12" name="id12">Known issues</a></li>
+<li><a href="#code-cleanup" id="id13" name="id13">Code cleanup</a></li>
+<li><a href="#cleanup-examples" id="id14" name="id14">Cleanup Examples</a></li>
+<li><a href="#performance-tuning-testing" id="id15" name="id15">Performance tuning/testing</a></li>
+<li><a href="#add-freelists" id="id16" name="id16">Add freelists</a></li>
+<li><a href="#links-to-apple-documentation" id="id17" name="id17">Links to Apple documentation</a></li>
+<li><a href="#implement-more-of-nsmutabledictionary-in-oc-pythondictionary" id="id18" name="id18">Implement more of NSMutableDictionary in OC_PythonDictionary</a></li>
+<li><a href="#clean-up-oc-pythonobject" id="id19" name="id19">Clean up OC_PythonObject</a></li>
+<li><a href="#rewrite-scripts-find-raw-pointers-py" id="id20" name="id20">Rewrite scripts/find-raw-pointers.py</a></li>
+<li><a href="#finish-refactoring-of-the-code-generator-scripts" id="id21" name="id21">Finish refactoring of the code-generator scripts</a></li>
+<li><a href="#setup-py-cleanup" id="id22" name="id22">setup.py cleanup</a></li>
+<li><a href="#nsset-vs-set" id="id23" name="id23">NSSet vs set</a></li>
+<li><a href="#python-2-4" id="id24" name="id24">Python 2.4</a></li>
+<li><a href="#nslog-stringwithformat" id="id25" name="id25">NSLog, stringWithFormat, ...</a></li>
 </ul>
 </li>
 </ul>
@@ -97,13 +96,7 @@ such as PyProtocols dispatch.</li>
 be enhanced.</p>
 <p>Unless somebody actually starts working on this GNUstep support will slowly
 fade away.</p>
-<h3><a href="#id9" name="project-templates">Project templates</a></h3>
-<ul>
-<li>Update or remove the Project Builder templates<p>I prefer updating them, by rebuilding the Xcode templates in Project Builder.</p>
-<p>This would require Python 2.3 on Jaguar.</p>
-</li>
-</ul>
-<h3><a href="#id10" name="complete-cocoa-wrapping">Complete Cocoa wrapping</a></h3>
+<h3><a href="#id9" name="complete-cocoa-wrapping">Complete Cocoa wrapping</a></h3>
 <p>We do not yet have a 100% coverage of the Cocoa API's. We also need code in
 the testsuite that checks if the function wrappers are working as expected.</p>
 <p>Not all constants and enums from Cocoa are currently wrapped.  The annotations
@@ -117,17 +110,17 @@ run across a missing or incorrectly wrapped constant, function, or method
 please report it as a bug and/or post to pyobjc-dev about the issue.  This is
 one area we intend to improve after the release of 1.3 when our new
 wrapper-generators are in a more complete state.</p>
-<h3><a href="#id11" name="pickle-support">Pickle support</a></h3>
+<h3><a href="#id10" name="pickle-support">Pickle support</a></h3>
 <p>Objective-C objects don't support pickling.</p>
 <p>This is post-1.3 work, in general this is a hard problem because it may 
 involve object cycles that cross the Python-ObjC boundary.</p>
-<h3><a href="#id12" name="nscoder-support">NSCoder support</a></h3>
+<h3><a href="#id11" name="nscoder-support">NSCoder support</a></h3>
 <p>It might be useful to add default implementations of <code><span>encodeWithCoder:</span></code> and
 <code><span>initWithCoder:</span></code> methods to Python subclasses of Objective-C classes that 
 implement these.  Note that property list types should already be serializable
 (<code><span>int</span></code>, <code><span>long</span></code>, <code><span>unicode</span></code>, <code><span>list</span></code>, <code><span>tuple</span></code>, <code><span>dict</span></code>).</p>
 <p>See also <cite>Pickle support</cite>.</p>
-<h3><a href="#id13" name="known-issues">Known issues</a></h3>
+<h3><a href="#id12" name="known-issues">Known issues</a></h3>
 <p>It is impossible to support methods with a variable number of arguments in the
 generic code (you have to re-implement almost all of the logic of these 
 methods in order to know how many and which types of arguments are expected).
@@ -137,13 +130,13 @@ be easily avoided.</p>
 we should provide custom wrappers, otherwise we should document alternatives.</p>
 <p>Limitations such as the above should be clearly documented elsewhere, these
 are not necessarily TODO items.</p>
-<h3><a href="#id14" name="code-cleanup">Code cleanup</a></h3>
+<h3><a href="#id13" name="code-cleanup">Code cleanup</a></h3>
 <ul>
 <li>Check all error/exception messages</li>
 <li>Check/cleanup error handling</li>
 <li>Finish in-code documentation for the C code</li>
 </ul>
-<h3><a href="#id15" name="cleanup-examples">Cleanup Examples</a></h3>
+<h3><a href="#id14" name="cleanup-examples">Cleanup Examples</a></h3>
 <p>The CurrencyConverter example should be removed, this should be the same as the
 final step of the tutorial. It isn't at the moment because additional cruft in
 the example.</p>
@@ -162,21 +155,21 @@ Move to documentation  (unittest?)</li>
 <li>how to integrate with MacPython</li>
 <li>how to use PIL with Cocoa</li>
 </ul>
-<h3><a href="#id16" name="performance-tuning-testing">Performance tuning/testing</a></h3>
+<h3><a href="#id15" name="performance-tuning-testing">Performance tuning/testing</a></h3>
 <p>Design and implement a set of performance tests for the bridge. Use this to 
 investigate and fix any possible performance problems.</p>
-<h3><a href="#id17" name="add-freelists">Add freelists</a></h3>
+<h3><a href="#id16" name="add-freelists">Add freelists</a></h3>
 <p>PyObjCSelector objects and PyObjCObject objects are created on
 a regular basis, we should check if using freelists would speed this up. See
 also <cite>Performance tuning/testing</cite>.</p>
 <p>NOTE: first add performance tests then experiment with freelists.</p>
-<h3><a href="#id18" name="links-to-apple-documentation">Links to Apple documentation</a></h3>
+<h3><a href="#id17" name="links-to-apple-documentation">Links to Apple documentation</a></h3>
 <p>Links to Apple documentation are not stable, can we add a layer of indirection
 here, e.g. link to the PyObjC website that will redirect to the right
 location?</p>
 <p>We should also provide links to locally installed documentation,
 especially in the documentation that will be installed on the users machine.</p>
-<h3><a href="#id19" name="implement-more-of-nsmutabledictionary-in-oc-pythondictionary">Implement more of NSMutableDictionary in OC_PythonDictionary</a></h3>
+<h3><a href="#id18" name="implement-more-of-nsmutabledictionary-in-oc-pythondictionary">Implement more of NSMutableDictionary in OC_PythonDictionary</a></h3>
 <p>The implementation of OC_PythonDictionary is very minimal, we should add
 additional methods in the NSMutableDictionary interface if those can be 
 implemented efficiently. The default implementation will take care of the
@@ -184,31 +177,31 @@ methods we cannot implement efficiently.</p>
 <p>And the same is true of OC_PythonArray</p>
 <p>In both cases we shouldn't do this unless we can measure the difference in
 performance.</p>
-<h3><a href="#id20" name="clean-up-oc-pythonobject">Clean up OC_PythonObject</a></h3>
+<h3><a href="#id19" name="clean-up-oc-pythonobject">Clean up OC_PythonObject</a></h3>
 <p>The code is a mess.</p>
-<h3><a href="#id21" name="rewrite-scripts-find-raw-pointers-py">Rewrite scripts/find-raw-pointers.py</a></h3>
+<h3><a href="#id20" name="rewrite-scripts-find-raw-pointers-py">Rewrite scripts/find-raw-pointers.py</a></h3>
 <p>This is a script for finding 'difficult' methods. The script should be 
 refactored to make it easier to create readable reports.</p>
-<h3><a href="#id22" name="finish-refactoring-of-the-code-generator-scripts">Finish refactoring of the code-generator scripts</a></h3>
+<h3><a href="#id21" name="finish-refactoring-of-the-code-generator-scripts">Finish refactoring of the code-generator scripts</a></h3>
 <ol type="1">
 <li>Change code-generator scripts to use loadBundleFunctions, etc.</li>
 <li>Move the code-generator scripts to <code><span>PyObjCTools</span></code>, to make it easier
 for others to generate wrappers.</li>
 <li>Install <code><span>pyobjc-api.h</span></code>.</li>
 </ol>
-<h3><a href="#id23" name="setup-py-cleanup">setup.py cleanup</a></h3>
+<h3><a href="#id22" name="setup-py-cleanup">setup.py cleanup</a></h3>
 <ul>
 <li>Use 'WrapperGenerator.py', probably need to create a custom build action
 for that.</li>
 </ul>
-<h3><a href="#id24" name="nsset-vs-set">NSSet vs set</a></h3>
+<h3><a href="#id23" name="nsset-vs-set">NSSet vs set</a></h3>
 <p>Check if it is possible to wrap <code><span>NSSet</span></code> using <code><span>set</span></code> (and v.v.).</p>
 <p>Only implement this when it is possible to convert without loss of information.</p>
 <p><strong>Ronald, 20050130</strong>: <i>converting</i> is not an option: PyObjC takes care to
 preserve the identity of ObjC objects when passed through python. This is 
 necessary for at least some APIs.   Furthermore, both <code><span>NSSet</span></code> and 
 <code><span>__builtin__.set</span></code> are mutable!</p>
-<h3><a href="#id25" name="python-2-4">Python 2.4</a></h3>
+<h3><a href="#id24" name="python-2-4">Python 2.4</a></h3>
 <p>Python 2.4 introduces a decorator syntax. Add convenience functions that
 make it easier to use decorators with PyObjC.</p>
 <p>Also add example programs using decorators. Actually, first add the example(s)
@@ -230,7 +223,7 @@ class FooClass (NSObject):
         def myIntMethod_(self, value):
                 pass
 </pre>
-<h3><a href="#id26" name="nslog-stringwithformat">NSLog, stringWithFormat, ...</a></h3>
+<h3><a href="#id25" name="nslog-stringwithformat">NSLog, stringWithFormat, ...</a></h3>
 <p>Functions and methods that use format strings are not properly wrapped. Fix
 that.</p>
 </body>

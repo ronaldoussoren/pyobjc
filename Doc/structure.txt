@@ -67,9 +67,6 @@ Scripts/
 Installer Package/
   Resources used for building the Apple Installer packages.
 
-ProjectBuilder Extras/
-  Project Builder templates and syntax specifications for PyObjC development.
-
 Xcode/
   Xcode templates for PyObjC development.
 
