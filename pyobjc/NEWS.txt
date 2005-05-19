@@ -4,8 +4,12 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 1.4 (2005-??-??)
-------------------------
+Version 1.3.6 (2005-05-19)
+--------------------------
+
+- Fixed bugs in the ProgressViewPalette example
+
+- Fixed a bug in the class builder that caused most plugins to break
 
 - Removed all references to Project Builder
 

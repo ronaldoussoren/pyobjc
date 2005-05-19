@@ -4,6 +4,7 @@ from AppKit import *
 from InterfaceBuilder import *
 from ProgressView import ProgressView
 from ProgressCell import ProgressCell
+from ProgressViewInspector import ProgressViewInspector
 #import pprint, os
 
 #objc.setVerbose(1) ### DEBUG
@@ -21,7 +22,8 @@ class ProgressViewPalette (IBPalette):
 
     def init(self):
         self = super(ProgressViewPalette, self).init()
-        if self is None: return None
+        if self is None:
+            return None
 
         NSView.registerViewResourceDraggingDelegate_(self)
         return self
@@ -31,7 +33,7 @@ class ProgressViewPalette (IBPalette):
     def viewResourcePasteboardTypes(self):
         return [NSColorPboardType]
 
-    def acceptsViewResourceFromPasteboard_forObjeect_atPoint_(self,
+    def acceptsViewResourceFromPasteboard_forObject_atPoint_(self,
             pasteboard, object, point):
 
         if NSColorPboardType in pasteboard.types():
@@ -74,8 +76,6 @@ class ProgressCell(objc.Category(ProgressCell)):
     def inspectorClassName(self):
         return u'ProgressViewInspector'
 
-def ibMatchPrototype_(self, prototype):
-    super(ProgressCell, self).ibMatchPrototype_(prototype)
-    self.setPercentageIncrement_(prototype.percentageIncrement())
-
-objc.removeAutoreleasePool()
+    def ibMatchPrototype_(self, prototype):
+        super(ProgressCell, self).ibMatchPrototype_(prototype)
+        self.setPercentageIncrement_(prototype.percentageIncrement())

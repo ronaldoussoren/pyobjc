@@ -6,11 +6,10 @@ class ProgressView (NSControl):
     A simple progress view
     """
 
-
     def percentageIncrement(self):
         return self.cell().percentageIncrement()
 
-    def setPercentageIncrement(self, value):
+    def setPercentageIncrement_(self, value):
         self.cell().setPercentageIncrement_(value)
 
     def percentage(self):

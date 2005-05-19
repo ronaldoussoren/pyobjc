@@ -180,7 +180,9 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	char* name;
 	PyObject* bases;
 	PyObject* dict;
+	PyObject* old_dict;
 	PyObject* res;
+	PyObject* k;
 	PyObject* v;
 	int       i;
 	int       len;
@@ -188,6 +190,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	Class	   super_class = NULL;
 	PyObject*  py_super_class = NULL;
 	PyObjCClassObject* info;
+	PyObject* keys;
 	PyObject* protocols;
 	PyObject* real_bases;
 	PyObject* delmethod;
@@ -399,12 +402,23 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	 * call to super-class implementation, because '__*' methods
 	 * are treated specially there.
 	 */
-	if (add_convenience_methods(objc_class, dict) < 0) {
+	old_dict = PyDict_Copy(dict);
+	if (old_dict == NULL) {
 		(void)PyObjCClass_UnbuildClass(objc_class);
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
 		return NULL;
 	}
+		
+	if (add_convenience_methods(objc_class, dict) < 0) {
+		(void)PyObjCClass_UnbuildClass(objc_class);
+		Py_DECREF(old_dict);
+		Py_DECREF(protocols);
+		Py_DECREF(real_bases);
+		return NULL;
+	}
+
+
 
 	/* call super-class implementation */
 	args = Py_BuildValue("(sOO)", name, real_bases, dict);
@@ -412,6 +426,8 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	if (res == NULL) {
 		Py_DECREF(args);
 		Py_DECREF(real_bases);
+		Py_DECREF(protocols);
+		Py_DECREF(old_dict);
 		(void)PyObjCClass_UnbuildClass(objc_class);
 		return NULL;
 	}
@@ -425,6 +441,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 
 	if (objc_class_register(objc_class, res) < 0) {
 		Py_DECREF(res);
+		Py_DECREF(old_dict);
 		(void)PyObjCClass_UnbuildClass(objc_class);
 		return NULL;
 	}
@@ -450,6 +467,28 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		info->useKVO = PyObject_IsTrue(useKVOObj);
 	}
 
+
+	keys = PyDict_Keys(dict);
+	if (keys == NULL) {
+		Py_DECREF(old_dict);
+		return NULL;
+	}
+	
+	/* Merge the "difference" to pick up new selectors */
+	len = PyList_GET_SIZE(keys);
+	for (i=0; i < len; i++) {
+		k = PyList_GET_ITEM(keys, i);
+		if (PyDict_GetItem(old_dict, k) == NULL) {
+			v = PyDict_GetItem(dict, k);
+			if (v != NULL && PyObject_SetAttr(res, k, v) == -1) {
+				PyErr_Clear();
+			}
+		}
+	}
+	Py_DECREF(keys);
+	Py_DECREF(old_dict);
+	
+	/* This is an "extra" ref */
 	Py_INCREF(res);
 	return res;
 }
