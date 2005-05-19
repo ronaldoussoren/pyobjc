@@ -47,7 +47,7 @@ class MyDocument (NibClassBuilder.AutoBaseClass):
             NSBeep()
             return
 
-	selection = self.outlineTreeController.election()
+	selection = self.outlineTreeController.selection()
 
         parentNote = selection.valueForKeyPath_("parent")
         if parentNote is None:
@@ -61,7 +61,7 @@ class MyDocument (NibClassBuilder.AutoBaseClass):
         if index == 0:
             NSBeep()
         else:
-            ssibling = children.objectAtIndex_(index - 1)
+            sibling = children.objectAtIndex_(index - 1)
             selection.setValue_forKeyPath_(sibling, "parent")
     
     def dedentNote_(self, sender):
