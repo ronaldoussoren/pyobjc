@@ -75,6 +75,7 @@ class SplitSignatureTest (unittest.TestCase):
         for cls in objc.getClassList():
             for selName in cls.__dict__.keys():
                 if selName in EXCEPTIONS: continue
+                if selName.startswith('__') and selName.endswith('__'): continue
 
                 try:
                     sel = getattr(cls, selName)
