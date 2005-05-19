@@ -1,6 +1,15 @@
 <?
   $macpython23="<a href=\"http://homepages.cwi.nl/~jack/macpython/\">Mac Python 2.3</a>";
 ?>
+<span class="news_date">2005-05-19: </span><span class="news_headline">PyObjC 1.3.6 released</span><?php gray_line(); ?>
+  <p>
+Just after the release of PyObjC 1.3.5 we noticed a bug in the core, and one
+of the examples was non-functional.
+  <p>
+All users of PyObjC 1.3.5 are advised to update immediately.
+  <p>
+Click <a href="/software/">here</a> to go to the download page.
+  <p>
 <span class="news_date">2005-05-19: </span><span class="news_headline">PyObjC 1.3.5 released</span><?php gray_line(); ?>
   <p>
 PyObjC 1.3.5 features Tiger support and py2app based Xcode
@@ -9,8 +18,6 @@ for a complete list of changes.
   <p>
 This version also features a number of important bugfix, therefore all users
 are advised to upgrade.
-  <p>
-Click <a href="/software/">here</a> to go to the download page.
   <p>
 
 <span class="news_date">2004-12-29: </span><span class="news_headline">PyObjC 1.2 released</span><?php gray_line(); ?>

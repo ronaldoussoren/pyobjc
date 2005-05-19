@@ -151,7 +151,7 @@ of the first argument.</p>
 </ul>
 </div>
 <div class="section" id="class-nsbitmapimagerep">
-<h4><a class="toc-backref" href="#id8" name="class-nsbitmapimagerep">Class <tt class="docutils literal"><span class="pre">NSBitmapImageRep</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id8" name="class-nsbitmapimagerep">Class <tt class="docutils literal docutils literal"><span class="pre">NSBitmapImageRep</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">getBitMapDataPlanes</span></tt></p>
 <p>This method is not supported (yet)</p>
@@ -165,7 +165,7 @@ of the first argument.</p>
 </ul>
 </div>
 <div class="section" id="class-nsfont">
-<h4><a class="toc-backref" href="#id9" name="class-nsfont">Class <tt class="docutils literal"><span class="pre">NSFont</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id9" name="class-nsfont">Class <tt class="docutils literal docutils literal"><span class="pre">NSFont</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">positionsForCompositeSequence:numberOfGlyphs:pointArray:</span></tt></p>
 <p>This method is not supported (yet)</p>
@@ -173,7 +173,7 @@ of the first argument.</p>
 </ul>
 </div>
 <div class="section" id="class-nsgraphicscontext">
-<h4><a class="toc-backref" href="#id10" name="class-nsgraphicscontext">Class <tt class="docutils literal"><span class="pre">NSGraphicsContext</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id10" name="class-nsgraphicscontext">Class <tt class="docutils literal docutils literal"><span class="pre">NSGraphicsContext</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">focusStack</span></tt></p>
 <p>This method is not supported.</p>
@@ -188,7 +188,7 @@ at the moment.</p>
 </ul>
 </div>
 <div class="section" id="class-nslayoutmanager">
-<h4><a class="toc-backref" href="#id11" name="class-nslayoutmanager">Class <tt class="docutils literal"><span class="pre">NSLayoutManager</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id11" name="class-nslayoutmanager">Class <tt class="docutils literal docutils literal"><span class="pre">NSLayoutManager</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">getGlyphs:range:</span></tt></p>
 <p>This method is not yet supported</p>
@@ -208,7 +208,7 @@ at the moment.</p>
 </ul>
 </div>
 <div class="section" id="class-nsmatrix">
-<h4><a class="toc-backref" href="#id12" name="class-nsmatrix">Class <tt class="docutils literal"><span class="pre">NSMatrix</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id12" name="class-nsmatrix">Class <tt class="docutils literal docutils literal"><span class="pre">NSMatrix</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">sortUsingFunction:context:</span></tt></p>
 <p>Calling this method from Python is supported, overriding it in Python
@@ -217,12 +217,12 @@ is not. The <tt class="docutils literal"><span class="pre">context</span></tt> c
 </ul>
 </div>
 <div class="section" id="class-nsmovie">
-<h4><a class="toc-backref" href="#id13" name="class-nsmovie">Class <tt class="docutils literal"><span class="pre">NSMovie</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id13" name="class-nsmovie">Class <tt class="docutils literal docutils literal"><span class="pre">NSMovie</span></tt></a></h4>
 <p>The return value of <tt class="docutils literal"><span class="pre">QTMovie</span></tt> and the sole argument of <tt class="docutils literal"><span class="pre">initWithMovie:</span></tt>
 are <tt class="docutils literal"><span class="pre">Carbon.Qt.Movie</span></tt> objects.</p>
 </div>
 <div class="section" id="class-nsopenglcontext">
-<h4><a class="toc-backref" href="#id14" name="class-nsopenglcontext">Class <tt class="docutils literal"><span class="pre">NSOpenGLContext</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id14" name="class-nsopenglcontext">Class <tt class="docutils literal docutils literal"><span class="pre">NSOpenGLContext</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">getValues:forParameter:</span></tt></p>
 <p>This method is not yet supported.</p>
@@ -239,7 +239,7 @@ are <tt class="docutils literal"><span class="pre">Carbon.Qt.Movie</span></tt> o
 </ul>
 </div>
 <div class="section" id="class-nsopenglpixelformat">
-<h4><a class="toc-backref" href="#id15" name="class-nsopenglpixelformat">Class <tt class="docutils literal"><span class="pre">NSOpenGLPixelFormat</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id15" name="class-nsopenglpixelformat">Class <tt class="docutils literal docutils literal"><span class="pre">NSOpenGLPixelFormat</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">getValues:forAttribute:forVirtualScreen:</span></tt></p>
 <p>This method is not yet supported</p>
@@ -247,7 +247,7 @@ are <tt class="docutils literal"><span class="pre">Carbon.Qt.Movie</span></tt> o
 </ul>
 </div>
 <div class="section" id="class-nsquickdrawview">
-<h4><a class="toc-backref" href="#id16" name="class-nsquickdrawview">Class <tt class="docutils literal"><span class="pre">NSQuickDrawView</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id16" name="class-nsquickdrawview">Class <tt class="docutils literal docutils literal"><span class="pre">NSQuickDrawView</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">qdPort</span></tt></p>
 <p>This method returns an instance of type <tt class="docutils literal"><span class="pre">Carbon.Qd.GrafPort</span></tt>.</p>
@@ -255,7 +255,7 @@ are <tt class="docutils literal"><span class="pre">Carbon.Qt.Movie</span></tt> o
 </ul>
 </div>
 <div class="section" id="class-nssimplehorizontaltypesetter">
-<h4><a class="toc-backref" href="#id17" name="class-nssimplehorizontaltypesetter">Class <tt class="docutils literal"><span class="pre">NSSimpleHorizontalTypesetter</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id17" name="class-nssimplehorizontaltypesetter">Class <tt class="docutils literal docutils literal"><span class="pre">NSSimpleHorizontalTypesetter</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">baseOfTypesetterGlyphInfo</span></tt></p>
 <p>This method is not yet supported</p>
@@ -266,7 +266,7 @@ are <tt class="docutils literal"><span class="pre">Carbon.Qt.Movie</span></tt> o
 </ul>
 </div>
 <div class="section" id="class-nsview">
-<h4><a class="toc-backref" href="#id18" name="class-nsview">Class <tt class="docutils literal"><span class="pre">NSView</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id18" name="class-nsview">Class <tt class="docutils literal docutils literal"><span class="pre">NSView</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">sortSubviewsUsingFunction:context:</span></tt></p>
 <p>Calling this method from Python is supported, overriding it in Python
@@ -275,7 +275,7 @@ is not. The <tt class="docutils literal"><span class="pre">context</span></tt> c
 </ul>
 </div>
 <div class="section" id="class-nswindow">
-<h4><a class="toc-backref" href="#id19" name="class-nswindow">Class <tt class="docutils literal"><span class="pre">NSWindow</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id19" name="class-nswindow">Class <tt class="docutils literal docutils literal"><span class="pre">NSWindow</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">graphicsPort</span></tt></p>
 <p>This method is not yet supported</p>
@@ -300,7 +300,7 @@ function invocation can be used instead.</p>
 using the field names as attributes, or they can be accessed as sequences for
 backwards compatibility.</p>
 <div class="section" id="class-nsarray">
-<h4><a class="toc-backref" href="#id21" name="class-nsarray">Class <tt class="docutils literal"><span class="pre">NSArray</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id21" name="class-nsarray">Class <tt class="docutils literal docutils literal"><span class="pre">NSArray</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">getObjects:</span></tt></p>
 <p>This method is not supported, accessing the objects using the usual
@@ -321,7 +321,7 @@ This limitation will be lifted in a future version of PyObjC.</p>
 </ul>
 </div>
 <div class="section" id="class-nsautoreleasepool">
-<h4><a class="toc-backref" href="#id22" name="class-nsautoreleasepool">Class <tt class="docutils literal"><span class="pre">NSAutoreleasePool</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id22" name="class-nsautoreleasepool">Class <tt class="docutils literal docutils literal"><span class="pre">NSAutoreleasePool</span></tt></a></h4>
 <p>The bridge automatically manages reference counts for you, but it is still 
 required to make an autorelease pool available.</p>
 <p>In single-threaded programs that use <tt class="docutils literal"><span class="pre">NSRunLoop</span></tt> or are not long-lived,
@@ -354,7 +354,7 @@ is necessary to create an <tt class="docutils literal"><span class="pre">NSAutor
 using other Objective-C objects.</p>
 </div>
 <div class="section" id="class-nscoder">
-<h4><a class="toc-backref" href="#id23" name="class-nscoder">Class <tt class="docutils literal"><span class="pre">NSCoder</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id23" name="class-nscoder">Class <tt class="docutils literal docutils literal"><span class="pre">NSCoder</span></tt></a></h4>
 <p>The following methods are not supported in the current version of PyObjC.
 This limitation will be lifted in a future version of the bridge.</p>
 <ul>
@@ -372,7 +372,7 @@ Note that this will not read back data that was written using
 represent the return value of this method in Python.</p>
 </div>
 <div class="section" id="class-nsdata">
-<h4><a class="toc-backref" href="#id24" name="class-nsdata">Class <tt class="docutils literal"><span class="pre">NSData</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id24" name="class-nsdata">Class <tt class="docutils literal docutils literal"><span class="pre">NSData</span></tt></a></h4>
 <p>NSData subclasses support the Python buffer protocol, and any Python
 object that implements the Python buffer protocol (except str and unicode)
 are wrapped as an NSData subclass.</p>
@@ -414,7 +414,7 @@ desired range.</p>
 </ul>
 </div>
 <div class="section" id="class-nsdecimalnumber-and-the-nsdecimal-type">
-<h4><a class="toc-backref" href="#id25" name="class-nsdecimalnumber-and-the-nsdecimal-type">Class <tt class="docutils literal"><span class="pre">NSDecimalNumber</span></tt> and the <tt class="docutils literal"><span class="pre">NSDecimal</span></tt> type</a></h4>
+<h4><a class="toc-backref" href="#id25" name="class-nsdecimalnumber-and-the-nsdecimal-type">Class <tt class="docutils literal docutils literal"><span class="pre">NSDecimalNumber</span></tt> and the <tt class="docutils literal docutils literal"><span class="pre">NSDecimal</span></tt> type</a></h4>
 <p>NSDecimal is wrapped by a Python type.</p>
 <p>Creating an <tt class="docutils literal"><span class="pre">NSDecimal</span></tt> instance: <tt class="docutils literal"><span class="pre">NSDecimal(value)</span></tt> or 
 <tt class="docutils literal"><span class="pre">NSDecimal(mantisssa,</span> <span class="pre">exponent,</span> <span class="pre">isNegative)</span></tt>.  <tt class="docutils literal"><span class="pre">Value</span></tt> can be a string,
@@ -423,12 +423,12 @@ int or long (not a float because of the representation issues for floats).</p>
 <tt class="docutils literal"><span class="pre">aDecimal.as_float</span></tt>.</p>
 </div>
 <div class="section" id="class-nsdictionary">
-<h4><a class="toc-backref" href="#id26" name="class-nsdictionary">Class <tt class="docutils literal"><span class="pre">NSDictionary</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id26" name="class-nsdictionary">Class <tt class="docutils literal docutils literal"><span class="pre">NSDictionary</span></tt></a></h4>
 <p>The (undocumented) methods <tt class="docutils literal"><span class="pre">getKeys:</span></tt>, <tt class="docutils literal"><span class="pre">getObjects:</span></tt> and 
 <tt class="docutils literal"><span class="pre">getObjects:andKeys:</span></tt> are not supported.</p>
 </div>
 <div class="section" id="class-nsexception">
-<h4><a class="toc-backref" href="#id27" name="class-nsexception">Class <tt class="docutils literal"><span class="pre">NSException</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id27" name="class-nsexception">Class <tt class="docutils literal docutils literal"><span class="pre">NSException</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">raise:format:</span></tt>, <tt class="docutils literal"><span class="pre">raise:format:arguments:</span></tt></p>
 <p>These methods are not supported because they accept a variable number of
@@ -439,12 +439,12 @@ thing.</p>
 </ul>
 </div>
 <div class="section" id="class-nsfault">
-<h4><a class="toc-backref" href="#id28" name="class-nsfault">Class <tt class="docutils literal"><span class="pre">NSFault</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id28" name="class-nsfault">Class <tt class="docutils literal docutils literal"><span class="pre">NSFault</span></tt></a></h4>
 <p>The <tt class="docutils literal"><span class="pre">extraData</span></tt> argument/return value for <tt class="docutils literal"><span class="pre">-extraData</span></tt> and 
 <tt class="docutils literal"><span class="pre">setTargetClassextraData:</span></tt> is represented as an integer.</p>
 </div>
 <div class="section" id="class-nsindexset">
-<h4><a class="toc-backref" href="#id29" name="class-nsindexset">Class <tt class="docutils literal"><span class="pre">NSIndexSet</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id29" name="class-nsindexset">Class <tt class="docutils literal docutils literal"><span class="pre">NSIndexSet</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">getIndexes:maxCount:inIndexRange:</span></tt>
 The usage is:</p>
@@ -456,7 +456,7 @@ The usage is:</p>
 </ul>
 </div>
 <div class="section" id="class-nsinvocation">
-<h4><a class="toc-backref" href="#id30" name="class-nsinvocation">Class <tt class="docutils literal"><span class="pre">NSInvocation</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id30" name="class-nsinvocation">Class <tt class="docutils literal docutils literal"><span class="pre">NSInvocation</span></tt></a></h4>
 <p>In some versions of Mac OS X, <tt class="docutils literal"><span class="pre">NSInvocation</span></tt> doesn't work properly with structs
 that contain padding for alignment.  Such structs are not used in the Mac OS X API,
 but may be present in 3rd party code.  This leads to problems when
@@ -464,7 +464,7 @@ but may be present in 3rd party code.  This leads to problems when
 its arguments.</p>
 </div>
 <div class="section" id="class-nsmutablearray">
-<h4><a class="toc-backref" href="#id31" name="class-nsmutablearray">Class <tt class="docutils literal"><span class="pre">NSMutableArray</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id31" name="class-nsmutablearray">Class <tt class="docutils literal docutils literal"><span class="pre">NSMutableArray</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">sortUsingFunction:context:</span></tt>, <tt class="docutils literal"><span class="pre">sortUsingFunction:context:range:</span></tt></p>
 <p>Calling this method from Python is supported, overriding it in a subclass
@@ -474,7 +474,7 @@ is not.  This limitation will be fixed in a later version of PyObjC.</p>
 </ul>
 </div>
 <div class="section" id="class-nsmutablestring">
-<h4><a class="toc-backref" href="#id32" name="class-nsmutablestring">Class <tt class="docutils literal"><span class="pre">NSMutableString</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id32" name="class-nsmutablestring">Class <tt class="docutils literal docutils literal"><span class="pre">NSMutableString</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">appendFormat:</span></tt></p>
 <p>This method is not supported because it accepts a variable number of 
@@ -483,7 +483,7 @@ arguments. Use Python's <tt class="docutils literal"><span class="pre">%</span><
 </ul>
 </div>
 <div class="section" id="class-nsnetservice">
-<h4><a class="toc-backref" href="#id33" name="class-nsnetservice">Class <tt class="docutils literal"><span class="pre">NSNetService</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id33" name="class-nsnetservice">Class <tt class="docutils literal docutils literal"><span class="pre">NSNetService</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">addresses</span></tt></p>
 <p>When calling this from Python this methods returns a tuple of address info
@@ -492,7 +492,7 @@ tuples, like the values returned by <tt class="docutils literal"><span class="pr
 </ul>
 </div>
 <div class="section" id="class-nsobject">
-<h4><a class="toc-backref" href="#id34" name="class-nsobject">Class <tt class="docutils literal"><span class="pre">NSObject</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id34" name="class-nsobject">Class <tt class="docutils literal docutils literal"><span class="pre">NSObject</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">observationInfo</span></tt>, <tt class="docutils literal"><span class="pre">setObservationInfo:</span></tt></p>
 <p>These methods can be used from Python, but the <tt class="docutils literal"><span class="pre">observationInfo</span></tt> is 
@@ -517,7 +517,7 @@ of PyObjC.</p>
 </ul>
 </div>
 <div class="section" id="class-nsscriptobjectspecifier">
-<h4><a class="toc-backref" href="#id35" name="class-nsscriptobjectspecifier">Class <tt class="docutils literal"><span class="pre">NSScriptObjectSpecifier</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id35" name="class-nsscriptobjectspecifier">Class <tt class="docutils literal docutils literal"><span class="pre">NSScriptObjectSpecifier</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">indicesOfObjectsByEvaluatingWithContainer:count:</span></tt></p>
 <p>Implementing this in Python is not supported yet. We're looking for a way
@@ -527,7 +527,7 @@ internal data-structure.</p>
 </ul>
 </div>
 <div class="section" id="class-nsstring">
-<h4><a class="toc-backref" href="#id36" name="class-nsstring">Class <tt class="docutils literal"><span class="pre">NSString</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id36" name="class-nsstring">Class <tt class="docutils literal docutils literal"><span class="pre">NSString</span></tt></a></h4>
 <p>Objective-C strings are represented as instances of a subclass of
 the Python type <tt class="docutils literal"><span class="pre">unicode</span></tt>.  Since Python <tt class="docutils literal"><span class="pre">unicode</span></tt> objects are immutable,
 working with <tt class="docutils literal"><span class="pre">NSMutableString</span></tt> can be tricky.  If you need to update the
@@ -565,7 +565,7 @@ right thing here.</p>
 </ul>
 </div>
 <div class="section" id="class-nsthread">
-<h4><a class="toc-backref" href="#id37" name="class-nsthread">class <tt class="docutils literal"><span class="pre">NSThread</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id37" name="class-nsthread">class <tt class="docutils literal docutils literal"><span class="pre">NSThread</span></tt></a></h4>
 <p>It is safe to call from Objective-C to Python on any thread.  It is safe to
 start new threads using the Python threading API and run non-Cocoa code on
 those threads.</p>
@@ -583,13 +583,13 @@ the detached thread.</p>
 following methods with a &quot;difficult&quot; signature are not supported.</p>
 <p>Please let me know if there is documentation for this framework.</p>
 <div class="section" id="class-ibobjcsourceparser">
-<h4><a class="toc-backref" href="#id39" name="class-ibobjcsourceparser">Class <tt class="docutils literal"><span class="pre">IBObjCSourceParser</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id39" name="class-ibobjcsourceparser">Class <tt class="docutils literal docutils literal"><span class="pre">IBObjCSourceParser</span></tt></a></h4>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">parseClass:</span></tt></li>
 </ul>
 </div>
 <div class="section" id="id1">
-<h4><a class="toc-backref" href="#id40" name="id1">Class <tt class="docutils literal"><span class="pre">NSView</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id40" name="id1">Class <tt class="docutils literal docutils literal"><span class="pre">NSView</span></tt></a></h4>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">objectAtPoint:rect:</span></tt></p>
 <p>Defined in a category on <tt class="docutils literal"><span class="pre">NSView</span></tt>.</p>
@@ -597,27 +597,27 @@ following methods with a &quot;difficult&quot; signature are not supported.</p>
 </ul>
 </div>
 <div class="section" id="class-nsibobjectdata">
-<h4><a class="toc-backref" href="#id41" name="class-nsibobjectdata">Class <tt class="docutils literal"><span class="pre">NSIBObjectData</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id41" name="class-nsibobjectdata">Class <tt class="docutils literal docutils literal"><span class="pre">NSIBObjectData</span></tt></a></h4>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">restoreFromObjectDataInfo:</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">snapshotIntoObjectDataInfo:</span></tt></li>
 </ul>
 </div>
 <div class="section" id="class-ibobjectcontainer">
-<h4><a class="toc-backref" href="#id42" name="class-ibobjectcontainer">Class <tt class="docutils literal"><span class="pre">IBObjectContainer</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id42" name="class-ibobjectcontainer">Class <tt class="docutils literal docutils literal"><span class="pre">IBObjectContainer</span></tt></a></h4>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">decodeObjectToIntMapTableForKey:fromCoder:alwaysCreate:</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">decodeObjectToObjectMapTableForKey:fromCoder:alwaysCreate:</span></tt></li>
 </ul>
 </div>
 <div class="section" id="class-ibxmldecoder">
-<h4><a class="toc-backref" href="#id43" name="class-ibxmldecoder">Class <tt class="docutils literal"><span class="pre">IBXMLDecoder</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id43" name="class-ibxmldecoder">Class <tt class="docutils literal docutils literal"><span class="pre">IBXMLDecoder</span></tt></a></h4>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">allocObjectWithClassName:</span></tt></li>
 </ul>
 </div>
 <div class="section" id="class-ibsplitscrollview">
-<h4><a class="toc-backref" href="#id44" name="class-ibsplitscrollview">Class <tt class="docutils literal"><span class="pre">IBSplitScrollView</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id44" name="class-ibsplitscrollview">Class <tt class="docutils literal docutils literal"><span class="pre">IBSplitScrollView</span></tt></a></h4>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">getMinimumX:maximumX:</span></tt></li>
 </ul>
