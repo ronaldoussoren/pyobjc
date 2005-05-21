@@ -25,10 +25,6 @@ Cocoa applications in Python.
   An overview of the PyObjC package and how to use it.  Read this before
   you start using the package, it will help you to avoid some surprises.
 
-* `Python classes and Objective-C code`_
-
-  Another older overview of PyObjC. 
-
 * `Notes on supported APIs and classes on Mac OS X`_
 
   This document lists the methods and classes that are not fully supported,
@@ -82,8 +78,6 @@ you want to write Cocoa programs in Python.
 .. _`Xcode Python templates`: Xcode-Templates.html
 
 .. _`An introduction to PyObjC`: intro.html
-
-.. _`Python classes and Objective-C code`: classes.html
 
 .. _`Coding style for PyObjC`: coding-style.html
 

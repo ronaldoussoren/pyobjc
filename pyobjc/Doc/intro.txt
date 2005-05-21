@@ -516,6 +516,50 @@ To make it clear that ``objc.Category`` performs a special task the name in
 the class definition must be the same as the ``__name__`` of the argument
 to ``objc.Category``.
 
+Accessing Python objects from Objective-C
+-----------------------------------------
+
+All Python objects can be accessed from Objective-C through proxy objects.
+Whenever a Python object crosses the line from Python to Objective-C a proxy
+object is created (of class ``OC_PythonObject``, a subclass of ``NSProxy``).
+This proxy object will forward all method calls from Objective-C to Python, and
+will return the results back to Objective-C.
+
+See the section 'Method protocol' for a description of how PyObjC translates
+between Python and Objective-C method calls.
+
+A number of Python types/classes are treated specially:
+
+- Python numbers (``int``, ``float``, ``long``) are translated into
+  ``NSNumber`` instances.  Their identity is not preserved across the bridge.
+
+- Python ``str`` is proxied using ``OC_PythonString``, a subclass of
+  ``NSString``.  A Python ``str`` may be used anywhere a ``NSString`` is
+  expected, but ``unicode`` should be used whenever possible.
+  ``OC_PythonString`` will use the default encoding of ``NSString``, which is
+  normally MacRoman but could be something else.
+
+- Python ``unicode`` is proxied using ``OC_PythonUnicode``, a subclass of
+  ``NSString``.  A Python ``unicode`` may be used anywhere a ``NSString``
+  is expected.
+
+- Python ``dict`` is proxied using ``OC_PythonDictionary``, a subclass of
+  ``NSMutableDictionary``.  A Python ``dict`` may be used anywhere
+  an ``NSDictionary`` is expected.
+
+- Python ``list`` and ``tuple`` are proxied using ``OC_PythonArray``, a
+  subclass of ``NSMutableArray``.  Python ``list`` or ``tuple`` objects
+  may be used anywhere an ``NSArray`` is expected.
+
+- Python objects that implement the Python buffer API, except for ``str``
+  and ``unicode``, are proxied using ``OC_PythonData``, a ``NSData`` subclass.
+  Objects that implement the Python buffer API such as ``buffer``,
+  ``array.array``, ``mmap.mmap``, etc. may be used anywhere a ``NSData`` is
+  expected.
+
+These special cases allow for more transparent bridging between Python and
+Objective-C.
+
 Cocoa for Python programmers
 ----------------------------
 
