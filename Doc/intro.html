@@ -27,16 +27,17 @@ Contents</title>
 <li><a href="#categories" id="id14" name="id14">Categories</a></li>
 </ul>
 </li>
-<li><a href="#cocoa-for-python-programmers" id="id15" name="id15">Cocoa for Python programmers</a></li>
-<li><a href="#notes-on-specific-tasks" id="id16" name="id16">Notes on specific tasks</a><ul>
-<li><a href="#working-with-threads" id="id17" name="id17">Working with threads</a></li>
-<li><a href="#finalizers" id="id18" name="id18">Finalizers</a></li>
-<li><a href="#copying" id="id19" name="id19">Copying</a></li>
+<li><a href="#accessing-python-objects-from-objective-c" id="id15" name="id15">Accessing Python objects from Objective-C</a></li>
+<li><a href="#cocoa-for-python-programmers" id="id16" name="id16">Cocoa for Python programmers</a></li>
+<li><a href="#notes-on-specific-tasks" id="id17" name="id17">Notes on specific tasks</a><ul>
+<li><a href="#working-with-threads" id="id18" name="id18">Working with threads</a></li>
+<li><a href="#finalizers" id="id19" name="id19">Finalizers</a></li>
+<li><a href="#copying" id="id20" name="id20">Copying</a></li>
 </ul>
 </li>
-<li><a href="#building-applications" id="id20" name="id20">Building applications</a><ul>
-<li><a href="#py2app-setup-py" id="id21" name="id21">&quot;py2app&quot; :  setup.py</a></li>
-<li><a href="#ide-approach-xcode" id="id22" name="id22">&quot;IDE approach&quot; : Xcode</a></li>
+<li><a href="#building-applications" id="id21" name="id21">Building applications</a><ul>
+<li><a href="#py2app-setup-py" id="id22" name="id22">&quot;py2app&quot; :  setup.py</a></li>
+<li><a href="#ide-approach-xcode" id="id23" name="id23">&quot;IDE approach&quot; : Xcode</a></li>
 </ul>
 </li>
 </ul>
@@ -488,7 +489,41 @@ class NSObject(objc.Category(NSObject)):
 <p>To make it clear that <code><span>objc.Category</span></code> performs a special task the name in
 the class definition must be the same as the <code><span>__name__</span></code> of the argument
 to <code><span>objc.Category</span></code>.</p>
-<h2><a href="#id15" name="cocoa-for-python-programmers">Cocoa for Python programmers</a></h2>
+<h2><a href="#id15" name="accessing-python-objects-from-objective-c">Accessing Python objects from Objective-C</a></h2>
+<p>All Python objects can be accessed from Objective-C through proxy objects.
+Whenever a Python object crosses the line from Python to Objective-C a proxy
+object is created (of class <code><span>OC_PythonObject</span></code>, a subclass of <code><span>NSProxy</span></code>).
+This proxy object will forward all method calls from Objective-C to Python, and
+will return the results back to Objective-C.</p>
+<p>See the section 'Method protocol' for a description of how PyObjC translates
+between Python and Objective-C method calls.</p>
+<p>A number of Python types/classes are treated specially:</p>
+<ul>
+<li>Python numbers (<code><span>int</span></code>, <code><span>float</span></code>, <code><span>long</span></code>) are translated into
+<code><span>NSNumber</span></code> instances.  Their identity is not preserved across the bridge.</li>
+<li>Python <code><span>str</span></code> is proxied using <code><span>OC_PythonString</span></code>, a subclass of
+<code><span>NSString</span></code>.  A Python <code><span>str</span></code> may be used anywhere a <code><span>NSString</span></code> is
+expected, but <code><span>unicode</span></code> should be used whenever possible.
+<code><span>OC_PythonString</span></code> will use the default encoding of <code><span>NSString</span></code>, which is
+normally MacRoman but could be something else.</li>
+<li>Python <code><span>unicode</span></code> is proxied using <code><span>OC_PythonUnicode</span></code>, a subclass of
+<code><span>NSString</span></code>.  A Python <code><span>unicode</span></code> may be used anywhere a <code><span>NSString</span></code>
+is expected.</li>
+<li>Python <code><span>dict</span></code> is proxied using <code><span>OC_PythonDictionary</span></code>, a subclass of
+<code><span>NSMutableDictionary</span></code>.  A Python <code><span>dict</span></code> may be used anywhere
+an <code><span>NSDictionary</span></code> is expected.</li>
+<li>Python <code><span>list</span></code> and <code><span>tuple</span></code> are proxied using <code><span>OC_PythonArray</span></code>, a
+subclass of <code><span>NSMutableArray</span></code>.  Python <code><span>list</span></code> or <code><span>tuple</span></code> objects
+may be used anywhere an <code><span>NSArray</span></code> is expected.</li>
+<li>Python objects that implement the Python buffer API, except for <code><span>str</span></code>
+and <code><span>unicode</span></code>, are proxied using <code><span>OC_PythonData</span></code>, a <code><span>NSData</span></code> subclass.
+Objects that implement the Python buffer API such as <code><span>buffer</span></code>,
+<code><span>array.array</span></code>, <code><span>mmap.mmap</span></code>, etc. may be used anywhere a <code><span>NSData</span></code> is
+expected.</li>
+</ul>
+<p>These special cases allow for more transparent bridging between Python and
+Objective-C.</p>
+<h2><a href="#id16" name="cocoa-for-python-programmers">Cocoa for Python programmers</a></h2>
 <p>Cocoa frameworks are mapped onto Python packages with the same name; that is
 the classes, constants and functions from the AppKit framework are available
 after you import <code><span>AppKit</span></code> in your Python script.</p>
@@ -516,8 +551,8 @@ Python.  The <a href="../Examples/00ReadMe.html">PyObjC Example index</a> contai
 <li><a href="http://www.stepwise.com/">stepwise.com</a></li>
 <li>Your local bookstore or library</li>
 </ul>
-<h2><a href="#id16" name="notes-on-specific-tasks">Notes on specific tasks</a></h2>
-<h3><a href="#id17" name="working-with-threads">Working with threads</a></h3>
+<h2><a href="#id17" name="notes-on-specific-tasks">Notes on specific tasks</a></h2>
+<h3><a href="#id18" name="working-with-threads">Working with threads</a></h3>
 <p>Most of Cocoa, and thus PyObjC, requires an <code><span>NSAutoreleasePool</span></code> in order to function
 properly.  PyObjC does this automatically on the first thread it is imported from,
 but other threads will require explicit <code><span>NSAutoreleasePool</span></code> management.  The following
@@ -534,7 +569,7 @@ instance, otherwise it will not have the intended effect.</p>
 in the body of the loop in order to optimize memory usage.  For example, <code><span>NSRunLoop</span></code>
 will be create a new <code><span>NSAutoreleasePool</span></code> at the beginning of each run loop iteration
 and release it at the end.</p>
-<h3><a href="#id18" name="finalizers">Finalizers</a></h3>
+<h3><a href="#id19" name="finalizers">Finalizers</a></h3>
 <p>In normal Python, there are two methods for writing finalizers: implementing
 <code><span>__del__</span></code>, and using <code><span>weakref.ref</span></code> callbacks.  Generally, <code><span>__del___</span></code> is
 discouraged as it does not allow the object to participate in cyclic garbage
@@ -552,7 +587,7 @@ undefined.</p>
 object.  It is probably technically possible to do, but tricky, so it
 may eventually be implemented in a future version of PyObjC (especially
 if a future Objective-C runtime supports it).</p>
-<h3><a href="#id19" name="copying">Copying</a></h3>
+<h3><a href="#id20" name="copying">Copying</a></h3>
 <p>It is possible for a Python subclass of an Objective-C class to implement
 the <code><span>NSCopying</span></code> protocol.  Some care must be taken when the superclass
 already implements the protocol.</p>
@@ -572,9 +607,9 @@ External code should not rely on the existance of this class.</p>
 <p>NOTE2: <code><span>SomeClass.copyWithZone_</span></code> should not be implemented unless a
 superclass already implements <code><span>copyWithZone:</span></code>, or else the behavior
 will be undefined (memory corruption, crashes, etc.).</p>
-<h2><a href="#id20" name="building-applications">Building applications</a></h2>
+<h2><a href="#id21" name="building-applications">Building applications</a></h2>
 <p>There are two different recommended ways to build applications with PyObjC.</p>
-<h3><a href="#id21" name="py2app-setup-py">&quot;py2app&quot; :  setup.py</a></h3>
+<h3><a href="#id22" name="py2app-setup-py">&quot;py2app&quot; :  setup.py</a></h3>
 <p>The PyObjC installer includes a copy of the <code><span>py2app</span></code> package.  This package
 offers a way to build distutils scripts for building (standalone)
 applications and plugin bundles.</p>
@@ -609,7 +644,7 @@ following command to see the list of options:</p>
 <pre>
 python setup.py py2app --help
 </pre>
-<h3><a href="#id22" name="ide-approach-xcode">&quot;IDE approach&quot; : Xcode</a></h3>
+<h3><a href="#id23" name="ide-approach-xcode">&quot;IDE approach&quot; : Xcode</a></h3>
 <p>PyObjC includes a number of Xcode templates that can be used to 
 develop applications, using the same underlying functionality that
 is in py2app.  These templates are used like any other Xcode template,
