@@ -64,7 +64,7 @@ that make use of Cocoa features.
 
   XXX
   An example script that demonstrates how PyObjC interacts with Key-Value
-  Observation (KVO) at the lowest level.  This script was used to debug
+  Observing (KVO) at the lowest level.  This script was used to debug
   the PyObjC runtime and should not be used as a guideline for writing
   new KVO code.  It may be interesting to some until we ensure that we
   have proper unit tests for KVO and remove this example!

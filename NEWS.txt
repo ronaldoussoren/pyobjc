@@ -57,7 +57,7 @@ Version 1.3.5 (2005-05-18)
 - Key-Value Coding of Python objects (whether or not using an Objective-C
   base class) should act like Objective-C now.  In previous versions
   there were inconsistencies with the use of capitalization, the
-  underscore postfix in setters, and Key-Value Observation.
+  underscore postfix in setters, and Key-Value Observing.
 
 - The formal protocol list is now complete.  A new internal function, 
   ``objc.protocolsForProcess()`` enumerates over all mach
