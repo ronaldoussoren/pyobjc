@@ -70,6 +70,9 @@ class SplitSignatureTest (unittest.TestCase):
             "setKey4",
             "get_key2",
             "read_bar",
+
+            # dictionary methods
+            'get',
         ]
 
         for cls in objc.getClassList():
