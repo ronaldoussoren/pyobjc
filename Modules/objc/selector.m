@@ -587,6 +587,7 @@ objcsel_call(PyObjCNativeSelector* self, PyObject* args)
 			 * too high
 			 */
 			id obj = PyObjCObject_GetObject(pyres);
+
 			[obj release];
 		}
 	}
@@ -964,6 +965,7 @@ pysel_call(PyObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 	     ((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
 
 	     ((PyObjCObject*)self->sel_self)->flags &= ~PyObjCObject_kUNINITIALIZED;
+
 	}
 
 	return result;
