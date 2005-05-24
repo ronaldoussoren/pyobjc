@@ -108,6 +108,10 @@ object_dealloc(PyObject* obj)
 		if (PyObjCObject_IsClassic(obj)) {
 			/* pass */
 
+		} else if ((((PyObjCObject*)obj)->flags
+				& PyObjCObject_kSHOULD_NOT_RELEASE)) {
+			/* pass */
+
 		} else if (((PyObjCObject*)obj)->flags 
 				& PyObjCObject_kUNINITIALIZED) {
 			/* Freeing of an uninitialized object, just leak because 
@@ -776,7 +780,8 @@ PyObjCObject_NewUnitialized(id objc_object)
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
 	((PyObjCObject*)res)->objc_object = objc_object;
-	((PyObjCObject*)res)->flags = 0;
+	/*((PyObjCObject*)res)->flags = 0;*/
+	((PyObjCObject*)res)->flags = PyObjCObject_kUNINITIALIZED;
 
 	PyObjC_RegisterPythonProxy(objc_object, res);
 

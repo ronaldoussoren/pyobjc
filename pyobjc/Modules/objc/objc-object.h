@@ -3,7 +3,8 @@
 
 #define PyObjCObject_kUNINITIALIZED 	0x01
 #define PyObjCObject_kCLASSIC 		0x02
-#define PyObjCObject_kDEALLOC_HELPER	0x03
+#define PyObjCObject_kDEALLOC_HELPER	0x04
+#define PyObjCObject_kSHOULD_NOT_RELEASE      0x08
 typedef struct {
 	PyObject_HEAD
 	id        objc_object;
