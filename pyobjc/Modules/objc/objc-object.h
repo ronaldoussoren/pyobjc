@@ -26,4 +26,7 @@ PyObject* _PyObjCObject_NewDeallocHelper(id objc_object);
 #define PyObjCObject_GetFlags(object) (((PyObjCObject*)(object))->flags)
 #define PyObjCObject_IsClassic(object) (PyObjCObject_GetFlags(object) & PyObjCObject_kCLASSIC)
 
+PyObject* PyObjCObject_NewTransient(id objc_object, int* cookie);
+void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie);
+
 #endif /* PyObjC_OBJC_OBJECT_H */

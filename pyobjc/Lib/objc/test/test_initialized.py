@@ -5,6 +5,13 @@ class OC_TestInitializePython (OC_TestInitialize):
     def init(self):
         return super(OC_TestInitializePython, self).init()
 
+OBJECT_LIST=[]
+class OC_TestInitializePython2 (OC_TestInitialize):
+    def init(self):
+        self = super(OC_TestInitializePython2, self).init()
+        OBJECT_LIST.append(self)
+        return self
+
 class TestInitializing (unittest.TestCase):
     #
     # These tests make sure that we don't call retain/release on objects
@@ -47,6 +54,23 @@ class TestInitializing (unittest.TestCase):
 
         o = OC_TestInitializePython.makeInstance()
         self.assert_(isinstance(o, OC_TestInitializePython))
+        v = OC_TestInitialize.numUninitialized()
+        self.assertEquals(v, start)
+
+        s = o.dummy()
+        self.assertEquals(s, u"hello")
+        v = OC_TestInitialize.numUninitialized()
+        self.assertEquals(v, start)
+
+    def testDontRetainUnitialized4(self):
+        start = OC_TestInitialize.numUninitialized()
+        self.assertEquals(start, 0)
+
+        o = OC_TestInitializePython2.makeInstance()
+        self.assert_(isinstance(o, OC_TestInitializePython2))
+        self.assert_(OBJECT_LIST[-1] is o)
+        del OBJECT_LIST[-1]
+
         v = OC_TestInitialize.numUninitialized()
         self.assertEquals(v, start)
 

@@ -365,11 +365,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	PyObject*          v;
 	int                have_output = 0;
 	const char*        rettype;
-	PyObject* pyself;
-#define UNINIT
-#ifdef UNINIT
-	int		didCreate = 0;
-#endif
+	PyObject* 	   pyself;
+	int		   cookie;
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
@@ -387,37 +384,13 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 	arglist = PyList_New(0);
 
-#ifndef UNINIT
-	pyself = pythonify_c_value(@encode(id), args[0+argOffset]);
-#else
-	/* just calling pythonify_c_value is not not correct: we should
-	 * try to avoid calling -retain because this can cause problems is
-	 * self is freshly +alloc-ed and this is a call to the initializer
-	 *
-	 * It is 99+% sure that self won't be treated specially by 
-	 * pythonify_c_value, it is extremely unlikely that anyone want's to
-	 * subclass a class that is treated specially by that function.
-	 */
-	pyself = PyObjC_FindPythonProxy(*(id*)args[0+argOffset]);
-	if (pyself == NULL) {
-		/* This is a bit of a hack, should drop NewXXX() and add
-		 * some arguments to New()
-		 */
-		pyself = PyObjCObject_NewUnitialized(*(id*)args[0+argOffset]);
-
-		((PyObjCObject*)pyself)->flags |= PyObjCObject_kSHOULD_NOT_RELEASE;
-		((PyObjCObject*)pyself)->flags &= ~PyObjCObject_kUNINITIALIZED;
-		didCreate = 1;
-	}
-
-#endif
+	pyself = PyObjCObject_NewTransient(*(id*)args[0+argOffset], &cookie);
 	if (pyself == NULL) {
 		goto error;
 	}
 	if (PyList_Append(arglist, pyself) == -1) {
 		goto error;
 	}
-	Py_DECREF(pyself);
 
 	/* First translate from Objective-C to python */
 	
@@ -469,6 +442,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	v = PyList_AsTuple(arglist);
 	if (v == NULL) {
 		Py_DECREF(arglist);
+		PyObjCObject_ReleaseTransient(pyself, cookie);
 		goto error;
 	}
 	Py_DECREF(arglist);
@@ -480,17 +454,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 	res = PyObject_Call(callable, arglist, NULL);
 	isAlloc = PyObjCSelector_DonatesRef(callable);
-
-#ifdef UNINIT
-	if (pyself->ob_refcnt != 1 && didCreate) {
-		/* Oops, additional references to the proxy, make sure we
-		 * own a reference to the ObjC object
-		 */
-		[PyObjCObject_GetObject(pyself) retain];
-		((PyObjCObject*)pyself)->flags &= ~PyObjCObject_kUNINITIALIZED;
-	}
-#endif
 	Py_DECREF(arglist);
+	PyObjCObject_ReleaseTransient(pyself, cookie);
 	if (res == NULL) {
 		goto error;
 	}

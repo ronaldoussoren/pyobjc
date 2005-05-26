@@ -99,15 +99,18 @@ imp_NSCoder_encodeValueOfObjCType_at_(
 	PyObject* result = NULL;
 	PyObject* arglist = NULL;
 	PyObject* v = NULL;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
 	
-	v = PyObjC_IdToPython(self);
-	if (v == NULL) goto error;
-	PyTuple_SetItem(arglist, 0,  v);
+	pyself = PyObjCObject_NewTransient(self, &cookie);
+	if (pyself == NULL) goto error;
+	PyTuple_SetItem(arglist, 0,  pyself);
+	Py_INCREF(pyself);
 
 	v = PyString_FromString(signature);
 	if (v == NULL) goto error;
@@ -119,6 +122,8 @@ imp_NSCoder_encodeValueOfObjCType_at_(
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
+
 	if (result == NULL) goto error;
 
 	if (result != Py_None) {
@@ -133,6 +138,9 @@ imp_NSCoder_encodeValueOfObjCType_at_(
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie); 
+	}
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 
@@ -238,6 +246,8 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(
 	PyObject* values = NULL;
 	int       size;
 	int       i;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
@@ -247,9 +257,10 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(
 	size = PyObjCRT_SizeOfType(signature);
 	if (size == -1) goto error;
 
-	v = PyObjC_IdToPython(self);
-	if (v == NULL) goto error;
-	PyTuple_SET_ITEM(arglist, 0, v);
+	pyself = PyObjCObject_NewTransient(self, &cookie);
+	if (pyself == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 0, pyself);
+	Py_INCREF(pyself);
 
 	v = PyString_FromString(signature);
 	if (v == NULL) goto error;
@@ -272,6 +283,8 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
+
 	if (result == NULL) goto error;
 
 	if (result != Py_None) {
@@ -285,6 +298,9 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie);
+	}
 	Py_XDECREF(values);
 	PyObjCErr_ToObjCWithGILState(&state);
 }
@@ -363,15 +379,18 @@ imp_NSCoder_decodeValueOfObjCType_at_(
 	PyObject* arglist = NULL;
 	PyObject* v;
 	int err;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) goto error;
 
-	v = PyObjC_IdToPython(self);
-	if (v == NULL) goto error;
-	PyTuple_SetItem(arglist, 0, v); 
+	pyself = PyObjCObject_NewTransient(self, &cookie);
+	if (pyself == NULL) goto error;
+	PyTuple_SetItem(arglist, 0, pyself); 
+	Py_INCREF(pyself);
 
 	v = PyString_FromString(signature);
 	if (v == NULL) goto error;
@@ -379,6 +398,7 @@ imp_NSCoder_decodeValueOfObjCType_at_(
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) goto error;
 
 	err = PyObjC_PythonToObjC(signature, result, buf);
@@ -390,6 +410,9 @@ imp_NSCoder_decodeValueOfObjCType_at_(
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie); 
+	}
 	PyObjCErr_ToObjCWithGILState(&state);
 	return;
 }
@@ -490,6 +513,8 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(
 	int       size;
 	int       i;
 	int res;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
@@ -499,9 +524,10 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(
 	size = PyObjCRT_SizeOfType(signature);
 	if (size == -1) goto error;
 
-	v = PyObjC_IdToPython(self);
-	if (v == NULL) goto error;
-	PyTuple_SetItem(arglist, 0, v); 
+	pyself = PyObjCObject_NewTransient(self, &cookie);
+	if (pyself == NULL) goto error;
+	PyTuple_SetItem(arglist, 0, pyself); 
+	Py_INCREF(pyself);
 
 	v = PyString_FromString(signature);
 	if (v == NULL) goto error;
@@ -513,6 +539,7 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 		return;
@@ -540,6 +567,9 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie); 
+	}
 	Py_XDECREF(seq);
 	PyObjCErr_ToObjCWithGILState(&state);
 }
@@ -604,15 +634,18 @@ imp_NSCoder_encodeBytes_length_(
 	PyObject* result;
 	PyObject* arglist = NULL;
 	PyObject* v;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
 
-	v = PyObjC_IdToPython(self);
-	if (v == NULL) goto error;
-	PyTuple_SetItem(arglist, 0, v); 
+	pyself = PyObjCObject_NewTransient(self, &cookie);
+	if (pyself == NULL) goto error;
+	PyTuple_SetItem(arglist, 0, pyself); 
+	Py_INCREF(pyself);
 
 	v = PyString_FromStringAndSize(bytes, length);
 	if (v == NULL) goto error;
@@ -624,6 +657,7 @@ imp_NSCoder_encodeBytes_length_(
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) goto error;
 
 	if (result != Py_None) {
@@ -637,6 +671,9 @@ imp_NSCoder_encodeBytes_length_(
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie); 
+	}
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 
@@ -733,22 +770,25 @@ imp_NSCoder_decodeBytesWithReturnedLength_(
 	const void** pretval = (const void**)resp;
 
 	PyObject* result;
-	PyObject* v;
 	PyObject* arglist = NULL;
 	int buflen;
 	int len;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) goto error;
 
-	v = PyObjC_IdToPython(self);
-	if (v == NULL) goto error;
-	PyTuple_SetItem(arglist, 0, v); 
+	pyself = PyObjCObject_NewTransient(self, &cookie);
+	if (pyself == NULL) goto error;
+	PyTuple_SetItem(arglist, 0, pyself); 
+	Py_INCREF(pyself);
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) goto error;
 
 	if (!PyTuple_Check(result)) {
@@ -793,6 +833,9 @@ imp_NSCoder_decodeBytesWithReturnedLength_(
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie); 
+	}
 	PyObjCErr_ToObjCWithGILState(&state);
 	*pretval = NULL;
 }
@@ -897,6 +940,8 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
 	PyObject* v;
 	int buflen;
 	int len;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
@@ -913,6 +958,7 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) goto error;
 
 	if (!PyTuple_Check(result)) {
@@ -957,6 +1003,9 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie); 
+	}
 	PyObjCErr_ToObjCWithGILState(&state);
 	*pretval = NULL;
 }
@@ -1017,15 +1066,18 @@ imp_NSCoder_encodeBytes_length_forKey_(
 	PyObject* result;
 	PyObject* arglist = NULL;
 	PyObject* v;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) goto error;
 
-	v = PyObjC_IdToPython(self);
-	if (v == NULL) goto error;
-	PyTuple_SetItem(arglist, 0, v); 
+	pyself = PyObjCObject_NewTransient(self, &cookie);
+	if (pyself == NULL) goto error;
+	PyTuple_SetItem(arglist, 0, pyself); 
+	Py_INCREF(pyself);
 
 	v = PyString_FromStringAndSize(bytes, length);
 	if (v == NULL) goto error;
@@ -1041,6 +1093,7 @@ imp_NSCoder_encodeBytes_length_forKey_(
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) goto error;
 
 	if (result != Py_None) {
@@ -1054,6 +1107,9 @@ imp_NSCoder_encodeBytes_length_forKey_(
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie); 
+	}
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 

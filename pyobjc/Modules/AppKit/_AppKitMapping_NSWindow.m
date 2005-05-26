@@ -69,19 +69,22 @@ imp_NSWindow_windowRef(
 
 	PyObject* result;
 	PyObject* arglist = NULL;
-	PyObject* v;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(1);
 	if (arglist == NULL) goto error;
 
-	v = PyObjC_IdToPython(self);
-	if (v == NULL) goto error;
-	PyTuple_SET_ITEM(arglist, 0, v);
+	pyself = PyObjCObject_NewTransient(self, &cookie);
+	if (pyself == NULL) goto error;
+	PyTuple_SetItem(arglist, 0, pyself); 
+	Py_INCREF(pyself);
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) goto error;
 
 	WinObj_Convert(result, pretval);
@@ -93,6 +96,9 @@ imp_NSWindow_windowRef(
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie); 
+	}
 	*pretval = NULL;
 	PyObjCErr_ToObjCWithGILState(&state);
 }
@@ -147,15 +153,18 @@ imp_NSWindow_initWithWindowRef_(
 	PyObject* result;
 	PyObject* arglist = NULL;
 	PyObject* v;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) goto error;
 	
-	v = PyObjC_IdToPython(self);
-	if (v == NULL) goto error;
-	PyTuple_SET_ITEM(arglist, 0, v);
+	pyself = PyObjCObject_NewTransient(self, &cookie);
+	if (pyself == NULL) goto error;
+	PyTuple_SetItem(arglist, 0, pyself); 
+	Py_INCREF(pyself);
 	
 	v = WinObj_New(windowRef);
 	if (v == NULL) goto error;
@@ -163,6 +172,7 @@ imp_NSWindow_initWithWindowRef_(
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) goto error;
 
 	*pretval = PyObjC_PythonToId(result);
@@ -173,6 +183,9 @@ imp_NSWindow_initWithWindowRef_(
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie); 
+	}
 	*pretval = nil;
 	PyObjCErr_ToObjCWithGILState(&state);
 }

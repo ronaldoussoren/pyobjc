@@ -134,8 +134,9 @@
      PyObjCClass_Convert, PyObjC_ConvertBOOL, and PyObjC_ConvertChar
  * - Version 12 adds PyObjCObject_New
  * - Version 13 adds PyObjCCreateOpaquePointerType
+ * - Version 14 adds PyObjCObject_NewTransient, PyObjCObject_ReleaseTransient
  */
-#define PYOBJC_API_VERSION 13
+#define PYOBJC_API_VERSION 14
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -280,6 +281,13 @@ struct pyobjc_api {
 
 	/* PyObjCCreateOpaquePointerType */
 	PyObject* (*pointer_type_new)(const char*, const char*, const char*);
+
+	/* PyObject* PyObjCObject_NewTransient(id objc_object, int* cookie); */
+	PyObject* (*newtransient)(id objc_object, int* cookie);
+
+	/* void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie); */
+	void (*releasetransient)(PyObject* proxy, int cookie);
+	
 	
 };
 
@@ -335,7 +343,8 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjC_ConvertChar (PyObjC_API->pyobjc_convertchar)
 #define PyObjCObject_New (PyObjC_API->pyobjc_object_new)
 #define PyObjCCreateOpaquePointerType (PyObjC_API->pointer_type_new)
-
+#define PyObjCObject_NewTransient (PyObjC_API->newtransient)
+#define PyObjCObject_ReleaseTransient (PyObjC_API->releasetransient)
 
 #ifndef PYOBJC_METHOD_STUB_IMPL
 
