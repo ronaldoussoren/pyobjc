@@ -104,7 +104,7 @@ PyObjCErr_FromObjC(NSException* localException)
 	PyDict_SetItemString(dict, "reason",  v);
 	Py_DECREF(v);
 	if (userInfo) {
-		v = PyObjCObject_New(userInfo);
+		v = PyObjCObject_New(userInfo, PyObjCObject_kDEFAULT, YES);
 		if (v != NULL) {
 			PyDict_SetItemString(dict, "userInfo", v);
 			Py_DECREF(v);

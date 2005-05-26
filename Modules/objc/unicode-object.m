@@ -49,7 +49,8 @@ meth_nsstring(PyObject* self)
 {
 	PyObjCUnicodeObject* uobj = (PyObjCUnicodeObject*)self;
 	if (uobj->py_nsstr == NULL) {
-		uobj->py_nsstr = PyObjCObject_New(uobj->nsstr);
+		uobj->py_nsstr = PyObjCObject_New(uobj->nsstr, 
+				PyObjCObject_kDEFAULT, YES);
 	}
 	Py_INCREF(uobj->py_nsstr);
 	return uobj->py_nsstr;

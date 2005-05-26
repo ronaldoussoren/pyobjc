@@ -135,8 +135,9 @@
  * - Version 12 adds PyObjCObject_New
  * - Version 13 adds PyObjCCreateOpaquePointerType
  * - Version 14 adds PyObjCObject_NewTransient, PyObjCObject_ReleaseTransient
+ * - Version 15 changes the interface of PyObjCObject_New
  */
-#define PYOBJC_API_VERSION 14
+#define PYOBJC_API_VERSION 15
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -277,7 +278,7 @@ struct pyobjc_api {
 	int (*pyobjc_convertchar)(PyObject*,void*);
 
 	/* PyObjCObject_New */
-	PyObject* (*pyobjc_object_new)(id);
+	PyObject* (*pyobjc_object_new)(id, int , int);
 
 	/* PyObjCCreateOpaquePointerType */
 	PyObject* (*pointer_type_new)(const char*, const char*, const char*);
