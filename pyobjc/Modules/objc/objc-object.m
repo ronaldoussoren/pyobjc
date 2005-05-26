@@ -677,7 +677,7 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 
 
 PyObject* 
-PyObjCObject_New(id objc_object)
+PyObjCObject_New(id objc_object, int flags, int retain)
 {
 	Class cls = [objc_object class];
 	PyTypeObject* cls_type;
@@ -705,86 +705,24 @@ PyObjCObject_New(id objc_object)
 	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
 	
 	((PyObjCObject*)res)->objc_object = objc_object;
-	((PyObjCObject*)res)->flags = 0;
+	((PyObjCObject*)res)->flags = flags;
 
-	if (strcmp(GETISA(objc_object)->name, "NSAutoreleasePool") != 0) {
-		/* NSAutoreleasePool doesn't like retain */
-		/* XXX: Technicly we shouldn't call retain either if this
-		 * is an uninitialized object.
-		 */
-		[objc_object retain];
+	if (retain) {
+		if (strcmp(GETISA(objc_object)->name, 
+						"NSAutoreleasePool") != 0) {
+			/* NSAutoreleasePool doesn't like retain */
+			[objc_object retain];
+		}
 	}
 
-	return res;
-}
-
-PyObject* 
-PyObjCObject_NewClassic(id objc_object)
-{
-	Class cls = [objc_object class];
-	PyTypeObject* cls_type;
-	PyObject*     res;
-
-	res = PyObjC_FindPythonProxy(objc_object);
-	if (res) return res;
-
-	assert(objc_object != nil);
-
-	cls_type = (PyTypeObject*)PyObjCClass_New(cls);
-	if (cls_type == NULL) {
-		return NULL;
-	}
-
-	res = cls_type->tp_alloc(cls_type, 0);
-	Py_DECREF(cls_type);
-	if (res == NULL) {
-		return NULL;
-	}
-
-	/* This should be in the tp_alloc for the new class, but 
-	 * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
+	/*
+	 * Don't register if we use the default flags, other parts will do
+	 * that if necessary. I don't like this, but don't want to pollute
+	 * the interface of this function with yet another argument.
 	 */
-	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
-	
-	((PyObjCObject*)res)->objc_object = objc_object;
-	((PyObjCObject*)res)->flags = PyObjCObject_kCLASSIC;
-
-	return res;
-}
-
-PyObject* 
-PyObjCObject_NewUnitialized(id objc_object)
-{
-	PyTypeObject* cls_type;
-	PyObject*     res;
-
-	res = PyObjC_FindPythonProxy(objc_object);
-	if (res) return res;
-
-	assert(objc_object != nil);
-
-	cls_type = (PyTypeObject*)PyObjCClass_New(GETISA(objc_object));
-	if (cls_type == NULL) {
-		return NULL;
+	if (flags != PyObjCObject_kDEFAULT) {
+		PyObjC_RegisterPythonProxy(objc_object, res);
 	}
-
-	res = cls_type->tp_alloc(cls_type, 0);
-	Py_DECREF(cls_type);
-	if (res == NULL) {
-		return NULL;
-	}
-
-	/* This should be in the tp_alloc for the new class, but 
-	 * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
-	 */
-	PyObjCClass_CheckMethodList((PyObject*)res->ob_type, 1);
-	
-	((PyObjCObject*)res)->objc_object = objc_object;
-	/*((PyObjCObject*)res)->flags = 0;*/
-	((PyObjCObject*)res)->flags = PyObjCObject_kUNINITIALIZED;
-
-	PyObjC_RegisterPythonProxy(objc_object, res);
-
 	return res;
 }
 
@@ -839,9 +777,8 @@ PyObject* PyObjCObject_NewTransient(id objc_object, int* cookie)
 	}
 
 	*cookie = 1;
-	result = PyObjCObject_NewUnitialized(objc_object);
-	((PyObjCObject*)result)-> flags |= PyObjCObject_kSHOULD_NOT_RELEASE;
-	((PyObjCObject*)result)-> flags &= ~PyObjCObject_kUNINITIALIZED;
+	result = PyObjCObject_New(objc_object, 
+			PyObjCObject_kSHOULD_NOT_RELEASE, NO);
 	return result;
 }
 

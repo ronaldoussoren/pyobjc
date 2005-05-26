@@ -1270,7 +1270,7 @@ object_method_respondsToSelector(
 
 	PyObjC_BEGIN_WITH_GIL
 		/* First check if we respond */
-		pyself = PyObjCObject_New(self);
+		pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
 		if (pyself == NULL) {
 			*pres = NO;
 			PyObjC_GIL_RETURNVOID;
@@ -1332,7 +1332,7 @@ object_method_methodSignatureForSelector(
 	}
 
 	PyObjC_BEGIN_WITH_GIL
-		pyself = PyObjCObject_New(self);
+		pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
 		if (pyself == NULL) {
 			PyErr_Clear();
 			PyObjC_GIL_RETURNVOID;
@@ -1397,7 +1397,7 @@ object_method_forwardInvocation(
 	volatile int have_output = 0;
 	PyGILState_STATE state = PyGILState_Ensure();
 
-	pyself = PyObjCObject_New(self);
+	pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
 	if (pyself == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 		return;
@@ -1807,7 +1807,7 @@ object_method_valueForKey_(
 		) && [[self class] accessInstanceVariablesDirectly]) {
 
 			PyGILState_STATE state = PyGILState_Ensure();
-			PyObject* selfObj = PyObjCObject_New(self);
+			PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
 			PyObject *res = NULL;
 			r = -1;
 			do {
@@ -1911,7 +1911,7 @@ object_method_setValue_forKey_(
 				[localException raise];
 			}
 			PyObject* res = NULL;
-			PyObject* selfObj = PyObjCObject_New(self);
+			PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
 			r = -1;
 			do {
 				char *rawkey = (char *)[[@"_" stringByAppendingString:key] UTF8String];

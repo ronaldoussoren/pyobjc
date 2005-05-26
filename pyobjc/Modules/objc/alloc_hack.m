@@ -56,7 +56,7 @@ call_NSObject_alloc(PyObject* method,
 		return NULL;
 	}
 
-	return PyObjCObject_NewUnitialized(result);
+	return PyObjCObject_New(result, PyObjCObject_kUNINITIALIZED, NO);
 }
 
 static void 
@@ -316,8 +316,9 @@ imp_NSObject_release(
 	void* callable)
 {
 	PyObject* arglist = NULL;
-	PyObject* v = NULL;
 	PyObject* result = NULL;
+	PyObject* pyself;
+	int cookie;
 
 	PyObjC_BEGIN_WITH_GIL
 
@@ -326,23 +327,24 @@ imp_NSObject_release(
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-		v = PyObjCObject_NewClassic(*(id*)args[0]);
-		//v = PyObjC_IdToPython(*(id*)args[0]);
-		if (v == NULL) {
+		pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
+		if (pyself == NULL) {
 			Py_DECREF(arglist);
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-		PyTuple_SET_ITEM(arglist, 0, v);
-		v = NULL;
+		PyTuple_SET_ITEM(arglist, 0, pyself);
+		Py_INCREF(pyself);
 
 		result = PyObject_Call((PyObject*)callable, arglist, NULL);
 		if (result == NULL) {
 			Py_DECREF(arglist);
+			PyObjCObject_ReleaseTransient(pyself, cookie);
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
 		Py_DECREF(arglist); 
+		PyObjCObject_ReleaseTransient(pyself, cookie);
 
 		/* TODO: assert result is None */
 		Py_DECREF(result);
@@ -358,8 +360,9 @@ imp_NSObject_retain(
 	void* callable)
 {
 	PyObject* arglist = NULL;
-	PyObject* v = NULL;
 	PyObject* result = NULL;
+	PyObject* pyself;
+	int cookie;
 	int err;
 
 	PyObjC_BEGIN_WITH_GIL
@@ -369,18 +372,19 @@ imp_NSObject_retain(
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-		v = PyObjCObject_NewClassic(*(id*)args[0]);
-		if (v == NULL) {
+		pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
+		if (pyself == NULL) {
 			Py_DECREF(arglist);
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-		PyTuple_SET_ITEM(arglist, 0, v);
-		v = NULL;
+		PyTuple_SET_ITEM(arglist, 0, pyself);
+		Py_INCREF(pyself);
 
 		result = PyObject_Call((PyObject*)callable, arglist, NULL);
 		if (result == NULL) {
 			Py_DECREF(arglist);
+			PyObjCObject_ReleaseTransient(pyself, cookie);
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
@@ -388,6 +392,7 @@ imp_NSObject_retain(
 
 		err = depythonify_c_value(@encode(id), result, resp);
 		Py_DECREF(result); 
+		PyObjCObject_ReleaseTransient(pyself, cookie);
 		if (err == -1) {
 			PyObjC_GIL_FORWARD_EXC();
 		}

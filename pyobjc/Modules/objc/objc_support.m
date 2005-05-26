@@ -55,7 +55,8 @@
 
 	rval = PyObjC_FindPythonProxy(self);
 	if (rval == NULL) {
-		rval = (PyObject *)PyObjCObject_New(self);
+		rval = (PyObject *)PyObjCObject_New(self, 
+				PyObjCObject_kDEFAULT, YES);
 		PyObjC_RegisterPythonProxy(self, rval);
 	}
 
@@ -91,7 +92,8 @@
 
 	rval = PyObjC_FindPythonProxy(self);
 	if (rval == NULL) {
-		rval = (PyObject *)PyObjCObject_New(self);
+		rval = (PyObject *)PyObjCObject_New(self,
+				PyObjCObject_kDEFAULT, YES);
 		PyObjC_RegisterPythonProxy(self, rval);
 	}
 	return rval;
@@ -143,7 +145,8 @@
 
 	rval = PyObjC_FindPythonProxy(self);
 	if (rval == NULL) {
-		rval = (PyObject *)PyObjCObject_NewClassic(self);
+		rval = (PyObject *)PyObjCObject_New(self,
+				PyObjCObject_kCLASSIC, NO);
 		PyObjC_RegisterPythonProxy(self, rval);
 	}
 	return rval;
@@ -188,7 +191,8 @@
 	
 	rval = PyObjC_FindPythonProxy(self);
 	if (rval == NULL) {
-		rval= PyObjCObject_New(self);
+		rval= PyObjCObject_New(self,
+				PyObjCObject_kDEFAULT, YES);
 
 		if (PyObjC_NSNumberWrapper && rval) {
 			PyObject *val = rval;
@@ -212,7 +216,8 @@
 
 	rval = PyObjC_FindPythonProxy(self);
 	if (rval == NULL) {
-		rval = (PyObject *)PyObjCObject_New(self);
+		rval = (PyObject *)PyObjCObject_New(self,
+				PyObjCObject_kDEFAULT, YES);
 		PyObjC_RegisterPythonProxy(self, rval);
 	}
 
