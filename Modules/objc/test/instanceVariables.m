@@ -46,6 +46,7 @@
 	Py_XDECREF(pyValue);
 	[objValue release];
 	[nilValue release];
+	[super dealloc];
 }
 
 @end

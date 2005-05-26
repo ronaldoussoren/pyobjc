@@ -362,6 +362,8 @@ imp_objWithObjects_count_(void* cif __attribute__((__unused__)), void* resp, voi
 	PyObject* arglist = NULL;
 	PyObject* v = NULL;
 	PyGILState_STATE state;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	*preturnValue = nil;
 
@@ -370,9 +372,10 @@ imp_objWithObjects_count_(void* cif __attribute__((__unused__)), void* resp, voi
 	arglist = PyTuple_New(3);
 	if (arglist == NULL) goto error;
 
-	v = PyObjC_IdToPython(self);
-	if (v == NULL) goto error;
-	PyTuple_SET_ITEM(arglist, 0, v);
+	pyself = PyObjCObject_NewTransient(self, &cookie);
+	if (pyself == NULL) goto error;
+	PyTuple_SET_ITEM(arglist, 0, pyself);
+	Py_INCREF(pyself);
 
 	v = PyObjC_CArrayToPython(@encode(id), objects, count);
 	if (v == NULL) goto error;
@@ -384,6 +387,7 @@ imp_objWithObjects_count_(void* cif __attribute__((__unused__)), void* resp, voi
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL); 
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) goto error;
 
 	*preturnValue = PyObjC_PythonToId(result);
@@ -395,6 +399,10 @@ imp_objWithObjects_count_(void* cif __attribute__((__unused__)), void* resp, voi
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie);
+	}
+
 	PyObjCErr_ToObjCWithGILState(&state);
 	*preturnValue = nil;
 }

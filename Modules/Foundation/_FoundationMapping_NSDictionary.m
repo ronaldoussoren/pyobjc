@@ -144,15 +144,18 @@ imp_NSDictionary_initWithObjects_forKeys_count_(
 	PyObject* arglist = NULL;
 	PyObject* v;
 	int i;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(4);
 	if (arglist == NULL) goto error;
 
-	v = PyObjC_IdToPython(self);
-	if (v == NULL) goto error;
-	PyTuple_SET_ITEM(arglist, 0, v);
+	pyself = PyObjCObject_NewTransient(self, &cookie);
+	if (pyself == NULL) goto error;
+	PyTuple_SetItem(arglist, 0, pyself); 
+	Py_INCREF(pyself);
 
 	v = PyTuple_New(count);
 	if (v == NULL) goto error;
@@ -178,6 +181,7 @@ imp_NSDictionary_initWithObjects_forKeys_count_(
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) goto error;
 
 	*pretval = PyObjC_PythonToId(result);
@@ -188,6 +192,9 @@ imp_NSDictionary_initWithObjects_forKeys_count_(
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie); 
+	}
 	*pretval = nil;
 	PyObjCErr_ToObjCWithGILState(&state);
 }

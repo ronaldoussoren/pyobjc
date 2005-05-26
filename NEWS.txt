@@ -4,6 +4,11 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 1.3.7 (????-??-??)
+--------------------------
+
+- Fixed a problem with reference counting in initializers.
+
 Version 1.3.6 (2005-05-19)
 --------------------------
 

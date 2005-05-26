@@ -121,6 +121,8 @@ struct pyobjc_api objc_api = {
 	PyObjC_ConvertChar,     /* pyobjc_convertchar */
 	PyObjCObject_New,		/* pyobjc_object_new */
 	PyObjCCreateOpaquePointerType, /* pointer_type_new */
+	PyObjCObject_NewTransient,	/* newtransient */
+	PyObjCObject_ReleaseTransient,  /* releasetransient */
 };
 
 int PyObjCAPI_Register(PyObject* module)

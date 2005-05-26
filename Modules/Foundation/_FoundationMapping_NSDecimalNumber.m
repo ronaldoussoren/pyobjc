@@ -87,15 +87,18 @@ imp_NSDecimalNumber_initWithDecimal_(
 	PyObject* result = NULL;
 	PyObject* arglist = NULL;
 	PyObject* v = NULL;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	arglist = PyTuple_New(2);
 	if (arglist == NULL) goto error;
 	
-	v = PyObjC_IdToPython(self);
-	if (v == NULL) goto error;
-	PyTuple_SetItem(arglist, 0,  v);
+	pyself = PyObjCObject_NewTransient(self, &cookie);
+	if (pyself == NULL) goto error;
+	PyTuple_SetItem(arglist, 0, pyself); 
+	Py_INCREF(pyself);
 
 	v = Decimal_New(&aDecimal);
 	if (v == NULL) goto error;
@@ -103,6 +106,7 @@ imp_NSDecimalNumber_initWithDecimal_(
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) goto error;
 
 	*pretval = PyObjC_PythonToId(result);
@@ -113,6 +117,9 @@ imp_NSDecimalNumber_initWithDecimal_(
 error:
 	*pretval = nil;
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie); 
+	}
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 
@@ -168,6 +175,8 @@ imp_NSDecimalNumber_decimalValue(
 	PyObject* result = NULL;
 	PyObject* arglist = NULL;
 	PyObject* v = NULL;
+	PyObject* pyself = NULL;
+	int cookie = 0;
 
 	PyGILState_STATE state = PyGILState_Ensure();
 
@@ -180,6 +189,7 @@ imp_NSDecimalNumber_decimalValue(
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
+	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) goto error;
 
 	Decimal_Convert(result, &res);
@@ -190,6 +200,9 @@ imp_NSDecimalNumber_decimalValue(
 
 error:
 	Py_XDECREF(arglist);
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie); 
+	}
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 #endif /* MACOSX */
