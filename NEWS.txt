@@ -9,6 +9,9 @@ Version 1.3.7 (????-??-??)
 
 - Fixed a problem with reference counting in initializers.
 
+- New TinyURLService example in AppKit that demonstrates how to write
+  a service that transforms URLs into their tinyurl.com equivalents.
+
 Version 1.3.6 (2005-05-19)
 --------------------------
 

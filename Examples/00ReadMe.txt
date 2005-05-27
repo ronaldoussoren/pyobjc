@@ -240,6 +240,13 @@ have installed.
 
 .. __: AppKit/TinyTinyEdit
 
+* `TinyURLService`__
+
+  Another simple service, this one converts URL or strings from the
+  pasteboard to tinyurl.com equivalents (shift-cmd-V by default).
+
+.. __: AppKit/TinyURLService
+  
 * `Todo`_
 
   A more complex NIB based applications. This is a document-based application.
