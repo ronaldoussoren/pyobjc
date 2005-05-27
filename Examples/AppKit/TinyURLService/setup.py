@@ -13,20 +13,7 @@ plist = dict(
     NSServices = [
         dict(
             NSKeyEquivalent=dict(
-                default=u'F',
-            ),
-            NSMenuItem=dict(
-                default=u'Open File',
-            ),
-            NSMessage=u'doOpenFileService',
-            NSPortName=u'TinyURLService',
-            NSSendTypes=[
-                u'NSStringPboardType',
-            ],
-        ),
-        dict(
-            NSKeyEquivalent=dict(
-                default=u'V',
+                default=u'0',
             ),
             NSMenuItem=dict(
                 default=u'Shorten URL'
@@ -34,11 +21,9 @@ plist = dict(
             NSMessage=u'doTinyURLService',
             NSPortName=u'TinyURLService',
             NSReturnTypes=[
-                u'NSURLPboardType',
                 u'NSStringPboardType',
             ],
             NSSendTypes=[
-                u'NSURLPboardType',
                 u'NSStringPboardType',
             ],
         ),

@@ -243,7 +243,7 @@ have installed.
 * `TinyURLService`__
 
   Another simple service, this one converts URL or strings from the
-  pasteboard to tinyurl.com equivalents (shift-cmd-V by default).
+  pasteboard to tinyurl.com equivalents.
 
 .. __: AppKit/TinyURLService
   
