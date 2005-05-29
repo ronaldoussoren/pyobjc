@@ -70,25 +70,42 @@ class TestRegressions(unittest.TestCase):
         from Foundation import NSLog, NSAutoreleasePool, NSObject
         import AppKit
         from threading import Thread
+        import os
 
-        class ThreadHangObject(NSObject):
-            def init(self):
-                self.t = MyThread()
-                self.t.start()
-                return self
+        # Temporarily redirect stderr to a file, this allows us to check
+        # that NSLog actually wrote some text.
+        fp = os.open('/tmp/pyobjc-thread.txt', os.O_RDWR|os.O_CREAT, 0666)
+        dupped = os.dup(2)
+        os.dup2(fp, 2)
 
-        aList = []
-        class MyThread(Thread):
-            def run(self):
-                pool = NSAutoreleasePool.alloc().init()
-                aList.append("before")
-                NSLog("does this print?")
-                aList.append("after")
+        try:
 
-        o = ThreadHangObject.alloc().init()
-        o.t.join()
+            class ThreadHangObject(NSObject):
+                def init(self):
+                    self.t = MyThread()
+                    self.t.start()
+                    return self
 
-        self.assertEquals(aList, ["before", "after"])
+            aList = []
+            class MyThread(Thread):
+                def run(self):
+                    pool = NSAutoreleasePool.alloc().init()
+                    aList.append("before")
+                    NSLog("does this print?")
+                    aList.append("after")
+
+            o = ThreadHangObject.alloc().init()
+            o.t.join()
+
+            self.assertEquals(aList, ["before", "after"])
+
+        finally:
+            os.close(fp)
+            os.dup2(dupped, 2)
+
+        data = open('/tmp/pyobjc-thread.txt', 'r').read()
+        self.assert_('does this print?' in data)
+
 
 if __name__ == '__main__':
     unittest.main()

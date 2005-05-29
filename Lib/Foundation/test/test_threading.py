@@ -65,6 +65,7 @@ class ThreadingTest (unittest.TestCase):
         self.assertEquals(lst, range(100))
 
     def testPyObject(self):
+        import os
 
         class TestThreadRunner :
             def run_(self, argument):
@@ -74,15 +75,26 @@ class ThreadingTest (unittest.TestCase):
         myObj = TestThreadRunner()
         lst = []
 
-        NSThread.detachNewThreadSelector_toTarget_withObject_(
+        # Redirect stderr to avoid spurious messages when running the
+        # tests.
+        dupped = os.dup(2)
+        fp = os.open('/dev/null', os.O_RDWR)
+        os.dup2(fp, 2)
+        os.close(fp)
+
+        try:
+            NSThread.detachNewThreadSelector_toTarget_withObject_(
                 'run:', myObj, lst)
 
-        lst2 = []
-        for i in range(100):
-            lst2.append(i*2)
+            lst2 = []
+            for i in range(100):
+                lst2.append(i*2)
 
-        time.sleep(2)
-        self.assertEquals(lst, range(100))
+            time.sleep(2)
+            self.assertEquals(lst, range(100))
+
+        finally:
+            os.dup2(dupped, 2)
 
     def testCalling(self):
         class Dummy:

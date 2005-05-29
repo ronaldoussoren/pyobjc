@@ -79,6 +79,23 @@ class TestNSBitmapImageRep(unittest.TestCase):
         self.assertEquals(bitmapData, singlePlane)
 
 class TestBadCreation(unittest.TestCase):
+
+    # Redirect stderr to /dev/null for the duration of this test, 
+    # NSBitmapImageRep will write an error message to stderr.
+
+    def setUp(self):
+        import os
+        self.duppedStderr = os.dup(2)
+        fp = os.open('/dev/null', os.O_RDWR)
+        os.dup2(fp, 2)
+        os.close(fp)
+
+    def tearDown(self):
+        import os
+        os.dup2(self.duppedStderr, 2)
+
+
+
     def test_AllocInit(self):
         y = NSBitmapImageRep.alloc()
         try:
