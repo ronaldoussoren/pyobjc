@@ -20,23 +20,6 @@ else:
         ),
     )
 
-def _initialize():
-    import sys, os
-    if 'PYOBJCFRAMEWORKS' in os.environ:
-        paths = os.environ['PYOBJCFRAMEWORKS'].split(":")
-        count = 0
-        for path in paths:
-            bundle = NSBundle.bundleWithPath_(path)
-            bundle.principalClass()
-            sys.path.insert(count, str(bundle.resourcePath()))
-            count = count + 1
-
-            initPath = bundle.pathForResource_ofType_( "Init", "py")
-            if initPath:
-                execfile(initPath, globals(), locals())
-
-_initialize()
-
 import protocols  # no need to export these, just register with PyObjC
 
 #
