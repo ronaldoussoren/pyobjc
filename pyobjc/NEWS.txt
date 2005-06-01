@@ -7,6 +7,19 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3.7 (????-??-??)
 --------------------------
 
+- Hide List, Object, and Protocol classes from objc.loadBundle
+  to prevent confusion with Python code.  They can still be looked
+  up with objc.lookUpClass.
+
+- Fixed a regression where type signatures for pointers weren't
+  normalized (fixes uses of NSModalSession, etc.)
+
+- Fixed a bug with -[NSObject hash] to __hash__, there was a mismatch
+  between integer types.
+
+- Removed traces of the old Project Builder and Xcode templates in the
+  examples and Foundation initialization code (PYOBJCFRAMEWORKS).
+  
 - Fixed a problem with reference counting in initializers.
 
 - New TinyURLService example in AppKit that demonstrates how to write
