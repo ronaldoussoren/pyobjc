@@ -41,10 +41,6 @@ static struct wrapper* items = 0;
 static int item_count = 0;
 
 static int find_offset(const char* signature) {
-	/* XXX:
-	 * I don't know what the heck this was supposed to do
-	 */
-#if 0
 	if (signature[1] == _C_STRUCT_B) {
 		int o1, o2;
 
@@ -53,7 +49,6 @@ static int find_offset(const char* signature) {
 
 		return (o1 < o2) ? o1 : o2;
 	}
-#endif
 	return strlen(signature);
 }
 
@@ -68,12 +63,9 @@ FindWrapper(const char* signature)
 	for (i = 0; i < item_count; i++) {
 		if (strncmp(signature, items[i].signature, items[i].offset) == 0) {
 			return &items[i];
-			/* XXX: What was this supposed to do? */
-#if 0
 			if (signature[1] != _C_STRUCT_B || signature[items[i].offset] == '=' || signature[items[i].offset] == _C_STRUCT_E) {
 				return &items[i];
 			}
-#endif
 		}
 	}
 	return NULL;
