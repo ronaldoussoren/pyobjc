@@ -711,6 +711,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		PyObject* item;
 		PyObject* mod;
 		Class     cls;
+		char*  nm;
 
 		item = PyTuple_GET_ITEM(class_list, i);
 		if (item == NULL) {
@@ -733,9 +734,15 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 				return NULL;
 			}
 		}
+
+		nm = ((PyTypeObject*)item)->tp_name;
 		
-		if (((PyTypeObject*)item)->tp_name[0] == '%') {
+		if (nm[0] == '%') {
 			/* skip, posed-as type */
+		} else if (strcmp(nm, "Object") == 0 
+				|| strcmp(nm, "List") == 0
+				|| strcmp(nm, "Protocol") == 0) {
+			/* skip, classes that we're depricated in OpenStep */
 		} else if (PyDict_SetItemString(module_globals, 
 				((PyTypeObject*)item)->tp_name, item) == -1) {
 			Py_DECREF(module_key); module_key = NULL;
