@@ -19,6 +19,7 @@ TODO:
 """
 from _objc import setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature
 from itertools import imap
+import sys
 
 __all__ = ['CONVENIENCE_METHODS', 'CLASS_METHODS']
 
@@ -192,8 +193,20 @@ CONVENIENCE_METHODS['containsObject:'] = (
     ('__contains__', lambda self, elem: bool(self.containsObject_(container_wrap(elem)))),
 )
 
+
+
+def objc_hash(self, _max=sys.maxint, _const=((sys.maxint + 1L) * 2L)):
+    rval = self.hash()
+    if rval > _max:
+        rval -= _const
+        # -1 is not a valid hash in Python and hash(x) will
+        # translate a hash of -1 to -2, so we might as well
+        # do it here so that it's not too surprising..
+        if rval == -1:
+            rval = -2
+    return int(rval)
 CONVENIENCE_METHODS['hash'] = (
-    ('__hash__', lambda self: self.hash()),
+    ('__hash__', objc_hash),
 )
 
 CONVENIENCE_METHODS['isEqualTo:'] = (
