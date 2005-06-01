@@ -742,7 +742,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		} else if (strcmp(nm, "Object") == 0 
 				|| strcmp(nm, "List") == 0
 				|| strcmp(nm, "Protocol") == 0) {
-			/* skip, classes that we're depricated in OpenStep */
+			/* skip, these have been deprecated since OpenStep! */
 		} else if (PyDict_SetItemString(module_globals, 
 				((PyTypeObject*)item)->tp_name, item) == -1) {
 			Py_DECREF(module_key); module_key = NULL;
