@@ -32,16 +32,14 @@ Better documentation
 Test suite
 ..........
 
-XXX: It might be a good idea to move the unittests to a seperate python
-package (e.g. ``PyObjCTest``) that is not installed. I'd be surprised if anyone
-ever runs the unittests outside of the build tree.
-
 The test suite needs to be enhanced. 
 
 * Somehow find a way to check code-coverage of the unittests.
 
-* Tests that exercise Key-Value Observing in a way that crashes older versions
-  of PyObjC.
+* Tests in the AppKit and Foundation packages that test functionality in
+  the objc package should be moved to the objc package.
+
+* Enhance KVO/KVC tests
 
 * tests for all functions in ``Modules/*/*Mapping*.m``
   (including IMPs)
@@ -81,6 +79,10 @@ From the top of my head:
 * Rewrite selectors to work as regular functions with some attributes,
   rather than descriptors, so that they can be used more easily with tools
   such as PyProtocols dispatch.
+
+  XXX(Ronald): that's only possible for methods with a python implementation,
+  and should result in less code as well. A disadvantage is that this would
+  probably be a backward-incomptable change, but that should not be a problem.
 
 Support for GNUstep
 ...................

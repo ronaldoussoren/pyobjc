@@ -40,7 +40,16 @@ struct wrapper {
 static struct wrapper* items = 0;
 static int item_count = 0;
 
-static int find_offset(const char* signature) {
+/*
+ * If signature is a pointer to a structure return the index of the character
+ * just beyond the end of the struct name. This information is needed because
+ * @encode(struct foo*) can return two different strings:
+ * 1) ^{foo} if the compiler has not yet seen a full definition of struct foo
+ * 2) ^{foo=...} if the compiler has ssen a full definition of the struct
+ * We want to treat those two pointer as the same type, therefore we need to
+ * ignore everything beyond the end of the struct name.
+ */
+static int find_end_of_structname(const char* signature) {
 	if (signature[1] == _C_STRUCT_B) {
 		int o1, o2;
 
@@ -62,9 +71,16 @@ FindWrapper(const char* signature)
 
 	for (i = 0; i < item_count; i++) {
 		if (strncmp(signature, items[i].signature, items[i].offset) == 0) {
-			return &items[i];
-			if (signature[1] != _C_STRUCT_B || signature[items[i].offset] == '=' || signature[items[i].offset] == _C_STRUCT_E) {
-				return &items[i];
+			/* See comment just above find_end_of_structname */
+			if (signature[1] != _C_STRUCT_B) {
+				if (signature[items[i].offset] == '\0') {
+					return items + i;
+				}
+			} else {
+				char ch = signature[items[i].offset];
+				if (ch == '=' || ch == _C_STRUCT_E) {
+					return items + i;
+				}
 			}
 		}
 	}
@@ -119,7 +135,7 @@ PyObjCPointerWrapper_Register(
 	value = items + (item_count-1);
 
 	value->signature = signature;
-	value->offset = find_offset(signature);
+	value->offset = find_end_of_structname(signature);
 
 	value->pythonify = pythonify;
 	value->depythonify = depythonify;

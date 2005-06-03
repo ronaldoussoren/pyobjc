@@ -582,6 +582,12 @@ class_getattro(PyObject* self, PyObject* name)
 	 * NOTE: This method should be rewritten, copy the version of type()
 	 *       and modify as needed, that would avoid unnecessary rescans
 	 * 	 of superclasses. The same strategy is used in object_getattro.
+	 *
+	 * NOTE2: That rewrite should also cause this method to prefer class
+	 *       methods over instance methods (and documentation should be 
+	 *       added that you shouldn't look up instance methods through the
+	 *       class).
+	 *       
 	 */
 	if (PyString_Check(name) 
 			&& strncmp(PyString_AS_STRING(name), "__", 2) == 0 
