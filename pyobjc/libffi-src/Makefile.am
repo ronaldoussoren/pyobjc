@@ -97,6 +97,9 @@ endif
 if X86
 nodist_libffi_la_SOURCES += src/x86/ffi.c src/x86/sysv.S
 endif
+if X86_DARWIN
+nodist_libffi_la_SOURCES += src/x86/ffi_darwin.c src/x86/darwin.S
+endif
 if X86_WIN32
 nodist_libffi_la_SOURCES += src/x86/ffi.c src/x86/win32.S
 endif

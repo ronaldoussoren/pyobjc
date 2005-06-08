@@ -5,7 +5,7 @@
 
 	***************************************************************************/
 
-#ifdef MACOSX
+#if defined(MACOSX) && !defined(__i386__)
 #include	"mach_inject.h"
 
 #include <mach-o/dyld.h>

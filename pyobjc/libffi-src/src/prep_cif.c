@@ -119,6 +119,9 @@ ffi_status ffi_prep_cif(/*@out@*/ /*@partial@*/ ffi_cif *cif,
 #ifdef SPARC
       && (cif->abi != FFI_V9 || cif->rtype->size > 32)
 #endif
+#ifdef __i386__ /* FIXME: only on darwin */
+      && (cif->rtype->size > 8) 
+#endif
       )
     bytes = STACK_ARG_SIZE(sizeof(void*));
 #endif
@@ -134,7 +137,16 @@ ffi_status ffi_prep_cif(/*@out@*/ /*@partial@*/ ffi_cif *cif,
 	 check after the initialization.  */
       FFI_ASSERT_VALID_TYPE(*ptr);
 
-#if !defined __x86_64__ && !defined S390 && !defined PA
+#ifdef X86_DARWIN
+      {
+	/* Add padding, but at most to 4 bytes */
+	int align = (*ptr)->alignment;
+	if (align>4) align = 4;
+	if ((align - 1) & bytes) 
+	  bytes = ALIGN(bytes, align);
+        bytes += STACK_ARG_SIZE((*ptr)->size);
+      }
+#elif !defined __x86_64__ && !defined S390 && !defined PA
 #ifdef SPARC
       if (((*ptr)->type == FFI_TYPE_STRUCT
 	   && ((*ptr)->size > 16 || cif->abi != FFI_V9))

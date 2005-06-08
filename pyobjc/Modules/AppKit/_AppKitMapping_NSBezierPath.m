@@ -340,8 +340,7 @@ call_NSBezierPath_setLineDash_count_phase_(
 				PyObjCSelector_GetClass(method),
 				PyObjCObject_GetObject(self));
 
-
-			objc_msgSendSuper(&super,
+			((void(*)(struct objc_super*,SEL,float*,int,float))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method),
 				pattern, count, phase);
 		}
