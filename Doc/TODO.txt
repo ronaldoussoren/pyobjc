@@ -289,3 +289,15 @@ NSLog, stringWithFormat, ...
 
 Functions and methods that use format strings are not properly wrapped. Fix
 that.
+
+
+Darwin/x86
+...........
+
+* mach_inject needs to be ported to intel.
+
+* when that works we need to figure out if and how we can inject code into 
+  programs running an other instruction set (e.g. cross-platform inject).
+
+* drop autoconf/automake for libffi, integrate into the normal build machinery.
+  This will make it easier to create fat binaries of PyObjC later on.

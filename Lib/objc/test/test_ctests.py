@@ -6,7 +6,7 @@ This file provides a nice unittest wrapper around the functions in that file,
 the code in this file defines a class CTests that has the functions in the
 unitest.m file as its methods.
 """
-import unittest, sys
+import unittest, sys, platform
 from  objc.test import ctests
 
 names = [ x for x in dir (ctests) if not x.startswith('_') ]
@@ -20,7 +20,7 @@ def make_test(name):
     """
     result = { 'meth': getattr(ctests, name) }
 
-    if sys.platform == 'darwin' and name == 'CheckNSInvoke':
+    if sys.platform == 'darwin' and name == 'CheckNSInvoke' and platform.machine() == 'Power Macintosh':
         # There is a bug in Apple's implementation of NSInvocation
         # surpress the test failure until Apple fixes the class.
         # Don't change the C-code, the same function is used to disable

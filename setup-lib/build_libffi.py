@@ -1,5 +1,5 @@
 import os
-import sys
+import sys, platform
 import shutil
 from distutils.cmd import Command
 from distutils.util import get_platform
@@ -52,11 +52,20 @@ class build_libffi(Command):
                 # Do not use a relative path for the build-tree, libtool on
                 # MacOS X doesn't like that.
 
+                cflags = os.environ.get('CFLAGS', None)
+                if sys.platform == 'darwin' and platform.machine() != 'Power Macintosh':
+                    os.environ['CFLAGS'] = '-O0 -fPIC'
+
                 runtasks('Building FFI',
                     [os.path.join(self.libffi_sources, 'configure'),
                         '--prefix=' + inst_dir, '--disable-shared', '--enable-static'],
                     ['make', 'install'],
                     cwd=build_dir)
+
+                if cflags is not None:
+                    os.environ['CFLAGS'] = cflags
+                elif 'CFLAGS' in os.environ:
+                    del os.environ['CFLAGS']
 
                 # make sure cflags is set correctly
                 self.finalize_options()

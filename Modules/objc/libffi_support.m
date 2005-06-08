@@ -372,7 +372,11 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 	rettype = methinfo->rettype;
 
+#ifdef __i386__
+	if (((size_t)PyObjCRT_SizeOfType(rettype) > 8)
+#else
 	if (((size_t)PyObjCRT_SizeOfType(rettype) > sizeof(id))
+#endif
 		 	&& *rettype != _C_DBL && *rettype != _C_FLT
 		 	&& *rettype != _C_LNGLNG && *rettype != _C_ULNGLNG) {
 		/* the prototype is objc_msgSend_stret(void* retbuf, ... */
@@ -1189,7 +1193,11 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 			 */
 
 			arglistOffset = 0;
+#ifdef __i386__
+		} else if ((size_t)resultSize > 8) {
+#else
 		} else if ((size_t)resultSize > sizeof(id)) {
+#endif
 			arglistOffset = 1;
 			arglist[0] = &ffi_type_pointer;
 			values[0] = &msgResult;
@@ -1333,7 +1341,11 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, int* pArgOffset)
 	rettype = methinfo->rettype;
 
 	/* XXX: this needs work!!! */
+#ifdef __i386__
+	if (pArgOffset != NULL && (((size_t)PyObjCRT_SizeOfType(rettype) > 8)
+#else
 	if (pArgOffset != NULL && (((size_t)PyObjCRT_SizeOfType(rettype) > sizeof(id))
+#endif
 		 	&& *rettype != _C_DBL && *rettype != _C_FLT
 		 	&& *rettype != _C_LNGLNG && *rettype != _C_ULNGLNG)) {
 

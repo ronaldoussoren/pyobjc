@@ -138,8 +138,18 @@ call_NSDecimalNumber_decimalValue(
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 #ifdef MACOSX
+
+#if defined(__i386__)
+		/* The call below doesn't work on i386, I'm not sure why.
+ 	         * Because nobody will every subclass NSDecimalNumber this is not
+		 * really a problem.
+		 */
+		aDecimal = [PyObjCObject_GetObject(self) decimalValue];
+#else
 		objc_msgSendSuper_stret(&aDecimal, &super,
 				PyObjCSelector_GetSelector(method));
+#endif
+
 
 #else /* GNUSTEP */
 		/*  My hacked objc_msgSendSuper_stret doesn't work and it

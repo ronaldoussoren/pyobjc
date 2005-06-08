@@ -42,6 +42,7 @@ target_triplet = @target@
 @MIPS_LINUX_TRUE@am__append_2 = src/mips/ffi.c src/mips/o32.S
 @X86_TRUE@am__append_3 = src/x86/ffi.c src/x86/sysv.S
 @X86_WIN32_TRUE@am__append_4 = src/x86/ffi.c src/x86/win32.S
+@X86_DARWIN_TRUE@am__append_4b = src/x86/ffi_darwin.c src/x86/darwin.S
 @SPARC_TRUE@am__append_5 = src/sparc/ffi.c src/sparc/v8.S src/sparc/v9.S
 @ALPHA_TRUE@am__append_6 = src/alpha/ffi.c src/alpha/osf.S
 @IA64_TRUE@am__append_7 = src/ia64/ffi.c src/ia64/unix.S
@@ -273,7 +274,7 @@ libffi_la_SOURCES = src/debug.c src/prep_cif.c src/types.c \
 		src/raw_api.c src/java_raw_api.c
 
 
-nodist_libffi_la_SOURCES = $(am__append_1) $(am__append_2) $(am__append_3) $(am__append_4) $(am__append_5) $(am__append_6) $(am__append_7) $(am__append_8) $(am__append_9) $(am__append_10) $(am__append_11) $(am__append_12) $(am__append_13) $(am__append_14) $(am__append_15) $(am__append_16) $(am__append_17)
+nodist_libffi_la_SOURCES = $(am__append_1) $(am__append_2) $(am__append_3) $(am__append_4) $(am__append_4b) $(am__append_5) $(am__append_6) $(am__append_7) $(am__append_8) $(am__append_9) $(am__append_10) $(am__append_11) $(am__append_12) $(am__append_13) $(am__append_14) $(am__append_15) $(am__append_16) $(am__append_17)
 
 libffi_convenience_la_SOURCES = $(libffi_la_SOURCES)
 nodist_libffi_convenience_la_SOURCES = $(nodist_libffi_la_SOURCES)
@@ -301,6 +302,7 @@ am_libffi_la_OBJECTS = src/debug.lo src/prep_cif.lo src/types.lo \
 @MIPS_LINUX_TRUE@am__objects_2 = src/mips/ffi.lo src/mips/o32.lo
 @X86_TRUE@am__objects_3 = src/x86/ffi.lo src/x86/sysv.lo
 @X86_WIN32_TRUE@am__objects_4 = src/x86/ffi.lo src/x86/win32.lo
+@X86_DARWIN_TRUE@am__objects_4b = src/x86/ffi_darwin.lo src/x86/darwin.lo
 @SPARC_TRUE@am__objects_5 = src/sparc/ffi.lo src/sparc/v8.lo \
 @SPARC_TRUE@	src/sparc/v9.lo
 @ALPHA_TRUE@am__objects_6 = src/alpha/ffi.lo src/alpha/osf.lo
@@ -322,7 +324,7 @@ am_libffi_la_OBJECTS = src/debug.lo src/prep_cif.lo src/types.lo \
 @SH64_TRUE@am__objects_16 = src/sh64/sysv.lo src/sh64/ffi.lo
 @PA_TRUE@am__objects_17 = src/pa/linux.lo src/pa/ffi.lo
 nodist_libffi_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
-	$(am__objects_3) $(am__objects_4) $(am__objects_5) \
+	$(am__objects_3) $(am__objects_4) $(am__objects_4b) $(am__objects_5) \
 	$(am__objects_6) $(am__objects_7) $(am__objects_8) \
 	$(am__objects_9) $(am__objects_10) $(am__objects_11) \
 	$(am__objects_12) $(am__objects_13) $(am__objects_14) \
@@ -334,7 +336,7 @@ am__objects_18 = src/debug.lo src/prep_cif.lo src/types.lo \
 	src/raw_api.lo src/java_raw_api.lo
 am_libffi_convenience_la_OBJECTS = $(am__objects_18)
 am__objects_19 = $(am__objects_1) $(am__objects_2) $(am__objects_3) \
-	$(am__objects_4) $(am__objects_5) $(am__objects_6) \
+	$(am__objects_4) $(am__objects_4b) $(am__objects_5) $(am__objects_6) \
 	$(am__objects_7) $(am__objects_8) $(am__objects_9) \
 	$(am__objects_10) $(am__objects_11) $(am__objects_12) \
 	$(am__objects_13) $(am__objects_14) $(am__objects_15) \

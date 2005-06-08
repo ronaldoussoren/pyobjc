@@ -354,7 +354,7 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
 
 	PyObjC_DURING
 		retval = (IMP)objc_msgSend(PyObjCClass_GetClass(self),
-			PyObjCSelector_GET_SELECTOR(method),
+			PyObjCSelector_GetSelector(method),
 			selector);
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
@@ -418,7 +418,7 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 
 	PyObjC_DURING
 		retval = (IMP)objc_msgSendSuper(&super,
-			PyObjCSelector_GET_SELECTOR(method),
+			PyObjCSelector_GetSelector(method),
 			selector);
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);

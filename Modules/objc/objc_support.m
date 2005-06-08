@@ -1257,6 +1257,7 @@ const char* type, PyObject* argument, void* datum)
 	unsigned long long utemp;
 	int       r;
 
+#ifndef __i386__
 	switch (*type) {
 	case _C_CHR: 
 		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
@@ -1303,11 +1304,20 @@ const char* type, PyObject* argument, void* datum)
 	default:
 		return depythonify_c_value(type, argument, datum);
 	}
+
+#else 
+	return depythonify_c_value(type, argument, datum);
+#endif
 }
 
 PyObject *
 pythonify_c_return_value (const char *type, void *datum)
 {
+#ifndef __i386__
+	/*
+ 	 * On PowerPC short and char return values are passed
+ 	 * as full-size ints.
+	 */
 	static  const char intType[] = { _C_INT, 0 };
 	static  const char uintType[] = { _C_UINT, 0 };
 
@@ -1321,6 +1331,11 @@ pythonify_c_return_value (const char *type, void *datum)
 	default:
 		return pythonify_c_value(type, datum);
 	}
+
+#else
+	return pythonify_c_value(type, datum);
+
+#endif
 }
 
 
