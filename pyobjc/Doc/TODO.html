@@ -38,6 +38,7 @@ Contents</title>
 <li><a href="#nsset-vs-set" id="id23" name="id23">NSSet vs set</a></li>
 <li><a href="#python-2-4" id="id24" name="id24">Python 2.4</a></li>
 <li><a href="#nslog-stringwithformat" id="id25" name="id25">NSLog, stringWithFormat, ...</a></li>
+<li><a href="#darwin-x86" id="id26" name="id26">Darwin/x86</a></li>
 </ul>
 </li>
 </ul>
@@ -57,14 +58,12 @@ features.  Currently, documentation doesn't refer to itself consistently
 Python and Objective-C code snippets.</li>
 </ul>
 <h3><a href="#id5" name="test-suite">Test suite</a></h3>
-<p>XXX: It might be a good idea to move the unittests to a seperate python
-package (e.g. <code><span>PyObjCTest</span></code>) that is not installed. I'd be surprised if anyone
-ever runs the unittests outside of the build tree.</p>
 <p>The test suite needs to be enhanced.</p>
 <ul>
 <li>Somehow find a way to check code-coverage of the unittests.</li>
-<li>Tests that exercise Key-Value Observing in a way that crashes older versions
-of PyObjC.</li>
+<li>Tests in the AppKit and Foundation packages that test functionality in
+the objc package should be moved to the objc package.</li>
+<li>Enhance KVO/KVC tests</li>
 <li>tests for all functions in <code><span>Modules/*/*Mapping*.m</span></code>
 (including IMPs)</li>
 <li>tests for all non-generated function wrappers (and some for the generated
@@ -89,7 +88,10 @@ class methods in the obvious way.  This would (finally) close <a href="http://so
 <li>Also restructure class-builder.m, this file is way to large.</li>
 <li>Rewrite selectors to work as regular functions with some attributes,
 rather than descriptors, so that they can be used more easily with tools
-such as PyProtocols dispatch.</li>
+such as PyProtocols dispatch.<p>XXX(Ronald): that's only possible for methods with a python implementation,
+and should result in less code as well. A disadvantage is that this would
+probably be a backward-incomptable change, but that should not be a problem.</p>
+</li>
 </ul>
 <h3><a href="#id8" name="support-for-gnustep">Support for GNUstep</a></h3>
 <p>The current SVN version contains some support for GNUstep, this needs to
@@ -226,5 +228,13 @@ class FooClass (NSObject):
 <h3><a href="#id25" name="nslog-stringwithformat">NSLog, stringWithFormat, ...</a></h3>
 <p>Functions and methods that use format strings are not properly wrapped. Fix
 that.</p>
+<h3><a href="#id26" name="darwin-x86">Darwin/x86</a></h3>
+<ul>
+<li>mach_inject needs to be ported to intel.</li>
+<li>when that works we need to figure out if and how we can inject code into 
+programs running an other instruction set (e.g. cross-platform inject).</li>
+<li>drop autoconf/automake for libffi, integrate into the normal build machinery.
+This will make it easier to create fat binaries of PyObjC later on.</li>
+</ul>
 </body>
 </html>

@@ -158,8 +158,24 @@ def openDict(fn):
         fn = unicode(fn, 'utf-8')
     return NSDictionary.dictionaryWithContentsOfFile_(fn)
 
+XCODE_20 = 1000
+XCODE_21 = 999
+
+def _xcodeFiles(base):
+    for fn in os.listdir(base):
+        base, ext = os.path.splitext(fn)
+        if ext == '.xcode':
+            yield XCODE_20, os.path.join(base, fn, 'project.pbxproj')
+        elif ext == '.xcodeproj':
+            yield XCODE_21, os.path.join(base, fn, 'project.pbxproj')
+
+def xcodeFiles(base):
+    lst = list(_xcodeFiles(base))
+    lst.sort()
+    return [path for (ver, path) in lst]
+        
 def main():
-    fn = (sys.argv[1:2] or glob.glob('*.xcode/project.pbxproj'))[0]
+    fn = (sys.argv[1:2] or xcodeFiles('.'))[0]
     o = ArchiveGraph.fromPath(fn)
     o.graphreport()
     return o
