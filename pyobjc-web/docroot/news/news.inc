@@ -1,6 +1,12 @@
 <?
   $macpython23="<a href=\"http://homepages.cwi.nl/~jack/macpython/\">Mac Python 2.3</a>";
 ?>
+<span class="news_date">2005-06-08: </span><span class="news_headline">PyObjC sessions at WWDC '05</span><?php gray_line(); ?>
+  <p>
+Bob Ippolito did a session about Python on Mac OS X, and more specifically 
+PyObjC at this year's WWDC. The web presence for that session is now up
+at: <A HREF="http://pythonmac.org/wwdc2005/">http://pythonmac.org/wwdc05</A>
+  </p>
 <span class="news_date">2005-05-19: </span><span class="news_headline">PyObjC 1.3.6 released</span><?php gray_line(); ?>
   <p>
 Just after the release of PyObjC 1.3.5 we noticed a bug in the core that made
