@@ -5,6 +5,12 @@ import os
 import glob
 import site
 
+# If true we'll build universal binaries on systems with the 10.4u SDK running
+# OS X 10.4 or later.
+# 
+# NOTE: This is an experimental feature.
+AUTO_UNIVERSAL=0
+
 # We need at least Python 2.3
 MIN_PYTHON = (2, 3)
 
@@ -43,6 +49,7 @@ PackageManager application.
 
 from distutils.core import setup, Extension
 import os
+
 
 def frameworks(*args):
     lst = []
@@ -83,7 +90,7 @@ if gs_root is None:
         "-no-cpp-precomp",
         "-Wno-long-double",
         "-g",
-        "-O0",
+        #"-O0",
 
         # Loads of warning flags
         "-Wall", "-Wstrict-prototypes", "-Wmissing-prototypes",
@@ -123,6 +130,22 @@ if gs_root is None:
     EXCEPTION_HANDLING_LDFLAGS = frameworks('CoreFoundation', 'ExceptionHandling', 'Foundation')
     PREFPANES_LDFLAGS = frameworks('CoreFoundation', 'PreferencePanes', 'Foundation')
 
+    BASE_LDFLAGS = []
+    if AUTO_UNIVERSAL:
+        if os.path.exists('/Developer/SDKs/MacOSX10.4u.sdk') and int(os.uname()[2].split('.')[0]) >= 8:
+            CFLAGS.extend([
+                    '-arch', 'i386', 
+                    '-arch', 'ppc',
+                    '-isysroot', '/Developer/SDKs/MacOSX10.4u.sdk',
+            ])
+            BASE_LDFLAGS.extend([
+                    '-arch', 'i386', 
+                    '-arch', 'ppc',
+                    '-isysroot', '/Developer/SDKs/MacOSX10.4u.sdk',
+                    '-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk',
+            ])
+
+
 else:
     #
     # GNUstep
@@ -131,6 +154,8 @@ else:
     # on systems where the installed python hasn't been build with debugging
     # support.
     gs_root = gs_root + '/Library'
+
+    BASE_LDFLAGS=[]
 
     gs_cpu = os.environ.get('GNUSTEP_HOST_CPU')
     gs_os = os.environ.get('GNUSTEP_HOST_OS')
@@ -188,24 +213,49 @@ else:
 
 CFLAGS.append('-Ibuild/codegen/')
 
+FFI_CFLAGS=['-Ilibffi-src/include']
+
+# The list below includes the source files for all CPU types that we run on
+# this makes it easier to build fat binaries on Mac OS X.
+FFI_SOURCE=[
+    "libffi-src/src/types.c",
+    "libffi-src/src/prep_cif.c",
+    "libffi-src/src/x86/ffi_darwin.c",
+    "libffi-src/src/x86/darwin.S",
+    "libffi-src/src/powerpc/ffi_darwin.c",
+    "libffi-src/src/powerpc/darwin.S",
+    "libffi-src/src/powerpc/darwin_closure.S",
+]
+
+# Patch distutils: it needs to compile .S files as well.
+from distutils.unixccompiler import UnixCCompiler
+UnixCCompiler.src_extensions.append('.S')
+del UnixCCompiler
+
+
 CorePackages = [ 'objc' ]
 objcExtension = Extension("objc._objc",
-    glob.glob(os.path.join('Modules', 'objc', '*.m')),
-    extra_compile_args=CFLAGS,
-    extra_link_args=OBJC_LDFLAGS,
+    FFI_SOURCE + list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
+    extra_compile_args=CFLAGS + list(FFI_CFLAGS),
+    extra_link_args=OBJC_LDFLAGS + BASE_LDFLAGS,
 )
-objcExtension.use_libffi = True
 
 CoreExtensions =  [ objcExtension ]
 
 for test_source in glob.glob(os.path.join('Modules', 'objc', 'test', '*.m')):
     name, ext = os.path.splitext(os.path.basename(test_source))
-    ext = Extension('objc.test.' + name,
-        [test_source],
-        extra_compile_args=['-IModules/objc'] + CFLAGS,
-        extra_link_args=OBJC_LDFLAGS)
-    if name == 'ctests':
-        ext.use_libffi = True
+
+    if name != 'ctests':
+        ext = Extension('objc.test.' + name,
+            [test_source],
+            extra_compile_args=['-IModules/objc'] + CFLAGS,
+            extra_link_args=OBJC_LDFLAGS)
+    else:
+        ext = Extension('objc.test.' + name,
+            [test_source] + FFI_SOURCE,
+            extra_compile_args=['-IModules/objc'] + CFLAGS + FFI_CFLAGS,
+            extra_link_args=OBJC_LDFLAGS + BASE_LDFLAGS)
+
     CoreExtensions.append(ext)
 
 CoreFoundationDepends = dict()
@@ -253,7 +303,7 @@ FoundationPackages, FoundationExtensions = \
                         "-IModules/objc",
                     ] + CFLAGS,
                     extra_link_args=[
-                    ] + FND_LDFLAGS,
+                    ] + FND_LDFLAGS + BASE_LDFLAGS,
                     **FoundationDepends
                     ),
         ])
@@ -266,7 +316,7 @@ AppKitPackages, AppKitExtensions = \
                         "-IModules/objc",
                     ] + CFLAGS,
                     extra_link_args=[
-                    ] + APPKIT_LDFLAGS,
+                    ] + APPKIT_LDFLAGS + BASE_LDFLAGS,
                     **AppKitDepends
                     ),
       ])
@@ -281,7 +331,7 @@ AddressBookPackages, AddressBookExtensions = \
                         '-IModules/objc',
                       ] + CFLAGS,
                       extra_link_args=[
-                      ] + ADDRESSBOOK_LDFLAGS,
+                      ] + ADDRESSBOOK_LDFLAGS + BASE_LDFLAGS,
                       **AddressBookDepends
                       ),
         ])
@@ -294,7 +344,7 @@ CoreFoundationPackages, CoreFoundationExtensions = \
                         '-IModules/objc',
                       ] + CFLAGS,
                       extra_link_args=[
-                      ] + CF_LDFLAGS,
+                      ] + CF_LDFLAGS + BASE_LDFLAGS,
                       **CoreFoundationDepends),
         ])
 
@@ -306,7 +356,7 @@ SecurityInterfacePackages, SecurityInterfaceExtensions = \
                         '-IModules/objc',
                       ] + CFLAGS,
                       extra_link_args=[
-                      ] + SECURITY_INTERFACE_LDFLAGS,
+                      ] + SECURITY_INTERFACE_LDFLAGS + BASE_LDFLAGS,
                       **SecurityInterfaceDepends
                       ),
         ])
@@ -319,7 +369,7 @@ ExceptionHandlingPackages, ExceptionHandlingExtensions = \
                         '-IModules/objc',
                       ] + CFLAGS,
                       extra_link_args=[
-                      ] + EXCEPTION_HANDLING_LDFLAGS,
+                      ] + EXCEPTION_HANDLING_LDFLAGS + BASE_LDFLAGS,
                       **ExceptionHandlingDepends
                       ),
         ])
@@ -332,7 +382,7 @@ PrefPanesPackages, PrefPanesExtensions = \
                         '-IModules/objc',
                       ] + CFLAGS,
                       extra_link_args=[
-                      ] + PREFPANES_LDFLAGS,
+                      ] + PREFPANES_LDFLAGS + BASE_LDFLAGS,
                       **PrefPanesDepends
                       ),
         ])

@@ -1,3 +1,4 @@
+#ifdef __i386__
 /* -----------------------------------------------------------------------
    ffi.c - Copyright (c) 1996, 1998, 1999, 2001  Red Hat, Inc.
            Copyright (c) 2002  Ranjit Mathew
@@ -257,8 +258,10 @@ static void ffi_prep_incoming_args_SYSV (char *stack, void **ret,
 					 void** args, ffi_cif* cif);
 static void ffi_closure_SYSV (ffi_closure *)
      __attribute__ ((regparm(1)));
+#if !FFI_NO_RAW_API
 static void ffi_closure_raw_SYSV (ffi_raw_closure *)
      __attribute__ ((regparm(1)));
+#endif
 
 /* This function is jumped to by the trampoline */
 
@@ -577,3 +580,5 @@ ffi_raw_call(/*@dependent@*/ ffi_cif *cif,
 #endif
 
 #endif /* __x86_64__  */
+
+#endif /* __i386__ */

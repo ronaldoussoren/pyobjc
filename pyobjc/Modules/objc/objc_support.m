@@ -1257,7 +1257,8 @@ const char* type, PyObject* argument, void* datum)
 	unsigned long long utemp;
 	int       r;
 
-#ifndef __i386__
+#ifdef __ppc__
+	/* Small integers are promoted to integers when returning them */
 	switch (*type) {
 	case _C_CHR: 
 		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
@@ -1313,9 +1314,9 @@ const char* type, PyObject* argument, void* datum)
 PyObject *
 pythonify_c_return_value (const char *type, void *datum)
 {
-#ifndef __i386__
+#ifdef __ppc__
 	/*
- 	 * On PowerPC short and char return values are passed
+ 	 * On PowerPC short and char return values are returned
  	 * as full-size ints.
 	 */
 	static  const char intType[] = { _C_INT, 0 };

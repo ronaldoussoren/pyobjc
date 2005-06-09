@@ -1802,6 +1802,7 @@ static 	char buf[1024];
 	[key release];
 	[observed release];
 	[value release];
+	[super dealloc];
 }
 
 -getValue
