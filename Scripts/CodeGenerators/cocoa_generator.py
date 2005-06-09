@@ -67,6 +67,7 @@ if sys.platform == "darwin":
     QUARTZ2_HDRS=pathjoin(FRAMEWORKS, "Quartz.framework", "Frameworks", "QuartzComposer.framework", "Headers")
     QUARTZ3_HDRS=pathjoin(FRAMEWORKS, "Quartz.framework", "Frameworks", "PDFKit.framework", "Headers")
     OSAKIT_HDRS=pathjoin(FRAMEWORKS, "OSAKit.framework", "Headers")
+    SENTESTINGKIT_HDRS=pathjoin(FRAMEWORKS, "SenTestingKit.framework", "Headers")
 
 else:
     # This is probably incorrect, and was added to help a future
@@ -759,3 +760,11 @@ if QUARTZ_HDRS is not None:
     strconst_generator.generate(
             QUARTZ3_HDRS,
             'build/codegen/_Quartz3_Str.inc', emit_header=0)
+
+if SENTESTINGKIT_HDRS is not None:
+    enum_generator.generate(
+            SENTESTINGKIT_HDRS,
+            'build/codegen/_SenTestingKit_Enum.inc')
+    strconst_generator.generate(
+            SENTESTINGKIT_HDRS,
+            'build/codegen/_SenTestingKit_Str.inc')
