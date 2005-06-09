@@ -104,12 +104,6 @@ class pyobjc_build_ext (build_ext):
             build_ext.run(self)
 
     def build_extension(self, ext):
-        if getattr(ext, 'use_libffi', False):
-            libffi = self.reinitialize_command('build_libffi')
-            libffi.run()
-            ext.extra_compile_args[:0] = libffi.cflags
-            ext.extra_link_args[:0] = libffi.ldflags
-            ext.use_libffi = False
         build_ext.build_extension(self, ext)
 
 

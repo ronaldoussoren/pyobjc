@@ -1,3 +1,4 @@
+#ifdef __ppc__
 /* -----------------------------------------------------------------------
    ffi.c - Copyright (c) 1998 Geoffrey Keating
 
@@ -700,3 +701,4 @@ int ffi_closure_helper_DARWIN (ffi_closure* closure, void * rvalue,
   /* Tell ffi_closure_ASM to perform return type promotions.  */
   return cif->rtype->type;
 }
+#endif

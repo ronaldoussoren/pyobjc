@@ -1,4 +1,3 @@
-import build_libffi
 import build_html
 import di_build_ext
 import di_sdist

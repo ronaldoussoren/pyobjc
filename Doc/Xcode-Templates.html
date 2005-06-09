@@ -7,8 +7,6 @@
 PyObjC Xcode Templates</title>
 <meta name="Author" content="Bob Ippolito" />
 <meta name="Contact" content="bob@redivi.com" />
-<title>
-Contents</title>
 </head>
 <body>
 <h2>PyObjC Xcode Templates</h2>
@@ -24,18 +22,19 @@ Contents</title>
 applications &quot;by hand&quot; using py2app, as described in the
 tutorial.  As of PyObjC 1.3.1, these templates are py2app based,
 so there is no longer a technical reason not to use them.</p>
-<h2>Contents</h2>
+<table border="1" width="80%" align="center"><tbody><tr><td><i><center>Contents</center></i><br />
 <ul>
-<li><a href="#installing" id="id3" name="id3">Installing</a></li>
-<li><a href="#notes" id="id4" name="id4">Notes</a></li>
-<li><a href="#groups" id="id5" name="id5">Groups</a></li>
-<li><a href="#targets" id="id6" name="id6">Targets</a></li>
-<li><a href="#custom-executable" id="id7" name="id7">Custom Executable</a></li>
-<li><a href="#pyobjc-application" id="id8" name="id8">PyObjC Application</a></li>
-<li><a href="#pyobjc-document-based-application" id="id9" name="id9">PyObjC Document Based Application</a></li>
-<li><a href="#pyobjc-mixed-application" id="id10" name="id10">PyObjC Mixed Application</a></li>
+<li><a href="#installing">Installing</a></li>
+<li><a href="#notes">Notes</a></li>
+<li><a href="#groups">Groups</a></li>
+<li><a href="#targets">Targets</a></li>
+<li><a href="#custom-executable">Custom Executable</a></li>
+<li><a href="#pyobjc-application">PyObjC Application</a></li>
+<li><a href="#pyobjc-document-based-application">PyObjC Document Based Application</a></li>
+<li><a href="#pyobjc-mixed-application">PyObjC Mixed Application</a></li>
 </ul>
-<h2><a href="#id3" name="installing">Installing</a></h2>
+</td></tr></tbody></table>
+<h2><a href="#id3">Installing</a></h2>
 <p>If you have installed PyObjC 1.3.1 or later using the installer, then
 the Xcode templates are already installed.</p>
 <p>If you have installed any version of PyObjC prior to 1.3.1, then you
@@ -48,7 +47,7 @@ be found here:</p>
 </pre>
 <p>To install the templates manually, simply copy (or link) them into
 this Project Templates folder.</p>
-<h2><a href="#id4" name="notes">Notes</a></h2>
+<h2><a href="#id4">Notes</a></h2>
 <ul>
 <li>These templates are brand new in PyObjC 1.3.1 and haven't had much
 use yet.  If you think that you have found a bug or would like them to be
@@ -106,7 +105,7 @@ plug-in.  py2app will find them and put them into your application!
 See PyObjC Mixed Application below for more information about using
 plug-ins to integrate non-Python code into your application.</li>
 </ul>
-<h2><a href="#id5" name="groups">Groups</a></h2>
+<h2><a href="#id5">Groups</a></h2>
 <p>The PyObjC Xcode templates use py2app to build applications,
 but they parse the <code><span>.xcode</span></code> project file to determine
 how they should be built, rather than directly in the
@@ -167,7 +166,7 @@ can go in this plist, see
 </dl>
 </dd>
 </dl>
-<h2><a href="#id6" name="targets">Targets</a></h2>
+<h2><a href="#id6">Targets</a></h2>
 <dl>
 <dt>Development:</dt>
 <dd><p>This target will use py2app <code><span>--alias</span></code> build mode.  Executables
@@ -195,7 +194,7 @@ source code.  To change the current build style, Get Info on the
 project.  The build style has no effect on Python code.</p>
 </dd>
 </dl>
-<h2><a href="#id7" name="custom-executable">Custom Executable</a></h2>
+<h2><a href="#id7">Custom Executable</a></h2>
 <p>The custom executable enables for your built application to be run from Xcode.</p>
 <p>If you rename your main script or fiddle around with your <code><span>Info.plist</span></code>,
 the path to your application may change and this will no longer work.
@@ -225,12 +224,12 @@ has been built once.</p>
 <p>Custom executables are specific to a particular user in Xcode, so anything
 you do to this part of the template won't be seen by anyone else unless
 they happen to have the same short user name as you.</p>
-<h2><a href="#id8" name="pyobjc-application">PyObjC Application</a></h2>
+<h2><a href="#id8">PyObjC Application</a></h2>
 <p>This is a simple template that has a window and an application delegate.</p>
-<h2><a href="#id9" name="pyobjc-document-based-application">PyObjC Document Based Application</a></h2>
+<h2><a href="#id9">PyObjC Document Based Application</a></h2>
 <p>This is template demonstrates a Document-based application written in Python.
 It is a simple text editor (like the TinyTinyEdit example).</p>
-<h2><a href="#id10" name="pyobjc-mixed-application">PyObjC Mixed Application</a></h2>
+<h2><a href="#id10">PyObjC Mixed Application</a></h2>
 <p>This template contains both Objective-C and Python code.  The Objective-C code
 is built as a &quot;ProjectNamePlugIn.bundle&quot; plug-in in a separate target.  The plug-in
 is placed in the <code><span>Resources</span></code> directory of your application.  A wrapper script

@@ -1,3 +1,4 @@
+#ifdef __ppc__
 /* -----------------------------------------------------------------------
    darwin.S - Copyright (c) 2000 John Hornkvist
 
@@ -221,3 +222,4 @@ LEFDE1:
         .align 2
 LLFB0$non_lazy_ptr:
         .long   LFB0
+#endif

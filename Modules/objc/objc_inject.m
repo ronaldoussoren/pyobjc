@@ -1,5 +1,5 @@
 #include "objc_inject.h"
-#if defined(MAC_OS_X_VERSION_10_3) && !defined(__i386__)
+#if defined(MAC_OS_X_VERSION_10_3) && defined(__ppc__)
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
 #include "mach_inject.h"
 #include <string.h>

@@ -1,3 +1,4 @@
+#ifdef __ppc__
 /* -----------------------------------------------------------------------
    darwin_closure.S - Copyright (c) 2002 2003 Free Software Foundation,
    Inc. based on ppc_closure.S
@@ -302,3 +303,4 @@ L_ffi_closure_helper_DARWIN$lazy_ptr:
 	.align 2
 LLFB1$non_lazy_ptr:
         .long LFB1
+#endif
