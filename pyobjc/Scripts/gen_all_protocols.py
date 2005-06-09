@@ -59,6 +59,7 @@ for framework in [
         "WebKit", "ExceptionHandling", "SecurityInterface", "AppleScriptKit",
         "Automator", "CoreData", "XgridFoundation",
         "SyncServices", "DiscRecording", "DiscRecordingUI", 'QTKit', "OSAKit",
+        "SenTestingKit",
         ]:
     path = "/System/Library/Frameworks/%s.framework" % framework
     protfile = file(os.path.join(libdir, framework, "protocols.py"), "w")

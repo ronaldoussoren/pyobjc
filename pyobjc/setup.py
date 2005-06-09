@@ -129,6 +129,7 @@ if gs_root is None:
     SECURITY_INTERFACE_LDFLAGS = frameworks('CoreFoundation', 'SecurityInterface', 'Foundation')
     EXCEPTION_HANDLING_LDFLAGS = frameworks('CoreFoundation', 'ExceptionHandling', 'Foundation')
     PREFPANES_LDFLAGS = frameworks('CoreFoundation', 'PreferencePanes', 'Foundation')
+    SENTESTINGKIT_LDFLAGS = frameworks('Foundation')
 
     BASE_LDFLAGS = []
     if AUTO_UNIVERSAL:
@@ -292,6 +293,7 @@ XgridFoundationDepends = dict(depends=INCFILES)
 QTKitDepends = dict(depends=INCFILES)
 QuartzDepends = dict(depends=INCFILES)
 OSAKitDepends = dict(depends=INCFILES)
+SenTestingKitDepends = dict(depends=INCFILES)
 
 FoundationPackages, FoundationExtensions = \
         IfFrameWork('Foundation.framework', [ 'Foundation' ], [
@@ -405,6 +407,21 @@ InterfaceBuilderPackages, InterfaceBuilderExtensions = \
                         'Foundation'
                       ),
                       **InterfaceBuilderDepends
+                      ),
+        ])
+
+SenTestingKitPackages, SenTestingKitExtensions = \
+        IfFrameWork('SenTestingKit.framework', [ 'SenTestingKit' ], [
+            Extension('SenTestingKit._SenTestingKit',
+                      [ 'Modules/SenTestingKit/_SenTestingKit.m' ],
+                      extra_compile_args=[
+                        '-IModules/objc',
+                      ] + CFLAGS,
+                      extra_link_args=frameworks(
+                        'SenTestingKit',
+                        'Foundation'
+                      ),
+                      **SenTestingKitDepends
                       ),
         ])
 
@@ -609,6 +626,7 @@ packages = (
     QTKitPackages +
     QuartzPackages +
     OSAKitPackages +
+    SenTestingKitPackages +
 
     [
         'PyObjCTools',
@@ -676,6 +694,7 @@ dist = setup(
        + DiscRecordingUIExtensions
        + SyncServicesExtensions
        + XgridFoundationExtensions
+       + SenTestingKitExtensions
 
     ),
     packages = packages,

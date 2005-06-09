@@ -31,6 +31,16 @@ Version 1.3.7 (????-??-??)
   Intel ABI has not been finalised yet. It is also possible to build fat
   binaries, that option should not be used in production builds.
 
+- Support a number of new frameworks:
+
+  * SenTestingKit
+    
+    TODO: this framework uses lots of macros (such as STAssertEquals), these
+    have not yet been wrapped/converted.
+
+  * SecurityFoundation
+
+
 Version 1.3.6 (2005-05-19)
 --------------------------
 
