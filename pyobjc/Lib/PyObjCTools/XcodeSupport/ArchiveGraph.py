@@ -163,7 +163,7 @@ XCODE_21 = 999
 
 def _xcodeFiles(base):
     for fn in os.listdir(base):
-        base, ext = os.path.splitext(fn)
+        ext = os.path.splitext(fn)[1]
         if ext == '.xcode':
             yield XCODE_20, os.path.join(base, fn, 'project.pbxproj')
         elif ext == '.xcodeproj':
