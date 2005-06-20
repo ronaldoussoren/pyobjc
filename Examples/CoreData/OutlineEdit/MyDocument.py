@@ -47,7 +47,7 @@ class MyDocument (NibClassBuilder.AutoBaseClass):
             NSBeep()
             return
 
-	selection = self.outlineTreeController.selection()
+        selection = self.outlineTreeController.selection()
 
         parentNote = selection.valueForKeyPath_("parent")
         if parentNote is None:
@@ -55,9 +55,9 @@ class MyDocument (NibClassBuilder.AutoBaseClass):
         else:
             children  = parentNote.valueForKeyPath_("children").allObjects()
 
-	children = children.sortedArrayUsingDescriptors_(self.outlineTreeController.sortDescriptors())
+        children = children.sortedArrayUsingDescriptors_(self.outlineTreeController.sortDescriptors())
 
-	index = selectionPath.indexAtPosition_(selectionPath.length() - 1)
+        index = selectionPath.indexAtPosition_(selectionPath.length() - 1)
         if index == 0:
             NSBeep()
         else:
@@ -72,5 +72,5 @@ class MyDocument (NibClassBuilder.AutoBaseClass):
             NSBeep();
             return;
         
-	parent = parent.valueForKeyPath_("parent")
+        parent = parent.valueForKeyPath_("parent")
         selection.setValue_forKeyPath_(parent, "parent")
