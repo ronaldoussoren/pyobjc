@@ -21,7 +21,11 @@ PyDoc_STRVAR(ib_doc,
 
 
 #include "_DiscRecording_Enum.inc"
+#include "_DiscRecording2_Enum.inc"
+#include "_DiscRecording3_Enum.inc"
 #include "_DiscRecording_Str.inc"
+#include "_DiscRecording2_Str.inc"
+#include "_DiscRecording3_Str.inc"
 
 void init_DiscRecording(void);
 
