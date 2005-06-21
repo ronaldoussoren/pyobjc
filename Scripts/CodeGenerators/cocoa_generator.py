@@ -57,6 +57,8 @@ if sys.platform == "darwin":
     AUTOMATOR_HDRS=pathjoin(FRAMEWORKS, "Automator.framework", "Headers")
     COREDATA_HDRS=pathjoin(FRAMEWORKS, "CoreData.framework", "Headers")
     DISCRECORDING_HDRS=pathjoin(FRAMEWORKS, "DiscRecording.framework", "Headers")
+    DISCRECORDING2_HDRS=pathjoin(FRAMEWORKS, "DiscRecording.framework", "Frameworks", "DiscRecordingEngine.framework", "Headers")
+    DISCRECORDING3_HDRS=pathjoin(FRAMEWORKS, "DiscRecording.framework", "Frameworks", "DiscRecordingContent.framework", "Headers")
     DISCRECORDINGUI_HDRS=pathjoin(FRAMEWORKS, "DiscRecordingUI.framework", "Headers")
     SYNCSERVICES_HDRS=pathjoin(FRAMEWORKS, "SyncServices.framework", "Headers")
     XGRIDFOUNDATION_HDRS=pathjoin(FRAMEWORKS, "XgridFoundation.framework", "Headers")
@@ -674,11 +676,25 @@ if DISCRECORDING_HDRS is not None:
     enum_generator.generate(
             DISCRECORDING_HDRS,
             'build/codegen/_DiscRecording_Enum.inc',
-                ignore_files=[])
+                ignore_files=[], emit_imports=0, emit_footer=0)
+    enum_generator.generate(
+            DISCRECORDING2_HDRS,
+            'build/codegen/_DiscRecording2_Enum.inc',
+                ignore_files=[], emit_imports=0, emit_footer=0, emit_header=0)
+    enum_generator.generate(
+            DISCRECORDING3_HDRS,
+            'build/codegen/_DiscRecording3_Enum.inc',
+                ignore_files=[], emit_imports=0, emit_header=0)
 
     strconst_generator.generate(DISCRECORDING_HDRS,
                                 'build/codegen/_DiscRecording_Str.inc',
-                                ignore=())
+                                ignore=(), emit_footer=0)
+    strconst_generator.generate(DISCRECORDING2_HDRS,
+                                'build/codegen/_DiscRecording2_Str.inc',
+                                ignore=(), emit_footer=0, emit_header=0)
+    strconst_generator.generate(DISCRECORDING3_HDRS,
+                                'build/codegen/_DiscRecording3_Str.inc',
+                                ignore=(), emit_header=0)
 
 if DISCRECORDINGUI_HDRS is not None:
     enum_generator.generate(
