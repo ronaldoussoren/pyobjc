@@ -335,6 +335,7 @@ class GlobalThing(Token):
     FOUNDATION_EXPORT NSString * const Foo;
     extern CFStringRef cfFoo AVAILABLE_MAC_OSX_10_8;
     APPKIT_EXTERN const char foosball[] AVAILABLE_NEVER;
+    FOUNDATION_EXPORT BOOL NSKeepAllocationStatistics;
     ''')
 
 class ForwardClassReference(Token):

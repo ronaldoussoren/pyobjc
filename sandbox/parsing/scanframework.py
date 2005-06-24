@@ -9,6 +9,8 @@
 # - test, test and even more testing
 # - refactor script: make it possible to create wrappers for multiple 
 #   frameworks in one go, without rescanning headers over and over again.
+#   [maybe: add cache file to wrapped frameworks, that would make it easier
+#    to scan an add-on framework]
 # - integrate into build process
 # - Scanframework of CoreFoundation seems to indicate that the tokenizer 
 #   isn't good enough yet (or that I broke it).
@@ -205,7 +207,12 @@ class Hinter (object):
 
         return fun(name, fieldnames, fieldtypes)
 
+    def getFooter(self):
+        """ Return some text for at the end of __init__.py """
+        return self._globals.get('FOOTER', '')
 
+    def additionalHeaders(self):
+        return self._globals.get('ADDITIONAL_HEADERS', None)
 
 
 def update_fallback(env, framework):
@@ -244,8 +251,12 @@ class Dependency(object):
     
 
 class FrameworkScanner(object):
-    def __init__(self):
+    def __init__(self, additional=None):
         self._scanner = None
+        if additional is not None:
+            self._additionalHeaders = additional
+        else:
+            self._additionalHeaders = []
 
     def scanframework(self, name, sub=None):
         if sub is None:
@@ -258,6 +269,12 @@ class FrameworkScanner(object):
         if os.path.exists(startfile):
             seen.add(start)
             scanners.append(self.scanfile(startfile))
+            for item in self._additionalHeaders:
+                headers = glob.glob(locate_header('%s/%s.h' % (name, item)))
+                for header in headers:
+                    seen.add(name + '/' + os.path.basename(header))
+                    scanners.append(self.scanfile(header))
+
         else:
             headers = glob.glob(locate_header('%s/*.h' % (name,)))
             for header in headers:
@@ -615,7 +632,12 @@ def extractTypes(framework, types, dependencies):
 def makeInit(framework, out, hinter = None, types=None):
     framework_name = filter(None, os.path.split(framework))[0]
     framework_path = unicode(os.path.dirname(framework_find(framework_name)), sys.getfilesystemencoding())
-    f = FrameworkScanner()
+
+    if hinter is not None:
+        x = hinter.additionalHeaders()
+    else:
+        x = None
+    f = FrameworkScanner(x)
     if types is None:
         types = typedict()
 
@@ -766,8 +788,11 @@ def makeInit(framework, out, hinter = None, types=None):
             do_function(token, types, functions, hinter)
 
         elif isinstance(token, StaticInlineFunction):
-            # TODO: emit wrapper inside a C file.
-            pass
+            if hinter and hinter.should_ignore(token['name']):
+                continue
+
+            # TODO: emit wrapper inside a C file (or just wrap by hand...)
+            print "[SKIP STATIC INLINE]", token['name']
 
         else:
             if type(token) not in ignores:
@@ -823,9 +848,13 @@ def _initialize():
     ])
 """ % locals()
     print >>out, """
-_initialize()
+_initialize(); del _initialize
 del objc
 """
+
+    text = hinter.getFooter()
+    if text:
+        print >>out, text
 
 def makeWrapper(fmwk, hinter, types):
     try:

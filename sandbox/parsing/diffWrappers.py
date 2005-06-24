@@ -34,9 +34,22 @@ for k, v_old in old.__dict__.iteritems():
             print "OLD isn't callable, NEW is for %s (%r, %r)" % (
                     k, v_old, v_new)
 
+    elif isinstance(v_old, (tuple, list)):
+        if v_old != v_new:
+            print "OLD != NEW for %s (%r != %r)"%(k, v_old, v_new)
+
+    elif v_old is None:
+        if v_new is not None:
+            print "OLD != NEW for %s (%r != %r)"%(k, v_old, v_new)
+
     else:
-        print k, type(v_old), type(v_new)
+        print "FIXME!", k, type(v_old), type(v_new)
 
 for k, v in new.__dict__.iteritems():
+    if k.startswith('_') and k.endswith('_encoded'):
+        # Most likely '_SOMESTRUCT_encoded', these are introduced by 
+        # the wrapper generator and are not interesting at all.
+        continue
+
     if not hasattr(old, k):
         print "Not in OLD: %s (%r)" % (k, v)

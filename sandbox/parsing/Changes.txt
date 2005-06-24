@@ -1,0 +1,23 @@
+The new parsing code results in several changes, most of which should have no
+effect on user code. The list below tries to enumerate these changes, all 
+changes with effects on user code are definitely mentioned here.
+
+Changes that could affect user code:
+* NSObjC<Some>Type
+ 
+  This family of constants now have type 'str' (of length 1) instead of 
+  type 'int'. These functions are seldomly used.
+
+
+Changes that should not affect user code:
+* Most function wrappers are no longer instances of 
+  ``types.BuiltinFunctionType``.
+
+  This change makes pydoc even less effective on wrapped frameworks. Listed 
+  in this section because pydoc was already quite useless on wrapped frameworks.
+
+* ``from AppKit import *`` will also pull in all symbols from dependent
+  frameworks.
+
+  ``from Framework import *`` now behaves more like 
+  ``#import <Framework/Framework.h>`` in Objective-C. 
