@@ -7,8 +7,59 @@
 ?>
 <h1 class="title">PyObjC NEWS</h1>
 <p>An overview of the relevant changes in new, and older, releases.</p>
-<div class="section" id="version-1-3-5-2005-05">
-<h3><a name="version-1-3-5-2005-05">Version 1.3.5 (2005-05-??)</a></h3>
+<div class="section" id="version-1-3-7-2005-07-06">
+<h3><a name="version-1-3-7-2005-07-06">Version 1.3.7 (2005-07-06)</a></h3>
+<ul>
+<li><p class="first">Added wrappers for embedded DiscRecording frameworks
+([ 1224188 ] Fix for DiscRecording framework)</p>
+</li>
+<li><p class="first">Probably working Xcode 2.1 support (for converted Xcode 2.0 projects)</p>
+</li>
+<li><p class="first">Hide List, Object, and Protocol classes from objc.loadBundle
+to prevent confusion with Python code.  They can still be looked
+up with objc.lookUpClass.</p>
+</li>
+<li><p class="first">Fixed a regression where type signatures for pointers weren't
+normalized (fixes uses of NSModalSession, etc.)</p>
+</li>
+<li><p class="first">Fixed a bug with -[NSObject hash] to __hash__, there was a mismatch
+between integer types.</p>
+</li>
+<li><p class="first">Removed traces of the old Project Builder and Xcode templates in the
+examples and Foundation initialization code (PYOBJCFRAMEWORKS).</p>
+</li>
+<li><p class="first">Fixed a problem with reference counting in initializers.</p>
+</li>
+<li><p class="first">New TinyURLService example in AppKit that demonstrates how to write
+a service that transforms URLs into their tinyurl.com equivalents.</p>
+</li>
+<li><p class="first">Ported to Mac OS X on Intel. This is an initial, experimental port. The
+Intel ABI has not been finalised yet. It is also possible to build fat
+binaries, that option should not be used in production builds.</p>
+</li>
+<li><p class="first">Support a number of new frameworks:</p>
+<ul>
+<li><p class="first">SenTestingKit</p>
+<p>TODO: this framework uses lots of macros (such as STAssertEquals), these
+have not yet been wrapped/converted.</p>
+</li>
+<li><p class="first">SecurityFoundation</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-1-3-6-2005-05-19">
+<h3><a name="version-1-3-6-2005-05-19">Version 1.3.6 (2005-05-19)</a></h3>
+<ul class="simple">
+<li>Fixed bugs in the ProgressViewPalette example</li>
+<li>Fixed a bug in the class builder that caused most plugins to break</li>
+<li>Removed all references to Project Builder</li>
+<li>Mac OS X 10.2 (Jaguar) no longer supported</li>
+</ul>
+</div>
+<div class="section" id="version-1-3-5-2005-05-18">
+<h3><a name="version-1-3-5-2005-05-18">Version 1.3.5 (2005-05-18)</a></h3>
 <ul>
 <li><p class="first">Importing objc now ensures that Foundation is multi-threaded, previously
 it only ensured that Python was.</p>
@@ -49,7 +100,7 @@ Array Operators supported by Mac OS X 10.4.</p>
 <li><p class="first">Key-Value Coding of Python objects (whether or not using an Objective-C
 base class) should act like Objective-C now.  In previous versions
 there were inconsistencies with the use of capitalization, the
-underscore postfix in setters, and Key-Value Observation.</p>
+underscore postfix in setters, and Key-Value Observing.</p>
 </li>
 <li><p class="first">The formal protocol list is now complete.  A new internal function, 
 <tt class="docutils literal"><span class="pre">objc.protocolsForProcess()</span></tt> enumerates over all mach

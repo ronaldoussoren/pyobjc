@@ -94,6 +94,8 @@ class HTTranslator(HTMLTranslator):
         # the header, so always link to the stylesheet.
         document.settings.embed_stylesheet = 0
         document.settings.base_section = int(document.settings.base_section)
+        document.settings.cloak_email_addresses = False
+        document.settings.field_name_limit = False
 
         HTMLTranslator.__init__(self, document)
         # ht2html likes having a title, so add a default one

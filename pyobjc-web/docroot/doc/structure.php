@@ -56,8 +56,6 @@ frameworks.</dd>
 <dd>Scripts used during building and/or development of PyObjC.</dd>
 <dt>Installer Package/</dt>
 <dd>Resources used for building the Apple Installer packages.</dd>
-<dt>ProjectBuilder Extras/</dt>
-<dd>Project Builder templates and syntax specifications for PyObjC development.</dd>
 <dt>Xcode/</dt>
 <dd>Xcode templates for PyObjC development.</dd>
 <dt>libffi-src/</dt>

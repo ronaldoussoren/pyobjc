@@ -18,24 +18,24 @@
 <li><a class="reference" href="#less-important-items" id="id6" name="id6">Less important items</a><ul>
 <li><a class="reference" href="#refactor-some-parts-of-the-bridge" id="id7" name="id7">Refactor some parts of the bridge</a></li>
 <li><a class="reference" href="#support-for-gnustep" id="id8" name="id8">Support for GNUstep</a></li>
-<li><a class="reference" href="#project-templates" id="id9" name="id9">Project templates</a></li>
-<li><a class="reference" href="#complete-cocoa-wrapping" id="id10" name="id10">Complete Cocoa wrapping</a></li>
-<li><a class="reference" href="#pickle-support" id="id11" name="id11">Pickle support</a></li>
-<li><a class="reference" href="#nscoder-support" id="id12" name="id12">NSCoder support</a></li>
-<li><a class="reference" href="#known-issues" id="id13" name="id13">Known issues</a></li>
-<li><a class="reference" href="#code-cleanup" id="id14" name="id14">Code cleanup</a></li>
-<li><a class="reference" href="#cleanup-examples" id="id15" name="id15">Cleanup Examples</a></li>
-<li><a class="reference" href="#performance-tuning-testing" id="id16" name="id16">Performance tuning/testing</a></li>
-<li><a class="reference" href="#add-freelists" id="id17" name="id17">Add freelists</a></li>
-<li><a class="reference" href="#links-to-apple-documentation" id="id18" name="id18">Links to Apple documentation</a></li>
-<li><a class="reference" href="#implement-more-of-nsmutabledictionary-in-oc-pythondictionary" id="id19" name="id19">Implement more of NSMutableDictionary in OC_PythonDictionary</a></li>
-<li><a class="reference" href="#clean-up-oc-pythonobject" id="id20" name="id20">Clean up OC_PythonObject</a></li>
-<li><a class="reference" href="#rewrite-scripts-find-raw-pointers-py" id="id21" name="id21">Rewrite scripts/find-raw-pointers.py</a></li>
-<li><a class="reference" href="#finish-refactoring-of-the-code-generator-scripts" id="id22" name="id22">Finish refactoring of the code-generator scripts</a></li>
-<li><a class="reference" href="#setup-py-cleanup" id="id23" name="id23">setup.py cleanup</a></li>
-<li><a class="reference" href="#nsset-vs-set" id="id24" name="id24">NSSet vs set</a></li>
-<li><a class="reference" href="#python-2-4" id="id25" name="id25">Python 2.4</a></li>
-<li><a class="reference" href="#nslog-stringwithformat" id="id26" name="id26">NSLog, stringWithFormat, ...</a></li>
+<li><a class="reference" href="#complete-cocoa-wrapping" id="id9" name="id9">Complete Cocoa wrapping</a></li>
+<li><a class="reference" href="#pickle-support" id="id10" name="id10">Pickle support</a></li>
+<li><a class="reference" href="#nscoder-support" id="id11" name="id11">NSCoder support</a></li>
+<li><a class="reference" href="#known-issues" id="id12" name="id12">Known issues</a></li>
+<li><a class="reference" href="#code-cleanup" id="id13" name="id13">Code cleanup</a></li>
+<li><a class="reference" href="#cleanup-examples" id="id14" name="id14">Cleanup Examples</a></li>
+<li><a class="reference" href="#performance-tuning-testing" id="id15" name="id15">Performance tuning/testing</a></li>
+<li><a class="reference" href="#add-freelists" id="id16" name="id16">Add freelists</a></li>
+<li><a class="reference" href="#links-to-apple-documentation" id="id17" name="id17">Links to Apple documentation</a></li>
+<li><a class="reference" href="#implement-more-of-nsmutabledictionary-in-oc-pythondictionary" id="id18" name="id18">Implement more of NSMutableDictionary in OC_PythonDictionary</a></li>
+<li><a class="reference" href="#clean-up-oc-pythonobject" id="id19" name="id19">Clean up OC_PythonObject</a></li>
+<li><a class="reference" href="#rewrite-scripts-find-raw-pointers-py" id="id20" name="id20">Rewrite scripts/find-raw-pointers.py</a></li>
+<li><a class="reference" href="#finish-refactoring-of-the-code-generator-scripts" id="id21" name="id21">Finish refactoring of the code-generator scripts</a></li>
+<li><a class="reference" href="#setup-py-cleanup" id="id22" name="id22">setup.py cleanup</a></li>
+<li><a class="reference" href="#nsset-vs-set" id="id23" name="id23">NSSet vs set</a></li>
+<li><a class="reference" href="#python-2-4" id="id24" name="id24">Python 2.4</a></li>
+<li><a class="reference" href="#nslog-stringwithformat" id="id25" name="id25">NSLog, stringWithFormat, ...</a></li>
+<li><a class="reference" href="#darwin-x86" id="id26" name="id26">Darwin/x86</a></li>
 </ul>
 </li>
 </ul>
@@ -62,14 +62,12 @@ Python and Objective-C code snippets.</li>
 </div>
 <div class="section" id="test-suite">
 <h4><a class="toc-backref" href="#id5" name="test-suite">Test suite</a></h4>
-<p>XXX: It might be a good idea to move the unittests to a seperate python
-package (e.g. <tt class="docutils literal"><span class="pre">PyObjCTest</span></tt>) that is not installed. I'd be surprised if anyone
-ever runs the unittests outside of the build tree.</p>
 <p>The test suite needs to be enhanced.</p>
 <ul class="simple">
 <li>Somehow find a way to check code-coverage of the unittests.</li>
-<li>Tests that exercise Key-Value Observing in a way that crashes older versions
-of PyObjC.</li>
+<li>Tests in the AppKit and Foundation packages that test functionality in
+the objc package should be moved to the objc package.</li>
+<li>Enhance KVO/KVC tests</li>
 <li>tests for all functions in <tt class="docutils literal"><span class="pre">Modules/*/*Mapping*.m</span></tt>
 (including IMPs)</li>
 <li>tests for all non-generated function wrappers (and some for the generated
@@ -94,11 +92,16 @@ Objective-C.</li>
 <li>Remove the need for <tt class="docutils literal"><span class="pre">pyobjc_classMethods</span></tt>, you should be able to call
 class methods in the obvious way.  This would (finally) close <a class="reference" href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=836247&amp;group_id=14534&amp;atid=114534">836247</a>.</li>
 </ul>
-<ul class="simple">
-<li>Also restructure class-builder.m, this file is way to large.</li>
-<li>Rewrite selectors to work as regular functions with some attributes,
+<ul>
+<li><p class="first">Also restructure class-builder.m, this file is way to large.</p>
+</li>
+<li><p class="first">Rewrite selectors to work as regular functions with some attributes,
 rather than descriptors, so that they can be used more easily with tools
-such as PyProtocols dispatch.</li>
+such as PyProtocols dispatch.</p>
+<p>XXX(Ronald): that's only possible for methods with a python implementation,
+and should result in less code as well. A disadvantage is that this would
+probably be a backward-incomptable change, but that should not be a problem.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="support-for-gnustep">
@@ -108,17 +111,8 @@ be enhanced.</p>
 <p>Unless somebody actually starts working on this GNUstep support will slowly
 fade away.</p>
 </div>
-<div class="section" id="project-templates">
-<h4><a class="toc-backref" href="#id9" name="project-templates">Project templates</a></h4>
-<ul>
-<li><p class="first">Update or remove the Project Builder templates</p>
-<p>I prefer updating them, by rebuilding the Xcode templates in Project Builder.</p>
-<p>This would require Python 2.3 on Jaguar.</p>
-</li>
-</ul>
-</div>
 <div class="section" id="complete-cocoa-wrapping">
-<h4><a class="toc-backref" href="#id10" name="complete-cocoa-wrapping">Complete Cocoa wrapping</a></h4>
+<h4><a class="toc-backref" href="#id9" name="complete-cocoa-wrapping">Complete Cocoa wrapping</a></h4>
 <p>We do not yet have a 100% coverage of the Cocoa API's. We also need code in
 the testsuite that checks if the function wrappers are working as expected.</p>
 <p>Not all constants and enums from Cocoa are currently wrapped.  The annotations
@@ -134,13 +128,13 @@ one area we intend to improve after the release of 1.3 when our new
 wrapper-generators are in a more complete state.</p>
 </div>
 <div class="section" id="pickle-support">
-<h4><a class="toc-backref" href="#id11" name="pickle-support">Pickle support</a></h4>
+<h4><a class="toc-backref" href="#id10" name="pickle-support">Pickle support</a></h4>
 <p>Objective-C objects don't support pickling.</p>
 <p>This is post-1.3 work, in general this is a hard problem because it may 
 involve object cycles that cross the Python-ObjC boundary.</p>
 </div>
 <div class="section" id="nscoder-support">
-<h4><a class="toc-backref" href="#id12" name="nscoder-support">NSCoder support</a></h4>
+<h4><a class="toc-backref" href="#id11" name="nscoder-support">NSCoder support</a></h4>
 <p>It might be useful to add default implementations of <tt class="docutils literal"><span class="pre">encodeWithCoder:</span></tt> and
 <tt class="docutils literal"><span class="pre">initWithCoder:</span></tt> methods to Python subclasses of Objective-C classes that 
 implement these.  Note that property list types should already be serializable
@@ -148,7 +142,7 @@ implement these.  Note that property list types should already be serializable
 <p>See also <cite>Pickle support</cite>.</p>
 </div>
 <div class="section" id="known-issues">
-<h4><a class="toc-backref" href="#id13" name="known-issues">Known issues</a></h4>
+<h4><a class="toc-backref" href="#id12" name="known-issues">Known issues</a></h4>
 <p>It is impossible to support methods with a variable number of arguments in the
 generic code (you have to re-implement almost all of the logic of these 
 methods in order to know how many and which types of arguments are expected).
@@ -160,7 +154,7 @@ we should provide custom wrappers, otherwise we should document alternatives.</p
 are not necessarily TODO items.</p>
 </div>
 <div class="section" id="code-cleanup">
-<h4><a class="toc-backref" href="#id14" name="code-cleanup">Code cleanup</a></h4>
+<h4><a class="toc-backref" href="#id13" name="code-cleanup">Code cleanup</a></h4>
 <ul class="simple">
 <li>Check all error/exception messages</li>
 <li>Check/cleanup error handling</li>
@@ -168,7 +162,7 @@ are not necessarily TODO items.</p>
 </ul>
 </div>
 <div class="section" id="cleanup-examples">
-<h4><a class="toc-backref" href="#id15" name="cleanup-examples">Cleanup Examples</a></h4>
+<h4><a class="toc-backref" href="#id14" name="cleanup-examples">Cleanup Examples</a></h4>
 <p>The CurrencyConverter example should be removed, this should be the same as the
 final step of the tutorial. It isn't at the moment because additional cruft in
 the example.</p>
@@ -189,19 +183,19 @@ Move to documentation  (unittest?)</li>
 </ul>
 </div>
 <div class="section" id="performance-tuning-testing">
-<h4><a class="toc-backref" href="#id16" name="performance-tuning-testing">Performance tuning/testing</a></h4>
+<h4><a class="toc-backref" href="#id15" name="performance-tuning-testing">Performance tuning/testing</a></h4>
 <p>Design and implement a set of performance tests for the bridge. Use this to 
 investigate and fix any possible performance problems.</p>
 </div>
 <div class="section" id="add-freelists">
-<h4><a class="toc-backref" href="#id17" name="add-freelists">Add freelists</a></h4>
+<h4><a class="toc-backref" href="#id16" name="add-freelists">Add freelists</a></h4>
 <p>PyObjCSelector objects and PyObjCObject objects are created on
 a regular basis, we should check if using freelists would speed this up. See
 also <cite>Performance tuning/testing</cite>.</p>
 <p>NOTE: first add performance tests then experiment with freelists.</p>
 </div>
 <div class="section" id="links-to-apple-documentation">
-<h4><a class="toc-backref" href="#id18" name="links-to-apple-documentation">Links to Apple documentation</a></h4>
+<h4><a class="toc-backref" href="#id17" name="links-to-apple-documentation">Links to Apple documentation</a></h4>
 <p>Links to Apple documentation are not stable, can we add a layer of indirection
 here, e.g. link to the PyObjC website that will redirect to the right
 location?</p>
@@ -209,7 +203,7 @@ location?</p>
 especially in the documentation that will be installed on the users machine.</p>
 </div>
 <div class="section" id="implement-more-of-nsmutabledictionary-in-oc-pythondictionary">
-<h4><a class="toc-backref" href="#id19" name="implement-more-of-nsmutabledictionary-in-oc-pythondictionary">Implement more of NSMutableDictionary in OC_PythonDictionary</a></h4>
+<h4><a class="toc-backref" href="#id18" name="implement-more-of-nsmutabledictionary-in-oc-pythondictionary">Implement more of NSMutableDictionary in OC_PythonDictionary</a></h4>
 <p>The implementation of OC_PythonDictionary is very minimal, we should add
 additional methods in the NSMutableDictionary interface if those can be 
 implemented efficiently. The default implementation will take care of the
@@ -219,16 +213,16 @@ methods we cannot implement efficiently.</p>
 performance.</p>
 </div>
 <div class="section" id="clean-up-oc-pythonobject">
-<h4><a class="toc-backref" href="#id20" name="clean-up-oc-pythonobject">Clean up OC_PythonObject</a></h4>
+<h4><a class="toc-backref" href="#id19" name="clean-up-oc-pythonobject">Clean up OC_PythonObject</a></h4>
 <p>The code is a mess.</p>
 </div>
 <div class="section" id="rewrite-scripts-find-raw-pointers-py">
-<h4><a class="toc-backref" href="#id21" name="rewrite-scripts-find-raw-pointers-py">Rewrite scripts/find-raw-pointers.py</a></h4>
+<h4><a class="toc-backref" href="#id20" name="rewrite-scripts-find-raw-pointers-py">Rewrite scripts/find-raw-pointers.py</a></h4>
 <p>This is a script for finding 'difficult' methods. The script should be 
 refactored to make it easier to create readable reports.</p>
 </div>
 <div class="section" id="finish-refactoring-of-the-code-generator-scripts">
-<h4><a class="toc-backref" href="#id22" name="finish-refactoring-of-the-code-generator-scripts">Finish refactoring of the code-generator scripts</a></h4>
+<h4><a class="toc-backref" href="#id21" name="finish-refactoring-of-the-code-generator-scripts">Finish refactoring of the code-generator scripts</a></h4>
 <ol class="arabic simple">
 <li>Change code-generator scripts to use loadBundleFunctions, etc.</li>
 <li>Move the code-generator scripts to <tt class="docutils literal"><span class="pre">PyObjCTools</span></tt>, to make it easier
@@ -237,14 +231,14 @@ for others to generate wrappers.</li>
 </ol>
 </div>
 <div class="section" id="setup-py-cleanup">
-<h4><a class="toc-backref" href="#id23" name="setup-py-cleanup">setup.py cleanup</a></h4>
+<h4><a class="toc-backref" href="#id22" name="setup-py-cleanup">setup.py cleanup</a></h4>
 <ul class="simple">
 <li>Use 'WrapperGenerator.py', probably need to create a custom build action
 for that.</li>
 </ul>
 </div>
 <div class="section" id="nsset-vs-set">
-<h4><a class="toc-backref" href="#id24" name="nsset-vs-set">NSSet vs set</a></h4>
+<h4><a class="toc-backref" href="#id23" name="nsset-vs-set">NSSet vs set</a></h4>
 <p>Check if it is possible to wrap <tt class="docutils literal"><span class="pre">NSSet</span></tt> using <tt class="docutils literal"><span class="pre">set</span></tt> (and v.v.).</p>
 <p>Only implement this when it is possible to convert without loss of information.</p>
 <p><strong>Ronald, 20050130</strong>: <em>converting</em> is not an option: PyObjC takes care to
@@ -253,7 +247,7 @@ necessary for at least some APIs.   Furthermore, both <tt class="docutils litera
 <tt class="docutils literal"><span class="pre">__builtin__.set</span></tt> are mutable!</p>
 </div>
 <div class="section" id="python-2-4">
-<h4><a class="toc-backref" href="#id25" name="python-2-4">Python 2.4</a></h4>
+<h4><a class="toc-backref" href="#id24" name="python-2-4">Python 2.4</a></h4>
 <p>Python 2.4 introduces a decorator syntax. Add convenience functions that
 make it easier to use decorators with PyObjC.</p>
 <p>Also add example programs using decorators. Actually, first add the example(s)
@@ -277,9 +271,19 @@ class FooClass (NSObject):
 </pre>
 </div>
 <div class="section" id="nslog-stringwithformat">
-<h4><a class="toc-backref" href="#id26" name="nslog-stringwithformat">NSLog, stringWithFormat, ...</a></h4>
+<h4><a class="toc-backref" href="#id25" name="nslog-stringwithformat">NSLog, stringWithFormat, ...</a></h4>
 <p>Functions and methods that use format strings are not properly wrapped. Fix
 that.</p>
+</div>
+<div class="section" id="darwin-x86">
+<h4><a class="toc-backref" href="#id26" name="darwin-x86">Darwin/x86</a></h4>
+<ul class="simple">
+<li>mach_inject needs to be ported to intel.</li>
+<li>when that works we need to figure out if and how we can inject code into 
+programs running an other instruction set (e.g. cross-platform inject).</li>
+<li>drop autoconf/automake for libffi, integrate into the normal build machinery.
+This will make it easier to create fat binaries of PyObjC later on.</li>
+</ul>
 </div>
 </div>
 </div>

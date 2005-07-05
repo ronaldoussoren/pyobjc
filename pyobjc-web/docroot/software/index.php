@@ -11,11 +11,11 @@ include "header.inc";
 <h2>Stable release</h2>
 
 <ul>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.6-py2.3-macosx10.3.zip?download">PyObjC 1.3.6 installer package for Python 2.3 on Mac OS X 10.3</a>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.6-py2.4-macosx10.3.zip?download">PyObjC 1.3.6 installer package for Python 2.4.1 on Mac OS X 10.3</a>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.6-py2.3-macosx10.4.zip?download">PyObjC 1.3.6 installer package for Python 2.3 on Mac OS X 10.4</a>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.6-py2.4-macosx10.4.zip?download">PyObjC 1.3.6 installer package for Python 2.4.1 on Mac OS X 10.4</a>
-<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.6.tar.gz?download">PyObjC 1.3.6 source release (a compressed tar archive)</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.7-py2.3-macosx10.3.zip?download">PyObjC 1.3.7 installer package for Python 2.3 on Mac OS X 10.3</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.7-py2.4-macosx10.3.zip?download">PyObjC 1.3.7 installer package for Python 2.4.1 on Mac OS X 10.3</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.7-py2.3-macosx10.4.zip?download">PyObjC 1.3.7 installer package for Python 2.3 on Mac OS X 10.4</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.7-py2.4-macosx10.4.zip?download">PyObjC 1.3.7 installer package for Python 2.4.1 on Mac OS X 10.4</a>
+<li><a href="http://prdownloads.sourceforge.net/pyobjc/pyobjc-1.3.7.tar.gz?download">PyObjC 1.3.7 source release (a compressed tar archive)</a>
 </ul>
 
 <p>Older releases are available in the <a href="http://sourceforge.net/project/showfiles.php?group_id=14534">Files section of our SourceForge project</a>.

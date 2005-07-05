@@ -100,8 +100,6 @@ def copy_project_docs(srctree):
     docs.append(os.path.join(docdir, 'tutorial_embed', 'extending_objc_with_python.txt'))
     NAMES = {
         os.path.join(srctree, 'Examples', '00ReadMe.txt') : 'Examples.txt',
-        os.path.join(srctree, 'Xcode', 'Project Templates', '00README.txt') : 'Xcode-Templates.txt',
-        os.path.join(srctree, 'ProjectBuilder Extras', 'Project Templates', '00README.txt') : 'ProjectBuilder-Templates.txt',
     }
     docs.extend(NAMES)
 

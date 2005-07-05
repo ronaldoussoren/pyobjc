@@ -55,7 +55,7 @@ probably shouldn't make a habit of this)</p>
 <li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/Scripts/kvo-debugging.py">kvo-debugging.py</a></p>
 <p>XXX
 An example script that demonstrates how PyObjC interacts with Key-Value
-Observation (KVO) at the lowest level.  This script was used to debug
+Observing (KVO) at the lowest level.  This script was used to debug
 the PyObjC runtime and should not be used as a guideline for writing
 new KVO code.  It may be interesting to some until we ensure that we
 have proper unit tests for KVO and remove this example!</p>
@@ -199,6 +199,12 @@ from a menu action.</p>
 <ul>
 <li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/AppKit/TinyTinyEdit">TinyTinyEdit</a></p>
 <p>A minimal Document-based text editor application.</p>
+</li>
+</ul>
+<ul>
+<li><p class="first"><a class="reference" href="http://svn.red-bean.com/pyobjc/trunk/pyobjc/Examples/AppKit/TinyURLService">TinyURLService</a></p>
+<p>Another simple service, this one converts URL or strings from the
+pasteboard to tinyurl.com equivalents.</p>
 </li>
 </ul>
 <ul>
