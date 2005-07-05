@@ -51,12 +51,17 @@ static int item_count = 0;
  */
 static int find_end_of_structname(const char* signature) {
 	if (signature[1] == _C_STRUCT_B) {
-		int o1, o2;
+		char* end1;
+		char* end2;
 
-		o1 = strchr(signature, _C_STRUCT_E) - signature;
-		o2 = strchr(signature, '=') - signature;
+		end1 = strchr(signature, _C_STRUCT_E);
+		end2 = strchr(signature, '=');
 
-		return (o1 < o2) ? o1 : o2;
+		if (end2 == NULL) {
+			return end1 - signature;
+		} else {
+			return end2 - signature;
+		}
 	}
 	return strlen(signature);
 }
