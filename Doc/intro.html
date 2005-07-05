@@ -141,8 +141,9 @@ class MyClass(NSObject):
         &quot;&quot;&quot;
         # ALWAYS call the super's designated initializer.
         # Also, make sure to re-bind &quot;self&quot; just in case it
-        # returns something else!
+        # returns something else, or even None!
         self = super(MyClass, self).init()
+        if self is None: return None
 
         self.myVariable = 10
 
@@ -157,6 +158,8 @@ class MyOtherClass(MyClass):
         Designated initializer for MyOtherClass
         &quot;&quot;&quot;
         self = super(MyOtherClass, self).init()
+        if self is None: return None
+
         self.otherVariable = otherVariable
         return self
 
