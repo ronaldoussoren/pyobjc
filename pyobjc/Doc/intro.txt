@@ -124,8 +124,9 @@ initialization phase::
             """
             # ALWAYS call the super's designated initializer.
             # Also, make sure to re-bind "self" just in case it
-            # returns something else!
+            # returns something else, or even None!
             self = super(MyClass, self).init()
+	    if self is None: return None
 
             self.myVariable = 10
 
@@ -140,6 +141,8 @@ initialization phase::
             Designated initializer for MyOtherClass
             """
             self = super(MyOtherClass, self).init()
+	    if self is None: return None
+
             self.otherVariable = otherVariable
             return self
 
