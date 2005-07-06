@@ -82,7 +82,6 @@ def process_file(outfp, filename, ignore):
 
 def generate(dirname, fn = None, ignore=(), filter = lambda x: 1,
             emit_header=1, emit_footer=1):
-    if not os.path.exists(dirname): return
 
     if fn:
         fp = dupfile(fn, 'w')
@@ -90,6 +89,8 @@ def generate(dirname, fn = None, ignore=(), filter = lambda x: 1,
         import sys
         fp = sys.stdout
         del sys
+
+    if dirname is None or not os.path.exists(dirname): return
 
     if emit_header:
         fp.write("/*\n")
