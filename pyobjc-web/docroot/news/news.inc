@@ -6,7 +6,7 @@
 This version features support for Xcode 2.1, an initial port to Intel, wrappers
 for even more frameworks and several bugfixes.
   <p>
-See <a href="<?print $root; ?>">the NEWS file</a> for more information.
+See <a href="<?print $root; ?>NEWS-1.3.7.txt">the NEWS file</a> for more information.
   <p>
 Click <a href="/software/">here</a> to go to the download page.
   <p>
