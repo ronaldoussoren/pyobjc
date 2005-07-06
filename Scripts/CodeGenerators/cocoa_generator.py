@@ -676,11 +676,11 @@ if DISCRECORDING_HDRS is not None:
     enum_generator.generate(
             DISCRECORDING_HDRS,
             'build/codegen/_DiscRecording_Enum.inc',
-                ignore_files=[], emit_imports=0, emit_footer=0)
+                ignore_files=[], emit_imports=0, emit_footer=(DISCRECORDING2_HDRS is None and DISCRECORDING3_HDRS is None))
     enum_generator.generate(
             DISCRECORDING2_HDRS,
             'build/codegen/_DiscRecording2_Enum.inc',
-                ignore_files=[], emit_imports=0, emit_footer=0, emit_header=0)
+                ignore_files=[], emit_imports=0, emit_footer=(DISCRECORDING3_HDRS is None), emit_header=0)
     enum_generator.generate(
             DISCRECORDING3_HDRS,
             'build/codegen/_DiscRecording3_Enum.inc',
@@ -688,10 +688,10 @@ if DISCRECORDING_HDRS is not None:
 
     strconst_generator.generate(DISCRECORDING_HDRS,
                                 'build/codegen/_DiscRecording_Str.inc',
-                                ignore=(), emit_footer=0)
+                                ignore=(), emit_footer=(DISCRECORDING2_HDRS is None and DISCRECORDING3_HDRS is None))
     strconst_generator.generate(DISCRECORDING2_HDRS,
                                 'build/codegen/_DiscRecording2_Str.inc',
-                                ignore=(), emit_footer=0, emit_header=0)
+                                ignore=(), emit_footer=(DISCRECORDING3_HDRS is None), emit_header=0)
     strconst_generator.generate(DISCRECORDING3_HDRS,
                                 'build/codegen/_DiscRecording3_Str.inc',
                                 ignore=(), emit_header=0)

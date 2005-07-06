@@ -9,7 +9,7 @@ PyObjC NEWS</title>
 <body>
 <h2>PyObjC NEWS</h2>
 <p>An overview of the relevant changes in new, and older, releases.</p>
-<h2><a name="version-1-3-7">Version 1.3.7 (????-??-??)</a></h2>
+<h2><a>Version 1.3.7 (2005-07-06)</a></h2>
 <ul>
 <li>Added wrappers for embedded DiscRecording frameworks
 ([ 1224188 ] Fix for DiscRecording framework)</li>
@@ -37,14 +37,14 @@ have not yet been wrapped/converted.</p>
 </ul>
 </li>
 </ul>
-<h2><a name="version-1-3-6-2005-05-19">Version 1.3.6 (2005-05-19)</a></h2>
+<h2><a>Version 1.3.6 (2005-05-19)</a></h2>
 <ul>
 <li>Fixed bugs in the ProgressViewPalette example</li>
 <li>Fixed a bug in the class builder that caused most plugins to break</li>
 <li>Removed all references to Project Builder</li>
 <li>Mac OS X 10.2 (Jaguar) no longer supported</li>
 </ul>
-<h2><a name="version-1-3-5-2005-05-18">Version 1.3.5 (2005-05-18)</a></h2>
+<h2><a>Version 1.3.5 (2005-05-18)</a></h2>
 <ul>
 <li>Importing objc now ensures that Foundation is multi-threaded, previously
 it only ensured that Python was.</li>
@@ -170,7 +170,7 @@ act like a <code><span>buffer</span></code> instance for <code><span>str()</span
 <code><span>array.array</span></code> (but not <code><span>str</span></code> or <code><span>unicode</span></code>) are now bridged as
 <code><span>NSData</span></code> subclasses.</li>
 </ul>
-<h2><a name="version-1-3-2005-03-31">Version 1.3 (2005-03-31)</a></h2>
+<h2><a>Version 1.3 (2005-03-31)</a></h2>
 <ul>
 <li>New <code><span>objc.pyobjc_id</span></code> function that returns a the id of the underlying
 NSObject as an integer.  (Python wrapper objects are often made on the
@@ -349,7 +349,7 @@ appropriate default value, instead of <code><span>None</span></code>.</p>
 function is also exposed in the C API (and has been for a while).</p>
 </li>
 </ul>
-<h2><a name="version-1-2-2004-12-29">Version 1.2 (2004-12-29)</a></h2>
+<h2><a>Version 1.2 (2004-12-29)</a></h2>
 <ul>
 <li><code><span>PyObjCTools.AppHelper.stopEventLoop</span></code> will attempt to stop the current
 <code><span>NSRunLoop</span></code> (if started by <code><span>runConsoleEventLoop</span></code>) or terminate the
@@ -424,12 +424,12 @@ See <code><span>objc._bridges</span></code>.  This is how the <code><span>Carbon
 packages as <code><span>objc._objc</span></code>, <code><span>AppKit._AppKit</span></code>, etc.  They should never be
 used directly, so this should not break user code.</li>
 </ul>
-<h2><a name="version-1-1-2004-05-30">Version 1.1 (2004-05-30)</a></h2>
+<h2><a>Version 1.1 (2004-05-30)</a></h2>
 <ul>
 <li>KVO now actually works from Python without using nasty hacks.</li>
 <li>Added Xcode template for document-based applications</li>
 </ul>
-<h2><a name="version-1-1b2-2004-04-11">Version 1.1b2 (2004-04-11)</a></h2>
+<h2><a>Version 1.1b2 (2004-04-11)</a></h2>
 <ul>
 <li>More fine-grained multi-threading support</li>
 <li>Xcode templates use a smarter embedded main program</li>
@@ -442,7 +442,7 @@ feature has not received much testing</p>
 expression in Objective-C.</li>
 <li>Add several new examples</li>
 </ul>
-<h2><a name="version-1-1b1-2004-02-20">Version 1.1b1 (2004-02-20)</a></h2>
+<h2><a>Version 1.1b1 (2004-02-20)</a></h2>
 <ul>
 <li>Fixes some regressions in 1.1 w.r.t. 1.0</li>
 <li>Add Xcode templates for python files<p>You can now select a new python file in the 'add file...' dialog in Xcode</p>
@@ -466,7 +466,7 @@ class MyClass (NSObject):
 accessor method.</p>
 </li>
 </ul>
-<h2><a name="version-1-1a0-2004-02-02">Version 1.1a0 (2004-02-02)</a></h2>
+<h2><a>Version 1.1a0 (2004-02-02)</a></h2>
 <ul>
 <li>Objective-C structs can now be wrapped using struct-like types. This has
 been used to implement wrapper types for NSPoint, NSSize, NSRange and NSRect
@@ -527,21 +527,21 @@ NSController and therefore requires MacOS X 10.3.</p>
 </ul>
 </li>
 </ul>
-<h2><a name="version-1-0-2003-09-21">Version 1.0 (2003-09-21)</a></h2>
+<h2><a>Version 1.0 (2003-09-21)</a></h2>
 <ul>
 <li>This version includes a new version of libffi that properly deals with
 complex types on MacOS X.</li>
 </ul>
-<h2><a name="version-1-0rc3-2003-09-14">Version 1.0rc3 (2003-09-14)</a></h2>
+<h2><a>Version 1.0rc3 (2003-09-14)</a></h2>
 <ul>
 <li>1.0rc2 didn't include the nibclassbuilder script</li>
 <li>Fix bug in NSRectFillList</li>
 </ul>
-<h2><a name="version-1-0rc2-2003-09-10">Version 1.0rc2 (2003-09-10)</a></h2>
+<h2><a>Version 1.0rc2 (2003-09-10)</a></h2>
 <ul>
 <li>Fix a number of bugs found in 1.0rc1.</li>
 </ul>
-<h2><a name="version-1-0rc1-2003-08-10">Version 1.0rc1 (2003-08-10)</a></h2>
+<h2><a>Version 1.0rc1 (2003-08-10)</a></h2>
 <ul>
 <li>Better support for the NSKeyValueCoding protocol.  The module 
 <code><span>PyObjCTools.KeyValueCoding</span></code> provides a python interface that makes it
@@ -576,7 +576,7 @@ code.</li>
 <li>The interface of Foundation.NSFillRects changed, it now has an interface
 that is consistent with the rest of the bridge.</li>
 </ul>
-<h2><a name="version-1-0b1-2003-07-05">Version 1.0b1 (2003-07-05)</a></h2>
+<h2><a>Version 1.0b1 (2003-07-05)</a></h2>
 <ul>
 <li>More tutorials<p>Two new tutorials were added: 'Adding Python code to an existing ObjC 
 application' and 'Understanding existing PyObjC examples'. The former
@@ -646,7 +646,7 @@ we support more Cocoa APIs without special mappings.</li>
 <li>The generator scripts are automaticly called when building PyObjC. This
 should make it easier to support multiple versions of MacOS X.</li>
 </ul>
-<h2><a name="version-0-9-may-02-2003">Version 0.9 (May-02-2003)</a></h2>
+<h2><a>Version 0.9 (May-02-2003)</a></h2>
 <ul>
 <li>This version includes numerous bugfixes and improvements.</li>
 <li>The module AppKit.NibClassBuilder has been moved to the package
@@ -691,7 +691,7 @@ very quickly draw points and rects via NSRectFillList()</li>
 makes it easily possible to use NSString values with Python APIs, while at 
 the same time allowing access to the full power of NSString.</li>
 </ul>
-<h2><a name="version-0-8-dec-10-2002">Version 0.8 (Dec-10-2002)</a></h2>
+<h2><a>Version 0.8 (Dec-10-2002)</a></h2>
 <ul>
 <li>GNUStep support has been removed for lack of support.  Volunteers
 needed.</li>
@@ -713,7 +713,7 @@ MacPython).</li>
 <li>Support for Project Builder based Cocoa-Python projects.</li>
 <li>Unit tests.</li>
 </ul>
-<h2><a name="version-2002-01-30-january-30-2002">Version 2002-01-30 (January 30, 2002)</a></h2>
+<h2><a>Version 2002-01-30 (January 30, 2002)</a></h2>
 <ul>
 <li>Version bumped to 0.6.1 ( __version__ is now a PyString )</li>
 <li>Will now build for Python 2.2</li>
@@ -725,12 +725,12 @@ of message sends to /tmp file.</li>
 without check, it crashes on sends to abstract classes like NSProxy.</li>
 <li>There are still problems with Delegates and Notifications.</li>
 </ul>
-<h2><a name="version-2001-03-17-march-17-2001">Version 2001-03-17 (March 17, 2001)</a></h2>
+<h2><a>Version 2001-03-17 (March 17, 2001)</a></h2>
 <ul>
 <li>moved to using distutils setup.py (requires small patch to distutils
 that has been submitted against python 2.1b1)</li>
 </ul>
-<h2><a name="version-2000-11-14-november-14-2000">Version 2000-11-14 (November 14, 2000)</a></h2>
+<h2><a>Version 2000-11-14 (November 14, 2000)</a></h2>
 <ul>
 <li>GNU_RUNTIME is likely completely broken</li>
 <li>Compiles on Mac OS X Server (python 2.0)</li>
@@ -743,7 +743,7 @@ SourceForge.net's Python project].</li>
 <li>Some pre-OSX stuff removed;  references to old APIs, etc... (but
 nowhere near clean)</li>
 </ul>
-<h2><a name="version-0-55-18-august-1998">Version 0.55, 18 August 1998</a></h2>
+<h2><a>Version 0.55, 18 August 1998</a></h2>
 <ul>
 <li>Here again, supporting GNU_RUNTIME and GNUstep Base! On my new Linux
 box I can finally test the module against them: I installed the
@@ -757,12 +757,12 @@ o make static
 </pre>
 </li>
 </ul>
-<h2><a name="version-0-54-24-march-1998">Version 0.54, 24 March 1998</a></h2>
+<h2><a>Version 0.54, 24 March 1998</a></h2>
 <ul>
 <li>OC_Pasteboard.[hm], OC_Stream.[mh] and ObjCStreams.m are definitively gone.</li>
 <li>OC_PythonObject derives from NSProxy.</li>
 </ul>
-<h2><a name="version-0-53-4-january-1998">Version 0.53, 4 January 1998</a></h2>
+<h2><a>Version 0.53, 4 January 1998</a></h2>
 <ul>
 <li>Tons of changes, retargeting the core functionality around the
 OpenSTEP API. This release basically matches the previous one
@@ -771,7 +771,7 @@ in terms of functionalities, but is should be closer to GNUstep.</li>
 if they are needed anymore.</li>
 <li>Updated LittleButtonedWindow demo.</li>
 </ul>
-<h2><a name="version-0-47-29-october-1996">Version 0.47, 29 October 1996</a></h2>
+<h2><a>Version 0.47, 29 October 1996</a></h2>
 <ul>
 <li>Misc/Makefile.pre.in automatically sets TARGET to <code><span>pyobjc</span></code>.</li>
 <li>ObjC.m splitted to ObjCObject.m ObjCMethod.m ObjCPointer.m
@@ -786,7 +786,7 @@ category of Pasteboard/NSPasteboard.</li>
 <li>OC_Streams are mapped to ObjCStreams by pythonify_c_value and its
 counterpart.</li>
 </ul>
-<h2><a name="version-0-46-18-october-1996">Version 0.46, 18 October 1996</a></h2>
+<h2><a>Version 0.46, 18 October 1996</a></h2>
 <ul>
 <li>OC_Stream is now a subclass of NSData under Foundation.</li>
 <li>New Objective-C class: OC_Pasteboard. Use it instead of Pasteboard/
@@ -797,20 +797,20 @@ directly from the WorkSpace.</li>
 <li>OC_Python.[hm] aren't in the package anymore.</li>
 <li>Setup.in directives changed again, due to OC_Python.m dropping.</li>
 </ul>
-<h2><a name="version-0-45-14-october-1996">Version 0.45, 14 October 1996</a></h2>
+<h2><a>Version 0.45, 14 October 1996</a></h2>
 <ul>
 <li>Double syntax: to make it easier for us to test and choose the
 better candidate, the only one that will be present in the final 1.0
 release. Keeping both would result in a speed penality.</li>
 <li>Revisited streams, in particular GNUstep support.</li>
 </ul>
-<h2><a name="version-0-44-9-october-1996">Version 0.44, 9 October 1996</a></h2>
+<h2><a>Version 0.44, 9 October 1996</a></h2>
 <ul>
 <li>Integers are now accepted too where floats or doubles are expected.</li>
 <li>New method: ObjC.make_pointer (1) returns an ObjCPointer containing
 <code><span>((void</span> <span>*)</span> <span>1)</span></code>.</li>
 </ul>
-<h2><a name="version-0-43-7-october-1996">Version 0.43, 7 October 1996</a></h2>
+<h2><a>Version 0.43, 7 October 1996</a></h2>
 <ul>
 <li>Completed ObjCStream implementation. There is now a new module, ObjCStreams
 which is automatically loaded by ObjC. You can access it as ObjC.streams.</li>
@@ -818,14 +818,14 @@ which is automatically loaded by ObjC. You can access it as ObjC.streams.</li>
 libObjC.tex describing the main module, libObjCStreams.tex explains the
 stream facilities.</li>
 </ul>
-<h2><a name="version-0-42-4-october-1996">Version 0.42, 4 October 1996</a></h2>
+<h2><a>Version 0.42, 4 October 1996</a></h2>
 <ul>
 <li>You can pass initialization arguments when using the <code><span>Class()</span></code> syntax. You
 select the right initializer selector with the <code><span>init</span></code> keyword parameter.</li>
 <li>First cut on ObjCStream objects. Thanx to Bill Bumgarner for motivations.</li>
 <li>New demo ShellText, to test above points.</li>
 </ul>
-<h2><a name="version-0-41-2-october-1996">Version 0.41, 2 October 1996</a></h2>
+<h2><a>Version 0.41, 2 October 1996</a></h2>
 <ul>
 <li>Revised error messages: for arguments type mismatch they show the ObjC type
 expected.</li>
@@ -837,12 +837,12 @@ it ;-).</li>
 <li>Setup.in directives changed. See the new file Modules/Setup.PyObjC.in</li>
 <li>Distribuited as a standalone package. Special thanks to Bill Bumgarner.</li>
 </ul>
-<h2><a name="version-0-4-27-september-1996">Version 0.4, 27 September 1996</a></h2>
+<h2><a>Version 0.4, 27 September 1996</a></h2>
 <ul>
 <li>Now handles methods returning doubles or floats.</li>
 <li>ObjCRuntime responds to .sel_is_mapped().</li>
 </ul>
-<h2><a name="version-0-31-26-september-1996">Version 0.31, 26 September 1996</a></h2>
+<h2><a>Version 0.31, 26 September 1996</a></h2>
 <ul>
 <li>It's now possible to use a different strategy to map ObjC method names to
 Python ones. Sooner or later we should decide the one to go, and drop the
@@ -852,11 +852,11 @@ objc_support.h.</li>
 <li>ObjC.runtime.__dict__ added.</li>
 <li>ObjC.runtime.kind added.</li>
 </ul>
-<h2><a name="version-0-3-20-september-1996">Version 0.3, 20 September 1996</a></h2>
+<h2><a>Version 0.3, 20 September 1996</a></h2>
 <ul>
 <li>No user visible changes, just a little effort towards GNU_RUNTIME support.</li>
 </ul>
-<h2><a name="version-0-2-16-september-1996">Version 0.2, 16 September 1996</a></h2>
+<h2><a>Version 0.2, 16 September 1996</a></h2>
 <ul>
 <li>Accepts a struct.pack() string for pointer arguments, but...</li>
 <li>... New methods on ObjCMethod: .pack_argument and .unpack_argument:
@@ -870,7 +870,7 @@ frame = aView.getFrame__.unpack_argument (0, framep)
 </pre>
 </li>
 </ul>
-<h2><a name="version-0-1-13-september-1996">Version 0.1, 13 September 1996</a></h2>
+<h2><a>Version 0.1, 13 September 1996</a></h2>
 <ul>
 <li>Correctly handle pointer arguments.</li>
 <li>New syntax to get a class: ObjC.runtime.NameOfClass</li>
