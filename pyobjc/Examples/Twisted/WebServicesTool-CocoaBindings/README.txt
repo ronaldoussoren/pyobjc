@@ -29,7 +29,7 @@ This application has been modified for Twisted.  It demonstrates:
 - well, it no longer demonstrates how to use multi-threading
 
 To run the demo:
-python buildapp.py build
-open build/Web\ Services\ Tool.app
+python setup.py py2app
+open dist/Web\ Services\ Tool.app
 
 bob@redivi.com
