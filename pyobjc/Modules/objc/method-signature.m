@@ -31,6 +31,15 @@ PyObjCMethodSignature* PyObjCMethodSignature_FromSignature(
 	}
 
 	retval->rettype = retval->signature;
+
+	/* Ignore type specifiers for methods returning void. Mostly needed
+	 * to avoid crapping out one (oneway void) methods.
+	 */
+	cur = PyObjCRT_SkipTypeQualifiers(retval->rettype);
+	if (*cur == _C_VOID) {
+		retval->rettype = cur;
+	}
+
 	
 	cur = PyObjCRT_SkipTypeSpec(retval->signature);
 	nargs = 0;

@@ -107,5 +107,6 @@ class PyOCTestTypeStr(unittest.TestCase):
         self.assertEquals(objc._C_OUT, "o")
         self.assertEquals(objc._C_INOUT, "N")
 
+
 if __name__ == '__main__':
     unittest.main()

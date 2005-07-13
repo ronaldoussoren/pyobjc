@@ -58,6 +58,7 @@ extern int PyObjCRT_SizeOfReturnType(const char* type);
 extern int PyObjCRT_SizeOfType(const char *type);
 extern int PyObjCRT_AlignOfType(const char *type);
 extern const char *PyObjCRT_SkipTypeSpec (const char *type);
+extern const char* PyObjCRT_SkipTypeQualifiers (const char* type);
 
 /*
  * Compatibility with pyobjc-api.h
