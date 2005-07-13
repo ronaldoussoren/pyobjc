@@ -2,6 +2,12 @@
 Cocoa Package Manager
 =====================
 
+NOTE:
+
+    The Package Manager infrastructure is currently unmaintained.  This
+    example is not intended for actual use, but remains to show how such an
+    application could be built.
+
 This application is a Cocoa version of the Package Manager application that
 is included with MacPython.
 
@@ -13,7 +19,7 @@ Features w.r.t. the official Package Manager:
 
 - You can have a list of favorite databases
 
-- The scroll-list doesn't scroll back automaticly ;-)
+- The scroll-list doesn't scroll back automatically ;-)
 
 Building
 --------
@@ -21,7 +27,7 @@ Building
 This version requires the latest version of PyObjC (1.1b1) and Mac OS X 10.3.
 Please let me know if it also works on OSX 10.2.
 
-Run ``python buildapp.py build`` to create the application.
+Run ``python setup.py py2app`` to create the application.
 
 TODO
 ----
