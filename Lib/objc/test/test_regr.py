@@ -106,6 +106,17 @@ class TestRegressions(unittest.TestCase):
         data = open('/tmp/pyobjc-thread.txt', 'r').read()
         self.assert_('does this print?' in data)
 
+    def testOneWayMethods(self):
+        # This one should be in test_methods*.py
+        from objc.test.initialize import OC_TestInitialize
+
+        o = OC_TestInitialize.alloc().init()
+        self.assertEquals(objc.splitSignature(o.onewayVoidMethod.signature), (objc._C_ONEWAY + objc._C_VOID, objc._C_ID, objc._C_SEL))
+
+        # Make sure we can call the method
+        o.onewayVoidMethod()
+        self.assertEquals(o.isInitialized(), -1)
+
 
 if __name__ == '__main__':
     unittest.main()

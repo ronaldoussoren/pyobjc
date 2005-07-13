@@ -252,7 +252,7 @@ ROUND(int v, int a)
 #endif
 
 
-static inline const char*
+const char*
 PyObjCRT_SkipTypeQualifiers (const char* type)
 {
 	while (

@@ -21,6 +21,9 @@ static int numUninitialized = 0;
 -(id)dummy;
 +(id)makeInstance;
 
+/* completely unrelated ... */
+-(oneway void)onewayVoidMethod;
+
 @end
 
 @implementation OC_TestInitialize 
@@ -78,11 +81,16 @@ static int numUninitialized = 0;
 	return [[[self alloc] init] autorelease];
 }
 
+-(oneway void)onewayVoidMethod
+{
+	isInitialized=-1;
+}
+
 @end
 
 
 static PyMethodDef initialize_methods[] = {
-	{ NULL, NULL, NULL, NULL }
+	{ 0, 0, 0, 0 }
 };
 
 void initinitialize(void);
