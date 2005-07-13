@@ -40,6 +40,41 @@ class PyOCTestTypeStr(unittest.TestCase):
         self.assertRaises(ValueError, objc.selector, lambda(x,y):1,
                 returnType="X")
 
+    def testArgumentTypesPythonStyle(self):
+        # Check that argumentTypes + returnType is correctly converted to
+        # a signature
+
+        s = objc.selector(lambda self: None, argumentTypes='ii', returnType='i')
+        self.assertEquals(s.signature, 'i@:ii')
+
+        s = objc.selector(lambda self: None, argumentTypes='Oi', returnType='i')
+        self.assertEquals(s.signature, 'i@:@i')
+
+        s = objc.selector(lambda self: None, argumentTypes='', returnType='l')
+        self.assertEquals(s.signature, objc._C_LNG + '@:')
+
+        s = objc.selector(lambda self: None, argumentTypes='', returnType='f')
+        self.assertEquals(s.signature, objc._C_FLT + '@:')
+
+        s = objc.selector(lambda self: None, argumentTypes='', returnType='d')
+        self.assertEquals(s.signature, objc._C_DBL + '@:')
+
+        s = objc.selector(lambda self: None, argumentTypes='', returnType='i')
+        self.assertEquals(s.signature, objc._C_INT + '@:')
+
+        s = objc.selector(lambda self: None, argumentTypes='', returnType='s')
+        self.assertEquals(s.signature, '@@:')
+
+        s = objc.selector(lambda self: None, argumentTypes='', returnType='S')
+        self.assertEquals(s.signature, '@@:')
+
+        s = objc.selector(lambda self: None, argumentTypes='', returnType='z')
+        self.assertEquals(s.signature, '@@:')
+
+        s = objc.selector(lambda self: None, argumentTypes='zbhilcfdO', returnType='z')
+        self.assertEquals(s.signature, '@@:@csilcfd@')
+
+
     def testAll(self):
         if hasattr(objc, '_C_BOOL'):
             self.assertEquals(objc._C_BOOL, "B")
