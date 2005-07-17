@@ -35,7 +35,7 @@ that PyObjC works is quite compliant with the `Zen of Python`_
 
 .. _`Zen of Python`: http://www.python.org/peps/pep-0020.html
 
-With no further adieu, here are the three most important things you
+With no further ado, here are the three most important things you
 *must* know before embarking on any PyObjC voyage:
 
 Underscores, and lots of them
