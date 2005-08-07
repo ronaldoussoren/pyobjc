@@ -6,6 +6,7 @@ from AppKit import *
 import objc; objc.setVerbose(1)
 
 import PyDocURLProtocol
+import PyDocEvents
 
 PyDocURLProtocol.setup()
 

@@ -7,7 +7,16 @@ Usage:
 from distutils.core import setup
 import py2app
 
-plist = dict(NSMainNibFile='PyDocBrowser')
+plist = dict(
+            NSMainNibFile='PyDocBrowser',
+            NSAppleScriptEnabled=True,
+            CFBundleURLTypes=[
+                dict(
+                    CFBundleURLName='Python Documention URL',
+                    CFBundleURLSchemes=['pydoc'],
+                )
+            ]
+        )
 setup(
     app=["PyDocBrowser.py"],
     data_files=["PyDocBrowser.nib"],
