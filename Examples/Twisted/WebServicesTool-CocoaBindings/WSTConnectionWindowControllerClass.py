@@ -290,6 +290,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
     def receivedMethods(self, _methods, _server, _methodPrefix):
         self.k_server = _server
         self.k_methods = {}
+        self.k_methodPrefix = _methodPrefix
         for aMethod in _methods:
             self.k_methods[aMethod] = RPCMethod.alloc().initWithDocument_name_(self, aMethod)
         self.setMethodArray_(self.k_methods.values())
