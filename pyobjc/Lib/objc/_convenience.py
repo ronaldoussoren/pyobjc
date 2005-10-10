@@ -613,3 +613,8 @@ CLASS_METHODS['NSMutableData'] = (
     ('__setslice__', NSMutableData__setslice__),
     ('__setitem__', NSMutableData__setitem__),
 )
+
+CLASS_METHODS['NSManagedObject'] = (
+    ('__setattr__', lambda self, name, value: self.setValue_forKey_(name, value)),
+    ('__getattr__', lambda self, name: self.valueForKey_(name)),
+    )
