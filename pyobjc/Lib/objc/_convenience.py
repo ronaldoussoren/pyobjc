@@ -615,6 +615,6 @@ CLASS_METHODS['NSMutableData'] = (
 )
 
 CLASS_METHODS['NSManagedObject'] = (
-    ('__setattr__', lambda self, name, value: self.setValue_forKey_(name, value)),
+    ('__setattr__', lambda self, name, value: self.setValue_forKey_(value, name)),
     ('__getattr__', lambda self, name: self.valueForKey_(name)),
     )
