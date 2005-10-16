@@ -125,7 +125,6 @@ object_dealloc(PyObject* obj)
 			 *   clusters like NSArray.
 			 */
 			char buf[256];
-
 			snprintf(buf, sizeof(buf), 
 				"leaking an uninitialized object of type %s",
 				obj->ob_type->tp_name);
@@ -133,7 +132,13 @@ object_dealloc(PyObject* obj)
 			((PyObjCObject*)obj)->objc_object = nil;
 		} else {
 			PyObjC_DURING
-				[((PyObjCObject*)obj)->objc_object release];
+				if (strcmp(GETISA(((PyObjCObject*)obj)->objc_object)->name, 
+						"NSAutoreleasePool") != 0) {
+
+					[((PyObjCObject*)obj)->objc_object autorelease];
+				} else {
+					[((PyObjCObject*)obj)->objc_object release];
+				}
 
 			PyObjC_HANDLER
 				NSLog(@"PyObjC: Exception during dealloc of proxy: %@",

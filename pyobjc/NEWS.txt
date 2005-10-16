@@ -4,6 +4,18 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 1.3.8 (????-??-??)
+
+- Make it possible to override the KVO methods, like ``setValue:forKey:`` and
+  ``valueForKey:`` in Python for all levels in the inheritance hierarchie.
+
+- Fix issues with reference counts for ``__slots__``.
+
+- Experimental: use ``-autorelease`` instead of ``-release`` to release
+  values in destructors. This seems to solve at least one memory managment
+  issue.
+
+
 Version 1.3.7 (2005-07-06)
 --------------------------
 

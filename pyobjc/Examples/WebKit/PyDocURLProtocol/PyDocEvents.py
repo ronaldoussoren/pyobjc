@@ -19,8 +19,7 @@ class PyDocEventHandler (NSObject):
     urlfield = objc.IBOutlet('urlfield')
 
     def handleEvent_withReplyEvent_(self, event, replyEvent):
-        theURL = event.descriptorForKeyword_(
-                fourCharToInt('----'))
+        theURL = event.descriptorForKeyword_(fourCharToInt('----'))
 
         self.urlfield.setStringValue_(theURL.stringValue())
         self.webview.takeStringURLFrom_(theURL)

@@ -225,6 +225,7 @@ class TestOverridingSpecials(unittest.TestCase):
             def __del__(self):
                 aList.append('__del__')
 
+        pool = NSAutoreleasePool.alloc().init()
         del aList[:]
         o = ClassWithRetaining.alloc().init()
         v = o.retainCount()
@@ -235,6 +236,7 @@ class TestOverridingSpecials(unittest.TestCase):
         self.assertEquals(aList, ['retain', 'release'])
         self.assertEquals(o.retainCount(), v)
         del o
+        del pool
 
         self.assertEquals(aList, ['retain', 'release', 'release', '__del__'])
 
@@ -254,6 +256,7 @@ class TestOverridingSpecials(unittest.TestCase):
         
         self.assertEquals(aList, ['retain', 'release', 'release', '__del__'])
 
+        pool = NSAutoreleasePool.alloc().init()
         class ClassWithRetainCount(NSObject):
             def retainCount(self):
                 aList.append('retainCount')
@@ -266,6 +269,7 @@ class TestOverridingSpecials(unittest.TestCase):
         self.assert_(isinstance(v, int))
         self.assertEquals(aList, ['retainCount'])
         del o
+        del pool
 
     def testOverrideDealloc(self):
         aList = []
@@ -290,9 +294,11 @@ class TestOverridingSpecials(unittest.TestCase):
                 return super(ClassWithDealloc, self).dealloc()
 
         del aList[:]
+        pool = NSAutoreleasePool.alloc().init()
         o = ClassWithDealloc.alloc().init()
         self.assertEquals(aList, [])
         del o
+        del pool
         self.assertEquals(len(aList), 2)
         self.assert_('dealloc' in aList)
         self.assert_('__del__' in aList)
@@ -303,9 +309,11 @@ class TestOverridingSpecials(unittest.TestCase):
                 return super(SubClassWithDealloc, self).dealloc()
 
         del aList[:]
+        pool = NSAutoreleasePool.alloc().init()
         o = SubClassWithDealloc.alloc().init()
         self.assertEquals(aList, [])
         del o
+        del pool
         self.assertEquals(len(aList), 3)
         self.assert_('dealloc.dealloc' in aList)
         self.assert_('dealloc' in aList)
@@ -326,9 +334,11 @@ class TestOverridingSpecials(unittest.TestCase):
                 aList.append('mydel')
 
         del aList[:]
+        pool = NSAutoreleasePool.alloc().init()
         o = ClassWithDeallocAndDel.alloc().init()
         self.assertEquals(aList, [])
         del o
+        del pool
         self.assertEquals(len(aList), 3)
         self.assert_('mydel' in aList)
         self.assert_('dealloc' in aList)
