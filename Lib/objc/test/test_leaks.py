@@ -21,6 +21,21 @@ class LeaksClass (NSObject):
 
         LeaksDel = 1
 
+class SlottedClass (NSObject):
+    __slots__ = ('slot1',)
+
+    def init(self):
+        self = NSObject.init(self)
+        self.slot1 = LeaksClass.alloc().init()
+        return self
+
+class MemberClass (NSObject):
+
+    def init(self):
+        self = NSObject.init(self)
+        self.slot1 = LeaksClass.alloc().init()
+        return self
+
 class TestRetains(unittest.TestCase):
     def testPyClass(self):
 
@@ -29,10 +44,12 @@ class TestRetains(unittest.TestCase):
         LeaksDel = 0
         self.assertEquals(LeaksDel, 0)
 
+        pool = NSAutoreleasePool.alloc().init()
         o = LeaksClass.alloc().init()
         self.assert_(o is not None)
         self.assertEquals(LeaksDel, 0)
         del o
+        del pool
         self.assertEquals(LeaksDel, 1)
 
     def testOCClass1(self):
@@ -68,6 +85,31 @@ class TestRetains(unittest.TestCase):
         del c
         del pool
         self.assertEquals(LeaksDel, 1)
+
+    def testSlots(self):
+        global LeaksDel
+
+        LeaksDel = 0
+        pool = NSAutoreleasePool.alloc().init()
+
+        o = SlottedClass.alloc().init()
+        self.assertEquals(LeaksDel, 0)
+        del o
+        del pool
+        self.assertEquals(LeaksDel, 1)
+
+    def testMembers(self):
+        global LeaksDel
+
+        LeaksDel = 0
+        pool = NSAutoreleasePool.alloc().init()
+
+        o = MemberClass.alloc().init()
+        self.assertEquals(LeaksDel, 0)
+        del o
+        del pool
+        self.assertEquals(LeaksDel, 1)
+
 
 
 if __name__ == '__main__':
