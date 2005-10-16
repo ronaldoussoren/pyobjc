@@ -196,7 +196,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 		if (v == NULL) {
 			return -1;
 		}
-		((PyObjCInstanceVariable*)v)->type = PyObjCUtil_Strdup("");
+		((PyObjCInstanceVariable*)v)->type = PyObjCUtil_Strdup(@encode(PyObject*));
 		((PyObjCInstanceVariable*)v)->isSlot = 1;
 		if (PyDict_SetItemString(clsdict, "__dict__", v) < 0) {
 			Py_DECREF(v);
@@ -240,7 +240,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 			Py_DECREF(slots);
 			return -1;
 		}
-		((PyObjCInstanceVariable*)var)->type = PyObjCUtil_Strdup("");
+		((PyObjCInstanceVariable*)var)->type = PyObjCUtil_Strdup(@encode(PyObject*));
 		((PyObjCInstanceVariable*)var)->isSlot = 1;
 	
 		if (PyDict_SetItem(clsdict, slot_value, (PyObject*)var) < 0) {
@@ -282,7 +282,7 @@ build_intermediate_class(Class base_class, char* name)
 	IMP closure;
 	PyObjCMethodSignature* methinfo = NULL;
 
-	method_list = PyObjCRT_AllocMethodList(2);
+	method_list = PyObjCRT_AllocMethodList(9);
 
 	if (method_list == NULL) {
 		PyErr_NoMemory();
@@ -317,6 +317,39 @@ build_intermediate_class(Class base_class, char* name)
 	if (closure == NULL) goto error_cleanup;
 	meth = method_list->method_list + method_list->method_count++;
 	PyObjCRT_InitMethod(meth, @selector(dealloc), "v@:", (IMP)closure); 
+
+	methinfo = PyObjCMethodSignature_FromSignature("@@:@");
+	if (methinfo == NULL) goto error_cleanup; 
+	closure = PyObjCFFI_MakeClosure(methinfo, object_method_valueForKey_,
+		base_class);
+	PyObjCMethodSignature_Free(methinfo); methinfo = NULL;
+	if (closure == NULL) goto error_cleanup;
+	meth = method_list->method_list + method_list->method_count++;
+	PyObjCRT_InitMethod(meth, @selector(valueForKey:), "@@:@", (IMP)closure); 
+	PyObjCRT_InitMethod(meth, @selector(storedValueForKey:), "@@:@", (IMP)closure); 
+
+	methinfo = PyObjCMethodSignature_FromSignature("v@:@@");
+	if (methinfo == NULL) goto error_cleanup; 
+	closure = PyObjCFFI_MakeClosure(methinfo, object_method_setValue_forKey_,
+		base_class);
+	PyObjCMethodSignature_Free(methinfo); methinfo = NULL;
+	if (closure == NULL) goto error_cleanup;
+	meth = method_list->method_list + method_list->method_count++;
+	PyObjCRT_InitMethod(meth, @selector(setValue:forKey:), "v@:@@", (IMP)closure); 
+	PyObjCRT_InitMethod(meth, @selector(takeStoredValue:forKey:), "v@:@@", (IMP)closure); 
+	PyObjCRT_InitMethod(meth, @selector(takeValue:forKey:), "v@:@@", (IMP)closure); 
+
+	if (_KVOHackLevel() == 1) {
+		methinfo = PyObjCMethodSignature_FromSignature("v@:@");
+		if (methinfo == NULL) goto error_cleanup; 
+		closure = PyObjCFFI_MakeClosure(methinfo, object_method_willOrDidChangeValueForKey_,
+			base_class);
+		PyObjCMethodSignature_Free(methinfo); methinfo = NULL;
+		if (closure == NULL) goto error_cleanup;
+		meth = method_list->method_list + method_list->method_count++;
+		PyObjCRT_InitMethod(meth, @selector(willChangeValueForKey:), "v@:@@", (IMP)closure); 
+		PyObjCRT_InitMethod(meth, @selector(didChangeValueForKey:), "v@:@@", (IMP)closure); 
+	}
 
 	root_class = base_class;
 	while (root_class->super_class != NULL) {
@@ -518,6 +551,43 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		PyErr_Clear();
 	} else {
 		need_intermediate = 1;
+	}
+	if (PyDict_GetItemString(class_dict, "valueForKey_") == NULL) {
+		PyErr_Clear();
+	} else {
+		need_intermediate = 1;
+	}
+	if (PyDict_GetItemString(class_dict, "storedValueForKey_") == NULL) {
+		PyErr_Clear();
+	} else {
+		need_intermediate = 1;
+	}
+	if (PyDict_GetItemString(class_dict, "setValueForKey_") == NULL) {
+		PyErr_Clear();
+	} else {
+		need_intermediate = 1;
+	}
+	if (PyDict_GetItemString(class_dict, "takeValueForKey_") == NULL) {
+		PyErr_Clear();
+	} else {
+		need_intermediate = 1;
+	}
+	if (PyDict_GetItemString(class_dict, "takeStoredValueForKey_") == NULL) {
+		PyErr_Clear();
+	} else {
+		need_intermediate = 1;
+	}
+	if (_KVOHackLevel() == 1) {
+		if (PyDict_GetItemString(class_dict, "willChangeValueForKey_") == NULL) {
+			PyErr_Clear();
+		} else {
+			need_intermediate = 1;
+		}
+		if (PyDict_GetItemString(class_dict, "didChangeValueForKey_") == NULL) {
+			PyErr_Clear();
+		} else {
+			need_intermediate = 1;
+		}
 	}
 
 	if (!PyObjCClass_HasPythonImplementation(py_superclass) && need_intermediate) {
@@ -781,6 +851,43 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				@selector(dealloc), 
 				"v@:", 
 				object_method_dealloc);
+			METH(
+				"storedValueForKey_",
+				@selector(storedValueForKey:),
+				"@@:@",
+				object_method_valueForKey_);
+			METH(
+				"valueForKey_",
+				@selector(valueForKey:),
+				"@@:@",
+				object_method_valueForKey_);
+			METH(
+				"takeStoredValue_forKey_",
+				@selector(takeStoredValue:forKey:),
+				"v@:@@",
+				object_method_setValue_forKey_);
+			METH(
+				"takeValue_forKey_",
+				@selector(takeValue:forKey:),
+				"v@:@@",
+				object_method_setValue_forKey_);
+			METH(
+				"setValue_forKey_",
+				@selector(setValue:forKey:),
+				"v@:@@",
+				object_method_setValue_forKey_);
+			if (_KVOHackLevel() == 1) {
+				METH(
+					"willChangeValueForKey_",
+					@selector(willChangeValueForKey:),
+					"v@:@",
+					object_method_willOrDidChangeValueForKey_);
+				METH(
+					"didChangeValueForKey_",
+					@selector(didChangeValueForKey:),
+					"v@:@",
+					object_method_willOrDidChangeValueForKey_);
+			}
 		}
 		/* FIXME: 
 		 * all these should be in the intermediate class as well,
@@ -802,43 +909,6 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			@selector(forwardInvocation:), 
 			"v@:@", 
 			object_method_forwardInvocation);
-		METH(
-			"storedValueForKey_",
-			@selector(storedValueForKey:),
-			"@@:@",
-			object_method_valueForKey_);
-		METH(
-			"valueForKey_",
-			@selector(valueForKey:),
-			"@@:@",
-			object_method_valueForKey_);
-		METH(
-			"takeStoredValue_forKey_",
-			@selector(takeStoredValue:forKey:),
-			"v@:@@",
-			object_method_setValue_forKey_);
-		METH(
-			"takeValue_forKey_",
-			@selector(takeValue:forKey:),
-			"v@:@@",
-			object_method_setValue_forKey_);
-		METH(
-			"setValue_forKey_",
-			@selector(setValue:forKey:),
-			"v@:@@",
-			object_method_setValue_forKey_);
-		if (_KVOHackLevel() == 1) {
-			METH(
-				"willChangeValueForKey_",
-				@selector(willChangeValueForKey:),
-				"v@:@",
-				object_method_willOrDidChangeValueForKey_);
-			METH(
-				"didChangeValueForKey_",
-				@selector(didChangeValueForKey:),
-				"v@:@",
-				object_method_willOrDidChangeValueForKey_);
-		}
 
 		if (!have_intermediate && [super_class instancesRespondToSelector:@selector(copyWithZone:)]) {
 			if (copyWithZone_signature[0] == '\0') {
@@ -1092,7 +1162,7 @@ free_ivars(id self, PyObject* volatile cls )
 			iv = ((PyObjCInstanceVariable*)o);
 
 			if (iv->isOutlet) continue;
-			if (strcmp(iv->type, "@") != 0) continue;
+			if (strcmp(iv->type, "@") != 0 && strcmp(iv->type, @encode(PyObject*)) != 0) continue;
 
 			var = class_getInstanceVariable(objcClass, iv->name);
 			if (var == NULL) continue;
@@ -1100,9 +1170,11 @@ free_ivars(id self, PyObject* volatile cls )
 			if (iv->isSlot) {
 				Py_XDECREF(*(PyObject**)(((char*)self) + 
 					var->ivar_offset));
+				(*(PyObject**)(((char*)self) + 
+					var->ivar_offset)) = NULL;
 			} else {
 				PyObjC_DURING
-					[*(id*)(((char*)self) + var->ivar_offset) release];
+					[*(id*)(((char*)self) + var->ivar_offset) autorelease];
 
 				PyObjC_HANDLER
 					NSLog(@"ignoring exception %@ in destructor",
@@ -1733,12 +1805,6 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, int* isAlloc)
 			return NULL;
 		}
 		if (arg_self != ((PyObjCSelector*)pymeth)->sel_self) {
-
-			printf("self[%p]:%s sel_self[%p]:%s\n",
-				arg_self, PyObject_REPR(arg_self),
-				((PyObjCSelector*)pymeth)->sel_self,
-				PyObject_REPR(((PyObjCSelector*)pymeth)->sel_self));
-
 
 			PyErr_SetString(PyExc_TypeError,
 				"PyObjC_CallPython called with 'self' and "
