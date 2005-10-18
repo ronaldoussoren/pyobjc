@@ -28,6 +28,7 @@ Version 1.3.8 (????-??-??)
   the translation from Objective-C to Python is unmodified and is entirely
   consistent with the modified rules for translating from Python to Objective-C.
 
+- Fix for a memory leak in ``__pyobjc_object__`` handling.
 
 Version 1.3.7 (2005-07-06)
 --------------------------
