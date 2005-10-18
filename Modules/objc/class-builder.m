@@ -746,6 +746,8 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (pyname == NULL) continue;
 
 			ocname = PyString_AS_STRING(pyname);
+			
+			/* XXX: Why is this needed? */
 			if (ocname[0] == '_' && ocname[1] == '_') {
 				/* Skip special methods */
 				continue;

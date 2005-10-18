@@ -464,7 +464,7 @@ simple translations must take place.  The rules for these translations are:
 1. Replace all colons in the selector with underscores:
   
     - ``someMethod:withFoo:andBar:`` translates to ``someMethod_withFoo_andBar_``
-  
+
 2. If the result ``class`` or ``raise`` (Python keywords), append two underscores:
   
     - ``class`` translates to ``class__``
