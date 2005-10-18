@@ -110,7 +110,9 @@ NSMapTable *PyObjC_ObjectToIdTable = NULL;
 
 	anObject = PyObject_GetAttrString(argument, "__pyobjc_object__");
 	if (anObject && anObject != argument) {
-		return [self wrapPyObject:anObject toId:datum];
+		r = [self wrapPyObject:anObject toId:datum];
+		Py_DECREF(anObject);
+		return r;
 	}
 	PyErr_Clear();
  
