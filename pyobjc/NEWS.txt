@@ -15,6 +15,19 @@ Version 1.3.8 (????-??-??)
   values in destructors. This seems to solve at least one memory managment
   issue.
 
+- A slight complication in the naming rule:
+
+  1) Don't translate leading underscores in Python to colons in Objective-C,
+     ``_doFoo_andBar_`` in Python will be ``_doFoo:andBar:`` in Objective-C.
+
+  2) If a name starts and ends with double underscores don't modify the
+     name at all when moving from Python to Objective-C, 
+     ``__foobar__`` in Python will stay that way in Objective-C.
+
+  These changes fix some minor annoyances with the older scheme. Note that
+  the translation from Objective-C to Python is unmodified and is entirely
+  consistent with the modified rules for translating from Python to Objective-C.
+
 
 Version 1.3.7 (2005-07-06)
 --------------------------

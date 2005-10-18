@@ -1087,7 +1087,30 @@ PyObjCSelector_DefaultSelector(const char* methname)
 		}
 	}
 
-	cur = strchr(buf, '_');
+	/* Skip leading underscores, '_doFoo_' is probably '_doFoo:' in 
+	 * Objective-C, not ':doFoo:'.
+	 *
+	 * Also if the name starts and ends with two underscores, return
+	 * it unmodified. This avoids mangling of Python's special methods.
+	 *
+	 * Both are heuristics and could be the wrong choice, but either 
+	 * form is very unlikely to exist in ObjC code.
+	 */
+	cur = buf;
+
+	if (ln > 5) {
+		if (cur[0] == '_' && cur[1] == '_' &&
+		    cur[ln-1] == '_' && cur[ln-2] == '_') {
+			return sel_registerName(buf);
+		}
+	}
+
+	while (*cur == '_') {
+		cur++;
+	}
+
+	/* Replace all other underscores by colons */
+	cur = strchr(cur, '_');
 	while (cur != NULL) {
 		*cur = ':';
 		cur = strchr(cur, '_');

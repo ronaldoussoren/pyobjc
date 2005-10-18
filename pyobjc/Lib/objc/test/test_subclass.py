@@ -344,6 +344,42 @@ class TestOverridingSpecials(unittest.TestCase):
         self.assert_('dealloc' in aList)
         self.assert_('__del__' in aList)
 
+    def testMethodNames(self):
+
+        class MethodNamesClass (NSObject):
+            def someName_andArg_(self, name, arg):
+                pass
+
+            def _someName_andArg_(self, name, arg):
+                pass
+
+
+            def raise__(self):
+                pass
+
+            def froobnicate__(self):
+                pass
+
+        # XXX: workaround for a 'feature' in class-builder.m, that code 
+        # ignores methods whose name starts with two underscores. That code
+        # is not necessary, or the other ways of adding methods to a class
+        # should be changed.
+        def __foo_bar__(self, a, b, c):
+            pass
+
+        MethodNamesClass.__foo_bar__ = __foo_bar__
+
+        self.assertEquals(MethodNamesClass.someName_andArg_.selector,
+                'someName:andArg:')
+        self.assertEquals(MethodNamesClass._someName_andArg_.selector,
+                '_someName:andArg:')
+        self.assertEquals(MethodNamesClass.__foo_bar__.selector,
+                '__foo_bar__')
+        self.assertEquals(MethodNamesClass.raise__.selector,
+                'raise')
+        self.assertEquals(MethodNamesClass.froobnicate__.selector,
+                'froobnicate::')
+
 
 if __name__ == '__main__':
     unittest.main()
