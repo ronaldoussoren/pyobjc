@@ -135,7 +135,7 @@ object_dealloc(PyObject* obj)
 				if (strcmp(GETISA(((PyObjCObject*)obj)->objc_object)->name, 
 						"NSAutoreleasePool") != 0) {
 
-					[((PyObjCObject*)obj)->objc_object autorelease];
+				        [((PyObjCObject*)obj)->objc_object release];
 				} else {
 					[((PyObjCObject*)obj)->objc_object release];
 				}
