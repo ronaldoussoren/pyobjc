@@ -44,12 +44,10 @@ class TestRetains(unittest.TestCase):
         LeaksDel = 0
         self.assertEquals(LeaksDel, 0)
 
-        pool = NSAutoreleasePool.alloc().init()
         o = LeaksClass.alloc().init()
         self.assert_(o is not None)
         self.assertEquals(LeaksDel, 0)
         del o
-        del pool
         self.assertEquals(LeaksDel, 1)
 
     def testOCClass1(self):
