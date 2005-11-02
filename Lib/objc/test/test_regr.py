@@ -118,5 +118,14 @@ class TestRegressions(unittest.TestCase):
         self.assertEquals(o.isInitialized(), -1)
 
 
+    def testNoneAsSelf (self):
+        class SelfIsNone (NSObject):
+            def f(x):
+                pass
+
+        self.assertRaises(TypeError, NSObject.description, None)
+        self.assertRaises(TypeError, SelfIsNone.f, None)
+
+
 if __name__ == '__main__':
     unittest.main()
