@@ -925,8 +925,10 @@ pysel_call(PyObjCPythonSelector* self, PyObject* args, PyObject* kwargs)
 			}
 			self_arg = PyTuple_GET_ITEM(args, 0);
 			if (!PyObjCObject_Check(self_arg) && !PyObjCClass_Check(self_arg)) {
-				PyErr_SetString(PyObjCExc_Error, "bad self type");
-				abort();
+				PyErr_Format(PyExc_TypeError, 
+					"Expecting an Objective-C class or "
+					"instance as self, got a %s",
+					self_arg->ob_type->tp_name);
 				return NULL;
 			}
 		}
