@@ -3,6 +3,7 @@
 import unittest
 import objc
 
+import Foundation
 import CoreData
 
 class Test (unittest.TestCase):
@@ -25,7 +26,7 @@ class Test (unittest.TestCase):
 	self.managedObjectContext = CoreData.NSManagedObjectContext.new()
 	self.managedObjectContext.setPersistentStoreCoordinator_(self.persistentStoreCoordinator)
 
-    def testManagedKVO(self):
+    def testModeledAttribute(self):
 	managedObject = CoreData.NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(self.entity, self.managedObjectContext)
 
 	testValue = u'FooBarBaz'
@@ -40,6 +41,22 @@ class Test (unittest.TestCase):
 
 	self.assertEquals(testValue, managedObject.valueForKey_(u'testAttribute'))
 	self.assertEquals(testValue, managedObject.testAttribute)
+
+	testValue = u'Zebras have long legs.'
+	managedObject.testAttribute = testValue
+
+	self.assertEquals(testValue, managedObject.valueForKey_(u'testAttribute'))
+	self.assertEquals(testValue, managedObject.testAttribute)
+
+    def testPythonicAttribute(self):
+	managedObject = CoreData.NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(self.entity, self.managedObjectContext)
+
+	testValue = u'Ducks have webbed feet'
+	managedObject.attributeWithoutModel = testValue
+
+	self.assertEquals(testValue, managedObject.attributeWithoutModel)
+	
+	self.assertRaises(Foundation.NSUnknownKeyException, managedObject.valueForKey_(u'attributeWithoutModel'))
 	
 
 if __name__ == "__main__":

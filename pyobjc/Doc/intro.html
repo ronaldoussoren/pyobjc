@@ -639,6 +639,12 @@ classes that partially implement a protocol.</p>
 to create and use <i>Controller</i> objects using <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueObserving/">Key-Value Observing</a> and
 <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/">Key-Value Coding</a>.  In order to create accessors compatible with this, you
 must use <code><span>objc.accessor</span></code> to create an appropriate selector descriptor.</p>
+<p>PyObjC automaticly emits the right <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueObserving/">Key-Value Observing</a> notifications when 
+you set attributes on an Objective-C class. This is however not supported for
+pure python objects. You should therefore use <code><span>NSMutableArray</span></code> instances 
+instead of Python lists for instance variables that will be observed and contain
+a sequence of values (and simularly for <code><span>NSMutableDictionary</span></code> instead of
+<code><span>dict</span></code>).</p>
 <h3><a href="#id18">Categories</a></h3>
 <p>Objective-C has a mechanism for modularize a class definition, it is possible
 to add methods to an existing class in a separate compilation unit and even

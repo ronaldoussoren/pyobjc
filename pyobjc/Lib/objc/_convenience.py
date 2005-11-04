@@ -614,7 +614,20 @@ CLASS_METHODS['NSMutableData'] = (
     ('__setitem__', NSMutableData__setitem__),
 )
 
+def NSMOsetValue_ForKey_(self, name, value):
+    from Foundation import NSUnknownKeyException
+    try:
+	super(self.__class__, self).setValue_forKey_(value, name)
+    except NSUnknownKeyException:
+	super(self.__class__, self).__setattr__(name, value)
+
+def NSMOvalueForKey_(self, name):
+    try:
+	return super(self.__class__, self).valueForKey__(name)
+    except AttributeError:
+	return super(self.__class__, self).__getattr__(name)
+	
 CLASS_METHODS['NSManagedObject'] = (
-    ('__setattr__', lambda self, name, value: self.setValue_forKey_(value, name)),
-    ('__getattr__', lambda self, name: self.valueForKey_(name)),
+    ('__setattr__', NSMOsetValue_ForKey_),
+    ('__getattr__', NSMOvalueForKey_),
     )
