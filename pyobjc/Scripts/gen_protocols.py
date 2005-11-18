@@ -135,7 +135,7 @@ def makeTypeCodes(frameworkName, types, frameworkMain=None, extraStuff=""):
     os.remove(tempExecutable)
 
 
-def genProtocols(frameworkPath, outFile=None, specials={}, frameworkMain=None, extraStuff=""):
+def genProtocols(frameworkPath, outFile=None, specials={}, frameworkMain=None, extraStuff="", pointerInfo={}):
     """Generate protocol definitions for a framework. If outFile is None,
     the generated Python code will be printed to sys.stdout.
     """
@@ -171,6 +171,24 @@ def genProtocols(frameworkPath, outFile=None, specials={}, frameworkMain=None, e
             print >> outFile, "        _objc.selector("
             print >> outFile, "            None,"
             print >> outFile, "            selector='%s'," % selector
+
+            pointers = [ (idx, tp) 
+                        for idx, tp in enumerate(types) if tp[0] == '^' ]
+
+            for idx, tp in pointers:
+                if (selector, idx) in pointerInfo:
+                    extra = pointerInfo[(selector, idx)]
+                    if extra is None:
+                        pass
+                    elif extra in 'nNo':
+                        types[idx] = pointerInfo[(selector, idx)] + types[idx]
+                    else:
+                        types[idx] = extra
+                else:
+                    print >>sys.stderr, " === Unhandled pointer =="
+                    print >>sys.stderr, protoName
+                    print >>sys.stderr, selector
+                    print >>sys.stderr, "at %d: %r"%(idx, tp)
 
             if selector in specials:
                 print >> outFile, "            signature='%s'," % (specials[selector],)

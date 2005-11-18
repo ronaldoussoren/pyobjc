@@ -783,7 +783,7 @@ NSDatePickerCellDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='datePickerCell:validateProposedDateValue:timeInterval:',
-            signature='v@:@^@^d',
+            signature='v@:@N^@N^d',
             isRequired=0,
         ),
     ]
@@ -1057,7 +1057,7 @@ NSEditor = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='commitEditingWithDelegate:didCommitSelector:contextInfo:',
-            signature='v@:@:^v',
+            signature='v@:@:i',
             isRequired=0,
         ),
 # (void)discardEditing
@@ -1143,7 +1143,7 @@ NSGlyphStorage = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='insertGlyphs:length:forStartingGlyphAtIndex:characterIndex:',
-            signature='v@:^rIIII',
+            signature='v@:r^IIII',
             isRequired=0,
         ),
 # (unsigned int)layoutOptions
@@ -1438,7 +1438,7 @@ NSMenuDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='menuHasKeyEquivalent:forEvent:target:action:',
-            signature='c@:@@^@^:',
+            signature='c@:@@o^@o^:',
             isRequired=0,
         ),
 # (void)menuNeedsUpdate:(NSMenu*)menu
@@ -2938,7 +2938,7 @@ NSTokenFieldCellDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='tokenFieldCell:completionsForSubstring:indexOfToken:indexOfSelectedItem:',
-            signature='@@:@@i^i',
+            signature='@@:@@io^i',
             isRequired=0,
         ),
 # (NSString *)tokenFieldCell:(NSTokenFieldCell *)tokenFieldCell displayStringForRepresentedObject:(id)representedObject
@@ -3014,7 +3014,7 @@ NSTokenFieldDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='tokenField:completionsForSubstring:indexOfToken:indexOfSelectedItem:',
-            signature='@@:@@i^i',
+            signature='@@:@@io^i',
             isRequired=0,
         ),
 # (NSString *)tokenField:(NSTokenField *)tokenField displayStringForRepresentedObject:(id)representedObject
@@ -3090,7 +3090,7 @@ NSToolTipOwner = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='view:stringForToolTip:point:userData:',
-            signature='@@:@i{_NSPoint=ff}^v',
+            signature='@@:@i{_NSPoint=ff}i',
             isRequired=0,
         ),
     ]
