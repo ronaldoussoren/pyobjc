@@ -81,7 +81,7 @@ def process_file(outfp, filename, ignore):
 
 
 def generate(dirname, fn = None, ignore=(), filter = lambda x: 1,
-            emit_header=1, emit_footer=1):
+            emit_header=1, emit_footer=1, append=()):
 
     if fn:
         fp = dupfile(fn, 'w')
@@ -104,6 +104,10 @@ def generate(dirname, fn = None, ignore=(), filter = lambda x: 1,
     fnames.sort()
     for f in fnames:
         process_file(fp, f, ignore)
+
+    for item in append:
+        entry(fp, item, ignore)
+
 
     if emit_footer:
         fp.write("\t{0, 0} /* Sentinel */\n")

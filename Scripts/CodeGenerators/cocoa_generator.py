@@ -163,7 +163,10 @@ if FOUNDATION_HDRS is not None:
                 # Declared on GNUstep, but not actually inside the
                 # shared lib?
                 'ConnectionBecameInvalidNotification',
-            )
+            ),
+            append=(
+                'NSUnknownKeyException',
+            ),
     )
     FOUNDATION_IGNORE_LIST=(
         # All have types that are not (yet) mapped to python
