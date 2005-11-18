@@ -617,8 +617,9 @@ CLASS_METHODS['NSMutableData'] = (
 def NSMOsetValue_ForKey_(self, name, value):
     from Foundation import NSObject
     try:
-        super(self.__class__, self).setValue_forKey_(value, name)
-    except KeyError:
+        #super(self.__class__, self).setValue_forKey_(value, name)
+        self.setValue_forKey_(value, name)
+    except KeyError, msg:
         NSObject.__setattr__(self, name, value)
 
 CLASS_METHODS['NSManagedObject'] = (

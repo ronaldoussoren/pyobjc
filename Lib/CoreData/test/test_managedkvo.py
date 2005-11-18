@@ -52,6 +52,11 @@ class Test (unittest.TestCase):
 	managedObject = CoreData.NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(self.entity, self.managedObjectContext)
 
 	testValue = u'Ducks have webbed feet'
+        self.assertRaises(AttributeError, setattr, managedObject, 'attributeWithoutModel', testValue)
+        return
+
+        # XXX: this test is invalid, you cannot add arbitrary attributes
+        # to an object that is fully implemented in ObjC.
 	managedObject.attributeWithoutModel = testValue
 
 	self.assertEquals(testValue, managedObject.attributeWithoutModel)

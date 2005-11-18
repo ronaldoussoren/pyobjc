@@ -63,7 +63,7 @@ DRSetupPanelDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='setupPanel:deviceContainsSuitableMedia:promptString:',
-            signature='c@:@@^@',
+            signature='c@:@@o^@',
             isRequired=0,
         ),
 # (BOOL) setupPanel:(DRSetupPanel*)aPanel deviceCouldBeTarget:(DRDevice*)device

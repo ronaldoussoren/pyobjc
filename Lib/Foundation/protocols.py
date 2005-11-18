@@ -413,7 +413,7 @@ NSErrorRecoveryAttempting = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='attemptRecoveryFromError:optionIndex:delegate:didRecoverSelector:contextInfo:',
-            signature='v@:@I@:^v',
+            signature='v@:@I@:i',
             isRequired=0,
         ),
     ]
@@ -504,14 +504,14 @@ NSKeyValueCoding = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='validateValue:forKey:error:',
-            signature='c@:^@@^@',
+            signature='c@:N^@@o^@',
             isRequired=0,
         ),
 # (BOOL)validateValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError
         _objc.selector(
             None,
             selector='validateValue:forKeyPath:error:',
-            signature='c@:^@@^@',
+            signature='c@:N^@@o^@',
             isRequired=0,
         ),
 # (id)valueForKey:(NSString *)key
@@ -593,7 +593,7 @@ NSKeyValueObserverRegistration = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='addObserver:forKeyPath:options:context:',
-            signature='v@:@@I^v',
+            signature='v@:@@Ii',
             isRequired=0,
         ),
 # (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath
@@ -613,7 +613,7 @@ NSKeyValueObserving = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='observeValueForKeyPath:ofObject:change:context:',
-            signature='v@:@@@^v',
+            signature='v@:@@@i',
             isRequired=0,
         ),
     ]
@@ -634,7 +634,7 @@ NSKeyValueObservingCustomization = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='observationInfo',
-            signature='^v@:',
+            signature='i@:',
             isRequired=0,
         ),
 # (void)setKeys:(NSArray *)keys triggerChangeNotificationsForDependentKey:(NSString *)dependentKey
@@ -649,7 +649,7 @@ NSKeyValueObservingCustomization = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='setObservationInfo:',
-            signature='v@:^v',
+            signature='v@:i',
             isRequired=0,
         ),
     ]
@@ -1359,7 +1359,7 @@ NSSpellServerDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='spellServer:findMisspelledWordInString:language:wordCount:countOnly:',
-            signature='{_NSRange=II}@:@@@^ic',
+            signature='{_NSRange=II}@:@@@o^ic',
             isRequired=0,
         ),
 # (NSArray *)spellServer:(NSSpellServer *)sender suggestCompletionsForPartialWordRange:(NSRange)range inString:(NSString *)string language:(NSString *)language
