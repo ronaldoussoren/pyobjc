@@ -2003,7 +2003,7 @@ NSOutlineViewDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='outlineView:toolTipForCell:rect:tableColumn:item:mouseLocation:',
-            signature='@@:@@^{_NSRect={_NSPoint=ff}{_NSSize=ff}}@@{_NSPoint=ff}',
+            signature='@@:@@N^{_NSRect={_NSPoint=ff}{_NSSize=ff}}@@{_NSPoint=ff}',
             isRequired=0,
         ),
 # (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
@@ -2483,7 +2483,7 @@ NSTableViewDelegate = _objc.informal_protocol(
         _objc.selector(
             None,
             selector='tableView:toolTipForCell:rect:tableColumn:row:mouseLocation:',
-            signature='@@:@@^{_NSRect={_NSPoint=ff}{_NSSize=ff}}@i{_NSPoint=ff}',
+            signature='@@:@@N^{_NSRect={_NSPoint=ff}{_NSSize=ff}}@i{_NSPoint=ff}',
             isRequired=0,
         ),
 # (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(int)row
