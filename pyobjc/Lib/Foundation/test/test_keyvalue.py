@@ -41,6 +41,13 @@ class KeyValueClass1 (NSObject):
     def setKey5_(self, value):
         self.key5 = value * 5
 
+    def keyRaisingValueError(self):
+        raise ValueError, "42"
+
+    def keyRaisingNSUnknownKeyException(self):
+        return self.valueForKey_("thisKeyDoesNotExist")
+
+
 class KeyValueClass1Explicit (NSObject):
     def init(self):
         self = super(KeyValueClass1Explicit, self).init()
@@ -139,6 +146,12 @@ class PyKeyValueCoding (unittest.TestCase):
         self.assertEquals(STUB.keyValue_forObject_key_(0, o, u"multiple"), o.multiple)
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o, u"nokey")
+
+        self.assertRaises(ValueError, STUB.keyValue_forObject_key_, 0, o,
+                u"keyRaisingValueError")
+        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o,
+                u"keyRaisingNSUnknownKeyException")
+
 
     def testValueForKey2(self):
         o = KeyValueClass4.alloc().init()
