@@ -47,6 +47,11 @@ class KeyValueClass1 (NSObject):
     def keyRaisingNSUnknownKeyException(self):
         return self.valueForKey_("thisKeyDoesNotExist")
 
+    def keyReturningSameSlector(self):
+        return self.keyReturningSameSelector
+
+    def keyReturningOtherSelector(self):
+        return self.getKey1
 
 class KeyValueClass1Explicit (NSObject):
     def init(self):
@@ -151,6 +156,13 @@ class PyKeyValueCoding (unittest.TestCase):
                 u"keyRaisingValueError")
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o,
                 u"keyRaisingNSUnknownKeyException")
+        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o,
+                u"keyReturningSameSelector")
+
+        obj = STUB.keyValue_forObject_key_( 0, o, u"keyReturningOtherSelector")
+        self.failUnless( isinstance(obj, objc.selector) )
+        self.assertEquals(obj.selector, "getKey1")
+        self.failUnless( obj.self is o )
 
 
     def testValueForKey2(self):
