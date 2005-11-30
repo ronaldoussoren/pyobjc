@@ -54,7 +54,11 @@ class RemoteConsole(InteractiveConsole):
         old_stdin = sys.stdin
         old_stdout = sys.stdout
         old_stderr = sys.stderr
+        old_help = __builtin__.help
+        old_quit = __builtin__.quit
         __builtin__.raw_input = self.raw_input
+        __builtin__.help = "Close window to exit."
+        __builtin__.quit = "Close window to exit."
         sys.displayhook = self.displayhook
         sys.excepthook = self.excepthook
         sys.stdin = self.pipe.stdin
@@ -65,6 +69,8 @@ class RemoteConsole(InteractiveConsole):
             InteractiveConsole.interact(self)
         finally:
             __builtin__.raw_input = old_raw_input
+            __builtin__.help = old_help
+            __builtin__.quit = old_quit
             sys.displayhook = old_displayhook
             sys.excepthook = old_excepthook
             sys.stdin = old_stdin
