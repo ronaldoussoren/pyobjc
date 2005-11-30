@@ -1887,6 +1887,15 @@ object_method_valueForKey_(
 						break;
 					}
 				}
+
+				/* Check that we don't accidently return 
+				 * an accessor method.
+				 */
+				if (PyObjCSelector_Check(res) &&
+					((PyObjCSelector*)res)->sel_self == selfObj) {
+					Py_DECREF(res); res = NULL;
+					break;
+				}
 				r = depythonify_c_value(@encode(id), res, retval);
 			} while (0);
 			Py_DECREF(selfObj);
