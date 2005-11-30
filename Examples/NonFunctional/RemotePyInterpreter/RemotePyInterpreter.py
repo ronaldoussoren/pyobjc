@@ -52,6 +52,12 @@ class RemotePyInterpreterReactor(NibClassBuilder.AutoBaseClass):
                 style, msg = map(ensure_unicode, args)
                 args = [msg, style]
                 self.doCallback_sequence_args_(self.delegate.writeString_forOutput_, seq, args)
+
+            elif method == 'readline':
+                def input_received(line):
+                    self.sendResult_sequence_(line, seq)
+                self.delegate.expectCodeInput_withPrompt_(input_received, '')
+
             else:
                 self.doCallback_sequence_args_(NSLog, seq, [u'%r does not respond to expect %r' % (self, command,)])
         elif name == 'RemoteConsole.initialize':

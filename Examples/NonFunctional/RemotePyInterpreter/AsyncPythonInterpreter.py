@@ -97,6 +97,9 @@ class AsyncPythonInterpreter(NSObject):
             self.serverFileHandle)
         self.serverFileHandle.acceptConnectionInBackgroundAndNotify()
         self.remoteFileHandle = None
+        for k in os.environ.keys():
+            if k.startswith('PYTHON'):
+                del os.environ[k]
         self.childTask = NSTask.launchedTaskWithLaunchPath_arguments_(self.interpreterPath, [self.scriptPath, repr(self.serverSocket.getsockname())])
         nc.addObserver_selector_name_object_(
             self,
