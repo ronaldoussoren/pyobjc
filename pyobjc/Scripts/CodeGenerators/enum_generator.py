@@ -40,6 +40,19 @@ def process_file(outfp, filename):
     for ln in fp.xreadlines():
         ln = LINE_COMMENT_RE.sub('', ln)
 
+        if in_comment:
+            m = BLOCK_E_RE.search(ln)
+            if not m:
+                continue
+            ln = ln[m.end():]
+            in_comment = 0
+
+        ln = BLOCK_1_RE.sub('', ln)
+        m = BLOCK_S_RE.search(ln)
+        if m:
+            in_comment = 1
+            ln = ln[:m.start()]
+
         m = DEFINE_RE.match(ln)
         if m is not None:
             name, value = m.group(1), m.group(2)
@@ -69,23 +82,9 @@ def process_file(outfp, filename):
                 in_enum = 1
                 need_brace=1
         else:
-            if in_comment:
-                m = BLOCK_E_RE.search(ln)
-                if not m:
-                    continue
-                ln = ln[m.end():]
-                in_comment = 0
-
-
             if END_RE.match(ln):
                 in_enum = 0
                 continue
-
-            ln = BLOCK_1_RE.sub('', ln)
-            m = BLOCK_S_RE.search(ln)
-            if m:
-                in_comment = 1
-                ln = ln[:m.start()]
 
             if need_brace:
                 if not ln.strip().startswith('{'):
