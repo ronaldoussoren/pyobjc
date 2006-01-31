@@ -355,5 +355,18 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
         if objc.platform == 'MACOSX' or hasattr(o, 'apply_context_'):
             self.assertRaises(TypeError, o.apply_context_, lambda x, y:None, 0)
 
+
+    def testInsert(self):
+        o = NSMutableArray.arrayWithArray_(range(4))
+        self.assertEquals(list(o), list(range(4)))
+
+        self.assertEquals(o[0], 0)
+        o.insert(0, "foo")
+        self.assertEquals(o[0], "foo")
+        self.assertEquals(o[1], 0)
+        self.assertEquals(len(o), 5)
+
+        # FIXME: test the entire interface of list.insert
+
 if __name__ == '__main__':
     unittest.main()

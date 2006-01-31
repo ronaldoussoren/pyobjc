@@ -282,7 +282,7 @@ CONVENIENCE_METHODS['indexOfObject:'] = (
 )
 
 def insert_insertObject_atIndex_(self, idx, item):
-    idx = slice(idx, None, None).indices(len(self)).start
+    idx = slice(idx, None, None).indices(len(self))[0]
     self.insertObject_atIndex_(container_wrap(item), idx)
 
 CONVENIENCE_METHODS['insertObject:atIndex:'] = (
