@@ -8,7 +8,7 @@ from distutils.core import setup
 import py2app
 
 setup(
+    name="TableModel",
     app=["__main__.py"],
     data_files=["English.lproj"],
-    options=dict(py2app=dict(plist='Info.plist')),
 )
