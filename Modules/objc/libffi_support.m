@@ -602,16 +602,20 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			default: continue;
 			}
 
-			v = PyTuple_GET_ITEM(res, idx++);
-			err = depythonify_c_value(argtype, v, *(void**)args[i]);
-			if (err == -1) {
-				goto error;
-			}
-			if (v->ob_refcnt == 1 && argtype[0] == _C_ID) {
-				/* make sure return value doesn't die before
-				 * the caller can get its hands on it.
-				 */
-				[[**(id**)args[i] retain] autorelease];
+			if (*(void**)args[i] != NULL) {
+				/* The output pointer might be NULL */
+
+				v = PyTuple_GET_ITEM(res, idx++);
+				err = depythonify_c_value(argtype, v, *(void**)args[i]);
+				if (err == -1) {
+					goto error;
+				}
+				if (v->ob_refcnt == 1 && argtype[0] == _C_ID) {
+					/* make sure return value doesn't die before
+					 * the caller can get its hands on it.
+					 */
+					[[**(id**)args[i] retain] autorelease];
+				}
 			}
 		}
 
