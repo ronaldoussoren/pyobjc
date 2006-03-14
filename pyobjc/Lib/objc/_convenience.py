@@ -80,11 +80,54 @@ def _add_convenience_methods(super_class, name, type_dict):
         if sel.selector == "alloc" or sel.selector == "allocWithZone:":
             sel.isAlloc = 1
 
+        # 
+        # Handle some common exceptions to the usual rules:
+        #
+
         if sel.selector.endswith(':error:'):
+            # Error is always an output argument
             sigParts = splitSignature(sel.signature)
             if sigParts[-1] == '^@':
                 sigParts = sigParts[:-1] + ('o^@',)
                 sel.signature = ''.join(sigParts)
+
+        elif sel.selector.endswith(':userData:'):
+            # userData:(void*)arg -> userData:(int)arg
+            sigParts = splitSignature(sel.signature)
+            if sigParts[-1] == '^v':
+                sigParts = sigParts[:-1] + ('i',)
+                sel.signature = ''.join(sigParts)
+
+        elif sel.selector == 'userData':
+            # The getter for userData.
+            sigParts = splitSignature(sel.signature)
+            if sigParts[0] == '^v':
+                sigParts = ('i',) + sigParts[1:]
+                sel.signature = ''.join(sigParts)
+
+        elif sel.selector.endswith(':contextInfo:'):
+            # contextInfo:(void*)arg -> contextInfo:(int)arg
+            sigParts = splitSignature(sel.signature)
+            if sigParts[-1] == '^v':
+                sigParts = sigParts[:-1] + ('i',)
+                sel.signature = ''.join(sigParts)
+
+        elif sel.selector.endswith(':context:'):
+            # context:(void*)arg -> context:(int)arg
+            sigParts = splitSignature(sel.signature)
+            if sigParts[-1] == '^v':
+                sigParts = sigParts[:-1] + ('i',)
+                sel.signature = ''.join(sigParts)
+
+        elif sel.selector == 'context':
+            # The getter for context.
+            sigParts = splitSignature(sel.signature)
+            if sigParts[0] == '^v':
+                sigParts = ('i',) + sigParts[1:]
+                sel.signature = ''.join(sigParts)
+            
+
+
 
         if sel.selector in ( 'copy', 'copyWithZone:',
                       'mutableCopy', 'mutableCopyWithZone:'):
