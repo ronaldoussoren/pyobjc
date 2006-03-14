@@ -1,6 +1,7 @@
 from _objc import setSignatureForSelector
 
 setSignatureForSelector("NSScanner", "scanCharactersFromSet:intoString:", "c@:@o^@")
+setSignatureForSelector("NSScanner", "scanDecimal:", "c@:o^{?=b8b4b1b1b18[8S]}")
 setSignatureForSelector("NSScanner", "scanDouble:", "c@:o^d")
 setSignatureForSelector("NSScanner", "scanFloat:", "c@:o^f")
 setSignatureForSelector("NSScanner", "scanHexInt:", "c@:o^I")
@@ -43,21 +44,22 @@ setSignatureForSelector("NSFormatter", "isPartialStringValid:proposedSelectedRan
 
 setSignatureForSelector("NSObject", "validateValue:forKey:error:", "c@:N^@@o^@")
 setSignatureForSelector("NSObject", "validateValue:forKeyPath:error:", "c@:N^@@o^@")
-setSignatureForSelector("NSObject", "addObserver:forKeyPath:options:context:",
-    "v@:@@Ii")
-setSignatureForSelector("NSObject", "observeValueForKeyPath:ofObject:change:context:", "v@:@@@i")
-setSignatureForSelector("NSArray", "addObserver:toObjectsAtIndexes:forKeyPath:options:context:", 'v@:@@@Ii')
+#setSignatureForSelector("NSObject", "addObserver:forKeyPath:options:context:",
+#    "v@:@@Ii")
+#setSignatureForSelector("NSObject", "observeValueForKeyPath:ofObject:change:context:", "v@:@@@i")
+#setSignatureForSelector("NSArray", "addObserver:toObjectsAtIndexes:forKeyPath:options:context:", 'v@:@@@Ii')
 setSignatureForSelector("NSURLConnection", "sendSynchronousRequest:returningResponse:error:", "@@:@o^@o^@")
 setSignatureForSelector("NSString", "getParagraphStart:end:contentsEnd:forRange:", "v@:o^Io^Io^I{_NSRange=II}")
 setSignatureForSelector("NSMutableAttributedString", "readFromData:options:documentAttributes:", "c@:@@o^@")
 setSignatureForSelector("NSAttributedString", "initWithHTML:options:documentAttributes:", "@20@0:4@8@12o^@16")
 setSignatureForSelector("NSAttributedString", "initWithDocFormat:documentAttributes:", "@@:@o^@")
 setSignatureForSelector("NSKeyValueProperty", "keyPathIfAffectedByValueForKey:exactMatch:", "@@:@o^c")
-setSignatureForSelector("NSKeyValueObservationForwarder", "initWithObserver:relationshipKey:keyPathFromRelatedObject:options:context:", "@@:@@@Ii")
+#setSignatureForSelector("NSKeyValueObservationForwarder", "initWithObserver:relationshipKey:keyPathFromRelatedObject:options:context:", "@@:@@@Ii")
 setSignatureForSelector("NSDeserializer", "deserializePropertyListFromData:atCursor:mutableContainers:", "@@:@O^Ic")
 setSignatureForSelector("NSDeserializer", "deserializePropertyListLazilyFromData:atCursor:length:mutableContainers:", "@@:@O^IIc")
-setSignatureForSelector("OC_PythonObject", "addObserver:forKeyPath:options:context:", "v@:@@Ii")
-
+#setSignatureForSelector("OC_PythonObject", "addObserver:forKeyPath:options:context:", "v@:@@Ii")
+setSignatureForSelector("NSXMLDocument", "validateAndReturnError:", "c@:o^@")
+setSignatureForSelector("NSNetService", "getInputStream:outputStream:", "c@:o^@o^@")
 
 # Technically incorrect, but not used anyway
 setSignatureForSelector("NSObject", "setObservationInfo:", "v@:i")

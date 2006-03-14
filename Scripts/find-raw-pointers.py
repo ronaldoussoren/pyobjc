@@ -21,56 +21,66 @@ XXX:
 import objc
 import Foundation
 
-try:
-    import AppKit
-except ImportError:
-    pass
+if 1:
+    try:
+        import AppKit
+    except ImportError:
+        pass
 
-try:
-    import PreferencePanes
-except ImportError:
-    pass
+if 0:
+    try:
+        import PreferencePanes
+    except ImportError:
+        pass
 
-try:
-    import ScreenSaver
-except ImportError:
-    pass
+if 0:
+    try:
+        import ScreenSaver
+    except ImportError:
+        pass
 
-try:
-    import InterfaceBuilder
-except ImportError:
-    pass
+if 0:
+    try:
+        import InterfaceBuilder
+    except ImportError:
+        pass
 
-try:
-    import AddressBook
-except ImportError:
-    pass
+if 0:
+    try:
+        import AddressBook
+    except ImportError:
+        pass
 
-try:
-    import WebKit
-except ImportError:
-    pass
+if 0:
+    try:
+        import WebKit
+    except ImportError:
+        pass
 
-try:
-    import SecurityInterface
-except ImportError:
-    pass
+if 0:
+    try:
+        import SecurityInterface
+    except ImportError:
+        pass
 
-try:
-    import ExceptionHandlers
-except ImportError:
-    pass
+if 0:
+    try:
+        import ExceptionHandlers
+    except ImportError:
+        pass
 
-try:
-    import CoreData
-except ImportError:
-    pass
+if 0:
+    try:
+        import CoreData
+    except ImportError:
+        pass
 
 PTRSIG={}
 
 
 REL_OSX_10_2 = 'MacOS X 10.2'
 REL_OSX_10_3 = 'MacOS X 10.3'
+REL_OSX_10_4 = 'MacOS X 10.4'
 
 TP_SUPPORTED = 'supported'
 TP_UNSUPPORTED = 'unsupported'
@@ -81,6 +91,66 @@ TP_UNDOCUMENTED = 'undocumented' #  Unsupported because there is no documentatio
 
 # XXX: This should be a data file, need to add framework info and comments.
 WRAPPED_METHODS={
+    'NSKeyValueIvarSetter_initWithContainerClassID_key_containerIsa_ivar_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSKeyValueIvarGetter_initWithContainerClassID_key_ivar_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSKeyValueAccessor_initWithContainerClassID_key_implementation_selector_extraArguments_count_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSKeyValueIvarMutableCollectionGetter_initWithContainerClassID_key_containerIsa_ivar_proxyClass_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSKeyValueIvarMutableCollectionGetter_ivar': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSKeyValueMethodSetter_initWithContainerClassID_key_method_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSKeyValueMethodGetter_initWithContainerClassID_key_method_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+
+    # All of these would require libxml2 wrappers:
+    'NSXMLTreeReader_createNamedNodeFromNode_reader_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processCDATA_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processComment_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processDocumentFragment_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processDocumentType_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processDocument_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processElement_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processEndElement_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processEndEntity_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processEntityReference_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processEntity_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processNode_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processNotation_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processProcessingInstruction_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processRealDocument_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processSignificantWhitespace_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processText_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processWhitespace_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLTreeReader_processXMLDeclaration_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLElementDeclarationContent_XMLStringSequenceStarted_choiceStarted_appendingToString_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLElementDeclarationContent_createElementContent_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLElementDeclarationContent_libxml2Content': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLElement_validateName_error_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSXMLSAXParser_context': (REL_OSX_10_4, TP_UNDOCUMENTED),
+
+
+
+    # WebKit related
+    'NSHTTPAuthenticator_addCredentialsToInitialHTTPRequest_proxyURL_protocol_': (REL_OSX_10_4, TP_UNSUPPORTED),
+    'NSHTTPAuthenticator_addCredentialsToRetryHTTPRequest_proxyURL_afterFailureResponse_nsFailureResponse_failureCount_protocol_withCallback_context_': (REL_OSX_10_4, TP_UNSUPPORTED),
+    'NSHTTPAuthenticator_checkForAuthenticationFailureInHTTPResponse_withURL_proxyURL_': (REL_OSX_10_4, TP_UNSUPPORTED),
+    'NSPortMessage_initWithMachMessage_': (REL_OSX_10_4, TP_UNSUPPORTED),
+    'NSSet_initWithObjects_ex_count_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSDictionary_initWithObjects_ex_forKeys_count_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSArray_initWithObjects_ex_count_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+
+    'NSConnectionHTTPURLProtocol_createStream_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSConnectionHTTPURLProtocol_retryAfterAuthenticationFailure_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSConnectionHTTPURLProtocol_setResponseHeaderUsingHTTPResponse_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSConnectionHTTPURLProtocol_updateConnectionForResponse_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSHTTPConnectionCache_addConnection_forKey_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSHTTPConnectionCache_connectionsForKey_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSHTTPConnectionCache_dequeueRequestForKey_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSHTTPConnectionCache_enqueueRequest_forKey_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSHTTPConnectionCache_removeConnection_forKey_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSHTTPConnectionCache_setUseSSLOnly_forKey_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+    'NSHTTPConnectionCache_useSSLOnlyForKey_': (REL_OSX_10_4, TP_UNDOCUMENTED),
+
+
+
+
     # Internal methods
     'OC_PythonArray_getObjects_inRange_': (REL_OSX_10_3, TP_UNSUPPORTED),
 
@@ -224,6 +294,8 @@ WRAPPED_METHODS={
     'NSData_initWithBytesNoCopy_length_freeWhenDone_':1,
     'NSBezierPath_getLineDash_count_phase_':1,
     'NSFault_forward__':1,
+    'NSResurrectedObject_forward__':1,
+    'NSDeallocatedObject_forward__':1,
     'NSInvocationBuilder_forward__':1,
     'NSObject_forward__':1,
     'NSProxy_forward__':1,
@@ -496,6 +568,7 @@ WRAPPED_METHODS={
     'NSCFNetworkHTTPURLProtocol_retryAfterAuthenticationFailure_':1,
     'NSCFNetworkHTTPURLProtocol_setResponseHeaderUsingHTTPResponse_andCall_context_':1,
     'NSURLAuthenticationChallengeState_initWithProtocol_httpRequest_challenge_callback_context_':1,
+    'NSURLAuthenticationChallengeState_initWithProtocol_httpRequest_proxyURL_challenge_callback_context_': 1,
     'NSHTTPURLProtocol_didAddCredentials_toRequest_context_':1,
     'NSURLQueue_newNode':1,
     'NSUndoManager_registerUndoWithTarget_selector_arguments_argumentCount_':1,
@@ -865,6 +938,8 @@ for cls in objc.getClassList():
     if cls.__name__.startswith('%'): continue
     if cls.__name__ == 'Object': continue
 
+    if cls.__name__.startswith('OC_'): continue
+
     for selName in dir(cls):
         try:
             sel = getattr(cls, selName)
@@ -897,7 +972,7 @@ for cls in objc.getClassList():
         if m:
             r = '%s_%s'%(cls.__name__, sel.selector.replace(':', '_'))
             if not WRAPPED_METHODS.has_key(r):
-                print r
+                print r, sel.signature
 
 #print "--- SIGNATURES ----"
 #sigs = PTRSIG.values()
