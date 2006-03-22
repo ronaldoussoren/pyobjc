@@ -53,12 +53,7 @@ FFI_INTEGRAL_TYPEDEF(pointer, 4, 4, FFI_TYPE_POINTER);
 
 #endif
 
-#if defined X86_DARWIN
-
-FFI_INTEGRAL_TYPEDEF(uint64, 8, 8, FFI_TYPE_UINT64);
-FFI_INTEGRAL_TYPEDEF(sint64, 8, 8, FFI_TYPE_SINT64);
-
-#elif defined X86 || defined ARM || defined M68K || defined(POWERPC_DARWIN)
+#if defined X86 || defined ARM || defined M68K || defined(POWERPC_DARWIN)
 
 FFI_INTEGRAL_TYPEDEF(uint64, 8, 4, FFI_TYPE_UINT64);
 FFI_INTEGRAL_TYPEDEF(sint64, 8, 4, FFI_TYPE_SINT64);
