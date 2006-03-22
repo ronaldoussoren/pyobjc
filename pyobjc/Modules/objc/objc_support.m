@@ -402,11 +402,16 @@ PyObjC_EmbeddedAlignOfType (const char*  type)
 {
 	int align = PyObjCRT_AlignOfType(type);
 
+#ifdef __i386__
+	return align;
+
+#else
 	if (align < 4) {
 		return align;
 	} else {
 		return 4;
 	}
+#endif
 }
 
 #else
@@ -445,14 +450,31 @@ PyObjCRT_AlignOfType (const char *type)
 	case _C_LNG:   return __alignof__ (long);
 	case _C_ULNG:  return __alignof__ (unsigned long);
 	case _C_FLT:   return __alignof__ (float);
-	case _C_DBL:   return __alignof__ (double);
+	case _C_DBL:   
+#if defined(__APPLE__) && defined(__i386__)
+		/* The ABI says natural alignment is 4 bytes, but 
+		 * GCC's __alignof__ says 8. The latter is wrong.
+		 */
+		return 4;
+#else
+		return __alignof__ (double);
+#endif
+
 	case _C_CHARPTR: return __alignof__ (char *);
 #ifdef _C_ATOM
 	case _C_ATOM: return __alignof__ (char *);
 #endif
 	case _C_PTR:   return __alignof__ (void *);
+#if defined(__APPLE__) && defined(__i386__)
+		/* The ABI says natural alignment is 4 bytes, but 
+		 * GCC's __alignof__ says 8. The latter is wrong.
+		 */
+	case _C_LNGLNG: return 4;
+	case _C_ULNGLNG: return 4;
+#else
 	case _C_LNGLNG: return __alignof__(long long);
 	case _C_ULNGLNG: return __alignof__(unsigned long long);
+#endif
 
 	case _C_ARY_B:
 		while (isdigit(*++type)) /* do nothing */;
@@ -460,10 +482,6 @@ PyObjCRT_AlignOfType (const char *type)
   
 	case _C_STRUCT_B:
 	{
-		/* The alignment of a struct is the alignment of it's first
-		 * member
-		 */
-
 		struct { int x; double y; } fooalign;
 		while(*type != _C_STRUCT_E && *type++ != '=') /* do nothing */;
 		if (*type != _C_STRUCT_E) {
