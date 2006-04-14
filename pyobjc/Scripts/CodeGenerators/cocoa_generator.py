@@ -266,7 +266,6 @@ if FOUNDATION_HDRS is not None:
         # List of manually wrapped functions:
         'NSFileTypeForHFSTypeCode(',
         'NSHFSTypeCodeFromFileType(',
-        'NSStringFromPoint',
         'NSDivideRect(',
 
         # Zones might be usefull someday
