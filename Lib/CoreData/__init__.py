@@ -8,4 +8,4 @@ if _objc.platform == 'MACOSX':
     )
 import protocols
 
-objc.setSignatureForSelector("NSManagedObjectContext", "save:", "c@:o^@")
+_objc.setSignatureForSelector("NSManagedObjectContext", "save:", "c@:o^@")
