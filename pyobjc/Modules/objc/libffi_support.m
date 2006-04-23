@@ -345,7 +345,26 @@ signature_to_ffi_type(const char* argtype)
  * Linux/GNUstep we need a slightly different function.
  */
 #ifdef MACOSX
+
+#ifdef __ppc__
 #define arg_signature_to_ffi_type signature_to_ffi_type
+
+#else
+static inline ffi_type*
+arg_signature_to_ffi_type(const char* argtype)
+{
+	/* NOTE: This is the minimal change to pass the unittests, it is not
+	 * based on analysis of the calling conventions.
+	 */
+	switch (*argtype) {
+	case _C_CHR: return &ffi_type_sint;
+	case _C_UCHR: return &ffi_type_uint;
+	case _C_SHT: return &ffi_type_sint;
+	case _C_USHT: return &ffi_type_uint;
+	default: return signature_to_ffi_type(argtype);
+	}
+}
+#endif
 
 #else
 

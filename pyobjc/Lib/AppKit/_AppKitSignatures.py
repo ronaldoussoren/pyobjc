@@ -13,7 +13,7 @@ setSignatureForSelector("NSPSMatrix", "transformRect:", "@@:N^{_NSRect={_NSPoint
 setSignatureForSelector("NSPSMatrix", "transform:", "@@:N^{_NSPoint=ff}")
 setSignatureForSelector("NSButton", "getPeriodicDelay:interval:", "v@:o^fo^f")
 #setSignatureForSelector("NSView", "addToolTipRect:owner:userData:", "i28@4:8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@28i32")
-#setSignatureForSelector("NSView", "addTrackingRect:owner:userData:assumeInside:", "i@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}@ic")
+setSignatureForSelector("NSView", "addTrackingRect:owner:userData:assumeInside:", "i@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}@ic")
 #setSignatureForSelector("NSAlert", "didEndSheet:returnCode:contextInfo:", "v16@4:8@12i16i20")
 #setSignatureForSelector("NSSavePanel", "_runModalForDirectory:file:relativeToWindow:modalDelegate:didEndSelector:contextInfo:", "v28@4:8@12@16@20@24:28i32")
 #setSignatureForSelector("NSSavePanel", "beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:", "v28@4:8@12@16@20@24:28i32")

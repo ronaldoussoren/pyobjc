@@ -235,7 +235,11 @@ void ffi_call(/*@dependent@*/ ffi_cif *cif,
     {
     case FFI_SYSV:
       /*@-usedef@*/
-      ffi_call_SYSV(ffi_prep_args, &ecif, cif->bytes, 
+      /* FIXME: we should pass in cif->bytes, the actual code below seems to
+       * work for correctly aligning the stack, but is something that should
+       * be done in the assembly code.
+       */
+      ffi_call_SYSV(ffi_prep_args, &ecif, ALIGN(cif->bytes, 16)+8, 
 		    flags, ecif.rvalue, fn);
       /*@=usedef@*/
       break;

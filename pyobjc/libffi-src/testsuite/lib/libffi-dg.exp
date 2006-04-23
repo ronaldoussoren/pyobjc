@@ -78,7 +78,8 @@ proc libffi-init { args } {
     global libffi_link_flags
     global tool_root_dir
 
-    set blddirffi [lookfor_file [get_multilibs] libffi]
+    #set blddirffi [lookfor_file [get_multilibs] libffi]
+    set blddirffi "/Users/ronald/Projects/pyobjc-trunk/pyobjc/libffi-src/build"
     verbose "libffi $blddirffi"
     set blddircxx [lookfor_file [get_multilibs] libstdc++-v3]
     verbose "libstdc++ $blddircxx"
