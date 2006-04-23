@@ -127,5 +127,15 @@ class TestRegressions(unittest.TestCase):
         self.assertRaises(TypeError, SelfIsNone.f, None)
 
 
+    def testStructArgs (self):
+        # Like AppKit.test.test_nsimage.TestNSImage.test_compositePoint
+        # unlike that this one doesn't crash on darwin/x86, makeing it less
+        # likely that libffi is at fault
+        from objc.test.structargs import StructArgClass
+
+        o = StructArgClass.alloc().init()
+        v = o.compP_aRect_anOp_((1,2), ((3,4),(5,6)), 7)
+        self.assertEquals(v, u"aP:{1, 2} aR:{{3, 4}, {5, 6}} anO:7")
+
 if __name__ == '__main__':
     unittest.main()
