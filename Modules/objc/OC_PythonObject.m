@@ -423,6 +423,7 @@ check_argcount (PyObject *pymethod, int argcount)
 			return pymethod;
 		}
 	} 
+
 	return NULL;
 }
 
@@ -439,6 +440,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	unsigned int argcount;
 	PyObject*    pymethod;
 	const char*  p;
+	PyObject*    result;
 
 	if (!aSelector) {
 		[NSException raise:NSInvalidArgumentException
@@ -461,7 +463,11 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		return NULL;	
 	}
 
-	return check_argcount(pymethod, argcount);
+	result =  check_argcount(pymethod, argcount);
+	if (result == NULL) {
+		Py_DECREF(pymethod);
+	}
+	return result;
 }
 
 
@@ -495,6 +501,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		m = get_method_for_selector(pyObject, aSelector);
 
 		if (m) {
+			Py_DECREF(m);
 			PyObjC_GIL_RETURN(YES);
 		} else {
 			PyErr_Clear();
@@ -544,6 +551,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 				pymethod);
 			argcount = func_code->co_argcount;
 		}
+		Py_DECREF(pymethod);
 
 		encoding = alloca(argcount+4);
 		memset(encoding, '@', argcount+3);
@@ -629,6 +637,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		argcount = [msign numberOfArguments];
 		args = PyTuple_New(argcount-2);
 		if (args == NULL) {
+			Py_DECREF(pymethod);
 			PyObjC_GIL_FORWARD_EXC();
 		}
 		for (i=2; i< argcount; i++) {
@@ -643,6 +652,8 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 			argsize = PyObjCRT_SizeOfType(argtype);
 			if (argsize == -1) {
+				Py_DECREF(args);
+				Py_DECREF(pymethod);
 				PyObjC_GIL_FORWARD_EXC();
 			}
 			argbuffer = alloca (argsize);
@@ -659,13 +670,15 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 			pyarg = pythonify_c_value (argtype, argbuffer);
 			if (pyarg == NULL) {
 				Py_DECREF(args);
+				Py_DECREF(pymethod);
 				PyObjC_GIL_FORWARD_EXC();
 			}
 
 			PyTuple_SET_ITEM (args, i-2, pyarg);
 		}
 		result = PyObject_CallObject(pymethod, args);
-		Py_DECREF(args);
+		Py_DECREF(args); args = NULL;
+		Py_DECREF(pymethod); pymethod = NULL;
 
 		if (result == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
@@ -673,6 +686,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		}
 
 		err = depythonify_c_value (rettype, result, retbuffer);
+		Py_DECREF(result);
 		if (err == -1) {
 			PyObjC_GIL_FORWARD_EXC();
 		} else {
