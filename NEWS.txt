@@ -25,6 +25,9 @@ Version 1.3.8 (????-??-??)
 - 'void*' arguments are treated like unsigned integers, they are almost always
   opaque cookies.
 
+- ``FILE*`` arguments are recognized and mostly work correctly. We can't 
+  reliably detect if the file was opened in append mode though.
+
 - Make it possible to override the KVO methods, like ``setValue:forKey:`` and
   ``valueForKey:`` in Python for all levels in the inheritance hierarchie.
 
