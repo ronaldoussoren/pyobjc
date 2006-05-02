@@ -80,10 +80,13 @@ enum { ASM_NEEDS_REGISTERS = 4 };
    */
 
 /*@-exportheader@*/
+/* Called from assemblycode, add prototype to avoid warning */
+void ffi_prep_args(extended_cif *ecif, unsigned *const stack);
+
 void ffi_prep_args(extended_cif *ecif, unsigned *const stack)
 /*@=exportheader@*/
 {
-  const unsigned bytes = ecif->cif->bytes;
+/*  const unsigned bytes = ecif->cif->bytes;*/
   const unsigned flags = ecif->cif->flags;
 
   /* 'stacktop' points at the previous backchain pointer.  */
@@ -350,18 +353,18 @@ ffi_status ffi_prep_cif_machdep(ffi_cif *cif)
 extern void ffi_call_AIX(/*@out@*/ extended_cif *,
 			 unsigned, unsigned,
 			 /*@out@*/ unsigned *,
-			 void (*fn)(),
-			 void (*fn2)());
+			 void (*fn)(void),
+			 void (*fn2)(void));
 extern void ffi_call_DARWIN(/*@out@*/ extended_cif *,
 			    unsigned, unsigned,
 			    /*@out@*/ unsigned *,
-			    void (*fn)(),
-			    void (*fn2)());
+			    void (*fn)(void),
+			    void (*fn2)(void));
 /*@=declundef@*/
 /*@=exportheader@*/
 
 void ffi_call(/*@dependent@*/ ffi_cif *cif,
-	      void (*fn)(),
+	      void (*fn)(void),
 	      /*@out@*/ void *rvalue,
 	      /*@dependent@*/ void **avalue)
 {
@@ -388,13 +391,13 @@ void ffi_call(/*@dependent@*/ ffi_cif *cif,
     case FFI_AIX:
       /*@-usedef@*/
       ffi_call_AIX(&ecif, -cif->bytes,
-		   cif->flags, ecif.rvalue, fn, ffi_prep_args);
+		   cif->flags, ecif.rvalue, fn, FFI_FN(ffi_prep_args));
       /*@=usedef@*/
       break;
     case FFI_DARWIN:
       /*@-usedef@*/
       ffi_call_DARWIN(&ecif, -cif->bytes,
-		      cif->flags, ecif.rvalue, fn, ffi_prep_args);
+		      cif->flags, ecif.rvalue, fn, FFI_FN(ffi_prep_args));
       /*@=usedef@*/
       break;
     default:
@@ -639,7 +642,7 @@ int ffi_closure_helper_DARWIN (ffi_closure* closure, void * rvalue,
 	  if (arg_types[i]->elements[0]->type == 3)
 	    size_al = ALIGN(arg_types[i]->size, 8);
 	  if (size_al < 3 && cif->abi == FFI_DARWIN)
-	    avalue[i] = (void*) pgr + 4 - size_al;
+	    avalue[i] = (void*) ((char*)pgr + 4 - size_al);
 	  else
 	    avalue[i] = (void*) pgr;
 	  ng += (size_al + 3) / 4;

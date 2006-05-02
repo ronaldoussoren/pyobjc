@@ -203,7 +203,7 @@ typedef union {
 } ffi_raw;
 
 void ffi_raw_call (/*@dependent@*/ ffi_cif *cif, 
-		   void (*fn)(), 
+		   void (*fn)(void), 
 		   /*@out@*/ void *rvalue, 
 		   /*@dependent@*/ ffi_raw *avalue);
 
@@ -216,7 +216,7 @@ size_t ffi_raw_size (ffi_cif *cif);
 /* longs and doubles are followed by an empty 64-bit word.		*/
 
 void ffi_java_raw_call (/*@dependent@*/ ffi_cif *cif, 
-		        void (*fn)(), 
+		        void (*fn)(void), 
 		        /*@out@*/ void *rvalue, 
 		        /*@dependent@*/ ffi_raw *avalue);
 
@@ -285,12 +285,12 @@ ffi_status ffi_prep_cif(/*@out@*/ /*@partial@*/ ffi_cif *cif,
 			/*@dependent@*/ ffi_type **atypes);
 
 void ffi_call(/*@dependent@*/ ffi_cif *cif, 
-	      void (*fn)(), 
+	      void (*fn)(void), 
 	      /*@out@*/ void *rvalue, 
 	      /*@dependent@*/ void **avalue);
 
 /* Useful for eliminating compiler warnings */
-#define FFI_FN(f) ((void (*)())f)
+#define FFI_FN(f) ((void (*)(void))f)
 
 /* ---- Definitions shared with assembly code ---------------------------- */
 
