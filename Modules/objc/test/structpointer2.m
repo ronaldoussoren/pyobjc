@@ -8,7 +8,7 @@
 
 
 static PyMethodDef initialize_methods[] = {
-	{ NULL, NULL, NULL, NULL }
+	{ NULL, NULL, NULL, 0 }
 };
 
 typedef struct TestStructPointerStruct* Foo;
