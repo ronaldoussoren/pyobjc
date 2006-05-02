@@ -1067,9 +1067,20 @@ pythonify_c_value (const char *type, void *datum)
 	}
 
 	case _C_PTR:
-		if (*(void**)datum == NULL) {
+		if (type[1] == _C_VOID) {
+			/* A void*. These are treated like unsigned integers. */
+			if (*(unsigned int*)datum > LONG_MAX) {
+				retobject = (PyObject*)PyLong_FromUnsignedLongLong(
+					*(unsigned int*)datum);
+			} else {
+				retobject = (PyObject*)PyInt_FromLong (
+					*(unsigned int *) datum);
+			}
+
+		} else if (*(void**)datum == NULL) {
 			retobject = Py_None;
 			Py_INCREF(retobject);
+
 		} else {
 			retobject = PyObjCPointerWrapper_ToPython(type, datum);
 			if (retobject == NULL && !PyErr_Occurred()) {
@@ -1271,11 +1282,12 @@ depythonify_signed_int_value(
 int depythonify_c_return_value(
 const char* type, PyObject* argument, void* datum)
 {
+
+#ifdef __ppc__
 	long long temp;
 	unsigned long long utemp;
 	int       r;
 
-#ifdef __ppc__
 	/* Small integers are promoted to integers when returning them */
 	switch (*type) {
 	case _C_CHR: 
@@ -1555,6 +1567,16 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 
 	case _C_PTR:
+		if (type[1] == _C_VOID) {
+			r = depythonify_unsigned_int_value(argument, 
+				"unsigned int",
+				&utemp, UINT_MAX);
+			if (r == 0) {
+				*(void**)datum = (void*)(unsigned)utemp;
+			}
+			return r;
+
+		}
 		if (argument == Py_None) {
 			*(void**)datum = NULL;
 			return 0;
