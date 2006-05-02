@@ -85,7 +85,7 @@ class DgTestCase (unittest.TestCase):
         libdir = os.path.join('build', 'temp.%s-%d.%d'%(get_platform(), sys.version_info[0], sys.version_info[1]), 'libffi-src')
         libffiobjects = self.object_files(libdir)
 
-        commandline='cc -DMACOSX -Ilibffi-src/include -o /tmp/test.bin %s %s 2>&1'%(
+        commandline='cc -g -DMACOSX -Ilibffi-src/include -o /tmp/test.bin %s %s 2>&1'%(
                 self.filename, ' '.join(libffiobjects))
 
         fp = os.popen(commandline)
@@ -115,9 +115,13 @@ class DgTestCase (unittest.TestCase):
 
 def testSuiteForDirectory(dirname):
     tests = []
+    alltests = sys.argv[1:]
     for fn in os.listdir(dirname):
         if not fn.endswith('.c'): continue
-        tests.append(DgTestCase(os.path.join(dirname, fn)))
+        tst = DgTestCase(os.path.join(dirname, fn))
+        if alltests and tst.shortDescription() not in alltests:
+            continue
+        tests.append(tst)
 
     return unittest.TestSuite(tests)
 
