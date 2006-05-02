@@ -38,6 +38,8 @@
    has been allocated for the function's arguments */
 
 /*@-exportheader@*/
+void ffi_prep_args(char *stack, extended_cif *ecif);
+
 void ffi_prep_args(char *stack, extended_cif *ecif)
 /*@=exportheader@*/
 {
@@ -181,7 +183,7 @@ extern void ffi_call_SYSV(void (*)(char *, extended_cif *),
 			  /*@out@*/ extended_cif *, 
 			  unsigned, unsigned, 
 			  /*@out@*/ unsigned *, 
-			  void (*fn)());
+			  void (*fn)(void));
 /*@=declundef@*/
 /*@=exportheader@*/
 
@@ -192,7 +194,7 @@ extern void ffi_call_STDCALL(void (*)(char *, extended_cif *),
 			  /*@out@*/ extended_cif *,
 			  unsigned, unsigned,
 			  /*@out@*/ unsigned *,
-			  void (*fn)());
+			  void (*fn)(void));
 /*@=declundef@*/
 /*@=exportheader@*/
 #endif /* X86_WIN32 */
