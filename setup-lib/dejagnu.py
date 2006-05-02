@@ -115,7 +115,6 @@ class DgTestCase (unittest.TestCase):
 
 def testSuiteForDirectory(dirname):
     tests = []
-    alltests = sys.argv[1:]
     for fn in os.listdir(dirname):
         if not fn.endswith('.c'): continue
         tst = DgTestCase(os.path.join(dirname, fn))
@@ -125,7 +124,8 @@ def testSuiteForDirectory(dirname):
 
     return unittest.TestSuite(tests)
 
-
+alltests = []
 if __name__ == "__main__":
+    alltests = sys.argv[1:]
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(testSuiteForDirectory('libffi-src/testsuite/libffi.call'))
