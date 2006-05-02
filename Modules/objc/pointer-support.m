@@ -202,6 +202,40 @@ PyObjectPtr_Convert(PyObject* obj, void* pObj)
 	return 0;
 }
 
+static int dontClose(FILE* fp __attribute__((__unused__)))
+{
+	return 0;
+}
+static PyObject*
+FILE_New(void *obj)
+{
+	FILE* fp = (FILE*)obj;
+	char* mode = "r";
+
+#if defined(__SRW) 
+	/* This is a hack, but allows us to pass the right file mode into
+	 * Python.
+	 */
+	if (fp->_flags & __SWR) {
+		mode = "w";
+	} else if (fp->_flags & __SRW) {
+		mode = "w+";
+	}
+#endif
+	return PyFile_FromFile(fp, "<objc-file>", mode, dontClose);
+}
+
+static int
+FILE_Convert(PyObject* obj, void* pObj)
+{
+	*(FILE**)pObj = PyFile_AsFile(obj);
+	if (*(FILE**)pObj == NULL) {
+		return 1;
+	}
+
+	return 0;
+}
+
 #ifdef MACOSX
 /*
  * Generic CF type support 
@@ -261,6 +295,10 @@ PyObjCPointerWrapper_Init(void)
 
 	r = PyObjCPointerWrapper_Register(@encode(PyObject*),
 		PyObjectPtr_New, PyObjectPtr_Convert);
+	if (r == -1) return -1;
+
+	r = PyObjCPointerWrapper_Register(@encode(FILE*),
+		FILE_New, FILE_Convert);
 	if (r == -1) return -1;
 
 	return 0;
