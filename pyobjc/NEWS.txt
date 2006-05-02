@@ -7,6 +7,24 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3.8 (????-??-??)
 --------------------------
 
+- Introduction of a GUI tool to manage custom method signatures 
+  (``Tools/Signatures``). This replaces the ``find-raw-pointers.py`` script.
+
+- Fixed memory leak in ``OC_PythonObject``, this was due to bad reference 
+  counting.
+
+- ``NSMutableArray.sort`` now has the same API as ``list.sort``. Due to 
+  implementation constraints the ``key`` argument results in slower sorting
+  than you'd see with ``list.sort``.
+
+- Selectors now have a read-only property 'native_signature' that contains
+  the untampered signature for the method. This is for use by tools.
+
+  TODO: unittests
+
+- 'void*' arguments are treated like unsigned integers, they are almost always
+  opaque cookies.
+
 - Make it possible to override the KVO methods, like ``setValue:forKey:`` and
   ``valueForKey:`` in Python for all levels in the inheritance hierarchie.
 
