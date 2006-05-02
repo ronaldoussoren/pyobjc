@@ -7,5 +7,4 @@ if _objc.platform == 'MACOSX':
         bundle_identifier=u'com.apple.CoreData',
     )
 import protocols
-
-_objc.setSignatureForSelector("NSManagedObjectContext", "save:", "c@:o^@")
+import _signatures

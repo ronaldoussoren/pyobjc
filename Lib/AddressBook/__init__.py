@@ -29,13 +29,4 @@ else:
     )
 
 import protocols  # no need to export these, just register with PyObjC
-
-# Define useful utility methods here
-
-_objc.setSignatureForSelector('NSImagePickerController', 'setTarget:selector:userInfo:', 'v@:@:i')
-
-# Not entirely correct...
-_objc.setSignatureForSelector('ABAuthenticationInfo', 'appliesToRequest:', 'c@:@')
-_objc.setSignatureForSelector('ABAuthenticationInfo', 'applyToRequest:', 'c@:@')
-_objc.setSignatureForSelector('ABDAVQuery', 'buildRequest', '@@:')
-_objc.setSignatureForSelector('ABPerson', 'encodedDataForValue:charsetName:', '@@:@o^@')
+import _signatures

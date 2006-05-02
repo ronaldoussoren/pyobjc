@@ -22,5 +22,7 @@ def _initialize():
     ])
 _initialize()
 
+import _signatures
+
 # Define useful utility methods here
 

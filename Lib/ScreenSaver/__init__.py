@@ -34,5 +34,6 @@ else:
 
 # NOTE: One MacOSX 10.2.4 the framework doesn't define constants,
 # therefore there is no _ScreenSaver module.
+import _signatures
 
 # Define useful utility methods here
