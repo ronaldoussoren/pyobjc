@@ -39,7 +39,7 @@ static PyMemberDef func_members[] = {
 	},
 	{
 		NULL,
-		NULL,
+		0,
 		0,
 		0,
 		NULL
