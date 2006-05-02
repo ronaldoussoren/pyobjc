@@ -98,7 +98,9 @@ class DgTestCase (unittest.TestCase):
     def runTestCase(self):
         fp = os.popen('/tmp/test.bin', 'r')
         data = fp.read()
-        fp.close()
+        xit = fp.close()
+        if xit != None:
+            self.fail("Running failed[%s]"%(xit,))
         return data
 
 
