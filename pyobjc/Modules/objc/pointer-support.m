@@ -221,6 +221,7 @@ FILE_New(void *obj)
 	} else if (fp->_flags & __SRW) {
 		mode = "w+";
 	}
+
 #endif
 	return PyFile_FromFile(fp, "<objc-file>", mode, dontClose);
 }
