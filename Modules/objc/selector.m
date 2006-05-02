@@ -171,6 +171,18 @@ base_signature(PyObjCSelector* self, void* closure __attribute__((__unused__)))
 	return PyString_FromString(self->sel_signature);
 }
 
+PyDoc_STRVAR(base_native_signature_doc, "original Objective-C signature for the method");
+static PyObject*
+base_native_signature(PyObjCSelector* self, void* closure __attribute__((__unused__)))
+{
+	if (self->sel_native_signature == NULL) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	return PyString_FromString(self->sel_native_signature);
+}
+
 static int
 base_signature_setter(PyObjCNativeSelector* self, PyObject* newVal, void* closure __attribute__((__unused__)))
 {
@@ -310,6 +322,13 @@ static PyGetSetDef base_getset[] = {
 		base_signature_doc, 
 		0
 	},
+	{
+		"native_signature",
+		(getter)base_native_signature,
+		0,
+		base_native_signature_doc,
+		0
+	},
 	{ 
 		"self", 
 		(getter)base_self, 
@@ -350,6 +369,11 @@ sel_dealloc(PyObject* object)
 
 	PyMem_Free(self->sel_signature);
 	self->sel_signature = NULL;
+
+	if (self->sel_native_signature != NULL) {
+		PyMem_Free(self->sel_native_signature);
+		self->sel_native_signature = NULL;
+	}
 	if (self->sel_self) { 
 		Py_DECREF(self->sel_self); 
 		self->sel_self = NULL;
@@ -616,6 +640,16 @@ objcsel_descr_get(PyObjCNativeSelector* meth, PyObject* volatile obj, PyObject* 
 		Py_DECREF(result);
 		return NULL;
 	}
+
+	if (meth->sel_native_signature != NULL) {
+		result->sel_native_signature = PyObjCUtil_Strdup(meth->sel_native_signature);
+		if (result->sel_native_signature == NULL) {
+			Py_DECREF(result);
+			return NULL;
+		}
+	} else {
+		result->sel_native_signature = NULL;
+	}
 	result->sel_flags = meth->sel_flags;
 	result->sel_class = meth->sel_class;
 
@@ -814,6 +848,7 @@ PyObjCSelector_NewNative(Class class,
 			SEL selector, const char* signature, int class_method)
 {
 	PyObjCNativeSelector* result;
+	const char* native_signature = signature;
 	char* repl_sig;
 
 	repl_sig = PyObjC_FindReplacementSignature(class, selector);
@@ -826,6 +861,7 @@ PyObjCSelector_NewNative(Class class,
 
 	result->sel_selector = selector;
 	result->sel_signature = PyObjCUtil_Strdup(signature);
+	result->sel_native_signature = PyObjCUtil_Strdup(native_signature);
 	if (result->sel_signature == NULL) {
 		Py_DECREF(result);
 		return NULL;
@@ -858,6 +894,7 @@ PyObjCSelector_New(PyObject* callable,
 
 	result->sel_selector = selector;
 	result->sel_signature = signature;
+	result->sel_native_signature = NULL;
 	result->sel_self = NULL;
 	result->sel_class = cls;
 	result->sel_flags = 0;
@@ -1319,6 +1356,16 @@ pysel_descr_get(PyObjCPythonSelector* meth, PyObject* obj, PyObject* class)
 		Py_DECREF(result);
 		return NULL;
 	}
+	if (meth->sel_native_signature) {
+		result->sel_native_signature  = PyObjCUtil_Strdup(meth->sel_native_signature);
+		if (result->sel_native_signature == NULL) {
+			Py_DECREF(result);
+			return NULL;
+		}
+	} else {
+		result->sel_native_signature = NULL;
+	}
+
 	result->sel_self       = obj;
 	result->sel_flags = meth->sel_flags;
 	result->callable = meth->callable;
@@ -1567,6 +1614,7 @@ PyObjCSelector_FromFunction(
 			Py_DECREF(result);
 			return NULL;
 		}
+		result->sel_native_signature = NULL;
 		result->sel_self       = NULL;
 		result->sel_flags = ((PyObjCPythonSelector*)callable)->sel_flags;
 		result->callable = ((PyObjCPythonSelector*)callable)->callable;

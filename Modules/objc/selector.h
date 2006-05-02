@@ -14,6 +14,7 @@
 #define PyObjCSelector_HEAD \
 	PyObject_HEAD 			\
 	char*		sel_signature;  \
+	char* 		sel_native_signature; \
 	SEL		sel_selector;	\
 	PyObject*	sel_self;	\
 	Class		sel_class;	\
