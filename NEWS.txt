@@ -7,6 +7,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.3.8 (????-??-??)
 --------------------------
 
+- Most of the libffi testsuite is now run using a module that emulates 
+  dejagnu.
+
 - Introduction of a GUI tool to manage custom method signatures 
   (``Tools/Signatures``). This replaces the ``find-raw-pointers.py`` script.
 
@@ -19,8 +22,6 @@ Version 1.3.8 (????-??-??)
 
 - Selectors now have a read-only property 'native_signature' that contains
   the untampered signature for the method. This is for use by tools.
-
-  TODO: unittests
 
 - 'void*' arguments are treated like unsigned integers, they are almost always
   opaque cookies.

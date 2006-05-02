@@ -5,6 +5,7 @@ import sys, os, string, glob
 from os.path import basename, dirname, splitext, join, expanduser, walk
 from fnmatch import fnmatch
 import unittest
+import dejagnu
 
 from distutils.command.install_lib import install_lib
 from distutils.errors import DistutilsOptionError
@@ -115,15 +116,18 @@ class cmd_test (install_lib):
         if self.test_installed:
             sys.path.insert(0, self.build_dir)
         try:
+            deja_suite = dejagnu.testSuiteForDirectory(
+                    'libffi-src/testsuite/libffi.call')
+
             plain_suite = importExternalTestCases("test_*.py",
                 self.get_test_dir(), package=self.package)
             
             if self.include_gui_tests:
                 gui_suite = importExternalTestCases("guitest_*.py",
                     self.get_test_dir(), package=self.package)
-                suite = unittest.TestSuite((plain_suite, gui_suite))
+                suite = unittest.TestSuite((plain_suite, gui_suite, deja_suite))
             else:
-                suite = unittest.TestSuite((plain_suite,))
+                suite = unittest.TestSuite((plain_suite, deja_suite))
 
             runner = unittest.TextTestRunner(verbosity=self.verbosity)
             runner.run(suite)
