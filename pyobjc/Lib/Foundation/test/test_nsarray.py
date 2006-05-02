@@ -336,13 +336,33 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
         def cmpfunc(l, r):
             return -cmp(l,r)
 
-        a.sort(cmpfunc)
+        a.sort(cmpfunc=cmpfunc)
 
         self.assertEquals(a, (3, 2, 1, 0))
 
         a.sort()
 
         self.assertEquals(a, (0, 1, 2, 3))
+
+        map={
+            0: "nul",
+            1: "een",
+            2: "twee",
+            3: "drie",
+        }
+
+
+        def keyfunc(l):
+            return  map[l]
+
+        a.sort(key=keyfunc)
+        self.assertEquals(a, (3, 1, 0, 2))
+
+        a.sort(key=keyfunc, reverse=True)
+        self.assertEquals(a, (2, 0, 1, 3))
+
+        a.sort(reverse=True)
+        self.assertEquals(a, (3, 2, 1, 0))
 
     def test_unsupportedMethods(self):
         #

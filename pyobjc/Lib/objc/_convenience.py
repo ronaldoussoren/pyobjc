@@ -41,6 +41,38 @@ def add_convenience_methods(super_class, name, type_dict):
         traceback.print_exc()
         raise
 
+# This will have to do until we finish CF support: replace type signatures
+# for toll-free bridged types by '@'.
+_CFTypes={
+    '^{__CFString}':1,
+    '^{__CFString=}':1,
+    '^{__CFArray}':1,
+    '^{__CFArray=}':1,
+    '^{__CFDictionary}':1,
+    '^{__CFDictionary=}':1,
+    '^{__CFURL}':1,
+    '^{__CFURL=}':1,
+}
+
+def defaultSignatureUpdates(sel, signature):
+    if sel.endswith(':error:'):
+        # Error is always an output argument
+        sigParts = splitSignature(signature)
+        if sigParts[-1] == '^@':
+            sigParts = sigParts[:-1] + ('o^@',)
+            signature = ''.join(sigParts)
+
+    sigParts = list(splitSignature(signature))
+    updated = 0
+    for idx, val in enumerate(sigParts):
+        if val in _CFTypes:
+            sigParts[idx] = '@'
+            updated = 1
+
+    if updated:
+        signature = ''.join(sigParts)
+
+    return signature
 
 def _add_convenience_methods(super_class, name, type_dict):
     """
@@ -84,48 +116,9 @@ def _add_convenience_methods(super_class, name, type_dict):
         # Handle some common exceptions to the usual rules:
         #
 
-        if sel.selector.endswith(':error:'):
-            # Error is always an output argument
-            sigParts = splitSignature(sel.signature)
-            if sigParts[-1] == '^@':
-                sigParts = sigParts[:-1] + ('o^@',)
-                sel.signature = ''.join(sigParts)
-
-        elif sel.selector.endswith(':userData:'):
-            # userData:(void*)arg -> userData:(int)arg
-            sigParts = splitSignature(sel.signature)
-            if sigParts[-1] == '^v':
-                sigParts = sigParts[:-1] + ('i',)
-                sel.signature = ''.join(sigParts)
-
-        elif sel.selector == 'userData':
-            # The getter for userData.
-            sigParts = splitSignature(sel.signature)
-            if sigParts[0] == '^v':
-                sigParts = ('i',) + sigParts[1:]
-                sel.signature = ''.join(sigParts)
-
-        elif sel.selector.endswith(':contextInfo:'):
-            # contextInfo:(void*)arg -> contextInfo:(int)arg
-            sigParts = splitSignature(sel.signature)
-            if sigParts[-1] == '^v':
-                sigParts = sigParts[:-1] + ('i',)
-                sel.signature = ''.join(sigParts)
-
-        elif sel.selector.endswith(':context:'):
-            # context:(void*)arg -> context:(int)arg
-            sigParts = splitSignature(sel.signature)
-            if sigParts[-1] == '^v':
-                sigParts = sigParts[:-1] + ('i',)
-                sel.signature = ''.join(sigParts)
-
-        elif sel.selector == 'context':
-            # The getter for context.
-            sigParts = splitSignature(sel.signature)
-            if sigParts[0] == '^v':
-                sigParts = ('i',) + sigParts[1:]
-                sel.signature = ''.join(sigParts)
-            
+        sig = defaultSignatureUpdates(sel.selector, sel.signature)
+        if sig != sel.signature:
+            sel.signature = sig
 
 
 
@@ -585,11 +578,28 @@ CONVENIENCE_METHODS['initWithObjectsAndKeys:'] = (
     ( 'initWithObjectsAndKeys_', initWithObjectsAndKeys_ ),
 )
 
-def sort(self, cmpfunc=cmp):
-    def doCmp(a, b, cmpfunc):
-        return cmpfunc(a, b)
+def sort(self, key=None, reverse=False, cmpfunc=cmp):
+    # NOTE: cmpfunc argument is for backward compatibility.
+    if key is None:
+        if reverse:
+            def doCmp(a, b, cmpfunc):
+                return -cmpfunc(a, b)
+        else:
+            def doCmp(a, b, cmpfunc):
+                return cmpfunc(a, b)
+    else:
+        # This is (a lot) slower than the algoritm used for
+        # list.sort, but so be it.
+        if reverse:
+            def doCmp(a, b, cmpfunc):
+                return -cmpfunc(key(a), key(b))
+        else:
+            def doCmp(a, b, cmpfunc):
+                return cmpfunc(key(a), key(b))
 
     self.sortUsingFunction_context_(doCmp, cmpfunc)
+
+
 
 CONVENIENCE_METHODS['sortUsingFunction:context:'] = (
     ('sort', sort),

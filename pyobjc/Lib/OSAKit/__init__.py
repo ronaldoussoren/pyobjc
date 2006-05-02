@@ -7,3 +7,4 @@ if _objc.platform == 'MACOSX':
         bundle_identifier=u'com.apple.OSAKit',
     )
 import protocols
+import _signatures
