@@ -1,4 +1,4 @@
-#ifdef __i386__
+# ifdef __i386__
 /* -----------------------------------------------------------------------
    ffi.c - Copyright (c) 1996, 1998, 1999, 2001  Red Hat, Inc.
            Copyright (c) 2002  Ranjit Mathew
@@ -40,6 +40,22 @@
 /*@-exportheader@*/
 void ffi_prep_args(char *stack, extended_cif *ecif);
 
+static inline int retval_on_stack(ffi_type* tp)
+{
+	if (tp->type == FFI_TYPE_STRUCT) {
+		int sz = tp->size;
+		if (sz > 8) {
+			return 1;
+		}
+		switch (sz) {
+		case 1: case 2: case 4: case 8: return 0;
+		default: return 1;
+		}
+	}
+	return 0;
+}
+
+
 void ffi_prep_args(char *stack, extended_cif *ecif)
 /*@=exportheader@*/
 {
@@ -50,11 +66,11 @@ void ffi_prep_args(char *stack, extended_cif *ecif)
 
   argp = stack;
 
-  if (ecif->cif->flags == FFI_TYPE_STRUCT && ecif->cif->rtype->size > 8)
-    {
+  if (retval_on_stack(ecif->cif->rtype)) {
       *(void **) argp = ecif->rvalue;
       argp += 4;
-    }
+  }
+
 
   p_argv = ecif->avalue;
 
@@ -66,7 +82,7 @@ void ffi_prep_args(char *stack, extended_cif *ecif)
 
       /* Align if necessary */
       if ((sizeof(int) - 1) & (unsigned) argp)
-	argp = (char *) ALIGN(argp, sizeof(int));
+	      argp = (char *) ALIGN(argp, sizeof(int));
 
       z = (*p_arg)->size;
       if (z < sizeof(int))
@@ -213,8 +229,7 @@ void ffi_call(/*@dependent@*/ ffi_cif *cif,
   /* If the return value is a struct and we don't have a return	*/
   /* value address then we need to make one		        */
 
-  if ((rvalue == NULL) && 
-      (cif->flags == FFI_TYPE_STRUCT) && (cif->rtype->size > 8))
+  if ((rvalue == NULL) && retval_on_stack(cif->rtype))
     {
       /*@-sysunrecog@*/
       ecif.rvalue = alloca(cif->rtype->size);
@@ -227,7 +242,11 @@ void ffi_call(/*@dependent@*/ ffi_cif *cif,
   if (flags == FFI_TYPE_STRUCT) {
     if (cif->rtype->size == 8) {
 	flags = FFI_TYPE_SINT64;
-    } else if (cif->rtype->size < 8) {
+    } else if (cif->rtype->size == 4) {
+        flags = FFI_TYPE_INT;
+    } else if (cif->rtype->size == 2) {
+        flags = FFI_TYPE_INT;
+    } else if (cif->rtype->size == 1) {
         flags = FFI_TYPE_INT;
     }
   }
@@ -237,11 +256,11 @@ void ffi_call(/*@dependent@*/ ffi_cif *cif,
     {
     case FFI_SYSV:
       /*@-usedef@*/
-      /* FIXME: we should pass in cif->bytes, the actual code below seems to
-       * work for correctly aligning the stack, but is something that should
-       * be done in the assembly code.
+      /* To avoid changing the assembly code make sure the size of the argument 
+       * block is a multiple of 16. Then add 8 to compensate for local variables
+       * in ffi_call_SYSV.
        */
-      ffi_call_SYSV(ffi_prep_args, &ecif, ALIGN(cif->bytes, 16)+8, 
+      ffi_call_SYSV(ffi_prep_args, &ecif, ALIGN(cif->bytes, 16) +8, 
 		    flags, ecif.rvalue, fn);
       /*@=usedef@*/
       break;
@@ -302,7 +321,7 @@ ffi_closure_SYSV (closure)
 
   rtype = cif->flags;
 
-  if (rtype == FFI_TYPE_STRUCT && cif->rtype->size <= 8) {
+  if (!retval_on_stack(cif->rtype) && cif->flags == FFI_TYPE_STRUCT) {
       if (cif->rtype->size == 8) {
          rtype = FFI_TYPE_SINT64;
       } else {
@@ -359,7 +378,7 @@ ffi_prep_incoming_args_SYSV(char *stack, void **rvalue,
 
   argp = stack;
 
-  if ( cif->flags == FFI_TYPE_STRUCT && (cif->rtype->size > 8)) {
+  if (retval_on_stack(cif->rtype)) {
     *rvalue = *(void **) argp;
     argp += 4;
   }
@@ -552,8 +571,7 @@ ffi_raw_call(/*@dependent@*/ ffi_cif *cif,
   /* If the return value is a struct and we don't have a return	*/
   /* value address then we need to make one		        */
 
-  if ((rvalue == NULL) && 
-      (cif->rtype->type == FFI_TYPE_STRUCT) && (cif->rtype->size > 8))
+  if ((rvalue == NULL) && retval_on_stack(cif->rtype)) 
     {
       /*@-sysunrecog@*/
       ecif.rvalue = alloca(cif->rtype->size);
