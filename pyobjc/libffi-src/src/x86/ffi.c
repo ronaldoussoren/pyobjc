@@ -121,7 +121,7 @@ ffi_status ffi_prep_cif_machdep(ffi_cif *cif)
   switch (cif->rtype->type)
     {
     case FFI_TYPE_VOID:
-#ifndef X86_WIN32
+#if !defined(X86_WIN32) && !defined(X86_DARWIN)
     case FFI_TYPE_STRUCT:
 #endif
     case FFI_TYPE_SINT64:
@@ -135,7 +135,7 @@ ffi_status ffi_prep_cif_machdep(ffi_cif *cif)
       cif->flags = FFI_TYPE_SINT64;
       break;
 
-#ifdef X86_WIN32
+#if defined(X86_WIN32) || defined(X86_DARWIN)
     case FFI_TYPE_STRUCT:
       if (cif->rtype->size == 1)
         {
@@ -326,7 +326,7 @@ ffi_prep_incoming_args_SYSV(char *stack, void **rvalue,
 
   argp = stack;
 
-  if ( cif->flags == FFI_TYPE_STRUCT ) {
+  if ( cif->flags == FFI_TYPE_STRUCT && cif->rtype->size > 8) {
     *rvalue = *(void **) argp;
     argp += 4;
   }
@@ -343,6 +343,9 @@ ffi_prep_incoming_args_SYSV(char *stack, void **rvalue,
       }
 
       z = (*p_arg)->size;
+      if (z == 0) {
+	      abort();
+      }
 
       /* because we're little endian, this is what it turns into.   */
 
