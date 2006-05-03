@@ -71,7 +71,7 @@ FFI_INTEGRAL_TYPEDEF(sint64, 8, 8, FFI_TYPE_SINT64);
 #endif
 
 
-#if defined X86 || defined X86_WIN32 || defined M68K
+#if defined X86 || defined X86_WIN32 || defined M68K || defined(X86_DARWIN)
 
 #ifdef X86_WIN32 
 FFI_INTEGRAL_TYPEDEF(double, 8, 8, FFI_TYPE_DOUBLE);

@@ -119,7 +119,7 @@ ffi_status ffi_prep_cif(/*@out@*/ /*@partial@*/ ffi_cif *cif,
 #ifdef SPARC
       && (cif->abi != FFI_V9 || cif->rtype->size > 32)
 #endif
-#ifdef __i386__ /* FIXME: only on darwin */
+#ifdef X86_DARWIN
       && (cif->rtype->size > 8) 
 #endif
       )
