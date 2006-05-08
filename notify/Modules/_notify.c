@@ -34,8 +34,11 @@ static	char* keywords[] = { "name", NULL };
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "s", keywords, &name)) {
 		return NULL;
 	}
+	
+	Py_BEGIN_ALLOW_THREADS
+		status = notify_post(name);
+	Py_END_ALLOW_THREADS
 
-	status = notify_post(name);
 	if (status != NOTIFY_STATUS_OK) {
 		return raise_exception(status);
 	}
@@ -60,7 +63,10 @@ static 	char* keywords[] = { "name", NULL };
 		return NULL;
 	}
 
-	status = notify_register_check(name, &token);
+	Py_BEGIN_ALLOW_THREADS
+		status = notify_register_check(name, &token);
+	Py_END_ALLOW_THREADS
+
 	if (status != NOTIFY_STATUS_OK) {
 		return raise_exception(status);
 	}
@@ -87,7 +93,10 @@ static	char* keywords[] = { "name", "signum", NULL };
 		return NULL;
 	}
 
-	status = notify_register_signal(name, signum, &token);
+	Py_BEGIN_ALLOW_THREADS
+		status = notify_register_signal(name, signum, &token);
+	Py_END_ALLOW_THREADS
+
 	if (status != NOTIFY_STATUS_OK) {
 		return raise_exception(status);
 	}
@@ -126,7 +135,10 @@ static	char* keywords[] = { "name", "notify_fd", "flags", NULL };
 		return NULL;
 	}
 
-	status = notify_register_file_descriptor(name, &notify_fd, flags, &token);
+	Py_BEGIN_ALLOW_THREADS
+		status = notify_register_file_descriptor(name, &notify_fd, flags, &token);
+	Py_END_ALLOW_THREADS
+
 	if (status != NOTIFY_STATUS_OK) {
 		return raise_exception(status);
 	}
@@ -156,7 +168,10 @@ static	char* keywords[] = { "token", NULL };
 		return NULL;
 	}
 
-	status = notify_check(token, &check);
+	Py_BEGIN_ALLOW_THREADS
+		status = notify_check(token, &check);
+	Py_END_ALLOW_THREADS
+
 	if (status != NOTIFY_STATUS_OK) {
 		return raise_exception(status);
 	}
@@ -182,7 +197,10 @@ static	char* keywords[] = { "token", NULL };
 		return NULL;
 	}
 
-	status = notify_cancel(token);
+	Py_BEGIN_ALLOW_THREADS
+		status = notify_cancel(token);
+	Py_END_ALLOW_THREADS
+
 	if (status != NOTIFY_STATUS_OK) {
 		return raise_exception(status);
 	}
