@@ -96,9 +96,9 @@ class DgTestCase (unittest.TestCase):
 
 
     def runTestCase(self):
-    #    os.environ['DYLD_BIND_AT_LAUNCH'] = '1'
+        os.environ['DYLD_BIND_AT_LAUNCH'] = '1'
         fp = os.popen('/tmp/test.bin', 'r')
-    #    del os.environ['DYLD_BIND_AT_LAUNCH']
+        del os.environ['DYLD_BIND_AT_LAUNCH']
         data = fp.read()
         xit = fp.close()
         if xit != None:
