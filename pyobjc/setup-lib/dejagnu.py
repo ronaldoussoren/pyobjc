@@ -5,6 +5,7 @@ unittests into the pyobjc ones.
 import os
 import re
 import sys
+import signal
 from fnmatch import fnmatch
 import unittest
 from distutils.util import get_platform
@@ -15,6 +16,27 @@ gDgCommands=re.compile(r'''
         (?:{\s*(dg-output)\s*"([^"]*)"\s*})
         ''',
             re.VERBOSE|re.MULTILINE)
+
+def signame(code):
+    for nm in dir(signal):
+        if nm.startswith('SIG') and nm[3] != '_' \
+                and getattr(signal, nm) == code:
+            return nm
+    return code
+
+def exitCode2Description(code):
+    """
+    Convert the exit code as returned by os.popen().close() to a string
+    """
+    if os.WIFEXITED(code):
+        return 'exited with status %s'%(os.WEXITSTATUS(code),)
+    
+    elif os.WIFSIGNALED(code):
+        sig = os.WTERMSIG(code)
+        return 'crashed with signal %s [%s]'%(signame(sig), sig)
+
+    else:
+        return 'exit code %s'%(code,)
 
 def platform_matches(matchstr):
     # This is a hack
@@ -73,8 +95,6 @@ class DgTestCase (unittest.TestCase):
             self.assertEquals(data.rstrip(), output.rstrip())
         os.unlink('/tmp/test.bin')
 
-        #print "TODO: run the output if it compiled"
-        #print "TODO: check if output equals expected output"
 
     def shortDescription(self):
         fn = os.path.basename(self.filename)[:-2]
@@ -102,7 +122,7 @@ class DgTestCase (unittest.TestCase):
         data = fp.read()
         xit = fp.close()
         if xit != None:
-            self.fail("Running failed[%s]"%(xit,))
+            self.fail("Running failed (%s)"%(exitCode2Description(xit),))
         return data
 
 
