@@ -152,6 +152,23 @@ void ffi_prep_args(extended_cif *ecif, unsigned *const stack)
 	  FFI_ASSERT(flags & FLAG_FP_ARGUMENTS);
 	  break;
 
+#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+	case FFI_TYPE_LONGDOUBLE:
+	  if (fparg_count >= NUM_FPR_ARG_REGISTERS-1) {
+	    ((double *)next_arg)[0] = ((double *)*p_argv)[0];
+	    ((double *)next_arg)[1] = ((double *)*p_argv)[0];
+	  } else {
+	    *fpr_base++ = ((double *)*p_argv)[0];
+	    *fpr_base++ = ((double *)*p_argv)[1];
+	  }
+	  next_arg += 2;
+
+	  fparg_count += 2;
+
+	  FFI_ASSERT(flags & FLAG_FP_ARGUMENTS);
+	  break;
+#endif
+
 	case FFI_TYPE_UINT64:
 	case FFI_TYPE_SINT64:
 	  *(long long *)next_arg = *(long long *)*p_argv;
@@ -172,9 +189,6 @@ void ffi_prep_args(extended_cif *ecif, unsigned *const stack)
 
 	case FFI_TYPE_STRUCT:
 
-#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
-	case FFI_TYPE_LONGDOUBLE:
-#endif
 	  dest_cpy = (char *) next_arg;
 
 	  /* Structures that match the basic modes (QI 1 byte, HI 2 bytes,
@@ -184,9 +198,10 @@ void ffi_prep_args(extended_cif *ecif, unsigned *const stack)
 	  /* If the first member of the struct is a double, then align
 	     the struct to double-word.
 	     Type 3 is defined in include/ffi.h. #define FFI_TYPE_DOUBLE 3.  */
-	  if ((*ptr)->elements[0]->type == 3)
+	  if ((*ptr)->elements && (*ptr)->elements[0]->type == 3)
 	    size_al = ALIGN((*ptr)->size, 8);
-	  if (size_al < 3 && ecif->cif->abi == FFI_DARWIN)
+	  if (size_al < 3 && (ecif->cif == NULL ||  ecif->cif->abi == FFI_DARWIN))
+	    /* XXX: for some reason ecif->cif is NULL at times */
 	    dest_cpy += 4 - size_al;
 
 	  memcpy((char *)dest_cpy, (char *)*p_argv, size_al);
@@ -313,7 +328,7 @@ ffi_status ffi_prep_cif_machdep(ffi_cif *cif)
 	  /* If the first member of the struct is a double, then align
 	     the struct to double-word.
 	     Type 3 is defined in include/ffi.h. #define FFI_TYPE_DOUBLE 3.  */
-	  if ((*ptr)->elements[0]->type == 3)
+	  if ((*ptr)->elements && (*ptr)->elements[0]->type == 3)
 	    size_al = ALIGN((*ptr)->size, 8);
 	  intarg_count += (size_al + 3) / 4;
 	  break;
