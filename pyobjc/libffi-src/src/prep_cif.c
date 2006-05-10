@@ -61,7 +61,7 @@ static ffi_status initialize_aggregate(/*@out@*/ ffi_type *arg)
 
       curalign = (*ptr)->alignment;
       if (ptr != &(arg->elements[0])) {
-	      if (curalign > 4) {
+	      if (curalign > 4 && curalign != 16) {
 		      curalign = 4;
 	      }
       }
