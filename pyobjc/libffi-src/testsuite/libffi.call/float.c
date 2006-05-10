@@ -13,6 +13,8 @@ static int floating(int a, float b, double c, long double d, int e)
 {
   int i;
 
+  printf("%d\n", e);
+  printf("a:%d b:%f c:%f d:%llf e:%d\n", a, b, c, d, e);
   i = (int) ((float)a/b + ((float)c/(float)d));
 
   return i;
@@ -54,6 +56,7 @@ int main (void)
 
   floating (si1, f, d, ld, si2);
 
+  printf("calling through ffi %d\n", si2);
   ffi_call(&cif, FFI_FN(floating), &rint, values);
 
   printf ("%d vs %d\n", (int)rint, floating (si1, f, d, ld, si2));

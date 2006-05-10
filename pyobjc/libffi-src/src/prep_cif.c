@@ -55,11 +55,32 @@ static ffi_status initialize_aggregate(/*@out@*/ ffi_type *arg)
       /* Perform a sanity check on the argument type */
       FFI_ASSERT_VALID_TYPE(*ptr);
 
+#ifdef POWERPC_DARWIN
+      {
+      int curalign;
+
+      curalign = (*ptr)->alignment;
+      if (ptr != &(arg->elements[0])) {
+	      if (curalign > 4) {
+		      curalign = 4;
+	      }
+      }
+
+      arg->size = ALIGN(arg->size, curalign);
+      arg->size += (*ptr)->size;
+
+      arg->alignment = (arg->alignment > curalign) ? 
+	arg->alignment : curalign;
+      }
+#else
+      int curalign;
+
       arg->size = ALIGN(arg->size, (*ptr)->alignment);
       arg->size += (*ptr)->size;
 
       arg->alignment = (arg->alignment > (*ptr)->alignment) ? 
 	arg->alignment : (*ptr)->alignment;
+#endif
 
       ptr++;
     }
