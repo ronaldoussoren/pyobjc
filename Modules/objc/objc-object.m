@@ -161,6 +161,7 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 	int i, n;
 	PyObject *mro, *base, *dict;
 	PyObject *descr = NULL;
+	PyObject* protDict;
 
 	/* Look in tp_dict of types in MRO */
 	mro = tp->tp_mro;
@@ -172,10 +173,13 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 
 		if (PyClass_Check(base)) {
 			dict = ((PyClassObject*)base)->cl_dict;
+			protDict = NULL;
 		} else {
 			assert(PyType_Check(base));
+			protDict = NULL;
 			if (PyObjCClass_Check(base)) {
 				PyObjCClass_CheckMethodList(base, 0);
+				protDict = ((PyObjCClassObject*)base)->protectedMethods;
 			}
 
 			dict = ((PyTypeObject *)base)->tp_dict;
@@ -184,6 +188,13 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 		descr = PyDict_GetItem(dict, name);
 		if (descr != NULL) {
 			break;
+		}
+
+		if (protDict) {
+			descr = PyDict_GetItem(protDict, name);
+			if (descr != NULL) {
+				break;
+			}
 		}
 	}
 
@@ -619,7 +630,7 @@ PyObjCClassObject PyObjCObject_Type = {
      { 0, 0, 0, 0 },			/* as_buffer */
      0,					/* name */
      0,					/* slots */
-   }, 0, 0, 0, 0, 0, 0, 0, 0
+   }, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
 /*

@@ -28,6 +28,8 @@ typedef struct _ProtocolTemplate { @defs(Protocol) } ProtocolTemplate;
 #endif
 
 int PyObjC_VerboseLevel = 0;
+int PyObjC_HideProtected = 1;
+
 PyObject* PyObjCClass_DefaultModule = NULL;
 PyObject* PyObjC_NSNumberWrapper = NULL;
 PyObject* PyObjCStrBridgeWarning = NULL;
@@ -526,6 +528,28 @@ static 	char* keywords[] = { NULL };
 	return PyObjC_NSNumberWrapper;
 }
 
+PyDoc_STRVAR(setHideProtected_doc,
+	"setHideProtected(bool) -> None\n"
+	"\n"
+	"If true methods whose name starts with an underscore will not "
+	"visible for introspection using dir() or the class __dict__.");
+static PyObject* 
+setHideProtected(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static 	char* keywords[] = { "flag", NULL };
+	PyObject* o;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:setVerbose",
+			keywords, &o)) {
+		return NULL;
+	}
+
+	PyObjC_HideProtected = PyObject_IsTrue(o);
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
 
 PyDoc_STRVAR(setVerbose_doc,
 	"setVerbose(bool) -> None\n"
@@ -711,7 +735,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		PyObject* item;
 		PyObject* mod;
 		Class     cls;
-		char*  nm;
+		const char*  nm;
 
 		item = PyTuple_GET_ITEM(class_list, i);
 		if (item == NULL) {
@@ -739,6 +763,8 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 		
 		if (nm[0] == '%') {
 			/* skip, posed-as type */
+		} else if (PyObjC_HideProtected && nm[0] == '_') {
+			/* Skip private classes */
 		} else if (strcmp(nm, "Object") == 0 
 				|| strcmp(nm, "List") == 0
 				|| strcmp(nm, "Protocol") == 0) {
@@ -1210,6 +1236,7 @@ static PyMethodDef mod_methods[] = {
 	{ "setNSNumberWrapper", (PyCFunction)setNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, setNSNumberWrapper_doc },
 	{ "getNSNumberWrapper", (PyCFunction)getNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, getNSNumberWrapper_doc },
 	{ "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
+	{ "setHideProtected", (PyCFunction)setHideProtected, METH_VARARGS|METH_KEYWORDS, setHideProtected_doc },
 	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
 	{ "pyobjc_id", (PyCFunction)pyobjc_id, METH_VARARGS|METH_KEYWORDS, pyobjc_id_doc },
 	{ "repythonify", (PyCFunction)repythonify, METH_VARARGS|METH_KEYWORDS, repythonify_doc },

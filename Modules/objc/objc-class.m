@@ -72,7 +72,7 @@ PyDoc_STRVAR(class_doc,
 
 PyObject* PyObjC_ClassExtender = NULL;
 
-static int add_class_fields(Class objc_class, PyObject* dict);
+static int add_class_fields(Class objc_class, PyObject* dict, PyObject* protDict);
 static int add_convenience_methods(Class cls, PyObject* type_dict);
 static int update_convenience_methods(PyObject* cls);
 
@@ -196,6 +196,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	PyObject* delmethod;
 	PyObject* useKVOObj;
 	PyObjCRT_Ivar_t var;
+	PyObject* protectedMethods = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:__new__",
 			keywords, &name, &bases, &dict)) {
@@ -227,6 +228,11 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	super_class = PyObjCClass_GetClass(py_super_class);
 	if (super_class) {
 		PyObjCClass_CheckMethodList(py_super_class, 1);
+	}
+
+	protectedMethods = PyDict_New();
+	if (protectedMethods == NULL) {
+		return NULL;
 	}
 
 	/*
@@ -454,6 +460,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	info->useKVO = 0;
 	info->delmethod = delmethod;
 	info->hasPythonImpl = 1;
+	info->protectedMethods = protectedMethods;
 
 	PyObjCClass_FinishClass(objc_class);
 
@@ -540,7 +547,8 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 
 			r = add_class_fields(
 				info->class,
-				((PyTypeObject*)cls)->tp_dict);
+				((PyTypeObject*)cls)->tp_dict,
+				info->protectedMethods);
 			if (r < 0) {
 				PyErr_SetString(PyExc_RuntimeError,
 					"Cannot rescan method table");
@@ -815,20 +823,20 @@ cls_get__name__(PyObject* self, void* closure __attribute__((__unused__)))
 }
 
 static PyGetSetDef class_getset[] = {
-		{
-				"pyobjc_classMethods",
-				(getter)cls_get_classMethods,
-				NULL,
-				cls_get_classMethods_doc,
-				0
-		},
-		{
-				"pyobjc_instanceMethods",
-				(getter)cls_get_instanceMethods,
-				NULL,
-				cls_get_instanceMethods_doc,
-				0
-		},
+	{
+		"pyobjc_classMethods",
+		(getter)cls_get_classMethods,
+		NULL,
+		cls_get_classMethods_doc,
+		0
+	},
+	{
+		"pyobjc_instanceMethods",
+		(getter)cls_get_instanceMethods,
+		NULL,
+		cls_get_instanceMethods_doc,
+		0
+	},
 	{
 		/* Access __name__ through a property: Objective-C name 
 		 * might change due to posing.
@@ -839,7 +847,7 @@ static PyGetSetDef class_getset[] = {
 		NULL,
 		0
 	},
-		{ 0, 0, 0, 0, 0 }
+	{ 0, 0, 0, 0, 0 }
 };
 
 static PyMemberDef class_members[] = {
@@ -943,13 +951,14 @@ PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
  * surprising)
  */
 static int
-add_class_fields(Class objc_class, PyObject* dict)
+add_class_fields(Class objc_class, PyObject* pubDict, PyObject* protDict)
 {
 	Class     cls;
 	struct objc_method_list* mlist;
 	void*     iterator;
 	PyObject* descr;
 	char      selbuf[1024];
+	PyObject* dict;
 
 	if (objc_class == NULL) return 0;
 
@@ -967,8 +976,15 @@ add_class_fields(Class objc_class, PyObject* dict)
 			char* name;
 			PyObject* curItem;
 
+
 			meth = mlist->method_list + i;
 
+			dict = pubDict;
+			if (*PyObjCRT_SELName(meth->method_name) == '_') {
+				if (PyObjC_HideProtected) {
+					dict = protDict;
+				}
+			}
 			name = (char*)PyObjC_SELToPythonName(
 						meth->method_name, 
 						selbuf, 
@@ -1015,6 +1031,13 @@ add_class_fields(Class objc_class, PyObject* dict)
 
 		for (i = 0; i < mlist->method_count; i++) {
 			meth = mlist->method_list + i;
+
+			dict = pubDict;
+			if (*PyObjCRT_SELName(meth->method_name) == '_') {
+				if (PyObjC_HideProtected) {
+					dict = protDict;
+				}
+			}
 
 			PyObjC_SELToPythonName(
 				meth->method_name, 
@@ -1100,10 +1123,16 @@ PyObjCClass_New(Class objc_class)
 	PyObject* bases;
 	PyObjCClassObject* info;
 	PyObjCRT_Ivar_t var;
+	PyObject* protectedMethods;
 
 	result = objc_class_locate(objc_class);
 	if (result != NULL) {
 		return result;
+	}
+
+	protectedMethods = PyDict_New();
+	if (protectedMethods == NULL) {
+		return NULL;
 	}
 
 #ifdef GNU_RUNTIME
@@ -1149,6 +1178,7 @@ PyObjCClass_New(Class objc_class)
 	info->useKVO = 0;
 	info->delmethod = NULL;
 	info->hasPythonImpl = 0;
+	info->protectedMethods = protectedMethods;
 
 	/* XXX: Hack to support buffer API */
 	if (strcmp(objc_class->name, "NSData") == 0) {
