@@ -62,6 +62,7 @@ extern PyObject* PyObjC_ClassExtender;
  * @field generation   The value of PyObjC_MappingCount at the last time
  *                     the method-list was updated.
  * @field useKVO    should the class implement automatic KVO notifications?
+ * @field protectedMethods methods whose name starts with an underscore
  *
  * @discussion
  *      This struct is the type-object for on Objective-C class. It stores
@@ -80,10 +81,6 @@ extern PyObject* PyObjC_ClassExtender;
  *
  *	We store the __del__ implementation here instead of in the type itself
  *	to ensure that our teardown code is correctly called.
- *
- *	NOTE: The additional fields are in a seperate struct when using Python
- *	2.2, because it is not possible to store the information in the type
- *	object itself.
  */
 typedef struct {
 	PyHeapTypeObject base;
@@ -95,6 +92,7 @@ typedef struct {
 	int hasPythonImpl;
 	int generation;
 	int useKVO;
+	PyObject* protectedMethods;
 } PyObjCClassObject;
 
 extern PyObject* PyObjCClass_DefaultModule;

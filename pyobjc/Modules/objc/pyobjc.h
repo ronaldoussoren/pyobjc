@@ -81,6 +81,7 @@
 #endif
 
 extern int PyObjC_VerboseLevel;
+extern int PyObjC_HideProtected;
 extern int PyObjC_StrBridgeEnabled;
 extern PyObject *PyObjCStrBridgeWarning;
 extern PyObject *PyObjC_NSNumberWrapper;

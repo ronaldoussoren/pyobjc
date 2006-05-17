@@ -111,10 +111,10 @@ class PyOCTestTypeStr(unittest.TestCase):
         s = objc.selector(lambda(x,y):1, signature="ii")
         self.assertEquals(s.native_signature, None)
 
-        self.assertRaises(TypeError, setattr, s, 'native_signature', 'v@:ii')
+        self.assertRaises((TypeError, AttributeError), setattr, s, 'native_signature', 'v@:ii')
 
         s = objc.lookUpClass('NSObject').description
-        self.assertRaises(TypeError, setattr, s, 'native_signature', 'v@:ii')
+        self.assertRaises((TypeError, AttributeError), setattr, s, 'native_signature', 'v@:ii')
 
         # We know that the description signature isn't changed by default
         self.assertEquals(s.signature, s.native_signature)
