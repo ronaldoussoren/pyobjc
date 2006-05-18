@@ -101,6 +101,11 @@ def process_file(outfp, filename):
             if not ident in ['if', 'endif', 'else']:
                 entry(outfp, ident)
 
+def deprecatedHeader(fname):
+    for ln in open(fname, 'r'):
+        if ln.startswith('#warning') and 'adjust your header import' in ln:
+            return 1
+    return 0
 
 def generate(dirname, fn = None, filter = lambda x: 1, ignore_files=(), emit_imports=1, emit_header=1, emit_footer=1):
 
@@ -119,7 +124,7 @@ def generate(dirname, fn = None, filter = lambda x: 1, ignore_files=(), emit_imp
     if emit_imports:
         for fname in fnames:
             fmwkname = os.path.dirname(os.path.dirname(fname))
-            if fmwkname.endswith('.framework'):
+            if fmwkname.endswith('.framework') and not deprecatedHeader(fname):
                 fp.write("#import <%s/%s>\n" % (os.path.splitext(os.path.basename(fmwkname))[0], os.path.basename(fname)))
 
     if emit_header:
