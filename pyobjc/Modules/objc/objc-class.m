@@ -492,6 +492,8 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			}
 		}
 	}
+
+	PyObjC_RegisterPythonProxy(objc_class, res);
 	Py_DECREF(keys);
 	Py_DECREF(old_dict);
 	
