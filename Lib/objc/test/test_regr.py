@@ -137,5 +137,17 @@ class TestRegressions(unittest.TestCase):
         v = o.compP_aRect_anOp_((1,2), ((3,4),(5,6)), 7)
         self.assertEquals(v, u"aP:{1, 2} aR:{{3, 4}, {5, 6}} anO:7")
 
+    def testInitialize(self):
+        calls=[]
+        class InitializeTestClass (NSObject):
+            def initialize(self):
+                calls.append(repr(self))
+
+        self.assertEquals(len(calls), 0)
+        o = InitializeTestClass.new()
+        self.assertEquals(len(calls), 1)
+        o = InitializeTestClass.new()
+        self.assertEquals(len(calls), 1)
+
 if __name__ == '__main__':
     unittest.main()
