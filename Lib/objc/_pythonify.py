@@ -17,6 +17,9 @@ class OC_PythonFloat(float):
     def __getattr__(self, attr):
         return getattr(self.__pyobjc_object__, attr)
 
+    def __reduce__(self):
+        return (float, (float(self),))
+
 class OC_PythonLong(long):
 
     def __new__(cls, obj, value):
@@ -36,6 +39,9 @@ class OC_PythonLong(long):
             raise AttributeError, "'%s' object has no attribute '%s')"%(self.__class__.__name__, attr)
         self.__dict__['__pyobjc_object__'] = value
 
+    def __reduce__(self):
+        return (long, (long(self),))
+
 class OC_PythonInt(int):
     __slots__=('__pyobjc_object__',)
 
@@ -48,6 +54,9 @@ class OC_PythonInt(int):
 
     def __getattr__(self, attr):
         return getattr(self.__pyobjc_object__, attr)
+
+    def __reduce__(self):
+        return (int, (int(self),))
 
 NSNumber = _objc.lookUpClass('NSNumber')
 NSDecimalNumber = _objc.lookUpClass('NSDecimalNumber')
