@@ -143,7 +143,7 @@ if gs_root is None:
                     '-arch', 'i386', 
                     '-arch', 'ppc',
                     '-isysroot', '/Developer/SDKs/MacOSX10.4u.sdk',
-                    '-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk',
+                    #'-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk',
             ])
 
 
@@ -420,7 +420,7 @@ SenTestingKitPackages, SenTestingKitExtensions = \
                       extra_link_args=frameworks(
                         'SenTestingKit',
                         'Foundation'
-                      ),
+                      ) + BASE_LDFLAGS,
                       **SenTestingKitDepends
                       ),
         ])
@@ -435,7 +435,7 @@ WebKitPackages, WebKitExtensions = \
                       extra_link_args=frameworks(
                         'WebKit',
                         'Foundation'
-                      ),
+                      ) + BASE_LDFLAGS,
                       **WebKitDepends
                       ),
         ], headername="WebKit.h")
@@ -450,7 +450,7 @@ XgridFoundationPackages, XgridFoundationExtensions = \
                       extra_link_args=frameworks(
                         'XgridFoundation',
                         'Foundation'
-                      ),
+                      ) + BASE_LDFLAGS,
                       **XgridFoundationDepends
                       ),
         ], headername="XgridFoundation.h")
@@ -465,7 +465,7 @@ CoreDataPackages, CoreDataExtensions = \
                       extra_link_args=frameworks(
                         'CoreData',
                         'Foundation'
-                      ),
+                      ) + BASE_LDFLAGS,
                       **CoreDataDepends
                       ),
         ], headername="CoreData.h")
@@ -480,7 +480,7 @@ DiscRecordingPackages, DiscRecordingExtensions = \
                       extra_link_args=frameworks(
                         'DiscRecording',
                         'Foundation'
-                      ),
+                      ) + BASE_LDFLAGS,
                       **DiscRecordingDepends
                       ),
         ], headername="DiscRecording.h")
@@ -495,7 +495,7 @@ DiscRecordingUIPackages, DiscRecordingUIExtensions = \
                       extra_link_args=frameworks(
                         'DiscRecordingUI',
                         'Foundation'
-                      ),
+                      ) + BASE_LDFLAGS,
                       **DiscRecordingUIDepends
                       ),
         ], headername="DiscRecordingUI.h")
@@ -510,7 +510,7 @@ SyncServicesPackages, SyncServicesExtensions = \
                       extra_link_args=frameworks(
                         'SyncServices',
                         'Foundation'
-                      ),
+                      ) + BASE_LDFLAGS,
                       **SyncServicesDepends
                       ),
         ], headername="SyncServices.h")
@@ -525,7 +525,7 @@ AutomatorPackages, AutomatorExtensions = \
                       extra_link_args=frameworks(
                         'Automator',
                         'Foundation'
-                      ),
+                      ) + BASE_LDFLAGS,
                       **AutomatorDepends
                       ),
         ], headername="Automator.h")
@@ -540,7 +540,7 @@ QTKitPackages, QTKitExtensions = \
                       extra_link_args=frameworks(
                         'QTKit',
                         'Foundation'
-                      ),
+                      ) + BASE_LDFLAGS,
                       **QTKitDepends
                       ),
         ], headername="QTKit.h")
@@ -555,7 +555,7 @@ QuartzPackages, QuartzExtensions = \
                       extra_link_args=frameworks(
                         'Quartz',
                         'Foundation'
-                      ),
+                      ) + BASE_LDFLAGS,
                       **QuartzDepends
                       ),
         ], headername="Quartz.h")
@@ -570,7 +570,7 @@ OSAKitPackages, OSAKitExtensions = \
                       extra_link_args=frameworks(
                         'OSAKit',
                         'Foundation'
-                      ),
+                      ) + BASE_LDFLAGS,
                       **OSAKitDepends
                       ),
         ], headername="OSAKit.h")
@@ -585,7 +585,7 @@ AppleScriptKitPackages, AppleScriptKitExtensions = \
                       extra_link_args=frameworks(
                         'AppleScriptKit',
                         'Foundation'
-                      ),
+                      ) + BASE_LDFLAGS,
                       **AppleScriptKitDepends
                       ),
         ], headername="ASKPluginObject.h")
