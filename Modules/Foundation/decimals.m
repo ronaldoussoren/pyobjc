@@ -84,6 +84,9 @@ static PyNumberMethods decimal_asnumber = {
 	NULL,				/* nb_true_divide */
 	NULL,				/* nb_inplace_floor_divide */
 	NULL				/* nb_inplace_true_divide */
+#if (PY_VERSION_HEX >= 0x02050000)
+	,NULL				/* nb_index */
+#endif
 };
 
 static NSDecimalNumber *

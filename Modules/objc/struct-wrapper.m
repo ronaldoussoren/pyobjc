@@ -44,7 +44,7 @@ SET_FIELD(PyObject* self, PyMemberDef* member, PyObject* val)
  * Implementation of the sequence interface.
  */
 
-static int
+static Py_ssize_t
 struct_sq_length(PyObject* self)
 {
 	/* The object contains the generic PyObject header followed by an
@@ -54,9 +54,9 @@ struct_sq_length(PyObject* self)
 }
 
 static PyObject*
-struct_sq_item(PyObject* self, int offset)
+struct_sq_item(PyObject* self, Py_ssize_t offset)
 {
-	int len = struct_sq_length(self);
+	Py_ssize_t len = struct_sq_length(self);
 	PyMemberDef* member;
 	PyObject* res;
 
@@ -75,10 +75,10 @@ struct_sq_item(PyObject* self, int offset)
 }
 
 static PyObject*
-struct_sq_slice(PyObject* self, int ilow, int ihigh)
+struct_sq_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh)
 {
 	PyObject* result;
-	int i, len;
+	Py_ssize_t i, len;
 	
 	len = struct_sq_length(self);
 	if (ilow < 0)  ilow = 0;
@@ -99,14 +99,14 @@ struct_sq_slice(PyObject* self, int ilow, int ihigh)
 }
 
 static int
-struct_sq_ass_item(PyObject* self, int offset, PyObject* newVal)
+struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
 {
-	int len;
+	Py_ssize_t len;
 	PyMemberDef* member;
 
 	if (newVal == NULL) {
 		PyErr_Format(PyExc_TypeError, 
-			"Cannot delete item '%d' in a %s instance",
+			"Cannot delete item '%"PY_FORMAT_SIZE_T"d' in a %s instance",
 			offset, self->ob_type->tp_name);
 		return -1;
 	}
@@ -125,10 +125,10 @@ struct_sq_ass_item(PyObject* self, int offset, PyObject* newVal)
 }
 
 static int
-struct_sq_ass_slice(PyObject* self, int ilow, int ihigh, PyObject* v)
+struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject* v)
 {
 	PyObject* seq;
-	int i, len;
+	Py_ssize_t i, len;
 
 	if (v == NULL) {
 		PyErr_Format(PyExc_TypeError,
@@ -201,7 +201,7 @@ struct_reduce(PyObject* self)
 {
 	PyObject* result;
 	PyObject* values;
-	int i, len;
+	Py_ssize_t i, len;
 
 	len = struct_sq_length(self);
 	values = PyTuple_New(len);
@@ -316,7 +316,7 @@ static int LOCATE_MEMBER(PyTypeObject* type, const char* name)
 
 static int set_defaults(PyObject* self, const char* typestr)
 {
-	int i = 0;
+	Py_ssize_t i = 0;
 	int r;
 	PyObject* v;
 
@@ -400,7 +400,7 @@ struct_init(
 	PyObject* args = *(PyObject**)cargs[1];
 	PyObject* kwds = *(PyObject**)cargs[2];
 	const char* typestr = (char*)userdata;
-	int setUntil = -1;
+	Py_ssize_t setUntil = -1;
 	int r;
 
 	if (args != NULL && !PyTuple_Check(args)) {
@@ -425,12 +425,12 @@ struct_init(
 	}
 
 	if (args != NULL) {
-		int i, len;
+		Py_ssize_t i, len;
 
 		len = PyTuple_GET_SIZE(args);
 		if (len > struct_sq_length(self)) {
 			PyErr_Format(PyExc_TypeError, 
-				"%s() takes at most %d %sarguments (%d given)",
+				"%s() takes at most %"PY_FORMAT_SIZE_T"d %sarguments (%"PY_FORMAT_SIZE_T"d given)",
 				self->ob_type->tp_name,
 				struct_sq_length(self),
 				kwds?"non-keyword ":"", len);
@@ -465,7 +465,7 @@ struct_init(
 		len = PyList_GET_SIZE(keys);
 		for (i = 0; i < len; i++) {
 			PyMemberDef* member;
-			int off;
+			Py_ssize_t off;
 			PyObject* k;
 			PyObject* v;
 
@@ -559,7 +559,8 @@ struct_hash(PyObject* self)
 static PyObject*
 struct_richcompare(PyObject* self, PyObject* other, int op)
 {
-	int self_len, other_len, i, len, cmp;
+	Py_ssize_t self_len, other_len, i, len;
+	int cmp;
 	PyObject* self_cur;
 	PyObject* other_cur;
 
@@ -685,7 +686,7 @@ struct_clear(PyObject* self)
 static PyObject*
 struct_repr(PyObject* self)
 {
-	int i, len;
+	Py_ssize_t i, len;
 	PyObject* cur;
 	PyMemberDef* member;
 
@@ -791,13 +792,13 @@ PyObjC_MakeStructType(
 		const char* name,
 		const char* doc,
 		initproc tpinit,
-		int numFields,
+		Py_ssize_t numFields,
 		const char** fieldnames,
 		const char* typestr)
 {
 	PyTypeObject* result;
 	PyMemberDef* members;
-	int i;
+	Py_ssize_t i;
 
 	members = PyMem_Malloc(sizeof(PyMemberDef) * (numFields+1));
 	if (members == NULL) {
@@ -859,7 +860,7 @@ PyObjC_MakeStructType(
 static PyObject* structRegistry = NULL;
 
 PyObject* 
-PyObjC_CreateRegisteredStruct(const char* signature, int len)
+PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len)
 {
 	PyTypeObject* type;
 	PyObject* result;
@@ -904,7 +905,7 @@ PyObjC_RegisterStructType(
 		const char* name,
 		const char* doc,
 		initproc tpinit,
-		int numFields,
+		Py_ssize_t numFields,
 		const char** fieldnames)
 {
 	PyObject* structType;

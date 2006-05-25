@@ -39,46 +39,6 @@ extern NSString * const NSUnknownKeyException; /* Radar #3336042 */
 PyObject *OC_PythonObject_DepythonifyTable = NULL;
 PyObject *OC_PythonObject_PythonifyStructTable = NULL;
 
-#if 0
-static void
-nsmaptable_python_retain(NSMapTable *table __attribute__((__unused__)), const void *datum) {
-	Py_INCREF((PyObject *)datum);
-}
-
-static void
-nsmaptable_python_release(NSMapTable *table __attribute__((__unused__)), void *datum) {
-	Py_DECREF((PyObject *)datum);
-}
-
-static void
-nsmaptable_objc_retain(NSMapTable *table __attribute__((__unused__)), const void *datum) {
-	[(id)datum retain];
-}
-
-static void
-nsmaptable_objc_release(NSMapTable *table __attribute__((__unused__)), void *datum) {
-	[(id)datum release];
-}
-
-NSMapTableKeyCallBacks PyObjC_ObjectToIdTable_KeyCallBacks = {
-	NULL, // use pointer value for hash
-	NULL, // use pointer value for equality
-	&nsmaptable_python_retain,
-	&nsmaptable_python_release,
-	NULL, // generic description
-	NULL // not a key
-};
-
-NSMapTableValueCallBacks PyObjC_ObjectToIdTable_ValueCallBacks = {
-	&nsmaptable_objc_retain,
-	&nsmaptable_objc_release,
-	NULL  // generic description
-};
-
-NSMapTable *PyObjC_ObjectToIdTable = NULL;
-#endif
-
-/* FIXME: PyObjC_RegisterObjCProxy should be moved to a central location! */
 @implementation OC_PythonObject
 + (int)wrapPyObject:(PyObject *)argument toId:(id *)datum
 {
@@ -308,7 +268,7 @@ end:
 	PyObjC_END_WITH_GIL
 }
 
-+ (PyObject *)__pythonifyStruct:(PyObject*)obj withType:(const char *)type length:(int)length
++ (PyObject *)__pythonifyStruct:(PyObject*)obj withType:(const char *)type length:(Py_ssize_t)length
 {
 	if (OC_PythonObject_PythonifyStructTable == NULL) {
 		Py_INCREF(obj);
@@ -407,7 +367,7 @@ end:
   returning the method itself if it matches @var{argcount}, NULL
   otherwise. */
 static inline PyObject *
-check_argcount (PyObject *pymethod, int argcount)
+check_argcount (PyObject *pymethod, Py_ssize_t argcount)
 {
 	PyCodeObject *func_code;
 
@@ -435,9 +395,9 @@ static PyObject*
 get_method_for_selector(PyObject *obj, SEL aSelector)
 {
 	const char*  meth_name;
-	int          len;
+	Py_ssize_t   len;
 	char         pymeth_name[256];
-	unsigned int argcount;
+	Py_ssize_t   argcount;
 	PyObject*    pymethod;
 	const char*  p;
 	PyObject*    result;
@@ -521,7 +481,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	char*        	   encoding;
 	PyObject*          pymethod;
 	PyCodeObject*      func_code;
-	int                argcount;
+	Py_ssize_t         argcount;
 
 	encoding = (char*)get_selector_encoding (self, sel);
 	if (encoding) {
@@ -534,7 +494,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		pymethod = get_method_for_selector(pyObject, sel);
 		if (!pymethod) {
 			PyErr_Clear();
-			PyGILState_Release(_GILState); // XXX: FIXME
+			PyGILState_Release(_GILState); 
 			[NSException raise:NSInvalidArgumentException 
 				format:@"Class %s: no such selector: %s", 
 				GETISA(self)->name, PyObjCRT_SELName(sel)];
@@ -610,7 +570,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	PyObject*          args = NULL;
 	volatile unsigned int       i;
 	unsigned int       argcount;      
-	int		   retsize;
+	Py_ssize_t	   retsize;
 	char*              retbuffer;
 
 	if ([self _forwardNative:invocation]) {
@@ -629,7 +589,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		pymethod = get_method_for_selector(pyObject, aSelector);
 
 		if (!pymethod) {
-			PyGILState_Release(_GILState); // FIXME
+			PyGILState_Release(_GILState);
 			[self doesNotRecognizeSelector:aSelector];
 			return;
 		}
@@ -643,7 +603,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 		for (i=2; i< argcount; i++) {
 			const char *argtype;
 			char *argbuffer;
-			int  argsize;
+			Py_ssize_t  argsize;
 			PyObject *pyarg;
 
 			argtype = [msign getArgumentTypeAtIndex:i];
@@ -662,7 +622,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 				[invocation getArgument:argbuffer atIndex:i];
 
 			PyObjC_HANDLER
-				PyGILState_Release(_GILState); // FIXME
+				PyGILState_Release(_GILState);
 				[localException raise];
 
 			PyObjC_ENDHANDLER
@@ -694,7 +654,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 				[invocation setReturnValue:retbuffer];
 
 			PyObjC_HANDLER
-				PyGILState_Release(_GILState); // FIXME
+				PyGILState_Release(_GILState);
 				[localException raise];
 			PyObjC_ENDHANDLER
 		}

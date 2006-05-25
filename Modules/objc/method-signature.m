@@ -3,10 +3,9 @@
 PyObjCMethodSignature* PyObjCMethodSignature_FromSignature(
 		const char* signature)
 {
-	int nargs;
+	Py_ssize_t nargs;
 	const char* cur;
 	PyObjCMethodSignature* retval;
-
 
 	/* Skip return-type */
 	cur = PyObjCRT_SkipTypeSpec(signature);
@@ -40,7 +39,6 @@ PyObjCMethodSignature* PyObjCMethodSignature_FromSignature(
 		retval->rettype = cur;
 	}
 
-	
 	cur = PyObjCRT_SkipTypeSpec(retval->signature);
 	nargs = 0;
 	for (;cur && *cur; cur = PyObjCRT_SkipTypeSpec(cur)) {

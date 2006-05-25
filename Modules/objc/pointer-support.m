@@ -38,7 +38,7 @@ struct wrapper {
  * number of custom wrappers this should not be a problem.
  */
 static struct wrapper* items = 0;
-static int item_count = 0;
+static Py_ssize_t item_count = 0;
 
 /*
  * If signature is a pointer to a structure return the index of the character
@@ -69,8 +69,8 @@ static int find_end_of_structname(const char* signature) {
 static struct wrapper*
 FindWrapper(const char* signature)
 {
-	int i;
-	int len;
+	Py_ssize_t i;
+	Py_ssize_t len;
 
 	len = strlen(signature);
 

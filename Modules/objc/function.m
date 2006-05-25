@@ -50,10 +50,10 @@ static PyObject*
 func_call(PyObject* s, PyObject* args, PyObject* kwds)
 {
 	func_object* self = (func_object*)s;
-	int byref_in_count;
-	int byref_out_count;
-	int plain_count;
-	int argbuf_len;
+	Py_ssize_t byref_in_count;
+	Py_ssize_t byref_out_count;
+	Py_ssize_t plain_count;
+	Py_ssize_t argbuf_len;
 	int r;
 
 	unsigned char* argbuf;
@@ -65,7 +65,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
 	if (self->methinfo->nargs >= 63) {
 		PyErr_Format(PyObjCExc_Error,
-			"wrapping a function with %d arguments, at most 64 "
+			"wrapping a function with %"PY_FORMAT_SIZE_T"d arguments, at most 64 "
 			"are supported", self->methinfo->nargs);
 		return NULL;
 	}
@@ -86,7 +86,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 	}
 
 	if (PyTuple_Size(args) != (plain_count + byref_in_count)) {
-		PyErr_Format(PyExc_TypeError, "Need %d arguments, got %d",
+		PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
 			plain_count + byref_in_count, PyTuple_Size(args));
 		return NULL;
 	}
@@ -159,7 +159,7 @@ PyTypeObject PyObjCFunc_Type =
 	0,					/* tp_itemsize */
   
 	/* methods */
-	(destructor)func_dealloc,		/* tp_dealloc */
+	func_dealloc,				/* tp_dealloc */
 	0,					/* tp_print */
 	0,					/* tp_getattr */
 	0,					/* tp_setattr */

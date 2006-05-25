@@ -16,7 +16,6 @@ find_selector(PyObject* self, char* name, int class_method)
 	volatile int   unbound_instance_method = 0;
 	char* flattened;
 
-
 	if (name[0] == '_' && name[1] == '_') {
 		/*
 		 * FIXME: Some classes (NSFault, NSFinalProxy) crash hard
@@ -218,8 +217,9 @@ typedef struct {
 } ObjCMethodAccessor;
 
 static void
-obj_dealloc(ObjCMethodAccessor* self)
+obj_dealloc(PyObject* _self)
 {
+	ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
 	Py_XDECREF(self->base);
 	self->base = NULL;
 
@@ -231,8 +231,9 @@ obj_dealloc(ObjCMethodAccessor* self)
 }
 
 static PyObject*
-obj_getattro(ObjCMethodAccessor* self, PyObject* name)
+obj_getattro(PyObject* _self, PyObject* name)
 {
+	ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
 	PyObject* result;
 	int	  class_method;
 
@@ -319,8 +320,9 @@ obj_getattro(ObjCMethodAccessor* self, PyObject* name)
 }
 
 static PyObject*
-obj_repr(ObjCMethodAccessor* self)
+obj_repr(PyObject* _self)
 {
+	ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
 	PyObject* rval;
 	PyObject* repr;
 
@@ -346,19 +348,19 @@ PyTypeObject PyObjCMethodAccessor_Type = {
 	sizeof(ObjCMethodAccessor),		/* tp_basicsize */
 	0,					/* tp_itemsize */
 	/* methods */
-	(destructor)obj_dealloc,	 	/* tp_dealloc */
+	obj_dealloc,	 			/* tp_dealloc */
 	0,					/* tp_print */
 	0,					/* tp_getattr */
 	0,					/* tp_setattr */
 	0,					/* tp_compare */
-	(reprfunc)obj_repr,			/* tp_repr */
+	obj_repr,				/* tp_repr */
 	0,					/* tp_as_number */
 	0,					/* tp_as_sequence */
 	0,		       			/* tp_as_mapping */
 	0,					/* tp_hash */
 	0,					/* tp_call */
 	0,					/* tp_str */
-	(getattrofunc)obj_getattro,		/* tp_getattro */
+	obj_getattro,				/* tp_getattro */
 	0,					/* tp_setattro */
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT,			/* tp_flags */

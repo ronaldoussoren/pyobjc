@@ -24,7 +24,7 @@
 {
 	char c;
 
-	return (&c)+1;
+	return ((unsigned)&c)+1;
 }
 @end
 

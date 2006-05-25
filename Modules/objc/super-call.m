@@ -13,7 +13,7 @@
  */
 #include "pyobjc.h"
 
-int PyObjC_MappingCount = 0;
+Py_ssize_t PyObjC_MappingCount = 0;
 
 struct registry
 {
@@ -170,8 +170,8 @@ search_special(Class class, SEL sel)
 {
 	PyObject* result = NULL;
 	PyObject* special_class = NULL;
-	int special_len;
-	int i;
+	Py_ssize_t special_len;
+	Py_ssize_t i;
 
 	if (special_registry == NULL) goto error;
 

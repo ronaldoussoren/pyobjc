@@ -57,8 +57,9 @@ object_new(
 }
 
 static PyObject*
-object_repr(PyObjCObject* self)
+object_repr(PyObject* _self)
 {
+	PyObjCObject* self = (PyObjCObject*)_self;
 	PyObject* res;
 
 	if ((self->flags & PyObjCObject_kUNINITIALIZED) == 0 && !PyObjCObject_IsClassic(self)) {
@@ -158,7 +159,7 @@ object_dealloc(PyObject* obj)
 static inline PyObject*
 _type_lookup(PyTypeObject* tp, PyObject* name)
 {
-	int i, n;
+	Py_ssize_t i, n;
 	PyObject *mro, *base, *dict;
 	PyObject *descr = NULL;
 	PyObject* protDict;
@@ -203,7 +204,7 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 
 static PyObject** _get_dictptr(PyObject* obj)
 {
-	int dictoffset;
+	Py_ssize_t dictoffset;
 	id obj_object;
 	dictoffset = PyObjCClass_DictOffset((PyObject*)obj->ob_type);
 	if (dictoffset == 0) return NULL;
@@ -220,8 +221,8 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	PyObject *descr = NULL;
 	PyObject *res = NULL;
 	descrgetfunc f;
-	PyObject **dictptr;
-	char*      namestr;
+	PyObject** dictptr;
+	char* namestr;
 	id obj_inst;
 
 	if (!PyString_Check(name)){
@@ -501,6 +502,7 @@ objc_get_real_class(PyObject* self, void* closure __attribute__((__unused__)))
 {
 	id obj_object;
 	PyObject* ret;
+
 	obj_object = PyObjCObject_GetObject(self);
 	assert(obj_object != nil);
 	ret = PyObjCClass_New(GETISA(obj_object));
@@ -517,22 +519,23 @@ PyDoc_STRVAR(obj_get_instanceMethods_doc,
 "can be used to force access to an instance method."
 );
 static PyObject*
-obj_get_instanceMethods(PyObjCObject* self, void* closure __attribute__((__unused__)))
+obj_get_instanceMethods(PyObject* _self, void* closure __attribute__((__unused__)))
 {
+	PyObjCObject* self = (PyObjCObject*)_self;
 	return PyObjCMethodAccessor_New((PyObject*)self, 0);
 }
 
 static PyGetSetDef obj_getset[] = {
 	{
 		"pyobjc_ISA",
-		(getter)objc_get_real_class,
+		objc_get_real_class,
 		NULL,
 		objc_get_real_class_doc,
 		0
 	},
 	{
 		"pyobjc_instanceMethods",
-		(getter)obj_get_instanceMethods,
+		obj_get_instanceMethods,
 		NULL,
 		obj_get_instanceMethods_doc,
 		0
@@ -584,7 +587,7 @@ PyObjCClassObject PyObjCObject_Type = {
 	0,					/* tp_getattr */
 	0,					/* tp_setattr */
 	0,					/* tp_compare */
-	(reprfunc)object_repr,			/* tp_repr */
+	object_repr,				/* tp_repr */
 	0,					/* tp_as_number */
 	0,					/* tp_as_sequence */
 	0,		       			/* tp_as_mapping */
@@ -624,7 +627,11 @@ PyObjCClassObject PyObjCObject_Type = {
 	(destructor)object_del			/* tp_del */
      },
      { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* as_number */
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
+#if PY_VERSION_HEX >= 0x02050000
+       , 0
+#endif
+     }, /* as_number */
      { 0, 0, 0 },			/* as_mapping */
      { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },	/* as_sequence */
      { 0, 0, 0, 0 },			/* as_buffer */

@@ -1,3 +1,4 @@
+#include "pyobjc.h"
 #import "OC_PythonArray.h"
 
 @implementation OC_PythonArray 
@@ -42,12 +43,16 @@
 
 -(int)count
 {
-	int result;
+	Py_ssize_t result;
 
 	PyObjC_BEGIN_WITH_GIL
 		result = PySequence_Length(value);
 
 	PyObjC_END_WITH_GIL
+
+	if (result > INT_MAX) {
+		return INT_MAX;
+	}
 
 	return result;
 }
@@ -143,8 +148,17 @@
 
 -(void)insertObject:(id)anObject atIndex:(unsigned)idx
 {
+	Py_ssize_t theIndex;
 	PyObject* v;
 	PyObject* w;
+
+	if (idx > PY_SSIZE_T_MAX) {
+		PyObjC_BEGIN_WITH_GIL
+			PyErr_SetString(PyExc_IndexError, "No such index");
+			PyObjC_GIL_FORWARD_EXC();
+		PyObjC_END_WITH_GIL
+	}
+	theIndex = idx;
 
 	PyObjC_BEGIN_WITH_GIL
 		if (anObject == [NSNull null]) {
@@ -171,7 +185,7 @@
 -(void)removeLastObject
 {
 	int r;
-	int idx;
+	Py_ssize_t idx;
 
 	PyObjC_BEGIN_WITH_GIL
 		idx = PySequence_Length(value);
@@ -197,12 +211,12 @@
 	int r;
 
 	PyObjC_BEGIN_WITH_GIL
-		if (idx > INT_MAX) {
+		if (idx > PY_SSIZE_T_MAX) {
 			PyErr_SetString(PyExc_IndexError, "No such index");
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-		r = PySequence_DelItem(value, (int)idx);
+		r = PySequence_DelItem(value, (Py_ssize_t)idx);
 		if (r == -1) {
 			PyObjC_GIL_FORWARD_EXC();
 		}

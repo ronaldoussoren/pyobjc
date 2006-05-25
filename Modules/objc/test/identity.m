@@ -135,7 +135,7 @@
 @end
 
 static PyMethodDef identity_methods[] = {
-	{ NULL, NULL, NULL, NULL }
+	{ 0, 0, 0, 0 }
 };
 
 void initidentity(void);

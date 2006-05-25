@@ -9,7 +9,7 @@
 {
 	OC_PythonDictionary* value;
 	BOOL valid;
-	int pos;
+	Py_ssize_t pos;
 }
 + newWithWrappedDictionary:(OC_PythonDictionary*)value;
 - initWithWrappedDictionary:(OC_PythonDictionary*)value;
@@ -97,13 +97,16 @@
 
 -(int)count
 {
-	int result;
+	Py_ssize_t result;
 
 	PyObjC_BEGIN_WITH_GIL
 		result = PyDict_Size(value);
 
 	PyObjC_END_WITH_GIL
 
+	if (result > INT_MAX) {
+		return INT_MAX;
+	}
 	return result;
 }
 
@@ -194,7 +197,7 @@
 	PyObjC_END_WITH_GIL
 }
 
--(BOOL)wrappedKey:(id*)keyPtr value:(id*)valuePtr atPosition:(int*)positionPtr
+-(BOOL)wrappedKey:(id*)keyPtr value:(id*)valuePtr atPosition:(Py_ssize_t*)positionPtr
 {
 	PyObject *pykey = NULL;
 	PyObject *pyvalue = NULL;

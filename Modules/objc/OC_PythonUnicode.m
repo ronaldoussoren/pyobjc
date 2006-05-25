@@ -58,13 +58,9 @@
 	if (aRange.location + aRange.length > (unsigned)PyUnicode_GET_SIZE(value)) {
 		[NSException raise:@"NSRangeException" format:@"Range or index out of bounds"];
 	}
-	memcpy(buffer, PyUnicode_AS_UNICODE(value) + aRange.location, sizeof(unichar) * aRange.length);
-	/*
-	unsigned i;
-	for (i = 0; i < aRange.length; i++) {
-		buffer[i] = PyUnicode_AS_UNICODE(value)[aRange.location + i];
-	}
-	*/
+	memcpy(buffer, 
+	       PyUnicode_AS_UNICODE(value) + aRange.location, 
+	       sizeof(unichar) * aRange.length);
 }
 
 #else /* !PyObjC_UNICODE_FAST_PATH */

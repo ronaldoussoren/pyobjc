@@ -268,8 +268,8 @@ static  ffi_cif* new_cif = NULL;
 
 error_cleanup:
 	if (newType) {
-		if (newType->tp_name) free(newType->tp_name);
-		if (newType->tp_doc) free(newType->tp_doc);
+		if (newType->tp_name) free((char*)newType->tp_name);
+		if (newType->tp_doc) free((char*)newType->tp_doc);
 		Py_XDECREF(newType->tp_dict);
 		free(newType);
 	}
