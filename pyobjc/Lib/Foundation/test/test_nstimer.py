@@ -22,7 +22,7 @@ class TestNSTimer(unittest.TestCase):
         NSRunLoop.currentRunLoop().addTimer_forMode_(
                 timer, NSDefaultRunLoopMode)
         NSRunLoop.currentRunLoop().runUntilDate_(
-                NSDate.dateWithTimeIntervalSinceNow_(0.2))
+                NSDate.dateWithTimeIntervalSinceNow_(0.5))
         timer.invalidate()
         self.assertEquals(obj.fireCount, 1)
 

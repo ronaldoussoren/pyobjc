@@ -18,6 +18,12 @@
 
 #import <Foundation/NSException.h>
 
+struct PyObjC_WeakLink {
+	const char* name;
+	void (*func)(void);
+};
+
+
 /* threading support */
 #define PyObjC_DURING \
 		Py_BEGIN_ALLOW_THREADS \
@@ -136,8 +142,9 @@
  * - Version 13 adds PyObjCCreateOpaquePointerType
  * - Version 14 adds PyObjCObject_NewTransient, PyObjCObject_ReleaseTransient
  * - Version 15 changes the interface of PyObjCObject_New
+ * - Version 16 adds PyObjC_PerformWeaklinking
  */
-#define PYOBJC_API_VERSION 15
+#define PYOBJC_API_VERSION 16
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -288,7 +295,8 @@ struct pyobjc_api {
 
 	/* void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie); */
 	void (*releasetransient)(PyObject* proxy, int cookie);
-	
+
+	void (*doweaklink)(PyObject*, struct PyObjC_WeakLink*);
 	
 };
 
@@ -346,6 +354,7 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCCreateOpaquePointerType (PyObjC_API->pointer_type_new)
 #define PyObjCObject_NewTransient (PyObjC_API->newtransient)
 #define PyObjCObject_ReleaseTransient (PyObjC_API->releasetransient)
+#define PyObjC_PerformWeaklinking (PyObjC_API->doweaklink)
 
 #ifndef PYOBJC_METHOD_STUB_IMPL
 

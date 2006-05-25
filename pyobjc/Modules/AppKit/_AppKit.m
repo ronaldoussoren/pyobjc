@@ -1330,4 +1330,6 @@ void init_AppKit(void)
 		Py_DECREF(o);
 	}
 	Py_DECREF(v);
+
+	PyObjC_PerformWeaklinking(d, gWeaklink);
 }
