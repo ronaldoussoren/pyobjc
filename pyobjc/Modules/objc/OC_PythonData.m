@@ -16,11 +16,10 @@
 	self = [super init];
 	if (!self) return nil;
 
-	if (PyObject_AsReadBuffer(v, &buffer, ((int *)&buffer_len))) {
+	if (PyObject_AsReadBuffer(v, &buffer, &buffer_len)) {
 		[super dealloc];
 		return nil;
 	}
-
 	Py_INCREF(v);
 	Py_XDECREF(value);
 	value = v;
@@ -48,11 +47,15 @@
 {
 	unsigned rval;
 	PyObjC_BEGIN_WITH_GIL
-		if (PyObject_AsReadBuffer(value, &buffer, ((int *)&buffer_len))) {
+		if (PyObject_AsReadBuffer(value, &buffer, &buffer_len)) {
 			PyErr_Clear();
 			rval = 0;
 		}
-		rval = buffer_len;
+		if ((unsigned)buffer_len > UINT_MAX) {
+			rval = UINT_MAX;
+		} else {
+			rval = buffer_len;
+		}
 	PyObjC_END_WITH_GIL
 	return rval;
 }
@@ -61,7 +64,7 @@
 {
 	const void *rval;
 	PyObjC_BEGIN_WITH_GIL
-		if (PyObject_AsReadBuffer(value, &buffer, ((int *)&buffer_len))) {
+		if (PyObject_AsReadBuffer(value, &buffer, &buffer_len)) {
 			PyErr_Clear();
 			rval = NULL;
 		}

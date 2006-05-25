@@ -30,10 +30,10 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 	NSBundle*	bundle;
 	PyObject*	module_globals;
 	PyObject*	variableInfo;
-	int		skip_undefined = 1;
+	Py_ssize_t	skip_undefined = 1;
 	CFBundleRef	cfBundle;
 	PyObject*       seq;
-	int		i, len;
+	Py_ssize_t	i, len;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO|i",
 			keywords, PyObjCObject_Convert, &bundle,
@@ -71,7 +71,8 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 
 		if (!PyTuple_Check(item)) {
 			PyErr_Format(PyExc_TypeError,
-				"item %d has type %s not tuple",
+				"item %" PY_FORMAT_SIZE_T 
+				"d has type %s not tuple",
 				i, item->ob_type->tp_name);
 			Py_DECREF(seq);
 			return NULL;
@@ -95,7 +96,7 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 		if (value == NULL) {
 			if (!skip_undefined) {
 				PyErr_SetString(PyObjCExc_Error,
-					"cannot find a variable"); // XXX
+					"cannot find a variable");
 				Py_DECREF(seq);
 				return NULL;
 			}
@@ -130,7 +131,7 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 	int		skip_undefined = 1;
 	CFBundleRef	cfBundle;
 	PyObject*       seq;
-	int		i, len;
+	Py_ssize_t	i, len;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO|i",
 			keywords, PyObjCObject_Convert, &bundle,
@@ -169,7 +170,8 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 
 		if (!PyTuple_Check(item)) {
 			PyErr_Format(PyExc_TypeError,
-				"item %d has type %s not tuple",
+				"item %" PY_FORMAT_SIZE_T 
+				"d has type %s not tuple",
 				i, item->ob_type->tp_name);
 			Py_DECREF(seq);
 			return NULL;
@@ -194,7 +196,7 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 		if (value == NULL) {
 			if (!skip_undefined) {
 				PyErr_SetString(PyObjCExc_Error,
-					"cannot find a function"); // XXX
+					"cannot find a function");
 				Py_DECREF(seq);
 				return NULL;
 			}

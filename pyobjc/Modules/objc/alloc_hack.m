@@ -195,7 +195,13 @@ imp_NSObject_dealloc(
 
 		Py_DECREF(arglist); 
 
-		/* TODO: assert result is None */
+		if (result != Py_None) {
+			PyErr_Format(PyExc_TypeError,
+				"dealloc should return None, returned instance"
+				" of %s", result->ob_type->tp_name);
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
 		Py_DECREF(result);
 
 	PyObjC_END_WITH_GIL
@@ -346,7 +352,13 @@ imp_NSObject_release(
 		Py_DECREF(arglist); 
 		PyObjCObject_ReleaseTransient(pyself, cookie);
 
-		/* TODO: assert result is None */
+		if (result != Py_None) {
+			PyErr_Format(PyExc_TypeError,
+				"release should return None, returned instance"
+				" of %s", result->ob_type->tp_name);
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
 		Py_DECREF(result);
 
 	PyObjC_END_WITH_GIL

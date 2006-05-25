@@ -103,7 +103,7 @@ PyObject *kwds)
 	const char *type = "@";
 	PyObject *rval;
 	void *datum;
-	int size;
+	Py_ssize_t size;
 	PyObject *o;
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O|s:repythonify",
 		keywords, &o, &type)) {
@@ -212,8 +212,8 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 	PyObject* classObject = NULL;
 	PyObject* methodsArray = NULL;
 	Class targetClass;
-	int methodCount;
-	int methodIndex;
+	Py_ssize_t methodCount;
+	Py_ssize_t methodIndex;
 	int r;
 	struct objc_method_list *methodsToAdd;
 	struct objc_method_list *classMethodsToAdd;
@@ -602,9 +602,10 @@ static PyObject*
 allocateBuffer(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 	static	char* keywords[] = { "length", 0 };
-	int length;
+	Py_ssize_t length;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "i", keywords, &length)) {
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, Py_ARG_SIZE_T, 
+				keywords, &length)) {
 		return NULL;
 	}
 
@@ -663,7 +664,7 @@ static  char* keywords[] = { "module_name", "module_globals", "bundle_path", "bu
 	PyObject* module_name;
 	PyObject* module_globals;
 	PyObject* class_list;
-	int       len, i;
+	Py_ssize_t len, i;
 	PyObject* module_key = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
@@ -1120,7 +1121,7 @@ static char* keywords[] = { "name", "typestr", "fieldnames", "doc", NULL };
 	char* docstr = NULL;
 	PyObject* retval;
 	char** fieldnames = NULL;
-	int i;
+	Py_ssize_t i;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "ssO|s", keywords, 
 				&name, &typestr, &pyfieldnames, &docstr)) {

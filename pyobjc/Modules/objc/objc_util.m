@@ -261,7 +261,7 @@ PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
 char* 
 PyObjCUtil_Strdup(const char* value)
 {
-	int len;
+	Py_ssize_t len;
 	char* result;
 
 	len = strlen(value);
@@ -399,7 +399,7 @@ array_typestr(PyObject* array)
 }
 
 static int 
-buffer_get(PyObject* obj, void** bufptr, int* sizeptr)
+buffer_get(PyObject* obj, void** bufptr, Py_ssize_t* sizeptr)
 {
 	int r;
 
@@ -527,9 +527,10 @@ PyObjC_PythonToCArray(
 	void** array,
 	int*   size)
 {
-	int eltsize = PyObjCRT_SizeOfType(elementType);
-	int eltcount;
-	int i, r;
+	Py_ssize_t eltsize = PyObjCRT_SizeOfType(elementType);
+	Py_ssize_t eltcount;
+	Py_ssize_t i;
+	int r;
 
 	if (eltsize == -1) {
 		return -1;
@@ -538,7 +539,7 @@ PyObjC_PythonToCArray(
 	if (eltsize == 1) {
 		/* A simple byte-array */
 		char* buf;
-		int bufsize;
+		Py_ssize_t bufsize;
 
 		if (buffer_get(pythonList, (void**)&buf, &bufsize) == -1) {
 			return -1;
@@ -553,8 +554,8 @@ PyObjC_PythonToCArray(
 			}
 			if (eltcount > bufsize) {
 				PyErr_Format(PyExc_ValueError,
-					"Requesting buffer of %d, have buffer "
-					"of %d", eltcount, bufsize);
+					"Requesting buffer of %"PY_FORMAT_SIZE_T"d, have buffer "
+					"of %"PY_FORMAT_SIZE_T"d", eltcount, bufsize);
 				return -1;
 			}
 			*array = buf;
@@ -571,7 +572,7 @@ PyObjC_PythonToCArray(
 		 * containing only elements of the type of the array.
 		 */
 		char* buf;
-		int bufsize;
+		Py_ssize_t bufsize;
 		char code = array_typestr(pythonList);
 		if (code == *elementType) {
 			/* Simple array, ok */
@@ -630,8 +631,8 @@ PyObjC_PythonToCArray(
 
 			if (eltcount > bufsize) {
 				PyErr_Format(PyExc_ValueError,
-					"Requesting buffer of %d, have buffer "
-					"of %d", eltcount, bufsize);
+					"Requesting buffer of %"PY_FORMAT_SIZE_T"d, have buffer "
+					"of %"PY_FORMAT_SIZE_T"d", eltcount, bufsize);
 				return -1;
 			}
 			*array = buf;
@@ -656,8 +657,8 @@ PyObjC_PythonToCArray(
 		 */
 #endif /* PyObjC_ENABLE_NUMARRAY */
 	} else {
-		int seqlen;
-		int pycount;
+		Py_ssize_t seqlen;
+		Py_ssize_t pycount;
 		PyObject* seq = PySequence_Fast(pythonList, 
 					"converting to a C array");
 		if (seq == NULL) {
@@ -679,8 +680,8 @@ PyObjC_PythonToCArray(
 		if (seqlen < pycount) {
 			Py_DECREF(seq);
 			PyErr_Format(PyExc_ValueError,
-					"too few values (%d) expecting at "
-					"least %d", seqlen, pycount);
+					"too few values (%"PY_FORMAT_SIZE_T"d) expecting at "
+					"least %"PY_FORMAT_SIZE_T"d", seqlen, pycount);
 			return -1;
 		}
 		*array = PyMem_Malloc(eltsize * pycount);
@@ -711,11 +712,11 @@ PyObject*
 PyObjC_CArrayToPython(
 	const char* elementType,
 	void* array,
-	int   size)
+	Py_ssize_t size)
 {
 	PyObject* result;
-	int i;
-	int eltsize;
+	Py_ssize_t i;
+	Py_ssize_t eltsize;
 
 	result = PyTuple_New(size);
 	if (result == NULL) {

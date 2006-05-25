@@ -33,8 +33,8 @@ proto_dealloc(PyObject* object)
 	 * For some reason this code causes a crash, while it should
 	 * be the reverse of the code in proto_new.
 	 */
-	int len = PyTuple_Size(self->selectors);
-	int i;
+	Py_ssize_t len = PyTuple_Size(self->selectors);
+	Py_ssize_t i;
 
 	for (i = 0; i < len; i++) {
 		PyObjCSelector* tmp =
@@ -66,7 +66,7 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 	PyObjCInformalProtocol* result;
 	PyObject* name;
 	PyObject* selectors;
-	int       i, len;
+	Py_ssize_t       i, len;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO:informal_protocol",
 			keywords, &name, &selectors)) { 
@@ -95,7 +95,7 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 		if (!PyObjCSelector_Check(
 				PyTuple_GET_ITEM(selectors, i))) {
 			PyErr_Format(PyExc_TypeError, 
-				"Item %d is not a selector", i);
+				"Item %"PY_FORMAT_SIZE_T"d is not a selector", i);
 			Py_DECREF(result);
 			return NULL;
 		}
@@ -217,7 +217,7 @@ PyObject*
 PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector, int isClassMethod)
 {
 	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;	
-	int i, len;
+	Py_ssize_t i, len;
 	PyObject* cur;
 	PyObject* seq;
 
@@ -264,7 +264,7 @@ findSelInDict(PyObject* clsdict, SEL selector)
 {
 	PyObject* values;
 	PyObject* seq;
-	int       i, len;
+	Py_ssize_t       i, len;
 
 	values = PyDict_Values(clsdict);
 	if (values == NULL) {
@@ -327,7 +327,7 @@ PyObjCInformalProtocol_CheckClass(
 	PyObject* obj, char* name, PyObject* super_class, PyObject* clsdict)
 {
 	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;	
-	int i, len;
+	Py_ssize_t i, len;
 	PyObject* cur;
 	PyObject* seq;
 

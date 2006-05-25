@@ -40,7 +40,7 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
 	}
 
 	while (cur != nil) {
-		int i, len;
+		Py_ssize_t i, len;
 		Ivar ivar;
 		PyObject* v;
 		int r;

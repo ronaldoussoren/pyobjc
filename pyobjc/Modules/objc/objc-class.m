@@ -13,7 +13,7 @@
  */
 
 static
-int nsdata_getreadbuffer(PyObject *pyself, int segment __attribute__((unused)), void **ptrptr) {
+Py_ssize_t nsdata_getreadbuffer(PyObject *pyself, Py_ssize_t segment __attribute__((unused)), void **ptrptr) {
 	NSData *self = (NSData *)PyObjCObject_GetObject(pyself);
 	assert(segment == 0);
 	if (ptrptr != NULL) {
@@ -23,7 +23,7 @@ int nsdata_getreadbuffer(PyObject *pyself, int segment __attribute__((unused)), 
 }
 
 static
-int nsmutabledata_getwritebuffer(PyObject *pyself, int segment __attribute__((unused)), void **ptrptr) {
+Py_ssize_t nsmutabledata_getwritebuffer(PyObject *pyself, Py_ssize_t segment __attribute__((unused)), void **ptrptr) {
 	NSMutableData *self = (NSMutableData *)PyObjCObject_GetObject(pyself);
 	assert(segment == 0);
 	if (ptrptr != NULL) {
@@ -33,25 +33,25 @@ int nsmutabledata_getwritebuffer(PyObject *pyself, int segment __attribute__((un
 }
 
 static
-int nsdata_getsegcount(PyObject *pyself, int *lenp) {
+Py_ssize_t nsdata_getsegcount(PyObject *pyself, Py_ssize_t *lenp) {
 	NSData *self = (NSData *)PyObjCObject_GetObject(pyself);
 	if (lenp != NULL) {
-		*lenp = (int)[self length];
+		*lenp = (Py_ssize_t)[self length];
 	}
 	return 1;
 }
 
 static PyBufferProcs nsdata_as_buffer = {
-	(getreadbufferproc)&nsdata_getreadbuffer,
+	nsdata_getreadbuffer,
 	NULL,
-	(getsegcountproc)&nsdata_getsegcount,
+	nsdata_getsegcount,
 	NULL
 };
 
 static PyBufferProcs nsmutabledata_as_buffer = {
-	(getreadbufferproc)&nsdata_getreadbuffer,
-	(getwritebufferproc)&nsmutabledata_getwritebuffer,
-	(getsegcountproc)&nsdata_getsegcount,
+	nsdata_getreadbuffer,
+	nsmutabledata_getwritebuffer,
+	nsdata_getsegcount,
 	NULL
 };
 
@@ -184,8 +184,8 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	PyObject* res;
 	PyObject* k;
 	PyObject* v;
-	int       i;
-	int       len;
+	Py_ssize_t i;
+	Py_ssize_t len;
 	Class      objc_class = NULL;
 	Class	   super_class = NULL;
 	PyObject*  py_super_class = NULL;
@@ -208,7 +208,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
-	len  = PyTuple_Size(bases);
+	len = PyTuple_Size(bases);
 	if (len < 1) {
 		PyErr_SetString(PyExc_TypeError, "'bases' must not be empty");
 		return NULL;
@@ -247,7 +247,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		if (protocols == NULL) return NULL;
 	} else {
 		PyObject* seq;
-		int protocols_len;
+		Py_ssize_t protocols_len;
 
 		seq = PySequence_Fast(protocols, 
 			"__pyobjc_protocols__ not a sequence?");
@@ -423,8 +423,6 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		Py_DECREF(real_bases);
 		return NULL;
 	}
-
-
 
 	/* call super-class implementation */
 	args = Py_BuildValue("(sOO)", name, real_bases, dict);
@@ -827,14 +825,14 @@ cls_get__name__(PyObject* self, void* closure __attribute__((__unused__)))
 static PyGetSetDef class_getset[] = {
 	{
 		"pyobjc_classMethods",
-		(getter)cls_get_classMethods,
+		cls_get_classMethods,
 		NULL,
 		cls_get_classMethods_doc,
 		0
 	},
 	{
 		"pyobjc_instanceMethods",
-		(getter)cls_get_instanceMethods,
+		cls_get_instanceMethods,
 		NULL,
 		cls_get_instanceMethods_doc,
 		0
@@ -844,7 +842,7 @@ static PyGetSetDef class_getset[] = {
 		 * might change due to posing.
 		 */
 		"__name__",
-		(getter)cls_get__name__,
+		cls_get__name__,
 		NULL,
 		NULL,
 		0
@@ -971,7 +969,7 @@ add_class_fields(Class objc_class, PyObject* pubDict, PyObject* protDict)
 	iterator = 0;
 	mlist = PyObjCRT_NextMethodList(objc_class, &iterator);
 	while (mlist != NULL) {
-		int i;
+		Py_ssize_t i;
 		PyObjCRT_Method_t meth;
 
 		for (i = 0; i < mlist->method_count; i++) {
@@ -1028,7 +1026,7 @@ add_class_fields(Class objc_class, PyObject* pubDict, PyObject* protDict)
 	iterator = 0;
 	mlist = PyObjCRT_NextMethodList(cls, &iterator);
 	while (mlist != NULL) {
-		int i;
+		Py_ssize_t i;
 		PyObjCRT_Method_t meth;
 
 		for (i = 0; i < mlist->method_count; i++) {
@@ -1081,7 +1079,7 @@ add_class_fields(Class objc_class, PyObject* pubDict, PyObject* protDict)
 	 * semantics.
 	 */
 	if (objc_class->ivars) {
-		int i;
+		Py_ssize_t i;
 		struct objc_ivar *var;
 		for (i = 0; i < objc_class->ivars->ivar_count; i++) {
 			var = objc_class->ivars->ivar_list + i;
@@ -1227,9 +1225,8 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector)
 	PyObject*          attributes;
 	PyObject*          key;
 	PyObject*          v;
-	int                i;
-	int                len;
-
+	Py_ssize_t         i;
+	Py_ssize_t         len;
 
 	if (!PyObjCClass_Check(cls)) {
 		PyErr_Format(PyObjCExc_InternalError,
@@ -1352,7 +1349,7 @@ PyObjCClass_IsSubClass(Class child, Class parent)
 	return 0;
 }
 
-int
+Py_ssize_t
 PyObjCClass_DictOffset(PyObject* cls)
 {
 	return ((PyObjCClassObject*)cls)->dictoffset;
@@ -1472,7 +1469,7 @@ update_convenience_methods(PyObject* cls)
 	PyObject* dict;
 	PyObject* keys;
 	PyObject* v;
-	int       i, len;
+	Py_ssize_t i, len;
 
 	if (PyObjC_ClassExtender == NULL || cls == NULL) return 0;
 

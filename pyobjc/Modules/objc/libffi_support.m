@@ -95,17 +95,17 @@ static void describe_cif(ffi_cif* cif)
 
 #endif
 
-static int align(int offset, int alignment)
+static Py_ssize_t align(Py_ssize_t offset, Py_ssize_t alignment)
 {
-	int rest = offset % alignment;
+	Py_ssize_t rest = offset % alignment;
 	if (rest == 0) return offset;
 	return offset + (alignment - rest);
 }
 
-static int
-count_struct(const char* argtype)
+static Py_ssize_t
+num_struct_fields(const char* argtype)
 {
-	int res = 0;
+	Py_ssize_t res = 0;
 
 	if (*argtype != _C_STRUCT_B) return -1;
 	while (*argtype != _C_STRUCT_E && *argtype != '=') argtype++;
@@ -136,8 +136,8 @@ array_to_ffi_type(const char* argtype)
 static  PyObject* array_types = NULL; /* XXX: Use NSMap  */
 	PyObject* v;
 	ffi_type* type;
-	int       field_count;
-	int        i;
+	Py_ssize_t field_count;
+	Py_ssize_t i;
 	const char* key = argtype;
 
 	if (array_types == NULL) {
@@ -204,8 +204,8 @@ struct_to_ffi_type(const char* argtype)
 	static  PyObject* struct_types = NULL; /* XXX: Use NSMap  */
 	PyObject* v;
 	ffi_type* type;
-	int       field_count;
-	const char*     curtype;
+	Py_ssize_t field_count;
+	const char* curtype;
 
 	if (struct_types == NULL) {
 		struct_types = PyDict_New();
@@ -220,7 +220,7 @@ struct_to_ffi_type(const char* argtype)
 	/* We don't have a type description yet, dynamicly 
 	 * create it.
 	 */
-	field_count = count_struct(argtype);
+	field_count = num_struct_fields(argtype);
 	if (field_count == -1) {
 		PyErr_Format(PyObjCExc_InternalError,
 			"Cannot determine layout of %s", argtype);
@@ -366,7 +366,7 @@ arg_signature_to_ffi_type(const char* argtype)
 }
 #endif
 
-#else
+#else /* GNUstep */
 
 static inline ffi_type*
 arg_signature_to_ffi_type(const char* argtype)
@@ -383,7 +383,7 @@ arg_signature_to_ffi_type(const char* argtype)
 	}
 }
 
-#endif
+#endif /* GNUstep */
 
 /* This function decodes its arguments into Python values, then
  * calls the python method and finally encodes the return value
@@ -401,8 +401,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	PyObject* callable = userdata->callable;
 	PyObjCMethodSignature* methinfo = userdata->methinfo;
 	int isAlloc = 0;
-	int                argOffset;
-	int                i;
+	Py_ssize_t         argOffset;
+	Py_ssize_t         i;
 	PyObject*          arglist;
 	PyObject*          res;
 	PyObject*          v;
@@ -544,7 +544,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 		/* We have some output parameters, locate them and encode
 		 * their values
 		 */
-		int idx;
+		Py_ssize_t idx;
 		PyObject* real_res;
 
 		if (*rettype == _C_VOID && have_output == 1) {
@@ -756,15 +756,15 @@ PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector)
  * bufferspace that will be allocated just before the argument array
  */
 int PyObjCFFI_CountArguments(
-		PyObjCMethodSignature* methinfo, int argOffset,
-		int* byref_in_count, 
-		int* byref_out_count,
-		int* plain_count,
-		int* argbuf_len)
+		PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
+		Py_ssize_t* byref_in_count, 
+		Py_ssize_t* byref_out_count,
+		Py_ssize_t* plain_count,
+		Py_ssize_t* argbuf_len)
 {
-	int i;
-	int itemAlign;
-	int itemSize;
+	Py_ssize_t i;
+	Py_ssize_t itemAlign;
+	Py_ssize_t itemSize;
 
 	*byref_in_count = *byref_out_count = *plain_count = 0;
 	
@@ -859,14 +859,14 @@ int PyObjCFFI_CountArguments(
 }
 
 int PyObjCFFI_ParseArguments(
-		PyObjCMethodSignature* methinfo, int argOffset,
+		PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 		PyObject* args,
-		int argbuf_cur, unsigned char* argbuf,
+		Py_ssize_t argbuf_cur, unsigned char* argbuf,
 		void** byref,
 		ffi_type** arglist, void** values)
 {
-	int py_arg = 0;
-	int i;
+	Py_ssize_t py_arg = 0;
+	Py_ssize_t i;
 	void* arg;
 
 	for (i = argOffset; i < methinfo->nargs; i++) {
@@ -877,7 +877,7 @@ int PyObjCFFI_ParseArguments(
 
 		if (argtype[0] == _C_OUT && argtype[1] == _C_PTR) {
 			/* Just allocate room in argbuf and set that*/
-			int sz;
+			Py_ssize_t sz;
 
 			argbuf_cur = align(argbuf_cur, 
 				PyObjCRT_AlignOfType(argtype+2));
@@ -903,22 +903,18 @@ int PyObjCFFI_ParseArguments(
 			switch (*argtype) {
 			case _C_STRUCT_B: case _C_ARY_B: case _C_UNION_B:
 				/* Allocate space and encode */
-				{
-					argbuf_cur = align(argbuf_cur, 
-						PyObjCRT_AlignOfType(argtype));
-					arg = argbuf + argbuf_cur;
-					argbuf_cur += PyObjCRT_SizeOfType(argtype);
-					byref[i] = arg;
-	  				error = depythonify_c_value (
-						argtype, 
-						argument, 
-						arg);
+				argbuf_cur = align(argbuf_cur, 
+					PyObjCRT_AlignOfType(argtype));
+				arg = argbuf + argbuf_cur;
+				argbuf_cur += PyObjCRT_SizeOfType(argtype);
+				byref[i] = arg;
+				error = depythonify_c_value (
+					argtype, 
+					argument, 
+					arg);
 
-
-					arglist[i] = 
-						signature_to_ffi_type(argtype);
-					values[i] = arg;
-				} 
+				arglist[i] = signature_to_ffi_type(argtype);
+				values[i] = arg;
 				break;
 			case _C_INOUT:
 			case _C_IN:
@@ -962,7 +958,6 @@ int PyObjCFFI_ParseArguments(
 				}
 				break;
 			default:
-				{
 				argbuf_cur = align(argbuf_cur, PyObjCRT_AlignOfType(argtype));
 				arg = argbuf + argbuf_cur;
 				argbuf_cur += PyObjCRT_SizeOfType(argtype);
@@ -974,7 +969,6 @@ int PyObjCFFI_ParseArguments(
 
 				arglist[i] = signature_to_ffi_type(argtype);
 				values[i] = arg;
-				}
 			}
 
 			if (error == -1) {
@@ -988,8 +982,8 @@ int PyObjCFFI_ParseArguments(
 
 PyObject* 
 PyObjCFFI_BuildResult(
-	PyObjCMethodSignature* methinfo, int argOffset,
-	void* pRetval, void** byref, int byref_out_count,
+	PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
+	void* pRetval, void** byref, Py_ssize_t byref_out_count,
 	PyObject* self, int flags)
 /* XXX: Need to refactor to deal with 'self' */
 {
@@ -997,7 +991,7 @@ PyObjCFFI_BuildResult(
 	PyObject* result = NULL;
 	int py_arg;
 	void* arg;
-	int i;
+	Py_ssize_t i;
 
 	if ( (*methinfo->rettype != _C_VOID) /* && ([methinfo isOneway] == NO) */ ) {
 		objc_result = pythonify_c_return_value (methinfo->rettype, pRetval);
@@ -1085,12 +1079,12 @@ error_cleanup:
 PyObject *
 PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 {
-	int            argbuf_len = 0;
-	int            argbuf_cur = 0;
+	Py_ssize_t argbuf_len = 0;
+	Py_ssize_t argbuf_cur = 0;
 	unsigned char* volatile argbuf = NULL;
-	int            byref_in_count = 0;
-	int            byref_out_count = 0;
-	int            plain_count = 0;
+	Py_ssize_t byref_in_count = 0;
+	Py_ssize_t byref_out_count = 0;
+	Py_ssize_t plain_count = 0;
 	void** volatile byref = NULL; /* offset for arguments in argbuf */
 	const char* 	  rettype;
 	PyObjCMethodSignature*  volatile methinfo;
@@ -1105,8 +1099,8 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	void*             values[64];
 	int               r;
 	void*		  msgResult;
-	int               resultSize;
-	volatile int      arglistOffset;
+	Py_ssize_t        resultSize;
+	volatile Py_ssize_t arglistOffset;
 	volatile int      flags;
 	SEL		  theSel;
 
@@ -1130,7 +1124,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 	if (methinfo->nargs >= 63) {
 		 PyErr_Format(PyObjCExc_Error,
-			 "wrapping a function with %d arguments, at most 64 "
+			 "wrapping a function with %"PY_FORMAT_SIZE_T"d arguments, at most 64 "
 			 "are supported", methinfo->nargs);
 		 return NULL;
 	}
@@ -1162,7 +1156,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	 * input argument that is passed by reference.
 	 */
 	if (PyTuple_Size(args) != (plain_count + byref_in_count)) {
-		PyErr_Format(PyExc_TypeError, "Need %d arguments, got %d",
+		PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
 			plain_count + byref_in_count, PyTuple_Size(args));
 		goto error_cleanup;
 	}
@@ -1367,13 +1361,13 @@ error_cleanup:
  * as an initial argument), and is set to 0 otherwise.
  */
 ffi_cif*
-PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, int* pArgOffset)
+PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, Py_ssize_t* pArgOffset)
 {
 	ffi_cif* cif;
 	ffi_type** cl_arg_types;
 	ffi_type* cl_ret_type;
 	const char* rettype;
-	int argOffset;
+	Py_ssize_t argOffset;
 	ffi_status rv;
 	int i;
 
@@ -1464,7 +1458,7 @@ PyObjCFFI_MakeClosure(
 	ffi_cif *cif;
 	ffi_closure *cl;
 	ffi_status rv;
-	int argOffset;
+	Py_ssize_t argOffset;
 
 	cif = PyObjCFFI_CIFForSignature(methinfo, &argOffset);
 	if (cif == NULL) {

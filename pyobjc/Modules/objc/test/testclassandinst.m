@@ -18,7 +18,7 @@
 @end
 
 @implementation PyObjC_TestUnallocatable
-+ allocWithZone:(NSZone *)zone
++ allocWithZone:(NSZone *)zone 
 {
     return nil;
 }

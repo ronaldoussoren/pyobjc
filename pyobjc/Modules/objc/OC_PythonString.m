@@ -43,19 +43,22 @@
 		supportsNoCopy = (int)[NSString instancesRespondToSelector:@selector(initWithBytesNoCopy:length:encoding:freeWhenDone:)];
 	}
 	if (!realObject) {
+		/* This will fail in interesting ways on 64-bit systems with
+		 * python2.5.  Luckily we don't support 64-bit systems :-)
+		 */
 		if (supportsNoCopy) {
 			// Mac OS X 10.3+
 			realObject = [[NSString alloc]
 				initWithBytesNoCopy:PyString_AS_STRING(value)
-							 length:(unsigned)PyString_GET_SIZE(value)
-						   encoding:[NSString defaultCStringEncoding]
-					   freeWhenDone:NO];
+				length:(unsigned)PyString_GET_SIZE(value)
+				encoding:[NSString defaultCStringEncoding]
+				freeWhenDone:NO];
 		} else {
 			// Mac OS X 10.2
 			realObject = [[NSString alloc]
-			    initWithBytes:PyString_AS_STRING(value)
-		  	           length:(unsigned)PyString_GET_SIZE(value)
-			         encoding:[NSString defaultCStringEncoding]];
+				initWithBytes:PyString_AS_STRING(value)
+				length:(unsigned)PyString_GET_SIZE(value)
+				encoding:[NSString defaultCStringEncoding]];
 		}
 	}
 	return realObject;

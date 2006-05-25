@@ -14,16 +14,18 @@
  */
 
 static void
-ivar_dealloc(PyObjCInstanceVariable* ivar)
+ivar_dealloc(PyObject* _ivar)
 {
+	PyObjCInstanceVariable* ivar = (PyObjCInstanceVariable*)_ivar;
 	PyMem_Free(ivar->name);
 	PyMem_Free(ivar->type);
 	ivar->ob_type->tp_free((PyObject*)ivar);
 }
 
 static PyObject*
-ivar_repr(PyObjCInstanceVariable* self)
+ivar_repr(PyObject* _self)
 {
+	PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
 	if (self->isOutlet) {
 		return PyString_FromFormat("<IBOutlet %s>", self->name);
 	} else {
@@ -32,8 +34,9 @@ ivar_repr(PyObjCInstanceVariable* self)
 }
 
 static PyObject*
-ivar_descr_get(PyObjCInstanceVariable* self, PyObject* obj, PyObject* type __attribute__((__unused__)))
+ivar_descr_get(PyObject* _self, PyObject* obj, PyObject* type __attribute__((__unused__)))
 {
+	PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
 	PyObjCRT_Ivar_t var;
 	id   objc;
 	PyObject* res;
@@ -80,11 +83,12 @@ ivar_descr_get(PyObjCInstanceVariable* self, PyObject* obj, PyObject* type __att
 }
 
 static int
-ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
+ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
 {
+	PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
 	volatile PyObjCRT_Ivar_t var;
 	id   objc;
-	int  size;
+	Py_ssize_t  size;
 	int res;
 
 	if (value == NULL && !self->isSlot) {
@@ -172,9 +176,10 @@ ivar_descr_set(PyObjCInstanceVariable* self, PyObject* obj, PyObject* value)
 }
 
 static int
-ivar_init(PyObjCInstanceVariable* self, PyObject* args, PyObject* kwds)
+ivar_init(PyObject* _self, PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { "name", "type", "isOutlet", NULL };
+	PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
 	char* name = NULL;
 	char* type = @encode(id);
 	PyObject* isOutletObj = NULL;
@@ -189,10 +194,10 @@ static  char* keywords[] = { "name", "type", "isOutlet", NULL };
 		return -1;
 	}
 	self->type = PyObjCUtil_Strdup(type);
-    if(self->type == NULL) {
+	if(self->type == NULL) {
 		PyMem_Free(self->name);
-        return -1;
-    }
+		return -1;
+	}
 	if (isOutletObj) {
 		self->isOutlet = PyObject_IsTrue(isOutletObj);
 	} else {
@@ -220,12 +225,12 @@ PyTypeObject PyObjCInstanceVariable_Type = {
 	"ivar",                             
 	sizeof(PyObjCInstanceVariable),                       
 	0,                                           
-	(destructor)ivar_dealloc,               /* tp_dealloc */
+	ivar_dealloc,               		/* tp_dealloc */
 	0,                                      /* tp_print */
 	0,                                      /* tp_getattr */
 	0,                                      /* tp_setattr */
 	0,                                      /* tp_compare */
-	(reprfunc)ivar_repr,                    /* tp_repr */
+	ivar_repr,                    		/* tp_repr */
 	0,                                      /* tp_as_number */
 	0,                                      /* tp_as_sequence */
 	0,                                      /* tp_as_mapping */
@@ -248,10 +253,10 @@ PyTypeObject PyObjCInstanceVariable_Type = {
 	0,                                      /* tp_getset */
 	0,                                      /* tp_base */
 	0,                                      /* tp_dict */
-	(descrgetfunc)ivar_descr_get,           /* tp_descr_get */
-	(descrsetfunc)ivar_descr_set,           /* tp_descr_set */
+	ivar_descr_get,           		/* tp_descr_get */
+	ivar_descr_set,           		/* tp_descr_set */
 	0,                                      /* tp_dictoffset */
-	(initproc)ivar_init,                    /* tp_init */
+	ivar_init,                    		/* tp_init */
 	PyType_GenericAlloc,                    /* tp_alloc */
 	PyType_GenericNew,                      /* tp_new */
 	0,                                      /* tp_free */

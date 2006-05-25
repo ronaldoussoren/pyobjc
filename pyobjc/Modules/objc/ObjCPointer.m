@@ -15,8 +15,9 @@
 #include "pyobjc.h"
 
 static void
-PyObjCPointer_dealloc (PyObjCPointer *self)
+PyObjCPointer_dealloc (PyObject* _self)
 {
+	PyObjCPointer* self = (PyObjCPointer*)_self;
 	Py_DECREF (self->type);
 	PyObject_Free((PyObject*)self);
 }
@@ -25,8 +26,10 @@ PyDoc_STRVAR(PyObjCPointer_unpack_doc,
 	"Unpack the pointed value accordingly to its type.\n"
         "obj.unpack() -> value");
 static PyObject *
-PyObjCPointer_unpack (PyObjCPointer *self)
+PyObjCPointer_unpack (PyObject* _self)
 {
+	PyObjCPointer* self = (PyObjCPointer*)_self;
+
 	if (self->ptr) {
 		const char *type = PyString_AS_STRING (self->type);
 
@@ -47,7 +50,7 @@ static PyMethodDef PyObjCPointer_methods[] =
 {
 	{
 		"unpack",   
-		(PyCFunction) PyObjCPointer_unpack,       
+		(PyCFunction)PyObjCPointer_unpack,       
 		METH_NOARGS,   
 		PyObjCPointer_unpack_doc 
 	},
@@ -81,7 +84,7 @@ PyTypeObject PyObjCPointer_Type =
 	sizeof (char),				/* tp_itemsize */
   
 	/* methods */
-	(destructor)PyObjCPointer_dealloc,	/* tp_dealloc */
+	PyObjCPointer_dealloc,			/* tp_dealloc */
 	0,					/* tp_print */
 	0,					/* tp_getattr */
 	0,					/* tp_setattr */
@@ -128,13 +131,13 @@ PyTypeObject PyObjCPointer_Type =
 PyObjCPointer *
 PyObjCPointer_New(void *p, const char *t)
 {
-	unsigned int size = PyObjCRT_SizeOfType (t);
+	Py_ssize_t size = PyObjCRT_SizeOfType (t);
 	const char *typeend = PyObjCRT_SkipTypeSpec (t);
 	PyObjCPointer *self;
 
 	NSLog(@"PyObjCPointer created: at %p of type %s", p, t);
 
-	if (size == (unsigned int)-1) {
+	if (size == -1) {
 		return NULL;
 	}
 	if (typeend == NULL) {

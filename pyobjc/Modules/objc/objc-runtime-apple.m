@@ -11,7 +11,7 @@ int PyObjCRT_SetupClass(
 	const char*name, 
 	Class superCls,
 	Class rootCls,
-	int ivarSize,
+	Py_ssize_t ivarSize,
 	struct objc_ivar_list* ivarList,
 	struct objc_protocol_list* protocolList
 )
@@ -116,7 +116,7 @@ void PyObjCRT_ClearClass(Class cls)
 	}
 }
 
-struct objc_method_list *PyObjCRT_AllocMethodList(int numMethods)
+struct objc_method_list *PyObjCRT_AllocMethodList(Py_ssize_t numMethods)
 {
 	struct objc_method_list *mlist;
 
@@ -133,7 +133,7 @@ struct objc_method_list *PyObjCRT_AllocMethodList(int numMethods)
 	return mlist;
 }
 
-struct objc_protocol_list* PyObjCRT_AllocProtocolList(int numProtocols)
+struct objc_protocol_list* PyObjCRT_AllocProtocolList(Py_ssize_t numProtocols)
 {
 	struct objc_protocol_list *plist;
 

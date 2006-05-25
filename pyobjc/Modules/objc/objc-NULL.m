@@ -23,7 +23,7 @@ PyTypeObject PyObjC_NULL_Type = {
 	0,					/* tp_getattr */
 	0,					/* tp_setattr */
 	0,					/* tp_compare */
-	(reprfunc)obj_repr,			/* tp_repr */
+	obj_repr,				/* tp_repr */
 	0,					/* tp_as_number */
 	0,					/* tp_as_sequence */
 	0,		       			/* tp_as_mapping */

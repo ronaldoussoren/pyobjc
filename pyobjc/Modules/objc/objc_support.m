@@ -226,22 +226,15 @@
 @end
 
 #ifndef MAX
-static inline int
-MAX(int x, int y)
+static inline Py_ssize_t
+MAX(Py_ssize_t x, Py_ssize_t y)
 {
 	return x > y ? x : y;
 }
 #endif
 
-#if 0
-static inline int
-ROUND(int v, int a)
-{
-	return a * ((v+a-1)/a);
-}
-#else
-static inline int 
-ROUND(int v, int a)
+static inline Py_ssize_t 
+ROUND(Py_ssize_t v, Py_ssize_t a)
 {
 	if (v % a == 0) {
 		return v;
@@ -249,7 +242,6 @@ ROUND(int v, int a)
 		return v + a - (v % a);
 	}
 }
-#endif
 
 
 const char*
@@ -397,16 +389,16 @@ Return the alignment of an object specified by type
 */
 #ifdef MACOSX
 
-static inline int
+static inline Py_ssize_t
 PyObjC_EmbeddedAlignOfType (const char*  type)
 {
-	int align = PyObjCRT_AlignOfType(type);
+	Py_ssize_t align = PyObjCRT_AlignOfType(type);
 
 #ifdef __i386__
 	return align;
 
 #else
-	if (align < 4) {
+	if (align < 4 || align == 16) {
 		return align;
 	} else {
 		return 4;
@@ -419,7 +411,7 @@ PyObjC_EmbeddedAlignOfType (const char*  type)
 static inline int
 PyObjC_EmbeddedAlignOfType (const char*  type)
 {
-	int align =  PyObjCRT_AlignOfType(type);
+	Py_ssize_t align =  PyObjCRT_AlignOfType(type);
 
 	/* GNUstep/ix86 seems to behave like this: */
 	if (align < 4) {
@@ -431,7 +423,7 @@ PyObjC_EmbeddedAlignOfType (const char*  type)
 
 #endif
 
-int
+Py_ssize_t
 PyObjCRT_AlignOfType (const char *type)
 {
 	switch (*type) {
@@ -486,7 +478,7 @@ PyObjCRT_AlignOfType (const char *type)
 		while(*type != _C_STRUCT_E && *type++ != '=') /* do nothing */;
 		if (*type != _C_STRUCT_E) {
 			int have_align = 0;
-			int align = 0;
+			Py_ssize_t align = 0;
 
 			while (type != NULL && *type != _C_STRUCT_E) {
 				if (*type == '"') {
@@ -542,24 +534,24 @@ PyObjCRT_AlignOfType (const char *type)
 The aligned size if the size rounded up to the nearest alignment.
 */
 
-static int
+static Py_ssize_t
 PyObjCRT_AlignedSize (const char *type)
 {
-	int size = PyObjCRT_SizeOfType (type);
-	int align = PyObjCRT_AlignOfType (type);
+	Py_ssize_t size = PyObjCRT_SizeOfType (type);
+	Py_ssize_t align = PyObjCRT_AlignOfType (type);
 
 	if (size == -1 || align == -1) return -1;
-	return ROUND (size, align);
+	return ROUND(size, align);
 }
 
 /*
 return the size of an object specified by type 
 */
 
-int
+Py_ssize_t
 PyObjCRT_SizeOfType (const char *type)
 {
-	int itemSize;
+	Py_ssize_t itemSize;
 	switch (*type) {
 	case _C_VOID:    return 0;
 	case _C_ID:      return sizeof(id);
@@ -590,8 +582,8 @@ PyObjCRT_SizeOfType (const char *type)
   
 	case _C_ARY_B:
 	{
-		int len = atoi(type+1);
-		int item_align;
+		Py_ssize_t len = atoi(type+1);
+		Py_ssize_t item_align;
 		while (isdigit(*++type))
 			;
 		item_align = PyObjCRT_AlignedSize(type);
@@ -602,10 +594,10 @@ PyObjCRT_SizeOfType (const char *type)
 
 	case _C_STRUCT_B:
 	{
-		int acc_size = 0;
+		Py_ssize_t acc_size = 0;
 		int have_align =  0;
-		int align;
-		int max_align = 0;
+		Py_ssize_t align;
+		Py_ssize_t max_align = 0;
 
 		while (*type != _C_STRUCT_E && *type++ != '=')
 			; /* skip "<name>=" */
@@ -638,7 +630,7 @@ PyObjCRT_SizeOfType (const char *type)
 
 	case _C_UNION_B:
 	{
-		int max_size = 0;
+		Py_ssize_t max_size = 0;
 		type++;
 		while (*type != _C_UNION_E) {
 			itemSize = PyObjCRT_SizeOfType (type);
@@ -671,7 +663,7 @@ static PyObject *
 pythonify_c_array (const char *type, void *datum)
 {
 	PyObject *ret;
-	int nitems, itemidx, sizeofitem;
+	Py_ssize_t nitems, itemidx, sizeofitem;
 	unsigned char* curdatum;
 
 	nitems = atoi (type+1);
@@ -709,15 +701,16 @@ pythonify_c_struct (const char *type, void *datum)
 {
 	PyObject *ret;
 	PyObject *converted;
-	unsigned int offset, itemidx;
+	Py_ssize_t offset, itemidx;
 	const char *item;
-	int have_align = 0, align;
+	int have_align = 0;
+	Py_ssize_t align;
 	int haveTuple;
 	const char* type_start = type;
 	const char* type_end = PyObjCRT_SkipTypeSpec(type);
 
 	const char* type_real_start = type;
-	int type_real_length = type_end - type_start;
+	Py_ssize_t type_real_length = type_end - type_start;
 
 	/* The compiler adds useless digits at the end of the signature */
 	while (type_end != type_start+1 && type_end[-1] != _C_STRUCT_E) {
@@ -803,7 +796,7 @@ NULL on success. */
 static int
 depythonify_c_array (const char *type, PyObject *arg, void *datum)
 {
-	int nitems, itemidx, sizeofitem;
+	Py_ssize_t nitems, itemidx, sizeofitem;
 	unsigned char* curdatum;
 	PyObject* seq;
 
@@ -825,7 +818,7 @@ depythonify_c_array (const char *type, PyObject *arg, void *datum)
 	if (nitems != PySequence_Fast_GET_SIZE(seq)) {
 		Py_DECREF(seq);
 		PyErr_Format(PyExc_ValueError,
-			"depythonifying array of %d items, got one of %d",
+			"depythonifying array of %"PY_FORMAT_SIZE_T"d items, got one of %"PY_FORMAT_SIZE_T"d",
 			nitems, PyTuple_Size(arg));
 		return -1;
 	}
@@ -854,8 +847,9 @@ NULL on success. */
 static int
 depythonify_c_struct(const char *types, PyObject *arg, void *datum)
 {
-	int nitems, offset, itemidx;
-	int have_align = 0, align;
+	Py_ssize_t nitems, offset, itemidx;
+	int have_align = 0;
+	Py_ssize_t align;
 	const char *type;
 	PyObject* seq;
 
@@ -880,7 +874,7 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
 	if (nitems != PySequence_Fast_GET_SIZE(seq)) {
 		Py_DECREF(seq);
 		PyErr_Format(PyExc_ValueError,
-			"depythonifying struct of %d members, got tuple of %d",
+			"depythonifying struct of %"PY_FORMAT_SIZE_T"d members, got tuple of %"PY_FORMAT_SIZE_T"d",
 			nitems, PyTuple_Size (arg));
 		return -1;
 	}
@@ -1092,7 +1086,7 @@ pythonify_c_value (const char *type, void *datum)
   
 	case _C_UNION_B:
 	{
-		int size = PyObjCRT_SizeOfType (type);
+		Py_ssize_t size = PyObjCRT_SizeOfType (type);
 		if (size == -1) return NULL;
 		retobject = PyString_FromStringAndSize ((void*)datum, size);
 		break;
@@ -1122,7 +1116,8 @@ pythonify_c_value (const char *type, void *datum)
 }
 
 
-int PyObjCRT_SizeOfReturnType(const char* type)
+Py_ssize_t 
+PyObjCRT_SizeOfReturnType(const char* type)
 {
 	switch(*type) {
 	case _C_CHR:
@@ -1253,7 +1248,7 @@ depythonify_signed_int_value(
 
 		if (PyString_Check(argument) || PyUnicode_Check(argument)) {
 			PyErr_Format(PyExc_ValueError,
-				"depythonifying '%s', got '%s' of %d",
+				"depythonifying '%s', got '%s' of %"PY_FORMAT_SIZE_T"d",
 					descr,
 					argument->ob_type->tp_name,
 					PyString_Size(argument));
@@ -1650,7 +1645,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 	case _C_UNION_B:
 		if (PyString_Check (argument)) {
-			int expected_size = PyObjCRT_SizeOfType (type);
+			Py_ssize_t expected_size = PyObjCRT_SizeOfType (type);
 
 			if (expected_size == -1) {
 				PyErr_Format(PyExc_ValueError,
@@ -1659,8 +1654,8 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				return -1;
 			} else if (expected_size != PyString_Size (argument)) {
 				PyErr_Format(PyExc_ValueError,
-					"depythonifying 'union' of size %d, "
-					"got string of %d",
+					"depythonifying 'union' of size %"PY_FORMAT_SIZE_T"d, "
+					"got string of %"PY_FORMAT_SIZE_T"d",
 						   expected_size, 
 						   PyString_Size (argument));
 				return -1;

@@ -6,8 +6,6 @@
 
 #import <Foundation/Foundation.h>
 
-static int numUninitialized = 0;
-
 struct TestStructPointerStruct {
 	int i1;
 };
@@ -29,7 +27,7 @@ static struct TestStructPointerStruct myGlobal = { 1 };
 
 
 static PyMethodDef initialize_methods[] = {
-	{ NULL, NULL, NULL, NULL }
+	{ 0, 0, 0, 0 }
 };
 
 void initstructpointer1(void);

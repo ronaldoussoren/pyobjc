@@ -119,8 +119,7 @@ static void object_method_copyWithZone_(
 		void* userdata);
 
 /*
- * When we create a 'Class' we actually create the struct below. This allows
- * us to add some extra information to the class definition.
+ * When we create a 'Class' we actually create the struct below. 
  *
  * XXX: The struct is not really necessary, it just makes error-recovery 
  * slightly easier. 
@@ -178,7 +177,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 {
 	PyObject* slot_value;
 	PyObject* slots;
-	int       len, i;
+	Py_ssize_t len, i;
 
 	slot_value = PyDict_GetItemString(clsdict, "__slots__");
 	if (slot_value == NULL) {
@@ -229,7 +228,8 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 
 		if (!PyString_Check(slot_value)) {
 			PyErr_Format(PyExc_TypeError, 
-				"__slots__ entry %d is not a string", i);
+				"__slots__ entry %" PY_FORMAT_SIZE_T 
+				"d is not a string", i);
 			Py_DECREF(slots);
 			return -1;
 		}
@@ -276,7 +276,7 @@ build_intermediate_class(Class base_class, char* name)
 	Class intermediate_class = nil;
 	Class meta_class = nil;
 	Class root_class;
-	int i;
+	int r;
 	struct objc_method_list* method_list = NULL;
 	PyObjCRT_Method_t meth;
 	IMP closure;
@@ -368,7 +368,7 @@ build_intermediate_class(Class base_class, char* name)
 		goto error_cleanup;
 	}
 
-	i = PyObjCRT_SetupClass(
+	r = PyObjCRT_SetupClass(
 		intermediate_class, 
 		meta_class, 
 		name,
@@ -377,7 +377,7 @@ build_intermediate_class(Class base_class, char* name)
 		base_class->instance_size, NULL,
 		NULL
 		);
-	if (i < 0) {
+	if (r < 0) {
 		goto error_cleanup;
 	}
 
@@ -433,12 +433,14 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	PyObject*                key_list = NULL;
 	PyObject*                key = NULL;
 	PyObject*                value = NULL;
-	int                      i, key_count;
-	int                      ivar_count = 0;
-	int                      ivar_size  = 0;
-	int                      meta_method_count = 0;
-	int                      method_count = 0;
-	int                      protocol_count = 0;
+	int               	 r;
+	Py_ssize_t		 i;
+	Py_ssize_t		 key_count;
+	Py_ssize_t               ivar_count = 0;
+	Py_ssize_t               ivar_size  = 0;
+	Py_ssize_t               meta_method_count = 0;
+	Py_ssize_t               method_count = 0;
+	Py_ssize_t               protocol_count = 0;
 	int                      first_python_gen = 0;
 	struct objc_ivar_list*   ivar_list = NULL;
 	struct objc_method_list* method_list = NULL;
@@ -448,7 +450,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	Class                    root_class;
 	Class                    cur_class;
 	PyObject*                py_superclass = NULL;
-	int                      item_size;
+	Py_ssize_t               item_size;
 	int			 have_intermediate = 0;
 	int			 need_intermediate = 0;
 
@@ -1030,7 +1032,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		root_class = root_class->super_class;
 	}
 
-	i = PyObjCRT_SetupClass(
+	r = PyObjCRT_SetupClass(
 		&new_class->class, 
 		&new_class->meta_class, 
 		name,
@@ -1039,7 +1041,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		ivar_size, ivar_list,
 		protocol_list
 		);
-	if (i < 0) {
+	if (r < 0) {
 		goto error_cleanup;
 	}
 
@@ -1125,12 +1127,12 @@ free_ivars(id self, PyObject* volatile cls )
 	}
 
 	while (cls != NULL) {
-		Class     objcClass = PyObjCClass_GetClass(cls);
+		Class objcClass = PyObjCClass_GetClass(cls);
 		PyObject* clsDict; 
 		PyObject* clsValues;
 		PyObject* o;
-		volatile int       i;
-		int len;
+		volatile Py_ssize_t i;
+		Py_ssize_t len;
 
 		if (objcClass == nil) break;
 
@@ -1458,14 +1460,14 @@ object_method_forwardInvocation(
 	PyObject* 	result;
 	PyObject*       v;
 	int		isAlloc;
-	int             i;
-	int 		len;
+	Py_ssize_t      i;
+	Py_ssize_t	len;
 	PyObjCMethodSignature* signature;
 	/*char		   argbuf[1024]; */
 	const char* 		type;
 	void* argbuf = NULL;
 	int  err;
-	int   arglen;
+	Py_ssize_t   arglen;
 	PyObject* pymeth;
 	PyObject* pyself;
 	volatile int have_output = 0;
@@ -1626,7 +1628,7 @@ object_method_forwardInvocation(
 		Py_DECREF(result);
 
 	} else {
-		int idx;
+		Py_ssize_t idx;
 		PyObject* real_res;
 
 		if (*type == _C_VOID && have_output == 1) {

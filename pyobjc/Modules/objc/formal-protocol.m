@@ -76,9 +76,9 @@ static	char*	keywords[] = { "name", "supers", "selectors", NULL };
 	char* name;
 	PyObject* supers;
 	PyObject* selectors;
-	int i, len;
-	int numInstance = 0;
-	int numClass = 0;
+	Py_ssize_t i, len;
+	Py_ssize_t numInstance = 0;
+	Py_ssize_t numClass = 0;
 	struct Protocol_struct* theProtocol = NULL;
 	struct objc_method_description* c;
 

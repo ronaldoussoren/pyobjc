@@ -87,15 +87,22 @@ PyObjCMethodSignature*   PyObjCIMP_GetSignature(PyObject* self)
 
 
 static PyObject*
-imp_call(PyObjCIMPObject* self, PyObject* args)
+imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
 {
+	PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
 	PyObject* pyself;
 	PyObjC_CallFunc execute = NULL;
 	PyObject* res;
 	PyObject* pyres;
-	int       argslen;
+	Py_ssize_t argslen;
 	PyObject* arglist;
-	int       i;
+	Py_ssize_t i;
+
+	if (kwds != NULL && PyObject_Size(kwds) != 0) {
+		PyErr_SetString(PyExc_TypeError,
+		    "Objective-C selectorrs don't support keyword arguments");
+		return NULL;
+	}
 
 	argslen = PyTuple_Size(args);
 	if (argslen < 1) {
@@ -163,24 +170,27 @@ imp_call(PyObjCIMPObject* self, PyObject* args)
 }
 
 static PyObject* 
-imp_repr(PyObjCIMPObject* self)
+imp_repr(PyObject* _self)
 {
+	PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
 	return PyString_FromFormat("<IMP %s at %p for %p>",
 		PyObjCRT_SELName(self->selector),
 		self, self->imp);
 }
 
 static void
-imp_dealloc(PyObjCIMPObject* self)
+imp_dealloc(PyObject* _self)
 {
+	PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
 	PyObjCMethodSignature_Free(self->signature);
 	PyObject_Free(self);
 }
 
 PyDoc_STRVAR(imp_signature_doc, "Objective-C signature for the IMP");
 static PyObject*
-imp_signature(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
+imp_signature(PyObject* _self, void* closure __attribute__((__unused__)))
 {
+	PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
 	if (self->signature) {
 		return PyString_FromString(self->signature->signature);
 	} else {
@@ -191,16 +201,18 @@ imp_signature(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
 
 PyDoc_STRVAR(imp_selector_doc, "Objective-C name for the IMP");
 static PyObject*
-imp_selector(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
+imp_selector(PyObject* _self, void* closure __attribute__((__unused__)))
 {
+	PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
 	return PyString_FromString(PyObjCRT_SELName(self->selector));
 }
 
 PyDoc_STRVAR(imp_class_method_doc, 
 	"True if this is a class method, False otherwise");
 static PyObject*
-imp_class_method(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
+imp_class_method(PyObject* _self, void* closure __attribute__((__unused__)))
 {
+	PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
 	return PyBool_FromLong(0 != (self->flags & PyObjCSelector_kCLASS_METHOD));
 }
 
@@ -210,8 +222,9 @@ PyDoc_STRVAR(imp_donates_ref_doc,
 "NOTE: This field is used by the implementation to adjust reference counts."
 );
 static PyObject*
-imp_donates_ref(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
+imp_donates_ref(PyObject* _self, void* closure __attribute__((__unused__)))
 {
+	PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
 	return PyBool_FromLong(0 != (self->flags & PyObjCSelector_kDONATE_REF));
 }
 
@@ -221,8 +234,9 @@ PyDoc_STRVAR(imp_is_alloc_doc,
 "NOTE: This field is used by the implementation."
 );
 static PyObject*
-imp_is_alloc(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
+imp_is_alloc(PyObject* _self, void* closure __attribute__((__unused__)))
 {
+	PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
 	return PyBool_FromLong(0 != (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED));
 }
 
@@ -230,42 +244,42 @@ imp_is_alloc(PyObjCIMPObject* self, void* closure __attribute__((__unused__)))
 static PyGetSetDef imp_getset[] = {
 	{
 		"isAlloc",
-		(getter)imp_is_alloc,
+		imp_is_alloc,
 		0,
 		imp_is_alloc_doc,
 		0
 	},
 	{
 		"doesDonateReference",
-		(getter)imp_donates_ref,
+		imp_donates_ref,
 		0,
 		imp_donates_ref_doc,
 		0
 	},
 	{
 		"isClassMethod",
-		(getter)imp_class_method,
+		imp_class_method,
 		0,
 		imp_class_method_doc,
 		0
 	},
 	{ 
 		"signature", 
-		(getter)imp_signature, 
+		imp_signature, 
 		0,
 		imp_signature_doc, 
 		0
 	},
 	{ 
 		"selector",  
-		(getter)imp_selector, 
+		imp_selector, 
 		0, 
 		imp_selector_doc,
 		0
 	},
 	{ 
 		"__name__",  
-		(getter)imp_selector, 
+		imp_selector, 
 		0, 
 		imp_selector_doc,
 		0
@@ -281,17 +295,17 @@ PyTypeObject PyObjCIMP_Type = {
 	sizeof(PyObjCIMPObject),		/* tp_basicsize */
 	0,					/* tp_itemsize */
 	/* methods */
-	(destructor)imp_dealloc,		/* tp_dealloc */
+	imp_dealloc,				/* tp_dealloc */
 	0,					/* tp_print */
 	0,					/* tp_getattr */
 	0,					/* tp_setattr */
 	0,					/* tp_compare */
-	(reprfunc)imp_repr,			/* tp_repr */
+	imp_repr,				/* tp_repr */
 	0,					/* tp_as_number */
 	0,					/* tp_as_sequence */
 	0,		       			/* tp_as_mapping */
 	0,					/* tp_hash */
-	(ternaryfunc)imp_call,			/* tp_call */
+	imp_call,				/* tp_call */
 	0,					/* tp_str */
 	PyObject_GenericGetAttr,		/* tp_getattro */
 	0,					/* tp_setattro */
@@ -466,7 +480,6 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 int PyObjCIMP_SetUpMethodWrappers(void)
 {
 	int r;
-
 
 	r = PyObjC_RegisterMethodMapping(
 			nil, 
