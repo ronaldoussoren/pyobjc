@@ -694,4 +694,6 @@ void init_Foundation(void)
 		Py_DECREF(o);
 	}
 	Py_DECREF(v);
+
+	PyObjC_PerformWeaklinking(d, gWeaklink);
 }

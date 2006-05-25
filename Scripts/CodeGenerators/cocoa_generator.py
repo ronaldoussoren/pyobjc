@@ -404,6 +404,7 @@ if FOUNDATION_HDRS is not None:
         'NSString* NSLocalizedStringFromTableInBundle(NSString* key, NSString* tableName, NSString* comment, NSBundle* bunlde);',
     ])
     func_builder.gen_method_table_entries(fd, funcs + funcs2 + funcs3)
+    func_builder.gen_method_weaklink_table(fd, funcs + funcs2)
     fd = None
     for s in structs:
         del func_builder.SIMPLE_TYPES[s]
@@ -535,6 +536,7 @@ if APPKIT_HDRS is not None:
         ])
 
     func_builder.gen_method_table_entries(fd, funcs + funcs2)
+    func_builder.gen_method_weaklink_table(fd, funcs + funcs2)
     for s in structs:
         del func_builder.SIMPLE_TYPES[s]
 
@@ -667,6 +669,7 @@ if QTKIT_HDRS is not None:
     func_builder.TYPE_ALIASES['OSType'] = 'int'
     funcs = func_builder.process_list(fd , file('build/codegen/QTKit.prototypes'))
     func_builder.gen_method_table_entries(fd, funcs)
+    func_builder.gen_method_weaklink_table(fd, funcs)
     fd.close()
 
 

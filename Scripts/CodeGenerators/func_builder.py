@@ -429,6 +429,18 @@ def gen_method_table_entries(fp, funcs):
             fp.write('\t{ "%(funcname)s", (PyCFunction)objc_%(funcname)s, METH_VARARGS|METH_KEYWORDS, "%(funcproto)s" }, \\\n'%{'funcname':f[0], 'funcproto':f[1]})
         fp.write("\t/* END */\n")
 
+def gen_method_weaklink_table(fp, funcs):
+    fp.write(
+        'struct PyObjC_WeakLink gWeaklink[] = {\n'
+    )
+
+    for f in funcs:
+        if f[0] is None: continue
+        fp.write('\t{ "%(funcname)s", (void(*)(void))&%(funcname)s },\n'%(
+            { 'funcname': f[0] }))
+
+    fp.write('\t{ NULL, NULL }\n')
+    fp.write('};\n')
 
 if __name__ == "__main__":
     import sys

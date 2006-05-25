@@ -14,6 +14,20 @@
 #undef PyObjCObject_GetObject
 #endif
 
+static void do_weaklink(PyObject* module_dict, struct PyObjC_WeakLink* funcs)
+{
+	while (funcs->name) {
+		if (!funcs->func) {
+			if (PyDict_DelItemString(
+					module_dict,
+					funcs->name) == -1) {
+				PyErr_Clear();
+			}
+		}
+		funcs++;
+	}
+}
+
 static int obj_is_uninitialized(PyObject* object)
 {
 	if (!PyObjCObject_Check(object)) {
@@ -123,6 +137,7 @@ struct pyobjc_api objc_api = {
 	PyObjCCreateOpaquePointerType, /* pointer_type_new */
 	PyObjCObject_NewTransient,	/* newtransient */
 	PyObjCObject_ReleaseTransient,  /* releasetransient */
+	do_weaklink,			/* doweaklink */
 };
 
 int PyObjCAPI_Register(PyObject* module)

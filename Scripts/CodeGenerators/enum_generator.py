@@ -105,6 +105,10 @@ def deprecatedHeader(fname):
     for ln in open(fname, 'r'):
         if ln.startswith('#warning') and 'adjust your header import' in ln:
             return 1
+        if ln.startswith('#warning') and 'This header file is obsolete' in ln:
+            return 1
+        if ln.startswith('#warning') and 'The API is this header is obsolete' in ln:
+            return 1
     return 0
 
 def generate(dirname, fn = None, filter = lambda x: 1, ignore_files=(), emit_imports=1, emit_header=1, emit_footer=1):
