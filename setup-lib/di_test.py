@@ -113,7 +113,7 @@ class cmd_test (install_lib):
 
         # Add the build_dir to the start of our module-search-path, and
         # remove it when we're done.
-        if self.test_installed:
+        if not self.test_installed:
             sys.path.insert(0, self.build_dir)
         try:
             deja_suite = dejagnu.testSuiteForDirectory(

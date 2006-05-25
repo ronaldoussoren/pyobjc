@@ -70,6 +70,7 @@ class pyobjc_build_ext (build_ext):
             self.create_empty_class_list()
 
         build_ext.run(self)
+        return
 
         if self.create_cached_class_list():
             # Note: dependencies don't work here, we depend on a file that
