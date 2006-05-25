@@ -57,24 +57,21 @@ static ffi_status initialize_aggregate(/*@out@*/ ffi_type *arg)
 
 #ifdef POWERPC_DARWIN
       {
-      int curalign;
+	      int curalign;
 
-      curalign = (*ptr)->alignment;
-      if (ptr != &(arg->elements[0])) {
-	      if (curalign > 4 && curalign != 16) {
-		      curalign = 4;
+	      curalign = (*ptr)->alignment;
+	      if (ptr != &(arg->elements[0])) {
+		      if (curalign > 4 && curalign != 16) {
+			      curalign = 4;
+		      }
 	      }
-      }
-
       arg->size = ALIGN(arg->size, curalign);
       arg->size += (*ptr)->size;
 
       arg->alignment = (arg->alignment > curalign) ? 
-	arg->alignment : curalign;
+	      arg->alignment : curalign;
       }
 #else
-      int curalign;
-
       arg->size = ALIGN(arg->size, (*ptr)->alignment);
       arg->size += (*ptr)->size;
 
@@ -102,8 +99,26 @@ static ffi_status initialize_aggregate(/*@out@*/ ffi_type *arg)
   /*@=usedef@*/
 }
 
+#ifndef __CRIS__
+/* The CRIS ABI specifies structure elements to have byte
+   alignment only, so it completely overrides this functions,
+   which assumes "natural" alignment and padding.  */
+
 /* Perform machine independent ffi_cif preparation, then call
    machine dependent routine. */
+
+#ifdef X86_DARWIN
+static inline int struct_on_stack(int size)
+{
+	if (size > 8) return 1;
+	/* This is not what the ABI says, but is what is really implemented */
+	switch (size) {
+	case 1: case 2: case 4: case 8: return 0;
+	return 1;
+	}
+}
+#endif
+
 
 ffi_status ffi_prep_cif(/*@out@*/ /*@partial@*/ ffi_cif *cif, 
 			ffi_abi abi, unsigned int nargs, 
@@ -141,7 +156,8 @@ ffi_status ffi_prep_cif(/*@out@*/ /*@partial@*/ ffi_cif *cif,
       && (cif->abi != FFI_V9 || cif->rtype->size > 32)
 #endif
 #ifdef X86_DARWIN
-      && (cif->rtype->size > 8) 
+
+      && (struct_on_stack(cif->rtype->size))
 #endif
       )
     bytes = STACK_ARG_SIZE(sizeof(void*));
@@ -158,15 +174,15 @@ ffi_status ffi_prep_cif(/*@out@*/ /*@partial@*/ ffi_cif *cif,
 	 check after the initialization.  */
       FFI_ASSERT_VALID_TYPE(*ptr);
 
-#ifdef X86_DARWIN
+#if defined(X86_DARWIN)
       {
-	/* Add padding, but at most to 4 bytes */
-	int align = (*ptr)->alignment;
-	if (align>4) align = 4;
-	if ((align - 1) & bytes) 
-	  bytes = ALIGN(bytes, align);
-        bytes += STACK_ARG_SIZE((*ptr)->size);
+	      int align = (*ptr)->alignment;
+	      if (align > 4) align = 4;
+	      if ((align - 1) & bytes)
+		 bytes = ALIGN(bytes, align);
+	      bytes += STACK_ARG_SIZE((*ptr)->size);
       }
+
 #elif !defined __x86_64__ && !defined S390 && !defined PA
 #ifdef SPARC
       if (((*ptr)->type == FFI_TYPE_STRUCT
@@ -191,3 +207,4 @@ ffi_status ffi_prep_cif(/*@out@*/ /*@partial@*/ ffi_cif *cif,
   /* Perform machine dependent cif processing */
   return ffi_prep_cif_machdep(cif);
 }
+#endif /* not __CRIS__ */
