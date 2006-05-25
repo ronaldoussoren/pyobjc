@@ -99,7 +99,7 @@
 /*
  * XXX - document these, internal
  */
--(BOOL)wrappedKey:(id*)keyPtr value:(id*)valuePtr atPosition:(int*)positionPtr;
+-(BOOL)wrappedKey:(id*)keyPtr value:(id*)valuePtr atPosition:(Py_ssize_t*)positionPtr;
 -(int)depythonify:(PyObject*)v toId:(id*)datum;
 
 

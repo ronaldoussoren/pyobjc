@@ -37,5 +37,15 @@
 #endif
 #endif
 
+#if (PY_VERSION_HEX < 0x02050000)
+typedef int Py_ssize_t;
+#define PY_FORMAT_SIZE_T ""
+#define Py_ARG_SIZE_T "n"
+
+#else
+
+#define Py_ARG_SIZE_T "i"
+#endif
+
 
 #endif /* PyObjC_COMPAT_H */

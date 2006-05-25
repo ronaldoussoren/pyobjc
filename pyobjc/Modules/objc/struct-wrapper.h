@@ -43,7 +43,7 @@ PyObject* PyObjC_MakeStructType(
 	const char* name,
 	const char* doc,
 	initproc tpinit,
-	int numFields,
+	Py_ssize_t numFields,
 	const char** fieldnames,
 	const char* typestr);
 
@@ -70,7 +70,7 @@ PyObject* PyObjC_RegisterStructType(
 	const char* name,
 	const char* doc,
 	initproc tpinit,
-	int numFields,
+	Py_ssize_t numFields,
 	const char** fieldnames);
 
 /*!
@@ -85,6 +85,6 @@ PyObject* PyObjC_RegisterStructType(
  *     The returned instance is uninitialized, all fields are NULL. The 
  *     __init__ method has not been called.
  */     
-PyObject* PyObjC_CreateRegisteredStruct(const char* signature, int len);
+PyObject* PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len);
 
 #endif /* PyObjC_STRUCT_MEMBER */

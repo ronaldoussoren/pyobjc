@@ -87,7 +87,7 @@ typedef struct {
 	Class class;
 	PyObject* sel_to_py;
 	int method_magic;
-	int dictoffset;
+	Py_ssize_t dictoffset;
 	PyObject* delmethod;
 	int hasPythonImpl;
 	int generation;
@@ -103,7 +103,7 @@ void PyObjCClass_MaybeRescan(PyObject* class);
 int PyObjCClass_IsSubClass(Class child, Class parent);
 int ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
 void PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
-int PyObjCClass_DictOffset(PyObject* cls);
+Py_ssize_t PyObjCClass_DictOffset(PyObject* cls);
 PyObject* PyObjCClass_GetDelMethod(PyObject* cls);
 void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
 int  PyObjCClass_HasPythonImplementation(PyObject* cls);

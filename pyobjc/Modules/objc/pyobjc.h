@@ -10,6 +10,7 @@
 // Loading in AppKit on Mac OS X 10.3 results in
 // a bit less than 1500 classes.
 #define PYOBJC_EXPECTED_CLASS_COUNT 2048
+#define PY_SSIZE_T_CLEAN
 
 #include <Python.h>
 #include "structmember.h"

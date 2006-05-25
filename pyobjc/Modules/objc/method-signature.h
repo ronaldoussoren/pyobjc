@@ -29,8 +29,8 @@
  * 	pointers point to substrings of signature.
  */
 typedef struct {
-	int   retainCount;
-	int   nargs;
+	int retainCount;
+	Py_ssize_t nargs;
 	const char* rettype;
 	const char* signature;
 	const char* argtype[1];

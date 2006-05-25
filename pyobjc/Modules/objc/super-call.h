@@ -21,7 +21,7 @@
  *     This value is used by the objc-class module to detect if the methods in
  *     a class should be regenerated.
  */
-extern int PyObjC_MappingCount;
+extern Py_ssize_t PyObjC_MappingCount;
 
 
 /*!
