@@ -54,9 +54,9 @@ extern int depythonify_c_return_value (const char *type,
 					PyObject *arg,
 					void *datum);
 
-extern int PyObjCRT_SizeOfReturnType(const char* type);
-extern int PyObjCRT_SizeOfType(const char *type);
-extern int PyObjCRT_AlignOfType(const char *type);
+extern Py_ssize_t PyObjCRT_SizeOfReturnType(const char* type);
+extern Py_ssize_t PyObjCRT_SizeOfType(const char *type);
+extern Py_ssize_t PyObjCRT_AlignOfType(const char *type);
 extern const char *PyObjCRT_SkipTypeSpec (const char *type);
 extern const char* PyObjCRT_SkipTypeQualifiers (const char* type);
 
@@ -86,7 +86,7 @@ static inline PyObject* PyObjC_IdToPython(id value)
 
 
 extern int PyObjCRT_SetupClass(
-	Class, Class, const char*, Class, Class, int, struct objc_ivar_list*,
+	Class, Class, const char*, Class, Class, Py_ssize_t, struct objc_ivar_list*,
 	struct objc_protocol_list*);
 extern void PyObjCRT_ClearClass(Class cls);
 

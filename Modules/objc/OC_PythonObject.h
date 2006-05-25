@@ -37,7 +37,7 @@
 + newWithObject:(PyObject *) obj;
 + depythonifyTable;
 + pythonifyStructTable;
-+ (PyObject *)__pythonifyStruct:(PyObject *) obj withType:(const char *) type length:(int) length;
++ (PyObject *)__pythonifyStruct:(PyObject *) obj withType:(const char *) type length:(Py_ssize_t) length;
 + newWithCoercedObject:(PyObject *) obj;
 - initWithObject:(PyObject *) obj;
 

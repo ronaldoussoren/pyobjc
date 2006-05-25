@@ -143,8 +143,9 @@ struct PyObjC_WeakLink {
  * - Version 14 adds PyObjCObject_NewTransient, PyObjCObject_ReleaseTransient
  * - Version 15 changes the interface of PyObjCObject_New
  * - Version 16 adds PyObjC_PerformWeaklinking
+ * - Version 17 introduces Py_ssize_t support
  */
-#define PYOBJC_API_VERSION 16
+#define PYOBJC_API_VERSION 17
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -204,7 +205,7 @@ struct pyobjc_api {
 	PyObject* (*objc_to_py)(const char*, void*);
 
 	/* PyObjC_SizeOfType */
-	int 	   (*sizeof_type)(const char*);
+	Py_ssize_t   (*sizeof_type)(const char*);
 
 	/* PyObjCSelector_GetClass */
 	Class	   (*sel_get_class)(PyObject* sel);
@@ -231,7 +232,7 @@ struct pyobjc_api {
 	void (*err_python_to_objc_gil)(PyGILState_STATE* state);
 
 	/* PyObjCRT_AlignOfType */
-	int (*alignof_type)(const char* typestr);
+	Py_ssize_t (*alignof_type)(const char* typestr);
 
 	/* PyObjCRT_SELName */
 	const char* (*selname)(SEL sel);
@@ -246,10 +247,10 @@ struct pyobjc_api {
 	int     (*py_to_c_array)(const char*, PyObject*, PyObject*, void**, int*);
 	
 	/* PyObjC_CArrayToPython */
-	PyObject* (*c_array_to_py)(const char*, void*, int);
+	PyObject* (*c_array_to_py)(const char*, void*, Py_ssize_t);
 
 	/* PyObjC_RegisterStructType */
-	PyObject* (*register_struct)(const char*, const char*, const char*, initproc, int, const char**);
+	PyObject* (*register_struct)(const char*, const char*, const char*, initproc, Py_ssize_t, const char**);
 
 	/* PyObjCIMP_Type */
 	PyTypeObject* imp_type;

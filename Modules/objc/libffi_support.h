@@ -6,7 +6,7 @@
 typedef void (*PyObjCFFI_ClosureFunc)(ffi_cif*, void*, void**, void*);
 
 void PyObjCFFI_FreeCIF(ffi_cif* cif);
-ffi_cif* PyObjCFFI_CIFForSignature(PyObjCMethodSignature* signature, int* pArgOffset);
+ffi_cif* PyObjCFFI_CIFForSignature(PyObjCMethodSignature* signature, Py_ssize_t* pArgOffset);
 IMP PyObjCFFI_MakeClosure(PyObjCMethodSignature* signature,
 			PyObjCFFI_ClosureFunc func, void* userdata);
 void* PyObjCFFI_FreeClosure(IMP closure);
@@ -16,21 +16,21 @@ IMP PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector);
 PyObject *PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args);
 
 int PyObjCFFI_CountArguments(
-	PyObjCMethodSignature* methinfo, int argOffset, 
-	int* byref_in_count,
-	int* byref_out_count,
-	int* plain_count,
-	int* argbuf_len);
+	PyObjCMethodSignature* methinfo, Py_ssize_t argOffset, 
+	Py_ssize_t* byref_in_count,
+	Py_ssize_t* byref_out_count,
+	Py_ssize_t* plain_count,
+	Py_ssize_t* argbuf_len);
 
 int PyObjCFFI_ParseArguments(
-	PyObjCMethodSignature* methinfo, int argOffset,
-	PyObject* args, int argbuf_cur, unsigned char* argbuf,
+	PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
+	PyObject* args, Py_ssize_t argbuf_cur, unsigned char* argbuf,
 	void** byref,
 	ffi_type** arglist, void** values);
 
 PyObject* PyObjCFFI_BuildResult(
-	PyObjCMethodSignature* methinfo, int argOffset,
-	void* pRetval, void** byref, int byref_out_count,
+	PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
+	void* pRetval, void** byref, Py_ssize_t byref_out_count,
 	PyObject* self, int flags);
 
 #endif /* PyObjC_FFI_SUPPORT_H */

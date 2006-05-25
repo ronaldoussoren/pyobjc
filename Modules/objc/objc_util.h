@@ -31,7 +31,7 @@ extern NSMapTableValueCallBacks PyObjCUtil_ObjCValueCallBacks;
 
 void    PyObjC_FreeCArray(int, void*);
 int     PyObjC_PythonToCArray(const char*, PyObject*, PyObject*, void**, int*);
-PyObject* PyObjC_CArrayToPython(const char*, void*, int);
+PyObject* PyObjC_CArrayToPython(const char*, void*, Py_ssize_t);
 int     PyObjC_IsPythonKeyword(const char* word);
 
 

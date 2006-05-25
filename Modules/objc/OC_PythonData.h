@@ -21,7 +21,7 @@
 @interface OC_PythonData : NSData
 {
 	PyObject* value;
-	unsigned buffer_len;
+	Py_ssize_t buffer_len;
 	const void *buffer;
 }
 
