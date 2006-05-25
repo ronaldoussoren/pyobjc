@@ -1,6 +1,7 @@
 #ifdef __ppc__
 /* -----------------------------------------------------------------------
    darwin.S - Copyright (c) 2000 John Hornkvist
+	      Copyright (c) 2004 Free Software Foundation, Inc.
 
    PowerPC Assembly glue.
 
@@ -24,6 +25,16 @@
    OTHER DEALINGS IN THE SOFTWARE.
    ----------------------------------------------------------------------- */
 
+#if defined(__ppc64__)
+#define MODE_CHOICE(x, y) y
+#else
+#define MODE_CHOICE(x, y) x
+#endif
+
+#define g_long  MODE_CHOICE(long, quad)         /* usage is ".g_long" */
+
+#define LOG2_GPR_BYTES  MODE_CHOICE(2,3)        /* log2(GPR_BYTES) */
+
 #define LIBFFI_ASM
 #include <fficonfig.h>
 #include <ffi.h>
@@ -40,8 +51,8 @@
 	.align 2
 _ffi_call_DARWIN:
 LFB0:
-	mr      r12,r8		/* We only need r12 until the call,
-				   so it doesn't have to be saved...  */
+	mr   	r12,r8	/* We only need r12 until the call,
+			   so it doesn't have to be saved.  */
 LFB1:
 	/* Save the old stack pointer as AP.  */
 	mr	r8,r1
@@ -52,16 +63,16 @@ LCFI0:
 	/* Save registers we use.  */
 	mflr	r9
 
-	stw	r28,-16(r8)
+	stw	r28,-16(r8)	
 	stw	r29,-12(r8)
-	stw	r30, -8(r8)
-	stw	r31, -4(r8)
+	stw	r30,-8(r8)
+	stw	r31,-4(r8)
 
-	stw	r9,  8(r8)
-	stw	r2, 20(r1)
+	stw	r9,8(r8)
+	stw	r2,20(r1)
 LCFI1:
 
-	/* Save arguments over call...  */
+	/* Save arguments over call.  */
 	mr	r31,r5	/* flags,  */
 	mr	r30,r6	/* rvalue,  */
 	mr	r29,r7	/* function address,  */
@@ -71,7 +82,7 @@ LCFI2:
 	mr	r4,r1
 	li	r9,0
 
-	mtctr	r12 // r12 holds address of _ffi_prep_args
+	mtctr	r12 /* r12 holds address of _ffi_prep_args.  */
 	bctrl
 	lwz     r2,20(r1)
 
@@ -82,19 +93,19 @@ LCFI2:
 	mtctr	r29
 	/* Load all those argument registers.
 	   We have set up a nice stack frame, just load it into registers.  */
-	lwz     r3, 20+(1*4)(r1)
-	lwz     r4, 20+(2*4)(r1)
-	lwz     r5, 20+(3*4)(r1)
-	lwz     r6, 20+(4*4)(r1)
+	lwz     r3,20+(1*4)(r1)
+	lwz     r4,20+(2*4)(r1)
+	lwz     r5,20+(3*4)(r1)
+	lwz     r6,20+(4*4)(r1)
 	nop
-	lwz     r7, 20+(5*4)(r1)
-	lwz     r8, 20+(6*4)(r1)
-	lwz     r9, 20+(7*4)(r1)
+	lwz     r7,20+(5*4)(r1)
+	lwz     r8,20+(6*4)(r1)
+	lwz     r9,20+(7*4)(r1)
 	lwz     r10,20+(8*4)(r1)
 
 L1:
 	/* Load all the FP registers.  */
-	bf	6,L2 // 2f + 0x18
+	bf	6,L2	/* No floats to load.  */
 	lfd	f1,-16-(13*8)(r28)
 	lfd	f2,-16-(12*8)(r28)
 	lfd	f3,-16-(11*8)(r28)
@@ -113,8 +124,8 @@ L1:
 	lfd     f13,-16-(1*8)(r28)
 
 L2:
-	mr	r12,r29 /* Put the target address in r12 as specified.  */
-	mtctr  r12
+	mr	r12,r29	/* Put the target address in r12 as specified.  */
+	mtctr  	r12
 	nop
 	nop
 	/* Make the call.  */
@@ -129,26 +140,37 @@ L2:
 	bf	28,L(done_return_value)
 	stw	r4,4(r30)
 
-	/* Fall through...  */
+	/* Fall through.  */
 
 L(done_return_value):
 	/* Restore the registers we used and return.  */
-	lwz	r9,   8(r28)
-	lwz	r31,  -4(r28)
+	lwz	r9,8(r28)
+	lwz	r31,-4(r28)
 	mtlr	r9
-	lwz	r30, -8(r28)
+	lwz	r30,-8(r28)
 	lwz	r29,-12(r28)
 	lwz	r28,-16(r28)
 	lwz	r1,0(r1)
 	blr
 
 L(fp_return_value):
+	/* Do we have long double to store?  */
+	bf	31,L(fd_return_value)
+	stfd	f1,0(r30)
+	stfd	f2,8(r30)
+	b	L(done_return_value)
+
+L(fd_return_value):
+	/* Do we have double to store?  */
 	bf	28,L(float_return_value)
 	stfd	f1,0(r30)
 	b	L(done_return_value)
+
 L(float_return_value):
+	/* We only have a float to store.  */
 	stfs	f1,0(r30)
 	b	L(done_return_value)
+
 LFE1:
 /* END(_ffi_call_DARWIN)  */
 
@@ -179,7 +201,7 @@ LSCIE1:
 	.byte	0xc	; DW_CFA_def_cfa
 	.byte	0x1	; uleb128 0x1
 	.byte	0x0	; uleb128 0x0
-	.align	2
+	.align	LOG2_GPR_BYTES
 LECIE1:
 .globl _ffi_call_DARWIN.eh
 _ffi_call_DARWIN.eh:
@@ -188,9 +210,9 @@ LSFDE1:
 	.long	L$set$1	; FDE Length
 LASFDE1:
 	.long	LASFDE1-EH_frame1 ; FDE CIE offset
-	.long	LLFB0$non_lazy_ptr-.	; FDE initial location
+	.g_long	LLFB0$non_lazy_ptr-.	; FDE initial location
 	.set	L$set$3,LFE1-LFB0
-	.long	L$set$3	; FDE address range
+	.g_long	L$set$3	; FDE address range
 	.byte   0x0     ; uleb128 0x0; Augmentation size
 	.byte	0x4	; DW_CFA_advance_loc4
 	.set	L$set$4,LCFI0-LFB1
@@ -216,10 +238,11 @@ LASFDE1:
 	.long	L$set$6
 	.byte	0xd	; DW_CFA_def_cfa_register
 	.byte	0x1c	; uleb128 0x1c
-	.align 2
+	.align LOG2_GPR_BYTES
 LEFDE1:
 .data
-        .align 2
+	.align LOG2_GPR_BYTES
 LLFB0$non_lazy_ptr:
-        .long   LFB0
-#endif
+	.g_long LFB0
+
+#endif /* __ppc__ */

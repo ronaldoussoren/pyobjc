@@ -3,7 +3,7 @@
 #include <ffi.h>
 #include <powerpc/asm.h>
 
-        .file   "ppc_closure.S"
+	.file   "ppc_closure.S"
 
 #ifndef __powerpc64__
 
@@ -17,14 +17,14 @@ ENTRY(ffi_closure_SYSV)
 
 # we want to build up an areas for the parameters passed
 # in registers (both floating point and integer)
-	
+
 	# so first save gpr 3 to gpr 10 (aligned to 4)
 	stw   %r3, 16(%r1)
 	stw   %r4, 20(%r1)
-	stw   %r5, 24(%r1) 
+	stw   %r5, 24(%r1)
 	stw   %r6, 28(%r1)
 	stw   %r7, 32(%r1)
-	stw   %r8, 36(%r1) 
+	stw   %r8, 36(%r1)
 	stw   %r9, 40(%r1)
 	stw   %r10,44(%r1)
 
@@ -41,31 +41,31 @@ ENTRY(ffi_closure_SYSV)
 	# set up registers for the routine that actually does the work
 	# get the context pointer from the trampoline
 	mr %r3,%r11
-	
-        # now load up the pointer to the result storage
+
+	# now load up the pointer to the result storage
 	addi %r4,%r1,112
-	
+
 	# now load up the pointer to the saved gpr registers
-        addi %r5,%r1,16
+	addi %r5,%r1,16
 
-        # now load up the pointer to the saved fpr registers */
-        addi %r6,%r1,48
+	# now load up the pointer to the saved fpr registers */
+	addi %r6,%r1,48
 
-	# now load up the pointer to the outgoing parameter 
+	# now load up the pointer to the outgoing parameter
 	# stack in the previous frame
 	# i.e. the previous frame pointer + 8
 	addi %r7,%r1,152
-	
-        # make the call
-	bl JUMPTARGET(ffi_closure_helper_SYSV)
+
+	# make the call
+	bl ffi_closure_helper_SYSV@local
 
 	# now r3 contains the return type
 	# so use it to look up in a table
 	# so we know how to deal with each type
 
-        # look up the proper starting point in table 
+	# look up the proper starting point in table
 	# by using return type as offset
-	addi %r5,%r1,112   # get pointer to results area
+	addi %r6,%r1,112   # get pointer to results area
 	bl .Lget_ret_type0_addr # get pointer to .Lret_type0 into LR
 	mflr %r4           # move to r4
 	slwi %r3,%r3,4     # now multiply return type by 16
@@ -94,85 +94,85 @@ ENTRY(ffi_closure_SYSV)
 
 # case FFI_TYPE_INT
 .Lret_type1:
-	lwz %r3,0(%r5)
+	lwz %r3,0(%r6)
 	b .Lfinish
 	nop
 	nop
 
 # case FFI_TYPE_FLOAT
 .Lret_type2:
-	lfs %f1,0(%r5)
+	lfs %f1,0(%r6)
 	b .Lfinish
 	nop
 	nop
 
 # case FFI_TYPE_DOUBLE
 .Lret_type3:
-        lfd %f1,0(%r5)
+	lfd %f1,0(%r6)
 	b .Lfinish
 	nop
 	nop
 
 # case FFI_TYPE_LONGDOUBLE
 .Lret_type4:
-        lfd %f1,0(%r5)
+	lfd %f1,0(%r6)
 	b .Lfinish
 	nop
 	nop
 
 # case FFI_TYPE_UINT8
 .Lret_type5:
-        lbz %r3,3(%r5)
+	lbz %r3,3(%r6)
 	b .Lfinish
 	nop
 	nop
 
 # case FFI_TYPE_SINT8
 .Lret_type6:
-	lbz %r3,3(%r5)
+	lbz %r3,3(%r6)
 	extsb %r3,%r3
 	b .Lfinish
 	nop
 
 # case FFI_TYPE_UINT16
 .Lret_type7:
-	lhz %r3,2(%r5)
+	lhz %r3,2(%r6)
 	b .Lfinish
 	nop
 	nop
 
 # case FFI_TYPE_SINT16
 .Lret_type8:
-	lha %r3,2(%r5)
+	lha %r3,2(%r6)
 	b .Lfinish
 	nop
 	nop
 
 # case FFI_TYPE_UINT32
 .Lret_type9:
-	lwz %r3,0(%r5)
+	lwz %r3,0(%r6)
 	b .Lfinish
 	nop
 	nop
 
 # case FFI_TYPE_SINT32
 .Lret_type10:
-	lwz %r3,0(%r5)
+	lwz %r3,0(%r6)
 	b .Lfinish
 	nop
 	nop
 
 # case FFI_TYPE_UINT64
 .Lret_type11:
-	lwz %r3,0(%r5)
-	lwz %r4,4(%r5)
+	lwz %r3,0(%r6)
+	lwz %r4,4(%r6)
 	b .Lfinish
 	nop
 
 # case FFI_TYPE_SINT64
 .Lret_type12:
-	lwz %r3,0(%r5)
-	lwz %r4,4(%r5)
+	lwz %r3,0(%r6)
+	lwz %r4,4(%r6)
 	b .Lfinish
 	nop
 
@@ -185,18 +185,91 @@ ENTRY(ffi_closure_SYSV)
 
 # case FFI_TYPE_POINTER
 .Lret_type14:
-	lwz %r3,0(%r5)
+	lwz %r3,0(%r6)
 	b .Lfinish
 	nop
 	nop
 
-# case done	
+# The return types below are only used when the ABI type is FFI_SYSV.
+# case FFI_SYSV_TYPE_SMALL_STRUCT + 1. One byte struct.
+.Lret_type15:
+# fall through.
+	lbz %r3,0(%r6)
+	b .Lfinish
+	nop
+	nop
+
+# case FFI_SYSV_TYPE_SMALL_STRUCT + 2. Two byte struct.
+.Lret_type16:
+# fall through.
+	lhz %r3,0(%r6)
+	b .Lfinish
+	nop
+	nop
+
+# case FFI_SYSV_TYPE_SMALL_STRUCT + 3. Three byte struct.
+.Lret_type17:
+# fall through.
+	lwz %r3,0(%r6)
+	srwi %r3,%r3,8
+	b .Lfinish
+	nop
+
+# case FFI_SYSV_TYPE_SMALL_STRUCT + 4. Four byte struct.
+.Lret_type18:
+# this one handles the structs from above too.
+	lwz %r3,0(%r6)
+	b .Lfinish
+	nop
+	nop
+
+# case FFI_SYSV_TYPE_SMALL_STRUCT + 5. Five byte struct.
+.Lret_type19:
+# fall through.
+	lwz %r3,0(%r6)
+	lwz %r4,4(%r6)
+	li %r5,24
+	b .Lstruct567
+
+# case FFI_SYSV_TYPE_SMALL_STRUCT + 6. Six byte struct.
+.Lret_type20:
+# fall through.
+	lwz %r3,0(%r6)
+	lwz %r4,4(%r6)
+	li %r5,16
+	b .Lstruct567
+
+# case FFI_SYSV_TYPE_SMALL_STRUCT + 7. Seven byte struct.
+.Lret_type21:
+# fall through.
+	lwz %r3,0(%r6)
+	lwz %r4,4(%r6)
+	li %r5,8
+	b .Lstruct567
+
+# case FFI_SYSV_TYPE_SMALL_STRUCT + 8. Eight byte struct.
+.Lret_type22:
+# this one handles the above unhandled structs.
+	lwz %r3,0(%r6)
+	lwz %r4,4(%r6)
+	b .Lfinish
+	nop
+
+# case done
 .Lfinish:
-	
+
 	lwz %r0,148(%r1)
 	mtlr %r0
 	addi %r1,%r1,144
 	blr
+
+.Lstruct567:
+	subfic %r0,%r5,32
+	srw %r4,%r4,%r5
+	slw %r0,%r3,%r0
+	srw %r3,%r3,%r5
+	or %r4,%r0,%r4
+	b .Lfinish
 END(ffi_closure_SYSV)
 
 	.section	".eh_frame",EH_FRAME_FLAGS,@progbits
@@ -241,9 +314,9 @@ END(ffi_closure_SYSV)
 	.uleb128 144
 	.byte	0x4	 # DW_CFA_advance_loc4
 	.4byte	.LCFI1-.LCFI0
-	.byte	0x2f	 # DW_CFA_GNU_negative_offset_extended
+	.byte	0x11	 # DW_CFA_offset_extended_sf
 	.uleb128 0x41
-	.uleb128 0x1
+	.sleb128 -1
 	.align 2
 .LEFDE1:
 

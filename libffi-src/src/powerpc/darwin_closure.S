@@ -1,6 +1,6 @@
 #ifdef __ppc__
 /* -----------------------------------------------------------------------
-   darwin_closure.S - Copyright (c) 2002 2003 Free Software Foundation,
+   darwin_closure.S - Copyright (c) 2002, 2003, 2004, Free Software Foundation,
    Inc. based on ppc_closure.S
 
    PowerPC Assembly glue.
@@ -28,23 +28,35 @@
 #define LIBFFI_ASM
 #define L(x) x
 
+#if defined(__ppc64__)
+#define MODE_CHOICE(x, y) y
+#else
+#define MODE_CHOICE(x, y) x
+#endif
+
+#define lgu     MODE_CHOICE(lwzu, ldu)
+
+#define g_long  MODE_CHOICE(long, quad)         /* usage is ".g_long" */
+
+#define LOG2_GPR_BYTES  MODE_CHOICE(2,3)        /* log2(GPR_BYTES) */
+
 	.file	"darwin_closure.S"
 .text
-	.align 2
+	.align LOG2_GPR_BYTES
 .globl _ffi_closure_ASM
 
 .text
-	.align 2
+	.align LOG2_GPR_BYTES
 _ffi_closure_ASM:
 LFB1:
-	mflr	r0			/* extract return address  */
-	stw	r0, 8(r1)		/* save the return address  */
+	mflr	r0		/* extract return address  */
+	stw	r0,8(r1)	/* save the return address  */
 LCFI0:
 	/* 24 Bytes (Linkage Area)
 	   32 Bytes (outgoing parameter area, always reserved)
 	   104 Bytes (13*8 from FPR)
-	   8 Bytes (result)
-	   168 Bytes  */
+	   16 Bytes (result)
+	   176 Bytes  */
 
 	stwu	r1,-176(r1)	/* skip over caller save area
 				keep stack aligned to 16.  */
@@ -54,29 +66,29 @@ LCFI1:
 
 	/* We store gpr 3 to gpr 10 (aligned to 4)
 	   in the parents outgoing area.  */
-	stw   r3, 200(r1)
-	stw   r4, 204(r1)
-	stw   r5, 208(r1)
-	stw   r6, 212(r1)
-	stw   r7, 216(r1)
-	stw   r8, 220(r1)
-	stw   r9, 224(r1)
-	stw   r10, 228(r1)
+	stw   r3,200(r1)
+	stw   r4,204(r1)
+	stw   r5,208(r1)
+	stw   r6,212(r1)
+	stw   r7,216(r1)
+	stw   r8,220(r1)
+	stw   r9,224(r1)
+	stw   r10,228(r1)
 
 	/* We save fpr 1 to fpr 13. (aligned to 8)  */
-	stfd  f1, 56(r1)
-	stfd  f2, 64(r1)
-	stfd  f3, 72(r1)
-	stfd  f4, 80(r1)
-	stfd  f5, 88(r1)
-	stfd  f6, 96(r1)
-	stfd  f7, 104(r1)
-	stfd  f8, 112(r1)
-	stfd  f9, 120(r1)
-	stfd  f10, 128(r1)
-	stfd  f11, 136(r1)
-	stfd  f12, 144(r1)
-	stfd  f13, 152(r1)
+	stfd  f1,56(r1)
+	stfd  f2,64(r1)
+	stfd  f3,72(r1)
+	stfd  f4,80(r1)
+	stfd  f5,88(r1)
+	stfd  f6,96(r1)
+	stfd  f7,104(r1)
+	stfd  f8,112(r1)
+	stfd  f9,120(r1)
+	stfd  f10,128(r1)
+	stfd  f11,136(r1)
+	stfd  f12,144(r1)
+	stfd  f13,152(r1)
 
 	/* Set up registers for the routine that actually does the work
 	   get the context pointer from the trampoline.  */
@@ -151,8 +163,8 @@ Lret_type3:
 /* case FFI_TYPE_LONGDOUBLE  */
 Lret_type4:
 	lfd	f1,0(r5)
+	lfd	f2,8(r5)
 	b	Lfinish
-	nop
 	nop
 
 /* case FFI_TYPE_UINT8  */
@@ -227,9 +239,9 @@ Lret_type14:
 
 /* case done  */
 Lfinish:
-	addi	r1,r1,176		/* Restore stack pointer.  */
-	lwz	r0,8(r1)		/* Get return address.  */
-	mtlr	r0			/* Reset link register.  */
+	addi	r1,r1,176	/* Restore stack pointer.  */
+	lwz	r0,8(r1)	/* Get return address.  */
+	mtlr	r0		/* Reset link register.  */
 	blr
 
 /* END(ffi_closure_ASM)  */
@@ -251,7 +263,7 @@ LSCIE1:
 	.byte	0xc	; DW_CFA_def_cfa
 	.byte	0x1	; uleb128 0x1
 	.byte	0x0	; uleb128 0x0
-	.align	2
+	.align	LOG2_GPR_BYTES
 LECIE1:
 .globl _ffi_closure_ASM.eh
 _ffi_closure_ASM.eh:
@@ -261,9 +273,9 @@ LSFDE1:
 
 LASFDE1:
 	.long	LASFDE1-EH_frame1	; FDE CIE offset
-	.long	LLFB1$non_lazy_ptr-.	; FDE initial location
+	.g_long	LLFB1$non_lazy_ptr-.	; FDE initial location
 	.set	L$set$3,LFE1-LFB1
-	.long	L$set$3	; FDE address range
+	.g_long	L$set$3	; FDE address range
 	.byte   0x0     ; uleb128 0x0; Augmentation size
 	.byte	0x4	; DW_CFA_advance_loc4
 	.set	L$set$3,LCFI1-LCFI0
@@ -276,14 +288,15 @@ LASFDE1:
 	.byte   0x11    ; DW_CFA_offset_extended_sf
 	.byte	0x41	; uleb128 0x41
 	.byte   0x7e    ; sleb128 -2
-	.align	2
+	.align	LOG2_GPR_BYTES
 LEFDE1:
 .data
-	.align	2
+	.align	LOG2_GPR_BYTES
 LDFCM0:
 .section __TEXT,__picsymbolstub1,symbol_stubs,pure_instructions,32
-	.align	2
+	.align	LOG2_GPR_BYTES
 Lffi_closure_helper_DARWIN$stub:
+#if 1
 	.indirect_symbol _ffi_closure_helper_DARWIN
 	mflr	r0
 	bcl	20,31,LO$ffi_closure_helper_DARWIN
@@ -291,16 +304,17 @@ LO$ffi_closure_helper_DARWIN:
 	mflr	r11
 	addis	r11,r11,ha16(L_ffi_closure_helper_DARWIN$lazy_ptr - LO$ffi_closure_helper_DARWIN)
 	mtlr	r0
-	lwzu	r12,lo16(L_ffi_closure_helper_DARWIN$lazy_ptr - LO$ffi_closure_helper_DARWIN)(r11)
+	lgu	r12,lo16(L_ffi_closure_helper_DARWIN$lazy_ptr - LO$ffi_closure_helper_DARWIN)(r11)
 	mtctr	r12
 	bctr
-.data
 .lazy_symbol_pointer
 L_ffi_closure_helper_DARWIN$lazy_ptr:
 	.indirect_symbol _ffi_closure_helper_DARWIN
-	.long   dyld_stub_binding_helper
-.data
-	.align 2
-LLFB1$non_lazy_ptr:
-        .long LFB1
+	.g_long dyld_stub_binding_helper
 #endif
+.data
+	.align LOG2_GPR_BYTES
+LLFB1$non_lazy_ptr:
+	.g_long LFB1
+
+#endif /* __ppc__ */
