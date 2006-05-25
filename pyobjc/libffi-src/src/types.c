@@ -102,7 +102,6 @@ FFI_INTEGRAL_TYPEDEF(double, 8, 8, FFI_TYPE_DOUBLE);
 #if __GNUC__ >= 4
 FFI_INTEGRAL_TYPEDEF(longdouble, 16, 16, FFI_TYPE_LONGDOUBLE);
 #else
-#error "don't use this"
 FFI_INTEGRAL_TYPEDEF(longdouble, 8, 8, FFI_TYPE_LONGDOUBLE);
 #endif
 
