@@ -39,6 +39,7 @@ enum {
   FLAG_RETURNS_NOTHING  = 1 << (31-30), /* These go in cr7  */
   FLAG_RETURNS_FP       = 1 << (31-29),
   FLAG_RETURNS_64BITS   = 1 << (31-28),
+  FLAG_RETURNS_128BITS  = 1 << (31-31),
 
   FLAG_ARG_NEEDS_COPY   = 1 << (31- 7),
   FLAG_FP_ARGUMENTS     = 1 << (31- 6), /* cr1.eq; specified by ABI  */
@@ -80,17 +81,14 @@ enum { ASM_NEEDS_REGISTERS = 4 };
    */
 
 /*@-exportheader@*/
-/* Called from assemblycode, add prototype to avoid warning */
-void ffi_prep_args(extended_cif *ecif, unsigned *const stack);
-
 void ffi_prep_args(extended_cif *ecif, unsigned *const stack)
 /*@=exportheader@*/
 {
-/*  const unsigned bytes = ecif->cif->bytes;*/
+  const unsigned bytes = ecif->cif->bytes;
   const unsigned flags = ecif->cif->flags;
 
   /* 'stacktop' points at the previous backchain pointer.  */
-  unsigned *const stacktop = stack + (ecif->cif->bytes / sizeof(unsigned));
+  unsigned *const stacktop = stack + (bytes / sizeof(unsigned));
 
   /* 'fpr_base' points at the space for fpr1, and grows upwards as
      we use FPR registers.  */
@@ -99,7 +97,7 @@ void ffi_prep_args(extended_cif *ecif, unsigned *const stack)
 
 
   /* 'next_arg' grows up as we put parameters in it.  */
-  unsigned *next_arg = stack + 6; /* 6 reserved posistions.  */
+  unsigned *next_arg = stack + 6; /* 6 reserved positions.  */
 
   int i = ecif->cif->nargs;
   double double_tmp;
@@ -141,6 +139,7 @@ void ffi_prep_args(extended_cif *ecif, unsigned *const stack)
 	  fparg_count++;
 	  FFI_ASSERT(flags & FLAG_FP_ARGUMENTS);
 	  break;
+
 	case FFI_TYPE_DOUBLE:
 	  double_tmp = *(double *)*p_argv;
 	  if (fparg_count >= NUM_FPR_ARG_REGISTERS)
@@ -153,22 +152,25 @@ void ffi_prep_args(extended_cif *ecif, unsigned *const stack)
 	  break;
 
 #if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+
 	case FFI_TYPE_LONGDOUBLE:
-	  if (fparg_count >= NUM_FPR_ARG_REGISTERS-1) {
-	    ((double *)next_arg)[0] = ((double *)*p_argv)[0];
-	    ((double *)next_arg)[1] = ((double *)*p_argv)[0];
-	  } else {
-	    *fpr_base++ = ((double *)*p_argv)[0];
-	    *fpr_base++ = ((double *)*p_argv)[1];
-	  }
+	  double_tmp = ((double *)*p_argv)[0];
+	  if (fparg_count >= NUM_FPR_ARG_REGISTERS)
+	    *(double *)next_arg = double_tmp;
+	  else
+	    *fpr_base++ = double_tmp;
 	  next_arg += 2;
-
-	  fparg_count += 2;
-
+	  fparg_count++;
+	  double_tmp = ((double *)*p_argv)[1];
+	  if (fparg_count >= NUM_FPR_ARG_REGISTERS)
+	    *(double *)next_arg = double_tmp;
+	  else
+	    *fpr_base++ = double_tmp;
+	  next_arg += 2;
+	  fparg_count++;
 	  FFI_ASSERT(flags & FLAG_FP_ARGUMENTS);
 	  break;
 #endif
-
 	case FFI_TYPE_UINT64:
 	case FFI_TYPE_SINT64:
 	  *(long long *)next_arg = *(long long *)*p_argv;
@@ -188,7 +190,6 @@ void ffi_prep_args(extended_cif *ecif, unsigned *const stack)
 	  goto putgpr;
 
 	case FFI_TYPE_STRUCT:
-
 	  dest_cpy = (char *) next_arg;
 
 	  /* Structures that match the basic modes (QI 1 byte, HI 2 bytes,
@@ -198,10 +199,9 @@ void ffi_prep_args(extended_cif *ecif, unsigned *const stack)
 	  /* If the first member of the struct is a double, then align
 	     the struct to double-word.
 	     Type 3 is defined in include/ffi.h. #define FFI_TYPE_DOUBLE 3.  */
-	  if ((*ptr)->elements && (*ptr)->elements[0]->type == 3)
+	  if ((*ptr)->elements[0]->type == 3)
 	    size_al = ALIGN((*ptr)->size, 8);
-	  if (size_al < 3 && (ecif->cif == NULL ||  ecif->cif->abi == FFI_DARWIN))
-	    /* XXX: for some reason ecif->cif is NULL at times */
+	  if (size_al < 3 && ecif->cif->abi == FFI_DARWIN)
 	    dest_cpy += 4 - size_al;
 
 	  memcpy((char *)dest_cpy, (char *)*p_argv, size_al);
@@ -259,10 +259,14 @@ ffi_status ffi_prep_cif_machdep(ffi_cif *cif)
        as the first argument.  */
   switch (cif->rtype->type)
     {
+
 #if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
     case FFI_TYPE_LONGDOUBLE:
+      flags |= FLAG_RETURNS_128BITS;
+      flags |= FLAG_RETURNS_FP;
+      break;
 #endif
-      /* Fall through.  */
+
     case FFI_TYPE_DOUBLE:
       flags |= FLAG_RETURNS_64BITS;
       /* Fall through.  */
@@ -291,9 +295,8 @@ ffi_status ffi_prep_cif_machdep(ffi_cif *cif)
 
   /* The first NUM_GPR_ARG_REGISTERS words of integer arguments, and the
      first NUM_FPR_ARG_REGISTERS fp arguments, go in registers; the rest
-     goes on the stack.  Structures and long doubles (if not equivalent
-     to double) are passed as a pointer to a copy of the structure.
-     Stuff on the stack needs to keep proper alignment.  */
+     goes on the stack.  Structures are passed as a pointer to a copy of
+     the structure. Stuff on the stack needs to keep proper alignment.  */
   for (ptr = cif->arg_types, i = cif->nargs; i > 0; i--, ptr++)
     {
       switch ((*ptr)->type)
@@ -308,6 +311,19 @@ ffi_status ffi_prep_cif_machdep(ffi_cif *cif)
 	    intarg_count++;
 	  break;
 
+#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+
+	case FFI_TYPE_LONGDOUBLE:
+	  fparg_count += 2;
+	  /* If this FP arg is going on the stack, it must be
+	     8-byte-aligned.  */
+	  if (fparg_count > NUM_FPR_ARG_REGISTERS
+	      && intarg_count%2 != 0)
+	    intarg_count++;
+	  intarg_count +=2;
+	  break;
+#endif
+
 	case FFI_TYPE_UINT64:
 	case FFI_TYPE_SINT64:
 	  /* 'long long' arguments are passed as two words, but
@@ -321,14 +337,11 @@ ffi_status ffi_prep_cif_machdep(ffi_cif *cif)
 	  break;
 
 	case FFI_TYPE_STRUCT:
-#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
-	case FFI_TYPE_LONGDOUBLE:
-#endif
 	  size_al = (*ptr)->size;
 	  /* If the first member of the struct is a double, then align
 	     the struct to double-word.
 	     Type 3 is defined in include/ffi.h. #define FFI_TYPE_DOUBLE 3.  */
-	  if ((*ptr)->elements && (*ptr)->elements[0]->type == 3)
+	  if ((*ptr)->elements[0]->type == 3)
 	    size_al = ALIGN((*ptr)->size, 8);
 	  intarg_count += (size_al + 3) / 4;
 	  break;
@@ -369,12 +382,12 @@ extern void ffi_call_AIX(/*@out@*/ extended_cif *,
 			 unsigned, unsigned,
 			 /*@out@*/ unsigned *,
 			 void (*fn)(void),
-			 void (*fn2)(void));
+			 void (*fn2)(extended_cif *, unsigned *const));
 extern void ffi_call_DARWIN(/*@out@*/ extended_cif *,
 			    unsigned, unsigned,
 			    /*@out@*/ unsigned *,
 			    void (*fn)(void),
-			    void (*fn2)(void));
+			    void (*fn2)(extended_cif *, unsigned *const));
 /*@=declundef@*/
 /*@=exportheader@*/
 
@@ -406,13 +419,13 @@ void ffi_call(/*@dependent@*/ ffi_cif *cif,
     case FFI_AIX:
       /*@-usedef@*/
       ffi_call_AIX(&ecif, -cif->bytes,
-		   cif->flags, ecif.rvalue, fn, FFI_FN(ffi_prep_args));
+		   cif->flags, ecif.rvalue, fn, ffi_prep_args);
       /*@=usedef@*/
       break;
     case FFI_DARWIN:
       /*@-usedef@*/
       ffi_call_DARWIN(&ecif, -cif->bytes,
-		      cif->flags, ecif.rvalue, fn, FFI_FN(ffi_prep_args));
+		      cif->flags, ecif.rvalue, fn, ffi_prep_args);
       /*@=usedef@*/
       break;
     default:
@@ -428,8 +441,8 @@ static void flush_range(char *, int);
    points to one of these.  */
 
 typedef struct aix_fd_struct {
-    void *code_pointer;
-    void *toc;
+  void *code_pointer;
+  void *toc;
 } aix_fd;
 
 /* here I'd like to add the stack frame layout we use in darwin_closure.S
@@ -549,11 +562,11 @@ flush_icache(char *addr)
 {
 #ifndef _AIX
   __asm__ volatile (
-		"dcbf 0,%0;"
-		"sync;"
-		"icbi 0,%0;"
-		"sync;"
-		"isync;"
+		"dcbf 0,%0\n"
+		"\tsync\n"
+		"\ticbi 0,%0\n"
+		"\tsync\n"
+		"\tisync"
 		: : "r"(addr) : "memory");
 #endif
 }
@@ -591,6 +604,13 @@ int ffi_closure_helper_DARWIN (ffi_closure* closure, void * rvalue,
      pgr is the pointer to where r3-r10 are stored in ffi_closure_ASM
      pfr is the pointer to where f1-f13 are stored in ffi_closure_ASM.  */
 
+  typedef double ldbits[2];
+
+  union ldu
+  {
+    ldbits lb;
+    long double ld;
+  };
 
   void **          avalue;
   ffi_type **      arg_types;
@@ -600,6 +620,7 @@ int ffi_closure_helper_DARWIN (ffi_closure* closure, void * rvalue,
   ffi_cif *        cif;
   double           temp;
   unsigned         size_al;
+  union ldu        temp_ld;
 
   cif = closure->cif;
   avalue = alloca(cif->nargs * sizeof(void *));
@@ -657,7 +678,7 @@ int ffi_closure_helper_DARWIN (ffi_closure* closure, void * rvalue,
 	  if (arg_types[i]->elements[0]->type == 3)
 	    size_al = ALIGN(arg_types[i]->size, 8);
 	  if (size_al < 3 && cif->abi == FFI_DARWIN)
-	    avalue[i] = (void*) ((char*)pgr + 4 - size_al);
+	    avalue[i] = (void*) pgr + 4 - size_al;
 	  else
 	    avalue[i] = (void*) pgr;
 	  ng += (size_al + 3) / 4;
@@ -708,6 +729,34 @@ int ffi_closure_helper_DARWIN (ffi_closure* closure, void * rvalue,
 	  pgr += 2;
 	  break;
 
+#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+
+	case FFI_TYPE_LONGDOUBLE:
+	  /* A long double value consumes four GPRs and two FPRs.
+	     There are 13 64bit floating point registers.  */
+	  if (nf < NUM_FPR_ARG_REGISTERS - 1)
+	    {
+	      avalue[i] = pfr;
+	      pfr += 2;
+	    }
+	  /* Here we have the situation where one part of the long double
+	     is stored in fpr13 and the other part is already on the stack.
+	     We use a union to pass the long double to avalue[i].  */
+	  else if (nf == NUM_FPR_ARG_REGISTERS - 1)
+	    {
+	      memcpy (&temp_ld.lb[0], pfr, sizeof(ldbits));
+	      memcpy (&temp_ld.lb[1], pgr + 2, sizeof(ldbits));
+	      avalue[i] = &temp_ld.ld;
+	    }
+	  else
+	    {
+	      avalue[i] = pgr;
+	    }
+	  nf += 2;
+	  ng += 4;
+	  pgr += 4;
+	  break;
+#endif
 	default:
 	  FFI_ASSERT(0);
 	}
@@ -719,4 +768,5 @@ int ffi_closure_helper_DARWIN (ffi_closure* closure, void * rvalue,
   /* Tell ffi_closure_ASM to perform return type promotions.  */
   return cif->rtype->type;
 }
-#endif
+
+#endif /* __ppc__ */
