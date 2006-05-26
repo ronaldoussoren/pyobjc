@@ -23,9 +23,12 @@ if sys.version_info < MIN_PYTHON:
 #    site.addsitedir(os.path.abspath('source-deps'))
 # When using py2.5 this will give warnings about missing __init__.py files,
 # which I (ronald) find annoying enough to add a workaround...
-for fn in os.listdir('source-deps'):
-    if not fn.endswith('.pth'): continue
-    sys.path.append(open(os.path.join('source-deps', fn), 'r').read().strip())
+##  ... which doesn't actually work because this implements only part of the 
+##      addsitedir function
+##for fn in os.listdir('source-deps'):
+##    if not fn.endswith('.pth'): continue
+##    sys.path.append(open(os.path.join('source-deps', fn), 'r').read().strip())
+site.addsitedir(os.path.abspath('source-deps'))
 
 # Add our utility library to the path
 sys.path.insert(1,
