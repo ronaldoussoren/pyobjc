@@ -16,6 +16,20 @@
 #include "Python.h"
 #include <objc/objc.h>
 
+#ifndef PyObjC_COMPAT_H
+#if (PY_VERSION_HEX < 0x02050000)
+typedef int Py_ssize_t;
+#define PY_FORMAT_SIZE_T ""
+#define Py_ARG_SIZE_T "n"
+#define PY_SSIZE_T_MAX INT_MAX
+
+#else
+
+#define Py_ARG_SIZE_T "i"
+#endif
+#endif
+
+
 #import <Foundation/NSException.h>
 
 struct PyObjC_WeakLink {

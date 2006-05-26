@@ -1,3 +1,4 @@
+#include "pyobjc.h"
 #import "OC_PythonDictionary.h"
 
 /*
