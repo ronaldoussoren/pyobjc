@@ -1,3 +1,4 @@
+#include "pyobjc.h"
 #import "OC_PythonString.h"
 
 @implementation OC_PythonString 
