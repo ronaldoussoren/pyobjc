@@ -1,6 +1,6 @@
 import imp
 import os, sys, site
-path = os.path.join(os.path.dirname(__file__), 'py2app', 'src')
+path = os.path.join(os.path.dirname(__file__), 'py2app-source', 'src')
 try:
     py2app_file = imp.find_module('py2app', None)[1]
     from findVersion import findVersion
