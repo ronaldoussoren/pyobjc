@@ -18,16 +18,7 @@ if sys.version_info < MIN_PYTHON:
     vstr = '.'.join(map(str, MIN_PYTHON))
     raise SystemExit('PyObjC: Need at least Python ' + vstr)
 
-# Add source-deps to the path
-# Before py2.5 we did this:
-#    site.addsitedir(os.path.abspath('source-deps'))
-# When using py2.5 this will give warnings about missing __init__.py files,
-# which I (ronald) find annoying enough to add a workaround...
-##  ... which doesn't actually work because this implements only part of the 
-##      addsitedir function
-##for fn in os.listdir('source-deps'):
-##    if not fn.endswith('.pth'): continue
-##    sys.path.append(open(os.path.join('source-deps', fn), 'r').read().strip())
+# Add our dependencies to the path.
 site.addsitedir(os.path.abspath('source-deps'))
 
 # Add our utility library to the path
