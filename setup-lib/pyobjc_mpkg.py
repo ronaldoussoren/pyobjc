@@ -53,7 +53,7 @@ CUSTOM_SCHEMES = dict(
 )
 
 SUBPROJECT_SCHEMES = dict(
-    py2app='source-deps/py2app/setup.py',
+    py2app='source-deps/py2app-source/setup.py',
 )
 
 
