@@ -124,6 +124,9 @@ BEGIN_UNITTEST(StructSize)
 	    sizeof(struct Struct4), PyObjCRT_SizeOfType(@encode(struct Struct4)),
 	    "%d");
 
+	ASSERT_EQUALS(
+	    sizeof(NSRect), PyObjCRT_SizeOfType(@encode(NSRect)), "%d");
+
 END_UNITTEST
 
 BEGIN_UNITTEST(StructAlign)
@@ -682,6 +685,52 @@ BEGIN_UNITTEST(NSLogging)
 	ASSERT(r != -1);
 	r = close(fd);
 	ASSERT(r != -1);
+END_UNITTEST
+
+BEGIN_UNITTEST(FillNSRect)
+
+	struct output {
+		unsigned int before;
+		NSRect rect;
+		unsigned int after;
+	};
+
+
+	PyObject* input;
+	PyObject* v;
+	PyObject* t;
+	struct output output;
+	int r;
+
+	output.before = 0xDEADBEEF;
+	output.after = 0xBEEFDEAD;
+
+	input = PyTuple_New(2);
+	FAIL_IF(input == NULL);
+
+	v= PyTuple_New(2);
+	PyTuple_SET_ITEM(v, 0, PyInt_FromLong(10));
+	PyTuple_SET_ITEM(v, 1, PyInt_FromLong(11));
+
+	t= PyTuple_New(2);
+	PyTuple_SET_ITEM(t, 0, PyInt_FromLong(20));
+	PyTuple_SET_ITEM(t, 1, PyInt_FromLong(21));
+
+	PyTuple_SET_ITEM(input, 0, v);
+	PyTuple_SET_ITEM(input, 1, t);
+	
+	r = PyObjC_PythonToObjC(@encode(struct NSRect), input, &output.rect);
+	FAIL_IF(r < 0);
+
+	Py_DECREF(input);
+
+	ASSERT_EQUALS(output.rect.origin.x, 10, "%d");
+	ASSERT_EQUALS(output.rect.origin.y, 11, "%d");
+	ASSERT_EQUALS(output.rect.size.width, 20, "%d");
+	ASSERT_EQUALS(output.rect.size.height, 21, "%d");
+	ASSERT_EQUALS(output.before, 0xDEADBEAF, "%d");
+	ASSERT_EQUALS(output.after, 0xBEAFDEAD, "%d");
+
 END_UNITTEST
 
 static PyMethodDef unittest_methods[] = {

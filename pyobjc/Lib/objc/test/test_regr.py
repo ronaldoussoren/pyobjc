@@ -1,8 +1,16 @@
 import unittest
+from objc.test import structargs
 
-import objc
+import objc, sys
+import Foundation
 
 NSObject = objc.lookUpClass('NSObject')
+
+class ReturnAStruct (NSObject):
+    def someRectWithRect_(self, ((x, y), (h, w))):
+        return ((x,y),(h,w))
+    someRectWithRect_ = objc.selector(someRectWithRect_,
+            signature='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}')
 
 class TestRegressions(unittest.TestCase):
     def testNSObjectRespondsToCommonMethods(self):
@@ -137,6 +145,23 @@ class TestRegressions(unittest.TestCase):
         v = o.compP_aRect_anOp_((1,2), ((3,4),(5,6)), 7)
         self.assertEquals(v, u"aP:{1, 2} aR:{{3, 4}, {5, 6}} anO:7")
 
+    def testStructReturnPy(self):
+        from objc.test.structargs import StructArgClass
+        o = ReturnAStruct.alloc().init()
+        p = StructArgClass.alloc().init()
+
+        v = p.someRectWithObject_X_Y_H_W_(o, 1, 2, 3, 4)
+        self.assert_(isinstance(v, Foundation.NSRect))
+        self.assertEquals(v, ((1,2),(3,4)))
+
+    def testStructReturn(self):
+        from objc.test.structargs import StructArgClass
+        o = StructArgClass.alloc().init()
+
+        v = o.someRect()
+        self.assertEquals(v, ((1,2),(3,4)))
+
+
     def testInitialize(self):
         calls=[]
         class InitializeTestClass (NSObject):
@@ -148,6 +173,24 @@ class TestRegressions(unittest.TestCase):
         self.assertEquals(len(calls), 1)
         o = InitializeTestClass.new()
         self.assertEquals(len(calls), 1)
+
+    if sys.byteorder == 'little':
+        # i386 has specific stack alignment requirements.
+
+        class AlignmentTestClass(NSObject):
+            def testWithObject_(self, obj):
+                return obj.stackPtr()
+
+
+        def testStackPtr(self):
+            o = structargs.StructArgClass.alloc().init()
+
+            self.assertEquals(o.stackPtr() % 16, 0)
+            self.assertEquals(o.stackPtr() % 16, 0)
+            self.assertEquals(o.stackPtr() % 16, 0)
+
+            p = self.AlignmentTestClass.alloc().init()
+            self.assertEquals(p.testWithObject_(o) % 16, o.stackPtr() % 16)
 
 if __name__ == '__main__':
     unittest.main()
