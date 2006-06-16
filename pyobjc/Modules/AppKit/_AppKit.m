@@ -533,7 +533,7 @@ static char* keywords[] = { "boundsRect", "clipRect", "sides", "grays", "count",
 	if (sidesToken == -1) return NULL;
 
 	graysToken = PyObjC_PythonToCArray(
-		@encode(id), pyGrays, pyCount, (void**)&grays, &graysCount);
+		@encode(float), pyGrays, pyCount, (void**)&grays, &graysCount);
 
 	if (graysToken == -1)  {
 		PyObjC_FreeCArray(sidesToken, sides);
