@@ -185,10 +185,6 @@ class TestRegressions(unittest.TestCase):
         def testStackPtr(self):
             o = structargs.StructArgClass.alloc().init()
 
-            self.assertEquals(o.stackPtr() % 16, 0)
-            self.assertEquals(o.stackPtr() % 16, 0)
-            self.assertEquals(o.stackPtr() % 16, 0)
-
             p = self.AlignmentTestClass.alloc().init()
             self.assertEquals(p.testWithObject_(o) % 16, o.stackPtr() % 16)
 
