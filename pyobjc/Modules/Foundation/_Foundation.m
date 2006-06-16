@@ -627,7 +627,6 @@ void init_Foundation(void)
 #endif
 
 
-#	include "_Fnd_Var.inc"
     
 	/* Add manual registrations below */
 	v = PyObjC_RegisterStructType(@encode(NSPoint),
@@ -653,6 +652,8 @@ void init_Foundation(void)
 	if (v == NULL) return;
 	PyDict_SetItemString(d, "NSRect", v);
 	Py_DECREF(v);
+
+#	include "_Fnd_Var.inc"
 
 	/* Install wrappers for difficult methods */
 #ifdef MACOSX
