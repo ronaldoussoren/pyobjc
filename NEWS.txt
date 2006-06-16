@@ -4,11 +4,8 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 1.4 (????-??-??)
+Version 1.4 (2006-06-14)
 --------------------------
-
-- It is now possible to build PyObjC on Tiger and use the resulting binaries
-  on Panther. The binaries still include wrappers for all functions on Tiger.
 
 - Classes whose name starts with and underscore are no longer imported when
   using ``objc.loadBundle``. They are still available using 
