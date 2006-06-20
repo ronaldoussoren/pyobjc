@@ -4,6 +4,19 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 1.4.1 (2006-??-??)
+--------------------------
+
+- Remove ``OC_PythonObject.pythonifyStructTable``. This method of wrapping
+  structs was untested and not used in the core distribution. Use
+  ``objc.createStructType`` instead.
+
+- Binaries build on 10.4 also work on 10.3. This means it is no longer 
+  necessary to build PyObjC on the lowest version of the OS that you want
+  to run your binaries on.  Doing this with python is somewhat of a black
+  art, please test your applications on the lowest version of the OS that
+  you want to support to make sure that this actually works.
+
 Version 1.4 (2006-06-14)
 --------------------------
 
