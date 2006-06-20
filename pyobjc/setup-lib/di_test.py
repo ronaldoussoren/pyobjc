@@ -40,7 +40,12 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
     suites = []
    
     for modName in testModules:
-        module = __import__(modName)
+        try:
+            module = __import__(modName)
+        except ImportError, msg:
+            print "SKIP %s: %s"%(modName, msg)
+            continue
+
         if '.' in modName:
             for elem in modName.split('.')[1:]:
                 module = getattr(module, elem)
@@ -98,22 +103,24 @@ class cmd_test (install_lib):
         self.test()
 
     def get_test_dir(self):
+        if self.test_installed:
+            import objc
+            return os.path.dirname(os.path.dirname(objc.__file__))
+
         if self.package is None:
             return self.build_dir
         return os.path.join(self.build_dir, self.package.replace('.', '/'))
     
     def test (self):
-        if not os.path.isdir(self.build_dir):
-            self.warn("'%s' does not exist -- cannot test" %
-                      self.build_dir)
-            return
-
-
         import sys
 
         # Add the build_dir to the start of our module-search-path, and
         # remove it when we're done.
         if not self.test_installed:
+            if not os.path.isdir(self.build_dir):
+                self.warn("'%s' does not exist -- cannot test" %
+                          self.build_dir)
+                return
             sys.path.insert(0, self.build_dir)
         try:
             deja_suite = dejagnu.testSuiteForDirectory(
