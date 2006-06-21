@@ -140,7 +140,7 @@ ffi_status ffi_prep_cif_machdep(ffi_cif *cif)
   switch (cif->rtype->type)
     {
     case FFI_TYPE_VOID:
-#if !defined(X86_WIN32) 
+#if !defined(X86_WIN32)  && !defined(X86_DARWIN)
     case FFI_TYPE_STRUCT:
 #endif
     case FFI_TYPE_SINT64:
@@ -154,7 +154,7 @@ ffi_status ffi_prep_cif_machdep(ffi_cif *cif)
       cif->flags = FFI_TYPE_SINT64;
       break;
 
-#if defined X86_WIN32  
+#if defined(X86_WIN32) || defined(X86_DARWIN)
 
     case FFI_TYPE_STRUCT:
       if (cif->rtype->size == 1)
@@ -186,7 +186,7 @@ ffi_status ffi_prep_cif_machdep(ffi_cif *cif)
     }
 
   /* Darwin: The stack needs to be aligned to a multiple of 16 bytes */
-#if 0
+#if 1
   cif->bytes = (cif->bytes + 15) & ~0xF;
 #endif
 
@@ -260,7 +260,7 @@ void ffi_call(/*@dependent@*/ ffi_cif *cif,
        * block is a multiple of 16. Then add 8 to compensate for local variables
        * in ffi_call_SYSV.
        */
-      ffi_call_SYSV(ffi_prep_args, &ecif, ALIGN(cif->bytes, 16) +8, 
+      ffi_call_SYSV(ffi_prep_args, &ecif, ALIGN(cif->bytes, 16), 
 		    flags, ecif.rvalue, fn);
       /*@=usedef@*/
       break;
@@ -324,8 +324,12 @@ ffi_closure_SYSV (closure)
   if (!retval_on_stack(cif->rtype) && cif->flags == FFI_TYPE_STRUCT) {
       if (cif->rtype->size == 8) {
          rtype = FFI_TYPE_SINT64;
-      } else {
+      } else if (cif->rtype->size == 4) {
          rtype = FFI_TYPE_INT;
+      } else if (cif->rtype->size == 2) {
+         rtype = FFI_TYPE_SINT16;
+      } else if (cif->rtype->size == 1) {
+         rtype = FFI_TYPE_SINT8;
       }
   }
 
@@ -353,7 +357,7 @@ ffi_closure_SYSV (closure)
 	   : : "r"(resp)
 	   : "eax", "edx");
     }
-#ifdef X86_WIN32
+#if defined(X86_WIN32) || defined(X86_DARWIN)
   else if (rtype == FFI_TYPE_SINT8) /* 1-byte struct  */
     {
       asm ("movsbl (%0),%%eax" : : "r" (resp) : "eax");
@@ -363,6 +367,15 @@ ffi_closure_SYSV (closure)
       asm ("movswl (%0),%%eax" : : "r" (resp) : "eax");
     }
 #endif
+
+  else if (rtype == FFI_TYPE_STRUCT)
+    {
+      asm ("lea -8(%ebp),%esp;"
+	   "pop %esi;"
+	   "pop %edi;"
+	   "pop %ebp;"
+	   "ret $4");
+    }
 }
 
 /*@-exportheader@*/

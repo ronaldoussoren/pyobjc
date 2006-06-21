@@ -47,6 +47,7 @@ _ffi_call_SYSV:
         pushl %ebp
 .LCFI0:
         movl  %esp,%ebp
+	subl  $8,%esp
 .LCFI1:
 	/* Make room for all of the new args.  */
 	movl  16(%ebp),%ecx
@@ -55,12 +56,13 @@ _ffi_call_SYSV:
 	movl  %esp,%eax
 
 	/* Place all of the ffi_prep_args in position  */
+	subl  $8,%esp
 	pushl 12(%ebp)
 	pushl %eax
 	call  *8(%ebp)
 
 	/* Return stack to previous state and call the function  */
-	addl  $8,%esp	
+	addl  $16,%esp	
 
 	call  *28(%ebp)
 
@@ -117,17 +119,40 @@ retlongdouble:
 	
 retint64:	
 	cmpl  $FFI_TYPE_SINT64,%ecx
-        jne   retstruct
+        jne   retstruct1b
 	/* Load %ecx with the pointer to storage for the return value  */
 	movl  24(%ebp),%ecx	
 	movl  %eax,0(%ecx)
 	movl  %edx,4(%ecx)
+	jmp   epilogue
+
+retstruct1b:
+   cmpl $FFI_TYPE_SINT8,%ecx
+   jne  retstruct2b
+   movl 24(%ebp),%ecx
+   movb  %al,0(%ecx)
+   jmp  epilogue
+
+retstruct2b:
+   cmpl $FFI_TYPE_SINT16,%ecx
+   jne  retstruct
+   movl 24(%ebp),%ecx
+   movw %ax,0(%ecx)
+   jmp  epilogue
 	
 retstruct:
+   cmpl $FFI_TYPE_STRUCT,%ecx
+   jne  noretval
 	/* Nothing to do!  */
+
+	/* addl $4,%esp */
+	movl %ebp, %esp
+	popl %ebp
+	ret
 
 noretval:
 epilogue:
+        /* addl $8,%esp */
         movl %ebp,%esp
         popl %ebp
         ret
