@@ -62,7 +62,7 @@ _ffi_call_SYSV:
 	call  *8(%ebp)
 
 	/* Return stack to previous state and call the function  */
-	addl  $16,%esp	
+	addl  $16,%esp
 
 	call  *28(%ebp)
 

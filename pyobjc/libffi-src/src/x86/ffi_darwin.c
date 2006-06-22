@@ -260,7 +260,7 @@ void ffi_call(/*@dependent@*/ ffi_cif *cif,
        * block is a multiple of 16. Then add 8 to compensate for local variables
        * in ffi_call_SYSV.
        */
-      ffi_call_SYSV(ffi_prep_args, &ecif, ALIGN(cif->bytes, 16), 
+      ffi_call_SYSV(ffi_prep_args, &ecif, cif->bytes, 
 		    flags, ecif.rvalue, fn);
       /*@=usedef@*/
       break;
@@ -281,8 +281,6 @@ void ffi_call(/*@dependent@*/ ffi_cif *cif,
 
 /** private members **/
 
-static void ffi_prep_incoming_args_SYSV (char *stack, void **ret,
-					 void** args, ffi_cif* cif);
 static void ffi_closure_SYSV (ffi_closure *)
      __attribute__ ((regparm(1)));
 #if !FFI_NO_RAW_API
@@ -290,96 +288,8 @@ static void ffi_closure_raw_SYSV (ffi_raw_closure *)
      __attribute__ ((regparm(1)));
 #endif
 
-/* This function is jumped to by the trampoline */
-
-static void
-ffi_closure_SYSV (closure)
-     ffi_closure *closure;
-{
-  // this is our return value storage
-  long double  res;
-
-  // our various things...
-  ffi_cif       *cif;
-  void         **arg_area;
-  unsigned short rtype;
-  void          *resp = (void*)&res;
-  void *args = __builtin_dwarf_cfa ();
-
-  cif         = closure->cif;
-  arg_area    = (void**) alloca (cif->nargs * sizeof (void*));  
-
-  /* this call will initialize ARG_AREA, such that each
-   * element in that array points to the corresponding 
-   * value on the stack; and if the function returns
-   * a structure, it will re-set RESP to point to the
-   * structure return address.  */
-
-  ffi_prep_incoming_args_SYSV(args, (void**)&resp, arg_area, cif);
-  
-  (closure->fun) (cif, resp, arg_area, closure->user_data);
-
-  rtype = cif->flags;
-
-  if (!retval_on_stack(cif->rtype) && cif->flags == FFI_TYPE_STRUCT) {
-      if (cif->rtype->size == 8) {
-         rtype = FFI_TYPE_SINT64;
-      } else if (cif->rtype->size == 4) {
-         rtype = FFI_TYPE_INT;
-      } else if (cif->rtype->size == 2) {
-         rtype = FFI_TYPE_SINT16;
-      } else if (cif->rtype->size == 1) {
-         rtype = FFI_TYPE_SINT8;
-      }
-  }
-
-  /* now, do a generic return based on the value of rtype */
-  if (rtype == FFI_TYPE_INT)
-    {
-      asm ("movl (%0),%%eax" : : "r" (resp) : "eax");
-    }
-  else if (rtype == FFI_TYPE_FLOAT)
-    {
-      asm ("flds (%0)" : : "r" (resp) : "st" );
-    }
-  else if (rtype == FFI_TYPE_DOUBLE)
-    {
-      asm ("fldl (%0)" : : "r" (resp) : "st", "st(1)" );
-    }
-  else if (rtype == FFI_TYPE_LONGDOUBLE)
-    {
-      asm ("fldt (%0)" : : "r" (resp) : "st", "st(1)" );
-    }
-  else if (rtype == FFI_TYPE_SINT64)
-    {
-      asm ("movl 0(%0),%%eax;"
-	   "movl 4(%0),%%edx" 
-	   : : "r"(resp)
-	   : "eax", "edx");
-    }
-#if defined(X86_WIN32) || defined(X86_DARWIN)
-  else if (rtype == FFI_TYPE_SINT8) /* 1-byte struct  */
-    {
-      asm ("movsbl (%0),%%eax" : : "r" (resp) : "eax");
-    }
-  else if (rtype == FFI_TYPE_SINT16) /* 2-bytes struct */
-    {
-      asm ("movswl (%0),%%eax" : : "r" (resp) : "eax");
-    }
-#endif
-
-  else if (rtype == FFI_TYPE_STRUCT)
-    {
-      asm ("lea -8(%ebp),%esp;"
-	   "pop %esi;"
-	   "pop %edi;"
-	   "pop %ebp;"
-	   "ret $4");
-    }
-}
-
 /*@-exportheader@*/
-static void 
+static inline void 
 ffi_prep_incoming_args_SYSV(char *stack, void **rvalue,
 			    void **avalue, ffi_cif *cif)
 /*@=exportheader@*/
@@ -419,6 +329,84 @@ ffi_prep_incoming_args_SYSV(char *stack, void **rvalue,
   
   return;
 }
+
+/* This function is jumped to by the trampoline */
+
+static void
+ffi_closure_SYSV (closure)
+     ffi_closure *closure;
+{
+  // this is our return value storage
+  long double  res;
+
+  // our various things...
+  ffi_cif       *cif;
+  void         **arg_area;
+  void          *resp = (void*)&res;
+  void *args = __builtin_dwarf_cfa ();
+
+
+  cif         = closure->cif;
+#if 0
+  printf("closure! %p %d\n", closure->fun, cif->nargs);
+#endif
+  arg_area    = (void**) alloca (cif->nargs * sizeof (void*));  
+
+  /* this call will initialize ARG_AREA, such that each
+   * element in that array points to the corresponding 
+   * value on the stack; and if the function returns
+   * a structure, it will re-set RESP to point to the
+   * structure return address.  */
+
+  ffi_prep_incoming_args_SYSV(args, (void**)&resp, arg_area, cif);
+  
+  (closure->fun) (cif, resp, arg_area, closure->user_data);
+
+  /* now, do a generic return based on the value of rtype */
+  if (cif->flags == FFI_TYPE_INT)
+    {
+      asm ("movl (%0),%%eax" : : "r" (resp) : "eax");
+    }
+  else if (cif->flags == FFI_TYPE_FLOAT)
+    {
+      asm ("flds (%0)" : : "r" (resp) : "st" );
+    }
+  else if (cif->flags == FFI_TYPE_DOUBLE)
+    {
+      asm ("fldl (%0)" : : "r" (resp) : "st", "st(1)" );
+    }
+  else if (cif->flags == FFI_TYPE_LONGDOUBLE)
+    {
+      asm ("fldt (%0)" : : "r" (resp) : "st", "st(1)" );
+    }
+  else if (cif->flags == FFI_TYPE_SINT64)
+    {
+      asm ("movl 0(%0),%%eax;"
+	   "movl 4(%0),%%edx" 
+	   : : "r"(resp)
+	   : "eax", "edx");
+    }
+#if defined(X86_WIN32) || defined(X86_DARWIN)
+  else if (cif->flags == FFI_TYPE_SINT8) /* 1-byte struct  */
+    {
+      asm ("movsbl (%0),%%eax" : : "r" (resp) : "eax");
+    }
+  else if (cif->flags == FFI_TYPE_SINT16) /* 2-bytes struct */
+    {
+      asm ("movswl (%0),%%eax" : : "r" (resp) : "eax");
+    }
+#endif
+
+  else if (cif->flags == FFI_TYPE_STRUCT)
+    {
+      asm ("lea -8(%ebp),%esp;"
+	   "pop %esi;"
+	   "pop %edi;"
+	   "pop %ebp;"
+	   "ret $4"); 
+    }
+}
+
 
 /* How to make a trampoline.  Derived from gcc/config/i386/i386.c. */
 
