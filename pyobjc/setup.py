@@ -86,7 +86,11 @@ if gs_root is None:
         print ""
         raise SystemExit("ObjC runtime not found")
 
+
+    # Enable 'PyObjC_STRICT_DEBUGGING' to enable some costly internal 
+    # assertions. 
     CFLAGS=[
+        #"-DPyObjC_STRICT_DEBUGGING",
         "-DMACOSX",
         "-DAPPLE_RUNTIME",
         "-no-cpp-precomp",

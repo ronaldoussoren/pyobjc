@@ -522,7 +522,7 @@ static 	ffi_cif* init_cif = NULL;
 	if (init_cif == NULL) {
 		PyObjCMethodSignature* signature;
 		signature = PyObjCMethodSignature_FromSignature("i^v^v^v");
-		init_cif = PyObjCFFI_CIFForSignature(signature, NULL);
+		init_cif = PyObjCFFI_CIFForSignature(signature);
 		PyObjCMethodSignature_Free(signature);
 		if (init_cif == NULL) {
 			return NULL;

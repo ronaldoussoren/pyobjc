@@ -898,6 +898,14 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		 * define the intermediate class when any of them are 
 		 * overridden
 		 */
+
+		/* XXX:
+		 * Are respondsToSelector: and methodSignatureForSelector:
+		 * even necessary these days? All unittests pass without them,
+		 * which is expected because the default implementation can
+		 * find that information in the runtime, just like with normal
+		 * ObjC classes.
+		 */
 		METH(
 			"respondsToSelector_", 
 			@selector(respondsToSelector:), 

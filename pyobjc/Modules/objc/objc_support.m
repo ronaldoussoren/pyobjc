@@ -700,7 +700,6 @@ static PyObject *
 pythonify_c_struct (const char *type, void *datum)
 {
 	PyObject *ret;
-	PyObject *converted;
 	Py_ssize_t offset, itemidx;
 	const char *item;
 	int have_align = 0;
@@ -785,9 +784,14 @@ pythonify_c_struct (const char *type, void *datum)
 		item = PyObjCRT_SkipTypeSpec (item);
 	}
 
-	converted = [OC_PythonObject __pythonifyStruct:ret withType:type_real_start length:type_real_length];
-	Py_DECREF(ret);
-	return converted;
+	if (haveTuple) {
+		PyObject *converted;
+		converted = [OC_PythonObject __pythonifyStruct:ret withType:type_real_start length:type_real_length];
+		Py_DECREF(ret);
+		return converted;
+	} else {
+		return ret;
+	}
 }
 
 /*#F Extracts the elements from the tuple @var{arg} and fills a C array

@@ -1089,7 +1089,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	int               r;
 	void*		  msgResult;
 	Py_ssize_t        resultSize;
-	volatile Py_ssize_t arglistOffset;
+	int               useStret;
 	volatile int      flags;
 	SEL		  theSel;
 
@@ -1206,25 +1206,22 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 			super.class = meth->sel_class;
 		}
 
-#ifdef GNU_RUNTIME
-
-#else /* !GNU_RUNTIME */
-		if (*rettype == _C_DBL || *rettype == _C_FLT ||
-			 *rettype == _C_LNGLNG || *rettype == _C_ULNGLNG) {
-			arglistOffset = 0;
-
-			/* Libffi knows how to pass them, and ..._stret 
-			 * doesn't work with these...
-			 */
-
-		} else if ((size_t)resultSize > SMALL_STRUCT_LIMIT) {
-			arglistOffset = 1;
-			arglist[0] = &ffi_type_pointer;
-			values[0] = &msgResult;
-		} else {
-			arglistOffset = 0;
-		}
+#ifndef GNU_RUNTIME 
+		useStret = 0;
+		if (*rettype == _C_STRUCT_B && 
+			(resultSize > SMALL_STRUCT_LIMIT
+#ifdef __i386__
+			 /* darwin/x86 ABI is slightly odd ;-) */
+			 || (resultSize != 1 
+				&& resultSize != 2 
+				&& resultSize != 4 
+				&& resultSize != 8)
 #endif
+			)) {
+			
+			useStret = 1;
+		}
+#endif /* !GNU_RUNTIME */
 		
 		superPtr = &super;
 		arglist[ 0] = &ffi_type_pointer;
@@ -1245,16 +1242,8 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 
 	PyErr_Clear();
-#if 0
-	if (arglistOffset) {
-		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, methinfo->nargs+1,
-			&ffi_type_void, arglist);
-	} else 
-#endif
-	{
-		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, methinfo->nargs,
-			signature_to_ffi_return_type(rettype), arglist);
-	}
+	r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, methinfo->nargs,
+		signature_to_ffi_return_type(rettype), arglist);
 	if (r != FFI_OK) {
 		PyErr_Format(PyExc_RuntimeError,
 			"Cannot setup FFI CIF [%d]", r);
@@ -1294,7 +1283,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 #else /* !GNU_RUNTIME */
 
-			if (arglistOffset) {
+			if (useStret) {
 				ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), 
 					msgResult, values);
 			} else {
@@ -1352,33 +1341,20 @@ error_cleanup:
  * as an initial argument), and is set to 0 otherwise.
  */
 ffi_cif*
-PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, Py_ssize_t* pArgOffset)
+PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 {
 	ffi_cif* cif;
 	ffi_type** cl_arg_types;
 	ffi_type* cl_ret_type;
 	const char* rettype;
-	Py_ssize_t argOffset;
 	ffi_status rv;
 	int i;
 
 	rettype = methinfo->rettype;
 
-	/* XXX: this needs work!!! */
-	if (pArgOffset != NULL && (((size_t)PyObjCRT_SizeOfType(rettype) > SMALL_STRUCT_LIMIT)
-		 	&& *rettype != _C_DBL && *rettype != _C_FLT
-		 	&& *rettype != _C_LNGLNG && *rettype != _C_ULNGLNG)) {
-
-		/* the prototype is objc_msgSend_stret(void* retbuf, ... */
-		argOffset = 1;
-		cl_ret_type = &ffi_type_void;
-		cl_ret_type = signature_to_ffi_return_type(rettype);
-	} else {
-		argOffset = 0;
-		cl_ret_type = signature_to_ffi_return_type(rettype);
-		if (cl_ret_type == NULL) {
-			return NULL;
-		}
+	cl_ret_type = signature_to_ffi_return_type(rettype);
+	if (cl_ret_type == NULL) {
+		return NULL;
 	}
 
 	/* Build FFI argumentlist description */
@@ -1415,9 +1391,6 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, Py_ssize_t* pArgOffse
 		return NULL;
 	}
 
-	if (pArgOffset) {
-		*pArgOffset = argOffset;
-	}
 	return cif;
 }
 
@@ -1446,9 +1419,8 @@ PyObjCFFI_MakeClosure(
 	ffi_cif *cif;
 	ffi_closure *cl;
 	ffi_status rv;
-	Py_ssize_t argOffset;
 
-	cif = PyObjCFFI_CIFForSignature(methinfo, &argOffset);
+	cif = PyObjCFFI_CIFForSignature(methinfo);
 	if (cif == NULL) {
 		return NULL;
 	}

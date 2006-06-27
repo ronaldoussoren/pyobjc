@@ -227,7 +227,7 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc)
 
 	result->module = NULL;
 
-	result->cif = PyObjCFFI_CIFForSignature(result->methinfo, 0);
+	result->cif = PyObjCFFI_CIFForSignature(result->methinfo);
 	if (result->cif == NULL) {
 		Py_DECREF(result);
 		return NULL;	

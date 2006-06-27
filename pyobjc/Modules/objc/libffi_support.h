@@ -6,7 +6,7 @@
 typedef void (*PyObjCFFI_ClosureFunc)(ffi_cif*, void*, void**, void*);
 
 void PyObjCFFI_FreeCIF(ffi_cif* cif);
-ffi_cif* PyObjCFFI_CIFForSignature(PyObjCMethodSignature* signature, Py_ssize_t* pArgOffset);
+ffi_cif* PyObjCFFI_CIFForSignature(PyObjCMethodSignature* signature);
 IMP PyObjCFFI_MakeClosure(PyObjCMethodSignature* signature,
 			PyObjCFFI_ClosureFunc func, void* userdata);
 void* PyObjCFFI_FreeClosure(IMP closure);

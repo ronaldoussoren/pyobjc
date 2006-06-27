@@ -35,7 +35,7 @@
 #include <fficonfig.h>
 #include <ffi.h>
 
-#if 0
+#ifdef PyObjC_STRICT_DEBUGGING
   /* XXX: Debugging of stack alignment, to be removed */
 #define ASSERT_STACK_ALIGNED movdqa -16(%esp), %xmm0
 #else
