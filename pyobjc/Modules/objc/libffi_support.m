@@ -401,7 +401,6 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	PyObject* callable = userdata->callable;
 	PyObjCMethodSignature* methinfo = userdata->methinfo;
 	int isAlloc = 0;
-	Py_ssize_t         argOffset;
 	Py_ssize_t         i;
 	PyObject*          arglist;
 	PyObject*          res;
@@ -415,19 +414,9 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 	rettype = methinfo->rettype;
 
-	if (((size_t)PyObjCRT_SizeOfType(rettype) > SMALL_STRUCT_LIMIT)
-		 	&& *rettype != _C_DBL && *rettype != _C_FLT
-		 	&& *rettype != _C_LNGLNG && *rettype != _C_ULNGLNG) {
-		/* the prototype is objc_msgSend_stret(void* retbuf, ... */
-		resp = *(void**)args[0];
-		argOffset = 1;
-	} else {
-		argOffset = 0;
-	}
-
 	arglist = PyList_New(0);
 
-	pyself = PyObjCObject_NewTransient(*(id*)args[0+argOffset], &cookie);
+	pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
 	if (pyself == NULL) {
 		goto error;
 	}
@@ -449,16 +438,16 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			/* FALL THROUGH */
 		case _C_IN: case _C_CONST:
 			if (argtype[1] == _C_PTR) {
-				if (*(void**)args[i+argOffset]) {
+				if (*(void**)args[i]) {
 					v = pythonify_c_value(argtype+2, 
-						*(void**)args[i+argOffset]);
+						*(void**)args[i]);
 				} else {
 					v = PyObjC_NULL;
 					Py_INCREF(v);
 				}
 			} else {
 				v = pythonify_c_value(argtype+1, 
-						args[i+argOffset]);
+						args[i]);
 			}
 			break;
 		case _C_OUT:
@@ -468,7 +457,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			}
 			continue;
 		default:
-			v = pythonify_c_value(argtype, args[i+argOffset]);
+			v = pythonify_c_value(argtype, args[i]);
 		}
 		if (v == NULL) {
 			Py_DECREF(arglist);
@@ -1201,12 +1190,11 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	/* XXX */
 
 	if (PyObjCIMP_Check(aMeth)) {
-		arglistOffset = 0;
 		theSel = PyObjCIMP_GetSelector(aMeth);
-		arglist[arglistOffset + 0] = &ffi_type_pointer;
-		values[arglistOffset + 0] = &self_obj;
-		arglist[arglistOffset + 1] = &ffi_type_pointer;
-		values[arglistOffset + 1] = &theSel;
+		arglist[0] = &ffi_type_pointer;
+		values[0] = &self_obj;
+		arglist[1] = &ffi_type_pointer;
+		values[1] = &theSel;
 		msgResult = argbuf;
 		argbuf_cur = resultSize;
 		
@@ -1219,17 +1207,16 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		}
 
 #ifdef GNU_RUNTIME
-		arglistOffset = 0;
 
 #else /* !GNU_RUNTIME */
 		if (*rettype == _C_DBL || *rettype == _C_FLT ||
 			 *rettype == _C_LNGLNG || *rettype == _C_ULNGLNG) {
+			arglistOffset = 0;
 
 			/* Libffi knows how to pass them, and ..._stret 
 			 * doesn't work with these...
 			 */
 
-			arglistOffset = 0;
 		} else if ((size_t)resultSize > SMALL_STRUCT_LIMIT) {
 			arglistOffset = 1;
 			arglist[0] = &ffi_type_pointer;
@@ -1240,27 +1227,31 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 #endif
 		
 		superPtr = &super;
-		arglist[arglistOffset + 0] = &ffi_type_pointer;
-		values[arglistOffset + 0] = &superPtr;
-		arglist[arglistOffset + 1] = &ffi_type_pointer;
-		values[arglistOffset + 1] = &meth->sel_selector;
+		arglist[ 0] = &ffi_type_pointer;
+		values[ 0] = &superPtr;
+		arglist[ 1] = &ffi_type_pointer;
+		values[ 1] = &meth->sel_selector;
+		theSel = meth->sel_selector;
 		msgResult = argbuf;
 		argbuf_cur = resultSize;
 	}
 
 	r = PyObjCFFI_ParseArguments(methinfo, 2, args,
 		argbuf_cur, argbuf, byref, 
-		arglist+arglistOffset, values+arglistOffset);
+		arglist, values);
 	if (r == -1) {
 		goto error_cleanup;
 	}
 
 
 	PyErr_Clear();
+#if 0
 	if (arglistOffset) {
 		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, methinfo->nargs+1,
 			&ffi_type_void, arglist);
-	} else {
+	} else 
+#endif
+	{
 		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, methinfo->nargs,
 			signature_to_ffi_return_type(rettype), arglist);
 	}
@@ -1305,7 +1296,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 			if (arglistOffset) {
 				ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), 
-					NULL, values);
+					msgResult, values);
 			} else {
 				ffi_call(&cif, FFI_FN(objc_msgSendSuper), 
 					msgResult, values);
@@ -1381,6 +1372,7 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, Py_ssize_t* pArgOffse
 		/* the prototype is objc_msgSend_stret(void* retbuf, ... */
 		argOffset = 1;
 		cl_ret_type = &ffi_type_void;
+		cl_ret_type = signature_to_ffi_return_type(rettype);
 	} else {
 		argOffset = 0;
 		cl_ret_type = signature_to_ffi_return_type(rettype);
@@ -1390,21 +1382,17 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, Py_ssize_t* pArgOffse
 	}
 
 	/* Build FFI argumentlist description */
-	cl_arg_types = PyMem_Malloc(sizeof(ffi_type*) * (argOffset+methinfo->nargs));
+	cl_arg_types = PyMem_Malloc(sizeof(ffi_type*) * (methinfo->nargs));
 	if (cl_arg_types == NULL) {
 		PyMem_Free(cl_ret_type);
 		PyErr_NoMemory();
 		return NULL;
 	}
 
-	if (argOffset) {
-		cl_arg_types[0] = &ffi_type_pointer;
-	}
-
 	for (i = 0; i < methinfo->nargs; i++) {
-		cl_arg_types[i+argOffset] = arg_signature_to_ffi_type(
+		cl_arg_types[i] = arg_signature_to_ffi_type(
 			methinfo->argtype[i]);
-		if (cl_arg_types[i+argOffset] == NULL) {
+		if (cl_arg_types[i] == NULL) {
 			PyMem_Free(cl_arg_types);
 			return NULL;
 		}
@@ -1418,7 +1406,7 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo, Py_ssize_t* pArgOffse
 		return NULL;
 	}
 
-	rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, methinfo->nargs+argOffset, 
+	rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, methinfo->nargs, 
 		cl_ret_type, cl_arg_types);
 	if (rv != FFI_OK) {
 		PyMem_Free(cl_arg_types);
