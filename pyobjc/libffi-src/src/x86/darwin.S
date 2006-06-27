@@ -35,6 +35,13 @@
 #include <fficonfig.h>
 #include <ffi.h>
 
+#if 0
+  /* XXX: Debugging of stack alignment, to be removed */
+#define ASSERT_STACK_ALIGNED movdqa -16(%esp), %xmm0
+#else
+#define ASSERT_STACK_ALIGNED 
+#endif
+
 .text
 
 .globl _ffi_prep_args
@@ -48,10 +55,13 @@ _ffi_call_SYSV:
 .LCFI0:
         movl  %esp,%ebp
 	subl  $8,%esp
+	ASSERT_STACK_ALIGNED
 .LCFI1:
 	/* Make room for all of the new args.  */
 	movl  16(%ebp),%ecx
 	subl  %ecx,%esp
+
+	ASSERT_STACK_ALIGNED
 
 	movl  %esp,%eax
 
@@ -61,17 +71,23 @@ _ffi_call_SYSV:
 	pushl %eax
 	call  *8(%ebp)
 
+	ASSERT_STACK_ALIGNED
+
 	/* Return stack to previous state and call the function  */
 	addl  $16,%esp
 
-	call  *28(%ebp)
+	ASSERT_STACK_ALIGNED
 
-	/* Remove the space we pushed for the args  */
+	call  *28(%ebp)
+	
+	/* XXX: return returns return with 'ret $4', that upsets the stack! */
 	movl  16(%ebp),%ecx
 	addl  %ecx,%esp
 
+
 	/* Load %ecx with the return type code  */
 	movl  20(%ebp),%ecx	
+
 
 	/* If the return value pointer is NULL, assume no return value.  */
 	cmpl  $0,24(%ebp)
@@ -145,14 +161,21 @@ retstruct:
    jne  noretval
 	/* Nothing to do!  */
 
-	/* addl $4,%esp */
+	subl $4,%esp
+
+	ASSERT_STACK_ALIGNED
+
+	addl $8,%esp
 	movl %ebp, %esp
 	popl %ebp
 	ret
 
 noretval:
 epilogue:
-        /* addl $8,%esp */
+	ASSERT_STACK_ALIGNED
+	addl $8, %esp
+
+
         movl %ebp,%esp
         popl %ebp
         ret

@@ -190,6 +190,7 @@ ffi_status ffi_prep_cif_machdep(ffi_cif *cif)
   cif->bytes = (cif->bytes + 15) & ~0xF;
 #endif
 
+
   return FFI_OK;
 }
 
@@ -221,7 +222,6 @@ void ffi_call(/*@dependent@*/ ffi_cif *cif,
 	      /*@dependent@*/ void **avalue)
 {
   extended_cif ecif;
-  int flags;
 
   ecif.cif = cif;
   ecif.avalue = avalue;
@@ -238,20 +238,6 @@ void ffi_call(/*@dependent@*/ ffi_cif *cif,
   else
     ecif.rvalue = rvalue;
 
-  flags = cif->flags;
-  if (flags == FFI_TYPE_STRUCT) {
-    if (cif->rtype->size == 8) {
-	flags = FFI_TYPE_SINT64;
-    } else if (cif->rtype->size == 4) {
-        flags = FFI_TYPE_INT;
-    } else if (cif->rtype->size == 2) {
-        flags = FFI_TYPE_INT;
-    } else if (cif->rtype->size == 1) {
-        flags = FFI_TYPE_INT;
-    }
-  }
-
-  
   switch (cif->abi) 
     {
     case FFI_SYSV:
@@ -261,7 +247,7 @@ void ffi_call(/*@dependent@*/ ffi_cif *cif,
        * in ffi_call_SYSV.
        */
       ffi_call_SYSV(ffi_prep_args, &ecif, cif->bytes, 
-		    flags, ecif.rvalue, fn);
+		    cif->flags, ecif.rvalue, fn);
       /*@=usedef@*/
       break;
 #ifdef X86_WIN32
@@ -347,9 +333,6 @@ ffi_closure_SYSV (closure)
 
 
   cif         = closure->cif;
-#if 0
-  printf("closure! %p %d\n", closure->fun, cif->nargs);
-#endif
   arg_area    = (void**) alloca (cif->nargs * sizeof (void*));  
 
   /* this call will initialize ARG_AREA, such that each
