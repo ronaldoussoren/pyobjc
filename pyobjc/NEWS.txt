@@ -7,6 +7,11 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.4.1 (2006-??-??)
 --------------------------
 
+- Add RoundTransparentWindow and DragItemAround examples in ``Examples/AppKit``.
+
+  Both are ports of Objective-C examples at ADC and were provided by
+  ytrewq1.
+
 - Fix issue where programs would crash with an badly aligned C-stack on
   some problems. This issue only affected Intel systems.
 

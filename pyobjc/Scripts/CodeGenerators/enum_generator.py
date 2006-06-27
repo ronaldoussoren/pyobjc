@@ -20,7 +20,7 @@ BLOCK_1_RE=re.compile(r'/\*([^*]|(\*[^/]))*\*/')
 BLOCK_S_RE=re.compile(r'/\*')
 BLOCK_E_RE=re.compile(r'\*/')
 
-DEFINE_RE=re.compile(r'^\s*#\s*define\s+([A-Za-z_][A-Za-z0-9]*)\s+(\d+)$')
+DEFINE_RE=re.compile(r'^\s*#\s*define\s+([A-Za-z_][_A-Za-z0-9]*)\s+(\d+)$')
 
 def entry(fp, val):
     if val.endswith('Mask'):
