@@ -15,7 +15,7 @@ import logging
 from logging import error, info, debug
 
 import site
-site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'source-deps'))
+site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'source-deps'))
 
 import subprocess
 import utf16reader
