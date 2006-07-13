@@ -1,7 +1,7 @@
 import os
 import subprocess
 from distutils.dep_util import newer
-from distutils.cmd import Command
+from setuptools import Command
 
 def rest2HTML(irrelevant, dirName, names):
     while '.svn' in names:

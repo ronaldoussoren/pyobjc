@@ -1,6 +1,7 @@
 import os
 import shutil
-from distutils.command.install import install
+import setuptools
+install = setuptools.Distribution().get_command_class('install')
 
 CRUFT = """
 objc

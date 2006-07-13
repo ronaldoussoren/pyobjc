@@ -6,11 +6,14 @@ if not os.path.exists('/usr/bin/sw_vers'):
 import sys
 from distutils.version import LooseVersion
 from distutils import log
-from bdist_mpkg.command import bdist_mpkg as _bdist_mpkg
+import setuptools
+import pkg_resources
+pkg_resources.require('bdist_mpkg')
+_bdist_mpkg = setuptools.Distribution().get_command_class('bdist_mpkg')
+
 from py2app.util import skipfunc, skipjunk
 
 from altgraph.compat import *
-from bdist_mpkg import tools
 
 # XXX - not used
 SCHEME_REMOVE = dict(
@@ -52,10 +55,6 @@ CUSTOM_SCHEMES = dict(
     ),
 )
 
-SUBPROJECT_SCHEMES = dict(
-    py2app='source-deps/py2app-source/setup.py',
-)
-
 
 class pyobjc_bdist_mpkg(_bdist_mpkg):
     def initialize_options(self):
@@ -71,7 +70,6 @@ class pyobjc_bdist_mpkg(_bdist_mpkg):
             self.scheme_map[scheme] = prefix
             self.scheme_copy[scheme] = source
         self.scheme_command['doc'] = 'build_html'
-        self.scheme_subprojects.update(SUBPROJECT_SCHEMES)
 
     def copy_tree(self, *args, **kw):
         if kw.get('condition') is None:

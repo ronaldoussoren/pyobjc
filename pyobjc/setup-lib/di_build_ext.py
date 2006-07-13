@@ -2,7 +2,8 @@ import sys
 import os
 import shutil
 from pyobjc_setup_utils import runtasks
-from distutils.command.build_ext import build_ext
+import setuptools
+build_ext = setuptools.Distribution().get_command_class('build_ext')
 
 class pyobjc_build_ext (build_ext):
     # Custom build_ext implementation. This differs in two ways from the

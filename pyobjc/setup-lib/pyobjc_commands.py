@@ -3,10 +3,7 @@ import di_build_ext
 import di_sdist
 import di_test
 import di_install
-try:
-    import pyobjc_mpkg
-except ImportError:
-    pass
+import pyobjc_mpkg
 try:
     import bdist_dmg
 except ImportError:

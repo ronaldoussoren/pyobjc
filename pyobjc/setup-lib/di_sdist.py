@@ -5,7 +5,8 @@ Custom 'sdist' action for setup.py
 # distutils doesn't know about subversion and I'm to lazy to reverse engineer
 # distutils in the hope of detecting how to specify that all svn directories
 # should be removed.
-from distutils.command.sdist import sdist as sdist_base
+import setuptools
+sdist_base = setuptools.Distribution().get_command_class('sdist')
 
 class sdist (sdist_base):
 

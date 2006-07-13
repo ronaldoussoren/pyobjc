@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+import ez_setup
+ez_setup.use_setuptools()
+
 import sys
 import os
 import glob
@@ -49,7 +52,7 @@ MacPython 2.3.  Users of MacPython 2.3 can install PyObjC though the
 PackageManager application.
 """
 
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 import os
 
 
@@ -141,12 +144,12 @@ if gs_root is None:
     if AUTO_UNIVERSAL:
         if os.path.exists('/Developer/SDKs/MacOSX10.4u.sdk') and int(os.uname()[2].split('.')[0]) >= 8:
             CFLAGS.extend([
-                    '-arch', 'i386', 
+                    '-arch', 'i386',
                     '-arch', 'ppc',
                     '-isysroot', '/Developer/SDKs/MacOSX10.4u.sdk',
             ])
             BASE_LDFLAGS.extend([
-                    '-arch', 'i386', 
+                    '-arch', 'i386',
                     '-arch', 'ppc',
                     '-isysroot', '/Developer/SDKs/MacOSX10.4u.sdk',
                     #'-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk',
@@ -705,6 +708,8 @@ dist = setup(
     ),
     packages = packages,
     package_dir = package_dir,
+    install_requires = ['py2app>=0.3', 'bdist_mpkg>=0.4.1'],
+    setup_requires = ['py2app>=0.3', 'bdist_mpkg>=0.4.1'],
     scripts = [ 'Scripts/nibclassbuilder', ],
     extra_path = "PyObjC",
     cmdclass = extra_cmdclass,
