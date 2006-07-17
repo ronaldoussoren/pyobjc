@@ -671,7 +671,7 @@ Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
 """.splitlines())
 
-if gs_root is None:
+if gs_root is not None:
     install_requires = setup_requires = []
 else:
     install_requires = setup_requires = ['py2app>=0.3.1', 'bdist_mpkg>=0.4.2']
@@ -728,6 +728,8 @@ dist = setup(
     license = 'MIT License',
     download_url = 'http://pyobjc.sourceforge.net/software/index.php',
     zip_safe = False,
+    # workaround for setuptools 0.6b4 bug
+    dependency_links = [],
 )
 
 if 'install' in sys.argv:
