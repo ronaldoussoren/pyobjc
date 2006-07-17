@@ -2,7 +2,6 @@ import build_html
 import di_build_ext
 import di_sdist
 import di_test
-import di_install
 try:
     import pyobjc_mpkg
     import bdist_dmg
