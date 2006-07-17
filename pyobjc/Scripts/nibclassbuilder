@@ -1,5 +1,0 @@
-#!/usr/bin/env python
-"""
-This file is part of PyObjC <http://pyobjc.sourceforge.net>
-"""
-import PyObjCScripts.nibclassbuilder

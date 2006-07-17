@@ -28,7 +28,7 @@ site.addsitedir(os.path.abspath('source-deps'))
 sys.path.insert(1,
     os.path.abspath(os.path.join(os.path.dirname(__file__), 'setup-lib')))
 
-from pyobjc_commands import extra_cmdclass
+from pyobjc_commands import extra_cmdclass, extra_options
 
 # Some PiPy stuff
 LONG_DESCRIPTION="""
@@ -640,7 +640,6 @@ packages = (
     [
         'PyObjCTools',
         'PyObjCTools.XcodeSupport',
-        'PyObjCScripts',
     ]
 )
 
@@ -669,6 +668,11 @@ Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
 """.splitlines())
+
+if gs_root is None:
+    install_requires = setup_requires = []
+else:
+    install_requires = setup_requires = ['py2app>=0.3.1', 'bdist_mpkg>=0.4.2']
 
 dist = setup(
     name = "pyobjc",
@@ -708,11 +712,16 @@ dist = setup(
     ),
     packages = packages,
     package_dir = package_dir,
-    install_requires = ['py2app>=0.3', 'bdist_mpkg>=0.4.1'],
-    setup_requires = ['py2app>=0.3', 'bdist_mpkg>=0.4.1'],
-    scripts = [ 'Scripts/nibclassbuilder', ],
+    install_requires = install_requires,
+    setup_requires = setup_requires,
+    entry_points = {
+        'console_scripts': [
+            "nibclassbuilder = PyObjCTools.NibClassBuilder.commandline"
+        ],
+    },
     extra_path = "PyObjC",
     cmdclass = extra_cmdclass,
+    options = extra_options,
     classifiers = CLASSIFIERS,
     license = 'MIT License',
     download_url = 'http://pyobjc.sourceforge.net/software/index.php',

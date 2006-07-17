@@ -8,7 +8,7 @@ import shutil
 from distutils.dep_util import newer
 from setuptools import Command
 from pyobjc_setup_utils import runtasks
-from bdist_mpkg.tools import sw_vers
+from macosx_version import sw_vers
 
 OSX_VERSION = sw_vers()
 
