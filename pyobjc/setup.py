@@ -28,7 +28,9 @@ site.addsitedir(os.path.abspath('source-deps'))
 sys.path.insert(1,
     os.path.abspath(os.path.join(os.path.dirname(__file__), 'setup-lib')))
 
+OPTIONS = {'egg_info': {'egg_base': 'Lib'}}
 from pyobjc_commands import extra_cmdclass, extra_options
+OPTIONS.update(extra_options)
 
 # Some PiPy stuff
 LONG_DESCRIPTION="""
@@ -721,7 +723,7 @@ dist = setup(
     },
     extra_path = "PyObjC",
     cmdclass = extra_cmdclass,
-    options = extra_options,
+    options = OPTIONS,
     classifiers = CLASSIFIERS,
     license = 'MIT License',
     download_url = 'http://pyobjc.sourceforge.net/software/index.php',
