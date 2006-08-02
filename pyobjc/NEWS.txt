@@ -7,6 +7,14 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.4.1 (2006-??-??)
 --------------------------
 
+- PyObjC now uses setuptools. Setuptools support is fairly minimal at the 
+  moment, we expect to move more of the build infrastructure to setuptools and
+  to split PyObjC into smaller eggs.
+
+- Fix an issue that made is possible to create weakref's to subclasses of 
+  subclasses of Objective-C classes. This was unintentional behaviour, the 
+  weakref is to the proxy (see the news for 1.0b1 for more details).
+
 - Add RoundTransparentWindow and DragItemAround examples in ``Examples/AppKit``.
 
   Both are ports of Objective-C examples at ADC and were provided by

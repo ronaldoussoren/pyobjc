@@ -186,6 +186,17 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 		/* Add an __dict__ unless it is already there */
 		PyErr_Clear();
 
+		slot_value = PyTuple_New(0);
+		if (slot_value == NULL) {
+			return 0;
+		}
+
+		if (PyDict_SetItemString(clsdict, "__slots__", slot_value) < 0){
+			Py_DECREF(slot_value);
+			return -1;
+		}
+		Py_DECREF(slot_value);
+
 		if (PyObjCClass_DictOffset(super_class) != 0) {
 			/* We already have an __dict__ */
 			return 0;
@@ -203,16 +214,6 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 		}
 		Py_DECREF(v);
 
-		slot_value = PyTuple_New(0);
-		if (slot_value == NULL) {
-			return 0;
-		}
-
-		if (PyDict_SetItemString(clsdict, "__slots__", slot_value) < 0){
-			Py_DECREF(slot_value);
-			return -1;
-		}
-		Py_DECREF(slot_value);
 		return 0;
 	}
 
