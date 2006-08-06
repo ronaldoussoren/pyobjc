@@ -1,4 +1,7 @@
-from distutils.core import setup, Extension
+import ez_setup
+ez_setup.use_setuptools()
+
+from setuptools import setup, Extension
 
 LONG_DESCRIPTION="""
 Wrappers for the launch library on Mac OS X 10.4 or later.  
@@ -26,7 +29,7 @@ def grep_version():
 
 
 setup(
-    name="launch",
+    name="macosx-launch",
     version=grep_version(),
     description="Wrapper for the launch library in MacOSX 10.3 or later",
     long_description=LONG_DESCRIPTION,
