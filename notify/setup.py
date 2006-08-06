@@ -1,4 +1,7 @@
-from distutils.core import setup, Extension
+import ez_setup
+ez_setup.use_setuptools()
+
+from setuptools import setup, Extension
 
 LONG_DESCRIPTION="""
 Wrappers for the notify library on Mac OS X 10.3 or later. This library allows
@@ -32,7 +35,7 @@ def grep_version():
 
 
 setup(
-    name="notify",
+    name="macosx-notify",
     version=grep_version(),
     description="Wrapper for the notify library in MacOSX 10.3 or later",
     long_description=LONG_DESCRIPTION,
