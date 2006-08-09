@@ -256,7 +256,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	 */
 	obj_inst = PyObjCObject_GetObject(obj);
 	if (!obj_inst) {
-		PyErr_Format(PyExc_AttributeError,
+		PyErr_Format(PyExc_TypeError,
 		     "cannot access attribute '%.400s' of NIL '%.50s' object",
 		     PyString_AS_STRING(name),
 		     obj->ob_type->tp_name);
