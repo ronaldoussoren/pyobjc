@@ -1092,6 +1092,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	int               useStret;
 	volatile int      flags;
 	SEL		  theSel;
+	int		  isUninitialized;
 
 
 	if (PyObjCIMP_Check(aMeth)) {
@@ -1250,6 +1251,9 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		goto error_cleanup;
 	}
 
+	isUninitialized = ((PyObjCObject*)self)->flags  & PyObjCObject_kUNINITIALIZED;
+	((PyObjCObject*)self)->flags  &= ~PyObjCObject_kUNINITIALIZED;
+
 	PyObjC_DURING
 		if (PyObjCIMP_Check(aMeth)) {
 			ffi_call(&cif, FFI_FN(PyObjCIMP_GetIMP(aMeth)), 
@@ -1297,6 +1301,10 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 	PyObjC_ENDHANDLER
+
+	if (isUninitialized) {
+		((PyObjCObject*)self)->flags  |= PyObjCObject_kUNINITIALIZED;
+	}
 
 	if (PyErr_Occurred()) goto error_cleanup;
 
