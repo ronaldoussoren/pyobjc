@@ -1261,7 +1261,7 @@
 <signature clsName="NSFont" framework="AppKit" origSignature="{_NSPoint=ff}@:IiI^{_NSSize=ff}^c" selector="positionOfGlyph:withRelation:toBaseGlyph:totalAdvancement:metricsExist:" signature="{_NSPoint=ff}@:IiIo^{_NSSize=ff}o^c" />
 <signature clsName="NSFormatter" framework="Foundation" origSignature="c@:^@@^@" selector="getObjectValue:forString:errorDescription:" signature="c@:o^@@o^@" />
 <signature clsName="NSFormatter" framework="Foundation" origSignature="c@:@^@^@" selector="isPartialStringValid:newEditingString:errorDescription:" signature="c@:@o^@o^@" />
-<signature clsName="NSFormatter" framework="Foundation" origSignature="c@:^@^{_NSRange=II}@{_NSRange=II}^@" selector="isPartialStringValid:proposedSelectedRange:originalString:originalSelectedRange:errorDescription:" signature="c@:o^@o^{_NSRange=II}@{_NSRange=II}o^@" />
+<signature clsName="NSFormatter" framework="Foundation" origSignature="c@:^@^{_NSRange=II}@{_NSRange=II}^@" selector="isPartialStringValid:proposedSelectedRange:originalString:originalSelectedRange:errorDescription:" signature="c@:N^@N^{_NSRange=II}@{_NSRange=II}o^@" />
 <signature clsName="NSGZipDecoder" framework="Foundation" origSignature="c@:@^@^@" selector="decodeDownloadData:dataForkData:resourceForkData:" signature="c@:@o^@o^@" />
 <signature clsName="NSHTTPURLHandle" framework="Foundation" origSignature="v@:^{__CFReadStream=}@" selector="populateCacheFromStream:data:" signature="v@:^{__CFReadStream=}@" />
 <signature clsName="NSIBObjectData" framework="AppKit" origSignature="v@:^{__CFDictionary=}" selector="reinsertEmptyHelpConnectors:" signature="v@:^{__CFDictionary=}" />

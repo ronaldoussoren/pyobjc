@@ -40,7 +40,7 @@ setSignatureForSelector("NSFaultHandler", "extraData", "i@:")
 setSignatureForSelector("NSFaultHandler", "setTargetClass:extraData:", "v@:#i")
 setSignatureForSelector("NSFormatter", "getObjectValue:forString:errorDescription:", "c@:o^@@o^@")
 setSignatureForSelector("NSFormatter", "isPartialStringValid:newEditingString:errorDescription:", "c@:@o^@o^@")
-setSignatureForSelector("NSFormatter", "isPartialStringValid:proposedSelectedRange:originalString:originalSelectedRange:errorDescription:", "c0@4:8o^@12o^{_NSRange=II}16@20{_NSRange=II}24o^@32")
+setSignatureForSelector("NSFormatter", "isPartialStringValid:proposedSelectedRange:originalString:originalSelectedRange:errorDescription:", "c0@4:8N^@12N^{_NSRange=II}16@20{_NSRange=II}24o^@32")
 
 setSignatureForSelector("NSObject", "validateValue:forKey:error:", "c@:N^@@o^@")
 setSignatureForSelector("NSObject", "validateValue:forKeyPath:error:", "c@:N^@@o^@")

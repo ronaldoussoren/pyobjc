@@ -24,7 +24,7 @@ setSignatureForSelector('NSDeserializer', 'deserializePropertyListLazilyFromData
 setSignatureForSelector('NSFileManager', 'fileExistsAtPath:isDirectory:', 'c@:@o^c')
 setSignatureForSelector('NSFormatter', 'getObjectValue:forString:errorDescription:', 'c@:o^@@o^@')
 setSignatureForSelector('NSFormatter', 'isPartialStringValid:newEditingString:errorDescription:', 'c@:@o^@o^@')
-setSignatureForSelector('NSFormatter', 'isPartialStringValid:proposedSelectedRange:originalString:originalSelectedRange:errorDescription:', 'c@:o^@o^{_NSRange=II}@{_NSRange=II}o^@')
+setSignatureForSelector('NSFormatter', 'isPartialStringValid:proposedSelectedRange:originalString:originalSelectedRange:errorDescription:', 'c@:N^@N^{_NSRange=II}@{_NSRange=II}o^@')
 setSignatureForSelector('NSGZipDecoder', 'decodeDownloadData:dataForkData:resourceForkData:', 'c@:@o^@o^@')
 setSignatureForSelector('NSKeyValueProperty', 'keyPathIfAffectedByValueForKey:exactMatch:', '@@:@o^c')
 setSignatureForSelector('NSMacBinaryDecoder', 'decodeDownloadData:dataForkData:resourceForkData:', 'c@:@o^@o^@')
