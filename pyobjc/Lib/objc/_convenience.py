@@ -92,6 +92,18 @@ def defaultSignatureUpdates(sel, signature):
             sigParts = sigParts[:-1] + ('o^@',)
             signature = ''.join(sigParts)
 
+    if ':documentAttributes:' in sel and sel.startswith('init'):
+        # documentAttributes is used in NSAttributedString initialisers
+        selParts = sel.split(':')
+        idx = selParts.index('documentAttributes')
+        sigParts = splitSignature(signature)
+        if sigParts[idx+3] == '^@':
+            sigParts = list(sigParts)
+            sigParts[idx+3] = 'o^@'
+            signature = ''.join(sigParts)
+
+
+
     sigParts = list(splitSignature(signature))
     updated = 0
     for idx, val in enumerate(sigParts):
