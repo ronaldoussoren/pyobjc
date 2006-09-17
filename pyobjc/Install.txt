@@ -52,6 +52,9 @@ When using Mac OS X 10.2, you must install the WebKit SDK from the
 `ADC website <http://connect.apple.com>`_ in order to build or use
 the WebKit wrapper.
 
+When using Mac OS X 10.2, you must install the QuickTime 7 SDK, some parts
+of the source depend on the QT7 headers.
+
 Examples
 ========
 
