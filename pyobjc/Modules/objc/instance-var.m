@@ -219,6 +219,45 @@ PyDoc_STRVAR(ivar_doc,
 "'type' is optional and should be a signature string.\n"
 );
 
+static PyMemberDef ivar_members[] = {
+	{
+		"name",
+		T_STRING,
+		offsetof(PyObjCInstanceVariable, name),
+		READONLY,
+		NULL
+	},
+	{
+		"typestr",
+		T_STRING,
+		offsetof(PyObjCInstanceVariable, type),
+		READONLY,
+		NULL
+	},
+	{
+		"isOutlet",
+		T_INT,
+		offsetof(PyObjCInstanceVariable, isOutlet),
+		READONLY,
+		NULL
+	},
+	{
+		"isSlot",
+		T_INT,
+		offsetof(PyObjCInstanceVariable, isSlot),
+		READONLY,
+		NULL
+	},
+	{
+		NULL,
+		0,
+		0,
+		0,
+		NULL
+	}
+};
+
+
 PyTypeObject PyObjCInstanceVariable_Type = {
 	PyObject_HEAD_INIT(&PyType_Type)             
 	0,                                           
@@ -249,7 +288,7 @@ PyTypeObject PyObjCInstanceVariable_Type = {
 	0,                                      /* tp_iter */
 	0,                                      /* tp_iternext */
 	0,                                      /* tp_selectors */
-	0,                                      /* tp_members */
+	ivar_members,                           /* tp_members */
 	0,                                      /* tp_getset */
 	0,                                      /* tp_base */
 	0,                                      /* tp_dict */
