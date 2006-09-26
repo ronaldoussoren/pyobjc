@@ -8,6 +8,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.4.1 (2006-??-??)
 --------------------------
 
+
 - NibClassBuilder.AutoBaseClass raises an exception when the (optional) python 
   definition for an outlet is incompatible with the definition in the NIB file.
 
@@ -39,6 +40,9 @@ Version 1.4.1 (2006-??-??)
   to run your binaries on.  Doing this with python is somewhat of a black
   art, please test your applications on the lowest version of the OS that
   you want to support to make sure that this actually works.
+
+- PyOpenGLContext -setValues:forParameter: and -getValues:forParameter: got
+  wrapped.
 
 Version 1.4 (2006-06-14)
 --------------------------
