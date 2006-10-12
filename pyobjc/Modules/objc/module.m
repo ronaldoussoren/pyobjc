@@ -951,7 +951,7 @@ static char* keywords[] = { "value", 0 };
 	return PyObjC_IDToCFType(PyObjCObject_GetObject(argument));
 }
 
-#if defined(MAC_OS_X_VERSION_10_3) && defined(__ppc__)
+#if defined(MAC_OS_X_VERSION_10_3)
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
 
 PyDoc_STRVAR(inject_doc,
@@ -1256,7 +1256,7 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleVariables_doc },
 	{ "loadBundleFunctions", (PyCFunction)PyObjC_loadBundleFunctions,
 		METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleFunctions_doc },
-#if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3) && defined(__ppc__)
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
 	{ "_inject", (PyCFunction)pyject_inject, METH_VARARGS|METH_KEYWORDS, inject_doc },
 #endif /* MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3 */
 #endif /* MACOSX */

@@ -1,5 +1,5 @@
 #include "objc_inject.h"
-#if defined(MAC_OS_X_VERSION_10_3) && defined(__ppc__)
+#if defined(MAC_OS_X_VERSION_10_3)
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
 #include "mach_inject.h"
 #include <string.h>
@@ -19,7 +19,11 @@
 	NSLINKMODULE_OPTION_RETURN_ON_ERROR | \
 	NSLINKMODULE_OPTION_PRIVATE)
 
+#if defined(__ppc__)
 #define TRAP() __asm__ ("trap")
+#elif defined(__i386__)
+#define TRAP() __asm__ __volatile__ ("int3")
+#endif
 
 typedef struct {
 	task_port_t target_task;
@@ -85,7 +89,7 @@ typedef struct {
 
 
 /* functions */
-static void INJECT_ENTRY(ptrdiff_t codeOffset, objc_inject_param *param, size_t paramSize);
+static void INJECT_ENTRY(ptrdiff_t codeOffset, objc_inject_param *param, size_t paramSize, char *dummy_pthread_struct);
 static target_mach_header *get_target_mach_header(target_mach_header *th);
 static target_mach_header *calculate_header(target_mach_header *th);
 static kern_return_t dispose_target_mach_header(target_mach_header *th);
@@ -240,14 +244,21 @@ INJECT_test_func(void) {
 }
 
 static void
-INJECT_ENTRY(ptrdiff_t codeOffset, objc_inject_param *param, size_t paramSize __attribute__((__unused__))) {
+INJECT_ENTRY(ptrdiff_t codeOffset, objc_inject_param *param, size_t paramSize, char *dummy_pthread_struct) {
+#if defined (__i386__)
+	// On intel, per-pthread data is a zone of data that must be allocated.
+	// if not, all function trying to access per-pthread data (all mig functions for instance)
+	// will crash. 
+	extern void __pthread_set_self(char*);
+	__pthread_set_self(dummy_pthread_struct);
+#endif
 	func_wrappers *f = &param->f;
 #define CODE_SHIFT(func) f->func = (void *)(((char *)f->func) + codeOffset)
-    CODE_SHIFT(INJECT_pthread_entry);
-    CODE_SHIFT(INJECT_test_func);
-    CODE_SHIFT(INJECT_EventLoopTimerEntry);
+	CODE_SHIFT(INJECT_pthread_entry);
+	CODE_SHIFT(INJECT_test_func);
+	CODE_SHIFT(INJECT_EventLoopTimerEntry);
 #undef CODE_SHIFT
-    f->INJECT_test_func();
+	f->INJECT_test_func();
 	f->_dyld_func_lookup = *((__typeof__(&f->_dyld_func_lookup))param->funcLookupPtr);
 	/* dyld */
 #define DYLD_WRAP(func) f->_dyld_func_lookup("_"#func, (void **)&f->func)
