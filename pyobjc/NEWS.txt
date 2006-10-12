@@ -8,9 +8,17 @@ An overview of the relevant changes in new, and older, releases.
 Version 1.4.1 (2006-??-??)
 --------------------------
 
-- objc.inject now works on Intel. Thanks to ytrewq1 who did the actual port,
-  and Robert Chin and Nicholas Riley who allowed us to reuse parts of F-Script
-  Anywhere.
+- objc.inject now works on darwin/x86. Thanks to ytrewq1 who did the actual 
+  port, and Robert Chin and Nicholas Riley who allowed us to reuse parts of 
+  F-Script Anywhere.
+
+  Note that objc.inject for x86 requires that the users that does the injecting
+  it a member of group ``procmod``. See 
+  <http://0xced.blogspot.com/2006/06/machinject-procmod-group-and-security.html>
+  for a good explaination on what to do to arrange this when you use the 
+  injecting functionality in an application. The one line summary: use
+  the Authorization framework to run a tool as root and make the py2app 
+  application stub set-group-id to group ``procmod``.
 
 - NibClassBuilder.AutoBaseClass raises an exception when the (optional) python 
   definition for an outlet is incompatible with the definition in the NIB file.
