@@ -61,7 +61,7 @@ import os
 import objc
 
 
-__all__ = ["AutoBaseClass", "NibInfo", "extractClasses", "InvalidOutletDefinition"]
+__all__ = ["AutoBaseClass", "NibInfo", "extractClasses" ]
 
 
 from Foundation import NSDictionary, NSObject, NSBundle
@@ -70,7 +70,6 @@ import AppKit  # not used directly, but we look up classes from AppKit
 
 
 class NibLoaderError(Exception): pass
-class InvalidOutletDefinition (NibLoaderError): pass
 
 
 class ClassInfo:
@@ -212,10 +211,7 @@ class NibInfo(object):
                 iv = methods[o]
                 if not iv.isOutlet:
                     methods[o] = objc.ivar(o, iv.typestr, isOutlet=True)
-
-            else:
-                raise InvalidOutletDefinition("class %s, outlet %s"%(name, o))
-
+            
 
         for a in clsInfo.actions:
             if not methods.has_key(a):
