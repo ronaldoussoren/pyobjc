@@ -17,6 +17,7 @@ infoPlist = dict(
     NSPrefPaneIconFile='ShellEnv.icns',
     NSPrincipalClass='EnvironmentPane',
     NSMainNibFile='EnvironmentPane',
+    CFBundleIdentifier='org.sf.pyobjc.ShellEnvironment',
 )
 
 setup(

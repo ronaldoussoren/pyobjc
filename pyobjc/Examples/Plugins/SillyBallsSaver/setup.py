@@ -9,6 +9,7 @@ import py2app
 
 plist = dict(
     NSPrincipalClass='SillyBalls',
+    CFBundleIdentifier='org.sf.pyobjc.SillyBalls',
 )
 
 setup(
