@@ -153,6 +153,9 @@ class NibInfo(object):
 
     def _extractClassesFromNibFromPath(self, path):
         path = os.path.normpath(path)
+        if not isinstance(path, unicode):
+            path = path.decode(sys.getfilesystemencoding())
+
         if self.parsedNibs.has_key(path):
             return  # we've already parsed this nib
         nibName = os.path.basename(path)

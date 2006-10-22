@@ -7,7 +7,7 @@ __all__ = [
     'infoForFramework',
 ]
 
-import os
+import os, sys
 from _framework import infoForFramework
 
 # These are the defaults as per man dyld(1)
@@ -106,6 +106,24 @@ def dyld_library(filename, libname):
             return f
     raise ValueError, "dylib %s could not be found" % (filename,)
 
+
+# Python version upto (at least) 2.5 do not propertly convert unicode
+# arguments to os.readlink, the code below works around that.
+if sys.version_info[:3] >= (2,6,0):
+    _realpath = os.path.realpath
+
+else:
+    def _realpath(path):
+        """
+        Unicode-safe version of os.path.realpath.
+        """
+        if isinstance(path, unicode):
+            fsenc = sys.getfilesystemencoding()
+            return os.path.realpath(path.encode(fsenc)).decode(fsenc)
+
+        return os.path.realpath(path)
+
+
 def dyld_find(filename):
     """Generic way to locate a dyld framework or dyld"""
     # if they passed in a framework directory, not a mach-o file
@@ -116,7 +134,7 @@ def dyld_find(filename):
             filename,
             os.path.basename(filename)[:-len(os.path.splitext(filename)[-1])]
         )
-    filename = os.path.realpath(filename)
+    filename = _realpath(filename)
     res = infoForFramework(filename)
     if res:
         framework_loc, framework_name, version = res
