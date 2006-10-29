@@ -20,14 +20,20 @@ class TestAttributedString (unittest.TestCase):
         self.assert_(err is None)
 
     def testInitWithURL(self):
-        url = NSURL.fileURLWithPath_(__file__)
+        filePath = __file__
+        if filePath[-1] == 'c':
+            # Make sure we're not reading the compiled file, which isn't text
+            # and confuses this this.
+            filePath = filePath[:-1]
+
+        url = NSURL.fileURLWithPath_(filePath)
 
         strval, attr, err = NSAttributedString.alloc(
                 ).initWithURL_options_documentAttributes_error_(
                     url, {})
 
         self.assert_(isinstance(strval, NSAttributedString))
-        self.assertEquals(strval.string(), open(__file__, 'rb').read())
+        self.assertEquals(strval.string(), open(filePath, 'rb').read())
         self.assert_(isinstance(attr, NSDictionary))
         self.assert_(err is None)
 
