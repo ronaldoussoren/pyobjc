@@ -201,7 +201,14 @@ void ffi_prep_args(extended_cif *ecif, unsigned *const stack)
 	     Type 3 is defined in include/ffi.h. #define FFI_TYPE_DOUBLE 3.  */
 	  if ((*ptr)->elements[0]->type == 3)
 	    size_al = ALIGN((*ptr)->size, 8);
+#if defined(POWERPC_DARWIN)
+	  /* ecif->cif is sometimes NULL, assume we're always using the darwin
+	   * ABI. 
+	   */
+	  if (size_al < 3)
+#else
 	  if (size_al < 3 && ecif->cif->abi == FFI_DARWIN)
+#endif
 	    dest_cpy += 4 - size_al;
 
 	  memcpy((char *)dest_cpy, (char *)*p_argv, size_al);
