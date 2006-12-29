@@ -1,6 +1,35 @@
 #!/usr/bin/env python
 
 import ez_setup
+import sys
+
+# ez_setup doesn't suppport the trunk of python (as well as ancient versions
+# of python), check if a setuptools egg is listed for the current python version
+# before going futher.
+
+# We need at least Python 2.3
+MIN_PYTHON = (2, 3)
+
+if sys.version_info < MIN_PYTHON:
+    vstr = '.'.join(map(str, MIN_PYTHON))
+    raise SystemExit('PyObjC: Need at least Python ' + vstr)
+
+v = "py%d.%d.egg"%(sys.version_info[:2])
+for k in ez_setup.md5_data.keys():
+    if k.endswith(v):
+        break
+
+else:
+    try:
+        import setuptools
+    except ImportError:
+        print "Ez_setup doesn't seem to support this version of python"
+        print "Please install setuptools from source by hand. See "
+        print "http://peak.telecommunity.com/DevCenter/setuptools for "
+        print "more information on setuptools."
+        sys.exit(1)
+
+
 ez_setup.use_setuptools()
 
 import sys
@@ -14,12 +43,6 @@ import site
 # NOTE: This is an experimental feature.
 AUTO_UNIVERSAL=0
 
-# We need at least Python 2.3
-MIN_PYTHON = (2, 3)
-
-if sys.version_info < MIN_PYTHON:
-    vstr = '.'.join(map(str, MIN_PYTHON))
-    raise SystemExit('PyObjC: Need at least Python ' + vstr)
 
 # Add our dependencies to the path.
 site.addsitedir(os.path.abspath('source-deps'))
