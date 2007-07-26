@@ -741,7 +741,7 @@ dist = setup(
     setup_requires = setup_requires,
     entry_points = {
         'console_scripts': [
-            "nibclassbuilder = PyObjCTools.NibClassBuilder.commandline"
+            "nibclassbuilder = PyObjCTools.NibClassBuilder:commandline"
         ],
     },
     extra_path = "PyObjC",
