@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutOverlayDisplayFunc</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutMouseFunc.3GLUT.xml" title="glutMouseFunc"/><link rel="next" href="glutPopWindow.3GLUT.xml" title="glutPopWindow"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutOverlayDisplayFunc</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutMouseFunc.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutPopWindow.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutOverlayDisplayFunc.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutOverlayDisplayFunc.3GLUT-name"/><h2>Name</h2><p>glutOverlayDisplayFunc &#8212; sets the overlay display callback for the current window.</p></div><div class="refsynopsisdiv"><a name="glutOverlayDisplayFunc.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutOverlayDisplayFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>void (*<i><tt>func</tt></i>)());</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutOverlayDisplayFunc.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutOverlayDisplayFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>func</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutOverlayDisplayFunc.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>func</tt></i></span></dt><dd>
+						The new overlay display callback function.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glutOverlayDisplayFunc.3GLUT-description"/><h2>Description</h2><p>
+			<a href="glutDisplayFunc.3GLUT.xml"><tt>glutDisplayFunc</tt></a> sets the overlay display callback for the current window. The
+			overlay display callback is functionally the same as the window's display callback except that the overlay display
+			callback is used to redisplay the window's overlay.
+		</p><p>
+			When GLUT determines that the overlay plane for the window needs to be redisplayed, the overlay display callback for
+			the window is called. Before the callback, the current window is set to the window needing to be redisplayed and the
+			layer in use is set to the overlay. The overlay display callback is called with no parameters. The entire overlay
+			region should be redisplayed in response to the callback (this includes ancillary buffers if your program depends on
+			their state).
+		</p><p>
+			GLUT determines when the overlay display callback should be triggered based on the window's overlay redisplay state.
+			The overlay redisplay state for a window can be either set explicitly by calling <a href="glutPostOverlayRedisplay.3GLUT.xml"><tt>glutPostOverlayRedisplay</tt></a> or implicitly as the result of window damage reported by the
+			window system. Multiple posted overlay redisplays for a window are coalesced by GLUT to minimize the number of overlay
+			display callbacks called.
+		</p><p>
+			Upon return from the overlay display callback, the overlay damaged state of the window (returned by calling <tt>glutLayerGet(GLUT_OVERLAY_DAMAGED)</tt> is cleared.
+		</p><p>
+			The overlay display callback can be deregistered by passing <tt>NULL</tt> to
+			<tt>glutOverlayDisplayFunc</tt>. The overlay display callback is initially <tt>NULL</tt> when
+			an overlay is established. See <a href="glutDisplayFunc.3GLUT.xml"><tt>glutDisplayFunc</tt></a> to understand how the display
+			callback alone is used if an overlay display callback is not registered.
+		</p></div><div class="refsect1" lang="en"><a name="glutOverlayDisplayFunc.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutDisplayFunc.3GLUT.xml">glutDisplayFunc</a>, <a href="glutPostOverlayRedisplay.3GLUT.xml">glutPostOverlayRedisplay</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutMouseFunc.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutPopWindow.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutMouseFunc </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutPopWindow</td></tr></table></div></body></html>

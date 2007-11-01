@@ -1,0 +1,12 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <function name='NSExceptionHandlerResume'>
+    <retval type='v' />
+  </function>
+  <class name='NSExceptionHandlerDelegate'>
+    <method selector='exceptionHandler:shouldHandleException:mask:' type='B@:@@I' type64='B@:@@Q' />
+    <method selector='exceptionHandler:shouldLogException:mask:' type='B@:@@I' type64='B@:@@Q' />
+  </class>
+</signatures>
+

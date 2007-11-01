@@ -1,0 +1,22 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {buildIndex = id; chooseDirectory = id; search = id; }; 
+            CLASS = AppController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                buildIndexButton = NSButton; 
+                directoryTextField = NSTextField; 
+                myWindow = NSWindow; 
+                numberOfDocumentsTextField = NSTextField; 
+                numberOfTermsTextField = NSTextField; 
+                searchField = NSSearchField; 
+                searchResultsTextView = NSTextView; 
+                selectDirectoryButton = NSButton; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

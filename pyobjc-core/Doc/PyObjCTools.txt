@@ -1,0 +1,244 @@
+===============================
+PyObjCTools: The PyObjC Toolbox
+===============================
+
+Introduction
+------------
+
+The package ``PyObjCTools`` contains a number of (basically unrelated) modules
+with useful functionality. These have been placed inside a module to avoid
+cluttering the global namespace.
+
+The rest of this document provides documentation for these modules, but lets
+start with a short overview.
+
+* ``PyObjCTools.AppHelper``
+
+Utility functions for use with the ``AppKit`` module.
+
+* ``PyObjCTools.Conversion``
+
+Functions for converting between Cocoa and pure Python data structures.
+
+* ``PyObjCTools.KeyValueCoding``
+
+A Python API for working with `Key-Value Coding`__. 
+
+.. __: http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/
+
+* ``PyObjCTools.NibClassBuilder``
+
+Module containing a magic super-class that can read information about the
+actual super-class and implemented actions and outlets from a NIB file.
+
+* ``PyObjCTools.MachSignals``
+
+Module to make it possible to integrate signal handling into the main
+runloop.
+
+* ``PyObjCTools.Debugging``
+
+Allows logging of NSException stack traces.  This module should only be used
+during development.
+
+* ``PyObjCTools.Signals``
+
+Module that tries to print useful information when the program gets a fatal
+exception. This module should only be used during development.
+
+* ``PyObjCTools.XcodeSupport``
+
+Used by the PyObjC Xcode templates to derive py2app options from an Xcode
+project file.
+
+
+``PyObjCTools.AppHelper``
+.........................
+
+This module exports functions that are useful when working with the
+``AppKit`` framework (or more generally, run loops).
+
+* ``callAfter(func, *args, **kwargs) -> None``
+
+  Call a function on the main thread.  Returns immediately.
+
+* ``callLater(delay, func, *args, **kwargs) -> None``
+
+  Call a function on the main thread after a delay.  Returns immediately.
+
+* ``endSheetMethod(method) -> selector``
+
+  Convert a method to a form that is suitable to use as the delegate callback
+  for sheet methods.
+
+* ``stopEventLoop() -> None``
+
+  Stops the event loop (if started by ``runConsoleEventLoop``) or sends the
+  ``NSApplication`` a ``terminate:`` message.
+
+* ``runConsoleEventLoop(argv=None, installInterrupt=False, mode=NSDefaultRunLoopMode) -> None``
+
+  Run a ``NSRunLoop`` in a stoppable way (with ``stopEventLoop``).
+
+* ``runEventLoop(argv=None, unexpectedErrorAlert=unexpectedErrorAlert, installInterrupt=None, pdb=None, main=NSApplicationMain) -> None``
+
+  Run the event loop using ``NSApplicationMain`` and ask the user if we should
+  continue if an exception is caught.
+
+  This function doesn't return unless it throws an exception.
+
+
+``PyObjCTools.Conversion``
+.............................
+
+Functions for converting between Cocoa and pure Python data structures.
+
+* ``propertyListFromPythonCollection(pyCol, conversionHelper=None) -> ocCol``
+
+  Convert a Python collection (dictionary, array, tuple, string) into an 
+  Objective-C collection.
+
+  If conversionHelper is defined, it must be a callable.  It will be called 
+  for any object encountered for which ``propertyListFromPythonCollection()``
+  cannot automatically convert the object.   The supplied helper function 
+  should convert the object and return the converted form.  If the conversion 
+  helper cannot convert the type, it should raise an exception or return None.
+
+* ``pythonCollectionFromPropertyList(ocCol, conversionHelper=None) -> pyCol``
+
+  Converts a Foundation based collection-- a property list-- into a Python 
+  collection.  Like ``propertyListFromPythonCollection()``, ``conversionHelper``
+  is an optional callable that will be invoked any time an encountered object 
+  cannot be converted.
+
+``PyObjCTools.KeyValueCoding``
+..............................
+
+A module for working with Key-Value Coding in Python. Key-Value Coding is
+explained `on the Apple website`__
+
+.. __: http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/
+
+This module provides a Python interface to some of that functionality. The
+interface is modeled on the ``getattr`` and ``setattr`` functions.
+
+* ``getKey(object, key) -> value``
+
+    Get the attribute referenced by 'key'. The key is used
+    to build the name of an attribute, or attribute accessor method.
+
+    The following attributes and accesors are tried (in this order):
+
+    - Accessor 'getKey'
+    - Accesoor 'get_key'
+    - Accessor or attribute 'key'
+    - Accessor or attribute 'isKey'
+    - Attribute '_key'
+
+    If none of these exist, raise KeyError
+
+* ``getKeyPath(object, keypath) -> value``
+
+  Like ``getKey`` but using a key path. The ``keypath`` is a sequence of keys
+  separated by dots. It calls ``getKey`` to follow the path and returns the
+  final value.
+
+* ``setKey(object, key, value) -> None``
+
+  Set the value of ``key`` to ``value``.
+
+  The following values are used for setting the value for a key named ``key``
+  (first match wins):
+
+  - Call ``object.set_key(value)``
+
+  - Call ``object.setKey(value)``
+
+  - Call ``object._set_key(value)``
+
+  - Call ``object._setKey(value)``
+
+  - Check if ``_key`` is an attribute and if so, set its value
+
+  - Try to set the attribute ``key``.
+
+  Raises ``KeyError`` if the key cannot be changed.
+
+* ``setKeyPath(object, keypath, value) -> None``
+
+  The same as ``setKey``, but now using a key path. A key path is a sequence
+  of keys separated by dots. The ``getKey`` function is used to traverse 
+  the path up to the last item, and then ``setKey`` is used to change the value.
+
+PyObjCTools.NibClassBuilder
+...........................
+
+Extracting class definitions from nibs
+++++++++++++++++++++++++++++++++++++++
+
+The module maintains a global set of class definitions, extracted from
+nibs. To add the classes from a nib to this set, use the ``extractClasses()``
+function. It can be called in two ways:
+
+- ``extractClasses(nibName, bundle=<current-bundle>)``
+
+  This finds the nib by name from a bundle. If no bundle
+  if given, the ``objc.currentBundle()`` is searched.
+
+- ``extractClasses(path=pathToNib)``
+
+  This uses an explicit path to a nib.
+
+``extractClasses()`` can be called multiple times for the same bundle: the
+results are cached so no almost extra overhead is caused.
+
+Using the class definitions
++++++++++++++++++++++++++++
+
+The module contains a "magic" base (super) class called ``AutoBaseClass``.
+Subclassing ``AutoBaseClass`` will invoke some magic that will look up the
+proper base class in the class definitions extracted from the nib(s).
+If you use multiple inheritance to use Cocoa's "informal protocols",
+you *must* list ``AutoBaseClass`` as the first base class. For example::
+
+    class PyModel(AutoBaseClass, NSTableSource):
+        ...
+
+
+The ``NibInfo`` class
++++++++++++++++++++++
+
+The parsing of nibs and collecting the class definition is done by the
+``NibInfo`` class. You normally don't use it directly, but it's here if you
+have special needs.
+
+The command line tool
++++++++++++++++++++++
+
+When run from the command line, this module invokes a simple command
+line program, which you feed paths to nibs. This will print a Python
+template for all classes defined in the nib(s). For more documentation,
+see the commandline_doc variable, or simply run the program without
+arguments. It also contains a simple test program.
+
+PyObjCTools.Signals
+...................
+
+This module provides two functions that can be useful while investigating
+random crashes of a PyObjC program. These crashes are often caused by 
+Objective-C style weak references or incorrectly implemented protocols.
+
+- ``dumpStackOnFatalSignal()``
+
+  This function will install signal handlers that print a stack trace and
+  then re-raise the signal.
+
+- ``resetFatalSignals()``
+
+  Restores the signal handlers to the state they had before the call to
+  dumpStackOnFatalSignal.
+
+This module is not designed to provide fine grained control over signal 
+handling. Nor is it intended to be terribly robust. It may give useful
+information when your program gets unexpected signals, but it might just
+as easily cause a crash when such a signal gets in. 

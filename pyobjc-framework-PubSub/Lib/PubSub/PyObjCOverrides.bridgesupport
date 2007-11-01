@@ -1,0 +1,28 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <enum name='PSFeedSettingsIntervalDefault' value='0.0' />
+  <class name='PSClientDelegate'>
+    <method selector='enclosure:downloadStateDidChange:' type='v@:@i' />
+    <method selector='feed:didAddEntries:' type='v@:@@' />
+    <method selector='feed:didChangeFlagsInEntries:' type='v@:@@' />
+    <method selector='feed:didRemoveEntriesWithIdentifiers:' type='v@:@@' />
+    <method selector='feed:didUpdateEntries:' type='v@:@@' />
+    <method selector='feedDidBeginRefresh:' type='v@:@' />
+    <method selector='feedDidEndRefresh:' type='v@:@' />
+  </class>
+  <class name='PSClient'>
+    <method selector='setPrivate:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='PSEntry'>
+    <method selector='setFlagged:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setRead:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+</signatures>
+

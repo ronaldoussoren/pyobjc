@@ -1,0 +1,270 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <depends_on path='/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices' />
+  <constant name='QCCompositionAttributeBuiltInKey' type='@' />
+  <constant name='QCCompositionAttributeCategoryKey' type='@' />
+  <constant name='QCCompositionAttributeCopyrightKey' type='@' />
+  <constant name='QCCompositionAttributeDescriptionKey' type='@' />
+  <constant name='QCCompositionAttributeHasConsumersKey' type='@' />
+  <constant name='QCCompositionAttributeIsTimeDependentKey' type='@' />
+  <constant name='QCCompositionAttributeNameKey' type='@' />
+  <constant name='QCCompositionCategoryDistortion' type='@' />
+  <constant name='QCCompositionCategoryStylize' type='@' />
+  <constant name='QCCompositionCategoryUtility' type='@' />
+  <constant name='QCCompositionInputAudioPeakKey' type='@' />
+  <constant name='QCCompositionInputAudioSpectrumKey' type='@' />
+  <constant name='QCCompositionInputDestinationImageKey' type='@' />
+  <constant name='QCCompositionInputImageKey' type='@' />
+  <constant name='QCCompositionInputPaceKey' type='@' />
+  <constant name='QCCompositionInputPreviewModeKey' type='@' />
+  <constant name='QCCompositionInputPrimaryColorKey' type='@' />
+  <constant name='QCCompositionInputRSSArticleDurationKey' type='@' />
+  <constant name='QCCompositionInputRSSFeedURLKey' type='@' />
+  <constant name='QCCompositionInputScreenImageKey' type='@' />
+  <constant name='QCCompositionInputSecondaryColorKey' type='@' />
+  <constant name='QCCompositionInputSourceImageKey' type='@' />
+  <constant name='QCCompositionInputTrackInfoKey' type='@' />
+  <constant name='QCCompositionInputTrackPositionKey' type='@' />
+  <constant name='QCCompositionInputTrackSignalKey' type='@' />
+  <constant name='QCCompositionInputXKey' type='@' />
+  <constant name='QCCompositionInputYKey' type='@' />
+  <constant name='QCCompositionOutputImageKey' type='@' />
+  <constant name='QCCompositionOutputWebPageURLKey' type='@' />
+  <constant name='QCCompositionPickerPanelDidSelectCompositionNotification' type='@' />
+  <constant name='QCCompositionPickerViewDidSelectCompositionNotification' type='@' />
+  <constant name='QCCompositionProtocolGraphicAnimation' type='@' />
+  <constant name='QCCompositionProtocolGraphicTransition' type='@' />
+  <constant name='QCCompositionProtocolImageFilter' type='@' />
+  <constant name='QCCompositionProtocolMusicVisualizer' type='@' />
+  <constant name='QCCompositionProtocolRSSVisualizer' type='@' />
+  <constant name='QCCompositionProtocolScreenSaver' type='@' />
+  <constant name='QCCompositionRepositoryDidUpdateNotification' type='@' />
+  <constant name='QCPlugInAttributeCopyrightKey' type='@' />
+  <constant name='QCPlugInAttributeDescriptionKey' type='@' />
+  <constant name='QCPlugInAttributeNameKey' type='@' />
+  <constant name='QCPlugInExecutionArgumentEventKey' type='@' />
+  <constant name='QCPlugInExecutionArgumentMouseLocationKey' type='@' />
+  <constant name='QCPlugInPixelFormatARGB8' type='@' />
+  <constant name='QCPlugInPixelFormatBGRA8' type='@' />
+  <constant name='QCPlugInPixelFormatI8' type='@' />
+  <constant name='QCPlugInPixelFormatIf' type='@' />
+  <constant name='QCPlugInPixelFormatRGBAf' type='@' />
+  <constant name='QCPortAttributeDefaultValueKey' type='@' />
+  <constant name='QCPortAttributeMaximumValueKey' type='@' />
+  <constant name='QCPortAttributeMenuItemsKey' type='@' />
+  <constant name='QCPortAttributeMinimumValueKey' type='@' />
+  <constant name='QCPortAttributeNameKey' type='@' />
+  <constant name='QCPortAttributeTypeKey' type='@' />
+  <constant name='QCPortTypeBoolean' type='@' />
+  <constant name='QCPortTypeColor' type='@' />
+  <constant name='QCPortTypeImage' type='@' />
+  <constant name='QCPortTypeIndex' type='@' />
+  <constant name='QCPortTypeNumber' type='@' />
+  <constant name='QCPortTypeString' type='@' />
+  <constant name='QCPortTypeStructure' type='@' />
+  <constant name='QCRendererEventKey' type='@' />
+  <constant name='QCRendererMouseLocationKey' type='@' />
+  <constant name='QCViewDidStartRenderingNotification' type='@' />
+  <constant name='QCViewDidStopRenderingNotification' type='@' />
+  <enum name='kQCPlugInExecutionModeConsumer' value='3' />
+  <enum name='kQCPlugInExecutionModeProcessor' value='2' />
+  <enum name='kQCPlugInExecutionModeProvider' value='1' />
+  <enum name='kQCPlugInTimeModeIdle' value='1' />
+  <enum name='kQCPlugInTimeModeNone' value='0' />
+  <enum name='kQCPlugInTimeModeTimeBase' value='2' />
+  <informal_protocol name='QCCompositionParameterViewDelegate'>
+    <method selector='compositionParameterView:didChangeParameterWithKey:' type='v@:@@' />
+    <method selector='compositionParameterView:shouldDisplayParameterWithKey:attributes:' type='B@:@@@' />
+  </informal_protocol>
+  <informal_protocol name='QCCompositionPickerViewDelegate'>
+    <method selector='compositionPickerView:didSelectComposition:' type='v@:@@' />
+    <method selector='compositionPickerViewDidStartAnimating:' type='v@:@' />
+    <method selector='compositionPickerViewWillStopAnimating:' type='v@:@' />
+  </informal_protocol>
+  <class name='NSObject'>
+    <method selector='CGLContextObj'>
+      <retval type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='bindTextureRepresentationToCGLContext:textureUnit:normalizeCoordinates:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+      <arg index='2' type='B' />
+    </method>
+    <method selector='bufferBaseAddress'>
+      <retval type='^v' />
+    </method>
+    <method selector='bufferColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='canRenderWithCGLContext:'>
+      <retval type='B' />
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='colorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='compositionParameterView:shouldDisplayParameterWithKey:attributes:'>
+      <retval type='B' />
+    </method>
+    <method selector='copyRenderedTextureForCGLContext:pixelFormat:bounds:isFlipped:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+      <arg index='3' type='^B' />
+    </method>
+    <method selector='imageColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='imageColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='lockBufferRepresentationWithPixelFormat:colorSpace:forBounds:'>
+      <retval type='B' />
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='lockTextureRepresentationWithColorSpace:forBounds:'>
+      <retval type='B' />
+      <arg index='0' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='logMessage:' variadic='true' />
+    <method selector='outputImageProviderFromBufferWithPixelFormat:pixelsWide:pixelsHigh:baseAddress:bytesPerRow:releaseCallback:releaseContext:colorSpace:shouldColorMatch:'>
+      <arg index='3' type='^v' />
+      <arg index='5' type='^?' />
+      <arg index='6' type='^v' />
+      <arg index='7' type='^{CGColorSpace=}' />
+      <arg index='8' type='B' />
+    </method>
+    <method selector='outputImageProviderFromTextureWithPixelFormat:pixelsWide:pixelsHigh:name:flipped:releaseCallback:releaseContext:colorSpace:shouldColorMatch:'>
+      <arg index='4' type='B' />
+      <arg index='5' type='^?' />
+      <arg index='6' type='^v' />
+      <arg index='7' type='^{CGColorSpace=}' />
+      <arg index='8' type='B' />
+    </method>
+    <method selector='releaseRenderedTexture:forCGLContext:'>
+      <arg index='1' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='renderToBuffer:withBytesPerRow:pixelFormat:forBounds:'>
+      <retval type='B' />
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='renderWithCGLContext:forBounds:'>
+      <retval type='B' />
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='setValue:forInputKey:'>
+      <retval type='B' />
+    </method>
+    <method selector='shouldColorMatch'>
+      <retval type='B' />
+    </method>
+    <method selector='shouldColorMatch'>
+      <retval type='B' />
+    </method>
+    <method selector='textureColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='textureFlipped'>
+      <retval type='B' />
+    </method>
+    <method selector='textureMatrix'>
+      <retval type='^f' />
+    </method>
+    <method selector='unbindTextureRepresentationFromCGLContext:textureUnit:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+  </class>
+  <class name='QCCompositionParameterView'>
+    <method selector='drawsBackground'>
+      <retval type='B' />
+    </method>
+    <method selector='hasParameters'>
+      <retval type='B' />
+    </method>
+    <method selector='setDrawsBackground:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='QCCompositionPickerView'>
+    <method selector='allowsEmptySelection'>
+      <retval type='B' />
+    </method>
+    <method selector='drawsBackground'>
+      <retval type='B' />
+    </method>
+    <method selector='isAnimating'>
+      <retval type='B' />
+    </method>
+    <method selector='setAllowsEmptySelection:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setDrawsBackground:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setShowsCompositionNames:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='showsCompositionNames'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='QCPlugIn'>
+    <method selector='didValueForInputKeyChange:'>
+      <retval type='B' />
+    </method>
+    <method selector='execute:atTime:withArguments:'>
+      <retval type='B' />
+    </method>
+    <method class_method='true' selector='loadPlugInAtPath:'>
+      <retval type='B' />
+    </method>
+    <method selector='setValue:forOutputKey:'>
+      <retval type='B' />
+    </method>
+    <method selector='startExecution:'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='QCRenderer'>
+    <method selector='initOffScreenWithSize:colorSpace:composition:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithCGLContext:pixelFormat:colorSpace:composition:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+      <arg index='1' type='^{_CGLPixelFormatObject=}' />
+      <arg index='2' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithComposition:colorSpace:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='renderAtTime:arguments:'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='QCView'>
+    <method selector='autostartsRendering'>
+      <retval type='B' />
+    </method>
+    <method selector='isPausedRendering'>
+      <retval type='B' />
+    </method>
+    <method selector='isRendering'>
+      <retval type='B' />
+    </method>
+    <method selector='loadComposition:'>
+      <retval type='B' />
+    </method>
+    <method selector='loadCompositionFromFile:'>
+      <retval type='B' />
+    </method>
+    <method selector='renderAtTime:arguments:'>
+      <retval type='B' />
+    </method>
+    <method selector='setAutostartsRendering:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='startRendering'>
+      <retval type='B' />
+    </method>
+  </class>
+</signatures>
+

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gluSphere</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLU.xml" title="GLU"/><link rel="previous" href="gluScaleImage.3G.xml" title="gluScaleImage"/><link rel="next" href="gluTessBeginContour.3G.xml" title="gluTessBeginContour"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gluSphere</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gluScaleImage.3G.xml">Prev</a> </td><th width="60%" align="center">GLU</th><td width="20%" align="right"> <a accesskey="n" href="gluTessBeginContour.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gluSphere.3G"/><div class="titlepage"/><div class="refnamediv"><a name="gluSphere.3G-name"/><h2>Name</h2><p>gluSphere &#8212; draw a sphere</p></div><div class="refsynopsisdiv"><a name="gluSphere.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>gluSphere</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLUquadric* <i><tt>quad</tt></i>, GLdouble <i><tt>radius</tt></i>, GLint <i><tt>slices</tt></i>, GLint <i><tt>stacks</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gluSphere.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gluSphere</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>quad</tt></i>, <i><tt>radius</tt></i>, <i><tt>slices</tt></i>, <i><tt>stacks</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="gluSphere.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>quad</tt></i></span></dt><dd>
+						Specifies the quadrics object (created with <a href="gluNewQuadric.3G.xml"><tt>gluNewQuadric</tt></a>).
+					</dd><dt><span class="term"><i><tt>radius</tt></i></span></dt><dd>
+						Specifies the radius of the sphere.
+					</dd><dt><span class="term"><i><tt>slices</tt></i></span></dt><dd>
+						Specifies the number of subdivisions around the <i><tt>z</tt></i> axis (similar to lines of
+						longitude).
+					</dd><dt><span class="term"><i><tt>stacks</tt></i></span></dt><dd>
+						Specifies the number of subdivisions along the <i><tt>z</tt></i> axis (similar to lines of latitude).
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gluSphere.3G-description"/><h2>Description</h2><p>
+			<tt>gluSphere</tt> draws a sphere of the given radius centered around the origin. The sphere is subdivided
+			around the <i><tt>z</tt></i> axis into slices and along the <i><tt>z</tt></i> axis into stacks (similar
+			to lines of longitude and latitude).
+		</p><p>
+			If the orientation is set to <tt>GLU_OUTSIDE</tt> (with <a href="gluQuadricOrientation.3G.xml"><tt>gluQuadricOrientation</tt></a>), then any normals generated point away from the center of the
+			sphere. Otherwise, they point toward the center of the sphere.
+		</p><p>
+			If texturing is turned on (with <a href="gluQuadricTexture.3G.xml"><tt>gluQuadricTexture</tt></a>), then texture coordinates
+			are generated so that <i><tt>t</tt></i> ranges from 0.0 at <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>z</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mo>-</mml:mo>
+						<mml:mi>radius</mml:mi>
+					</mml:mrow>
+				</mml:math> to 1.0 at <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>z</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mi>radius</mml:mi>
+					</mml:mrow>
+				</mml:math> (<i><tt>t</tt></i> increases linearly along longitudinal lines), and <i><tt>s</tt></i>
+			ranges from 0.0 at the +<i><tt>y</tt></i> axis, to 0.25 at the +<i><tt>x</tt></i> axis, to 0.5 at the
+			-<i><tt>y</tt></i> axis, to 0.75 at the -<i><tt>x</tt></i> axis, and back to 1.0 at the
+			+<i><tt>y</tt></i> axis.
+		</p></div><div class="refsect1" lang="en"><a name="gluSphere.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="gluCylinder.3G.xml">gluCylinder</a>, <a href="gluDisk.3G.xml">gluDisk</a>, <a href="gluNewQuadric.3G.xml">gluNewQuadric</a>, <a href="gluPartialDisk.3G.xml">gluPartialDisk</a>, <a href="gluQuadricOrientation.3G.xml">gluQuadricOrientation</a>, <a href="gluQuadricTexture.3G.xml">gluQuadricTexture</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gluScaleImage.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLU.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gluTessBeginContour.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gluScaleImage </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gluTessBeginContour</td></tr></table></div></body></html>

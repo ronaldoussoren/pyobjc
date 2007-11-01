@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gluLoadSamplingMatrices</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLU.xml" title="GLU"/><link rel="previous" href="gluGetTessProperty.3G.xml" title="gluGetTessProperty"/><link rel="next" href="gluLookAt.3G.xml" title="gluLookAt"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gluLoadSamplingMatrices</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gluGetTessProperty.3G.xml">Prev</a> </td><th width="60%" align="center">GLU</th><td width="20%" align="right"> <a accesskey="n" href="gluLookAt.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gluLoadSamplingMatrices.3G"/><div class="titlepage"/><div class="refnamediv"><a name="gluLoadSamplingMatrices.3G-name"/><h2>Name</h2><p>gluLoadSamplingMatrices &#8212; load NURBS sampling and culling matrices</p></div><div class="refsynopsisdiv"><a name="gluLoadSamplingMatrices.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>gluLoadSamplingMatrices</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLUnurbs* <i><tt>nurb</tt></i>, const GLfloat *<i><tt>model</tt></i>, const GLfloat *<i><tt>perspective</tt></i>, const GLint *<i><tt>view</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gluLoadSamplingMatrices.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gluLoadSamplingMatrices</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>nurb</tt></i>, <i><tt>model</tt></i>, <i><tt>perspective</tt></i>, <i><tt>view</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="gluLoadSamplingMatrices.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>nurb</tt></i></span></dt><dd>
+						Specifies the NURBS object (created with <a href="gluNewNurbsRenderer.3G.xml"><tt>gluNewNurbsRenderer</tt></a>).
+					</dd><dt><span class="term"><i><tt>model</tt></i></span></dt><dd>
+						Specifies a modelview matrix (as from a <a href="glGet.3G.xml"><tt>glGetFloatv</tt></a> call).
+					</dd><dt><span class="term"><i><tt>perspective</tt></i></span></dt><dd>
+						Specifies a projection matrix (as from a <a href="glGet.3G.xml"><tt>glGetFloatv</tt></a> call).
+					</dd><dt><span class="term"><i><tt>view</tt></i></span></dt><dd>
+						Specifies a viewport (as from a <a href="glGet.3G.xml"><tt>glGetIntegerv</tt></a> call).
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gluLoadSamplingMatrices.3G-description"/><h2>Description</h2><p>
+			<tt>gluLoadSamplingMatrices</tt> uses <i><tt>model</tt></i>, <i><tt>perspective</tt></i>, and
+			<i><tt>view</tt></i> to recompute the sampling and culling matrices stored in <i><tt>nurb</tt></i>. The
+			sampling matrix determines how finely a NURBS curve or surface must be tessellated to satisfy the sampling tolerance
+			(as determined by the <tt>GLU_SAMPLING_TOLERANCE</tt> property). The culling matrix is used in deciding if
+			a NURBS curve or surface should be culled before rendering (when the <tt>GLU_CULLING</tt> property is
+			turned on).
+		</p><p>
+			<tt>gluLoadSamplingMatrices</tt> is necessary only if the <tt>GLU_AUTO_LOAD_MATRIX</tt>
+			property is turned off (see <a href="gluNurbsProperty.3G.xml">gluNurbsProperty</a>). Although it can be convenient to leave the <tt>GLU_AUTO_LOAD_MATRIX</tt> property turned
+			on, there can be a performance penalty for doing so. (A round trip to the GL server is needed to fetch the current
+			values of the modelview matrix, projection matrix, and viewport.)
+		</p></div><div class="refsect1" lang="en"><a name="gluLoadSamplingMatrices.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="gluGetNurbsProperty.3G.xml">gluGetNurbsProperty</a>, <a href="gluNewNurbsRenderer.3G.xml">gluNewNurbsRenderer</a>, <a href="gluNurbsProperty.3G.xml">gluNurbsProperty</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gluGetTessProperty.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLU.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gluLookAt.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gluGetTessProperty </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gluLookAt</td></tr></table></div></body></html>

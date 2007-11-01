@@ -1,0 +1,3504 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures verison='1.0'>
+  <struct name='CGAffineTransform' type='{CGAffineTransform="a"f"b"f"c"f"d"f"tx"f"ty"f}' type64='{CGAffineTransform="a"d"b"d"c"d"d"d"tx"d"ty"d}' />
+  <struct name='CGDataConsumerCallbacks' type='{CGDataConsumerCallbacks="putBytes"^?"releaseConsumer"^?}' type64='{CGDataConsumerCallbacks="putBytes"^?"releaseConsumer"^?}' />
+  <struct name='CGDataProviderCallbacks' type='{CGDataProviderCallbacks="getBytes"^?"skipBytes"^?"rewind"^?"releaseProvider"^?}' type64='{CGDataProviderCallbacks="getBytes"^?"skipBytes"^?"rewind"^?"releaseProvider"^?}' />
+  <struct name='CGDataProviderDirectAccessCallbacks' type='{CGDataProviderDirectAccessCallbacks="getBytePointer"^?"releaseBytePointer"^?"getBytes"^?"releaseProvider"^?}' type64='{CGDataProviderDirectAccessCallbacks="getBytePointer"^?"releaseBytePointer"^?"getBytes"^?"releaseProvider"^?}' />
+  <struct name='CGDataProviderDirectCallbacks' type='{CGDataProviderDirectCallbacks="version"I"getBytePointer"^?"releaseBytePointer"^?"getBytesAtPosition"^?"releaseInfo"^?}' type64='{CGDataProviderDirectCallbacks="version"I"getBytePointer"^?"releaseBytePointer"^?"getBytesAtPosition"^?"releaseInfo"^?}' />
+  <struct name='CGDataProviderSequentialCallbacks' type='{CGDataProviderSequentialCallbacks="version"I"getBytes"^?"skipForward"^?"rewind"^?"releaseInfo"^?}' type64='{CGDataProviderSequentialCallbacks="version"I"getBytes"^?"skipForward"^?"rewind"^?"releaseInfo"^?}' />
+  <struct name='CGDeviceByteColor' type='{_CGDeviceByteColor="red"C"green"C"blue"C}' type64='{_CGDeviceByteColor="red"C"green"C"blue"C}' />
+  <struct name='CGDeviceColor' type='{_CGDeviceColor="red"f"green"f"blue"f}' type64='{_CGDeviceColor="red"f"green"f"blue"f}' />
+  <struct name='CGEventTapInformation' type='{CGEventTapInformation="eventTapID"I"tapPoint"I"options"I"eventsOfInterest"Q"tappingProcess"i"processBeingTapped"i"enabled"B"minUsecLatency"f"avgUsecLatency"f"maxUsecLatency"f}' type64='{CGEventTapInformation="eventTapID"I"tapPoint"I"options"I"eventsOfInterest"Q"tappingProcess"i"processBeingTapped"i"enabled"B"minUsecLatency"f"avgUsecLatency"f"maxUsecLatency"f}' />
+  <struct name='CGFunctionCallbacks' type='{CGFunctionCallbacks="version"I"evaluate"^?"releaseInfo"^?}' type64='{CGFunctionCallbacks="version"I"evaluate"^?"releaseInfo"^?}' />
+  <struct name='CGPSConverterCallbacks' type='{CGPSConverterCallbacks="version"I"beginDocument"^?"endDocument"^?"beginPage"^?"endPage"^?"noteProgress"^?"noteMessage"^?"releaseInfo"^?}' type64='{CGPSConverterCallbacks="version"I"beginDocument"^?"endDocument"^?"beginPage"^?"endPage"^?"noteProgress"^?"noteMessage"^?"releaseInfo"^?}' />
+  <struct name='CGPathElement' type='{CGPathElement="type"i"points"^{CGPoint}}' type64='{CGPathElement="type"i"points"^{CGPoint}}' />
+  <struct name='CGPatternCallbacks' type='{CGPatternCallbacks="version"I"drawPattern"^?"releaseInfo"^?}' type64='{CGPatternCallbacks="version"I"drawPattern"^?"releaseInfo"^?}' />
+  <struct name='CGPoint' type='{CGPoint="x"f"y"f}' type64='{CGPoint="x"d"y"d}' />
+  <struct name='CGRect' type='{CGRect="origin"{CGPoint="x"f"y"f}"size"{CGSize="width"f"height"f}}' type64='{CGRect="origin"{CGPoint="x"d"y"d}"size"{CGSize="width"d"height"d}}' />
+  <struct name='CGScreenUpdateMoveDelta' type='{_CGScreenUpdateMoveDelta="dX"i"dY"i}' type64='{_CGScreenUpdateMoveDelta="dX"i"dY"i}' />
+  <struct name='CGSize' type='{CGSize="width"f"height"f}' type64='{CGSize="width"d"height"d}' />
+  <opaque name='CGDirectPaletteRef' type='^{_CGDirectPaletteRef=}' type64='^{_CGDirectPaletteRef=}' />
+  <opaque name='CGDisplayConfigRef' type='^{_CGDisplayConfigRef=}' type64='^{_CGDisplayConfigRef=}' />
+  <opaque name='CGEventTapProxy' type='^{__CGEventTapProxy=}' type64='^{__CGEventTapProxy=}' />
+  <opaque name='CGPDFArrayRef' type='^{CGPDFArray=}' type64='^{CGPDFArray=}' />
+  <opaque name='CGPDFContentStreamRef' type='^{CGPDFContentStream=}' type64='^{CGPDFContentStream=}' />
+  <opaque name='CGPDFDictionaryRef' type='^{CGPDFDictionary=}' type64='^{CGPDFDictionary=}' />
+  <opaque name='CGPDFOperatorTableRef' type='^{CGPDFOperatorTable=}' type64='^{CGPDFOperatorTable=}' />
+  <opaque name='CGPDFScannerRef' type='^{CGPDFScanner=}' type64='^{CGPDFScanner=}' />
+  <opaque name='CGPDFStreamRef' type='^{CGPDFStream=}' type64='^{CGPDFStream=}' />
+  <opaque name='CGPDFStringRef' type='^{CGPDFString=}' type64='^{CGPDFString=}' />
+  <cftype gettypeid_func='CGColorGetTypeID' name='CGColorRef' type='^{CGColor=}' type64='^{CGColor=}' />
+  <cftype gettypeid_func='CGColorSpaceGetTypeID' name='CGColorSpaceRef' type='^{CGColorSpace=}' type64='^{CGColorSpace=}' />
+  <cftype gettypeid_func='CGContextGetTypeID' name='CGContextRef' type='^{CGContext=}' type64='^{CGContext=}' />
+  <cftype gettypeid_func='CGDataConsumerGetTypeID' name='CGDataConsumerRef' type='^{CGDataConsumer=}' type64='^{CGDataConsumer=}' />
+  <cftype gettypeid_func='CGDataProviderGetTypeID' name='CGDataProviderRef' type='^{CGDataProvider=}' type64='^{CGDataProvider=}' />
+  <cftype gettypeid_func='CGEventGetTypeID' name='CGEventRef' type='^{__CGEvent=}' type64='^{__CGEvent=}' />
+  <cftype gettypeid_func='CGEventSourceGetTypeID' name='CGEventSourceRef' type='^{__CGEventSource=}' type64='^{__CGEventSource=}' />
+  <cftype gettypeid_func='CGFontGetTypeID' name='CGFontRef' type='^{CGFont=}' type64='^{CGFont=}' />
+  <cftype gettypeid_func='CGFunctionGetTypeID' name='CGFunctionRef' type='^{CGFunction=}' type64='^{CGFunction=}' />
+  <cftype gettypeid_func='CGGradientGetTypeID' name='CGGradientRef' type='^{CGGradient=}' type64='^{CGGradient=}' />
+  <cftype gettypeid_func='CGImageGetTypeID' name='CGImageRef' type='^{CGImage=}' type64='^{CGImage=}' />
+  <cftype gettypeid_func='CGLayerGetTypeID' name='CGLayerRef' type='^{CGLayer=}' type64='^{CGLayer=}' />
+  <cftype gettypeid_func='CGMutablePathGetTypeID' name='CGMutablePathRef' type='^{CGPath=}' type64='^{CGPath=}' />
+  <cftype gettypeid_func='CGPDFDocumentGetTypeID' name='CGPDFDocumentRef' type='^{CGPDFDocument=}' type64='^{CGPDFDocument=}' />
+  <cftype gettypeid_func='CGPDFPageGetTypeID' name='CGPDFPageRef' type='^{CGPDFPage=}' type64='^{CGPDFPage=}' />
+  <cftype gettypeid_func='CGPSConverterGetTypeID' name='CGPSConverterRef' type='^{CGPSConverter=}' type64='^{CGPSConverter=}' />
+  <cftype gettypeid_func='CGPathGetTypeID' name='CGPathRef' type='^{CGPath=}' type64='^{CGPath=}' />
+  <cftype gettypeid_func='CGPatternGetTypeID' name='CGPatternRef' type='^{CGPattern=}' type64='^{CGPattern=}' />
+  <cftype gettypeid_func='CGShadingGetTypeID' name='CGShadingRef' type='^{CGShading=}' type64='^{CGShading=}' />
+  <constant name='CGAffineTransformIdentity' type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+  <constant name='CGPointZero' type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+  <constant name='CGRectInfinite' type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+  <constant name='CGRectNull' type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+  <constant name='CGRectZero' type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+  <constant name='CGSizeZero' type='{CGSize=ff}' type64='{CGSize=dd}' />
+  <constant name='kCGColorBlack' type='^{__CFString=}' />
+  <constant name='kCGColorClear' type='^{__CFString=}' />
+  <constant name='kCGColorSpaceAdobeRGB1998' type='^{__CFString=}' />
+  <constant name='kCGColorSpaceGenericCMYK' type='^{__CFString=}' />
+  <constant name='kCGColorSpaceGenericGray' type='^{__CFString=}' />
+  <constant name='kCGColorSpaceGenericRGB' type='^{__CFString=}' />
+  <constant name='kCGColorSpaceGenericRGBLinear' type='^{__CFString=}' />
+  <constant name='kCGColorSpaceSRGB' type='^{__CFString=}' />
+  <constant name='kCGColorWhite' type='^{__CFString=}' />
+  <constant name='kCGFontVariationAxisDefaultValue' type='^{__CFString=}' />
+  <constant name='kCGFontVariationAxisMaxValue' type='^{__CFString=}' />
+  <constant name='kCGFontVariationAxisMinValue' type='^{__CFString=}' />
+  <constant name='kCGFontVariationAxisName' type='^{__CFString=}' />
+  <constant name='kCGPDFContextAllowsCopying' type='^{__CFString=}' />
+  <constant name='kCGPDFContextAllowsPrinting' type='^{__CFString=}' />
+  <constant name='kCGPDFContextArtBox' type='^{__CFString=}' />
+  <constant name='kCGPDFContextAuthor' type='^{__CFString=}' />
+  <constant name='kCGPDFContextBleedBox' type='^{__CFString=}' />
+  <constant name='kCGPDFContextCreator' type='^{__CFString=}' />
+  <constant name='kCGPDFContextCropBox' type='^{__CFString=}' />
+  <constant name='kCGPDFContextEncryptionKeyLength' type='^{__CFString=}' />
+  <constant name='kCGPDFContextKeywords' type='^{__CFString=}' />
+  <constant name='kCGPDFContextMediaBox' type='^{__CFString=}' />
+  <constant name='kCGPDFContextOutputIntent' type='^{__CFString=}' />
+  <constant name='kCGPDFContextOutputIntents' type='^{__CFString=}' />
+  <constant name='kCGPDFContextOwnerPassword' type='^{__CFString=}' />
+  <constant name='kCGPDFContextSubject' type='^{__CFString=}' />
+  <constant name='kCGPDFContextTitle' type='^{__CFString=}' />
+  <constant name='kCGPDFContextTrimBox' type='^{__CFString=}' />
+  <constant name='kCGPDFContextUserPassword' type='^{__CFString=}' />
+  <constant name='kCGPDFXDestinationOutputProfile' type='^{__CFString=}' />
+  <constant name='kCGPDFXInfo' type='^{__CFString=}' />
+  <constant name='kCGPDFXOutputCondition' type='^{__CFString=}' />
+  <constant name='kCGPDFXOutputConditionIdentifier' type='^{__CFString=}' />
+  <constant name='kCGPDFXOutputIntentSubtype' type='^{__CFString=}' />
+  <constant name='kCGPDFXRegistryName' type='^{__CFString=}' />
+  <constant name='kCGTransparencyLayerContentBounds' type='^{__CFString=}' />
+  <constant name='kCGWindowAlpha' type='^{__CFString=}' />
+  <constant name='kCGWindowBackingLocationVideoMemory' type='^{__CFString=}' />
+  <constant name='kCGWindowBounds' type='^{__CFString=}' />
+  <constant name='kCGWindowIsOnscreen' type='^{__CFString=}' />
+  <constant name='kCGWindowLayer' type='^{__CFString=}' />
+  <constant name='kCGWindowMemoryUsage' type='^{__CFString=}' />
+  <constant name='kCGWindowName' type='^{__CFString=}' />
+  <constant name='kCGWindowNumber' type='^{__CFString=}' />
+  <constant name='kCGWindowOwnerName' type='^{__CFString=}' />
+  <constant name='kCGWindowOwnerPID' type='^{__CFString=}' />
+  <constant name='kCGWindowSharingState' type='^{__CFString=}' />
+  <constant name='kCGWindowStoreType' type='^{__CFString=}' />
+  <constant name='kCGWindowWorkspace' type='^{__CFString=}' />
+  <enum name='CGDisplayNoErr' value='0' />
+  <enum name='CGEventNoErr' value='0' />
+  <enum name='CGFLOAT_DEFINED' value='1' />
+  <enum name='CGFLOAT_IS_DOUBLE' value='0' value64='1' />
+  <enum name='CGFLOAT_IS_DOUBLE' value='0' value64='1' />
+  <enum name='CGFLOAT_MAX' value='3.4028234663852886e+38' value64='1.7976931348623157e+308' />
+  <enum name='CGFLOAT_MAX' value='3.4028234663852886e+38' value64='1.7976931348623157e+308' />
+  <enum name='CGFLOAT_MIN' value='1.1754943508222875e-38' value64='2.2250738585072014e-308' />
+  <enum name='CGFLOAT_MIN' value='1.1754943508222875e-38' value64='2.2250738585072014e-308' />
+  <enum name='CGGlyphMax' value='65534' />
+  <enum name='CGGlyphMin' value='0' />
+  <enum name='CGPDFDataFormatJPEG2000' value='2' />
+  <enum name='CGPDFDataFormatJPEGEncoded' value='1' />
+  <enum name='CGPDFDataFormatRaw' value='0' />
+  <enum name='CGRectMaxXEdge' value='2' />
+  <enum name='CGRectMaxYEdge' value='3' />
+  <enum name='CGRectMinXEdge' value='0' />
+  <enum name='CGRectMinYEdge' value='1' />
+  <enum name='kCGAnnotatedSessionEventTap' value='2' />
+  <enum name='kCGAnyInputEventType' value='4294967295' />
+  <enum name='kCGAssistiveTechHighWindowLevelKey' value='20' />
+  <enum name='kCGBackingStoreBuffered' value='2' />
+  <enum name='kCGBackingStoreNonretained' value='1' />
+  <enum name='kCGBackingStoreRetained' value='0' />
+  <enum name='kCGBackstopMenuLevelKey' value='3' />
+  <enum name='kCGBaseWindowLevelKey' value='0' />
+  <enum name='kCGBitmapAlphaInfoMask' value='31' />
+  <enum name='kCGBitmapByteOrder16Big' value='12288' />
+  <enum be_value='12288' le_value='4096' name='kCGBitmapByteOrder16Host' />
+  <enum be_value='12288' le_value='4096' name='kCGBitmapByteOrder16Host' />
+  <enum name='kCGBitmapByteOrder16Little' value='4096' />
+  <enum name='kCGBitmapByteOrder32Big' value='16384' />
+  <enum be_value='16384' le_value='8192' name='kCGBitmapByteOrder32Host' />
+  <enum be_value='16384' le_value='8192' name='kCGBitmapByteOrder32Host' />
+  <enum name='kCGBitmapByteOrder32Little' value='8192' />
+  <enum name='kCGBitmapByteOrderDefault' value='0' />
+  <enum name='kCGBitmapByteOrderMask' value='28672' />
+  <enum name='kCGBitmapFloatComponents' value='256' />
+  <enum name='kCGBlendModeClear' value='16' />
+  <enum name='kCGBlendModeColor' value='14' />
+  <enum name='kCGBlendModeColorBurn' value='7' />
+  <enum name='kCGBlendModeColorDodge' value='6' />
+  <enum name='kCGBlendModeCopy' value='17' />
+  <enum name='kCGBlendModeDarken' value='4' />
+  <enum name='kCGBlendModeDestinationAtop' value='24' />
+  <enum name='kCGBlendModeDestinationIn' value='22' />
+  <enum name='kCGBlendModeDestinationOut' value='23' />
+  <enum name='kCGBlendModeDestinationOver' value='21' />
+  <enum name='kCGBlendModeDifference' value='10' />
+  <enum name='kCGBlendModeExclusion' value='11' />
+  <enum name='kCGBlendModeHardLight' value='9' />
+  <enum name='kCGBlendModeHue' value='12' />
+  <enum name='kCGBlendModeLighten' value='5' />
+  <enum name='kCGBlendModeLuminosity' value='15' />
+  <enum name='kCGBlendModeMultiply' value='1' />
+  <enum name='kCGBlendModeNormal' value='0' />
+  <enum name='kCGBlendModeOverlay' value='3' />
+  <enum name='kCGBlendModePlusDarker' value='26' />
+  <enum name='kCGBlendModePlusLighter' value='27' />
+  <enum name='kCGBlendModeSaturation' value='13' />
+  <enum name='kCGBlendModeScreen' value='2' />
+  <enum name='kCGBlendModeSoftLight' value='8' />
+  <enum name='kCGBlendModeSourceAtop' value='20' />
+  <enum name='kCGBlendModeSourceIn' value='18' />
+  <enum name='kCGBlendModeSourceOut' value='19' />
+  <enum name='kCGBlendModeXOR' value='25' />
+  <enum name='kCGCaptureNoFill' value='1' />
+  <enum name='kCGCaptureNoOptions' value='0' />
+  <enum name='kCGColorSpaceModelCMYK' value='2' />
+  <enum name='kCGColorSpaceModelDeviceN' value='4' />
+  <enum name='kCGColorSpaceModelIndexed' value='5' />
+  <enum name='kCGColorSpaceModelLab' value='3' />
+  <enum name='kCGColorSpaceModelMonochrome' value='0' />
+  <enum name='kCGColorSpaceModelPattern' value='6' />
+  <enum name='kCGColorSpaceModelRGB' value='1' />
+  <enum name='kCGColorSpaceModelUnknown' value='-1' />
+  <enum name='kCGConfigureForAppOnly' value='0' />
+  <enum name='kCGConfigureForSession' value='1' />
+  <enum name='kCGConfigurePermanently' value='2' />
+  <enum name='kCGCursorWindowLevelKey' value='19' />
+  <enum name='kCGDesktopIconWindowLevelKey' value='18' />
+  <enum name='kCGDesktopWindowLevelKey' value='2' />
+  <enum name='kCGDisplayAddFlag' value='16' />
+  <enum name='kCGDisplayBeginConfigurationFlag' value='1' />
+  <enum name='kCGDisplayBlendNormal' value='0.0' />
+  <enum name='kCGDisplayBlendSolidColor' value='1.0' />
+  <enum name='kCGDisplayDesktopShapeChangedFlag' value='4096' />
+  <enum name='kCGDisplayDisabledFlag' value='512' />
+  <enum name='kCGDisplayEnabledFlag' value='256' />
+  <enum name='kCGDisplayFadeReservationInvalidToken' value='0' />
+  <enum name='kCGDisplayMirrorFlag' value='1024' />
+  <enum name='kCGDisplayMovedFlag' value='2' />
+  <enum name='kCGDisplayRemoveFlag' value='32' />
+  <enum name='kCGDisplaySetMainFlag' value='4' />
+  <enum name='kCGDisplaySetModeFlag' value='8' />
+  <enum name='kCGDisplayUnMirrorFlag' value='2048' />
+  <enum name='kCGDockWindowLevelKey' value='7' />
+  <enum name='kCGDraggingWindowLevelKey' value='12' />
+  <enum name='kCGEncodingFontSpecific' value='0' />
+  <enum name='kCGEncodingMacRoman' value='1' />
+  <enum name='kCGErrorApplicationAlreadyRunning' value='1025' />
+  <enum name='kCGErrorApplicationCanOnlyBeRunInOneSessionAtATime' value='1026' />
+  <enum name='kCGErrorApplicationIncorrectExecutableFormatFound' value='1023' />
+  <enum name='kCGErrorApplicationIsLaunching' value='1024' />
+  <enum name='kCGErrorApplicationNotPermittedToExecute' value='1016' />
+  <enum name='kCGErrorApplicationRequiresNewerSystem' value='1015' />
+  <enum name='kCGErrorCannotComplete' value='1004' />
+  <enum name='kCGErrorClassicApplicationsMustBeLaunchedByClassic' value='1027' />
+  <enum name='kCGErrorFailure' value='1000' />
+  <enum name='kCGErrorFirst' value='1000' />
+  <enum name='kCGErrorForkFailed' value='1028' />
+  <enum name='kCGErrorIllegalArgument' value='1001' />
+  <enum name='kCGErrorInvalidConnection' value='1002' />
+  <enum name='kCGErrorInvalidContext' value='1003' />
+  <enum name='kCGErrorInvalidOperation' value='1010' />
+  <enum name='kCGErrorLast' value='1028' />
+  <enum name='kCGErrorNameTooLong' value='1005' />
+  <enum name='kCGErrorNoCurrentPoint' value='1009' />
+  <enum name='kCGErrorNoneAvailable' value='1011' />
+  <enum name='kCGErrorNotImplemented' value='1006' />
+  <enum name='kCGErrorRangeCheck' value='1007' />
+  <enum name='kCGErrorSuccess' value='0' />
+  <enum name='kCGErrorTypeCheck' value='1008' />
+  <enum name='kCGEventFilterMaskPermitLocalKeyboardEvents' value='2' />
+  <enum name='kCGEventFilterMaskPermitLocalMouseEvents' value='1' />
+  <enum name='kCGEventFilterMaskPermitSystemDefinedEvents' value='4' />
+  <enum name='kCGEventFlagMaskAlphaShift' value='65536' />
+  <enum name='kCGEventFlagMaskAlternate' value='524288' />
+  <enum name='kCGEventFlagMaskCommand' value='1048576' />
+  <enum name='kCGEventFlagMaskControl' value='262144' />
+  <enum name='kCGEventFlagMaskHelp' value='4194304' />
+  <enum name='kCGEventFlagMaskNonCoalesced' value='256' />
+  <enum name='kCGEventFlagMaskNumericPad' value='2097152' />
+  <enum name='kCGEventFlagMaskSecondaryFn' value='8388608' />
+  <enum name='kCGEventFlagMaskShift' value='131072' />
+  <enum name='kCGEventFlagsChanged' value='12' />
+  <enum name='kCGEventKeyDown' value='10' />
+  <enum name='kCGEventKeyUp' value='11' />
+  <enum name='kCGEventLeftMouseDown' value='1' />
+  <enum name='kCGEventLeftMouseDragged' value='6' />
+  <enum name='kCGEventLeftMouseUp' value='2' />
+  <enum name='kCGEventMouseMoved' value='5' />
+  <enum name='kCGEventMouseSubtypeDefault' value='0' />
+  <enum name='kCGEventMouseSubtypeTabletPoint' value='1' />
+  <enum name='kCGEventMouseSubtypeTabletProximity' value='2' />
+  <enum name='kCGEventNull' value='0' />
+  <enum name='kCGEventOtherMouseDown' value='25' />
+  <enum name='kCGEventOtherMouseDragged' value='27' />
+  <enum name='kCGEventOtherMouseUp' value='26' />
+  <enum name='kCGEventRightMouseDown' value='3' />
+  <enum name='kCGEventRightMouseDragged' value='7' />
+  <enum name='kCGEventRightMouseUp' value='4' />
+  <enum name='kCGEventScrollWheel' value='22' />
+  <enum name='kCGEventSourceGroupID' value='44' />
+  <enum name='kCGEventSourceStateCombinedSessionState' value='0' />
+  <enum name='kCGEventSourceStateHIDSystemState' value='1' />
+  <enum name='kCGEventSourceStateID' value='45' />
+  <enum name='kCGEventSourceStatePrivate' value='-1' />
+  <enum name='kCGEventSourceUnixProcessID' value='41' />
+  <enum name='kCGEventSourceUserData' value='42' />
+  <enum name='kCGEventSourceUserID' value='43' />
+  <enum name='kCGEventSuppressionStateRemoteMouseDrag' value='1' />
+  <enum name='kCGEventSuppressionStateSuppressionInterval' value='0' />
+  <enum name='kCGEventSupressionStateRemoteMouseDrag' value='1' />
+  <enum name='kCGEventSupressionStateSupressionInterval' value='0' />
+  <enum name='kCGEventTabletPointer' value='23' />
+  <enum name='kCGEventTabletProximity' value='24' />
+  <enum name='kCGEventTapDisabledByTimeout' value='-2' />
+  <enum name='kCGEventTapDisabledByUserInput' value='-1' />
+  <enum name='kCGEventTapOptionDefault' value='0' />
+  <enum name='kCGEventTapOptionListenOnly' value='1' />
+  <enum name='kCGEventTargetProcessSerialNumber' value='39' />
+  <enum name='kCGEventTargetUnixProcessID' value='40' />
+  <enum name='kCGFloatingWindowLevelKey' value='5' />
+  <enum name='kCGFontIndexInvalid' value='65535' />
+  <enum name='kCGFontIndexMax' value='65534' />
+  <enum name='kCGFontPostScriptFormatType1' value='1' />
+  <enum name='kCGFontPostScriptFormatType3' value='3' />
+  <enum name='kCGFontPostScriptFormatType42' value='42' />
+  <enum name='kCGGlyphMax' value='65534' />
+  <enum name='kCGGradientDrawsAfterEndLocation' value='2' />
+  <enum name='kCGGradientDrawsBeforeStartLocation' value='1' />
+  <enum name='kCGHIDEventTap' value='0' />
+  <enum name='kCGHeadInsertEventTap' value='0' />
+  <enum name='kCGHelpWindowLevelKey' value='16' />
+  <enum name='kCGImageAlphaFirst' value='4' />
+  <enum name='kCGImageAlphaLast' value='3' />
+  <enum name='kCGImageAlphaNone' value='0' />
+  <enum name='kCGImageAlphaNoneSkipFirst' value='6' />
+  <enum name='kCGImageAlphaNoneSkipLast' value='5' />
+  <enum name='kCGImageAlphaOnly' value='7' />
+  <enum name='kCGImageAlphaPremultipliedFirst' value='2' />
+  <enum name='kCGImageAlphaPremultipliedLast' value='1' />
+  <enum name='kCGInterpolationDefault' value='0' />
+  <enum name='kCGInterpolationHigh' value='3' />
+  <enum name='kCGInterpolationLow' value='2' />
+  <enum name='kCGInterpolationNone' value='1' />
+  <enum name='kCGKeyboardEventAutorepeat' value='8' />
+  <enum name='kCGKeyboardEventKeyboardType' value='10' />
+  <enum name='kCGKeyboardEventKeycode' value='9' />
+  <enum name='kCGLineCapButt' value='0' />
+  <enum name='kCGLineCapRound' value='1' />
+  <enum name='kCGLineCapSquare' value='2' />
+  <enum name='kCGLineJoinBevel' value='2' />
+  <enum name='kCGLineJoinMiter' value='0' />
+  <enum name='kCGLineJoinRound' value='1' />
+  <enum name='kCGMainMenuWindowLevelKey' value='8' />
+  <enum name='kCGMaxDisplayReservationInterval' value='15.0' />
+  <enum name='kCGMaximumWindowLevelKey' value='14' />
+  <enum name='kCGMinimumWindowLevelKey' value='1' />
+  <enum name='kCGModalPanelWindowLevelKey' value='10' />
+  <enum name='kCGMouseButtonCenter' value='2' />
+  <enum name='kCGMouseButtonLeft' value='0' />
+  <enum name='kCGMouseButtonRight' value='1' />
+  <enum name='kCGMouseDownEventMaskingDeadSwitchTimeout' value='60.0' />
+  <enum name='kCGMouseEventButtonNumber' value='3' />
+  <enum name='kCGMouseEventClickState' value='1' />
+  <enum name='kCGMouseEventDeltaX' value='4' />
+  <enum name='kCGMouseEventDeltaY' value='5' />
+  <enum name='kCGMouseEventInstantMouser' value='6' />
+  <enum name='kCGMouseEventNumber' value='0' />
+  <enum name='kCGMouseEventPressure' value='2' />
+  <enum name='kCGMouseEventSubtype' value='7' />
+  <enum name='kCGNormalWindowLevelKey' value='4' />
+  <enum name='kCGNullDirectDisplay' value='0' />
+  <enum name='kCGNullWindowID' value='0' />
+  <enum name='kCGNumReservedWindowLevels' value='16' />
+  <enum name='kCGNumberOfEventSuppressionStates' value='2' />
+  <enum name='kCGNumberOfEventSupressionStates' value='2' />
+  <enum name='kCGNumberOfWindowLevelKeys' value='21' />
+  <enum name='kCGOverlayWindowLevelKey' value='15' />
+  <enum name='kCGPDFArtBox' value='4' />
+  <enum name='kCGPDFBleedBox' value='2' />
+  <enum name='kCGPDFCropBox' value='1' />
+  <enum name='kCGPDFMediaBox' value='0' />
+  <enum name='kCGPDFObjectTypeArray' value='7' />
+  <enum name='kCGPDFObjectTypeBoolean' value='2' />
+  <enum name='kCGPDFObjectTypeDictionary' value='8' />
+  <enum name='kCGPDFObjectTypeInteger' value='3' />
+  <enum name='kCGPDFObjectTypeName' value='5' />
+  <enum name='kCGPDFObjectTypeNull' value='1' />
+  <enum name='kCGPDFObjectTypeReal' value='4' />
+  <enum name='kCGPDFObjectTypeStream' value='9' />
+  <enum name='kCGPDFObjectTypeString' value='6' />
+  <enum name='kCGPDFTrimBox' value='3' />
+  <enum name='kCGPathEOFill' value='1' />
+  <enum name='kCGPathEOFillStroke' value='4' />
+  <enum name='kCGPathElementAddCurveToPoint' value='3' />
+  <enum name='kCGPathElementAddLineToPoint' value='1' />
+  <enum name='kCGPathElementAddQuadCurveToPoint' value='2' />
+  <enum name='kCGPathElementCloseSubpath' value='4' />
+  <enum name='kCGPathElementMoveToPoint' value='0' />
+  <enum name='kCGPathFill' value='0' />
+  <enum name='kCGPathFillStroke' value='3' />
+  <enum name='kCGPathStroke' value='2' />
+  <enum name='kCGPatternTilingConstantSpacing' value='2' />
+  <enum name='kCGPatternTilingConstantSpacingMinimalDistortion' value='1' />
+  <enum name='kCGPatternTilingNoDistortion' value='0' />
+  <enum name='kCGPopUpMenuWindowLevelKey' value='11' />
+  <enum name='kCGRenderingIntentAbsoluteColorimetric' value='1' />
+  <enum name='kCGRenderingIntentDefault' value='0' />
+  <enum name='kCGRenderingIntentPerceptual' value='3' />
+  <enum name='kCGRenderingIntentRelativeColorimetric' value='2' />
+  <enum name='kCGRenderingIntentSaturation' value='4' />
+  <enum name='kCGScreenSaverWindowLevelKey' value='13' />
+  <enum name='kCGScreenUpdateOperationMove' value='1' />
+  <enum name='kCGScreenUpdateOperationReducedDirtyRectangleCount' value='-2147483648' />
+  <enum name='kCGScreenUpdateOperationRefresh' value='0' />
+  <enum name='kCGScrollEventUnitLine' value='1' />
+  <enum name='kCGScrollEventUnitPixel' value='0' />
+  <enum name='kCGScrollWheelEventDeltaAxis1' value='11' />
+  <enum name='kCGScrollWheelEventDeltaAxis2' value='12' />
+  <enum name='kCGScrollWheelEventDeltaAxis3' value='13' />
+  <enum name='kCGScrollWheelEventFixedPtDeltaAxis1' value='93' />
+  <enum name='kCGScrollWheelEventFixedPtDeltaAxis2' value='94' />
+  <enum name='kCGScrollWheelEventFixedPtDeltaAxis3' value='95' />
+  <enum name='kCGScrollWheelEventInstantMouser' value='14' />
+  <enum name='kCGScrollWheelEventIsContinuous' value='88' />
+  <enum name='kCGScrollWheelEventPointDeltaAxis1' value='96' />
+  <enum name='kCGScrollWheelEventPointDeltaAxis2' value='97' />
+  <enum name='kCGScrollWheelEventPointDeltaAxis3' value='98' />
+  <enum name='kCGSessionEventTap' value='1' />
+  <enum name='kCGStatusWindowLevelKey' value='9' />
+  <enum name='kCGTabletEventDeviceID' value='24' />
+  <enum name='kCGTabletEventPointButtons' value='18' />
+  <enum name='kCGTabletEventPointPressure' value='19' />
+  <enum name='kCGTabletEventPointX' value='15' />
+  <enum name='kCGTabletEventPointY' value='16' />
+  <enum name='kCGTabletEventPointZ' value='17' />
+  <enum name='kCGTabletEventRotation' value='22' />
+  <enum name='kCGTabletEventTangentialPressure' value='23' />
+  <enum name='kCGTabletEventTiltX' value='20' />
+  <enum name='kCGTabletEventTiltY' value='21' />
+  <enum name='kCGTabletEventVendor1' value='25' />
+  <enum name='kCGTabletEventVendor2' value='26' />
+  <enum name='kCGTabletEventVendor3' value='27' />
+  <enum name='kCGTabletProximityEventCapabilityMask' value='36' />
+  <enum name='kCGTabletProximityEventDeviceID' value='31' />
+  <enum name='kCGTabletProximityEventEnterProximity' value='38' />
+  <enum name='kCGTabletProximityEventPointerID' value='30' />
+  <enum name='kCGTabletProximityEventPointerType' value='37' />
+  <enum name='kCGTabletProximityEventSystemTabletID' value='32' />
+  <enum name='kCGTabletProximityEventTabletID' value='29' />
+  <enum name='kCGTabletProximityEventVendorID' value='28' />
+  <enum name='kCGTabletProximityEventVendorPointerSerialNumber' value='34' />
+  <enum name='kCGTabletProximityEventVendorPointerType' value='33' />
+  <enum name='kCGTabletProximityEventVendorUniqueID' value='35' />
+  <enum name='kCGTailAppendEventTap' value='1' />
+  <enum name='kCGTextClip' value='7' />
+  <enum name='kCGTextFill' value='0' />
+  <enum name='kCGTextFillClip' value='4' />
+  <enum name='kCGTextFillStroke' value='2' />
+  <enum name='kCGTextFillStrokeClip' value='6' />
+  <enum name='kCGTextInvisible' value='3' />
+  <enum name='kCGTextStroke' value='1' />
+  <enum name='kCGTextStrokeClip' value='5' />
+  <enum name='kCGTornOffMenuWindowLevelKey' value='6' />
+  <enum name='kCGUtilityWindowLevelKey' value='17' />
+  <enum name='kCGWindowBackingCFNumberType' value='3' />
+  <enum name='kCGWindowIDCFNumberType' value='3' />
+  <enum name='kCGWindowImageBoundsIgnoreFraming' value='1' />
+  <enum name='kCGWindowImageDefault' value='0' />
+  <enum name='kCGWindowImageShouldBeOpaque' value='2' />
+  <enum name='kCGWindowListExcludeDesktopElements' value='16' />
+  <enum name='kCGWindowListOptionAll' value='0' />
+  <enum name='kCGWindowListOptionIncludingWindow' value='8' />
+  <enum name='kCGWindowListOptionOnScreenAboveWindow' value='2' />
+  <enum name='kCGWindowListOptionOnScreenBelowWindow' value='4' />
+  <enum name='kCGWindowListOptionOnScreenOnly' value='1' />
+  <enum name='kCGWindowSharingCFNumberType' value='3' />
+  <enum name='kCGWindowSharingNone' value='0' />
+  <enum name='kCGWindowSharingReadOnly' value='1' />
+  <enum name='kCGWindowSharingReadWrite' value='2' />
+  <string_constant name='kCGColorSpaceUserCMYK' nsstring='true' value='kCGColorSpaceUserCMYK' />
+  <string_constant name='kCGColorSpaceUserGray' nsstring='true' value='kCGColorSpaceUserGray' />
+  <string_constant name='kCGColorSpaceUserRGB' nsstring='true' value='kCGColorSpaceUserRGB' />
+  <string_constant name='kCGDisplayBitsPerPixel' nsstring='true' value='BitsPerPixel' />
+  <string_constant name='kCGDisplayBitsPerSample' nsstring='true' value='BitsPerSample' />
+  <string_constant name='kCGDisplayBytesPerRow' nsstring='true' value='kCGDisplayBytesPerRow' />
+  <string_constant name='kCGDisplayHeight' nsstring='true' value='Height' />
+  <string_constant name='kCGDisplayIOFlags' nsstring='true' value='IOFlags' />
+  <string_constant name='kCGDisplayMode' nsstring='true' value='Mode' />
+  <string_constant name='kCGDisplayModeIsInterlaced' nsstring='true' value='kCGDisplayModeIsInterlaced' />
+  <string_constant name='kCGDisplayModeIsSafeForHardware' nsstring='true' value='kCGDisplayModeIsSafeForHardware' />
+  <string_constant name='kCGDisplayModeIsStretched' nsstring='true' value='kCGDisplayModeIsStretched' />
+  <string_constant name='kCGDisplayModeIsTelevisionOutput' nsstring='true' value='kCGDisplayModeIsTelevisionOutput' />
+  <string_constant name='kCGDisplayModeUsableForDesktopGUI' nsstring='true' value='UsableForDesktopGUI' />
+  <string_constant name='kCGDisplayRefreshRate' nsstring='true' value='RefreshRate' />
+  <string_constant name='kCGDisplaySamplesPerPixel' nsstring='true' value='SamplesPerPixel' />
+  <string_constant name='kCGDisplayWidth' nsstring='true' value='Width' />
+  <string_constant name='kCGIODisplayModeID' nsstring='true' value='IODisplayModeID' />
+  <string_constant name='kCGNotifyEventTapAdded' value='com.apple.coregraphics.eventTapAdded' />
+  <string_constant name='kCGNotifyEventTapRemoved' value='com.apple.coregraphics.eventTapRemoved' />
+  <string_constant name='kCGNotifyGUIConsoleSessionChanged' value='com.apple.coregraphics.GUIConsoleSessionChanged' />
+  <string_constant name='kCGNotifyGUISessionUserChanged' value='com.apple.coregraphics.GUISessionUserChanged' />
+  <string_constant name='kCGPDFContextAuthor' nsstring='true' value='kCGPDFContextAuthor' />
+  <string_constant name='kCGPDFContextCreator' nsstring='true' value='kCGPDFContextCreator' />
+  <string_constant name='kCGPDFContextOutputIntent' nsstring='true' value='kCGPDFContextOutputIntent' />
+  <string_constant name='kCGPDFContextOutputIntents' nsstring='true' value='kCGPDFContextOutputIntents' />
+  <string_constant name='kCGPDFContextTitle' nsstring='true' value='kCGPDFContextTitle' />
+  <string_constant name='kCGSessionConsoleSetKey' nsstring='true' value='kCGSSessionConsoleSetKey' />
+  <string_constant name='kCGSessionLoginDoneKey' nsstring='true' value='kCGSessionLoginDoneKey' />
+  <string_constant name='kCGSessionOnConsoleKey' nsstring='true' value='kCGSSessionOnConsoleKey' />
+  <string_constant name='kCGSessionUserIDKey' nsstring='true' value='kCGSSessionUserIDKey' />
+  <string_constant name='kCGSessionUserNameKey' nsstring='true' value='kCGSSessionUserNameKey' />
+  <function name='CGAcquireDisplayFadeReservation'>
+    <retval type='i' />
+    <arg type='f' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='CGAffineTransformConcat'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+  </function>
+  <function name='CGAffineTransformEqualToTransform'>
+    <retval type='B' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+  </function>
+  <function name='CGAffineTransformInvert'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+  </function>
+  <function name='CGAffineTransformIsIdentity'>
+    <retval type='B' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+  </function>
+  <function name='CGAffineTransformMake'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGAffineTransformMakeRotation'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGAffineTransformMakeScale'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGAffineTransformMakeTranslation'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGAffineTransformRotate'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGAffineTransformScale'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGAffineTransformTranslate'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGAssociateMouseAndMouseCursorPosition'>
+    <retval type='i' />
+    <arg type='i' />
+  </function>
+  <function name='CGBeginDisplayConfiguration'>
+    <retval type='i' />
+    <arg type='^^{_CGDisplayConfigRef}' type_modifier='o' />
+  </function>
+  <function name='CGBitmapContextCreate'>
+    <retval already_retained='true' type='^{CGContext=}' />
+    <arg c_array_of_variable_length='true' type='^v' type_modifier='n' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^{CGColorSpace=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGBitmapContextCreateImage'>
+    <retval already_retained='true' type='^{CGImage=}' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGBitmapContextGetAlphaInfo'>
+    <retval type='i' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGBitmapContextGetBitmapInfo'>
+    <retval type='I' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGBitmapContextGetBitsPerComponent'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGBitmapContextGetBitsPerPixel'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGBitmapContextGetBytesPerRow'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGBitmapContextGetColorSpace'>
+    <retval type='^{CGColorSpace=}' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGBitmapContextGetData'>
+    <retval c_array_of_variable_length='true' type='^v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGBitmapContextGetHeight'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGBitmapContextGetWidth'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGCancelDisplayConfiguration'>
+    <retval type='i' />
+    <arg type='^{_CGDisplayConfigRef=}' />
+  </function>
+  <function name='CGCaptureAllDisplays'>
+    <retval type='i' />
+  </function>
+  <function name='CGCaptureAllDisplaysWithOptions'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGColorCreate'>
+    <retval already_retained='true' type='^{CGColor=}' />
+    <arg type='^{CGColorSpace=}' />
+    <arg c_array_of_variable_length='true' type='^f' type64='^f' type_modifier='n' />
+  </function>
+  <function name='CGColorCreateCopy'>
+    <retval already_retained='true' type='^{CGColor=}' />
+    <arg type='^{CGColor=}' />
+  </function>
+  <function name='CGColorCreateCopyWithAlpha'>
+    <retval already_retained='true' type='^{CGColor=}' />
+    <arg type='^{CGColor=}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGColorCreateGenericCMYK'>
+    <retval already_retained='true' type='^{CGColor=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGColorCreateGenericGray'>
+    <retval already_retained='true' type='^{CGColor=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGColorCreateGenericRGB'>
+    <retval already_retained='true' type='^{CGColor=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGColorCreateWithPattern'>
+    <retval already_retained='true' type='^{CGColor=}' />
+    <arg type='^{CGColorSpace=}' />
+    <arg type='^{CGPattern=}' />
+    <arg c_array_of_variable_length='true' type='^f' type64='^f' type_modifier='n' />
+  </function>
+  <function name='CGColorEqualToColor'>
+    <retval type='B' />
+    <arg type='^{CGColor=}' />
+    <arg type='^{CGColor=}' />
+  </function>
+  <function name='CGColorGetAlpha'>
+    <retval type='f' type64='d' />
+    <arg type='^{CGColor=}' />
+  </function>
+  <function name='CGColorGetColorSpace'>
+    <retval type='^{CGColorSpace=}' />
+    <arg type='^{CGColor=}' />
+  </function>
+  <function name='CGColorGetComponents'>
+    <retval c_array_of_variable_length='true' type='^f' type64='^d' />
+    <arg type='^{CGColor=}' />
+  </function>
+  <function name='CGColorGetConstantColor'>
+    <retval type='^{CGColor=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CGColorGetNumberOfComponents'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGColor=}' />
+  </function>
+  <function name='CGColorGetPattern'>
+    <retval type='^{CGPattern=}' />
+    <arg type='^{CGColor=}' />
+  </function>
+  <function name='CGColorGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGColorRelease'>
+    <retval type='v' />
+    <arg type='^{CGColor=}' />
+  </function>
+  <function name='CGColorRetain'>
+    <retval type='^{CGColor=}' />
+    <arg type='^{CGColor=}' />
+  </function>
+  <function name='CGColorSpaceCopyICCProfile'>
+    <retval already_retained='true' type='^{__CFData=}' type64='^{__CFData=}' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGColorSpaceCreateCalibratedGray'>
+    <retval already_retained='true' type='^{CGColorSpace=}' />
+    <arg type='[3f]' type64='[3f]' />
+    <arg type='[3f]' type64='[3f]' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGColorSpaceCreateCalibratedRGB'>
+    <retval already_retained='true' type='^{CGColorSpace=}' />
+    <arg type='[3f]' type64='[3f]' />
+    <arg type='[3f]' type64='[3f]' />
+    <arg type='[3f]' type64='[3f]' />
+    <arg type='[9f]' type64='[9f]' />
+  </function>
+  <function name='CGColorSpaceCreateDeviceCMYK'>
+    <retval already_retained='true' type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGColorSpaceCreateDeviceGray'>
+    <retval already_retained='true' type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGColorSpaceCreateDeviceRGB'>
+    <retval already_retained='true' type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGColorSpaceCreateICCBased'>
+    <retval already_retained='true' type='^{CGColorSpace=}' />
+    <arg type='L' type64='L' />
+    <arg c_array_of_variable_length='true' type='^f' type64='^f' type_modifier='n' />
+    <arg type='^{CGDataProvider=}' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGColorSpaceCreateIndexed'>
+    <retval already_retained='true' type='^{CGColorSpace=}' />
+    <arg type='^{CGColorSpace=}' />
+    <arg type='L' type64='L' />
+    <arg c_array_of_variable_length='true' type='*' type_modifier='n' />
+  </function>
+  <function name='CGColorSpaceCreateLab'>
+    <retval already_retained='true' type='^{CGColorSpace=}' />
+    <arg type='[3f]' type64='[3f]' />
+    <arg type='[3f]' type64='[3f]' />
+    <arg type='[4f]' type64='[4f]' />
+  </function>
+  <function name='CGColorSpaceCreatePattern'>
+    <retval already_retained='true' type='^{CGColorSpace=}' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGColorSpaceCreateWithName'>
+    <retval already_retained='true' type='^{CGColorSpace=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CGColorSpaceCreateWithPlatformColorSpace'>
+    <retval already_retained='true' type='^{CGColorSpace=}' />
+    <arg type='^{OpaqueCMProfileRef=}' type64='^{OpaqueCMProfileRef=}' />
+  </function>
+  <function name='CGColorSpaceGetBaseColorSpace'>
+    <retval type='^{CGColorSpace=}' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGColorSpaceGetColorTable'>
+    <retval type='v' />
+    <arg type='^{CGColorSpace=}' />
+    <arg c_array_of_variable_length='true' type='*' type_modifier='N' />
+  </function>
+  <function name='CGColorSpaceGetColorTableCount'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGColorSpaceGetModel'>
+    <retval type='i' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGColorSpaceGetNumberOfComponents'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGColorSpaceGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGColorSpaceRelease'>
+    <retval type='v' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGColorSpaceRetain'>
+    <retval type='^{CGColorSpace=}' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGCompleteDisplayConfiguration'>
+    <retval type='i' />
+    <arg type='^{_CGDisplayConfigRef=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGConfigureDisplayFadeEffect'>
+    <retval type='i' />
+    <arg type='^{_CGDisplayConfigRef=}' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+  </function>
+  <function name='CGConfigureDisplayMirrorOfDisplay'>
+    <retval type='i' />
+    <arg type='^{_CGDisplayConfigRef=}' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGConfigureDisplayMode'>
+    <retval type='i' />
+    <arg type='^{_CGDisplayConfigRef=}' />
+    <arg type='I' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CGConfigureDisplayOrigin'>
+    <retval type='i' />
+    <arg type='^{_CGDisplayConfigRef=}' />
+    <arg type='I' />
+    <arg type='i' />
+    <arg type='i' />
+  </function>
+  <function name='CGConfigureDisplayStereoOperation'>
+    <retval type='i' />
+    <arg type='^{_CGDisplayConfigRef=}' />
+    <arg type='I' />
+    <arg type='i' />
+    <arg type='i' />
+  </function>
+  <function name='CGContextAddArc'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='i' />
+  </function>
+  <function name='CGContextAddArcToPoint'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextAddCurveToPoint'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextAddEllipseInRect'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGContextAddLineToPoint'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextAddLines'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg c_array_length_in_arg='2' type='^{CGPoint=ff}' type64='^{CGPoint=ff}' type_modifier='n' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGContextAddPath'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{CGPath=}' />
+  </function>
+  <function name='CGContextAddQuadCurveToPoint'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextAddRect'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGContextAddRects'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg c_array_length_in_arg='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGContextBeginPage'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg null_accepted='true' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+  </function>
+  <function name='CGContextBeginPath'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextBeginTransparencyLayer'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CGContextClearRect'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGContextClip'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextClipToMask'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGContextClipToRect'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGContextClipToRects'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg c_array_length_in_arg='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGContextClosePath'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextConcatCTM'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+  </function>
+  <function name='CGContextConvertPointToDeviceSpace'>
+    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+  </function>
+  <function name='CGContextConvertPointToUserSpace'>
+    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+  </function>
+  <function name='CGContextConvertRectToDeviceSpace'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGContextConvertRectToUserSpace'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGContextConvertSizeToDeviceSpace'>
+    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+  </function>
+  <function name='CGContextConvertSizeToUserSpace'>
+    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+  </function>
+  <function name='CGContextDrawImage'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGContextDrawLayerAtPoint'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='^{CGLayer=}' />
+  </function>
+  <function name='CGContextDrawLayerInRect'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='^{CGLayer=}' />
+  </function>
+  <function name='CGContextDrawLinearGradient'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{CGGradient=}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='I' />
+  </function>
+  <function name='CGContextDrawPDFDocument'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='^{CGPDFDocument=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGContextDrawPDFPage'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{CGPDFPage=}' />
+  </function>
+  <function name='CGContextDrawPath'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGContextDrawRadialGradient'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{CGGradient=}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='f' type64='f' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='f' type64='f' />
+    <arg type='I' />
+  </function>
+  <function name='CGContextDrawShading'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{CGShading=}' />
+  </function>
+  <function name='CGContextDrawTiledImage'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGContextEOClip'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextEOFillPath'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextEndPage'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextEndTransparencyLayer'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextFillEllipseInRect'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGContextFillPath'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextFillRect'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGContextFillRects'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg c_array_length_in_arg='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGContextFlush'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextGetCTM'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextGetClipBoundingBox'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextGetInterpolationQuality'>
+    <retval type='i' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextGetPathBoundingBox'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextGetPathCurrentPoint'>
+    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextGetTextMatrix'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextGetTextPosition'>
+    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGContextGetUserSpaceToDeviceSpaceTransform'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextIsPathEmpty'>
+    <retval type='B' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextMoveToPoint'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextPathContainsPoint'>
+    <retval type='B' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='i' />
+  </function>
+  <function name='CGContextRelease'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextReplacePathWithStrokedPath'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextRestoreGState'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextRetain'>
+    <retval type='^{CGContext=}' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextRotateCTM'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSaveGState'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextScaleCTM'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSelectFont'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='*' type64='*' />
+    <arg type='f' type64='f' />
+    <arg type='i' />
+  </function>
+  <function name='CGContextSetAllowsAntialiasing'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='B' />
+  </function>
+  <function name='CGContextSetAlpha'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetBlendMode'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGContextSetCMYKFillColor'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetCMYKStrokeColor'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetCharacterSpacing'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetFillColor'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg c_array_of_variable_length='true' type='^f' type64='^f' type_modifier='n' />
+  </function>
+  <function name='CGContextSetFillColorSpace'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGContextSetFillColorWithColor'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{CGColor=}' />
+  </function>
+  <function name='CGContextSetFillPattern'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{CGPattern=}' />
+    <arg c_array_of_variable_length='true' type='^f' type64='^f' type_modifier='n' />
+  </function>
+  <function name='CGContextSetFlatness'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetFont'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGContextSetFontSize'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetGrayFillColor'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetGrayStrokeColor'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetInterpolationQuality'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGContextSetLineCap'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGContextSetLineDash'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg c_array_length_in_arg='3' null_accepted='true' type='^f' type64='^f' type_modifier='n' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGContextSetLineJoin'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGContextSetLineWidth'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetMiterLimit'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetPatternPhase'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+  </function>
+  <function name='CGContextSetRGBFillColor'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetRGBStrokeColor'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetRenderingIntent'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGContextSetShadow'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSetShadowWithColor'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='f' type64='f' />
+    <arg type='^{CGColor=}' />
+  </function>
+  <function name='CGContextSetShouldAntialias'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='B' />
+  </function>
+  <function name='CGContextSetShouldSmoothFonts'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='B' />
+  </function>
+  <function name='CGContextSetStrokeColor'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg c_array_of_variable_length='true' type='^f' type64='^f' type_modifier='n' />
+  </function>
+  <function name='CGContextSetStrokeColorSpace'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGContextSetStrokeColorWithColor'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{CGColor=}' />
+  </function>
+  <function name='CGContextSetStrokePattern'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{CGPattern=}' />
+    <arg c_array_of_variable_length='true' type='^f' type64='^f' type_modifier='n' />
+  </function>
+  <function name='CGContextSetTextDrawingMode'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGContextSetTextMatrix'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+  </function>
+  <function name='CGContextSetTextPosition'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextShowGlyphs'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg c_array_length_in_arg='1' type='^S' type_modifier='n' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGContextShowGlyphsAtPoint'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg c_array_length_in_arg='4' type='^S' type_modifier='n' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGContextShowGlyphsAtPositions'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg c_array_length_in_arg='3' type='^S' />
+    <arg c_array_length_in_arg='3' type='^{CGPoint=ff}' type64='^{CGPoint=ff}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGContextShowGlyphsWithAdvances'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg c_array_length_in_arg='3' type='^S' type_modifier='n' />
+    <arg c_array_length_in_arg='3' type='^{CGSize=ff}' type64='^{CGSize=ff}' type_modifier='n' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGContextShowText'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='*' type64='*' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGContextShowTextAtPoint'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='*' type64='*' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGContextStrokeEllipseInRect'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGContextStrokeLineSegments'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg c_array_length_in_arg='2' type='^{CGPoint=ff}' type64='^{CGPoint=ff}' type_modifier='n' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGContextStrokePath'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextStrokeRect'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGContextStrokeRectWithWidth'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGContextSynchronize'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGContextTranslateCTM'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGCursorIsDrawnInFramebuffer'>
+    <retval type='i' />
+  </function>
+  <function name='CGCursorIsVisible'>
+    <retval type='i' />
+  </function>
+  <function comment='manual wrapper' name='CGDataConsumerCreate'>
+    <retval already_retained='true' type='^{CGDataConsumer=}' />
+    <arg type='^v' type64='^v' />
+    <arg type='r^{CGDataConsumerCallbacks=^?^?}' type64='r^{CGDataConsumerCallbacks=^?^?}' />
+  </function>
+  <function name='CGDataConsumerCreateWithCFData'>
+    <retval already_retained='true' type='^{CGDataConsumer=}' />
+    <arg type='^{__CFData=}' />
+  </function>
+  <function name='CGDataConsumerCreateWithURL'>
+    <retval already_retained='true' type='^{CGDataConsumer=}' />
+    <arg type='^{__CFURL=}' />
+  </function>
+  <function name='CGDataConsumerGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGDataConsumerRelease'>
+    <retval type='v' />
+    <arg type='^{CGDataConsumer=}' />
+  </function>
+  <function name='CGDataConsumerRetain'>
+    <retval type='^{CGDataConsumer=}' />
+    <arg type='^{CGDataConsumer=}' />
+  </function>
+  <function comment='manual wrapper' name='CGDataProviderCreate'>
+    <retval already_retained='true' type='^{CGDataProvider=}' />
+    <arg type='^v' type64='^v' />
+    <arg type='r^{CGDataProviderCallbacks=^?^?^?^?}' type64='r^{CGDataProviderCallbacks=^?^?^?^?}' />
+  </function>
+  <function comment='manual wrapper' name='CGDataProviderCreateDirect'>
+    <retval already_retained='true' type='^{CGDataProvider=}' />
+    <arg type='^v' type64='^v' />
+    <arg type='q' />
+    <arg type='r^{CGDataProviderDirectCallbacks=I^?^?^?^?}' type64='r^{CGDataProviderDirectCallbacks=I^?^?^?^?}' />
+  </function>
+  <function comment='manual wrapper' name='CGDataProviderCreateDirectAccess'>
+    <retval already_retained='true' type='^{CGDataProvider=}' />
+    <arg type='^v' type64='^v' />
+    <arg type='L' type64='L' />
+    <arg type='r^{CGDataProviderDirectAccessCallbacks=^?^?^?^?}' type64='r^{CGDataProviderDirectAccessCallbacks=^?^?^?^?}' />
+  </function>
+  <function comment='manual wrapper' name='CGDataProviderCreateSequential'>
+    <retval already_retained='true' type='^{CGDataProvider=}' />
+    <arg type='^v' type64='^v' />
+    <arg type='r^{CGDataProviderSequentialCallbacks=I^?^?^?^?}' type64='r^{CGDataProviderSequentialCallbacks=I^?^?^?^?}' />
+  </function>
+  <function name='CGDataProviderCreateWithCFData'>
+    <retval already_retained='true' type='^{CGDataProvider=}' />
+    <arg type='^{__CFData=}' />
+  </function>
+  <function comment='manual wrapper' name='CGDataProviderCreateWithData'>
+    <retval already_retained='true' type='^{CGDataProvider=}' />
+    <arg type='^v' type64='^v' />
+    <arg type='^v' type64='^v' />
+    <arg type='L' type64='L' />
+    <arg function_pointer='true' type='^?' type64='^?' />
+  </function>
+  <function name='CGDataProviderCreateWithFilename'>
+    <retval already_retained='true' type='^{CGDataProvider=}' />
+    <arg type='*' type64='*' />
+  </function>
+  <function name='CGDataProviderCreateWithURL'>
+    <retval already_retained='true' type='^{CGDataProvider=}' />
+    <arg type='^{__CFURL=}' />
+  </function>
+  <function name='CGDataProviderGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGDataProviderRelease'>
+    <retval type='v' />
+    <arg type='^{CGDataProvider=}' />
+  </function>
+  <function name='CGDataProviderRetain'>
+    <retval type='^{CGDataProvider=}' />
+    <arg type='^{CGDataProvider=}' />
+  </function>
+  <function name='CGDisplayAddressForPosition'>
+    <retval c_array_of_variable_length='true' type='^v' />
+    <arg type='I' />
+    <arg type='i' />
+    <arg type='i' />
+  </function>
+  <function name='CGDisplayAvailableModes'>
+    <retval type='^{__CFArray=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayBaseAddress'>
+    <retval c_array_of_variable_length='true' type='^v' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayBeamPosition'>
+    <retval type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayBestModeForParameters'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='I' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^i' type64='^i' type_modifier='o' />
+  </function>
+  <function name='CGDisplayBestModeForParametersAndRefreshRate'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='I' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='d' />
+    <arg type='^i' type64='^i' type_modifier='o' />
+  </function>
+  <function name='CGDisplayBestModeForParametersAndRefreshRateWithProperty'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='I' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='d' />
+    <arg type='^{__CFString=}' />
+    <arg type='^i' type64='^i' type_modifier='o' />
+  </function>
+  <function name='CGDisplayBitsPerPixel'>
+    <retval type='L' type64='Q' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayBitsPerSample'>
+    <retval type='L' type64='Q' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayBounds'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayBytesPerRow'>
+    <retval type='L' type64='Q' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayCanSetPalette'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayCapture'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayCaptureWithOptions'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayCopyColorSpace'>
+    <retval already_retained='true' type='^{CGColorSpace=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayCurrentMode'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayFade'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='i' />
+  </function>
+  <function name='CGDisplayFadeOperationInProgress'>
+    <retval type='i' />
+  </function>
+  <function name='CGDisplayGammaTableCapacity'>
+    <retval type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayGetDrawingContext'>
+    <retval type='^{CGContext=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayHideCursor'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayIDToOpenGLDisplayMask'>
+    <retval type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayIOServicePort'>
+    <retval type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayIsActive'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayIsAlwaysInMirrorSet'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayIsAsleep'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayIsBuiltin'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayIsCaptured'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayIsInHWMirrorSet'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayIsInMirrorSet'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayIsMain'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayIsOnline'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayIsStereo'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayMirrorsDisplay'>
+    <retval type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayModelNumber'>
+    <retval type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayMoveCursorToPoint'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+  </function>
+  <function name='CGDisplayPixelsHigh'>
+    <retval type='L' type64='Q' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayPixelsWide'>
+    <retval type='L' type64='Q' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayPrimaryDisplay'>
+    <retval type='I' />
+    <arg type='I' />
+  </function>
+  <function comment='manual wrapper' name='CGDisplayRegisterReconfigurationCallback'>
+    <retval type='i' />
+    <arg type='^?' type64='^?' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function name='CGDisplayRelease'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function comment='manual wrapper' name='CGDisplayRemoveReconfigurationCallback'>
+    <retval type='i' />
+    <arg type='^?' type64='^?' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function name='CGDisplayRestoreColorSyncSettings'>
+    <retval type='v' />
+  </function>
+  <function name='CGDisplayRotation'>
+    <retval type='d' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplaySamplesPerPixel'>
+    <retval type='L' type64='Q' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayScreenSize'>
+    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplaySerialNumber'>
+    <retval type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplaySetPalette'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='^{_CGDirectPaletteRef=}' />
+  </function>
+  <function name='CGDisplaySetStereoOperation'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='i' />
+    <arg type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayShowCursor'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplaySwitchToMode'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CGDisplayUnitNumber'>
+    <retval type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayUsesOpenGLAcceleration'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayVendorNumber'>
+    <retval type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayWaitForBeamPositionOutsideLines'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGEnableEventStateCombining'>
+    <retval type='i' />
+    <arg type='i' />
+  </function>
+  <function name='CGEventCreate'>
+    <retval already_retained='true' type='^{__CGEvent=}' />
+    <arg type='^{__CGEventSource=}' />
+  </function>
+  <function name='CGEventCreateCopy'>
+    <retval already_retained='true' type='^{__CGEvent=}' />
+    <arg type='^{__CGEvent=}' />
+  </function>
+  <function name='CGEventCreateData'>
+    <retval already_retained='true' type='^{__CFData=}' type64='^{__CFData=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CGEvent=}' />
+  </function>
+  <function name='CGEventCreateFromData'>
+    <retval already_retained='true' type='^{__CGEvent=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFData=}' />
+  </function>
+  <function name='CGEventCreateKeyboardEvent'>
+    <retval already_retained='true' type='^{__CGEvent=}' />
+    <arg type='^{__CGEventSource=}' />
+    <arg type='S' />
+    <arg type='B' />
+  </function>
+  <function name='CGEventCreateMouseEvent'>
+    <retval already_retained='true' type='^{__CGEvent=}' />
+    <arg type='^{__CGEventSource=}' />
+    <arg type='I' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='I' />
+  </function>
+  <function name='CGEventCreateScrollWheelEvent' variadic='true'>
+    <retval already_retained='true' type='^{__CGEvent=}' />
+    <arg type='^{__CGEventSource=}' />
+    <arg type='I' />
+    <arg type='I' />
+    <arg type='i' />
+  </function>
+  <function name='CGEventCreateSourceFromEvent'>
+    <retval already_retained='true' type='^{__CGEventSource=}' />
+    <arg type='^{__CGEvent=}' />
+  </function>
+  <function name='CGEventGetDoubleValueField'>
+    <retval type='d' />
+    <arg type='^{__CGEvent=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGEventGetFlags'>
+    <retval type='Q' />
+    <arg type='^{__CGEvent=}' />
+  </function>
+  <function name='CGEventGetIntegerValueField'>
+    <retval type='q' />
+    <arg type='^{__CGEvent=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGEventGetLocation'>
+    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='^{__CGEvent=}' />
+  </function>
+  <function name='CGEventGetTimestamp'>
+    <retval type='Q' />
+    <arg type='^{__CGEvent=}' />
+  </function>
+  <function name='CGEventGetType'>
+    <retval type='I' />
+    <arg type='^{__CGEvent=}' />
+  </function>
+  <function name='CGEventGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGEventGetUnflippedLocation'>
+    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='^{__CGEvent=}' />
+  </function>
+  <function name='CGEventKeyboardGetUnicodeString'>
+    <retval type='v' />
+    <arg type='^{__CGEvent=}' />
+    <arg type='L' type64='L' />
+    <arg type='^I' type64='^I' type_modifier='o' />
+    <arg c_array_length_in_arg='1,2' type='^S' type_modifier='o' />
+  </function>
+  <function name='CGEventKeyboardSetUnicodeString'>
+    <retval type='v' />
+    <arg type='^{__CGEvent=}' />
+    <arg type='L' type64='L' />
+    <arg c_array_length_in_arg='1' type='^S' type_modifier='n' unicode_string='true' />
+  </function>
+  <function name='CGEventPost'>
+    <retval type='v' />
+    <arg type='I' />
+    <arg type='^{__CGEvent=}' />
+  </function>
+  <function name='CGEventPostToPSN'>
+    <retval type='v' />
+    <arg type='^{ProcessSerialNumber=II}' type64='^{ProcessSerialNumber=II}' type_modifier='n' />
+    <arg type='^{__CGEvent=}' />
+  </function>
+  <function name='CGEventSetDoubleValueField'>
+    <retval type='v' />
+    <arg type='^{__CGEvent=}' />
+    <arg type='I' />
+    <arg type='d' />
+  </function>
+  <function name='CGEventSetFlags'>
+    <retval type='v' />
+    <arg type='^{__CGEvent=}' />
+    <arg type='Q' />
+  </function>
+  <function name='CGEventSetIntegerValueField'>
+    <retval type='v' />
+    <arg type='^{__CGEvent=}' />
+    <arg type='I' />
+    <arg type='q' />
+  </function>
+  <function name='CGEventSetLocation'>
+    <retval type='v' />
+    <arg type='^{__CGEvent=}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+  </function>
+  <function name='CGEventSetSource'>
+    <retval type='v' />
+    <arg type='^{__CGEvent=}' />
+    <arg type='^{__CGEventSource=}' />
+  </function>
+  <function name='CGEventSetTimestamp'>
+    <retval type='v' />
+    <arg type='^{__CGEvent=}' />
+    <arg type='Q' />
+  </function>
+  <function name='CGEventSetType'>
+    <retval type='v' />
+    <arg type='^{__CGEvent=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGEventSourceButtonState'>
+    <retval type='B' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGEventSourceCounterForEventType'>
+    <retval type='I' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGEventSourceCreate'>
+    <retval already_retained='true' type='^{__CGEventSource=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGEventSourceFlagsState'>
+    <retval type='Q' />
+    <arg type='I' />
+  </function>
+  <function name='CGEventSourceGetKeyboardType'>
+    <retval type='I' />
+    <arg type='^{__CGEventSource=}' />
+  </function>
+  <function name='CGEventSourceGetLocalEventsFilterDuringSuppressionState'>
+    <retval type='I' />
+    <arg type='^{__CGEventSource=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGEventSourceGetLocalEventsSuppressionInterval'>
+    <retval type='d' />
+    <arg type='^{__CGEventSource=}' />
+  </function>
+  <function name='CGEventSourceGetPixelsPerLine'>
+    <retval type='d' />
+    <arg type='^{__CGEventSource=}' />
+  </function>
+  <function name='CGEventSourceGetSourceStateID'>
+    <retval type='I' />
+    <arg type='^{__CGEventSource=}' />
+  </function>
+  <function name='CGEventSourceGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGEventSourceGetUserData'>
+    <retval type='q' />
+    <arg type='^{__CGEventSource=}' />
+  </function>
+  <function name='CGEventSourceKeyState'>
+    <retval type='B' />
+    <arg type='I' />
+    <arg type='S' />
+  </function>
+  <function name='CGEventSourceSecondsSinceLastEventType'>
+    <retval type='d' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGEventSourceSetKeyboardType'>
+    <retval type='v' />
+    <arg type='^{__CGEventSource=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGEventSourceSetLocalEventsFilterDuringSuppressionState'>
+    <retval type='v' />
+    <arg type='^{__CGEventSource=}' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGEventSourceSetLocalEventsSuppressionInterval'>
+    <retval type='v' />
+    <arg type='^{__CGEventSource=}' />
+    <arg type='d' />
+  </function>
+  <function name='CGEventSourceSetPixelsPerLine'>
+    <retval type='v' />
+    <arg type='^{__CGEventSource=}' />
+    <arg type='d' />
+  </function>
+  <function name='CGEventSourceSetUserData'>
+    <retval type='v' />
+    <arg type='^{__CGEventSource=}' />
+    <arg type='q' />
+  </function>
+  <function comment='manual wrapper' name='CGEventTapCreate'>
+    <retval already_retained='true' type='^{__CFMachPort=}' type64='^{__CFMachPort=}' />
+    <arg type='I' />
+    <arg type='I' />
+    <arg type='I' />
+    <arg type='Q' />
+    <arg type='^?' type64='^?' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function comment='manual wrapper' name='CGEventTapCreateForPSN'>
+    <retval already_retained='true' type='^{__CFMachPort=}' type64='^{__CFMachPort=}' />
+    <arg type='^{ProcessSerialNumber=II}' type64='^{ProcessSerialNumber=II}' type_modifier='n' />
+    <arg type='I' />
+    <arg type='I' />
+    <arg type='Q' />
+    <arg type='^?' type64='^?' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function name='CGEventTapEnable'>
+    <retval type='v' />
+    <arg type='^{__CFMachPort=}' />
+    <arg type='B' />
+  </function>
+  <function name='CGEventTapIsEnabled'>
+    <retval type='B' />
+    <arg type='^{__CFMachPort=}' />
+  </function>
+  <function name='CGEventTapPostEvent'>
+    <retval type='v' />
+    <arg type='^{__CGEventTapProxy=}' />
+    <arg type='^{__CGEvent=}' />
+  </function>
+  <function name='CGFontCanCreatePostScriptSubset'>
+    <retval type='B' />
+    <arg type='^{CGFont=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGFontCopyFullName'>
+    <retval already_retained='true' type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontCopyGlyphNameForGlyph'>
+    <retval already_retained='true' type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{CGFont=}' />
+    <arg type='S' />
+  </function>
+  <function name='CGFontCopyPostScriptName'>
+    <retval already_retained='true' type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontCopyTableForTag'>
+    <retval already_retained='true' type='^{__CFData=}' type64='^{__CFData=}' />
+    <arg type='^{CGFont=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGFontCopyTableTags'>
+    <retval already_retained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontCopyVariationAxes'>
+    <retval already_retained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontCopyVariations'>
+    <retval already_retained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontCreateCopyWithVariations'>
+    <retval already_retained='true' type='^{CGFont=}' />
+    <arg type='^{CGFont=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CGFontCreatePostScriptEncoding'>
+    <retval already_retained='true' type='^{__CFData=}' type64='^{__CFData=}' />
+    <arg type='^{CGFont=}' />
+    <arg type='[256S]' />
+  </function>
+  <function name='CGFontCreatePostScriptSubset'>
+    <retval already_retained='true' type='^{__CFData=}' type64='^{__CFData=}' />
+    <arg type='^{CGFont=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='i' />
+    <arg c_array_length_in_arg='4' type='^S' type_modifier='n' />
+    <arg type='L' type64='L' />
+    <arg type='[256S]' />
+  </function>
+  <function name='CGFontCreateWithDataProvider'>
+    <retval already_retained='true' type='^{CGFont=}' />
+    <arg type='^{CGDataProvider=}' />
+  </function>
+  <function name='CGFontCreateWithFontName'>
+    <retval already_retained='true' type='^{CGFont=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CGFontCreateWithPlatformFont'>
+    <retval already_retained='true' type='^{CGFont=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGFontGetAscent'>
+    <retval type='i' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontGetCapHeight'>
+    <retval type='i' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontGetDescent'>
+    <retval type='i' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontGetFontBBox'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontGetGlyphAdvances'>
+    <retval type='B' />
+    <arg type='^{CGFont=}' />
+    <arg c_array_length_in_arg='2' type='^S' />
+    <arg type='L' type64='L' />
+    <arg c_array_length_in_arg='2' type='^i' />
+  </function>
+  <function name='CGFontGetGlyphBBoxes'>
+    <retval type='B' />
+    <arg type='^{CGFont=}' />
+    <arg c_array_length_in_arg='2' type='^S' />
+    <arg type='L' type64='L' />
+    <arg c_array_length_in_arg='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGFontGetGlyphWithGlyphName'>
+    <retval type='S' />
+    <arg type='^{CGFont=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CGFontGetItalicAngle'>
+    <retval type='f' type64='d' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontGetLeading'>
+    <retval type='i' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontGetNumberOfGlyphs'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontGetStemV'>
+    <retval type='f' type64='d' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGFontGetUnitsPerEm'>
+    <retval type='i' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontGetXHeight'>
+    <retval type='i' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontRelease'>
+    <retval type='v' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function name='CGFontRetain'>
+    <retval type='^{CGFont=}' />
+    <arg type='^{CGFont=}' />
+  </function>
+  <function comment='manual wrapper' name='CGFunctionCreate'>
+    <retval already_retained='true' type='^{CGFunction=}' />
+    <arg type='^v' type64='^v' />
+    <arg type='L' type64='L' />
+    <arg c_array_of_variable_length='true' null_accepted='true' type='^f' type64='^f' type_modifier='n' />
+    <arg type='L' type64='L' />
+    <arg c_array_of_variable_length='true' null_accepted='true' type='^f' type64='^f' type_modifier='n' />
+    <arg type='r^{CGFunctionCallbacks=I^?^?}' type64='r^{CGFunctionCallbacks=I^?^?}' />
+  </function>
+  <function name='CGFunctionGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGFunctionRelease'>
+    <retval type='v' />
+    <arg type='^{CGFunction=}' />
+  </function>
+  <function name='CGFunctionRetain'>
+    <retval type='^{CGFunction=}' />
+    <arg type='^{CGFunction=}' />
+  </function>
+  <function name='CGGLContextCreate'>
+    <retval already_retained='true' type='^{CGContext=}' />
+    <arg type='^v' type64='^v' />
+    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGGLContextUpdateViewportSize'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+  </function>
+  <function name='CGGetActiveDisplayList'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg c_array_length_in_arg='0,2' null_accepted='true' type='^I' type_modifier='o' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='CGGetDisplayTransferByFormula'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='^f' type_modifier='o' />
+    <arg type='^f' type_modifier='o' />
+    <arg type='^f' type_modifier='o' />
+    <arg type='^f' type_modifier='o' />
+    <arg type='^f' type_modifier='o' />
+    <arg type='^f' type_modifier='o' />
+    <arg type='^f' type_modifier='o' />
+    <arg type='^f' type_modifier='o' />
+    <arg type='^f' type_modifier='o' />
+  </function>
+  <function name='CGGetDisplayTransferByTable'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='I' />
+    <arg c_array_length_in_arg='1,5' type='^f' type_modifier='o' />
+    <arg c_array_length_in_arg='1,5' type='^f' type_modifier='o' />
+    <arg c_array_length_in_arg='1,5' type='^f' type_modifier='o' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='CGGetDisplaysWithOpenGLDisplayMask'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='I' />
+    <arg c_array_length_in_arg='1,3' null_accepted='true' type='^I' type_modifier='o' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='CGGetDisplaysWithPoint'>
+    <retval type='i' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='I' />
+    <arg c_array_length_in_arg='1,3' null_accepted='true' type='^I' type_modifier='o' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='CGGetDisplaysWithRect'>
+    <retval type='i' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='I' />
+    <arg c_array_length_in_arg='1,3' null_accepted='true' type='^I' type_modifier='o' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='CGGetEventTapList'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg c_array_length_in_arg='0,2' type='^{CGEventTapInformation=IIIQiiBfff}' type_modifier='o' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='CGGetLastMouseDelta'>
+    <retval type='v' />
+    <arg type='^i' type_modifier='o' />
+    <arg type='^i' type_modifier='o' />
+  </function>
+  <function name='CGGetOnlineDisplayList'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg c_array_length_in_arg='0,2' null_accepted='true' type='^I' type_modifier='o' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='CGGradientCreateWithColorComponents'>
+    <retval already_retained='true' type='^{CGGradient=}' />
+    <arg type='^{CGColorSpace=}' />
+    <arg c_array_length_in_arg='3' type='^f' type64='^f' type_modifier='n' />
+    <arg c_array_length_in_arg='3' null_accepted='true' type='^f' type64='^f' type_modifier='n' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGGradientCreateWithColors'>
+    <retval already_retained='true' type='^{CGGradient=}' />
+    <arg type='^{CGColorSpace=}' />
+    <arg type='^{__CFArray=}' />
+    <arg c_array_length_in_arg='1' null_accepted='true' type='^f' type64='^f' type_modifier='n' />
+  </function>
+  <function name='CGGradientGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGGradientRelease'>
+    <retval type='v' />
+    <arg type='^{CGGradient=}' />
+  </function>
+  <function name='CGGradientRetain'>
+    <retval type='^{CGGradient=}' />
+    <arg type='^{CGGradient=}' />
+  </function>
+  <function name='CGImageCreate'>
+    <retval already_retained='true' type='^{CGImage=}' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^{CGColorSpace=}' />
+    <arg type='I' />
+    <arg type='^{CGDataProvider=}' />
+    <arg c_array_of_variable_length='true' null_accepted='true' type='^f' type64='^f' type_modifier='n' />
+    <arg type='B' />
+    <arg type='i' />
+  </function>
+  <function name='CGImageCreateCopy'>
+    <retval already_retained='true' type='^{CGImage=}' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageCreateCopyWithColorSpace'>
+    <retval already_retained='true' type='^{CGImage=}' />
+    <arg type='^{CGImage=}' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
+  <function name='CGImageCreateWithImageInRect'>
+    <retval already_retained='true' type='^{CGImage=}' />
+    <arg type='^{CGImage=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGImageCreateWithJPEGDataProvider'>
+    <retval already_retained='true' type='^{CGImage=}' />
+    <arg type='^{CGDataProvider=}' />
+    <arg c_array_of_variable_length='true' null_accepted='true' type='^f' type64='^f' type_modifier='n' />
+    <arg type='B' />
+    <arg type='i' />
+  </function>
+  <function name='CGImageCreateWithMask'>
+    <retval already_retained='true' type='^{CGImage=}' />
+    <arg type='^{CGImage=}' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageCreateWithMaskingColors'>
+    <retval already_retained='true' type='^{CGImage=}' />
+    <arg type='^{CGImage=}' />
+    <arg c_array_of_variable_length='true' null_accepted='true' type='^f' type64='^f' type_modifier='n' />
+  </function>
+  <function name='CGImageCreateWithPNGDataProvider'>
+    <retval already_retained='true' type='^{CGImage=}' />
+    <arg type='^{CGDataProvider=}' />
+    <arg c_array_of_variable_length='true' null_accepted='true' type='^f' type64='^f' type_modifier='n' />
+    <arg type='B' />
+    <arg type='i' />
+  </function>
+  <function name='CGImageGetAlphaInfo'>
+    <retval type='i' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageGetBitmapInfo'>
+    <retval type='I' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageGetBitsPerComponent'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageGetBitsPerPixel'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageGetBytesPerRow'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageGetColorSpace'>
+    <retval type='^{CGColorSpace=}' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageGetDataProvider'>
+    <retval type='^{CGDataProvider=}' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageGetDecode'>
+    <retval c_array_of_variable_length='true' type='^f' type64='^d' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageGetHeight'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageGetRenderingIntent'>
+    <retval type='i' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageGetShouldInterpolate'>
+    <retval type='B' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGImageGetWidth'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageIsMask'>
+    <retval type='B' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageMaskCreate'>
+    <retval already_retained='true' type='^{CGImage=}' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^{CGDataProvider=}' />
+    <arg c_array_of_variable_length='true' null_accepted='true' type='^f' type64='^f' type_modifier='n' />
+    <arg type='B' />
+  </function>
+  <function name='CGImageRelease'>
+    <retval type='v' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGImageRetain'>
+    <retval type='^{CGImage=}' />
+    <arg type='^{CGImage=}' />
+  </function>
+  <function name='CGInhibitLocalEvents'>
+    <retval type='i' />
+    <arg type='i' />
+  </function>
+  <function name='CGLayerCreateWithContext'>
+    <retval already_retained='true' type='^{CGLayer=}' />
+    <arg type='^{CGContext=}' />
+    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CGLayerGetContext'>
+    <retval type='^{CGContext=}' />
+    <arg type='^{CGLayer=}' />
+  </function>
+  <function name='CGLayerGetSize'>
+    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <arg type='^{CGLayer=}' />
+  </function>
+  <function name='CGLayerGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGLayerRelease'>
+    <retval type='v' />
+    <arg type='^{CGLayer=}' />
+  </function>
+  <function name='CGLayerRetain'>
+    <retval type='^{CGLayer=}' />
+    <arg type='^{CGLayer=}' />
+  </function>
+  <function name='CGMainDisplayID'>
+    <retval type='I' />
+  </function>
+  <function name='CGOpenGLDisplayMaskToDisplayID'>
+    <retval type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGPDFArrayGetArray'>
+    <retval type='B' />
+    <arg type='^{CGPDFArray=}' />
+    <arg type='L' type64='L' />
+    <arg type='^^{CGPDFArray}' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetBoolean'>
+    <retval type='B' />
+    <arg type='^{CGPDFArray=}' />
+    <arg type='L' type64='L' />
+    <arg type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetCount'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGPDFArray=}' />
+  </function>
+  <function name='CGPDFArrayGetDictionary'>
+    <retval type='B' />
+    <arg type='^{CGPDFArray=}' />
+    <arg type='L' type64='L' />
+    <arg type='^^{CGPDFDictionary}' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetInteger'>
+    <retval type='B' />
+    <arg type='^{CGPDFArray=}' />
+    <arg type='L' type64='L' />
+    <arg type='^i' type64='^i' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetName'>
+    <retval type='B' />
+    <arg type='^{CGPDFArray=}' />
+    <arg type='L' type64='L' />
+    <arg type='^*' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetNull'>
+    <retval type='B' />
+    <arg type='^{CGPDFArray=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGPDFArrayGetNumber'>
+    <retval type='B' />
+    <arg type='^{CGPDFArray=}' />
+    <arg type='L' type64='L' />
+    <arg type='^f' type64='^f' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetObject'>
+    <retval type='B' />
+    <arg type='^{CGPDFArray=}' />
+    <arg type='L' type64='L' />
+    <arg type='^^(CGPDFObject)' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetStream'>
+    <retval type='B' />
+    <arg type='^{CGPDFArray=}' />
+    <arg type='L' type64='L' />
+    <arg type='^^{CGPDFStream}' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetString'>
+    <retval type='B' />
+    <arg type='^{CGPDFArray=}' />
+    <arg type='L' type64='L' />
+    <arg type='^^{CGPDFString}' type_modifier='o' />
+  </function>
+  <function name='CGPDFContentStreamCreateWithPage'>
+    <retval type='^{CGPDFContentStream=}' />
+    <arg type='^{CGPDFPage=}' />
+  </function>
+  <function name='CGPDFContentStreamCreateWithStream'>
+    <retval type='^{CGPDFContentStream=}' />
+    <arg type='^{CGPDFStream=}' />
+    <arg type='^{CGPDFDictionary=}' />
+    <arg type='^{CGPDFContentStream=}' />
+  </function>
+  <function name='CGPDFContentStreamGetResource'>
+    <retval type='^(CGPDFObject=)' type64='^(CGPDFObject=)' />
+    <arg type='^{CGPDFContentStream=}' />
+    <arg type='r*' type64='r*' />
+    <arg type='r*' type64='r*' />
+  </function>
+  <function name='CGPDFContentStreamGetStreams'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{CGPDFContentStream=}' />
+  </function>
+  <function name='CGPDFContentStreamRelease'>
+    <retval type='v' />
+    <arg type='^{CGPDFContentStream=}' />
+  </function>
+  <function name='CGPDFContentStreamRetain'>
+    <retval type='^{CGPDFContentStream=}' />
+    <arg type='^{CGPDFContentStream=}' />
+  </function>
+  <function name='CGPDFContextAddDestinationAtPoint'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+  </function>
+  <function name='CGPDFContextBeginPage'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CGPDFContextClose'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGPDFContextCreate'>
+    <retval already_retained='true' type='^{CGContext=}' />
+    <arg type='^{CGDataConsumer=}' />
+    <arg null_accepted='true' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CGPDFContextCreateWithURL'>
+    <retval already_retained='true' type='^{CGContext=}' />
+    <arg type='^{__CFURL=}' />
+    <arg null_accepted='true' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CGPDFContextEndPage'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+  </function>
+  <function name='CGPDFContextSetDestinationForRect'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGPDFContextSetURLForRect'>
+    <retval type='v' />
+    <arg type='^{CGContext=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function comment='manual wrapper' name='CGPDFDictionaryApplyFunction'>
+    <retval type='v' />
+    <arg type='^{CGPDFDictionary=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function name='CGPDFDictionaryGetArray'>
+    <retval type='B' />
+    <arg type='^{CGPDFDictionary=}' />
+    <arg type='r*' type64='r*' />
+    <arg type='^^{CGPDFArray}' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetBoolean'>
+    <retval type='B' />
+    <arg type='^{CGPDFDictionary=}' />
+    <arg type='r*' type64='r*' />
+    <arg type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetCount'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGPDFDictionary=}' />
+  </function>
+  <function name='CGPDFDictionaryGetDictionary'>
+    <retval type='B' />
+    <arg type='^{CGPDFDictionary=}' />
+    <arg type='r*' type64='r*' />
+    <arg type='^^{CGPDFDictionary}' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetInteger'>
+    <retval type='B' />
+    <arg type='^{CGPDFDictionary=}' />
+    <arg type='r*' type64='r*' />
+    <arg type='^i' type64='^i' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetName'>
+    <retval type='B' />
+    <arg type='^{CGPDFDictionary=}' />
+    <arg type='r*' type64='r*' />
+    <arg type='^*' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetNumber'>
+    <retval type='B' />
+    <arg type='^{CGPDFDictionary=}' />
+    <arg type='r*' type64='r*' />
+    <arg type='^f' type64='^f' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetObject'>
+    <retval type='B' />
+    <arg type='^{CGPDFDictionary=}' />
+    <arg type='r*' type64='r*' />
+    <arg type='^^(CGPDFObject)' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetStream'>
+    <retval type='B' />
+    <arg type='^{CGPDFDictionary=}' />
+    <arg type='r*' type64='r*' />
+    <arg type='^^{CGPDFStream}' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetString'>
+    <retval type='B' />
+    <arg type='^{CGPDFDictionary=}' />
+    <arg type='r*' type64='r*' />
+    <arg type='^^{CGPDFString}' type_modifier='o' />
+  </function>
+  <function name='CGPDFDocumentAllowsCopying'>
+    <retval type='B' />
+    <arg type='^{CGPDFDocument=}' />
+  </function>
+  <function name='CGPDFDocumentAllowsPrinting'>
+    <retval type='B' />
+    <arg type='^{CGPDFDocument=}' />
+  </function>
+  <function name='CGPDFDocumentCreateWithProvider'>
+    <retval already_retained='true' type='^{CGPDFDocument=}' />
+    <arg type='^{CGDataProvider=}' />
+  </function>
+  <function name='CGPDFDocumentCreateWithURL'>
+    <retval already_retained='true' type='^{CGPDFDocument=}' />
+    <arg type='^{__CFURL=}' />
+  </function>
+  <function name='CGPDFDocumentGetArtBox'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGPDFDocument=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGPDFDocumentGetBleedBox'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGPDFDocument=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGPDFDocumentGetCatalog'>
+    <retval type='^{CGPDFDictionary=}' />
+    <arg type='^{CGPDFDocument=}' />
+  </function>
+  <function name='CGPDFDocumentGetCropBox'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGPDFDocument=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGPDFDocumentGetID'>
+    <retval type='^{CGPDFArray=}' />
+    <arg type='^{CGPDFDocument=}' />
+  </function>
+  <function name='CGPDFDocumentGetInfo'>
+    <retval type='^{CGPDFDictionary=}' />
+    <arg type='^{CGPDFDocument=}' />
+  </function>
+  <function name='CGPDFDocumentGetMediaBox'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGPDFDocument=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGPDFDocumentGetNumberOfPages'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGPDFDocument=}' />
+  </function>
+  <function name='CGPDFDocumentGetPage'>
+    <retval type='^{CGPDFPage=}' />
+    <arg type='^{CGPDFDocument=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGPDFDocumentGetRotationAngle'>
+    <retval type='i' />
+    <arg type='^{CGPDFDocument=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGPDFDocumentGetTrimBox'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGPDFDocument=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGPDFDocumentGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGPDFDocumentGetVersion'>
+    <retval type='v' />
+    <arg type='^{CGPDFDocument=}' />
+    <arg type='^i' type_modifier='o' />
+    <arg type='^i' type_modifier='o' />
+  </function>
+  <function name='CGPDFDocumentIsEncrypted'>
+    <retval type='B' />
+    <arg type='^{CGPDFDocument=}' />
+  </function>
+  <function name='CGPDFDocumentIsUnlocked'>
+    <retval type='B' />
+    <arg type='^{CGPDFDocument=}' />
+  </function>
+  <function name='CGPDFDocumentRelease'>
+    <retval type='v' />
+    <arg type='^{CGPDFDocument=}' />
+  </function>
+  <function name='CGPDFDocumentRetain'>
+    <retval type='^{CGPDFDocument=}' />
+    <arg type='^{CGPDFDocument=}' />
+  </function>
+  <function name='CGPDFDocumentUnlockWithPassword'>
+    <retval type='B' />
+    <arg type='^{CGPDFDocument=}' />
+    <arg type='r*' type64='r*' />
+  </function>
+  <function name='CGPDFObjectGetType'>
+    <retval type='i' />
+    <arg type='^(CGPDFObject=)' type64='^(CGPDFObject=)' />
+  </function>
+  <function comment='users will have to use "unpack" theirselfes' name='CGPDFObjectGetValue'>
+    <retval type='B' />
+    <arg type='^(CGPDFObject=)' type64='^(CGPDFObject=)' />
+    <arg type='i' />
+    <arg c_array_of_variable_length='true' type='^v' type_modifier='o' />
+  </function>
+  <function name='CGPDFOperatorTableCreate'>
+    <retval type='^{CGPDFOperatorTable=}' />
+  </function>
+  <function name='CGPDFOperatorTableRelease'>
+    <retval type='v' />
+    <arg type='^{CGPDFOperatorTable=}' />
+  </function>
+  <function name='CGPDFOperatorTableRetain'>
+    <retval type='^{CGPDFOperatorTable=}' />
+    <arg type='^{CGPDFOperatorTable=}' />
+  </function>
+  <function name='CGPDFOperatorTableSetCallback'>
+    <retval type='v' />
+    <arg type='^{CGPDFOperatorTable=}' />
+    <arg type='r*' type64='r*' />
+    <arg function_pointer='true' type='^?' type64='^?' />
+  </function>
+  <function name='CGPDFPageGetBoxRect'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGPDFPage=}' />
+    <arg type='i' />
+  </function>
+  <function name='CGPDFPageGetDictionary'>
+    <retval type='^{CGPDFDictionary=}' />
+    <arg type='^{CGPDFPage=}' />
+  </function>
+  <function name='CGPDFPageGetDocument'>
+    <retval type='^{CGPDFDocument=}' />
+    <arg type='^{CGPDFPage=}' />
+  </function>
+  <function name='CGPDFPageGetDrawingTransform'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='^{CGPDFPage=}' />
+    <arg type='i' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='i' />
+    <arg type='B' />
+  </function>
+  <function name='CGPDFPageGetPageNumber'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGPDFPage=}' />
+  </function>
+  <function name='CGPDFPageGetRotationAngle'>
+    <retval type='i' />
+    <arg type='^{CGPDFPage=}' />
+  </function>
+  <function name='CGPDFPageGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGPDFPageRelease'>
+    <retval type='v' />
+    <arg type='^{CGPDFPage=}' />
+  </function>
+  <function name='CGPDFPageRetain'>
+    <retval type='^{CGPDFPage=}' />
+    <arg type='^{CGPDFPage=}' />
+  </function>
+  <function name='CGPDFScannerCreate'>
+    <retval type='^{CGPDFScanner=}' />
+    <arg type='^{CGPDFContentStream=}' />
+    <arg type='^{CGPDFOperatorTable=}' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function name='CGPDFScannerGetContentStream'>
+    <retval type='^{CGPDFContentStream=}' />
+    <arg type='^{CGPDFScanner=}' />
+  </function>
+  <function name='CGPDFScannerPopArray'>
+    <retval type='B' />
+    <arg type='^{CGPDFScanner=}' />
+    <arg type='^^{CGPDFArray}' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopBoolean'>
+    <retval type='B' />
+    <arg type='^{CGPDFScanner=}' />
+    <arg type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopDictionary'>
+    <retval type='B' />
+    <arg type='^{CGPDFScanner=}' />
+    <arg type='^^{CGPDFDictionary}' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopInteger'>
+    <retval type='B' />
+    <arg type='^{CGPDFScanner=}' />
+    <arg type='^i' type64='^i' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopName'>
+    <retval type='B' />
+    <arg type='^{CGPDFScanner=}' />
+    <arg type='^*' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopNumber'>
+    <retval type='B' />
+    <arg type='^{CGPDFScanner=}' />
+    <arg type='^f' type64='^f' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopObject'>
+    <retval type='B' />
+    <arg type='^{CGPDFScanner=}' />
+    <arg type='^^(CGPDFObject)' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopStream'>
+    <retval type='B' />
+    <arg type='^{CGPDFScanner=}' />
+    <arg type='^^{CGPDFStream}' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopString'>
+    <retval type='B' />
+    <arg type='^{CGPDFScanner=}' />
+    <arg type='^^{CGPDFString}' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerRelease'>
+    <retval type='v' />
+    <arg type='^{CGPDFScanner=}' />
+  </function>
+  <function name='CGPDFScannerRetain'>
+    <retval type='^{CGPDFScanner=}' />
+    <arg type='^{CGPDFScanner=}' />
+  </function>
+  <function name='CGPDFScannerScan'>
+    <retval type='B' />
+    <arg type='^{CGPDFScanner=}' />
+  </function>
+  <function name='CGPDFStreamCopyData'>
+    <retval already_retained='true' type='^{__CFData=}' type64='^{__CFData=}' />
+    <arg type='^{CGPDFStream=}' />
+    <arg type='^i' type_modifier='o' />
+  </function>
+  <function name='CGPDFStreamGetDictionary'>
+    <retval type='^{CGPDFDictionary=}' />
+    <arg type='^{CGPDFStream=}' />
+  </function>
+  <function name='CGPDFStringCopyDate'>
+    <retval already_retained='true' type='^{__CFDate=}' type64='^{__CFDate=}' />
+    <arg type='^{CGPDFString=}' />
+  </function>
+  <function name='CGPDFStringCopyTextString'>
+    <retval already_retained='true' type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{CGPDFString=}' />
+  </function>
+  <function name='CGPDFStringGetBytePtr'>
+    <retval c_array_of_variable_length='true' type='*' />
+    <arg type='^{CGPDFString=}' />
+  </function>
+  <function name='CGPDFStringGetLength'>
+    <retval type='L' type64='Q' />
+    <arg type='^{CGPDFString=}' />
+  </function>
+  <function name='CGPSConverterAbort'>
+    <retval type='B' />
+    <arg type='^{CGPSConverter=}' />
+  </function>
+  <function name='CGPSConverterConvert'>
+    <retval type='B' />
+    <arg type='^{CGPSConverter=}' />
+    <arg type='^{CGDataProvider=}' />
+    <arg type='^{CGDataConsumer=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function comment='manual wrapper' name='CGPSConverterCreate'>
+    <retval already_retained='true' type='^{CGPSConverter=}' />
+    <arg type='^v' type64='^v' />
+    <arg type='r^{CGPSConverterCallbacks=I^?^?^?^?^?^?^?}' type64='r^{CGPSConverterCallbacks=I^?^?^?^?^?^?^?}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CGPSConverterGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGPSConverterIsConverting'>
+    <retval type='B' />
+    <arg type='^{CGPSConverter=}' />
+  </function>
+  <function name='CGPaletteCreateCopy'>
+    <retval type='^{_CGDirectPaletteRef=}' />
+    <arg type='^{_CGDirectPaletteRef=}' />
+  </function>
+  <function name='CGPaletteCreateDefaultColorPalette'>
+    <retval type='^{_CGDirectPaletteRef=}' />
+  </function>
+  <function name='CGPaletteCreateFromPaletteBlendedWithColor'>
+    <retval type='^{_CGDirectPaletteRef=}' />
+    <arg type='^{_CGDirectPaletteRef=}' />
+    <arg type='f' />
+    <arg type='{_CGDeviceColor=fff}' />
+  </function>
+  <function name='CGPaletteCreateWithByteSamples'>
+    <retval type='^{_CGDirectPaletteRef=}' />
+    <arg c_array_length_in_arg='1' type='^{_CGDeviceByteColor=CCC}' type_modifier='n' />
+    <arg type='I' />
+  </function>
+  <function name='CGPaletteCreateWithCapacity'>
+    <retval type='^{_CGDirectPaletteRef=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGPaletteCreateWithDisplay'>
+    <retval type='^{_CGDirectPaletteRef=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGPaletteCreateWithSamples'>
+    <retval type='^{_CGDirectPaletteRef=}' />
+    <arg c_array_length_in_arg='1' type='^{_CGDeviceColor=fff}' type_modifier='n' />
+    <arg type='I' />
+  </function>
+  <function name='CGPaletteGetColorAtIndex'>
+    <retval type='{_CGDeviceColor=fff}' />
+    <arg type='^{_CGDirectPaletteRef=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGPaletteGetIndexForColor'>
+    <retval type='I' />
+    <arg type='^{_CGDirectPaletteRef=}' />
+    <arg type='{_CGDeviceColor=fff}' />
+  </function>
+  <function name='CGPaletteGetNumberOfSamples'>
+    <retval type='I' />
+    <arg type='^{_CGDirectPaletteRef=}' />
+  </function>
+  <function name='CGPaletteIsEqualToPalette'>
+    <retval type='B' />
+    <arg type='^{_CGDirectPaletteRef=}' />
+    <arg type='^{_CGDirectPaletteRef=}' />
+  </function>
+  <function name='CGPaletteRelease'>
+    <retval type='v' />
+    <arg type='^{_CGDirectPaletteRef=}' />
+  </function>
+  <function name='CGPaletteSetColorAtIndex'>
+    <retval type='v' />
+    <arg type='^{_CGDirectPaletteRef=}' />
+    <arg type='{_CGDeviceColor=fff}' />
+    <arg type='I' />
+  </function>
+  <function name='CGPathAddArc'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+    <arg null_accepted='true' type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='B' />
+  </function>
+  <function name='CGPathAddArcToPoint'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+    <arg null_accepted='true' type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGPathAddCurveToPoint'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+    <arg null_accepted='true' type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGPathAddEllipseInRect'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+    <arg null_accepted='true' type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGPathAddLineToPoint'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+    <arg null_accepted='true' type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGPathAddLines'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+    <arg null_accepted='true' type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg c_array_length_in_arg='3' type='^{CGPoint=ff}' type64='^{CGPoint=ff}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='CGPathAddPath'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+    <arg null_accepted='true' type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg type='^{CGPath=}' />
+  </function>
+  <function name='CGPathAddQuadCurveToPoint'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+    <arg null_accepted='true' type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGPathAddRect'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+    <arg null_accepted='true' type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGPathAddRects'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+    <arg null_accepted='true' type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg c_array_length_in_arg='3' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function comment='manual wrapper' name='CGPathApply'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+    <arg type='^v' type64='^v' />
+    <arg type='^?' type64='^?' />
+  </function>
+  <function name='CGPathCloseSubpath'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+  </function>
+  <function name='CGPathContainsPoint'>
+    <retval type='B' />
+    <arg type='^{CGPath=}' />
+    <arg null_accepted='true' type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='B' />
+  </function>
+  <function name='CGPathCreateCopy'>
+    <retval already_retained='true' type='^{CGPath=}' />
+    <arg type='^{CGPath=}' />
+  </function>
+  <function name='CGPathCreateMutable'>
+    <retval already_retained='true' type='^{CGPath=}' />
+  </function>
+  <function name='CGPathCreateMutableCopy'>
+    <retval already_retained='true' type='^{CGPath=}' />
+    <arg type='^{CGPath=}' />
+  </function>
+  <function name='CGPathEqualToPath'>
+    <retval type='B' />
+    <arg type='^{CGPath=}' />
+    <arg type='^{CGPath=}' />
+  </function>
+  <function name='CGPathGetBoundingBox'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGPath=}' />
+  </function>
+  <function name='CGPathGetCurrentPoint'>
+    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='^{CGPath=}' />
+  </function>
+  <function name='CGPathGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGPathIsEmpty'>
+    <retval type='B' />
+    <arg type='^{CGPath=}' />
+  </function>
+  <function name='CGPathIsRect'>
+    <retval type='B' />
+    <arg type='^{CGPath=}' />
+    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='o' />
+  </function>
+  <function name='CGPathMoveToPoint'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+    <arg null_accepted='true' type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGPathRelease'>
+    <retval type='v' />
+    <arg type='^{CGPath=}' />
+  </function>
+  <function name='CGPathRetain'>
+    <retval type='^{CGPath=}' />
+    <arg type='^{CGPath=}' />
+  </function>
+  <function comment='manual wrapper' name='CGPatternCreate'>
+    <retval already_retained='true' type='^{CGPattern=}' />
+    <arg type='^v' type64='^v' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='i' />
+    <arg type='B' />
+    <arg type='r^{CGPatternCallbacks=I^?^?}' type64='r^{CGPatternCallbacks=I^?^?}' />
+  </function>
+  <function name='CGPatternGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGPatternRelease'>
+    <retval type='v' />
+    <arg type='^{CGPattern=}' />
+  </function>
+  <function name='CGPatternRetain'>
+    <retval type='^{CGPattern=}' />
+    <arg type='^{CGPattern=}' />
+  </function>
+  <function name='CGPointApplyAffineTransform'>
+    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+  </function>
+  <function name='CGPointCreateDictionaryRepresentation'>
+    <retval already_retained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+  </function>
+  <function name='CGPointEqualToPoint'>
+    <retval type='B' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+  </function>
+  <function name='CGPointMakeWithDictionaryRepresentation'>
+    <retval type='B' />
+    <arg type='^{__CFDictionary=}' />
+    <arg type='^{CGPoint=ff}' type64='^{CGPoint=dd}' />
+  </function>
+  <function name='CGPostKeyboardEvent'>
+    <retval type='i' />
+    <arg type='S' />
+    <arg type='S' />
+    <arg type='i' />
+  </function>
+  <function name='CGPostMouseEvent' variadic='true'>
+    <retval type='i' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='i' />
+    <arg type='I' />
+    <arg type='i' />
+  </function>
+  <function name='CGPostScrollWheelEvent' variadic='true'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='i' />
+  </function>
+  <function name='CGRectApplyAffineTransform'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+  </function>
+  <function name='CGRectContainsPoint'>
+    <retval type='B' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+  </function>
+  <function name='CGRectContainsRect'>
+    <retval type='B' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectCreateDictionaryRepresentation'>
+    <retval already_retained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
+  </function>
+  <function name='CGRectDivide'>
+    <retval type='v' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='f' type64='f' />
+    <arg type='i' />
+  </function>
+  <function name='CGRectEqualToRect'>
+    <retval type='B' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectGetHeight'>
+    <retval type='f' type64='d' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectGetMaxX'>
+    <retval type='f' type64='d' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectGetMaxY'>
+    <retval type='f' type64='d' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectGetMidX'>
+    <retval type='f' type64='d' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectGetMidY'>
+    <retval type='f' type64='d' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectGetMinX'>
+    <retval type='f' type64='d' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectGetMinY'>
+    <retval type='f' type64='d' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectGetWidth'>
+    <retval type='f' type64='d' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectInset'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGRectIntegral'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectIntersection'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectIntersectsRect'>
+    <retval type='B' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectIsEmpty'>
+    <retval type='B' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectIsInfinite'>
+    <retval type='B' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectIsNull'>
+    <retval type='B' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectMakeWithDictionaryRepresentation'>
+    <retval type='B' />
+    <arg type='^{__CFDictionary=}' />
+    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+  </function>
+  <function name='CGRectOffset'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CGRectStandardize'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGRectUnion'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function comment='manual wrapper' name='CGRegisterScreenRefreshCallback'>
+    <retval type='i' />
+    <arg type='^?' type64='^?' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function name='CGReleaseAllDisplays'>
+    <retval type='i' />
+  </function>
+  <function name='CGReleaseDisplayFadeReservation'>
+    <retval type='i' />
+    <arg type='I' />
+  </function>
+  <function comment='manual wrapper' name='CGReleaseScreenRefreshRects'>
+    <retval type='v' />
+    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+  </function>
+  <function name='CGRestorePermanentDisplayConfiguration'>
+    <retval type='v' />
+  </function>
+  <function comment='manual wrapper' name='CGScreenRegisterMoveCallback'>
+    <retval type='i' />
+    <arg type='^?' type64='^?' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function comment='manual wrapper' name='CGScreenUnregisterMoveCallback'>
+    <retval type='v' />
+    <arg type='^?' type64='^?' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function name='CGSessionCopyCurrentDictionary'>
+    <retval already_retained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
+  </function>
+  <function name='CGSetDisplayTransferByByteTable'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='I' />
+    <arg c_array_length_in_arg='1' type='*' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='*' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='*' type_modifier='n' />
+  </function>
+  <function name='CGSetDisplayTransferByFormula'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+    <arg type='f' />
+  </function>
+  <function name='CGSetDisplayTransferByTable'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='I' />
+    <arg c_array_length_in_arg='1' type='^f' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^f' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^f' type_modifier='n' />
+  </function>
+  <function name='CGSetLocalEventsFilterDuringSuppressionState'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGSetLocalEventsSuppressionInterval'>
+    <retval type='i' />
+    <arg type='d' />
+  </function>
+  <function name='CGShadingCreateAxial'>
+    <retval already_retained='true' type='^{CGShading=}' />
+    <arg type='^{CGColorSpace=}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='^{CGFunction=}' />
+    <arg type='B' />
+    <arg type='B' />
+  </function>
+  <function name='CGShadingCreateRadial'>
+    <retval already_retained='true' type='^{CGShading=}' />
+    <arg type='^{CGColorSpace=}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='f' type64='f' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='f' type64='f' />
+    <arg type='^{CGFunction=}' />
+    <arg type='B' />
+    <arg type='B' />
+  </function>
+  <function name='CGShadingGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGShadingRelease'>
+    <retval type='v' />
+    <arg type='^{CGShading=}' />
+  </function>
+  <function name='CGShadingRetain'>
+    <retval type='^{CGShading=}' />
+    <arg type='^{CGShading=}' />
+  </function>
+  <function name='CGShieldingWindowID'>
+    <retval type='^v' />
+    <arg type='I' />
+  </function>
+  <function name='CGShieldingWindowLevel'>
+    <retval type='i' />
+  </function>
+  <function name='CGSizeApplyAffineTransform'>
+    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+  </function>
+  <function name='CGSizeCreateDictionaryRepresentation'>
+    <retval already_retained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
+    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+  </function>
+  <function name='CGSizeEqualToSize'>
+    <retval type='B' />
+    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+  </function>
+  <function name='CGSizeMakeWithDictionaryRepresentation'>
+    <retval type='B' />
+    <arg type='^{__CFDictionary=}' />
+    <arg type='^{CGSize=ff}' type64='^{CGSize=dd}' />
+  </function>
+  <function comment='manual wrapper' name='CGUnregisterScreenRefreshCallback'>
+    <retval type='v' />
+    <arg type='^?' type64='^?' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function comment='manual wrapper, array value returned by indirection' name='CGWaitForScreenRefreshRects'>
+    <retval type='i' />
+    <arg c_array_length_in_arg='1' type='^^{CGRect}' type_modifier='o' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function comment='manual wrapper, array value returned by indirection' name='CGWaitForScreenUpdateRects'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='^I' type_modifier='o' />
+    <arg c_array_length_in_arg='3' type='^^{CGRect}' type_modifier='o' />
+    <arg type='^I' type64='^Q' />
+    <arg type='^{_CGScreenUpdateMoveDelta=ii}' type64='^{_CGScreenUpdateMoveDelta=ii}' />
+  </function>
+  <function name='CGWarpMouseCursorPosition'>
+    <retval type='i' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+  </function>
+  <function name='CGWindowLevelForKey'>
+    <retval type='i' />
+    <arg type='i' />
+  </function>
+  <function name='CGWindowListCopyWindowInfo'>
+    <retval already_retained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGWindowListCreate'>
+    <retval already_retained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGWindowListCreateDescriptionFromArray'>
+    <retval already_retained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
+    <arg type='^{__CFArray=}' />
+  </function>
+  <function name='CGWindowListCreateImage'>
+    <retval already_retained='true' type='^{CGImage=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='I' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CGWindowListCreateImageFromArray'>
+    <retval already_retained='true' type='^{CGImage=}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGWindowServerCFMachPort'>
+    <retval type='^{__CFMachPort=}' />
+  </function>
+  <function inline='true' name='CGPointMake'>
+    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function inline='true' name='CGRectMake'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function inline='true' name='CGSizeMake'>
+    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+</signatures>
+

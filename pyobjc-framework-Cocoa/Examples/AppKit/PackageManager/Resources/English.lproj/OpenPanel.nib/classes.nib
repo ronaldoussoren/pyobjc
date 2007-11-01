@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {doOpenURL = id; }; 
+            CLASS = URLOpener; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {okButton = id; urlField = id; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

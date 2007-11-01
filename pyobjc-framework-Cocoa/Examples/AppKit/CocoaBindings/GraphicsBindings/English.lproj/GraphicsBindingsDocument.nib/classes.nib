@@ -1,0 +1,24 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = GraphicsArrayController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {graphicsView = NSView; }; 
+            SUPERCLASS = NSArrayController; 
+        }, 
+        {
+            CLASS = GraphicsBindingsDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                graphicsController = NSArrayController; 
+                graphicsView = id; 
+                shadowInspector = id; 
+            }; 
+            SUPERCLASS = NSDocument; 
+        }, 
+        {CLASS = GraphicsView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = JoystickView; LANGUAGE = ObjC; SUPERCLASS = NSView; }
+    ); 
+    IBVersion = 1; 
+}

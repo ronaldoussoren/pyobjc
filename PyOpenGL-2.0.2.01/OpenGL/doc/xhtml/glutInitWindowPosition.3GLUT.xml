@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutInitWindowPosition</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutInitDisplayString.3GLUT.xml" title="glutInitDisplayString"/><link rel="next" href="glutJoystickFunc.3GLUT.xml" title="glutJoystickFunc"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutInitWindowPosition</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutInitDisplayString.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutJoystickFunc.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutInitWindowPosition.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutInitWindowPosition.3GLUT-name"/><h2>Name</h2><p>glutInitWindowPosition, glutInitWindowSize &#8212; set the initial window position and size respectively.</p></div><div class="refsynopsisdiv"><a name="glutInitWindowPosition.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutInitWindowSize</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>int <i><tt>width</tt></i>, int <i><tt>height</tt></i>);</code></td></tr><tr><td valign="top"><code>void <tt>glutInitWindowPosition</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>int <i><tt>x</tt></i>, int <i><tt>y</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutInitWindowPosition.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutInitWindowSize</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>width</tt></i>, <i><tt>height</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glutInitWindowPosition</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>x</tt></i>, <i><tt>y</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutInitWindowPosition.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>width</tt></i></span></dt><dd>
+						Width in pixels.
+					</dd><dt><span class="term"><i><tt>height</tt></i></span></dt><dd>
+						Height in pixels.
+					</dd><dt><span class="term"><i><tt>x</tt></i></span></dt><dd>
+						Window X location in pixels.
+					</dd><dt><span class="term"><i><tt>y</tt></i></span></dt><dd>
+						Window Y location in pixels.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glutInitWindowPosition.3GLUT-description"/><h2>Description</h2><p>
+			Windows created by <a href="glutCreateWindow.3GLUT.xml"><tt>glutCreateWindow</tt></a> will be requested to be created with the
+			current initial window position and size.
+		</p><p>
+			The initial value of the initial window position GLUT state is -1 and -1. If either the X or Y component to the initial
+			window position is negative, the actual window position is left to the window system to determine. The initial value of
+			the initial window size GLUT state is 300 by 300. The initial window size components must be greater than zero.
+		</p><p>
+			The intent of the initial window position and size values is to provide a suggestion to the window system for a
+			window's initial size and position. The window system is not obligated to use this information. Therefore, GLUT
+			programs should not assume the window was created at the specified size or position. A GLUT program should use the
+			window's reshape callback to determine the true size of the window.
+		</p></div><div class="refsect1" lang="en"><a name="glutInitWindowPosition.3GLUT-example"/><h2>Example</h2><p>
+			If you would like your GLUT program to default to starting at a given screen location and at a given size, but you
+			would also like to let the user override these defaults via a command line argument (such as -geometry for X11), call
+			<tt>glutInitWindowSize</tt> and <tt>glutInitWindowPosition</tt> <span class="emphasis"><em>before</em></span>
+			your call to <a href="glutInit.3GLUT.xml"><tt>glutInit</tt></a>. For example:
+		</p><pre class="programlisting">int main(int argc, char **argv)
+{
+    glutInitWindowSize(500, 300);
+    glutInitWindowPosition(100, 100);
+    glutInit(&amp;argc, argv);
+    ...
+}</pre><p>
+			However, if you'd like to force your program to start up at a given size, call <tt>glutInitWindowSize</tt>
+			and <tt>glutInitWindowPosition</tt> <span class="emphasis"><em>after</em></span> your call to <a href="glutInit.3GLUT.xml"><tt>glutInit</tt></a>. For example:
+		</p><pre class="programlisting">int main(int argc, char **argv)
+{
+    glutInit(&amp;argc, argv);
+    glutInitWindowSize(500, 300);
+    glutInitWindowPosition(100,	100);
+    ...
+}</pre></div><div class="refsect1" lang="en"><a name="glutInitWindowPosition.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutInit.3GLUT.xml">glutInit</a>, <a href="glutCreateWindow.3GLUT.xml">glutCreateWindow</a>, <a href="glutCreateSubWindow.3GLUT.xml">glutCreateSubWindow</a>, <a href="glutReshapeFunc.3GLUT.xml">glutReshapeFunc</a>, <a href="glutGet.3GLUT.xml">glutGet</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutInitDisplayString.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutJoystickFunc.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutInitDisplayString </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutJoystickFunc</td></tr></table></div></body></html>

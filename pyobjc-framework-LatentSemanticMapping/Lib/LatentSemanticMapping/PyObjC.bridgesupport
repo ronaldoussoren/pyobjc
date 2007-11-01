@@ -1,0 +1,191 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation' />
+  <depends_on path='/System/Library/Frameworks/CoreServices.framework/CoreServices' />
+  <cftype gettypeid_func='LSMMapGetTypeID' name='LSMMapRef' type='^{__LSMMap=}' type64='^{__LSMMap=}' />
+  <cftype gettypeid_func='LSMResultGetTypeID' name='LSMResultRef' type='^{__LSMResult=}' type64='^{__LSMResult=}' />
+  <cftype gettypeid_func='LSMTextGetTypeID' name='LSMTextRef' type='^{__LSMText=}' type64='^{__LSMText=}' />
+  <enum name='kLSMClusterAgglomerative' value='4' />
+  <enum name='kLSMClusterCategories' value='0' />
+  <enum name='kLSMClusterKMeans' value='0' />
+  <enum name='kLSMClusterTokens' value='2' />
+  <enum name='kLSMClusterWords' value='1' />
+  <enum name='kLSMMapBadCluster' value='-6644' />
+  <enum name='kLSMMapBadPath' value='-6643' />
+  <enum name='kLSMMapDiscardCounts' value='1' />
+  <enum name='kLSMMapHashText' value='256' />
+  <enum name='kLSMMapLoadMutable' value='2' />
+  <enum name='kLSMMapNoSuchCategory' value='-6641' />
+  <enum name='kLSMMapOutOfState' value='-6640' />
+  <enum name='kLSMMapPairs' value='1' />
+  <enum name='kLSMMapTriplets' value='2' />
+  <enum name='kLSMMapWriteError' value='-6642' />
+  <enum name='kLSMResultBestWords' value='1' />
+  <enum name='kLSMTextApplySpamHeuristics' value='4' />
+  <enum name='kLSMTextPreserveAcronyms' value='2' />
+  <enum name='kLSMTextPreserveCase' value='1' />
+  <string_constant name='kLSMAlgorithmDense' nsstring='true' value='LSMAlgorithmDense' />
+  <string_constant name='kLSMAlgorithmKey' nsstring='true' value='LSMAlgorithm' />
+  <string_constant name='kLSMAlgorithmSparse' nsstring='true' value='LSMAlgorithmSparse' />
+  <string_constant name='kLSMDimensionKey' nsstring='true' value='LSMDimension' />
+  <string_constant name='kLSMIterationsKey' nsstring='true' value='LSMIterations' />
+  <string_constant name='kLSMPrecisionDouble' nsstring='true' value='LSMPrecisionDouble' />
+  <string_constant name='kLSMPrecisionFloat' nsstring='true' value='LSMPrecisionFloat' />
+  <string_constant name='kLSMPrecisionKey' nsstring='true' value='LSMPrecision' />
+  <string_constant name='kLSMSweepAgeKey' nsstring='true' value='LSMSweepAge' />
+  <string_constant name='kLSMSweepCutoffKey' nsstring='true' value='LSMSweepCutoff' />
+  <function name='LSMMapAddCategory'>
+    <retval type='I' />
+    <arg type='^{__LSMMap=}' />
+  </function>
+  <function name='LSMMapAddText'>
+    <retval type='l' type64='i' />
+    <arg type='^{__LSMMap=}' />
+    <arg type='^{__LSMText=}' />
+    <arg type='I' />
+  </function>
+  <function name='LSMMapAddTextWithWeight'>
+    <retval type='l' type64='i' />
+    <arg type='^{__LSMMap=}' />
+    <arg type='^{__LSMText=}' />
+    <arg type='I' />
+    <arg type='f' />
+  </function>
+  <function name='LSMMapApplyClusters'>
+    <retval type='l' type64='i' />
+    <arg type='^{__LSMMap=}' />
+    <arg type='^{__CFArray=}' />
+  </function>
+  <function name='LSMMapCompile'>
+    <retval type='l' type64='i' />
+    <arg type='^{__LSMMap=}' />
+  </function>
+  <function name='LSMMapCreate'>
+    <retval already_cfretained='true' type='^{__LSMMap=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='LSMMapCreateClusters'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__LSMMap=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='l' type64='l' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='LSMMapCreateFromURL'>
+    <retval already_cfretained='true' type='^{__LSMMap=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='LSMMapGetCategoryCount'>
+    <retval type='l' type64='q' />
+    <arg type='^{__LSMMap=}' />
+  </function>
+  <function name='LSMMapGetProperties'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{__LSMMap=}' />
+  </function>
+  <function name='LSMMapGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='LSMMapSetProperties'>
+    <arg type='^{__LSMMap=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='LSMMapSetStopWords'>
+    <retval type='l' type64='i' />
+    <arg type='^{__LSMMap=}' />
+    <arg type='^{__LSMText=}' />
+  </function>
+  <function name='LSMMapStartTraining'>
+    <retval type='l' type64='i' />
+    <arg type='^{__LSMMap=}' />
+  </function>
+  <function name='LSMMapWriteToStream'>
+    <retval type='l' type64='i' />
+    <arg type='^{__LSMMap=}' />
+    <arg type='^{__LSMText=}' />
+    <arg type='^{__CFWriteStream=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='LSMMapWriteToURL'>
+    <retval type='l' type64='i' />
+    <arg type='^{__LSMMap=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='LSMResultCopyToken'>
+    <retval already_cfretained='true' type='^{__CFData=}' />
+    <arg type='^{__LSMResult=}' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='LSMResultCopyTokenCluster'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__LSMResult=}' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='LSMResultCopyWord'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__LSMResult=}' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='LSMResultCopyWordCluster'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__LSMResult=}' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='LSMResultCreate'>
+    <retval already_cfretained='true' type='^{__LSMResult=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__LSMMap=}' />
+    <arg type='^{__LSMText=}' />
+    <arg type='l' type64='l' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='LSMResultGetCategory'>
+    <retval type='I' />
+    <arg type='^{__LSMResult=}' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='LSMResultGetCount'>
+    <retval type='l' type64='q' />
+    <arg type='^{__LSMResult=}' />
+  </function>
+  <function name='LSMResultGetScore'>
+    <retval type='f' />
+    <arg type='^{__LSMResult=}' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='LSMResultGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='LSMTextAddToken'>
+    <retval type='l' type64='i' />
+    <arg type='^{__LSMText=}' />
+    <arg type='^{__CFData=}' />
+  </function>
+  <function name='LSMTextAddWord'>
+    <retval type='l' type64='i' />
+    <arg type='^{__LSMText=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='LSMTextAddWords'>
+    <retval type='l' type64='i' />
+    <arg type='^{__LSMText=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFLocale=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='LSMTextCreate'>
+    <retval already_cfretained='true' type='^{__LSMText=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__LSMMap=}' />
+  </function>
+  <function name='LSMTextGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+</signatures>
+

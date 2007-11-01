@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {addEntry = id; removeEntry = id; }; 
+            CLASS = AppController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {tableView = NSTableView; view = QCView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

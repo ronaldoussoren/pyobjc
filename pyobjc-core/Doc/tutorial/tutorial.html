@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+Creating your first PyObjC application.</title>
+</head>
+<body>
+<h2>Creating your first PyObjC application.</h2>
+<p>In this tutorial you will learn how to create your first Python Cocoa
+application: a simple dialog that allows you to convert amounts of money from
+one currency to another.  Definitely easier to do with a calculator, but in the
+process of following the tutorial you will learn which bits of Apple's Cocoa
+documentation apply to PyObjC and which bits are different, and how to adapt
+the different bits to PyObjC from Objective-C.</p>
+<p>To follow the tutorial you need:</p>
+<blockquote>
+<ul>
+<li>PyObjC 1.3.1</li>
+<li>py2app 0.2 or later (included in the binary installer for PyObjC)</li>
+<li>Python 2.3 or later (note: PyObjC is NOT compatible with MacPython-OS9)</li>
+<li>Mac OS X 10.2 or later</li>
+<li>Xcode Tools (was Developer Tools for Mac OS X 10.2)</li>
+</ul>
+</blockquote>
+<p>If you do not have a <code><span>/Developer</span></code> folder, then you do not have Xcode Tools
+installed.  See <a href="http://developer.apple.com/tools/download/">Getting the Xcode Tools</a>.</p>
+<h2><a name="getting-started">Getting Started</a></h2>
+<ol type="1">
+<li>Create a work directory <code><span>src</span></code>.  Check which Python you have installed
+PyObjC for, by running <code><span>python</span></code> and checking that <code><span>import</span> <span>Foundation</span></code>
+works.  If it does not work it could be that you have installed PyObjC for
+<code><span>/usr/local/bin/python</span></code> but Apple's <code><span>/usr/bin/python</span></code> comes first in
+your <code><span>$PATH</span></code>.  Make sure you use the right python whereever it says
+<code><span>python</span></code> in this tutorial.</li>
+<li>Start Interface Builder, select <i>Cocoa Application</i>
+in the new file dialog, save this file as <code><span>src/MainMenu.nib</span></code>.</li>
+<li>Proceed with the instructions as lined out in Apple's
+<a href="http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCTutorial/index.html">Developing Cocoa Objective-C Applications: a Tutorial</a>, <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCTutorial/index.html?http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCTutorial/chapter03/chapter_3_section_1.html">chapter 3</a>,
+just after the section &quot;<i>Creating the Currency Converter Interface</i>&quot;.
+Work through &quot;Defining the Classes of Currency Converter&quot;, &quot;Connecting
+ConverterController to the Interface&quot;, and stop at
+&quot;<i>Implementing the Classes of Currency Converter</i>&quot;, as we are going to do
+this in Python, not Objective-C.  Your nib file should now be the same as
+<a href="step3-MainMenu.nib">step3-MainMenu.nib</a>.</li>
+</ol>
+<ol start="4" type="1">
+<li>Create the skeleton Python script by running the <code><span>nibclassbuilder</span></code> script.
+<code><span>nibclassbuilder</span></code> will parse the NIB file and create a skeleton module for
+you.  Invoke it as follows (from the <code><span>src</span></code> directory):<pre>
+$ python -c &quot;import PyObjCScripts.nibclassbuilder&quot; MainMenu.nib &gt; CurrencyConverter.py
+</pre>
+<p>Depending on your installation, the <code><span>nibclassbuilder</span></code> script may be on your <code><span>$PATH</span></code>.
+If so, it can be invoked as such:</p>
+<pre>
+$ nibclassbuilder MainMenu.nib &gt; CurrencyConverter.py
+</pre>
+<p>The result of this can be seen in <a href="step4-CurrencyConverter.py">step4-CurrencyConverter.py</a>.</p>
+</li>
+</ol>
+<h2><a name="testing-the-user-interface">Testing the user interface</a></h2>
+<ol start="5" type="1">
+<li>Now we need to create an build script for CurrencyConverter.  To do this,
+create a file named <code><span>setup.py</span></code> with the following contents:<pre>
+from distutils.core import setup
+import py2app
+
+setup(
+    app=['CurrencyConverter.py'],
+    data_files=['MainMenu.nib'],
+)
+</pre>
+<p>The result of this can be seen in <a href="step5-setup.py">step5-setup.py</a>.</p>
+</li>
+</ol>
+<ol start="6" type="1">
+<li>Run the setup script to create a temporary application bundle for
+development:<pre>
+$ python setup.py py2app -A
+</pre>
+<p>Note that we use the <code><span>-A</span></code> argument to create an alias bundle at 
+<code><span>dist/CurrencyConverter.app</span></code>.  Alias bundles contain an alias to the
+main script (<code><span>CurrencyConverter.py</span></code>) and symlinks to the data files
+(<code><span>MainMenu.nib</span></code>), rather than including them and their dependencies
+into a standalone application bundle.  This allows us to keep working on
+the source files without having to rebuild the application.  This alias
+bundle is similar to a ZeroLink executable for Xcode - it is for
+DEVELOPMENT ONLY, and will not work on other machines.</p>
+</li>
+<li>Run the program.  This can be done in three ways:<ul>
+<li>double-click <code><span>dist/CurrencyConverter</span></code> from the Finder
+(you won't see the .app extension)</li>
+<li>open it from the terminal with:<pre>
+$ open dist/CurrencyConverter.app
+</pre>
+</li>
+<li>run it directly from the Terminal, as:<pre>
+$ ./dist/CurrencyConverter.app/Contents/MacOS/CurrencyConverter
+</pre>
+</li>
+</ul>
+<p>The last method is typically the best to use for development: it leaves
+stdout and stderr connected to your terminal session so you can see what
+is going on if there are errors, and it allows you to interact with <code><span>pdb</span></code>
+if you are using it to debug your application.  Note that your application
+will likely appear in the background, so you will have to cmd-tab or click
+on its dock icon to see its user interface.</p>
+<p>The other methods cause stdout and stderr to go to the Console log, which
+can be viewed with <code><span>/Applications/Utilities/Console.app</span></code>.</p>
+<p>When you run your script as it is now it should behave identically as when
+you tested your interface in Interface Builder in step 3, only now the
+skeleton is in Python, not Objective-C.</p>
+</li>
+</ol>
+<h2><a name="writing-the-code">Writing the code</a></h2>
+<ol start="8" type="1">
+<li>Time to actually write some code.  Open <code><span>CurrencyConverter.py</span></code> in your
+favorite text editor.  Follow Apple's documentation again, chapter 3,
+section &quot;Implementing Currency Converter's Classes&quot;.  To translate this
+Objective C code to Python syntax, we will need to do some name mangling of
+the selectors.  See <i>An introduction to PyObjC</i> for the details, but the
+short is that:<pre>
+[anObject modifyArg: arg1 andAnother: arg2]
+</pre>
+</li>
+</ol>
+<blockquote>
+<p>translates into the following Python code, by replacing the colons in the
+selector with underscores, and passing the arguments as you would with a
+normal Python method call:</p>
+<pre>
+anObject.modifyArg_andAnother_(arg1, arg2)
+</pre>
+<p>Note that we don't do this mangling for <code><span>Converter.convertAmount()</span></code>: this
+method is only called by other Python code, so there is no need to go
+through the name mangling.  Also, if we would want to make this method
+callable from ObjC code we may have to tell the PyObjC runtime system about
+the types of the arguments, so it could do the conversion.  This is beyond
+the scope of this first tutorial, <i>An introduction to PyObjC</i> has a little
+more detail on this.</p>
+<p>The application should now be fully functional, try it.  The results of what
+we have up to now can be seen in <a href="step8-CurrencyConverter.py">step8-CurrencyConverter.py</a>.</p>
+</blockquote>
+<h2><a name="extending-the-functionality">Extending the functionality</a></h2>
+<ol start="9" type="1">
+<li>We are going to add one more goodie, just to show how you edit an existing
+application.  The main problem, which may be obvious, is that we cannot run
+<code><span>nibclassbuilder</span></code> again because we would destroy all the code we wrote in
+steps 5 and 8, so we do this by hand.  What we are going to do is add an
+&quot;invert rate&quot; command, because I always get this wrong: instead of typing
+in the exchange rate from dollars to euros I type in the rate to convert
+from euros to dollars.<p>Open <code><span>MainMenu.nib</span></code> in Interface Builder.  Select the <i>Classes</i> view and
+then select the <code><span>ConverterController</span></code> class.  In the info panel select
+the <i>Attributes</i> from the popup.  Select the <i>Actions</i> tab, and add an
+action <code><span>invertRate:</span></code>.  You have now told Interface Builder that instances
+of the <code><span>ConverterController</span></code> class have grown a new method
+<code><span>invertRate_()</span></code>.</p>
+<p>In the <code><span>MainMenu.nib</span> <span>main</span></code> window open the <i>MainMenu</i> menubar.  Select
+the <code><span>Edit</span></code> menu.  Make sure the <i>Menus</i> palette is open and selected,
+drag a separator to the <code><span>Edit</span></code> menu and then drag an <code><span>Item</span></code> there.
+Double-click the item and set the text to <code><span>Invert</span> <span>Exchange</span> <span>Rate</span></code>.</p>
+<p>Make the connection by control-dragging from the new
+<code><span>Invert</span> <span>Exchange</span> <span>Rate</span></code> menu item to the <code><span>ConverterController</span></code> instance
+in the Instances tab in the <code><span>MainMenu.nib</span></code> main window.</p>
+<p><i>NOTE:</i> you drag to the <i>instance</i> of <code><span>ConverterController</span></code>, not to the
+class.</p>
+<p>In the <i>Info</i> panel, <i>Connections</i> section, select <code><span>invertRate:</span></code> and
+press <i>Connect</i>.</p>
+</li>
+<li>We know our program can't invert rates yet, because we haven't actually
+written the code to do it, but we are going to try it anyway, just to see
+what sort of spectacular crash we get.  Alas, nothing spectacular about it:
+when the NIB is loaded the Cocoa runtime system tries to make the
+connection, notices that we have no <code><span>invertRate_()</span></code> method in our
+<code><span>ConverterController</span></code> class and it gives an error message:<pre>
+$ ./dist/CurrencyConverter.app/Contents/MacOS/CurrencyConverter 
+2004-12-09 03:29:09.957 CurrencyConverter[4454] Could not connect the action 
+invertRate: to target of class ConverterController
+</pre>
+<p>Moreover, it has disabled the <code><span>Invert</span> <span>Exchange</span> <span>Rate</span></code> menu command and
+continues, so the program works as it did before, only with one more
+(disabled) menu item.</p>
+</li>
+</ol>
+<h2><a name="debugging">Debugging</a></h2>
+<ol start="11" type="1">
+<li>Writing the code is easy: add a method <code><span>invertRate_(self,</span> <span>sender)</span></code> that
+gets the float value of <code><span>rateField</span></code>, inverts it and puts it back.  We
+deliberately forget to test for divide by zero.  We run the program again,
+and now the menu entry is enabled.  After trying it with a couple of
+non-zero exchange rates we try it with an exchange rate of zero (or empty,
+which is the same).  We get a dialog box giving the Python exception, and
+offering the choice of continuing or quitting.<p>To debug this application with pdb, start the application with the
+following command line:</p>
+<pre>
+$ env USE_PDB=1 ./dist/CurrencyConverter.app/Contents/MacOS/CurrencyConverter
+</pre>
+<p>When running in this mode, we will get a <code><span>pdb.post_mortem(...)</span></code> console
+in the terminal instead of the alert panel.  You can see this in action if
+you try and invert an exchange rate of <code><span>0</span></code>.</p>
+</li>
+<li>Fix the final bug by testing for <code><span>rate</span> <span>==</span> <span>0.0</span></code> in <code><span>invertRate_()</span></code>.
+The result is in the <a href="step12-src">step12-src</a> directory.</li>
+</ol>
+<h2><a name="creating-a-redistributable-application">Creating a redistributable application</a></h2>
+<p>Your application is finished, and you want to run it on other computers, or
+simply just move it to the <code><span>Applications</span></code> folder (or anywhere else) and
+insulate it from the original source code.</p>
+<p>This can be done with the following steps from the <code><span>src</span></code> directory:</p>
+<pre>
+$ rm -rf dist
+$ python setup.py py2app
+</pre>
+<p>Now the application bundle located at <code><span>dist/CurrencyConverter.app</span></code> is a fully
+standalone application that should run on any computer running the same major
+version of Mac OS X or later.  This means that applications built on
+Mac OS X 10.2 are compatible with Mac OS X 10.3, but NOT vice versa.  If you
+are not using an Apple-supplied version of Python, a subset of your Python
+installation will be included in this application.</p>
+<p>For more complicated examples of py2app usage to do things such as change the
+application's icon, see the Examples or the py2app documentation.</p>
+</body>
+</html>

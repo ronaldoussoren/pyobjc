@@ -1,0 +1,251 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <struct ignore='true' name='ABActionCallbacks' />
+  <cftype name='ABAddressBookRef' tollfree='ABAddressBook' />
+  <cftype name='ABGroupRef' tollfree='ABGroup' />
+  <cftype name='ABMultiValueRef' tollfree='ABMultiValue' />
+  <cftype name='ABMutableMultiValueRef' tollfree='ABMutableMultiValue' />
+  <cftype name='ABPersonRef' tollfree='ABPerson' />
+  <cftype comment='no document as such, found by testing' name='ABPickerRef' tollfree='ABPeoplePickerView' />
+  <cftype name='ABSearchElementRef' tollfree='ABSearchElement' />
+  <function name='ABAddRecord'>
+    <arg index='1' type='@' type64='@' />
+  </function>
+  <function comment='manually wrapped' name='ABBeginLoadingImageDataForClient'>
+    <arg function_pointer='true' index='1' type='^?' type64='^?' />
+    <arg index='2' type='^v' type64='^v' />
+  </function>
+  <function name='ABCopyArrayOfAllGroups'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABCopyArrayOfAllPeople'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABCopyArrayOfMatchingRecords'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABCopyArrayOfPropertiesForRecordType'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABCopyDefaultCountryCode'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABCopyLocalizedPropertyOrLabel'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABCopyRecordForUniqueId'>
+    <retval type='@' type64='@' />
+  </function>
+  <function name='ABCopyRecordTypeFromUniqueId'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABCreateFormattedAddressFromDictionary'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABGroupCopyArrayOfAllMembers'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABGroupCopyArrayOfAllSubgroups'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABGroupCopyDistributionIdentifier'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABGroupCopyParentGroups'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABGroupCreate'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABGroupCreateSearchElement'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABMultiValueAdd'>
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='ABMultiValueCopyIdentifierAtIndex'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABMultiValueCopyLabelAtIndex'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABMultiValueCopyPrimaryIdentifier'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABMultiValueCopyValueAtIndex'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABMultiValueCreate'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABMultiValueCreateCopy'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABMultiValueCreateMutable'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABMultiValueCreateMutableCopy'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABMultiValueInsert'>
+    <arg index='4' type_modifier='o' />
+  </function>
+  <function name='ABPersonCopyImageData'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPersonCopyParentGroups'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPersonCopyVCardRepresentation'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPersonCreate'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPersonCreateSearchElement'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPersonCreateWithVCardRepresentation'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPickerCopyColumnTitle'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPickerCopyDisplayedProperty'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPickerCopyProperties'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPickerCopySelectedGroups'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPickerCopySelectedIdentifiers'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPickerCopySelectedRecords'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPickerCopySelectedValues'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPickerCreate'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABPickerDeselectRecord'>
+    <arg comment='CFTypeRef' index='1' type='@' />
+  </function>
+  <function name='ABPickerGetDelegate'>
+    <retval type='^{OpaqueHIObjectRef=}' type64='^{OpaqueHIObjectRef=}' />
+  </function>
+  <function name='ABPickerGetFrame'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='ABPickerSelectRecord'>
+    <arg comment='CFTypeRef' index='1' type='@' />
+  </function>
+  <function name='ABPickerSetDelegate'>
+    <arg index='1' type='^{OpaqueHIObjectRef=}' type64='^{OpaqueHIObjectRef=}' />
+  </function>
+  <function name='ABPickerSetFrame'>
+    <arg index='1' type_modifier='n' />
+  </function>
+  <function name='ABRecordCopyRecordType'>
+    <retval already_cfretained='true' />
+    <arg comment='CFTypeRef' index='0' type='@' />
+  </function>
+  <function name='ABRecordCopyUniqueId'>
+    <retval already_cfretained='true' />
+    <arg comment='CFTypeRef' index='0' type='@' />
+  </function>
+  <function name='ABRecordCopyValue'>
+    <retval already_cfretained='true' />
+    <arg comment='CFTypeRef' index='0' type='@' />
+  </function>
+  <function name='ABRecordCreateCopy'>
+    <retval comment='CFTypeRef' type='@' type64='@' />
+    <arg comment='CFTypeRef' index='0' type='@' />
+  </function>
+  <function name='ABRecordIsReadOnly'>
+    <arg comment='CFTypeRef' index='0' type='@' />
+  </function>
+  <function name='ABRecordRemoveValue'>
+    <arg comment='CFTypeRef' index='0' type='@' />
+  </function>
+  <function name='ABRecordSetValue'>
+    <arg comment='CFTypeRef' index='0' type='@' />
+  </function>
+  <function name='ABRemoveRecord'>
+    <arg comment='CFTypeRef' index='1' type='@' />
+  </function>
+  <function name='ABSearchElementCreateWithConjunction'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='ABSearchElementMatchesRecord'>
+    <arg comment='CFTypeRef' index='1' type='@' />
+  </function>
+  <class name='ABAddressBook'>
+    <method selector='saveAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ABPeoplePickerView'>
+    <method selector='setGroupDoubleAction:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='setNameDoubleAction:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='ABAddressBook'>
+    <method selector='saveAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ABPeoplePickerView'>
+    <method selector='setGroupDoubleAction:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='setNameDoubleAction:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='ABAddressBook'>
+    <method selector='saveAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ABPeoplePickerView'>
+    <method selector='setGroupDoubleAction:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='setNameDoubleAction:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='ABAddressBook'>
+    <method selector='saveAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ABIdentityPicker'>
+    <method selector='beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:'>
+      <arg index='2' sel_of_type='v@:@@^v' />
+      <arg comment='contextinfo' index='3' type='^v' />
+    </method>
+  </class>
+  <class name='ABPeoplePickerView'>
+    <method selector='setGroupDoubleAction:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='setNameDoubleAction:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='ABPerson'>
+    <method selector='identity'>
+      <retval type='^{__CSIdentity=}' />
+    </method>
+  </class>
+</signatures>

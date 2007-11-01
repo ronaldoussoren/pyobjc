@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {CLASS = Converter; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {convert = id; invertRate = id; }; 
+            CLASS = ConverterController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                converter = id; 
+                dollarField = NSTextField; 
+                rateField = NSTextField; 
+                totalField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

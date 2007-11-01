@@ -1,0 +1,377 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <struct name='QTTime' type='{QTTime="timeValue"q"timeScale"l"flags"l}' type64='{QTTime="timeValue"q"timeScale"q"flags"q}' />
+  <struct name='QTTimeRange' type='{QTTimeRange="time"{?="timeValue"q"timeScale"l"flags"l}"duration"{?="timeValue"q"timeScale"l"flags"l}}' type64='{QTTimeRange="time"{?="timeValue"q"timeScale"q"flags"q}"duration"{?="timeValue"q"timeScale"q"flags"q}}' />
+  <constant name='QTIndefiniteTime' type='{QTTime=qll}' type64='{QTTime=qqq}' />
+  <constant name='QTMovieActiveSegmentAttribute' type='@' />
+  <constant name='QTZeroTime' type='{QTTime=qll}' type64='{QTTime=qqq}' />
+  <enum name='AliasDataHandlerSubType' value='1634494835' />
+  <enum name='BaseMediaType' value='1735291491' />
+  <enum name='FlashMediaType' value='1718383464' />
+  <enum name='HandleDataHandlerSubType' value='1752065132' />
+  <enum name='MPEGMediaType' value='1297106247' />
+  <enum name='MovieMediaType' value='1836019574' />
+  <enum name='MusicMediaType' value='1836413801' />
+  <enum name='NullDataHandlerSubType' value='1853189228' />
+  <enum name='PointerDataHandlerSubType' value='1886679584' />
+  <enum name='ResourceDataHandlerSubType' value='1920168547' />
+  <enum name='SkinMediaType' value='1936419182' />
+  <enum name='SoundMediaType' value='1936684398' />
+  <enum name='SpriteMediaType' value='1936749172' />
+  <enum name='TextMediaType' value='1952807028' />
+  <enum name='ThreeDeeMediaType' value='1902392164' />
+  <enum name='TimeCode64MediaType' value='1952658996' />
+  <enum name='TimeCodeMediaType' value='1953325924' />
+  <enum name='TweenMediaType' value='1953981806' />
+  <enum name='URLDataHandlerSubType' value='1970433056' />
+  <enum name='VideoMediaType' value='1986618469' />
+  <enum name='WiredActionHandlerType' value='2003399269' />
+  <enum name='codecHighQuality' value='768' />
+  <enum name='codecLosslessQuality' value='1024' />
+  <enum name='codecLowQuality' value='256' />
+  <enum name='codecMaxQuality' value='1023' />
+  <enum name='codecMinQuality' value='0' />
+  <enum name='codecNormalQuality' value='512' />
+  <enum name='graphicsModeComposition' value='259' />
+  <enum name='graphicsModePerComponentAlpha' value='272' />
+  <enum name='graphicsModePreBlackAlpha' value='258' />
+  <enum name='graphicsModePreMulColorAlpha' value='261' />
+  <enum name='graphicsModePreWhiteAlpha' value='257' />
+  <enum name='graphicsModeStraightAlpha' value='256' />
+  <enum name='graphicsModeStraightAlphaBlend' value='260' />
+  <enum name='k16GrayCodecType' value='1647392359' />
+  <enum name='k32AlphaGrayCodecType' value='1647522401' />
+  <enum name='k422YpCbCr10CodecType' value='1983000880' />
+  <enum name='k422YpCbCr16CodecType' value='1983000886' />
+  <enum name='k422YpCbCr8CodecType' value='846624121' />
+  <enum name='k4444YpCbCrA8CodecType' value='1983131704' />
+  <enum name='k4444YpCbCrA8RCodecType' value='1916022840' />
+  <enum name='k444YpCbCr10CodecType' value='1983131952' />
+  <enum name='k444YpCbCr8CodecType' value='1983066168' />
+  <enum name='k48RGBCodecType' value='1647589490' />
+  <enum name='k64ARGBCodecType' value='1647719521' />
+  <enum name='kAVRJPEGCodecType' value='1635152416' />
+  <enum name='kAnimationCodecType' value='1919706400' />
+  <enum name='kBMPCodecType' value='1465011269' />
+  <enum name='kBaseCodecType' value='1650553701' />
+  <enum name='kCMYKCodecType' value='1668118891' />
+  <enum name='kCinepakCodecType' value='1668704612' />
+  <enum name='kCloudCodecType' value='1668050805' />
+  <enum name='kComponentVideoCodecType' value='2037741106' />
+  <enum name='kComponentVideoSigned' value='2037741173' />
+  <enum name='kComponentVideoUnsigned' value='2037741171' />
+  <enum name='kDVCNTSCCodecType' value='1685480224' />
+  <enum name='kDVCPALCodecType' value='1685480304' />
+  <enum name='kDVCPROHD1080i50CodecType' value='1685481525' />
+  <enum name='kDVCPROHD1080i60CodecType' value='1685481526' />
+  <enum name='kDVCPROHD720pCodecType' value='1685481584' />
+  <enum name='kDVCPro100NTSCCodecType' value='1685467502' />
+  <enum name='kDVCPro100PALCodecType' value='1685467504' />
+  <enum name='kDVCPro50NTSCCodecType' value='1685468526' />
+  <enum name='kDVCPro50PALCodecType' value='1685468528' />
+  <enum name='kDVCProPALCodecType' value='1685483632' />
+  <enum name='kFLCCodecType' value='1718380899' />
+  <enum name='kFireCodecType' value='1718186597' />
+  <enum name='kGIFCodecType' value='1734960672' />
+  <enum name='kGraphicsCodecType' value='1936548640' />
+  <enum name='kH261CodecType' value='1748121137' />
+  <enum name='kH263CodecType' value='1748121139' />
+  <enum name='kH264CodecType' value='1635148593' />
+  <enum name='kIndeo4CodecType' value='1230386225' />
+  <enum name='kJPEG2000CodecType' value='1835692082' />
+  <enum name='kJPEGCodecType' value='1785750887' />
+  <enum name='kMPEG4VisualCodecType' value='1836070006' />
+  <enum name='kMacPaintCodecType' value='1347310663' />
+  <enum name='kMicrosoftVideo1CodecType' value='1836283491' />
+  <enum name='kMotionJPEGACodecType' value='1835692129' />
+  <enum name='kMotionJPEGBCodecType' value='1835692130' />
+  <enum name='kMpegYUV420CodecType' value='1836676470' />
+  <enum name='kOpenDMLJPEGCodecType' value='1684890161' />
+  <enum name='kPNGCodecType' value='1886283552' />
+  <enum name='kPhotoCDCodecType' value='1802527588' />
+  <enum name='kPixletCodecType' value='1886940276' />
+  <enum name='kPlanarRGBCodecType' value='943870035' />
+  <enum name='kQTFileType3DMF' value='860114246' />
+  <enum name='kQTFileType3GP2' value='862416946' />
+  <enum name='kQTFileType3GPP' value='862417008' />
+  <enum name='kQTFileTypeAIFC' value='1095321155' />
+  <enum name='kQTFileTypeAIFF' value='1095321158' />
+  <enum name='kQTFileTypeAMC' value='1634558752' />
+  <enum name='kQTFileTypeAMR' value='1634562592' />
+  <enum name='kQTFileTypeAVI' value='1449547552' />
+  <enum name='kQTFileTypeAudioCDTrack' value='1953653099' />
+  <enum name='kQTFileTypeBMP' value='1112363110' />
+  <enum name='kQTFileTypeDVC' value='1685480225' />
+  <enum name='kQTFileTypeFLC' value='1179403040' />
+  <enum name='kQTFileTypeFlash' value='1398228556' />
+  <enum name='kQTFileTypeFlashPix' value='1179675000' />
+  <enum name='kQTFileTypeGIF' value='1195984486' />
+  <enum name='kQTFileTypeJFIF' value='1246774599' />
+  <enum name='kQTFileTypeJPEG' value='1246774599' />
+  <enum name='kQTFileTypeJPEG2000' value='1785737760' />
+  <enum name='kQTFileTypeMIDI' value='1298752617' />
+  <enum name='kQTFileTypeMP4' value='1836082996' />
+  <enum name='kQTFileTypeMacPaint' value='1347310663' />
+  <enum name='kQTFileTypeMovie' value='1299148630' />
+  <enum name='kQTFileTypeMuLaw' value='1431060823' />
+  <enum name='kQTFileTypePDF' value='1346651680' />
+  <enum name='kQTFileTypePICS' value='1346978643' />
+  <enum name='kQTFileTypePNG' value='1347307366' />
+  <enum name='kQTFileTypePhotoShop' value='943870035' />
+  <enum name='kQTFileTypePicture' value='1346978644' />
+  <enum name='kQTFileTypeQuickDrawGXPicture' value='1902405496' />
+  <enum name='kQTFileTypeQuickTimeImage' value='1903454566' />
+  <enum name='kQTFileTypeSDV' value='1935963680' />
+  <enum name='kQTFileTypeSGIImage' value='777209673' />
+  <enum name='kQTFileTypeSoundDesignerII' value='1399075430' />
+  <enum name='kQTFileTypeSystemSevenSound' value='1936091500' />
+  <enum name='kQTFileTypeTIFF' value='1414088262' />
+  <enum name='kQTFileTypeTargaImage' value='1414547779' />
+  <enum name='kQTFileTypeText' value='1413830740' />
+  <enum name='kQTFileTypeWave' value='1463899717' />
+  <enum name='kQTQuartzComposerMediaType' value='1903458848' />
+  <enum name='kQuickDrawCodecType' value='1902408311' />
+  <enum name='kQuickDrawGXCodecType' value='1902405496' />
+  <enum name='kRawCodecType' value='1918990112' />
+  <enum name='kSGICodecType' value='777209673' />
+  <enum name='kSorenson3CodecType' value='1398165811' />
+  <enum name='kSorensonCodecType' value='1398165809' />
+  <enum name='kSorensonYUV9CodecType' value='1937339961' />
+  <enum name='kTIFFCodecType' value='1953064550' />
+  <enum name='kTargaCodecType' value='1952932128' />
+  <enum name='kVectorCodecType' value='1885434984' />
+  <enum name='kVideoCodecType' value='1919973985' />
+  <enum name='kWaterRippleCodecType' value='1919512684' />
+  <enum name='kWindowsRawCodecType' value='1465008471' />
+  <enum name='kYUV420CodecType' value='2033463856' />
+  <function name='QTEqualTimeRanges'>
+    <retval type='B' />
+    <arg type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qll}{?=qll}}' />
+    <arg type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qll}{?=qll}}' />
+  </function>
+  <function name='QTGetTimeInterval'>
+    <retval type='B' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+    <arg type='^d' type_modifier='o' />
+  </function>
+  <function name='QTGetTimeRecord'>
+    <retval type='B' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+    <arg type='^{TimeRecord={wide=Ii}i^{TimeBaseRecord}}' type_modifier='o' />
+  </function>
+  <function name='QTIntersectionTimeRange'>
+    <retval type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qqq}{?=qqq}}' />
+    <arg type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qll}{?=qll}}' />
+    <arg type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qll}{?=qll}}' />
+  </function>
+  <function name='QTMakeTime'>
+    <retval type='{QTTime=qll}' type64='{QTTime=qqq}' />
+    <arg type='q' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='QTMakeTimeRange'>
+    <retval type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qqq}{?=qqq}}' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+  </function>
+  <function name='QTMakeTimeScaled'>
+    <retval type='{QTTime=qll}' type64='{QTTime=qqq}' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='QTMakeTimeWithTimeInterval'>
+    <retval type='{QTTime=qll}' type64='{QTTime=qqq}' />
+    <arg type='d' />
+  </function>
+  <function name='QTMakeTimeWithTimeRecord'>
+    <retval type='{QTTime=qll}' type64='{QTTime=qqq}' />
+    <arg type='{TimeRecord={wide=Ii}i^{TimeBaseRecord}}' />
+  </function>
+  <function name='QTStringForOSType'>
+    <retval type='@' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='QTStringFromTime'>
+    <retval type='@' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+  </function>
+  <function name='QTStringFromTimeRange'>
+    <retval type='@' />
+    <arg type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qll}{?=qll}}' />
+  </function>
+  <function name='QTTimeCompare'>
+    <retval type='i' type64='q' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+  </function>
+  <function name='QTTimeDecrement'>
+    <retval type='{QTTime=qll}' type64='{QTTime=qqq}' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+  </function>
+  <function name='QTTimeFromString'>
+    <retval type='{QTTime=qll}' type64='{QTTime=qqq}' />
+    <arg type='@' />
+  </function>
+  <function name='QTTimeInTimeRange'>
+    <retval type='B' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+    <arg type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qll}{?=qll}}' />
+  </function>
+  <function name='QTTimeIncrement'>
+    <retval type='{QTTime=qll}' type64='{QTTime=qqq}' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+  </function>
+  <function name='QTTimeIsIndefinite'>
+    <retval type='B' />
+    <arg type='{QTTime=qll}' type64='{QTTime=qll}' />
+  </function>
+  <function name='QTTimeRangeEnd'>
+    <retval type='{QTTime=qll}' type64='{QTTime=qqq}' />
+    <arg type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qll}{?=qll}}' />
+  </function>
+  <function name='QTTimeRangeFromString'>
+    <retval type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qqq}{?=qqq}}' />
+    <arg type='@' />
+  </function>
+  <function name='QTUnionTimeRange'>
+    <retval type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qqq}{?=qqq}}' />
+    <arg type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qll}{?=qll}}' />
+    <arg type='{QTTimeRange={?=qll}{?=qll}}' type64='{QTTimeRange={?=qll}{?=qll}}' />
+  </function>
+  <class name='QTCaptureDecompressedVideoOutputDelegate'>
+    <method selector='captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:' type='v@:@^{__CVBuffer=}@@' />
+  </class>
+  <class name='QTCaptureFileOutputDelegate'>
+    <method selector='captureOutput:didFinishRecordingToOutputFileAtURL:forConnections:dueToError:' type='v@:@@@@' />
+    <method selector='captureOutput:didOutputSampleBuffer:fromConnection:' type='v@:@@@' />
+    <method selector='captureOutput:didStartRecordingToOutputFileAtURL:forConnections:' type='v@:@@@' />
+    <method selector='captureOutput:mustChangeOutputFileAtURL:forConnections:dueToError:' type='v@:@@@@' />
+    <method selector='captureOutput:shouldChangeOutputFileAtURL:forConnections:dueToError:' type='B@:@@@@' />
+    <method selector='captureOutput:willFinishRecordingToOutputFileAtURL:forConnections:dueToError:' type='v@:@@@@' />
+    <method selector='captureOutput:willStartRecordingToOutputFileAtURL:forConnections:' type='v@:@@@' />
+  </class>
+  <class name='QTCaptureVideoPreviewOutputDelegate'>
+    <method selector='captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:' type='v@:@^{__CVBuffer=}@@' />
+  </class>
+  <class name='QTCaptureViewDelegate'>
+    <method selector='view:willDisplayImage:' type='@@:@@' />
+  </class>
+  <class name='QTMovieDelegate'>
+    <method selector='externalMovie:' type='@@:@' />
+    <method selector='movie:linkToURL:' type='B@:@@' />
+    <method selector='movie:shouldContinueOperation:withPhase:atPercent:withAttributes:' type='B@:@@i@@' />
+    <method selector='movieShouldLoadData:' type='B@:@' />
+    <method selector='movieShouldTask:' type='B@:@' />
+  </class>
+  <class name='QTMovieViewDelegate'>
+    <method selector='view:willDisplayImage:' type='@@:@@' />
+  </class>
+  <class name='NSObject'>
+    <method selector='captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='1' type='^{__CVBuffer=}' />
+    </method>
+    <method selector='captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='1' type='^{__CVBuffer=}' />
+    </method>
+  </class>
+  <class name='QTCaptureDecompressedVideoOutput'>
+    <method selector='outputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='0' type='^{__CVBuffer=}' />
+    </method>
+  </class>
+  <class name='QTCaptureVideoPreviewOutput'>
+    <method selector='outputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='0' type='^{__CVBuffer=}' />
+    </method>
+    <method selector='setVisualContext:forConnection:'>
+      <arg index='0' type='^{OpaqueQTVisualContext=}' />
+    </method>
+    <method selector='visualContextForConnection:'>
+      <retval type='^{OpaqueQTVisualContext=}' />
+    </method>
+  </class>
+  <class name='QTDataReference'>
+    <method selector='dataRef'>
+      <retval type='^*' />
+    </method>
+    <method class_method='true' selector='dataReferenceWithDataRef:type:'>
+      <arg index='0' type='^*' />
+    </method>
+    <method selector='initWithDataRef:type:'>
+      <arg index='0' type='^*' />
+    </method>
+    <method selector='setDataRef:'>
+      <arg index='0' type='^*' />
+    </method>
+  </class>
+  <class name='QTMedia'>
+    <method selector='initWithQuickTimeMedia:error:'>
+      <arg index='0' type='^^{MediaType}' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='mediaWithQuickTimeMedia:error:'>
+      <arg index='0' type='^^{MediaType}' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='quickTimeMedia'>
+      <retval type='^^{MediaType}' />
+    </method>
+  </class>
+  <class name='QTMovie'>
+    <method selector='frameImageAtTime:withAttributes:error:'>
+      <retval type='^v' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='initWithMovie:timeRange:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='initWithQuickTimeMovie:disposeWhenDone:error:'>
+      <arg index='0' type='^^{MovieType}' />
+      <arg index='1' type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithQuickTimeMovie:disposeWhenDone:error:'>
+      <arg index='0' type='^^{MovieType}' />
+      <arg index='1' type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='movieWithTimeRange:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='quickTimeMovie'>
+      <retval type='^^{MovieType}' />
+    </method>
+    <method selector='quickTimeMovieController'>
+      <retval type='^{ComponentInstanceRecord=[1l]}' />
+    </method>
+    <method selector='setVisualContext:'>
+      <arg index='0' type='^{OpaqueQTVisualContext=}' />
+    </method>
+    <method selector='visualContext'>
+      <retval type='^{OpaqueQTVisualContext=}' />
+    </method>
+  </class>
+  <class name='QTSampleBuffer'>
+    <method selector='getAudioStreamPacketDescriptions:inRange:'>
+      <retval type='B' />
+      <arg index='0' type='^v' />
+    </method>
+  </class>
+  <class name='QTTrack'>
+    <method selector='initWithQuickTimeTrack:error:'>
+      <arg index='0' type='^^{TrackType}' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='quickTimeTrack'>
+      <retval type='^^{TrackType}' />
+    </method>
+    <method class_method='true' selector='trackWithQuickTimeTrack:error:'>
+      <arg index='0' type='^^{TrackType}' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+</signatures>
+

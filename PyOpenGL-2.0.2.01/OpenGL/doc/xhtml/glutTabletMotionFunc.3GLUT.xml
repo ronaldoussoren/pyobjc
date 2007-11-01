@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutTabletMotionFunc</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutTabletButtonFunc.3GLUT.xml" title="glutTabletButtonFunc"/><link rel="next" href="glutTimerFunc.3GLUT.xml" title="glutTimerFunc"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutTabletMotionFunc</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutTabletButtonFunc.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutTimerFunc.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutTabletMotionFunc.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutTabletMotionFunc.3GLUT-name"/><h2>Name</h2><p>glutTabletMotionFunc &#8212; sets the special keyboard callback for the current window.</p></div><div class="refsynopsisdiv"><a name="glutTabletMotionFunc.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutTabletMotionFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>void (*<i><tt>func</tt></i>)(int x, int y));</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutTabletMotionFunc.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutTabletMotionFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>func</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutTabletMotionFunc.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>func</tt></i></span></dt><dd>
+						The new entry callback function.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glutTabletMotionFunc.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutTabletMotionFunc</tt> sets the tablet motion callback for the current window. The tablet motion
+			callback for a window is called when the window has tablet input focus (normally, when the mouse is in the window) and
+			the user generates tablet motion. The x<i><tt> </tt></i>and <i><tt>y</tt></i> callback parameters
+			indicate the absolute position of the tablet "puck" on the tablet. The callback parameters are normalized to be within
+			the range of 0 to 2000 inclusive.
+		</p><p>
+			Registering a tablet motion callback when a tablet device is not available is ineffectual and not an error. In this
+			case, no tablet motion callbacks will be generated.
+		</p><p>
+			Passing <tt>NULL</tt> to <tt>glutTabletMotionFunc</tt> disables the generation of tablet motion
+			callbacks. When a new window is created, no tablet motion callback is initially registered.
+		</p></div><div class="refsect1" lang="en"><a name="glutTabletMotionFunc.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutTabletButtonFunc.3GLUT.xml">glutTabletButtonFunc</a>, <a href="glutDeviceGet.3GLUT.xml">glutDeviceGet</a>, <a href="glutMotionFunc.3GLUT.xml">glutMotionFunc</a>, <a href="glutSpaceballMotionFunc.3GLUT.xml">glutSpaceballMotionFunc</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutTabletButtonFunc.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutTimerFunc.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutTabletButtonFunc </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutTimerFunc</td></tr></table></div></body></html>

@@ -1,0 +1,34 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <cftype gettypeid_func='LSMMapGetTypeID' name='LSMMapRef' />
+  <cftype gettypeid_func='LSMResultGetTypeID' name='LSMResultRef' />
+  <cftype gettypeid_func='LSMTextGetTypeID' name='LSMTextRef' />
+  <function name='LSMMapCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSMMapCreateClusters'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSMMapCreateFromURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSMResultCopyToken'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSMResultCopyTokenCluster'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSMResultCopyWord'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSMResultCopyWordCluster'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSMResultCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSMTextCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+</signatures>

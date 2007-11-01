@@ -1,0 +1,6 @@
+README
+setup.py
+DragApp.egg-info/PKG-INFO
+DragApp.egg-info/SOURCES.txt
+DragApp.egg-info/dependency_links.txt
+DragApp.egg-info/top_level.txt

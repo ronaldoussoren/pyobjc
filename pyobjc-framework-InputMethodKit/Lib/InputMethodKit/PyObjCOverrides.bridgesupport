@@ -1,0 +1,28 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <class name='IMKServerInput'>
+    <method selector='candidates:' type='@@:@' />
+    <method selector='composedString:' type='@@:@' />
+    <method selector='didCommandBySelector:client:' type='B@::@' />
+    <method selector='handleEvent:client:' type='B@:@@' />
+    <method selector='inputText:client:' type='B@:@@' />
+    <method selector='inputText:key:modifiers:client:' type='B@:@iI@' type64='(&apos;B@:@qQ@&apos;,)' />
+    <method selector='originalString:' type='@@:@' />
+  </class>
+  <class name='IMKCandidates'>
+    <method selector='selectionKeysKeylayout'>
+      <retval type='^{__TISInputSource=}' />
+    </method>
+    <method selector='setSelectionKeysKeylayout:'>
+      <arg index='0' type='^{__TISInputSource=}' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='mouseDownOnCharacterIndex:coordinate:withModifier:continueTracking:client:'>
+      <retval type='B' />
+      <arg index='3' type='^B' />
+    </method>
+  </class>
+</signatures>
+

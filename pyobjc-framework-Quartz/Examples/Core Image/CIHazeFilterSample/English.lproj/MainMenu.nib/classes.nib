@@ -1,0 +1,17 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                distanceSliderChanged = id; 
+                greenSliderChanged = id; 
+                redSliderChanged = id; 
+                slopeSliderChanged = id; 
+            }; 
+            CLASS = HazeFilterView; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSView; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutSetColor</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutReshapeWindow.3GLUT.xml" title="glutReshapeWindow"/><link rel="next" href="glutSetCursor.3GLUT.xml" title="glutSetCursor"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutSetColor</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutReshapeWindow.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutSetCursor.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutSetColor.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutSetColor.3GLUT-name"/><h2>Name</h2><p>glutSetColor &#8212; sets the color of a colormap entry in the layer of use for the current window.</p></div><div class="refsynopsisdiv"><a name="glutSetColor.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutSetColor</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>int <i><tt>cell</tt></i>, GLfloat <i><tt>red</tt></i>, GLfloat <i><tt>green</tt></i>, GLfloat <i><tt>blue</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutSetColor.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutSetColor</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>cell</tt></i>, <i><tt>red</tt></i>, <i><tt>green</tt></i>, <i><tt>blue</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutSetColor.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>cell</tt></i></span></dt><dd>
+						Color cell index (starting at zero).
+					</dd><dt><span class="term"><i><tt>red</tt></i></span></dt><dd>
+						Red intensity (clamped between 0.0 and 1.0 inclusive).
+					</dd><dt><span class="term"><i><tt>green</tt></i></span></dt><dd>
+						Green intensity (clamped between 0.0 and 1.0 inclusive).
+					</dd><dt><span class="term"><i><tt>blue</tt></i></span></dt><dd>
+						Blue intensity (clamped between 0.0 and 1.0 inclusive).
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glutSetColor.3GLUT-description"/><h2>Description</h2><p>
+			Sets the cell color index colormap entry of the current window's logical colormap for the layer in use with the color
+			specified by <i><tt>red</tt></i>, <i><tt>green</tt></i>, and <i><tt>blue</tt></i>. The layer in
+			use of the current window should be a color index window. <i><tt>cell</tt></i> should be zero or greater and
+			less than the total number of colormap entries for the window. If the layer in use's colormap was copied by reference,
+			a <tt>glutSetColor</tt> call will force the duplication of the colormap. Do not attempt to set the color of
+			an overlay's transparent index.
+		</p></div><div class="refsect1" lang="en"><a name="glutSetColor.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutGetColor.3GLUT.xml">glutGetColor</a>, <a href="glutCopyColormap.3GLUT.xml">glutCopyColormap</a>, <a href="glutInitDisplayMode.3GLUT.xml">glutInitDisplayMode</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutReshapeWindow.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutSetCursor.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutReshapeWindow </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutSetCursor</td></tr></table></div></body></html>

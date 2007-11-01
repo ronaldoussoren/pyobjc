@@ -1,0 +1,31 @@
+{
+    IBClasses = (
+        {CLASS = CGImageView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {
+                changeScaleX = id; 
+                changeScaleY = id; 
+                changeTranslateX = id; 
+                changeTranslateY = id; 
+                openDocument = id; 
+                reset = id; 
+                saveDocumentAs = id; 
+            }; 
+            CLASS = Controller; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                imageView = CGImageView; 
+                scaleYView = NSStepper; 
+                textScaleYView = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

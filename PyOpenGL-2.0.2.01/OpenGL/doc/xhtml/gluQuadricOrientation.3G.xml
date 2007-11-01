@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gluQuadricOrientation</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLU.xml" title="GLU"/><link rel="previous" href="gluQuadricNormals.3G.xml" title="gluQuadricNormals"/><link rel="next" href="gluQuadricTexture.3G.xml" title="gluQuadricTexture"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gluQuadricOrientation</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gluQuadricNormals.3G.xml">Prev</a> </td><th width="60%" align="center">GLU</th><td width="20%" align="right"> <a accesskey="n" href="gluQuadricTexture.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gluQuadricOrientation.3G"/><div class="titlepage"/><div class="refnamediv"><a name="gluQuadricOrientation.3G-name"/><h2>Name</h2><p>gluQuadricOrientation &#8212; specify inside/outside orientation for quadrics</p></div><div class="refsynopsisdiv"><a name="gluQuadricOrientation.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>gluQuadricOrientation</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLUquadric* <i><tt>quad</tt></i>, GLenum <i><tt>orientation</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gluQuadricOrientation.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gluQuadricOrientation</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>quad</tt></i>, <i><tt>orientation</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="gluQuadricOrientation.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>quad</tt></i></span></dt><dd>
+						Specifies the quadrics object (created with <a href="gluNewQuadric.3G.xml"><tt>gluNewQuadric</tt></a>).
+					</dd><dt><span class="term"><i><tt>orientation</tt></i></span></dt><dd>
+						Specifies the desired orientation. Valid values are <tt>GLU_OUTSIDE</tt> and
+						<tt>GLU_INSIDE</tt>.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gluQuadricOrientation.3G-description"/><h2>Description</h2><p>
+			<tt>gluQuadricOrientation</tt> specifies what kind of orientation is desired for quadrics rendered with
+			<i><tt>quad</tt></i>. The <i><tt>orientation</tt></i> values are as follows:
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GLU_OUTSIDE</tt></span></dt><dd>
+						Quadrics are drawn with normals pointing outward (the initial value).
+					</dd><dt><span class="term"><tt>GLU_INSIDE</tt></span></dt><dd>
+						Quadrics are drawn with normals pointing inward.
+					</dd></dl></div><p>
+			Note that the interpretation of <i><tt>outward</tt></i> and <i><tt>inward</tt></i> depends on the quadric
+			being drawn.
+		</p></div><div class="refsect1" lang="en"><a name="gluQuadricOrientation.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="gluNewQuadric.3G.xml">gluNewQuadric</a>, <a href="gluQuadricDrawStyle.3G.xml">gluQuadricDrawStyle</a>, <a href="gluQuadricNormals.3G.xml">gluQuadricNormals</a>, <a href="gluQuadricTexture.3G.xml">gluQuadricTexture</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gluQuadricNormals.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLU.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gluQuadricTexture.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gluQuadricNormals </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gluQuadricTexture</td></tr></table></div></body></html>

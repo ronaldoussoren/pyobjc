@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IFPkgDescriptionDeleteWarning</key>
+	<string></string>
+	<key>IFPkgDescriptionDescription</key>
+	<string>See http://pyobjc.sourceforge.net/ for the latest news and information.
+
+The ObjC package provides the glue needed to interface the Python interpreter with the Objective-C language. The 'objc' module makes Objective-C objects and classes available as first-class Python citizens, it is not only possible to use Objective-C objects but you can also subclass Objective-C classes.
+
+The package also includes support for the Foundation, AppKit, WebKit and AddressBook frameworks.   As a result, it is possible to build complete Cocoa applications entirely in Python.
+
+The package also includes a project template from which the developer can create new Cocoa projects implemented in Python.
+
+Must be installed on boot volume.
+</string>
+	<key>IFPkgDescriptionTitle</key>
+	<string>PyObjC</string>
+	<key>IFPkgDescriptionVersion</key>
+	<string>1.0</string>
+</dict>
+</plist>

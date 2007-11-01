@@ -1,0 +1,1506 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <struct ignore='true' name='CFAllocatorContext' />
+  <struct name='CFArrayCallBacks' />
+  <struct name='CFBagCallBacks' />
+  <struct name='CFDictionaryKeyCallBacks' />
+  <struct name='CFDictionaryValueCallBacks' />
+  <struct name='CFGregorianDate' />
+  <struct name='CFGregorianUnits' />
+  <struct name='CFRange' />
+  <struct name='CFSetCallBacks' />
+  <struct name='CFSocketSignature' />
+  <struct name='CFStreamError' />
+  <struct ignore='true' name='CFStringInlineBuffer' />
+  <struct name='CFSwappedFloat32' />
+  <struct name='CFSwappedFloat64' />
+  <struct name='CFTreeContext' />
+  <struct name='CFUUIDBytes' />
+  <struct name='CFXMLAttributeDeclarationInfo' />
+  <struct name='CFXMLAttributeListDeclarationInfo' />
+  <struct name='CFXMLDocumentInfo' />
+  <struct name='CFXMLDocumentTypeInfo' />
+  <struct name='CFXMLElementInfo' />
+  <struct name='CFXMLElementTypeDeclarationInfo' />
+  <struct name='CFXMLEntityInfo' />
+  <struct name='CFXMLEntityReferenceInfo' />
+  <struct name='CFXMLExternalID' />
+  <struct name='CFXMLNotationInfo' />
+  <struct ignore='true' name='CFXMLParserCallBacks' />
+  <struct ignore='true' name='CFXMLParserContext' />
+  <struct name='CFXMLProcessingInstructionInfo' />
+  <struct ignore='true' name='IUnknownVTbl' />
+  <opaque name='CFArrayCallBacks*' />
+  <opaque name='CFBagCallBacks*' />
+  <opaque name='CFDictionaryKeyCallBacks*' />
+  <opaque name='CFDictionaryValueCallBacks*' />
+  <opaque name='CFSetCallBacks' />
+  <cftype gettypeid_func='CFAllocatorGetTypeID' name='CFAllocatorRef' />
+  <cftype gettypeid_func='CFArrayGetTypeID' name='CFArrayRef' tollfree='NSCFArray' />
+  <cftype gettypeid_func='CFAttributedStringGetTypeID' name='CFAttributedStringRef' tollfree='NSCFAttributedString' />
+  <cftype gettypeid_func='CFBagGetTypeID' name='CFBagRef' />
+  <cftype gettypeid_func='CFBinaryHeapGetTypeID' name='CFBinaryHeapRef' />
+  <cftype gettypeid_func='CFBitVectorGetTypeID' name='CFBitVectorRef' />
+  <cftype gettypeid_func='CFBooleanGetTypeID' name='CFBooleanRef' tollfree='NSCFBoolean' />
+  <cftype gettypeid_func='CFBundleGetTypeID' name='CFBundleRef' />
+  <cftype gettypeid_func='CFCalendarGetTypeID' name='CFCalendarRef' tollfree='NSCFCalendar' />
+  <cftype gettypeid_func='CFCharacterSetGetTypeID' name='CFCharacterSetRef' tollfree='NSCFCharacterSet' />
+  <cftype gettypeid_func='CFDataGetTypeID' name='CFDataRef' tollfree='NSCFData' />
+  <cftype gettypeid_func='CFDateFormatterGetTypeID' name='CFDateFormatterRef' />
+  <cftype gettypeid_func='CFDateGetTypeID' name='CFDateRef' tollfree='NSCFDate' />
+  <cftype gettypeid_func='CFDictionaryGetTypeID' name='CFDictionaryRef' tollfree='NSCFDictionary' />
+  <cftype gettypeid_func='CFErrorGetTypeID' name='CFErrorRef' tollfree='NSCFError' />
+  <cftype gettypeid_func='CFFileDescriptorGetTypeID' name='CFFileDescriptorRef' />
+  <cftype gettypeid_func='CFLocaleGetTypeID' name='CFLocaleRef' tollfree='NSCFLocale' />
+  <cftype gettypeid_func='CFMachPortGetTypeID' name='CFMachPortRef' tollfree='NSMachPort' />
+  <cftype gettypeid_func='CFMessagePortGetTypeID' name='CFMessagePortRef' />
+  <cftype gettypeid_func='CFArrayGetTypeID' name='CFMutableArrayRef' tollfree='NSMutableArray' />
+  <cftype gettypeid_func='CFAttributedStringGetTypeID' name='CFMutableAttributedStringRef' />
+  <cftype gettypeid_func='CFBagGetTypeID' name='CFMutableBagRef' />
+  <cftype gettypeid_func='CFBitVectorGetTypeID' name='CFMutableBitVectorRef' />
+  <cftype gettypeid_func='CFCharacterSetGetTypeID' name='CFMutableCharacterSetRef' />
+  <cftype gettypeid_func='CFDataGetTypeID' name='CFMutableDataRef' tollfree='NSMutableData' />
+  <cftype gettypeid_func='CFDictionaryGetTypeID' name='CFMutableDictionaryRef' tollfree='NSMutableDictionary' />
+  <cftype gettypeid_func='CFSetGetTypeID' name='CFMutableSetRef' tollfree='NSMutableSet' />
+  <cftype gettypeid_func='CFStringGetTypeID' name='CFMutableStringRef' />
+  <cftype gettypeid_func='CFNotificationCenterGetTypeID' name='CFNotificationCenterRef' />
+  <cftype gettypeid_func='CFNullGetTypeID' name='CFNullRef' tollfree='NSNull' />
+  <cftype gettypeid_func='CFNumberFormatterGetTypeID' name='CFNumberFormatterRef' />
+  <cftype gettypeid_func='CFNumberGetTypeID' name='CFNumberRef' tollfree='NSCFNumber' />
+  <cftype gettypeid_func='CFPlugInInstanceGetTypeID' name='CFPlugInInstanceRef' />
+  <cftype gettypeid_func='CFPlugInGetTypeID' name='CFPlugInRef' />
+  <cftype name='CFPropertyListRef' />
+  <cftype gettypeid_func='CFReadStreamGetTypeID' name='CFReadStreamRef' tollfree='NSCFInputStream' />
+  <cftype gettypeid_func='CFRunLoopObserverGetTypeID' name='CFRunLoopObserverRef' />
+  <cftype gettypeid_func='CFRunLoopGetTypeID' name='CFRunLoopRef' />
+  <cftype gettypeid_func='CFRunLoopSourceGetTypeID' name='CFRunLoopSourceRef' />
+  <cftype gettypeid_func='CFRunLoopTimerGetTypeID' name='CFRunLoopTimerRef' tollfree='NSCFTimer' />
+  <cftype gettypeid_func='CFSetGetTypeID' name='CFSetRef' tollfree='NSCFSet' />
+  <cftype gettypeid_func='CFSocketGetTypeID' name='CFSocketRef' />
+  <cftype gettypeid_func='CFStringGetTypeID' name='CFStringRef' tollfree='NSCFString' />
+  <cftype gettypeid_func='CFStringTokenizerGetTypeID' name='CFStringTokenizerRef' />
+  <cftype gettypeid_func='CFTimeZoneGetTypeID' name='CFTimeZoneRef' tollfree='NSCFTimeZone' />
+  <cftype gettypeid_func='CFTreeGetTypeID' name='CFTreeRef' />
+  <cftype gettypeid_func='CFURLGetTypeID' name='CFURLRef' tollfree='NSURL' />
+  <cftype gettypeid_func='CFUUIDGetTypeID' name='CFUUIDRef' />
+  <cftype gettypeid_func='CFUserNotificationGetTypeID' name='CFUserNotificationRef' />
+  <cftype gettypeid_func='CFWriteStreamGetTypeID' name='CFWriteStreamRef' tollfree='NSCFOutputStream' />
+  <cftype gettypeid_func='CFXMLNodeGetTypeID' name='CFXMLNodeRef' />
+  <cftype gettypeid_func='CFXMLParserGetTypeID' name='CFXMLParserRef' />
+  <function inline='true' name='CFStringGetCharacterFromInlineBuffer'>
+    <arg index='0' type='^{?=[64S]^{__CFString}^S{?=ii}ii}' type64='^{?=[64S]^{__CFString}^S{?=qq}qq}' />
+  </function>
+  <function inline='true' name='CFStringInitInlineBuffer'>
+    <arg index='1' type='^{?=[64S]^{__CFString}^S{?=ii}ii}' type64='^{?=[64S]^{__CFString}^S{?=qq}qq}' />
+  </function>
+  <function comment='fixme' name='CFAllocatorAllocate'>
+    <retval type='^v' type64='^v' />
+  </function>
+  <function comment='fixme' name='CFAllocatorCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type='^{?=i^v^?^?^?^?^?^?^?}' type64='^{?=q^v^?^?^?^?^?^?^?}' />
+  </function>
+  <function comment='fixme' name='CFAllocatorDeallocate'>
+    <arg index='1' type='^v' type64='^v' />
+  </function>
+  <function comment='fixme' name='CFAllocatorGetContext'>
+    <arg index='1' type='^{?=i^v^?^?^?^?^?^?^?}' type64='^{?=q^v^?^?^?^?^?^?^?}' />
+  </function>
+  <function comment='fixme' name='CFAllocatorReallocate'>
+    <retval type='^v' type64='^v' />
+    <arg index='1' type='^v' type64='^v' />
+  </function>
+  <function name='CFArrayAppendValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFArrayApplyFunction'>
+    <arg function_pointer='true' function_pointer_retained='false' index='2' type='^?' type64='^?'>
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+    <arg comment='context' index='3' type='@' type64='@' />
+  </function>
+  <function name='CFArrayBSearchValues'>
+    <arg index='2' type='^v' type64='^v' />
+    <arg function_pointer='true' function_pointer_retained='false' index='3' type='^?' type64='^?'>
+      <retval type='l' />
+      <arg type='@' />
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+    <arg comment='context' index='4' type='@' type64='@' />
+  </function>
+  <function name='CFArrayContainsValue'>
+    <arg comment='CFTypeRef' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFArrayCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' index='1' type='^@' type64='^@' type_modifier='n' />
+    <arg index='3' type='r^{?=i^?^?^?^?}' type64='r^{?=q^?^?^?^?}' />
+  </function>
+  <function name='CFArrayCreateCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFArrayCreateMutable'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='2' type='r^{?=i^?^?^?^?}' type64='r^{?=q^?^?^?^?}' />
+  </function>
+  <function name='CFArrayCreateMutableCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFArrayGetCountOfValue'>
+    <arg comment='CFTypeRef' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFArrayGetFirstIndexOfValue'>
+    <arg comment='CFTypeRef' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFArrayGetLastIndexOfValue'>
+    <arg comment='CFTypeRef' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFArrayGetValueAtIndex'>
+    <retval comment='CFTypeRef' type='@' type64='@' />
+  </function>
+  <function name='CFArrayGetValues'>
+    <arg c_array_length_in_arg='1' comment='CFTypeRef' index='2' type='r^@' type64='r^@' type_modifier='o' />
+  </function>
+  <function name='CFArrayInsertValueAtIndex'>
+    <arg comment='CFTypeRef' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFArrayReplaceValues'>
+    <arg c_array_length_in_arg='3' comment='CFTypeRef' index='2' type='r^@' type64='r^@' />
+  </function>
+  <function name='CFArraySetValueAtIndex'>
+    <arg comment='CFTypeRef' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFArraySortValues'>
+    <arg function_pointer='true' function_pointer_retained='false' index='2' type='^?' type64='^?'>
+      <retval type='l' />
+      <arg type='@' />
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+    <arg comment='context' index='3' type='@' type64='@' />
+  </function>
+  <function name='CFAttributedStringCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFAttributedStringCreateCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFAttributedStringCreateMutable'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFAttributedStringCreateMutableCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFAttributedStringCreateWithSubstring'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFAttributedStringGetAttribute'>
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='CFAttributedStringGetAttributeAndLongestEffectiveRange'>
+    <arg index='4' type_modifier='o' />
+  </function>
+  <function name='CFAttributedStringGetAttributes'>
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CFAttributedStringGetAttributesAndLongestEffectiveRange'>
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='CFAttributedStringRemoveAttribute' />
+  <function name='CFAttributedStringReplaceAttributedString' />
+  <function name='CFAttributedStringReplaceString' />
+  <function name='CFAttributedStringSetAttribute' />
+  <function name='CFAttributedStringSetAttributes' />
+  <function name='CFBagAddValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFBagApplyFunction'>
+    <arg function_pointer='true' function_pointer_retained='false' index='1' type='^?' type64='^?'>
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+    <arg comment='context' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFBagContainsValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function comment='manual wrapper' name='CFBagCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' index='1' type='r^^v' type64='r^^v' type_modifier='n' />
+    <arg index='3' type='r^{?=i^?^?^?^?^?}' type64='r^{?=q^?^?^?^?^?}' />
+  </function>
+  <function name='CFBagCreateCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBagCreateMutable'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='2' type='r^{?=i^?^?^?^?^?}' type64='r^{?=q^?^?^?^?^?}' />
+  </function>
+  <function name='CFBagCreateMutableCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBagGetCountOfValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFBagGetValue'>
+    <retval comment='CFTypeRef' type='@' type64='@' />
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFBagGetValueIfPresent'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+    <arg comment='CFTypeRef' index='2' type='r^@' type64='r^@' type_modifier='o' />
+  </function>
+  <function ignore='true' name='CFBagGetValues' />
+  <function name='CFBagRemoveValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFBagReplaceValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFBagSetValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFBinaryHeapAddValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFBinaryHeapApplyFunction'>
+    <arg function_pointer='true' function_pointer_retained='false' index='1' type='^?' type64='^?'>
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+    <arg comment='context' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFBinaryHeapContainsValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFBinaryHeapCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='2' type='r^{?=i^?^?^?^?}' type64='r^{?=q^?^?^?^?}' />
+    <arg index='3' type='r^{?=i^v^?^?^?}' type64='r^{?=q^v^?^?^?}' />
+  </function>
+  <function name='CFBinaryHeapCreateCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBinaryHeapGetCountOfValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFBinaryHeapGetMinimum'>
+    <retval comment='CFTypeRef' type='@' type64='@' />
+  </function>
+  <function name='CFBinaryHeapGetMinimumIfPresent'>
+    <arg index='1' type='^@' type64='^@' type_modifier='o' />
+  </function>
+  <function ignore='true' name='CFBinaryHeapGetValues' />
+  <function name='CFBitVectorContainsBit' />
+  <function name='CFBitVectorCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_of_variable_length='true' index='1' type_modifier='n' />
+  </function>
+  <function name='CFBitVectorCreateCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBitVectorCreateMutable'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBitVectorCreateMutableCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBitVectorFlipBits' />
+  <function name='CFBitVectorGetBits'>
+    <arg c_array_of_variable_length='true' comment='actually arg1 / 8' index='2' type_modifier='o' />
+  </function>
+  <function name='CFBitVectorGetCountOfBit' />
+  <function name='CFBitVectorGetFirstIndexOfBit' />
+  <function name='CFBitVectorGetLastIndexOfBit' />
+  <function name='CFBitVectorSetBits' />
+  <function name='CFBundleCopyAuxiliaryExecutableURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyBuiltInPlugInsURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyBundleLocalizations'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyBundleURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyExecutableArchitectures'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyExecutableArchitecturesForURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyExecutableURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyInfoDictionaryForURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyInfoDictionaryInDirectory'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyLocalizationsForPreferences'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyLocalizationsForURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyLocalizedString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyPreferredLocalizationsFromArray'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyPrivateFrameworksURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyResourceURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyResourceURLForLocalization'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyResourceURLInDirectory'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyResourceURLsOfType'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyResourceURLsOfTypeForLocalization'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyResourceURLsOfTypeInDirectory'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopyResourcesDirectoryURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopySharedFrameworksURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopySharedSupportURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCopySupportFilesDirectoryURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleCreateBundlesFromDirectory'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFBundleGetDataPointerForName'>
+    <retval c_array_of_variable_length='true' />
+  </function>
+  <function name='CFBundleGetDataPointersForNames'>
+    <arg index='2' type='^^v' type64='^^v' />
+  </function>
+  <function ignore='true' name='CFBundleGetFunctionPointerForName' />
+  <function ignore='true' name='CFBundleGetFunctionPointersForNames' />
+  <function name='CFBundleGetPackageInfo'>
+    <arg index='1' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CFBundleGetPackageInfoInDirectory'>
+    <arg index='1' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CFBundleLoadExecutableAndReturnError'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CFBundleOpenBundleResourceFiles'>
+    <arg index='1' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CFBundlePreflightExecutable'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function comment='manual wrapper' name='CFCalendarAddComponents' variadic='true'>
+    <arg index='1' type_modifier='N' />
+    <arg comment='format string, but not printf' index='3' type='r*' type64='r*' />
+  </function>
+  <function comment='manual wrapper' name='CFCalendarComposeAbsoluteTime' variadic='true'>
+    <arg index='1' type_modifier='o' />
+    <arg comment='format string, but not printf' index='2' type='r*' type64='r*' />
+  </function>
+  <function name='CFCalendarCopyCurrent'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFCalendarCopyLocale'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFCalendarCopyTimeZone'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFCalendarCreateWithIdentifier'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='manual wrapper' name='CFCalendarDecomposeAbsoluteTime' variadic='true'>
+    <arg comment='format string, not printf' index='2' type='r*' type64='r*' />
+  </function>
+  <function comment='manual wrapper' name='CFCalendarGetComponentDifference' variadic='true'>
+    <arg comment='format string, not printf' index='4' type='r*' type64='r*' />
+  </function>
+  <function name='CFCalendarGetMaximumRangeOfUnit' />
+  <function name='CFCalendarGetMinimumRangeOfUnit' />
+  <function name='CFCalendarGetRangeOfUnit' />
+  <function name='CFCalendarGetTimeRangeOfUnit'>
+    <arg index='3' type_modifier='o' />
+    <arg index='4' type_modifier='o' />
+  </function>
+  <function name='CFCharacterSetAddCharactersInRange' />
+  <function name='CFCharacterSetCreateBitmapRepresentation'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFCharacterSetCreateCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFCharacterSetCreateInvertedSet'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFCharacterSetCreateMutable'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFCharacterSetCreateMutableCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFCharacterSetCreateWithBitmapRepresentation'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFCharacterSetCreateWithCharactersInRange'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFCharacterSetCreateWithCharactersInString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFCharacterSetIsCharacterMember'>
+    <arg index='1' numeric='false' type='S' type64='S' />
+  </function>
+  <function name='CFCharacterSetRemoveCharactersInRange' />
+  <function name='CFCopyDescription'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFCopyTypeIDDescription'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFDataAppendBytes'>
+    <arg index='1' type='r*' type64='r*' />
+  </function>
+  <function name='CFDataCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+  </function>
+  <function name='CFDataCreateCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFDataCreateMutable'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFDataCreateMutableCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFDataCreateWithBytesNoCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+  </function>
+  <function name='CFDataDeleteBytes' />
+  <function name='CFDataGetBytePtr'>
+    <retval c_array_of_variable_length='true' />
+  </function>
+  <function name='CFDataGetBytes'>
+    <arg c_array_length_in_arg='1' index='2' type_modifier='o' />
+  </function>
+  <function name='CFDataGetMutableBytePtr'>
+    <retval c_array_of_variable_length='true' />
+  </function>
+  <function name='CFDataReplaceBytes'>
+    <arg c_array_length_in_arg='3' index='2' type_modifier='n' />
+  </function>
+  <function name='CFDateCompare'>
+    <arg comment='must be null' index='2' type='^v' type64='^v' />
+  </function>
+  <function name='CFDateCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFDateFormatterCopyProperty'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFDateFormatterCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFDateFormatterCreateDateFromString'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='3' type_modifier='N' />
+  </function>
+  <function name='CFDateFormatterCreateStringWithAbsoluteTime'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFDateFormatterCreateStringWithDate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFDateFormatterGetAbsoluteTimeFromString'>
+    <arg index='2' type_modifier='N' />
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='CFDictionaryAddValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+    <arg comment='CFTypeRef' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFDictionaryApplyFunction'>
+    <arg function_pointer='true' function_pointer_retained='false' index='1' type='^?' type64='^?'>
+      <arg type='@' />
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+    <arg comment='context' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFDictionaryContainsKey'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFDictionaryContainsValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFDictionaryCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='3' index='1' type='r^@' type64='r^@' type_modifier='n' />
+    <arg c_array_length_in_arg='3' index='2' type='r^@' type64='r^@' type_modifier='n' />
+    <arg index='4' type='r^{?=i^?^?^?^?^?}' type64='r^{?=q^?^?^?^?^?}' />
+    <arg index='5' type='r^{?=i^?^?^?^?}' type64='r^{?=q^?^?^?^?}' />
+  </function>
+  <function name='CFDictionaryCreateCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFDictionaryCreateMutable'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='2' type='r^{?=i^?^?^?^?^?}' type64='r^{?=q^?^?^?^?^?}' />
+    <arg index='3' type='r^{?=i^?^?^?^?}' type64='r^{?=q^?^?^?^?}' />
+  </function>
+  <function name='CFDictionaryCreateMutableCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFDictionaryGetCountOfKey'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFDictionaryGetCountOfValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFDictionaryGetKeysAndValues'>
+    <arg c_array_of_variable_length='true' index='1' type='^@' type64='^@' type_modifier='o' />
+    <arg c_array_of_variable_length='true' index='2' type='^@' type64='^@' type_modifier='o' />
+  </function>
+  <function name='CFDictionaryGetValue'>
+    <retval comment='CFTypeRef' type='@' type64='@' />
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFDictionaryGetValueIfPresent'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+    <arg comment='CFTypeRef' index='2' type='r^@' type64='r^@' type_modifier='o' />
+  </function>
+  <function name='CFDictionaryRemoveValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFDictionaryReplaceValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+    <arg comment='CFTypeRef' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFDictionarySetValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+    <arg comment='CFTypeRef' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFErrorCopyDescription'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFErrorCopyFailureReason'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFErrorCopyRecoverySuggestion'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFErrorCopyUserInfo'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFErrorCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFErrorCreateWithUserInfoKeysAndValues'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='5' index='3' type='^@' type64='^@' type_modifier='n' />
+    <arg c_array_length_in_arg='5' index='4' type='^@' type64='^@' type_modifier='n' />
+  </function>
+  <function comment='manual wrapper' name='CFFileDescriptorCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='3' type='^?' type64='^?' />
+    <arg index='4' type='r^{?=i^v^?^?^?}' type64='r^{?=q^v^?^?^?}' />
+  </function>
+  <function name='CFFileDescriptorCreateRunLoopSource'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='manual wrapper' name='CFFileDescriptorGetContext'>
+    <arg index='1' type='r^{?=i^v^?^?^?}' type64='r^{?=q^v^?^?^?}' />
+  </function>
+  <function name='CFLocaleCopyAvailableLocaleIdentifiers'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCopyCommonISOCurrencyCodes'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCopyCurrent'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCopyDisplayNameForPropertyValue'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCopyISOCountryCodes'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCopyISOCurrencyCodes'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCopyISOLanguageCodes'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCopyPreferredLanguages'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCreateCanonicalLanguageIdentifierFromString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCreateCanonicalLocaleIdentifierFromScriptManagerCodes'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCreateCanonicalLocaleIdentifierFromString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCreateComponentsFromLocaleIdentifier'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCreateCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFLocaleCreateLocaleIdentifierFromComponents'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='manual wrapper' name='CFMachPortCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type='^?' type64='^?' />
+    <arg index='2' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+    <arg index='3' type='^B' type64='^B' />
+  </function>
+  <function name='CFMachPortCreateRunLoopSource'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='manual wrapper' name='CFMachPortCreateWithPort'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='2' type='^?' type64='^?' />
+    <arg index='3' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+    <arg index='4' type='^B' type64='^B' />
+  </function>
+  <function comment='manual wrapper' name='CFMachPortGetContext'>
+    <arg index='1' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function comment='manual wrapper' name='CFMachPortGetInvalidationCallBack'>
+    <retval function_pointer='true' type='^?' type64='^?'>
+      <arg type='@' />
+      <arg type='@' />
+    </retval>
+  </function>
+  <function comment='manual wrapper' name='CFMachPortSetInvalidationCallBack'>
+    <arg function_pointer='true' index='1' type='^?' type64='^?'>
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+  </function>
+  <function comment='manual wrapper' name='CFMessagePortCreateLocal'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='2' type='^?' type64='^?' />
+    <arg index='3' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+    <arg index='4' type='^B' type64='^B' />
+  </function>
+  <function name='CFMessagePortCreateRemote'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFMessagePortCreateRunLoopSource'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='manual wrapper' name='CFMessagePortGetContext'>
+    <arg index='1' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='CFMessagePortGetInvalidationCallBack'>
+    <retval function_pointer='true' type='^?' type64='^?'>
+      <arg type='@' />
+      <arg type='@' />
+    </retval>
+  </function>
+  <function name='CFMessagePortSendRequest'>
+    <arg already_retained='true' index='6' type_modifier='o' />
+  </function>
+  <function name='CFMessagePortSetInvalidationCallBack'>
+    <arg function_pointer='true' index='1' type='^?' type64='^?'>
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+  </function>
+  <function name='CFNotificationCenterAddObserver'>
+    <arg index='1' type='@' type64='@' />
+    <arg function_pointer='true' index='2' type='^?' type64='^?'>
+      <arg type='@' />
+      <arg type='@' />
+      <arg type='@' />
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+    <arg index='4' type='@' type64='@' />
+  </function>
+  <function name='CFNotificationCenterPostNotification'>
+    <arg index='2' type='@' type64='@' />
+  </function>
+  <function name='CFNotificationCenterPostNotificationWithOptions'>
+    <arg index='2' type='@' type64='@' />
+  </function>
+  <function name='CFNotificationCenterRemoveEveryObserver'>
+    <arg index='1' type='@' type64='@' />
+  </function>
+  <function name='CFNotificationCenterRemoveObserver'>
+    <arg index='1' type='@' type64='@' />
+    <arg index='3' type='@' type64='@' />
+  </function>
+  <function name='CFNumberCompare'>
+    <arg comment='must be NULL' index='2' type='^v' type64='^v' />
+  </function>
+  <function name='CFNumberCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='must be NULL' index='2' type='^v' type64='^v' />
+  </function>
+  <function name='CFNumberFormatterCopyProperty'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFNumberFormatterCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFNumberFormatterCreateNumberFromString'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='3' type_modifier='N' />
+  </function>
+  <function name='CFNumberFormatterCreateStringWithNumber'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFNumberFormatterCreateStringWithValue'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='must be NULL' index='3' type='^v' type64='^v' />
+  </function>
+  <function name='CFNumberFormatterGetDecimalInfoForCurrencyCode'>
+    <arg index='1' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CFNumberFormatterGetValueFromString'>
+    <arg index='2' type_modifier='N' />
+    <arg already_retained='true' index='4' type='^@' type64='^@' type_modifier='o' />
+  </function>
+  <function comment='manual wrapper' name='CFNumberGetValue'>
+    <arg index='2' type='^v' type64='^v' />
+  </function>
+  <function name='CFPlugInCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='fixme' name='CFPlugInInstanceCreate'>
+    <retval type='^v' type64='^v' />
+  </function>
+  <function comment='fixme' name='CFPlugInInstanceCreateWithInstanceDataSize'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='2' type='^?' type64='^?' />
+    <arg index='4' type='^?' type64='^?' />
+  </function>
+  <function comment='fixme' name='CFPlugInInstanceGetInstanceData'>
+    <retval type='^v' type64='^v' />
+  </function>
+  <function comment='fixme' name='CFPlugInInstanceGetInterfaceFunctionTable'>
+    <arg index='2' type='r^^v' type64='r^^v' />
+  </function>
+  <function name='CFPlugInRegisterFactoryFunction'>
+    <arg function_pointer='true' index='1' type='^?' type64='^?'>
+      <retval type='@' />
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+  </function>
+  <function name='CFPreferencesCopyAppValue'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFPreferencesCopyApplicationList'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFPreferencesCopyKeyList'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFPreferencesCopyMultiple'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFPreferencesCopyValue'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFPreferencesGetAppBooleanValue'>
+    <arg index='2' type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='CFPreferencesGetAppIntegerValue'>
+    <arg index='2' type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='CFPropertyListCreateDeepCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFPropertyListCreateFromStream'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='4' type_modifier='n' />
+    <arg already_retained='true' index='5' type_modifier='o' />
+  </function>
+  <function name='CFPropertyListCreateFromXMLData'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg already_retained='true' index='3' type_modifier='o' />
+  </function>
+  <function name='CFPropertyListCreateXMLData'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFPropertyListWriteToStream'>
+    <arg already_retained='true' index='3' type_modifier='o' />
+  </function>
+  <function name='CFReadStreamCopyError'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFReadStreamCopyProperty'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='user must pass kCAllocatorNull as the bytesDeallocator!' name='CFReadStreamCreateWithBytesNoCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' index='1' />
+  </function>
+  <function name='CFReadStreamCreateWithFile'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFReadStreamGetBuffer'>
+    <retval c_array_length_in_arg='2' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CFReadStreamRead'>
+    <arg c_array_length_in_arg='2' index='1' type_modifier='o' />
+  </function>
+  <function comment='manual wrapper' name='CFReadStreamSetClient'>
+    <arg index='2' type='^?' type64='^?' />
+    <arg index='3' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='CFRunLoopCopyAllModes'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFRunLoopCopyCurrentMode'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='manual wrapper' name='CFRunLoopObserverCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='4' type='^?' type64='^?' />
+    <arg index='5' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function comment='manual wrapper' name='CFRunLoopObserverGetContext'>
+    <arg index='1' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function comment='fixme' name='CFRunLoopSourceCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='2' type='^{?=i^v^?^?^?^?^?^?^?^?}' type64='^{?=q^v^?^?^?^?^?^?^?^?}' />
+  </function>
+  <function comment='fixme' name='CFRunLoopSourceGetContext'>
+    <arg index='1' type='^{?=i^v^?^?^?^?^?^?^?^?}' type64='^{?=q^v^?^?^?^?^?^?^?^?}' />
+  </function>
+  <function comment='manual wrapper' name='CFRunLoopTimerCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='5' type='^?' type64='^?' />
+    <arg index='6' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function comment='manual wrapper' name='CFRunLoopTimerGetContext'>
+    <arg index='1' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='CFSetAddValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFSetApplyFunction'>
+    <arg function_pointer='true' function_pointer_retained='false' index='1' type='^?' type64='^?'>
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+    <arg comment='context' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFSetContainsValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function comment='fixme' name='CFSetCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type='r^^v' type64='r^^v' />
+    <arg index='3' type='r^{?=i^?^?^?^?^?}' type64='r^{?=q^?^?^?^?^?}' />
+  </function>
+  <function name='CFSetCreateCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='fixme' name='CFSetCreateMutable'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='2' type='r^{?=i^?^?^?^?^?}' type64='r^{?=q^?^?^?^?^?}' />
+  </function>
+  <function name='CFSetCreateMutableCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFSetGetCountOfValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFSetGetValue'>
+    <retval type='@' type64='@' />
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFSetGetValueIfPresent'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+    <arg index='2' type='^@' type64='^@' type_modifier='o' />
+  </function>
+  <function name='CFSetGetValues'>
+    <arg c_array_of_variable_length='true' index='1' type='^@' type64='^@' type_modifier='o' />
+  </function>
+  <function name='CFSetRemoveValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFSetReplaceValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFSetSetValue'>
+    <arg comment='CFTypeRef' index='1' type='@' type64='@' />
+  </function>
+  <function name='CFSocketCopyAddress'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFSocketCopyPeerAddress'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFSocketCopyRegisteredSocketSignature'>
+    <arg index='0' type_modifier='n' />
+    <arg index='3' type_modifier='o' />
+    <arg index='4' type_modifier='o' />
+  </function>
+  <function name='CFSocketCopyRegisteredValue'>
+    <arg index='0' type_modifier='n' />
+    <arg index='3' type='^@' type64='^@' type_modifier='o' />
+    <arg index='4' type_modifier='o' />
+  </function>
+  <function comment='fixme' name='CFSocketCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='5' type='^?' type64='^?' />
+    <arg index='6' type='r^{?=i^v^?^?^?}' type64='r^{?=q^v^?^?^?}' />
+  </function>
+  <function comment='fixme' name='CFSocketCreateConnectedToSocketSignature'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type='r^{?=iii^{__CFData}}' type64='r^{?=iii^{__CFData}}' />
+    <arg index='3' type='^?' type64='^?' />
+    <arg index='4' type='r^{?=i^v^?^?^?}' type64='r^{?=q^v^?^?^?}' />
+  </function>
+  <function name='CFSocketCreateRunLoopSource'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='fixme' name='CFSocketCreateWithNative'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='3' type='^?' type64='^?' />
+    <arg index='4' type='r^{?=i^v^?^?^?}' type64='r^{?=q^v^?^?^?}' />
+  </function>
+  <function comment='fixme' name='CFSocketCreateWithSocketSignature'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type_modifier='n' />
+    <arg index='3' type='^?' type64='^?' />
+    <arg index='4' type='r^{?=i^v^?^?^?}' type64='r^{?=q^v^?^?^?}' />
+  </function>
+  <function comment='fixme' name='CFSocketGetContext'>
+    <arg index='1' type='r^{?=i^v^?^?^?}' type64='r^{?=q^v^?^?^?}' />
+  </function>
+  <function comment='fixme' name='CFSocketRegisterSocketSignature'>
+    <arg index='0' type_modifier='n' />
+    <arg index='3' null_accepted='false' type_modifier='n' />
+  </function>
+  <function name='CFSocketRegisterValue'>
+    <arg index='0' type_modifier='n' />
+  </function>
+  <function name='CFSocketUnregister'>
+    <arg index='0' type_modifier='n' />
+  </function>
+  <function name='CFStreamCreateBoundPair'>
+    <arg already_retained='true' index='1' type_modifier='o' />
+    <arg already_retained='true' index='2' type_modifier='o' />
+  </function>
+  <function name='CFStreamCreatePairWithPeerSocketSignature'>
+    <arg index='1' type_modifier='n' />
+    <arg index='2' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='CFStreamCreatePairWithSocket'>
+    <arg index='2' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='CFStreamCreatePairWithSocketToHost'>
+    <arg index='3' type_modifier='o' />
+    <arg index='4' type_modifier='o' />
+  </function>
+  <function name='CFStringAppendCString'>
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+  </function>
+  <function name='CFStringAppendCharacters'>
+    <arg c_array_length_in_arg='2' comment='Unicode string' index='1' type_modifier='n' />
+  </function>
+  <function name='CFStringAppendFormat' variadic='true' />
+  <function ignore='true' name='CFStringAppendFormatAndArguments' />
+  <function name='CFStringAppendPascalString'>
+    <arg comment='pascal string' index='1' type='*' type64='*' />
+  </function>
+  <function name='CFStringCapitalize'>
+    <arg index='1' type='^{__CFLocale=}' type64='^{__CFLocale=}' />
+  </function>
+  <function name='CFStringCompareWithOptions' />
+  <function name='CFStringCompareWithOptionsAndLocale' />
+  <function name='CFStringCreateArrayBySeparatingStrings'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFStringCreateArrayWithFindResults'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFStringCreateByCombiningStrings'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFStringCreateCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFStringCreateExternalRepresentation'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFStringCreateFromExternalRepresentation'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFStringCreateMutable'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFStringCreateMutableCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFStringCreateMutableWithExternalCharactersNoCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' unicode_string='true' />
+  </function>
+  <function name='CFStringCreateWithBytes'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+  </function>
+  <function name='CFStringCreateWithBytesNoCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+  </function>
+  <function name='CFStringCreateWithCString'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+  </function>
+  <function name='CFStringCreateWithCStringNoCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+  </function>
+  <function name='CFStringCreateWithCharacters'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' unicode_string='true' />
+  </function>
+  <function name='CFStringCreateWithCharactersNoCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' unicode_string='true' />
+  </function>
+  <function name='CFStringCreateWithFileSystemRepresentation'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+  </function>
+  <function name='CFStringCreateWithFormat' variadic='true'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function ignore='true' name='CFStringCreateWithFormatAndArguments' />
+  <function name='CFStringCreateWithPascalString'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='pascal string' index='1' type='*' type64='*' />
+  </function>
+  <function name='CFStringCreateWithPascalStringNoCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='pascal string' index='1' type='*' type64='*' />
+  </function>
+  <function name='CFStringCreateWithSubstring'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFStringDelete' />
+  <function name='CFStringFind' />
+  <function name='CFStringFindAndReplace' />
+  <function name='CFStringFindCharacterFromSet'>
+    <arg index='4' type_modifier='o' />
+  </function>
+  <function name='CFStringFindWithOptions'>
+    <arg index='4' type_modifier='o' />
+  </function>
+  <function name='CFStringFindWithOptionsAndLocale'>
+    <arg index='5' type_modifier='o' />
+  </function>
+  <function name='CFStringGetBytes'>
+    <arg c_array_length_in_arg='6,7' index='5' type_modifier='o' />
+    <arg index='7' type_modifier='o' />
+  </function>
+  <function name='CFStringGetCString'>
+    <arg c_array_length_in_arg='2' index='1' numeric='false' type_modifier='o' />
+  </function>
+  <function name='CFStringGetCStringPtr'>
+    <retval comment='string' numeric='false' type='r*' type64='r*' />
+  </function>
+  <function name='CFStringGetCharacterAtIndex'>
+    <retval numeric='false' type='S' type64='S' />
+  </function>
+  <function name='CFStringGetCharacters'>
+    <arg c_array_length_in_arg='1' index='2' type_modifier='o' />
+  </function>
+  <function name='CFStringGetCharactersPtr'>
+    <retval c_array_of_variable_length='true' comment='UTF-8 string' />
+  </function>
+  <function name='CFStringGetFileSystemRepresentation'>
+    <arg c_array_length_in_arg='2' index='1' numeric='false' type_modifier='o' />
+  </function>
+  <function name='CFStringGetLineBounds'>
+    <arg index='2' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+    <arg index='4' type_modifier='o' />
+  </function>
+  <function name='CFStringGetListOfAvailableEncodings'>
+    <retval c_array_of_variable_length='true' comment='array terminated by kCFStringEncodingInvalidId' />
+  </function>
+  <function name='CFStringGetParagraphBounds'>
+    <arg index='2' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+    <arg index='4' type_modifier='o' />
+  </function>
+  <function name='CFStringGetPascalString'>
+    <arg c_array_length_in_arg='2' index='1' type_modifier='o' />
+  </function>
+  <function name='CFStringGetPascalStringPtr'>
+    <retval c_array_of_variable_length='true' />
+  </function>
+  <function name='CFStringGetRangeOfComposedCharactersAtIndex' />
+  <function name='CFStringLowercase'>
+    <arg index='1' type='^{__CFLocale=}' type64='^{__CFLocale=}' />
+  </function>
+  <function name='CFStringReplace' />
+  <function name='CFStringSetExternalCharactersNoCopy'>
+    <arg c_array_length_in_arg='3' index='1' type_modifier='n' unicode_string='true' />
+  </function>
+  <function name='CFStringTokenizerCopyBestStringLanguage'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFStringTokenizerCopyCurrentTokenAttribute'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFStringTokenizerCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFStringTokenizerGetCurrentSubTokens'>
+    <arg index='1' type='^{?=ii}' type64='^{?=qq}' />
+  </function>
+  <function name='CFStringTokenizerGetCurrentTokenRange' />
+  <function name='CFStringTransform'>
+    <arg index='1' type_modifier='N' />
+  </function>
+  <function name='CFStringUppercase'>
+    <arg index='1' type='^{__CFLocale=}' type64='^{__CFLocale=}' />
+  </function>
+  <function name='CFTimeZoneCopyAbbreviation'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFTimeZoneCopyAbbreviationDictionary'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFTimeZoneCopyDefault'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFTimeZoneCopyKnownNames'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFTimeZoneCopyLocalizedName'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFTimeZoneCopySystem'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFTimeZoneCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFTimeZoneCreateWithName'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFTimeZoneCreateWithTimeIntervalFromGMT'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFTreeApplyFunctionToChildren'>
+    <arg function_pointer='true' function_pointer_retained='false' index='1' type='^?' type64='^?'>
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+    <arg comment='context' index='2' type='@' type64='@' />
+  </function>
+  <function comment='manual wrapper' name='CFTreeCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type='r^{?=i^v^?^?^?}' type64='r^{?=q^v^?^?^?}' />
+  </function>
+  <function name='CFTreeGetChildren'>
+    <arg c_array_of_variable_length='true' comment='array of CFTreeGetChildCount elements' index='1' type_modifier='o' />
+  </function>
+  <function comment='manual wrapper' name='CFTreeGetContext'>
+    <arg index='1' type='r^{?=i^v^?^?^?}' type64='r^{?=q^v^?^?^?}' />
+  </function>
+  <function comment='manual wrapper' name='CFTreeSetContext'>
+    <arg index='1' type='r^{?=i^v^?^?^?}' type64='r^{?=q^v^?^?^?}' />
+  </function>
+  <function name='CFTreeSortChildren'>
+    <arg function_pointer='true' function_pointer_retained='false' index='1' type='^?' type64='^?'>
+      <retval type='l' />
+      <arg type='@' />
+      <arg type='@' />
+      <arg type='@' />
+    </arg>
+    <arg comment='context' index='2' type='@' type64='@' />
+  </function>
+  <function name='CFURLCopyAbsoluteURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyFileSystemPath'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyFragment'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyHostName'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyLastPathComponent'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyNetLocation'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyParameterString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyPassword'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyPath'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyPathExtension'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyQueryString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyResourceSpecifier'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyScheme'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCopyStrictPath'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='CFURLCopyUserName'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCreateAbsoluteURLWithBytes'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+  </function>
+  <function name='CFURLCreateCopyAppendingPathComponent'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCreateCopyAppendingPathExtension'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCreateCopyDeletingLastPathComponent'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCreateCopyDeletingPathExtension'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCreateData'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCreateDataAndPropertiesFromResource'>
+    <arg already_retained='true' index='2' type_modifier='o' />
+    <arg already_retained='true' index='3' type_modifier='o' />
+    <arg index='5' type_modifier='o' />
+  </function>
+  <function name='CFURLCreateFromFSRef'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type_modifier='n' />
+  </function>
+  <function name='CFURLCreateFromFileSystemRepresentation'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='string' index='1' type='r*' type64='r*' />
+  </function>
+  <function name='CFURLCreateFromFileSystemRepresentationRelativeToBase'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='string' index='1' type='r*' type64='r*' />
+  </function>
+  <function name='CFURLCreatePropertyFromResource'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='CFURLCreateStringByAddingPercentEscapes'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCreateStringByReplacingPercentEscapes'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCreateStringByReplacingPercentEscapesUsingEncoding'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCreateWithBytes'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+  </function>
+  <function name='CFURLCreateWithFileSystemPath'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCreateWithFileSystemPathRelativeToBase'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLCreateWithString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFURLDestroyResource'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CFURLGetByteRangeForComponent'>
+    <arg index='2' type_modifier='n' />
+  </function>
+  <function name='CFURLGetBytes'>
+    <arg c_array_length_in_arg='2' index='1' type_modifier='o' />
+  </function>
+  <function name='CFURLGetFSRef'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CFURLGetFileSystemRepresentation'>
+    <arg c_array_length_in_arg='3' comment='string' index='2' type_modifier='o' />
+  </function>
+  <function name='CFURLWriteDataAndPropertiesToResource'>
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='CFUUIDCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFUUIDCreateFromString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFUUIDCreateFromUUIDBytes'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFUUIDCreateString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFUUIDCreateWithBytes'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFUserNotificationCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='CFUserNotificationCreateRunLoopSource'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg function_pointer='true' index='2' type='^?' type64='^?'>
+      <arg type='^{__CFUserNotification=}' />
+      <arg type='i' />
+    </arg>
+  </function>
+  <function name='CFUserNotificationDisplayAlert'>
+    <arg index='10' type_modifier='o' />
+  </function>
+  <function name='CFUserNotificationReceiveResponse'>
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CFWriteStreamCopyError'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFWriteStreamCopyProperty'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFWriteStreamCreateWithAllocatedBuffers'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='fixme' name='CFWriteStreamCreateWithBuffer'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg c_array_length_in_arg='2' comment='buffer must not die until the stream is disposed off' index='1' />
+  </function>
+  <function name='CFWriteStreamCreateWithFile'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='manual wrapper' name='CFWriteStreamSetClient'>
+    <arg index='2' type='^?' type64='^?' />
+    <arg index='3' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='CFWriteStreamWrite'>
+    <arg c_array_length_in_arg='2' index='1' />
+  </function>
+  <function name='CFXMLCreateStringByEscapingEntities'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFXMLCreateStringByUnescapingEntities'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFXMLNodeCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='context?' index='3' type='^v' type64='^v' />
+  </function>
+  <function name='CFXMLNodeCreateCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFXMLNodeGetInfoPtr'>
+    <retval comment='context' type='^v' type64='^v' />
+  </function>
+  <function name='CFXMLParserCopyErrorDescription'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='fixme' name='CFXMLParserCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='5' type='^{?=i^?^?^?^?^?}' type64='^{?=q^?^?^?^?^?}' />
+    <arg index='6' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function comment='fixme' name='CFXMLParserCreateWithDataFromURL'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='4' type='^{?=i^?^?^?^?^?}' type64='^{?=q^?^?^?^?^?}' />
+    <arg index='5' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function comment='fixme' name='CFXMLParserGetCallBacks'>
+    <arg index='1' type='^{?=i^?^?^?^?^?}' type64='^{?=q^?^?^?^?^?}' />
+  </function>
+  <function comment='fixme' name='CFXMLParserGetContext'>
+    <arg index='1' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='CFXMLParserGetDocument'>
+    <retval comment='CFTypeRef' type='@' type64='@' />
+  </function>
+  <function name='CFXMLTreeCreateFromData'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFXMLTreeCreateFromDataWithError'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='5' type_modifier='o' />
+  </function>
+  <function name='CFXMLTreeCreateWithDataFromURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFXMLTreeCreateWithNode'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='CFXMLTreeCreateXMLData'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+</signatures>

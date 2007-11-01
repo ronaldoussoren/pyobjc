@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutIdleFunc</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutGetModifiers.3GLUT.xml" title="glutGetModifiers"/><link rel="next" href="glutIgnoreKeyRepeat.3GLUT.xml" title="glutIgnoreKeyRepeat"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutIdleFunc</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutGetModifiers.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutIgnoreKeyRepeat.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutIdleFunc.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutIdleFunc.3GLUT-name"/><h2>Name</h2><p>glutIdleFunc &#8212; sets the global idle callback.</p></div><div class="refsynopsisdiv"><a name="glutIdleFunc.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutIdleFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>void (*<i><tt>func</tt></i>)());</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutIdleFunc.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutIdleFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>func</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutIdleFunc.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>func</tt></i></span></dt><dd>
+						The new idle callback function.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glutIdleFunc.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutIdleFunc</tt> sets the global idle callback to be func so a GLUT program can perform background
+			processing tasks or continuous animation when window system events are not being received. If enabled, the idle
+			callback is continuously called when events are not being received. The callback routine has no parameters. The current
+			window and current menu will not be changed before the idle callback. Programs with multiple windows and/or menus
+			should explicitly set the current window and/or current menu and not rely on its current setting.
+		</p><p>
+			The amount of computation and rendering done in an idle callback should be minimized to avoid affecting the program's
+			interactive response. In general, not more than a single frame of rendering should be done in an idle callback.
+		</p><p>
+			Passing <tt>NULL</tt> to <tt>glutIdleFunc</tt> disables the generation of the idle callback.
+		</p></div><div class="refsect1" lang="en"><a name="glutIdleFunc.3GLUT-example"/><h2>Example</h2><p>
+			A typical idle callback to animate a window might look like:
+		</p><pre class="programlisting">void idle(void)
+{
+    time += 0.05;
+    glutSetWindow(window);
+    glutPostRedisplay();
+}</pre><p>
+			Notice how the idle callback does not do any actual drawing; it only advances the time scene state global variable.
+			That is left to the window's display callback which will be triggered by the call to glutPostRedisplay.
+		</p><p>
+			If you use the idle callback for animation, you should be sure to stop rendering when the window is not visible. This
+			is easy to set up with a visibility callback. For example:
+		</p><pre class="programlisting">void visible(int vis)
+{
+    if (vis == GLUT_VISIBLE)
+        glutIdleFunc(idle);
+    else
+        glutIdleFunc(NULL);
+}</pre><p>
+			If you do use the idle callback for animation, one thing you should <span class="emphasis"><em>not</em></span> do is setup the idle
+			callback before calling <a href="glutMainLoop.3GLUT.xml"><tt>glutMainLoop</tt></a>. It is much better to use the visibility
+			callback to install idle callback when the window first becomes visible on the screen.
+		</p></div><div class="refsect1" lang="en"><a name="glutIdleFunc.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutTimerFunc.3GLUT.xml">glutTimerFunc</a>, <a href="glutVisibilityFunc.3GLUT.xml">glutVisibilityFunc</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutGetModifiers.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutIgnoreKeyRepeat.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutGetModifiers </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutIgnoreKeyRepeat</td></tr></table></div></body></html>

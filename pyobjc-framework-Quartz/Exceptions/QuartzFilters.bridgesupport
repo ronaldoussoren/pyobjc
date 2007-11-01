@@ -1,0 +1,12 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <class name='QuartzFilter'>
+    <method selector='applyToContext:'>
+      <arg index='0' type='^{CGContext=}' />
+    </method>
+    <method selector='removeFromContext:'>
+      <arg index='0' type='^{CGContext=}' />
+    </method>
+  </class>
+</signatures>

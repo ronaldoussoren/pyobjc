@@ -1,0 +1,11 @@
+kernel vec4 myHazeRemovalKernel(sampler src, __color color, float distance, float slope)
+{
+    vec4   t;
+    float  d;
+    
+    d = destCoord().y * slope  +  distance;
+    t = sample(src, samplerCoord(src));
+    t = (t - d*color) / (1.0-d);
+
+    return t;
+}

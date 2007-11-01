@@ -1,0 +1,25 @@
+{
+    IBClasses = (
+        {
+            CLASS = AsyncPythonInterpreter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {commandReactor = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = ConsoleReactor; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = RemotePyInterpreterDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {commandReactor = id; interpreter = id; textView = id; }; 
+            SUPERCLASS = NSDocument; 
+        }, 
+        {
+            CLASS = RemotePyInterpreterReactor; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {delegate = id; }; 
+            SUPERCLASS = ConsoleReactor; 
+        }
+    ); 
+    IBVersion = 1; 
+}

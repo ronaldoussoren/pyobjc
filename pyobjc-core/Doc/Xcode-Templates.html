@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+PyObjC Xcode Templates</title>
+<meta name="Author" content="Bob Ippolito" />
+<meta name="Contact" content="bob@redivi.com" />
+</head>
+<body>
+<h2>PyObjC Xcode Templates</h2>
+<table>
+<tbody valign="top">
+<tr><th >Author:</th>
+<td>Bob Ippolito</td></tr>
+<tr><th >Contact:</th>
+<td><a href="mailto:bob@redivi.com">bob@redivi.com</a></td></tr>
+</tbody>
+</table>
+<p>The PyObjC Xcode Templates offer an alternative to developing
+applications &quot;by hand&quot; using py2app, as described in the
+tutorial.  As of PyObjC 1.3.1, these templates are py2app based,
+so there is no longer a technical reason not to use them.</p>
+<table border="1" width="80%" align="center"><tbody><tr><td><i><center>Contents</center></i><br />
+<ul>
+<li><a href="#installing">Installing</a></li>
+<li><a href="#notes">Notes</a></li>
+<li><a href="#groups">Groups</a></li>
+<li><a href="#targets">Targets</a></li>
+<li><a href="#custom-executable">Custom Executable</a></li>
+<li><a href="#pyobjc-application">PyObjC Application</a></li>
+<li><a href="#pyobjc-document-based-application">PyObjC Document Based Application</a></li>
+<li><a href="#pyobjc-mixed-application">PyObjC Mixed Application</a></li>
+</ul>
+</td></tr></tbody></table>
+<h2><a href="#id3">Installing</a></h2>
+<p>If you have installed PyObjC 1.3.1 or later using the installer, then
+the Xcode templates are already installed.</p>
+<p>If you have installed any version of PyObjC prior to 1.3.1, then you
+may have old Xcode templates installed.  These Xcode templates named
+&quot;Cocoa-Python Application&quot; and &quot;Cocoa-Python Document Based Application&quot;
+should NOT be used, and it would be wise to remove them.  They can
+be found here:</p>
+<pre>
+/Library/Application Support/Apple/Developer Tools/Project Templates
+</pre>
+<p>To install the templates manually, simply copy (or link) them into
+this Project Templates folder.</p>
+<h2><a href="#id4">Notes</a></h2>
+<ul>
+<li>These templates are brand new in PyObjC 1.3.1 and haven't had much
+use yet.  If you think that you have found a bug or would like them to be
+changed in some way, please speak up on the <a href="http://lists.sourceforge.net/lists/listinfo/pyobjc-dev">pyobjc-dev</a>
+mailing list, and/or <a href="http://sourceforge.net/tracker/?group_id=14534&amp;atid=114534">report a bug</a>.</li>
+</ul>
+<ul>
+<li>The Python interpreter used by the templates is determined by the
+first line of the <code><span>setup.py</span></code> file.  By default, it points to:<pre>
+#!/usr/bin/env python
+</pre>
+<p>This means that whichever Python that comes first on the <code><span>PATH</span></code>
+will be used.  This will normally be the Python 2.3 interpreter
+that ships with Mac OS X.  If you would like to use a different
+interpreter, you have two choices:</p>
+<ol type="1">
+<li>Edit the first line of <code><span>setup.py</span></code> to point to the desired
+interpreter explicitly, for example:<pre>
+#!/usr/local/bin/python2.4
+</pre>
+<p>This change must be done to every project that you use the
+template from.  Alternatively, you can make this change
+to the templates themselves so that this is set for all
+new projects.  See the Installing section above for the
+location of these templates.  If you choose to do this,
+edit the <code><span>setup.py</span></code> directly.  Do not open the
+<code><span>.xcode</span></code> project in the template, as Xcode templates
+can be rather fragile.</p>
+</li>
+<li>Change your <code><span>PATH</span></code> environment variable so that the location
+of your Python interpreter appears before the others.  Since
+LaunchServices and thus Xcode is not started by your user shell,
+you will need to specify it in a plist.  See <a href="http://developer.apple.com/qa/qa2001/qa1067.html">QA1067</a>,
+<a href="http://developer.apple.com/documentation/MacOSX/Conceptual/BPRuntimeConfig/Concepts/EnvironmentVars.html">Runtime Configuration: Environment Variables</a>, and the
+<a href="file:///Developer/Python/PyObjC/Examples/Plugins/EnvironmentPrefs">EnvironmentPrefs</a> System Preferences plug-in example that
+comes with PyObjC for more information about how to do this.</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>This change will be specific to your user account, and will
+take effect globally, which may or may not be a good thing.</p>
+</blockquote>
+<ul>
+<li>The Clean command currently does not remove everything, if you
+want to ensure that the project has actually been completely
+cleaned, then you should remove the <code><span>build</span></code> folder yourself.</li>
+<li>Like Xcode, the built product and temporary files will both end
+up in the <code><span>build</span></code> folder unless explicitly specified that they
+should go elsewhere.  When not using these templates, py2app
+would normally put the result in a <code><span>dist</span></code> folder.</li>
+<li>If you need to include non-system frameworks or dylibs that are not otherwise
+referenced by a Python extension, then link to them from an Objective-C
+plug-in.  py2app will find them and put them into your application!
+See PyObjC Mixed Application below for more information about using
+plug-ins to integrate non-Python code into your application.</li>
+</ul>
+<h2><a href="#id5">Groups</a></h2>
+<p>The PyObjC Xcode templates use py2app to build applications,
+but they parse the <code><span>.xcode</span></code> project file to determine
+how they should be built, rather than directly in the
+<code><span>setup.py</span></code>.  The parser, in <code><span>PyObjCTools.XcodeSupport</span></code>,
+gives special meaning to several groups.  If these groups
+are renamed or removed, your project may not build correctly!</p>
+<dl>
+<dt>Main Script:</dt>
+<dd><p>This group should contain exactly one file, the main script
+of your application.  The default main script in the template
+generally does not need to be changed.</p>
+<p>If you need to ensure that additional code is imported, simply
+place it in the Classes group.  You shouldn't need to modify
+your main script.</p>
+<p>ONLY the main script should be in this group.</p>
+</dd>
+<dt>Resources:</dt>
+<dd><p>Every file in this group goes into the <code><span>Resources</span></code> folder
+inside of your application bundle.</p>
+<p>Any <code><span>.nib</span></code> files that are in this folder will
+be parsed with <code><span>PyObjCTools.NibClassBuilder.extractClasses</span></code>
+by  the main script before any modules in the Classes group
+are imported, and before the run loop is started.  You should
+not need to call <code><span>extractClasses</span></code> manually in your code.</p>
+<p>Source code should not go in here.</p>
+</dd>
+<dt>Classes:</dt>
+<dd><p>Modules in the classes group will be imported by the main
+script in the order that they appear in the Xcode project,
+after all classes are extracted from the nibs.</p>
+<p>Every Python module in this group is guaranteed to be scanned
+by py2app for dependencies.</p>
+</dd>
+<dt>Other Sources:</dt>
+<dd><p>This group is not actually special.  You may put anything you
+want in this group.  It is used by the templates to store
+files and source code that do not fit into any of the above
+categories, such as the <code><span>Info.plist</span></code> and the <code><span>setup.py</span></code>.</p>
+<dl>
+<dt>setup.py:</dt>
+<dd><p>This is the script that is actually used to build your
+project.  It may also be used from the command line
+either directly or via <code><span>xcodebuild</span></code>.  Read the file
+for more instructions.  This script must not be renamed
+or removed.</p>
+<p>If you need to customize the py2app or distutils
+build process, you should modify the <code><span>setup_options</span></code>
+dict before the <code><span>setup(...)</span></code> function is called.</p>
+</dd>
+<dt>Info.plist:</dt>
+<dd><p>When present, this file is used as a template for your
+application's <code><span>Info.plist</span></code>.  If you rename or delete
+it, then it will not be used and plist will be
+generated by py2app.  For information about what
+can go in this plist, see
+<a href="http://developer.apple.com/documentation/MacOSX/Conceptual/BPRuntimeConfig/Concepts/PListKeys.html">Runtime Configuration: Property List Key Reference</a>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h2><a href="#id6">Targets</a></h2>
+<dl>
+<dt>Development:</dt>
+<dd><p>This target will use py2app <code><span>--alias</span></code> build mode.  Executables
+built with this mechanism are produced very quickly, and use the
+sources in-place via symlinks and <code><span>sys.path</span></code> manipulations.
+These executables are not redistributable, much like development
+executables produced by Xcode when using Zero-Link.</p>
+</dd>
+<dt>Deployment:</dt>
+<dd><p>This target will use py2app's default build mode, <code><span>--standalone</span></code>.
+This will create a standalone bundle out of your application that is
+redistributable.  Everything that py2app determines to be
+needed by your application will be included in the executable,
+including Python itself, extensions you use, and dynamic
+libraries or frameworks that are linked to by these extensions.</p>
+<p>If you are using a Python distributed by
+Apple, then it will be built in <code><span>--semi-standalone</span></code> mode.
+This means that Python and its standard library <i>will not</i>
+be included in the application.</p>
+<p>Using the Deployment <i>target</i> does not automatically
+imply that you are using the Deployment <i>build style</i>.  This is
+only relevant when using the PyObjC Mixed Application template,
+or are otherwise using the same project to compile non-Python
+source code.  To change the current build style, Get Info on the
+project.  The build style has no effect on Python code.</p>
+</dd>
+</dl>
+<h2><a href="#id7">Custom Executable</a></h2>
+<p>The custom executable enables for your built application to be run from Xcode.</p>
+<p>If you rename your main script or fiddle around with your <code><span>Info.plist</span></code>,
+the path to your application may change and this will no longer work.
+If that is the case, use Get Info on the custom executable and change
+the Arguments to point to the correct path.</p>
+<p>By default, executables are launched with the <code><span>USE_PDB</span></code> environment variable
+set for both Development and Deployment targets.  This turns on verbose stack
+traces whenever an exception crosses the PyObjC bridge, and will drop you at
+a pdb prompt in the console when an uncaught exception occurs.</p>
+<p>Other useful environment variables that you can set, such as <code><span>NSZombieEnabled</span></code>,
+as well as all kinds of other debugging tricks you should know are covered
+in <a href="http://developer.apple.com/technotes/tn2004/tn2124.html">TN2124: Mac OS X Debugging Magic</a>.</p>
+<p>If Xcode screwed up and didn't create a Custom Executable, which is not
+beyond the realm of possibility, then you can create one as follows:</p>
+<ol type="1">
+<li>Create a Custom Executable for <code><span>/usr/bin/env</span></code> (yes, Xcode is dumb)</li>
+<li>Set that it runs from the Built Product directory</li>
+<li>Use <code><span>YourProject.app/Contents/MacOS/YourProject</span></code> as the first (and only) argument</li>
+<li>Optionally set the <code><span>USE_PDB</span></code> (or any other) environment variables</li>
+</ol>
+<p>Note that when debugging using gdb, you'll get a trap signal because
+<code><span>/usr/bin/env</span></code> will be <code><span>execve</span></code>'ing your application.  Unfortunately,
+there's nothing we can do from the template, because Xcode can only create
+Custom Executables to absolute paths.  However, you can probably modify
+yours such that it points directly to your built application after it
+has been built once.</p>
+<p>Custom executables are specific to a particular user in Xcode, so anything
+you do to this part of the template won't be seen by anyone else unless
+they happen to have the same short user name as you.</p>
+<h2><a href="#id8">PyObjC Application</a></h2>
+<p>This is a simple template that has a window and an application delegate.</p>
+<h2><a href="#id9">PyObjC Document Based Application</a></h2>
+<p>This is template demonstrates a Document-based application written in Python.
+It is a simple text editor (like the TinyTinyEdit example).</p>
+<h2><a href="#id10">PyObjC Mixed Application</a></h2>
+<p>This template contains both Objective-C and Python code.  The Objective-C code
+is built as a &quot;ProjectNamePlugIn.bundle&quot; plug-in in a separate target.  The plug-in
+is placed in the <code><span>Resources</span></code> directory of your application.  A wrapper script
+in the Classes group, &quot;ProjectNamePlugIn.py&quot; can be imported from Python and will
+contain all of the Objective-C classes referenced in the plug-in (even if there
+is more than just the example <code><span>ProjectNamePlugIn</span></code> class).</p>
+<p>The example class implements a simple method, <code><span>-(BOOL)plugInLoaded</span></code> which will
+always return <code><span>YES</span></code>.  The Python application delegate creates an instances of
+this class, and will beep when the application has finished launching if the
+plug-in loaded correctly.  If it didn't load correctly, you would get an exception,
+but that shouldn't happen :)</p>
+<p>Note that this template doesn't have any special machinery behind it.  If you find
+that you later need to add Objective-C code to a project that you started with
+one of the other templates, you can do the following:</p>
+<ol type="1">
+<li>Create a new Objective-C loadable bundle target</li>
+<li>Make the Development and Deployment targets depend on this target</li>
+<li>Drag the product loadable bundle into the Resources group</li>
+<li>Create a wrapper module, that uses <code><span>objc.loadBundle(...)</span></code> in the
+Classes group (see the example in the template).</li>
+</ol>
+<p>Note that switching between Development and Deployment targets does
+not imply that you are switching to the build style of the same name.
+See the Targets section for more information.</p>
+</body>
+</html>

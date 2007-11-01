@@ -1,0 +1,22 @@
+{
+    IBClasses = (
+        {CLASS = AppDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {predicateEditorChanged = id; }; 
+            CLASS = MyWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                mySearchResults = NSArrayController; 
+                myTableView = NSTableView; 
+                predicateEditor = NSPredicateEditor; 
+                progressSearch = NSProgressIndicator; 
+                progressSearchLabel = NSTextField; 
+                progressView = NSView; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = NSDatePicker; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
+    ); 
+    IBVersion = 1; 
+}

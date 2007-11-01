@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+Notes on supported APIs and classes on Mac OS X</title>
+<title>
+Contents</title>
+</head>
+<body>
+<h2>Notes on supported APIs and classes on Mac OS X</h2>
+<!-- :author: Ronald Oussoren -->
+<h2>Contents</h2>
+<ul>
+<li><a href="#introduction" id="id2" name="id2">Introduction</a></li>
+<li><a href="#core-objective-c-runtime" id="id3" name="id3">Core Objective-C runtime</a></li>
+<li><a href="#addressbook-framework" id="id4" name="id4">Addressbook framework</a></li>
+<li><a href="#appkit-framework" id="id5" name="id5">AppKit framework</a><ul>
+<li><a href="#class-nsapplication" id="id6" name="id6">Class NSApplication</a></li>
+<li><a href="#class-nsbezierpath" id="id7" name="id7">Class NSBezierPath</a></li>
+<li><a href="#class-nsbitmapimagerep" id="id8" name="id8">Class <code><span>NSBitmapImageRep</span></code></a></li>
+<li><a href="#class-nsfont" id="id9" name="id9">Class <code><span>NSFont</span></code></a></li>
+<li><a href="#class-nsgraphicscontext" id="id10" name="id10">Class <code><span>NSGraphicsContext</span></code></a></li>
+<li><a href="#class-nslayoutmanager" id="id11" name="id11">Class <code><span>NSLayoutManager</span></code></a></li>
+<li><a href="#class-nsmatrix" id="id12" name="id12">Class <code><span>NSMatrix</span></code></a></li>
+<li><a href="#class-nsmovie" id="id13" name="id13">Class <code><span>NSMovie</span></code></a></li>
+<li><a href="#class-nsopenglcontext" id="id14" name="id14">Class <code><span>NSOpenGLContext</span></code></a></li>
+<li><a href="#class-nsopenglpixelformat" id="id15" name="id15">Class <code><span>NSOpenGLPixelFormat</span></code></a></li>
+<li><a href="#class-nsquickdrawview" id="id16" name="id16">Class <code><span>NSQuickDrawView</span></code></a></li>
+<li><a href="#class-nssimplehorizontaltypesetter" id="id17" name="id17">Class <code><span>NSSimpleHorizontalTypesetter</span></code></a></li>
+<li><a href="#class-nsview" id="id18" name="id18">Class <code><span>NSView</span></code></a></li>
+<li><a href="#class-nswindow" id="id19" name="id19">Class <code><span>NSWindow</span></code></a></li>
+</ul>
+</li>
+<li><a href="#foundation-framework" id="id20" name="id20">Foundation framework</a><ul>
+<li><a href="#class-nsarray" id="id21" name="id21">Class <code><span>NSArray</span></code></a></li>
+<li><a href="#class-nsautoreleasepool" id="id22" name="id22">Class <code><span>NSAutoreleasePool</span></code></a></li>
+<li><a href="#class-nscoder" id="id23" name="id23">Class <code><span>NSCoder</span></code></a></li>
+<li><a href="#class-nsdata" id="id24" name="id24">Class <code><span>NSData</span></code></a></li>
+<li><a href="#class-nsdecimalnumber-and-the-nsdecimal-type" id="id25" name="id25">Class <code><span>NSDecimalNumber</span></code> and the <code><span>NSDecimal</span></code> type</a></li>
+<li><a href="#class-nsdictionary" id="id26" name="id26">Class <code><span>NSDictionary</span></code></a></li>
+<li><a href="#class-nsexception" id="id27" name="id27">Class <code><span>NSException</span></code></a></li>
+<li><a href="#class-nsfault" id="id28" name="id28">Class <code><span>NSFault</span></code></a></li>
+<li><a href="#class-nsindexset" id="id29" name="id29">Class <code><span>NSIndexSet</span></code></a></li>
+<li><a href="#class-nsinvocation" id="id30" name="id30">Class <code><span>NSInvocation</span></code></a></li>
+<li><a href="#class-nsmutablearray" id="id31" name="id31">Class <code><span>NSMutableArray</span></code></a></li>
+<li><a href="#class-nsmutablestring" id="id32" name="id32">Class <code><span>NSMutableString</span></code></a></li>
+<li><a href="#class-nsnetservice" id="id33" name="id33">Class <code><span>NSNetService</span></code></a></li>
+<li><a href="#class-nsobject" id="id34" name="id34">Class <code><span>NSObject</span></code></a></li>
+<li><a href="#class-nsscriptobjectspecifier" id="id35" name="id35">Class <code><span>NSScriptObjectSpecifier</span></code></a></li>
+<li><a href="#class-nsstring" id="id36" name="id36">Class <code><span>NSString</span></code></a></li>
+<li><a href="#class-nsthread" id="id37" name="id37">class <code><span>NSThread</span></code></a></li>
+</ul>
+</li>
+<li><a href="#interfacebuilder-framework" id="id38" name="id38">InterfaceBuilder framework</a><ul>
+<li><a href="#class-ibobjcsourceparser" id="id39" name="id39">Class <code><span>IBObjCSourceParser</span></code></a></li>
+<li><a href="#id1" id="id40" name="id40">Class <code><span>NSView</span></code></a></li>
+<li><a href="#class-nsibobjectdata" id="id41" name="id41">Class <code><span>NSIBObjectData</span></code></a></li>
+<li><a href="#class-ibobjectcontainer" id="id42" name="id42">Class <code><span>IBObjectContainer</span></code></a></li>
+<li><a href="#class-ibxmldecoder" id="id43" name="id43">Class <code><span>IBXMLDecoder</span></code></a></li>
+<li><a href="#class-ibsplitscrollview" id="id44" name="id44">Class <code><span>IBSplitScrollView</span></code></a></li>
+</ul>
+</li>
+<li><a href="#preferencepanes-framework" id="id45" name="id45">PreferencePanes framework</a></li>
+</ul>
+<p>TODO: Add documentation about weak linking (see intro.txt).</p>
+<h2><a href="#id2" name="introduction">Introduction</a></h2>
+<p>This document describes the restrictions with regard to supported APIs and
+classes on Mac OS X.  In general, classes and global functions are used just
+as they are in Objective-C (e.g. the Apple developer documentation applies),
+but in some cases there are special considerations.</p>
+<p>Global functions that are not useful for Python programs are not callable from
+Python, as listed below.</p>
+<p>This document lists the exceptions to the basic rules.  If a method uses pointers
+to return additional values, the Python wrapper for that method returns a tuple
+containing the original return value and the additional values.  It is not necessary
+to provide values for pointer arguments unless their initial value is used by the
+method.  Additionally, <code><span>objc.NULL</span></code> can be passed to denote that these arguments
+should be <code><span>NULL</span></code> rather than a pointer to allocated memory.</p>
+<p>This document is targeted at the latest supported version of Mac OS X (currently
+Mac OS X 10.4.x).  Unless specifically noted, the same restrictions apply to 
+earlier versions of Mac OS X.  Earlier versions of Mac OS X have less extensive
+APIs, and PyObjC does <i>not</i> provide a compatibility layer except when necessary
+to support its own operation.</p>
+<p>This document is not entirely complete, but does cover the most used APIs.
+Classes not mentioned in this document may very well work properly.</p>
+<p>Frameworks that do not have PyObjC wrappers can be loaded at runtime using
+the <code><span>objc.loadBundle</span></code>, <code><span>objc.loadBundleFunctions</span></code> and
+<code><span>objc.loadBundleVariables</span></code> functions.  In a future version of PyObjC,
+there will be an Objective-C header parser that can be used to automate this
+process and to generate wrappers.</p>
+<h2><a href="#id3" name="core-objective-c-runtime">Core Objective-C runtime</a></h2>
+<h2><a href="#id4" name="addressbook-framework">Addressbook framework</a></h2>
+<p>The global functions in this framework are not wrapped, as the same 
+functionality can be accessed by using the object-oriented interface.</p>
+<h2><a href="#id5" name="appkit-framework">AppKit framework</a></h2>
+<p>The callback methods for the <code><span>NSSheet</span></code> API's have a non-default signature
+and no fixed name. You should therefore explicitly specify the signature. This
+is done by calling the <code><span>endSheetMethod</span></code> function after defining your
+callback:</p>
+<pre>
+class MyClass(NSObject):
+        def mySheetDidEnd(self, panel, returnCode, contextInfo):
+                &quot;&quot;&quot; Actual implementation goes here &quot;&quot;&quot;
+                pass
+
+        mySheetDidEnd = PyObjCTools.AppHelper.endSheetMethod(
+                mySheetDidEnd)
+</pre>
+<p>In Python 2.4, this may be written using a decorator as such:</p>
+<pre>
+class MyClass(NSObject):
+        @PyObjCTools.AppHelper.endSheetMethod
+        def mySheetDidEnd(self, panel, returnCode, contextInfo):
+                &quot;&quot;&quot; Actual implementation goes here &quot;&quot;&quot;
+                pass
+</pre>
+<p>Unless otherwise noted, all <code><span>contextInfo</span></code> arguments are passed as integers,
+not as arbitrary pointers.</p>
+<h3><a href="#id6" name="class-nsapplication">Class NSApplication</a></h3>
+<p><code><span>NSModalSession</span></code> objects are wrapped as opaque values.  Two wrapper objects
+refer to the same session object if their <code><span>ptr</span></code> attributes are equal.</p>
+<h3><a href="#id7" name="class-nsbezierpath">Class NSBezierPath</a></h3>
+<ul>
+<li><code><span>getLineDash:count:phase:</span></code><p>Use <code><span>getLineDash_count_phase_(0)</span></code> to get the length of the pattern, and
+then use <code><span>getLineDash_count_phase_(actualCount)</span></code> to fetch all information.
+Both return <code><span>(pattern,</span> <span>actualCount,</span> <span>phase)</span></code>. The <code><span>pattern</span></code> is <code><span>None</span></code>
+when the input argument is <code><span>0</span></code>.</p>
+</li>
+<li><code><span>appendBezierPathWithGlyphs:count:inFont:</span></code><p>The first argument is a list of integers, count should be at most the length
+of the first argument.</p>
+</li>
+<li><code><span>appendBezierPathWithPoints:count:</span></code><p>The first argument is a list of points, count should be at most the length
+of the first argument.</p>
+</li>
+<li><code><span>setAssociatedPoints:atIndex:</span></code><p>Implementing this method in Python is not yet supported.</p>
+</li>
+</ul>
+<h3><a href="#id8" name="class-nsbitmapimagerep">Class <code><span>NSBitmapImageRep</span></code></a></h3>
+<ul>
+<li><code><span>getBitMapDataPlanes</span></code><p>This method is not supported (yet)</p>
+</li>
+<li><code><span>getTIFFCompressionTypes:count:</span></code><p>This method is not supported (yet)</p>
+</li>
+<li><code><span>initWithBitmapDataPlanes:pixesWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:</span></code><p>This method is not supported (yet)</p>
+</li>
+</ul>
+<h3><a href="#id9" name="class-nsfont">Class <code><span>NSFont</span></code></a></h3>
+<ul>
+<li><code><span>positionsForCompositeSequence:numberOfGlyphs:pointArray:</span></code><p>This method is not supported (yet)</p>
+</li>
+</ul>
+<h3><a href="#id10" name="class-nsgraphicscontext">Class <code><span>NSGraphicsContext</span></code></a></h3>
+<ul>
+<li><code><span>focusStack</span></code><p>This method is not supported.</p>
+</li>
+<li><code><span>setFocusStack</span></code><p>This method is not supported.</p>
+</li>
+<li><code><span>graphicsPort</span></code><p>This method is not yet supported, MacPython doesn't wrap <code><span>CGContextRef</span></code>
+at the moment.</p>
+</li>
+</ul>
+<h3><a href="#id11" name="class-nslayoutmanager">Class <code><span>NSLayoutManager</span></code></a></h3>
+<ul>
+<li><code><span>getGlyphs:range:</span></code><p>This method is not yet supported</p>
+</li>
+<li><code><span>getGlyphsInRange:glyphs:characterIndexes:glyphInscriptions:elasticBits:</span></code><p>This method is not yet supported</p>
+</li>
+<li><code><span>getGlyphsInRange:glyphs:characterIndexes:glyphInscriptions:elasticBits:bidiLevels:</span></code><p>This method is not yet supported</p>
+</li>
+<li><code><span>rectArrayForCharacterRange:withinSelectedCharacterRange:inTextContainer:rectCount:</span></code><p>This method is not yet supported</p>
+</li>
+<li><code><span>rectArrayForGlyphRange:withinSelectedGlyphRange:inTextContainer:rectCount:</span></code><p>This method is not yet supported</p>
+</li>
+</ul>
+<h3><a href="#id12" name="class-nsmatrix">Class <code><span>NSMatrix</span></code></a></h3>
+<ul>
+<li><code><span>sortUsingFunction:context:</span></code><p>Calling this method from Python is supported, overriding it in Python
+is not. The <code><span>context</span></code> can be an arbitrary python object.</p>
+</li>
+</ul>
+<h3><a href="#id13" name="class-nsmovie">Class <code><span>NSMovie</span></code></a></h3>
+<p>The return value of <code><span>QTMovie</span></code> and the sole argument of <code><span>initWithMovie:</span></code>
+are <code><span>Carbon.Qt.Movie</span></code> objects.</p>
+<h3><a href="#id14" name="class-nsopenglcontext">Class <code><span>NSOpenGLContext</span></code></a></h3>
+<ul>
+<li><code><span>getValues:forParameter:</span></code><p>This method is not yet supported.</p>
+</li>
+<li><code><span>setValues:forParameter:</span></code><p>This method is not yet supported.</p>
+</li>
+<li><code><span>setOffScreen:width:height:rowbytes:</span></code><p>This method is not yet supported.</p>
+</li>
+<li><code><span>CGLContextObj</span></code><p>This method is not yet supported.</p>
+</li>
+</ul>
+<h3><a href="#id15" name="class-nsopenglpixelformat">Class <code><span>NSOpenGLPixelFormat</span></code></a></h3>
+<ul>
+<li><code><span>getValues:forAttribute:forVirtualScreen:</span></code><p>This method is not yet supported</p>
+</li>
+</ul>
+<h3><a href="#id16" name="class-nsquickdrawview">Class <code><span>NSQuickDrawView</span></code></a></h3>
+<ul>
+<li><code><span>qdPort</span></code><p>This method returns an instance of type <code><span>Carbon.Qd.GrafPort</span></code>.</p>
+</li>
+</ul>
+<h3><a href="#id17" name="class-nssimplehorizontaltypesetter">Class <code><span>NSSimpleHorizontalTypesetter</span></code></a></h3>
+<ul>
+<li><code><span>baseOfTypesetterGlyphInfo</span></code><p>This method is not yet supported</p>
+</li>
+<li><code><span>layoutGlyphsInHorizontalLineFragment:baseline:</span></code><p>This method is not yet supported</p>
+</li>
+</ul>
+<h3><a href="#id18" name="class-nsview">Class <code><span>NSView</span></code></a></h3>
+<ul>
+<li><code><span>sortSubviewsUsingFunction:context:</span></code><p>Calling this method from Python is supported, overriding it in Python
+is not. The <code><span>context</span></code> can be an arbitrary python object.</p>
+</li>
+</ul>
+<h3><a href="#id19" name="class-nswindow">Class <code><span>NSWindow</span></code></a></h3>
+<ul>
+<li><code><span>graphicsPort</span></code><p>This method is not yet supported</p>
+</li>
+<li><code><span>initWithWindowRef:</span></code><p>This method is not yet supported</p>
+</li>
+<li><code><span>windowRef</span></code><p>This method is not yet supported</p>
+</li>
+</ul>
+<h2><a href="#id20" name="foundation-framework">Foundation framework</a></h2>
+<p>NOTE: The list below is mostly based on scripts that find methods that can
+not be automatically handled by the bridge. We have not yet performed a manual
+search for such methods in the Cocoa documentation.</p>
+<p>The <code><span>-forward::</span></code> and <code><span>performv::</span></code> methods are not supported.  Normal Python
+function invocation can be used instead.</p>
+<p>Structs are wrapped using a struct-like type.  Struct members can be accessed
+using the field names as attributes, or they can be accessed as sequences for
+backwards compatibility.</p>
+<h3><a href="#id21" name="class-nsarray">Class <code><span>NSArray</span></code></a></h3>
+<ul>
+<li><code><span>getObjects:</span></code><p>This method is not supported, accessing the objects using the usual
+accessor methods is just as efficient as using this method.</p>
+</li>
+<li><code><span>getObjects:inRange:</span></code><p>This method is not supported, accessing the objects using the usual
+accessor methods is just as efficient as using this method.</p>
+</li>
+<li><code><span>sortedArrayUsingFunction:context:</span></code> and <code><span>sortedArrayUsingFunction:context:hint</span></code><p>These methods can be called from Python, but Python can not override them.
+This limitation will be lifted in a future version of PyObjC.</p>
+<p>The <code><span>context</span></code> can be an arbitrary python object.</p>
+</li>
+<li><code><span>addObserver:toObjectsAtIndexes:forKeyPath:options:context:</span></code><p>The context is an integer, not a <code><span>void*</span></code>.</p>
+</li>
+</ul>
+<h3><a href="#id22" name="class-nsautoreleasepool">Class <code><span>NSAutoreleasePool</span></code></a></h3>
+<p>The bridge automatically manages reference counts for you, but it is still 
+required to make an autorelease pool available.</p>
+<p>In single-threaded programs that use <code><span>NSRunLoop</span></code> or are not long-lived,
+it is not necessary to explicitly manage <code><span>NSAutoreleasePool</span></code>, as
+<code><span>NSRunLoop</span></code> will push and pop one for each iteration, and PyObjC creates
+a <code><span>NSAutoreleasePool</span></code> in the thread it is imported in.</p>
+<p>When creating a large amount of objects in a loop, it may be useful to
+manually create a pool to reclaim memory as soon as possible. The proper
+idiom for this is:</p>
+<pre>
+while &lt;test&gt;:
+        pool = NSAutoreleasePool.alloc().init()
+
+        # ... Do work here ...
+
+        del pool
+</pre>
+<p>The previous pool <i>must</i> be deallocated before a new one is
+created.  For example, the code below will <i>silently leak memory</i>:</p>
+<pre>
+while &lt;test&gt;:
+        # This pool is allocated BEFORE the previous is
+        # garbage collected, so the stack grows!
+        pool = NSAutoreleasePool.alloc().init()
+
+        # ... Do work here ...
+</pre>
+<p>In threads other than the main thread, as with Objective-C applications, it
+is necessary to create an <code><span>NSAutoreleasePool</span></code> as soon as possible before
+using other Objective-C objects.</p>
+<h3><a href="#id23" name="class-nscoder">Class <code><span>NSCoder</span></code></a></h3>
+<p>The following methods are not supported in the current version of PyObjC.
+This limitation will be lifted in a future version of the bridge.</p>
+<ul>
+<li><code><span>encodeValuesOfObjCType:</span></code><p>Use multiple calls to <code><span>encodeValueOfObjCType:at:</span></code> instead.</p>
+</li>
+<li><code><span>decodeValuesOfObjCType:</span></code><p>Use multiple calls to <code><span>decodeValueOfObjCType:at:</span></code> instead.
+Note that this will not read back data that was written using
+<code><span>encodeValuesOfObjCType:</span></code>.</p>
+</li>
+</ul>
+<p>The method <code><span>decodeBytesWithoutReturnedLength:</span></code> is not supported, use 
+<code><span>decodeBytesWithReturnedLength:</span></code> instead.  It is not possible to safely
+represent the return value of this method in Python.</p>
+<h3><a href="#id24" name="class-nsdata">Class <code><span>NSData</span></code></a></h3>
+<p>NSData subclasses support the Python buffer protocol, and any Python
+object that implements the Python buffer protocol (except str and unicode)
+are wrapped as an NSData subclass.</p>
+<ul>
+<li><code><span>initWithBytesNoCopy:length:</span></code><p>This method is not supported, use <code><span>initWithBytes:length:</span></code> instead.</p>
+</li>
+<li><code><span>initWithBytesNoCopy:length:freeWhenDone:</span></code><p>This method is not supported, use <code><span>initWithBytes:length:</span></code> instead.</p>
+</li>
+<li><code><span>dataWithBytesNoCopy:length:</span></code><p>This method is not supported, use <code><span>dataWithBytes:length:</span></code> instead.</p>
+</li>
+<li><code><span>dataWithBytesNoCopy:length:freeWhenDone:</span></code><p>This method is not supported, use <code><span>dataWithBytes:length:</span></code> instead.</p>
+</li>
+<li><code><span>deserializeAlignedBytesLengthAtCursor:</span></code><p>This is a deprecated method, see Apple documentation.</p>
+</li>
+<li><code><span>deserializeBytes:length:atCursor:</span></code><p>This is a deprecated method, see Apple documentation.</p>
+</li>
+<li><code><span>deserializeDataAt:ofObjCType:atCursor:context:</span></code><p>This is a deprecated method, see Apple documentation.</p>
+</li>
+<li><code><span>deserializeIntAtCursor:</span></code><p>This is a deprecated method, see Apple documentation.</p>
+</li>
+<li><code><span>deserializeInts:count:atCursor:</span></code><p>This is a deprecated method, see Apple documentation.</p>
+</li>
+<li><code><span>deserializeInts:count:atIndex:</span></code><p>This is a deprecated method, see Apple documentation.</p>
+</li>
+<li><code><span>getBytes:</span></code>, <code><span>getBytes:length:</span></code>, <code><span>getBytes:range:</span></code><p>Use <code><span>bytes</span></code> instead, and then use subscripting to get the
+desired range.</p>
+</li>
+</ul>
+<h3><a href="#id25" name="class-nsdecimalnumber-and-the-nsdecimal-type">Class <code><span>NSDecimalNumber</span></code> and the <code><span>NSDecimal</span></code> type</a></h3>
+<p>NSDecimal is wrapped by a Python type.</p>
+<p>Creating an <code><span>NSDecimal</span></code> instance: <code><span>NSDecimal(value)</span></code> or 
+<code><span>NSDecimal(mantisssa,</span> <span>exponent,</span> <span>isNegative)</span></code>.  <code><span>Value</span></code> can be a string,
+int or long (not a float because of the representation issues for floats).</p>
+<p>Converting an <code><span>NSDecimal</span></code> to a float or int: <code><span>aDecimal.as_int()</span></code> and
+<code><span>aDecimal.as_float</span></code>.</p>
+<h3><a href="#id26" name="class-nsdictionary">Class <code><span>NSDictionary</span></code></a></h3>
+<p>The (undocumented) methods <code><span>getKeys:</span></code>, <code><span>getObjects:</span></code> and 
+<code><span>getObjects:andKeys:</span></code> are not supported.</p>
+<h3><a href="#id27" name="class-nsexception">Class <code><span>NSException</span></code></a></h3>
+<ul>
+<li><code><span>raise:format:</span></code>, <code><span>raise:format:arguments:</span></code><p>These methods are not supported because they accept a variable number of
+arguments.  Use Python's <code><span>%</span></code> operator to format the message.  A future
+version of PyObjC may be able to parse format strings and do the right
+thing.</p>
+</li>
+</ul>
+<h3><a href="#id28" name="class-nsfault">Class <code><span>NSFault</span></code></a></h3>
+<p>The <code><span>extraData</span></code> argument/return value for <code><span>-extraData</span></code> and 
+<code><span>setTargetClassextraData:</span></code> is represented as an integer.</p>
+<h3><a href="#id29" name="class-nsindexset">Class <code><span>NSIndexSet</span></code></a></h3>
+<ul>
+<li><code><span>getIndexes:maxCount:inIndexRange:</span></code>
+The usage is:<pre>
+(realCount, indices, newRange) = obj.getIndexes_maxCount_inIndexRange(
+        maxCount, inRange)              
+</pre>
+</li>
+</ul>
+<h3><a href="#id30" name="class-nsinvocation">Class <code><span>NSInvocation</span></code></a></h3>
+<p>In some versions of Mac OS X, <code><span>NSInvocation</span></code> doesn't work properly with structs
+that contain padding for alignment.  Such structs are not used in the Mac OS X API,
+but may be present in 3rd party code.  This leads to problems when
+<code><span>forwardInvocation:</span></code> is used to call a method that has such a struct as one of
+its arguments.</p>
+<h3><a href="#id31" name="class-nsmutablearray">Class <code><span>NSMutableArray</span></code></a></h3>
+<ul>
+<li><code><span>sortUsingFunction:context:</span></code>, <code><span>sortUsingFunction:context:range:</span></code><p>Calling this method from Python is supported, overriding it in a subclass
+is not.  This limitation will be fixed in a later version of PyObjC.</p>
+<p>The <code><span>context</span></code> can be an arbitrary Python object.</p>
+</li>
+</ul>
+<h3><a href="#id32" name="class-nsmutablestring">Class <code><span>NSMutableString</span></code></a></h3>
+<ul>
+<li><code><span>appendFormat:</span></code><p>This method is not supported because it accepts a variable number of 
+arguments. Use Python's <code><span>%</span></code> operator to format strings.</p>
+</li>
+</ul>
+<h3><a href="#id33" name="class-nsnetservice">Class <code><span>NSNetService</span></code></a></h3>
+<ul>
+<li><code><span>addresses</span></code><p>When calling this from Python this methods returns a tuple of address info
+tuples, like the values returned by <code><span>socket.getpeeraddr()</span></code>.</p>
+</li>
+</ul>
+<h3><a href="#id34" name="class-nsobject">Class <code><span>NSObject</span></code></a></h3>
+<ul>
+<li><code><span>observationInfo</span></code>, <code><span>setObservationInfo:</span></code><p>These methods can be used from Python, but the <code><span>observationInfo</span></code> is 
+represented by an integer instead of <code><span>void*</span></code>. This probably makes it
+impossible to do anything useful with these methods.</p>
+</li>
+<li><code><span>addObserver:forKeyPath:options:context:</span></code><p>The context is an integer.</p>
+</li>
+<li><code><span>observeValueForKeyPath:ofObject:change:context:</span></code><p>The context is an integer</p>
+</li>
+<li><code><span>methodForSelector:</span></code>, <code><span>instanceMethodForSelector:</span></code><p>These methods return instances of <code><span>objc.IMP</span></code>.  The major difference from
+Objective-C is that the selector argument is omitted.  In other words,
+using an <code><span>objc.IMP</span></code> is the same as using an unbound selector; <code><span>self</span></code>
+must be passed explicitly as the first argument, and the other arguments
+are passed as usual.</p>
+<p>WARNING: This interface is experimental and might change in a future version
+of PyObjC.</p>
+</li>
+</ul>
+<h3><a href="#id35" name="class-nsscriptobjectspecifier">Class <code><span>NSScriptObjectSpecifier</span></code></a></h3>
+<ul>
+<li><code><span>indicesOfObjectsByEvaluatingWithContainer:count:</span></code><p>Implementing this in Python is not supported yet. We're looking for a way
+to avoid leaking the returned buffer, as we cannot return a pointer to an
+internal data-structure.</p>
+</li>
+</ul>
+<h3><a href="#id36" name="class-nsstring">Class <code><span>NSString</span></code></a></h3>
+<p>Objective-C strings are represented as instances of a subclass of
+the Python type <code><span>unicode</span></code>.  Since Python <code><span>unicode</span></code> objects are immutable,
+working with <code><span>NSMutableString</span></code> can be tricky.  If you need to update the
+Python representation of the string, use <code><span>aString.self()</span></code>, which will be a
+new Python proxy for the same <code><span>NSMutableString</span></code> instance.</p>
+<ul>
+<li><code><span>initWithCharactersNoCopy:length:freeWhenDone:</span></code><p>This method is unsupported because we can not guarantee that the buffer will
+be available as long as the string is. Use <code><span>initWithCharacters:</span></code> instead.</p>
+</li>
+<li><code><span>getCharacters:</span></code> and <code><span>getCharacters:range:</span></code><p>These methods are not supported at the moment.  This limitation will be lifted
+in a future version of the bridge.</p>
+</li>
+<li><code><span>getCString:maxLength:range:remainingRange:</span></code> and <code><span>getCString:maxLength:</span></code><p>Calling these methods from Python is supported, overriding them from 
+Python is not. This limitation will be lifted in a future version of the
+bridge.</p>
+</li>
+<li><code><span>getCString:</span></code><p>This method is not supported. Use <code><span>getCString:maxLength:</span></code> instead (using
+the length of the string as the maximum length).  This limitation will be
+lifted in a future version of the bridge.</p>
+</li>
+<li><code><span>stringWithFormat:</span></code>, <code><span>initWithFormat:</span></code>, <code><span>initWithFormat:locale:</span></code>,
+<code><span>stringByAppendingFormat:</span></code><p>These methods are not supported because they accept a variable number of 
+arbitrarily typed arguments.  Use Python's <code><span>%</span></code> operator to format strings.
+A future version of PyObjC may be able to parse format strings and do the
+right thing here.</p>
+</li>
+<li><code><span>initWithFormat:arguments:</span></code>, <code><span>initWithFormat:locale:arguments:</span></code><p>These are also not supported, with the same workaround.</p>
+</li>
+</ul>
+<h3><a href="#id37" name="class-nsthread">class <code><span>NSThread</span></code></a></h3>
+<p>It is safe to call from Objective-C to Python on any thread.  It is safe to
+start new threads using the Python threading API and run non-Cocoa code on
+those threads.</p>
+<ul>
+<li><code><span>detachNewThreadSelector:toTarget:withObject:</span></code><p>As with Objective-C, make sure to create an <code><span>NSAutoreleasePool</span></code> in this
+the detached thread.</p>
+</li>
+</ul>
+<h2><a href="#id38" name="interfacebuilder-framework">InterfaceBuilder framework</a></h2>
+<p>I (Ronald) have not found documentation for this framework, therefore the
+following methods with a &quot;difficult&quot; signature are not supported.</p>
+<p>Please let me know if there is documentation for this framework.</p>
+<h3><a href="#id39" name="class-ibobjcsourceparser">Class <code><span>IBObjCSourceParser</span></code></a></h3>
+<ul>
+<li><code><span>parseClass:</span></code></li>
+</ul>
+<h3><a href="#id40" name="id1">Class <code><span>NSView</span></code></a></h3>
+<ul>
+<li><code><span>objectAtPoint:rect:</span></code><p>Defined in a category on <code><span>NSView</span></code>.</p>
+</li>
+</ul>
+<h3><a href="#id41" name="class-nsibobjectdata">Class <code><span>NSIBObjectData</span></code></a></h3>
+<ul>
+<li><code><span>restoreFromObjectDataInfo:</span></code></li>
+<li><code><span>snapshotIntoObjectDataInfo:</span></code></li>
+</ul>
+<h3><a href="#id42" name="class-ibobjectcontainer">Class <code><span>IBObjectContainer</span></code></a></h3>
+<ul>
+<li><code><span>decodeObjectToIntMapTableForKey:fromCoder:alwaysCreate:</span></code></li>
+<li><code><span>decodeObjectToObjectMapTableForKey:fromCoder:alwaysCreate:</span></code></li>
+</ul>
+<h3><a href="#id43" name="class-ibxmldecoder">Class <code><span>IBXMLDecoder</span></code></a></h3>
+<ul>
+<li><code><span>allocObjectWithClassName:</span></code></li>
+</ul>
+<h3><a href="#id44" name="class-ibsplitscrollview">Class <code><span>IBSplitScrollView</span></code></a></h3>
+<ul>
+<li><code><span>getMinimumX:maximumX:</span></code></li>
+</ul>
+<h2><a href="#id45" name="preferencepanes-framework">PreferencePanes framework</a></h2>
+<p>This framework seems to define useful classes like <code><span>NSAuthorization</span></code> and
+<code><span>NSKeychain</span></code>, but these are not documented and some useful methods have
+a hard signature.</p>
+<p>The only documented class, <code><span>NSPreferencePane</span></code>, is fully supported.</p>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gluCylinder</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLU.xml" title="GLU"/><link rel="previous" href="gluCheckExtension.3G.xml" title="gluCheckExtension"/><link rel="next" href="gluDeleteNurbsRenderer.3G.xml" title="gluDeleteNurbsRenderer"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gluCylinder</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gluCheckExtension.3G.xml">Prev</a> </td><th width="60%" align="center">GLU</th><td width="20%" align="right"> <a accesskey="n" href="gluDeleteNurbsRenderer.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gluCylinder.3G"/><div class="titlepage"/><div class="refnamediv"><a name="gluCylinder.3G-name"/><h2>Name</h2><p>gluCylinder &#8212; draw a cylinder</p></div><div class="refsynopsisdiv"><a name="gluCylinder.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>gluCylinder</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLUquadric* <i><tt>quad</tt></i>, GLdouble <i><tt>base</tt></i>, GLdouble <i><tt>top</tt></i>, GLdouble <i><tt>height</tt></i>, GLint <i><tt>slices</tt></i>, GLint <i><tt>stacks</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gluCylinder.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gluCylinder</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>quad</tt></i>, <i><tt>base</tt></i>, <i><tt>top</tt></i>, <i><tt>height</tt></i>, <i><tt>slices</tt></i>, <i><tt>stacks</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="gluCylinder.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>quad</tt></i></span></dt><dd>
+						Specifies the quadrics object (created with <a href="gluNewQuadric.3G.xml"><tt>gluNewQuadric</tt></a>).
+					</dd><dt><span class="term"><i><tt>base</tt></i></span></dt><dd>
+						Specifies the radius of the cylinder at <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>z</mml:mi>
+								<mml:mo>=</mml:mo>
+								<mml:mn>0</mml:mn>
+							</mml:math>.
+					</dd><dt><span class="term"><i><tt>top</tt></i></span></dt><dd>
+						Specifies the radius of the cylinder at <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>z</mml:mi>
+								<mml:mo>=</mml:mo>
+								<mml:mi>height</mml:mi>
+							</mml:math>.
+					</dd><dt><span class="term"><i><tt>height</tt></i></span></dt><dd>
+						Specifies the height of the cylinder.
+					</dd><dt><span class="term"><i><tt>slices</tt></i></span></dt><dd>
+						Specifies the number of subdivisions around the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>z</mml:mi>
+							</mml:math> axis.
+					</dd><dt><span class="term"><i><tt>stacks</tt></i></span></dt><dd>
+						Specifies the number of subdivisions along the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>z</mml:mi>
+							</mml:math> axis.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gluCylinder.3G-description"/><h2>Description</h2><p>
+			<tt>gluCylinder</tt> draws a cylinder oriented along the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>z</mml:mi>
+				</mml:math> axis. The base of the cylinder is placed at <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>z</mml:mi>
+					<mml:mo>=</mml:mo>
+					<mml:mn>0</mml:mn>
+				</mml:math>, and the top at <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>z</mml:mi>
+					<mml:mo>=</mml:mo>
+					<mml:mi>height</mml:mi>
+				</mml:math>. Like a sphere, a cylinder is subdivided around the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>z</mml:mi>
+				</mml:math> axis into slices, and along the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>z</mml:mi>
+				</mml:math> axis into stacks.
+		</p><p>
+			Note that if <i><tt>top</tt></i> is set to 0.0, this routine generates a cone.
+		</p><p>
+			If the orientation is set to <tt>GLU_OUTSIDE</tt> (with <a href="gluQuadricOrientation.3G.xml"><tt>gluQuadricOrientation</tt></a>), then any generated normals point away from the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>z</mml:mi>
+				</mml:math> axis. Otherwise, they point toward the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>z</mml:mi>
+				</mml:math> axis.
+		</p><p>
+			If texturing is turned on (with <a href="gluQuadricTexture.3G.xml"><tt>gluQuadricTexture</tt></a>), then texture coordinates
+			are generated so that <i><tt>t</tt></i> ranges linearly from 0.0 at <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>z</mml:mi>
+					<mml:mo>=</mml:mo>
+					<mml:mn>0</mml:mn>
+				</mml:math> to 1.0 at <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>z</mml:mi>
+					<mml:mo>=</mml:mo>
+					<mml:mi>height</mml:mi>
+				</mml:math>, and <i><tt>s</tt></i> ranges from 0.0 at the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mo>+</mml:mo>
+					<mml:mi>y</mml:mi>
+				</mml:math> axis, to 0.25 at the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mo>+</mml:mo>
+					<mml:mi>x</mml:mi>
+				</mml:math> axis, to 0.5 at the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mo>-</mml:mo>
+					<mml:mi>y</mml:mi>
+				</mml:math> axis, to 0.75 at the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mo>-</mml:mo>
+					<mml:mi>x</mml:mi>
+				</mml:math> axis, and back to 1.0 at the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mo>+</mml:mo>
+					<mml:mi>y</mml:mi>
+				</mml:math> axis.
+		</p></div><div class="refsect1" lang="en"><a name="gluCylinder.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="gluDisk.3G.xml">gluDisk</a>, <a href="gluNewQuadric.3G.xml">gluNewQuadric</a>, <a href="gluPartialDisk.3G.xml">gluPartialDisk</a>, <a href="gluQuadricTexture.3G.xml">gluQuadricTexture</a>, <a href="gluSphere.3G.xml">gluSphere</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gluCheckExtension.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLU.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gluDeleteNurbsRenderer.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gluCheckExtension </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gluDeleteNurbsRenderer</td></tr></table></div></body></html>

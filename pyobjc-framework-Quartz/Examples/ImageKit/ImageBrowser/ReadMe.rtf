@@ -1,0 +1,172 @@
+{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
+{\fonttbl\f0\fswiss\fcharset77 Helvetica-Bold;\f1\fswiss\fcharset77 Helvetica;\f2\fnil\fcharset77 Monaco;
+}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww15460\viewh17160\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs36 \cf0 ImageBrowser
+\f1\b0\fs24 \
+\
+This sample demonstrates the ImageKit ImageBrowser in a basic Cocoa application. It uses IB to create a window an ImageBrowser and a zoom slider. \
+\
+- This sample should present a reasonably complete correctly formed Cocoa application which can be used as a starting point for using the ImageBrowser in a Cocoa applications. \
+\
+Usual steps to use the ImageKit image browser in your application :\
+\
+1) setup your nib file\
+    Add a custom view and set its class to IKImageBrowserView.\
+    Connect an IBOutlet from your controller to your image browser view \
+    and connect the IKImageBrowserView's _datasource IBOutlet to your controller (if you want your controller to be the data source)\
+\
+2) In the header of your controller, don't forget to include the Quartz header:\
+\
+
+\f2\fs18 	#import <Quartz/Quartz.h>
+\f1\fs24 \
+\
+3) create your own data source representation (here using a NSMutableArray). \
+\
+
+\f2\fs18 @interface MyController : NSWindowController \
+\{\
+    // my images to display and browse (ie my data source) \
+    NSMutableArray*     _myImages;\
+\
+    // my browser (connected in the nib file)\
+    IButlet id		_myImageView;\
+\}
+\f1\fs24 \
+\
+4) implement the required methods of the informal data source protocol (IKImageBrowserDataSource) :\
+\
+
+\f2\fs18 - (int) numberOfItemsInImageBrowser:(IKImageBrowserView *) browser\
+\{\
+    return [_images count];\
+\}\
+\
+- (id) imageBrowser:(IKImageBrowserView *) aBrowser itemAtIndex:(int)index\
+\{\
+    return [_myImages objectAtIndex:index];\
+\}
+\f1\fs24 \
+\
+\
+5)  The returned data source object must implement the 3 required methods \
+from the IKImageBrowserItemProtocol informal protocol:\
+\
+
+\f2\fs18 - (NSString *) imageUID;\
+- (NSString *) imageRepresentationType;\
+- (id) imageRepresentation;
+\f1\fs24 \
+\
+- the id returned by imageUID MUST be different for each item displayed in the image-view. Moreover, the\
+image browser build it's own internal cache according to this UID. the imageUID can be for exemple the absolute \
+path of an image existing on the filesystem or another UID based on your own data structures.\
+\
+- "imageRepresentationType" return one of the following string constant depending of the client's choice of representation:\
+\
+
+\f2\fs18 IKImageBrowserPathRepresentationType\
+IKImageBrowserNSImageRepresentationType\
+IKImageBrowserCGImageRepresentationType\
+IKImageBrowserNSDataRepresentationType\
+IKImageBrowserNSBitmapImageRepresentationType\
+IKImageBrowserQTMovieRepresentationType
+\f1\fs24 \
+	(see IKImageBrowserView.h for complete list)\
+\
+- "imageRepresentation" return an object depending of the representation type:\
+\
+a 
+\f2\fs20 NSString
+\f1\fs24  for 
+\f2\fs20 IKImageBrowserPathRepresentationType
+\f1\fs24 \
+a 
+\f2\fs20 NSImage
+\f1\fs24  for 
+\f2\fs20 IKImageBrowserNSImageRepresentationType
+\f1\fs24 \
+a 
+\f2\fs20 CGImageRef
+\f1\fs24  for 
+\f2\fs20 IKImageBrowserCGImageRepresentationType
+\f1\fs24 \
+...\
+\
+Here is a sample code of a simple implementation of a data source item:\
+\
+
+\f2\fs18 // the datasource object\
+@interface myItemObject : NSObject <IKImageBrowserItem>\
+\{\
+	NSString *_path; \
+\}\
+@end\
+\
+@implementation myItemObject\
+\
+- (void) dealloc\
+\{\
+	[_path release];\
+	[super dealloc];\
+\}\
+\
+- (NSString *) imageRepresentationType\
+\{\
+	return IKImageBrowserPathRepresentationType;\
+\}\
+\
+- (id) imageRepresentation\
+\{\
+	return _path;\
+\}\
+\
+- (NSString *) imageUID\
+\{\
+	return _path;\
+\}\
+\
+@end
+\f1\fs24 \
+\
+\
+6) Now to see your data displayed in your instance of the image browser view, you have to tell the browser to read your data using your IBOutlet connected to the browser and\
+invoke "reloadData" on it:\
+\
+
+\f2\fs18 [_myImageView reloadData];
+\f1\fs24 \
+\
+call reload data each time you want the image browser to reflect changes of your data source.\
+\
+That's all for a very basic use. \
+Then you may need to add a scroller or a scrollview and a slider to your interface\
+to let the user to scroll and zoom to browser his images. To do this\
+you will have to use some image browser public methods such as:\
+\
+
+\f2\fs18 - (void) setZoomValue:(float) zoomValue;\
+- (void) setScroller:(NSScroller *) scroller; // if you choose to manage independent scroller instead of having a scrollview
+\f1\fs24 \
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj\pardirnatural
+
+\f0\b \cf0 Changes from Previous Versions
+\f1\b0 \
+1.0 - First version\
+1.1 - Updated to the latest Leopard interfaces, minor adjustments according to the sample code guidelines.\
+\
+\
+
+\f0\b Feedback and Bug Reports
+\f1\b0 \
+Please send all feedback about this sample to:\
+<http://developer.apple.com/contact/feedback.html>\
+\
+Please submit any bug reports about this sample to:\
+<http://developer.apple.com/bugreporter>}

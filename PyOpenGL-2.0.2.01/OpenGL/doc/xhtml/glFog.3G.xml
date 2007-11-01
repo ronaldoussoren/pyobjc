@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glFog</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GL.xml" title="GL"/><link rel="previous" href="glFlush.3G.xml" title="glFlush"/><link rel="next" href="glFrontFace.3G.xml" title="glFrontFace"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glFog</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glFlush.3G.xml">Prev</a> </td><th width="60%" align="center">GL</th><td width="20%" align="right"> <a accesskey="n" href="glFrontFace.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glFog.3G"/><div class="titlepage"/><div class="refnamediv"><a name="glFog.3G-name"/><h2>Name</h2><p>glFogf, glFogi, glFogfv, glFogiv &#8212; specify fog parameters</p></div><div class="refsynopsisdiv"><a name="glFog.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glFogf</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>pname</tt></i>, GLfloat <i><tt>param</tt></i>);</code></td></tr><tr><td valign="top"><code>void <tt>glFogi</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>pname</tt></i>, GLint <i><tt>param</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glFog.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glFogf</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>pname</tt></i>, <i><tt>param</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glFogi</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>pname</tt></i>, <i><tt>param</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glFog.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>pname</tt></i></span></dt><dd>
+						Specifies a single-valued fog parameter. <tt>GL_FOG_MODE</tt>,
+						<tt>GL_FOG_DENSITY</tt>, <tt>GL_FOG_START</tt>, <tt>GL_FOG_END</tt>,
+						and <tt>GL_FOG_INDEX</tt> are accepted.
+					</dd><dt><span class="term"><i><tt>param</tt></i></span></dt><dd>
+						Specifies the value that <i><tt>pname</tt></i> will be set to.
+					</dd></dl></div></div><div class="refsynopsisdiv"><a name="glFog.3G-c_spec-v"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glFogfv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>pname</tt></i>, const GLfloat *<i><tt>params</tt></i>);</code></td></tr><tr><td valign="top"><code>void <tt>glFogiv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>pname</tt></i>, const GLint *<i><tt>params</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glFog.3G-python_spec-v"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glFogfv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>pname</tt></i>, <i><tt>params</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glFogiv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>pname</tt></i>, <i><tt>params</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glFog.3G-parameters-v"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>pname</tt></i></span></dt><dd>
+						Specifies a fog parameter. <tt>GL_FOG_MODE</tt>, <tt>GL_FOG_DENSITY</tt>,
+						<tt>GL_FOG_START</tt>, <tt>GL_FOG_END</tt>, <tt>GL_FOG_INDEX</tt>, and
+						<tt>GL_FOG_COLOR</tt> are accepted.
+					</dd><dt><span class="term"><i><tt>params</tt></i></span></dt><dd>
+						Specifies the value or values to be assigned to <i><tt>pname</tt></i>.
+						<tt>GL_FOG_COLOR</tt> requires an array of four values. All other parameters accept an array
+						containing only a single value.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glFog.3G-description"/><h2>Description</h2><p>
+			Fog is initially disabled. While enabled, fog affects rasterized geometry, bitmaps, and pixel blocks, but not buffer
+			clear operations. To enable and disable fog, call <a href="glEnable.3G.xml"><tt>glEnable</tt></a> and <a href="glEnable.3G.xml"><tt>glDisable</tt></a> with argument <tt>GL_FOG</tt>.
+		</p><p>
+			<tt>glFog</tt> assigns the value or values in <i><tt>params</tt></i> to the fog
+			parameter specified by <i><tt>pname</tt></i>. The following values are accepted for
+			<i><tt>pname</tt></i>:
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GL_FOG_MODE</tt></span></dt><dd>
+						<i><tt>params</tt></i> is a single integer or floating-point value that specifies the equation to be
+						used to compute the fog blend factor, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>f</mml:mi>
+							</mml:math>. Three symbolic constants are accepted: <tt>GL_LINEAR</tt>,
+						<tt>GL_EXP</tt>, and <tt>GL_EXP2</tt>. The equations corresponding to these
+						symbolic constants are defined below. The initial fog mode is <tt>GL_EXP</tt>.
+					</dd><dt><span class="term"><tt>GL_FOG_DENSITY</tt></span></dt><dd>
+						<i><tt>params</tt></i> is a single integer or floating-point value that specifies <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>density</mml:mi>
+							</mml:math>, the fog density used in both exponential fog equations. Only nonnegative densities are
+						accepted. The initial fog density is 1.
+					</dd><dt><span class="term"><tt>GL_FOG_START</tt></span></dt><dd>
+						<i><tt>params</tt></i> is a single integer or floating-point value that specifies <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>start</mml:mi>
+							</mml:math>, the near distance used in the linear fog equation. The initial near distance is 0.
+					</dd><dt><span class="term"><tt>GL_FOG_END</tt></span></dt><dd>
+						<i><tt>params</tt></i> is a single integer or floating-point value that specifies <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>end</mml:mi>
+							</mml:math>, the far distance used in the linear fog equation. The initial far distance is 1.
+					</dd><dt><span class="term"><tt>GL_FOG_INDEX</tt></span></dt><dd>
+						<i><tt>params</tt></i> is a single integer or floating-point value that specifies <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:msub>
+									<mml:mi>i</mml:mi>
+									<mml:mi>f</mml:mi>
+								</mml:msub>
+							</mml:math>, the fog color index. The initial fog index is 0.
+					</dd><dt><span class="term"><tt>GL_FOG_COLOR</tt></span></dt><dd>
+						<i><tt>params</tt></i> contains four integer or floating-point values that specify <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:msub>
+									<mml:mi>C</mml:mi>
+									<mml:mi>f</mml:mi>
+								</mml:msub>
+							</mml:math>, the fog color. Integer values are mapped linearly such that the most positive
+						representable value maps to 1.0, and the most negative representable value maps to -1.0. Floating-point
+						values are mapped directly. After conversion, all color components are clamped to the range [0,1]. The
+						initial fog color is (0, 0, 0, 0).
+					</dd></dl></div><p>
+			Fog blends a fog color with each rasterized pixel fragment's posttexturing color using a blending factor
+			<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>f</mml:mi>
+				</mml:math>. Factor <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>f</mml:mi>
+				</mml:math> is computed in one of three ways, depending on the fog mode. Let <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>z</mml:mi>
+				</mml:math> be the distance in eye coordinates from the origin to the fragment being fogged. The equation for
+			<tt>GL_LINEAR</tt> fog is
+		</p><p>
+			</p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>f</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mfrac>
+							<mml:mrow>
+								<mml:mi>end</mml:mi>
+								<mml:mo>-</mml:mo>
+								<mml:mi>z</mml:mi>
+							</mml:mrow>
+							<mml:mrow>
+								<mml:mi>end</mml:mi>
+								<mml:mo>-</mml:mo>
+								<mml:mi>start</mml:mi>
+							</mml:mrow>
+						</mml:mfrac>
+					</mml:mrow>
+				</mml:math></div><p>
+		</p><p>
+			The equation for <tt>GL_EXP</tt> fog is
+		</p><p>
+			</p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>f</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:msup>
+							<mml:mi>e</mml:mi>
+							<mml:mrow>
+								<mml:mo>-</mml:mo>
+								<mml:mo>(</mml:mo>
+								<mml:mi>density</mml:mi>
+								<mml:mo>·</mml:mo>
+								<mml:mi>z</mml:mi>
+								<mml:mo>)</mml:mo>
+							</mml:mrow>
+						</mml:msup>
+					</mml:mrow>
+				</mml:math></div><p>
+		</p><p>
+			The equation for <tt>GL_EXP2</tt> fog is
+		</p><p>
+			</p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>f</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:msup>
+							<mml:msup>
+								<mml:mi>e</mml:mi>
+								<mml:mrow>
+									<mml:mo>-</mml:mo>
+									<mml:mo>(</mml:mo>
+									<mml:mi>density</mml:mi>
+									<mml:mo>·</mml:mo>
+									<mml:mi>z</mml:mi>
+									<mml:mo>)</mml:mo>
+								</mml:mrow>
+							</mml:msup>
+							<mml:mn>2</mml:mn>
+						</mml:msup>
+					</mml:mrow>
+				</mml:math></div><p>
+		</p><p>
+			Regardless of the fog mode, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>f</mml:mi>
+				</mml:math> is clamped to the range [0,1] after it is computed. Then, if the GL is in RGBA color mode, the
+			fragment's red, green, and blue colors, represented by <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>C</mml:mi>
+						<mml:mi>r</mml:mi>
+					</mml:msub>
+				</mml:math>, are replaced by </p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:msup>
+							<mml:msub>
+								<mml:mi>C</mml:mi>
+								<mml:mi>r</mml:mi>
+							</mml:msub>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:mo>=</mml:mo>
+						<mml:mi>f</mml:mi>
+						<mml:msub>
+							<mml:mi>C</mml:mi>
+							<mml:mi>r</mml:mi>
+						</mml:msub>
+						<mml:mo>+</mml:mo>
+						<mml:mo>(</mml:mo>
+						<mml:mn>1</mml:mn>
+						<mml:mo>-</mml:mo>
+						<mml:mi>f</mml:mi>
+						<mml:mo>)</mml:mo>
+						<mml:msub>
+							<mml:mi>C</mml:mi>
+							<mml:mi>f</mml:mi>
+						</mml:msub>
+					</mml:mrow>
+				</mml:math></div><p>
+		</p><p>
+			Fog does not affect a fragment's alpha component.
+		</p><p>
+			In color index mode, the fragment's color index <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>i</mml:mi>
+						<mml:mi>r</mml:mi>
+					</mml:msub>
+				</mml:math> is replaced by </p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:msup>
+							<mml:msub>
+								<mml:mi>i</mml:mi>
+								<mml:mi>r</mml:mi>
+							</mml:msub>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:mo>=</mml:mo>
+						<mml:msub>
+							<mml:mi>i</mml:mi>
+							<mml:mi>r</mml:mi>
+						</mml:msub>
+						<mml:mo>+</mml:mo>
+						<mml:mo>(</mml:mo>
+						<mml:mn>1</mml:mn>
+						<mml:mo>-</mml:mo>
+						<mml:mi>f</mml:mi>
+						<mml:mo>)</mml:mo>
+						<mml:msub>
+							<mml:mi>i</mml:mi>
+							<mml:mi>f</mml:mi>
+						</mml:msub>
+					</mml:mrow>
+				</mml:math></div><p>
+		</p></div><div class="refsect1" lang="en"><a name="glFog.3G-errors"/><h2>Errors</h2><p>
+			<tt>GL_INVALID_ENUM</tt> is generated if <i><tt>pname</tt></i> is not an accepted value, or if
+			<i><tt>pname</tt></i> is <tt>GL_FOG_MODE</tt> and <i><tt>params</tt></i> is not an accepted
+			value.
+		</p><p>
+			<tt>GL_INVALID_VALUE</tt> is generated if <i><tt>pname</tt></i> is
+			<tt>GL_FOG_DENSITY</tt>, and <i><tt>params</tt></i> is negative.
+		</p><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <tt>glFog</tt> is executed
+			between the execution of <a href="glBegin.3G.xml"><tt>glBegin</tt></a> and the corresponding execution of <a href="glBegin.3G.xml"><tt>glEnd</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glFog.3G-associated_gets"/><h2>Associated Gets</h2><p>
+			<a href="glIsEnabled.3G.xml"><tt>glIsEnabled</tt></a> with argument <tt>GL_FOG</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_FOG_COLOR</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_FOG_INDEX</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_FOG_DENSITY</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_FOG_START</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_FOG_END</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_FOG_MODE</tt>
+		</p></div><div class="refsect1" lang="en"><a name="glFog.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glEnable.3G.xml">glEnable</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glFlush.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GL.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glFrontFace.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glFlush </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glFrontFace</td></tr></table></div></body></html>

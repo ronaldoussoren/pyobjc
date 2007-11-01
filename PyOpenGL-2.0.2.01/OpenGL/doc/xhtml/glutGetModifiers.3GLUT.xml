@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutGetModifiers</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutGetColor.3GLUT.xml" title="glutGetColor"/><link rel="next" href="glutIdleFunc.3GLUT.xml" title="glutIdleFunc"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutGetModifiers</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutGetColor.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutIdleFunc.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutGetModifiers.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutGetModifiers.3GLUT-name"/><h2>Name</h2><p>glutGetModifiers &#8212; returns the modifier key state when certain callbacks were generated.</p></div><div class="refsynopsisdiv"><a name="glutGetModifiers.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>int <tt>glutGetModifiers</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutGetModifiers.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutGetModifiers</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutGetModifiers.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutGetModifiers</tt> returns the modifier key state at the time the input event for a keyboard,
+			special, or mouse callback is generated. This routine may only be called while a keyboard, special, or mouse callback
+			is being handled. The window system is permitted to intercept window system defined modifier key strokes or mouse
+			buttons, in which case, no GLUT callback will be generated. This interception will be independent of use of
+			<tt>glutGetModifiers</tt>.
+		</p><p>
+			The bitmask components of the returned integer value are:
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GLUT_ACTIVE_SHIFT</tt></span></dt><dd>
+						Set if the Shift modifier or Caps Lock is active.
+					</dd><dt><span class="term"><tt>GLUT_ACTIVE_CTRL</tt></span></dt><dd>
+						Set if the Ctrl modifier is active.
+					</dd><dt><span class="term"><tt>GLUT_ACTIVE_ALT</tt></span></dt><dd>
+						Set if the Alt modifier is active.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glutGetModifiers.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutSpecialFunc.3GLUT.xml">glutSpecialFunc</a>, <a href="glutKeyboardFunc.3GLUT.xml">glutKeyboardFunc</a>, <a href="glutMouseFunc.3GLUT.xml">glutMouseFunc</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutGetColor.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutIdleFunc.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutGetColor </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutIdleFunc</td></tr></table></div></body></html>

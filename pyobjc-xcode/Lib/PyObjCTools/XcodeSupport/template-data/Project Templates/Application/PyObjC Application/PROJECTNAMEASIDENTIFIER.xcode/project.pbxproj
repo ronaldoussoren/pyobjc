@@ -1,0 +1,169 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 39;
+	objects = {
+		C430F00A07FFB82B00A1CD60 = {
+			buildArgumentsString = "\"$(SOURCE_ROOT)/setup.py\" py2app";
+			buildPhases = (
+			);
+			buildSettings = {
+			};
+			buildToolPath = /usr/bin/env;
+			buildWorkingDirectory = "$(SOURCE_ROOT)";
+			dependencies = (
+			);
+			isa = PBXLegacyTarget;
+			name = Deployment;
+			passBuildSettingsInEnvironment = 1;
+			productName = Deployment;
+		};
+		C49FE1AD07FFBCAA005B49ED = {
+			buildArgumentsString = "\"$(SOURCE_ROOT)/setup.py\" py2app --alias";
+			buildPhases = (
+			);
+			buildSettings = {
+			};
+			buildToolPath = /usr/bin/env;
+			buildWorkingDirectory = /;
+			dependencies = (
+			);
+			isa = PBXLegacyTarget;
+			name = Development;
+			passBuildSettingsInEnvironment = 1;
+			productName = Development;
+		};
+		C4D29FE007FF53B000EDA198 = {
+			children = (
+				C4D2A00607FF55F400EDA198,
+				C4D2A00507FF55D000EDA198,
+				C4D2A00407FF55C400EDA198,
+				C4D2A01507FF5B3B00EDA198,
+			);
+			isa = PBXGroup;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		C4D29FE207FF53B000EDA198 = {
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			isa = PBXBuildStyle;
+			name = Development;
+		};
+		C4D29FE307FF53B000EDA198 = {
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			isa = PBXBuildStyle;
+			name = Deployment;
+		};
+		C4D29FE407FF53B000EDA198 = {
+			buildSettings = {
+			};
+			buildStyles = (
+				C4D29FE207FF53B000EDA198,
+				C4D29FE307FF53B000EDA198,
+			);
+			hasScannedForEncodings = 0;
+			isa = PBXProject;
+			mainGroup = C4D29FE007FF53B000EDA198;
+			productRefGroup = C4D29FE007FF53B000EDA198;
+			projectDirPath = "";
+			targets = (
+				C49FE1AD07FFBCAA005B49ED,
+				C430F00A07FFB82B00A1CD60,
+			);
+		};
+		C4D2A00407FF55C400EDA198 = {
+			children = (
+				C4D2A01407FF5B1C00EDA198,
+			);
+			isa = PBXGroup;
+			name = Resources;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		C4D2A00507FF55D000EDA198 = {
+			children = (
+				C4D2A00E07FF576900EDA198,
+			);
+			isa = PBXGroup;
+			name = "Main Script";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		C4D2A00607FF55F400EDA198 = {
+			children = (
+				C4D2A03507FF5BF800EDA198,
+			);
+			isa = PBXGroup;
+			name = Classes;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		C4D2A00A07FF563C00EDA198 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.script.python;
+			path = setup.py;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		C4D2A00E07FF576900EDA198 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.script.python;
+			path = "«PROJECTNAMEASIDENTIFIER».py";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		C4D2A01307FF5B0900EDA198 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.nib;
+			name = English;
+			path = English.lproj/MainMenu.nib;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		C4D2A01407FF5B1C00EDA198 = {
+			children = (
+				C4D2A01307FF5B0900EDA198,
+			);
+			isa = PBXVariantGroup;
+			name = MainMenu.nib;
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		C4D2A01507FF5B3B00EDA198 = {
+			children = (
+				C4D2A00A07FF563C00EDA198,
+				C4E30E3107FFA7A90043E6B0,
+			);
+			isa = PBXGroup;
+			name = "Other Source";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		C4D2A03507FF5BF800EDA198 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.script.python;
+			path = "«PROJECTNAMEASIDENTIFIER»AppDelegate.py";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		C4E30E3107FFA7A90043E6B0 = {
+			explicitFileType = text.plist;
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = Info.plist;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+	};
+	rootObject = C4D29FE407FF53B000EDA198;
+}

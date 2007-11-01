@@ -1,0 +1,81 @@
+{\rtf1\ansi\ansicpg1252\cocoartf902
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx960\tx1920\tx2880\tx3840\tx4800\tx5760\tx6720\tx7680\tx8640\tx9600\qj
+
+\f0\b\fs36 \cf0 PredicateEditorSample
+\b0\fs24 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj\pardirnatural
+\cf0 October 10, 2006\
+\
+\pard\tx960\tx1920\tx2880\tx3840\tx4800\tx5760\tx6720\tx7680\tx8640\tx9600\qj
+\cf0 "PredicateEditorSample" is a Cocoa application that demonstrates how to use the 
+\f1\fs20 NSPredicateEditor
+\f0\fs24  class.  The 
+\f1\fs20 NSPredicateEditor
+\f0\fs24  class is a subclass of 
+\f1\fs20 NSRuleEditor
+\f0\fs24  that is specialized for editing 
+\f1\fs20 NSPredicate
+\f0\fs24  objects.  This sample is intended to show how to use the many different features and aspects of this control and leverages Spotlight to search your Address Book.\
+\
+It shows how to manage this control inside your window along with an 
+\f1\fs20 NSTableView
+\f0\fs24 , build Spotlight friendly queries based on 
+\f1\fs20 \CocoaLigature0 NSPredicate
+\f0\fs24  and 
+\f1\fs20 NSCompountPredicate
+\f0\fs24 \CocoaLigature1 , build search results based on 
+\f1\fs20 NSMetadataQuery
+\f0\fs24  object.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj\pardirnatural
+\cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj\pardirnatural
+
+\b \cf0 Sample Requirements
+\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qj\pardirnatural
+\cf0 The supplied Xcode project was created using Xcode v3.0 running under Mac OS X 10.5.x or later. The project will create a Universal Binary.  Editing the nib files requires Interface Builder 3.0.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj\pardirnatural
+\cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj\pardirnatural
+
+\b \cf0 Using the Sample
+\b0 \
+Simply build and run the sample using Xcode.  Enter query information pertaining to your Address Book.  The application will display matches in its table view.\
+Note that this sample uses Interface Builder 3.0 to build the 
+\f1\fs20 NSPredicateEditorRowTemplates
+\f0\fs24  that make up the control's interface.\
+\
+AddressBook searches are achieved by specifically requesting the "kind" of data to search via the 
+\f1\fs20 kMDItemKind
+\f0\fs24  key constant.  This is the metadata attribute key that tells Spotlight to search for address book data only.  Together along with the other predicates from the NSPredicateEditor class we form a "compound predicate" and start the query.  The code snippet below found in this sample shows how this is done:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj\pardirnatural
+
+\f1\fs18 \cf0 // always search for items in the Address Book\
+NSPredicate* addrBookPredicate = [NSPredicate predicateWithFormat:@"(kMDItemKind = 'Address Book Person Data')"];\
+predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:addrBookPredicate, predicate, nil]];\
+\
+[query setPredicate: predicate];\
+[query startQuery];
+\f0\fs24 \
+		\
+				\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qj\pardirnatural
+
+\b \cf0 Changes from Previous Versions
+\b0 \
+n/a\
+\
+\
+
+\b Feedback and Bug Reports
+\b0 \
+Please send all feedback about this sample to \
+<http://developer.apple.com/contact/feedback.html>.\
+\
+Please submit any bug reports about this sample to\
+<http://developer.apple.com/bugreporter>}

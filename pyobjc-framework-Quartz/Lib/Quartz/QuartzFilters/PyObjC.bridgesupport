@@ -1,0 +1,33 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Cocoa.framework/Cocoa' />
+  <constant name='kQuartzFilterApplicationDomain' type='@' />
+  <constant name='kQuartzFilterManagerDidAddFilterNotification' type='@' />
+  <constant name='kQuartzFilterManagerDidModifyFilterNotification' type='@' />
+  <constant name='kQuartzFilterManagerDidRemoveFilterNotification' type='@' />
+  <constant name='kQuartzFilterManagerDidSelectFilterNotification' type='@' />
+  <constant name='kQuartzFilterPDFWorkflowDomain' type='@' />
+  <constant name='kQuartzFilterPrintingDomain' type='@' />
+  <informal_protocol name='QuartzFilterManagerDelegate'>
+    <method selector='quartzFilterManager:didAddFilter:' type='v@:@@' />
+    <method selector='quartzFilterManager:didModifyFilter:' type='v@:@@' />
+    <method selector='quartzFilterManager:didRemoveFilter:' type='v@:@@' />
+    <method selector='quartzFilterManager:didSelectFilter:' type='v@:@@' />
+  </informal_protocol>
+  <class name='QuartzFilter'>
+    <method selector='applyToContext:'>
+      <retval type='B' />
+      <arg index='0' type='^{CGContext=}' />
+    </method>
+    <method selector='removeFromContext:'>
+      <arg index='0' type='^{CGContext=}' />
+    </method>
+  </class>
+  <class name='QuartzFilterView'>
+    <method selector='selectFilter:'>
+      <retval type='B' />
+    </method>
+  </class>
+</signatures>
+

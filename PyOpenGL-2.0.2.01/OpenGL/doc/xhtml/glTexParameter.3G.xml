@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glTexParameter</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GL.xml" title="GL"/><link rel="previous" href="glTexImage3D.3G.xml" title="glTexImage3D"/><link rel="next" href="glTexSubImage1D.3G.xml" title="glTexSubImage1D"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glTexParameter</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glTexImage3D.3G.xml">Prev</a> </td><th width="60%" align="center">GL</th><td width="20%" align="right"> <a accesskey="n" href="glTexSubImage1D.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glTexParameter.3G"/><div class="titlepage"/><div class="refnamediv"><a name="glTexParameter.3G-name"/><h2>Name</h2><p>glTexParameterf, glTexParameteri, glTexParameterfv, glTexParameteriv &#8212; set texture parameters</p></div><div class="refsynopsisdiv"><a name="glTexParameter.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glTexParameterf</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>target</tt></i>, GLenum <i><tt>pname</tt></i>, GLfloat <i><tt>param</tt></i>);</code></td></tr><tr><td valign="top"><code>void <tt>glTexParameteri</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>target</tt></i>, GLenum <i><tt>pname</tt></i>, GLint <i><tt>param</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glTexParameter.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glTexParameterf</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>target</tt></i>, <i><tt>pname</tt></i>, <i><tt>param</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glTexParameteri</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>target</tt></i>, <i><tt>pname</tt></i>, <i><tt>param</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glTexParameter.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>target</tt></i></span></dt><dd>
+						Specifies the target texture, which must be either <tt>GL_TEXTURE_1D</tt>,
+						<tt>GL_TEXTURE_2D</tt>, or <tt>GL_TEXTURE_3D</tt>.
+					</dd><dt><span class="term"><i><tt>pname</tt></i></span></dt><dd>
+						Specifies the symbolic name of a single-valued texture parameter. <i><tt>pname</tt></i> can be one
+						of the following: <tt>GL_TEXTURE_MIN_FILTER</tt>, <tt>GL_TEXTURE_MAG_FILTER</tt>,
+						<tt>GL_TEXTURE_MIN_LOD</tt>, <tt>GL_TEXTURE_MAX_LOD</tt>,
+						<tt>GL_TEXTURE_BASE_LEVEL</tt>, <tt>GL_TEXTURE_MAX_LEVEL</tt>,
+						<tt>GL_TEXTURE_WRAP_S</tt>, <tt>GL_TEXTURE_WRAP_T</tt>,
+						<tt>GL_TEXTURE_WRAP_R</tt>, or <tt>GL_TEXTURE_PRIORITY</tt>.
+					</dd><dt><span class="term"><i><tt>param</tt></i></span></dt><dd>
+						Specifies the value of <i><tt>pname</tt></i>.
+					</dd></dl></div></div><div class="refsynopsisdiv"><a name="glTexParameter.3G-c_spec-v"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glTexParameterfv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>target</tt></i>, GLenum <i><tt>pname</tt></i>, const GLfloat *<i><tt>params</tt></i>);</code></td></tr><tr><td valign="top"><code>void <tt>glTexParameteriv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>target</tt></i>, GLenum <i><tt>pname</tt></i>, const GLint *<i><tt>params</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glTexParameter.3G-python_spec-v"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glTexParameterfv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>target</tt></i>, <i><tt>pname</tt></i>, <i><tt>params</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glTexParameteriv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>target</tt></i>, <i><tt>pname</tt></i>, <i><tt>params</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glTexParameter.3G-parameters-v"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>target</tt></i></span></dt><dd>
+						Specifies the target texture, which must be either <tt>GL_TEXTURE_1D</tt>,
+						<tt>GL_TEXTURE_2D</tt> or <tt>GL_TEXTURE_3D</tt>.
+					</dd><dt><span class="term"><i><tt>pname</tt></i></span></dt><dd>
+						Specifies the symbolic name of a texture parameter. <i><tt>pname</tt></i> can be one of the
+						following: <tt>GL_TEXTURE_MIN_FILTER</tt>, <tt>GL_TEXTURE_MAG_FILTER</tt>,
+						<tt>GL_TEXTURE_MIN_LOD</tt>, <tt>GL_TEXTURE_MAX_LOD</tt>,
+						<tt>GL_TEXTURE_BASE_LEVEL</tt>, <tt>GL_TEXTURE_MAX_LEVEL</tt>,
+						<tt>GL_TEXTURE_WRAP_S</tt>, <tt>GL_TEXTURE_WRAP_T</tt>,
+						<tt>GL_TEXTURE_WRAP_R</tt>, <tt>GL_TEXTURE_BORDER_COLOR</tt>, or
+						<tt>GL_TEXTURE_PRIORITY</tt>.
+					</dd><dt><span class="term"><i><tt>params</tt></i></span></dt><dd>
+						Specifies a pointer to an array where the value or values of <i><tt>pname</tt></i> are stored.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glTexParameter.3G-description"/><h2>Description</h2><p>
+			Texture mapping is a technique that applies an image onto an object's surface as if the image were a decal or
+			cellophane shrink-wrap. The image is created in texture space, with an (<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>s</mml:mi>
+				</mml:math>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>t</mml:mi>
+				</mml:math>) coordinate system. A texture is a one- or two-dimensional image and a set of parameters that
+			determine how samples are derived from the image.
+		</p><p>
+			<tt>glTexParameter</tt> assigns the value or values in <i><tt>params</tt></i> to
+			the texture parameter specified as <i><tt>pname</tt></i>. <i><tt>target</tt></i> defines the target
+			texture, either <tt>GL_TEXTURE_1D</tt>, <tt>GL_TEXTURE_2D</tt>, or
+			<tt>GL_TEXTURE_3D</tt>. The following symbols are accepted in <i><tt>pname</tt></i>:
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GL_TEXTURE_MIN_FILTER</tt></span></dt><dd><p>
+						The texture minifying function is used whenever the pixel being textured maps to an area greater than one
+						texture element. There are six defined minifying functions. Two of them use the nearest one or nearest four
+						texture elements to compute the texture value. The other four use mipmaps.
+					</p><p>
+						A mipmap is an ordered set of arrays representing the same image at progressively lower resolutions. If the
+						texture has dimensions <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:msup>
+										<mml:mn>2</mml:mn>
+										<mml:mi>n</mml:mi>
+									</mml:msup>
+									<mml:mo>×</mml:mo>
+									<mml:msup>
+										<mml:mn>2</mml:mn>
+										<mml:mi>m</mml:mi>
+									</mml:msup>
+								</mml:mrow>
+							</mml:math>, there are <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:mi>max</mml:mi>
+									<mml:mo>(</mml:mo>
+									<mml:mi>n</mml:mi>
+									<mml:mi>m</mml:mi>
+									<mml:mo>)</mml:mo>
+									<mml:mo>+</mml:mo>
+									<mml:mn>1</mml:mn>
+								</mml:mrow>
+							</mml:math> mipmaps. The first mipmap is the original texture, with dimensions <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:msup>
+										<mml:mn>2</mml:mn>
+										<mml:mi>n</mml:mi>
+									</mml:msup>
+									<mml:mo>×</mml:mo>
+									<mml:msup>
+										<mml:mn>2</mml:mn>
+										<mml:mi>m</mml:mi>
+									</mml:msup>
+								</mml:mrow>
+							</mml:math>. Each subsequent mipmap has dimensions <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:msup>
+										<mml:mn>2</mml:mn>
+										<mml:mrow>
+											<mml:mi>k</mml:mi>
+											<mml:mo>-</mml:mo>
+											<mml:mn>1</mml:mn>
+										</mml:mrow>
+									</mml:msup>
+									<mml:mo>×</mml:mo>
+									<mml:msup>
+										<mml:mn>2</mml:mn>
+										<mml:mrow>
+											<mml:mi>l</mml:mi>
+											<mml:mo>-</mml:mo>
+											<mml:mn>1</mml:mn>
+										</mml:mrow>
+									</mml:msup>
+								</mml:mrow>
+							</mml:math>, where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:msup>
+										<mml:mn>2</mml:mn>
+										<mml:mi>k</mml:mi>
+									</mml:msup>
+									<mml:mo>×</mml:mo>
+									<mml:msup>
+										<mml:mn>2</mml:mn>
+										<mml:mi>l</mml:mi>
+									</mml:msup>
+								</mml:mrow>
+							</mml:math> are the dimensions of the previous mipmap, until either <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:mi>k</mml:mi>
+									<mml:mo>=</mml:mo>
+									<mml:mn>0</mml:mn>
+								</mml:mrow>
+							</mml:math> or <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:mi>l</mml:mi>
+									<mml:mo>=</mml:mo>
+									<mml:mn>0</mml:mn>
+								</mml:mrow>
+							</mml:math>. At that point, subsequent mipmaps have dimension <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:mn>1</mml:mn>
+									<mml:mo>×</mml:mo>
+									<mml:msup>
+										<mml:mn>2</mml:mn>
+										<mml:mrow>
+											<mml:mi>l</mml:mi>
+											<mml:mo>-</mml:mo>
+											<mml:mn>1</mml:mn>
+										</mml:mrow>
+									</mml:msup>
+								</mml:mrow>
+							</mml:math> or <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:msup>
+										<mml:mn>2</mml:mn>
+										<mml:mrow>
+											<mml:mi>k</mml:mi>
+											<mml:mo>-</mml:mo>
+											<mml:mn>1</mml:mn>
+										</mml:mrow>
+									</mml:msup>
+									<mml:mo>×</mml:mo>
+									<mml:mn>1</mml:mn>
+								</mml:mrow>
+							</mml:math> until the final mipmap, which has dimension <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:mn>1</mml:mn>
+									<mml:mo>×</mml:mo>
+									<mml:mn>1</mml:mn>
+								</mml:mrow>
+							</mml:math>. To define the mipmaps, call <a href="glTexImage1D.3G.xml"><tt>glTexImage1D</tt></a>,
+						<a href="glTexImage2D.3G.xml"><tt>glTexImage2D</tt></a>, <a href="glTexImage3D.3G.xml"><tt>glTexImage3D</tt></a>, <a href="glCopyTexImage1D.3G.xml"><tt>glCopyTexImage1D</tt></a>, or
+						<a href="glCopyTexImage2D.3G.xml"><tt>glCopyTexImage2D</tt></a> with the <i><tt>level</tt></i> argument
+						indicating the order of the mipmaps. Level 0 is the original texture; level <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:mi>max</mml:mi>
+									<mml:mo>(</mml:mo>
+									<mml:mi>n</mml:mi>
+									<mml:mi>m</mml:mi>
+									<mml:mo>)</mml:mo>
+								</mml:mrow>
+							</mml:math> is the final <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:mn>1</mml:mn>
+									<mml:mo>×</mml:mo>
+									<mml:mn>1</mml:mn>
+								</mml:mrow>
+							</mml:math> mipmap.
+					</p><p>
+						<i><tt>params</tt></i> supplies a function for minifying the texture as one of the following:
+					</p></dd><dt><span class="term"><tt>GL_NEAREST</tt></span></dt><dd>
+						Returns the value of the texture element that is nearest (in Manhattan distance) to the center of the pixel
+						being textured.
+					</dd><dt><span class="term"><tt>GL_LINEAR</tt></span></dt><dd>
+						Returns the weighted average of the four texture elements that are closest to the center of the pixel being
+						textured. These can include border texture elements, depending on the values of
+						<tt>GL_TEXTURE_WRAP_S</tt> and <tt>GL_TEXTURE_WRAP_T</tt>, and on the exact
+						mapping.
+					</dd><dt><span class="term"><tt>GL_NEAREST_MIPMAP_NEAREST</tt></span></dt><dd>
+						Chooses the mipmap that most closely matches the size of the pixel being textured and uses the
+						<tt>GL_NEAREST</tt> criterion (the texture element nearest to the center of the pixel) to
+						produce a texture value.
+					</dd><dt><span class="term"><tt>GL_LINEAR_MIPMAP_NEAREST</tt></span></dt><dd>
+						Chooses the mipmap that most closely matches the size of the pixel being textured and uses the
+						<tt>GL_LINEAR</tt> criterion (a weighted average of the four texture elements that are closest
+						to the center of the pixel) to produce a texture value.
+					</dd><dt><span class="term"><tt>GL_NEAREST_MIPMAP_LINEAR</tt></span></dt><dd>
+						Chooses the two mipmaps that most closely match the size of the pixel being textured and uses the
+						<tt>GL_NEAREST</tt> criterion (the texture element nearest to the center of the pixel) to
+						produce a texture value from each mipmap. The final texture value is a weighted average of those two
+						values.
+					</dd><dt><span class="term"><tt>GL_LINEAR_MIPMAP_LINEAR</tt></span></dt><dd><p>
+						Chooses the two mipmaps that most closely match the size of the pixel being textured and uses the
+						<tt>GL_LINEAR</tt> criterion (a weighted average of the four texture elements that are closest
+						to the center of the pixel) to produce a texture value from each mipmap. The final texture value is a
+						weighted average of those two values.
+					</p><p>
+						As more texture elements are sampled in the minification process, fewer aliasing artifacts will be
+						apparent. While the <tt>GL_NEAREST</tt> and <tt>GL_LINEAR</tt> minification
+						functions can be faster than the other four, they sample only one or four texture elements to determine the
+						texture value of the pixel being rendered and can produce moire patterns or ragged transitions. The initial
+						value of <tt>GL_TEXTURE_MIN_FILTER</tt> is <tt>GL_NEAREST_MIPMAP_LINEAR</tt>.
+					</p></dd><dt><span class="term"><tt>GL_TEXTURE_MAG_FILTER</tt></span></dt><dd>
+						The texture magnification function is used when the pixel being textured maps to an area less than or equal
+						to one texture element. It sets the texture magnification function to either
+						<tt>GL_NEAREST</tt> or <tt>GL_LINEAR</tt> (see below).
+						<tt>GL_NEAREST</tt> is generally faster than <tt>GL_LINEAR</tt>, but it can produce
+						textured images with sharper edges because the transition between texture elements is not as smooth. The
+						initial value of <tt>GL_TEXTURE_MAG_FILTER</tt> is <tt>GL_LINEAR</tt>.
+					</dd><dt><span class="term"><tt>GL_NEAREST</tt></span></dt><dd>
+						Returns the value of the texture element that is nearest (in Manhattan distance) to the center of the pixel
+						being textured.
+					</dd><dt><span class="term"><tt>GL_LINEAR</tt></span></dt><dd>
+						Returns the weighted average of the four texture elements that are closest to the center of the pixel being
+						textured. These can include border texture elements, depending on the values of
+						<tt>GL_TEXTURE_WRAP_S</tt> and <tt>GL_TEXTURE_WRAP_T</tt>, and on the exact
+						mapping.
+					</dd></dl></div><div class="variablelist"><dl><dt><span class="term"><tt>GL_TEXTURE_MIN_LOD</tt></span></dt><dd>
+						Sets the minimum level-of-detail parameter. This floating-point value limits the selection of highest
+						resolution mipmap (lowest mipmap level). The initial value is -1000.
+					</dd></dl></div><div class="variablelist"><dl><dt><span class="term"><tt>GL_TEXTURE_MAX_LOD</tt></span></dt><dd>
+						Sets the maximum level-of-detail parameter. This floating-point value limits the selection of the lowest
+						resolution mipmap (highest mipmap level). The initial value is 1000.
+					</dd></dl></div><div class="variablelist"><dl><dt><span class="term"><tt>GL_TEXTURE_BASE_LEVEL</tt></span></dt><dd>
+						Specifies the index of the lowest defined mipmap level. This is an integer value. The initial value is 0.
+					</dd></dl></div><div class="variablelist"><dl><dt><span class="term"><tt>GL_TEXTURE_MAX_LEVEL</tt></span></dt><dd>
+						Sets the index of the highest defined mipmap level. This is an integer value. The initial value is 1000.
+					</dd></dl></div><div class="variablelist"><dl><dt><span class="term"><tt>GL_TEXTURE_WRAP_S</tt></span></dt><dd>
+						Sets the wrap parameter for texture coordinate <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>s</mml:mi>
+							</mml:math> to either <tt>GL_CLAMP</tt>, <tt>GL_CLAMP_TO_EDGE</tt>, or
+						<tt>GL_REPEAT</tt>. <tt>GL_CLAMP</tt> causes <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>s</mml:mi>
+							</mml:math> coordinates to be clamped to the range [0,1] and is useful for preventing wrapping
+						artifacts when mapping a single image onto an object. <tt>GL_CLAMP_TO_EDGE</tt> causes
+						<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>s</mml:mi>
+							</mml:math> coordinates to be clamped to the range <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:mo>[</mml:mo>
+									<mml:mfrac>
+										<mml:mn>1</mml:mn>
+										<mml:mo>2N</mml:mo>
+									</mml:mfrac>
+									<mml:mn>1</mml:mn>
+									<mml:mo>-</mml:mo>
+									<mml:mfrac>
+										<mml:mn>1</mml:mn>
+										<mml:mo>2N</mml:mo>
+									</mml:mfrac>
+									<mml:mo>]</mml:mo>
+								</mml:mrow>
+							</mml:math>, where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>N</mml:mi>
+							</mml:math> is the size of the texture in the direction of clamping. <tt>GL_REPEAT</tt>
+						causes the integer part of the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>s</mml:mi>
+							</mml:math> coordinate to be ignored; the GL uses only the fractional part, thereby creating a
+						repeating pattern. Border texture elements are accessed only if wrapping is set to
+						<tt>GL_CLAMP</tt>. Initially, <tt>GL_TEXTURE_WRAP_S</tt> is set to
+						<tt>GL_REPEAT</tt>.
+					</dd></dl></div><div class="variablelist"><dl><dt><span class="term"><tt>GL_TEXTURE_WRAP_T</tt></span></dt><dd>
+						Sets the wrap parameter for texture coordinate <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>t</mml:mi>
+							</mml:math> to either <tt>GL_CLAMP</tt>, <tt>GL_CLAMP_TO_EDGE</tt>, or
+						<tt>GL_REPEAT</tt>. See the discussion under <tt>GL_TEXTURE_WRAP_S</tt>. Initially,
+						<tt>GL_TEXTURE_WRAP_T</tt> is set to <tt>GL_REPEAT</tt>.
+					</dd><dt><span class="term"><tt>GL_TEXTURE_WRAP_R</tt></span></dt><dd>
+						Sets the wrap parameter for texture coordinate <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>r</mml:mi>
+							</mml:math> to either <tt>GL_CLAMP</tt>, <tt>GL_CLAMP_TO_EDGE</tt>, or
+						<tt>GL_REPEAT</tt>. See the discussion under <tt>GL_TEXTURE_WRAP_S</tt>. Initially,
+						<tt>GL_TEXTURE_WRAP_R</tt> is set to <tt>GL_REPEAT</tt>.
+					</dd><dt><span class="term"><tt>GL_TEXTURE_BORDER_COLOR</tt></span></dt><dd>
+						Sets a border color. <i><tt>params</tt></i> contains four values that comprise the RGBA color of the
+						texture border. Integer color components are interpreted linearly such that the most positive integer maps
+						to 1.0, and the most negative integer maps to -1.0. The values are clamped to the range [0,1] when they are
+						specified. Initially, the border color is (0, 0, 0, 0).
+					</dd><dt><span class="term"><tt>GL_TEXTURE_PRIORITY</tt></span></dt><dd>
+						Specifies the texture residence priority of the currently bound texture. Permissible values are in the
+						range [0,1]. See <a href="glPrioritizeTextures.3G.xml"><tt>glPrioritizeTextures</tt></a> and <a href="glBindTexture.3G.xml"><tt>glBindTexture</tt></a> for more information.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glTexParameter.3G-notes"/><h2>Notes</h2><p>
+			<tt>GL_TEXTURE_3D</tt>, <tt>GL_TEXTURE_MIN_LOD</tt>, <tt>GL_TEXTURE_MAX_LOD</tt>,
+			<tt>GL_TEXTURE_BASE_LEVEL</tt>, and <tt>GL_TEXTURE_MAX_LEVEL</tt> are only available if the GL
+			version is 1.2 or greater.
+		</p><p>
+			Suppose that a program has enabled texturing (by calling <a href="glEnable.3G.xml"><tt>glEnable</tt></a> with
+			argument <tt>GL_TEXTURE_1D</tt>, <tt>GL_TEXTURE_2D</tt>, or <tt>GL_TEXTURE_3D</tt>)
+			and has set <tt>GL_TEXTURE_MIN_FILTER</tt> to one of the functions that requires a mipmap. If either the
+			dimensions of the texture images currently defined (with previous calls to <a href="glTexImage1D.3G.xml"><tt>glTexImage1D</tt></a>, <a href="glTexImage2D.3G.xml"><tt>glTexImage2D</tt></a>, <a href="glTexImage3D.3G.xml"><tt>glTexImage3D</tt></a>, <a href="glCopyTexImage1D.3G.xml"><tt>glCopyTexImage1D</tt></a>, or <a href="glCopyTexImage2D.3G.xml"><tt>glCopyTexImage2D</tt></a>) do not follow the proper sequence for mipmaps (described above), or
+			there are fewer texture images defined than are needed, or the set of texture images have differing numbers of texture
+			components, then it is as if texture mapping were disabled.
+		</p><p>
+			Linear filtering accesses the four nearest texture elements only in 2D textures. In 1D textures, linear filtering
+			accesses the two nearest texture elements.
+		</p><p>
+			When the <tt>GL_ARB_multitexture</tt> extension is supported, <tt>glTexParameter</tt> specifies the texture parameters for the active texture unit, specified
+			by calling <a href="glActiveTextureARB.3G.xml"><tt>glActiveTextureARB</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glTexParameter.3G-errors"/><h2>Errors</h2><p>
+			<tt>GL_INVALID_ENUM</tt> is generated if <i><tt>target</tt></i> or <i><tt>pname</tt></i> is
+			not one of the accepted defined values.
+		</p><p>
+			<tt>GL_INVALID_ENUM</tt> is generated if <i><tt>params</tt></i> should have a defined constant value
+			(based on the value of <i><tt>pname</tt></i>) and does not.
+		</p><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <tt>glTexParameter</tt> is
+			executed between the execution of <a href="glBegin.3G.xml"><tt>glBegin</tt></a> and the corresponding execution of
+			<a href="glBegin.3G.xml"><tt>glEnd</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glTexParameter.3G-associated_gets"/><h2>Associated Gets</h2><p>
+			<tt>glGetTexParameter</tt>
+		</p><p>
+			<tt>glGetTexLevelParameter</tt>
+		</p></div><div class="refsect1" lang="en"><a name="glTexParameter.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glActiveTextureARB.3G.xml">glActiveTextureARB</a>, <a href="glBindTexture.3G.xml">glBindTexture</a>, <a href="glCopyPixels.3G.xml">glCopyPixels</a>, <a href="glCopyTexImage1D.3G.xml">glCopyTexImage1D</a>, <a href="glCopyTexImage2D.3G.xml">glCopyTexImage2D</a>, <a href="glCopyTexSubImage1D.3G.xml">glCopyTexSubImage1D</a>, <a href="glCopyTexSubImage2D.3G.xml">glCopyTexSubImage2D</a>, <a href="glCopyTexSubImage3D.3G.xml">glCopyTexSubImage3D</a>, <a href="glDrawPixels.3G.xml">glDrawPixels</a>, <a href="glPixelStore.3G.xml">glPixelStore</a>, <a href="glPixelTransfer.3G.xml">glPixelTransfer</a>, <a href="glPrioritizeTextures.3G.xml">glPrioritizeTextures</a>, <a href="glTexEnv.3G.xml">glTexEnv</a>, <a href="glTexGen.3G.xml">glTexGen</a>, <a href="glTexImage1D.3G.xml">glTexImage1D</a>, <a href="glTexImage2D.3G.xml">glTexImage2D</a>, <a href="glTexImage3D.3G.xml">glTexImage3D</a>, <a href="glTexSubImage1D.3G.xml">glTexSubImage1D</a>, <a href="glTexSubImage2D.3G.xml">glTexSubImage2D</a>, <a href="glTexSubImage3D.3G.xml">glTexSubImage3D</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glTexImage3D.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GL.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glTexSubImage1D.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glTexImage3D </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glTexSubImage1D</td></tr></table></div></body></html>

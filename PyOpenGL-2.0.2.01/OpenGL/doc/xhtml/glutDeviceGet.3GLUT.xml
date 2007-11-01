@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutDeviceGet</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutDestroyWindow.3GLUT.xml" title="glutDestroyWindow"/><link rel="next" href="glutDialsFunc.3GLUT.xml" title="glutDialsFunc"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutDeviceGet</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutDestroyWindow.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutDialsFunc.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutDeviceGet.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutDeviceGet.3GLUT-name"/><h2>Name</h2><p>glutDeviceGet &#8212; retrieves GLUT device information represented by integers.</p></div><div class="refsynopsisdiv"><a name="glutDeviceGet.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>int <tt>glutDeviceGet</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>info</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutDeviceGet.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutDeviceGet</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>info</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutDeviceGet.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>info</tt></i></span></dt><dd><p>
+						Name of device information to retrieve.
+					</p><div class="variablelist"><dl><dt><span class="term"><tt>GLUT_HAS_KEYBOARD</tt></span></dt><dd>
+									Non-zero if a keyboard is available; zero if not available. For most GLUT implementations, a
+									keyboard can be assumed.
+								</dd><dt><span class="term"><tt>GLUT_HAS_MOUSE</tt></span></dt><dd>
+									Non-zero if a mouse is available; zero if not available. For most GLUT implementations, a
+									keyboard can be assumed.
+								</dd><dt><span class="term"><tt>GLUT_HAS_SPACEBALL</tt></span></dt><dd>
+									Non-zero if a Spaceball is available; zero if not available.
+								</dd><dt><span class="term"><tt>GLUT_HAS_DIAL_AND_BUTTON_BOX</tt></span></dt><dd>
+									Non-zero if a dial &amp; button box is available; zero if not available.
+								</dd><dt><span class="term"><tt>GLUT_HAS_TABLET</tt></span></dt><dd>
+									Non-zero if a tablet is available; zero if not available.
+								</dd><dt><span class="term"><tt>GLUT_NUM_MOUSE_BUTTONS</tt></span></dt><dd>
+									Number of buttons supported by the mouse. If no mouse is supported, zero is returned.
+								</dd><dt><span class="term"><tt>GLUT_NUM_SPACEBALL_BUTTONS</tt></span></dt><dd>
+									Number of buttons supported by the Spaceball. If no Spaceball is supported, zero is returned.
+								</dd><dt><span class="term"><tt>GLUT_NUM_BUTTON_BOX_BUTTONS</tt></span></dt><dd>
+									Number of buttons supported by the dial &amp; button box device. If no dials &amp; button box
+									device is supported, zero is returned.
+								</dd><dt><span class="term"><tt>GLUT_NUM_DIALS</tt></span></dt><dd>
+									Number of dials supported by the dial &amp; button box device. If no dials &amp; button box
+									device is supported, zero is returned.
+								</dd><dt><span class="term"><tt>GLUT_NUM_TABLET_BUTTONS</tt></span></dt><dd>
+									Number of buttons supported by the tablet. If no tablet is supported, zero is returned.
+								</dd><dt><span class="term"><tt>GLUT_DEVICE_IGNORE_KEY_REPEAT</tt></span></dt><dd>
+									Returns true if the current window's auto repeated keys are ignored. This state is controlled
+									by <a href="glutIgnoreKeyRepeat.3GLUT.xml"><tt>glutIgnoreKeyRepeat</tt></a>.
+								</dd><dt><span class="term"><tt>GLUT_DEVICE_KEY_REPEAT</tt></span></dt><dd>
+									The window system's global key repeat state. Returns either
+									<tt>GLUT_KEY_REPEAT_OFF</tt>, <tt>GLUT_KEY_REPEAT_ON</tt>, or
+									<tt>GLUT_KEY_REPEAT_DEFAULT</tt>. This will not necessarily return the value last
+									passed to <a href="glutSetKeyRepeat.3GLUT.xml"><tt>glutSetKeyRepeat</tt></a>.
+								</dd><dt><span class="term"><tt>GLUT_JOYSTICK_POLL_RATE</tt></span></dt><dd>
+									Returns the current window's joystick poll rate as set by <a href="glutJoystickFunc.3GLUT.xml"><tt>glutJoystickFunc</tt></a>. If no joystick is supported, the poll rate
+									will always be zero. The joystick poll rate also returns zero if the poll rate last specified
+									to <a href="glutJoystickFunc.3GLUT.xml"><tt>glutJoystickFunc</tt></a> is negative or a
+									<tt>NULL</tt> callback was registered.
+								</dd><dt><span class="term"><tt>GLUT_HAS_JOYSTICK</tt></span></dt><dd>
+									Non-zero if a joystick is available; zero if not available.
+								</dd><dt><span class="term"><tt>GLUT_JOYSTICK_BUTTONS</tt></span></dt><dd>
+									Number of buttons supported by the joystick. If no joystick is supported, zero is returned.
+								</dd><dt><span class="term"><tt>GLUT_JOYSTICK_AXES</tt></span></dt><dd>
+									Number of axes supported by the joystick. If no joystick is supposrted, zero is returned.
+								</dd></dl></div></dd></dl></div></div><div class="refsect1" lang="en"><a name="glutDeviceGet.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutDeviceGet</tt> retrieves GLUT device information represented by integers. The info parameter
+			determines what type of device information to return. Requesting device information for an invalid GLUT device
+			information name returns negative one.
+		</p></div><div class="refsect1" lang="en"><a name="glutDeviceGet.3GLUT-x_implementation_notes"/><h2>X Implementation Notes</h2><p>
+			The current implementation uses to X Input extension to regonize SGI's Spaceball, tablet, and dial and button box
+			devices.
+		</p></div><div class="refsect1" lang="en"><a name="glutDeviceGet.3GLUT-win32_implementation_notes"/><h2>Win32 Implementation Notes</h2><p>
+			The <tt>GLUT_DEVICE_KEY_REPEAT</tt> always returns <tt>GLUT_KEY_REPEAT_ON</tt>.
+		</p></div><div class="refsect1" lang="en"><a name="glutDeviceGet.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutGet.3GLUT.xml">glutGet</a>, <a href="glutKeyboardFunc.3GLUT.xml">glutKeyboardFunc</a>, <a href="glutMouseFunc.3GLUT.xml">glutMouseFunc</a>, <a href="glutSpaceballMotion.3GLUT.xml">glutSpaceballMotion</a>, <a href="glutTabletMotionFunc.3GLUT.xml">glutTabletMotionFunc</a>, <a href="glutTabletButtonFunc.3GLUT.xml">glutTabletButtonFunc</a>, <a href="glutDialsFunc.3GLUT.xml">glutDialsFunc</a>, <a href="glutButtonBoxFunc.3GLUT.xml">glutButtonBoxFunc</a>, <a href="glutIgnoreKeyRepeat.3GLUT.xml">glutIgnoreKeyRepeat</a>, <a href="glutSetKeyRepeat.3GLUT.xml">glutSetKeyRepeat</a>, <a href="glutJoystickFunc.3GLUT.xml">glutJoystickFunc</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutDestroyWindow.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutDialsFunc.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutDestroyWindow </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutDialsFunc</td></tr></table></div></body></html>

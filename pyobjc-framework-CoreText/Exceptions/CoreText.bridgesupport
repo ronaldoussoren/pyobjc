@@ -1,0 +1,286 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <struct name='CTParagraphStyleSetting' />
+  <cftype gettypeid_func='CTFontCollectionGetTypeID' name='CTFontCollectionRef' />
+  <cftype gettypeid_func='CTFontDescriptorGetTypeID' name='CTFontDescriptorRef' />
+  <cftype gettypeid_func='CTFontGetTypeID' name='CTFontRef' />
+  <cftype gettypeid_func='CTFrameGetTypeID' name='CTFrameRef' />
+  <cftype gettypeid_func='CTFramesetterGetTypeID' name='CTFramesetterRef' />
+  <cftype gettypeid_func='CTGlyphInfoGetTypeID' name='CTGlyphInfoRef' />
+  <cftype gettypeid_func='CTLineGetTypeID' name='CTLineRef' />
+  <cftype gettypeid_func='CTParagraphStyleGetTypeID' name='CTParagraphStyleRef' />
+  <cftype gettypeid_func='CTRunGetTypeID' name='CTRunRef' />
+  <cftype gettypeid_func='CTTextTabGetTypeID' name='CTTextTabRef' />
+  <cftype gettypeid_func='CTTypesetterGetTypeID' name='CTTypesetterRef' />
+  <function name='CTFontCollectionCreateCopyWithFontDescriptors'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCollectionCreateFromAvailableFonts'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCollectionCreateMatchingFontDescriptors'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCollectionCreateMatchingFontDescriptorsSortedWithCallback'>
+    <retval already_cfretained='true' />
+    <arg comment='XXX: sort-like callback' index='1' type='^?' type64='^?' />
+    <arg index='2' type='^v' type64='^v' />
+  </function>
+  <function name='CTFontCollectionCreateWithFontDescriptors'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyAttribute'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyAvailableTables'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyCharacterSet'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyDisplayName'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyFamilyName'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyFeatureSettings'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyFeatures'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyFontDescriptor'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyFullName'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyGraphicsFont'>
+    <retval already_retained='true' type='^{CGFont=}' type64='^{CGFont=}' />
+    <arg index='1' null_accepted='true' type_modifier='o' />
+  </function>
+  <function name='CTFontCopyLocalizedName'>
+    <retval already_cfretained='true' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CTFontCopyName'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyPostScriptName'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopySupportedLanguages'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyTable'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyTraits'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyVariation'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCopyVariationAxes'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCreateCopyWithAttributes'>
+    <retval already_cfretained='true' />
+    <arg index='2' type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+  </function>
+  <function name='CTFontCreateCopyWithFamily'>
+    <retval already_cfretained='true' />
+    <arg index='2' type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+  </function>
+  <function name='CTFontCreateCopyWithSymbolicTraits'>
+    <retval already_cfretained='true' />
+    <arg index='2' type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+  </function>
+  <function name='CTFontCreateForString'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCreateUIFontForLanguage'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCreateWithFontDescriptor'>
+    <retval already_cfretained='true' />
+    <arg index='2' type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+  </function>
+  <function name='CTFontCreateWithGraphicsFont'>
+    <retval already_cfretained='true' />
+    <arg index='0' type='^{CGFont=}' type64='^{CGFont=}' />
+    <arg index='2' type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+  </function>
+  <function name='CTFontCreateWithName'>
+    <retval already_cfretained='true' />
+    <arg index='2' type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+  </function>
+  <function name='CTFontCreateWithPlatformFont'>
+    <retval already_cfretained='true' />
+    <arg index='2' type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+  </function>
+  <function name='CTFontCreateWithQuickdrawInstance'>
+    <retval already_cfretained='true' />
+    <arg index='0' type='*' type64='*' />
+  </function>
+  <function name='CTFontDescriptorCopyAttribute'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontDescriptorCopyAttributes'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontDescriptorCopyLocalizedAttribute'>
+    <retval already_cfretained='true' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CTFontDescriptorCreateCopyWithAttributes'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontDescriptorCreateCopyWithFeature'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontDescriptorCreateCopyWithVariation'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontDescriptorCreateMatchingFontDescriptor'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontDescriptorCreateMatchingFontDescriptors'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontDescriptorCreateWithAttributes'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontDescriptorCreateWithNameAndSize'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontGetAdvancesForGlyphs'>
+    <arg index='2' type_modifier='n' />
+    <arg index='3' null_accepted='true' type_modifier='o' />
+  </function>
+  <function name='CTFontGetBoundingRectsForGlyphs'>
+    <arg index='2' type_modifier='n' />
+    <arg index='3' null_accepted='true' type_modifier='o' />
+  </function>
+  <function name='CTFontGetGlyphsForCharacters'>
+    <arg index='1' type_modifier='n' unicode_string='true' />
+    <arg c_array_length_in_arg='3' index='2' type_modifier='o' />
+  </function>
+  <function name='CTFontGetPlatformFont'>
+    <arg index='1' null_accepted='true' type_modifier='o' />
+  </function>
+  <function name='CTFontGetVerticalTranslationsForGlyphs'>
+    <arg index='1' type_modifier='n' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CTFrameDraw'>
+    <arg index='1' type='^{CGContext=}' type64='^{CGContext=}' />
+  </function>
+  <function name='CTFrameGetLineOrigins'>
+    <arg c_array_length_in_arg='1' index='2' type_modifier='o' />
+  </function>
+  <function name='CTFrameGetPath'>
+    <retval type='^{CGPath=}' type64='^{CGPath=}' />
+  </function>
+  <function name='CTFramesetterCreateFrame'>
+    <retval already_cfretained='true' />
+    <arg index='2' type='^{CGPath=}' type64='^{CGPath=}' />
+  </function>
+  <function name='CTFramesetterCreateWithAttributedString'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTGlyphInfoCreateWithCharacterIdentifier'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTGlyphInfoCreateWithGlyph'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTGlyphInfoCreateWithGlyphName'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTLineCreateJustifiedLine'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTLineCreateTruncatedLine'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTLineCreateWithAttributedString'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTLineDraw'>
+    <arg index='1' type='^{CGContext=}' type64='^{CGContext=}' />
+  </function>
+  <function name='CTLineGetImageBounds'>
+    <arg index='1' type='^{CGContext=}' type64='^{CGContext=}' />
+  </function>
+  <function name='CTLineGetOffsetForStringIndex'>
+    <arg index='2' type='^f' type64='^d' />
+  </function>
+  <function name='CTLineGetTypographicBounds'>
+    <arg index='1' null_accepted='true' type_modifier='o' />
+    <arg index='2' null_accepted='true' type_modifier='o' />
+    <arg index='3' null_accepted='true' type_modifier='o' />
+  </function>
+  <function name='CTParagraphStyleCreate'>
+    <retval already_cfretained='true' />
+    <arg index='0' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CTParagraphStyleCreateCopy'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTParagraphStyleGetValueForSpecifier'>
+    <arg c_array_length_in_arg='2' index='3' />
+  </function>
+  <function name='CTRunDraw'>
+    <arg index='1' type='^{CGContext=}' type64='^{CGContext=}' />
+  </function>
+  <function name='CTRunGetGlyphs'>
+    <arg c_array_length_in_arg='1' index='2' type_modifier='o' unicode_string='true' />
+  </function>
+  <function name='CTRunGetGlyphsPtr'>
+    <retval type='r^S' type64='r^S' />
+  </function>
+  <function name='CTRunGetImageBounds'>
+    <arg index='1' type='^{CGContext=}' type64='^{CGContext=}' />
+  </function>
+  <function name='CTRunGetPositions'>
+    <arg index='2' type='^{CGPoint=ff}' type64='^{CGPoint=dd}' />
+  </function>
+  <function name='CTRunGetPositionsPtr'>
+    <retval type='r^{CGPoint=ff}' type64='r^{CGPoint=dd}' />
+  </function>
+  <function name='CTRunGetStringIndices'>
+    <arg c_array_length_in_arg='1' index='2' type_modifier='o' />
+  </function>
+  <function name='CTRunGetStringIndicesPtr'>
+    <retval type='r^i' type64='r^q' />
+  </function>
+  <function name='CTRunGetTypographicBounds'>
+    <arg index='2' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+    <arg index='4' type_modifier='o' />
+  </function>
+  <function name='CTTextTabCreate'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTTypesetterCreateLine'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTTypesetterCreateWithAttributedString'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTTypesetterCreateWithAttributedStringAndOptions'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CTLineCopyCaretPathForStringIndex'>
+    <retval already_retained='true' />
+  </function>
+  <function name='CTLineCopyHighlightPathForStringRange'>
+    <retval already_retained='true' />
+  </function>
+  <function name='CTTypesetterCreateLineWithOptions'>
+    <retval already_retained='true' />
+  </function>
+</signatures>

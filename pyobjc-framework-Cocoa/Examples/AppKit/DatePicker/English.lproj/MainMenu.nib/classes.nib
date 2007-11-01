@@ -1,0 +1,60 @@
+{
+    IBClasses = (
+        {CLASS = AppDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                clearMaxDate = id; 
+                clearMinDate = id; 
+                dateOverrideAction = id; 
+                datePickerAction = id; 
+                setBackgroundColor = id; 
+                setBezeled = id; 
+                setBordered = id; 
+                setDateElementFlags = id; 
+                setDatePickerMode = id; 
+                setDrawsBackground = id; 
+                setFontSize = id; 
+                setMaxDate = id; 
+                setMinDate = id; 
+                setPickerStyle = id; 
+                setTextColor = id; 
+                setTimeElementFlags = id; 
+            }; 
+            CLASS = MyWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                backColorWell = NSColorWell; 
+                bezeledCheck = NSButton; 
+                borderedCheck = NSButton; 
+                clearMaxDateButton = NSButton; 
+                clearMinDateButton = NSButton; 
+                dateElementChecks = NSMatrix; 
+                datePickerModeRadios = NSMatrix; 
+                datePickerPlaceHolder = NSView; 
+                dateResult1 = NSTextField; 
+                dateResult2 = NSTextField; 
+                dateResult3 = NSTextField; 
+                dateResult4 = NSTextField; 
+                dateResult5 = NSTextField; 
+                drawsBackgroundCheck = NSButton; 
+                fontSizePopup = NSPopUpButton; 
+                maxDatePicker = NSDatePicker; 
+                minDatePicker = NSDatePicker; 
+                outerBox = NSBox; 
+                overrideDate = NSDatePicker; 
+                overrideDateCheck = NSButton; 
+                pickerStylePopup = NSPopUpButton; 
+                secondsRangeEdit = NSTextField; 
+                secondsRangeEditLabel = NSTextField; 
+                setMaxDateButton = NSButton; 
+                setMinDateButton = NSButton; 
+                textColorWell = NSColorWell; 
+                timeElementChecks = NSMatrix; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = NSDatePicker; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
+    ); 
+    IBVersion = 1; 
+}

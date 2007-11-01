@@ -1,0 +1,21 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = ShadowOffsetView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {shadowRadiusChanged = id; toggleTransparencyLayers = id; }; 
+            CLASS = TLayerDemo; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                colorWell = NSColorWell; 
+                shadowOffsetView = ShadowOffsetView; 
+                shadowRadiusSlider = NSSlider; 
+                tlayerView = TLayerView; 
+                transparencyLayerButton = NSButton; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = TLayerView; LANGUAGE = ObjC; SUPERCLASS = NSView; }
+    ); 
+    IBVersion = 1; 
+}

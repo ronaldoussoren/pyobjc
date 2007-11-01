@@ -1,0 +1,25 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <enum name='NSCoreDataVersionNumber10_4' value='46.0' />
+  <enum name='NSCoreDataVersionNumber10_4_3' value='77.0' />
+  <class name='NSManagedObject'>
+    <method selector='observationInfo'>
+      <retval type='^v' />
+    </method>
+    <method selector='setObservationInfo:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='validateValue:forKey:error:'>
+      <retval type='B' />
+      <arg index='0' type_modifier='N' />
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSManagedObjectContext'>
+    <method selector='observeValueForKeyPath:ofObject:change:context:'>
+      <arg index='3' type='^v' />
+    </method>
+  </class>
+</signatures>
+

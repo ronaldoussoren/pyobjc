@@ -1,0 +1,24 @@
+{
+    IBClasses = (
+        {
+            CLASS = FilteringArrayController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {searchField = NSSearchField; }; 
+            SUPERCLASS = NSArrayController; 
+        }, 
+        {
+            CLASS = FilteringControllerDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {peopleController = id; }; 
+            SUPERCLASS = NSDocument; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {search = id; }; 
+            CLASS = NSArrayController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObjectController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

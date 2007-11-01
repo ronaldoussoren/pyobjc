@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+How to wrap an Objective-C class library</title>
+</head>
+<body>
+<h2>How to wrap an Objective-C class library</h2>
+<!-- :author: Ronald Oussoren -->
+<h2><a name="introduction">Introduction</a></h2>
+<p>This document describes how you can wrap on Objective-C class library using
+a Python module or package.  This document assumes that your class library is
+located in a framework.</p>
+<p>Wrapping can be pretty easy for most classes, but you may have to write some
+C code for specific methods.</p>
+<h2><a name="the-basics">The basics</a></h2>
+<p>The code for loading a framework and exporting its classes is pretty simple:</p>
+<pre>
+import objc
+objc.loadBundle(&quot;MyFramework&quot;, globals(), 
+   bundle_path=objc.pathForFramework(u'/path/to/MyFramework.framework'))
+del objc
+</pre>
+<p>In general you should not load frameworks this way, but you should write a
+package or module to do this for you (e.g. place this code in
+<code><span>MyFramework.py</span></code> or <code><span>MyFramework/__init__.py</span></code>.  This makes it possible to 
+<code><span>import</span> <span>MyFramework</span></code> which is much more convenient.</p>
+<p>If your class library does not require helper functions for some methods this
+is all that is needed.</p>
+<p>It is currently necessary to import the wrapper modules for all frameworks that
+are used by your framework.  Not doing this may lead to subtle bugs in other
+parts of the code.  This is a limitation of PyObjC that will be 
+lifted in a future version.</p>
+<h2><a name="wrapping-global-functions-and-constants">Wrapping global functions and constants</a></h2>
+<p>The code above only provides wrappers for Objective-C classes, if the library
+also defines global functions and/or constants you'll have to write an 
+extension module to make these available to Python.</p>
+<p>You can use the PyObjC C-API (to be documented) when writing this module.  With
+some luck you can adapt the scripts in <code><span>Scripts/CodeGenerators</span></code> to generate
+this module for you.  These scripts are both very rough and tuned for the Apple
+headers, so YMMV.</p>
+<p>Note that we currently do not install the <code><span>pyobjc-api.h</span></code> header, you'll have
+to copy it from the source-tree until we do.  This header is not installed 
+because the interface is not yet stable, please let us know if you want to
+use the API.</p>
+<h2><a name="pointer-arguments">Pointer arguments</a></h2>
+<p>Methods with pointer arguments (other then arguments that are equivalent to 
+an 'id') require more work.  If the pointer arguments are used to pass a single 
+value to/from a function ('pass-by-reference arguments') you'll just have to 
+provide more specific method signatures.  In other cases you'll have to write
+custom wrappers for these methods.</p>
+<p>Check <code><span>Modules/Foundation</span></code> for examples of these custom wrappers.</p>
+<h3><a name="pass-by-reference-arguments">Pass-by-reference arguments</a></h3>
+<p>Pass-by-reference arguments can be 'in' (data passed into the function), 
+'out' (data is returned from the function) or 'inout' (data is passed into 
+and then returned from  the function).</p>
+<p>Given the following class interface:</p>
+<pre>
+@interface ClassName {}
+
+-(void)selector:(id*)outArgument withArguments:(NSArray*)data;
+
+@end
+</pre>
+<p>The compiler will generate a method signature for this method and this can 
+be accessed from Python using the property 'signature' of Objective-C methods. 
+You can also just make up the signature, which is quite easy once you get the
+hang of it.  The signature for this method is 'v@:^@@'.  See <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/ObjectiveC/RuntimeOverview/chapter_4_section_6.html">Type Encodings</a>
+for the list of valid encoding characters for the Apple Objective-C runtime.</p>
+<p>Let's say the first argument is an output parameter.  Output parameters are 
+denoted in the signature string using the character 'o' before the actual
+argument signature.  The 'correct' signature for method is therefore 'v@:o^@@'.
+The following code tells the bridge about this better method signature:</p>
+<pre>
+import objc
+objc.setSignatureForSelector(&quot;ClassName&quot;, &quot;selector:withArguments:&quot;,
+     &quot;v@:o^@:@&quot;)
+</pre>
+<p>To annotate method signatures you'll have to add a single character before all
+'^' characters in the signature of a method.  The characters are:</p>
+<ul>
+<li>output parameter: o</li>
+<li>input parameter: n</li>
+<li>input-output parameter: N</li>
+</ul>
+<h3><a name="special-wrappers">special wrappers</a></h3>
+<p>If the method has pointer arguments that are not pass-by-reference arguments,
+or if the default method wrappers are not suitable for other reasons, you'll
+have to write custom wrappers.  For every custom wrapper you'll have to write
+three functions: 1 to call the method from Python, 1 to call the superclass
+implementation of the method from Python and 1 to call a Python implementation
+of the method from Objective-C.</p>
+<p>You also must write a custom wrapper when the method has a variable number
+of arguments.  It is often advisable to documented varargs method as 
+unsupported, or to support them only using a fixed number of arguments.</p>
+<p>For now it is best to check the source code for the wrappers for the Cocoa 
+class library for more information.  We'll add documentation for this in the
+future.</p>
+<h3><a name="protocols">protocols</a></h3>
+<p>If the framework defines any (informal) protocols you should add 
+<code><span>objc.informal_protocol</span></code> objects for those protocols to your module.  These
+can be defined in a submodule, as long as you arrange for that module to be
+loaded whenever someone imports your package.</p>
+<p>See <code><span>Lib/Foundation/protocols.py</span></code> for examples of protocol definitions.</p>
+</body>
+</html>

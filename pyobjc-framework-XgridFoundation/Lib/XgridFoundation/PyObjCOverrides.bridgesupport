@@ -1,0 +1,23 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <class name='XGAuthenticatorDelegate'>
+    <method selector='authenticatorDidAuthenticate:' type='v@:@' />
+    <method selector='authenticatorDidNotAuthenticate:' type='v@:@' />
+  </class>
+  <class name='XGConnectionDelegate'>
+    <method selector='connectionDidClose:' type='v@:@' />
+    <method selector='connectionDidNotOpen:withError:' type='v@:@@' />
+    <method selector='connectionDidOpen:' type='v@:@' />
+  </class>
+  <class name='XGFileDownloadDelegate'>
+    <method selector='fileDownload:decideDestinationWithSuggestedPath:' type='v@:@@' />
+    <method selector='fileDownload:didCreateDestination:' type='v@:@@' />
+    <method selector='fileDownload:didFailWithError:' type='v@:@@' />
+    <method selector='fileDownload:didReceiveAttributes:' type='v@:@@' />
+    <method selector='fileDownload:didReceiveData:' type='v@:@@' />
+    <method selector='fileDownloadDidBegin:' type='v@:@' />
+    <method selector='fileDownloadDidFinish:' type='v@:@' />
+  </class>
+</signatures>
+

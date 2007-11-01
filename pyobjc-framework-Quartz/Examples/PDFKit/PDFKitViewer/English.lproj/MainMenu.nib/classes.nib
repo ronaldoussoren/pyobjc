@@ -1,0 +1,22 @@
+{
+    IBClasses = (
+        {
+            CLASS = AppDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {"_findPanel" = NSPanel; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                displaySinglePage = id; 
+                displayTwoUp = id; 
+                takeFindString = id; 
+                toggleDrawer = id; 
+            }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

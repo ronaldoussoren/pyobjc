@@ -1,0 +1,528 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <struct name='QTTime' />
+  <struct name='QTTimeRange' />
+  <function name='QTGetTimeInterval'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='QTGetTimeRecord'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <class name='NSObject'>
+    <method selector='captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='1' type='^{__CVBuffer=}' />
+    </method>
+    <method selector='captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='1' type='^{__CVBuffer=}' />
+    </method>
+  </class>
+  <class name='QTCaptureDecompressedVideoOutput'>
+    <method selector='outputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='0' type='^{__CVBuffer=}' />
+    </method>
+  </class>
+  <class name='QTCaptureDevice'>
+    <method selector='open:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='QTCaptureSession'>
+    <method selector='addInput:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='addOutput:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='QTCaptureVideoPreviewOutput'>
+    <method selector='outputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='0' type='^{__CVBuffer=}' />
+    </method>
+    <method selector='setVisualContext:forConnection:'>
+      <arg index='0' type='^{OpaqueQTVisualContext=}' />
+    </method>
+    <method selector='visualContextForConnection:'>
+      <retval type='^{OpaqueQTVisualContext=}' />
+    </method>
+  </class>
+  <class name='QTDataReference'>
+    <method comment='fixme' selector='dataRef'>
+      <retval type='^*' />
+    </method>
+    <method class_method='true' selector='dataReferenceWithDataRef:type:'>
+      <arg comment='fixme' index='0' type='^*' />
+    </method>
+    <method selector='initWithDataRef:type:'>
+      <arg comment='fixme' index='0' type='^*' />
+    </method>
+    <method selector='setDataRef:'>
+      <arg comment='fixme' index='0' type='^*' />
+    </method>
+  </class>
+  <class name='QTMedia'>
+    <method selector='initWithQuickTimeMedia:error:'>
+      <arg comment='fixme' index='0' type='^^{MediaType}' />
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='mediaWithQuickTimeMedia:error:'>
+      <arg comment='fixme' index='0' type='^^{MediaType}' />
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='quickTimeMedia'>
+      <retval comment='fixme' type='^^{MediaType}' />
+    </method>
+  </class>
+  <class name='QTMovie'>
+    <method selector='addChapters:withAttributes:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='frameImageAtTime:withAttributes:error:'>
+      <retval type='^v' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initToWritableData:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initToWritableDataReference:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initToWritableFile:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithAttributes:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithData:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithDataReference:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithFile:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithMovie:timeRange:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithPasteboard:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithQuickTimeMovie:disposeWhenDone:error:'>
+      <arg comment='fixme' index='0' type='^^{MovieType}' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieNamed:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithAttributes:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithData:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithDataReference:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithFile:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithPasteboard:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithQuickTimeMovie:disposeWhenDone:error:'>
+      <arg comment='fixme' index='0' type='^^{MovieType}' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='movieWithTimeRange:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='quickTimeMovie'>
+      <retval comment='fixme' type='^^{MovieType}' />
+    </method>
+    <method selector='quickTimeMovieController'>
+      <retval comment='fixme' type='^{ComponentInstanceRecord=[1l]}' />
+    </method>
+    <method selector='setVisualContext:'>
+      <arg index='0' type='^{OpaqueQTVisualContext=}' />
+    </method>
+    <method selector='visualContext'>
+      <retval type='^{OpaqueQTVisualContext=}' />
+    </method>
+    <method selector='writeToFile:withAttributes:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='QTSampleBuffer'>
+    <method selector='audioBufferListWithOptions:'>
+      <retval type='^{AudioBufferList=I[1{AudioBuffer=II^v}]}' />
+    </method>
+    <method selector='bytesForAllSamples'>
+      <retval type='^v' />
+    </method>
+    <method selector='getAudioStreamPacketDescriptions:inRange:'>
+      <arg comment='fixme' index='0' type='^v' />
+    </method>
+  </class>
+  <class name='QTTrack'>
+    <method selector='initWithQuickTimeTrack:error:'>
+      <arg comment='fixme' index='0' type='^^{TrackType}' />
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='quickTimeTrack'>
+      <retval comment='fixme' type='^^{TrackType}' />
+    </method>
+    <method class_method='true' selector='trackWithQuickTimeTrack:error:'>
+      <arg comment='fixme' index='0' type='^^{TrackType}' />
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='1' type='^{__CVBuffer=}' />
+    </method>
+    <method selector='captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='1' type='^{__CVBuffer=}' />
+    </method>
+  </class>
+  <class name='QTCaptureDecompressedVideoOutput'>
+    <method selector='outputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='0' type='^{__CVBuffer=}' />
+    </method>
+  </class>
+  <class name='QTCaptureDevice'>
+    <method selector='open:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='QTCaptureSession'>
+    <method selector='addInput:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='addOutput:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='QTCaptureVideoPreviewOutput'>
+    <method selector='outputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='0' type='^{__CVBuffer=}' />
+    </method>
+    <method selector='setVisualContext:forConnection:'>
+      <arg index='0' type='^{OpaqueQTVisualContext=}' />
+    </method>
+    <method selector='visualContextForConnection:'>
+      <retval type='^{OpaqueQTVisualContext=}' />
+    </method>
+  </class>
+  <class name='QTDataReference'>
+    <method comment='fixme' selector='dataRef'>
+      <retval type='^*' />
+    </method>
+    <method class_method='true' selector='dataReferenceWithDataRef:type:'>
+      <arg comment='fixme' index='0' type='^*' />
+    </method>
+    <method selector='initWithDataRef:type:'>
+      <arg comment='fixme' index='0' type='^*' />
+    </method>
+    <method selector='setDataRef:'>
+      <arg comment='fixme' index='0' type='^*' />
+    </method>
+  </class>
+  <class name='QTMedia'>
+    <method selector='initWithQuickTimeMedia:error:'>
+      <arg comment='fixme' index='0' type='^^{MediaType}' />
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='mediaWithQuickTimeMedia:error:'>
+      <arg comment='fixme' index='0' type='^^{MediaType}' />
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='quickTimeMedia'>
+      <retval comment='fixme' type='^^{MediaType}' />
+    </method>
+  </class>
+  <class name='QTMovie'>
+    <method selector='addChapters:withAttributes:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='frameImageAtTime:withAttributes:error:'>
+      <retval type='^v' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initToWritableData:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initToWritableDataReference:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initToWritableFile:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithAttributes:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithData:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithDataReference:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithFile:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithMovie:timeRange:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithPasteboard:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithQuickTimeMovie:disposeWhenDone:error:'>
+      <arg comment='fixme' index='0' type='^^{MovieType}' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieNamed:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithAttributes:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithData:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithDataReference:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithFile:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithPasteboard:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithQuickTimeMovie:disposeWhenDone:error:'>
+      <arg comment='fixme' index='0' type='^^{MovieType}' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='movieWithTimeRange:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='quickTimeMovie'>
+      <retval comment='fixme' type='^^{MovieType}' />
+    </method>
+    <method selector='quickTimeMovieController'>
+      <retval comment='fixme' type='^{ComponentInstanceRecord=[1l]}' />
+    </method>
+    <method selector='setVisualContext:'>
+      <arg index='0' type='^{OpaqueQTVisualContext=}' />
+    </method>
+    <method selector='visualContext'>
+      <retval type='^{OpaqueQTVisualContext=}' />
+    </method>
+    <method selector='writeToFile:withAttributes:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='QTSampleBuffer'>
+    <method selector='audioBufferListWithOptions:'>
+      <retval type='^{AudioBufferList=I[1{AudioBuffer=II^v}]}' />
+    </method>
+    <method selector='bytesForAllSamples'>
+      <retval type='^v' />
+    </method>
+    <method selector='getAudioStreamPacketDescriptions:inRange:'>
+      <arg comment='fixme' index='0' type='^v' />
+    </method>
+  </class>
+  <class name='QTTrack'>
+    <method selector='initWithQuickTimeTrack:error:'>
+      <arg comment='fixme' index='0' type='^^{TrackType}' />
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='quickTimeTrack'>
+      <retval comment='fixme' type='^^{TrackType}' />
+    </method>
+    <method class_method='true' selector='trackWithQuickTimeTrack:error:'>
+      <arg comment='fixme' index='0' type='^^{TrackType}' />
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='1' type='^{__CVBuffer=}' />
+    </method>
+    <method selector='captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='1' type='^{__CVBuffer=}' />
+    </method>
+  </class>
+  <class name='QTCaptureDecompressedVideoOutput'>
+    <method selector='outputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='0' type='^{__CVBuffer=}' />
+    </method>
+  </class>
+  <class name='QTCaptureDevice'>
+    <method selector='open:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='QTCaptureSession'>
+    <method selector='addInput:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='addOutput:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='QTCaptureVideoPreviewOutput'>
+    <method selector='outputVideoFrame:withSampleBuffer:fromConnection:'>
+      <arg index='0' type='^{__CVBuffer=}' />
+    </method>
+    <method selector='setVisualContext:forConnection:'>
+      <arg index='0' type='^{OpaqueQTVisualContext=}' />
+    </method>
+    <method selector='visualContextForConnection:'>
+      <retval type='^{OpaqueQTVisualContext=}' />
+    </method>
+  </class>
+  <class name='QTDataReference'>
+    <method comment='fixme' selector='dataRef'>
+      <retval type='^*' />
+    </method>
+    <method class_method='true' selector='dataReferenceWithDataRef:type:'>
+      <arg comment='fixme' index='0' type='^*' />
+    </method>
+    <method selector='initWithDataRef:type:'>
+      <arg comment='fixme' index='0' type='^*' />
+    </method>
+    <method selector='setDataRef:'>
+      <arg comment='fixme' index='0' type='^*' />
+    </method>
+  </class>
+  <class name='QTMedia'>
+    <method selector='initWithQuickTimeMedia:error:'>
+      <arg comment='fixme' index='0' type='^^{MediaType}' />
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='mediaWithQuickTimeMedia:error:'>
+      <arg comment='fixme' index='0' type='^^{MediaType}' />
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='quickTimeMedia'>
+      <retval comment='fixme' type='^^{MediaType}' />
+    </method>
+  </class>
+  <class name='QTMovie'>
+    <method selector='addChapters:withAttributes:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='frameImageAtTime:withAttributes:error:'>
+      <retval type='^v' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initToWritableData:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initToWritableDataReference:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initToWritableFile:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithAttributes:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithData:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithDataReference:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithFile:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithMovie:timeRange:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithPasteboard:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithQuickTimeMovie:disposeWhenDone:error:'>
+      <arg comment='fixme' index='0' type='^^{MovieType}' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieNamed:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithAttributes:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithData:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithDataReference:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithFile:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithPasteboard:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithQuickTimeMovie:disposeWhenDone:error:'>
+      <arg comment='fixme' index='0' type='^^{MovieType}' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='movieWithTimeRange:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='movieWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='quickTimeMovie'>
+      <retval comment='fixme' type='^^{MovieType}' />
+    </method>
+    <method selector='quickTimeMovieController'>
+      <retval comment='fixme' type='^{ComponentInstanceRecord=[1l]}' />
+    </method>
+    <method selector='setVisualContext:'>
+      <arg index='0' type='^{OpaqueQTVisualContext=}' />
+    </method>
+    <method selector='visualContext'>
+      <retval type='^{OpaqueQTVisualContext=}' />
+    </method>
+    <method selector='writeToFile:withAttributes:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='QTSampleBuffer'>
+    <method selector='getAudioStreamPacketDescriptions:inRange:'>
+      <arg comment='fixme' index='0' type='^v' />
+    </method>
+  </class>
+  <class name='QTTrack'>
+    <method selector='initWithQuickTimeTrack:error:'>
+      <arg comment='fixme' index='0' type='^^{TrackType}' />
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='quickTimeTrack'>
+      <retval comment='fixme' type='^^{TrackType}' />
+    </method>
+    <method class_method='true' selector='trackWithQuickTimeTrack:error:'>
+      <arg comment='fixme' index='0' type='^^{TrackType}' />
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+</signatures>

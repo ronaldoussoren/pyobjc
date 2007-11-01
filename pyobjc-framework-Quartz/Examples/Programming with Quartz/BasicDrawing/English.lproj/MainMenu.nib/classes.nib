@@ -1,0 +1,29 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                exportAsJPEG = id; 
+                exportAsPDF = id; 
+                exportAsPNG = id; 
+                exportAsTIFF = id; 
+                print = id; 
+                setExportResolution = id; 
+                setUseCGImageSource = id; 
+                setUseQT = id; 
+            }; 
+            CLASS = MyAppController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {currentDPIMenuItem = id; currentExportStyleMenuItem = id; theView = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {print = id; setDrawCommand = id; }; 
+            CLASS = MyView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {currentMenuItem = id; }; 
+            SUPERCLASS = NSView; 
+        }
+    ); 
+    IBVersion = 1; 
+}

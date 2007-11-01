@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gluNurbsCurve</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLU.xml" title="GLU"/><link rel="previous" href="gluNurbsCallbackDataEXT.3G.xml" title="gluNurbsCallbackDataEXT"/><link rel="next" href="gluNurbsProperty.3G.xml" title="gluNurbsProperty"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gluNurbsCurve</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gluNurbsCallbackDataEXT.3G.xml">Prev</a> </td><th width="60%" align="center">GLU</th><td width="20%" align="right"> <a accesskey="n" href="gluNurbsProperty.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gluNurbsCurve.3G"/><div class="titlepage"/><div class="refnamediv"><a name="gluNurbsCurve.3G-name"/><h2>Name</h2><p>gluNurbsCurve &#8212; define the shape of a NURBS curve</p></div><div class="refsynopsisdiv"><a name="gluNurbsCurve.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>gluNurbsCurve</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLUnurbs* <i><tt>nurb</tt></i>, GLint <i><tt>knotCount</tt></i>, GLfloat *<i><tt>knots</tt></i>, GLint <i><tt>stride</tt></i>, GLfloat *<i><tt>control</tt></i>, GLint <i><tt>order</tt></i>, GLenum <i><tt>type</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gluNurbsCurve.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gluNurbsCurve</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>nurb</tt></i>, <i><tt>knots</tt></i>[], <i><tt>control</tt></i>[], <i><tt>type</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="gluNurbsCurve.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>nurb</tt></i></span></dt><dd>
+						Specifies the NURBS object (created with <a href="gluNewNurbsRenderer.3G.xml"><tt>gluNewNurbsRenderer</tt></a>).
+					</dd><dt><span class="term"><i><tt>knotCount</tt></i></span></dt><dd>
+						Specifies the number of knots in <i><tt>knots</tt></i>. <i><tt>knotCount</tt></i> equals the
+						number of control points plus the order.
+					</dd><dt><span class="term"><i><tt>knots</tt></i></span></dt><dd>
+						Specifies an array of <i><tt>knotCount</tt></i> nondecreasing knot values.
+					</dd><dt><span class="term"><i><tt>stride</tt></i></span></dt><dd>
+						Specifies the offset (as a number of single-precision floating-point values) between successive curve
+						control points.
+					</dd><dt><span class="term"><i><tt>control</tt></i></span></dt><dd>
+						Specifies a pointer to an array of control points. The coordinates must agree with
+						<i><tt>type</tt></i>, specified below.
+					</dd><dt><span class="term"><i><tt>order</tt></i></span></dt><dd>
+						Specifies the order of the NURBS curve. <i><tt>order</tt></i> equals degree + 1, hence a cubic curve
+						has an order of 4.
+					</dd><dt><span class="term"><i><tt>type</tt></i></span></dt><dd>
+						Specifies the type of the curve. If this curve is defined within a <a href="gluBeginCurve.3G.xml"><tt>gluBeginCurve</tt></a>/<a href="gluBeginCurve.3G.xml"><tt>gluEndCurve</tt></a> pair,
+						then the type can be any of the valid one-dimensional evaluator types (such as
+						<tt>GL_MAP1_VERTEX_3</tt> or <tt>GL_MAP1_COLOR_4</tt>). Between a <a href="gluBeginTrim.3G.xml"><tt>gluBeginTrim</tt></a>/<a href="gluBeginTrim.3G.xml"><tt>gluEndTrim</tt></a> pair, the
+						only valid types are <tt>GLU_MAP1_TRIM_2</tt> and <tt>GLU_MAP1_TRIM_3</tt>.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gluNurbsCurve.3G-description"/><h2>Description</h2><p>
+			Use <tt>gluNurbsCurve</tt> to describe a NURBS curve.
+		</p><p>
+			When <tt>gluNurbsCurve</tt> appears between a <a href="gluBeginCurve.3G.xml"><tt>gluBeginCurve</tt></a>/<a href="gluBeginCurve.3G.xml"><tt>gluEndCurve</tt></a> pair, it is used to
+			describe a curve to be rendered. Positional, texture, and color coordinates are associated by presenting each as a
+			separate <tt>gluNurbsCurve</tt> between a <a href="gluBeginCurve.3G.xml"><tt>gluBeginCurve</tt></a>/<a href="gluBeginCurve.3G.xml"><tt>gluEndCurve</tt></a> pair. No more than one call to <tt>gluNurbsCurve</tt> for each
+			of color, position, and texture data can be made within a single <a href="gluBeginCurve.3G.xml"><tt>gluBeginCurve</tt></a>/<a href="gluBeginCurve.3G.xml"><tt>gluEndCurve</tt></a> pair. Exactly one
+			call must be made to describe the position of the curve (a <i><tt>type</tt></i> of
+			<tt>GL_MAP1_VERTEX_3</tt> or <tt>GL_MAP1_VERTEX_4</tt>).
+		</p><p>
+			When <tt>gluNurbsCurve</tt> appears between a <a href="gluBeginTrim.3G.xml"><tt>gluBeginTrim</tt></a>/<a href="gluBeginTrim.3G.xml"><tt>gluEndTrim</tt></a> pair, it is used to
+			describe a trimming curve on a NURBS surface. If <i><tt>type</tt></i> is <tt>GLU_MAP1_TRIM_2</tt>,
+			then it describes a curve in two-dimensional (<i><tt>u</tt></i> and <i><tt>v</tt></i>) parameter space.
+			If it is <tt>GLU_MAP1_TRIM_3</tt>, then it describes a curve in two-dimensional homogeneous
+			(<i><tt>u</tt></i>, <i><tt>v</tt></i>, and <i><tt>w</tt></i>) parameter space. See the <a href="gluBeginTrim.3G.xml"><tt>gluBeginTrim</tt></a> reference page for more discussion about trimming curves.
+		</p></div><div class="refsect1" lang="en"><a name="gluNurbsCurve.3G-example"/><h2>Example</h2><p>
+			The following commands render a textured NURBS curve with normals: gluBeginCurve(nobj); gluNurbsCurve(nobj, ...,
+			GL_MAP1_TEXTURE_COORD_2); gluNurbsCurve(nobj, ..., GL_MAP1_NORMAL); gluNurbsCurve(nobj, ..., GL_MAP1_VERTEX_4);
+			gluEndCurve(nobj);
+		</p></div><div class="refsect1" lang="en"><a name="gluNurbsCurve.3G-notes"/><h2>Notes</h2><p>
+			To define trim curves which stitch well, use <a href="gluPwlCurve.3G.xml"><tt>gluPwlCurve</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="gluNurbsCurve.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="gluBeginCurve.3G.xml">gluBeginCurve</a>, <a href="gluBeginTrim.3G.xml">gluBeginTrim</a>, <a href="gluNewNurbsRenderer.3G.xml">gluNewNurbsRenderer</a>, <a href="gluPwlCurve.3G.xml">gluPwlCurve</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gluNurbsCallbackDataEXT.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLU.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gluNurbsProperty.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gluNurbsCallbackDataEXT </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gluNurbsProperty</td></tr></table></div></body></html>

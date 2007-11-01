@@ -1,0 +1,22 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {choseDay = id; monthChanged = id; }; 
+            CLASS = CalendarMatrix; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {lastMonthButton = id; monthName = id; nextMonthButton = id; }; 
+            SUPERCLASS = NSMatrix; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+	{CLASS = MySound; LANGUAGE = ObjC; SUPERCLASS = Sound; },
+        {CLASS = SelectionNotifyMatrix; LANGUAGE = ObjC; SUPERCLASS = NSMatrix; }, 
+        {
+            ACTIONS = {itemStatusClicked = id; }; 
+            CLASS = ToDoDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {calendar = id; dayLabel = id; itemList = id; statusList = id; }; 
+            SUPERCLASS = NSDocument; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gluProject</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLU.xml" title="GLU"/><link rel="previous" href="gluPickMatrix.3G.xml" title="gluPickMatrix"/><link rel="next" href="gluPwlCurve.3G.xml" title="gluPwlCurve"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gluProject</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gluPickMatrix.3G.xml">Prev</a> </td><th width="60%" align="center">GLU</th><td width="20%" align="right"> <a accesskey="n" href="gluPwlCurve.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gluProject.3G"/><div class="titlepage"/><div class="refnamediv"><a name="gluProject.3G-name"/><h2>Name</h2><p>gluProject &#8212; map object coordinates to window coordinates</p></div><div class="refsynopsisdiv"><a name="gluProject.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>GLint <tt>gluProject</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLdouble <i><tt>objX</tt></i>, GLdouble <i><tt>objY</tt></i>, GLdouble <i><tt>objZ</tt></i>, const GLdouble *<i><tt>model</tt></i>, const GLdouble *<i><tt>proj</tt></i>, const GLint *<i><tt>view</tt></i>, GLdouble* <i><tt>winX</tt></i>, GLdouble* <i><tt>winY</tt></i>, GLdouble* <i><tt>winZ</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gluProject.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gluProject</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>objX</tt></i>, <i><tt>objY</tt></i>, <i><tt>objZ</tt></i>, <i><tt>model</tt></i> = <tt>None</tt>, <i><tt>proj</tt></i> = <tt>None</tt>, <i><tt>view</tt></i> = <tt>None</tt>) &#8594; (<i><tt>winX</tt></i>,
+				<i><tt>winY</tt></i>,
+				<i><tt>winZ</tt></i>)</code></td></tr></table></div><div class="refsect1" lang="en"><a name="gluProject.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>objX</tt></i>, <i><tt>objY</tt></i>, <i><tt>objZ</tt></i></span></dt><dd>
+						Specify the object coordinates.
+					</dd><dt><span class="term"><i><tt>model</tt></i></span></dt><dd>
+						Specifies the current modelview matrix (as from a <a href="glGet.3G.xml"><tt>glGetDoublev</tt></a>
+						call).
+					</dd><dt><span class="term"><i><tt>proj</tt></i></span></dt><dd>
+						Specifies the current projection matrix (as from a <a href="glGet.3G.xml"><tt>glGetDoublev</tt></a>
+						call).
+					</dd><dt><span class="term"><i><tt>view</tt></i></span></dt><dd>
+						Specifies the current viewport (as from a <a href="glGet.3G.xml"><tt>glGetIntegerv</tt></a> call).
+					</dd><dt><span class="term"><i><tt>winX</tt></i>, <i><tt>winY</tt></i>, <i><tt>winZ</tt></i></span></dt><dd>
+						Return the computed window coordinates.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gluProject.3G-description"/><h2>Description</h2><p>
+			<tt>gluProject</tt> transforms the specified object coordinates into window coordinates using
+			<i><tt>model</tt></i>, <i><tt>proj</tt></i>, and <i><tt>view</tt></i>. The result is stored in
+			<i><tt>winX</tt></i>, <i><tt>winY</tt></i>, and <i><tt>winZ</tt></i>. A return value of
+			<tt>GL_TRUE</tt> indicates success, a return value of <tt>GL_FALSE</tt> indicates failure.
+		</p><p>
+			To compute the coordinates, let <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>v</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mo>(</mml:mo>
+						<mml:mi>objX</mml:mi>
+						<mml:mi>objY</mml:mi>
+						<mml:mi>objZ</mml:mi>
+						<mml:mn>1.0</mml:mn>
+						<mml:mo>)</mml:mo>
+					</mml:mrow>
+				</mml:math> represented as a matrix with 4 rows and 1 column. Then <tt>gluProject</tt> computes
+			<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msup>
+						<mml:mi>v</mml:mi>
+						<mml:mo>'</mml:mo>
+					</mml:msup>
+				</mml:math> as follows: </p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:msup>
+							<mml:mi>v</mml:mi>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:mo>=</mml:mo>
+						<mml:mi>P</mml:mi>
+						<mml:mo>×</mml:mo>
+						<mml:mi>M</mml:mi>
+						<mml:mo>×</mml:mo>
+						<mml:mi>v</mml:mi>
+					</mml:mrow>
+				</mml:math></div><p>where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>P</mml:mi>
+				</mml:math> is the current projection matrix <i><tt>proj</tt></i>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>M</mml:mi>
+				</mml:math> is the current modelview matrix <i><tt>model</tt></i> (both represented as <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mn>4</mml:mn>
+						<mml:mo>×</mml:mo>
+						<mml:mn>4</mml:mn>
+					</mml:mrow>
+				</mml:math> matrices in column-major order) and '<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mo>×</mml:mo>
+				</mml:math>' represents matrix multiplication.
+		</p><p>
+			The window coordinates are then computed as follows: </p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>winX</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mi>view</mml:mi>
+						<mml:mo>(</mml:mo>
+						<mml:mn>0</mml:mn>
+						<mml:mo>)</mml:mo>
+						<mml:mo>+</mml:mo>
+						<mml:mi>view</mml:mi>
+						<mml:mo>(</mml:mo>
+						<mml:mn>2</mml:mn>
+						<mml:mo>)</mml:mo>
+						<mml:mo>*</mml:mo>
+						<mml:mo>(</mml:mo>
+						<mml:msup>
+							<mml:mi>v</mml:mi>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:mo>(</mml:mo>
+						<mml:mn>0</mml:mn>
+						<mml:mo>)</mml:mo>
+						<mml:mo>+</mml:mo>
+						<mml:mn>1</mml:mn>
+						<mml:mo>)</mml:mo>
+						<mml:mo>/</mml:mo>
+						<mml:mn>2</mml:mn>
+					</mml:mrow>
+				</mml:math></div><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>winZ</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mo>(</mml:mo>
+						<mml:msup>
+							<mml:mi>v</mml:mi>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:mo>(</mml:mo>
+						<mml:mn>2</mml:mn>
+						<mml:mo>)</mml:mo>
+						<mml:mo>+</mml:mo>
+						<mml:mn>1</mml:mn>
+						<mml:mo>)</mml:mo>
+						<mml:mo>/</mml:mo>
+						<mml:mn>2</mml:mn>
+					</mml:mrow>
+				</mml:math></div><p>
+		</p></div><div class="refsect1" lang="en"><a name="gluProject.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glGet.3G.xml">glGet</a>, <a href="gluUnProject.3G.xml">gluUnProject</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gluPickMatrix.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLU.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gluPwlCurve.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gluPickMatrix </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gluPwlCurve</td></tr></table></div></body></html>

@@ -1,0 +1,8 @@
+- cleanup loader.py (and rename to mht_loader)
+  * Just a set of function: read and write
+- support for .webarchive loading
+- documentation
+- printing support
+- exporting (save as...: .webarchive, .mht, .html)
+- icon
+- help

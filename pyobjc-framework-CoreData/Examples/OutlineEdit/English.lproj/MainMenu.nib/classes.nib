@@ -1,0 +1,11 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {createChildNote = id; createNote = id; dedentNote = id; indentNote = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>This project builds a Cocoa-based application written in Python that uses the NSDocument architecture.</string>
+	<key>FilesToMacroExpand</key>
+	<array>
+		<string>Info.plist</string>
+		<string>setup.py</string>
+		<string>English.lproj/MainMenu.nib/classes.nib</string>
+		<string>English.lproj/MainMenu.nib/keyedobjects.nib</string>
+		<string>«PROJECTNAMEASIDENTIFIER».py</string>
+		<string>«PROJECTNAMEASIDENTIFIER»Document.py</string>
+		<string>English.lproj/«PROJECTNAMEASIDENTIFIER»Document.nib/classes.nib</string>
+		<string>English.lproj/«PROJECTNAMEASIDENTIFIER»Document.nib/keyedobjects.nib</string>
+		<string>«PROJECTNAMEASIDENTIFIER».xcode/default.pbxuser</string>
+	</array>
+	<key>FilesToRename</key>
+	<dict>
+		<key>English.lproj/PROJECTNAMEASIDENTIFIERDocument.nib</key>
+		<string>English.lproj/«PROJECTNAMEASIDENTIFIER»Document.nib</string>
+		<key>PROJECTNAMEASIDENTIFIER.py</key>
+		<string>«PROJECTNAMEASIDENTIFIER».py</string>
+		<key>PROJECTNAMEASIDENTIFIERDocument.py</key>
+		<string>«PROJECTNAMEASIDENTIFIER»Document.py</string>
+	</dict>
+</dict>
+</plist>

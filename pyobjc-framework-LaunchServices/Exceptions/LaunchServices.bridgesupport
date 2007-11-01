@@ -1,0 +1,260 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <struct name='LSApplicationParameters' />
+  <struct name='LSLaunchFSRefSpec' />
+  <struct name='LSLaunchURLSpec' />
+  <opaque name='IconRef' />
+  <opaque name='LSSharedFileListItemRef' />
+  <opaque name='LSSharedFileListRef' />
+  <function name='CompositeIconRef'>
+    <arg index='2' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='GetCustomIconsEnabled'>
+    <arg index='1' type='^B' type64='^B' />
+  </function>
+  <function name='GetIconRef'>
+    <arg index='3' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='GetIconRefFromComponent'>
+    <arg index='0' type='^{ComponentRecord=[1l]}' type64='^{ComponentRecord=[1q]}' />
+    <arg index='1' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='GetIconRefFromFile'>
+    <arg index='0' type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
+    <arg index='1' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg index='2' type='^s' type64='^s' />
+  </function>
+  <function name='GetIconRefFromFileInfo'>
+    <arg index='0' type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+    <arg index='2' type='^S' type64='^S' />
+    <arg index='4' type='^{FSCatalogInfo=SsIICCCC{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}[4I][16C][16C]QQQQII}' type64='^{FSCatalogInfo=SsIICCCC{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{FSPermissionInfo=IICCS^{__FSFileSecurity}}[16C][16C]QQQQII}' />
+    <arg index='6' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg index='7' type='^s' type64='^s' />
+  </function>
+  <function name='GetIconRefFromFolder'>
+    <arg index='5' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='GetIconRefFromIconFamilyPtr'>
+    <arg index='0' type='^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}' type64='^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}' />
+    <arg index='2' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='GetIconRefFromTypeInfo'>
+    <arg index='5' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='GetIconRefOwners'>
+    <arg index='1' type='^S' type64='^S' />
+  </function>
+  <function name='IsIconRefComposite'>
+    <arg index='1' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg index='2' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='LSCanRefAcceptItem'>
+    <arg index='0' type='r^{FSRef=[80C]}' type64='r^{FSRef=[80C]}' />
+    <arg index='1' type='r^{FSRef=[80C]}' type64='r^{FSRef=[80C]}' />
+    <arg index='4' type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='LSCanURLAcceptURL'>
+    <arg index='4' type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='LSCopyAllHandlersForURLScheme'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSCopyAllRoleHandlersForContentType'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSCopyApplicationForMIMEType'>
+    <arg already_retained='true' index='2' type_modifier='o' />
+  </function>
+  <function name='LSCopyApplicationURLsForURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSCopyDefaultHandlerForURLScheme'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSCopyDefaultRoleHandlerForContentType'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSCopyDisplayNameForRef'>
+    <arg index='0' type_modifier='n' />
+    <arg already_retained='true' index='1' type_modifier='o' />
+  </function>
+  <function name='LSCopyDisplayNameForURL'>
+    <arg already_retained='true' index='1' type_modifier='o' />
+  </function>
+  <function name='LSCopyItemAttribute'>
+    <arg index='0' type_modifier='n' />
+    <arg already_retained='true' comment='generic cftype object' index='3' type_modifier='o' />
+  </function>
+  <function name='LSCopyItemAttributes'>
+    <arg index='0' type_modifier='n' />
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='LSCopyItemInfoForRef'>
+    <arg index='0' type_modifier='n' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='LSCopyItemInfoForURL'>
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='LSCopyKindStringForMIMEType'>
+    <arg already_retained='true' index='1' type_modifier='o' />
+  </function>
+  <function name='LSCopyKindStringForRef'>
+    <arg index='0' type_modifier='n' />
+    <arg already_retained='true' index='1' type_modifier='o' />
+  </function>
+  <function name='LSCopyKindStringForTypeInfo'>
+    <arg already_retained='true' index='3' type_modifier='o' />
+  </function>
+  <function name='LSCopyKindStringForURL'>
+    <arg already_retained='true' index='1' type_modifier='o' />
+  </function>
+  <function name='LSFindApplicationForInfo'>
+    <arg index='3' type_modifier='o' />
+    <arg already_retained='true' index='4' type_modifier='o' />
+  </function>
+  <function name='LSGetApplicationForInfo'>
+    <arg index='4' type_modifier='o' />
+    <arg already_retained='true' index='5' type_modifier='o' />
+  </function>
+  <function name='LSGetApplicationForItem'>
+    <arg index='0' type_modifier='n' />
+    <arg index='2' type_modifier='o' />
+    <arg already_retained='true' index='3' type_modifier='o' />
+  </function>
+  <function name='LSGetApplicationForURL'>
+    <arg index='2' type_modifier='o' />
+    <arg already_retained='true' index='3' type_modifier='o' />
+  </function>
+  <function name='LSGetExtensionInfo'>
+    <arg c_array_length_in_arg='0' index='1' type_modifier='n' unicode_string='true' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='LSOpenApplication'>
+    <arg index='0' type_modifier='n' />
+    <arg index='1' null_accepted='true' type_modifier='o' />
+  </function>
+  <function name='LSOpenCFURLRef'>
+    <arg already_retained='true' index='1' type_modifier='o' />
+  </function>
+  <function name='LSOpenFSRef'>
+    <arg index='0' type_modifier='n' />
+    <arg index='1' null_accepted='true' type_modifier='o' />
+  </function>
+  <function name='LSOpenFromRefSpec'>
+    <arg index='0' type_modifier='n' />
+    <arg index='1' null_accepted='true' type_modifier='o' />
+  </function>
+  <function name='LSOpenFromURLSpec'>
+    <arg index='0' type_modifier='n' />
+    <arg already_retained='true' index='1' null_accepted='true' type_modifier='o' />
+  </function>
+  <function name='LSOpenItemsWithRole'>
+    <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    <arg index='3' null_accepted='true' type_modifier='n' />
+    <arg index='4' null_accepted='true' type_modifier='n' />
+    <arg index='5' null_accepted='true' type_modifier='o' />
+  </function>
+  <function name='LSOpenURLsWithRole'>
+    <arg index='2' null_accepted='true' type_modifier='n' />
+    <arg index='3' null_accepted='true' type_modifier='n' />
+    <arg index='4' null_accepted='true' type_modifier='o' />
+  </function>
+  <function name='LSRegisterFSRef'>
+    <arg index='0' type_modifier='n' />
+  </function>
+  <function name='LSSetExtensionHiddenForRef'>
+    <arg index='0' type_modifier='n' />
+  </function>
+  <function name='LSSetItemAttribute'>
+    <arg index='0' type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+  </function>
+  <function name='LSSharedFileListAddObserver'>
+    <arg index='3' type='^?' type64='^?' />
+    <arg index='4' type='^v' type64='^v' />
+  </function>
+  <function name='LSSharedFileListCopyProperty'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='LSSharedFileListCopySnapshot'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type='^I' type64='^I' />
+  </function>
+  <function name='LSSharedFileListInsertItemFSRef'>
+    <arg index='4' type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+  </function>
+  <function name='LSSharedFileListItemCopyDisplayName'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='LSSharedFileListItemCopyProperty'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='LSSharedFileListItemResolve'>
+    <arg index='2' type='^^{__CFURL}' type64='^^{__CFURL}' />
+    <arg index='3' type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+  </function>
+  <function name='LSSharedFileListRemoveObserver'>
+    <arg index='3' type='^?' type64='^?' />
+    <arg index='4' type='^v' type64='^v' />
+  </function>
+  <function name='LSSharedFileListSetAuthorization'>
+    <arg index='1' type='^{AuthorizationOpaqueRef=}' type64='^{AuthorizationOpaqueRef=}' />
+  </function>
+  <function name='OverrideIconRefFromResource'>
+    <arg index='1' type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
+  </function>
+  <function name='ReadIconFile'>
+    <arg index='0' type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
+    <arg index='1' type='^^^{IconFamilyResource}' type64='^^^{IconFamilyResource}' />
+  </function>
+  <function name='ReadIconFromFSRef'>
+    <arg index='0' type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+    <arg index='1' type='^^^{IconFamilyResource}' type64='^^^{IconFamilyResource}' />
+  </function>
+  <function name='RegisterIconRefFromFSRef'>
+    <arg index='2' type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+    <arg index='3' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='RegisterIconRefFromIconFamily'>
+    <arg index='2' type='^^{IconFamilyResource}' type64='^^{IconFamilyResource}' />
+    <arg index='3' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='RegisterIconRefFromIconFile'>
+    <arg index='2' type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
+    <arg index='3' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='RegisterIconRefFromResource'>
+    <arg index='2' type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
+    <arg index='4' type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='UTCreateStringForOSType'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='UTTypeCopyDeclaration'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='UTTypeCopyDeclaringBundleURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='UTTypeCopyDescription'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='UTTypeCopyPreferredTagWithClass'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='UTTypeCreateAllIdentifiersForTag'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='UTTypeCreatePreferredIdentifierForTag'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='WriteIconFile'>
+    <arg index='0' type='^^{IconFamilyResource}' type64='^^{IconFamilyResource}' />
+    <arg index='1' type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
+  </function>
+  <function comment='undocumented, yet publicly announced in TN2029' name='_LSCopyAllApplicationURLs'>
+    <retval type='v' />
+    <arg already_retained='true' index='0' type='^@' type_modifier='o' />
+  </function>
+</signatures>

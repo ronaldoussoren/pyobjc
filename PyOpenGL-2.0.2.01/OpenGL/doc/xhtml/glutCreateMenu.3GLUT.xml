@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutCreateMenu</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutCopyColormap.3GLUT.xml" title="glutCopyColormap"/><link rel="next" href="glutCreateSubWindow.3GLUT.xml" title="glutCreateSubWindow"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutCreateMenu</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutCopyColormap.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutCreateSubWindow.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutCreateMenu.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutCreateMenu.3GLUT-name"/><h2>Name</h2><p>glutCreateMenu &#8212; creates a new pop-up menu.</p></div><div class="refsynopsisdiv"><a name="glutCreateMenu.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>int <tt>glutCreateMenu</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>void (*func)(int <i><tt>value</tt></i>));</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutCreateMenu.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutCreateMenu</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>value</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutCreateMenu.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>func</tt></i></span></dt><dd>
+						The callback function for the menu that is called when a menu entry from the menu is selected. The value
+						passed to the callback is determined by the value for the selected menu entry.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glutCreateMenu.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutCreateMenu</tt> creates a new pop-up menu and returns a unique small integer identifier. The range
+			of allocated identifiers starts at one. The menu identifier range is separate from the window identifier range.
+			Implicitly, the current menu is set to the newly created menu. This menu identifier can be used when calling <a href="glutSetMenu.3GLUT.xml"><tt>glutSetMenu</tt></a>.
+		</p><p>
+			When the menu callback is called because a menu entry is selected for the menu, the current menu will be implicitly set
+			to the menu with the selected entry before the callback is made.
+		</p></div><div class="refsect1" lang="en"><a name="glutCreateMenu.3GLUT-example"/><h2>Example</h2><p>
+			Here is a quick example of how to create a GLUT popup menu with two submenus and attach it to the right button of the
+			current window:
+		</p><pre class="programlisting">int submenu1, submenu2;
+submenu1 = glutCreateMenu(selectMessage);
+glutAddMenuEntry("abc", 1);
+glutAddMenuEntry("ABC", 2);
+submenu2 = glutCreateMenu(selectColor);
+glutAddMenuEntry("Green", 1);
+glutAddMenuEntry("Red", 2);
+glutAddMenuEntry("White", 3);
+glutCreateMenu(selectFont);
+glutAddMenuEntry("9 by 15", 0);
+glutAddMenuEntry("Times Roman 10", 1);
+glutAddMenuEntry("Times Roman 24", 2);
+glutAddSubMenu("Messages", submenu1);
+glutAddSubMenu("Color", submenu2);
+glutAttachMenu(GLUT_RIGHT_BUTTON);</pre></div><div class="refsect1" lang="en"><a name="glutCreateMenu.3GLUT-x_implementation_notes"/><h2>X Implementation Notes</h2><p>
+			If available, GLUT for X will take advantage of overlay planes for implementing pop-up menus. The use of overlay planes
+			can eliminate display callbacks when pop-up menus are deactivated. The SERVER_OVERLAY_VISUALS convention is used to
+			determine if overlay visuals are available.
+		</p></div><div class="refsect1" lang="en"><a name="glutCreateMenu.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutCreateWindow.3GLUT.xml">glutCreateWindow</a>, <a href="glutDestroyMenu.3GLUT.xml">glutDestroyMenu</a>, <a href="glutSetMenu.3GLUT.xml">glutSetMenu</a>, <a href="glutAttachMenu.3GLUT.xml">glutAttachMenu</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutCopyColormap.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutCreateSubWindow.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutCopyColormap </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutCreateSubWindow</td></tr></table></div></body></html>

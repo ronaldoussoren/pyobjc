@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gleLathe</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLE.xml" title="GLE"/><link rel="previous" href="gleHelicoid.3GLE.xml" title="gleHelicoid"/><link rel="next" href="glePolyCone.3GLE.xml" title="glePolyCone"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gleLathe</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gleHelicoid.3GLE.xml">Prev</a> </td><th width="60%" align="center">GLE</th><td width="20%" align="right"> <a accesskey="n" href="glePolyCone.3GLE.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gleLathe.3GLE"/><div class="titlepage"/><div class="refnamediv"><a name="gleLathe.3GLE-name"/><h2>Name</h2><p>gleLathe &#8212; Sweep using a Z-axis shear to create an arbitrary contour along a helical path.</p></div><div class="refsynopsisdiv"><a name="gleLathe.3GLE-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>gleLathe</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>int <i><tt>ncp</tt></i>, gleDouble <i><tt>contour</tt></i>[][2], gleDouble <i><tt>cont_normal</tt></i>[][2], gleDouble <i><tt>up</tt></i>[3], gleDouble <i><tt>startRadius</tt></i>, gleDouble <i><tt>drdTheta</tt></i>, gleDouble <i><tt>startZ</tt></i>, gleDouble <i><tt>dzdTheta</tt></i>, gleDouble <i><tt>startXform</tt></i>[2][3], gleDouble <i><tt>dXformdTheta</tt></i>[2][3], gleDouble <i><tt>startTheta</tt></i>, gleDouble <i><tt>sweepTheta</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gleLathe.3GLE-python_specification"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gleLathe</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>contour</tt></i>[][2], <i><tt>cont_normal</tt></i>[][2], <i><tt>up</tt></i>[3], <i><tt>startRadius</tt></i>, <i><tt>drdTheta</tt></i>, <i><tt>startZ</tt></i>, <i><tt>dzdTheta</tt></i>, <i><tt>startXform</tt></i>[2][3], <i><tt>dXformdTheta</tt></i>[2][3], <i><tt>startTheta</tt></i>, <i><tt>sweepTheta</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="gleLathe.3GLE-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>ncp</tt></i></span></dt><dd>
+						number of contour points
+					</dd><dt><span class="term"><i><tt>contour</tt></i></span></dt><dd>
+						2D contour
+					</dd><dt><span class="term"><i><tt>cont_normal</tt></i></span></dt><dd>
+						2D contour normals
+					</dd><dt><span class="term"><i><tt>up</tt></i></span></dt><dd>
+						up vector for contour
+					</dd><dt><span class="term"><i><tt>startRadius</tt></i></span></dt><dd>
+						spiral starts in x-y plane
+					</dd><dt><span class="term"><i><tt>drdTheta</tt></i></span></dt><dd>
+						change in radius per revolution
+					</dd><dt><span class="term"><i><tt>startZ</tt></i></span></dt><dd>
+						starting z value
+					</dd><dt><span class="term"><i><tt>dzdTheta</tt></i></span></dt><dd>
+						change in Z per revolution
+					</dd><dt><span class="term"><i><tt>startXform</tt></i></span></dt><dd>
+						starting contour affine transformation
+					</dd><dt><span class="term"><i><tt>dXformdTheta</tt></i></span></dt><dd>
+						tangent change xform per revolution
+					</dd><dt><span class="term"><i><tt>startTheta</tt></i></span></dt><dd>
+						start angle in x-y plane
+					</dd><dt><span class="term"><i><tt>sweepTheta</tt></i></span></dt><dd>
+						degrees to spiral around
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gleLathe.3GLE-description"/><h2>Description</h2><p>
+			Sweep an arbitrary contour along a helical path. The sweep will be performed as a shear along the z-axis, so that the
+			orientation of the contour is displaced, rather than translated, as the contour is swept.
+		</p><p>
+			The axis of the helix lies along the modeling coordinate z-axis.
+		</p><p>
+			An affine transform can be applied as the contour is swept. For most ordinary usage, the affines should be given as
+			<tt>NULL</tt>.
+		</p></div><div class="refsect1" lang="en"><a name="gleLathe.3GLE-see_also"/><h2>See Also</h2><p>
+			<a href="gleSpiral.3GLE.xml">gleSpiral</a>
+		</p></div><div class="refsect1" lang="en"><a name="gleLathe.3GLE-author"/><h2>Author</h2><p>
+			Linas Vepstas
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gleHelicoid.3GLE.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLE.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glePolyCone.3GLE.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gleHelicoid </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glePolyCone</td></tr></table></div></body></html>

@@ -1,0 +1,312 @@
+================================================
+Documentation for the PyObjC C-API (Preliminary)
+================================================
+
+Introduction
+------------
+
+*WARNING: This API is unstable and might change in the future. Please let
+us know if you want to use the C-API in your own code*
+
+The PyObjC package can be extended in C (or more likely Objective-C) using
+the C API described in this document. This API should be used to write
+custom wrappers for "hard" methods and to create/access Objective-C proxy
+objects from the wrappers for C functions.
+
+IMHO this API shouldn't be used to write modules that "just happen" to
+work with Objective-C objects, using (static) methods in a class is much
+more convenient.
+
+The C API is defined in ``pyobjc-api.h``. This file is currently not installed
+because the API is not entirely stable. This is the only file that can
+be included from outside of the 'Modules/objc' directory; future versions of
+the bridge may use additional linker flags to make sure that the module doesn't
+export symbols other than the module init function.
+
+The easiest way to wrap global functions and constants is by using the scripts
+in Scripts/CodeGenerators. These scripts are unsupported and might not work on
+anything but the Apple headers, but if they work it will save you a lot of work.
+
+Limitations
+-----------
+
+An important limitation of the current C API is that you can only use the API
+from one C file in the implementation of an extension module. This limitation
+will probably not be removed in future versions of the API.
+
+
+Initialization
+--------------
+
+The initialization function (below) should be called before using the
+rest of the API::
+
+  static int PyObjC_ImportAPI(PyObject* calling_module)
+
+This module will return 0 if loading the module was successful, and -1
+otherwise. Reasons for failure include: not being able to locate the module
+and API version conflicts.
+
+Loading the API will make it impossible to unload the ``calling_module``.
+
+NOTE: Using the API other than by the mechanism described in this document 
+is unsupported.
+
+Compatibility Macros
+--------------------
+
+On Mac OS X, the version guard macro ``MAC_OS_X_VERSION_MAX_ALLOWED`` will 
+always be available. 
+
+The macros ``PyDoc_STR``, ``PyDoc_VAR`` and ``PyDoc_STRVAR`` are defined 
+when they are not defined in ``Python.h``.
+
+Types
+-----
+
+::
+ 
+   PyObjCObject_Type
+
+   int PyObjCObject_Check(value);
+
+``PyObjCObject_Type`` is the type of Objective-C objects, both pure Objective-C
+objects and hybrid Python/Objective-C objects are instances of this type. Use
+``PyObjCObject_Check`` to check if a value is an instance of this type.
+
+There is at most 1 proxy for an Objective-C instance. That is, you can use
+the ``is`` operator in Python to check if two variables refer to the same
+Objective-C object.
+
+::
+ 
+   PyObjCClass_Type
+
+   int PyObjCClass_Check(value);
+
+``PyObjCClass_Type`` is the type of Objective-C classes, both pure Objective-C
+objects and hybrid Python/Objective-C classes are instances of this type. Use
+``PyObjCClass_Check`` to check if a value is an instance of this type.
+
+There is at most 1 class proxy for an Objective-C class. That is, you can use
+the ``is`` operator in Python to compare two classes for equality.
+
+::
+ 
+   PyObjCSelector_Type
+
+   int PyObjCSelector_Check(value);
+
+``PyObjCSelector_Type`` is the type of Objective-C methods (including the
+methods defined in Python).  Use ``PyObjCSelector_Check`` to check if a value 
+is an instance of this type.
+
+API functions
+-------------
+
+::
+
+   int PyObjC_RegisterMethodMapping(
+			Class cls, 
+			SEL sel, 
+			PyObject *(callObjC)(PyObject*, PyObject*, PyObject*),
+			IMP callPython);
+
+Register a custom wrapper for a specific method. Returns -1 on failure.
+
+::
+
+   int PyObjC_RegisterSignatureMapping(
+			char* typespec,
+			PyObject *(*callObjC)(PyObject*, PyObject*, PyObject*),
+			IMP callPython);
+
+Register a custom wrapper for methods with a specific signature. Returns -1
+on failure.
+
+::
+
+  id PyObjCObject_GetObject(PyObject* obj);
+
+Return the Objective-C object that is proxied by a ``PyObjCObject_Type`` 
+instance.
+
+::
+
+  void PyObjCObject_ClearObject(PyObject* obj);
+
+Clear the proxied object. That is, the ``PyObjCObject_Type`` instance will
+no longer be a proxy.
+
+::
+
+  Class PyObjCClass_GetClass(PyObject* cls);
+
+Extract the Class from a proxied Objective-C class. 
+
+::
+
+  PyObject* PyObjCClass_New(Class cls);
+
+Create or find a proxy object for the class. 
+
+::
+  
+  id PyObjC_PythonToId(PyObject* value);
+
+Create a proxy for the Python object. This will unwrap proxied Objective-C 
+objects, and will create the appropriate proxy for Python objects.
+
+::
+
+  PyObject* IdToPython(id value);
+
+Create a proxy for the Objective-C object. This will unwrap proxied Python
+objects and will create a proxy object for Objective-C objects.
+
+::
+
+  void PyObjCErr_FromObjC(NSException* localException);
+
+Convert an Objective-C exception to Python. Use 
+``PyObjCErr_FromObjC(localException)`` to convert the exception in an 
+``NS_HANDLER`` block.
+
+Note that PyObjC supports round-tripping for exceptions, if the current 
+Objective-C exception is an converted Python exception, the original Python
+exception will be rethrown.
+
+::
+
+  void PyObjCErr_ToObjC(void);
+
+Convert a Python exception to Objective-C. This function does not return.
+
+Note that PyObjC supports round-tripping for exceptions, if the current Python
+exception is an converted Objective-C exception, the original Objective-C
+exception will be rethrown.
+
+::
+
+  int PyObjC_PythonToObjC(const char* typespec, PyObject* value, void* buffer);
+
+Convert the value to an Objective-C value of type ``typespec``. The buffer must
+be at least ``PyObjCRT_SizeOfType(typespec)`` bytes long.
+
+NOTE: The ``typespec`` is a type specifier as described in the runtime 
+reference of the Objective-C manual from Apple. Use ``@encode(mytype)`` if to
+get code that is portable to a different Objective-C runtime.
+
+::
+
+  PyObject* PyObjC_ObjCToPython(const char* typespec, void* value);
+
+Convert an Objective-C value of type ``typespec`` to python. 
+
+::
+
+  PyObject* PyObjC_CallPython(id self, SEL sel, PyObject* arglist, int* isAlloc);
+
+Call the Python implementation of method ``sel`` of ``self``. The ``arglist``
+must contain the complete argument list, including self. If ``isAlloc`` is not
+``NULL`` it is used to output whether this method should return a new reference
+(TRUE) or a borrowed reference (FALSE).
+
+::
+
+  int PyObjCRT_SizeOfType(const char* typespec);
+
+Return the size of variables of the specified type.
+
+::
+
+  int PyObjCRT_AlignOfType(const char* typespec);
+
+Return the alignment of variables of the specified type.
+
+::
+
+  Class PyObjCSelector_GetClass(PyObject* sel);
+
+Return the class containing the definition of ``sel``.
+
+::
+
+  SEL PyObjCSelector_GetSelector(PyObject* sel);
+
+Return the Objective-C method name for ``sel``.
+
+::
+
+  void PyObjC_InitSuper(struct objc_super*, Class, id);
+
+Initialize the ``struct objc_super`` for use with ``objc_sendMsgSuper``. Use 
+this if the ``self`` argument is a normal object.
+
+::
+
+  void PyObjC_InitSuperCls(struct objc_super*, Class, Class);
+
+Initialize the ``struct objc_super`` for use with ``objc_sendMsgSuper``. Use 
+this if the ``self`` argument is a Class.
+
+::
+
+  int  PyObjCPointerWrapper_Register(
+	        const char* typespec, PyObject* (*pythonify)(void*),
+		int (*depythonify)(PyObject*, void*)
+	);
+
+Use ``pythonify`` to convert pointers of type ``typespec`` to python and
+``depythonify`` to extract them from Python. Use this to register helper 
+function for the conversion of opaque pointers.
+
+::
+
+  id  PyObjCUnsupportedMethod_IMP(id, SEL);
+
+Use this as an argument for ``PyObjC_RegisterMethodMapping`` or 
+``PyObjC_RegisterSignatureMapping`` if the method is not callable from 
+Objective-C.
+
+::
+
+  PyObject* PyObjCUnsupportedMethod_Caller(PyObject*, PyObject*, PyObject*);
+
+Use this as an argument for ``PyObjC_RegisterMethodMapping`` or 
+``PyObjC_RegisterSignatureMapping`` if the method is not callable from Python.
+
+::
+
+  int PyObjCObject_Convert(PyObject* object, void* pvar);
+
+This is a variation on ``PyObjC_PythonToId`` than can be used with 
+``PyArg_Parse``.
+
+:: 
+ 
+  int PyObjCClass_Convert(PyObject* object, void* pvar);
+
+This is a variation on ``PyObjCClass_GetClass`` than can be used with 
+``PyArg_Parse``.
+
+::
+
+  int PyObjCSelector_Convert(PyObject* object, void* pvar);
+
+Write the ``SEL`` for a selector object into ``*pvar``. 
+For use with ``PyArg_Parse``.
+
+::
+
+  int PyObjC_ConvertBOOL(PyObject* object, void* pvar);
+
+Write ``YES`` into ``*pvar`` if ``object`` is true, write ``NO`` otherwise.
+``*pvar`` should be of type BOOL.  For use with ``PyArg_Parse``.
+
+::
+
+  int PyObjC_ConvertChar(PyObject* object, void* pvar);
+
+Write the value of a string of length 1 into the character (type char)
+at ``*pvar``. For use with ``PyArg_Parse``.

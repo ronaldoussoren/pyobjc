@@ -1,0 +1,378 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <struct name='NPAnyCallbackStruct' />
+  <struct name='NPByteRange' />
+  <struct name='NPClass' />
+  <struct name='NPEmbedPrint' />
+  <struct name='NPEvent' />
+  <struct name='NPFullPrint' />
+  <struct name='NPNetscapeFuncs' />
+  <struct name='NPObject' />
+  <struct comment='fixme: npp is actually a semi-opaque value' name='NPP_t' />
+  <struct name='NPPluginFuncs' />
+  <struct name='NPPrint' />
+  <struct name='NPPrintCallbackStruct' />
+  <struct name='NPRect' />
+  <struct name='NPSavedData' />
+  <struct name='NPSetWindowCallbackStruct' />
+  <struct name='NPStream' />
+  <struct name='NPString' />
+  <struct name='NPVariant' />
+  <struct name='NPWindow' />
+  <struct name='NP_CGContext' />
+  <struct name='NP_GLContext' />
+  <struct name='NP_Port' />
+  <opaque name='DOMObjectInternal*' />
+  <opaque name='NPClass*' />
+  <opaque name='NPObject*' />
+  <function name='HIWebViewCreate'>
+    <arg already_retained='true' index='0' type_modifier='o' />
+  </function>
+  <function name='HIWebViewCreateWithClass'>
+    <arg already_retained='true' index='1' type_modifier='o' />
+  </function>
+  <function name='HIWebViewGetWebView'>
+    <arg already_retained='true' index='0' type_modifier='o' />
+  </function>
+  <function name='NPN_CreateObject'>
+    <retval type='^{NPObject=^{NPClass}I}' />
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{NPClass=I^?^?^?^?^?^?^?^?^?^?}' />
+  </function>
+  <function name='NPN_DestroyStream'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{_NPStream=^v^v*II^v}' type64='^{_NPStream=^v^v*II^v}' />
+  </function>
+  <function name='NPN_Enumerate'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{NPObject=^{NPClass}I}' />
+    <arg index='2' type='^^^v' type64='^^^v' />
+    <arg index='3' type='^I' type64='^I' />
+  </function>
+  <function name='NPN_Evaluate'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{NPObject=^{NPClass}I}' />
+    <arg index='2' type='^{_NPString=*I}' type64='^{_NPString=*I}' />
+    <arg index='3' type='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' type64='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' />
+  </function>
+  <function name='NPN_ForceRedraw'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+  </function>
+  <function name='NPN_GetIntIdentifier'>
+    <retval type='^v' />
+  </function>
+  <function name='NPN_GetJavaEnv'>
+    <retval type='^v' type64='^v' />
+  </function>
+  <function name='NPN_GetJavaPeer'>
+    <retval type='^v' type64='^v' />
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+  </function>
+  <function name='NPN_GetProperty'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{NPObject=^{NPClass}I}' />
+    <arg index='2' type='^v' />
+    <arg index='3' type='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' type64='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' />
+  </function>
+  <function name='NPN_GetStringIdentifier'>
+    <retval type='^v' />
+    <arg index='0' type='r*' type64='r*' />
+  </function>
+  <function name='NPN_GetStringIdentifiers'>
+    <arg index='0' type='r^*' type64='r^*' />
+    <arg index='2' type='^^v' type64='^^v' />
+  </function>
+  <function name='NPN_GetURL'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' numeric='false' type='r*' type64='r*' />
+  </function>
+  <function name='NPN_GetURLNotify'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' numeric='false' type='r*' type64='r*' />
+    <arg index='3' type='^v' type64='^v' />
+  </function>
+  <function name='NPN_GetValue'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='2' type='^v' type64='^v' />
+  </function>
+  <function name='NPN_HasMethod'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{NPObject=^{NPClass}I}' />
+    <arg index='2' type='^v' />
+  </function>
+  <function name='NPN_HasProperty'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{NPObject=^{NPClass}I}' />
+    <arg index='2' type='^v' />
+  </function>
+  <function name='NPN_IdentifierIsString'>
+    <arg index='0' type='^v' />
+  </function>
+  <function name='NPN_IntFromIdentifier'>
+    <arg index='0' type='^v' />
+  </function>
+  <function name='NPN_InvalidateRect'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{_NPRect=SSSS}' type64='^{_NPRect=SSSS}' />
+  </function>
+  <function name='NPN_InvalidateRegion'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^v' />
+  </function>
+  <function name='NPN_Invoke'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{NPObject=^{NPClass}I}' />
+    <arg index='2' type='^v' />
+    <arg index='3' type='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' type64='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' />
+    <arg index='5' type='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' type64='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' />
+  </function>
+  <function name='NPN_InvokeDefault'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{NPObject=^{NPClass}I}' />
+    <arg index='2' type='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' type64='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' />
+    <arg index='4' type='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' type64='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' />
+  </function>
+  <function name='NPN_MemAlloc'>
+    <retval type='^v' type64='^v' />
+  </function>
+  <function name='NPN_MemFree'>
+    <arg index='0' type='^v' type64='^v' />
+  </function>
+  <function name='NPN_NewStream'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='*' type64='*' />
+    <arg index='2' numeric='false' type='r*' type64='r*' />
+    <arg index='3' type='^^{_NPStream}' type64='^^{_NPStream}' />
+  </function>
+  <function name='NPN_PopPopupsEnabledState'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+  </function>
+  <function name='NPN_PostURL'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' numeric='false' type='r*' type64='r*' />
+    <arg index='4' numeric='false' type='r*' type64='r*' />
+  </function>
+  <function name='NPN_PostURLNotify'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' numeric='false' type='r*' type64='r*' />
+    <arg index='4' numeric='false' type='r*' type64='r*' />
+    <arg index='6' type='^v' type64='^v' />
+  </function>
+  <function name='NPN_PushPopupsEnabledState'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+  </function>
+  <function name='NPN_ReleaseObject'>
+    <arg index='0' type='^{NPObject=^{NPClass}I}' />
+  </function>
+  <function name='NPN_ReleaseVariantValue'>
+    <arg index='0' type='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' type64='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' />
+  </function>
+  <function name='NPN_RemoveProperty'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{NPObject=^{NPClass}I}' />
+    <arg index='2' type='^v' />
+  </function>
+  <function name='NPN_RequestRead'>
+    <arg index='0' type='^{_NPStream=^v^v*II^v}' type64='^{_NPStream=^v^v*II^v}' />
+    <arg index='1' type='^{_NPByteRange=iI^{_NPByteRange}}' type64='^{_NPByteRange=iI^{_NPByteRange}}' />
+  </function>
+  <function name='NPN_RetainObject'>
+    <retval type='^{NPObject=^{NPClass}I}' />
+    <arg index='0' type='^{NPObject=^{NPClass}I}' />
+  </function>
+  <function name='NPN_SetException'>
+    <arg index='0' type='^{NPObject=^{NPClass}I}' />
+    <arg index='1' type='r*' type64='r*' />
+  </function>
+  <function name='NPN_SetProperty'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{NPObject=^{NPClass}I}' />
+    <arg index='2' type='^v' />
+    <arg index='3' type='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' type64='^{_NPVariant=i(?=Bid{_NPString=*I}^{NPObject})}' />
+  </function>
+  <function name='NPN_SetValue'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='2' type='^v' type64='^v' />
+  </function>
+  <function name='NPN_Status'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' numeric='false' type='r*' type64='r*' />
+  </function>
+  <function name='NPN_UTF8FromIdentifier'>
+    <retval type='r*' type64='r*' />
+    <arg index='0' type='^v' />
+  </function>
+  <function name='NPN_UserAgent'>
+    <retval numeric='false' type='r*' type64='r*' />
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+  </function>
+  <function name='NPN_Version'>
+    <arg index='0' type='^i' type64='^i' />
+    <arg index='1' type='^i' type64='^i' />
+    <arg index='2' type='^i' type64='^i' />
+    <arg index='3' type='^i' type64='^i' />
+  </function>
+  <function name='NPN_Write'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{_NPStream=^v^v*II^v}' type64='^{_NPStream=^v^v*II^v}' />
+    <arg index='3' type='^v' type64='^v' />
+  </function>
+  <function name='NPP_Destroy'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^^{_NPSavedData}' type64='^^{_NPSavedData}' />
+  </function>
+  <function name='NPP_DestroyStream'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{_NPStream=^v^v*II^v}' type64='^{_NPStream=^v^v*II^v}' />
+  </function>
+  <function name='NPP_GetJavaClass'>
+    <retval type='^v' type64='^v' />
+  </function>
+  <function name='NPP_GetMIMEDescription'>
+    <retval numeric='false' type='r*' type64='r*' />
+  </function>
+  <function name='NPP_GetValue'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='2' type='^v' type64='^v' />
+  </function>
+  <function name='NPP_HandleEvent'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^v' type64='^v' />
+  </function>
+  <function name='NPP_New'>
+    <arg index='0' type='*' type64='*' />
+    <arg index='1' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='4' type='^*' type64='^*' />
+    <arg index='5' type='^*' type64='^*' />
+    <arg index='6' type='^{_NPSavedData=i^v}' type64='^{_NPSavedData=i^v}' />
+  </function>
+  <function name='NPP_NewStream'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='*' type64='*' />
+    <arg index='2' type='^{_NPStream=^v^v*II^v}' type64='^{_NPStream=^v^v*II^v}' />
+    <arg index='4' type='^S' type64='^S' />
+  </function>
+  <function name='NPP_Print'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{_NPPrint=S(?={_NPFullPrint=CC^v}{_NPEmbedPrint={_NPWindow=^viiII{_NPRect=SSSS}i}^v})}' type64='^{_NPPrint=S(?={_NPFullPrint=CC^v}{_NPEmbedPrint={_NPWindow=^viiII{_NPRect=SSSS}i}^v})}' />
+  </function>
+  <function name='NPP_SetValue'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='2' type='^v' type64='^v' />
+  </function>
+  <function name='NPP_SetWindow'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{_NPWindow=^viiII{_NPRect=SSSS}i}' type64='^{_NPWindow=^viiII{_NPRect=SSSS}i}' />
+  </function>
+  <function name='NPP_StreamAsFile'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{_NPStream=^v^v*II^v}' type64='^{_NPStream=^v^v*II^v}' />
+    <arg index='2' numeric='false' type='r*' type64='r*' />
+  </function>
+  <function name='NPP_URLNotify'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='3' type='^v' type64='^v' />
+  </function>
+  <function name='NPP_Write'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{_NPStream=^v^v*II^v}' type64='^{_NPStream=^v^v*II^v}' />
+    <arg index='4' type='^v' type64='^v' />
+  </function>
+  <function name='NPP_WriteReady'>
+    <arg index='0' type='^{_NPP=^v^v}' type64='^{_NPP=^v^v}' />
+    <arg index='1' type='^{_NPStream=^v^v*II^v}' type64='^{_NPStream=^v^v*II^v}' />
+  </function>
+  <function name='WebConvertNSImageToCGImageRef'>
+    <retval type='^{CGImage=}' type64='^{CGImage=}' />
+  </function>
+  <class name='NSObject'>
+    <method class_method='true' selector='isKeyExcludedFromWebScript:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='isSelectorExcludedFromWebScript:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='webPlugInCallJava:isStatic:returnType:method:arguments:callingURL:exceptionDescription:'>
+      <arg index='0' type='^{_jobject=}' />
+      <arg index='3' type='^{_jmethodID=}' />
+      <arg index='4' type='^(jvalue=CcSsiqfd^{_jobject})' />
+      <arg index='6' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='webPlugInGetApplet'>
+      <retval type='^{_jobject=}' />
+    </method>
+    <method class_method='true' selector='webScriptNameForKey:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='webScriptNameForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='webView:doCommandBySelector:'>
+      <arg index='1' type=':' />
+    </method>
+    <method selector='webView:shouldPerformAction:fromSender:'>
+      <arg index='1' type=':' />
+    </method>
+  </class>
+  <class name='WebFrame'>
+    <method selector='globalContext'>
+      <retval type='^{OpaqueJSContext=}' />
+    </method>
+  </class>
+  <class name='WebHistory'>
+    <method selector='loadFromURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='saveToURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='WebScriptObject'>
+    <method selector='JSObject'>
+      <retval type='^{OpaqueJSValue=}' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method class_method='true' selector='isKeyExcludedFromWebScript:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='isSelectorExcludedFromWebScript:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='webPlugInCallJava:isStatic:returnType:method:arguments:callingURL:exceptionDescription:'>
+      <arg index='0' type='^{_jobject=}' />
+      <arg index='3' type='^{_jmethodID=}' />
+      <arg index='4' type='^(jvalue=CcSsiqfd^{_jobject})' />
+      <arg index='6' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='webPlugInGetApplet'>
+      <retval type='^{_jobject=}' />
+    </method>
+    <method class_method='true' selector='webScriptNameForKey:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='webScriptNameForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='webView:doCommandBySelector:'>
+      <arg index='1' type=':' />
+    </method>
+    <method selector='webView:shouldPerformAction:fromSender:'>
+      <arg index='1' type=':' />
+    </method>
+  </class>
+  <class name='WebHistory'>
+    <method selector='loadFromURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='saveToURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+</signatures>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutGameModeGet</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutFullScreen.3GLUT.xml" title="glutFullScreen"/><link rel="next" href="glutGameModeString.3GLUT.xml" title="glutGameModeString"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutGameModeGet</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutFullScreen.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutGameModeString.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutGameModeGet.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutGameModeGet.3GLUT-name"/><h2>Name</h2><p>glutGameModeGet &#8212; retrieves GLUT game mode information represented by integers.</p></div><div class="refsynopsisdiv"><a name="glutGameModeGet.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>int <tt>glutGameModeGet</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>info</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutGameModeGet.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutGameModeGet</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>info</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutGameModeGet.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>info</tt></i></span></dt><dd><p>
+						Name of game mode information to retrieve.
+					</p><div class="variablelist"><dl><dt><span class="term"><tt>GLUT_GAME_MODE_ACTIVE</tt></span></dt><dd>
+									Non-zero if GLUT's game mode is active; zero if not active. Game mode is not active initially.
+									Game mode becomes active when <a href="glutEnterGameMode.3GLUT.xml"><tt>glutEnterGameMode</tt></a> is
+									called. Game mode becomes inactive when <a href="glutEnterGameMode.3GLUT.xml"><tt>glutLeaveGameMode</tt></a> is called.
+								</dd><dt><span class="term"><tt>GLUT_GAME_MODE_POSSIBLE</tt></span></dt><dd>
+									Non-zero if the game mode string last specified to <a href="glutGameModeString.3GLUT.xml"><tt>glutGameModeString</tt></a> is a possible game mode configuration; zero
+									otherwise. Being "possible" does not guarantee that if game mode is entered with
+									<a href="glutEnterGameMode.3GLUT.xml"><tt>glutEnterGameMode</tt></a> that the display settings will
+									actually changed. <tt>GLUT_GAME_MODE_DISPLAY_CHANGED</tt> should be called once
+									game mode is entered to determine if the display mode is actually changed.
+								</dd><dt><span class="term"><tt>GLUT_GAME_MODE_WIDTH</tt></span></dt><dd>
+									Width in pixels of the screen when game mode is activated.
+								</dd><dt><span class="term"><tt>GLUT_GAME_MODE_HEIGHT</tt></span></dt><dd>
+									Height in pixels of the screen when game mode is activated.
+								</dd><dt><span class="term"><tt>GLUT_GAME_MODE_PIXEL_DEPTH</tt></span></dt><dd>
+									Pixel depth of the screen when game mode is activiated.
+								</dd><dt><span class="term"><tt>GLUT_GAME_MODE_REFRESH_RATE</tt></span></dt><dd>
+									Screen refresh rate in cyles per second (hertz) when game mode is activated. Zero is returned
+									if the refresh rate is unknown or cannot be queried.
+								</dd><dt><span class="term"><tt>GLUT_GAME_MODE_DISPLAY_CHANGED</tt></span></dt><dd>
+									Non-zero if entering game mode actually changed the display settings. If the game mode string
+									is not possible or the display mode could not be changed for any other reason, zero is
+									returned.
+								</dd></dl></div></dd></dl></div></div><div class="refsect1" lang="en"><a name="glutGameModeGet.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutGameModeGet</tt> retrieves GLUT game mode information represented by integers. The info parameter
+			determines what type of game mode information to return. Requesting game mode information for an invalid GLUT game mode
+			information name returns negative one.
+		</p></div><div class="refsect1" lang="en"><a name="glutGameModeGet.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutGet.3GLUT.xml">glutGet</a>, <a href="glutDeviceGet.3GLUT.xml">glutDeviceGet</a>, <a href="glutLayerGet.3GLUT.xml">glutLayerGet</a>, <a href="glutGameModeString.3GLUT.xml">glutGameModeString</a>, <a href="glutEnterGameMode.3GLUT.xml">glutEnterGameMode</a>, <a href="glutLeaveGameMode.3GLUT.xml">glutLeaveGameMode</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutFullScreen.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutGameModeString.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutFullScreen </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutGameModeString</td></tr></table></div></body></html>

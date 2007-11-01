@@ -1,0 +1,62 @@
+The 1.0b1 announcement message, mostly present as input for future announcements.
+
+to 
+   python-list@python.org
+   python-announce-list@python.org
+   macosx-dev@omnigroup.com
+   pyobjc-dev@sourceforge.net
+   pythonmac-sig@python.org
+   cocoa-dev@lists.apple.com
+
+subject: ANN: PyObjC 1.3.5
+
+PyObjC 1.3.5 is now available for download at http://pyobjc.sourceforge.net/  
+
+PyObjC is a bridge between Python and Objective-C.  It allows full
+featured Cocoa applications to be written in pure Python.  It is also
+easy to use other frameworks containing Objective-C class libraries
+from Python and to mix in Objective-C, C and C++ source.
+
+Python is a highly dynamic programming language with a shallow learning 
+curve.  It combines remarkable power with very clear syntax.
+
+The installer package includes a number of Xcode templates 
+for easily creating new Cocoa-Python projects, as well as py2app,
+a suite of tools for building redistributable Python applications
+and plugins.
+
+PyObjC also supports full introspection of Objective-C classes and 
+direct invocation of Objective-C APIs from the interactive interpreter.
+
+PyObjC requires Mac OS X 10.2 or later and Python 2.3 or later.  PyObjC
+works with the Apple provided Python installation in Mac OS X 10.3 (and later),
+MacPython 2.3, and MacPython 2.4.
+
+This release features several bugfixes, improved documentation, new Xcode
+templates, Tiger support and many major enhancements.  See the news file at 
+http://pyobjc.sourceforge.net/NEWS-1.3.5.txt for more information.
+
+PyObjC is released with an open source license (MIT style).
+
+
+on our website (News section):
+
+PyObjC 1.0b1 has shipped. A disk image and the sources are `available` [link]. 
+There are many new features and bugfixes, the the NEWS file [link] for details.
+
+The PyObjC installer installs a number of examples and project builder templates
+as well as some documentation into /Developer. Users of MacPython 2.3b1 [link] 
+can install this release using the PackageManager application.
+
+
+to adcnews@apple.com (see release-process.txt):
+
+subject: PyObjC 1.1 released
+
+PyObjC 1.1 provides a bridge between the Python and Objective-C
+programming languages, allowing the Python programmer
+transparent access to Objective-C-based classes and APIs. Write
+Cocoa applications in Python, using Interface Builder to design
+the user interface.
+
+URL: http://pyobjc.sourceforge.net/

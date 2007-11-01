@@ -1,0 +1,1023 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/CarbonCore' />
+  <depends_on path='/System/Library/Frameworks/CoreServices.framework/Frameworks/OSServices.framework/OSServices' />
+  <depends_on path='/System/Library/Frameworks/Security.framework/Security' />
+  <depends_on path='/System/Library/Frameworks/CoreServices.framework/Frameworks/AE.framework/AE' />
+  <depends_on path='/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation' />
+  <struct name='LSApplicationParameters' type='{LSApplicationParameters="version"i"flags"I"application"^{FSRef}"asyncLaunchRefCon"^v"environment"^{__CFDictionary}"argv"^{__CFArray}"initialEvent"^{AEDesc}}' type64='{LSApplicationParameters="version"q"flags"I"application"^{FSRef}"asyncLaunchRefCon"^v"environment"^{__CFDictionary}"argv"^{__CFArray}"initialEvent"^{AEDesc}}' />
+  <struct name='LSLaunchFSRefSpec' type='{LSLaunchFSRefSpec="appRef"^{FSRef}"numDocs"I"itemRefs"^{FSRef}"passThruParams"^{AEDesc}"launchFlags"I"asyncRefCon"^v}' type64='{LSLaunchFSRefSpec="appRef"^{FSRef}"numDocs"Q"itemRefs"^{FSRef}"passThruParams"^{AEDesc}"launchFlags"I"asyncRefCon"^v}' />
+  <struct name='LSLaunchURLSpec' type='{LSLaunchURLSpec="appURL"^{__CFURL}"itemURLs"^{__CFArray}"passThruParams"^{AEDesc}"launchFlags"I"asyncRefCon"^v}' type64='{LSLaunchURLSpec="appURL"^{__CFURL}"itemURLs"^{__CFArray}"passThruParams"^{AEDesc}"launchFlags"I"asyncRefCon"^v}' />
+  <opaque name='IconRef' type='^{OpaqueIconRef=}' type64='^{OpaqueIconRef=}' />
+  <opaque name='LSSharedFileListItemRef' type='^{OpaqueLSSharedFileListItemRef=}' type64='^{OpaqueLSSharedFileListItemRef=}' />
+  <opaque name='LSSharedFileListRef' type='^{OpaqueLSSharedFileListRef=}' type64='^{OpaqueLSSharedFileListRef=}' />
+  <constant name='kLSItemContentType' type='^{__CFString=}' />
+  <constant name='kLSItemDisplayKind' type='^{__CFString=}' />
+  <constant name='kLSItemDisplayName' type='^{__CFString=}' />
+  <constant name='kLSItemExtension' type='^{__CFString=}' />
+  <constant name='kLSItemExtensionIsHidden' type='^{__CFString=}' />
+  <constant name='kLSItemFileCreator' type='^{__CFString=}' />
+  <constant name='kLSItemFileType' type='^{__CFString=}' />
+  <constant name='kLSItemIsInvisible' type='^{__CFString=}' />
+  <constant name='kLSItemQuarantineProperties' type='^{__CFString=}' />
+  <constant name='kLSItemRoleHandlerDisplayName' type='^{__CFString=}' />
+  <constant name='kLSQuarantineAgentBundleIdentifierKey' type='^{__CFString=}' />
+  <constant name='kLSQuarantineAgentNameKey' type='^{__CFString=}' />
+  <constant name='kLSQuarantineDataURLKey' type='^{__CFString=}' />
+  <constant name='kLSQuarantineOriginURLKey' type='^{__CFString=}' />
+  <constant name='kLSQuarantineTimeStampKey' type='^{__CFString=}' />
+  <constant name='kLSQuarantineTypeCalendarEventAttachment' type='^{__CFString=}' />
+  <constant name='kLSQuarantineTypeEmailAttachment' type='^{__CFString=}' />
+  <constant name='kLSQuarantineTypeInstantMessageAttachment' type='^{__CFString=}' />
+  <constant name='kLSQuarantineTypeKey' type='^{__CFString=}' />
+  <constant name='kLSQuarantineTypeOtherAttachment' type='^{__CFString=}' />
+  <constant name='kLSQuarantineTypeOtherDownload' type='^{__CFString=}' />
+  <constant name='kLSQuarantineTypeWebDownload' type='^{__CFString=}' />
+  <constant name='kLSSharedFileListFavoriteItems' type='^{__CFString=}' />
+  <constant name='kLSSharedFileListFavoriteVolumes' type='^{__CFString=}' />
+  <constant name='kLSSharedFileListGlobalLoginItems' type='^{__CFString=}' />
+  <constant name='kLSSharedFileListItemBeforeFirst' type='^{OpaqueLSSharedFileListItemRef=}' />
+  <constant name='kLSSharedFileListItemHidden' type='^{__CFString=}' />
+  <constant name='kLSSharedFileListItemLast' type='^{OpaqueLSSharedFileListItemRef=}' />
+  <constant name='kLSSharedFileListRecentApplicationItems' type='^{__CFString=}' />
+  <constant name='kLSSharedFileListRecentDocumentItems' type='^{__CFString=}' />
+  <constant name='kLSSharedFileListRecentItemsMaxAmount' type='^{__CFString=}' />
+  <constant name='kLSSharedFileListRecentServerItems' type='^{__CFString=}' />
+  <constant name='kLSSharedFileListSessionLoginItems' type='^{__CFString=}' />
+  <constant name='kLSSharedFileListVolumesComputerVisible' type='^{__CFString=}' />
+  <constant name='kLSSharedFileListVolumesIDiskVisible' type='^{__CFString=}' />
+  <constant name='kLSSharedFileListVolumesNetworkVisible' type='^{__CFString=}' />
+  <constant name='kUTExportedTypeDeclarationsKey' type='^{__CFString=}' />
+  <constant name='kUTImportedTypeDeclarationsKey' type='^{__CFString=}' />
+  <constant name='kUTTagClassFilenameExtension' type='^{__CFString=}' />
+  <constant name='kUTTagClassMIMEType' type='^{__CFString=}' />
+  <constant name='kUTTagClassNSPboardType' type='^{__CFString=}' />
+  <constant name='kUTTagClassOSType' type='^{__CFString=}' />
+  <constant name='kUTTypeAliasFile' type='^{__CFString=}' />
+  <constant name='kUTTypeAliasRecord' type='^{__CFString=}' />
+  <constant name='kUTTypeAppleICNS' type='^{__CFString=}' />
+  <constant name='kUTTypeAppleProtectedMPEG4Audio' type='^{__CFString=}' />
+  <constant name='kUTTypeApplication' type='^{__CFString=}' />
+  <constant name='kUTTypeApplicationBundle' type='^{__CFString=}' />
+  <constant name='kUTTypeApplicationFile' type='^{__CFString=}' />
+  <constant name='kUTTypeArchive' type='^{__CFString=}' />
+  <constant name='kUTTypeAudio' type='^{__CFString=}' />
+  <constant name='kUTTypeAudiovisualContent' type='^{__CFString=}' />
+  <constant name='kUTTypeBMP' type='^{__CFString=}' />
+  <constant name='kUTTypeBundle' type='^{__CFString=}' />
+  <constant name='kUTTypeCHeader' type='^{__CFString=}' />
+  <constant name='kUTTypeCPlusPlusHeader' type='^{__CFString=}' />
+  <constant name='kUTTypeCPlusPlusSource' type='^{__CFString=}' />
+  <constant name='kUTTypeCSource' type='^{__CFString=}' />
+  <constant name='kUTTypeCompositeContent' type='^{__CFString=}' />
+  <constant name='kUTTypeConformsToKey' type='^{__CFString=}' />
+  <constant name='kUTTypeContact' type='^{__CFString=}' />
+  <constant name='kUTTypeContent' type='^{__CFString=}' />
+  <constant name='kUTTypeData' type='^{__CFString=}' />
+  <constant name='kUTTypeDescriptionKey' type='^{__CFString=}' />
+  <constant name='kUTTypeDirectory' type='^{__CFString=}' />
+  <constant name='kUTTypeDiskImage' type='^{__CFString=}' />
+  <constant name='kUTTypeFileURL' type='^{__CFString=}' />
+  <constant name='kUTTypeFlatRTFD' type='^{__CFString=}' />
+  <constant name='kUTTypeFolder' type='^{__CFString=}' />
+  <constant name='kUTTypeFramework' type='^{__CFString=}' />
+  <constant name='kUTTypeGIF' type='^{__CFString=}' />
+  <constant name='kUTTypeHTML' type='^{__CFString=}' />
+  <constant name='kUTTypeICO' type='^{__CFString=}' />
+  <constant name='kUTTypeIconFileKey' type='^{__CFString=}' />
+  <constant name='kUTTypeIdentifierKey' type='^{__CFString=}' />
+  <constant name='kUTTypeImage' type='^{__CFString=}' />
+  <constant name='kUTTypeInkText' type='^{__CFString=}' />
+  <constant name='kUTTypeItem' type='^{__CFString=}' />
+  <constant name='kUTTypeJPEG' type='^{__CFString=}' />
+  <constant name='kUTTypeJPEG2000' type='^{__CFString=}' />
+  <constant name='kUTTypeJavaSource' type='^{__CFString=}' />
+  <constant name='kUTTypeMP3' type='^{__CFString=}' />
+  <constant name='kUTTypeMPEG' type='^{__CFString=}' />
+  <constant name='kUTTypeMPEG4' type='^{__CFString=}' />
+  <constant name='kUTTypeMPEG4Audio' type='^{__CFString=}' />
+  <constant name='kUTTypeMessage' type='^{__CFString=}' />
+  <constant name='kUTTypeMountPoint' type='^{__CFString=}' />
+  <constant name='kUTTypeMovie' type='^{__CFString=}' />
+  <constant name='kUTTypeObjectiveCPlusPlusSource' type='^{__CFString=}' />
+  <constant name='kUTTypeObjectiveCSource' type='^{__CFString=}' />
+  <constant name='kUTTypePDF' type='^{__CFString=}' />
+  <constant name='kUTTypePICT' type='^{__CFString=}' />
+  <constant name='kUTTypePNG' type='^{__CFString=}' />
+  <constant name='kUTTypePackage' type='^{__CFString=}' />
+  <constant name='kUTTypePlainText' type='^{__CFString=}' />
+  <constant name='kUTTypeQuickTimeImage' type='^{__CFString=}' />
+  <constant name='kUTTypeQuickTimeMovie' type='^{__CFString=}' />
+  <constant name='kUTTypeRTF' type='^{__CFString=}' />
+  <constant name='kUTTypeRTFD' type='^{__CFString=}' />
+  <constant name='kUTTypeReferenceURLKey' type='^{__CFString=}' />
+  <constant name='kUTTypeResolvable' type='^{__CFString=}' />
+  <constant name='kUTTypeSourceCode' type='^{__CFString=}' />
+  <constant name='kUTTypeSymLink' type='^{__CFString=}' />
+  <constant name='kUTTypeTIFF' type='^{__CFString=}' />
+  <constant name='kUTTypeTXNTextAndMultimediaData' type='^{__CFString=}' />
+  <constant name='kUTTypeTagSpecificationKey' type='^{__CFString=}' />
+  <constant name='kUTTypeText' type='^{__CFString=}' />
+  <constant name='kUTTypeURL' type='^{__CFString=}' />
+  <constant name='kUTTypeUTF16ExternalPlainText' type='^{__CFString=}' />
+  <constant name='kUTTypeUTF16PlainText' type='^{__CFString=}' />
+  <constant name='kUTTypeUTF8PlainText' type='^{__CFString=}' />
+  <constant name='kUTTypeVCard' type='^{__CFString=}' />
+  <constant name='kUTTypeVersionKey' type='^{__CFString=}' />
+  <constant name='kUTTypeVideo' type='^{__CFString=}' />
+  <constant name='kUTTypeVolume' type='^{__CFString=}' />
+  <constant name='kUTTypeWebArchive' type='^{__CFString=}' />
+  <constant name='kUTTypeXML' type='^{__CFString=}' />
+  <enum name='appleMenuFolderIconResource' value='-3982' />
+  <enum name='controlPanelFolderIconResource' value='-3976' />
+  <enum name='desktopIconResource' value='-3992' />
+  <enum name='dropFolderIconResource' value='-3979' />
+  <enum name='extensionsFolderIconResource' value='-3973' />
+  <enum name='floppyIconResource' value='-3998' />
+  <enum name='fontsFolderIconResource' value='-3968' />
+  <enum name='fullTrashIconResource' value='-3984' />
+  <enum name='genericApplicationIconResource' value='-3996' />
+  <enum name='genericCDROMIconResource' value='-3987' />
+  <enum name='genericDeskAccessoryIconResource' value='-3991' />
+  <enum name='genericDocumentIconResource' value='-4000' />
+  <enum name='genericEditionFileIconResource' value='-3989' />
+  <enum name='genericExtensionIconResource' value='-16415' />
+  <enum name='genericFileServerIconResource' value='-3972' />
+  <enum name='genericFolderIconResource' value='-3999' />
+  <enum name='genericHardDiskIconResource' value='-3995' />
+  <enum name='genericMoverObjectIconResource' value='-3969' />
+  <enum name='genericPreferencesIconResource' value='-3971' />
+  <enum name='genericQueryDocumentIconResource' value='-16506' />
+  <enum name='genericRAMDiskIconResource' value='-3988' />
+  <enum name='genericStationeryIconResource' value='-3985' />
+  <enum name='genericSuitcaseIconResource' value='-3970' />
+  <enum name='kAFPServerIcon' value='1634103411' />
+  <enum name='kAlertCautionBadgeIcon' value='1667392615' />
+  <enum name='kAlertCautionIcon' value='1667331444' />
+  <enum name='kAlertNoteIcon' value='1852798053' />
+  <enum name='kAlertStopIcon' value='1937010544' />
+  <enum name='kAliasBadgeIcon' value='1633838183' />
+  <enum name='kAppearanceFolderIcon' value='1634758770' />
+  <enum name='kAppleExtrasFolderIcon' value='1634040004' />
+  <enum name='kAppleLogoIcon' value='1667330156' />
+  <enum name='kAppleMenuFolderIcon' value='1634561653' />
+  <enum name='kAppleMenuFolderIconResource' value='-3982' />
+  <enum name='kAppleMenuIcon' value='1935765612' />
+  <enum name='kAppleScriptBadgeIcon' value='1935897200' />
+  <enum name='kAppleTalkIcon' value='1635019883' />
+  <enum name='kAppleTalkZoneIcon' value='1635023470' />
+  <enum name='kApplicationSupportFolderIcon' value='1634956656' />
+  <enum name='kApplicationsFolderIcon' value='1634758771' />
+  <enum name='kAssistantsFolderIcon' value='1634956484' />
+  <enum name='kBackwardArrowIcon' value='1650553455' />
+  <enum name='kBurningIcon' value='1651864174' />
+  <enum name='kClipboardIcon' value='1129072976' />
+  <enum name='kClippingPictureTypeIcon' value='1668051056' />
+  <enum name='kClippingSoundTypeIcon' value='1668051059' />
+  <enum name='kClippingTextTypeIcon' value='1668051060' />
+  <enum name='kClippingUnknownTypeIcon' value='1668051061' />
+  <enum name='kColorSyncFolderIcon' value='1886547814' />
+  <enum name='kComputerIcon' value='1919905652' />
+  <enum name='kConnectToIcon' value='1668178804' />
+  <enum name='kContextualMenuItemsFolderIcon' value='1668116085' />
+  <enum name='kControlPanelDisabledFolderIcon' value='1668575812' />
+  <enum name='kControlPanelFolderIcon' value='1668575852' />
+  <enum name='kControlPanelFolderIconResource' value='-3976' />
+  <enum name='kControlStripModulesFolderIcon' value='1935963844' />
+  <enum name='kDeleteAliasIcon' value='1684106345' />
+  <enum name='kDesktopIcon' value='1684370283' />
+  <enum name='kDesktopIconResource' value='-3992' />
+  <enum name='kDocumentsFolderIcon' value='1685021555' />
+  <enum name='kDropFolderIcon' value='1684172664' />
+  <enum name='kDropFolderIconResource' value='-3979' />
+  <enum name='kEjectMediaIcon' value='1701471587' />
+  <enum name='kExtensionsDisabledFolderIcon' value='1702392900' />
+  <enum name='kExtensionsFolderIcon' value='1702392942' />
+  <enum name='kExtensionsFolderIconResource' value='-3973' />
+  <enum name='kFTPServerIcon' value='1718906995' />
+  <enum name='kFavoriteItemsIcon' value='1717663346' />
+  <enum name='kFavoritesFolderIcon' value='1717663347' />
+  <enum name='kFinderIcon' value='1179534418' />
+  <enum name='kFloppyIconResource' value='-3998' />
+  <enum name='kFontSuitcaseIcon' value='1179011404' />
+  <enum name='kFontsFolderIcon' value='1718578804' />
+  <enum name='kFontsFolderIconResource' value='-3968' />
+  <enum name='kForwardArrowIcon' value='1717662319' />
+  <enum name='kFullTrashIcon' value='1718907496' />
+  <enum name='kFullTrashIconResource' value='-3984' />
+  <enum name='kGenericApplicationIcon' value='1095782476' />
+  <enum name='kGenericApplicationIconResource' value='-3996' />
+  <enum name='kGenericCDROMIcon' value='1667523698' />
+  <enum name='kGenericCDROMIconResource' value='-3987' />
+  <enum name='kGenericComponentIcon' value='1953001063' />
+  <enum name='kGenericControlPanelIcon' value='1095782467' />
+  <enum name='kGenericControlStripModuleIcon' value='1935959414' />
+  <enum name='kGenericDeskAccessoryIcon' value='1095782468' />
+  <enum name='kGenericDeskAccessoryIconResource' value='-3991' />
+  <enum name='kGenericDocumentIcon' value='1685021557' />
+  <enum name='kGenericDocumentIconResource' value='-4000' />
+  <enum name='kGenericEditionFileIcon' value='1701082214' />
+  <enum name='kGenericEditionFileIconResource' value='-3989' />
+  <enum name='kGenericExtensionIcon' value='1229867348' />
+  <enum name='kGenericExtensionIconResource' value='-16415' />
+  <enum name='kGenericFileServerIcon' value='1936881266' />
+  <enum name='kGenericFileServerIconResource' value='-3972' />
+  <enum name='kGenericFloppyIcon' value='1718382713' />
+  <enum name='kGenericFolderIcon' value='1718379634' />
+  <enum name='kGenericFolderIconResource' value='-3999' />
+  <enum name='kGenericFontIcon' value='1717987692' />
+  <enum name='kGenericFontScalerIcon' value='1935895666' />
+  <enum name='kGenericHardDiskIcon' value='1751413611' />
+  <enum name='kGenericHardDiskIconResource' value='-3995' />
+  <enum name='kGenericIDiskIcon' value='1768190827' />
+  <enum name='kGenericMoverObjectIcon' value='1836021362' />
+  <enum name='kGenericMoverObjectIconResource' value='-3969' />
+  <enum name='kGenericNetworkIcon' value='1735288180' />
+  <enum name='kGenericPCCardIcon' value='1885564259' />
+  <enum name='kGenericPreferencesIcon' value='1886545254' />
+  <enum name='kGenericPreferencesIconResource' value='-3971' />
+  <enum name='kGenericQueryDocumentIcon' value='1902473849' />
+  <enum name='kGenericQueryDocumentIconResource' value='-16506' />
+  <enum name='kGenericRAMDiskIcon' value='1918987620' />
+  <enum name='kGenericRAMDiskIconResource' value='-3988' />
+  <enum name='kGenericRemovableMediaIcon' value='1919774582' />
+  <enum name='kGenericSharedLibaryIcon' value='1936223330' />
+  <enum name='kGenericStationeryIcon' value='1935961955' />
+  <enum name='kGenericStationeryIconResource' value='-3985' />
+  <enum name='kGenericSuitcaseIcon' value='1937074548' />
+  <enum name='kGenericSuitcaseIconResource' value='-3970' />
+  <enum name='kGenericURLIcon' value='1735750252' />
+  <enum name='kGenericWORMIcon' value='2003792493' />
+  <enum name='kGenericWindowIcon' value='1735879022' />
+  <enum name='kGridIcon' value='1735551332' />
+  <enum name='kGroupIcon' value='1735554416' />
+  <enum name='kGuestUserIcon' value='1735750514' />
+  <enum name='kHTTPServerIcon' value='1752461427' />
+  <enum name='kHelpFolderIcon' value='-999789456' />
+  <enum name='kHelpIcon' value='1751477360' />
+  <enum name='kHelpIconResource' value='-20271' />
+  <enum name='kIPFileServerIcon' value='1769173622' />
+  <enum name='kIconServicesCatalogInfoMask' value='531550' />
+  <enum name='kIconServicesNoBadgeFlag' value='1' />
+  <enum name='kIconServicesNormalUsageFlag' value='0' />
+  <enum name='kIconServicesUpdateIfNeededFlag' value='2' />
+  <enum name='kInternationResourcesIcon' value='1768319340' />
+  <enum name='kInternationalResourcesIcon' value='1768319340' />
+  <enum name='kInternetFolderIcon' value='1768846532' />
+  <enum name='kInternetLocationAppleShareIcon' value='1768710502' />
+  <enum name='kInternetLocationAppleTalkZoneIcon' value='1768710516' />
+  <enum name='kInternetLocationFTPIcon' value='1768711796' />
+  <enum name='kInternetLocationFileIcon' value='1768711785' />
+  <enum name='kInternetLocationGenericIcon' value='1768712037' />
+  <enum name='kInternetLocationHTTPIcon' value='1768712308' />
+  <enum name='kInternetLocationMailIcon' value='1768713569' />
+  <enum name='kInternetLocationNSLNeighborhoodIcon' value='1768713843' />
+  <enum name='kInternetLocationNewsIcon' value='1768713847' />
+  <enum name='kInternetPlugInFolderIcon' value='-999398028' />
+  <enum name='kInternetSearchSitesFolderIcon' value='1769173862' />
+  <enum name='kKeepArrangedIcon' value='1634889319' />
+  <enum name='kKeyboardLayoutIcon' value='1801873772' />
+  <enum name='kLSAppDoesNotClaimTypeErr' value='-10820' />
+  <enum name='kLSAppDoesNotSupportSchemeWarning' value='-10821' />
+  <enum name='kLSAppInTrashErr' value='-10660' />
+  <enum name='kLSApplicationNotFoundErr' value='-10814' />
+  <enum name='kLSAttributeNotFoundErr' value='-10662' />
+  <enum name='kLSAttributeNotSettableErr' value='-10663' />
+  <enum name='kLSCannotSetInfoErr' value='-10823' />
+  <enum name='kLSDataErr' value='-10817' />
+  <enum name='kLSDataTooOldErr' value='-10816' />
+  <enum name='kLSDataUnavailableErr' value='-10813' />
+  <enum name='kLSExecutableIncorrectFormat' value='-10661' />
+  <enum name='kLSHandlerOptionsDefault' value='0' />
+  <enum name='kLSHandlerOptionsIgnoreCreator' value='1' />
+  <enum name='kLSIncompatibleSystemVersionErr' value='-10825' />
+  <enum name='kLSInitializeDefaults' value='1' />
+  <enum name='kLSInvalidExtensionIndex' value='4294967295' value64='18446744073709551615' />
+  <enum name='kLSItemInfoAppIsScriptable' value='2048' />
+  <enum name='kLSItemInfoAppPrefersClassic' value='1024' />
+  <enum name='kLSItemInfoAppPrefersNative' value='512' />
+  <enum name='kLSItemInfoExtensionIsHidden' value='1048576' />
+  <enum name='kLSItemInfoIsAliasFile' value='16' />
+  <enum name='kLSItemInfoIsApplication' value='4' />
+  <enum name='kLSItemInfoIsClassicApp' value='256' />
+  <enum name='kLSItemInfoIsContainer' value='8' />
+  <enum name='kLSItemInfoIsInvisible' value='64' />
+  <enum name='kLSItemInfoIsNativeApp' value='128' />
+  <enum name='kLSItemInfoIsPackage' value='2' />
+  <enum name='kLSItemInfoIsPlainFile' value='1' />
+  <enum name='kLSItemInfoIsSymlink' value='32' />
+  <enum name='kLSItemInfoIsVolume' value='4096' />
+  <enum name='kLSLaunchAndDisplayErrors' value='64' />
+  <enum name='kLSLaunchAndHide' value='1048576' />
+  <enum name='kLSLaunchAndHideOthers' value='2097152' />
+  <enum name='kLSLaunchAndPrint' value='2' />
+  <enum name='kLSLaunchAsync' value='65536' />
+  <enum name='kLSLaunchDefaults' value='1' />
+  <enum name='kLSLaunchDontAddToRecents' value='256' />
+  <enum name='kLSLaunchDontSwitch' value='512' />
+  <enum name='kLSLaunchHasUntrustedContents' value='4194304' />
+  <enum name='kLSLaunchInClassic' value='262144' />
+  <enum name='kLSLaunchInProgressErr' value='-10818' />
+  <enum name='kLSLaunchInhibitBGOnly' value='128' />
+  <enum name='kLSLaunchNewInstance' value='524288' />
+  <enum name='kLSLaunchNoParams' value='2048' />
+  <enum name='kLSLaunchReserved2' value='4' />
+  <enum name='kLSLaunchReserved3' value='8' />
+  <enum name='kLSLaunchReserved4' value='16' />
+  <enum name='kLSLaunchReserved5' value='32' />
+  <enum name='kLSLaunchStartClassic' value='131072' />
+  <enum name='kLSMinCatInfoBitmap' value='6154' />
+  <enum name='kLSMultipleSessionsNotSupportedErr' value='-10829' />
+  <enum name='kLSNoClassicEnvironmentErr' value='-10828' />
+  <enum name='kLSNoExecutableErr' value='-10827' />
+  <enum name='kLSNoLaunchPermissionErr' value='-10826' />
+  <enum name='kLSNoRegistrationInfoErr' value='-10824' />
+  <enum name='kLSNotAnApplicationErr' value='-10811' />
+  <enum name='kLSNotInitializedErr' value='-10812' />
+  <enum name='kLSNotRegisteredErr' value='-10819' />
+  <enum name='kLSRequestAllFlags' value='16' />
+  <enum name='kLSRequestAllInfo' value='-1' />
+  <enum name='kLSRequestAppTypeFlags' value='8' />
+  <enum name='kLSRequestBasicFlagsOnly' value='4' />
+  <enum name='kLSRequestExtension' value='1' />
+  <enum name='kLSRequestExtensionFlagsOnly' value='64' />
+  <enum name='kLSRequestIconAndKind' value='32' />
+  <enum name='kLSRequestTypeCreator' value='2' />
+  <enum name='kLSRolesAll' value='-1' />
+  <enum name='kLSRolesEditor' value='4' />
+  <enum name='kLSRolesNone' value='1' />
+  <enum name='kLSRolesShell' value='8' />
+  <enum name='kLSRolesViewer' value='2' />
+  <enum name='kLSServerCommunicationErr' value='-10822' />
+  <enum name='kLSSharedFileListDoNotMountVolumes' value='2' />
+  <enum name='kLSSharedFileListNoUserInteraction' value='1' />
+  <enum name='kLSUnknownCreator' value='0' />
+  <enum name='kLSUnknownErr' value='-10810' />
+  <enum name='kLSUnknownKindID' value='0' />
+  <enum name='kLSUnknownType' value='0' />
+  <enum name='kLSUnknownTypeErr' value='-10815' />
+  <enum name='kLocalesFolderIcon' value='-999526557' />
+  <enum name='kLockedBadgeIcon' value='1818387559' />
+  <enum name='kLockedIcon' value='1819239275' />
+  <enum name='kMacOSReadMeFolderIcon' value='1836020420' />
+  <enum name='kMountedBadgeIcon' value='1835164775' />
+  <enum name='kMountedFolderIcon' value='1835955300' />
+  <enum name='kMountedFolderIconResource' value='-3977' />
+  <enum name='kNoFilesIcon' value='1852205420' />
+  <enum name='kNoFolderIcon' value='1852206180' />
+  <enum name='kNoWriteIcon' value='1853321844' />
+  <enum name='kOpenFolderIcon' value='1868983396' />
+  <enum name='kOpenFolderIconResource' value='-3997' />
+  <enum name='kOwnedFolderIcon' value='1870098020' />
+  <enum name='kOwnedFolderIconResource' value='-3980' />
+  <enum name='kOwnerIcon' value='1937077106' />
+  <enum name='kPreferencesFolderIcon' value='1886545604' />
+  <enum name='kPreferencesFolderIconResource' value='-3974' />
+  <enum name='kPrintMonitorFolderIcon' value='1886547572' />
+  <enum name='kPrintMonitorFolderIconResource' value='-3975' />
+  <enum name='kPrinterDescriptionFolderIcon' value='1886413926' />
+  <enum name='kPrinterDriverFolderIcon' value='-999263644' />
+  <enum name='kPrivateFolderIcon' value='1886549606' />
+  <enum name='kPrivateFolderIconResource' value='-3994' />
+  <enum name='kProtectedApplicationFolderIcon' value='1885433968' />
+  <enum name='kProtectedSystemFolderIcon' value='1886615923' />
+  <enum name='kPublicFolderIcon' value='1886741094' />
+  <enum name='kQuestionMarkIcon' value='1903519091' />
+  <enum name='kRecentApplicationsFolderIcon' value='1918988400' />
+  <enum name='kRecentDocumentsFolderIcon' value='1919184739' />
+  <enum name='kRecentItemsIcon' value='1919118964' />
+  <enum name='kRecentServersFolderIcon' value='1920168566' />
+  <enum name='kRightContainerArrowIcon' value='1919115634' />
+  <enum name='kScriptingAdditionsFolderIcon' value='-999070862' />
+  <enum name='kScriptsFolderIcon' value='1935897284' />
+  <enum name='kSharedBadgeIcon' value='1935828071' />
+  <enum name='kSharedFolderIcon' value='1936221804' />
+  <enum name='kSharedFolderIconResource' value='-3978' />
+  <enum name='kSharedLibrariesFolderIcon' value='-999528094' />
+  <enum name='kSharingPrivsNotApplicableIcon' value='1936223841' />
+  <enum name='kSharingPrivsReadOnlyIcon' value='1936224879' />
+  <enum name='kSharingPrivsReadWriteIcon' value='1936224887' />
+  <enum name='kSharingPrivsUnknownIcon' value='1936225643' />
+  <enum name='kSharingPrivsWritableIcon' value='2003986804' />
+  <enum name='kShortcutIcon' value='1936224884' />
+  <enum name='kShutdownItemsDisabledFolderIcon' value='1936221252' />
+  <enum name='kShutdownItemsFolderIcon' value='1936221286' />
+  <enum name='kSortAscendingIcon' value='1634954852' />
+  <enum name='kSortDescendingIcon' value='1685286500' />
+  <enum name='kSoundFileIcon' value='1936091500' />
+  <enum name='kSpeakableItemsFolder' value='1936747369' />
+  <enum name='kStartupFolderIconResource' value='-3981' />
+  <enum name='kStartupItemsDisabledFolderIcon' value='1937011268' />
+  <enum name='kStartupItemsFolderIcon' value='1937011316' />
+  <enum name='kSystemExtensionDisabledFolderIcon' value='1835098948' />
+  <enum name='kSystemFolderIcon' value='1835098995' />
+  <enum name='kSystemFolderIconResource' value='-3983' />
+  <enum name='kSystemIconsCreator' value='1835098995' />
+  <enum name='kSystemSuitcaseIcon' value='2054388083' />
+  <enum name='kTextEncodingsFolderIcon' value='-999004808' />
+  <enum name='kToolbarCustomizeIcon' value='1952675187' />
+  <enum name='kToolbarDeleteIcon' value='1952736620' />
+  <enum name='kToolbarFavoritesIcon' value='1952866678' />
+  <enum name='kToolbarHomeIcon' value='1953001325' />
+  <enum name='kTrashIcon' value='1953657704' />
+  <enum name='kTrashIconResource' value='-3993' />
+  <enum name='kTrueTypeFlatFontIcon' value='1936092788' />
+  <enum name='kTrueTypeFontIcon' value='1952868716' />
+  <enum name='kTrueTypeMultiFlatFontIcon' value='1953784678' />
+  <enum name='kUnknownFSObjectIcon' value='1970169459' />
+  <enum name='kUnlockedIcon' value='1970037611' />
+  <enum name='kUserFolderIcon' value='1969646692' />
+  <enum name='kUserIDiskIcon' value='1969517419' />
+  <enum name='kUserIcon' value='1970496882' />
+  <enum name='kUsersFolderIcon' value='1970500292' />
+  <enum name='kUtilitiesFolderIcon' value='1970563524' />
+  <enum name='kVoicesFolderIcon' value='1719037795' />
+  <enum name='kWorkgroupFolderIcon' value='2003201124' />
+  <enum name='mountedFolderIconResource' value='-3977' />
+  <enum name='openFolderIconResource' value='-3997' />
+  <enum name='ownedFolderIconResource' value='-3980' />
+  <enum name='preferencesFolderIconResource' value='-3974' />
+  <enum name='printMonitorFolderIconResource' value='-3975' />
+  <enum name='privateFolderIconResource' value='-3994' />
+  <enum name='sharedFolderIconResource' value='-3978' />
+  <enum name='startupFolderIconResource' value='-3981' />
+  <enum name='systemFolderIconResource' value='-3983' />
+  <enum name='trashIconResource' value='-3993' />
+  <function name='AcquireIconRef'>
+    <retval type='s' />
+    <arg type='^{OpaqueIconRef=}' />
+  </function>
+  <function name='CompositeIconRef'>
+    <retval type='s' />
+    <arg type='^{OpaqueIconRef=}' />
+    <arg type='^{OpaqueIconRef=}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='FlushIconRefs'>
+    <retval type='s' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='FlushIconRefsByVolume'>
+    <retval type='s' />
+    <arg type='s' />
+  </function>
+  <function name='GetCustomIconsEnabled'>
+    <retval type='s' />
+    <arg type='s' />
+    <arg type='^B' type64='^B' />
+  </function>
+  <function name='GetIconRef'>
+    <retval type='s' />
+    <arg type='s' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='GetIconRefFromComponent'>
+    <retval type='l' type64='i' />
+    <arg type='^{ComponentRecord=[1l]}' type64='^{ComponentRecord=[1q]}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='GetIconRefFromFile'>
+    <retval type='s' />
+    <arg type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg type='^s' type64='^s' />
+  </function>
+  <function name='GetIconRefFromFileInfo'>
+    <retval type='l' type64='i' />
+    <arg type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+    <arg type='L' type64='L' />
+    <arg type='^S' type64='^S' />
+    <arg type='L' type64='L' />
+    <arg type='^{FSCatalogInfo=SsIICCCC{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}[4I][16C][16C]QQQQII}' type64='^{FSCatalogInfo=SsIICCCC{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{FSPermissionInfo=IICCS^{__FSFileSecurity}}[16C][16C]QQQQII}' />
+    <arg type='L' type64='L' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg type='^s' type64='^s' />
+  </function>
+  <function name='GetIconRefFromFolder'>
+    <retval type='s' />
+    <arg type='s' />
+    <arg type='l' type64='l' />
+    <arg type='l' type64='l' />
+    <arg type='c' />
+    <arg type='c' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='GetIconRefFromIconFamilyPtr'>
+    <retval type='l' type64='i' />
+    <arg type='^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}' type64='^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}' />
+    <arg type='l' type64='l' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='GetIconRefFromTypeInfo'>
+    <retval type='s' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='L' type64='L' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='GetIconRefOwners'>
+    <retval type='s' />
+    <arg type='^{OpaqueIconRef=}' />
+    <arg type='^S' type64='^S' />
+  </function>
+  <function name='IsDataAvailableInIconRef'>
+    <retval type='B' />
+    <arg type='L' type64='L' />
+    <arg type='^{OpaqueIconRef=}' />
+  </function>
+  <function name='IsIconRefComposite'>
+    <retval type='s' />
+    <arg type='^{OpaqueIconRef=}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='IsValidIconRef'>
+    <retval type='B' />
+    <arg type='^{OpaqueIconRef=}' />
+  </function>
+  <function name='LSCanRefAcceptItem'>
+    <retval type='l' type64='i' />
+    <arg type='r^{FSRef=[80C]}' type64='r^{FSRef=[80C]}' />
+    <arg type='r^{FSRef=[80C]}' type64='r^{FSRef=[80C]}' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='LSCanURLAcceptURL'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='LSCopyAllHandlersForURLScheme'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='LSCopyAllRoleHandlersForContentType'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='LSCopyApplicationForMIMEType'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFString=}' />
+    <arg type='L' type64='L' />
+    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+  </function>
+  <function name='LSCopyApplicationURLsForURL'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='LSCopyDefaultHandlerForURLScheme'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='LSCopyDefaultRoleHandlerForContentType'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='LSCopyDisplayNameForRef'>
+    <retval type='l' type64='i' />
+    <arg type='^{FSRef=[80C]}' type_modifier='n' />
+    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+  </function>
+  <function name='LSCopyDisplayNameForURL'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFURL=}' />
+    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+  </function>
+  <function name='LSCopyItemAttribute'>
+    <retval type='l' type64='i' />
+    <arg type='^{FSRef=[80C]}' type_modifier='n' />
+    <arg type='L' type64='L' />
+    <arg type='^{__CFString=}' />
+    <arg already_retained='true' type='^@' type_modifier='o' />
+  </function>
+  <function name='LSCopyItemAttributes'>
+    <retval type='l' type64='i' />
+    <arg type='^{FSRef=[80C]}' type_modifier='n' />
+    <arg type='L' type64='L' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^^{__CFDictionary}' type_modifier='o' />
+  </function>
+  <function name='LSCopyItemInfoForRef'>
+    <retval type='l' type64='i' />
+    <arg type='^{FSRef=[80C]}' type_modifier='n' />
+    <arg type='L' type64='L' />
+    <arg type='^{LSItemInfoRecord=III^{__CFString}^{__CFString}I}' type64='^{LSItemInfoRecord=III^{__CFString}^{__CFString}I}' type_modifier='o' />
+  </function>
+  <function name='LSCopyItemInfoForURL'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFURL=}' />
+    <arg type='L' type64='L' />
+    <arg type='^{LSItemInfoRecord=III^{__CFString}^{__CFString}I}' type64='^{LSItemInfoRecord=III^{__CFString}^{__CFString}I}' type_modifier='o' />
+  </function>
+  <function name='LSCopyKindStringForMIMEType'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFString=}' />
+    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+  </function>
+  <function name='LSCopyKindStringForRef'>
+    <retval type='l' type64='i' />
+    <arg type='^{FSRef=[80C]}' type_modifier='n' />
+    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+  </function>
+  <function name='LSCopyKindStringForTypeInfo'>
+    <retval type='l' type64='i' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^{__CFString=}' />
+    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+  </function>
+  <function name='LSCopyKindStringForURL'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFURL=}' />
+    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+  </function>
+  <function name='LSFindApplicationForInfo'>
+    <retval type='l' type64='i' />
+    <arg type='L' type64='L' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{FSRef=[80C]}' type_modifier='o' />
+    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+  </function>
+  <function name='LSGetApplicationForInfo'>
+    <retval type='l' type64='i' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^{__CFString=}' />
+    <arg type='L' type64='L' />
+    <arg type='^{FSRef=[80C]}' type_modifier='o' />
+    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+  </function>
+  <function name='LSGetApplicationForItem'>
+    <retval type='l' type64='i' />
+    <arg type='^{FSRef=[80C]}' type_modifier='n' />
+    <arg type='L' type64='L' />
+    <arg type='^{FSRef=[80C]}' type_modifier='o' />
+    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+  </function>
+  <function name='LSGetApplicationForURL'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFURL=}' />
+    <arg type='L' type64='L' />
+    <arg type='^{FSRef=[80C]}' type_modifier='o' />
+    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+  </function>
+  <function name='LSGetExtensionInfo'>
+    <retval type='l' type64='i' />
+    <arg type='L' type64='L' />
+    <arg c_array_length_in_arg='0' type='^S' type_modifier='n' unicode_string='true' />
+    <arg type='^I' type64='^I' type_modifier='o' />
+  </function>
+  <function name='LSGetHandlerOptionsForContentType'>
+    <retval type='L' type64='I' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='LSInit'>
+    <retval type='l' type64='i' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='LSOpenApplication'>
+    <retval type='l' type64='i' />
+    <arg type='^{LSApplicationParameters=iI^{FSRef}^v^{__CFDictionary}^{__CFArray}^{AEDesc}}' type64='^{LSApplicationParameters=iI^{FSRef}^v^{__CFDictionary}^{__CFArray}^{AEDesc}}' type_modifier='n' />
+    <arg type='^{ProcessSerialNumber=II}' type_modifier='o' />
+  </function>
+  <function name='LSOpenCFURLRef'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFURL=}' />
+    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+  </function>
+  <function name='LSOpenFSRef'>
+    <retval type='l' type64='i' />
+    <arg type='^{FSRef=[80C]}' type_modifier='n' />
+    <arg type='^{FSRef=[80C]}' type_modifier='o' />
+  </function>
+  <function name='LSOpenFromRefSpec'>
+    <retval type='l' type64='i' />
+    <arg type='^{LSLaunchFSRefSpec=^{FSRef}I^{FSRef}^{AEDesc}I^v}' type64='^{LSLaunchFSRefSpec=^{FSRef}I^{FSRef}^{AEDesc}I^v}' type_modifier='n' />
+    <arg type='^{FSRef=[80C]}' type_modifier='o' />
+  </function>
+  <function name='LSOpenFromURLSpec'>
+    <retval type='l' type64='i' />
+    <arg type='^{LSLaunchURLSpec=^{__CFURL}^{__CFArray}^{AEDesc}I^v}' type_modifier='n' />
+    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+  </function>
+  <function name='LSOpenItemsWithRole'>
+    <retval type='l' type64='i' />
+    <arg c_array_length_in_arg='1' type='^{FSRef=[80C]}' type_modifier='n' />
+    <arg type='l' type64='l' />
+    <arg type='L' type64='L' />
+    <arg type='^{AEKeyDesc=I{AEDesc=I^^{OpaqueAEDataStorageType}}}' type_modifier='n' />
+    <arg type='^{LSApplicationParameters=iI^{FSRef}^v^{__CFDictionary}^{__CFArray}^{AEDesc}}' type64='^{LSApplicationParameters=iI^{FSRef}^v^{__CFDictionary}^{__CFArray}^{AEDesc}}' type_modifier='n' />
+    <arg type='^{ProcessSerialNumber=II}' type_modifier='o' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='LSOpenURLsWithRole'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFArray=}' />
+    <arg type='L' type64='L' />
+    <arg type='^{AEKeyDesc=I{AEDesc=I^^{OpaqueAEDataStorageType}}}' type_modifier='n' />
+    <arg type='^{LSApplicationParameters=iI^{FSRef}^v^{__CFDictionary}^{__CFArray}^{AEDesc}}' type64='^{LSApplicationParameters=iI^{FSRef}^v^{__CFDictionary}^{__CFArray}^{AEDesc}}' type_modifier='n' />
+    <arg type='^{ProcessSerialNumber=II}' type_modifier='o' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='LSRegisterFSRef'>
+    <retval type='l' type64='i' />
+    <arg type='^{FSRef=[80C]}' type_modifier='n' />
+    <arg type='B' />
+  </function>
+  <function name='LSRegisterURL'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFURL=}' />
+    <arg type='B' />
+  </function>
+  <function name='LSSetDefaultHandlerForURLScheme'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='LSSetDefaultRoleHandlerForContentType'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFString=}' />
+    <arg type='L' type64='L' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='LSSetExtensionHiddenForRef'>
+    <retval type='l' type64='i' />
+    <arg type='^{FSRef=[80C]}' type_modifier='n' />
+    <arg type='B' />
+  </function>
+  <function name='LSSetExtensionHiddenForURL'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFURL=}' />
+    <arg type='B' />
+  </function>
+  <function name='LSSetHandlerOptionsForContentType'>
+    <retval type='l' type64='i' />
+    <arg type='^{__CFString=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='LSSetItemAttribute'>
+    <retval type='l' type64='i' />
+    <arg type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+    <arg type='L' type64='L' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' />
+  </function>
+  <function name='LSSharedFileListAddObserver'>
+    <arg type='^{OpaqueLSSharedFileListRef=}' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function name='LSSharedFileListCopyProperty'>
+    <retval already_cfretained='true' type='@' />
+    <arg type='^{OpaqueLSSharedFileListRef=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='LSSharedFileListCopySnapshot'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{OpaqueLSSharedFileListRef=}' />
+    <arg type='^I' type64='^I' />
+  </function>
+  <function name='LSSharedFileListCreate'>
+    <retval type='^{OpaqueLSSharedFileListRef=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' />
+  </function>
+  <function name='LSSharedFileListGetSeedValue'>
+    <retval type='L' type64='I' />
+    <arg type='^{OpaqueLSSharedFileListRef=}' />
+  </function>
+  <function name='LSSharedFileListGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='LSSharedFileListInsertItemFSRef'>
+    <retval type='^{OpaqueLSSharedFileListItemRef=}' />
+    <arg type='^{OpaqueLSSharedFileListRef=}' />
+    <arg type='^{OpaqueLSSharedFileListItemRef=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{OpaqueIconRef=}' />
+    <arg type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+    <arg type='^{__CFDictionary=}' />
+    <arg type='^{__CFArray=}' />
+  </function>
+  <function name='LSSharedFileListInsertItemURL'>
+    <retval type='^{OpaqueLSSharedFileListItemRef=}' />
+    <arg type='^{OpaqueLSSharedFileListRef=}' />
+    <arg type='^{OpaqueLSSharedFileListItemRef=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{OpaqueIconRef=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^{__CFDictionary=}' />
+    <arg type='^{__CFArray=}' />
+  </function>
+  <function name='LSSharedFileListItemCopyDisplayName'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{OpaqueLSSharedFileListItemRef=}' />
+  </function>
+  <function name='LSSharedFileListItemCopyIconRef'>
+    <retval type='^{OpaqueIconRef=}' />
+    <arg type='^{OpaqueLSSharedFileListItemRef=}' />
+  </function>
+  <function name='LSSharedFileListItemCopyProperty'>
+    <retval already_cfretained='true' type='@' />
+    <arg type='^{OpaqueLSSharedFileListItemRef=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='LSSharedFileListItemGetID'>
+    <retval type='L' type64='I' />
+    <arg type='^{OpaqueLSSharedFileListItemRef=}' />
+  </function>
+  <function name='LSSharedFileListItemGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='LSSharedFileListItemMove'>
+    <retval type='l' type64='i' />
+    <arg type='^{OpaqueLSSharedFileListRef=}' />
+    <arg type='^{OpaqueLSSharedFileListItemRef=}' />
+    <arg type='^{OpaqueLSSharedFileListItemRef=}' />
+  </function>
+  <function name='LSSharedFileListItemRemove'>
+    <retval type='l' type64='i' />
+    <arg type='^{OpaqueLSSharedFileListRef=}' />
+    <arg type='^{OpaqueLSSharedFileListItemRef=}' />
+  </function>
+  <function name='LSSharedFileListItemResolve'>
+    <retval type='l' type64='i' />
+    <arg type='^{OpaqueLSSharedFileListItemRef=}' />
+    <arg type='L' type64='L' />
+    <arg type='^^{__CFURL}' type64='^^{__CFURL}' />
+    <arg type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+  </function>
+  <function name='LSSharedFileListItemSetProperty'>
+    <retval type='l' type64='i' />
+    <arg type='^{OpaqueLSSharedFileListItemRef=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' />
+  </function>
+  <function name='LSSharedFileListRemoveAllItems'>
+    <retval type='l' type64='i' />
+    <arg type='^{OpaqueLSSharedFileListRef=}' />
+  </function>
+  <function name='LSSharedFileListRemoveObserver'>
+    <arg type='^{OpaqueLSSharedFileListRef=}' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function name='LSSharedFileListSetAuthorization'>
+    <retval type='l' type64='i' />
+    <arg type='^{OpaqueLSSharedFileListRef=}' />
+    <arg type='^{AuthorizationOpaqueRef=}' type64='^{AuthorizationOpaqueRef=}' />
+  </function>
+  <function name='LSSharedFileListSetProperty'>
+    <retval type='l' type64='i' />
+    <arg type='^{OpaqueLSSharedFileListRef=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' />
+  </function>
+  <function name='LSTerm'>
+    <retval type='l' type64='i' />
+  </function>
+  <function name='OverrideIconRef'>
+    <retval type='s' />
+    <arg type='^{OpaqueIconRef=}' />
+    <arg type='^{OpaqueIconRef=}' />
+  </function>
+  <function name='OverrideIconRefFromResource'>
+    <retval type='s' />
+    <arg type='^{OpaqueIconRef=}' />
+    <arg type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
+    <arg type='s' />
+  </function>
+  <function name='ReadIconFile'>
+    <retval type='s' />
+    <arg type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
+    <arg type='^^^{IconFamilyResource}' type64='^^^{IconFamilyResource}' />
+  </function>
+  <function name='ReadIconFromFSRef'>
+    <retval type='l' type64='i' />
+    <arg type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+    <arg type='^^^{IconFamilyResource}' type64='^^^{IconFamilyResource}' />
+  </function>
+  <function name='RegisterIconRefFromFSRef'>
+    <retval type='l' type64='i' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='RegisterIconRefFromIconFamily'>
+    <retval type='s' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^^{IconFamilyResource}' type64='^^{IconFamilyResource}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='RegisterIconRefFromIconFile'>
+    <retval type='s' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='RegisterIconRefFromResource'>
+    <retval type='s' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+    <arg type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
+    <arg type='s' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+  </function>
+  <function name='ReleaseIconRef'>
+    <retval type='s' />
+    <arg type='^{OpaqueIconRef=}' />
+  </function>
+  <function name='RemoveIconRefOverride'>
+    <retval type='s' />
+    <arg type='^{OpaqueIconRef=}' />
+  </function>
+  <function name='SetCustomIconsEnabled'>
+    <retval type='s' />
+    <arg type='s' />
+    <arg type='B' />
+  </function>
+  <function name='UTCreateStringForOSType'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='UTGetOSTypeFromString'>
+    <retval type='L' type64='I' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='UTTypeConformsTo'>
+    <retval type='B' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='UTTypeCopyDeclaration'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='UTTypeCopyDeclaringBundleURL'>
+    <retval already_cfretained='true' type='^{__CFURL=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='UTTypeCopyDescription'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='UTTypeCopyPreferredTagWithClass'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='UTTypeCreateAllIdentifiersForTag'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='UTTypeCreatePreferredIdentifierForTag'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='UTTypeEqual'>
+    <retval type='B' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='UnregisterIconRef'>
+    <retval type='s' />
+    <arg type='L' type64='L' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='UpdateIconRef'>
+    <retval type='s' />
+    <arg type='^{OpaqueIconRef=}' />
+  </function>
+  <function name='WriteIconFile'>
+    <retval type='s' />
+    <arg type='^^{IconFamilyResource}' type64='^^{IconFamilyResource}' />
+    <arg type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
+  </function>
+</signatures>
+

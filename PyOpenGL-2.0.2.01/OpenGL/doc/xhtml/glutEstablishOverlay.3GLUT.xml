@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutEstablishOverlay</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutEntryFunc.3GLUT.xml" title="glutEntryFunc"/><link rel="next" href="glutExtensionSupported.3GLUT.xml" title="glutExtensionSupported"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutEstablishOverlay</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutEntryFunc.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutExtensionSupported.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutEstablishOverlay.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutEstablishOverlay.3GLUT-name"/><h2>Name</h2><p>glutEstablishOverlay &#8212; establishes an overlay (if possible) for the current window.</p></div><div class="refsynopsisdiv"><a name="glutEstablishOverlay.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutEstablishOverlay</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutEstablishOverlay.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutEstablishOverlay</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutEstablishOverlay.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutEstablishOverlay</tt> establishes an overlay (if possible) for the current window. The requested
+			display mode for the overlay is determined by the initial display mode. <tt>glutLayerGet(GLUT_OVERLAY_POSSIBLE)</tt> can be called to determine if an overlay is possible
+			for the current window with the current initial display mode. Do not attempt to establish an overlay when one is not
+			possible; GLUT will terminate the program.
+		</p><p>
+			If <tt>glutEstablishOverlay</tt> is called when an overlay already exists, the existing overlay is first
+			removed, and then a new overlay is established. The state of the old overlay's OpenGL context is discarded.
+		</p><p>
+			The initial display state of an overlay is shown, however the overlay is only actually shown if the overlay's window is
+			shown.
+		</p><p>
+			Implicitly, the window's layer in use changes to the overlay immediately after the overlay is established.
+		</p></div><div class="refsect1" lang="en"><a name="glutEstablishOverlay.3GLUT-example"/><h2>Example</h2><p>
+			Establishing an overlay is a bit involved, but easy once you get the hang of it. Here is an example:
+		</p><pre class="programlisting">int overlaySupport;
+int transparent, red, white;
+glutInitDisplayMode(GLUT_SINGLE | GLUT_INDEX);
+overlaySupport = glutLayerGet(GLUT_OVERLAY_POSSIBLE);
+if (overlaySupport) {
+    glutEstablishOverlay();
+    glutHideOverlay();
+    transparent = glutLayerGet(GLUT_TRANSPARENT_INDEX);
+    glClearIndex(transparent);
+    red = (transparent + 1) % glutGet(GLUT_WINDOW_COLORMAP_SIZE);
+    white = (transparent + 2) % glutGet(GLUT_WINDOW_COLORMAP_SIZE);
+    glutSetColor(red, 1.0, 0.0, 0.0); /* Red. */
+    glutSetColor(white, 1.0, 1.0, 1.0); /* White. */
+    glutOverlayDisplayFunc(redrawOverlay);
+    glutReshapeFunc(reshape);
+} else {
+    printf("Sorry, no nifty overlay (try an SGI workstation)!");
+}</pre><p>
+			If you setup an overlay and you install a reshape callback, you need to update the viewports and possibly projection
+			matrices of both the normal plane and the overlay. For example, your reshape callback might look like this:
+		</p><pre class="programlisting">void reshape(int w, int h)
+{
+    if (overlaySupport) {
+        glutUseLayer(GLUT_OVERLAY); /* Setup overlay to have X style coordinate system. */
+        glViewport(0, 0, w, h);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluOrtho2D(0, w, 0, h);
+        glScalef(1, -1, 1);
+        glTranslatef(0, -h, 0);
+        glMatrixMode(GL_MODELVIEW);
+        glutUseLayer(GLUT_NORMAL);
+    }
+    glViewport(0, 0, w, h);
+}</pre><p>
+			See the glutOverlayDisplayFunc man page for an example showing one way to write your overlay display callback.
+		</p></div><div class="refsect1" lang="en"><a name="glutEstablishOverlay.3GLUT-x_implementation_notes"/><h2>X Implementation Notes</h2><p>
+			GLUT for X uses the SERVER_OVERLAY_VISUALS convention is used to determine if overlay visuals are available. While the
+			convention allows for opaque overlays (no transparency) and overlays with the transparency specified as a bitmask, GLUT
+			overlay management only provides access to transparent pixel overlays.
+		</p><p>
+			Until RGBA overlays are better understood, GLUT only supports color index overlays.
+		</p></div><div class="refsect1" lang="en"><a name="glutEstablishOverlay.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutUseLayer.3GLUT.xml">glutUseLayer</a>, <a href="glutRemoveOverlay.3GLUT.xml">glutRemoveOverlay</a>, <a href="glutCreateWindow.3GLUT.xml">glutCreateWindow</a>, <a href="glutPostOverlayRedisplay.3GLUT.xml">glutPostOverlayRedisplay</a>, <a href="glutShowOverlay.3GLUT.xml">glutShowOverlay</a>, <a href="glutOverlayDisplayFunc.3GLUT.xml">glutOverlayDisplayFunc</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutEntryFunc.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutExtensionSupported.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutEntryFunc </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutExtensionSupported</td></tr></table></div></body></html>

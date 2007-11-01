@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutSetCursor</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutSetColor.3GLUT.xml" title="glutSetColor"/><link rel="next" href="glutSetKeyRepeat.3GLUT.xml" title="glutSetKeyRepeat"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutSetCursor</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutSetColor.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutSetKeyRepeat.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutSetCursor.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutSetCursor.3GLUT-name"/><h2>Name</h2><p>glutSetCursor &#8212; changes the cursor image of the current window.</p></div><div class="refsynopsisdiv"><a name="glutSetCursor.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutSetCursor</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>int <i><tt>cursor</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutSetCursor.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutSetCursor</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>cursor</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutSetCursor.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>cursor</tt></i></span></dt><dd><p>
+						Name of cursor image to change to. Possible values follow:
+					</p><div class="variablelist"><dl><dt><span class="term"><tt>GLUT_CURSOR_RIGHT_ARROW</tt></span></dt><dd>
+									Arrow pointing up and to the right.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_LEFT_ARROW</tt></span></dt><dd>
+									Arrow pointing up and to the left.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_INFO</tt></span></dt><dd>
+									Pointing hand.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_DESTROY</tt></span></dt><dd>
+									Skull &amp; cross bones.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_HELP</tt></span></dt><dd>
+									Question mark.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_CYCLE</tt></span></dt><dd>
+									Arrows rotating in a circle.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_SPRAY</tt></span></dt><dd>
+									Spray can.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_WAIT</tt></span></dt><dd>
+									Wrist watch.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_TEXT</tt></span></dt><dd>
+									Insertion point cursor for text.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_CROSSHAIR</tt></span></dt><dd>
+									Simple cross-hair.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_UP_DOWN</tt></span></dt><dd>
+									Bi-directional pointing up &amp; down.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_LEFT_RIGHT</tt></span></dt><dd>
+									Bi-directional pointing left &amp; right.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_TOP_SIDE</tt></span></dt><dd>
+									Arrow pointing to top side.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_BOTTOM_SIDE</tt></span></dt><dd>
+									Arrow pointing to bottom side.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_LEFT_SIDE</tt></span></dt><dd>
+									Arrow pointing to left side.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_RIGHT_SIDE</tt></span></dt><dd>
+									Arrow pointing to right side.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_TOP_LEFT_CORNER</tt></span></dt><dd>
+									Arrow pointing to top-left corner.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_TOP_RIGHT_CORNER</tt></span></dt><dd>
+									Arrow pointing to top-right corner.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_BOTTOM_RIGHT_CORNER</tt></span></dt><dd>
+									Arrow pointing to bottom-left corner.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_BOTTOM_LEFT_CORNER</tt></span></dt><dd>
+									Arrow pointing to bottom-right corner.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_FULL_CROSSHAIR</tt></span></dt><dd>
+									Full-screen cross-hair cursor (if possible, otherwise
+									<tt>GLUT_CURSOR_CROSSHAIR</tt>).
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_NONE</tt></span></dt><dd>
+									Invisible cursor.
+								</dd><dt><span class="term"><tt>GLUT_CURSOR_INHERIT</tt></span></dt><dd>
+									Use parent's cursor.
+								</dd></dl></div></dd></dl></div></div><div class="refsect1" lang="en"><a name="glutSetCursor.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutSetCursor</tt> changes the cursor image of the current window. Each call requests the window system
+			change the cursor appropriately. The cursor image when a window is created is <tt>GLUT_CURSOR_INHERIT</tt>.
+			The exact cursor images used are implementation dependent. The intent is for the image to convey the meaning of the
+			cursor name. For a top-level window, <tt>GLUT_CURSOR_INHERIT</tt> uses the default window system cursor.
+		</p></div><div class="refsect1" lang="en"><a name="glutSetCursor.3GLUT-x_implementation_notes"/><h2>X Implementation Notes</h2><p>
+			GLUT for X uses SGI's _SGI_CROSSHAIR_CURSOR convention to access a full-screen cross-hair cursor if possible.
+		</p></div><div class="refsect1" lang="en"><a name="glutSetCursor.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutCreateWindow.3GLUT.xml">glutCreateWindow</a>, <a href="glutCreateSubWindow.3GLUT.xml">glutCreateSubWindow</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutSetColor.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutSetKeyRepeat.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutSetColor </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutSetKeyRepeat</td></tr></table></div></body></html>

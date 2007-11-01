@@ -1,0 +1,3781 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <struct comment='Encodings are hardcoded because they do not contain a struct tag on Leopard. The value here is compatible with the encoding on Tiger.' name='NSAffineTransformStruct' type='{_NSAffineTransformStruct="m11"f"m12"f"m21"f"m22"f"tX"f"tY"f}' type64='{_NSAffineTransformStruct="m11"d"m12"d"m21"d"m22"d"tX"d"tY"d}' />
+  <struct name='NSDecimal' />
+  <struct ignore='true' name='NSFastEnumerationState' />
+  <struct ignore='true' name='NSHashEnumerator' />
+  <struct ignore='true' name='NSMapEnumerator' />
+  <struct ignore='true' name='NSObjCValue' />
+  <struct name='NSPoint' />
+  <struct name='NSRange' />
+  <struct name='NSRect' />
+  <struct name='NSSize' />
+  <struct name='NSSwappedDouble' type='{_NSSwappedDoubleTag="v"Q}' type64='{_NSSwappedDoubleTag="v"Q}' />
+  <struct name='NSSwappedFloat' type='{_NSSwappedFloatTag="v"I}' type64='{_NSSwappedFloatTag="v"I}' />
+  <opaque name='NSAppleEventManagerSuspensionID' />
+  <opaque name='NSZone*' />
+  <enum ignore='true' name='NO' />
+  <enum ignore='true' name='YES' />
+  <function inline='true' name='NSDecimalIsNotANumber'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function ignore='true' name='NSAllHashTableObjects' />
+  <function ignore='true' name='NSAllMapTableKeys' />
+  <function ignore='true' name='NSAllMapTableValues' />
+  <function ignore='true' name='NSAllocateCollectable' />
+  <function ignore='true' name='NSAllocateMemoryPages' />
+  <function ignore='true' name='NSCompareHashTables' />
+  <function ignore='true' name='NSCompareMapTables' />
+  <function name='NSCopyHashTableWithZone'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function ignore='true' name='NSCopyMapTableWithZone' />
+  <function ignore='true' name='NSCopyMemoryPages' />
+  <function name='NSCopyObject'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function ignore='true' name='NSCountHashTable' />
+  <function ignore='true' name='NSCountMapTable' />
+  <function ignore='true' name='NSCreateHashTable' />
+  <function ignore='true' name='NSCreateHashTableWithZone' />
+  <function ignore='true' name='NSCreateMapTable' />
+  <function ignore='true' name='NSCreateMapTableWithZone' />
+  <function ignore='true' name='NSDeallocateMemoryPages' />
+  <function comment='Metadata is wrong, but needed like this for current version of PyObjC' name='NSDecimalAdd'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='1' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='2' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function name='NSDecimalCompact'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function name='NSDecimalCompare'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='1' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function name='NSDecimalCopy'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='1' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function name='NSDecimalDivide'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='1' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='2' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function name='NSDecimalMultiply'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='1' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='2' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function name='NSDecimalMultiplyByPowerOf10'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='1' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function name='NSDecimalNormalize'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='1' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function name='NSDecimalPower'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='1' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function name='NSDecimalRound'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='1' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function name='NSDecimalString'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function name='NSDecimalSubtract'>
+    <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='1' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+    <arg index='2' type='r^{?=b8b4b1b1b18[8S]}' type64='r^{?=b8b4b1b1b18[8S]}' />
+  </function>
+  <function name='NSDivideRect'>
+    <arg index='1' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function ignore='true' name='NSEndHashTableEnumeration' />
+  <function ignore='true' name='NSEndMapTableEnumeration' />
+  <function ignore='true' name='NSEnumerateHashTable' />
+  <function ignore='true' name='NSEnumerateMapTable' />
+  <function ignore='true' name='NSFrameAddress' />
+  <function ignore='true' name='NSFreeHashTable' />
+  <function ignore='true' name='NSFreeMapTable' />
+  <function name='NSGetSizeAndAlignment'>
+    <retval comment='string' numeric='false' type='r*' type64='r*' />
+    <arg comment='string' index='0' numeric='false' type='r*' type64='r*' />
+    <arg index='1' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function ignore='true' name='NSGetUncaughtExceptionHandler' />
+  <function ignore='true' name='NSHashGet' />
+  <function ignore='true' name='NSHashInsert' />
+  <function ignore='true' name='NSHashInsertIfAbsent' />
+  <function ignore='true' name='NSHashInsertKnownAbsent' />
+  <function ignore='true' name='NSHashRemove' />
+  <function ignore='true' name='NSJavaClassesForBundle' />
+  <function ignore='true' name='NSJavaClassesFromPath' />
+  <function name='NSLog' variadic='true'>
+    <arg index='0' printf_format='true' type='@' type64='@' />
+  </function>
+  <function ignore='true' name='NSLogv' />
+  <function ignore='true' name='NSMapGet' />
+  <function ignore='true' name='NSMapInsert' />
+  <function ignore='true' name='NSMapInsertIfAbsent' />
+  <function ignore='true' name='NSMapInsertKnownAbsent' />
+  <function ignore='true' name='NSMapMember' />
+  <function ignore='true' name='NSMapRemove' />
+  <function ignore='true' name='NSNextHashEnumeratorItem' />
+  <function ignore='true' name='NSNextMapEnumeratorPair' />
+  <function ignore='true' name='NSReallocateCollectable' />
+  <function ignore='true' name='NSRecordAllocationEvent' />
+  <function ignore='true' name='NSResetHashTable' />
+  <function ignore='true' name='NSResetMapTable' />
+  <function ignore='true' name='NSReturnAddress' />
+  <function ignore='true' name='NSSetUncaughtExceptionHandler' />
+  <function ignore='true' name='NSStringFromHashTable' />
+  <function ignore='true' name='NSStringFromMapTable' />
+  <function ignore='true' name='NSZoneCalloc' />
+  <function ignore='true' name='NSZoneFree' />
+  <function ignore='true' name='NSZoneFromPointer' />
+  <function ignore='true' name='NSZoneMalloc' />
+  <function ignore='true' name='NSZoneRealloc' />
+  <function ignore='true' name='NSUncaughtExceptionHandler' />
+  <function ignore='true' name='NSCompareHashTablesWithZone' />
+  <class name='NSAppleEventDescriptor'>
+    <method selector='aeDesc'>
+      <retval type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' />
+    </method>
+    <method class_method='true' selector='descriptorWithDescriptorType:bytes:length:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method selector='initWithAEDescNoCopy:'>
+      <arg index='0' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' type_modifier='n' />
+    </method>
+    <method selector='initWithDescriptorType:bytes:length:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSAppleEventManager'>
+    <method selector='dispatchRawAppleEvent:withRawReply:handlerRefCon:'>
+      <arg index='0' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' type_modifier='n' />
+      <arg index='1' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' type_modifier='o' />
+    </method>
+    <method selector='setEventHandler:andSelector:forEventClass:andEventID:'>
+      <arg index='1' sel_of_type='v@:@@' />
+    </method>
+  </class>
+  <class name='NSAppleScript'>
+    <method selector='compileAndReturnError:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='executeAndReturnError:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='executeAppleEvent:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSArray'>
+    <method selector='addObserver:forKeyPath:options:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='addObserver:toObjectsAtIndexes:forKeyPath:options:context:'>
+      <arg comment='context' index='4' type='^v' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='arrayWithObjects:' variadic='true' />
+    <method class_method='true' selector='arrayWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='context:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='context:hint:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='getObjects:' suggestion='use some other method'>
+      <arg index='0' type='^@' />
+    </method>
+    <method selector='getObjects:range:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='initWithObjects:' variadic='true' />
+    <method selector='initWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='makeObjectsPerformSelector:'>
+      <arg index='0' sel_of_type='v@:' />
+    </method>
+    <method selector='makeObjectsPerformSelector:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='sortedArrayUsingSelector:'>
+      <arg index='0' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSAssertionHandler'>
+    <method selector='handleFailureInFunction:file:lineNumber:description:' variadic='true'>
+      <arg index='3' printf_format='true' />
+    </method>
+    <method selector='handleFailureInMethod:object:file:lineNumber:description:' variadic='true'>
+      <arg index='0' type=':' />
+      <arg index='4' printf_format='true' />
+    </method>
+  </class>
+  <class name='NSAttributedString'>
+    <method selector='attribute:atIndex:effectiveRange:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='attribute:atIndex:longestEffectiveRange:inRange:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='attributesAtIndex:effectiveRange:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='attributesAtIndex:longestEffectiveRange:inRange:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSBundle'>
+    <method selector='loadAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='preflightAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSCalendar'>
+    <method comment='No documentation yet?' selector='rangeOfUnit:startDate:interval:forDate:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSCalendarDate'>
+    <method comment='No documentation yet?' selector='years:months:days:hours:minutes:seconds:sinceDate:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+      <arg index='4' type_modifier='o' />
+      <arg index='5' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSCharacterSet'>
+    <method selector='characterIsMember:'>
+      <arg index='0' numeric='false' type='S' />
+    </method>
+  </class>
+  <class comment='needs further checking' name='NSCoder'>
+    <method selector='decodeArrayOfObjCType:count:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='2' type_modifier='o' />
+    </method>
+    <method selector='decodeBytesForKey:returnedLength:'>
+      <retval type='r*' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='decodeBytesWithReturnedLength:'>
+      <retval c_array_length_in_arg='0' />
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='decodeValueOfObjCType:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='1' />
+    </method>
+    <method selector='decodeValuesOfObjCTypes:' variadic='true'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='encodeArrayOfObjCType:count:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='2' type_modifier='n' />
+    </method>
+    <method selector='encodeBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='encodeBytes:length:forKey:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+    <method selector='encodeValueOfObjCType:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='1' type_modifier='n' />
+    </method>
+    <method selector='encodeValuesOfObjCTypes:' variadic='true'>
+      <arg index='0' type='r*' />
+    </method>
+  </class>
+  <class name='NSComparisonPredicate'>
+    <method selector='initWithLeftExpression:rightExpression:customSelector:'>
+      <arg index='2' sel_of_type='B@:@' />
+    </method>
+    <method class_method='true' selector='predicateWithLeftExpression:rightExpression:customSelector:'>
+      <arg index='2' sel_of_type='B@:@' />
+    </method>
+  </class>
+  <class name='NSData'>
+    <method comment='Needs manual wrapping or metadata update' selector='bytes'>
+      <retval c_array_of_variable_length='true' />
+    </method>
+    <method class_method='true' selector='dataWithBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method class_method='true' selector='dataWithBytesNoCopy:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method class_method='true' ignore='true' selector='dataWithBytesNoCopy:length:freeWhenDone:' suggestion='Use +dataWithBytes:length: instead'>
+      <arg index='0' type='^v' />
+    </method>
+    <method class_method='true' selector='dataWithContentsOfFile:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='dataWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method ignore='true' selector='getBytes:' suggestion='Use -bytes instead'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='getBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='o' />
+    </method>
+    <method selector='getBytes:range:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='o' />
+    </method>
+    <method selector='initWithBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='initWithBytesNoCopy:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method ignore='true' selector='initWithBytesNoCopy:length:freeWhenDone:' suggestion='Use -initWithBytes:length: instead'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='initWithContentsOfFile:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToFile:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSDateFormatter'>
+    <method selector='getObjectValue:forString:range:error:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSDecimalNumber'>
+    <method selector='objCType'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+  </class>
+  <class name='NSDictionary'>
+    <method class_method='true' selector='dictionaryWithObjects:forKeys:count:'>
+      <arg c_array_length_in_arg='2' index='0' type_modifier='n' />
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='dictionaryWithObjectsAndKeys:' variadic='true' />
+    <method ignore='true' selector='getObjects:andKeys:' suggestion='use some other method instead'>
+      <arg index='0' type='^@' />
+      <arg index='1' type='^@' />
+    </method>
+    <method selector='initWithObjects:forKeys:count:'>
+      <arg c_array_length_in_arg='2' index='0' type_modifier='n' />
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='initWithObjectsAndKeys:' variadic='true' />
+    <method selector='keysSortedByValueUsingSelector:'>
+      <arg index='0' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSDistributedNotificationCenter'>
+    <method selector='addObserver:selector:name:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+    <method selector='addObserver:selector:name:object:suspensionBehavior:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSException'>
+    <method class_method='true' selector='raise:format:' variadic='true'>
+      <arg index='1' printf_format='true' />
+    </method>
+    <method class_method='true' ignore='true' selector='raise:format:arguments:' suggestion='use +raise:format: instead'>
+      <arg index='2' type='*' type64='[1{?=II^v^v}]' />
+    </method>
+  </class>
+  <class name='NSFileManager'>
+    <method selector='attributesOfFileSystemForPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='attributesOfItemAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='contentsOfDirectoryAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='copyItemAtPath:toPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createDirectoryAtPath:withIntermediateDirectories:attributes:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createSymbolicLinkAtPath:withDestinationPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='destinationOfSymbolicLinkAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='fileExistsAtPath:isDirectory:'>
+      <arg index='1' type='^B' type_modifier='o' />
+    </method>
+    <method selector='fileSystemRepresentationWithPath:'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method selector='linkItemAtPath:toPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='moveItemAtPath:toPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='removeItemAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='setAttributes:ofItemAtPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='stringWithFileSystemRepresentation:length:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' />
+    </method>
+    <method selector='subpathsOfDirectoryAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSFormatter'>
+    <method selector='getObjectValue:forString:errorDescription:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='isPartialStringValid:newEditingString:errorDescription:'>
+      <arg index='1' type_modifier='N' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='isPartialStringValid:proposedSelectedRange:originalString:originalSelectedRange:errorDescription:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='1' type_modifier='N' />
+      <arg index='4' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSGarbageCollector'>
+    <method ignore='true' selector='disableCollectorForPointer:' suggestion='Not supported right now'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='enableCollectorForPointer:' suggestion='Not supported right now'>
+      <arg index='0' type='^v' />
+    </method>
+  </class>
+  <class name='NSIndexPath'>
+    <method ignore='true' selector='getIndexes:' suggestion='Use -indexAtPosition instead'>
+      <arg index='0' type='^I' type64='^Q' />
+    </method>
+    <method class_method='true' selector='indexPathWithIndexes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='initWithIndexes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSIndexSet'>
+    <method selector='getIndexes:maxCount:inIndexRange:'>
+      <arg c_array_length_in_arg='1,2' index='0' type_modifier='o' />
+      <arg index='2' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSInputStream'>
+    <method comment='buffer by indirection' ignore='true' selector='getBuffer:length:' />
+    <method selector='read:maxLength:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSInvocation'>
+    <method ignore='true' selector='getArgument:atIndex:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='getReturnValue:' />
+    <method ignore='true' selector='setArgument:atIndex:' />
+    <method ignore='true' selector='setReturnValue:' />
+    <method selector='setSelector:'>
+      <arg index='0' type=':' />
+    </method>
+  </class>
+  <class name='NSInvocationOperation'>
+    <method selector='initWithTarget:selector:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSKeyedArchiver'>
+    <method selector='encodeBytes:length:forKey:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSKeyedUnarchiver'>
+    <method selector='decodeBytesForKey:returnedLength:'>
+      <retval c_array_length_in_arg='1' type='r*' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSMethodSignature'>
+    <method selector='getArgumentTypeAtIndex:'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method selector='methodReturnType'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method class_method='true' selector='signatureWithObjCTypes:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+  </class>
+  <class name='NSMutableArray'>
+    <method selector='context:'>
+      <arg comment='userinfo' index='0' type='^v' />
+    </method>
+    <method selector='removeObjectsFromIndices:numIndices:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='sortUsingSelector:'>
+      <arg index='0' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSMutableData'>
+    <method selector='appendBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method comment='cannot handle this' ignore='true' selector='mutableBytes' suggestion='use your language native array access on this object'>
+      <retval type='^v' />
+    </method>
+    <method selector='replaceBytesInRange:withBytes:'>
+      <arg c_array_length_in_arg='0' index='1' type_modifier='n' />
+    </method>
+    <method selector='replaceBytesInRange:withBytes:length:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSMutableString'>
+    <method selector='appendFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+  </class>
+  <class name='NSNetService'>
+    <method selector='getInputStream:outputStream:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSNotificationCenter'>
+    <method selector='addObserver:selector:name:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSNumber'>
+    <method selector='charValue'>
+      <retval numeric='false' />
+    </method>
+    <method selector='initWithChar:'>
+      <arg index='0' numeric='false' type='c' />
+    </method>
+    <method class_method='true' selector='numberWithChar:'>
+      <arg index='0' numeric='false' type='c' />
+    </method>
+  </class>
+  <class comment='need attenention' name='NSObject'>
+    <method selector='addObserver:forKeyPath:options:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='attemptRecoveryFromError:optionIndex:delegate:didRecoverSelector:contextInfo:'>
+      <arg index='3' sel_of_type='v@:B^v' />
+      <arg comment='context' index='4' type='^v' />
+    </method>
+    <method class_method='true' selector='cancelPreviousPerformRequestsWithTarget:selector:object:'>
+      <arg index='1' type=':' />
+    </method>
+    <method selector='countByEnumeratingWithState:objects:count:'>
+      <arg index='0' type='^{?=L^@^L[5L]}' type64='^{?=Q^@^Q[5Q]}' />
+      <arg index='1' type='^@' />
+    </method>
+    <method selector='doesNotRecognizeSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='handleMachMessage:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method class_method='true' selector='instanceMethodForSelector:'>
+      <retval comment='IMP, manual wrapper' type='^?' />
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='instanceMethodSignatureForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='instancesRespondToSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='methodForSelector:'>
+      <retval comment='IMP, manual wrapper' type='^?' />
+      <arg index='0' type=':' />
+    </method>
+    <method selector='methodSignatureForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='observationInfo'>
+      <retval comment='context' type='^v' />
+    </method>
+    <method selector='observeValueForKeyPath:ofObject:change:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='performSelector:onThread:withObject:waitUntilDone:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelector:onThread:withObject:waitUntilDone:modes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelector:withObject:afterDelay:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelector:withObject:afterDelay:inModes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelectorInBackground:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelectorOnMainThread:withObject:waitUntilDone:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelectorOnMainThread:withObject:waitUntilDone:modes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method class_method='true' selector='resolveClassMethod:'>
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='resolveInstanceMethod:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='setObservationInfo:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='spellServer:checkGrammarInString:language:details:'>
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='spellServer:findMisspelledWordInString:language:wordCount:countOnly:'>
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKey:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKeyPath:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSOutputStream'>
+    <method comment='need work' selector='initToBuffer:capacity:'>
+      <arg index='0' type='r*' />
+    </method>
+    <method class_method='true' comment='need work' selector='outputStreamToBuffer:capacity:'>
+      <arg index='0' type='r*' />
+    </method>
+    <method selector='write:maxLength:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSPointerArray'>
+    <method ignore='true' selector='addPointer:' suggestion='use NSMutableArray'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='insertPointer:atIndex:' suggestion='use NSMutableArray'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='pointerAtIndex:' suggestion='use NSMutableArray' />
+    <method ignore='true' selector='replacePointerAtIndex:withPointer:' suggestion='use NSMutableArray'>
+      <arg index='1' type='^v' />
+    </method>
+  </class>
+  <class name='NSPointerFunctions'>
+    <method selector='acquireFunction'>
+      <retval type='^v' />
+    </method>
+    <method selector='setAcquireFunction:'>
+      <arg index='0' type='^v' />
+    </method>
+  </class>
+  <class name='NSPredicate'>
+    <method class_method='true' selector='predicateWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method class_method='true' ignore='true' selector='predicateWithFormat:arguments:' suggestion='use +predicateWithFormat:'>
+      <arg index='1' type='*' type64='[1{?=II^v^v}]' />
+    </method>
+  </class>
+  <class name='NSPropertyListSerialization'>
+    <method class_method='true' selector='dataFromPropertyList:format:errorDescription:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='propertyListFromData:mutabilityOption:format:errorDescription:'>
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSProxy'>
+    <method selector='methodSignatureForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='respondsToSelector:'>
+      <arg index='0' type=':' />
+    </method>
+  </class>
+  <class name='NSRunLoop'>
+    <method selector='cancelPerformSelector:target:argument:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='performSelector:target:argument:order:modes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSScanner'>
+    <method selector='scanCharactersFromSet:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='scanDecimal:'>
+      <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type_modifier='o' />
+    </method>
+    <method selector='scanDouble:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanFloat:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanHexDouble:'>
+      <arg index='0' type='^d' />
+    </method>
+    <method selector='scanHexFloat:'>
+      <arg index='0' type='^f' />
+    </method>
+    <method selector='scanHexInt:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanHexLongLong:'>
+      <arg index='0' type='^Q' />
+    </method>
+    <method selector='scanInt:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanInteger:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanLongLong:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanString:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='scanUpToCharactersFromSet:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='scanUpToString:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSScriptCoercionHandler'>
+    <method selector='registerCoercer:selector:toConvertFromClass:toClass:'>
+      <arg index='1' sel_of_type='@@:@#' />
+    </method>
+  </class>
+  <class name='NSScriptObjectSpecifier'>
+    <method selector='indicesOfObjectsByEvaluatingWithContainer:count:'>
+      <retval c_array_length_in_arg='1' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSSet'>
+    <method selector='addObserver:forKeyPath:options:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='initWithObjects:' variadic='true' />
+    <method selector='initWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='makeObjectsPerformSelector:'>
+      <arg index='0' sel_of_type='v@:' />
+    </method>
+    <method selector='makeObjectsPerformSelector:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='setWithObjects:' variadic='true' />
+    <method class_method='true' selector='setWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSSortDescriptor'>
+    <method selector='initWithKey:ascending:selector:'>
+      <arg index='2' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSStream'>
+    <method class_method='true' selector='getStreamsToHost:port:inputStream:outputStream:'>
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSString'>
+    <method selector=''>
+      <retval numeric='false' type='*' />
+    </method>
+    <method selector=''>
+      <retval numeric='false' type='*' />
+    </method>
+    <method selector='UTF8String'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method class_method='true' selector='availableStringEncodings'>
+      <retval c_array_of_variable_length='true' type='r^I' type64='r^Q' />
+    </method>
+    <method selector='cStringUsingEncoding:'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method selector='completePathIntoString:caseSensitive:matchesIntoArray:filterTypes:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='fileSystemRepresentation'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method comment='no docs?' ignore='true' selector='getBytes:maxLength:usedLength:encoding:options:range:remainingRange:' suggestion='do not use'>
+      <arg index='0' type='^v' />
+      <arg index='2' type='^I' type64='^Q' />
+      <arg index='6' type='^{_NSRange=II}' type64='^{_NSRange=QQ}' />
+    </method>
+    <method ignore='true' selector='getCString:' suggestion='use -cString instead'>
+      <arg index='0' type='*' />
+    </method>
+    <method ignore='true' selector='getCString:maxLength:' suggestion='use -cString instead'>
+      <arg index='0' type='*' />
+    </method>
+    <method ignore='true' selector='getCString:maxLength:encoding:' suggestion='use -cString instead'>
+      <arg index='0' type='*' />
+    </method>
+    <method ignore='true' selector='getCString:maxLength:range:remainingRange:' suggestion='use -cString instead'>
+      <arg index='0' type='*' />
+      <arg index='3' type='^{_NSRange=II}' type64='^{_NSRange=QQ}' />
+    </method>
+    <method selector='getCharacters:'>
+      <arg index='0' type='^S' />
+    </method>
+    <method selector='getCharacters:range:'>
+      <arg index='0' type='^S' />
+    </method>
+    <method selector='getFileSystemRepresentation:maxLength:'>
+      <arg c_array_length_in_arg='1' comment='fixme' index='0' type='r*' type_modifier='o' />
+    </method>
+    <method selector='getLineStart:end:contentsEnd:forRange:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='getParagraphStart:end:contentsEnd:forRange:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='initWithBytes:length:encoding:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method ignore='true' selector='initWithBytesNoCopy:length:encoding:freeWhenDone:' suggestion='use -initWithBytes:length:encoding instead'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='initWithCString:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='initWithCString:encoding:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='initWithCString:length:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method ignore='true' selector='initWithCStringNoCopy:length:freeWhenDone:' suggestion='use -initWithCString:length: instead'>
+      <arg index='0' type='*' />
+    </method>
+    <method selector='initWithCharacters:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' unicode_string='true' />
+    </method>
+    <method ignore='true' selector='initWithCharactersNoCopy:length:freeWhenDone:' suggestion='use -initWithCharacters:length: instead'>
+      <arg index='0' type='^S' />
+    </method>
+    <method selector='initWithContentsOfFile:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfFile:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method ignore='true' selector='initWithFormat:arguments:' suggestion='use some other method'>
+      <arg index='1' type='*' type64='[1{?=II^v^v}]' />
+    </method>
+    <method selector='initWithFormat:locale:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method ignore='true' selector='initWithFormat:locale:arguments:' suggestion='use some other method'>
+      <arg index='2' type='*' type64='[1{?=II^v^v}]' />
+    </method>
+    <method selector='initWithUTF8String:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='localizedStringWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method selector='stringByAppendingFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method class_method='true' selector='stringWithCString:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='stringWithCString:encoding:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='stringWithCString:length:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+    <method class_method='true' selector='stringWithCharacters:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' unicode_string='true' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfFile:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfFile:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfURL:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfURL:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method class_method='true' selector='stringWithUTF8String:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='writeToFile:atomically:encoding:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToURL:atomically:encoding:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSThread'>
+    <method class_method='true' selector='detachNewThreadSelector:toTarget:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='initWithTarget:selector:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSTimer'>
+    <method selector='initWithFireDate:interval:target:selector:userInfo:repeats:'>
+      <arg index='3' sel_of_type='v@:@' />
+    </method>
+    <method class_method='true' selector='scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:'>
+      <arg index='2' sel_of_type='v@:@' />
+    </method>
+    <method class_method='true' selector='timerWithTimeInterval:target:selector:userInfo:repeats:'>
+      <arg index='2' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSURLConnection'>
+    <method class_method='true' selector='sendSynchronousRequest:returningResponse:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSUndoManager'>
+    <method selector='registerUndoWithTarget:selector:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSValue'>
+    <method ignore='true' selector='getValue:' suggestion='use something else'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='initWithBytes:objCType:' suggestion='use something else'>
+      <arg index='0' type='^v' />
+      <arg index='1' type='*' />
+    </method>
+    <method selector='objCType'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method ignore='true' selector='pointerValue' suggestion='use something else'>
+      <retval type='^v' />
+    </method>
+    <method class_method='true' ignore='true' selector='value:withObjCType:' suggestion='use something else'>
+      <arg index='0' type='^v' />
+      <arg index='1' type='*' />
+    </method>
+    <method class_method='true' ignore='true' selector='valueWithBytes:objCType:' suggestion='use something else'>
+      <arg index='0' type='^v' />
+      <arg index='1' type='*' />
+    </method>
+    <method class_method='true' ignore='true' selector='valueWithPointer:' suggestion='use something else'>
+      <arg index='0' type='^v' />
+    </method>
+  </class>
+  <class name='NSXMLDTD'>
+    <method selector='initWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithData:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSXMLDocument'>
+    <method selector='initWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithData:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithXMLString:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectByApplyingXSLT:arguments:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectByApplyingXSLTAtURL:arguments:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectByApplyingXSLTString:arguments:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSXMLElement'>
+    <method selector='initWithXMLString:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSXMLNode'>
+    <method selector='nodesForXPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectsForXQuery:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectsForXQuery:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSAppleEventDescriptor'>
+    <method selector='aeDesc'>
+      <retval type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' />
+    </method>
+    <method class_method='true' selector='descriptorWithDescriptorType:bytes:length:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method selector='initWithAEDescNoCopy:'>
+      <arg index='0' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' type_modifier='n' />
+    </method>
+    <method selector='initWithDescriptorType:bytes:length:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSAppleEventManager'>
+    <method selector='dispatchRawAppleEvent:withRawReply:handlerRefCon:'>
+      <arg index='0' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' type_modifier='n' />
+      <arg index='1' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' type_modifier='o' />
+    </method>
+    <method selector='setEventHandler:andSelector:forEventClass:andEventID:'>
+      <arg index='1' sel_of_type='v@:@@' />
+    </method>
+  </class>
+  <class name='NSAppleScript'>
+    <method selector='compileAndReturnError:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='executeAndReturnError:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='executeAppleEvent:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSArray'>
+    <method selector='addObserver:forKeyPath:options:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='addObserver:toObjectsAtIndexes:forKeyPath:options:context:'>
+      <arg comment='context' index='4' type='^v' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='arrayWithObjects:' variadic='true' />
+    <method class_method='true' selector='arrayWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='context:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='context:hint:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='getObjects:' suggestion='use some other method' />
+    <method selector='getObjects:range:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='initWithObjects:' variadic='true' />
+    <method selector='initWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='makeObjectsPerformSelector:'>
+      <arg index='0' sel_of_type='v@:' />
+    </method>
+    <method selector='makeObjectsPerformSelector:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='sortedArrayUsingSelector:'>
+      <arg index='0' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSAssertionHandler'>
+    <method selector='handleFailureInFunction:file:lineNumber:description:' variadic='true'>
+      <arg index='3' printf_format='true' />
+    </method>
+    <method selector='handleFailureInMethod:object:file:lineNumber:description:' variadic='true'>
+      <arg index='0' type=':' />
+      <arg index='4' printf_format='true' />
+    </method>
+  </class>
+  <class name='NSAttributedString'>
+    <method selector='attribute:atIndex:effectiveRange:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='attribute:atIndex:longestEffectiveRange:inRange:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='attributesAtIndex:effectiveRange:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='attributesAtIndex:longestEffectiveRange:inRange:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSBundle'>
+    <method selector='loadAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='preflightAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSCalendar'>
+    <method comment='No documentation yet?' selector='rangeOfUnit:startDate:interval:forDate:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSCalendarDate'>
+    <method comment='No documentation yet?' selector='years:months:days:hours:minutes:seconds:sinceDate:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+      <arg index='4' type_modifier='o' />
+      <arg index='5' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSCharacterSet'>
+    <method selector='characterIsMember:'>
+      <arg index='0' numeric='false' type='S' />
+    </method>
+  </class>
+  <class comment='needs further checking' name='NSCoder'>
+    <method selector='decodeArrayOfObjCType:count:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='2' type_modifier='o' />
+    </method>
+    <method selector='decodeBytesForKey:returnedLength:'>
+      <retval type='r*' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='decodeBytesWithReturnedLength:'>
+      <retval c_array_length_in_arg='0' />
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='decodeValueOfObjCType:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='1' />
+    </method>
+    <method selector='decodeValuesOfObjCTypes:' variadic='true'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='encodeArrayOfObjCType:count:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='2' type_modifier='n' />
+    </method>
+    <method selector='encodeBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='encodeBytes:length:forKey:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+    <method selector='encodeValueOfObjCType:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='1' type_modifier='n' />
+    </method>
+    <method selector='encodeValuesOfObjCTypes:' variadic='true'>
+      <arg index='0' type='r*' />
+    </method>
+  </class>
+  <class name='NSComparisonPredicate'>
+    <method selector='initWithLeftExpression:rightExpression:customSelector:'>
+      <arg index='2' sel_of_type='B@:@' />
+    </method>
+    <method class_method='true' selector='predicateWithLeftExpression:rightExpression:customSelector:'>
+      <arg index='2' sel_of_type='B@:@' />
+    </method>
+  </class>
+  <class name='NSData'>
+    <method comment='Needs manual wrapping or metadata update' selector='bytes'>
+      <retval c_array_of_variable_length='true' />
+    </method>
+    <method class_method='true' selector='dataWithBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method class_method='true' selector='dataWithBytesNoCopy:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method ignore='true' selector='dataWithBytesNoCopy:length:freeWhenDone:' suggestion='Use +dataWithBytes:length: instead' />
+    <method class_method='true' selector='dataWithContentsOfFile:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='dataWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method ignore='true' selector='getBytes:' suggestion='Use -bytes instead' />
+    <method selector='getBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='o' />
+    </method>
+    <method selector='getBytes:range:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='o' />
+    </method>
+    <method selector='initWithBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='initWithBytesNoCopy:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method ignore='true' selector='initWithBytesNoCopy:length:freeWhenDone:' suggestion='Use -initWithBytes:length: instead' />
+    <method selector='initWithContentsOfFile:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToFile:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSDateFormatter'>
+    <method selector='getObjectValue:forString:range:error:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSDecimalNumber'>
+    <method selector='objCType'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+  </class>
+  <class name='NSDictionary'>
+    <method class_method='true' selector='dictionaryWithObjects:forKeys:count:'>
+      <arg c_array_length_in_arg='2' index='0' type_modifier='n' />
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='dictionaryWithObjectsAndKeys:' variadic='true' />
+    <method ignore='true' selector='getObjects:andKeys:' suggestion='use some other method instead' />
+    <method selector='initWithObjects:forKeys:count:'>
+      <arg c_array_length_in_arg='2' index='0' type_modifier='n' />
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='initWithObjectsAndKeys:' variadic='true' />
+    <method selector='keysSortedByValueUsingSelector:'>
+      <arg index='0' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSDistributedNotificationCenter'>
+    <method selector='addObserver:selector:name:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+    <method selector='addObserver:selector:name:object:suspensionBehavior:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSFileManager'>
+    <method selector='attributesOfFileSystemForPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='attributesOfItemAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='contentsOfDirectoryAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='copyItemAtPath:toPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createDirectoryAtPath:withIntermediateDirectories:attributes:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createSymbolicLinkAtPath:withDestinationPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='destinationOfSymbolicLinkAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='fileExistsAtPath:isDirectory:'>
+      <arg index='1' type='^B' type_modifier='o' />
+    </method>
+    <method selector='fileSystemRepresentationWithPath:'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method selector='linkItemAtPath:toPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='moveItemAtPath:toPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='removeItemAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='setAttributes:ofItemAtPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='stringWithFileSystemRepresentation:length:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' />
+    </method>
+    <method selector='subpathsOfDirectoryAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSFormatter'>
+    <method selector='getObjectValue:forString:errorDescription:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='isPartialStringValid:newEditingString:errorDescription:'>
+      <arg index='1' type_modifier='N' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='isPartialStringValid:proposedSelectedRange:originalString:originalSelectedRange:errorDescription:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='1' type_modifier='N' />
+      <arg index='4' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSGarbageCollector'>
+    <method ignore='true' selector='disableCollectorForPointer:' suggestion='Not supported right now' />
+    <method ignore='true' selector='enableCollectorForPointer:' suggestion='Not supported right now' />
+  </class>
+  <class name='NSIndexPath'>
+    <method ignore='true' selector='getIndexes:' suggestion='Use -indexAtPosition instead' />
+    <method class_method='true' selector='indexPathWithIndexes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='initWithIndexes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSIndexSet'>
+    <method selector='getIndexes:maxCount:inIndexRange:'>
+      <arg c_array_length_in_arg='1,2' index='0' type_modifier='o' />
+      <arg index='2' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSInputStream'>
+    <method comment='buffer by indirection' ignore='true' selector='getBuffer:length:'>
+      <arg index='0' type='^*' />
+      <arg index='1' type='^I' type64='^Q' />
+    </method>
+    <method selector='read:maxLength:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSInvocation'>
+    <method ignore='true' selector='getArgument:atIndex:' />
+    <method ignore='true' selector='getReturnValue:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='setArgument:atIndex:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='setReturnValue:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='setSelector:'>
+      <arg index='0' type=':' />
+    </method>
+  </class>
+  <class name='NSInvocationOperation'>
+    <method selector='initWithTarget:selector:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSKeyedArchiver'>
+    <method selector='encodeBytes:length:forKey:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSKeyedUnarchiver'>
+    <method selector='decodeBytesForKey:returnedLength:'>
+      <retval c_array_length_in_arg='1' type='r*' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSMethodSignature'>
+    <method selector='getArgumentTypeAtIndex:'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method selector='methodReturnType'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method class_method='true' selector='signatureWithObjCTypes:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+  </class>
+  <class name='NSMutableArray'>
+    <method selector='context:'>
+      <arg comment='userinfo' index='0' type='^v' />
+    </method>
+    <method selector='removeObjectsFromIndices:numIndices:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='sortUsingSelector:'>
+      <arg index='0' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSMutableData'>
+    <method selector='appendBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method comment='cannot handle this' ignore='true' selector='mutableBytes' suggestion='use your language native array access on this object' />
+    <method selector='replaceBytesInRange:withBytes:'>
+      <arg c_array_length_in_arg='0' index='1' type_modifier='n' />
+    </method>
+    <method selector='replaceBytesInRange:withBytes:length:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSMutableString'>
+    <method selector='appendFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+  </class>
+  <class name='NSNetService'>
+    <method selector='getInputStream:outputStream:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSNotificationCenter'>
+    <method selector='addObserver:selector:name:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSNumber'>
+    <method selector='charValue'>
+      <retval numeric='false' />
+    </method>
+    <method selector='initWithChar:'>
+      <arg index='0' numeric='false' type='c' />
+    </method>
+    <method class_method='true' selector='numberWithChar:'>
+      <arg index='0' numeric='false' type='c' />
+    </method>
+  </class>
+  <class comment='need attenention' name='NSObject'>
+    <method selector='addObserver:forKeyPath:options:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='attemptRecoveryFromError:optionIndex:delegate:didRecoverSelector:contextInfo:'>
+      <arg index='3' sel_of_type='v@:B^v' />
+      <arg comment='context' index='4' type='^v' />
+    </method>
+    <method class_method='true' selector='cancelPreviousPerformRequestsWithTarget:selector:object:'>
+      <arg index='1' type=':' />
+    </method>
+    <method selector='countByEnumeratingWithState:objects:count:'>
+      <arg index='0' type='^{?=L^@^L[5L]}' type64='^{?=Q^@^Q[5Q]}' />
+      <arg index='1' type='^@' />
+    </method>
+    <method selector='doesNotRecognizeSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='handleMachMessage:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method class_method='true' selector='instanceMethodForSelector:'>
+      <retval comment='IMP, manual wrapper' type='^?' />
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='instanceMethodSignatureForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='instancesRespondToSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='methodForSelector:'>
+      <retval comment='IMP, manual wrapper' type='^?' />
+      <arg index='0' type=':' />
+    </method>
+    <method selector='methodSignatureForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='observationInfo'>
+      <retval comment='context' type='^v' />
+    </method>
+    <method selector='observeValueForKeyPath:ofObject:change:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='performSelector:onThread:withObject:waitUntilDone:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelector:onThread:withObject:waitUntilDone:modes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelector:withObject:afterDelay:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelector:withObject:afterDelay:inModes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelectorInBackground:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelectorOnMainThread:withObject:waitUntilDone:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelectorOnMainThread:withObject:waitUntilDone:modes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method class_method='true' selector='resolveClassMethod:'>
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='resolveInstanceMethod:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='setObservationInfo:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='spellServer:checkGrammarInString:language:details:'>
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='spellServer:findMisspelledWordInString:language:wordCount:countOnly:'>
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKey:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKeyPath:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSOutputStream'>
+    <method comment='need work' selector='initToBuffer:capacity:'>
+      <arg index='0' type='r*' />
+    </method>
+    <method class_method='true' comment='need work' selector='outputStreamToBuffer:capacity:'>
+      <arg index='0' type='r*' />
+    </method>
+    <method selector='write:maxLength:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSPointerArray'>
+    <method ignore='true' selector='addPointer:' suggestion='use NSMutableArray' />
+    <method ignore='true' selector='insertPointer:atIndex:' suggestion='use NSMutableArray' />
+    <method ignore='true' selector='pointerAtIndex:' suggestion='use NSMutableArray'>
+      <retval type='^v' />
+    </method>
+    <method ignore='true' selector='replacePointerAtIndex:withPointer:' suggestion='use NSMutableArray' />
+  </class>
+  <class name='NSPointerFunctions'>
+    <method selector='acquireFunction'>
+      <retval type='^v' />
+    </method>
+    <method selector='setAcquireFunction:'>
+      <arg index='0' type='^v' />
+    </method>
+  </class>
+  <class name='NSPredicate'>
+    <method class_method='true' selector='predicateWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method ignore='true' selector='predicateWithFormat:arguments:' suggestion='use +predicateWithFormat:' />
+  </class>
+  <class name='NSPropertyListSerialization'>
+    <method class_method='true' selector='dataFromPropertyList:format:errorDescription:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='propertyListFromData:mutabilityOption:format:errorDescription:'>
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSProxy'>
+    <method selector='methodSignatureForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='respondsToSelector:'>
+      <arg index='0' type=':' />
+    </method>
+  </class>
+  <class name='NSRunLoop'>
+    <method selector='cancelPerformSelector:target:argument:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='performSelector:target:argument:order:modes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSScanner'>
+    <method selector='scanCharactersFromSet:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='scanDecimal:'>
+      <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type_modifier='o' />
+    </method>
+    <method selector='scanDouble:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanFloat:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanHexDouble:'>
+      <arg index='0' type='^d' />
+    </method>
+    <method selector='scanHexFloat:'>
+      <arg index='0' type='^f' />
+    </method>
+    <method selector='scanHexInt:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanHexLongLong:'>
+      <arg index='0' type='^Q' />
+    </method>
+    <method selector='scanInt:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanInteger:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanLongLong:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanString:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='scanUpToCharactersFromSet:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='scanUpToString:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSScriptCoercionHandler'>
+    <method selector='registerCoercer:selector:toConvertFromClass:toClass:'>
+      <arg index='1' sel_of_type='@@:@#' />
+    </method>
+  </class>
+  <class name='NSScriptObjectSpecifier'>
+    <method selector='indicesOfObjectsByEvaluatingWithContainer:count:'>
+      <retval c_array_length_in_arg='1' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSSet'>
+    <method selector='addObserver:forKeyPath:options:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='initWithObjects:' variadic='true' />
+    <method selector='initWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='makeObjectsPerformSelector:'>
+      <arg index='0' sel_of_type='v@:' />
+    </method>
+    <method selector='makeObjectsPerformSelector:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='setWithObjects:' variadic='true' />
+    <method class_method='true' selector='setWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSSortDescriptor'>
+    <method selector='initWithKey:ascending:selector:'>
+      <arg index='2' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSStream'>
+    <method class_method='true' selector='getStreamsToHost:port:inputStream:outputStream:'>
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSString'>
+    <method selector=''>
+      <retval numeric='false' type='*' />
+    </method>
+    <method selector=''>
+      <retval numeric='false' type='*' />
+    </method>
+    <method selector='UTF8String'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method class_method='true' selector='availableStringEncodings'>
+      <retval c_array_of_variable_length='true' type='r^I' type64='r^Q' />
+    </method>
+    <method selector='cStringUsingEncoding:'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method selector='completePathIntoString:caseSensitive:matchesIntoArray:filterTypes:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='fileSystemRepresentation'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method comment='no docs?' ignore='true' selector='getBytes:maxLength:usedLength:encoding:options:range:remainingRange:' suggestion='do not use' />
+    <method ignore='true' selector='getCString:' suggestion='use -cString instead' />
+    <method ignore='true' selector='getCString:maxLength:' suggestion='use -cString instead' />
+    <method ignore='true' selector='getCString:maxLength:encoding:' suggestion='use -cString instead' />
+    <method ignore='true' selector='getCString:maxLength:range:remainingRange:' suggestion='use -cString instead' />
+    <method selector='getCharacters:'>
+      <arg index='0' type='^S' />
+    </method>
+    <method selector='getCharacters:range:'>
+      <arg index='0' type='^S' />
+    </method>
+    <method selector='getFileSystemRepresentation:maxLength:'>
+      <arg c_array_length_in_arg='1' comment='fixme' index='0' type='r*' type_modifier='o' />
+    </method>
+    <method selector='getLineStart:end:contentsEnd:forRange:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='getParagraphStart:end:contentsEnd:forRange:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='initWithBytes:length:encoding:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method ignore='true' selector='initWithBytesNoCopy:length:encoding:freeWhenDone:' suggestion='use -initWithBytes:length:encoding instead' />
+    <method selector='initWithCString:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='initWithCString:encoding:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='initWithCString:length:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method ignore='true' selector='initWithCStringNoCopy:length:freeWhenDone:' suggestion='use -initWithCString:length: instead' />
+    <method selector='initWithCharacters:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' unicode_string='true' />
+    </method>
+    <method ignore='true' selector='initWithCharactersNoCopy:length:freeWhenDone:' suggestion='use -initWithCharacters:length: instead' />
+    <method selector='initWithContentsOfFile:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfFile:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method ignore='true' selector='initWithFormat:arguments:' suggestion='use some other method' />
+    <method selector='initWithFormat:locale:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method ignore='true' selector='initWithFormat:locale:arguments:' suggestion='use some other method' />
+    <method selector='initWithUTF8String:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='localizedStringWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method selector='stringByAppendingFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method class_method='true' selector='stringWithCString:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='stringWithCString:encoding:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='stringWithCString:length:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+    <method class_method='true' selector='stringWithCharacters:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' unicode_string='true' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfFile:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfFile:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfURL:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfURL:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method class_method='true' selector='stringWithUTF8String:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='writeToFile:atomically:encoding:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToURL:atomically:encoding:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSThread'>
+    <method class_method='true' selector='detachNewThreadSelector:toTarget:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='initWithTarget:selector:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSTimer'>
+    <method selector='initWithFireDate:interval:target:selector:userInfo:repeats:'>
+      <arg index='3' sel_of_type='v@:@' />
+    </method>
+    <method class_method='true' selector='scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:'>
+      <arg index='2' sel_of_type='v@:@' />
+    </method>
+    <method class_method='true' selector='timerWithTimeInterval:target:selector:userInfo:repeats:'>
+      <arg index='2' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSURLConnection'>
+    <method class_method='true' selector='sendSynchronousRequest:returningResponse:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSUndoManager'>
+    <method selector='registerUndoWithTarget:selector:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSValue'>
+    <method ignore='true' selector='getValue:' suggestion='use something else' />
+    <method ignore='true' selector='initWithBytes:objCType:' suggestion='use something else' />
+    <method selector='objCType'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method ignore='true' selector='pointerValue' suggestion='use something else' />
+    <method ignore='true' selector='value:withObjCType:' suggestion='use something else' />
+    <method ignore='true' selector='valueWithBytes:objCType:' suggestion='use something else' />
+    <method ignore='true' selector='valueWithPointer:' suggestion='use something else' />
+  </class>
+  <class name='NSXMLDTD'>
+    <method selector='initWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithData:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSXMLDocument'>
+    <method selector='initWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithData:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithXMLString:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectByApplyingXSLT:arguments:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectByApplyingXSLTAtURL:arguments:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectByApplyingXSLTString:arguments:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSXMLElement'>
+    <method selector='initWithXMLString:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSXMLNode'>
+    <method selector='nodesForXPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectsForXQuery:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectsForXQuery:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSAppleEventDescriptor'>
+    <method selector='aeDesc'>
+      <retval type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' />
+    </method>
+    <method class_method='true' selector='descriptorWithDescriptorType:bytes:length:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method selector='initWithAEDescNoCopy:'>
+      <arg index='0' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' type_modifier='n' />
+    </method>
+    <method selector='initWithDescriptorType:bytes:length:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSAppleEventManager'>
+    <method selector='dispatchRawAppleEvent:withRawReply:handlerRefCon:'>
+      <arg index='0' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' type_modifier='n' />
+      <arg index='1' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' type_modifier='o' />
+    </method>
+    <method selector='setEventHandler:andSelector:forEventClass:andEventID:'>
+      <arg index='1' sel_of_type='v@:@@' />
+    </method>
+  </class>
+  <class name='NSAppleScript'>
+    <method selector='compileAndReturnError:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='executeAndReturnError:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='executeAppleEvent:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSArray'>
+    <method selector='addObserver:forKeyPath:options:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='addObserver:toObjectsAtIndexes:forKeyPath:options:context:'>
+      <arg comment='context' index='4' type='^v' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='arrayWithObjects:' variadic='true' />
+    <method class_method='true' selector='arrayWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='context:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='context:hint:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='getObjects:' suggestion='use some other method'>
+      <arg index='0' type='^@' />
+    </method>
+    <method selector='getObjects:range:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='initWithObjects:' variadic='true' />
+    <method selector='initWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='makeObjectsPerformSelector:'>
+      <arg index='0' sel_of_type='v@:' />
+    </method>
+    <method selector='makeObjectsPerformSelector:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='sortedArrayUsingSelector:'>
+      <arg index='0' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSAssertionHandler'>
+    <method selector='handleFailureInFunction:file:lineNumber:description:' variadic='true'>
+      <arg index='3' printf_format='true' />
+    </method>
+    <method selector='handleFailureInMethod:object:file:lineNumber:description:' variadic='true'>
+      <arg index='0' type=':' />
+      <arg index='4' printf_format='true' />
+    </method>
+  </class>
+  <class name='NSAttributedString'>
+    <method selector='attribute:atIndex:effectiveRange:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='attribute:atIndex:longestEffectiveRange:inRange:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='attributesAtIndex:effectiveRange:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='attributesAtIndex:longestEffectiveRange:inRange:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSBundle'>
+    <method selector='loadAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='preflightAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSCalendar'>
+    <method comment='No documentation yet?' selector='rangeOfUnit:startDate:interval:forDate:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSCalendarDate'>
+    <method comment='No documentation yet?' selector='years:months:days:hours:minutes:seconds:sinceDate:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+      <arg index='4' type_modifier='o' />
+      <arg index='5' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSCharacterSet'>
+    <method selector='characterIsMember:'>
+      <arg index='0' numeric='false' type='S' />
+    </method>
+  </class>
+  <class comment='needs further checking' name='NSCoder'>
+    <method selector='decodeArrayOfObjCType:count:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='2' type_modifier='o' />
+    </method>
+    <method selector='decodeBytesForKey:returnedLength:'>
+      <retval type='r*' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='decodeBytesWithReturnedLength:'>
+      <retval c_array_length_in_arg='0' />
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='decodeValueOfObjCType:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='1' />
+    </method>
+    <method selector='decodeValuesOfObjCTypes:' variadic='true'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='encodeArrayOfObjCType:count:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='2' type_modifier='n' />
+    </method>
+    <method selector='encodeBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='encodeBytes:length:forKey:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+    <method selector='encodeValueOfObjCType:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='1' type_modifier='n' />
+    </method>
+    <method selector='encodeValuesOfObjCTypes:' variadic='true'>
+      <arg index='0' type='r*' />
+    </method>
+  </class>
+  <class name='NSComparisonPredicate'>
+    <method selector='initWithLeftExpression:rightExpression:customSelector:'>
+      <arg index='2' sel_of_type='B@:@' />
+    </method>
+    <method class_method='true' selector='predicateWithLeftExpression:rightExpression:customSelector:'>
+      <arg index='2' sel_of_type='B@:@' />
+    </method>
+  </class>
+  <class name='NSData'>
+    <method comment='Needs manual wrapping or metadata update' selector='bytes'>
+      <retval c_array_of_variable_length='true' />
+    </method>
+    <method class_method='true' selector='dataWithBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method class_method='true' selector='dataWithBytesNoCopy:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method class_method='true' ignore='true' selector='dataWithBytesNoCopy:length:freeWhenDone:' suggestion='Use +dataWithBytes:length: instead'>
+      <arg index='0' type='^v' />
+    </method>
+    <method class_method='true' selector='dataWithContentsOfFile:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='dataWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method ignore='true' selector='getBytes:' suggestion='Use -bytes instead'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='getBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='o' />
+    </method>
+    <method selector='getBytes:range:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='o' />
+    </method>
+    <method selector='initWithBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='initWithBytesNoCopy:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method ignore='true' selector='initWithBytesNoCopy:length:freeWhenDone:' suggestion='Use -initWithBytes:length: instead'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='initWithContentsOfFile:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToFile:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSDateFormatter'>
+    <method selector='getObjectValue:forString:range:error:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSDecimalNumber'>
+    <method selector='objCType'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+  </class>
+  <class name='NSDictionary'>
+    <method class_method='true' selector='dictionaryWithObjects:forKeys:count:'>
+      <arg c_array_length_in_arg='2' index='0' type_modifier='n' />
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='dictionaryWithObjectsAndKeys:' variadic='true' />
+    <method ignore='true' selector='getObjects:andKeys:' suggestion='use some other method instead'>
+      <arg index='0' type='^@' />
+      <arg index='1' type='^@' />
+    </method>
+    <method selector='initWithObjects:forKeys:count:'>
+      <arg c_array_length_in_arg='2' index='0' type_modifier='n' />
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='initWithObjectsAndKeys:' variadic='true' />
+    <method selector='keysSortedByValueUsingSelector:'>
+      <arg index='0' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSDistributedNotificationCenter'>
+    <method selector='addObserver:selector:name:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+    <method selector='addObserver:selector:name:object:suspensionBehavior:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSFileManager'>
+    <method selector='attributesOfFileSystemForPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='attributesOfItemAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='contentsOfDirectoryAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='copyItemAtPath:toPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createDirectoryAtPath:withIntermediateDirectories:attributes:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createSymbolicLinkAtPath:withDestinationPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='destinationOfSymbolicLinkAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='fileExistsAtPath:isDirectory:'>
+      <arg index='1' type='^B' type_modifier='o' />
+    </method>
+    <method selector='fileSystemRepresentationWithPath:'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method selector='linkItemAtPath:toPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='moveItemAtPath:toPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='removeItemAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='setAttributes:ofItemAtPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='stringWithFileSystemRepresentation:length:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' />
+    </method>
+    <method selector='subpathsOfDirectoryAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSFormatter'>
+    <method selector='getObjectValue:forString:errorDescription:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='isPartialStringValid:newEditingString:errorDescription:'>
+      <arg index='1' type_modifier='N' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='isPartialStringValid:proposedSelectedRange:originalString:originalSelectedRange:errorDescription:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='1' type_modifier='N' />
+      <arg index='4' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSGarbageCollector'>
+    <method ignore='true' selector='disableCollectorForPointer:' suggestion='Not supported right now'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='enableCollectorForPointer:' suggestion='Not supported right now'>
+      <arg index='0' type='^v' />
+    </method>
+  </class>
+  <class name='NSIndexPath'>
+    <method ignore='true' selector='getIndexes:' suggestion='Use -indexAtPosition instead'>
+      <arg index='0' type='^I' type64='^Q' />
+    </method>
+    <method class_method='true' selector='indexPathWithIndexes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='initWithIndexes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSIndexSet'>
+    <method selector='getIndexes:maxCount:inIndexRange:'>
+      <arg c_array_length_in_arg='1,2' index='0' type_modifier='o' />
+      <arg index='2' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSInputStream'>
+    <method comment='buffer by indirection' ignore='true' selector='getBuffer:length:' />
+    <method selector='read:maxLength:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSInvocation'>
+    <method ignore='true' selector='getArgument:atIndex:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='getReturnValue:' />
+    <method ignore='true' selector='setArgument:atIndex:' />
+    <method ignore='true' selector='setReturnValue:' />
+    <method selector='setSelector:'>
+      <arg index='0' type=':' />
+    </method>
+  </class>
+  <class name='NSInvocationOperation'>
+    <method selector='initWithTarget:selector:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSKeyedArchiver'>
+    <method selector='encodeBytes:length:forKey:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSKeyedUnarchiver'>
+    <method selector='decodeBytesForKey:returnedLength:'>
+      <retval c_array_length_in_arg='1' type='r*' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSMethodSignature'>
+    <method selector='getArgumentTypeAtIndex:'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method selector='methodReturnType'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method class_method='true' selector='signatureWithObjCTypes:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+  </class>
+  <class name='NSMutableArray'>
+    <method selector='context:'>
+      <arg comment='userinfo' index='0' type='^v' />
+    </method>
+    <method selector='removeObjectsFromIndices:numIndices:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='sortUsingSelector:'>
+      <arg index='0' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSMutableData'>
+    <method selector='appendBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method comment='cannot handle this' ignore='true' selector='mutableBytes' suggestion='use your language native array access on this object'>
+      <retval type='^v' />
+    </method>
+    <method selector='replaceBytesInRange:withBytes:'>
+      <arg c_array_length_in_arg='0' index='1' type_modifier='n' />
+    </method>
+    <method selector='replaceBytesInRange:withBytes:length:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSMutableString'>
+    <method selector='appendFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+  </class>
+  <class name='NSNetService'>
+    <method selector='getInputStream:outputStream:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSNotificationCenter'>
+    <method selector='addObserver:selector:name:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSNumber'>
+    <method selector='charValue'>
+      <retval numeric='false' />
+    </method>
+    <method selector='initWithChar:'>
+      <arg index='0' numeric='false' type='c' />
+    </method>
+    <method class_method='true' selector='numberWithChar:'>
+      <arg index='0' numeric='false' type='c' />
+    </method>
+  </class>
+  <class comment='need attenention' name='NSObject'>
+    <method selector='addObserver:forKeyPath:options:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='attemptRecoveryFromError:optionIndex:delegate:didRecoverSelector:contextInfo:'>
+      <arg index='3' sel_of_type='v@:B^v' />
+      <arg comment='context' index='4' type='^v' />
+    </method>
+    <method class_method='true' selector='cancelPreviousPerformRequestsWithTarget:selector:object:'>
+      <arg index='1' type=':' />
+    </method>
+    <method selector='countByEnumeratingWithState:objects:count:'>
+      <arg index='0' type='^{?=L^@^L[5L]}' type64='^{?=Q^@^Q[5Q]}' />
+      <arg index='1' type='^@' />
+    </method>
+    <method selector='doesNotRecognizeSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='handleMachMessage:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method class_method='true' selector='instanceMethodForSelector:'>
+      <retval comment='IMP, manual wrapper' type='^?' />
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='instanceMethodSignatureForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='instancesRespondToSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='methodForSelector:'>
+      <retval comment='IMP, manual wrapper' type='^?' />
+      <arg index='0' type=':' />
+    </method>
+    <method selector='methodSignatureForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='observationInfo'>
+      <retval comment='context' type='^v' />
+    </method>
+    <method selector='observeValueForKeyPath:ofObject:change:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='performSelector:onThread:withObject:waitUntilDone:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelector:onThread:withObject:waitUntilDone:modes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelector:withObject:afterDelay:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelector:withObject:afterDelay:inModes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelectorInBackground:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelectorOnMainThread:withObject:waitUntilDone:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelectorOnMainThread:withObject:waitUntilDone:modes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method class_method='true' selector='resolveClassMethod:'>
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='resolveInstanceMethod:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='setObservationInfo:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='spellServer:checkGrammarInString:language:details:'>
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='spellServer:findMisspelledWordInString:language:wordCount:countOnly:'>
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKey:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKeyPath:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSOutputStream'>
+    <method comment='need work' selector='initToBuffer:capacity:'>
+      <arg index='0' type='r*' />
+    </method>
+    <method class_method='true' comment='need work' selector='outputStreamToBuffer:capacity:'>
+      <arg index='0' type='r*' />
+    </method>
+    <method selector='write:maxLength:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSPointerArray'>
+    <method ignore='true' selector='addPointer:' suggestion='use NSMutableArray'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='insertPointer:atIndex:' suggestion='use NSMutableArray'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='pointerAtIndex:' suggestion='use NSMutableArray' />
+    <method ignore='true' selector='replacePointerAtIndex:withPointer:' suggestion='use NSMutableArray'>
+      <arg index='1' type='^v' />
+    </method>
+  </class>
+  <class name='NSPointerFunctions'>
+    <method selector='acquireFunction'>
+      <retval type='^v' />
+    </method>
+    <method selector='setAcquireFunction:'>
+      <arg index='0' type='^v' />
+    </method>
+  </class>
+  <class name='NSPredicate'>
+    <method class_method='true' selector='predicateWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method class_method='true' ignore='true' selector='predicateWithFormat:arguments:' suggestion='use +predicateWithFormat:'>
+      <arg index='1' type='*' type64='[1{?=II^v^v}]' />
+    </method>
+  </class>
+  <class name='NSPropertyListSerialization'>
+    <method class_method='true' selector='dataFromPropertyList:format:errorDescription:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='propertyListFromData:mutabilityOption:format:errorDescription:'>
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSProxy'>
+    <method selector='methodSignatureForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='respondsToSelector:'>
+      <arg index='0' type=':' />
+    </method>
+  </class>
+  <class name='NSRunLoop'>
+    <method selector='cancelPerformSelector:target:argument:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='performSelector:target:argument:order:modes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSScanner'>
+    <method selector='scanCharactersFromSet:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='scanDecimal:'>
+      <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type_modifier='o' />
+    </method>
+    <method selector='scanDouble:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanFloat:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanHexDouble:'>
+      <arg index='0' type='^d' />
+    </method>
+    <method selector='scanHexFloat:'>
+      <arg index='0' type='^f' />
+    </method>
+    <method selector='scanHexInt:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanHexLongLong:'>
+      <arg index='0' type='^Q' />
+    </method>
+    <method selector='scanInt:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanInteger:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanLongLong:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanString:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='scanUpToCharactersFromSet:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='scanUpToString:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSScriptCoercionHandler'>
+    <method selector='registerCoercer:selector:toConvertFromClass:toClass:'>
+      <arg index='1' sel_of_type='@@:@#' />
+    </method>
+  </class>
+  <class name='NSScriptObjectSpecifier'>
+    <method selector='indicesOfObjectsByEvaluatingWithContainer:count:'>
+      <retval c_array_length_in_arg='1' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSSet'>
+    <method selector='addObserver:forKeyPath:options:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='initWithObjects:' variadic='true' />
+    <method selector='initWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='makeObjectsPerformSelector:'>
+      <arg index='0' sel_of_type='v@:' />
+    </method>
+    <method selector='makeObjectsPerformSelector:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='setWithObjects:' variadic='true' />
+    <method class_method='true' selector='setWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSSortDescriptor'>
+    <method selector='initWithKey:ascending:selector:'>
+      <arg index='2' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSStream'>
+    <method class_method='true' selector='getStreamsToHost:port:inputStream:outputStream:'>
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSString'>
+    <method selector=''>
+      <retval numeric='false' type='*' />
+    </method>
+    <method selector=''>
+      <retval numeric='false' type='*' />
+    </method>
+    <method selector='UTF8String'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method class_method='true' selector='availableStringEncodings'>
+      <retval c_array_of_variable_length='true' type='r^I' type64='r^Q' />
+    </method>
+    <method selector='cStringUsingEncoding:'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method selector='completePathIntoString:caseSensitive:matchesIntoArray:filterTypes:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='fileSystemRepresentation'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method comment='no docs?' ignore='true' selector='getBytes:maxLength:usedLength:encoding:options:range:remainingRange:' suggestion='do not use'>
+      <arg index='0' type='^v' />
+      <arg index='2' type='^I' type64='^Q' />
+      <arg index='6' type='^{_NSRange=II}' type64='^{_NSRange=QQ}' />
+    </method>
+    <method ignore='true' selector='getCString:' suggestion='use -cString instead'>
+      <arg index='0' type='*' />
+    </method>
+    <method ignore='true' selector='getCString:maxLength:' suggestion='use -cString instead'>
+      <arg index='0' type='*' />
+    </method>
+    <method ignore='true' selector='getCString:maxLength:encoding:' suggestion='use -cString instead'>
+      <arg index='0' type='*' />
+    </method>
+    <method ignore='true' selector='getCString:maxLength:range:remainingRange:' suggestion='use -cString instead'>
+      <arg index='0' type='*' />
+      <arg index='3' type='^{_NSRange=II}' type64='^{_NSRange=QQ}' />
+    </method>
+    <method selector='getCharacters:'>
+      <arg index='0' type='^S' />
+    </method>
+    <method selector='getCharacters:range:'>
+      <arg index='0' type='^S' />
+    </method>
+    <method selector='getFileSystemRepresentation:maxLength:'>
+      <arg c_array_length_in_arg='1' comment='fixme' index='0' type='r*' type_modifier='o' />
+    </method>
+    <method selector='getLineStart:end:contentsEnd:forRange:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='getParagraphStart:end:contentsEnd:forRange:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='initWithBytes:length:encoding:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method ignore='true' selector='initWithBytesNoCopy:length:encoding:freeWhenDone:' suggestion='use -initWithBytes:length:encoding instead'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='initWithCString:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='initWithCString:encoding:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='initWithCString:length:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method ignore='true' selector='initWithCStringNoCopy:length:freeWhenDone:' suggestion='use -initWithCString:length: instead'>
+      <arg index='0' type='*' />
+    </method>
+    <method selector='initWithCharacters:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' unicode_string='true' />
+    </method>
+    <method ignore='true' selector='initWithCharactersNoCopy:length:freeWhenDone:' suggestion='use -initWithCharacters:length: instead'>
+      <arg index='0' type='^S' />
+    </method>
+    <method selector='initWithContentsOfFile:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfFile:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method ignore='true' selector='initWithFormat:arguments:' suggestion='use some other method'>
+      <arg index='1' type='*' type64='[1{?=II^v^v}]' />
+    </method>
+    <method selector='initWithFormat:locale:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method ignore='true' selector='initWithFormat:locale:arguments:' suggestion='use some other method'>
+      <arg index='2' type='*' type64='[1{?=II^v^v}]' />
+    </method>
+    <method selector='initWithUTF8String:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='localizedStringWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method selector='stringByAppendingFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method class_method='true' selector='stringWithCString:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='stringWithCString:encoding:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='stringWithCString:length:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+    <method class_method='true' selector='stringWithCharacters:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' unicode_string='true' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfFile:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfFile:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfURL:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfURL:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method class_method='true' selector='stringWithUTF8String:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='writeToFile:atomically:encoding:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToURL:atomically:encoding:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSThread'>
+    <method class_method='true' selector='detachNewThreadSelector:toTarget:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='initWithTarget:selector:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSTimer'>
+    <method selector='initWithFireDate:interval:target:selector:userInfo:repeats:'>
+      <arg index='3' sel_of_type='v@:@' />
+    </method>
+    <method class_method='true' selector='scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:'>
+      <arg index='2' sel_of_type='v@:@' />
+    </method>
+    <method class_method='true' selector='timerWithTimeInterval:target:selector:userInfo:repeats:'>
+      <arg index='2' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSURLConnection'>
+    <method class_method='true' selector='sendSynchronousRequest:returningResponse:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSUndoManager'>
+    <method selector='registerUndoWithTarget:selector:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSValue'>
+    <method ignore='true' selector='getValue:' suggestion='use something else'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='initWithBytes:objCType:' suggestion='use something else'>
+      <arg index='0' type='^v' />
+      <arg index='1' type='*' />
+    </method>
+    <method selector='objCType'>
+      <retval comment='string' numeric='false' type='r*' />
+    </method>
+    <method ignore='true' selector='pointerValue' suggestion='use something else'>
+      <retval type='^v' />
+    </method>
+    <method class_method='true' ignore='true' selector='value:withObjCType:' suggestion='use something else'>
+      <arg index='0' type='^v' />
+      <arg index='1' type='*' />
+    </method>
+    <method class_method='true' ignore='true' selector='valueWithBytes:objCType:' suggestion='use something else'>
+      <arg index='0' type='^v' />
+      <arg index='1' type='*' />
+    </method>
+    <method class_method='true' ignore='true' selector='valueWithPointer:' suggestion='use something else'>
+      <arg index='0' type='^v' />
+    </method>
+  </class>
+  <class name='NSXMLDTD'>
+    <method selector='initWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithData:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSXMLDocument'>
+    <method selector='initWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithData:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithXMLString:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectByApplyingXSLT:arguments:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectByApplyingXSLTAtURL:arguments:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectByApplyingXSLTString:arguments:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSXMLElement'>
+    <method selector='initWithXMLString:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSXMLNode'>
+    <method selector='nodesForXPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectsForXQuery:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectsForXQuery:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSAppleEventDescriptor'>
+    <method selector='aeDesc'>
+      <retval type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' />
+    </method>
+    <method class_method='true' selector='descriptorWithDescriptorType:bytes:length:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method selector='initWithAEDescNoCopy:'>
+      <arg index='0' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' type_modifier='n' />
+    </method>
+    <method selector='initWithDescriptorType:bytes:length:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSAppleEventManager'>
+    <method selector='dispatchRawAppleEvent:withRawReply:handlerRefCon:'>
+      <arg index='0' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' type_modifier='n' />
+      <arg index='1' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' type_modifier='o' />
+    </method>
+    <method selector='setEventHandler:andSelector:forEventClass:andEventID:'>
+      <arg index='1' sel_of_type='v@:@@' />
+    </method>
+  </class>
+  <class name='NSAppleScript'>
+    <method selector='compileAndReturnError:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='executeAndReturnError:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='executeAppleEvent:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSArray'>
+    <method selector='addObserver:forKeyPath:options:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='addObserver:toObjectsAtIndexes:forKeyPath:options:context:'>
+      <arg comment='context' index='4' type='^v' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='arrayWithObjects:' variadic='true' />
+    <method class_method='true' selector='arrayWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='context:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='context:hint:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='getObjects:' suggestion='use some other method' />
+    <method selector='getObjects:range:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='initWithObjects:' variadic='true' />
+    <method selector='initWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='makeObjectsPerformSelector:'>
+      <arg index='0' sel_of_type='v@:' />
+    </method>
+    <method selector='makeObjectsPerformSelector:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='sortedArrayUsingSelector:'>
+      <arg index='0' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSAssertionHandler'>
+    <method selector='handleFailureInFunction:file:lineNumber:description:' variadic='true'>
+      <arg index='3' printf_format='true' />
+    </method>
+    <method selector='handleFailureInMethod:object:file:lineNumber:description:' variadic='true'>
+      <arg index='0' type=':' />
+      <arg index='4' printf_format='true' />
+    </method>
+  </class>
+  <class name='NSAttributedString'>
+    <method selector='attribute:atIndex:effectiveRange:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='attribute:atIndex:longestEffectiveRange:inRange:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='attributesAtIndex:effectiveRange:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='attributesAtIndex:longestEffectiveRange:inRange:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSBundle'>
+    <method selector='loadAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='preflightAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSCalendar'>
+    <method comment='No documentation yet?' selector='rangeOfUnit:startDate:interval:forDate:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSCalendarDate'>
+    <method comment='No documentation yet?' selector='years:months:days:hours:minutes:seconds:sinceDate:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+      <arg index='4' type_modifier='o' />
+      <arg index='5' type_modifier='o' />
+    </method>
+  </class>
+  <class comment='needs further checking' name='NSCoder'>
+    <method selector='decodeArrayOfObjCType:count:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='2' type_modifier='o' />
+    </method>
+    <method selector='decodeBytesForKey:returnedLength:'>
+      <retval type='r*' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='decodeBytesWithReturnedLength:'>
+      <retval c_array_length_in_arg='0' />
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='decodeValueOfObjCType:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='1' />
+    </method>
+    <method selector='decodeValuesOfObjCTypes:' variadic='true'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='encodeArrayOfObjCType:count:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='2' type_modifier='n' />
+    </method>
+    <method selector='encodeBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='encodeBytes:length:forKey:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+    <method selector='encodeValueOfObjCType:at:'>
+      <arg comment='string' index='0' type='r*' />
+      <arg c_array_of_variable_length='true' index='1' type_modifier='n' />
+    </method>
+    <method selector='encodeValuesOfObjCTypes:' variadic='true'>
+      <arg index='0' type='r*' />
+    </method>
+  </class>
+  <class name='NSComparisonPredicate'>
+    <method selector='initWithLeftExpression:rightExpression:customSelector:'>
+      <arg index='2' sel_of_type='B@:@' />
+    </method>
+    <method class_method='true' selector='predicateWithLeftExpression:rightExpression:customSelector:'>
+      <arg index='2' sel_of_type='B@:@' />
+    </method>
+  </class>
+  <class name='NSData'>
+    <method comment='Needs manual wrapping or metadata update' selector='bytes'>
+      <retval c_array_of_variable_length='true' />
+    </method>
+    <method class_method='true' selector='dataWithBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method class_method='true' selector='dataWithBytesNoCopy:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method ignore='true' selector='dataWithBytesNoCopy:length:freeWhenDone:' suggestion='Use +dataWithBytes:length: instead' />
+    <method class_method='true' selector='dataWithContentsOfFile:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='dataWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method ignore='true' selector='getBytes:' suggestion='Use -bytes instead' />
+    <method selector='getBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='o' />
+    </method>
+    <method selector='getBytes:range:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='o' />
+    </method>
+    <method selector='initWithBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='initWithBytesNoCopy:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method ignore='true' selector='initWithBytesNoCopy:length:freeWhenDone:' suggestion='Use -initWithBytes:length: instead' />
+    <method selector='initWithContentsOfFile:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToFile:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSDateFormatter'>
+    <method selector='getObjectValue:forString:range:error:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSDecimalNumber'>
+    <method selector='objCType'>
+      <retval comment='string' type='r*' />
+    </method>
+  </class>
+  <class name='NSDictionary'>
+    <method class_method='true' selector='dictionaryWithObjects:forKeys:count:'>
+      <arg c_array_length_in_arg='2' index='0' type_modifier='n' />
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='dictionaryWithObjectsAndKeys:' variadic='true' />
+    <method ignore='true' selector='getObjects:andKeys:' suggestion='use some other method instead' />
+    <method selector='initWithObjects:forKeys:count:'>
+      <arg c_array_length_in_arg='2' index='0' type_modifier='n' />
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='initWithObjectsAndKeys:' variadic='true' />
+    <method selector='keysSortedByValueUsingSelector:'>
+      <arg index='0' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSDistributedNotificationCenter'>
+    <method selector='addObserver:selector:name:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+    <method selector='addObserver:selector:name:object:suspensionBehavior:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSException'>
+    <method class_method='true' selector='raise:format:' variadic='true'>
+      <arg index='1' printf_format='true' />
+    </method>
+    <method ignore='true' selector='raise:format:arguments:' suggestion='use +raise:format: instead' />
+  </class>
+  <class name='NSFileManager'>
+    <method selector='attributesOfFileSystemForPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='attributesOfItemAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='contentsOfDirectoryAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='copyItemAtPath:toPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createDirectoryAtPath:withIntermediateDirectories:attributes:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createSymbolicLinkAtPath:withDestinationPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='destinationOfSymbolicLinkAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='fileExistsAtPath:isDirectory:'>
+      <arg index='1' type='^B' type_modifier='o' />
+    </method>
+    <method selector='fileSystemRepresentationWithPath:'>
+      <retval comment='string' type='r*' />
+    </method>
+    <method selector='linkItemAtPath:toPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='moveItemAtPath:toPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='removeItemAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='setAttributes:ofItemAtPath:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='stringWithFileSystemRepresentation:length:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' />
+    </method>
+    <method selector='subpathsOfDirectoryAtPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSFormatter'>
+    <method selector='getObjectValue:forString:errorDescription:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='isPartialStringValid:newEditingString:errorDescription:'>
+      <arg index='1' type_modifier='N' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='isPartialStringValid:proposedSelectedRange:originalString:originalSelectedRange:errorDescription:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='1' type_modifier='N' />
+      <arg index='4' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSGarbageCollector'>
+    <method ignore='true' selector='disableCollectorForPointer:' suggestion='Not supported right now' />
+    <method ignore='true' selector='enableCollectorForPointer:' suggestion='Not supported right now' />
+  </class>
+  <class name='NSIndexPath'>
+    <method ignore='true' selector='getIndexes:' suggestion='Use -indexAtPosition instead' />
+    <method class_method='true' selector='indexPathWithIndexes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='initWithIndexes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSIndexSet'>
+    <method selector='getIndexes:maxCount:inIndexRange:'>
+      <arg c_array_length_in_arg='1,2' index='0' type_modifier='o' />
+      <arg index='2' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSInputStream'>
+    <method comment='buffer by indirection' ignore='true' selector='getBuffer:length:'>
+      <arg index='0' type='^*' />
+      <arg index='1' type='^I' type64='^Q' />
+    </method>
+    <method selector='read:maxLength:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSInvocation'>
+    <method ignore='true' selector='getArgument:atIndex:' />
+    <method ignore='true' selector='getReturnValue:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='setArgument:atIndex:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method ignore='true' selector='setReturnValue:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='setSelector:'>
+      <arg index='0' type=':' />
+    </method>
+  </class>
+  <class name='NSInvocationOperation'>
+    <method selector='initWithTarget:selector:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSKeyedArchiver'>
+    <method selector='encodeBytes:length:forKey:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSKeyedUnarchiver'>
+    <method selector='decodeBytesForKey:returnedLength:'>
+      <retval c_array_length_in_arg='1' type='r*' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSMethodSignature'>
+    <method selector='getArgumentTypeAtIndex:'>
+      <retval comment='string' type='r*' />
+    </method>
+    <method selector='methodReturnType'>
+      <retval comment='string' type='r*' />
+    </method>
+    <method class_method='true' selector='signatureWithObjCTypes:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+  </class>
+  <class name='NSMutableArray'>
+    <method selector='context:'>
+      <arg comment='userinfo' index='0' type='^v' />
+    </method>
+    <method selector='replaceObjectsInRange:withObjects:count:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+    <method selector='removeObjectsFromIndices:numIndices:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='sortUsingSelector:'>
+      <arg index='0' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSMutableData'>
+    <method selector='appendBytes:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method comment='cannot handle this' ignore='true' selector='mutableBytes' suggestion='use your language native array access on this object' />
+    <method selector='replaceBytesInRange:withBytes:'>
+      <arg c_array_length_in_arg='0' index='1' type_modifier='n' />
+    </method>
+    <method selector='replaceBytesInRange:withBytes:length:'>
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSMutableString'>
+    <method selector='appendFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+  </class>
+  <class name='NSNetService'>
+    <method selector='getInputStream:outputStream:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSNotificationCenter'>
+    <method selector='addObserver:selector:name:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class comment='need attenention' name='NSObject'>
+    <method selector='addObserver:forKeyPath:options:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='attemptRecoveryFromError:optionIndex:delegate:didRecoverSelector:contextInfo:'>
+      <arg index='3' sel_of_type='v@:B^v' />
+      <arg comment='context' index='4' type='^v' />
+    </method>
+    <method class_method='true' selector='cancelPreviousPerformRequestsWithTarget:selector:object:'>
+      <arg index='1' type=':' />
+    </method>
+    <method selector='countByEnumeratingWithState:objects:count:'>
+      <arg index='0' type='^{?=L^@^L[5L]}' type64='^{?=Q^@^Q[5Q]}' />
+      <arg index='1' type='^@' />
+    </method>
+    <method selector='doesNotRecognizeSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='handleMachMessage:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method class_method='true' selector='instanceMethodForSelector:'>
+      <retval comment='IMP, manual wrapper' type='^?' />
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='instanceMethodSignatureForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='instancesRespondToSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='methodForSelector:'>
+      <retval comment='IMP, manual wrapper' type='^?' />
+      <arg index='0' type=':' />
+    </method>
+    <method selector='methodSignatureForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='observationInfo'>
+      <retval comment='context' type='^v' />
+    </method>
+    <method selector='observeValueForKeyPath:ofObject:change:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='performSelector:onThread:withObject:waitUntilDone:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelector:onThread:withObject:waitUntilDone:modes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelector:withObject:afterDelay:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelector:withObject:afterDelay:inModes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelectorInBackground:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelectorOnMainThread:withObject:waitUntilDone:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='performSelectorOnMainThread:withObject:waitUntilDone:modes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='setObservationInfo:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='spellServer:checkGrammarInString:language:details:'>
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='spellServer:findMisspelledWordInString:language:wordCount:countOnly:'>
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKey:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKeyPath:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSOutputStream'>
+    <method comment='need work' selector='initToBuffer:capacity:'>
+      <arg index='0' type='r*' />
+    </method>
+    <method class_method='true' comment='need work' selector='outputStreamToBuffer:capacity:'>
+      <arg index='0' type='r*' />
+    </method>
+    <method selector='write:maxLength:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSPointerArray'>
+    <method ignore='true' selector='addPointer:' suggestion='use NSMutableArray' />
+    <method ignore='true' selector='insertPointer:atIndex:' suggestion='use NSMutableArray' />
+    <method ignore='true' selector='pointerAtIndex:' suggestion='use NSMutableArray'>
+      <retval type='^v' />
+    </method>
+    <method ignore='true' selector='replacePointerAtIndex:withPointer:' suggestion='use NSMutableArray' />
+  </class>
+  <class name='NSPredicate'>
+    <method class_method='true' selector='predicateWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method ignore='true' selector='predicateWithFormat:arguments:' suggestion='use +predicateWithFormat:' />
+  </class>
+  <class name='NSPropertyListSerialization'>
+    <method class_method='true' selector='dataFromPropertyList:format:errorDescription:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='propertyListFromData:mutabilityOption:format:errorDescription:'>
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSProxy'>
+    <method selector='methodSignatureForSelector:'>
+      <arg index='0' type=':' />
+    </method>
+    <method class_method='true' selector='respondsToSelector:'>
+      <arg index='0' type=':' />
+    </method>
+  </class>
+  <class name='NSRunLoop'>
+    <method selector='cancelPerformSelector:target:argument:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='performSelector:target:argument:order:modes:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSScanner'>
+    <method selector='scanCharactersFromSet:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='scanDecimal:'>
+      <arg index='0' type='r^{?=b8b4b1b1b18[8S]}' type_modifier='o' />
+    </method>
+    <method selector='scanDouble:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanFloat:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanHexInt:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanInt:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanInteger:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanLongLong:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='scanString:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='scanUpToCharactersFromSet:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='scanUpToString:intoString:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSScriptCoercionHandler'>
+    <method selector='registerCoercer:selector:toConvertFromClass:toClass:'>
+      <arg index='1' sel_of_type='@@:@#' />
+    </method>
+  </class>
+  <class name='NSScriptObjectSpecifier'>
+    <method selector='indicesOfObjectsByEvaluatingWithContainer:count:'>
+      <retval c_array_length_in_arg='1' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSSet'>
+    <method selector='addObserver:forKeyPath:options:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='initWithObjects:' variadic='true' />
+    <method selector='initWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method selector='makeObjectsPerformSelector:'>
+      <arg index='0' sel_of_type='v@:' />
+    </method>
+    <method selector='makeObjectsPerformSelector:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method c_array_delimited_by_null='true' selector='setWithObjects:' variadic='true' />
+    <method class_method='true' selector='setWithObjects:count:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSSortDescriptor'>
+    <method selector='initWithKey:ascending:selector:'>
+      <arg index='2' sel_of_type='i@:@' />
+    </method>
+  </class>
+  <class name='NSStream'>
+    <method class_method='true' selector='getStreamsToHost:port:inputStream:outputStream:'>
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSString'>
+    <method selector=''>
+      <retval type='*' />
+    </method>
+    <method selector=''>
+      <retval type='*' />
+    </method>
+    <method selector='UTF8String'>
+      <retval comment='string' type='r*' />
+    </method>
+    <method class_method='true' selector='availableStringEncodings'>
+      <retval c_array_of_variable_length='true' type='r^I' type64='r^Q' />
+    </method>
+    <method selector='cStringUsingEncoding:'>
+      <retval comment='string' type='r*' />
+    </method>
+    <method selector='completePathIntoString:caseSensitive:matchesIntoArray:filterTypes:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='fileSystemRepresentation'>
+      <retval comment='string' type='r*' />
+    </method>
+    <method comment='no docs?' ignore='true' selector='getBytes:maxLength:usedLength:encoding:options:range:remainingRange:' suggestion='do not use' />
+    <method ignore='true' selector='getCString:' suggestion='use -cString instead' />
+    <method ignore='true' selector='getCString:maxLength:' suggestion='use -cString instead' />
+    <method ignore='true' selector='getCString:maxLength:encoding:' suggestion='use -cString instead' />
+    <method ignore='true' selector='getCString:maxLength:range:remainingRange:' suggestion='use -cString instead' />
+    <method selector='getCharacters:'>
+      <arg index='0' type='^S' />
+    </method>
+    <method selector='getCharacters:range:'>
+      <arg index='0' type='^S' />
+    </method>
+    <method selector='getFileSystemRepresentation:maxLength:'>
+      <arg c_array_length_in_arg='1' comment='fixme' index='0' type='r*' type_modifier='o' />
+    </method>
+    <method selector='getLineStart:end:contentsEnd:forRange:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='getParagraphStart:end:contentsEnd:forRange:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='initWithBytes:length:encoding:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+    </method>
+    <method ignore='true' selector='initWithBytesNoCopy:length:encoding:freeWhenDone:' suggestion='use -initWithBytes:length:encoding instead' />
+    <method selector='initWithCString:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='initWithCString:encoding:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='initWithCString:length:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method ignore='true' selector='initWithCStringNoCopy:length:freeWhenDone:' suggestion='use -initWithCString:length: instead' />
+    <method selector='initWithCharacters:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' unicode_string='true' />
+    </method>
+    <method ignore='true' selector='initWithCharactersNoCopy:length:freeWhenDone:' suggestion='use -initWithCharacters:length: instead' />
+    <method selector='initWithContentsOfFile:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfFile:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithContentsOfURL:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method ignore='true' selector='initWithFormat:arguments:' suggestion='use some other method' />
+    <method selector='initWithFormat:locale:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method ignore='true' selector='initWithFormat:locale:arguments:' suggestion='use some other method' />
+    <method selector='initWithUTF8String:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='localizedStringWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method selector='stringByAppendingFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method class_method='true' selector='stringWithCString:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='stringWithCString:encoding:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method class_method='true' selector='stringWithCString:length:'>
+      <arg c_array_length_in_arg='1' index='0' type='r*' type_modifier='n' />
+    </method>
+    <method class_method='true' selector='stringWithCharacters:length:'>
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' unicode_string='true' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfFile:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfFile:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfURL:encoding:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithContentsOfURL:usedEncoding:error:'>
+      <arg index='1' type='r^I' type64='r^Q' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='stringWithFormat:' variadic='true'>
+      <arg index='0' printf_format='true' />
+    </method>
+    <method class_method='true' selector='stringWithUTF8String:'>
+      <arg comment='string' index='0' type='r*' />
+    </method>
+    <method selector='writeToFile:atomically:encoding:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToURL:atomically:encoding:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSThread'>
+    <method class_method='true' selector='detachNewThreadSelector:toTarget:withObject:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='initWithTarget:selector:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSTimer'>
+    <method selector='initWithFireDate:interval:target:selector:userInfo:repeats:'>
+      <arg index='3' sel_of_type='v@:@' />
+    </method>
+    <method class_method='true' selector='scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:'>
+      <arg index='2' sel_of_type='v@:@' />
+    </method>
+    <method class_method='true' selector='timerWithTimeInterval:target:selector:userInfo:repeats:'>
+      <arg index='2' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSURLConnection'>
+    <method class_method='true' selector='sendSynchronousRequest:returningResponse:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSUndoManager'>
+    <method selector='registerUndoWithTarget:selector:object:'>
+      <arg index='1' sel_of_type='v@:@' />
+    </method>
+  </class>
+  <class name='NSValue'>
+    <method ignore='true' selector='getValue:' suggestion='use something else' />
+    <method ignore='true' selector='initWithBytes:objCType:' suggestion='use something else' />
+    <method selector='objCType'>
+      <retval comment='string' type='r*' />
+    </method>
+    <method ignore='true' selector='pointerValue' suggestion='use something else' />
+    <method ignore='true' selector='value:withObjCType:' suggestion='use something else' />
+    <method ignore='true' selector='valueWithBytes:objCType:' suggestion='use something else' />
+    <method ignore='true' selector='valueWithPointer:' suggestion='use something else' />
+  </class>
+  <class name='NSXMLDTD'>
+    <method selector='initWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithData:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSXMLDocument'>
+    <method selector='initWithContentsOfURL:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithData:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='initWithXMLString:options:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectByApplyingXSLT:arguments:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectByApplyingXSLTAtURL:arguments:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectByApplyingXSLTString:arguments:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSXMLElement'>
+    <method selector='initWithXMLString:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSXMLNode'>
+    <method selector='nodesForXPath:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectsForXQuery:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='objectsForXQuery:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+</signatures>

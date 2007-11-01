@@ -1,0 +1,28 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {changeSearchType = id; performSearch = id; }; 
+            CLASS = FilteringArrayController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {}; 
+            SUPERCLASS = NSArrayController; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = TableModelWithSearchAppDelegate; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = ToolbarCreator; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                filteringArrayController = FilteringArrayController; 
+                searchField = NSTextField; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

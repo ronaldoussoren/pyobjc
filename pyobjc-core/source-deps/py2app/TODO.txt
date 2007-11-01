@@ -1,0 +1,26 @@
+* EasyDialogs rsrc files
+* Fix embedded interpreter to go in MacOS
+* Refactor the Python bootstraps to compile the boot script and the main script
+* Put the main script in the zip, possibly the boot script too
+  Maybe not, this might break dirname(__name__) junk?
+  But not with the code object..
+* Support py2exe style --xref / -x option
+* Use an egg runtime zipimport metapath replacement thing.
+* Clean the dist dir when switching build styles (alias vs. non-alias)
+* Write recipe for including wxWidgets .rsrc file
+* Fix wxPython 2.4.2.4
+* Pango?
+* Build DMG option for py2app and bdist_mpkg
+* Make it useful to build multiple apps/plugins in one setup()?
+* Allow bdist_mpkg to build .pyc/.pyo post-install
+* bdist_mpkg name to not include version
+* support universal binaries
+* fix this::
+
+    TypeError: compile() expected string without null bytes
+
+    modulegraph.py(376)load_module()
+
+    -> co = compile (fp.read().replace("\r\n", "\n")+'\n',pathname, 'exec')
+
+* make py2applet --help work

@@ -1,0 +1,868 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation' />
+  <depends_on path='/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreGraphics.framework/CoreGraphics' />
+  <depends_on path='/System/Library/Frameworks/ApplicationServices.framework/Frameworks/ATS.framework/ATS' />
+  <struct name='CTParagraphStyleSetting' type='{CTParagraphStyleSetting="spec"I"valueSize"I"value"^v}' type64='{CTParagraphStyleSetting="spec"I"valueSize"Q"value"^v}' />
+  <cftype gettypeid_func='CTFontCollectionGetTypeID' name='CTFontCollectionRef' type='^{__CTFontCollection=}' type64='^{__CTFontCollection=}' />
+  <cftype gettypeid_func='CTFontDescriptorGetTypeID' name='CTFontDescriptorRef' type='^{__CTFontDescriptor=}' type64='^{__CTFontDescriptor=}' />
+  <cftype gettypeid_func='CTFontGetTypeID' name='CTFontRef' type='^{__CTFont=}' type64='^{__CTFont=}' />
+  <cftype gettypeid_func='CTFrameGetTypeID' name='CTFrameRef' type='^{__CTFrame=}' type64='^{__CTFrame=}' />
+  <cftype gettypeid_func='CTFramesetterGetTypeID' name='CTFramesetterRef' type='^{__CTFramesetter=}' type64='^{__CTFramesetter=}' />
+  <cftype gettypeid_func='CTGlyphInfoGetTypeID' name='CTGlyphInfoRef' type='^{__CTGlyphInfo=}' type64='^{__CTGlyphInfo=}' />
+  <cftype gettypeid_func='CTLineGetTypeID' name='CTLineRef' type='^{__CTLine=}' type64='^{__CTLine=}' />
+  <cftype gettypeid_func='CTParagraphStyleGetTypeID' name='CTParagraphStyleRef' type='^{__CTParagraphStyle=}' type64='^{__CTParagraphStyle=}' />
+  <cftype gettypeid_func='CTRunGetTypeID' name='CTRunRef' type='^{__CTRun=}' type64='^{__CTRun=}' />
+  <cftype gettypeid_func='CTTextTabGetTypeID' name='CTTextTabRef' type='^{__CTTextTab=}' type64='^{__CTTextTab=}' />
+  <cftype gettypeid_func='CTTypesetterGetTypeID' name='CTTypesetterRef' type='^{__CTTypesetter=}' type64='^{__CTTypesetter=}' />
+  <constant name='kCTFontAttributeName' type='^{__CFString=}' />
+  <constant name='kCTFontBaselineAdjustAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontCascadeListAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontCharacterSetAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontCollectionRemoveDuplicatesOption' type='^{__CFString=}' />
+  <constant name='kCTFontCopyrightNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontDescriptionNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontDesignerNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontDesignerURLNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontDisplayNameAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontFamilyNameAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontFamilyNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontFeatureSelectorDefaultKey' type='^{__CFString=}' />
+  <constant name='kCTFontFeatureSelectorIdentifierKey' type='^{__CFString=}' />
+  <constant name='kCTFontFeatureSelectorNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontFeatureSelectorSettingKey' type='^{__CFString=}' />
+  <constant name='kCTFontFeatureSettingsAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontFeatureTypeExclusiveKey' type='^{__CFString=}' />
+  <constant name='kCTFontFeatureTypeIdentifierKey' type='^{__CFString=}' />
+  <constant name='kCTFontFeatureTypeNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontFeatureTypeSelectorsKey' type='^{__CFString=}' />
+  <constant name='kCTFontFeaturesAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontFixedAdvanceAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontFullNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontLanguagesAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontLicenseNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontLicenseURLNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontMacintoshEncodingsAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontManufacturerNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontMatrixAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontNameAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontOrientationAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontPostScriptCIDNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontPostScriptNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontSampleTextNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontSizeAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontSlantTrait' type='^{__CFString=}' />
+  <constant name='kCTFontStyleNameAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontStyleNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontSubFamilyNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontSymbolicTrait' type='^{__CFString=}' />
+  <constant name='kCTFontTrademarkNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontTraitsAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontUniqueNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontVariationAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontVariationAxisDefaultValueKey' type='^{__CFString=}' />
+  <constant name='kCTFontVariationAxisIdentifierKey' type='^{__CFString=}' />
+  <constant name='kCTFontVariationAxisMaximumValueKey' type='^{__CFString=}' />
+  <constant name='kCTFontVariationAxisMinimumValueKey' type='^{__CFString=}' />
+  <constant name='kCTFontVariationAxisNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontVendorURLNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontVersionNameKey' type='^{__CFString=}' />
+  <constant name='kCTFontWeightTrait' type='^{__CFString=}' />
+  <constant name='kCTFontWidthTrait' type='^{__CFString=}' />
+  <constant name='kCTForegroundColorAttributeName' type='^{__CFString=}' />
+  <constant name='kCTFrameProgressionAttributeName' type='^{__CFString=}' />
+  <constant name='kCTGlyphInfoAttributeName' type='^{__CFString=}' />
+  <constant name='kCTKernAttributeName' type='^{__CFString=}' />
+  <constant name='kCTLigatureAttributeName' type='^{__CFString=}' />
+  <constant name='kCTParagraphStyleAttributeName' type='^{__CFString=}' />
+  <constant name='kCTTabColumnTerminatorsAttributeName' type='^{__CFString=}' />
+  <constant name='kCTTypesetterOptionDisableBidiProcessing' type='^{__CFString=}' />
+  <constant name='kCTUnderlineStyleAttributeName' type='^{__CFString=}' />
+  <constant name='kCTVerticalFormsAttributeName' type='^{__CFString=}' />
+  <enum name='kCTAdobeCNS1CharacterCollection' value='1' />
+  <enum name='kCTAdobeGB1CharacterCollection' value='2' />
+  <enum name='kCTAdobeJapan1CharacterCollection' value='3' />
+  <enum name='kCTAdobeJapan2CharacterCollection' value='4' />
+  <enum name='kCTAdobeKorea1CharacterCollection' value='5' />
+  <enum name='kCTCenterTextAlignment' value='2' />
+  <enum name='kCTFontAlertHeaderFontType' value='18' />
+  <enum name='kCTFontApplicationFontType' value='9' />
+  <enum name='kCTFontBoldTrait' value='2' />
+  <enum name='kCTFontClarendonSerifsClass' value='1073741824' />
+  <enum name='kCTFontClassMaskShift' value='28' />
+  <enum name='kCTFontClassMaskTrait' value='-268435456' />
+  <enum name='kCTFontCondensedTrait' value='64' />
+  <enum name='kCTFontControlContentFontType' value='26' />
+  <enum name='kCTFontDefaultOrientation' value='0' />
+  <enum name='kCTFontEmphasizedSystemDetailFontType' value='20' />
+  <enum name='kCTFontEmphasizedSystemFontType' value='3' />
+  <enum name='kCTFontExpandedTrait' value='32' />
+  <enum name='kCTFontFreeformSerifsClass' value='1879048192' />
+  <enum name='kCTFontHorizontalOrientation' value='1' />
+  <enum name='kCTFontItalicTrait' value='1' />
+  <enum name='kCTFontLabelFontType' value='10' />
+  <enum name='kCTFontMenuItemCmdKeyFontType' value='14' />
+  <enum name='kCTFontMenuItemFontType' value='12' />
+  <enum name='kCTFontMenuItemMarkFontType' value='13' />
+  <enum name='kCTFontMenuTitleFontType' value='11' />
+  <enum name='kCTFontMessageFontType' value='23' />
+  <enum name='kCTFontMiniEmphasizedSystemFontType' value='7' />
+  <enum name='kCTFontMiniSystemFontType' value='6' />
+  <enum name='kCTFontModernSerifsClass' value='805306368' />
+  <enum name='kCTFontMonoSpaceTrait' value='1024' />
+  <enum name='kCTFontNoFontType' value='-1' />
+  <enum name='kCTFontOldStyleSerifsClass' value='268435456' />
+  <enum name='kCTFontOrnamentalsClass' value='-1879048192' />
+  <enum name='kCTFontPaletteFontType' value='24' />
+  <enum name='kCTFontPushButtonFontType' value='16' />
+  <enum name='kCTFontSansSerifClass' value='-2147483648' />
+  <enum name='kCTFontScriptsClass' value='-1610612736' />
+  <enum name='kCTFontSlabSerifsClass' value='1342177280' />
+  <enum name='kCTFontSmallEmphasizedSystemFontType' value='5' />
+  <enum name='kCTFontSmallSystemFontType' value='4' />
+  <enum name='kCTFontSmallToolbarFontType' value='22' />
+  <enum name='kCTFontSymbolicClass' value='-1073741824' />
+  <enum name='kCTFontSystemDetailFontType' value='19' />
+  <enum name='kCTFontSystemFontType' value='2' />
+  <enum name='kCTFontTableAcnt' value='1633906292' />
+  <enum name='kCTFontTableAvar' value='1635148146' />
+  <enum name='kCTFontTableBASE' value='1111577413' />
+  <enum name='kCTFontTableBdat' value='1650745716' />
+  <enum name='kCTFontTableBhed' value='1651008868' />
+  <enum name='kCTFontTableBloc' value='1651273571' />
+  <enum name='kCTFontTableBsln' value='1651731566' />
+  <enum name='kCTFontTableCFF' value='1128678944' />
+  <enum name='kCTFontTableCmap' value='1668112752' />
+  <enum name='kCTFontTableCvar' value='1668702578' />
+  <enum name='kCTFontTableCvt' value='1668707360' />
+  <enum name='kCTFontTableDSIG' value='1146308935' />
+  <enum name='kCTFontTableEBDT' value='1161970772' />
+  <enum name='kCTFontTableEBLC' value='1161972803' />
+  <enum name='kCTFontTableEBSC' value='1161974595' />
+  <enum name='kCTFontTableFdsc' value='1717859171' />
+  <enum name='kCTFontTableFeat' value='1717920116' />
+  <enum name='kCTFontTableFmtx' value='1718449272' />
+  <enum name='kCTFontTableFpgm' value='1718642541' />
+  <enum name='kCTFontTableFvar' value='1719034226' />
+  <enum name='kCTFontTableGDEF' value='1195656518' />
+  <enum name='kCTFontTableGPOS' value='1196445523' />
+  <enum name='kCTFontTableGSUB' value='1196643650' />
+  <enum name='kCTFontTableGasp' value='1734439792' />
+  <enum name='kCTFontTableGlyf' value='1735162214' />
+  <enum name='kCTFontTableGvar' value='1735811442' />
+  <enum name='kCTFontTableHdmx' value='1751412088' />
+  <enum name='kCTFontTableHead' value='1751474532' />
+  <enum name='kCTFontTableHhea' value='1751672161' />
+  <enum name='kCTFontTableHmtx' value='1752003704' />
+  <enum name='kCTFontTableHsty' value='1752396921' />
+  <enum name='kCTFontTableJSTF' value='1246975046' />
+  <enum name='kCTFontTableJust' value='1786082164' />
+  <enum name='kCTFontTableKern' value='1801810542' />
+  <enum name='kCTFontTableLTSH' value='1280594760' />
+  <enum name='kCTFontTableLcar' value='1818452338' />
+  <enum name='kCTFontTableLoca' value='1819239265' />
+  <enum name='kCTFontTableMaxp' value='1835104368' />
+  <enum name='kCTFontTableMort' value='1836020340' />
+  <enum name='kCTFontTableMorx' value='1836020344' />
+  <enum name='kCTFontTableName' value='1851878757' />
+  <enum name='kCTFontTableOS2' value='1330851634' />
+  <enum name='kCTFontTableOpbd' value='1869636196' />
+  <enum name='kCTFontTableOptionExcludeSynthetic' value='1' />
+  <enum name='kCTFontTableOptionNoOptions' value='0' />
+  <enum name='kCTFontTablePCLT' value='1346587732' />
+  <enum name='kCTFontTablePost' value='1886352244' />
+  <enum name='kCTFontTablePrep' value='1886545264' />
+  <enum name='kCTFontTableProp' value='1886547824' />
+  <enum name='kCTFontTableTrak' value='1953653099' />
+  <enum name='kCTFontTableVDMX' value='1447316824' />
+  <enum name='kCTFontTableVORG' value='1448038983' />
+  <enum name='kCTFontTableVhea' value='1986553185' />
+  <enum name='kCTFontTableVmtx' value='1986884728' />
+  <enum name='kCTFontTableZapf' value='1516335206' />
+  <enum name='kCTFontToolTipFontType' value='25' />
+  <enum name='kCTFontToolbarFontType' value='21' />
+  <enum name='kCTFontTransitionalSerifsClass' value='536870912' />
+  <enum name='kCTFontUIOptimizedTrait' value='4096' />
+  <enum name='kCTFontUnknownClass' value='0' />
+  <enum name='kCTFontUserFixedPitchFontType' value='1' />
+  <enum name='kCTFontUserFontType' value='0' />
+  <enum name='kCTFontUtilityWindowTitleFontType' value='17' />
+  <enum name='kCTFontVerticalOrientation' value='2' />
+  <enum name='kCTFontVerticalTrait' value='2048' />
+  <enum name='kCTFontViewsFontType' value='8' />
+  <enum name='kCTFontWindowTitleFontType' value='15' />
+  <enum name='kCTFrameProgressionRightToLeft' value='1' />
+  <enum name='kCTFrameProgressionTopToBottom' value='0' />
+  <enum name='kCTIdentityMappingCharacterCollection' value='0' />
+  <enum name='kCTJustifiedTextAlignment' value='3' />
+  <enum name='kCTLeftTextAlignment' value='0' />
+  <enum name='kCTLineBreakByCharWrapping' value='1' />
+  <enum name='kCTLineBreakByClipping' value='2' />
+  <enum name='kCTLineBreakByTruncatingHead' value='3' />
+  <enum name='kCTLineBreakByTruncatingMiddle' value='5' />
+  <enum name='kCTLineBreakByTruncatingTail' value='4' />
+  <enum name='kCTLineBreakByWordWrapping' value='0' />
+  <enum name='kCTLineTruncationEnd' value='1' />
+  <enum name='kCTLineTruncationMiddle' value='2' />
+  <enum name='kCTLineTruncationStart' value='0' />
+  <enum name='kCTNaturalTextAlignment' value='4' />
+  <enum name='kCTParagraphStyleSpecifierAlignment' value='0' />
+  <enum name='kCTParagraphStyleSpecifierBaseWritingDirection' value='13' />
+  <enum name='kCTParagraphStyleSpecifierCount' value='14' />
+  <enum name='kCTParagraphStyleSpecifierDefaultTabInterval' value='5' />
+  <enum name='kCTParagraphStyleSpecifierFirstLineHeadIndent' value='1' />
+  <enum name='kCTParagraphStyleSpecifierHeadIndent' value='2' />
+  <enum name='kCTParagraphStyleSpecifierLineBreakMode' value='6' />
+  <enum name='kCTParagraphStyleSpecifierLineHeightMultiple' value='7' />
+  <enum name='kCTParagraphStyleSpecifierLineSpacing' value='10' />
+  <enum name='kCTParagraphStyleSpecifierMaximumLineHeight' value='8' />
+  <enum name='kCTParagraphStyleSpecifierMinimumLineHeight' value='9' />
+  <enum name='kCTParagraphStyleSpecifierParagraphSpacing' value='11' />
+  <enum name='kCTParagraphStyleSpecifierParagraphSpacingBefore' value='12' />
+  <enum name='kCTParagraphStyleSpecifierTabStops' value='4' />
+  <enum name='kCTParagraphStyleSpecifierTailIndent' value='3' />
+  <enum name='kCTRightTextAlignment' value='1' />
+  <enum name='kCTRunStatusHasNonIdentityMatrix' value='4' />
+  <enum name='kCTRunStatusNoStatus' value='0' />
+  <enum name='kCTRunStatusNonMonotonic' value='2' />
+  <enum name='kCTRunStatusRightToLeft' value='1' />
+  <enum name='kCTUnderlinePatternDash' value='512' />
+  <enum name='kCTUnderlinePatternDashDot' value='768' />
+  <enum name='kCTUnderlinePatternDashDotDot' value='1024' />
+  <enum name='kCTUnderlinePatternDot' value='256' />
+  <enum name='kCTUnderlinePatternSolid' value='0' />
+  <enum name='kCTUnderlineStyleDouble' value='9' />
+  <enum name='kCTUnderlineStyleNone' value='0' />
+  <enum name='kCTUnderlineStyleSingle' value='1' />
+  <enum name='kCTUnderlineStyleThick' value='2' />
+  <enum name='kCTVersionNumber10_5' value='131072' />
+  <enum name='kCTWritingDirectionLeftToRight' value='0' />
+  <enum name='kCTWritingDirectionNatural' value='-1' />
+  <enum name='kCTWritingDirectionRightToLeft' value='1' />
+  <function name='CTFontCollectionCreateCopyWithFontDescriptors'>
+    <retval already_cfretained='true' type='^{__CTFontCollection=}' />
+    <arg type='^{__CTFontCollection=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CTFontCollectionCreateFromAvailableFonts'>
+    <retval already_cfretained='true' type='^{__CTFontCollection=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CTFontCollectionCreateMatchingFontDescriptors'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CTFontCollection=}' />
+  </function>
+  <function name='CTFontCollectionCreateMatchingFontDescriptorsSortedWithCallback'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CTFontCollection=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function name='CTFontCollectionCreateWithFontDescriptors'>
+    <retval already_cfretained='true' type='^{__CTFontCollection=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CTFontCollectionGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CTFontCopyAttribute'>
+    <retval already_cfretained='true' type='@' />
+    <arg type='^{__CTFont=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CTFontCopyAvailableTables'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CTFont=}' />
+    <arg type='I' />
+  </function>
+  <function name='CTFontCopyCharacterSet'>
+    <retval already_cfretained='true' type='^{__CFCharacterSet=}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontCopyDisplayName'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontCopyFamilyName'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontCopyFeatureSettings'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontCopyFeatures'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontCopyFontDescriptor'>
+    <retval already_cfretained='true' type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontCopyFullName'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontCopyGraphicsFont'>
+    <retval already_retained='true' type='^{CGFont=}' type64='^{CGFont=}' />
+    <arg type='^{__CTFont=}' />
+    <arg type='^^{__CTFontDescriptor}' type_modifier='o' />
+  </function>
+  <function name='CTFontCopyLocalizedName'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CTFont=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^^{__CFString}' type_modifier='o' />
+  </function>
+  <function name='CTFontCopyName'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CTFont=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CTFontCopyPostScriptName'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontCopySupportedLanguages'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontCopyTable'>
+    <retval already_cfretained='true' type='^{__CFData=}' />
+    <arg type='^{__CTFont=}' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CTFontCopyTraits'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontCopyVariation'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontCopyVariationAxes'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontCreateCopyWithAttributes'>
+    <retval already_cfretained='true' type='^{__CTFont=}' />
+    <arg type='^{__CTFont=}' />
+    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+    <arg type='^{__CTFontDescriptor=}' />
+  </function>
+  <function name='CTFontCreateCopyWithFamily'>
+    <retval already_cfretained='true' type='^{__CTFont=}' />
+    <arg type='^{__CTFont=}' />
+    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CTFontCreateCopyWithSymbolicTraits'>
+    <retval already_cfretained='true' type='^{__CTFont=}' />
+    <arg type='^{__CTFont=}' />
+    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <function name='CTFontCreateForString'>
+    <retval already_cfretained='true' type='^{__CTFont=}' />
+    <arg type='^{__CTFont=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+  </function>
+  <function name='CTFontCreateUIFontForLanguage'>
+    <retval already_cfretained='true' type='^{__CTFont=}' />
+    <arg type='I' />
+    <arg type='f' type64='f' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CTFontCreateWithFontDescriptor'>
+    <retval already_cfretained='true' type='^{__CTFont=}' />
+    <arg type='^{__CTFontDescriptor=}' />
+    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+  </function>
+  <function name='CTFontCreateWithGraphicsFont'>
+    <retval already_cfretained='true' type='^{__CTFont=}' />
+    <arg type='^{CGFont=}' type64='^{CGFont=}' />
+    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+    <arg type='^{__CTFontDescriptor=}' />
+  </function>
+  <function name='CTFontCreateWithName'>
+    <retval already_cfretained='true' type='^{__CTFont=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+  </function>
+  <function name='CTFontCreateWithPlatformFont'>
+    <retval already_cfretained='true' type='^{__CTFont=}' />
+    <arg type='L' type64='L' />
+    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+    <arg type='^{__CTFontDescriptor=}' />
+  </function>
+  <function name='CTFontCreateWithQuickdrawInstance'>
+    <retval already_cfretained='true' type='^{__CTFont=}' />
+    <arg type='*' type64='*' />
+    <arg type='s' />
+    <arg type='C' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CTFontDescriptorCopyAttribute'>
+    <retval already_cfretained='true' type='@' />
+    <arg type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CTFontDescriptorCopyAttributes'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' />
+    <arg type='^{__CTFontDescriptor=}' />
+  </function>
+  <function name='CTFontDescriptorCopyLocalizedAttribute'>
+    <retval already_cfretained='true' type='@' />
+    <arg type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^^{__CFString}' type_modifier='o' />
+  </function>
+  <function name='CTFontDescriptorCreateCopyWithAttributes'>
+    <retval already_cfretained='true' type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CTFontDescriptorCreateCopyWithFeature'>
+    <retval already_cfretained='true' type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CFNumber=}' />
+    <arg type='^{__CFNumber=}' />
+  </function>
+  <function name='CTFontDescriptorCreateCopyWithVariation'>
+    <retval already_cfretained='true' type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CFNumber=}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CTFontDescriptorCreateMatchingFontDescriptor'>
+    <retval already_cfretained='true' type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CFSet=}' />
+  </function>
+  <function name='CTFontDescriptorCreateMatchingFontDescriptors'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CFSet=}' />
+  </function>
+  <function name='CTFontDescriptorCreateWithAttributes'>
+    <retval already_cfretained='true' type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CTFontDescriptorCreateWithNameAndSize'>
+    <retval already_cfretained='true' type='^{__CTFontDescriptor=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CTFontDescriptorGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CTFontGetAdvancesForGlyphs'>
+    <retval type='d' />
+    <arg type='^{__CTFont=}' />
+    <arg type='I' />
+    <arg type='^S' type_modifier='n' />
+    <arg type='^{CGSize=ff}' type64='^{CGSize=ff}' type_modifier='o' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='CTFontGetAscent'>
+    <retval type='f' type64='d' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetBoundingBox'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetBoundingRectsForGlyphs'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{__CTFont=}' />
+    <arg type='I' />
+    <arg type='^S' type_modifier='n' />
+    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='o' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='CTFontGetCapHeight'>
+    <retval type='f' type64='d' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetDescent'>
+    <retval type='f' type64='d' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetGlyphCount'>
+    <retval type='l' type64='q' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetGlyphWithName'>
+    <retval type='S' />
+    <arg type='^{__CTFont=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CTFontGetGlyphsForCharacters'>
+    <retval type='B' />
+    <arg type='^{__CTFont=}' />
+    <arg type='^S' type_modifier='n' unicode_string='true' />
+    <arg c_array_length_in_arg='3' type='^S' type_modifier='o' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='CTFontGetLeading'>
+    <retval type='f' type64='d' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetMatrix'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetPlatformFont'>
+    <retval type='L' type64='I' />
+    <arg type='^{__CTFont=}' />
+    <arg type='^^{__CTFontDescriptor}' type_modifier='o' />
+  </function>
+  <function name='CTFontGetSize'>
+    <retval type='f' type64='d' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetSlantAngle'>
+    <retval type='f' type64='d' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetStringEncoding'>
+    <retval type='L' type64='I' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetSymbolicTraits'>
+    <retval type='I' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CTFontGetUnderlinePosition'>
+    <retval type='f' type64='d' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetUnderlineThickness'>
+    <retval type='f' type64='d' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetUnitsPerEm'>
+    <retval type='I' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFontGetVerticalTranslationsForGlyphs'>
+    <arg type='^{__CTFont=}' />
+    <arg type='^S' type_modifier='n' />
+    <arg type='^{CGSize=ff}' type64='^{CGSize=ff}' type_modifier='o' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='CTFontGetXHeight'>
+    <retval type='f' type64='d' />
+    <arg type='^{__CTFont=}' />
+  </function>
+  <function name='CTFrameDraw'>
+    <arg type='^{__CTFrame=}' />
+    <arg type='^{CGContext=}' type64='^{CGContext=}' />
+  </function>
+  <function name='CTFrameGetFrameAttributes'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{__CTFrame=}' />
+  </function>
+  <function name='CTFrameGetLineOrigins'>
+    <arg type='^{__CTFrame=}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg c_array_length_in_arg='1' type='^{CGPoint=ff}' type64='^{CGPoint=ff}' type_modifier='o' />
+  </function>
+  <function name='CTFrameGetLines'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{__CTFrame=}' />
+  </function>
+  <function name='CTFrameGetPath'>
+    <retval type='^{CGPath=}' type64='^{CGPath=}' />
+    <arg type='^{__CTFrame=}' />
+  </function>
+  <function name='CTFrameGetStringRange'>
+    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <arg type='^{__CTFrame=}' />
+  </function>
+  <function name='CTFrameGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CTFrameGetVisibleStringRange'>
+    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <arg type='^{__CTFrame=}' />
+  </function>
+  <function name='CTFramesetterCreateFrame'>
+    <retval already_cfretained='true' type='^{__CTFrame=}' />
+    <arg type='^{__CTFramesetter=}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='^{CGPath=}' type64='^{CGPath=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CTFramesetterCreateWithAttributedString'>
+    <retval already_cfretained='true' type='^{__CTFramesetter=}' />
+    <arg type='^{__CFAttributedString=}' />
+  </function>
+  <function name='CTFramesetterGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CTFramesetterGetTypesetter'>
+    <retval type='^{__CTTypesetter=}' />
+    <arg type='^{__CTFramesetter=}' />
+  </function>
+  <function name='CTGetCoreTextVersion'>
+    <retval type='I' />
+  </function>
+  <function name='CTGlyphInfoCreateWithCharacterIdentifier'>
+    <retval already_cfretained='true' type='^{__CTGlyphInfo=}' />
+    <arg type='S' />
+    <arg type='S' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CTGlyphInfoCreateWithGlyph'>
+    <retval already_cfretained='true' type='^{__CTGlyphInfo=}' />
+    <arg type='S' />
+    <arg type='^{__CTFont=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CTGlyphInfoCreateWithGlyphName'>
+    <retval already_cfretained='true' type='^{__CTGlyphInfo=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CTFont=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CTGlyphInfoGetCharacterCollection'>
+    <retval type='S' />
+    <arg type='^{__CTGlyphInfo=}' />
+  </function>
+  <function name='CTGlyphInfoGetCharacterIdentifier'>
+    <retval type='S' />
+    <arg type='^{__CTGlyphInfo=}' />
+  </function>
+  <function name='CTGlyphInfoGetGlyphName'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{__CTGlyphInfo=}' />
+  </function>
+  <function name='CTGlyphInfoGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CTLineCreateJustifiedLine'>
+    <retval already_cfretained='true' type='^{__CTLine=}' />
+    <arg type='^{__CTLine=}' />
+    <arg type='f' type64='f' />
+    <arg type='d' />
+  </function>
+  <function name='CTLineCreateTruncatedLine'>
+    <retval already_cfretained='true' type='^{__CTLine=}' />
+    <arg type='^{__CTLine=}' />
+    <arg type='d' />
+    <arg type='I' />
+    <arg type='^{__CTLine=}' />
+  </function>
+  <function name='CTLineCreateWithAttributedString'>
+    <retval already_cfretained='true' type='^{__CTLine=}' />
+    <arg type='^{__CFAttributedString=}' />
+  </function>
+  <function name='CTLineDraw'>
+    <arg type='^{__CTLine=}' />
+    <arg type='^{CGContext=}' type64='^{CGContext=}' />
+  </function>
+  <function name='CTLineGetGlyphCount'>
+    <retval type='l' type64='q' />
+    <arg type='^{__CTLine=}' />
+  </function>
+  <function name='CTLineGetGlyphRuns'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{__CTLine=}' />
+  </function>
+  <function name='CTLineGetImageBounds'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{__CTLine=}' />
+    <arg type='^{CGContext=}' type64='^{CGContext=}' />
+  </function>
+  <function name='CTLineGetOffsetForStringIndex'>
+    <retval type='f' type64='d' />
+    <arg type='^{__CTLine=}' />
+    <arg type='l' type64='l' />
+    <arg type='^f' type64='^d' />
+  </function>
+  <function name='CTLineGetPenOffsetForFlush'>
+    <retval type='d' />
+    <arg type='^{__CTLine=}' />
+    <arg type='f' type64='f' />
+    <arg type='d' />
+  </function>
+  <function name='CTLineGetStringIndexForPosition'>
+    <retval type='l' type64='q' />
+    <arg type='^{__CTLine=}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+  </function>
+  <function name='CTLineGetStringRange'>
+    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <arg type='^{__CTLine=}' />
+  </function>
+  <function name='CTLineGetTrailingWhitespaceWidth'>
+    <retval type='d' />
+    <arg type='^{__CTLine=}' />
+  </function>
+  <function name='CTLineGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CTLineGetTypographicBounds'>
+    <retval type='d' />
+    <arg type='^{__CTLine=}' />
+    <arg type='^f' type64='^f' type_modifier='o' />
+    <arg type='^f' type64='^f' type_modifier='o' />
+    <arg type='^f' type64='^f' type_modifier='o' />
+  </function>
+  <function name='CTParagraphStyleCreate'>
+    <retval already_cfretained='true' type='^{__CTParagraphStyle=}' />
+    <arg type='^{CTParagraphStyleSetting=II^v}' type64='^{CTParagraphStyleSetting=II^v}' type_modifier='n' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='CTParagraphStyleCreateCopy'>
+    <retval already_cfretained='true' type='^{__CTParagraphStyle=}' />
+    <arg type='^{__CTParagraphStyle=}' />
+  </function>
+  <function name='CTParagraphStyleGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CTParagraphStyleGetValueForSpecifier'>
+    <retval type='B' />
+    <arg type='^{__CTParagraphStyle=}' />
+    <arg type='I' />
+    <arg type='L' type64='L' />
+    <arg c_array_length_in_arg='2' type='^v' />
+  </function>
+  <function name='CTRunDraw'>
+    <arg type='^{__CTRun=}' />
+    <arg type='^{CGContext=}' type64='^{CGContext=}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+  </function>
+  <function name='CTRunGetAttributes'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{__CTRun=}' />
+  </function>
+  <function name='CTRunGetGlyphCount'>
+    <retval type='l' type64='q' />
+    <arg type='^{__CTRun=}' />
+  </function>
+  <function name='CTRunGetGlyphs'>
+    <arg type='^{__CTRun=}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg c_array_length_in_arg='1' type='^S' type_modifier='o' unicode_string='true' />
+  </function>
+  <function name='CTRunGetGlyphsPtr'>
+    <retval type='r^S' type64='r^S' />
+    <arg type='^{__CTRun=}' />
+  </function>
+  <function name='CTRunGetImageBounds'>
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{__CTRun=}' />
+    <arg type='^{CGContext=}' type64='^{CGContext=}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+  </function>
+  <function name='CTRunGetPositions'>
+    <arg type='^{__CTRun=}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='^{CGPoint=ff}' type64='^{CGPoint=dd}' />
+  </function>
+  <function name='CTRunGetPositionsPtr'>
+    <retval type='r^{CGPoint=ff}' type64='r^{CGPoint=dd}' />
+    <arg type='^{__CTRun=}' />
+  </function>
+  <function name='CTRunGetStatus'>
+    <retval type='I' />
+    <arg type='^{__CTRun=}' />
+  </function>
+  <function name='CTRunGetStringIndices'>
+    <arg type='^{__CTRun=}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg c_array_length_in_arg='1' type='^i' type64='^i' type_modifier='o' />
+  </function>
+  <function name='CTRunGetStringIndicesPtr'>
+    <retval type='r^i' type64='r^q' />
+    <arg type='^{__CTRun=}' />
+  </function>
+  <function name='CTRunGetStringRange'>
+    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <arg type='^{__CTRun=}' />
+  </function>
+  <function name='CTRunGetTextMatrix'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='^{__CTRun=}' />
+  </function>
+  <function name='CTRunGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CTRunGetTypographicBounds'>
+    <retval type='d' />
+    <arg type='^{__CTRun=}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='^f' type64='^f' type_modifier='o' />
+    <arg type='^f' type64='^f' type_modifier='o' />
+    <arg type='^f' type64='^f' type_modifier='o' />
+  </function>
+  <function name='CTTextTabCreate'>
+    <retval already_cfretained='true' type='^{__CTTextTab=}' />
+    <arg type='C' />
+    <arg type='d' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CTTextTabGetAlignment'>
+    <retval type='C' />
+    <arg type='^{__CTTextTab=}' />
+  </function>
+  <function name='CTTextTabGetLocation'>
+    <retval type='d' />
+    <arg type='^{__CTTextTab=}' />
+  </function>
+  <function name='CTTextTabGetOptions'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{__CTTextTab=}' />
+  </function>
+  <function name='CTTextTabGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CTTypesetterCreateLine'>
+    <retval already_cfretained='true' type='^{__CTLine=}' />
+    <arg type='^{__CTTypesetter=}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+  </function>
+  <function name='CTTypesetterCreateWithAttributedString'>
+    <retval already_cfretained='true' type='^{__CTTypesetter=}' />
+    <arg type='^{__CFAttributedString=}' />
+  </function>
+  <function name='CTTypesetterCreateWithAttributedStringAndOptions'>
+    <retval already_cfretained='true' type='^{__CTTypesetter=}' />
+    <arg type='^{__CFAttributedString=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CTTypesetterGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CTTypesetterSuggestClusterBreak'>
+    <retval type='l' type64='q' />
+    <arg type='^{__CTTypesetter=}' />
+    <arg type='l' type64='l' />
+    <arg type='d' />
+  </function>
+  <function name='CTTypesetterSuggestLineBreak'>
+    <retval type='l' type64='q' />
+    <arg type='^{__CTTypesetter=}' />
+    <arg type='l' type64='l' />
+    <arg type='d' />
+  </function>
+</signatures>
+

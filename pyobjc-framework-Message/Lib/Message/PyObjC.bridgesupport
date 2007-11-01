@@ -1,0 +1,21 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <constant name='NSASCIIMailFormat' type='@' />
+  <constant name='NSMIMEMailFormat' type='@' />
+  <constant name='NSSMTPDeliveryProtocol' type='@' />
+  <constant name='NSSendmailDeliveryProtocol' type='@' />
+  <class name='NSMailDelivery'>
+    <method class_method='true' selector=''>
+      <retval type='B' />
+    </method>
+    <method class_method='true' selector='deliverMessage:headers:format:protocol:'>
+      <retval type='B' />
+    </method>
+    <method class_method='true' selector='deliverMessage:subject:to:'>
+      <retval type='B' />
+    </method>
+  </class>
+</signatures>
+

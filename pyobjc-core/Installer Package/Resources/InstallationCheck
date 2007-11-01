@@ -1,0 +1,29 @@
+#!/bin/sh
+
+FAIL=9
+
+# Msg numbers *must* be 16 and 31.
+MSG_TOO_OLD=16	# Pre-Jaguar
+MSG_TOO_NEW=17	# Post-Jaguar
+
+if [ -d /usr/bin/sw_vers ]; then
+	VER=`/usr/bin/sw_vers | grep ProductVersion: | awk '{ print $2 }'`
+	echo $VER
+else
+	VER=`awk 'BEGIN { have_match=0; }
+		/ProductVersion/ { have_match = 1; next }
+		{ if (have_match) { gsub(/<[^>]*>/, ""); print $1; exit 0 } }' /System/Library/CoreServices/SystemVersion.plist`
+fi
+
+case $VER in
+10.0|10.1|10.0.*|10.1.*)
+	exit `expr $FAIL + $MSG_TOO_OLD`
+	;;
+
+10.2|10.2.*)
+	exit 0
+	;;
+*)
+	exit `expr $FAIL + $MSG_TOO_NEW`
+	;;
+esac

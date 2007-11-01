@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutSwapBuffers</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutStrokeWidth.3GLUT.xml" title="glutStrokeWidth"/><link rel="next" href="glutTabletButtonFunc.3GLUT.xml" title="glutTabletButtonFunc"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutSwapBuffers</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutStrokeWidth.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutTabletButtonFunc.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutSwapBuffers.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutSwapBuffers.3GLUT-name"/><h2>Name</h2><p>glutSwapBuffers &#8212; swaps the buffers of the current window if double buffered.</p></div><div class="refsynopsisdiv"><a name="glutSwapBuffers.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutSwapBuffers</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutSwapBuffers.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutSwapBuffers</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutSwapBuffers.3GLUT-description"/><h2>Description</h2><p>
+			Performs a buffer swap on the layer in use for the current window. Specifically, <tt>glutSwapBuffers</tt>
+			promotes the contents of the back buffer of the layer in use of the current window to become the contents of the front
+			buffer. The contents of the back buffer then become undefined. The update typically takes place during the vertical
+			retrace of the monitor, rather than immediately after <tt>glutSwapBuffers</tt> is called.
+		</p><p>
+			An implicit <a href="glFlush.3G.xml"><tt>glFlush</tt></a> is done by <tt>glutSwapBuffers</tt> before it
+			returns. Subsequent OpenGL commands can be issued immediately after calling <tt>glutSwapBuffers</tt>, but
+			are not executed until the buffer exchange is completed.
+		</p><p>
+			If the layer in use is not double buffered, <tt>glutSwapBuffers</tt> has no effect.
+		</p></div><div class="refsect1" lang="en"><a name="glutSwapBuffers.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutPostRedisplay.3GLUT.xml">glutPostRedisplay</a>, <a href="glutDisplayFunc.3GLUT.xml">glutDisplayFunc</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutStrokeWidth.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutTabletButtonFunc.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutStrokeWidth </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutTabletButtonFunc</td></tr></table></div></body></html>

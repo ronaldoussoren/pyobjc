@@ -1,0 +1,23 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='0.9'>
+  <struct comment='callbacks' name='FSEventStreamContext' />
+  <opaque name='ConstFSEventStreamRef' />
+  <opaque name='FSEventStreamRef' />
+  <function name='FSEventStreamCopyDescription'>
+    <retval already_retained='true' />
+  </function>
+  <function name='FSEventStreamCreate'>
+    <retval already_retained='true' />
+    <arg index='1' type='^?' type64='^?' />
+    <arg index='2' type='^{FSEventStreamContext=i^v^?^?^?}' type64='^{FSEventStreamContext=q^v^?^?^?}' />
+  </function>
+  <function name='FSEventStreamCreateRelativeToDevice'>
+    <retval already_retained='true' />
+    <arg index='1' type='^?' type64='^?' />
+    <arg index='2' type='^{FSEventStreamContext=i^v^?^?^?}' type64='^{FSEventStreamContext=q^v^?^?^?}' />
+  </function>
+  <function name='FSEventsCopyUUIDForDevice'>
+    <retval already_retained='true' />
+  </function>
+</signatures>
