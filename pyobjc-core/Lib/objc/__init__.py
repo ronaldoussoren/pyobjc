@@ -33,6 +33,7 @@ from _bridges import *
 from _compat import *
 from _pythonify import *
 from _functions import *
+from _locking import *
 
 ###
 # This can be usefull to hunt down memory problems in the testsuite.

@@ -4,6 +4,45 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 2.1 (...)
+-----------------
+
+- Add support for interacting with '@synchronized' blocks in Objective-C.
+
+  The function ``object_lock(object)`` is a contextmanager that acquires and
+  releases the '@synchronized' mutex for an object, and can also be used
+  manually.
+
+  That is (as context manager)::
+  	from __future__ import with_statement
+
+	obj = NSObject.new()
+
+	with objc.object_lock(obj):
+	    # Perform work while owning the @synchronize lock
+	    pass
+
+   or (manually)::
+
+   	obj = NSObject.new()
+	mutex = objc.object_lock(obj)
+	mutex.lock()
+	try:
+	    # Perform work while owning the @synchronized lock
+	    pass
+	finally:
+	    mutex.unlock()
+
+   Note that the first version is slightly saver (see the documentation
+   for with-statements for the details).
+
+
+Version 2.0.1 (...)
+-------------------
+
+- Fix crash when printing CF objects that are magic cookies.
+
+
 Version 2.0 (LEOPARD, post WWDC07)
 ----------------------------------
 

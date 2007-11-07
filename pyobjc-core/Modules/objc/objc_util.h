@@ -9,6 +9,7 @@ extern PyObject* PyObjCExc_NoSuchClassError;
 extern PyObject* PyObjCExc_InternalError;
 extern PyObject* PyObjCExc_UnInitDeallocWarning;
 extern PyObject* PyObjCExc_ObjCRevivalWarning;
+extern PyObject* PyObjCExc_LockError;
 
 int PyObjCUtil_Init(PyObject* module);
 

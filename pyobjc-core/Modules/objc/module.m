@@ -5,6 +5,7 @@
 #include "pyobjc.h"
 #include "OC_NSBundleHack.h"
 #include <objc/Protocol.h>
+#include <objc/objc-sync.h>
 
 #include <stddef.h>
 #include <ctype.h>
@@ -1374,6 +1375,115 @@ _updatingMetadata(PyObject* self __attribute__((__unused__)),
 	return Py_None;
 }
 
+/* Support for locking */
+static PyObject*
+PyObjC_objc_sync_enter(PyObject* self __attribute__((__unused__)), PyObject* args)
+{
+	NSObject* object;
+	int rv;
+
+	if (!PyArg_ParseTuple(args, "O&", 
+			PyObjCObject_Convert, &object)) {
+		return NULL;
+	}
+
+	rv = objc_sync_enter(object);
+	if (rv == OBJC_SYNC_SUCCESS) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	PyErr_Format(PyObjCExc_LockError, "objc_sync_enter failed: %d", rv);
+	return NULL;
+}
+
+static PyObject*
+PyObjC_objc_sync_exit(PyObject* self __attribute__((__unused__)), PyObject* args)
+{
+	NSObject* object;
+	int rv;
+
+	if (!PyArg_ParseTuple(args, "O&", 
+			PyObjCObject_Convert, &object)) {
+		return NULL;
+	}
+
+	rv = objc_sync_exit(object);
+	if (rv == OBJC_SYNC_SUCCESS) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	PyErr_Format(PyObjCExc_LockError, "objc_sync_exit failed: %d", rv);
+	return NULL;
+}
+
+static PyObject*
+PyObjC_objc_sync_notify(PyObject* self __attribute__((__unused__)), PyObject* args)
+{
+	NSObject* object;
+	int rv;
+
+	if (!PyArg_ParseTuple(args, "O&", 
+			PyObjCObject_Convert, &object)) {
+		return NULL;
+	}
+
+	rv = objc_sync_notify(object);
+	if (rv == OBJC_SYNC_SUCCESS) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	PyErr_Format(PyObjCExc_LockError, "objc_sync_notify failed: %d", rv);
+	return NULL;
+}
+
+static PyObject*
+PyObjC_objc_sync_notifyAll(PyObject* self __attribute__((__unused__)), PyObject* args)
+{
+	NSObject* object;
+	int rv;
+
+	if (!PyArg_ParseTuple(args, "O&", 
+			PyObjCObject_Convert, &object)) {
+		return NULL;
+	}
+
+	rv = objc_sync_notifyAll(object);
+	if (rv == OBJC_SYNC_SUCCESS) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	PyErr_Format(PyObjCExc_LockError, "objc_sync_notifyAll failed: %d", rv);
+	return NULL;
+}
+
+
+static PyObject*
+PyObjC_objc_sync_wait(PyObject* self __attribute__((__unused__)), PyObject* args)
+{
+	NSObject* object;
+	long long timeout;
+	int rv;
+
+	if (!PyArg_ParseTuple(args, "O&L", 
+			PyObjCObject_Convert, &object, &timeout)) {
+		return NULL;
+	}
+
+	rv = objc_sync_wait(object, timeout);
+	if (rv == OBJC_SYNC_SUCCESS) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	PyErr_Format(PyObjCExc_LockError, "objc_sync_wait failed: %d", rv);
+	return NULL;
+}
+
+
 PyDoc_STRVAR(parseBridgeSupport_doc,
  "parseBridgeSupport(xmldata, globals, framework [, dylib_path] [, inlineTab]) -> None\n"
  "\n"
@@ -1614,6 +1724,19 @@ static PyMethodDef mod_methods[] = {
 	{ "_setStructConvenience", (PyCFunction)PyObjC_SetStructConvenience, 
 		METH_O, "private function" },
 	{ "_ivar_dict", (PyCFunction)ivar_dict, METH_NOARGS, "private functions" },
+
+	{ "_objc_sync_enter", (PyCFunction)PyObjC_objc_sync_enter,
+		METH_VARARGS, "acquire mutex for an object" },
+	{ "_objc_sync_exit", (PyCFunction)PyObjC_objc_sync_exit,
+		METH_VARARGS, "release mutex for an object" },
+	{ "_objc_sync_wait", (PyCFunction)PyObjC_objc_sync_exit,
+		METH_VARARGS, "wait for mutex for an object" },
+	{ "_objc_sync_notify", (PyCFunction)PyObjC_objc_sync_notify,
+		METH_VARARGS, 
+		"notify a thread waiting for mutex for an object" },
+	{ "_objc_sync_notifyAll", (PyCFunction)PyObjC_objc_sync_notifyAll,
+		METH_VARARGS, 
+		"notify a all threads waiting for mutex for an object" },
 
 
 	{ 0, 0, 0, 0 } /* sentinel */
