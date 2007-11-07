@@ -35,7 +35,9 @@ from _pythonify import *
 from _functions import *
 from _locking import *
 
-###
-# This can be usefull to hunt down memory problems in the testsuite.
-#import atexit
-#atexit.register(recycleAutoreleasePool)
+# Make sure our global autorelease pool is
+# recycled when the interpreter shuts down.
+# This avoids issue1402 in the python
+# bugtracker
+import atexit
+atexit.register(recycleAutoreleasePool)
