@@ -104,6 +104,12 @@ object_repr(PyObject* _self)
 	PyObjCObject* self = (PyObjCObject*)_self;
 	PyObject* res;
 
+	if (self->flags & PyObjCObject_kMAGIC_COOKIE) {
+		return PyString_FromFormat(
+			"<%s objective-c magic instance %p>",
+			self->ob_type->tp_name, self->objc_object);
+	}
+
 	if ((self->flags & PyObjCObject_kUNINITIALIZED) == 0 && !PyObjCObject_IsClassic(self)) {
 		/* Try to call the method 'description', which is the ObjC
 		 * equivalent of __repr__. If that fails we'll fall back to

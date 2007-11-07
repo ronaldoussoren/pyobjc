@@ -19,6 +19,14 @@ static PyObject* gBaseClass = NULL;
 static PyObject*
 cf_repr(PyObject* self)
 {
+	if (PyObjCObject_GetFlags(self) & PyObjCObject_kMAGIC_COOKIE) {
+		return PyString_FromFormat(
+			"<%s CoreFoundation magic instance %p>",
+			self->ob_type->tp_name, PyObjCObject_GetObject(self));
+	}
+
+
+
 	CFStringRef repr = CFCopyDescription(PyObjCObject_GetObject(self));
 	if (repr) {
 		PyObject* result = pythonify_c_value(@encode(id), &repr);
