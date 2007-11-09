@@ -1729,7 +1729,7 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS, "acquire mutex for an object" },
 	{ "_objc_sync_exit", (PyCFunction)PyObjC_objc_sync_exit,
 		METH_VARARGS, "release mutex for an object" },
-	{ "_objc_sync_wait", (PyCFunction)PyObjC_objc_sync_exit,
+	{ "_objc_sync_wait", (PyCFunction)PyObjC_objc_sync_wait,
 		METH_VARARGS, "wait for mutex for an object" },
 	{ "_objc_sync_notify", (PyCFunction)PyObjC_objc_sync_notify,
 		METH_VARARGS, 
