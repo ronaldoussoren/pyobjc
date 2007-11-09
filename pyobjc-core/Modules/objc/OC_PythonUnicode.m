@@ -39,6 +39,10 @@
 	 * needed, but the test below isn't good enough. Be heavy handed to
 	 * make sure we're right, rather than crashing sometimes anyway.
 	 */
+	/* FIXME2: in rare occasions we're trying to acquire the GIL during 
+	 * shutdown and if we're very unlucky this can happen after the 
+	 * GILState machinery has shut down...
+	 */
 #if 0
 	if ([self retainCount] == 1) {
 #endif

@@ -36,6 +36,10 @@ Version 2.1 (...)
    Note that the first version is slightly saver (see the documentation
    for with-statements for the details).
 
+- PyObjC can now run in 64-bit mode.
+
+  (at least somewhat, there are still hard crashes but most of the 
+  unittests now pass).
 
 Version 2.0.1 (...)
 -------------------

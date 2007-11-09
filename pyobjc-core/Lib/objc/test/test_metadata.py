@@ -543,6 +543,12 @@ class TestArraysInOut (objc.test.TestCase):
         self.assertRaises(ValueError, o.reverseArray_count_, objc.NULL, 0)
 
         a = (1.0, 2.0, 3.0, 4.0, 5.0)
+        n, v = o.nullreverseArray_count_(a, 4)
+        self.assertEquals(n, 1)
+        self.assertEquals(a, (1.0, 2.0, 3.0, 4.0, 5.0))
+        self.assertEquals(v, (4.0, 3.0, 2.0, 1.0))
+
+        a = (1.0, 2.0, 3.0, 4.0, 5.0)
         n, v = o.nullreverseArray_count_(a, 5)
         self.assertEquals(n, 1)
         self.assertEquals(a, (1.0, 2.0, 3.0, 4.0, 5.0))

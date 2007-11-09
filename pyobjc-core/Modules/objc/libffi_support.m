@@ -658,6 +658,10 @@ parse_printf_args(
 
 		case 'd': case 'i': case 'D':
 			/* INT */
+			if (*format == 'D') {
+				typecode = _C_LNG;
+			} 
+
 			if (typecode == _C_LNG_LNG) {
 				byref[curarg] = PyMem_Malloc(sizeof(long long));
 			
@@ -686,6 +690,10 @@ parse_printf_args(
 		case 'o': case 'u': case 'x':
 		case 'X': case 'U': case 'O':
 			/* UNSIGNED */
+			if (*format == 'U' || *format == 'X') {
+				typecode = _C_LNG;
+			}
+
 			if (typecode == _C_LNG_LNG) {
 				byref[curarg] = PyMem_Malloc(sizeof(long long));
 				typecode = _C_ULNG_LNG;
@@ -1228,7 +1236,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 					sel_getName(*(SEL*)args[1]));
 				goto error;
 			}
-			*((int*)resp) = 0;
+			//*((int*)resp) = 0;
 		}
 
 	} else {
@@ -3364,7 +3372,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	 * of bytes of storage needed for them. Note that arguments 0 and 1
 	 * are self and the selector, no need to count those.
 	 */
-	argbuf_len = resultSize;
+	argbuf_len = resultSize + 32;
 	r = PyObjCFFI_CountArguments(
 		methinfo, 2, 
 		&byref_in_count, 
@@ -3482,7 +3490,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		arglist[1] = &ffi_type_pointer;
 		values[1] = &theSel;
 		msgResult = argbuf;
-		argbuf_cur = resultSize;
+		argbuf_cur = resultSize + 32;
 		
 	} else {
 		objc_superSetReceiver(super, self_obj);
@@ -3716,10 +3724,11 @@ PyObjCFFI_MakeClosure(
 
 
 	/* And finally create the actual closure */
-	cl = PyMem_Malloc(sizeof(*cl));
+	/*cl = PyMem_Malloc(sizeof(*cl));*/
+	cl = PyObjC_malloc_closure();
 	if (cl == NULL) {
 		PyObjCFFI_FreeCIF(cif);
-		PyErr_NoMemory();
+		/*PyErr_NoMemory();*/
 		return NULL;
 	}
 
@@ -3748,7 +3757,7 @@ PyObjCFFI_FreeClosure(IMP closure)
 	cl = (ffi_closure*)closure;
 	retval = cl->user_data;
 	PyObjCFFI_FreeCIF(cl->cif);
-	PyMem_Free(cl);
+	PyObjC_free_closure(cl); /* XXX: error handling */
 
 	return retval;
 }

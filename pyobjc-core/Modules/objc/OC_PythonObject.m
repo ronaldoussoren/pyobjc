@@ -17,6 +17,7 @@
 
 #include "pyobjc.h"
 #include "compile.h" /* From Python */
+#include <dlfcn.h>
 
 #include <stdarg.h>
 
