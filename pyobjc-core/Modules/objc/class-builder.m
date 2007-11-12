@@ -343,6 +343,42 @@ build_intermediate_class(Class base_class, char* name)
 	preclass_addMethod(intermediate_class, 
 		@selector(takeValue:forKey:), (IMP)closure, "v@:@@");
 
+
+	methinfo = PyObjCMethodSignature_FromSignature("c@::");
+	if (methinfo == NULL) goto error_cleanup; 
+	closure = PyObjCFFI_MakeClosure(methinfo, 
+		object_method_respondsToSelector,
+		base_class);
+	Py_DECREF(methinfo); methinfo = NULL;
+	if (closure == NULL) goto error_cleanup;
+	preclass_addMethod(intermediate_class,
+		@selector(respondsToSelector:), 
+		(IMP)closure, "c@::");
+
+	methinfo = PyObjCMethodSignature_FromSignature("@@::");
+	if (methinfo == NULL) goto error_cleanup; 
+	closure = PyObjCFFI_MakeClosure(methinfo, 
+		object_method_methodSignatureForSelector,
+		base_class);
+	Py_DECREF(methinfo); methinfo = NULL;
+	if (closure == NULL) goto error_cleanup;
+	preclass_addMethod(intermediate_class,
+		@selector(methodSignatureForSelector:), 
+		(IMP)closure, "@@::");
+
+	methinfo = PyObjCMethodSignature_FromSignature("v@:@");
+	if (methinfo == NULL) goto error_cleanup; 
+	closure = PyObjCFFI_MakeClosure(methinfo, 
+		object_method_forwardInvocation,
+		base_class);
+	Py_DECREF(methinfo); methinfo = NULL;
+	if (closure == NULL) goto error_cleanup;
+	preclass_addMethod(intermediate_class,
+		@selector(forwardInvocation:), 
+		(IMP)closure, "v@:@");
+
+	
+
 #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
 	if (_KVOHackLevel() == BROKEN_KVO) {
 		methinfo = PyObjCMethodSignature_FromSignature("v@:@");
@@ -540,6 +576,27 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		need_intermediate = 1;
 	}
 	if (PyDict_GetItemString(class_dict, "takeStoredValueForKey_") == NULL) {
+		PyErr_Clear();
+	} else {
+		need_intermediate = 1;
+	}
+	if (PyDict_GetItemString(class_dict, "respondsToSelector_") == NULL) {
+		PyErr_Clear();
+	} else {
+		need_intermediate = 1;
+	}
+	if (PyDict_GetItemString(class_dict, "instancesRespondToSelector_") == NULL) {
+		PyErr_Clear();
+	} else {
+		need_intermediate = 1;
+	}
+
+	if (PyDict_GetItemString(class_dict, "methodSignatureForSelector_") == NULL) {
+		PyErr_Clear();
+	} else {
+		need_intermediate = 1;
+	}
+	if (PyDict_GetItemString(class_dict, "forwardInvocation_") == NULL) {
 		PyErr_Clear();
 	} else {
 		need_intermediate = 1;
@@ -807,6 +864,22 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				"v@:@@",
 				object_method_setValue_forKey_);
 
+			METH(
+				"forwardInvocation_",
+				@selector(forwardInvocation:),
+				"v@:@",
+				object_method_forwardInvocation);
+			METH(
+				"methodSignatureForSelector_",
+				@selector(methodSignatureForSelector:),
+				"@@::",
+				object_method_methodSignatureForSelector);
+			METH(
+				"respondsToSelector",
+				@selector(respondsToSelector:),
+				"c@::",
+				object_method_respondsToSelector);
+
 #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
 			if (_KVOHackLevel() == BROKEN_KVO) {
 				METH(
@@ -822,30 +895,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			}
 #endif
 		}
-		/* FIXME: 
-		 * all these should be in the intermediate class as well,
-		 * define the intermediate class when any of them are 
-		 * overridden
-		 */
 
-		/* These methods are necessary to deal with mixin classes (multiple inheritance),
-		 * the default implementation only looks at methods in the ObjC class.
-		 */
-		METH(
-			"respondsToSelector_", 
-			@selector(respondsToSelector:), 
-			"c@::", 
-			object_method_respondsToSelector);
-		METH(
-			"methodSignatureForSelector_", 
-			@selector(methodSignatureForSelector:), 
-			"@@::", 
-			object_method_methodSignatureForSelector);
-		METH(
-			"forwardInvocation_", 
-			@selector(forwardInvocation:), 
-			"v@:@", 
-			object_method_forwardInvocation);
 
 		if (!have_intermediate && [super_class instancesRespondToSelector:@selector(copyWithZone:)]) {
 			if (copyWithZone_signature[0] == '\0') {

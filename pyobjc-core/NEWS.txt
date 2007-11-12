@@ -41,10 +41,14 @@ Version 2.1 (...)
   (at least somewhat, there are still hard crashes but most of the 
   unittests now pass).
 
+- BUGFIX: It is now possible to override ``respondsToSelector:`` in Python.
+
+  TODO: unittests and backport to 2.0.1.
+
 Version 2.0.1 (...)
 -------------------
 
-- Fix crash when printing CF objects that are magic cookies.
+- BUGFIX: don't crash when printing CF objects that are magic cookies.
 
 
 Version 2.0 (LEOPARD, post WWDC07)
