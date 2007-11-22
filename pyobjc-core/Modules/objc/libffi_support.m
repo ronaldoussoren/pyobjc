@@ -1673,6 +1673,15 @@ static int _argcount(PyObject* callable)
 	} else if (PyObjCPythonSelector_Check(callable)) {
 		return _argcount(((PyObjCPythonSelector*)callable)->callable);
 
+
+	} else if (PyObjCNativeSelector_Check(callable)) {
+		PyObjCMethodSignature* sig = PyObjCSelector_GetMetadata(callable);
+		 int result = sig->ob_size - 1;
+		 
+		 Py_DECREF(sig);
+		 return result;
+
+
 	} else {
 		PyErr_Format(PyExc_TypeError,
 			"Sorry, cannot create IMP for instances of type %s",

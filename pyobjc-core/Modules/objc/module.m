@@ -1387,7 +1387,11 @@ PyObjC_objc_sync_enter(PyObject* self __attribute__((__unused__)), PyObject* arg
 		return NULL;
 	}
 
-	rv = objc_sync_enter(object);
+	Py_BEGIN_ALLOW_THREADS
+		rv = objc_sync_enter(object);
+	
+	Py_END_ALLOW_THREADS
+
 	if (rv == OBJC_SYNC_SUCCESS) {
 		Py_INCREF(Py_None);
 		return Py_None;
@@ -1408,7 +1412,9 @@ PyObjC_objc_sync_exit(PyObject* self __attribute__((__unused__)), PyObject* args
 		return NULL;
 	}
 
-	rv = objc_sync_exit(object);
+	Py_BEGIN_ALLOW_THREADS
+		rv = objc_sync_exit(object);
+	Py_END_ALLOW_THREADS
 	if (rv == OBJC_SYNC_SUCCESS) {
 		Py_INCREF(Py_None);
 		return Py_None;
@@ -1429,7 +1435,11 @@ PyObjC_objc_sync_notify(PyObject* self __attribute__((__unused__)), PyObject* ar
 		return NULL;
 	}
 
-	rv = objc_sync_notify(object);
+	Py_BEGIN_ALLOW_THREADS
+		rv = objc_sync_notify(object);
+
+	Py_END_ALLOW_THREADS
+
 	if (rv == OBJC_SYNC_SUCCESS) {
 		Py_INCREF(Py_None);
 		return Py_None;
@@ -1450,7 +1460,11 @@ PyObjC_objc_sync_notifyAll(PyObject* self __attribute__((__unused__)), PyObject*
 		return NULL;
 	}
 
-	rv = objc_sync_notifyAll(object);
+	Py_BEGIN_ALLOW_THREADS
+		rv = objc_sync_notifyAll(object);
+		
+	Py_END_ALLOW_THREADS
+
 	if (rv == OBJC_SYNC_SUCCESS) {
 		Py_INCREF(Py_None);
 		return Py_None;
@@ -1473,7 +1487,11 @@ PyObjC_objc_sync_wait(PyObject* self __attribute__((__unused__)), PyObject* args
 		return NULL;
 	}
 
-	rv = objc_sync_wait(object, timeout);
+	Py_BEGIN_ALLOW_THREADS
+		rv = objc_sync_wait(object, timeout);
+	
+	Py_END_ALLOW_THREADS
+
 	if (rv == OBJC_SYNC_SUCCESS) {
 		Py_INCREF(Py_None);
 		return Py_None;
