@@ -228,9 +228,8 @@ static  ffi_cif* new_cif = NULL;
 		}
 	}
 
-	cl = PyMem_Malloc(sizeof(*cl));
+	cl = PyObjC_malloc_closure();
 	if (cl == NULL) {
-		PyErr_NoMemory();
 		goto error_cleanup;
 	}
 
@@ -251,9 +250,8 @@ static  ffi_cif* new_cif = NULL;
 	to_c = (PyObjCPointerWrapper_FromPythonFunc)cl;
 	cl = NULL;
 
-	cl = PyMem_Malloc(sizeof(*cl));
+	cl = PyObjC_malloc_closure();
 	if (cl == NULL) {
-		PyErr_NoMemory();
 		goto error_cleanup;
 	}
 
@@ -281,13 +279,13 @@ error_cleanup:
 		PyMem_Free(newType);
 	}
 	if (cl) {
-		PyMem_Free(cl);
+		PyObjC_free_closure(cl);
 	}
 	if (to_c) {
-		PyMem_Free(to_c);
+		PyObjC_free_closure(to_c);
 	}
 	if (from_c) {
-		PyMem_Free(from_c);
+		PyObjC_free_closure(from_c);
 	}
 	Py_XDECREF(v);
 	Py_XDECREF(w);

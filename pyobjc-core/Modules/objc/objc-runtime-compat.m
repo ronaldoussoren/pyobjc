@@ -1001,7 +1001,7 @@ PyObjC_objc_freeClassPair(Class cls __attribute__((__unused__)))
 
 -doesNotRecognizeSelector:(SEL)sel
 {
-	printf("--> %s\n", sel);
+	printf("--> %s\n", sel_getName(sel));
 	abort();
 }
 @end

@@ -590,15 +590,14 @@ static 	ffi_cif* init_cif = NULL;
 		}
 	}
 
-	cl = malloc(sizeof(*cl));
+	cl = PyObjC_malloc_closure();
 	if (cl == NULL) {
-		PyErr_NoMemory();
 		return NULL;
 	}
 
 	rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
 	if (rv != FFI_OK) {
-		free(cl);
+		PyObjC_free_closure(cl);
 		PyErr_Format(PyExc_RuntimeError,
 			"Cannot create FFI closure: %d", rv);
 		return NULL;

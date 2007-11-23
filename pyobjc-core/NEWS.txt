@@ -38,8 +38,17 @@ Version 2.1 (...)
 
 - PyObjC can now run in 64-bit mode.
 
-  (at least somewhat, there are still hard crashes but most of the 
-  unittests now pass).
+  (At least mostly: most unittests pass, but there are still some issues. I haven't tested
+  64-bit support beyond that, which means that there might be other issues)
+
+  This requires Leopard (OSX 10.5), earlier version of the OS don't have a 64-bit
+  Objective-C runtime at all.  This currently also requires a copy of python that was
+  build with ``MACOSX_DEPLOYMENT_TARGET=10.5``.
+
+  Note that class posing (the ``poseAsClass_`` class method) is not supported in 64-bit 
+  mode. It is also not possible to create new protocols in 64-bit code. Neither are 
+  supported by the 64-bit runtime APIs (that is, it is a restriction in Apple's 
+  Objective-C 2.0 runtime).
 
 - BUGFIX: It is now possible to override ``respondsToSelector:`` in Python.
 
