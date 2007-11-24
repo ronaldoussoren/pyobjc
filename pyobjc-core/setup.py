@@ -98,7 +98,7 @@ CFLAGS=[
     ## on i386 systems when a method returns a struct that isn't returned
     ## in registers. 
     #"-O0",
-    "-O0",
+    "-O1",
     #"-O2",
     #"-O3",
 

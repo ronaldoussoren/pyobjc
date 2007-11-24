@@ -4,6 +4,15 @@
  */
 #include "pyobjc.h"
 
+/* XXX: move this to a header file */
+static inline Py_ssize_t align(Py_ssize_t offset, Py_ssize_t alignment)
+{
+	Py_ssize_t rest = offset % alignment;
+	if (rest == 0) return offset;
+	return offset + (alignment - rest);
+}
+
+
 typedef struct {
 	PyObject_HEAD
 	ffi_cif*  cif;
@@ -106,6 +115,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 	}
 
 	argbuf_len = PyObjCRT_SizeOfReturnType(self->methinfo->rettype.type);
+	argbuf_len = align(argbuf_len, sizeof(void*));
 	r = PyObjCFFI_CountArguments(
 		self->methinfo, 0,
 		&byref_in_count, &byref_out_count, &plain_count,
@@ -157,7 +167,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
 	cif_arg_count = PyObjCFFI_ParseArguments(
 		self->methinfo, 0, args,
-		PyObjCRT_SizeOfReturnType(self->methinfo->rettype.type),
+		align(PyObjCRT_SizeOfReturnType(self->methinfo->rettype.type), sizeof(void*)),
 		argbuf, argbuf_len, byref, byref_attr, arglist, values,
 		allArgsPresent);
 	if (cif_arg_count == -1) {

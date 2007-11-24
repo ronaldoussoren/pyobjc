@@ -104,7 +104,7 @@ static void describe_cif(ffi_cif* cif)
 
 
 
-static Py_ssize_t align(Py_ssize_t offset, Py_ssize_t alignment)
+static inline Py_ssize_t align(Py_ssize_t offset, Py_ssize_t alignment)
 {
 	Py_ssize_t rest = offset % alignment;
 	if (rest == 0) return offset;
@@ -3381,7 +3381,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	 * of bytes of storage needed for them. Note that arguments 0 and 1
 	 * are self and the selector, no need to count those.
 	 */
-	argbuf_len = resultSize + 32;
+	argbuf_len = align(resultSize, sizeof(void*));
 	r = PyObjCFFI_CountArguments(
 		methinfo, 2, 
 		&byref_in_count, 
@@ -3491,6 +3491,8 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	}
 	/* XXX: Ronald: why the XXX? */
 
+	useStret = 0;
+
 	if (PyObjCIMP_Check(aMeth)) {
 		useStret = 0;
 		theSel = PyObjCIMP_GetSelector(aMeth);
@@ -3499,7 +3501,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		arglist[1] = &ffi_type_pointer;
 		values[1] = &theSel;
 		msgResult = argbuf;
-		argbuf_cur = resultSize + 32;
+		argbuf_cur = align(resultSize, sizeof(void*));
 		
 	} else {
 		objc_superSetReceiver(super, self_obj);
@@ -3530,7 +3532,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 				)
 #endif
 			)) {
-			
+		
 			useStret = 1;
 		}
 		superPtr = &super;
@@ -3540,7 +3542,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		values[ 1] = &meth->sel_selector;
 		theSel = meth->sel_selector;
 		msgResult = argbuf;
-		argbuf_cur = resultSize;
+		argbuf_cur = align(resultSize, sizeof(void*));
 	}
 
 	r = PyObjCFFI_ParseArguments(methinfo, 2, args,
@@ -3562,6 +3564,9 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 	isUninitialized = ((PyObjCObject*)self)->flags  & PyObjCObject_kUNINITIALIZED;
 	((PyObjCObject*)self)->flags  &= ~PyObjCObject_kUNINITIALIZED;
+
+	if (methinfo->ob_size >= 3) {
+	}
 
 	PyObjC_DURING
 		if (PyObjCIMP_Check(aMeth)) {
@@ -3588,6 +3593,9 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	}
 
 	if (PyErr_Occurred()) goto error_cleanup;
+
+	if (methinfo->ob_size >= 3) {
+	}
 
 	result = PyObjCFFI_BuildResult(methinfo, 2, msgResult, byref,
 			byref_attr, byref_out_count, 
