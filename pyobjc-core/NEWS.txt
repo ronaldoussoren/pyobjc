@@ -41,6 +41,8 @@ Version 2.1 (...)
   NOTE: 64-bit support is beta quality, that is: all unittests pass, but I haven't tried
   running real programs yet and hence there might be issues lurking below the surface.
 
+  NOTE2: PPC64 support is completely untested, aka "it compiles and therefore must work".
+
   This requires Leopard (OSX 10.5), earlier version of the OS don't have a 64-bit
   Objective-C runtime at all.  This currently also requires a copy of python that was
   build with ``MACOSX_DEPLOYMENT_TARGET=10.5``.

@@ -58,4 +58,5 @@ PyObjC_free_closure(ffi_closure* cl)
 {
 	((freelist*)cl)->next = closure_freelist;
 	closure_freelist = (freelist*)cl;
+	return 0;
 }

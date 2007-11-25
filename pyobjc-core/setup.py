@@ -101,6 +101,7 @@ CFLAGS=[
     "-O1",
     #"-O2",
     #"-O3",
+    #'-arch', 'x86_64', '-arch', 'ppc64',
 
     # Loads of warning flags
     "-Wall", "-Wstrict-prototypes", "-Wmissing-prototypes",

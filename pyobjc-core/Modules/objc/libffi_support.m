@@ -17,6 +17,11 @@
 #import <Foundation/NSHost.h>
 #import <CoreFoundation/CoreFoundation.h>
 
+#ifdef __ppc64__
+extern bool ffi64_stret_needs_ptr(const ffi_type* inType,
+		        unsigned short*, unsigned short*);
+#endif;
+
 /*
  * Define SMALL_STRUCT_LIMIT as the largest struct that will be returned
  * in registers instead of with a hidden pointer argument.
@@ -28,6 +33,10 @@ static const char gCFRangeEncoding[1024] = { 0 };
 #if defined(__ppc__)
 
 #   define SMALL_STRUCT_LIMIT	4
+
+#elif defined(__ppc64__)
+
+#   define SMALL_STRUCT_LIMIT	8
 
 #elif defined(__i386__) 
 
@@ -3514,6 +3523,10 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 		useStret = 0;
 		if (*rettype == _C_STRUCT_B && 
+#ifdef  __ppc64__
+			ffi64_stret_needs_ptr(signature_to_ffi_return_type(rettype), NULL, NULL)
+
+#else /* !__ppc64__ */
 			(resultSize > SMALL_STRUCT_LIMIT
 #ifdef __i386__
 			 /* darwin/x86 ABI is slightly odd ;-) */
@@ -3531,7 +3544,9 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 				&& resultSize != 16
 				)
 #endif
-			)) {
+			)
+#endif /* !__ppc64__ */
+			) {
 		
 			useStret = 1;
 		}
