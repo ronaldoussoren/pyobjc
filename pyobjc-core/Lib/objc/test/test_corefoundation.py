@@ -56,6 +56,8 @@ class TestCoreFoundation (objc.test.TestCase):
             r'[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}', 
             formatted) )
 
+        self.assertRaises(objc.error, objc.lookUpClass, "CFUUIDRef")
+
 
         # AnotherUUID claims to return an Object (objc._C_ID), check that
         # we correctly return an object of the right type in that case as well.
