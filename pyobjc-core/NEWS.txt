@@ -54,7 +54,6 @@ Version 2.1 (...)
 
 - BUGFIX: It is now possible to override ``respondsToSelector:`` in Python.
 
-  TODO: unittests and backport to 2.0.1.
 
 Version 2.0.1 (...)
 -------------------

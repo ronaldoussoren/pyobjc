@@ -373,6 +373,49 @@ class TestOverridingSpecials(objc.test.TestCase):
         self.assertEquals(MethodNamesClass.froobnicate__.selector,
                 'froobnicate::')
 
+    def testOverrideRespondsToSelector(self):
+        class OC_RespondsClass (NSObject):
+            def initWithList_(self, lst):
+                super(OC_RespondsClass, self).init()
+                self.lst = lst
+                return self
+
+            def respondsToSelector_(self, selector):
+                self.lst.append(selector)
+                return super(OC_RespondsClass, self).respondsToSelector_(selector)
+
+        lst = []
+        o = OC_RespondsClass.alloc().initWithList_(lst)
+
+        self.assertEquals(lst, [])
+
+        b = o.respondsToSelector_('init')
+        self.assert_(b)
+        self.assertEquals(lst, ['init'])
+
+        b = o.respondsToSelector_('alloc')
+        self.assert_(not b)
+        self.assertEquals(lst, ['init', 'alloc'])
+
+    def testOverrideInstancesRespondToSelector(self):
+        lst = []
+        class OC_InstancesRespondClass (NSObject):
+
+            @classmethod
+            def instancesRespondToSelector_(cls, selector):
+                lst.append(selector)
+                return objc.super(OC_InstancesRespondClass, cls).instancesRespondToSelector_(selector)
+
+        self.assertEquals(lst, [])
+
+        b = OC_InstancesRespondClass.instancesRespondToSelector_('init')
+        self.assert_(b)
+        self.assertEquals(lst, ['init'])
+
+        b = OC_InstancesRespondClass.instancesRespondToSelector_('alloc')
+        self.assert_(not b)
+        self.assertEquals(lst, ['init', 'alloc'])
+
 
 if __name__ == '__main__':
     objc.test.main()
