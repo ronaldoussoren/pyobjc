@@ -54,6 +54,9 @@ Version 2.1 (...)
 
 - BUGFIX: It is now possible to override ``respondsToSelector:`` in Python.
 
+- BUGFIX: The wrappers for CoreFoundation types no longer create a new type in the Objective-C runtime,
+  that type wasn't used anywhere and was an unwanted side-effect of how CoreFoundation types are wrapped.
+
 
 Version 2.0.1 (...)
 -------------------

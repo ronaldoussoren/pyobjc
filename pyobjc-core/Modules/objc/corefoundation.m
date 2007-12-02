@@ -14,7 +14,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 
 static PyObject* gTypeid2class = NULL;
-static PyObject* gBaseClass = NULL;
+PyObject* PyObjC_NSCFTypeClass = NULL;
 
 static PyObject*
 cf_repr(PyObject* self)
@@ -137,8 +137,8 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 
 	bases = PyTuple_New(1);
 
-	PyTuple_SET_ITEM(bases, 0, gBaseClass);
-	Py_INCREF(gBaseClass);
+	PyTuple_SET_ITEM(bases, 0, PyObjC_NSCFTypeClass);
+	Py_INCREF(PyObjC_NSCFTypeClass);
 
 	args = PyTuple_New(3);
 	PyTuple_SetItem(args, 0, PyString_FromString(name));
@@ -156,7 +156,7 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 	((PyTypeObject*)result)->tp_str = cf_repr;
 
 	info = (PyObjCClassObject*)result;
-	info->class = PyObjCClass_GetClass(gBaseClass);
+	info->class = PyObjCClass_GetClass(PyObjC_NSCFTypeClass);
 	info->sel_to_py = NULL;
 	info->method_magic = 0;
 	info->dictoffset = 0;
@@ -214,8 +214,8 @@ PyObjCCFType_Setup(void)
 			"Cannot locate NSCFType");
 		return -1;
 	}
-	gBaseClass = PyObjCClass_New(cls);
-	if (gBaseClass == NULL) {
+	PyObjC_NSCFTypeClass = PyObjCClass_New(cls);
+	if (PyObjC_NSCFTypeClass == NULL) {
 		return -1;
 	}
 

@@ -295,6 +295,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	PyObject* useKVOObj;
 	Ivar var;
 	PyObject* protectedMethods = NULL;
+	BOOL      isCFProxyClass = NO;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:__new__",
 			keywords, &name, &bases, &dict)) {
@@ -315,6 +316,13 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	py_super_class = PyTuple_GET_ITEM(bases, 0);
 	if (py_super_class == NULL) {
 		return NULL;
+	}
+
+	if (py_super_class == PyObjC_NSCFTypeClass) {
+		/* A new subclass of NSCFType 
+		 * -> a new proxy type for CoreFoundation classes
+		 */
+		isCFProxyClass = YES;
 	}
 
 	if (!PyObjCClass_Check(py_super_class)) {
@@ -407,36 +415,42 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
-	/* First generate the objective-C class. This may change the
-	 * class dict.
-	 */
-	objc_class = PyObjCClass_BuildClass(super_class, protocols, name, dict, metadict);
-	if (objc_class == NULL) {
-		Py_DECREF(protocols);
-		Py_DECREF(metadict);
-		Py_DECREF(real_bases);
-		return NULL;
-	}
-
-	/* PyObjCClass_BuildClass may have changed the super_class */
-	super_class = class_getSuperclass(objc_class);
-	py_super_class = PyObjCClass_New(super_class);
-	if (py_super_class == NULL) {
-		(void)PyObjCClass_UnbuildClass(objc_class);
-		Py_DECREF(protocols);
-		Py_DECREF(real_bases);
-		Py_DECREF(metadict);
-		return NULL;
+	if (isCFProxyClass) {
+		objc_class = nil;
 	} else {
-		PyObjCClass_CheckMethodList(py_super_class, 1);
-	}
+		/* First generate the objective-C class. This may change the
+		 * class dict.
+		 */
+		objc_class = PyObjCClass_BuildClass(super_class, protocols, name, dict, metadict);
+		if (objc_class == NULL) {
+			Py_DECREF(protocols);
+			Py_DECREF(metadict);
+			Py_DECREF(real_bases);
+			return NULL;
+		}
 
-	Py_DECREF(PyList_GET_ITEM(real_bases, 0));
-	PyList_SET_ITEM(real_bases, 0, py_super_class);
+		/* PyObjCClass_BuildClass may have changed the super_class */
+		super_class = class_getSuperclass(objc_class);
+		py_super_class = PyObjCClass_New(super_class);
+		if (py_super_class == NULL) {
+			(void)PyObjCClass_UnbuildClass(objc_class);
+			Py_DECREF(protocols);
+			Py_DECREF(real_bases);
+			Py_DECREF(metadict);
+			return NULL;
+		} else {
+			PyObjCClass_CheckMethodList(py_super_class, 1);
+		}
+
+		Py_DECREF(PyList_GET_ITEM(real_bases, 0));
+		PyList_SET_ITEM(real_bases, 0, py_super_class);
+	}
 
 	v = PyList_AsTuple(real_bases);
 	if (v == NULL) {
-		(void)PyObjCClass_UnbuildClass(objc_class);
+		if (objc_class != nil) {
+			(void)PyObjCClass_UnbuildClass(objc_class);
+		}
 		Py_DECREF(metadict);
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
@@ -505,12 +519,24 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		PyErr_Clear();
 	} else {
 		Py_INCREF(delmethod);
-		if (PyDict_DelItemString(dict, "__del__") < 0) {
-			(void)PyObjCClass_UnbuildClass(objc_class);
+
+		if (isCFProxyClass) {
+			PyErr_SetString(PyObjCExc_Error,
+			    "cannot define __del__ on subclasses of NSCFType");
 			Py_DECREF(protocols);
 			Py_DECREF(real_bases);
 			Py_DECREF(metadict);
 			return NULL;
+		} else {
+			if (PyDict_DelItemString(dict, "__del__") < 0) {
+				if (objc_class != nil) {
+					(void)PyObjCClass_UnbuildClass(objc_class);
+				}
+				Py_DECREF(protocols);
+				Py_DECREF(real_bases);
+				Py_DECREF(metadict);
+				return NULL;
+			}
 		}
 	}
 
@@ -520,38 +546,47 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	 */
 	old_dict = PyDict_Copy(dict);
 	if (old_dict == NULL) {
-		(void)PyObjCClass_UnbuildClass(objc_class);
+		if (objc_class != nil) {
+			(void)PyObjCClass_UnbuildClass(objc_class);
+		}
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
 		Py_DECREF(metadict);
 		return NULL;
 	}
-
-
 		
-	if (add_convenience_methods(objc_class, dict) < 0) {
-		(void)PyObjCClass_UnbuildClass(objc_class);
-		Py_DECREF(old_dict);
-		Py_DECREF(protocols);
-		Py_DECREF(real_bases);
-		Py_DECREF(metadict);
-		return NULL;
+	if (objc_class != nil) {
+		if (add_convenience_methods(objc_class, dict) < 0) {
+			(void)PyObjCClass_UnbuildClass(objc_class);
+			Py_DECREF(old_dict);
+			Py_DECREF(protocols);
+			Py_DECREF(real_bases);
+			Py_DECREF(metadict);
+			return NULL;
+		}
 	}
 
-	PyTypeObject* metatype = PyObjCClass_NewMetaClass(objc_class);
-	if (metatype == NULL) {
-		Py_DECREF(old_dict);
-		Py_DECREF(protocols);
-		Py_DECREF(real_bases);
-		Py_DECREF(metadict);
-		return NULL;
-	}
-	if (PyDict_Update(metatype->tp_dict, metadict) == -1) {
-		Py_DECREF(old_dict);
-		Py_DECREF(protocols);
-		Py_DECREF(real_bases);
-		Py_DECREF(metadict);
-		return NULL;
+
+
+	PyTypeObject* metatype;
+	if (objc_class != nil) {
+		metatype = PyObjCClass_NewMetaClass(objc_class);
+		if (metatype == NULL) {
+			Py_DECREF(old_dict);
+			Py_DECREF(protocols);
+			Py_DECREF(real_bases);
+			Py_DECREF(metadict);
+			return NULL;
+		}
+		if (PyDict_Update(metatype->tp_dict, metadict) == -1) {
+			Py_DECREF(old_dict);
+			Py_DECREF(protocols);
+			Py_DECREF(real_bases);
+			Py_DECREF(metadict);
+			return NULL;
+		}
+	} else {
+		metatype = PyObjC_NSCFTypeClass->ob_type;
 	}
 	Py_DECREF(metadict); metadict = NULL;
 
@@ -580,23 +615,29 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	Py_DECREF(protocols);
 	protocols = NULL;
 
-	/* Register the proxy as soon as possible, we can get initialize calls
-	 * very early on with the ObjC 2.0 runtime.
-	 */
-	PyObjC_RegisterPythonProxy(objc_class, res);
+	if (objc_class != nil) {
+		/* Register the proxy as soon as possible, we can get 
+		 * initialize calls very early on with the ObjC 2.0 runtime.
+		 */
+		PyObjC_RegisterPythonProxy(objc_class, res);
 
-	if (objc_class_register(objc_class, res) < 0) {
-		PyObjC_UnregisterPythonProxy(objc_class, res);
-		Py_DECREF(res);
-		Py_DECREF(old_dict);
-		(void)PyObjCClass_UnbuildClass(objc_class);
-		return NULL;
+		if (objc_class_register(objc_class, res) < 0) {
+			PyObjC_UnregisterPythonProxy(objc_class, res);
+			Py_DECREF(res);
+			Py_DECREF(old_dict);
+			(void)PyObjCClass_UnbuildClass(objc_class);
+			return NULL;
+		}
+
+		PyObjCClass_FinishClass(objc_class);
 	}
 
-	PyObjCClass_FinishClass(objc_class);
 
 	info = (PyObjCClassObject*)res;
 	info->class = objc_class;
+	if (isCFProxyClass) {
+		info->class = PyObjCClass_GetClass(PyObjC_NSCFTypeClass);
+	}
 	info->sel_to_py = NULL; 
 	info->method_magic = PyObjC_methodlist_magic(objc_class);
 	info->dictoffset = 0;
