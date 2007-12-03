@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>This project builds a Cocoa-based application written in a mix of Python and Objective-C.</string>
+	<key>FilesToMacroExpand</key>
+	<array>
+		<string>xcPROJECTNAMEASIDENTIFIERxc_Prefix.pch</string>
+		<string>Info.plist</string>
+		<string>English.lproj/InfoPlist.strings</string>
+		<string>English.lproj/MainMenu.xib</string>
+		<string>main.m</string>
+		<string>main.py</string>
+		<string>xcPROJECTNAMEASIDENTIFIERxcAppDelegate.py</string>
+	</array>
+	<key>FilesToRename</key>
+	<dict>
+		<key>CocoaAppAppDelegate.py</key>
+		<string>xcPROJECTNAMEASIDENTIFIERxcAppDelegate.py</string>
+		<key>CocoaApp_Prefix.pch</key>
+		<string>xcPROJECTNAMEASIDENTIFIERxc_Prefix.pch</string>
+	</dict>
+</dict>
+</plist>
