@@ -322,8 +322,14 @@ machImageForPointer(
 				
 				// needed for Universal binaries. Check if file is fat and get image size from there.
 				int fd = open (imageName, O_RDONLY);
+				if (fd == -1) {
+					return unix_err (errno );
+				}
 				size_t mapSize = *size;
-				char * fileImage = mmap (NULL, mapSize, PROT_READ, MAP_FILE, fd, 0);
+				char * fileImage = mmap (NULL, mapSize, PROT_READ, MAP_FILE|MAP_PRIVATE, fd, 0);
+				if (fileImage == (char*)-1) {
+					return unix_err (errno );
+				}
 				
 				struct fat_header* fatHeader = (struct fat_header *)fileImage;
 				if (fatHeader->magic == OSSwapBigToHostInt32(FAT_MAGIC)) {
