@@ -7,6 +7,38 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.1 (...)
 -----------------
 
+
+- PyObjC can now run in 64-bit mode.
+
+  NOTE: 64-bit support is beta quality, that is: all unittests pass, but I 
+  haven't tried running real programs yet and hence there might be issues 
+  lurking below the surface.
+
+  NOTE2: PPC64 support is completely untested, aka "it compiles and therefore 
+  must work".
+
+  This requires Leopard (OSX 10.5), earlier version of the OS don't have a 
+  64-bit Objective-C runtime at all.  This currently also requires a copy of 
+  python that was build with ``MACOSX_DEPLOYMENT_TARGET=10.5``.
+
+  Note that class posing (the ``poseAsClass_`` class method) is not supported 
+  in 64-bit mode. It is also not possible to create new protocols in 64-bit 
+  code. Neither are supported by the 64-bit runtime APIs (that is, it is a 
+  restriction in Apple's Objective-C 2.0 runtime).
+
+
+Version 2.0.1 (...)
+-------------------
+
+- BUGFIX: don't crash when printing CF objects that are magic cookies.
+
+- BUGFIX: It is now possible to override ``respondsToSelector:`` in Python.
+
+- BUGFIX: The wrappers for CoreFoundation types no longer create a new type 
+  in the Objective-C runtime, that type wasn't used anywhere and was an 
+  unwanted side-effect of how CoreFoundation types are wrapped.
+
+
 - Add support for interacting with '@synchronized' blocks in Objective-C.
 
   The function ``object_lock(object)`` is a contextmanager that acquires and
@@ -36,36 +68,8 @@ Version 2.1 (...)
    Note that the first version is slightly saver (see the documentation
    for with-statements for the details).
 
-- PyObjC can now run in 64-bit mode.
-
-  NOTE: 64-bit support is beta quality, that is: all unittests pass, but I haven't tried
-  running real programs yet and hence there might be issues lurking below the surface.
-
-  NOTE2: PPC64 support is completely untested, aka "it compiles and therefore must work".
-
-  This requires Leopard (OSX 10.5), earlier version of the OS don't have a 64-bit
-  Objective-C runtime at all.  This currently also requires a copy of python that was
-  build with ``MACOSX_DEPLOYMENT_TARGET=10.5``.
-
-  Note that class posing (the ``poseAsClass_`` class method) is not supported in 64-bit 
-  mode. It is also not possible to create new protocols in 64-bit code. Neither are 
-  supported by the 64-bit runtime APIs (that is, it is a restriction in Apple's 
-  Objective-C 2.0 runtime).
-
-- BUGFIX: It is now possible to override ``respondsToSelector:`` in Python.
-
-- BUGFIX: The wrappers for CoreFoundation types no longer create a new type in the Objective-C runtime,
-  that type wasn't used anywhere and was an unwanted side-effect of how CoreFoundation types are wrapped.
-
-
-Version 2.0.1 (...)
--------------------
-
-- BUGFIX: don't crash when printing CF objects that are magic cookies.
-
-
-Version 2.0 (LEOPARD, post WWDC07)
-----------------------------------
+Version 2.0 (MacOS X 10.5.0)
+----------------------------
 
 - The basic infrastructure for playing nice in a GC host was added.
 
@@ -178,13 +182,6 @@ Version 2.0 (LEOPARD, post WWDC07)
           def updateDescription(self):
 	     self.description = 42
 
-
-
-Version 2.0 (LEOPARD)
----------------------
-
-- NOTE: most of pyobjc should be 64-bit safe, but I haven't tested this yet
-  and the included libffi probably doesn't work with 64-bit darwin.
 
 - PyObjC has been split into several smaller packages: ``pyobjc-core`` contains
   the core bridge and frameworks are wrapped as seperate setuptools packages.
