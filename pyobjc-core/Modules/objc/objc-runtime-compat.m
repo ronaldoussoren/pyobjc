@@ -218,7 +218,7 @@ error_cleanup:
 }
 
 static void
-compat_objc_freeClassPair(Class cls)
+compat_objc_disposeClassPair(Class cls)
 {
 	struct objc_class* val = cls;
 	int i;
@@ -241,20 +241,6 @@ compat_objc_freeClassPair(Class cls)
 	val[0].name = val[1].name = NULL;
 	free(val);
 }
-
-#ifndef NO_OBJC2_RUNTIME
-static void
-objc20_objc_freeClassPair(Class cls __attribute__((__unused__)))
-{
-	/* The ObjC 2.0 API doesn't have this functionality, but should have
-	 * complain loudly.
-	 */
-#if 0
-	printf("objc20_objc_freeClassPair called\n");
-#endif
-
-}
-#endif
 
 
 static size_t 
@@ -788,7 +774,7 @@ void (*PyObjC_object_setIvar)(id obj, Ivar ivar, id value) = NULL;
 
 Class (*PyObjC_objc_allocateClassPair)(Class, const char*, size_t) = NULL;
 void (*PyObjC_objc_registerClassPair)(Class) = NULL;
-void (*PyObjC_objc_freeClassPair)(Class) = NULL;
+void (*PyObjC_objc_disposeClassPair)(Class) = NULL;
 Protocol** (*PyObjC_objc_copyProtocolList)(unsigned int*) = NULL;
 
 BOOL (*PyObjC_preclass_addMethod)(Class, SEL, IMP, const char*) = NULL;
@@ -835,7 +821,7 @@ void PyObjC_SetupRuntimeCompat(void)
 	 */
 	PyObjC_class_addMethodList  = compat_class_addMethodList;
 	PyObjC_methodlist_magic     = compat_methodlist_magic;
-	PyObjC_objc_freeClassPair   = compat_objc_freeClassPair;
+	PyObjC_objc_disposeClassPair   = compat_objc_freeClassPair;
 	PyObjC_preclass_addMethod   = compat_preclass_addMethod;
 	PyObjC_preclass_addIvar     = compat_preclass_addIvar;
 	PyObjC_preclass_addProtocol = compat_preclass_addProtocol;
@@ -863,12 +849,6 @@ void PyObjC_SetupRuntimeCompat(void)
 		PyObjC_methodlist_magic = compat_methodlist_magic;
 	}
 
-	if (objc_allocateClassPair) {
-		PyObjC_objc_freeClassPair = objc20_objc_freeClassPair;
-	} else {
-		PyObjC_objc_freeClassPair = compat_objc_freeClassPair;
-	}
-
 #   define SETUP(funcname) \
 	if (funcname == NULL) { \
 		PyObjC_##funcname = compat_##funcname; \
@@ -884,7 +864,7 @@ void PyObjC_SetupRuntimeCompat(void)
 
 	SETUP(objc_allocateClassPair);
 	SETUP(objc_registerClassPair);
-	SETUP(objc_freeClassPair);
+	SETUP(objc_disposeClassPair);
 	SETUP(objc_copyProtocolList);
 
 	SETUP(object_getClass);
@@ -969,17 +949,6 @@ size_t PyObjC_methodlist_magic(Class cls)
 #endif
 	free(methods);
 	return (size_t)count;
-}
-
-void
-PyObjC_objc_freeClassPair(Class cls __attribute__((__unused__)))
-{
-	/* The ObjC 2.0 API doesn't have this functionality, but should have
-	 * complain loudly.
-	 */
-#if 0
-	printf("objc20_objc_freeClassPair called\n");
-#endif
 }
 
 #endif

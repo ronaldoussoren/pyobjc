@@ -166,7 +166,7 @@ PyObjCClass_UnbuildClass(Class objc_class)
 	PyObjC_Assert(objc_class != nil, -1);
 	PyObjC_Assert(objc_lookUpClass(class_getName(objc_class)) == nil, -1);
 
-	objc_freeClassPair(objc_class);
+	//objc_disposeClassPair(objc_class);
 	return 0;
 }
 
@@ -402,7 +402,7 @@ build_intermediate_class(Class base_class, char* name)
 
 error_cleanup:
 	if (intermediate_class) {
-		objc_freeClassPair(intermediate_class);
+		objc_disposeClassPair(intermediate_class);
 	}
 	if (methinfo) {
 		Py_DECREF(methinfo);
@@ -1064,7 +1064,7 @@ error_cleanup:
 	}
 
 	if (new_class) {
-		objc_freeClassPair(new_class);
+		objc_disposeClassPair(new_class);
 	}
 
 	return NULL;

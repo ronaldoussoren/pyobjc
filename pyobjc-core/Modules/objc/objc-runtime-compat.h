@@ -77,7 +77,7 @@ extern BOOL (*PyObjC_preclass_addProtocol)(Class cls, Protocol *protocol);
 
 extern Class (*PyObjC_objc_allocateClassPair)(Class, const char*, size_t);
 extern void (*PyObjC_objc_registerClassPair)(Class);
-extern void (*PyObjC_objc_freeClassPair)(Class cls);
+extern void (*PyObjC_objc_disposeClassPair)(Class cls);
 
 
 extern Class (*PyObjC_object_getClass)(id obj);
@@ -132,7 +132,7 @@ extern void (*PyObjC_object_setIvar)(id obj, Ivar ivar, id value);
 
 #define objc_allocateClassPair		PyObjC_objc_allocateClassPair
 #define objc_registerClassPair		PyObjC_objc_registerClassPair
-#define objc_freeClassPair		PyObjC_objc_freeClassPair
+#define objc_disposeClassPair		PyObjC_objc_disposeClassPair
 
 #define object_getClass 		PyObjC_object_getClass
 #define object_setClass 		PyObjC_object_setClass
@@ -185,10 +185,8 @@ extern BOOL PyObjC_class_addMethodList(Class class,
 
 
 extern size_t PyObjC_methodlist_magic(Class cls);
-extern void PyObjC_objc_freeClassPair(Class cls);
 
 #define class_addMethodList	PyObjC_class_addMethodList
-#define objc_freeClassPair	PyObjC_objc_freeClassPair
 
 
 #endif
