@@ -1,7 +1,0 @@
-{
-    IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = ToDosDocument; LANGUAGE = ObjC; SUPERCLASS = NSDocument; }
-    ); 
-    IBVersion = 1; 
-}

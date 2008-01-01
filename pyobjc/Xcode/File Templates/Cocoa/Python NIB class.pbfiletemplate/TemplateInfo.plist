@@ -1,4 +1,0 @@
-{
-	MainTemplateFile = "class.py";
-	Description = "A Python Cocoa-class file, imports Foundation. Use this for classes defined in a NIB file.";
-}

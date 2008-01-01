@@ -1,8 +1,0 @@
-{
-    IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = ScreenSaverView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
-        {CLASS = SillyBalls; LANGUAGE = ObjC; SUPERCLASS = ScreenSaverView; }
-    ); 
-    IBVersion = 1; 
-}
