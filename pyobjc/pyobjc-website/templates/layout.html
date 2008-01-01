@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://genshi.edgewall.org/" py:strip="">
+    <head py:match="head" once="true" py:attrs="select('@*')">
+        <title py:with="title = list(select('title/text()'))">
+            ${title}
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="../css/layout.css" type="text/css" />
+        <link rel="start" href="/index.html" />
+        <link rel="copyright" href="/legal.html" />
+    </head>
+    <body>
+        <p>
+            ${select('*[local-name()!="title"]')}
+        </p>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr valign="bottom">
+                <td width="150" valign="middle" bgcolor="#FFFFFF" class="corner">
+                    <center>
+                        <a href="../index.html"><img src="../img/dogsnake.jpg" width="125" height="86" border="0" alt="PyObjC" /></a>
+                    </center>
+                </td>
+                <td class="banner" width="15">
+                    &nbsp;&nbsp;
+                </td>
+                <td align="left" class="banner" width="90%">
+                    <span class="headbanner">PyObjC</span> <span class="subbanner">The Python &lt;-&gt; Objective-C Bridge</span>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="150" align="left" style="background-image:url(../img/top-line.gif)" class="banner">
+                    <img src="../img/title2-2.gif" width="125" height="8" border="0" alt="" />
+                </td>
+                <td colspan="2" width="90%" style="background-image:url(../img/top-line.gif)" class="banner">
+                    <img src="../img/shim.gif" width="1" height="8" border="0" alt="" />
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr valign="top">
+                <td align="left" width="120" bgcolor="#EEEEEE" class="layout">
+                    <table border="0" cellpadding="0" cellspacing="0" width="120">
+                        <tr align="left">
+                            <td colspan="2" bgcolor="#DDDDDD" class="layout">
+                                <img src="../img/sect-head.gif" width="120" height="26" border="0" alt="Sections:" />
+                            </td>
+                        </tr>
+                        <tr align="left">
+                            <td colspan="2">
+                                <a href="../index.html">Home</a>
+                            </td>
+                        </tr>
+                        <tr align="left">
+                            <td colspan="2">
+                                <a href="../doc/index.html">Documentation</a>
+                            </td>
+                        </tr>
+                        <tr align="left">
+                            <td colspan="2">
+                                <a href="../development/index.html">Development</a>
+                            </td>
+                        </tr>
+                        <tr align="left">
+                            <td colspan="2">
+                                <a href="../software/index.html">Download</a>
+                            </td>
+                        </tr>
+                        <tr align="left">
+                            <td colspan="2" bgcolor="#87B9E7">
+                                <a href="../examples/index.html">Examples</a>
+                            </td>
+                        </tr>
+                        <tr align="left">
+                            <td colspan="2">
+                                <a href="http://sourceforge.net/mail/?group_id=14534">Mailing Lists</a>
+                            </td>
+                        </tr>
+                        <tr align="left">
+                            <td height="3" colspan="2" bgcolor="#999999" class="layout"></td>
+                        </tr>
+                        <tr align="left">
+                            <td colspan="2" bgcolor="#DDDDDD" class="layout">
+                                <img src="../img/nav-head.gif" width="120" height="26" border="0" alt="Navigation:" />
+                            </td>
+                        </tr>
+                        <tr class="layout" align="left" valign="middle" bgcolor="#87B9E7">
+                            <td class="layout">
+                                <img src="../img/nav-downicon.gif" width="18" height="15" border="0" alt="- " />
+                            </td>
+                            <td bgcolor="#87B9E7" class="layout">
+                                <span class="nav">Examples</span>
+                            </td>
+                        </tr>
+                        <tr class="layout" bgcolor="#FFFFFF">
+                            <td class="layout" height="1"></td>
+                            <td class="layout" height="1"></td>
+                        </tr>
+                        <tr align="left">
+                            <td height="3" colspan="2" bgcolor="#999999" class="layout"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                    <p>
+                        We're hosted on:<br />
+                        <a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=14534&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+                    </p>
+                    <p>
+                        Subversion hosting<br />
+                        <a href="http://www.red-bean.com/"><img src="http://www.red-bean.com/images/bean-brought.jpg" width="100" /></a>
+                    </p>
+                </td>
+                <td align="left" width="100%">
+                    ${select('*|text()')}
+                </td>
+            </tr>
+            <tr valign="middle" align="left">
+                <td bgcolor="#EEEEEE" align="center" width="120" style="background-image:url(../img/stripes.gif)">
+                    <a href="../legal.php" style="text-decoration:none;color:black;font-size:10pt;">Copyright&nbsp;©&nbsp;2003, 2004 The&nbsp;PyObjC&nbsp;Project</a>
+                </td>
+                <td class="layout">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100%">
+                                <div class="footer" align="center"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="7" class="layout">
+                                <img src="../img/shim.gif" width="1" height="7" border="0" alt="" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
