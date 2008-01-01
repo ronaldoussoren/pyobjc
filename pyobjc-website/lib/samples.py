@@ -15,7 +15,7 @@ from pygments.formatters import HtmlFormatter
 
 from docutils.core import publish_parts
 
-from genshi.template import MarkupTemplate
+from genshi.template import MarkupTemplate, TemplateLoader
 
 from distutils import log
 
@@ -30,6 +30,7 @@ gZipTemplate = "PyObjCExample-%s.zip"
 gTemplateDir = os.path.join(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
         'templates')
+gTemplateLoader = TemplateLoader(gTemplateDir)
 
 def zipDirectory(outputname, inputdir):
     """
@@ -155,19 +156,22 @@ def convertSample(name, inputdir, outputdir):
         readme = "A PyObjC Example without documentation"
 
     tmpl = MarkupTemplate(
-            open(os.path.join(gTemplateDir, "sample-index.html"), 'r').read())
+            open(os.path.join(gTemplateDir, "sample-index.html"), 'r').read(),
+            loader=gTemplateLoader)
     stream = tmpl.generate(
             title=name,
             sources=[item[:2] for item in coloredFiles],
             zipname=zipname,
-            readme=readme)
+            readme=readme,
+            )
     fp = open(os.path.join(outputdir, "index.html"), 'w')
     fp.write(stream.render('html'))
     fp.close()
 
 
     tmpl = MarkupTemplate(
-            open(os.path.join(gTemplateDir, "sample-source.html"), 'r').read())
+            open(os.path.join(gTemplateDir, "sample-source.html"), 'r').read(),
+            loader=gTemplateLoader)
     for realpath, htmlpath, style, body in coloredFiles:
         sources=[item[:2] for item in coloredFiles if item[1] != htmlpath]
         sources.insert(0, (realpath, htmlpath))
@@ -208,7 +212,8 @@ def samplesForProject(title, package, inputdir, outputdir):
 
     if samples:
         tmpl = MarkupTemplate(
-            open(os.path.join(gTemplateDir, "sample-framework-index.html"), 'r').read())
+            open(os.path.join(gTemplateDir, "sample-framework-index.html"), 'r').read(),
+            loader=gTemplateLoader)
         stream = tmpl.generate(
             title="Examples for %s" % (title,),
             samples=samples)
@@ -233,12 +238,12 @@ def generateSamples(basedir, outputdir, frameworkList):
                 outputdir)
 
         if listing:
-            print allSamples
             allSamples.append((title, nm, listing))
 
     if allSamples:
         tmpl = MarkupTemplate(
-            open(os.path.join(gTemplateDir, "sample-global-index.html"), 'r').read())
+            open(os.path.join(gTemplateDir, "sample-global-index.html"), 'r').read(),
+            loader=gTemplateLoader)
         stream = tmpl.generate(
             samplelist=allSamples)
         fp = open(os.path.join(outputdir, "index.html"), 'w')

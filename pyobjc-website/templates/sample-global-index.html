@@ -1,4 +1,9 @@
-<html xmlns:py="http://genshi.edgewall.org/">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude" >
+  <xi:include href="layout.html" />
   <head>
     <title>PyObjC Examples</title>
   </head>
@@ -9,7 +14,7 @@
     <div py:for="title, subpath, samples in samplelist">
       <a href="${subpath}/index.html"><h2>${title}</h2></a>
       <div py:for="path, name, summary in samples">
-        <a href="${path}/index.html"><h3>${name}</h3></a>
+        <a href="${subpath}/${path}/index.html"><h3>${name}</h3></a>
         <p py:if="summary">Markup(${summary})</p>
       </div>
     </div>

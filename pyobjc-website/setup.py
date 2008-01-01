@@ -50,6 +50,7 @@ class buildsite (Command):
                     "Run me in a complete checkout of the pyobjc trunk")
 
         frameworkList = [dn for dn in os.listdir('..') if dn.startswith('pyobjc-framework') ]
+        frameworkList = ['pyobjc-framework-Cocoa']
 
 
         samples.generateSamples('..', 'htdocs/examples', frameworkList)
@@ -89,8 +90,8 @@ setup(
             publish=publishsite,
         ),
         setup_requires = [
-            'docutils',
-            'Genshi',
+            'docutils >=0.4',
+            'Genshi >=0.4',
             'Pygments',
         ]
 )
